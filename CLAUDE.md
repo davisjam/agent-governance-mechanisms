@@ -1,18 +1,40 @@
 # CLAUDE.md — agent-governance-mechanisms
 
-This repo is a **pattern catalogue**: 51 governance controls that keep a fleet of autonomous coding
+This repo is a **pattern catalogue**: 53 governance controls that keep a fleet of autonomous coding
 agents productive while bounding their failures, each written as a Gang-of-Four-style design pattern.
 It is published as a static GitHub Pages site and embedded in a parent repo as a git submodule.
 
 `catalog.py` is the one tool — **stdlib-only, no dependencies** (so `python3 catalog.py …` runs on a
 fresh checkout with nothing installed). Do not add pip dependencies; keep it clone-and-run.
 
+## Core principle: this repo must be interpretable by an independent Claude
+
+**Every mechanism description must stand on its own to an agent that has no access to the parent
+(ada-tool) repo** — not its source, its docs, its tools, or its `CLAUDE.md` rule numbers. This is the
+governing rule for all content here:
+
+- **Describe artifacts by role and shape, not by unshipped filename.** "A host-level flock wrapper that
+  serializes the test runner," not `` `test-serializer.py` ``. "A stable lint that reads the model at
+  build time," not `` `lint-service-flow-model.py` ``.
+- **Explain a governing rule's *content*; never cite a bare rule number.** "A project rule that a new
+  event-bus topic must ship an observability entry," not "rule #46". A number like `#46` is meaningless
+  outside ada-tool.
+- **No dangling paths** into trees this repo does not ship (`services/…`, `deploy/…`, `docs/…`,
+  `talks-and-notes/…`). Intra-catalogue links (`../<role>/<family>/<control>.md`) are fine — they ship.
+- **Prefer the conceptual statement over the concrete ScholAccess artifact** that happens to implement
+  it. `Known uses` may name a real artifact *once* for grounding, but the mechanism must be understandable
+  without it. The `product/` role is the catalogue's flagged project-specific exception; keep it
+  self-contained too.
+
+The test: *could a Claude that has only this repo read an entry and understand the mechanism well enough
+to adapt it?* If it depends on a file, path, or rule number it can't see, the entry fails this rule.
+
 ## The content model
 
 - **Entries** live at `<role>/<family>/<control>.md` — roles are `agent/`, `models-bridge/`, `product/`.
   Every entry follows the template documented in [`README.md`](README.md): a title, an `**Intent** —`
-  line, a 7-row metadata card (`Target · Form · Novelty · Real artifact · Governing rule(s) ·
-  Enforcement · Summary`), then the sections (`Motivation` … `Related controls`).
+  line, a 4-row metadata card (`Summary · Target · Form · Enforcement`), then the sections
+  (`Motivation` … `Related controls`).
 - **[`INDEX.md`](INDEX.md)** is the census — one row per entry, grouped by family. The `Form`, `Novelty`,
   and `Enf.` columns MUST match the entry's metadata card (the validator enforces this).
 - Cross-cuts: 9 **forms**, **soft/hard** enforcement, 5 **relationships** — all defined in `README.md`.

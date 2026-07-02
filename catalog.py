@@ -126,8 +126,8 @@ def all_entries() -> list[Entry]:
 def check_links() -> list[str]:
     dead = []
     for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True):
-        if os.sep + "downloads" + os.sep in f:
-            continue  # raw download assets (redacted CLAUDE mirror): illustrative links, not rendered
+        if os.sep + "downloads" + os.sep in f or os.path.basename(f) == "HANDOFF.md":
+            continue  # raw assets (redacted CLAUDE mirror) + the internal HANDOFF: not rendered/served
         base = os.path.dirname(f)
         body = open(f, encoding="utf-8").read()
         for m in re.finditer(r"\]\(([^)]+\.md)(#[^)]*)?\)", body):
@@ -908,7 +908,8 @@ def cmd_build(_args) -> int:
     entries = all_entries()
     written = 0
     md_files = sorted(f for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True)
-                      if os.sep + "downloads" + os.sep not in f)  # raw assets, shipped as-is
+                      if os.sep + "downloads" + os.sep not in f     # raw assets, shipped as-is
+                      and os.path.basename(f) != "HANDOFF.md")       # internal handoff, not served
     by_path = {e.path: e for e in entries}
     for f in md_files:
         rel = os.path.relpath(f, ROOT)
