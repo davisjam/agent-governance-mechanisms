@@ -1,0 +1,45 @@
+# Build the catalogue site from its markdown and deploy to GitHub Pages.
+# Source = "GitHub Actions" (Settings → Pages). Running `catalog.py build` in CI is the
+# "executable, can't-drift" build: the deployed HTML is regenerated from the .md on every push.
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Validate schema
+        run: python3 catalog.py validate
+      - name: Render markdown -> HTML
+        run: python3 catalog.py build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

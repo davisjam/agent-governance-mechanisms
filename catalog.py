@@ -132,6 +132,8 @@ def all_entries() -> list[Entry]:
 def check_links() -> list[str]:
     dead = []
     for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True):
+        if os.sep + "downloads" + os.sep in f:
+            continue  # raw download assets (redacted CLAUDE mirror): illustrative links, not rendered
         base = os.path.dirname(f)
         body = open(f, encoding="utf-8").read()
         for m in re.finditer(r"\]\(([^)]+\.md)(#[^)]*)?\)", body):
@@ -485,6 +487,8 @@ LANDING_INTRO = """  <div class="tag">Pattern catalogue</div>
     <span style="color:#555;">— four views of the whole catalogue</span></li>
   <li style="margin-bottom:8px;"><a href="https://github.com/davisjam/agent-governance-mechanisms">▸ Browse the source on GitHub</a>
     <span style="color:#555;">— README · INDEX · every control as a full writeup</span></li>
+  <li style="margin-bottom:8px;"><a href="downloads/CLAUDE-starter.md" download>▸ Download a starter <code>CLAUDE.md</code></a>
+    <span style="color:#555;">— the governance-rules half of a real, mature one (identity redacted); a menu to adapt</span></li>
   <li><a href="https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip">▸ Download the catalogue</a>
     <span style="color:#555;">— the full set of markdown writeups as a ZIP</span></li>
   </ul>
@@ -494,7 +498,8 @@ LANDING_INTRO = """  <div class="tag">Pattern catalogue</div>
 def cmd_build(_args) -> int:
     entries = all_entries()
     written = 0
-    md_files = sorted(glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True))
+    md_files = sorted(f for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True)
+                      if os.sep + "downloads" + os.sep not in f)  # raw assets, shipped as-is
     by_path = {e.path: e for e in entries}
     for f in md_files:
         rel = os.path.relpath(f, ROOT)
