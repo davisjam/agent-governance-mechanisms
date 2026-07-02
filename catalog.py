@@ -511,6 +511,8 @@ LANDING_CSS = """
   .school h3 { margin:0 0 5px; font-size:14.5px; }
   .school.mid h3 { color:var(--accent); }
   .school p { margin:0 0 9px; font-size:12.5px; color:#444; line-height:1.5; }
+  .school .srefs { font-size:10.5px; color:var(--muted); margin:0 0 9px; line-height:1.5; }
+  .school .srefs a { color:var(--link); }
   .school .pole { margin-top:auto; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:800; }
   .spectrum-axis { text-align:center; font-size:11px; color:var(--muted); letter-spacing:.03em; margin:0 0 20px; }
   .cols3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:4px 0 8px; }
@@ -556,20 +558,24 @@ def _landing_cards() -> str:
         for t, sub, href, extra in LANDING_CARDS)
 
 
-# The two schools + the midway (title, blurb, pole-label, is-midway)
+# The two schools + the midway (title, blurb, pole-label, is-midway, [(ref-label, url), ...])
 SCHOOLS = [
     ("Vibe coding",
      "Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on "
      "the model and your eye. At scale the same failures keep recurring, and human review becomes the "
-     "bottleneck.", "all velocity — no durable guardrails", False),
+     "bottleneck.", "all velocity — no durable guardrails", False,
+     [("Karpathy (coined it)", "https://x.com/karpathy/status/1886192184808149383"),
+      ("Yegge’s Gas Town", "https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04"),
+      ("vibe-tools survey", "https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html")]),
     ("Governance-centric",
      "The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail "
      "— a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> "
-     "stays trustworthy.", "velocity + guardrails grown from failure", True),
+     "stays trustworthy.", "velocity + guardrails grown from failure", True, []),
     ("Spec-driven development",
      "Write a precise specification up front, then generate and verify against it. Rigorous — but it "
      "front-loads all the judgment: you must know every constraint before the agent acts, and specs "
-     "rarely anticipate what only breaks at velocity.", "all guardrails — specified up front", False),
+     "rarely anticipate what only breaks at velocity.", "all guardrails — specified up front", False,
+     [("Meyer, CACM — “From Probable to Provable”", "https://dl.acm.org/doi/full/10.1145/3773295")]),
 ]
 
 # The three-column "way of thinking" — the AI-First Engineering Method (A.1–A.21), engineering-oriented
@@ -600,9 +606,13 @@ WAYS = [
 
 def _landing_schools() -> str:
     out = []
-    for title, blurb, pole, mid in SCHOOLS:
+    for title, blurb, pole, mid, refs in SCHOOLS:
         cls = "school mid" if mid else "school"
-        out.append(f'<div class="{cls}"><h3>{title}</h3><p>{blurb}</p>'
+        rhtml = ""
+        if refs:
+            links = " · ".join(f'<a href="{u}">{lbl}</a>' for lbl, u in refs)
+            rhtml = f'<div class="srefs">See: {links}</div>'
+        out.append(f'<div class="{cls}"><h3>{title}</h3><p>{blurb}</p>{rhtml}'
                    f'<span class="pole">{pole}</span></div>')
     return "\n  ".join(out)
 

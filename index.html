@@ -75,6 +75,8 @@
   .school h3 { margin:0 0 5px; font-size:14.5px; }
   .school.mid h3 { color:var(--accent); }
   .school p { margin:0 0 9px; font-size:12.5px; color:#444; line-height:1.5; }
+  .school .srefs { font-size:10.5px; color:var(--muted); margin:0 0 9px; line-height:1.5; }
+  .school .srefs a { color:var(--link); }
   .school .pole { margin-top:auto; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:800; }
   .spectrum-axis { text-align:center; font-size:11px; color:var(--muted); letter-spacing:.03em; margin:0 0 20px; }
   .cols3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:4px 0 8px; }
@@ -100,9 +102,9 @@
   <p class="section-sub">Two common ways to build with agents sit at opposite poles. This site is about
   the midway.</p>
   <div class="spectrum">
-  <div class="school"><h3>Vibe coding</h3><p>Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on the model and your eye. At scale the same failures keep recurring, and human review becomes the bottleneck.</p><span class="pole">all velocity — no durable guardrails</span></div>
+  <div class="school"><h3>Vibe coding</h3><p>Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on the model and your eye. At scale the same failures keep recurring, and human review becomes the bottleneck.</p><div class="srefs">See: <a href="https://x.com/karpathy/status/1886192184808149383">Karpathy (coined it)</a> · <a href="https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04">Yegge’s Gas Town</a> · <a href="https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html">vibe-tools survey</a></div><span class="pole">all velocity — no durable guardrails</span></div>
   <div class="school mid"><h3>Governance-centric</h3><p>The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail — a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> stays trustworthy.</p><span class="pole">velocity + guardrails grown from failure</span></div>
-  <div class="school"><h3>Spec-driven development</h3><p>Write a precise specification up front, then generate and verify against it. Rigorous — but it front-loads all the judgment: you must know every constraint before the agent acts, and specs rarely anticipate what only breaks at velocity.</p><span class="pole">all guardrails — specified up front</span></div>
+  <div class="school"><h3>Spec-driven development</h3><p>Write a precise specification up front, then generate and verify against it. Rigorous — but it front-loads all the judgment: you must know every constraint before the agent acts, and specs rarely anticipate what only breaks at velocity.</p><div class="srefs">See: <a href="https://dl.acm.org/doi/full/10.1145/3773295">Meyer, CACM — “From Probable to Provable”</a></div><span class="pole">all guardrails — specified up front</span></div>
   </div>
   <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all guardrails →</p>
 
