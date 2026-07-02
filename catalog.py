@@ -286,7 +286,7 @@ TOPNAV = ('<div class="topnav"><a href="https://davisjam.github.io">James C. Dav
 
 FONT_CSS = ('  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }\n'
             '  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }\n'
-            '  .site-foot { max-width:1040px; margin:40px auto 0; padding:16px 22px 30px; border-top:1px solid #e2e8f0;'
+            '  .site-foot { max-width:1320px; margin:40px auto 0; padding:16px 26px 30px; border-top:1px solid #e2e8f0;'
             ' font-size:12.5px; color:#666; text-align:center; }\n'
             '  .site-foot a { color:#0b5cad; text-decoration:none; } .site-foot a:hover { text-decoration:underline; }\n'
             '  .site-foot .gh { white-space:nowrap; }\n'
@@ -299,7 +299,7 @@ PAGE_CSS = """
   * { box-sizing: border-box; }
   body { margin:0; font-family:"Avenir Next",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
          color:var(--ink); background:#fff; line-height:1.55; }
-  main { width: 92vw; max-width: 1040px; margin: 0 auto; padding: 32px 22px 80px; }
+  main { width: 94vw; max-width: 1320px; margin: 0 auto; padding: 32px 26px 80px; }
   nav.crumb { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
   nav.crumb a { color: var(--link); text-decoration: none; }
   nav.crumb a:hover { text-decoration: underline; }
@@ -549,8 +549,7 @@ LANDING_CSS = """
   .refs { margin:0 0 24px; }
   .refs .r { border-left:3px solid var(--accent); padding:3px 0 3px 12px; margin:0 0 7px; font-size:13px; color:#444; }
   .refs .r b { color:#333; font-weight:700; }
-  .cards-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin:0 0 26px; }
-  @media (max-width:640px){ .cards-grid { grid-template-columns:1fr; } }
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:11px; margin:0 0 26px; }
   .lcard { display:block; text-decoration:none; border:1.4px solid var(--line); border-radius:10px;
            padding:13px 15px; background:#fff; transition:box-shadow .12s, border-color .12s; }
   .lcard:hover { box-shadow:0 3px 12px rgba(0,0,0,.09); border-color:#cbd5e1; }
@@ -559,7 +558,7 @@ LANDING_CSS = """
   .lead, .subtitle, .walk-sub, .section-sub, .census-legend { max-width:840px; }
   .lead { font-size:14.5px; color:#2a2a2a; line-height:1.62; margin:0 0 13px; }
   .lead .term { font-weight:700; }
-  .wf { position:relative; left:50%; transform:translateX(-50%); width:min(1180px,96vw); margin:14px 0 6px; }
+  .wf { position:relative; left:50%; transform:translateX(-50%); width:min(1400px,96vw); margin:14px 0 6px; }
   .wf-frame { width:100%; overflow:hidden; }
   .wf-frame iframe { display:block; border:none; background:#fff; }
   .wf figcaption { font-size:12px; color:var(--muted); margin-top:8px; text-align:center; }
@@ -597,8 +596,7 @@ LANDING_CSS = """
 
 # (title, subtitle, href, extra-attrs) for the landing action cards
 LANDING_CARDS = [
-    ("The control-map figure", "the whole catalogue at a glance — four views, controls clickable", "catalogue-figure.html", ""),
-    ("Interactive views", "every control, re-grouped live from metadata", "catalogue-views.html", ""),
+    ("Views of the governance catalogue", "the whole catalogue at a glance — four views, controls clickable", "catalogue-figure.html", ""),
     ("Quick start", "adopt these in your own repo", "quick-start.html", ""),
     ("Starter CLAUDE.md", "a real, mature one — redacted; a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
     ("Download the catalogue", "all writeups as a markdown ZIP", "https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip", ""),
