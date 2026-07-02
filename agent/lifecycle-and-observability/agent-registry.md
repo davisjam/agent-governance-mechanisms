@@ -1,0 +1,72 @@
+# Agent-registry (`agent-registry.jsonl` + marker cache)
+
+**Intent** — An append-only registry, dual-written by every lifecycle tool, that is the *authoritative*
+record of which agents are in flight — so cleanup, tombstone, and merge decisions read a fact instead
+of guessing from filesystem timestamps.
+
+| | |
+|---|---|
+| Target | Agent · **Lifecycle & observability** |
+| Form | `observability` |
+| Novelty | notable |
+| Real artifact | `agent-registry.jsonl` (authoritative) + a per-agent marker cache |
+| Governing rule(s) | **#41** (tombstone dedup-via-registry) · **#39** (mass-tombstone id-list + live-worktree guard) |
+| Enforcement | **Hard** (deterministic) · *signal/record* — every lifecycle tool dual-writes; destructive-op gates query it before acting |
+
+## Motivation — the failure it kills
+
+With a fleet of concurrent agents living in worktrees, *"which agents are live right now?"* is the
+load-bearing question for every reclaim decision — cleanup, tombstoning, merge readiness. Answer it by
+scanning worktree directories and comparing mtimes and you get a **heuristic that races with live
+agents**: an agent mid-work can look identical to a stale one and have its worktree destroyed under
+it (the worktree-destruction-mid-flight incident). The failure is *unsafe reclaim of live work*, and
+it recurs on every cleanup pass.
+
+## Why it's not just "list the worktree dirs and check mtimes"
+
+Directory-listing plus mtime is an *inference* about liveness, and it races: nothing in a timestamp
+tells you whether a process is still working. The registry is an **authoritative append-only log that
+every lifecycle tool dual-writes** (the JSONL record plus a fast per-agent marker cache), so "is this
+agent live?" becomes a **lookup against a recorded fact**, not a guess from the filesystem. The
+distinction is *an authoritative, dual-written lifecycle record* versus *a racy filesystem heuristic* —
+and the heuristic was **retired precisely because it destroyed in-flight work.**
+
+## Mechanism
+
+`dispatch_agent.prepare()` dual-writes the JSONL registry and the per-agent marker cache at dispatch;
+lifecycle tools update both. `cleanup-stale` queries a **three-gate chain** — registry-gate, then
+marker-gate, then git-lock-gate — before removing anything. Tombstone and worktree-clean **refuse** to
+operate on an agent whose marker exists (#39). The registry is authoritative; the marker cache is a
+fast index that the registry wins over on any divergence.
+
+## Prerequisites
+
+- **Universal dual-write** — every lifecycle tool writes the registry; a side-door mutation that skips
+  it reintroduces the exact race the registry removes.
+- **An append-only log plus a fast cache**, and a rule for which wins on divergence (registry).
+- **Destructive-op gates that query it** before acting — the record is only protective if consulted.
+
+## Consequences & costs
+
+- **Dual-write discipline is load-bearing and fragile.** One tool that mutates lifecycle without
+  writing the registry silently brings the mtime-race back; the guarantee is only as strong as the
+  weakest writer.
+- **Append-only growth.** The JSONL grows unboundedly and needs rotation.
+- **Registry/marker divergence** is possible if one write fails; resolved by "registry authoritative,"
+  but the cache can briefly mislead a tool that trusts it alone.
+
+## Known uses
+
+- `agent-registry.jsonl` + per-agent marker cache, dual-written by `dispatch_agent.prepare()`.
+- The 3-gate `cleanup-stale` chain (registry → marker → git-lock).
+- Rule #39's live-worktree guard; rule #41's dedup-via-registry.
+
+## Related controls
+
+- **Enabler** — [merge-train-mis-batching](../gates-and-merge-train/merge-train-mis-batching.md) reads
+  it for worktree readiness; [sentinel-first-commit](../gates-and-merge-train/sentinel-first-commit.md)
+  reads its markers for substrate health.
+- **Consumer** — [tombstone-commits](tombstone-commits.md) checks live markers before writing a close
+  record; cleanup-stale consults it before removing a dir.
+- **Counterpart** — it *replaced* the mtime heuristic (now retired): the authoritative record is the
+  hard fact that the racy signal could never be.

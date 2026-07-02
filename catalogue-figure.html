@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Governance catalogue — control-map figure (four layout options)</title>
+<style>
+  :root {
+    --ink: #1a1a1a; --muted: #555;
+    /* HUMAN — light blue */
+    --h-bg: #dbe5f3; --h-bg-dark: #2a4d7a; --h-ink: #1e3a5f;
+    /* AGENT target — warm coral */
+    --a-bg: #fde2cf; --a-bg-dark: #c2410c; --a-ink: #7c2d12;
+    /* PRODUCT target — green */
+    --s-bg: #dcfce7; --s-bg-dark: #15803d; --s-ink: #14532d;
+    /* ENVIRONMENT / substrate — neutral slate (the enclosure) */
+    --env-border: #475569; --env-bg: #f1f5f9; --proc-bg: #e2e8f0; --env-ink: #334155;
+    /* relationship edge colours */
+    --rel-cp: #475569;   /* counterpart — slate double */
+    --rel-en: #c2410c;   /* enabler — coral → */
+    --rel-co: #15803d;   /* consumer — green ← */
+    --rel-ly: #334155;   /* layer — ink ▼ */
+    --rel-br: #b45309;   /* bridge — amber ◀▶ */
+    /* MODELS-BRIDGE — amber, sits between coral (agent) and green (product) */
+    --b-bg: #fef3c7; --b-dark: #b45309; --b-ink: #78350f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 26px 20px 60px;
+    font-family: "Avenir Next", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink); background: #fff; line-height: 1.4;
+  }
+  h1 { font-size: 20px; margin: 0 auto 4px; max-width: 1040px; }
+  .sub { max-width: 1040px; margin: 0 auto 14px; font-size: 12.5px; color: var(--muted); }
+  .compare-note {
+    max-width: 1040px; margin: 0 auto 22px; font-size: 12px; color: var(--muted);
+    border: 1px dashed #bbb; border-radius: 6px; padding: 8px 12px; background: #fafafa;
+  }
+  .opt-label {
+    max-width: 1040px; margin: 34px auto 10px; font-size: 14px; font-weight: 800; color: var(--env-ink);
+    border-left: 4px solid var(--env-border); padding-left: 10px;
+  }
+  .opt-label span { font-weight: 500; color: var(--muted); font-size: 12px; }
+  .figure { margin: 0 auto; max-width: 1040px; border: 1.5px solid var(--ink); border-radius: 4px; padding: 18px 20px 16px; background: #fff; }
+
+  /* ---------- shared legend ---------- */
+  .legend { max-width: 1040px; margin: 0 auto 20px; display: flex; flex-wrap: wrap; gap: 6px 18px;
+            font-size: 11px; color: var(--env-ink); border: 1px solid #d7dde4; border-radius: 7px; padding: 9px 13px; background: #fbfcfd; }
+  .legend b { font-weight: 700; }
+  .legend .grp { display: flex; align-items: center; gap: 7px; }
+  .lg-rel { font-weight: 800; font-family: ui-monospace, Menlo, monospace; }
+  .cp { color: var(--rel-cp); } .en { color: var(--rel-en); } .co { color: var(--rel-co); } .ly { color: var(--rel-ly); }
+  .badge { display: inline-block; font-size: 9px; font-weight: 800; border-radius: 3px; padding: 0 4px; vertical-align: middle; }
+  .b-s  { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }   /* soft */
+  .b-sh { background: #e0f2fe; color: #075985; border: 1px solid #7dd3fc; }   /* soft·hard */
+  .b-h  { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }   /* hard */
+
+  /* ---------- boxes ---------- */
+  .human { background: var(--h-bg); border: 1.5px solid var(--h-bg-dark); border-radius: 9px; padding: 8px 12px; }
+  .human h3 { margin: 0 0 2px; font-size: 13px; color: var(--h-ink); }
+  .human p { margin: 0; font-size: 10.5px; color: var(--h-ink); }
+  .env { position: relative; border: 2.5px solid var(--env-border); background: var(--env-bg); border-radius: 12px; padding: 22px 15px 15px; }
+  .env-tab { position: absolute; top: -12px; left: 16px; background: var(--env-border); color: #fff;
+             font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 5px; }
+  .v-arrow { text-align: center; color: var(--muted); font-size: 18px; margin: 6px 0; }
+  .v-arrow span { display: block; font-size: 9.5px; font-style: italic; }
+
+  /* target band header */
+  .band-h { font-size: 11.5px; font-weight: 800; letter-spacing: .02em; padding: 3px 9px; border-radius: 5px; display: inline-block; margin: 2px 0 8px; }
+  .band-a { background: var(--a-bg-dark); color: #fff; }
+  .band-s { background: var(--s-bg-dark); color: #fff; }
+  .band-note { font-weight: 500; font-size: 10px; opacity: .92; }
+
+  /* family cards grid */
+  .fam-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .fam { border-radius: 8px; padding: 7px 8px; font-size: 10px; }
+  .fam-a { background: var(--a-bg); border: 1.4px solid var(--a-bg-dark); }
+  .fam-s { background: var(--s-bg); border: 1.4px solid var(--s-bg-dark); }
+  .fam h4 { margin: 0 0 5px; font-size: 10.5px; letter-spacing: -.01em; }
+  .fam-a h4 { color: var(--a-ink); } .fam-s h4 { color: var(--s-ink); }
+  .chip { display: block; background: #fff; border: 1.2px solid #c9c9c9; border-radius: 4px; padding: 2px 5px; margin-bottom: 3px; font-size: 9.5px; line-height: 1.25; color: #222; }
+  .chip.soft { border-style: dashed; border-color: #a78bfa; }
+  .chip.sh   { border-left: 3px solid #38bdf8; }
+  .chip.flag { box-shadow: 0 0 0 1.4px #f59e0b inset; font-weight: 700; }
+  .chip .rel { font-family: ui-monospace, Menlo, monospace; font-weight: 800; }
+  .fam-a .chip { border-color: #eab08a; } .fam-s .chip { border-color: #86c79b; }
+
+  /* ---------- Option 2: staircase ---------- */
+  .stair { display: flex; flex-direction: column; gap: 0; }
+  .step { border: 1.5px solid var(--env-border); background: #fff; border-radius: 8px; padding: 8px 11px; margin-bottom: 4px; }
+  .step .st-h { font-size: 11.5px; font-weight: 800; color: var(--env-ink); }
+  .step .st-stage { font-size: 9.5px; font-weight: 700; color: var(--a-bg-dark); letter-spacing: .04em; text-transform: uppercase; }
+  .step .st-ctrls { margin-top: 4px; font-size: 10px; color: #333; }
+  .step .st-ctrls b { color: var(--a-ink); }
+  .drop { text-align: center; color: var(--rel-ly); font-size: 15px; line-height: 1; margin: -2px 0 2px; }
+  .art-rail { margin-top: 12px; border-top: 2px dashed var(--s-bg-dark); padding-top: 9px; }
+  .art-rail h4 { margin: 0 0 6px; font-size: 11.5px; color: var(--s-ink); }
+  .art-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; font-size: 10px; }
+  .art-gate { background: var(--s-bg); border: 1.3px solid var(--s-bg-dark); border-radius: 5px; padding: 3px 7px; color: var(--s-ink); font-weight: 600; }
+  .art-arrow { color: var(--s-bg-dark); font-weight: 800; }
+
+  /* ---------- Option 3: soft↔hard lattice ---------- */
+  .lat { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 10px; align-items: start; }
+  .lat-col { border-radius: 9px; padding: 9px 10px; }
+  .lat-soft { background: #f5f3ff; border: 1.5px solid #a78bfa; }
+  .lat-sh   { background: #f0f9ff; border: 1.5px solid #7dd3fc; }
+  .lat-hard { background: #f8fafc; border: 1.5px solid #cbd5e1; }
+  .lat-col h4 { margin: 0 0 3px; font-size: 12px; }
+  .lat-soft h4 { color: #5b21b6; } .lat-sh h4 { color: #075985; } .lat-hard h4 { color: #334155; }
+  .lat-col .cap { font-size: 9.5px; color: var(--muted); margin: 0 0 7px; font-style: italic; }
+  .lat-node { background: #fff; border: 1.2px solid #cbd5e1; border-radius: 5px; padding: 3px 6px; margin-bottom: 4px; font-size: 10px; }
+  .lat-node.t-a { border-left: 4px solid var(--a-bg-dark); }
+  .lat-node.t-s { border-left: 4px solid var(--s-bg-dark); }
+  .lat-node .cpair { display: block; font-size: 9px; color: var(--rel-cp); font-family: ui-monospace, Menlo, monospace; }
+  .lat-hard .grid2 { column-count: 2; column-gap: 8px; }
+  .takeaway { margin-top: 12px; background: var(--proc-bg); border: 1px solid #cbd5e1; border-radius: 7px; padding: 8px 12px; font-size: 11px; color: var(--env-ink); }
+  .takeaway b { color: var(--env-ink); }
+  .axis { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 800; color: var(--muted); margin: 2px 2px 8px; }
+  .axis .arr { flex: 1 1 auto; height: 0; border-top: 2px solid #cbd5e1; margin: 0 8px; position: relative; }
+</style>
+</head>
+<body>
+
+<h1>Governance catalogue — control-map figure</h1>
+<p class="sub">51 controls · 11 families · three roles (agent · models-bridge · product), inside the governed engineering environment.
+Four layout options for the same catalogue — pick one. Companion to <i>development-workflow.html</i>; same palette (human=blue, agent=coral, product=green, environment=slate).</p>
+
+<div class="compare-note">
+  <b>How to read the encodings (all three options):</b> node <b>colour</b> = target (coral=agent, green=product); node <b>style</b> = enforcement
+  (<span class="badge b-h">HARD</span> solid, <span class="badge b-s">SOFT</span> dashed, <span class="badge b-sh">S·H</span> blue-accent); gold outline = family flagship (★).
+</div>
+
+<div class="legend">
+  <span class="grp"><b>Relationships:</b></span>
+  <span class="grp"><span class="lg-rel cp">═══</span> counterpart (soft↔hard)</span>
+  <span class="grp"><span class="lg-rel en">──▶</span> enabler (A before B)</span>
+  <span class="grp"><span class="lg-rel co">◀──</span> consumer (B reads A)</span>
+  <span class="grp"><span class="lg-rel ly">▼</span> layer (defense in depth)</span>
+  <span class="grp"><span class="lg-rel" style="color:var(--rel-br)">◀▶</span> bridge (agent↔product via a model)</span>
+  <span class="grp"><b>Enforcement:</b> <span class="badge b-h">Hard</span> deterministic · <span class="badge b-s">Soft</span> probabilistic · <span class="badge b-sh">S·H</span> soft core + hard counterpart</span>
+</div>
+
+<!-- ============================ OPTION 1 — CENSUS MAP ============================ -->
+<div class="opt-label">Option 1 — Census map <span>· two target zones of family cards inside the environment; relationships shown inline (═ ─▶ ◀─)</span></div>
+<div class="figure">
+  <div class="human" style="max-width:360px;margin:0 auto 2px;text-align:center">
+    <h3>Human architect</h3><p>sets objectives · authors briefs · reviews / ratifies</p>
+  </div>
+  <div class="v-arrow into" style="color:var(--h-bg-dark)">▼<span>briefs</span></div>
+
+  <div class="env">
+    <span class="env-tab">ENGINEERING ENVIRONMENT — the governed substrate</span>
+
+    <div class="band-h band-a">AGENT TARGET <span class="band-note">· governs the fleet + the work-producing substrate</span></div>
+    <div class="fam-grid">
+      <div class="fam fam-a"><h4>Context&nbsp;&amp;&nbsp;dispatch</h4>
+        <span class="chip flag">brief-linting</span>
+        <span class="chip sh">docs-hierarchy</span>
+        <span class="chip soft">dyn-ctx-injection</span>
+        <span class="chip">role-typed-dispatch</span>
+      </div>
+      <div class="fam fam-a"><h4>Gates&nbsp;&amp;&nbsp;merge-train</h4>
+        <span class="chip flag">pre-commit-hook</span>
+        <span class="chip">sentinel-first-commit</span>
+        <span class="chip">merge-train-MIS</span>
+        <span class="chip">staged-deploy</span>
+      </div>
+      <div class="fam fam-a"><h4>Mediators&nbsp;&amp;&nbsp;locks</h4>
+        <span class="chip flag">test-serializer</span>
+        <span class="chip">build-serializer</span>
+        <span class="chip">lint-all mutex</span>
+      </div>
+      <div class="fam fam-a"><h4>Lifecycle&nbsp;&amp;&nbsp;obs.</h4>
+        <span class="chip flag">agent-registry</span>
+        <span class="chip">typed-event-bus</span>
+        <span class="chip">deploy-heartbeats</span>
+        <span class="chip">tombstone-commits</span>
+        <span class="chip">cron-alerts-gate</span>
+      </div>
+      <div class="fam fam-a"><h4>Governance-docs</h4>
+        <span class="chip flag sh">CLAUDE.md index <span class="rel cp">═</span> cap-lint</span>
+        <span class="chip">snippet-table</span>
+        <span class="chip">epic-DoD</span>
+        <span class="chip">doc-hygiene-lints</span>
+      </div>
+    </div>
+    <div class="v-arrow vel" style="color:var(--b-dark)">▼<span>feeds / is queried</span></div>
+
+    <div class="band-h" style="background:var(--b-dark);color:#fff">MODELS-BRIDGE <span class="band-note">· typed models — agents read them ◀▶ the codebase is generated from them</span></div>
+    <div class="fam-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Models (source-of-truth)</h4>
+        <span class="chip flag">executable-source-of-truth</span>
+        <span class="chip">component-zone</span>
+        <span class="chip">synchronization (meta-sync)</span>
+        <span class="chip">concurrency-contracts</span>
+        <span class="chip">service-flow · deployment · domain</span>
+      </div>
+      <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Kept true (map = territory)</h4>
+        <span class="chip">meta-sync <span class="rel cp">═</span> drift-parity gates</span>
+        <span class="chip">model-driven codegen <span class="rel en">──▶</span> artifacts</span>
+      </div>
+      <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Consumed by agents</h4>
+        <span class="chip soft">query-surface (repo-query)</span>
+        <span class="chip">read-don't-hardcode</span>
+      </div>
+    </div>
+    <div class="v-arrow vel" style="color:var(--s-bg-dark)">▼<span>governs &amp; generates → produces the artifact</span></div>
+
+    <div class="band-h band-s">PRODUCT TARGET <span class="band-note">· governs the shipped artifact</span></div>
+    <div class="fam-grid">
+      <div class="fam fam-s"><h4>Canonical models&nbsp;&amp;&nbsp;seams</h4>
+        <span class="chip flag">PdfModel <span class="rel cp">═</span> itext-ban</span>
+        <span class="chip">Office <span class="rel cp">═</span> openxml-ban</span>
+        <span class="chip">ServiceClient</span>
+        <span class="chip">canonical-walkers</span>
+        <span class="chip">raw-Redis seam</span>
+      </div>
+      <div class="fam fam-s"><h4>Validation&nbsp;&amp;&nbsp;conf.</h4>
+        <span class="chip flag">ContentValidator</span>
+        <span class="chip">semantic-lints</span>
+        <span class="chip">WCAG-engine <span class="rel cp">═</span> scope-doc</span>
+        <span class="chip">coherence-lints</span>
+      </div>
+      <div class="fam fam-s"><h4>Regression tests</h4>
+        <span class="chip flag">test-onion tiers</span>
+        <span class="chip">property tests</span>
+        <span class="chip">fuzz campaigns</span>
+        <span class="chip">DDT pin-trailers</span>
+      </div>
+      <div class="fam fam-s"><h4>Provenance&nbsp;&amp;&nbsp;attr.</h4>
+        <span class="chip flag">mutator-stamps <span class="rel cp">═</span> F10-lint</span>
+        <span class="chip">derive-changelog <span class="rel co">◀─</span> stamps</span>
+        <span class="chip">a11y_ prefix</span>
+      </div>
+      <div class="fam fam-s"><h4>Repair vocabulary</h4>
+        <span class="chip flag">typed enums</span>
+        <span class="chip">remediation-verbs</span>
+        <span class="chip soft">codemod-first</span>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:9px;font-size:10px;color:var(--muted);font-style:italic">
+    Inline edges shown: <span class="cp" style="font-weight:800">═</span> counterpart pairs (e.g. rule-index═cap-lint, PdfModel═itext-ban, stamps═F10-lint) ·
+    <span class="co" style="font-weight:800">◀─</span> consumer (derive-changelog◀─stamps). Cross-family edges (enabler/consumer) are omitted here for legibility — see Option 3.
+  </div>
+</div>
+
+<!-- ============================ OPTION 2 — STAIRCASE ============================ -->
+<div class="opt-label">Option 2 — Path-to-production staircase <span>· emphasises the LAYER relationship: each stage a backstop for the last; the artifact descends through product gates</span></div>
+<div class="figure">
+  <p style="margin:0 0 10px;font-size:11px;color:var(--env-ink)">
+    Agent controls form a descending staircase from dispatch to runtime — <b>defense in depth</b>, each stair catching what the last missed.
+    The shipped artifact (green rail, below) flows through the product-control gates as it is built.
+  </p>
+  <div class="stair">
+    <div class="step">
+      <span class="st-stage">brief-time · dispatch</span>
+      <div class="st-h">Context &amp; dispatch substrate</div>
+      <div class="st-ctrls"><b>brief-linting</b> (structure) · <b>dynamic-context-injection</b> <span class="badge b-s">soft</span> (content) · <b>role-typed-dispatch</b> · snippet-table <span class="en" style="font-weight:800">──▶</span> brief-lint</div>
+    </div>
+    <div class="drop">▼</div>
+    <div class="step" style="margin-left:26px">
+      <span class="st-stage">commit-time</span>
+      <div class="st-h">Gates — pre-commit &amp; sentinel</div>
+      <div class="st-ctrls"><b>pre-commit-hook</b> (changed-file lints + unit-tier, tree-sha markers) · <b>sentinel-first-commit</b> (substrate health, t≈0 abort)</div>
+    </div>
+    <div class="drop">▼</div>
+    <div class="step" style="margin-left:52px">
+      <span class="st-stage">cron · merge</span>
+      <div class="st-h">Merge-train (MIS batching)</div>
+      <div class="st-ctrls"><b>merge-train-MIS</b> lands non-conflicting worktrees <span class="co" style="font-weight:800">◀──</span> reads <b>agent-registry</b></div>
+    </div>
+    <div class="drop">▼</div>
+    <div class="step" style="margin-left:78px">
+      <span class="st-stage">deploy-time</span>
+      <div class="st-h">Staged deploy gates</div>
+      <div class="st-ctrls"><b>canary → smoke → promote</b> · pre-launch predicate (lints green, no flaky class) · deploy-heartbeats (liveness)</div>
+    </div>
+    <div class="drop">▼</div>
+    <div class="step" style="margin-left:104px;border-color:var(--a-bg-dark)">
+      <span class="st-stage">runtime · prod</span>
+      <div class="st-h">Lifecycle &amp; observability</div>
+      <div class="st-ctrls">typed-event-bus · <b>cron-alerts-gate</b> (blocks new dispatch on HIGH alert) · tombstone-commits</div>
+    </div>
+  </div>
+
+  <div style="margin-top:10px;font-size:10px;color:var(--muted)">
+    <span class="badge b-h">host tier</span> Mediators (<b>test-serializer</b> N=1 · <b>build-serializer</b> M=8 · <b>lint-all mutex</b>) ration compute <i>across</i> all stairs, not on one.
+  </div>
+
+  <div class="art-rail">
+    <h4>The shipped artifact — flowing through the PRODUCT gates (green)</h4>
+    <div class="art-flow">
+      <span class="art-gate">Canonical models (typed I/O)</span><span class="art-arrow">▶</span>
+      <span class="art-gate">mutator-stamps + verbs (bounded, attributed edits)</span><span class="art-arrow">▶</span>
+      <span class="art-gate">ContentValidator (input ⊆ output)</span><span class="art-arrow">▶</span>
+      <span class="art-gate">WCAG rule-engine (conformance)</span><span class="art-arrow">▶</span>
+      <span class="art-gate">regression suite (onion · property · fuzz · DDT)</span><span class="art-arrow">▶</span>
+      <span class="art-gate">derive-changelog</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ OPTION 3 — SOFT↔HARD LATTICE ============================ -->
+<div class="opt-label">Option 3 — Soft↔hard lattice <span>· positions every control by enforcement; draws the counterpart / enabler / consumer wiring — the "pattern language" view</span></div>
+<div class="figure">
+  <div class="axis"><span>SOFT · probabilistic (aims the fleet)</span><span class="arr"></span><span>HARD · deterministic (holds the line)</span></div>
+  <div class="lat">
+    <div class="lat-col lat-soft">
+      <h4>Soft <span style="font-weight:500;font-size:10px">(3)</span></h4>
+      <p class="cap">influence, not a gate — cannot block</p>
+      <div class="lat-node t-a">dynamic-context-injection <span class="cpair">reads the component model (bridge) · file-addr. rules</span></div>
+      <div class="lat-node t-s">codemod-first threshold <span class="cpair">a discipline; the transform is deterministic</span></div>
+      <div class="lat-node" style="border-left:4px solid var(--b-dark)">query-surface (repo-query) <span class="cpair">agent-facing read API over the models (bridge)</span></div>
+    </div>
+    <div class="lat-col lat-sh">
+      <h4>Soft · Hard <span style="font-weight:500;font-size:10px">(2)</span></h4>
+      <p class="cap">soft guidance kept honest by a hard counterpart</p>
+      <div class="lat-node t-a">CLAUDE.md rule index <span class="cpair">═══ cap-lint + conformance-lint</span></div>
+      <div class="lat-node t-a">docs-hierarchy <span class="cpair">═══ its cap / conformance lints</span></div>
+    </div>
+    <div class="lat-col lat-hard">
+      <h4>Hard <span style="font-weight:500;font-size:10px">(46 — the bulk of the fleet)</span></h4>
+      <p class="cap">deterministic: blocking gates · lints · mediators · signals · audit records</p>
+      <div class="grid2" style="font-size:9.5px;color:#334155;line-height:1.7">
+        brief-linting · role-typed-dispatch ·
+        pre-commit-hook · sentinel · merge-train-MIS · staged-deploy ·
+        test-serializer · build-serializer · lint-all-mutex ·
+        agent-registry · event-bus · heartbeats · tombstones · cron-alerts-gate ·
+        snippet-table · epic-DoD · doc-hygiene-lints ·
+        <b style="color:var(--b-dark)">bridge:</b> executable-src-of-truth · component-zone · synchronization(meta-sync) · concurrency · service-flow · deployment-topology · domain-registries · drift-parity · codegen · read-no-hardcode ·
+        PdfModel · Office · ServiceClient · walkers · raw-Redis ·
+        ContentValidator · semantic-lints · WCAG-engine · coherence-lints ·
+        test-onion · property · fuzz · DDT ·
+        mutator-stamps · F10-lint · derive-changelog · a11y_prefix ·
+        typed-enums · remediation-verbs
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;font-size:10.5px;color:var(--env-ink)">
+    <b>The wiring, by relationship</b> (a sample of the edges — full list in each entry's <i>Related controls</i>):
+    <ul style="margin:5px 0 0;padding-left:18px;line-height:1.55;font-size:10px">
+      <li><span class="cp" style="font-weight:800;font-family:ui-monospace,Menlo,monospace">═══ counterpart</span> — rule-index═cap-lint · docs-hierarchy═lints · mutator-stamps═F10-lint · PdfModel═itext-ban · Office═openxml-ban · WCAG-engine═scope-doc · epic-DoD═rule-index (audit)</li>
+      <li><span class="en" style="font-weight:800;font-family:ui-monospace,Menlo,monospace">──▶ enabler</span> — snippet-table▶brief-linting · file-addr.rules▶dyn-ctx-injection · agent-registry▶sentinel · bounded-verbs▶mutator-stamps + ContentValidator</li>
+      <li><span class="co" style="font-weight:800;font-family:ui-monospace,Menlo,monospace">◀── consumer</span> — dyn-ctx-injection◀component-registry · merge-train◀agent-registry · derive-changelog◀stamps · tombstone◀agent-registry · cron-alerts-gate◀event-bus · WCAG-engine◀walkers</li>
+      <li><span class="ly" style="font-weight:800;font-family:ui-monospace,Menlo,monospace">▼ layer</span> — pre-commit▸sentinel▸merge-train▸staged-deploy (the staircase) · the three mediators as one host tier</li>
+      <li><span style="color:var(--b-dark);font-weight:800;font-family:ui-monospace,Menlo,monospace">◀▶ bridge</span> — component-model: dyn-ctx-injection (agent) ◀▶ boundary-lints (product) · service-flow: repo-query (agent) ◀▶ NetworkPolicy-gen (product) — the one cross-role edge</li>
+    </ul>
+  </div>
+
+  <div class="takeaway">
+    <b>The asymmetry is the finding:</b> of 51 controls, <b>46 are Hard</b>, only <b>3 Soft</b> and <b>2 Soft·Hard</b>.
+    Probabilistic guidance is used to <i>aim</i> agents; deterministic machinery is what is trusted to <i>hold the line</i> — and every soft control sits beside a hard counterpart.
+  </div>
+</div>
+
+<!-- ============================ OPTION 4 — THE MODEL BRIDGE (hero) ============================ -->
+<div class="opt-label">Option 4 — The model bridge <span>· the scaling story: a context-bounded agent operates a context-exceeding codebase through the typed models</span></div>
+<div class="figure">
+  <p style="margin:0 0 12px;font-size:11px;color:var(--env-ink)">
+    The single most important structural idea: the <b>model layer is the interface</b> through which a
+    context-<i>bounded</i> agent operates a context-<i>exceeding</i> codebase. It faces both ways — agents
+    <b>read</b> it to reason; the codebase is <b>generated &amp; governed</b> from it — and
+    <b>meta-sync</b> keeps the two faces equal, or the bridge would lie.
+  </p>
+  <div style="display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:0;align-items:stretch">
+    <!-- AGENTS -->
+    <div class="actor-a" style="background:var(--a-bg);border:1.5px solid var(--a-bg-dark);border-radius:8px 0 0 8px;padding:10px 11px">
+      <h4 style="margin:0 0 5px;color:var(--a-ink);font-size:12px">AGENTS (the fleet)</h4>
+      <p style="margin:0 0 7px;font-size:10px;color:var(--a-ink)">context-bounded — cannot hold the whole codebase</p>
+      <div class="chip">dynamic-context-injection</div>
+      <div class="chip">repo-query (the query API)</div>
+      <div class="chip">role-typed-dispatch · brief-linting</div>
+      <p style="margin:7px 0 0;font-size:9.5px;font-style:italic;color:var(--a-ink)">reason <b>about</b> the codebase <b>through</b> the model</p>
+    </div>
+    <!-- BRIDGE -->
+    <div style="background:var(--b-bg);border:2px solid var(--b-dark);padding:10px 12px;position:relative">
+      <div style="position:absolute;left:-11px;top:50%;transform:translateY(-50%);color:var(--b-dark);font-size:20px;font-weight:800">◀</div>
+      <div style="position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--b-dark);font-size:20px;font-weight:800">▶</div>
+      <h4 style="margin:0 0 3px;color:var(--b-ink);font-size:12.5px;text-align:center">THE MODEL BRIDGE — system-models</h4>
+      <p style="margin:0 0 7px;font-size:9.5px;color:var(--b-ink);text-align:center;font-style:italic">executable documentation that cannot drift</p>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
+        <span class="chip flag" style="border-color:var(--b-dark)">executable source-of-truth</span>
+        <span class="chip" style="border-color:var(--b-dark)">component · sync(meta-sync) · service-flow · deploy · domain</span>
+      </div>
+      <div style="text-align:center;margin:7px 0;font-size:11px;color:var(--b-ink)"><b>meta-sync ═══ drift-parity gates</b><br><span style="font-size:9px">keep the map = the territory</span></div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
+        <span class="chip" style="border-color:var(--b-dark)">codegen ──▶</span>
+        <span class="chip soft" style="border-color:var(--b-dark)">query-surface</span>
+        <span class="chip" style="border-color:var(--b-dark)">read-don't-hardcode</span>
+      </div>
+    </div>
+    <!-- CODEBASE -->
+    <div class="actor-s" style="background:var(--s-bg);border:1.5px solid var(--s-bg-dark);border-radius:0 8px 8px 0;padding:10px 11px">
+      <h4 style="margin:0 0 5px;color:var(--s-ink);font-size:12px">CODEBASE / PRODUCT</h4>
+      <p style="margin:0 0 7px;font-size:10px;color:var(--s-ink)">context-exceeding — 280 KLOC, unbounded</p>
+      <div class="chip">NetworkPolicy · service wiring (gen)</div>
+      <div class="chip">deployment topology · tiers</div>
+      <div class="chip">boundary / seam lints</div>
+      <p style="margin:7px 0 0;font-size:9.5px;font-style:italic;color:var(--s-ink)">generated &amp; governed <b>from</b> the model</p>
+    </div>
+  </div>
+  <div class="takeaway" style="margin-top:14px">
+    <b>Why now — and why every project should:</b> MBSE (modelling your system as typed source-of-truth)
+    has always been <i>possible</i> and rarely <i>done</i> — because maintaining the models and satisfying
+    the drift gates is tedious, and humans resent the nagging. <b>Agents dissolve that barrier</b>: the
+    upkeep is exactly the disciplined, repetitive work they do without complaint. So agentic engineering
+    is what finally makes MBSE practical — and since the same models are what let agents scale to a large
+    codebase, the model bridge is not optional infrastructure, it is <b>the enabling substrate</b>.
+  </div>
+</div>
+
+</body>
+</html>
