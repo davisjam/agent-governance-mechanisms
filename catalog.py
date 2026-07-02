@@ -502,6 +502,24 @@ LANDING_CSS = """
   hr.sep { border:none; border-top:1px solid var(--line); margin:26px 0 20px; }
   .walk-h { font-size:18px; margin:0 0 4px; letter-spacing:-.01em; }
   .walk-sub { font-size:13px; color:var(--muted); margin:0 0 14px; }
+  .section-h { font-size:17px; margin:24px 0 3px; letter-spacing:-.01em; }
+  .section-sub { font-size:12.5px; color:var(--muted); margin:0 0 12px; }
+  .section-sub a { color:var(--link); }
+  .spectrum { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:4px 0 6px; align-items:stretch; }
+  .school { border:1.4px solid var(--line); border-radius:10px; padding:12px 13px; background:#fff; display:flex; flex-direction:column; }
+  .school.mid { border:2px solid var(--accent); background:#fffaf3; }
+  .school h3 { margin:0 0 5px; font-size:14.5px; }
+  .school.mid h3 { color:var(--accent); }
+  .school p { margin:0 0 9px; font-size:12.5px; color:#444; line-height:1.5; }
+  .school .pole { margin-top:auto; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:800; }
+  .spectrum-axis { text-align:center; font-size:11px; color:var(--muted); letter-spacing:.03em; margin:0 0 20px; }
+  .cols3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:4px 0 8px; }
+  .col h3 { margin:0 0 8px; font-size:14px; padding-bottom:5px; border-bottom:2px solid var(--accent); }
+  .col ul { margin:0; padding:0; list-style:none; }
+  .col li { font-size:12.3px; color:#3a3a3a; line-height:1.42; margin:0 0 9px; padding-left:15px; position:relative; }
+  .col li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  .ways-note { font-size:11.5px; color:var(--muted); margin:2px 0 22px; }
+  @media (max-width:720px){ .spectrum, .cols3 { grid-template-columns:1fr; } }
 """
 
 # (title, subtitle, href, extra-attrs) for the landing action cards
@@ -538,36 +556,94 @@ def _landing_cards() -> str:
         for t, sub, href, extra in LANDING_CARDS)
 
 
+# The two schools + the midway (title, blurb, pole-label, is-midway)
+SCHOOLS = [
+    ("Vibe coding",
+     "Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on "
+     "the model and your eye. At scale the same failures keep recurring, and human review becomes the "
+     "bottleneck.", "all velocity — no durable guardrails", False),
+    ("Governance-centric",
+     "The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail "
+     "— a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> "
+     "stays trustworthy.", "velocity + guardrails grown from failure", True),
+    ("Spec-driven development",
+     "Write a precise specification up front, then generate and verify against it. Rigorous — but it "
+     "front-loads all the judgment: you must know every constraint before the agent acts, and specs "
+     "rarely anticipate what only breaks at velocity.", "all guardrails — specified up front", False),
+]
+
+# The three-column "way of thinking" — the AI-First Engineering Method (A.1–A.21), engineering-oriented
+WAYS = [
+    ("Architect deliberately", [
+        "Implementation is cheap; architecture compounds — buy the right design, not the fast one.",
+        "Name shapes with types; primitive-passing leaves the architecture anonymous.",
+        "Make models, state, and policy explicit — state machines over scattered counters, enums over magic strings.",
+        "One canonical way beats many clever ones — a pattern seen 200× is applied on reflex.",
+        "Attack accidental complexity; budget for the essential kind.",
+    ]),
+    ("Convert failure into machinery", [
+        "When a failure recurs, encode it — a lint, type, gate, or schema — instead of re-inspecting for it.",
+        "Move audits to lints: cheap, at-commit, deterministic beats expensive and post-hoc.",
+        "Let the compiler and gates hold the line — review is not a substitute for static analysis.",
+        "Never fail quiet — every caught error logs, re-throws, or is justified in a comment.",
+        "No compatibility shims — migrate every call site in the same change.",
+    ]),
+    ("Keep judgment scarce & central", [
+        "Carry work autonomously; surface only the load-bearing, architectural calls.",
+        "Pilot, compare, measure — a cheap experiment beats a debate; negative results are wins.",
+        "Verify claims and trust nothing stale — re-run the gates yourself, because markers rot.",
+        "Reason about second-order dynamics — what happens at T+100, or under concurrency?",
+        "Documentation encodes invariants that drive tests, not prose that rots.",
+    ]),
+]
+
+
+def _landing_schools() -> str:
+    out = []
+    for title, blurb, pole, mid in SCHOOLS:
+        cls = "school mid" if mid else "school"
+        out.append(f'<div class="{cls}"><h3>{title}</h3><p>{blurb}</p>'
+                   f'<span class="pole">{pole}</span></div>')
+    return "\n  ".join(out)
+
+
+def _landing_ways() -> str:
+    out = []
+    for title, items in WAYS:
+        lis = "".join(f"<li>{it}</li>" for it in items)
+        out.append(f'<div class="col"><h3>{title}</h3><ul>{lis}</ul></div>')
+    return "\n  ".join(out)
+
+
 LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engineering</div>
   <h1>Agent Governance Mechanisms</h1>
 
-  <p class="lead">Generative AI is shifting software engineering from a practice organized around scarce
-  implementation effort toward one organized around <span class="term">abundant, low-cost code
-  production</span>. That shift changes the central engineering problem: not whether AI can generate
-  useful code, but how engineers organize architectures, tools, evidence, and feedback loops so that
-  AI-mediated development stays <span class="term">inspectable, correctable, and maintainable</span> at
-  speed.</p>
+  <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
+  implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
+  stops being writing code and becomes <span class="term">governing the conditions under which fast code
+  can be trusted</span> — keeping it inspectable, correctable, and maintainable at speed.</p>
 
-  <p class="lead">Existing accounts don't explain how agentic development sustains <span class="term">governable
-  velocity</span>: human-supervised workflows preserve oversight by making human attention the
-  bottleneck, while multi-agent workflows accelerate implementation with underspecified quality control.
-  The open problem is finding engineering methods that make AI-mediated implementation governable at
-  speed.</p>
+  <h2 class="section-h">Between two schools of thought</h2>
+  <p class="section-sub">Two common ways to build with agents sit at opposite poles. This site is about
+  the midway.</p>
+  <div class="spectrum">
+  {schools}
+  </div>
+  <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all guardrails →</p>
 
-  <p class="lead">From a 12-week first-person case study — one expert engineer building a production
-  document-accessibility system with frontier coding agents — we develop a candidate theory of
-  <span class="term">governance conversion</span>. Its central process is <b>failure&nbsp;→&nbsp;governance</b>:
-  agentic velocity exposes recurring <i>structural failure classes</i>, engineering judgment interprets
-  those failures, and new governance mechanisms encode that judgment into the engineering environment to
-  constrain subsequent agent work. Prior governance work is <i>ex-ante</i> — deriving controls from
-  obligations known before agents act; governance conversion is the complementary <i>ex-post</i> process:
-  <span class="term">inducing controls from failures discovered only during agentic work</span>. The
-  scarce human work is not implementation-level review, but recognizing which failures reveal missing
-  governance and converting them into architecture and controls.</p>
-
-  <p class="lead">This site is the concrete repertoire that process produced: <b>{n} governance
+  <p class="lead">The midway has a name — <span class="term">governance conversion</span> — and a working
+  rule: <b>don't specify everything up front, and don't trust the vibes; let velocity surface the
+  failures, and convert each recurring one into a durable guardrail.</b> The result is <b>{n} governance
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
+
+  <h2 class="section-h">The way of thinking</h2>
+  <p class="section-sub">Three stances that make the midway work — distilled from the AI-First Engineering
+  Method (21 principles); the full set ships in the
+  <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
+  <div class="cols3">
+  {ways}
+  </div>
 
   <div class="refs">
     <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
@@ -739,7 +815,8 @@ def cmd_build(_args) -> int:
         open(out_path, "w", encoding="utf-8").write(html)
         written += 1
     # landing index.html = intro + census (overwrites the hand-authored placeholder)
-    landing_body = LANDING_INTRO.format(n=len(entries), flow=_landing_flow(), cards=_landing_cards()) + "\n" + build_census(entries) + \
+    landing_body = LANDING_INTRO.format(n=len(entries), flow=_landing_flow(), cards=_landing_cards(),
+                                        schools=_landing_schools(), ways=_landing_ways()) + "\n" + build_census(entries) + \
         '\n  <p class="foot">Built from the markdown by <code>catalog.py build</code>. '\
         'Hover a control for its one-line summary; click to open its writeup.</p>'
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
