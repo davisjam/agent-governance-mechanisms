@@ -484,7 +484,14 @@ LANDING_CSS = """
   .fstep span { font-size:11px; color:var(--muted); line-height:1.35; }
   .farrow { align-self:center; color:#94a3b8; font-size:18px; font-weight:700; }
   @media (max-width:720px){ .farrow{ transform:rotate(90deg); width:100%; text-align:center; } .fstep{ flex-basis:100%; } }
-  .loop .tail { margin:12px 0 0; font-size:12.5px; color:#444; line-height:1.55; }
+  .mustache { height:22px; margin:6px 14% 0; border:2px solid #cbd5e1; border-top:none;
+              border-radius:0 0 46% 46% / 0 0 100% 100%; }
+  .loop-outcome { text-align:center; margin:12px 0 2px; font-size:13px; color:#333; }
+  .loop-outcome b { color:var(--accent); }
+  .loop-tag { display:inline-block; font-size:10px; font-weight:800; text-transform:uppercase;
+              letter-spacing:.05em; color:var(--accent); background:#fff3e6; border-radius:20px;
+              padding:1px 8px; margin-right:6px; vertical-align:middle; }
+  .loop .tail { margin:14px 0 0; font-size:12.5px; color:#444; line-height:1.55; text-align:center; }
   .refs { margin:0 0 24px; }
   .refs .r { border-left:3px solid var(--accent); padding:3px 0 3px 12px; margin:0 0 7px; font-size:13px; color:#444; }
   .refs .r b { color:#333; font-weight:700; }
@@ -496,9 +503,10 @@ LANDING_CSS = """
   .lcard span { display:block; font-size:12px; color:var(--muted); line-height:1.4; }
   .lead { font-size:14.5px; color:#2a2a2a; line-height:1.62; margin:0 0 13px; }
   .lead .term { font-weight:700; }
-  .wf { margin:6px 0 4px; }
-  .wf iframe { width:100%; height:640px; border:1px solid var(--line); border-radius:10px; background:#fff; }
-  .wf figcaption { font-size:12px; color:var(--muted); margin-top:7px; }
+  .wf { position:relative; left:50%; transform:translateX(-50%); width:min(1180px,96vw); margin:14px 0 6px; }
+  .wf-frame { width:100%; overflow:hidden; }
+  .wf-frame iframe { display:block; border:none; background:#fff; }
+  .wf figcaption { font-size:12px; color:var(--muted); margin-top:8px; text-align:center; }
   hr.sep { border:none; border-top:1px solid var(--line); margin:26px 0 20px; }
   .walk-h { font-size:18px; margin:0 0 4px; letter-spacing:-.01em; }
   .walk-sub { font-size:13px; color:var(--muted); margin:0 0 14px; }
@@ -538,12 +546,14 @@ LANDING_CARDS = [
 ]
 
 _FLOW = [
-    ("Velocity exposes failure", "agent changes surface ambiguity, drift, weak boundaries — fast"),
-    ("A human classifies it", "local defect, or a recurring structural weakness?"),
-    ("Convert to governance", "encode it: a type, lint, schema, gate, or harness rule"),
-    ("Action space narrows", "every later agent inherits a smaller, more explicit space"),
-    ("Governability compounds", "the environment absorbs more agent work; velocity is sustainable"),
+    ("Velocity exposes failure", "Agent changes surface ambiguity, drift, and weak boundaries — fast."),
+    ("Monitoring intelligence classifies it", "Local defect, or a recurring structural weakness?"),
+    ("Convert to governance", "Encode it: a type, a lint, a schema, a gate, or a harness rule."),
+    ("Action space narrows", "Every later agent inherits a smaller, more explicit space."),
 ]
+# The outcome of the loop — a centered fact, not a numbered step.
+_FLOW_OUTCOME = ("Governability compounds",
+                 "The environment absorbs more agent work, so velocity stays sustainable.")
 
 
 def _landing_flow() -> str:
@@ -552,7 +562,11 @@ def _landing_flow() -> str:
         steps.append(f'<div class="fstep"><span class="fn">{i}</span><b>{title}</b><span>{detail}</span></div>')
         if i < len(_FLOW):
             steps.append('<div class="farrow">→</div>')
-    return "\n    ".join(steps)
+    row = '<div class="flow">\n    ' + "\n    ".join(steps) + '\n    </div>'
+    mustache = '<div class="mustache" aria-hidden="true"></div>'
+    outcome = (f'<p class="loop-outcome"><span class="loop-tag">↺ loops</span> '
+               f'<b>{_FLOW_OUTCOME[0]}.</b> {_FLOW_OUTCOME[1]}</p>')
+    return row + "\n    " + mustache + "\n    " + outcome
 
 
 def _landing_cards() -> str:
@@ -665,10 +679,23 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   </div>
 
   <figure class="wf">
-    <iframe src="development-workflow.html" title="The development-process figure" loading="lazy"></iframe>
+    <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
+      title="The development-process figure" scrolling="no" onload="fitFig(this)"></iframe></div>
     <figcaption>The development process — the control substrate wrapped around the human-directs-agents
     loop. <a href="development-workflow.html">Open the figure full-screen ↗</a></figcaption>
   </figure>
+  <script>
+  function fitFig(f){{
+    try{{
+      var d=f.contentWindow.document, w=d.documentElement.scrollWidth||1040, h=d.documentElement.scrollHeight||600;
+      var avail=f.parentElement.clientWidth, s=Math.min(1, avail/w);
+      f.style.width=w+'px'; f.style.height=h+'px';
+      f.style.transformOrigin='top left'; f.style.transform='scale('+s+')';
+      f.parentElement.style.height=(h*s)+'px';
+    }}catch(e){{}}
+  }}
+  window.addEventListener('resize', function(){{ var f=document.getElementById('wf-frame'); if(f) fitFig(f); }});
+  </script>
 
   <hr class="sep" />
 
@@ -676,15 +703,17 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <p class="walk-sub">Governance conversion is a non-terminating loop: higher velocity keeps surfacing
   failure classes that earlier governance didn't address.</p>
   <div class="loop">
-    <div class="flow">
     {flow}
-    </div>
     <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
     exist</i> is the costly, human part. Two dual theses hold it together: governance makes velocity
-    sustainable, and judgment determines which governance should exist. The catalogue below is the
-    repertoire this loop produced in one real production system.</p>
+    sustainable, and judgment determines which governance should exist.</p>
   </div>
 
+  <hr class="sep" />
+
+  <h2 class="section-h">Explore the catalogue</h2>
+  <p class="section-sub">{n} governance mechanisms — the repertoire this loop produced in one real
+  production system.</p>
   <div class="cards-grid">
   {cards}
   </div>
