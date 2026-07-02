@@ -494,6 +494,14 @@ LANDING_CSS = """
   .lcard:hover { box-shadow:0 3px 12px rgba(0,0,0,.09); border-color:#cbd5e1; }
   .lcard b { display:block; font-size:16px; color:var(--link); letter-spacing:-.01em; margin-bottom:3px; }
   .lcard span { display:block; font-size:12px; color:var(--muted); line-height:1.4; }
+  .lead { font-size:14.5px; color:#2a2a2a; line-height:1.62; margin:0 0 13px; }
+  .lead .term { font-weight:700; }
+  .wf { margin:6px 0 4px; }
+  .wf iframe { width:100%; height:640px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+  .wf figcaption { font-size:12px; color:var(--muted); margin-top:7px; }
+  hr.sep { border:none; border-top:1px solid var(--line); margin:26px 0 20px; }
+  .walk-h { font-size:18px; margin:0 0 4px; letter-spacing:-.01em; }
+  .walk-sub { font-size:13px; color:var(--muted); margin:0 0 14px; }
 """
 
 # (title, subtitle, href, extra-attrs) for the landing action cards
@@ -532,27 +540,60 @@ def _landing_cards() -> str:
 
 LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engineering</div>
   <h1>Agent Governance Mechanisms</h1>
-  <p class="subtitle">When a fleet of AI agents writes code faster than any human can review it, the scarce
-  resource stops being implementation and becomes <b>judgment</b>: the engineering problem shifts to
-  governing the conditions under which fast code can be trusted. This site catalogues the <b>governance
-  mechanisms</b> that make that shift work — {n} controls across three roles, each written like a design
-  pattern: the recurring failure it kills, and why it is <i>not</i> just the cheaper thing everyone does.</p>
 
-  <div class="loop">
-    <p class="hd"><b>A new kind of software-engineering process.</b> These mechanisms are what a loop
-    called <b>governance conversion</b> produces:</p>
-    <div class="flow">
-    {flow}
-    </div>
-    <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
-    exist</i> is the costly, human part. The catalogue below is the repertoire that loop produced in one
-    real production system.</p>
-  </div>
+  <p class="lead">Generative AI is shifting software engineering from a practice organized around scarce
+  implementation effort toward one organized around <span class="term">abundant, low-cost code
+  production</span>. That shift changes the central engineering problem: not whether AI can generate
+  useful code, but how engineers organize architectures, tools, evidence, and feedback loops so that
+  AI-mediated development stays <span class="term">inspectable, correctable, and maintainable</span> at
+  speed.</p>
+
+  <p class="lead">Existing accounts don't explain how agentic development sustains <span class="term">governable
+  velocity</span>: human-supervised workflows preserve oversight by making human attention the
+  bottleneck, while multi-agent workflows accelerate implementation with underspecified quality control.
+  The open problem is finding engineering methods that make AI-mediated implementation governable at
+  speed.</p>
+
+  <p class="lead">From a 12-week first-person case study — one expert engineer building a production
+  document-accessibility system with frontier coding agents — we develop a candidate theory of
+  <span class="term">governance conversion</span>. Its central process is <b>failure&nbsp;→&nbsp;governance</b>:
+  agentic velocity exposes recurring <i>structural failure classes</i>, engineering judgment interprets
+  those failures, and new governance mechanisms encode that judgment into the engineering environment to
+  constrain subsequent agent work. Prior governance work is <i>ex-ante</i> — deriving controls from
+  obligations known before agents act; governance conversion is the complementary <i>ex-post</i> process:
+  <span class="term">inducing controls from failures discovered only during agentic work</span>. The
+  scarce human work is not implementation-level review, but recognizing which failures reveal missing
+  governance and converting them into architecture and controls.</p>
+
+  <p class="lead">This site is the concrete repertoire that process produced: <b>{n} governance
+  mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
+  and why it is <i>not</i> just the cheaper thing everyone already does.</p>
 
   <div class="refs">
     <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
     Judgment: A Case Study on Governable Agentic Software Engineering</i></a></div>
     <div class="r"><b>Live system it governs:</b> <a href="https://scholaccess.com">scholaccess.com</a></div>
+  </div>
+
+  <figure class="wf">
+    <iframe src="development-workflow.html" title="The development-process figure" loading="lazy"></iframe>
+    <figcaption>The development process — the control substrate wrapped around the human-directs-agents
+    loop. <a href="development-workflow.html">Open the figure full-screen ↗</a></figcaption>
+  </figure>
+
+  <hr class="sep" />
+
+  <h2 class="walk-h">Walking through the loop</h2>
+  <p class="walk-sub">Governance conversion is a non-terminating loop: higher velocity keeps surfacing
+  failure classes that earlier governance didn't address.</p>
+  <div class="loop">
+    <div class="flow">
+    {flow}
+    </div>
+    <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
+    exist</i> is the costly, human part. Two dual theses hold it together: governance makes velocity
+    sustainable, and judgment determines which governance should exist. The catalogue below is the
+    repertoire this loop produced in one real production system.</p>
   </div>
 
   <div class="cards-grid">
