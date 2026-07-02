@@ -40,17 +40,34 @@
 </head>
 <body>
 <main>
-  <div class="tag">Pattern catalogue</div>
+  <div class="tag">Governance-centric agentic software engineering</div>
   <h1>Agent Governance Mechanisms</h1>
-  <p class="subtitle">The controls that keep a fleet of autonomous coding agents productive while holding
-  the cost of their failures within bounds — 51 controls across three roles, each written like a design
+  <p class="subtitle">When a fleet of AI agents writes code faster than any human can review it, the scarce
+  resource stops being implementation and becomes <b>judgment</b>: the engineering problem shifts to
+  governing the conditions under which fast code can be trusted. This site catalogues the <b>governance
+  mechanisms</b> that make that shift work — 51 controls across three roles, each written like a design
   pattern: the recurring failure it kills, and why it is <i>not</i> just the cheaper thing everyone does.</p>
-  <p style="font-size:13.5px;color:#555;border-left:3px solid #b45309;padding:4px 0 4px 12px;margin:14px 0 22px;">
-  Distilled from the case study in <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
-  Judgment: A Case Study on Governable Agentic Software Engineering</i></a>.</p>
+
+  <div style="border:1px solid #e2e8f0;border-radius:9px;padding:13px 16px;margin:2px 0 20px;background:#fbfcfd;">
+  <p style="margin:0 0 7px;font-size:13.5px;color:#222;"><b>A new kind of software-engineering process.</b>
+  These mechanisms are what a loop called <b>governance conversion</b> produces:</p>
+  <p style="margin:0;font-size:12.8px;color:#444;line-height:1.6;">
+  ① agentic <b>velocity exposes</b> a recurring structural failure &nbsp;→&nbsp;
+  ② a human <b>classifies</b> it — local defect or structural weakness? &nbsp;→&nbsp;
+  ③ the failure is <b>converted into governance</b>: a type, lint, schema, gate, or harness rule &nbsp;→&nbsp;
+  ④ every later agent <b>inherits a narrower action space</b> &nbsp;→&nbsp;
+  ⑤ governability <b>compounds</b>.<br>
+  Implementation is cheap; the judgment that decides <i>which governance should exist</i> is the costly,
+  human part. The catalogue below is the repertoire that loop produced in one real production system.</p>
+  </div>
+
+  <p style="font-size:12.5px;color:#666;border-left:3px solid #b45309;padding:4px 0 4px 12px;margin:0 0 22px;">
+  From the case study <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly Judgment: A Case
+  Study on Governable Agentic Software Engineering</i></a> &nbsp;·&nbsp; the live system it governs:
+  <a href="https://scholaccess.com">scholaccess.com</a>.</p>
   <ul style="list-style:none;padding:0;margin:0 0 18px;font-size:14px;">
   <li style="margin-bottom:8px;"><a href="catalogue-figure.html"><b>▸ The control-map figure</b></a>
-    <span style="color:#555;">— the whole catalogue at a glance: four hand-drawn views (census · staircase · lattice · model-bridge)</span></li>
+    <span style="color:#555;">— the whole catalogue at a glance: four views (census · staircase · lattice · model-bridge), controls clickable</span></li>
   <li style="margin-bottom:8px;"><a href="catalogue-views.html">▸ Interactive views</a>
     <span style="color:#555;">— every control clickable + hover-summaries, re-grouped live from metadata; adding one is data, not layout</span></li>
   <li style="margin-bottom:8px;"><a href="quick-start.html">▸ Quick start — adopt these in your repo</a>

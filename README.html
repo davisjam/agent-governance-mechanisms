@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Governance Catalog — a pattern language of agentic-engineering controls</title>
+<title>Governance Catalog — a pattern language for governance-centric agentic software engineering</title>
 <style>
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
   * { box-sizing: border-box; }
@@ -40,10 +40,15 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Governance Catalog — a pattern language of agentic-engineering controls</nav>
-<h1>Governance Catalog — a pattern language of agentic-engineering controls</h1>
+<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Governance Catalog — a pattern language for governance-centric agentic software engineering</nav>
+<h1>Governance Catalog — a pattern language for governance-centric agentic software engineering</h1>
 <p>&lt;!-- summary: A pattern catalogue of the controls for governable agentic software engineering — 51 across three roles. --&gt;</p>
 <p><em>A catalog of the <strong>controls</strong> used to keep a fleet of autonomous coding agents productive while holding the cost of their failures within bounds. Each entry is written like a design pattern: it names a recurring failure, the control that kills it, and — most importantly — why the control is <strong>not</strong> just the cheaper thing everyone already does. The controls here are real artifacts from a sustained agentic-engineering effort; identities are kept out so the writeups are forwardable.</em></p>
+<h2>What this is: governance-centric agentic software engineering</h2>
+<p>When AI agents produce code faster than any human can review it, the bottleneck moves from <em>writing</em> code to <strong>governing the conditions under which fast code can be trusted</strong>. This catalogue is the concrete repertoire of one answer to that problem — a <strong>governance-centric</strong> practice in which the human's scarce work is judgment, and that judgment is <strong>relocated into the engineering environment</strong> as machine-actionable mechanisms rather than left to human review.</p>
+<p>The mechanisms are the output of a loop the case study calls <strong>governance conversion</strong>:</p>
+<p>1. <strong>Velocity exposes failure</strong> — agent-produced changes surface ambiguity, drift, weak boundaries, and missing oracles quickly. 2. <strong>A human classifies it</strong> — a local defect, or a recurring <em>structural failure class</em>? 3. <strong>Governance conversion</strong> — the structural failure is encoded as governance: <em>probabilistically</em> (a brief template, an agent-harness convention) or <em>deterministically</em> (a type, a lint, a schema, a gate). 4. <strong>Future work is constrained</strong> — subsequent agents inherit a narrower, more explicit action space. 5. <strong>Governability compounds</strong> — repeated conversions raise the environment's capacity to absorb agent work, so velocity becomes <em>sustainable</em> instead of churning.</p>
+<p>Implementation is cheap; the judgment that decides <em>which governance should exist</em> is the costly, human part — hence the case study's title, <em>Cheap Code, Costly Judgment</em>. Every entry below is one such conversion: a recurring failure, and the mechanism that now kills it on every future agent. The full theory, evidence, and testable propositions are in the <a href="https://arxiv.org/pdf/2607.01087">paper</a>; the live production system these controls govern is <a href="https://scholaccess.com">scholaccess.com</a>.</p>
 <p>This catalogue covers <strong>three roles</strong> a control can play, authored the same way, each a top-level folder with its own README:</p>
 <ul><li><strong><a href="agent/"><code>agent/</code></a></strong> — govern the <em>fleet and the substrate that produces work</em> (briefs, dispatch, gates, mediators, lifecycle, governance docs).</li><li><strong><a href="models-bridge/"><code>models-bridge/</code></a></strong> — the <strong>MBSE bridge</strong>: typed models of the system that agents read and the codebase is generated/governed from. <em>This is the interface through which a context-bounded agent operates a context-exceeding codebase</em> — the thing that lets agentic engineering scale past a toy.</li><li><strong><a href="product/"><code>product/</code></a></strong> — govern the <em>shipped artifact</em> (its models, validators, tests, provenance, repair vocabulary).</li></ul>
 <p>The <a href="INDEX.html">INDEX</a> is a single census across all three.</p>

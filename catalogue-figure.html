@@ -117,6 +117,8 @@
   .takeaway b { color: var(--env-ink); }
   .axis { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 800; color: var(--muted); margin: 2px 2px 8px; }
   .axis .arr { flex: 1 1 auto; height: 0; border-top: 2px solid #cbd5e1; margin: 0 8px; position: relative; }
+  .st-ctrls a, .lat-node a { color: inherit; text-decoration: none; border-bottom: 1px dotted #94a3b8; }
+  .st-ctrls a:hover, .lat-node a:hover { border-bottom: 1px solid #334155; }
 </style>
 </head>
 <body>
@@ -264,19 +266,19 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="step">
       <span class="st-stage">brief-time · dispatch</span>
       <div class="st-h">Context &amp; dispatch substrate</div>
-      <div class="st-ctrls"><b>brief-linting</b> (structure) · <b>dynamic-context-injection</b> <span class="badge b-s">soft</span> (content) · <b>role-typed-dispatch</b> · snippet-table <span class="en" style="font-weight:800">──▶</span> brief-lint</div>
+      <div class="st-ctrls"><b><a href="agent/context-and-dispatch/brief-linting.html" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a></b> (structure) · <b><a href="agent/context-and-dispatch/dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a></b> <span class="badge b-s">soft</span> (content) · <b><a href="agent/context-and-dispatch/role-typed-dispatch.html" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a></b> · snippet-table <span class="en" style="font-weight:800">──▶</span> brief-lint</div>
     </div>
     <div class="drop">▼</div>
     <div class="step" style="margin-left:26px">
       <span class="st-stage">commit-time</span>
       <div class="st-h">Gates — pre-commit &amp; sentinel</div>
-      <div class="st-ctrls"><b>pre-commit-hook</b> (changed-file lints + unit-tier, tree-sha markers) · <b>sentinel-first-commit</b> (substrate health, t≈0 abort)</div>
+      <div class="st-ctrls"><b><a href="agent/gates-and-merge-train/pre-commit-hook.html" title="Cheap changed-file checks gate every commit, marker-verified.">pre-commit-hook</a></b> (changed-file lints + unit-tier, tree-sha markers) · <b><a href="agent/gates-and-merge-train/sentinel-first-commit.html" title="Abort a broken agent at its first commit, not its last.">sentinel-first-commit</a></b> (substrate health, t≈0 abort)</div>
     </div>
     <div class="drop">▼</div>
     <div class="step" style="margin-left:52px">
       <span class="st-stage">cron · merge</span>
       <div class="st-h">Merge-train (MIS batching)</div>
-      <div class="st-ctrls"><b>merge-train-MIS</b> lands non-conflicting worktrees <span class="co" style="font-weight:800">◀──</span> reads <b>agent-registry</b></div>
+      <div class="st-ctrls"><b><a href="agent/gates-and-merge-train/merge-train-mis-batching.html" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-MIS</a></b> lands non-conflicting worktrees <span class="co" style="font-weight:800">◀──</span> reads <b><a href="agent/lifecycle-and-observability/agent-registry.html" title="Authoritative record of which agents are live right now.">agent-registry</a></b></div>
     </div>
     <div class="drop">▼</div>
     <div class="step" style="margin-left:78px">
@@ -288,12 +290,12 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="step" style="margin-left:104px;border-color:var(--a-bg-dark)">
       <span class="st-stage">runtime · prod</span>
       <div class="st-h">Lifecycle &amp; observability</div>
-      <div class="st-ctrls">typed-event-bus · <b>cron-alerts-gate</b> (blocks new dispatch on HIGH alert) · tombstone-commits</div>
+      <div class="st-ctrls">typed-event-bus · <b><a href="agent/lifecycle-and-observability/cron-alerts-gate.html" title="Block new dispatch while a HIGH cron alert is unresolved.">cron-alerts-gate</a></b> (blocks new dispatch on HIGH alert) · tombstone-commits</div>
     </div>
   </div>
 
   <div style="margin-top:10px;font-size:10px;color:var(--muted)">
-    <span class="badge b-h">host tier</span> Mediators (<b>test-serializer</b> N=1 · <b>build-serializer</b> M=8 · <b>lint-all mutex</b>) ration compute <i>across</i> all stairs, not on one.
+    <span class="badge b-h">host tier</span> Mediators (<b><a href="agent/mediators-and-resource-locks/test-serializer.html" title="Serialize dotnet test to a single writer per host.">test-serializer</a></b> N=1 · <b><a href="agent/mediators-and-resource-locks/build-serializer.html" title="Cap concurrent heavy builds with an M=8 host semaphore.">build-serializer</a></b> M=8 · <b><a href="agent/mediators-and-resource-locks/aggregate-compute-protection.html" title="One lint-all per host; one in flight per orchestrator.">lint-all mutex</a></b>) ration compute <i>across</i> all stairs, not on one.
   </div>
 
   <div class="art-rail">
@@ -317,15 +319,15 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="lat-col lat-soft">
       <h4>Soft <span style="font-weight:500;font-size:10px">(3)</span></h4>
       <p class="cap">influence, not a gate — cannot block</p>
-      <div class="lat-node t-a">dynamic-context-injection <span class="cpair">reads the component model (bridge) · file-addr. rules</span></div>
-      <div class="lat-node t-s">codemod-first threshold <span class="cpair">a discipline; the transform is deterministic</span></div>
-      <div class="lat-node" style="border-left:4px solid var(--b-dark)">query-surface (repo-query) <span class="cpair">agent-facing read API over the models (bridge)</span></div>
+      <div class="lat-node t-a"><a href="agent/context-and-dispatch/dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a> <span class="cpair">reads the component model (bridge) · file-addr. rules</span></div>
+      <div class="lat-node t-s"><a href="product/repair-vocabulary/codemod-first.html" title="For 50+ deterministic sites, write one AST transformer.">codemod-first threshold</a> <span class="cpair">a discipline; the transform is deterministic</span></div>
+      <div class="lat-node" style="border-left:4px solid var(--b-dark)"><a href="models-bridge/system-models/query-surface.html" title="repo-query — the agent-facing read API over the models.">query-surface (repo-query)</a> <span class="cpair">agent-facing read API over the models (bridge)</span></div>
     </div>
     <div class="lat-col lat-sh">
       <h4>Soft · Hard <span style="font-weight:500;font-size:10px">(2)</span></h4>
       <p class="cap">soft guidance kept honest by a hard counterpart</p>
-      <div class="lat-node t-a">CLAUDE.md rule index <span class="cpair">═══ cap-lint + conformance-lint</span></div>
-      <div class="lat-node t-a">docs-hierarchy <span class="cpair">═══ its cap / conformance lints</span></div>
+      <div class="lat-node t-a"><a href="agent/governance-doc-controls/claude-md-rule-index.html" title="The governance document itself, enforced by its own lints.">CLAUDE.md rule index</a> <span class="cpair">═══ cap-lint + conformance-lint</span></div>
+      <div class="lat-node t-a"><a href="agent/context-and-dispatch/docs-hierarchy.html" title="One enforced, numbered rule index every agent boots with.">docs-hierarchy</a> <span class="cpair">═══ its cap / conformance lints</span></div>
     </div>
     <div class="lat-col lat-hard">
       <h4>Hard <span style="font-weight:500;font-size:10px">(46 — the bulk of the fleet)</span></h4>
@@ -377,8 +379,8 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="actor-a" style="background:var(--a-bg);border:1.5px solid var(--a-bg-dark);border-radius:8px 0 0 8px;padding:10px 11px">
       <h4 style="margin:0 0 5px;color:var(--a-ink);font-size:12px">AGENTS (the fleet)</h4>
       <p style="margin:0 0 7px;font-size:10px;color:var(--a-ink)">context-bounded — cannot hold the whole codebase</p>
-      <div class="chip">dynamic-context-injection</div>
-      <div class="chip">repo-query (the query API)</div>
+      <div class="chip"><a href="agent/context-and-dispatch/dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a></div>
+      <div class="chip"><a href="models-bridge/system-models/query-surface.html" title="repo-query — the agent-facing read API over the models.">repo-query (the query API)</a></div>
       <div class="chip">role-typed-dispatch · brief-linting</div>
       <p style="margin:7px 0 0;font-size:9.5px;font-style:italic;color:var(--a-ink)">reason <b>about</b> the codebase <b>through</b> the model</p>
     </div>
@@ -389,14 +391,14 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <h4 style="margin:0 0 3px;color:var(--b-ink);font-size:12.5px;text-align:center">THE MODEL BRIDGE — system-models</h4>
       <p style="margin:0 0 7px;font-size:9.5px;color:var(--b-ink);text-align:center;font-style:italic">executable documentation that cannot drift</p>
       <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
-        <span class="chip flag" style="border-color:var(--b-dark)">executable source-of-truth</span>
+        <span class="chip flag" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/executable-source-of-truth.html" title="Typed models read every run and generated from — can't drift.">executable source-of-truth</a></span>
         <span class="chip" style="border-color:var(--b-dark)">component · sync(meta-sync) · service-flow · deploy · domain</span>
       </div>
       <div style="text-align:center;margin:7px 0;font-size:11px;color:var(--b-ink)"><b>meta-sync ═══ drift-parity gates</b><br><span style="font-size:9px">keep the map = the territory</span></div>
       <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
-        <span class="chip" style="border-color:var(--b-dark)">codegen ──▶</span>
-        <span class="chip soft" style="border-color:var(--b-dark)">query-surface</span>
-        <span class="chip" style="border-color:var(--b-dark)">read-don't-hardcode</span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/model-driven-codegen.html" title="Generate real artifacts from the models, provenance-headed.">codegen ──▶</a></span>
+        <span class="chip soft" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/query-surface.html" title="repo-query — the agent-facing read API over the models.">query-surface</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/meta-model-consumption.html" title="Read the model at runtime; never hardcode a snapshot.">read-don't-hardcode</a></span>
       </div>
     </div>
     <!-- CODEBASE -->
@@ -404,7 +406,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <h4 style="margin:0 0 5px;color:var(--s-ink);font-size:12px">CODEBASE / PRODUCT</h4>
       <p style="margin:0 0 7px;font-size:10px;color:var(--s-ink)">context-exceeding — 280 KLOC, unbounded</p>
       <div class="chip">NetworkPolicy · service wiring (gen)</div>
-      <div class="chip">deployment topology · tiers</div>
+      <div class="chip"><a href="models-bridge/system-models/deployment-topology-model.html" title="Typed models of where things run and how they layer.">deployment topology · tiers</a></div>
       <div class="chip">boundary / seam lints</div>
       <p style="margin:7px 0 0;font-size:9.5px;font-style:italic;color:var(--s-ink)">generated &amp; governed <b>from</b> the model</p>
     </div>

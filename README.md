@@ -1,4 +1,4 @@
-# Governance Catalog — a pattern language of agentic-engineering controls
+# Governance Catalog — a pattern language for governance-centric agentic software engineering
 
 <!-- summary: A pattern catalogue of the controls for governable agentic software engineering — 51 across three roles. -->
 
@@ -7,6 +7,32 @@ holding the cost of their failures within bounds. Each entry is written like a d
 names a recurring failure, the control that kills it, and — most importantly — why the control is
 **not** just the cheaper thing everyone already does. The controls here are real artifacts from a
 sustained agentic-engineering effort; identities are kept out so the writeups are forwardable.*
+
+## What this is: governance-centric agentic software engineering
+
+When AI agents produce code faster than any human can review it, the bottleneck moves from *writing*
+code to **governing the conditions under which fast code can be trusted**. This catalogue is the
+concrete repertoire of one answer to that problem — a **governance-centric** practice in which the
+human's scarce work is judgment, and that judgment is **relocated into the engineering environment** as
+machine-actionable mechanisms rather than left to human review.
+
+The mechanisms are the output of a loop the case study calls **governance conversion**:
+
+1. **Velocity exposes failure** — agent-produced changes surface ambiguity, drift, weak boundaries, and
+   missing oracles quickly.
+2. **A human classifies it** — a local defect, or a recurring *structural failure class*?
+3. **Governance conversion** — the structural failure is encoded as governance: *probabilistically* (a
+   brief template, an agent-harness convention) or *deterministically* (a type, a lint, a schema, a gate).
+4. **Future work is constrained** — subsequent agents inherit a narrower, more explicit action space.
+5. **Governability compounds** — repeated conversions raise the environment's capacity to absorb agent
+   work, so velocity becomes *sustainable* instead of churning.
+
+Implementation is cheap; the judgment that decides *which governance should exist* is the costly, human
+part — hence the case study's title, *Cheap Code, Costly Judgment*. Every entry below is one such
+conversion: a recurring failure, and the mechanism that now kills it on every future agent. The full
+theory, evidence, and testable propositions are in the
+[paper](https://arxiv.org/pdf/2607.01087); the live production system these controls govern is
+[scholaccess.com](https://scholaccess.com).
 
 This catalogue covers **three roles** a control can play, authored the same way, each a top-level
 folder with its own README:
