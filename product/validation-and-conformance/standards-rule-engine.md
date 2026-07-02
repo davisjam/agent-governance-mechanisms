@@ -6,13 +6,10 @@ deterministic, standards-grounded conformance predicate.
 
 | | |
 |---|---|
+| Summary | Map each finding to the WCAG/508/PDF-UA criterion it closes. |
 | Target | Product · **Validation & conformance** |
 | Form | `validation` |
-| Novelty | notable |
-| Real artifact | `CheckRunner.ComputeStandards`; the `RuleWalkers`; the WCAG-scope-mapping doc |
-| Governing rule(s) | The CLAUDE.md *WCAG 2.1 AA scope* rule — adding a check that closes an SC gap MUST update `CheckRunner.ComputeStandards` **and** the scope-doc Status column in the same commit |
 | Enforcement | **Hard** (deterministic) · *blocking* — a conformance predicate; the PDF runtime gate emits `##PASS_RULE_FAIL##` on new findings per pass (staging) |
-| Summary | Map each finding to the WCAG/508/PDF-UA criterion it closes. |
 
 ## Motivation — the failure it kills
 

@@ -5,13 +5,10 @@ queue's atomicity and schema invariants live in exactly one lint-enforced place.
 
 | | |
 |---|---|
+| Summary | All raw Redis in one seam; queue atomicity encoded once. |
 | Target | Product · **Canonical models & seams** |
 | Form | `bounded-service` |
-| Novelty | standard |
-| Real artifact | the dispatch module (sole raw-Redis seam) + its queue-key schema; the sole-seam lint |
-| Governing rule(s) | The CLAUDE.md architecture rules — *"the dispatch module is the sole raw-Redis seam"* + *queue atomicity* (all keys declared in the schema) |
 | Enforcement | **Hard** (deterministic) · *blocking* — the sole-seam lint bans raw Redis outside the dispatch module |
-| Summary | All raw Redis in one seam; queue atomicity encoded once. |
 
 ## Motivation — the failure it kills
 

@@ -5,6 +5,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Component &amp; zone model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
   * { box-sizing: border-box; }
@@ -36,6 +37,14 @@
   table.census-t tr:hover { background:#fafcff; }
   .fam-lede { font-size:13px; color:var(--muted); font-style:italic; margin:2px 0 6px; }
   .foot { font-size: 12.5px; color: var(--muted); border-top:1px solid var(--line); padding-top:14px; margin-top: 34px; }
+  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }
+  .site-foot { max-width:820px; margin:40px auto 0; padding:16px 22px 30px; border-top:1px solid #e2e8f0; font-size:12.5px; color:#666; text-align:center; }
+  .site-foot a { color:#0b5cad; text-decoration:none; } .site-foot a:hover { text-decoration:underline; }
+  .site-foot .gh { white-space:nowrap; }
+  .topnav { position:absolute; top:14px; right:20px; font-size:12px; display:flex; gap:16px; }
+  .topnav a { color:#555; text-decoration:none; white-space:nowrap; } .topnav a:hover { color:#0b5cad; }
+  @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 8px; } }
 </style>
 </head>
 <body>
@@ -44,7 +53,7 @@
 <p class="subtitle">A typed map of every component's code zone and seams.</p>
 <h1>Component &amp; zone model</h1>
 <p><strong>Intent</strong> — A typed catalogue of every component's code zone — focus-dirs, tags, boundary kind, external seams, read surfaces — so "which component owns this file, and what may touch it" is a queried fact, not a guess.</p>
-<table><tbody><tr><td>Target</td><td>Bridge · <strong>System models</strong></td></tr><tr><td>Form</td><td><code>typed-ir</code></td></tr><tr><td>Novelty</td><td>notable</td></tr><tr><td>Real artifact</td><td><code>components.py</code> (<code>Component</code> dataclass) + <code>boundary_kinds.py</code> · <code>external_seams.py</code> · <code>canonical_read_surfaces.py</code></td></tr><tr><td>Governing rule(s)</td><td><strong>#25</strong> (lints declare <code>COMPONENT_TAGS</code>) · <strong>#33</strong> (stable-lint-reads-meta-files) — both read this model</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) — a typed model <em>held true</em> by its reverse-mapping test + boundary lints (the drift gate is the counted control)</td></tr><tr><td>Summary</td><td>A typed map of every component's code zone and seams.</td></tr></tbody></table>
+<table><tbody><tr><td>Summary</td><td>A typed map of every component's code zone and seams.</td></tr><tr><td>Target</td><td>Bridge · <strong>System models</strong></td></tr><tr><td>Form</td><td><code>typed-ir</code></td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) — a typed model <em>held true</em> by its reverse-mapping test + boundary lints (the drift gate is the counted control)</td></tr></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p>Governance constantly asks "which component owns this file? what zone is it in? what boundary kind, what seams?" Answered ad hoc — a hardcoded path list here, a grep there — those answers drift the moment a component is added or a directory moves, and the tool keeps passing while reasoning about a stale map. It is also the map an agent needs to know <em>where it is</em> in a large codebase.</p>
 <h2>Why it's not just "infer it from the directory layout"</h2>
@@ -59,6 +68,7 @@
 <ul><li><code>components.py</code> <code>Component</code> registry (read by the lint fleet, dispatch, audit surfaces).</li><li><code>boundary_kinds</code> / <code>external_seams</code> / <code>canonical_read_surfaces</code> classification helpers.</li><li><code>test_components_reverse_mapping.py</code> (model↔tree parity).</li></ul>
 <h2>Related controls</h2>
 <ul><li><strong>Bridge</strong> — agents <em>consume</em> it (<a href="../../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a> slices constraints by component; <a href="../../agent/context-and-dispatch/role-typed-dispatch.html">role-typed-dispatch</a> reads zones) ◀──▶ it <em>governs the product</em> (boundary/seam lints, focus-dir scoping).</li><li><strong>Counterpart</strong> — <a href="drift-parity-gates.html">drift-parity-gates</a>: the reverse-mapping test that keeps it honest.</li><li><em>See also</em> — <a href="meta-model-consumption.html">meta-model-consumption</a> (read it, don't hardcode) · <a href="query-surface.html">query-surface</a> (<code>repo-query component</code>).</li></ul>
+<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a></footer>
 </main>
 </body>
 </html>

@@ -6,13 +6,10 @@ dispatched brief carries the safety and context boilerplate it needs.
 
 | | |
 |---|---|
+| Summary | Brief-linting asserts every required brief snippet is present. |
 | Target | Agent · **Governance-doc controls** |
 | Form | `validation` |
-| Novelty | notable |
-| Real artifact | the agent-snippet include-table; `agent_prompt_lint.py` |
-| Governing rule(s) | The CLAUDE.md *Agent brief snippets — mandatory include table* section |
 | Enforcement | **Hard** (deterministic) · *blocking via brief-linting* — a brief missing a required snippet marker fails the pre-dispatch lint |
-| Summary | Brief-linting asserts every required brief snippet is present. |
 
 ## Motivation — the failure it kills
 
@@ -65,9 +62,9 @@ rebase-first); others are conditional on the brief's shape (touches tests, bring
 ## Related controls
 
 - **Consumer** — [brief-linting](../context-and-dispatch/brief-linting.md) reads this table and asserts
-  each snippet's marker; this registry is brief-linting's **enabler** (it must exist before the lint can
+  each snippet's marker; this registry is [brief-linting](../context-and-dispatch/brief-linting.md)'s **enabler** (it must exist before the lint can
   check for its markers).
 - *See also (sibling)* — [claude-md-rule-index](claude-md-rule-index.md): another governance document
-  held honest by a hard counterpart — this one via brief-linting rather than a bloat lint.
+  held honest by a hard counterpart — this one via [brief-linting](../context-and-dispatch/brief-linting.md) rather than a bloat lint.
 - *See also (family)* — [doc-hygiene-lints](doc-hygiene-lints.md): the broader "documentation enforced
   by a lint" family.

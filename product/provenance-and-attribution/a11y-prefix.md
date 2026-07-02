@@ -6,13 +6,10 @@ content and the `InsertedContentValidator` can cover it.
 
 | | |
 |---|---|
+| Summary | Prefix invisible inserts so they're distinguishable and tracked. |
 | Target | Product · **Provenance & attribution** |
 | Form | `repair-vocab` |
-| Novelty | standard |
-| Real artifact | the `a11y_` prefix convention; `registry.Record(...)` + the `InsertedContentValidator` |
-| Governing rule(s) | **#10** (`a11y_` prefix for invisible inserts; user-visible inserts must not; spec-mandated names keep their spec name) |
 | Enforcement | **Hard** (deterministic) — the `InsertedContentValidator` covers every registered insert |
-| Summary | Prefix invisible inserts so they're distinguishable and tracked. |
 
 ## Motivation — the failure it kills
 

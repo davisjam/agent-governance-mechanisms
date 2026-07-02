@@ -6,13 +6,10 @@ the model is *load-bearing* (not merely descriptive) and hand-edits are caught.
 
 | | |
 |---|---|
+| Summary | Generate real artifacts from the models, provenance-headed. |
 | Target | Bridge · **System models** |
 | Form | `validation` |
-| Novelty | notable |
-| Real artifact | `gen-*` generators (`gen-network-policies`, `gen-service-catalog`, `gen-web-api-entities`, `gen-public-api-doc`, `gen-competitive-analysis`, `gen-wire-contracts`) · `docker_codegen.py` |
-| Governing rule(s) | **#35** (auto-generated files carry a provenance header; hand-edits will be overwritten) |
 | Enforcement | **Hard** (deterministic) — generated artifacts carry a re-emitted provenance marker + a freshness/drift lint |
-| Summary | Generate real artifacts from the models, provenance-headed. |
 
 ## Motivation — the failure it kills
 

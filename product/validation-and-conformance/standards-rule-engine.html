@@ -5,6 +5,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Standards / WCAG rule engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
   * { box-sizing: border-box; }
@@ -36,6 +37,14 @@
   table.census-t tr:hover { background:#fafcff; }
   .fam-lede { font-size:13px; color:var(--muted); font-style:italic; margin:2px 0 6px; }
   .foot { font-size: 12.5px; color: var(--muted); border-top:1px solid var(--line); padding-top:14px; margin-top: 34px; }
+  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }
+  .site-foot { max-width:820px; margin:40px auto 0; padding:16px 22px 30px; border-top:1px solid #e2e8f0; font-size:12.5px; color:#666; text-align:center; }
+  .site-foot a { color:#0b5cad; text-decoration:none; } .site-foot a:hover { text-decoration:underline; }
+  .site-foot .gh { white-space:nowrap; }
+  .topnav { position:absolute; top:14px; right:20px; font-size:12px; display:flex; gap:16px; }
+  .topnav a { color:#555; text-decoration:none; white-space:nowrap; } .topnav a:hover { color:#0b5cad; }
+  @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 8px; } }
 </style>
 </head>
 <body>
@@ -44,7 +53,7 @@
 <p class="subtitle">Map each finding to the WCAG/508/PDF-UA criterion it closes.</p>
 <h1>Standards / WCAG rule engine</h1>
 <p><strong>Intent</strong> — A rule engine that maps each accessibility finding to the exact <strong>WCAG 2.1 AA / Section 508 / PDF-UA</strong> criterion it closes — turning "is this document accessible?" into a deterministic, standards-grounded conformance predicate.</p>
-<table><tbody><tr><td>Target</td><td>Product · <strong>Validation &amp; conformance</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Novelty</td><td>notable</td></tr><tr><td>Real artifact</td><td><code>CheckRunner.ComputeStandards</code>; the <code>RuleWalkers</code>; the WCAG-scope-mapping doc</td></tr><tr><td>Governing rule(s)</td><td>The CLAUDE.md <em>WCAG 2.1 AA scope</em> rule — adding a check that closes an SC gap MUST update <code>CheckRunner.ComputeStandards</code> <strong>and</strong> the scope-doc Status column in the same commit</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking</em> — a conformance predicate; the PDF runtime gate emits <code>##PASS_RULE_FAIL##</code> on new findings per pass (staging)</td></tr><tr><td>Summary</td><td>Map each finding to the WCAG/508/PDF-UA criterion it closes.</td></tr></tbody></table>
+<table><tbody><tr><td>Summary</td><td>Map each finding to the WCAG/508/PDF-UA criterion it closes.</td></tr><tr><td>Target</td><td>Product · <strong>Validation &amp; conformance</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking</em> — a conformance predicate; the PDF runtime gate emits <code>##PASS_RULE_FAIL##</code> on new findings per pass (staging)</td></tr></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p>"Is this document accessible?" needs a <em>precise, standards-grounded</em> answer, not a fuzzy score. Without one, the tool either ships a document that claims conformance while missing success criteria, or runs checks that aren't tied to any standard (so "we check X" doesn't map to "we close SC Y"). The failure is <em>an unfounded conformance claim</em>, and it recurs per document and per new check.</p>
 <h2>Why it's not just "run some accessibility heuristics"</h2>
@@ -59,6 +68,7 @@
 <ul><li><code>CheckRunner.ComputeStandards</code> — the finding → SC mapping.</li><li>The <code>##PASS_RULE_FAIL##</code> staging per-pass rule-engine check.</li><li>The WCAG-scope-mapping doc (Covered / Coverage-gap / Aspirational status).</li></ul>
 <h2>Related controls</h2>
 <ul><li><strong>Layer</strong> — with <a href="content-validator.html">content-validator</a>: fidelity (nothing lost) + conformance (standards met) are the two product gates over the artifact.</li><li><strong>Counterpart</strong> — the WCAG-scope doc keeps the coverage <em>claims</em> honest (like the DoD ↔ rule index pairing on the agent side).</li><li><strong>Consumer</strong> — reads the <a href="../canonical-models-and-seams/canonical-walkers.html">canonical-walkers</a> (<code>RuleWalkers</code>) that traverse the typed models to produce findings.</li></ul>
+<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a></footer>
 </main>
 </body>
 </html>

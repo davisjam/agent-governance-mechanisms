@@ -6,13 +6,10 @@ at the right price per decision.
 
 | | |
 |---|---|
+| Summary | Cost-stratified test tiers: Smoke, Lite, targeted, full. |
 | Target | Product · **Regression tests** |
 | Form | `regression` |
-| Novelty | notable |
-| Real artifact | the trait-based tiers (`Suite=Smoke`, `Suite=Lite`, `FullyQualifiedName~`, `Format=`) |
-| Governing rule(s) | The CLAUDE.md test-onion strategy — tier conventions, the **1-second rule** for new pre-deploy tests, and the **Tier-3 escalation** rule |
 | Enforcement | **Hard** (deterministic) — a repeatable regression body; the full tier gates deploy |
-| Summary | Cost-stratified test tiers: Smoke, Lite, targeted, full. |
 
 ## Motivation — the failure it kills
 

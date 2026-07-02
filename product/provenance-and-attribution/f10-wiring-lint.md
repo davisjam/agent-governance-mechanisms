@@ -5,13 +5,10 @@ wiring — so a new mutator cannot land producing unattributable mutations.
 
 | | |
 |---|---|
+| Summary | Fail the build if any mutator verb lacks a stamp. |
 | Target | Product · **Provenance & attribution** |
 | Form | `validation` |
-| Novelty | notable |
-| Real artifact | `lint-mutator-stamp-wiring.py` (the F10 invariant) |
-| Governing rule(s) | The CLAUDE.md F10 invariant — every mutator verb in the Model `Primitives` MUST call stamp wiring; a new verb without wiring is HIGH-severity |
 | Enforcement | **Hard** (deterministic) · *blocking* — scans every mutator verb; fails the build on an unwired one (0 open gaps) |
-| Summary | Fail the build if any mutator verb lacks a stamp. |
 
 ## Motivation — the failure it kills
 

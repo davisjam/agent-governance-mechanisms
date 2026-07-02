@@ -6,13 +6,10 @@ service is banned.
 
 | | |
 |---|---|
+| Summary | A BinaryIO seam makes file-path-over-wire impossible. |
 | Target | Product · **Canonical models & seams** |
 | Form | `bounded-service` |
-| Novelty | notable |
-| Real artifact | `ServiceClient` (`post_file(BinaryIO)`); the sole cross-service-HTTP seam (`ipc`) lint |
-| Governing rule(s) | The CLAUDE.md *ServiceClient pattern* (cross-service HTTP goes through `ServiceClient`; direct `requests.post` to another service banned) |
 | Enforcement | **Hard** (deterministic) · *blocking* — the sole-seam lint bans direct cross-service `requests.post`; the `BinaryIO` type makes the bug unrepresentable |
-| Summary | A BinaryIO seam makes file-path-over-wire impossible. |
 
 ## Motivation — the failure it kills
 

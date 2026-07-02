@@ -5,13 +5,10 @@ stale-worker sweep, so a *hung* deploy or worker is distinguishable from a merel
 
 | | |
 |---|---|
+| Summary | Periodic liveness so a hung deploy differs from a slow one. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `observability` |
-| Novelty | standard |
-| Real artifact | the deploy heartbeat loop (`deploy2.py` / `deploy_k8s.py`); the stale-worker sweep |
-| Governing rule(s) | The CLAUDE.md deploy *heartbeat + concurrency-guard* discipline |
 | Enforcement | **Hard** (deterministic) · *signal* — emitted every 30 s; non-blocking (the concurrency guard beside it is blocking) |
-| Summary | Periodic liveness so a hung deploy differs from a slow one. |
 
 ## Motivation — the failure it kills
 

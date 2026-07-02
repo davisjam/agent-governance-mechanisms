@@ -6,13 +6,10 @@ made.
 
 | | |
 |---|---|
+| Summary | For 50+ deterministic sites, write one AST transformer. |
 | Target | Product · **Repair vocabulary** |
 | Form | `repair-vocab` |
-| Novelty | notable |
-| Real artifact | the codemod-first threshold; AST transformers (e.g. `hoist_inline_imports.py`) |
-| Governing rule(s) | **#28** (codemod-first for large mechanical lint backlogs — N≳50 + deterministic shape → AST transformer) · **#31** (codemod-class commits may skip the pre-commit lint stanza with a reason) |
 | Enforcement | **Soft** (probabilistic) — a discipline/threshold guiding *how* a mechanical backlog is fixed; nothing blocks N per-site edits, though the transform it produces is itself deterministic |
-| Summary | For 50+ deterministic sites, write one AST transformer. |
 
 ## Motivation — the failure it kills
 

@@ -6,13 +6,10 @@ triggered by many agents at once.
 
 | | |
 |---|---|
+| Summary | One lint-all per host; one in flight per orchestrator. |
 | Target | Agent · **Mediators & resource locks** |
 | Form | `validation` |
-| Novelty | standard |
-| Real artifact | `lint-all.py` flock on a host instance-lock; the brief `compute-class` declaration |
-| Governing rule(s) | **#44** (one `lint-all` per host; one `lint-all`-triggering Agent in flight per orchestrator) |
 | Enforcement | **Hard** (deterministic) · *blocking* — flock at entry (hard cap 1800s); the role-enforcement gate refuses `sonnet-active` · bypass `ADA_TOOL_LINT_ALL_NO_MUTEX=1` |
-| Summary | One lint-all per host; one in flight per orchestrator. |
 
 ## Motivation — the failure it kills
 

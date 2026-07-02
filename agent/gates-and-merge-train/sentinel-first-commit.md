@@ -6,13 +6,10 @@ that can never land.
 
 | | |
 |---|---|
+| Summary | Abort a broken agent at its first commit, not its last. |
 | Target | Agent · **Gates & merge-train** |
 | Form | `quality-gate` |
-| Novelty | novel |
-| Real artifact | `sentinel_first_commit.py`; the boot self-check `assert-agent-canonical-dispatch.py` |
-| Governing rule(s) | **#43** (production-path validation at the sentinel commit — AUDIT-ONLY → BLOCKING after clean events) |
 | Enforcement | **Hard** (deterministic) · *blocking* — aborts the run on a failed substrate assertion |
-| Summary | Abort a broken agent at its first commit, not its last. |
 
 ## Motivation — the failure it kills
 
@@ -68,5 +65,5 @@ and is promoted to BLOCKING after a session of clean events.
   *substrate* health, the hook guards *content* correctness.
 - **Counterpart** — the boot-time self-check (`assert-agent-canonical-dispatch.py`): boot-check at
   t=0-start, sentinel at first-commit; together they bracket the window a substrate can break in.
-- **Enabler** — the agent-registry markers (Lifecycle & observability family) are the facts this check
+- **Enabler** — the [agent-registry](../lifecycle-and-observability/agent-registry.md) markers (Lifecycle & observability family) are the facts this check
   reads; without that substrate there is nothing to assert against.

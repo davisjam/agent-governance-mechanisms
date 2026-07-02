@@ -6,13 +6,10 @@ competitor set, the CLAUDE.md rule metadata — each the single source of truth 
 
 | | |
 |---|---|
+| Summary | Frozen typed registries for the system's domain facts. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
-| Novelty | standard |
-| Real artifact | `supported_filetypes.py` · `wcag_coverage_gaps.py` · `cron_entries.py` · `ux_surfaces.py` · `competitors/` · `claude-md-rules.py` |
-| Governing rule(s) | Each registry's charter; consumed by dispatch, checkers, generators, and their parity lints |
 | Enforcement | **Hard** (deterministic) — typed registries *held true* by their coverage/parity lints |
-| Summary | Frozen typed registries for the system's domain facts. |
 
 ## Motivation — the failure it kills
 

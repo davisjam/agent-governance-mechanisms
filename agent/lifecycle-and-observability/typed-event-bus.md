@@ -6,13 +6,10 @@ over which substrate emits lifecycle/health events — so the orchestrator obser
 
 | | |
 |---|---|
+| Summary | Typed topics plus a playbook surface fleet health live. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `observability` |
-| Novelty | notable |
-| Real artifact | `event-bus.py`; the event-bus playbook (topic → baseline-healthy / what-looks-wrong) |
-| Governing rule(s) | **#46** (substrates emitting topics own observability end-to-end) · **#47** (monitor cron / merge-train / tombstone via the bus) |
 | Enforcement | **Hard** (deterministic) · *signal* — emission is mechanical; the bus itself does not block (the derived alerts gate does) |
-| Summary | Typed topics plus a playbook surface fleet health live. |
 
 ## Motivation — the failure it kills
 

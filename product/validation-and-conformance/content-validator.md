@@ -6,13 +6,10 @@ that pinpoints which pass dropped content.
 
 | | |
 |---|---|
+| Summary | Assert input content survives remediation — a fidelity gate. |
 | Target | Product · **Validation & conformance** |
 | Form | `validation` |
-| Novelty | notable |
-| Real artifact | `ContentValidator`; the `##PASS_FIDELITY##` per-pass staging variant |
-| Governing rule(s) | The CLAUDE.md *ContentValidator fidelity gate* rule (runs in prod; STAGING per-pass via env label); the accessibility-remediation policy (never drop user content) |
 | Enforcement | **Hard** (deterministic) · *blocking* — fails the job in prod on a fidelity violation; the per-pass variant emits `##PASS_FIDELITY##` + exit 3 in staging |
-| Summary | Assert input content survives remediation — a fidelity gate. |
 
 ## Motivation — the failure it kills
 

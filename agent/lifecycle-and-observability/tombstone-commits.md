@@ -6,13 +6,10 @@ reclaimable instead of guessing.
 
 | | |
 |---|---|
+| Summary | A close record proving a worktree is safe to reclaim. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `audit-trail` |
-| Novelty | notable |
-| Real artifact | `tombstone_commit.py`; the disposition record at the branch tip |
-| Governing rule(s) | **#39** (mass-tombstone id-list + live-worktree guard) · **#41** (tombstone dedup-via-registry) |
 | Enforcement | **Hard** (deterministic) · *audit record* — a durable close record that the cleanup gate reads before reclaiming |
-| Summary | A close record proving a worktree is safe to reclaim. |
 
 ## Motivation — the failure it kills
 

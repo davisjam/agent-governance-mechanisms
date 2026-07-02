@@ -6,13 +6,10 @@ files* (lints, conventions, component boundaries, tests) and inject that subset 
 
 | | |
 |---|---|
+| Summary | Inject the rules governing these files into the brief. |
 | Target | Agent · **Context & dispatch substrate** |
 | Form | `agent-output` |
-| Novelty | novel |
-| Real artifact | `get-constraints-for-files.py` (forward); the diff-attribution machinery (reverse) |
-| Governing rule(s) | *No dedicated rule number — it is dispatch substrate.* Invoked from the CLAUDE.md *Agent launch checklist* / *Canonical dispatch command*; consumes the scope tags mandated by **#25** (lint `COMPONENT_TAGS`) and the meta-models of **#33** |
 | Enforcement | **Soft** (probabilistic) — forward injection influences behavior; it does not block. (The *reverse* direction feeds a **hard** self-heal gate, but forward injection is advisory by nature.) |
-| Summary | Inject the rules governing these files into the brief. |
 
 > **★ Flagship entry.** This is the canonical example of the "why it's not just the naive
 > alternative" move that the whole catalog is built around. The standalone, forwardable long-form

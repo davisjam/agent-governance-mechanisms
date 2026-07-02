@@ -6,13 +6,10 @@ fact, not a guess.
 
 | | |
 |---|---|
+| Summary | A typed map of every component's code zone and seams. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
-| Novelty | notable |
-| Real artifact | `components.py` (`Component` dataclass) + `boundary_kinds.py` · `external_seams.py` · `canonical_read_surfaces.py` |
-| Governing rule(s) | **#25** (lints declare `COMPONENT_TAGS`) · **#33** (stable-lint-reads-meta-files) — both read this model |
 | Enforcement | **Hard** (deterministic) — a typed model *held true* by its reverse-mapping test + boundary lints (the drift gate is the counted control) |
-| Summary | A typed map of every component's code zone and seams. |
 
 ## Motivation — the failure it kills
 

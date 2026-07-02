@@ -6,13 +6,10 @@ violations the compiler and review can't catch.
 
 | | |
 |---|---|
+| Summary | The blocking semantic-lint fleet over the tool's own source. |
 | Target | Product · **Validation & conformance** |
 | Form | `validation` |
-| Novelty | standard |
-| Real artifact | the `lint-*` semantic-lint fleet (e.g. `lint-banned-apis`, `no-silent-catch`, config-field lints) |
-| Governing rule(s) | Many — **#8** (never silent-catch) · **#9** (banned APIs) · **#5** (config field in sample) · **#25** (lints declare `COMPONENT_TAGS`/`SEVERITY`), … |
 | Enforcement | **Hard** (deterministic) · *blocking* — each BLOCKING lint fails the build; escape is a scoped `noqa` with a reason |
-| Summary | The blocking semantic-lint fleet over the tool's own source. |
 
 > **This entry represents the fleet, not each lint.** Per the README scope note, the ~500+ individual
 > custom lints are a *magnitude reported in prose*; this is the one entry for the pattern.

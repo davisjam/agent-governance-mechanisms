@@ -6,13 +6,10 @@ edited.
 
 | | |
 |---|---|
+| Summary | Doc-derived characterization pinned to a cited source. |
 | Target | Product · **Regression tests** |
 | Form | `regression` |
-| Novelty | notable |
-| Real artifact | `*_doc_derived.py` files + their `DDT-audited` / `DDT-source` / `DDT-pins` trailer; `regen-ddt-trailer.py` |
-| Governing rule(s) | **#51** (DDT pin-trailer schema; regenerate on cited-source edits); `lint-ddt-trailer-present` (BLOCKING) + `lint-ddt-trailer-fresh` (WARNING) |
 | Enforcement | **Hard** (deterministic) — a repeatable characterization body; the presence lint is BLOCKING |
-| Summary | Doc-derived characterization pinned to a cited source. |
 
 ## Motivation — the failure it kills
 

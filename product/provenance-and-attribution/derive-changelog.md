@@ -6,13 +6,10 @@ after the fact.
 
 | | |
 |---|---|
+| Summary | Reconstruct the attributed mutation history from the stamps. |
 | Target | Product · **Provenance & attribution** |
 | Form | `audit-trail` |
-| Novelty | notable |
-| Real artifact | the `derive-changelog` command (stamp registry → ChangeLog JSON) |
-| Governing rule(s) | The CLAUDE.md mutator-attribution / RCA discipline — stamps exist to be reconstructed via `derive-changelog` |
 | Enforcement | **Hard** (deterministic) · *audit record* — a reproducible reconstruction from the embedded stamps |
-| Summary | Reconstruct the attributed mutation history from the stamps. |
 
 ## Motivation — the failure it kills
 

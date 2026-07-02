@@ -6,13 +6,10 @@ stale, or be hand-edited where they will be overwritten.
 
 | | |
 |---|---|
+| Summary | Lints keep docs indexed, provenance-headed, and cross-reference-valid. |
 | Target | Agent · **Governance-doc controls** |
 | Form | `validation` |
-| Novelty | standard |
-| Real artifact | the index-coverage lint; the autogen-provenance lint; the `_AUTOGEN_TARGETS` registry |
-| Governing rule(s) | **#35** (auto-generated files must carry a provenance header) |
 | Enforcement | **Hard** (deterministic) · *blocking* — a doc missing its index entry or provenance header fails the lint |
-| Summary | Lints keep docs indexed, provenance-headed, and cross-reference-valid. |
 
 ## Motivation — the failure it kills
 

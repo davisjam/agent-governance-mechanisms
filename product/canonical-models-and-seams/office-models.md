@@ -5,13 +5,10 @@ Office Models, with raw `DocumentFormat.OpenXml` access — and raw XML string-m
 
 | | |
 |---|---|
+| Summary | All OOXML through typed models; raw SDK access banned. |
 | Target | Product · **Canonical models & seams** |
 | Form | `typed-ir` |
-| Novelty | notable |
-| Real artifact | `SlidesModel` / `DocsModel` / `SheetsModel` + `OpenXmlCommon`; `openxml-direct-access` + `no-raw-xml-string-match` lints |
-| Governing rule(s) | **#16** (Office remediation goes through the Office Model; raw OpenXml banned) |
 | Enforcement | **Hard** (deterministic) · *blocking* — the two lints fail the build on raw OpenXml / raw-XML string-match; the typed models are *construction*, the lints are the counted controls |
-| Summary | All OOXML through typed models; raw SDK access banned. |
 
 ## Motivation — the failure it kills
 

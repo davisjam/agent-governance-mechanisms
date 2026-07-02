@@ -6,13 +6,10 @@ close on stale or rotted assertions.
 
 | | |
 |---|---|
+| Summary | Close an Epic only after re-running its checks at HEAD. |
 | Target | Agent · **Governance-doc controls** |
 | Form | `quality-gate` |
-| Novelty | notable |
-| Real artifact | `epic_close.py`; the Epic template §4 Definition-of-Done |
-| Governing rule(s) | **#38** (orchestrator closes Epics via the close tool, not an inline status edit); the Epic template §4 trust-nothing DoD |
 | Enforcement | **Hard** (deterministic) · *blocking close* — reachability/patch-id checks must pass, or a logged `--override` is required |
-| Summary | Close an Epic only after re-running its checks at HEAD. |
 
 ## Motivation — the failure it kills
 

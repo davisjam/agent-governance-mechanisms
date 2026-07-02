@@ -6,13 +6,10 @@ NetworkPolicy, and API docs are *generated from* and validated against.
 
 | | |
 |---|---|
+| Summary | The SOA source-of-truth NetworkPolicy and wiring are generated from. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
-| Novelty | notable |
-| Real artifact | `system-models/services/*.yaml` (Backstage `Component`/`API`/`System`) + `web-api/` (OpenAPI) + `wire-contracts/` + `config/` |
-| Governing rule(s) | The service-flow-model charter; drift gates `lint-service-flow-model.py`, `lint-public-api-drift.py`, `lint-service-call-graph-drift.py` |
 | Enforcement | **Hard** (deterministic) — a typed model *held true* by bidirectional parity gates (tree↔yaml, handler↔spec, call-graph↔model) |
-| Summary | The SOA source-of-truth NetworkPolicy and wiring are generated from. |
 
 ## Motivation — the failure it kills
 

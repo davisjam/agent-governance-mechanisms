@@ -5,13 +5,10 @@ closed, enumerable set that the compiler and lints can check for exhaustive hand
 
 | | |
 |---|---|
+| Summary | Typed enums replace free-form failure strings. |
 | Target | Product · **Repair vocabulary** |
 | Form | `repair-vocab` |
-| Novelty | notable |
-| Real artifact | the `ViolationCategory` / `FailureCategory` enums (replacing bare failure strings) |
-| Governing rule(s) | The CLAUDE.md regex/naming discipline — *failure-category strings → `FailureCategory` enum values*, not bare strings |
 | Enforcement | **Hard** (deterministic) — a typed closed set; the compiler + exhaustiveness checks enforce it |
-| Summary | Typed enums replace free-form failure strings. |
 
 ## Motivation — the failure it kills
 

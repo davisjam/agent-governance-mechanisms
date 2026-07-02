@@ -7,13 +7,10 @@ other control cannot silently rot.
 
 | | |
 |---|---|
+| Summary | The governance document itself, enforced by its own lints. |
 | Target | Agent · **Governance-doc controls** |
 | Form | `validation` |
-| Novelty | notable |
-| Real artifact | `CLAUDE.md`; `lint-claude-md-bloat.py`; the rule-conformance lint |
-| Governing rule(s) | The CLAUDE.md meta-section *"What belongs in this file (CLAUDE.md)"* (the three-part earns-its-spot test); **#35**-adjacent hygiene; enforced by `lint-claude-md-bloat.py` |
 | Enforcement | **Soft·Hard** — the rules are guidance to the agent (soft, booted into every context); the cap lint `lint-claude-md-bloat.py` + the rule-conformance lint are *blocking* (the hard counterpart) |
-| Summary | The governance document itself, enforced by its own lints. |
 
 > **★ The meta-control.** Every other entry in this catalog names a control. *This* is the control
 > that records the others. CLAUDE.md is the durability mechanism for the whole "convert a failure into
@@ -111,6 +108,6 @@ is governed, because it is one.
 - **Consumer** — [dynamic-context-injection](../context-and-dispatch/dynamic-context-injection.md)
   reads this index as the corpus it slices, promoting the *relevant subset* into a specific brief.
 - *See also (sibling)* — [mandatory-snippet-table](mandatory-snippet-table.md): another governance
-  document enforced the same way (via brief-linting rather than a bloat lint).
+  document enforced the same way (via [brief-linting](../context-and-dispatch/brief-linting.md) rather than a bloat lint).
 - *See also (family)* — [doc-hygiene-lints](doc-hygiene-lints.md): the general family of
   "documentation with a hard-counterpart lint" this control is the flagship of.

@@ -6,13 +6,10 @@ concurrency contracts are declared and checkable, not tribal.
 
 | | |
 |---|---|
+| Summary | A registry of every lock, what it guards, and its ordering. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
-| Novelty | notable |
-| Real artifact | `synchronization.py` (`SyncLock` · `LockAcquirer` · `LockOrdering` records) |
-| Governing rule(s) | The sync-registry charter ("single source of truth for which OS-level lock guards which shared resource"); consumed by the sync-coverage + ordering lints |
 | Enforcement | **Hard** (deterministic) — a typed model *held true* by the lock-coverage lint (every `fcntl.flock` site must be declared or annotated) |
-| Summary | A registry of every lock, what it guards, and its ordering. |
 
 ## Motivation — the failure it kills
 

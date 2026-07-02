@@ -6,13 +6,10 @@ conflict-free pass instead of thrashing sequentially.
 
 | | |
 |---|---|
+| Summary | Land non-conflicting worktrees together via a maximum independent set. |
 | Target | Agent · **Gates & merge-train** |
 | Form | `quality-gate` |
-| Novelty | notable |
-| Real artifact | `merge_train.py` |
-| Governing rule(s) | **#50** (MIS-aware composition for cron throughput — dispatch disjoint-footprint waves) |
 | Enforcement | **Hard** (deterministic) — the batch is selected by a graph predicate, not by hope-and-retry |
-| Summary | Land non-conflicting worktrees together via a maximum independent set. |
 
 ## Motivation — the failure it kills
 
@@ -66,7 +63,7 @@ Landed commits are checked by patch-id / ancestry reachability.
 
 - **Layer** — the cron → merge-train stair, downstream of [pre-commit-hook](pre-commit-hook.md) /
   [sentinel-first-commit](sentinel-first-commit.md) and upstream of [staged-deploy-gates](staged-deploy-gates.md).
-- **Consumer** — reads the agent-registry (Lifecycle & observability family) to know which worktrees
+- **Consumer** — reads the [agent-registry](../lifecycle-and-observability/agent-registry.md) (Lifecycle & observability family) to know which worktrees
   are ready to land.
 - **Enabler** — disjoint-footprint dispatch discipline (rule #50) is what makes the batch large; the
   algorithm alone cannot beat a hot-spot file.
