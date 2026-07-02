@@ -6,55 +6,21 @@
 
 # CLAUDE.md — <Project>
 
-<Project> is an accessibility-remediation tool: it takes PPTX / DOCX / XLSX /
-PDF documents and remediates them toward WCAG 2.1 AA / PDF/UA conformance
-(alt text, tag trees, reading order, metadata), with a web service + worker
-pipeline in front and a C# CLI + rule engine at the core. It is built as an
-**agent-team-as-team** codebase — most code is written by dispatched AI
-agents, and the discipline below exists to make that safe at scale.
+This is a **redacted starter** — the governance-rules half of a real, mature CLAUDE.md from an
+**agent-team-as-team** codebase (most code is written by dispatched AI agents; the discipline below
+exists to make that safe at scale). Product-specific details are stripped; adapt the rest to your repo.
 
-This file has three parts:
+This file has two parts:
 
-- **Part 0 — Mission.** The values anchor — what we optimize for and where
-  the full policy lives. Read this to orient.
-- **Part A — Davis AI-First Engineering Method.** Portable principles for
-  AI-collaborative engineering, distilled from this repo's own
-  `docs/dev/AI-FIRST-ENGINEERING.md`. Apply on every touch; they are about
-  *how to make choices that fit an agent-collaborative codebase*,
-  independent of <Project>'s domain.
-- **Part B — Project Reference.** Everything project-specific: conversation
-  conventions, the numbered development rules (`#1–#52` — cited by number
-  across the codebase), CLI commands, deploy, architecture, library
+- **Part A — Davis AI-First Engineering Method.** Portable principles for AI-collaborative engineering.
+  Apply on every touch; they are about *how to make choices that fit an agent-collaborative codebase*,
+  independent of any domain.
+- **Part B — Project Reference.** Everything project-specific: conversation conventions, the numbered
+  development rules (cited by number across the codebase), CLI commands, deploy, architecture, library
   discipline, testing, and the orchestrator / agent-launch machinery.
 
-**Reading order:** Part 0 + Part A are the durable, portable front-matter
-(Tier-1 read for orchestrators + code agents). Part B is the reference you
-consult per-task. The numbered rules in Part B are the enforcement index;
-Part A carries the principles behind them, and `docs/dev/AI-FIRST-ENGINEERING.md`
-carries the full treatise.
-
----
-
-# Part 0 — Mission
-
-See [`docs/product-policy/internal/MISSION.md`](docs/product-policy/internal/MISSION.md)
-for the values anchor — what we optimize for, what we publish, and how to
-resolve "should we open-source / publish / file upstream" questions without
-re-deriving each time. Do not duplicate MISSION.md; it is the source of truth.
-
-**In one paragraph:** <Project> exists to make real documents accessible with
-minimal human effort and maximal fidelity to what the author actually wrote.
-We optimize for **correctness over cost** (a wrong remediation is worse than
-a slow one), **fidelity** (we never author content the user never wrote — we
-defer to canonical authoring tools and GenAI-derived descriptions, not
-heuristics that manufacture data), and **auditable trust** (every inserted
-artifact is stamped and validated so a remediation can be explained and
-reversed). The accessibility-remediation policy that operationalizes this
-lives in
-[`docs/product-policy/internal/accessibility-remediation-principles.md`](docs/product-policy/internal/accessibility-remediation-principles.md)
-(internal) and
-[`docs/product-policy/external/accessibility-remediation-commitments.md`](docs/product-policy/external/accessibility-remediation-commitments.md)
-(customer-facing).
+**Reading order:** Part A is the durable, portable front-matter (Tier-1 read for orchestrators + code
+agents). Part B is the reference you consult per-task.
 
 ---
 
