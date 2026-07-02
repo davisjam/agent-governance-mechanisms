@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""pre-commit: regenerate the HTML site from the .md sources and stage it.
+
+The site is served via GitHub Pages deploy-from-branch, so the committed .html must
+stay in sync with the .md it is rendered from. Regen is cheap, so we run it on every
+commit and stage the result. Install once with `python3 catalog.py install-hooks`
+(sets core.hooksPath=hooks). No shell — pure Python, per the repo's tooling posture.
+"""
+import os
+import subprocess
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _catalog(*args: str) -> None:
+    r = subprocess.run([sys.executable, "catalog.py", *args], cwd=ROOT)
+    if r.returncode:
+        sys.exit(r.returncode)
+
+
+_catalog("validate")   # refuse to build/commit an invalid schema
+_catalog("build")      # render .md -> .html + regenerate the landing census
+subprocess.run(["git", "add", "--", "*.html"], cwd=ROOT)

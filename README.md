@@ -209,7 +209,7 @@ load-bearing one for this domain:
 |---|---|---|
 | **Intent** (one sentence) | What the control is, in a breath. | Intent |
 | **Motivation — the failure it kills** | The *recurring failure class*, why it recurs, why it *compounds* at velocity/concurrency/scale. A control is defined by the failure it kills, not by its steps. | Motivation / Applicability |
-| **Why it's not just *[the naive alternative]*** | The precise distinction from the cheaper thing people already do ("it's in the docs", "just add a test", "just review it"). | *(none — added)* |
+| **Why it's not just** *[the naive alternative]* | The precise distinction from the cheaper thing people already do ("it's in the docs", "just add a test", "just review it"). | *(none — added)* |
 | **Mechanism** | How it actually works; prefer a crisp structural claim over a step list. | Structure / Collaborations |
 | **Prerequisites** | What must already be true or built for the control to work at all — its enabling substrate. The reader's real question is *"can I do this in my system?"* | Implementation |
 | **Consequences & costs** | What the control *costs* — context tax, false positives/friction, false confidence, maintenance, and above all *what it does not catch*. No control is free; this section keeps the catalog honest to the paper's "costly judgment" thesis. | Consequences |
@@ -243,7 +243,7 @@ in `CLAUDE.md` directly rather than paraphrasing around it.
 > substrate and its model files (`components.py`, `synchronization.py`, `services/`, …) directly — that
 > directory *is* their subject, the way `PdfModel` is a product entry's subject, not an incidental path.
 
-**The load-bearing section is "Why it's not just *[the naive alternative]*."** Every good control is
+**The load-bearing section is "Why it's not just [the naive alternative]."** Every good control is
 confused with a cheaper thing. If that section can't be written, the control probably isn't a real
 contribution — it's the obvious thing. The flagship worked example is
 **[dynamic context injection](agent/context-and-dispatch/dynamic-context-injection.md)**, whose distinction
