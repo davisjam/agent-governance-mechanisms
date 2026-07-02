@@ -12,6 +12,7 @@ stamped, validated, and policy-checked.
 | Real artifact | the closed remediation-verb sets (the `Primitives` mutators); the masked-pass architecture |
 | Governing rule(s) | The CLAUDE.md masked-pass architecture + the accessibility-remediation policy (route changes through the sanctioned verbs) |
 | Enforcement | **Hard** (deterministic) — typed verbs; the [F10 lint](../provenance-and-attribution/f10-wiring-lint.md) + validators cover them |
+| Summary | A closed, named set of remediation actions — bounded moves. |
 
 ## Motivation — the failure it kills
 

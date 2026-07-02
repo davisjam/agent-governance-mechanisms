@@ -12,6 +12,7 @@ that can never land.
 | Real artifact | `sentinel_first_commit.py`; the boot self-check `assert-agent-canonical-dispatch.py` |
 | Governing rule(s) | **#43** (production-path validation at the sentinel commit — AUDIT-ONLY → BLOCKING after clean events) |
 | Enforcement | **Hard** (deterministic) · *blocking* — aborts the run on a failed substrate assertion |
+| Summary | Abort a broken agent at its first commit, not its last. |
 
 ## Motivation — the failure it kills
 

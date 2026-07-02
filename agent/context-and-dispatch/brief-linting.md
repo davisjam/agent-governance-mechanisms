@@ -11,6 +11,7 @@ any brief missing the markers that make the agent's work safe and well-scoped.
 | Real artifact | `agent_prompt_lint.py` |
 | Governing rule(s) | **#29 / #29a** (agent CWD-drift defense — `isolation:"worktree"` marker BLOCKING) · **#40** (`subagent-type` declared); CLAUDE.md *Agent launch checklist* / *Pre-launch lint* |
 | Enforcement | **Hard** (deterministic) · *blocking* — exit 1 refuses the launch · bypass `ADA_TOOL_BYPASS_AGENT_FENCE=1` (human-only, audit-logged) |
+| Summary | Reject a malformed dispatch brief before it can launch. |
 
 ## Motivation — the failure it kills
 

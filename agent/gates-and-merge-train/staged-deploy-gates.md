@@ -12,6 +12,7 @@ users see it, not after.
 | Real artifact | the deploy driver's staged gates (canary tag → smoke against canary URL → promote → revision GC) |
 | Governing rule(s) | **#34** (do not launch a deploy that will predictably fail — lints green, no flaky class, `--changed-since main` green first) |
 | Enforcement | **Hard** (deterministic) · *blocking* — promotion is refused until the smoke stage passes |
+| Summary | Canary → smoke → promote; gate before users see it. |
 
 ## Motivation — the failure it kills
 

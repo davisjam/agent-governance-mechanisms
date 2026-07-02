@@ -12,6 +12,7 @@ map instead of re-deriving invariants from scattered files.
 | Real artifact | `CLAUDE.md` (rule index) + the repository documentation index (one-line summaries) |
 | Governing rule(s) | The CLAUDE.md meta-section *"What belongs in this file (CLAUDE.md)"* (the three-part earns-its-spot test) and *"Documentation index"*; every numbered rule's canonical-doc cross-reference is an instance of this control |
 | Enforcement | **Soft·Hard** — the index *content* is advisory to the agent (soft, booted into every context); its cap + conformance lints are *blocking* (the hard counterpart) |
+| Summary | One enforced, numbered rule index every agent boots with. |
 
 ## Motivation — the failure it kills
 

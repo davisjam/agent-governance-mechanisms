@@ -13,6 +13,7 @@ other control cannot silently rot.
 | Real artifact | `CLAUDE.md`; `lint-claude-md-bloat.py`; the rule-conformance lint |
 | Governing rule(s) | The CLAUDE.md meta-section *"What belongs in this file (CLAUDE.md)"* (the three-part earns-its-spot test); **#35**-adjacent hygiene; enforced by `lint-claude-md-bloat.py` |
 | Enforcement | **Soft·Hard** — the rules are guidance to the agent (soft, booted into every context); the cap lint `lint-claude-md-bloat.py` + the rule-conformance lint are *blocking* (the hard counterpart) |
+| Summary | The governance document itself, enforced by its own lints. |
 
 > **★ The meta-control.** Every other entry in this catalog names a control. *This* is the control
 > that records the others. CLAUDE.md is the durability mechanism for the whole "convert a failure into

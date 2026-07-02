@@ -12,6 +12,7 @@ operable by a context-bounded agent.
 | Real artifact | `system-models/` (typed YAML/JSON + Python loaders); consumed by lints, deploy, dispatch |
 | Governing rule(s) | The `system-models/` charter ("declarative source-of-truth catalog … data, not code; tools read from here"); **#33** (stable-lint-reads-meta-files) |
 | Enforcement | **Hard** (deterministic) — the models are *construction* (typed IR); the counted controls are the [drift/parity gates](drift-parity-gates.md) that fail the build when a model diverges from reality |
+| Summary | Typed models read every run and generated from — can't drift. |
 
 > **★ The bridge.** This is the flagship of the third role: the model layer is the **interface through
 > which a context-bounded agent operates a context-exceeding codebase.** It faces both ways — agents

@@ -12,6 +12,7 @@ of guessing from filesystem timestamps.
 | Real artifact | `agent-registry.jsonl` (authoritative) + a per-agent marker cache |
 | Governing rule(s) | **#41** (tombstone dedup-via-registry) · **#39** (mass-tombstone id-list + live-worktree guard) |
 | Enforcement | **Hard** (deterministic) · *signal/record* — every lifecycle tool dual-writes; destructive-op gates query it before acting |
+| Summary | Authoritative record of which agents are live right now. |
 
 ## Motivation — the failure it kills
 

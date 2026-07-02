@@ -12,6 +12,7 @@ lints reason about a declared topology, not scattered constants.
 | Real artifact | `deployment_topology.py` (L3 topology) · `service_tiers.py` (tier classes) · `agent_substrate_layering.py` (layer-boundary contracts) |
 | Governing rule(s) | The deployment/layering charters; consumed by `deploy_k8s.py` + layering lints |
 | Enforcement | **Hard** (deterministic) — typed models *held true* by the deploy-parity + layer-boundary lints |
+| Summary | Typed models of where things run and how they layer. |
 
 ## Motivation — the failure it kills
 

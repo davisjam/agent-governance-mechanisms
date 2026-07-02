@@ -12,6 +12,7 @@ run this, and how many at once" is declared and enforceable.
 | Real artifact | `mediators.py` (dev-mediator registry) · `state_mutator_registry.py` (single-writer / monopoly contracts) |
 | Governing rule(s) | **#44** (aggregate-compute discipline) and the mediator charter; consumed by the mediator enforcers + coverage lints |
 | Enforcement | **Hard** (deterministic) — typed contracts *held true* by the mediator enforcers + a registry-coverage lint |
+| Summary | Declared mediator and single-writer contracts, coverage-checked. |
 
 ## Motivation — the failure it kills
 

@@ -1,5 +1,7 @@
 # Agent controls — governing the fleet
 
+<!-- summary: Controls that govern the agent fleet and the substrate that produces its work. -->
+
 *One of three roles in the [catalogue](../README.md). Agent controls govern the **fleet and the
 substrate that produces work**: how briefs are composed, how agents are dispatched and isolated, how
 their commits are gated and merged, how shared host compute is rationed, and how the fleet's lifecycle

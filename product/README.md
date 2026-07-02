@@ -1,5 +1,7 @@
 # Product controls — governing the shipped artifact
 
+<!-- summary: Controls that govern the shipped accessibility-remediation artifact. -->
+
 *One of three roles in the [catalogue](../README.md). Product controls govern the **shipped
 accessibility-remediation artifact**: how the document is modelled and accessed, how the remediation is
 validated and conformance-checked, how behaviour is regression-pinned, how mutations are made auditable,

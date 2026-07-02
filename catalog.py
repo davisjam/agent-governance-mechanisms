@@ -27,7 +27,8 @@ FORMS = {
 NOVELTY = {"novel", "notable", "standard"}
 ROLES = {"Agent", "Bridge", "Product"}
 ENF_CLASSES = {"Hard", "Soft", "Soft·Hard"}
-META_ORDER = ["Target", "Form", "Novelty", "Real artifact", "Governing rule(s)", "Enforcement"]
+META_ORDER = ["Target", "Form", "Novelty", "Real artifact", "Governing rule(s)", "Enforcement", "Summary"]
+SUMMARY_MAX = 100  # chars — a tooltip-friendly gloss, deliberately shorter than Intent
 SECTION_ORDER = [
     "Motivation", "Why it's not just", "Mechanism", "Prerequisites",
     "Consequences & costs", "Known uses", "Related controls",
@@ -84,6 +85,12 @@ class Entry:
         if self.enf not in ENF_CLASSES:
             self.issues.append(f"Enforcement has no soft/hard class: {self.meta.get('Enforcement', '')[:50]!r}")
 
+        self.summary = self.meta.get("Summary", "").strip()
+        if not self.summary:
+            self.issues.append("missing Summary row (needed for hover tooltips)")
+        elif len(self.summary) > SUMMARY_MAX:
+            self.issues.append(f"Summary too long ({len(self.summary)} > {SUMMARY_MAX} chars): tighten for tooltip")
+
         secs = [ln[3:].strip() for ln in t.splitlines() if ln.startswith("## ")]
         idxs: list[int] = []
         for canon in SECTION_ORDER:
@@ -106,6 +113,7 @@ class Entry:
         return {
             "path": self.path, "role": self.role, "family": self.family,
             "form": self.form, "novelty": self.novelty, "enforcement": self.enf,
+            "summary": self.summary,
             "title": (re.search(r"^# (.+)$", self.text, re.M) or [None, self.path])[1],
         }
 
@@ -157,6 +165,30 @@ def check_index(entries: list[Entry]) -> list[str]:
     return problems
 
 
+ROLE_READMES = ["README.md", "agent/README.md", "models-bridge/README.md", "product/README.md"]
+
+
+def role_summaries() -> dict:
+    """<!-- summary: … --> from each tiered README (umbrella + the three roles)."""
+    out = {}
+    for rel in ROLE_READMES:
+        p = os.path.join(ROOT, rel)
+        if os.path.exists(p):
+            m = re.search(r"<!-- summary: (.+?) -->", open(p, encoding="utf-8").read())
+            out[rel] = (m.group(1).strip() if m else "")
+    return out
+
+
+def family_summaries() -> dict:
+    """Family → the italic one-liner under its INDEX ## header (reused as the family tooltip)."""
+    idx = os.path.join(ROOT, "INDEX.md")
+    if not os.path.exists(idx):
+        return {}
+    text = open(idx, encoding="utf-8").read()
+    return {m.group(1).strip(): m.group(2).strip()
+            for m in re.finditer(r"^## \d+\. (.+?)\n\n\*(.+?)\*", text, re.M)}
+
+
 def cmd_validate(_args) -> int:
     entries = all_entries()
     n_issues = 0
@@ -170,6 +202,15 @@ def cmd_validate(_args) -> int:
     for msg in check_links():
         print(f"  [link]  DEAD {msg}")
         n_issues += 1
+    for rel, summ in role_summaries().items():
+        if not summ:
+            print(f"  [role]  {rel}: missing '<!-- summary: … -->' comment")
+            n_issues += 1
+    fams = family_summaries()
+    for fam in sorted({e.family for e in entries if e.family}):
+        if fam not in fams:
+            print(f"  [family] '{fam}': no italic one-liner under its INDEX header")
+            n_issues += 1
     by_role = {r: sum(e.role == r for e in entries) for r in ROLES}
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
@@ -195,10 +236,27 @@ def cmd_query(args) -> int:
     return 0
 
 
+def cmd_summaries(args) -> int:
+    """Dump the three tiers of summaries (roles · families · entries) — the codegen's tooltip source."""
+    data = {
+        "roles": role_summaries(),
+        "families": family_summaries(),
+        "entries": {e.path: e.summary for e in all_entries()},
+    }
+    if args.json:
+        print(json.dumps(data, ensure_ascii=False, indent=2))
+    else:
+        for tier in ("roles", "families", "entries"):
+            print(f"# {tier} ({len(data[tier])})")
+            for k, v in data[tier].items():
+                print(f"  {k}: {v}")
+    return 0
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description="Validate + query the governance-catalogue schema.")
     sub = p.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("validate", help="schema + INDEX + link checks; exit 1 on any violation")
+    sub.add_parser("validate", help="schema + INDEX + link + summary checks; exit 1 on any violation")
     q = sub.add_parser("query", help="filter/list entries")
     q.add_argument("--role", help="Agent | Bridge | Product")
     q.add_argument("--family")
@@ -206,8 +264,10 @@ def main() -> int:
     q.add_argument("--novelty", help="novel | notable | standard")
     q.add_argument("--enf", help="Hard | Soft | Soft·Hard")
     q.add_argument("--json", action="store_true")
+    s = sub.add_parser("summaries", help="dump role/family/entry summaries (tooltip source)")
+    s.add_argument("--json", action="store_true")
     args = p.parse_args()
-    return {"validate": cmd_validate, "query": cmd_query}[args.cmd](args)
+    return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries}[args.cmd](args)
 
 
 if __name__ == "__main__":

@@ -12,6 +12,7 @@ those choices are policy-by-type, not a per-dispatch judgment call.
 | Real artifact | `dispatch.py --role <r>`; the `lint-all` role-enforcement policy gate |
 | Governing rule(s) | **#37** (orchestrator commits only via `commit-slave`) · **#44** (`compute-class` declaration; one `lint-all`-triggering agent in flight); CLAUDE.md *Model routing: Opus vs Sonnet* |
 | Enforcement | **Hard** (deterministic) · *blocking at each gated op* — enforcers refuse calls whose role doesn't match (e.g. `lint-all` refuses `sonnet-active`) · human bypass `ADA_TOOL_BYPASS_ORCHESTRATOR_CHECK=1` (audit-logged) |
+| Summary | A typed role fixes model, isolation, and gates per dispatch. |
 
 ## Motivation — the failure it kills
 

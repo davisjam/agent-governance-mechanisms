@@ -12,6 +12,7 @@ their own.
 | Real artifact | the cross-source coherence lints (e.g. config-fields ⊆ sample; registry-agreement lints) |
 | Governing rule(s) | **#5** (every config field also in the sample JSON) · **#33** / **#42** (meta-files/substrate consistency) |
 | Enforcement | **Hard** (deterministic) · *blocking* — fails when the asserted relation between sources is violated |
+| Summary | Assert independent sources agree — catch cross-source drift. |
 
 ## Motivation — the failure it kills
 

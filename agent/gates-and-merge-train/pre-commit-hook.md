@@ -12,6 +12,7 @@ checks actually passed on *exactly this tree*.
 | Real artifact | the 3-stanza pre-commit hook; `worktree.py merge-check` |
 | Governing rule(s) | **#31** (codemod `pre-commit-skip` marker) · **#37** (commit delegation); the Commit-of `i/N` trailer discipline |
 | Enforcement | **Hard** (deterministic) · *blocking* — the hook fails the commit; `merge-check` rejects agent commits lacking valid markers · bypass prefixes (`sentinel:` / `tombstone:` / `chore(worktree):`) skip; `--no-verify` is **banned** for agents |
+| Summary | Cheap changed-file checks gate every commit, marker-verified. |
 
 ## Motivation — the failure it kills
 

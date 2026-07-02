@@ -12,6 +12,7 @@ fact.
 | Real artifact | `MutatorStampHelper.WriteStamp` (PDF); `OoxmlAttributionRegistry.AppendEntry` (OOXML) |
 | Governing rule(s) | The CLAUDE.md per-mutator stamp-emission rules (PDF via `MutatorStampHelper`; OOXML via `OoxmlAttributionRegistry`); visibility default `Debug`, user-visible passes opt into `Preserved` |
 | Enforcement | **Hard** (deterministic) · *audit record* — the [F10 wiring lint](f10-wiring-lint.md) makes it BLOCKING that every verb stamps |
+| Summary | Every mutation embeds an attribution stamp in the artifact. |
 
 ## Motivation — the failure it kills
 

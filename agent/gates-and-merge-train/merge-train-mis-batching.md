@@ -12,6 +12,7 @@ conflict-free pass instead of thrashing sequentially.
 | Real artifact | `merge_train.py` |
 | Governing rule(s) | **#50** (MIS-aware composition for cron throughput — dispatch disjoint-footprint waves) |
 | Enforcement | **Hard** (deterministic) — the batch is selected by a graph predicate, not by hope-and-retry |
+| Summary | Land non-conflicting worktrees together via a maximum independent set. |
 
 ## Motivation — the failure it kills
 

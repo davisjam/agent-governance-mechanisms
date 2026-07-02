@@ -12,6 +12,7 @@ tree's traversal invariants live in exactly one place.
 | Real artifact | `PdfStructTreeWalker`, `RuleWalkers`, `DocxTopLevelPartWalker`; the canonical-walker discipline |
 | Governing rule(s) | **#15 / #16** (tree traversal goes through the canonical walker); the canonical-walker discipline |
 | Enforcement | **Hard** (deterministic) · *blocking* — routed via the model ban-lints; raw recursion / regex-into-tree is banned alongside raw library access |
+| Summary | One canonical traversal per tree, not ad hoc recursion. |
 
 ## Motivation — the failure it kills
 

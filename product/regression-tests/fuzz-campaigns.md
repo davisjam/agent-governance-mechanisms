@@ -12,6 +12,7 @@ the failing seed.
 | Real artifact | the `*Fuzz*` / `*Campaign*` harnesses + auto-coverage collection/aggregation |
 | Governing rule(s) | **#18** (fuzz-exposed bugs: RCA to the stable point in the format spec, not the producer variation); the fuzz-coverage-collection discipline |
 | Enforcement | **Hard** (deterministic) — a repeatable campaign body; coverage tracked against a baseline |
+| Summary | Malformed-input campaigns; fix to the spec, not the seed. |
 
 ## Motivation — the failure it kills
 

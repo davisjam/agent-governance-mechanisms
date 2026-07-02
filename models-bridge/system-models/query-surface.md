@@ -12,6 +12,7 @@ rather than parsing raw files, and the tool itself documents how the models load
 | Real artifact | `repo-query.py` (self-describing `models` command + ~15 subcommands, `--json`) |
 | Governing rule(s) | The `repo-query` charter ("lives here so the tool documents how the models are loaded"); the `repo-query` skill |
 | Enforcement | **Soft** (probabilistic) — the canonical *read convenience* agents/orchestration use; it emits structured `--json` (deterministic) but doesn't block raw reads |
+| Summary | repo-query — the agent-facing read API over the models. |
 
 ## Motivation — the failure it kills
 

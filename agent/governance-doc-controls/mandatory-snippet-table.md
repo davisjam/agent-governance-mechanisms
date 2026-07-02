@@ -12,6 +12,7 @@ dispatched brief carries the safety and context boilerplate it needs.
 | Real artifact | the agent-snippet include-table; `agent_prompt_lint.py` |
 | Governing rule(s) | The CLAUDE.md *Agent brief snippets — mandatory include table* section |
 | Enforcement | **Hard** (deterministic) · *blocking via brief-linting* — a brief missing a required snippet marker fails the pre-dispatch lint |
+| Summary | Brief-linting asserts every required brief snippet is present. |
 
 ## Motivation — the failure it kills
 

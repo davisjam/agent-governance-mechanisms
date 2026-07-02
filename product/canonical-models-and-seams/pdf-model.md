@@ -12,6 +12,7 @@ the format's invariants.
 | Real artifact | `PdfModel` + its typed `Primitives/` mutators; the `itext-direct-access` ban-lint |
 | Governing rule(s) | **#15** (all PDF I/O goes through `PdfModel`; raw iText banned) |
 | Enforcement | **Hard** (deterministic) · *blocking* — `itext-direct-access` + `helpers-no-itext` fail the build on raw iText; the typed model is *construction*, the ban-lint is the counted control |
+| Summary | All PDF I/O through one typed model; raw iText banned. |
 
 ## Motivation — the failure it kills
 

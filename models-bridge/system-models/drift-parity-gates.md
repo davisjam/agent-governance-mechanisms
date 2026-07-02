@@ -12,6 +12,7 @@ reality** — every model row ↔ a real thing on disk, and every real thing ↔
 | Real artifact | `lint-*-drift` / `lint-*-parity` (service-flow, public-api, call-graph, deploy-phase, k8s, …) + reverse-mapping tests |
 | Governing rule(s) | The per-model charters' drift-gate clauses; **#33** (stable-lint-reads-meta-files) |
 | Enforcement | **Hard** (deterministic) · *blocking* — a model that diverges from reality fails the build |
+| Summary | Bidirectional model↔reality checks so models cannot drift. |
 
 ## Motivation — the failure it kills
 

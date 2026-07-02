@@ -12,6 +12,7 @@ each other's test runs.
 | Real artifact | `test-serializer.py`; the `TestMediatorEnforcer` `[ModuleInitializer]` |
 | Governing rule(s) | The CLAUDE.md *test-serializer discipline* (route `dotnet test` through the mediator; N=1) |
 | Enforcement | **Hard** (deterministic) · *blocking* — exclusive flock, N=1; the enforcer refuses a raw `dotnet test` from an agent-worktree CWD · bypass `ADA_TOOL_TEST_BYPASS_MEDIATOR=1` |
+| Summary | Serialize dotnet test to a single writer per host. |
 
 ## Motivation — the failure it kills
 

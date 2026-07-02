@@ -1,5 +1,7 @@
 # Governance Catalog — a pattern language of agentic-engineering controls
 
+<!-- summary: A pattern catalogue of the controls for governable agentic software engineering — 51 across three roles. -->
+
 *A catalog of the **controls** used to keep a fleet of autonomous coding agents productive while
 holding the cost of their failures within bounds. Each entry is written like a design pattern: it
 names a recurring failure, the control that kills it, and — most importantly — why the control is

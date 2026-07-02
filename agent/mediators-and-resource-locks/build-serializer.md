@@ -12,6 +12,7 @@ parallelism up to the machine's capacity without oversubscribing it.
 | Real artifact | `build-serializer.py` (byte-range M=8 semaphore); five per-tool enforcers |
 | Governing rule(s) | The CLAUDE.md *build-serializer discipline* (route the five adjacent heavy tools through the mediator) |
 | Enforcement | **Hard** (deterministic) · *blocking* — a byte-range semaphore caps concurrency at 8; five tool enforcers refuse the raw call |
+| Summary | Cap concurrent heavy builds with an M=8 host semaphore. |
 
 ## Motivation — the failure it kills
 

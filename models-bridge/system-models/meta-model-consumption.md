@@ -12,6 +12,7 @@ the model it was copied from.
 | Real artifact | the consumption pattern (`components.py` / `repo-query.py` read at runtime); `lint-test-hardcodes-queryable-value.py` (#42) |
 | Governing rule(s) | **#42** (tests look up substrate values, not hardcode them) · **#33** (stable-lint-reads-meta-files) · **#25** (`COMPONENT_TAGS`) |
 | Enforcement | **Hard** (deterministic) · *blocking* — rule #42's forward-policing lint fails on embedded snapshots (verify the named lint is built before relying on it as a live gate) |
+| Summary | Read the model at runtime; never hardcode a snapshot. |
 
 ## Motivation — the failure it kills
 

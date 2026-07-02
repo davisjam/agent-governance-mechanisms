@@ -1,5 +1,7 @@
 # The models-bridge — the MBSE substrate between agents and codebase
 
+<!-- summary: Typed models between agents and codebase — the MBSE substrate that makes scaling possible. -->
+
 *The third role in the [catalogue](../README.md). Not "agent" and not "product," but the layer that
 **couples** them: typed models of the system that agents **read** to reason about the codebase, and
 that the codebase is **generated and governed from**. This is the interface through which a

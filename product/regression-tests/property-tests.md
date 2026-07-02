@@ -11,6 +11,7 @@ machine-*generated* inputs, catching bugs in the input space that example-based 
 | Real artifact | FsCheck.Xunit property tests (round-trip / combinatorial invariants) across the test projects |
 | Governing rule(s) | The CLAUDE.md property-based-testing pilot + triage — FsCheck.Xunit is the canonical property-test library; add when a class has property-shaped invariants |
 | Enforcement | **Hard** (deterministic) — a repeatable regression body; shrinks to a minimal counterexample |
+| Summary | FsCheck invariants over generated inputs find hidden bugs. |
 
 ## Motivation — the failure it kills
 

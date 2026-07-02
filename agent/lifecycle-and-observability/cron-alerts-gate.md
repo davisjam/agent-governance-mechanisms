@@ -12,6 +12,7 @@ possibly-broken substrate.
 | Real artifact | the cron-alerts channel (`cron-alerts.jsonl`) + acks log + the dispatch gate |
 | Governing rule(s) | **#47** (session-start poll of unconsumed alerts) · **#48** (unresolved HIGH alert blocks dispatch) |
 | Enforcement | **Hard** (deterministic) · *blocking* — refuses `dispatch.py`, `worktree create`, `merge_train run/stage/attest`, `brief-template new` · resolve via `dispatch.py --resolves-alert` |
+| Summary | Block new dispatch while a HIGH cron alert is unresolved. |
 
 ## Motivation — the failure it kills
 
