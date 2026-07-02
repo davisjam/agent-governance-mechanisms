@@ -75,7 +75,10 @@
   .school h3 { margin:0 0 5px; font-size:14.5px; }
   .school.mid h3 { color:var(--accent); }
   .school p { margin:0 0 9px; font-size:12.5px; color:#444; line-height:1.5; }
-  .school .srefs { font-size:10.5px; color:var(--muted); margin:0 0 9px; line-height:1.5; }
+  .school .srefs { font-size:11px; color:var(--muted); margin:0 0 10px; }
+  .school .srefs .lbl { font-weight:700; color:#444; }
+  .school .srefs ul { margin:3px 0 0; padding-left:16px; }
+  .school .srefs li { margin:0 0 2px; line-height:1.4; }
   .school .srefs a { color:var(--link); }
   .school .pole { margin-top:auto; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:800; }
   .spectrum-axis { text-align:center; font-size:11px; color:var(--muted); letter-spacing:.03em; margin:0 0 20px; }
@@ -102,9 +105,9 @@
   <p class="section-sub">Two common ways to build with agents sit at opposite poles. This site is about
   the midway.</p>
   <div class="spectrum">
-  <div class="school"><h3>Vibe coding</h3><p>Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on the model and your eye. At scale the same failures keep recurring, and human review becomes the bottleneck.</p><div class="srefs">See: <a href="https://x.com/karpathy/status/1886192184808149383">Karpathy (coined it)</a> · <a href="https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04">Yegge’s Gas Town</a> · <a href="https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html">vibe-tools survey</a></div><span class="pole">all velocity — no durable guardrails</span></div>
+  <div class="school"><h3>Vibe coding</h3><p>Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on the model and your eye. At scale the same failures keep recurring, and human review becomes the bottleneck.</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://x.com/karpathy/status/1886192184808149383">Karpathy — coined “vibe coding”</a></li><li><a href="https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04">Steve Yegge’s Gas Town</a></li></ul></div><span class="pole">all velocity — no durable guardrails</span></div>
   <div class="school mid"><h3>Governance-centric</h3><p>The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail — a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> stays trustworthy.</p><span class="pole">velocity + guardrails grown from failure</span></div>
-  <div class="school"><h3>Spec-driven development</h3><p>Write a precise specification up front, then generate and verify against it. Rigorous — but it front-loads all the judgment: you must know every constraint before the agent acts, and specs rarely anticipate what only breaks at velocity.</p><div class="srefs">See: <a href="https://dl.acm.org/doi/full/10.1145/3773295">Meyer, CACM — “From Probable to Provable”</a></div><span class="pole">all guardrails — specified up front</span></div>
+  <div class="school"><h3>Spec-driven development</h3><p>Write a precise specification up front, then generate and verify against it. Rigorous — but it front-loads all the judgment: you must know every constraint before the agent acts, and specs rarely anticipate what only breaks at velocity.</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://dl.acm.org/doi/full/10.1145/3773295">Meyer, CACM — “From Probable to Provable”</a></li><li><a href="https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html">vibe-OS / vibe-tools (formal tooling for AI)</a></li></ul></div><span class="pole">all guardrails — specified up front</span></div>
   </div>
   <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all guardrails →</p>
 
@@ -119,9 +122,9 @@
   Method (21 principles); the full set ships in the
   <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
   <div class="cols3">
-  <div class="col"><h3>Architect deliberately</h3><ul><li>Implementation is cheap; architecture compounds — buy the right design, not the fast one.</li><li>Name shapes with types; primitive-passing leaves the architecture anonymous.</li><li>Make models, state, and policy explicit — state machines over scattered counters, enums over magic strings.</li><li>One canonical way beats many clever ones — a pattern seen 200× is applied on reflex.</li><li>Attack accidental complexity; budget for the essential kind.</li></ul></div>
+  <div class="col"><h3>Architect deliberately</h3><ul><li>Implementation is cheap; architecture compounds — buy the right design, not the fast one.</li><li>Name shapes with types; primitive-passing leaves the architecture anonymous.</li><li>Make models, state, and policy explicit — state machines over scattered counters, enums over magic strings.</li><li>One canonical way beats many clever ones — agents will apply patterns they see 200× with no debate.</li><li>Attack accidental complexity; budget for the essential kind.</li></ul></div>
   <div class="col"><h3>Convert failure into machinery</h3><ul><li>When a failure recurs, encode it — a lint, type, gate, or schema — instead of re-inspecting for it.</li><li>Move audits to lints: cheap, at-commit, deterministic beats expensive and post-hoc.</li><li>Let the compiler and gates hold the line — review is not a substitute for static analysis.</li><li>Never fail quiet — every caught error logs, re-throws, or is justified in a comment.</li><li>No compatibility shims — migrate every call site in the same change.</li></ul></div>
-  <div class="col"><h3>Keep judgment scarce & central</h3><ul><li>Carry work autonomously; surface only the load-bearing, architectural calls.</li><li>Pilot, compare, measure — a cheap experiment beats a debate; negative results are wins.</li><li>Verify claims and trust nothing stale — re-run the gates yourself, because markers rot.</li><li>Reason about second-order dynamics — what happens at T+100, or under concurrency?</li><li>Documentation encodes invariants that drive tests, not prose that rots.</li></ul></div>
+  <div class="col"><h3>Keep judgment scarce & central</h3><ul><li>Carry work autonomously; surface only the load-bearing, architectural calls.</li><li>Hyper-experimentation — pilot, compare, measure; a cheap experiment beats a debate, and negative results are wins.</li><li>Verify claims and trust nothing stale — re-run the gates yourself, because markers rot.</li><li>Reason about second-order dynamics — what happens at T+100, or under concurrency?</li><li>Documentation encodes invariants that drive tests, not prose that rots.</li></ul></div>
   </div>
 
   <div class="refs">

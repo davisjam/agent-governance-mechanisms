@@ -511,7 +511,10 @@ LANDING_CSS = """
   .school h3 { margin:0 0 5px; font-size:14.5px; }
   .school.mid h3 { color:var(--accent); }
   .school p { margin:0 0 9px; font-size:12.5px; color:#444; line-height:1.5; }
-  .school .srefs { font-size:10.5px; color:var(--muted); margin:0 0 9px; line-height:1.5; }
+  .school .srefs { font-size:11px; color:var(--muted); margin:0 0 10px; }
+  .school .srefs .lbl { font-weight:700; color:#444; }
+  .school .srefs ul { margin:3px 0 0; padding-left:16px; }
+  .school .srefs li { margin:0 0 2px; line-height:1.4; }
   .school .srefs a { color:var(--link); }
   .school .pole { margin-top:auto; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:800; }
   .spectrum-axis { text-align:center; font-size:11px; color:var(--muted); letter-spacing:.03em; margin:0 0 20px; }
@@ -564,9 +567,8 @@ SCHOOLS = [
      "Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on "
      "the model and your eye. At scale the same failures keep recurring, and human review becomes the "
      "bottleneck.", "all velocity — no durable guardrails", False,
-     [("Karpathy (coined it)", "https://x.com/karpathy/status/1886192184808149383"),
-      ("Yegge’s Gas Town", "https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04"),
-      ("vibe-tools survey", "https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html")]),
+     [("Karpathy — coined “vibe coding”", "https://x.com/karpathy/status/1886192184808149383"),
+      ("Steve Yegge’s Gas Town", "https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04")]),
     ("Governance-centric",
      "The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail "
      "— a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> "
@@ -575,7 +577,8 @@ SCHOOLS = [
      "Write a precise specification up front, then generate and verify against it. Rigorous — but it "
      "front-loads all the judgment: you must know every constraint before the agent acts, and specs "
      "rarely anticipate what only breaks at velocity.", "all guardrails — specified up front", False,
-     [("Meyer, CACM — “From Probable to Provable”", "https://dl.acm.org/doi/full/10.1145/3773295")]),
+     [("Meyer, CACM — “From Probable to Provable”", "https://dl.acm.org/doi/full/10.1145/3773295"),
+      ("vibe-OS / vibe-tools (formal tooling for AI)", "https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html")]),
 ]
 
 # The three-column "way of thinking" — the AI-First Engineering Method (A.1–A.21), engineering-oriented
@@ -584,7 +587,7 @@ WAYS = [
         "Implementation is cheap; architecture compounds — buy the right design, not the fast one.",
         "Name shapes with types; primitive-passing leaves the architecture anonymous.",
         "Make models, state, and policy explicit — state machines over scattered counters, enums over magic strings.",
-        "One canonical way beats many clever ones — a pattern seen 200× is applied on reflex.",
+        "One canonical way beats many clever ones — agents will apply patterns they see 200× with no debate.",
         "Attack accidental complexity; budget for the essential kind.",
     ]),
     ("Convert failure into machinery", [
@@ -596,7 +599,7 @@ WAYS = [
     ]),
     ("Keep judgment scarce & central", [
         "Carry work autonomously; surface only the load-bearing, architectural calls.",
-        "Pilot, compare, measure — a cheap experiment beats a debate; negative results are wins.",
+        "Hyper-experimentation — pilot, compare, measure; a cheap experiment beats a debate, and negative results are wins.",
         "Verify claims and trust nothing stale — re-run the gates yourself, because markers rot.",
         "Reason about second-order dynamics — what happens at T+100, or under concurrency?",
         "Documentation encodes invariants that drive tests, not prose that rots.",
@@ -610,8 +613,8 @@ def _landing_schools() -> str:
         cls = "school mid" if mid else "school"
         rhtml = ""
         if refs:
-            links = " · ".join(f'<a href="{u}">{lbl}</a>' for lbl, u in refs)
-            rhtml = f'<div class="srefs">See: {links}</div>'
+            lis = "".join(f'<li><a href="{u}">{lbl}</a></li>' for lbl, u in refs)
+            rhtml = f'<div class="srefs"><span class="lbl">Examples:</span><ul>{lis}</ul></div>'
         out.append(f'<div class="{cls}"><h3>{title}</h3><p>{blurb}</p>{rhtml}'
                    f'<span class="pole">{pole}</span></div>')
     return "\n  ".join(out)
