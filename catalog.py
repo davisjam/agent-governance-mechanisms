@@ -484,7 +484,9 @@ LANDING_INTRO = """  <div class="tag">Pattern catalogue</div>
   <li style="margin-bottom:8px;"><a href="quick-start.html"><b>▸ Quick start — adopt these in your repo</b></a>
     <span style="color:#555;">— install a governance doc, point your agent here, ask for an adopt/adapt plan</span></li>
   <li style="margin-bottom:8px;"><a href="catalogue-figure.html">▸ The control-map figure</a>
-    <span style="color:#555;">— four views of the whole catalogue</span></li>
+    <span style="color:#555;">— four hand-drawn views (census · staircase · lattice · model-bridge)</span></li>
+  <li style="margin-bottom:8px;"><a href="catalogue-views.html">▸ Codegen'd views</a>
+    <span style="color:#555;">— the same controls re-grouped live from metadata; adding one is data, not layout</span></li>
   <li style="margin-bottom:8px;"><a href="https://github.com/davisjam/agent-governance-mechanisms">▸ Browse the source on GitHub</a>
     <span style="color:#555;">— README · INDEX · every control as a full writeup</span></li>
   <li style="margin-bottom:8px;"><a href="downloads/CLAUDE-starter.md" download>▸ Download a starter <code>CLAUDE.md</code></a>
@@ -493,6 +495,111 @@ LANDING_INTRO = """  <div class="tag">Pattern catalogue</div>
     <span style="color:#555;">— the full set of markdown writeups as a ZIP</span></li>
   </ul>
 """
+
+
+VIEWS_CSS = """
+  :root { --ink:#1a1a1a; --muted:#555; --line:#e2e8f0;
+          --a:#c2410c; --p:#15803d; --b:#b45309; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:26px 20px 70px; color:var(--ink); background:#fff; line-height:1.4;
+         font-family:"Avenir Next",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  h1 { font-size:21px; max-width:1080px; margin:0 auto 4px; }
+  .sub { max-width:1080px; margin:0 auto 14px; font-size:12.5px; color:var(--muted); }
+  .sub a { color:#0b5cad; }
+  #tabs { max-width:1080px; margin:0 auto 6px; display:flex; flex-wrap:wrap; gap:6px; }
+  .tab { font:inherit; font-size:12.5px; font-weight:600; cursor:pointer; border:1px solid var(--line);
+         background:#f8fafc; color:#334155; border-radius:7px; padding:5px 11px; }
+  .tab.on { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
+  #stage { max-width:1080px; margin:10px auto 0; }
+  .blurb { font-size:12px; color:var(--muted); font-style:italic; margin:0 0 12px; }
+  .grp { margin:0 0 16px; }
+  .grp h3 { font-size:13.5px; margin:0 0 7px; padding-bottom:3px; border-bottom:1px solid var(--line); }
+  .grp h3 .cnt { color:var(--muted); font-weight:500; font-size:11px; }
+  .rt-a{color:var(--a);font-weight:800;} .rt-b{color:var(--b);font-weight:800;} .rt-p{color:var(--p);font-weight:800;}
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px; }
+  .card { display:block; text-decoration:none; color:var(--ink); border:1.4px solid #cbd5e1;
+          border-radius:8px; padding:7px 9px; background:#fff; transition:box-shadow .1s; }
+  .card:hover { box-shadow:0 2px 8px rgba(0,0,0,.10); }
+  .card.r-a { border-top:3px solid var(--a); } .card.r-p { border-top:3px solid var(--p); }
+  .card.r-b { border-top:3px solid var(--b); }
+  .card.e-s  { border-style:dashed; }
+  .card.e-sh { border-left:4px solid #38bdf8; }
+  .card .c-t { display:block; font-size:12.5px; font-weight:700; letter-spacing:-.01em; }
+  .card .c-m { display:block; font-size:10.5px; color:var(--muted); margin-top:2px; }
+  .card .c-m code { background:#f6f8fa; padding:0 3px; border-radius:3px; }
+  .card .star { color:#f59e0b; }
+"""
+
+VIEWS_JS = r"""
+const ROLE_ORDER = ["Agent","Bridge","Product"];
+const VIEWS = [
+  { id:"family",  label:"By role & family", blurb:"The logical view — the structural inventory, grouped as it ships.", key:c=>c.role+" · "+c.family, order:null },
+  { id:"enf",     label:"By enforcement",   blurb:"soft (probabilistic, cannot block) → soft·hard → hard (deterministic).", key:c=>c.enforcement, order:["Soft","Soft·Hard","Hard"] },
+  { id:"form",    label:"By form",          blurb:"The nine recurring shapes a control takes.", key:c=>c.form, order:null },
+  { id:"novelty", label:"By novelty",       blurb:"How new the mechanism is: novel · notable · standard-applied-well.", key:c=>c.novelty, order:["novel","notable","standard"] },
+];
+const roleCls = c => c.role==="Agent"?"r-a":c.role==="Product"?"r-p":"r-b";
+const enfCls  = c => c.enforcement==="Hard"?"e-h":c.enforcement==="Soft"?"e-s":"e-sh";
+function renderForView(card){                       // one card ← its metadata; clickable + tooltipped
+  const star = card.star ? ' <span class="star">★</span>' : '';
+  const tip = (card.summary||"").replace(/"/g,'&quot;');
+  return '<a class="card '+roleCls(card)+' '+enfCls(card)+'" href="'+card.html+'" title="'+tip+'">'
+       + '<span class="c-t">'+card.title+star+'</span>'
+       + '<span class="c-m"><code>'+card.form+'</code> · '+card.novelty+' · '+card.enforcement+'</span></a>';
+}
+function groupsFor(v){
+  const m = new Map();
+  for(const c of CARDS){ const k=v.key(c); (m.get(k)||m.set(k,[]).get(k)).push(c); }
+  let keys = [...m.keys()];
+  if(v.order) keys.sort((a,b)=>v.order.indexOf(a)-v.order.indexOf(b));
+  else if(v.id==="family") keys.sort((a,b)=>ROLE_ORDER.indexOf(a.split(" · ")[0])-ROLE_ORDER.indexOf(b.split(" · ")[0]));
+  else keys.sort();
+  return keys.map(k=>[k,m.get(k)]);
+}
+function label(k){
+  return k.replace(/^Agent · /,'<span class="rt-a">Agent</span> · ')
+          .replace(/^Bridge · /,'<span class="rt-b">Models-bridge</span> · ')
+          .replace(/^Product · /,'<span class="rt-p">Product</span> · ');
+}
+function renderView(v){
+  document.getElementById("stage").innerHTML = '<p class="blurb">'+v.blurb+'</p>' +
+    groupsFor(v).map(([k,cs]) =>
+      '<section class="grp"><h3>'+label(k)+' <span class="cnt">('+cs.length+')</span></h3>'
+      + '<div class="cards">'+cs.map(renderForView).join("")+'</div></section>').join("");
+}
+function setView(id){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.v===id));
+  renderView(VIEWS.find(v=>v.id===id));
+}
+document.getElementById("tabs").innerHTML = VIEWS.map(v=>'<button class="tab" data-v="'+v.id+'">'+v.label+'</button>').join("");
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>setView(t.dataset.v));
+setView("family");
+"""
+
+
+def build_views_page(entries: list[Entry]) -> str:
+    stars = {os.path.normpath(r["path"]) for fam in parse_census() for r in fam["rows"] if r["star"]}
+    cards = []
+    for e in entries:
+        d = e.as_dict()
+        cards.append({
+            "title": d["title"], "html": _md_link_rewrite(e.path),
+            "role": d["role"], "family": d["family"], "form": d["form"],
+            "novelty": d["novelty"], "enforcement": d["enforcement"],
+            "summary": d["summary"], "star": e.path in stars,
+        })
+    head = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
+            f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
+            f"<title>Governance catalogue — codegen'd views</title>\n<style>{VIEWS_CSS}</style>\n</head>\n<body>\n")
+    body = ("<h1>Governance catalogue — codegen'd views</h1>\n"
+            '<p class="sub">The same 51 controls, re-grouped live from card metadata. Every card is emitted by '
+            '<code>renderForView(card)</code>; a view is just a grouping key + order, so <b>adding a control or a '
+            'view is data, not layout</b>. Click a card for its writeup; hover for its one-line summary. '
+            '&nbsp;·&nbsp; <a href="catalogue-figure.html">the hand-drawn figure</a> '
+            '&nbsp;·&nbsp; <a href="index.html">catalogue</a></p>\n'
+            '<div id="tabs"></div>\n<div id="stage"></div>\n')
+    script = "<script>\nconst CARDS = " + json.dumps(cards, ensure_ascii=False) + ";\n" + VIEWS_JS + "</script>\n"
+    return head + body + script + "</body>\n</html>\n"
 
 
 def cmd_build(_args) -> int:
@@ -535,7 +642,8 @@ def cmd_build(_args) -> int:
                f"<title>Agent Governance Mechanisms</title>\n<style>{PAGE_CSS}</style>\n</head>\n"
                f"<body>\n<main>\n{landing_body}\n</main>\n</body>\n</html>\n")
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
-    print(f"built {written} entry/index pages + landing index.html "
+    open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
+    print(f"built {written} entry/index pages + landing index.html + catalogue-views.html "
           f"({len(entries)} controls in census)")
     return 0
 
