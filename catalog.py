@@ -286,7 +286,7 @@ TOPNAV = ('<div class="topnav"><a href="https://davisjam.github.io">James C. Dav
 
 FONT_CSS = ('  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }\n'
             '  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }\n'
-            '  .site-foot { max-width:820px; margin:40px auto 0; padding:16px 22px 30px; border-top:1px solid #e2e8f0;'
+            '  .site-foot { max-width:1040px; margin:40px auto 0; padding:16px 22px 30px; border-top:1px solid #e2e8f0;'
             ' font-size:12.5px; color:#666; text-align:center; }\n'
             '  .site-foot a { color:#0b5cad; text-decoration:none; } .site-foot a:hover { text-decoration:underline; }\n'
             '  .site-foot .gh { white-space:nowrap; }\n'
@@ -299,7 +299,7 @@ PAGE_CSS = """
   * { box-sizing: border-box; }
   body { margin:0; font-family:"Avenir Next",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
          color:var(--ink); background:#fff; line-height:1.55; }
-  main { max-width: 820px; margin: 0 auto; padding: 32px 22px 80px; }
+  main { width: 92vw; max-width: 1040px; margin: 0 auto; padding: 32px 22px 80px; }
   nav.crumb { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
   nav.crumb a { color: var(--link); text-decoration: none; }
   nav.crumb a:hover { text-decoration: underline; }
@@ -536,6 +536,7 @@ LANDING_CSS = """
   .lcard:hover { box-shadow:0 3px 12px rgba(0,0,0,.09); border-color:#cbd5e1; }
   .lcard b { display:block; font-size:16px; color:var(--link); letter-spacing:-.01em; margin-bottom:3px; }
   .lcard span { display:block; font-size:12px; color:var(--muted); line-height:1.4; }
+  .lead, .subtitle, .walk-sub, .section-sub, .census-legend { max-width:840px; }
   .lead { font-size:14.5px; color:#2a2a2a; line-height:1.62; margin:0 0 13px; }
   .lead .term { font-weight:700; }
   .wf { position:relative; left:50%; transform:translateX(-50%); width:min(1180px,96vw); margin:14px 0 6px; }

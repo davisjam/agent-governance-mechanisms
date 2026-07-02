@@ -203,7 +203,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
         <a class="chip" href="models-bridge/system-models/component-zone-model.html" title="A typed map of every component's code zone and seams.">component-zone</a>
         <a class="chip" href="models-bridge/system-models/synchronization-model.html" title="A registry of every lock, what it guards, and its ordering.">synchronization (meta-sync)</a>
         <a class="chip" href="models-bridge/system-models/concurrency-contracts.html" title="Declared mediator and single-writer contracts, coverage-checked.">concurrency-contracts</a>
-        <span class="chip">service-flow · deployment · domain</span>
+        <span class="chip"><a href="models-bridge/system-models/service-flow-model.html" title="The SOA source-of-truth NetworkPolicy and wiring are generated from.">service-flow</a> · <a href="models-bridge/system-models/deployment-topology-model.html" title="Typed models of where things run and how they layer.">deployment</a> · <a href="models-bridge/system-models/domain-registries.html" title="Frozen typed registries for the system's domain facts.">domain</a></span>
       </div>
       <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Kept true (map = territory)</h4>
         <span class="chip">meta-sync <span class="rel cp">═</span> drift-parity gates</span>
@@ -381,7 +381,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <p style="margin:0 0 7px;font-size:10px;color:var(--a-ink)">context-bounded — cannot hold the whole codebase</p>
       <div class="chip"><a href="agent/context-and-dispatch/dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a></div>
       <div class="chip"><a href="models-bridge/system-models/query-surface.html" title="repo-query — the agent-facing read API over the models.">repo-query (the query API)</a></div>
-      <div class="chip">role-typed-dispatch · brief-linting</div>
+      <div class="chip"><a href="agent/context-and-dispatch/role-typed-dispatch.html" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a> · <a href="agent/context-and-dispatch/brief-linting.html" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a></div>
       <p style="margin:7px 0 0;font-size:9.5px;font-style:italic;color:var(--a-ink)">reason <b>about</b> the codebase <b>through</b> the model</p>
     </div>
     <!-- BRIDGE -->
@@ -392,7 +392,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <p style="margin:0 0 7px;font-size:9.5px;color:var(--b-ink);text-align:center;font-style:italic">executable documentation that cannot drift</p>
       <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
         <span class="chip flag" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/executable-source-of-truth.html" title="Typed models read every run and generated from — can't drift.">executable source-of-truth</a></span>
-        <span class="chip" style="border-color:var(--b-dark)">component · sync(meta-sync) · service-flow · deploy · domain</span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/component-zone-model.html" title="A typed map of every component's code zone and seams.">component</a> · <a href="models-bridge/system-models/synchronization-model.html" title="A registry of every lock, what it guards, and its ordering.">sync(meta-sync)</a> · <a href="models-bridge/system-models/service-flow-model.html" title="The SOA source-of-truth NetworkPolicy and wiring are generated from.">service-flow</a> · <a href="models-bridge/system-models/deployment-topology-model.html" title="Typed models of where things run and how they layer.">deploy</a> · <a href="models-bridge/system-models/domain-registries.html" title="Frozen typed registries for the system's domain facts.">domain</a></span>
       </div>
       <div style="text-align:center;margin:7px 0;font-size:11px;color:var(--b-ink)"><b>meta-sync ═══ drift-parity gates</b><br><span style="font-size:9px">keep the map = the territory</span></div>
       <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
