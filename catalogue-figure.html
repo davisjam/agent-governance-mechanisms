@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Governance catalogue — control-map figure (four layout options)</title>
+<title>Governance catalogue — control-map figure (four views)</title>
 <style>
   :root {
     --ink: #1a1a1a; --muted: #555;
@@ -85,7 +85,7 @@
   .chip .rel { font-family: ui-monospace, Menlo, monospace; font-weight: 800; }
   .fam-a .chip { border-color: #eab08a; } .fam-s .chip { border-color: #86c79b; }
 
-  /* ---------- Option 2: staircase ---------- */
+  /* ---------- View 2: staircase ---------- */
   .stair { display: flex; flex-direction: column; gap: 0; }
   .step { border: 1.5px solid var(--env-border); background: #fff; border-radius: 8px; padding: 8px 11px; margin-bottom: 4px; }
   .step .st-h { font-size: 11.5px; font-weight: 800; color: var(--env-ink); }
@@ -99,7 +99,7 @@
   .art-gate { background: var(--s-bg); border: 1.3px solid var(--s-bg-dark); border-radius: 5px; padding: 3px 7px; color: var(--s-ink); font-weight: 600; }
   .art-arrow { color: var(--s-bg-dark); font-weight: 800; }
 
-  /* ---------- Option 3: soft↔hard lattice ---------- */
+  /* ---------- View 3: soft↔hard lattice ---------- */
   .lat { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 10px; align-items: start; }
   .lat-col { border-radius: 9px; padding: 9px 10px; }
   .lat-soft { background: #f5f3ff; border: 1.5px solid #a78bfa; }
@@ -123,10 +123,16 @@
 
 <h1>Governance catalogue — control-map figure</h1>
 <p class="sub">51 controls · 11 families · three roles (agent · models-bridge · product), inside the governed engineering environment.
-Four layout options for the same catalogue — pick one. Companion to <i>development-workflow.html</i>; same palette (human=blue, agent=coral, product=green, environment=slate).</p>
+<b>Four views of one catalogue</b> — each answers a different question, in the spirit of the
+<a href="https://en.wikipedia.org/wiki/4%2B1_architectural_view_model">4+1 architectural view model</a>
+(a system is understood through several concern-specific views, not one master diagram). Same palette
+(human=blue, agent=coral, product=green, environment=slate).</p>
+<p class="sub" style="margin-top:-4px;">The live system these controls govern: <a href="https://scholaccess.com">scholaccess.com</a> ·
+the case study: <a href="https://arxiv.org/pdf/2607.01087">paper</a> ·
+the full writeups: <a href="index.html">catalogue</a>.</p>
 
 <div class="compare-note">
-  <b>How to read the encodings (all three options):</b> node <b>colour</b> = target (coral=agent, green=product); node <b>style</b> = enforcement
+  <b>How to read the encodings (all four views):</b> node <b>colour</b> = target (coral=agent, green=product); node <b>style</b> = enforcement
   (<span class="badge b-h">HARD</span> solid, <span class="badge b-s">SOFT</span> dashed, <span class="badge b-sh">S·H</span> blue-accent); gold outline = family flagship (★).
 </div>
 
@@ -140,8 +146,8 @@ Four layout options for the same catalogue — pick one. Companion to <i>develop
   <span class="grp"><b>Enforcement:</b> <span class="badge b-h">Hard</span> deterministic · <span class="badge b-s">Soft</span> probabilistic · <span class="badge b-sh">S·H</span> soft core + hard counterpart</span>
 </div>
 
-<!-- ============================ OPTION 1 — CENSUS MAP ============================ -->
-<div class="opt-label">Option 1 — Census map <span>· two target zones of family cards inside the environment; relationships shown inline (═ ─▶ ◀─)</span></div>
+<!-- ============================ VIEW 1 — CENSUS MAP ============================ -->
+<div class="opt-label">View 1 — Census map <span>· <b>logical view</b> — the structural inventory: two target zones of family cards inside the environment; relationships shown inline (═ ─▶ ◀─)</span></div>
 <div class="figure">
   <div class="human" style="max-width:360px;margin:0 auto 2px;text-align:center">
     <h3>Human architect</h3><p>sets objectives · authors briefs · reviews / ratifies</p>
@@ -241,12 +247,12 @@ Four layout options for the same catalogue — pick one. Companion to <i>develop
   </div>
   <div style="margin-top:9px;font-size:10px;color:var(--muted);font-style:italic">
     Inline edges shown: <span class="cp" style="font-weight:800">═</span> counterpart pairs (e.g. rule-index═cap-lint, PdfModel═itext-ban, stamps═F10-lint) ·
-    <span class="co" style="font-weight:800">◀─</span> consumer (derive-changelog◀─stamps). Cross-family edges (enabler/consumer) are omitted here for legibility — see Option 3.
+    <span class="co" style="font-weight:800">◀─</span> consumer (derive-changelog◀─stamps). Cross-family edges (enabler/consumer) are omitted here for legibility — see View 3.
   </div>
 </div>
 
-<!-- ============================ OPTION 2 — STAIRCASE ============================ -->
-<div class="opt-label">Option 2 — Path-to-production staircase <span>· emphasises the LAYER relationship: each stage a backstop for the last; the artifact descends through product gates</span></div>
+<!-- ============================ VIEW 2 — STAIRCASE ============================ -->
+<div class="opt-label">View 2 — Path-to-production staircase <span>· <b>process view</b> — the flow: emphasises the LAYER relationship, each stage a backstop for the last; the artifact descends through product gates</span></div>
 <div class="figure">
   <p style="margin:0 0 10px;font-size:11px;color:var(--env-ink)">
     Agent controls form a descending staircase from dispatch to runtime — <b>defense in depth</b>, each stair catching what the last missed.
@@ -301,8 +307,8 @@ Four layout options for the same catalogue — pick one. Companion to <i>develop
   </div>
 </div>
 
-<!-- ============================ OPTION 3 — SOFT↔HARD LATTICE ============================ -->
-<div class="opt-label">Option 3 — Soft↔hard lattice <span>· positions every control by enforcement; draws the counterpart / enabler / consumer wiring — the "pattern language" view</span></div>
+<!-- ============================ VIEW 3 — SOFT↔HARD LATTICE ============================ -->
+<div class="opt-label">View 3 — Soft↔hard lattice <span>· <b>development / wiring view</b> — positions every control by enforcement and draws the counterpart / enabler / consumer wiring: the "pattern language" view</span></div>
 <div class="figure">
   <div class="axis"><span>SOFT · probabilistic (aims the fleet)</span><span class="arr"></span><span>HARD · deterministic (holds the line)</span></div>
   <div class="lat">
@@ -355,8 +361,8 @@ Four layout options for the same catalogue — pick one. Companion to <i>develop
   </div>
 </div>
 
-<!-- ============================ OPTION 4 — THE MODEL BRIDGE (hero) ============================ -->
-<div class="opt-label">Option 4 — The model bridge <span>· the scaling story: a context-bounded agent operates a context-exceeding codebase through the typed models</span></div>
+<!-- ============================ VIEW 4 — THE MODEL BRIDGE (hero) ============================ -->
+<div class="opt-label">View 4 — The model bridge <span>· <b>+1 scenario view</b> — the scaling story: a context-bounded agent operates a context-exceeding codebase through the typed models</span></div>
 <div class="figure">
   <p style="margin:0 0 12px;font-size:11px;color:var(--env-ink)">
     The single most important structural idea: the <b>model layer is the interface</b> through which a
