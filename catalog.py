@@ -16,6 +16,7 @@ import glob
 import json
 import os
 import re
+import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -650,11 +651,58 @@ def cmd_build(_args) -> int:
 
 def cmd_install_hooks(_args) -> int:
     """Point git at the tracked hooks/ dir so validate+build run on every commit."""
-    import subprocess  # noqa: no-inline-imports — standalone tool, not ada-tool prod code
     r = subprocess.run(["git", "config", "core.hooksPath", "hooks"], cwd=ROOT)
     if r.returncode == 0:
         print("core.hooksPath → hooks (pre-commit will validate + build + stage HTML)")
     return r.returncode
+
+
+DEFAULT_PORT = 8137  # deliberately not 8080/8000 (common collisions)
+
+
+def _git(*args: str, capture: bool = False) -> subprocess.CompletedProcess:
+    return subprocess.run(["git", *args], cwd=ROOT, text=True,
+                          capture_output=capture)
+
+
+def cmd_deploy(args) -> int:
+    """Build the site, then serve it locally (--local) or publish it to GitHub (--github)."""
+    print(f"== Deploy plan: target={args.target} ==")
+    print("  1. validate schema   2. build HTML   "
+          + ("3. serve on localhost" if args.target == "local"
+             else "3. commit + push to origin main (CI deploys)"))
+    if cmd_validate(None) != 0:
+        print("ABORT: schema invalid — fix before deploying.")
+        return 1
+    cmd_build(None)
+
+    if args.target == "local":
+        url = f"http://127.0.0.1:{args.port}/"
+        print(f"\n== Serving {url}  (Ctrl-C to stop) ==")
+        try:
+            subprocess.run([sys.executable, "-m", "http.server", str(args.port),
+                            "--bind", "127.0.0.1"], cwd=ROOT)
+        except KeyboardInterrupt:
+            print("\nstopped.")
+        return 0
+
+    # --github: commit whatever changed, then push (the Actions workflow deploys on push)
+    _git("add", "-A")
+    dirty = _git("status", "--porcelain", capture=True).stdout.strip()
+    if dirty:
+        cp = _git("commit", "-m", args.message)
+        if cp.returncode:
+            print("ABORT: commit failed (see hook output above).")
+            return cp.returncode
+    else:
+        print("  (nothing to commit — pushing current HEAD)")
+    if _git("push", "origin", "main").returncode:
+        print("ABORT: push failed.")
+        return 1
+    head = _git("rev-parse", "--short", "HEAD", capture=True).stdout.strip()
+    print(f"\n== Pushed {head} to origin/main. GitHub Actions will build + deploy Pages. ==")
+    print("   Watch: https://github.com/davisjam/agent-governance-mechanisms/actions")
+    return 0
 
 
 def main() -> int:
@@ -672,9 +720,13 @@ def main() -> int:
     s.add_argument("--json", action="store_true")
     sub.add_parser("build", help="render every .md → .html + regenerate the landing census")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
+    d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
+    d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
+    d.add_argument("--port", type=int, default=DEFAULT_PORT, help=f"localhost port for --local (default {DEFAULT_PORT})")
+    d.add_argument("-m", "--message", default="deploy: rebuild site", help="commit message for github mode")
     args = p.parse_args()
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
-            "build": cmd_build, "install-hooks": cmd_install_hooks}[args.cmd](args)
+            "build": cmd_build, "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 
 
 if __name__ == "__main__":
