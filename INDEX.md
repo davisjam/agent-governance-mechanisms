@@ -1,7 +1,7 @@
 # Control census
 
 Every control, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
-cross-cuts (see [README](README.md)). `★` marks the family's canonical example. Families **1–5** = the **agent** role
+cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
 the two); families **7–11** = the **product** role (the shipped artifact). All 51 entries are fully
 written (**✅**).
@@ -18,9 +18,9 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | Brief-linting | `validation` | Hard | [brief-linting.md](agent/context-and-dispatch/brief-linting.md) |
+| ✅ | Brief-linting | `validation` | Hard | [brief-linting.md](agent/context-and-dispatch/brief-linting.md) |
 | ✅ | Docs hierarchy + governance index | `validation` | Soft·Hard | [docs-hierarchy.md](agent/context-and-dispatch/docs-hierarchy.md) |
-| ✅ | Dynamic context injection | `agent-output` | **Soft** | [dynamic-context-injection.md](agent/context-and-dispatch/dynamic-context-injection.md) |
+| ✅ | Dynamic context injection | `agent-output` | Soft | [dynamic-context-injection.md](agent/context-and-dispatch/dynamic-context-injection.md) |
 | ✅ | Role-typed dispatch | `quality-gate` | Hard | [role-typed-dispatch.md](agent/context-and-dispatch/role-typed-dispatch.md) |
 
 ## 2. Gates & merge-train
@@ -29,7 +29,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | Pre-commit hook (3-stanza, tree-sha markers) | `quality-gate` | Hard | [pre-commit-hook.md](agent/gates-and-merge-train/pre-commit-hook.md) |
+| ✅ | Pre-commit hook (3-stanza, tree-sha markers) | `quality-gate` | Hard | [pre-commit-hook.md](agent/gates-and-merge-train/pre-commit-hook.md) |
 | ✅ | Sentinel first-commit early-abort | `quality-gate` | Hard | [sentinel-first-commit.md](agent/gates-and-merge-train/sentinel-first-commit.md) |
 | ✅ | Merge-train MIS batching | `quality-gate` | Hard | [merge-train-mis-batching.md](agent/gates-and-merge-train/merge-train-mis-batching.md) |
 | ✅ | Staged deploy gates (canary → smoke → promote) | `quality-gate` | Hard | [staged-deploy-gates.md](agent/gates-and-merge-train/staged-deploy-gates.md) |
@@ -40,7 +40,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | Test-serializer (N=1 flock on `dotnet test`) | `regression` | Hard | [test-serializer.md](agent/mediators-and-resource-locks/test-serializer.md) |
+| ✅ | Test-serializer (N=1 flock on `dotnet test`) | `regression` | Hard | [test-serializer.md](agent/mediators-and-resource-locks/test-serializer.md) |
 | ✅ | Build-serializer (M=8 semaphore) | `validation` | Hard | [build-serializer.md](agent/mediators-and-resource-locks/build-serializer.md) |
 | ✅ | Aggregate-compute protection (`lint-all` host mutex) | `validation` | Hard | [aggregate-compute-protection.md](agent/mediators-and-resource-locks/aggregate-compute-protection.md) |
 
@@ -50,7 +50,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | Agent-registry (`agent-registry.jsonl` + marker cache) | `observability` | Hard (signal) | [agent-registry.md](agent/lifecycle-and-observability/agent-registry.md) |
+| ✅ | Agent-registry (`agent-registry.jsonl` + marker cache) | `observability` | Hard (signal) | [agent-registry.md](agent/lifecycle-and-observability/agent-registry.md) |
 | ✅ | Typed event bus + playbook | `observability` | Hard (signal) | [typed-event-bus.md](agent/lifecycle-and-observability/typed-event-bus.md) |
 | ✅ | Deploy heartbeats + stale-worker detection | `observability` | Hard (signal) | [deploy-heartbeats.md](agent/lifecycle-and-observability/deploy-heartbeats.md) |
 | ✅ | Tombstone commits (lifecycle close records) | `audit-trail` | Hard (audit) | [tombstone-commits.md](agent/lifecycle-and-observability/tombstone-commits.md) |
@@ -62,7 +62,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | CLAUDE.md rule index + cap lint | `validation` | Soft·Hard | [claude-md-rule-index.md](agent/governance-doc-controls/claude-md-rule-index.md) |
+| ✅ | CLAUDE.md rule index + cap lint | `validation` | Soft·Hard | [claude-md-rule-index.md](agent/governance-doc-controls/claude-md-rule-index.md) |
 | ✅ | Mandatory snippet-table enforcement | `validation` | Hard | [mandatory-snippet-table.md](agent/governance-doc-controls/mandatory-snippet-table.md) |
 | ✅ | Epic Definition-of-Done (Final-Opus trust-nothing re-run) | `quality-gate` | Hard | [epic-definition-of-done.md](agent/governance-doc-controls/epic-definition-of-done.md) |
 | ✅ | Doc-hygiene lints (index coverage, autogen provenance) | `validation` | Hard | [doc-hygiene-lints.md](agent/governance-doc-controls/doc-hygiene-lints.md) |
@@ -75,7 +75,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | Executable source-of-truth (data-not-code, can't drift) | `typed-ir` | Hard | [executable-source-of-truth.md](models-bridge/system-models/executable-source-of-truth.md) |
+| ✅ | Executable source-of-truth (data-not-code, can't drift) | `typed-ir` | Hard | [executable-source-of-truth.md](models-bridge/system-models/executable-source-of-truth.md) |
 | ✅ | Component & zone model | `typed-ir` | Hard | [component-zone-model.md](models-bridge/system-models/component-zone-model.md) |
 | ✅ | Synchronization model (meta-sync) | `typed-ir` | Hard | [synchronization-model.md](models-bridge/system-models/synchronization-model.md) |
 | ✅ | Mediator & single-writer contracts | `typed-ir` | Hard | [concurrency-contracts.md](models-bridge/system-models/concurrency-contracts.md) |
@@ -84,7 +84,7 @@ soft guidance with a hard counterpart.
 | ✅ | Domain registries | `typed-ir` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |
 | ✅ | Drift & parity gates (model↔reality) | `validation` | Hard | [drift-parity-gates.md](models-bridge/system-models/drift-parity-gates.md) |
 | ✅ | Model-driven codegen | `validation` | Hard | [model-driven-codegen.md](models-bridge/system-models/model-driven-codegen.md) |
-| ✅ | Model query surface (`repo-query`) | `agent-output` | **Soft** | [query-surface.md](models-bridge/system-models/query-surface.md) |
+| ✅ | Model query surface (`repo-query`) | `agent-output` | Soft | [query-surface.md](models-bridge/system-models/query-surface.md) |
 | ✅ | Meta-model consumption (read, don't hardcode) | `typed-ir` | Hard | [meta-model-consumption.md](models-bridge/system-models/meta-model-consumption.md) |
 
 # Product target
@@ -95,7 +95,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | PdfModel (sole PDF mutation surface) | `typed-ir` | Hard | [pdf-model.md](product/canonical-models-and-seams/pdf-model.md) |
+| ✅ | PdfModel (sole PDF mutation surface) | `typed-ir` | Hard | [pdf-model.md](product/canonical-models-and-seams/pdf-model.md) |
 | ✅ | Office Models ({Slides,Docs,Sheets}Model) | `typed-ir` | Hard | [office-models.md](product/canonical-models-and-seams/office-models.md) |
 | ✅ | ServiceClient (typed cross-service seam) | `bounded-service` | Hard | [service-client.md](product/canonical-models-and-seams/service-client.md) |
 | ✅ | Canonical walkers (one traversal per tree) | `typed-ir` | Hard | [canonical-walkers.md](product/canonical-models-and-seams/canonical-walkers.md) |
@@ -107,7 +107,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | ContentValidator (input ⊆ output fidelity) | `validation` | Hard | [content-validator.md](product/validation-and-conformance/content-validator.md) |
+| ✅ | ContentValidator (input ⊆ output fidelity) | `validation` | Hard | [content-validator.md](product/validation-and-conformance/content-validator.md) |
 | ✅ | Blocking semantic lints | `validation` | Hard | [semantic-lints.md](product/validation-and-conformance/semantic-lints.md) |
 | ✅ | Standards / WCAG rule engine | `validation` | Hard | [standards-rule-engine.md](product/validation-and-conformance/standards-rule-engine.md) |
 | ✅ | Cross-source coherence lints | `validation` | Hard | [coherence-lints.md](product/validation-and-conformance/coherence-lints.md) |
@@ -118,7 +118,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | Test-onion tiers (Smoke / Lite / targeted / full) | `regression` | Hard | [test-onion-tiers.md](product/regression-tests/test-onion-tiers.md) |
+| ✅ | Test-onion tiers (Smoke / Lite / targeted / full) | `regression` | Hard | [test-onion-tiers.md](product/regression-tests/test-onion-tiers.md) |
 | ✅ | FsCheck property tests | `regression` | Hard | [property-tests.md](product/regression-tests/property-tests.md) |
 | ✅ | Fuzz campaigns (+ auto-coverage) | `regression` | Hard | [fuzz-campaigns.md](product/regression-tests/fuzz-campaigns.md) |
 | ✅ | DDT pin-trailers | `regression` | Hard | [ddt-pin-trailers.md](product/regression-tests/ddt-pin-trailers.md) |
@@ -129,7 +129,7 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | Per-mutator attribution stamps | `audit-trail` | Hard (audit) | [mutator-stamps.md](product/provenance-and-attribution/mutator-stamps.md) |
+| ✅ | Per-mutator attribution stamps | `audit-trail` | Hard (audit) | [mutator-stamps.md](product/provenance-and-attribution/mutator-stamps.md) |
 | ✅ | F10 mutator-stamp-wiring lint | `validation` | Hard | [f10-wiring-lint.md](product/provenance-and-attribution/f10-wiring-lint.md) |
 | ✅ | `derive-changelog` (reconstruct mutations) | `audit-trail` | Hard (audit) | [derive-changelog.md](product/provenance-and-attribution/derive-changelog.md) |
 | ✅ | `a11y_` prefix convention | `repair-vocab` | Hard | [a11y-prefix.md](product/provenance-and-attribution/a11y-prefix.md) |
@@ -140,9 +140,9 @@ soft guidance with a hard counterpart.
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ ★ | Typed `ViolationCategory` / `FailureCategory` enums | `repair-vocab` | Hard | [typed-categories.md](product/repair-vocabulary/typed-categories.md) |
+| ✅ | Typed `ViolationCategory` / `FailureCategory` enums | `repair-vocab` | Hard | [typed-categories.md](product/repair-vocabulary/typed-categories.md) |
 | ✅ | Closed remediation-verb sets | `repair-vocab` | Hard | [remediation-verbs.md](product/repair-vocabulary/remediation-verbs.md) |
-| ✅ | Codemod-first threshold (N≳50 → AST transformer) | `repair-vocab` | **Soft** | [codemod-first.md](product/repair-vocabulary/codemod-first.md) |
+| ✅ | Codemod-first threshold (N≳50 → AST transformer) | `repair-vocab` | Soft | [codemod-first.md](product/repair-vocabulary/codemod-first.md) |
 
 ---
 

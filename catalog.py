@@ -333,6 +333,8 @@ ROLE_DISPLAY = {"agent": "Agent", "models-bridge": "Models-bridge", "product": "
 def _md_link_rewrite(url: str) -> str:
     if url.startswith(("http://", "https://", "#", "mailto:")):
         return url
+    if "downloads/" in url:
+        return url  # raw asset (CLAUDE starter) — shipped as .md, not rendered
     if url.endswith(".md"):
         return url[:-3] + ".html"
     return url.replace(".md#", ".html#")
@@ -473,12 +475,18 @@ def parse_census() -> list[dict]:
 
 
 CENSUS_LEGEND = (
-    '<p class="census-legend">Each row is one control, grouped by role and family. '
-    '<b>Form</b> is the shape it takes (one of nine — a typed IR, a validation check, a quality gate, '
-    'an audit trail, …). <b>Enf.</b> is how it enforces: <b>Hard</b> = deterministic (it blocks, audits, '
-    'or signals regardless of agent cooperation), <b>Soft</b> = probabilistic (it aims an agent but '
-    'cannot block), <b>Soft·Hard</b> = soft guidance with a hard counterpart. <b>★</b> marks the family’s '
-    'canonical example. Hover a row for its one-line summary; click the name to open the full writeup.</p>')
+    '<p class="census-legend"><b>Form</b> is the shape a control takes (one of nine — a typed IR, a '
+    'validation check, a quality gate, an audit trail, …). <b>Enf.</b> is how it enforces: '
+    '<b>Hard</b> is deterministic (blocks, audits, or signals regardless of agent cooperation), '
+    '<b>Soft</b> is probabilistic (aims an agent but cannot block), and <b>Soft·Hard</b> is soft '
+    'guidance with a hard counterpart. Hover a row for its summary; click a name for the full writeup.</p>')
+
+ROLE_HEADINGS = {
+    "Agent": "Governance: Agents",
+    "Models-bridge": "Governance: Models — a bridge between agents and product",
+    "Bridge": "Governance: Models — a bridge between agents and product",
+    "Product": "Governance: Product",
+}
 
 
 def build_census(entries: list[Entry]) -> str:
@@ -487,7 +495,8 @@ def build_census(entries: list[Entry]) -> str:
     last = None
     for fam in parse_census():
         if fam["role"] != last:
-            out.append(f'<h3 class="role-h">{_attr(fam["role"] or "")}</h3>'); last = fam["role"]
+            heading = ROLE_HEADINGS.get(fam["role"] or "", f'Governance: {fam["role"]}')
+            out.append(f'<h3 class="role-h">{_attr(heading)}</h3>'); last = fam["role"]
         out.append(f'<h4>{_attr(fam["family"])}</h4>')
         if fam["oneliner"]:
             out.append(f'<p class="fam-lede">{_inline(fam["oneliner"])}</p>')
@@ -495,13 +504,11 @@ def build_census(entries: list[Entry]) -> str:
                    "<th>Enf.</th></tr></thead><tbody>")
         for r in fam["rows"]:
             href = _md_link_rewrite(r["path"])
-            star = " ★" if r["star"] else ""
             tip = _attr(summ.get(os.path.normpath(r["path"]), ""))
+            enf = _inline(r["enf"].replace("**", ""))   # no random bolding of Soft/Hard
             out.append(
-                f'<tr title="{tip}"><td class="c-name"><a href="{href}">'
-                f'{_inline(r["control"])}{star}</a></td>'
-                f'<td><code>{r["form"]}</code></td>'
-                f'<td>{_inline(r["enf"])}</td></tr>')
+                f'<tr title="{tip}"><td class="c-name"><a href="{href}">{_inline(r["control"])}</a></td>'
+                f'<td><code>{r["form"]}</code></td><td>{enf}</td></tr>')
         out.append("</tbody></table>")
     out.append("</section>")
     return "\n".join(out)
@@ -519,13 +526,9 @@ LANDING_CSS = """
   .fstep span { font-size:11px; color:var(--muted); line-height:1.35; }
   .farrow { align-self:center; color:#94a3b8; font-size:18px; font-weight:700; }
   @media (max-width:720px){ .farrow{ transform:rotate(90deg); width:100%; text-align:center; } .fstep{ flex-basis:100%; } }
-  .mustache { height:22px; margin:6px 14% 0; border:2px solid #cbd5e1; border-top:none;
-              border-radius:0 0 46% 46% / 0 0 100% 100%; }
-  .loop-outcome { text-align:center; margin:12px 0 2px; font-size:13px; color:#333; }
+  .mustache { display:block; width:100%; height:44px; margin:2px 0 0; }
+  .loop-outcome { text-align:center; margin:10px 0 2px; font-size:13px; color:#333; }
   .loop-outcome b { color:var(--accent); }
-  .loop-tag { display:inline-block; font-size:10px; font-weight:800; text-transform:uppercase;
-              letter-spacing:.05em; color:var(--accent); background:#fff3e6; border-radius:20px;
-              padding:1px 8px; margin-right:6px; vertical-align:middle; }
   .loop .tail { margin:14px 0 0; font-size:12.5px; color:#444; line-height:1.55; text-align:center; }
   .refs { margin:0 0 24px; }
   .refs .r { border-left:3px solid var(--accent); padding:3px 0 3px 12px; margin:0 0 7px; font-size:13px; color:#444; }
@@ -568,7 +571,11 @@ LANDING_CSS = """
   .col li { font-size:12.3px; color:#3a3a3a; line-height:1.42; margin:0 0 9px; padding-left:15px; position:relative; }
   .col li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
   .ways-note { font-size:11.5px; color:var(--muted); margin:2px 0 22px; }
-  @media (max-width:720px){ .spectrum, .cols3 { grid-template-columns:1fr; } }
+  .mechanisms { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:4px 0 8px; }
+  .mech { border:1.4px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:12px 15px; background:#fff; }
+  .mech h4 { margin:0 0 5px; font-size:14px; }
+  .mech p { margin:0; font-size:12.8px; color:#444; line-height:1.5; }
+  @media (max-width:720px){ .spectrum, .cols3, .mechanisms { grid-template-columns:1fr; } }
 """
 
 # (title, subtitle, href, extra-attrs) for the landing action cards
@@ -576,7 +583,6 @@ LANDING_CARDS = [
     ("The control-map figure", "the whole catalogue at a glance — four views, controls clickable", "catalogue-figure.html", ""),
     ("Interactive views", "every control, re-grouped live from metadata", "catalogue-views.html", ""),
     ("Quick start", "adopt these in your own repo", "quick-start.html", ""),
-    ("Browse on GitHub", "README · INDEX · every control's full writeup", "https://github.com/davisjam/agent-governance-mechanisms", ""),
     ("Starter CLAUDE.md", "a real, mature one — redacted; a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
     ("Download the catalogue", "all writeups as a markdown ZIP", "https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip", ""),
 ]
@@ -599,9 +605,12 @@ def _landing_flow() -> str:
         if i < len(_FLOW):
             steps.append('<div class="farrow">→</div>')
     row = '<div class="flow">\n    ' + "\n    ".join(steps) + '\n    </div>'
-    mustache = '<div class="mustache" aria-hidden="true"></div>'
-    outcome = (f'<p class="loop-outcome"><span class="loop-tag">↺ loops</span> '
-               f'<b>{_FLOW_OUTCOME[0]}.</b> {_FLOW_OUTCOME[1]}</p>')
+    mustache = ('<svg class="mustache" viewBox="0 0 1000 58" preserveAspectRatio="none" aria-hidden="true">'
+                '<path d="M980 6 C 980 52, 560 55, 500 55 C 440 55, 20 52, 20 6" fill="none" '
+                'stroke="#94a3b8" stroke-width="2.5" vector-effect="non-scaling-stroke"/>'
+                '<path d="M20 6 l 13 -3 M20 6 l 9 10" fill="none" stroke="#94a3b8" stroke-width="2.5" '
+                'stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>')
+    outcome = f'<p class="loop-outcome"><b>{_FLOW_OUTCOME[0]}.</b> {_FLOW_OUTCOME[1]}</p>'
     return row + "\n    " + mustache + "\n    " + outcome
 
 
@@ -623,10 +632,12 @@ SCHOOLS = [
      "The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail "
      "— a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> "
      "stays trustworthy.", "velocity + guardrails grown from failure", True, []),
-    ("Spec-driven development",
-     "Write a precise specification up front, then generate and verify against it. Rigorous — but it "
-     "front-loads all the judgment: you must know every constraint before the agent acts, and specs "
-     "rarely anticipate what only breaks at velocity.", "all guardrails — specified up front", False,
+    ("Oversight-centric",
+     "Check <i>everything</i> before you trust it — whether a human reviews every change or a formal "
+     "specification is verified against. Rigorous and safe, but checking becomes the bottleneck: all of it "
+     "must be vetted, and neither humans nor specs anticipate the failures that only appear at velocity. "
+     "(Spec-driven development is this, with the spec as the checker.)",
+     "all oversight — everything checked", False,
      [("Meyer, CACM — “From Probable to Provable”", "https://dl.acm.org/doi/full/10.1145/3773295"),
       ("vibe-OS / vibe-tools (formal tooling for AI)", "https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html")]),
 ]
@@ -692,13 +703,25 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <div class="spectrum">
   {schools}
   </div>
-  <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all guardrails →</p>
+  <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
 
   <p class="lead">The midway has a name — <span class="term">governance conversion</span> — and a working
   rule: <b>don't specify everything up front, and don't trust the vibes; let velocity surface the
   failures, and convert each recurring one into a durable guardrail.</b> The result is <b>{n} governance
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
+
+  <h2 class="section-h">Governance has two mechanisms</h2>
+  <p class="section-sub">A guardrail is one of two kinds — prevent the error, or catch it.</p>
+  <div class="mechanisms">
+    <div class="mech"><h4>Architecture</h4><p>Make the error <b>impossible by construction</b>: a typed
+    model with one sanctioned seam, a state that cannot be represented wrongly. Software
+    <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a> — error-<i>proofing</i>, so the bad
+    move can’t happen in the first place.</p></div>
+    <div class="mech"><h4>Control</h4><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
+    a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
+    deterministically, before the failure escapes.</p></div>
+  </div>
 
   <h2 class="section-h">The way of thinking</h2>
   <p class="section-sub">Three stances that make the midway work — distilled from the AI-First Engineering

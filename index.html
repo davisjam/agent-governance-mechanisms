@@ -49,13 +49,9 @@
   .fstep span { font-size:11px; color:var(--muted); line-height:1.35; }
   .farrow { align-self:center; color:#94a3b8; font-size:18px; font-weight:700; }
   @media (max-width:720px){ .farrow{ transform:rotate(90deg); width:100%; text-align:center; } .fstep{ flex-basis:100%; } }
-  .mustache { height:22px; margin:6px 14% 0; border:2px solid #cbd5e1; border-top:none;
-              border-radius:0 0 46% 46% / 0 0 100% 100%; }
-  .loop-outcome { text-align:center; margin:12px 0 2px; font-size:13px; color:#333; }
+  .mustache { display:block; width:100%; height:44px; margin:2px 0 0; }
+  .loop-outcome { text-align:center; margin:10px 0 2px; font-size:13px; color:#333; }
   .loop-outcome b { color:var(--accent); }
-  .loop-tag { display:inline-block; font-size:10px; font-weight:800; text-transform:uppercase;
-              letter-spacing:.05em; color:var(--accent); background:#fff3e6; border-radius:20px;
-              padding:1px 8px; margin-right:6px; vertical-align:middle; }
   .loop .tail { margin:14px 0 0; font-size:12.5px; color:#444; line-height:1.55; text-align:center; }
   .refs { margin:0 0 24px; }
   .refs .r { border-left:3px solid var(--accent); padding:3px 0 3px 12px; margin:0 0 7px; font-size:13px; color:#444; }
@@ -98,7 +94,11 @@
   .col li { font-size:12.3px; color:#3a3a3a; line-height:1.42; margin:0 0 9px; padding-left:15px; position:relative; }
   .col li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
   .ways-note { font-size:11.5px; color:var(--muted); margin:2px 0 22px; }
-  @media (max-width:720px){ .spectrum, .cols3 { grid-template-columns:1fr; } }
+  .mechanisms { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:4px 0 8px; }
+  .mech { border:1.4px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:12px 15px; background:#fff; }
+  .mech h4 { margin:0 0 5px; font-size:14px; }
+  .mech p { margin:0; font-size:12.8px; color:#444; line-height:1.5; }
+  @media (max-width:720px){ .spectrum, .cols3, .mechanisms { grid-template-columns:1fr; } }
   body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
   h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }
   .site-foot { max-width:1040px; margin:40px auto 0; padding:16px 22px 30px; border-top:1px solid #e2e8f0; font-size:12.5px; color:#666; text-align:center; }
@@ -126,15 +126,27 @@
   <div class="spectrum">
   <div class="school"><h3>Vibe coding</h3><p>Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on the model and your eye. At scale the same failures keep recurring, and human review becomes the bottleneck.</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://x.com/karpathy/status/1886192184808149383">Karpathy — coined “vibe coding”</a></li><li><a href="https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04">Steve Yegge’s Gas Town</a></li></ul></div><span class="pole">all velocity — no durable guardrails</span></div>
   <div class="school mid"><h3>Governance-centric</h3><p>The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail — a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> stays trustworthy.</p><span class="pole">velocity + guardrails grown from failure</span></div>
-  <div class="school"><h3>Spec-driven development</h3><p>Write a precise specification up front, then generate and verify against it. Rigorous — but it front-loads all the judgment: you must know every constraint before the agent acts, and specs rarely anticipate what only breaks at velocity.</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://dl.acm.org/doi/full/10.1145/3773295">Meyer, CACM — “From Probable to Provable”</a></li><li><a href="https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html">vibe-OS / vibe-tools (formal tooling for AI)</a></li></ul></div><span class="pole">all guardrails — specified up front</span></div>
+  <div class="school"><h3>Oversight-centric</h3><p>Check <i>everything</i> before you trust it — whether a human reviews every change or a formal specification is verified against. Rigorous and safe, but checking becomes the bottleneck: all of it must be vetted, and neither humans nor specs anticipate the failures that only appear at velocity. (Spec-driven development is this, with the spec as the checker.)</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://dl.acm.org/doi/full/10.1145/3773295">Meyer, CACM — “From Probable to Provable”</a></li><li><a href="https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html">vibe-OS / vibe-tools (formal tooling for AI)</a></li></ul></div><span class="pole">all oversight — everything checked</span></div>
   </div>
-  <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all guardrails →</p>
+  <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
 
   <p class="lead">The midway has a name — <span class="term">governance conversion</span> — and a working
   rule: <b>don't specify everything up front, and don't trust the vibes; let velocity surface the
   failures, and convert each recurring one into a durable guardrail.</b> The result is <b>51 governance
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
+
+  <h2 class="section-h">Governance has two mechanisms</h2>
+  <p class="section-sub">A guardrail is one of two kinds — prevent the error, or catch it.</p>
+  <div class="mechanisms">
+    <div class="mech"><h4>Architecture</h4><p>Make the error <b>impossible by construction</b>: a typed
+    model with one sanctioned seam, a state that cannot be represented wrongly. Software
+    <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a> — error-<i>proofing</i>, so the bad
+    move can’t happen in the first place.</p></div>
+    <div class="mech"><h4>Control</h4><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
+    a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
+    deterministically, before the failure escapes.</p></div>
+  </div>
 
   <h2 class="section-h">The way of thinking</h2>
   <p class="section-sub">Three stances that make the midway work — distilled from the AI-First Engineering
@@ -186,8 +198,8 @@
     <div class="farrow">→</div>
     <div class="fstep"><span class="fn">4</span><b>Action space narrows</b><span>Every later agent inherits a smaller, more explicit space.</span></div>
     </div>
-    <div class="mustache" aria-hidden="true"></div>
-    <p class="loop-outcome"><span class="loop-tag">↺ loops</span> <b>Governability compounds.</b> The environment absorbs more agent work, so velocity stays sustainable.</p>
+    <svg class="mustache" viewBox="0 0 1000 58" preserveAspectRatio="none" aria-hidden="true"><path d="M980 6 C 980 52, 560 55, 500 55 C 440 55, 20 52, 20 6" fill="none" stroke="#94a3b8" stroke-width="2.5" vector-effect="non-scaling-stroke"/><path d="M20 6 l 13 -3 M20 6 l 9 10" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+    <p class="loop-outcome"><b>Governability compounds.</b> The environment absorbs more agent work, so velocity stays sustainable.</p>
     <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
     exist</i> is the costly, human part. Two dual theses hold it together: governance makes velocity
     sustainable, and judgment determines which governance should exist.</p>
@@ -202,27 +214,26 @@
   <a class="lcard" href="catalogue-figure.html"><b>The control-map figure</b><span>the whole catalogue at a glance — four views, controls clickable</span></a>
   <a class="lcard" href="catalogue-views.html"><b>Interactive views</b><span>every control, re-grouped live from metadata</span></a>
   <a class="lcard" href="quick-start.html"><b>Quick start</b><span>adopt these in your own repo</span></a>
-  <a class="lcard" href="https://github.com/davisjam/agent-governance-mechanisms"><b>Browse on GitHub</b><span>README · INDEX · every control's full writeup</span></a>
   <a class="lcard" href="downloads/CLAUDE-starter.md" download><b>Starter CLAUDE.md</b><span>a real, mature one — redacted; a menu to adapt</span></a>
   <a class="lcard" href="https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip"><b>Download the catalogue</b><span>all writeups as a markdown ZIP</span></a>
   </div>
 
 <section class="census">
 <h2>The catalogue — every control</h2>
-<p class="census-legend">Each row is one control, grouped by role and family. <b>Form</b> is the shape it takes (one of nine — a typed IR, a validation check, a quality gate, an audit trail, …). <b>Enf.</b> is how it enforces: <b>Hard</b> = deterministic (it blocks, audits, or signals regardless of agent cooperation), <b>Soft</b> = probabilistic (it aims an agent but cannot block), <b>Soft·Hard</b> = soft guidance with a hard counterpart. <b>★</b> marks the family’s canonical example. Hover a row for its one-line summary; click the name to open the full writeup.</p>
-<h3 class="role-h">Agent</h3>
+<p class="census-legend"><b>Form</b> is the shape a control takes (one of nine — a typed IR, a validation check, a quality gate, an audit trail, …). <b>Enf.</b> is how it enforces: <b>Hard</b> is deterministic (blocks, audits, or signals regardless of agent cooperation), <b>Soft</b> is probabilistic (aims an agent but cannot block), and <b>Soft·Hard</b> is soft guidance with a hard counterpart. Hover a row for its summary; click a name for the full writeup.</p>
+<h3 class="role-h">Governance: Agents</h3>
 <h4>Context &amp; dispatch substrate</h4>
 <p class="fam-lede">What an agent knows and how it is launched.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Reject a malformed dispatch brief before it can launch."><td class="c-name"><a href="agent/context-and-dispatch/brief-linting.html">Brief-linting ★</a></td><td><code>validation</code></td><td>Hard</td></tr>
+<tr title="Reject a malformed dispatch brief before it can launch."><td class="c-name"><a href="agent/context-and-dispatch/brief-linting.html">Brief-linting</a></td><td><code>validation</code></td><td>Hard</td></tr>
 <tr title="One enforced, numbered rule index every agent boots with."><td class="c-name"><a href="agent/context-and-dispatch/docs-hierarchy.html">Docs hierarchy + governance index</a></td><td><code>validation</code></td><td>Soft·Hard</td></tr>
-<tr title="Inject the rules governing these files into the brief."><td class="c-name"><a href="agent/context-and-dispatch/dynamic-context-injection.html">Dynamic context injection</a></td><td><code>agent-output</code></td><td><strong>Soft</strong></td></tr>
+<tr title="Inject the rules governing these files into the brief."><td class="c-name"><a href="agent/context-and-dispatch/dynamic-context-injection.html">Dynamic context injection</a></td><td><code>agent-output</code></td><td>Soft</td></tr>
 <tr title="A typed role fixes model, isolation, and gates per dispatch."><td class="c-name"><a href="agent/context-and-dispatch/role-typed-dispatch.html">Role-typed dispatch</a></td><td><code>quality-gate</code></td><td>Hard</td></tr>
 </tbody></table>
 <h4>Gates &amp; merge-train</h4>
 <p class="fam-lede">The path-to-production staircase for agent work.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Cheap changed-file checks gate every commit, marker-verified."><td class="c-name"><a href="agent/gates-and-merge-train/pre-commit-hook.html">Pre-commit hook (3-stanza, tree-sha markers) ★</a></td><td><code>quality-gate</code></td><td>Hard</td></tr>
+<tr title="Cheap changed-file checks gate every commit, marker-verified."><td class="c-name"><a href="agent/gates-and-merge-train/pre-commit-hook.html">Pre-commit hook (3-stanza, tree-sha markers)</a></td><td><code>quality-gate</code></td><td>Hard</td></tr>
 <tr title="Abort a broken agent at its first commit, not its last."><td class="c-name"><a href="agent/gates-and-merge-train/sentinel-first-commit.html">Sentinel first-commit early-abort</a></td><td><code>quality-gate</code></td><td>Hard</td></tr>
 <tr title="Land non-conflicting worktrees together via a maximum independent set."><td class="c-name"><a href="agent/gates-and-merge-train/merge-train-mis-batching.html">Merge-train MIS batching</a></td><td><code>quality-gate</code></td><td>Hard</td></tr>
 <tr title="Canary → smoke → promote; gate before users see it."><td class="c-name"><a href="agent/gates-and-merge-train/staged-deploy-gates.html">Staged deploy gates (canary → smoke → promote)</a></td><td><code>quality-gate</code></td><td>Hard</td></tr>
@@ -230,14 +241,14 @@
 <h4>Mediators &amp; resource locks</h4>
 <p class="fam-lede">Host-level wrappers that ration shared compute across concurrent worktrees.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Serialize dotnet test to a single writer per host."><td class="c-name"><a href="agent/mediators-and-resource-locks/test-serializer.html">Test-serializer (N=1 flock on <code>dotnet test</code>) ★</a></td><td><code>regression</code></td><td>Hard</td></tr>
+<tr title="Serialize dotnet test to a single writer per host."><td class="c-name"><a href="agent/mediators-and-resource-locks/test-serializer.html">Test-serializer (N=1 flock on <code>dotnet test</code>)</a></td><td><code>regression</code></td><td>Hard</td></tr>
 <tr title="Cap concurrent heavy builds with an M=8 host semaphore."><td class="c-name"><a href="agent/mediators-and-resource-locks/build-serializer.html">Build-serializer (M=8 semaphore)</a></td><td><code>validation</code></td><td>Hard</td></tr>
 <tr title="One lint-all per host; one in flight per orchestrator."><td class="c-name"><a href="agent/mediators-and-resource-locks/aggregate-compute-protection.html">Aggregate-compute protection (<code>lint-all</code> host mutex)</a></td><td><code>validation</code></td><td>Hard</td></tr>
 </tbody></table>
 <h4>Lifecycle &amp; observability</h4>
 <p class="fam-lede">Live signal surfaces over the fleet.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Authoritative record of which agents are live right now."><td class="c-name"><a href="agent/lifecycle-and-observability/agent-registry.html">Agent-registry (<code>agent-registry.jsonl</code> + marker cache) ★</a></td><td><code>observability</code></td><td>Hard (signal)</td></tr>
+<tr title="Authoritative record of which agents are live right now."><td class="c-name"><a href="agent/lifecycle-and-observability/agent-registry.html">Agent-registry (<code>agent-registry.jsonl</code> + marker cache)</a></td><td><code>observability</code></td><td>Hard (signal)</td></tr>
 <tr title="Typed topics plus a playbook surface fleet health live."><td class="c-name"><a href="agent/lifecycle-and-observability/typed-event-bus.html">Typed event bus + playbook</a></td><td><code>observability</code></td><td>Hard (signal)</td></tr>
 <tr title="Periodic liveness so a hung deploy differs from a slow one."><td class="c-name"><a href="agent/lifecycle-and-observability/deploy-heartbeats.html">Deploy heartbeats + stale-worker detection</a></td><td><code>observability</code></td><td>Hard (signal)</td></tr>
 <tr title="A close record proving a worktree is safe to reclaim."><td class="c-name"><a href="agent/lifecycle-and-observability/tombstone-commits.html">Tombstone commits (lifecycle close records)</a></td><td><code>audit-trail</code></td><td>Hard (audit)</td></tr>
@@ -246,16 +257,16 @@
 <h4>Governance-doc controls</h4>
 <p class="fam-lede">Documentation treated as enforced infrastructure.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="The governance document itself, enforced by its own lints."><td class="c-name"><a href="agent/governance-doc-controls/claude-md-rule-index.html">CLAUDE.md rule index + cap lint ★</a></td><td><code>validation</code></td><td>Soft·Hard</td></tr>
+<tr title="The governance document itself, enforced by its own lints."><td class="c-name"><a href="agent/governance-doc-controls/claude-md-rule-index.html">CLAUDE.md rule index + cap lint</a></td><td><code>validation</code></td><td>Soft·Hard</td></tr>
 <tr title="Brief-linting asserts every required brief snippet is present."><td class="c-name"><a href="agent/governance-doc-controls/mandatory-snippet-table.html">Mandatory snippet-table enforcement</a></td><td><code>validation</code></td><td>Hard</td></tr>
 <tr title="Close an Epic only after re-running its checks at HEAD."><td class="c-name"><a href="agent/governance-doc-controls/epic-definition-of-done.html">Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></td><td><code>quality-gate</code></td><td>Hard</td></tr>
 <tr title="Lints keep docs indexed, provenance-headed, and cross-reference-valid."><td class="c-name"><a href="agent/governance-doc-controls/doc-hygiene-lints.html">Doc-hygiene lints (index coverage, autogen provenance)</a></td><td><code>validation</code></td><td>Hard</td></tr>
 </tbody></table>
-<h3 class="role-h">Models-bridge</h3>
+<h3 class="role-h">Governance: Models — a bridge between agents and product</h3>
 <h4>System models</h4>
 <p class="fam-lede">The typed models the fleet reasons through and the codebase is generated from — the MBSE bridge.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Typed models read every run and generated from — can't drift."><td class="c-name"><a href="models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth (data-not-code, can't drift) ★</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
+<tr title="Typed models read every run and generated from — can't drift."><td class="c-name"><a href="models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth (data-not-code, can't drift)</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
 <tr title="A typed map of every component's code zone and seams."><td class="c-name"><a href="models-bridge/system-models/component-zone-model.html">Component &amp; zone model</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
 <tr title="A registry of every lock, what it guards, and its ordering."><td class="c-name"><a href="models-bridge/system-models/synchronization-model.html">Synchronization model (meta-sync)</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
 <tr title="Declared mediator and single-writer contracts, coverage-checked."><td class="c-name"><a href="models-bridge/system-models/concurrency-contracts.html">Mediator &amp; single-writer contracts</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
@@ -264,14 +275,14 @@
 <tr title="Frozen typed registries for the system's domain facts."><td class="c-name"><a href="models-bridge/system-models/domain-registries.html">Domain registries</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
 <tr title="Bidirectional model↔reality checks so models cannot drift."><td class="c-name"><a href="models-bridge/system-models/drift-parity-gates.html">Drift &amp; parity gates (model↔reality)</a></td><td><code>validation</code></td><td>Hard</td></tr>
 <tr title="Generate real artifacts from the models, provenance-headed."><td class="c-name"><a href="models-bridge/system-models/model-driven-codegen.html">Model-driven codegen</a></td><td><code>validation</code></td><td>Hard</td></tr>
-<tr title="repo-query — the agent-facing read API over the models."><td class="c-name"><a href="models-bridge/system-models/query-surface.html">Model query surface (<code>repo-query</code>)</a></td><td><code>agent-output</code></td><td><strong>Soft</strong></td></tr>
+<tr title="repo-query — the agent-facing read API over the models."><td class="c-name"><a href="models-bridge/system-models/query-surface.html">Model query surface (<code>repo-query</code>)</a></td><td><code>agent-output</code></td><td>Soft</td></tr>
 <tr title="Read the model at runtime; never hardcode a snapshot."><td class="c-name"><a href="models-bridge/system-models/meta-model-consumption.html">Meta-model consumption (read, don't hardcode)</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
 </tbody></table>
-<h3 class="role-h">Product</h3>
+<h3 class="role-h">Governance: Product</h3>
 <h4>Canonical models &amp; seams</h4>
 <p class="fam-lede">The one sanctioned typed model or seam per concern, each held in place by a ban-lint.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="All PDF I/O through one typed model; raw iText banned."><td class="c-name"><a href="product/canonical-models-and-seams/pdf-model.html">PdfModel (sole PDF mutation surface) ★</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
+<tr title="All PDF I/O through one typed model; raw iText banned."><td class="c-name"><a href="product/canonical-models-and-seams/pdf-model.html">PdfModel (sole PDF mutation surface)</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
 <tr title="All OOXML through typed models; raw SDK access banned."><td class="c-name"><a href="product/canonical-models-and-seams/office-models.html">Office Models ({Slides,Docs,Sheets}Model)</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
 <tr title="A BinaryIO seam makes file-path-over-wire impossible."><td class="c-name"><a href="product/canonical-models-and-seams/service-client.html">ServiceClient (typed cross-service seam)</a></td><td><code>bounded-service</code></td><td>Hard</td></tr>
 <tr title="One canonical traversal per tree, not ad hoc recursion."><td class="c-name"><a href="product/canonical-models-and-seams/canonical-walkers.html">Canonical walkers (one traversal per tree)</a></td><td><code>typed-ir</code></td><td>Hard</td></tr>
@@ -280,7 +291,7 @@
 <h4>Validation &amp; conformance</h4>
 <p class="fam-lede">Deterministic pass/fail checks over the artifact.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Assert input content survives remediation — a fidelity gate."><td class="c-name"><a href="product/validation-and-conformance/content-validator.html">ContentValidator (input ⊆ output fidelity) ★</a></td><td><code>validation</code></td><td>Hard</td></tr>
+<tr title="Assert input content survives remediation — a fidelity gate."><td class="c-name"><a href="product/validation-and-conformance/content-validator.html">ContentValidator (input ⊆ output fidelity)</a></td><td><code>validation</code></td><td>Hard</td></tr>
 <tr title="The blocking semantic-lint fleet over the tool's own source."><td class="c-name"><a href="product/validation-and-conformance/semantic-lints.html">Blocking semantic lints</a></td><td><code>validation</code></td><td>Hard</td></tr>
 <tr title="Map each finding to the WCAG/508/PDF-UA criterion it closes."><td class="c-name"><a href="product/validation-and-conformance/standards-rule-engine.html">Standards / WCAG rule engine</a></td><td><code>validation</code></td><td>Hard</td></tr>
 <tr title="Assert independent sources agree — catch cross-source drift."><td class="c-name"><a href="product/validation-and-conformance/coherence-lints.html">Cross-source coherence lints</a></td><td><code>validation</code></td><td>Hard</td></tr>
@@ -288,7 +299,7 @@
 <h4>Regression tests</h4>
 <p class="fam-lede">Repeatable behaviour-pinning bodies.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Cost-stratified test tiers: Smoke, Lite, targeted, full."><td class="c-name"><a href="product/regression-tests/test-onion-tiers.html">Test-onion tiers (Smoke / Lite / targeted / full) ★</a></td><td><code>regression</code></td><td>Hard</td></tr>
+<tr title="Cost-stratified test tiers: Smoke, Lite, targeted, full."><td class="c-name"><a href="product/regression-tests/test-onion-tiers.html">Test-onion tiers (Smoke / Lite / targeted / full)</a></td><td><code>regression</code></td><td>Hard</td></tr>
 <tr title="FsCheck invariants over generated inputs find hidden bugs."><td class="c-name"><a href="product/regression-tests/property-tests.html">FsCheck property tests</a></td><td><code>regression</code></td><td>Hard</td></tr>
 <tr title="Malformed-input campaigns; fix to the spec, not the seed."><td class="c-name"><a href="product/regression-tests/fuzz-campaigns.html">Fuzz campaigns (+ auto-coverage)</a></td><td><code>regression</code></td><td>Hard</td></tr>
 <tr title="Doc-derived characterization pinned to a cited source."><td class="c-name"><a href="product/regression-tests/ddt-pin-trailers.html">DDT pin-trailers</a></td><td><code>regression</code></td><td>Hard</td></tr>
@@ -296,7 +307,7 @@
 <h4>Provenance &amp; attribution</h4>
 <p class="fam-lede">Durable records of what the tool changed.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Every mutation embeds an attribution stamp in the artifact."><td class="c-name"><a href="product/provenance-and-attribution/mutator-stamps.html">Per-mutator attribution stamps ★</a></td><td><code>audit-trail</code></td><td>Hard (audit)</td></tr>
+<tr title="Every mutation embeds an attribution stamp in the artifact."><td class="c-name"><a href="product/provenance-and-attribution/mutator-stamps.html">Per-mutator attribution stamps</a></td><td><code>audit-trail</code></td><td>Hard (audit)</td></tr>
 <tr title="Fail the build if any mutator verb lacks a stamp."><td class="c-name"><a href="product/provenance-and-attribution/f10-wiring-lint.html">F10 mutator-stamp-wiring lint</a></td><td><code>validation</code></td><td>Hard</td></tr>
 <tr title="Reconstruct the attributed mutation history from the stamps."><td class="c-name"><a href="product/provenance-and-attribution/derive-changelog.html"><code>derive-changelog</code> (reconstruct mutations)</a></td><td><code>audit-trail</code></td><td>Hard (audit)</td></tr>
 <tr title="Prefix invisible inserts so they're distinguishable and tracked."><td class="c-name"><a href="product/provenance-and-attribution/a11y-prefix.html"><code>a11y_</code> prefix convention</a></td><td><code>repair-vocab</code></td><td>Hard</td></tr>
@@ -304,9 +315,9 @@
 <h4>Repair vocabulary</h4>
 <p class="fam-lede">The bounded move-space of the remediator.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Form</th><th>Enf.</th></tr></thead><tbody>
-<tr title="Typed enums replace free-form failure strings."><td class="c-name"><a href="product/repair-vocabulary/typed-categories.html">Typed <code>ViolationCategory</code> / <code>FailureCategory</code> enums ★</a></td><td><code>repair-vocab</code></td><td>Hard</td></tr>
+<tr title="Typed enums replace free-form failure strings."><td class="c-name"><a href="product/repair-vocabulary/typed-categories.html">Typed <code>ViolationCategory</code> / <code>FailureCategory</code> enums</a></td><td><code>repair-vocab</code></td><td>Hard</td></tr>
 <tr title="A closed, named set of remediation actions — bounded moves."><td class="c-name"><a href="product/repair-vocabulary/remediation-verbs.html">Closed remediation-verb sets</a></td><td><code>repair-vocab</code></td><td>Hard</td></tr>
-<tr title="For 50+ deterministic sites, write one AST transformer."><td class="c-name"><a href="product/repair-vocabulary/codemod-first.html">Codemod-first threshold (N≳50 → AST transformer)</a></td><td><code>repair-vocab</code></td><td><strong>Soft</strong></td></tr>
+<tr title="For 50+ deterministic sites, write one AST transformer."><td class="c-name"><a href="product/repair-vocabulary/codemod-first.html">Codemod-first threshold (N≳50 → AST transformer)</a></td><td><code>repair-vocab</code></td><td>Soft</td></tr>
 </tbody></table>
 </section>
 <footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a></footer>
