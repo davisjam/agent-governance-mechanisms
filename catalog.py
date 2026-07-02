@@ -472,6 +472,64 @@ def build_census(entries: list[Entry]) -> str:
     return "\n".join(out)
 
 
+LANDING_CSS = """
+  .loop { border:1px solid var(--line); border-radius:11px; padding:16px 17px 15px; margin:4px 0 20px; background:#fbfcfd; }
+  .loop .hd { margin:0 0 12px; font-size:14px; color:#222; }
+  .flow { display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; }
+  .fstep { flex:1 1 150px; min-width:140px; border:1.4px solid #e2e8f0; border-top:3px solid var(--accent);
+           border-radius:9px; padding:9px 11px; background:#fff; position:relative; }
+  .fstep .fn { display:inline-flex; align-items:center; justify-content:center; width:19px; height:19px;
+               border-radius:50%; background:var(--accent); color:#fff; font-size:11px; font-weight:800; margin-bottom:5px; }
+  .fstep b { display:block; font-size:12.5px; line-height:1.25; margin-bottom:3px; }
+  .fstep span { font-size:11px; color:var(--muted); line-height:1.35; }
+  .farrow { align-self:center; color:#94a3b8; font-size:18px; font-weight:700; }
+  @media (max-width:720px){ .farrow{ transform:rotate(90deg); width:100%; text-align:center; } .fstep{ flex-basis:100%; } }
+  .loop .tail { margin:12px 0 0; font-size:12.5px; color:#444; line-height:1.55; }
+  .refs { margin:0 0 24px; }
+  .refs .r { border-left:3px solid var(--accent); padding:3px 0 3px 12px; margin:0 0 7px; font-size:13px; color:#444; }
+  .refs .r b { color:#333; font-weight:700; }
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:11px; margin:0 0 26px; }
+  .lcard { display:block; text-decoration:none; border:1.4px solid var(--line); border-radius:10px;
+           padding:13px 15px; background:#fff; transition:box-shadow .12s, border-color .12s; }
+  .lcard:hover { box-shadow:0 3px 12px rgba(0,0,0,.09); border-color:#cbd5e1; }
+  .lcard b { display:block; font-size:16px; color:var(--link); letter-spacing:-.01em; margin-bottom:3px; }
+  .lcard span { display:block; font-size:12px; color:var(--muted); line-height:1.4; }
+"""
+
+# (title, subtitle, href, extra-attrs) for the landing action cards
+LANDING_CARDS = [
+    ("The control-map figure", "the whole catalogue at a glance — four views, controls clickable", "catalogue-figure.html", ""),
+    ("Interactive views", "every control, re-grouped live from metadata", "catalogue-views.html", ""),
+    ("Quick start", "adopt these in your own repo", "quick-start.html", ""),
+    ("Browse on GitHub", "README · INDEX · every control's full writeup", "https://github.com/davisjam/agent-governance-mechanisms", ""),
+    ("Starter CLAUDE.md", "a real, mature one — redacted; a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
+    ("Download the catalogue", "all writeups as a markdown ZIP", "https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip", ""),
+]
+
+_FLOW = [
+    ("Velocity exposes failure", "agent changes surface ambiguity, drift, weak boundaries — fast"),
+    ("A human classifies it", "local defect, or a recurring structural weakness?"),
+    ("Convert to governance", "encode it: a type, lint, schema, gate, or harness rule"),
+    ("Action space narrows", "every later agent inherits a smaller, more explicit space"),
+    ("Governability compounds", "the environment absorbs more agent work; velocity is sustainable"),
+]
+
+
+def _landing_flow() -> str:
+    steps = []
+    for i, (title, detail) in enumerate(_FLOW, 1):
+        steps.append(f'<div class="fstep"><span class="fn">{i}</span><b>{title}</b><span>{detail}</span></div>')
+        if i < len(_FLOW):
+            steps.append('<div class="farrow">→</div>')
+    return "\n    ".join(steps)
+
+
+def _landing_cards() -> str:
+    return "\n  ".join(
+        f'<a class="lcard" href="{href}"{extra}><b>{t}</b><span>{sub}</span></a>'
+        for t, sub, href, extra in LANDING_CARDS)
+
+
 LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engineering</div>
   <h1>Agent Governance Mechanisms</h1>
   <p class="subtitle">When a fleet of AI agents writes code faster than any human can review it, the scarce
@@ -480,37 +538,26 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   mechanisms</b> that make that shift work — {n} controls across three roles, each written like a design
   pattern: the recurring failure it kills, and why it is <i>not</i> just the cheaper thing everyone does.</p>
 
-  <div style="border:1px solid #e2e8f0;border-radius:9px;padding:13px 16px;margin:2px 0 20px;background:#fbfcfd;">
-  <p style="margin:0 0 7px;font-size:13.5px;color:#222;"><b>A new kind of software-engineering process.</b>
-  These mechanisms are what a loop called <b>governance conversion</b> produces:</p>
-  <p style="margin:0;font-size:12.8px;color:#444;line-height:1.6;">
-  ① agentic <b>velocity exposes</b> a recurring structural failure &nbsp;→&nbsp;
-  ② a human <b>classifies</b> it — local defect or structural weakness? &nbsp;→&nbsp;
-  ③ the failure is <b>converted into governance</b>: a type, lint, schema, gate, or harness rule &nbsp;→&nbsp;
-  ④ every later agent <b>inherits a narrower action space</b> &nbsp;→&nbsp;
-  ⑤ governability <b>compounds</b>.<br>
-  Implementation is cheap; the judgment that decides <i>which governance should exist</i> is the costly,
-  human part. The catalogue below is the repertoire that loop produced in one real production system.</p>
+  <div class="loop">
+    <p class="hd"><b>A new kind of software-engineering process.</b> These mechanisms are what a loop
+    called <b>governance conversion</b> produces:</p>
+    <div class="flow">
+    {flow}
+    </div>
+    <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
+    exist</i> is the costly, human part. The catalogue below is the repertoire that loop produced in one
+    real production system.</p>
   </div>
 
-  <p style="font-size:12.5px;color:#666;border-left:3px solid #b45309;padding:4px 0 4px 12px;margin:0 0 22px;">
-  From the case study <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly Judgment: A Case
-  Study on Governable Agentic Software Engineering</i></a> &nbsp;·&nbsp; the live system it governs:
-  <a href="https://scholaccess.com">scholaccess.com</a>.</p>
-  <ul style="list-style:none;padding:0;margin:0 0 18px;font-size:14px;">
-  <li style="margin-bottom:8px;"><a href="catalogue-figure.html"><b>▸ The control-map figure</b></a>
-    <span style="color:#555;">— the whole catalogue at a glance: four views (census · staircase · lattice · model-bridge), controls clickable</span></li>
-  <li style="margin-bottom:8px;"><a href="catalogue-views.html">▸ Interactive views</a>
-    <span style="color:#555;">— every control clickable + hover-summaries, re-grouped live from metadata; adding one is data, not layout</span></li>
-  <li style="margin-bottom:8px;"><a href="quick-start.html">▸ Quick start — adopt these in your repo</a>
-    <span style="color:#555;">— install a governance doc, point your agent here, ask for an adopt/adapt plan</span></li>
-  <li style="margin-bottom:8px;"><a href="https://github.com/davisjam/agent-governance-mechanisms">▸ Browse the source on GitHub</a>
-    <span style="color:#555;">— README · INDEX · every control as a full writeup</span></li>
-  <li style="margin-bottom:8px;"><a href="downloads/CLAUDE-starter.md" download>▸ Download a starter <code>CLAUDE.md</code></a>
-    <span style="color:#555;">— the governance-rules half of a real, mature one (identity redacted); a menu to adapt</span></li>
-  <li><a href="https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip">▸ Download the catalogue</a>
-    <span style="color:#555;">— the full set of markdown writeups as a ZIP</span></li>
-  </ul>
+  <div class="refs">
+    <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
+    Judgment: A Case Study on Governable Agentic Software Engineering</i></a></div>
+    <div class="r"><b>Live system it governs:</b> <a href="https://scholaccess.com">scholaccess.com</a></div>
+  </div>
+
+  <div class="cards-grid">
+  {cards}
+  </div>
 """
 
 
@@ -651,12 +698,12 @@ def cmd_build(_args) -> int:
         open(out_path, "w", encoding="utf-8").write(html)
         written += 1
     # landing index.html = intro + census (overwrites the hand-authored placeholder)
-    landing_body = LANDING_INTRO.format(n=len(entries)) + "\n" + build_census(entries) + \
+    landing_body = LANDING_INTRO.format(n=len(entries), flow=_landing_flow(), cards=_landing_cards()) + "\n" + build_census(entries) + \
         '\n  <p class="foot">Built from the markdown by <code>catalog.py build</code>. '\
         'Hover a control for its one-line summary; click to open its writeup.</p>'
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
-               f"<title>Agent Governance Mechanisms</title>\n<style>{PAGE_CSS}</style>\n</head>\n"
+               f"<title>Agent Governance Mechanisms</title>\n<style>{PAGE_CSS}{LANDING_CSS}</style>\n</head>\n"
                f"<body>\n<main>\n{landing_body}\n</main>\n</body>\n</html>\n")
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
