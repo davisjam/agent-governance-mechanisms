@@ -9,16 +9,13 @@ recurring failure it kills, and why it is **not** just the cheaper thing everyon
 
 ## Between two schools of thought
 
-Two common ways to build with agents sit at opposite poles; this catalogue is about the **midway**.
+Two common ways to build with agents sit at opposite poles. This catalogue is about the **midway**.
 
-- **Vibe coding** — prompt, accept what looks right, iterate by feel. Fast, but the same failures keep
-  recurring and human review becomes the bottleneck.
-- **Oversight-centric** — check *everything* before you trust it, whether a human reviews every change or
-  a formal specification is verified against (spec-driven development is this). Rigorous, but checking is
-  the bottleneck, and neither humans nor specs anticipate what only breaks at velocity.
-- **Governance-centric (the midway)** — let velocity *expose* failures, and *convert* each recurring one
-  into a durable guardrail. The guardrails grow from real failures, so code stays fast **and**
-  trustworthy. This is **governance conversion**.
+| Vibe coding | · Governance-centric · — **the midway** | Oversight-centric |
+|:---|:---:|:---|
+| Prompt, accept what looks right, iterate by feel. Fast — but the same failures keep recurring and human review becomes the bottleneck. | Let velocity **expose** failures, and **convert** each recurring one into a durable guardrail. The guardrails grow from real failures, so code stays fast **and** trustworthy. This is **governance conversion**. | Check *everything* before you trust it — a human reviewing every change, or a formal spec verified against (spec-driven development is this). Rigorous — but checking is the bottleneck, and neither humans nor specs anticipate what only breaks at velocity. |
+| *all velocity — no guardrails* | *velocity + guardrails grown from failure* | *all oversight — everything checked* |
+| e.g. [Karpathy](https://x.com/karpathy/status/1886192184808149383) · [Gas Town](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04) | | e.g. [Meyer, CACM](https://dl.acm.org/doi/full/10.1145/3773295) · [vibe-OS / vibe-tools](https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html) |
 
 ## Governance has two mechanisms
 
