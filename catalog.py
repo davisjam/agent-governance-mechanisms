@@ -320,8 +320,13 @@ PAGE_CSS = """
   .subtitle { font-size: 15px; color:#444; font-style: italic; margin: 0 0 6px; }
   .tag { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:#c2410c; border-top:2px solid var(--line); padding-top:14px; margin-top:26px; }
+  .census .role-note { font-size:12.5px; color:#8a5320; background:#fff8f0; border-left:3px solid var(--accent);
+                       padding:7px 12px; border-radius:0 6px 6px 0; margin:2px 0 10px; }
   table.census-t td.c-name a { font-weight:600; text-decoration:none; }
   table.census-t td.c-name a:hover { text-decoration:underline; }
+  table.census-t td.c-sum { font-size:12.5px; color:#444; }
+  table.census-t td.c-enf { white-space:nowrap; color:#333; }
+  table.census-t th, table.census-t td { vertical-align:top; }
   table.census-t tr:hover { background:#fafcff; }
   .fam-lede { font-size:13px; color:var(--muted); font-style:italic; margin:2px 0 6px; }
   .foot { font-size: 12.5px; color: var(--muted); border-top:1px solid var(--line); padding-top:14px; margin-top: 34px; }
@@ -475,11 +480,11 @@ def parse_census() -> list[dict]:
 
 
 CENSUS_LEGEND = (
-    '<p class="census-legend"><b>Form</b> is the shape a control takes (one of nine — a typed IR, a '
-    'validation check, a quality gate, an audit trail, …). <b>Enf.</b> is how it enforces: '
-    '<b>Hard</b> is deterministic (blocks, audits, or signals regardless of agent cooperation), '
-    '<b>Soft</b> is probabilistic (aims an agent but cannot block), and <b>Soft·Hard</b> is soft '
-    'guidance with a hard counterpart. Hover a row for its summary; click a name for the full writeup.</p>')
+    '<p class="census-legend">A <b>representative</b> selection — control <i>patterns</i>, not an '
+    'exhaustive list of every lint and gate in the system. Each row is one control with its one-line '
+    '<b>Summary</b> and how it <b>Enforces</b>: <b>Hard</b> is deterministic (blocks, audits, or signals '
+    'regardless of agent cooperation), <b>Soft</b> is probabilistic (aims an agent but cannot block), and '
+    '<b>Soft·Hard</b> is soft guidance with a hard counterpart. Click a name for the full writeup.</p>')
 
 ROLE_HEADINGS = {
     "Agent": "Governance: Agents",
@@ -488,27 +493,36 @@ ROLE_HEADINGS = {
     "Product": "Governance: Product",
 }
 
+ROLE_NOTES = {
+    "Product": "This is the part that's specific to the ScholAccess project — you'll need your own for "
+               "your project.",
+}
+
 
 def build_census(entries: list[Entry]) -> str:
     summ = {e.path: e.summary for e in entries}
-    out = ['<section class="census">', '<h2>The catalogue — every control</h2>', CENSUS_LEGEND]
+    out = ['<section class="census">', '<h2>The catalogue</h2>', CENSUS_LEGEND]
     last = None
     for fam in parse_census():
         if fam["role"] != last:
             heading = ROLE_HEADINGS.get(fam["role"] or "", f'Governance: {fam["role"]}')
-            out.append(f'<h3 class="role-h">{_attr(heading)}</h3>'); last = fam["role"]
+            out.append(f'<h3 class="role-h">{_attr(heading)}</h3>')
+            note = ROLE_NOTES.get(fam["role"] or "")
+            if note:
+                out.append(f'<p class="role-note">{_attr(note)}</p>')
+            last = fam["role"]
         out.append(f'<h4>{_attr(fam["family"])}</h4>')
         if fam["oneliner"]:
             out.append(f'<p class="fam-lede">{_inline(fam["oneliner"])}</p>')
-        out.append('<table class="census-t"><thead><tr><th>Control</th><th>Form</th>'
-                   "<th>Enf.</th></tr></thead><tbody>")
+        out.append('<table class="census-t"><thead><tr><th>Control</th><th>Summary</th>'
+                   "<th>Enforcement</th></tr></thead><tbody>")
         for r in fam["rows"]:
             href = _md_link_rewrite(r["path"])
-            tip = _attr(summ.get(os.path.normpath(r["path"]), ""))
+            summary = _inline(summ.get(os.path.normpath(r["path"]), ""))
             enf = _inline(r["enf"].replace("**", ""))   # no random bolding of Soft/Hard
             out.append(
-                f'<tr title="{tip}"><td class="c-name"><a href="{href}">{_inline(r["control"])}</a></td>'
-                f'<td><code>{r["form"]}</code></td><td>{enf}</td></tr>')
+                f'<tr><td class="c-name"><a href="{href}">{_inline(r["control"])}</a></td>'
+                f'<td class="c-sum">{summary}</td><td class="c-enf">{enf}</td></tr>')
         out.append("</tbody></table>")
     out.append("</section>")
     return "\n".join(out)
@@ -526,14 +540,17 @@ LANDING_CSS = """
   .fstep span { font-size:11px; color:var(--muted); line-height:1.35; }
   .farrow { align-self:center; color:#94a3b8; font-size:18px; font-weight:700; }
   @media (max-width:720px){ .farrow{ transform:rotate(90deg); width:100%; text-align:center; } .fstep{ flex-basis:100%; } }
-  .mustache { display:block; width:100%; height:44px; margin:2px 0 0; }
+  .mustache { display:block; width:100%; height:auto; margin:0; }
   .loop-outcome { text-align:center; margin:10px 0 2px; font-size:13px; color:#333; }
   .loop-outcome b { color:var(--accent); }
   .loop .tail { margin:14px 0 0; font-size:12.5px; color:#444; line-height:1.55; text-align:center; }
+  .tail-pair { max-width:760px; margin:8px auto 0; padding-left:20px; }
+  .tail-pair li { font-size:12.5px; color:#444; line-height:1.5; margin:0 0 6px; }
   .refs { margin:0 0 24px; }
   .refs .r { border-left:3px solid var(--accent); padding:3px 0 3px 12px; margin:0 0 7px; font-size:13px; color:#444; }
   .refs .r b { color:#333; font-weight:700; }
-  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:11px; margin:0 0 26px; }
+  .cards-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin:0 0 26px; }
+  @media (max-width:640px){ .cards-grid { grid-template-columns:1fr; } }
   .lcard { display:block; text-decoration:none; border:1.4px solid var(--line); border-radius:10px;
            padding:13px 15px; background:#fff; transition:box-shadow .12s, border-color .12s; }
   .lcard:hover { box-shadow:0 3px 12px rgba(0,0,0,.09); border-color:#cbd5e1; }
@@ -605,11 +622,11 @@ def _landing_flow() -> str:
         if i < len(_FLOW):
             steps.append('<div class="farrow">→</div>')
     row = '<div class="flow">\n    ' + "\n    ".join(steps) + '\n    </div>'
-    mustache = ('<svg class="mustache" viewBox="0 0 1000 58" preserveAspectRatio="none" aria-hidden="true">'
-                '<path d="M980 6 C 980 52, 560 55, 500 55 C 440 55, 20 52, 20 6" fill="none" '
-                'stroke="#94a3b8" stroke-width="2.5" vector-effect="non-scaling-stroke"/>'
-                '<path d="M20 6 l 13 -3 M20 6 l 9 10" fill="none" stroke="#94a3b8" stroke-width="2.5" '
-                'stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>')
+    # return arc from the centre of box 4 (x≈885) back to the centre of box 1 (x≈115), arrowhead up into box 1
+    mustache = ('<svg class="mustache" viewBox="0 0 1000 76" aria-hidden="true">'
+                '<path d="M885 10 C 885 64, 560 70, 500 70 C 440 70, 115 64, 115 10" '
+                'fill="none" stroke="#9aa4b2" stroke-width="2.5"/>'
+                '<polygon points="115,3 107,17 123,17" fill="#9aa4b2"/></svg>')
     outcome = f'<p class="loop-outcome"><b>{_FLOW_OUTCOME[0]}.</b> {_FLOW_OUTCOME[1]}</p>'
     return row + "\n    " + mustache + "\n    " + outcome
 
@@ -764,8 +781,13 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <div class="loop">
     {flow}
     <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
-    exist</i> is the costly, human part. Two dual theses hold it together: governance makes velocity
-    sustainable, and judgment determines which governance should exist.</p>
+    exist</i> is the costly, human part. Two paired concepts hold it together:</p>
+    <ul class="tail-pair">
+      <li><b>Governance makes velocity sustainable</b> — guardrails are what let the fleet keep shipping
+      fast without drowning in its own failures.</li>
+      <li><b>Judgment decides which governance to build</b> — recognizing which failures deserve a
+      guardrail (and which are one-offs) is the hard, human call.</li>
+    </ul>
   </div>
 
   <hr class="sep" />
@@ -874,7 +896,7 @@ def build_views_page(entries: list[Entry]) -> str:
             f"<title>Governance catalogue — codegen'd views</title>\n{FONTS_LINK}\n"
             f"<style>{VIEWS_CSS}{FONT_CSS}</style>\n</head>\n<body>\n")
     body = ("<h1>Governance catalogue — codegen'd views</h1>\n"
-            '<p class="sub">The same 51 controls, re-grouped live from card metadata. Every card is emitted by '
+            f'<p class="sub">The same {len(entries)} controls, re-grouped live from card metadata. Every card is emitted by '
             '<code>renderForView(card)</code>; a view is just a grouping key + order, so <b>adding a control or a '
             'view is data, not layout</b>. Click a card for its writeup; hover for its one-line summary. '
             '&nbsp;·&nbsp; <a href="catalogue-figure.html">the control-map figure</a> '

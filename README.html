@@ -32,8 +32,13 @@
   .subtitle { font-size: 15px; color:#444; font-style: italic; margin: 0 0 6px; }
   .tag { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:#c2410c; border-top:2px solid var(--line); padding-top:14px; margin-top:26px; }
+  .census .role-note { font-size:12.5px; color:#8a5320; background:#fff8f0; border-left:3px solid var(--accent);
+                       padding:7px 12px; border-radius:0 6px 6px 0; margin:2px 0 10px; }
   table.census-t td.c-name a { font-weight:600; text-decoration:none; }
   table.census-t td.c-name a:hover { text-decoration:underline; }
+  table.census-t td.c-sum { font-size:12.5px; color:#444; }
+  table.census-t td.c-enf { white-space:nowrap; color:#333; }
+  table.census-t th, table.census-t td { vertical-align:top; }
   table.census-t tr:hover { background:#fafcff; }
   .fam-lede { font-size:13px; color:var(--muted); font-style:italic; margin:2px 0 6px; }
   .foot { font-size: 12.5px; color: var(--muted); border-top:1px solid var(--line); padding-top:14px; margin-top: 34px; }
@@ -51,7 +56,7 @@
 <main>
 <nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Agent Governance Mechanisms</nav>
 <h1>Agent Governance Mechanisms</h1>
-<p>&lt;!-- summary: A pattern catalogue of the controls for governable agentic software engineering — 51 across three roles. --&gt;</p>
+<p>&lt;!-- summary: A pattern catalogue of the controls for governable agentic software engineering — 53 across three roles. --&gt;</p>
 <p><em>A catalogue of the <strong>governance mechanisms</strong> that keep a fleet of AI coding agents productive while holding the cost of their failures within bounds — distilled from a 12-week case study of building a production system with frontier coding agents. Each mechanism is written like a design pattern: the recurring failure it kills, and why it is <strong>not</strong> just the cheaper thing everyone already does.</em></p>
 <h2>Between two schools of thought</h2>
 <p>Two common ways to build with agents sit at opposite poles. This catalogue is about the <strong>midway</strong>.</p>

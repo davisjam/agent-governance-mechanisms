@@ -3,7 +3,7 @@
 Every control, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All 51 entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All 53 entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Enforcement: soft vs hard*): **`Hard`** = deterministic
@@ -51,7 +51,7 @@ soft guidance with a hard counterpart.
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Agent-registry (`agent-registry.jsonl` + marker cache) | `observability` | Hard (signal) | [agent-registry.md](agent/lifecycle-and-observability/agent-registry.md) |
-| ✅ | Typed event bus + playbook | `observability` | Hard (signal) | [typed-event-bus.md](agent/lifecycle-and-observability/typed-event-bus.md) |
+| ✅ | Orchestrator-as-reactor over an event bus | `observability` | Hard (signal) | [typed-event-bus.md](agent/lifecycle-and-observability/typed-event-bus.md) |
 | ✅ | Deploy heartbeats + stale-worker detection | `observability` | Hard (signal) | [deploy-heartbeats.md](agent/lifecycle-and-observability/deploy-heartbeats.md) |
 | ✅ | Tombstone commits (lifecycle close records) | `audit-trail` | Hard (audit) | [tombstone-commits.md](agent/lifecycle-and-observability/tombstone-commits.md) |
 | ✅ | Cron-alerts gate | `observability` | Hard (blocking) | [cron-alerts-gate.md](agent/lifecycle-and-observability/cron-alerts-gate.md) |
@@ -66,6 +66,8 @@ soft guidance with a hard counterpart.
 | ✅ | Mandatory snippet-table enforcement | `validation` | Hard | [mandatory-snippet-table.md](agent/governance-doc-controls/mandatory-snippet-table.md) |
 | ✅ | Epic Definition-of-Done (Final-Opus trust-nothing re-run) | `quality-gate` | Hard | [epic-definition-of-done.md](agent/governance-doc-controls/epic-definition-of-done.md) |
 | ✅ | Doc-hygiene lints (index coverage, autogen provenance) | `validation` | Hard | [doc-hygiene-lints.md](agent/governance-doc-controls/doc-hygiene-lints.md) |
+| ✅ | Operational playbooks (situation-keyed devops procedures) | `agent-output` | Soft | [operational-playbooks.md](agent/governance-doc-controls/operational-playbooks.md) |
+| ✅ | Epic & design-doc templates | `agent-output` | Soft·Hard | [epic-and-design-templates.md](agent/governance-doc-controls/epic-and-design-templates.md) |
 
 # Models-bridge
 
@@ -146,7 +148,7 @@ soft guidance with a hard counterpart.
 
 ---
 
-**Three roles complete — 51 controls across 11 families, all fully developed.**
+**Three roles complete — 53 controls across 11 families, all fully developed.**
 **Agent (20):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (3) ·
 Lifecycle & observability (5) · Governance-doc controls (4, incl. the **CLAUDE.md rule index**
 meta-control).

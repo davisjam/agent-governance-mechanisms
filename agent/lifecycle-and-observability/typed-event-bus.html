@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Typed event bus + playbook</title>
+<title>Orchestrator-as-reactor over an event bus</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
@@ -32,8 +32,13 @@
   .subtitle { font-size: 15px; color:#444; font-style: italic; margin: 0 0 6px; }
   .tag { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:#c2410c; border-top:2px solid var(--line); padding-top:14px; margin-top:26px; }
+  .census .role-note { font-size:12.5px; color:#8a5320; background:#fff8f0; border-left:3px solid var(--accent);
+                       padding:7px 12px; border-radius:0 6px 6px 0; margin:2px 0 10px; }
   table.census-t td.c-name a { font-weight:600; text-decoration:none; }
   table.census-t td.c-name a:hover { text-decoration:underline; }
+  table.census-t td.c-sum { font-size:12.5px; color:#444; }
+  table.census-t td.c-enf { white-space:nowrap; color:#333; }
+  table.census-t th, table.census-t td { vertical-align:top; }
   table.census-t tr:hover { background:#fafcff; }
   .fam-lede { font-size:13px; color:var(--muted); font-style:italic; margin:2px 0 6px; }
   .foot { font-size: 12.5px; color: var(--muted); border-top:1px solid var(--line); padding-top:14px; margin-top: 34px; }
@@ -49,17 +54,17 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../agent/README.html">Agent</a> &nbsp;/&nbsp; Lifecycle &amp; observability &nbsp;/&nbsp; Typed event bus + playbook</nav>
-<p class="subtitle">Typed topics plus a playbook surface fleet health live.</p>
-<h1>Typed event bus + playbook</h1>
-<p><strong>Intent</strong> — A typed event bus with a closed, const-string topic registry and a companion playbook, over which substrate emits lifecycle/health events — so the orchestrator observes fleet health from a <em>queryable, self-documenting</em> signal surface rather than by grepping prose logs.</p>
-<table><tbody><tr><td>Summary</td><td>Typed topics plus a playbook surface fleet health live.</td></tr><tr><td>Target</td><td>Agent · <strong>Lifecycle &amp; observability</strong></td></tr><tr><td>Form</td><td><code>observability</code></td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>signal</em> — emission is mechanical; the bus itself does not block (the derived alerts gate does)</td></tr></tbody></table>
+<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../agent/README.html">Agent</a> &nbsp;/&nbsp; Lifecycle &amp; observability &nbsp;/&nbsp; Orchestrator-as-reactor over an event bus</nav>
+<p class="subtitle">The orchestrator reacts to typed fleet events via a per-topic playbook.</p>
+<h1>Orchestrator-as-reactor over an event bus</h1>
+<p><strong>Intent</strong> — A typed event bus with a closed, const-string topic registry and a companion <strong>playbook</strong>, over which substrate emits lifecycle/health events — turning the orchestrator into a <strong>reactor</strong> over the fleet: it reads health from a <em>queryable, self-documenting</em> signal surface and <em>reacts</em> to each event with a playbook-prescribed response, which is what keeps a fleet of agents productive over long-running sessions rather than drifting into silent breakage.</p>
+<table><tbody><tr><td>Summary</td><td>The orchestrator reacts to typed fleet events via a per-topic playbook.</td></tr><tr><td>Target</td><td>Agent · <strong>Lifecycle &amp; observability</strong></td></tr><tr><td>Form</td><td><code>observability</code></td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>signal</em> — emission is mechanical; the bus itself does not block (the derived alerts gate does)</td></tr></tbody></table>
 <h2>Motivation — the failure it kills</h2>
-<p>A fleet's health — is cron running, is the merge-train yielding, are tombstones stuck — is <strong>invisible without a signal surface</strong>, so degradation accretes silently (cron broken for hours before anyone notices). The failure is <em>silent substrate degradation</em>, and it recurs continuously: the orchestrator flies blind between the moment something breaks and the moment its downstream effect becomes obvious.</p>
+<p>A fleet's health — is cron running, is the merge-train yielding, are tombstones stuck — is <strong>invisible without a signal surface</strong>, so degradation accretes silently (cron broken for hours before anyone notices). Worse, without a reaction loop the orchestrator is a passive observer: it can only steer the fleet if it <em>reacts</em> to what the substrate reports. The failure is <em>silent substrate degradation and an un-reacting orchestrator</em>, and it recurs continuously across a long session — the fleet slowly stops being productive while each dispatch still looks locally fine.</p>
 <h2>Why it's not just "log it and grep the logs"</h2>
 <p>Free-form logs are a <strong>pull</strong> model: you have to know to look, and then parse prose. A <strong>typed</strong> event bus gives a <em>queryable</em> surface, and its topics are a <strong>closed const-string namespace</strong> (a typed registry, lint-enforced) — so a typo can't silently create a dead topic that disables a signal. Most important, every topic carries a <strong>playbook entry</strong>: baseline-healthy, what-looks-wrong, and a target §Q lookup (rule #46 makes a missing playbook entry an <em>incomplete substrate design</em>). The distinction is <em>a typed, queryable, self-documenting signal with an owned playbook</em> versus <em>unstructured logs you must remember to grep and know how to read</em>.</p>
 <h2>Mechanism</h2>
-<p>Emitters call <code>event-bus.py</code> with a topic drawn from the const-string registry. The playbook maps each topic → healthy / wrong / §Q entry. Rule #46 requires any design doc that introduces a topic to carry an Observability block (lint AUDIT-ONLY → BLOCKING). Rule #47 sets the <em>consumption</em> cadence: the orchestrator polls at session start and after cherry-pick waves, with named anomaly triggers (yields &gt;3 in a row, <code>discard_lint</code>, <code>no_op</code> &gt;30 min with tombstones queued).</p>
+<p>Emitters call <code>event-bus.py</code> with a topic drawn from the const-string registry. The playbook maps each topic → healthy / wrong / §Q entry. Rule #46 requires any design doc that introduces a topic to carry an Observability block (lint AUDIT-ONLY → BLOCKING). Rule #47 sets the <em>consumption</em> cadence: the orchestrator polls at session start and after cherry-pick waves, with named anomaly triggers (yields &gt;3 in a row, <code>discard_lint</code>, <code>no_op</code> &gt;30 min with tombstones queued). Together these are the <strong>reactor loop</strong>: emit → the orchestrator reads the queryable surface → matches the event to its playbook entry → takes the prescribed action (dispatch a fix, open a recovery playbook, hold new work). The playbook is the load-bearing half — it is what turns a raw signal into a <em>reaction</em> rather than a passive read.</p>
 <h2>Prerequisites</h2>
 <ul><li><strong>A typed topic registry</strong> (const strings + a lint) so topics are enumerable and typo-proof.</li><li><strong>Emit points wired into the substrate</strong> at the events that matter.</li><li><strong>A playbook keyed by topic</strong> — the signal is only actionable if each topic says what healthy and broken look like.</li><li><strong>An orchestrator that actually polls it</strong> on a defined cadence.</li></ul>
 <h2>Consequences &amp; costs</h2>
@@ -67,7 +72,7 @@
 <h2>Known uses</h2>
 <ul><li><code>event-bus.py</code> + the const-string topic registry.</li><li>The event-bus playbook (topic → healthy / wrong / §Q); rule #46's Observability-block requirement.</li><li>Rule #47's session-start + post-cherry-pick monitoring cadence.</li></ul>
 <h2>Related controls</h2>
-<ul><li><strong>Enabler</strong> — <a href="cron-alerts-gate.html">cron-alerts-gate</a>: alerts are <em>derived events</em> on this bus, promoted into a blocking gate.</li><li><strong>Counterpart</strong> — the rule-#46 Observability-block lint keeps every emitting substrate's topics documented (the playbook honest).</li><li><em>See also (sibling)</em> — <a href="agent-registry.html">agent-registry</a>, <a href="deploy-heartbeats.html">deploy-heartbeats</a>: the fleet's other signal surfaces.</li></ul>
+<ul><li><strong>Consumer</strong> — the <em>reaction</em> half is an <a href="../governance-doc-controls/operational-playbooks.html">operational playbook</a>: each topic's playbook entry is the situation-keyed procedure the orchestrator runs when the event fires.</li><li><strong>Enabler</strong> — <a href="cron-alerts-gate.html">cron-alerts-gate</a>: alerts are <em>derived events</em> on this bus, promoted into a blocking gate.</li><li><strong>Counterpart</strong> — the rule-#46 Observability-block lint keeps every emitting substrate's topics documented (the playbook honest).</li><li><em>See also (sibling)</em> — <a href="agent-registry.html">agent-registry</a>, <a href="deploy-heartbeats.html">deploy-heartbeats</a>: the fleet's other signal surfaces.</li></ul>
 <footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a></footer>
 </main>
 </body>

@@ -1,12 +1,14 @@
-# Typed event bus + playbook
+# Orchestrator-as-reactor over an event bus
 
-**Intent** — A typed event bus with a closed, const-string topic registry and a companion playbook,
-over which substrate emits lifecycle/health events — so the orchestrator observes fleet health from a
-*queryable, self-documenting* signal surface rather than by grepping prose logs.
+**Intent** — A typed event bus with a closed, const-string topic registry and a companion **playbook**,
+over which substrate emits lifecycle/health events — turning the orchestrator into a **reactor** over the
+fleet: it reads health from a *queryable, self-documenting* signal surface and *reacts* to each event
+with a playbook-prescribed response, which is what keeps a fleet of agents productive over long-running
+sessions rather than drifting into silent breakage.
 
 | | |
 |---|---|
-| Summary | Typed topics plus a playbook surface fleet health live. |
+| Summary | The orchestrator reacts to typed fleet events via a per-topic playbook. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `observability` |
 | Enforcement | **Hard** (deterministic) · *signal* — emission is mechanical; the bus itself does not block (the derived alerts gate does) |
@@ -15,8 +17,10 @@ over which substrate emits lifecycle/health events — so the orchestrator obser
 
 A fleet's health — is cron running, is the merge-train yielding, are tombstones stuck — is **invisible
 without a signal surface**, so degradation accretes silently (cron broken for hours before anyone
-notices). The failure is *silent substrate degradation*, and it recurs continuously: the orchestrator
-flies blind between the moment something breaks and the moment its downstream effect becomes obvious.
+notices). Worse, without a reaction loop the orchestrator is a passive observer: it can only steer the
+fleet if it *reacts* to what the substrate reports. The failure is *silent substrate degradation and an
+un-reacting orchestrator*, and it recurs continuously across a long session — the fleet slowly stops
+being productive while each dispatch still looks locally fine.
 
 ## Why it's not just "log it and grep the logs"
 
@@ -34,7 +38,10 @@ Emitters call `event-bus.py` with a topic drawn from the const-string registry. 
 topic → healthy / wrong / §Q entry. Rule #46 requires any design doc that introduces a topic to carry
 an Observability block (lint AUDIT-ONLY → BLOCKING). Rule #47 sets the *consumption* cadence: the
 orchestrator polls at session start and after cherry-pick waves, with named anomaly triggers (yields
->3 in a row, `discard_lint`, `no_op` >30 min with tombstones queued).
+>3 in a row, `discard_lint`, `no_op` >30 min with tombstones queued). Together these are the **reactor
+loop**: emit → the orchestrator reads the queryable surface → matches the event to its playbook entry →
+takes the prescribed action (dispatch a fix, open a recovery playbook, hold new work). The playbook is
+the load-bearing half — it is what turns a raw signal into a *reaction* rather than a passive read.
 
 ## Prerequisites
 
@@ -61,6 +68,9 @@ orchestrator polls at session start and after cherry-pick waves, with named anom
 
 ## Related controls
 
+- **Consumer** — the *reaction* half is an
+  [operational playbook](../governance-doc-controls/operational-playbooks.md): each topic's playbook
+  entry is the situation-keyed procedure the orchestrator runs when the event fires.
 - **Enabler** — [cron-alerts-gate](cron-alerts-gate.md): alerts are *derived events* on this bus,
   promoted into a blocking gate.
 - **Counterpart** — the rule-#46 Observability-block lint keeps every emitting substrate's topics
