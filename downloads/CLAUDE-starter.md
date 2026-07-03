@@ -257,17 +257,19 @@ structure; a strong-but-static unit suite will miss them.
 
 ### A.2.11. Essence vs. accident — attack accidental complexity; budget for essential
 
-Brooks' distinction in "No Silver Bullet" is the sharpest triage tool we have. Two kinds of complexity,
-handled oppositely:
+Two kinds of complexity, handled oppositely (Brooks' "No Silver Bullet"):
 
-- **Essential** — inherent to the problem: the business requirements, regulatory / compliance rules, and
-  domain semantics you're paid to get right. It genuinely *is* hard, and no tool erases it. **Budget**
-  for it — don't pretend a cleverer abstraction will make it vanish. Mis-labeling essential complexity as
-  accidental produces leaky abstractions that cost more than the complexity they hid.
+- **Essential** — the irreducible complexity of the problem and the structures that solve it: the domain
+  rules you're paid to get right, *plus* the inherent difficulty of the abstractions, state, and
+  interfaces themselves (a consensus protocol has trivial "requirements" yet enormous essential
+  complexity). No tool erases it. **Budget** for it — don't pretend a cleverer abstraction makes it
+  vanish; mis-labeling it as accidental produces leaky abstractions that cost more than the complexity
+  they hid.
 - **Accidental** — introduced by our own tooling and choices: parallel implementations, primitive-passing
   that hides shapes, hand-built argv, scattered state, doc↔code drift. **Attack** it — this is the
   complexity the substrate keeps removing (unification for defect-class consolidation, typed seams, single
-  sources of truth), and every removal is permanent.
+  sources of truth). A removal *stays* gone only once a control pins it; otherwise it re-accretes through
+  drift — which is why a removal graduates into a lint.
 
 The test before any big refactor: are you *reducing* accidental complexity, or just *relocating*
 essential complexity behind a prettier name?
