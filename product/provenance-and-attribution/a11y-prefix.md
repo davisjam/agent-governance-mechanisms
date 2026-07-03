@@ -29,7 +29,7 @@ control: it bounds *how inserts are named and tracked*, which is what makes vali
 
 ## Mechanism
 
-Invisible inserts are prefixed `a11y_` (per #10); user-visible inserts are not; spec-mandated names keep
+Invisible inserts are prefixed `a11y_` (the invisible-insert prefix convention); user-visible inserts are not; spec-mandated names keep
 their spec name. New inserters call `registry.Record(...)`, so the `InsertedContentValidator`
 automatically covers them; off-canvas placement uses dynamic geometry so it never bleeds on-page.
 Per-site corollaries live in the placement-audit doc.
@@ -48,7 +48,7 @@ Per-site corollaries live in the placement-audit doc.
 
 ## Known uses
 
-- The `a11y_` prefix convention (#10) and its per-site corollaries.
+- The `a11y_` prefix convention and its per-site corollaries.
 - `registry.Record(...)` + the `InsertedContentValidator` (automatic coverage of registered inserts).
 
 ## Related controls

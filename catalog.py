@@ -40,9 +40,6 @@ ROLE_DIRS = ["agent", "models-bridge", "product"]
 # Entries cite concrete artifacts as [[slug]] / [[slug|text]] rather than by unshipped filename.
 ABBR_SRC = "ABSTRACTIONS.md"
 ABBR_CITE_RE = re.compile(r"\[\[([^\]|]+?)(?:\|([^\]]*))?\]\]")
-# Families whose entries are migrated onto the glossary → the raw-filename + rule-number bans are BLOCKING
-# there. Grow this as each family is cleaned; when every family is in, drop the gate to "all entries".
-ABBR_MIGRATED_DIRS = ("agent", "models-bridge")
 # An "unshipped" reference = a backticked path with one of these extensions whose basename is NOT present
 # anywhere in this repo (so `catalog.py` — which ships here — is allowed; `components.py` is not).
 RAW_FILE_RE = re.compile(r"`([^`]+?\.(?:py|cs|jsonl|ya?ml))`")
@@ -269,7 +266,7 @@ def _repo_basenames() -> set:
 
 
 def check_abstractions(entries: list[Entry], abbrs: dict) -> list[str]:
-    """(1) every [[slug]] citation resolves; (2) in migrated families, no unshipped filename / rule number."""
+    """(1) every [[slug]] citation resolves; (2) no entry cites an unshipped filename or a bare rule number."""
     problems: list[str] = []
     shipped = _repo_basenames()
     for f in catalogue_md_files():
@@ -281,8 +278,6 @@ def check_abstractions(entries: list[Entry], abbrs: dict) -> list[str]:
             if m.group(1) not in abbrs:
                 problems.append(f"{rel}: [[{m.group(1)}]] — no such abstraction slug")
     for e in entries:
-        if not e.path.replace(os.sep, "/").startswith(ABBR_MIGRATED_DIRS):
-            continue
         for m in RAW_FILE_RE.finditer(e.text):
             if os.path.basename(m.group(1)) not in shipped:
                 problems.append(f"{e.path}: unshipped filename `{m.group(1)}` — route through an abstraction")

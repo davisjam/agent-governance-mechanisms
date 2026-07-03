@@ -29,7 +29,7 @@ into a guarantee.
 
 ## Mechanism
 
-`lint-mutator-stamp-wiring.py` scans the `{Pdf,Slides,Docs,Sheets}Model` `Primitives` directories for
+The mutator-stamp wiring lint scans the `{Pdf,Slides,Docs,Sheets}Model` `Primitives` directories for
 mutator verbs and asserts each calls the stamp wiring. It is BLOCKING; a new verb without wiring is a
 HIGH-severity finding. The invariant has been held at 0 open gaps.
 
@@ -48,7 +48,7 @@ HIGH-severity finding. The invariant has been held at 0 open gaps.
 
 ## Known uses
 
-- `lint-mutator-stamp-wiring.py` (F10, BLOCKING, 0 open gaps).
+- The mutator-stamp wiring lint (F10, BLOCKING, 0 open gaps).
 
 ## Related controls
 

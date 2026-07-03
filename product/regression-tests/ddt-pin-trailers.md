@@ -23,16 +23,17 @@ its cited source*. It recurs before every structural change and whenever a cited
 Existing tests may not cover the exact behaviour about to churn, and — critically — a doc-derived test
 can drift from its source with **no signal**. DDT pin-trailers are characterization tests with a
 **provenance block**: `DDT-source` names what the test was derived from, `DDT-pins` records the pinned
-points, and editing a cited source obliges regenerating the trailer in the *same commit* (#51). The
+points, and editing a cited source obliges regenerating the trailer in the *same commit* (the
+trailer-regeneration discipline). The
 distinction is *characterization-with-provenance, linked to a cited source* versus *ordinary tests with
 no source linkage*. And note: **near-zero defect yield is success here** — these pin correct behaviour
 before change; they are not meant to find bugs, they are meant to catch the change that alters behaviour.
 
 ## Mechanism
 
-`*_doc_derived.py` files carry a trailer block (`DDT-audited` / `DDT-source` / `DDT-pins`) right after
-the module docstring; `regen-ddt-trailer.py` regenerates it when a cited source is edited in the same
-commit. `lint-ddt-trailer-present` is BLOCKING; `lint-ddt-trailer-fresh` is a WARNING (staleness is
+The doc-derived test files carry a trailer block (`DDT-audited` / `DDT-source` / `DDT-pins`) right after
+the module docstring; a trailer regenerator rebuilds it when a cited source is edited in the same
+commit. The trailer-present lint is BLOCKING; the trailer-freshness lint is a WARNING (staleness is
 informational).
 
 ## Prerequisites
@@ -50,8 +51,8 @@ informational).
 
 ## Known uses
 
-- `*_doc_derived.py` files + the `DDT-audited` / `DDT-source` / `DDT-pins` trailer (#51).
-- `regen-ddt-trailer.py`; `lint-ddt-trailer-present` (BLOCKING) + `lint-ddt-trailer-fresh` (WARNING).
+- The doc-derived test files + the `DDT-audited` / `DDT-source` / `DDT-pins` trailer.
+- The trailer regenerator; the trailer-present lint (BLOCKING) + the trailer-freshness lint (WARNING).
 
 ## Related controls
 

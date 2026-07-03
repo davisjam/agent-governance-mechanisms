@@ -65,21 +65,21 @@ Strict per-entry shape the parser reads (`parse_abstractions()` in `catalog.py`)
   grounding, not a load-bearing click. Good: "the [[component-registry]] is a typed dataclass set". Bad:
   "[[component-registry]] does the mapping" (leans on the link to be understood).
 
-## The gate (what `catalog.py validate` enforces)
+## The gate (what `catalog.py validate` enforces — now global)
 
-- Every `[[slug]]` across all served markdown resolves to an `ABSTRACTIONS.md` entry.
-- **In migrated families only** (`ABBR_MIGRATED_DIRS` in `catalog.py`): no backticked *unshipped*
-  filename (basename absent from this repo — so `catalog.py` is allowed, `components.py` is not) and no
-  bare `#NN` rule citation.
+- Every `[[slug]]` across all catalogue markdown resolves to an `ABSTRACTIONS.md` entry.
+- **Every** entry: no backticked *unshipped* filename (basename absent from this repo — so `catalog.py`
+  is allowed, `components.py` is not) and no bare `#NN` rule citation. (This was scoped by a
+  now-removed `ABBR_MIGRATED_DIRS` while the sweep was in progress; the ban is global by construction
+  now that all three roles are migrated, so a *new* entry is forward-policed automatically.)
 
-## Migrating the next family (the loop)
+## Adding a new entry (the ongoing rule)
 
-1. Add the family's dir prefix to `ABBR_MIGRATED_DIRS` — `validate` now lists every offender in it.
-2. Walk each offender through the decision procedure above; add glossary entries as needed.
-3. `python3 catalog.py validate` → 0 issues, then `build`, then preview (`deploy local`).
-4. When **every** family is migrated, drop `ABBR_MIGRATED_DIRS` and make the ban apply to all entries
-   (delete the prefix guard in `check_abstractions`).
+Author it clean from the start: run every filename / rule-number through the decision procedure above,
+citing `[[slug]]` (adding a glossary entry if the artifact is non-obvious and recurs) or writing
+self-describing prose. `python3 catalog.py validate` will reject an entry that reintroduces a raw
+filename or a bare rule number.
 
-Pilot completed: `models-bridge/system-models` (9 entries, 11 glossary entries). Remaining: the rest of
-`models-bridge/`, all of `agent/`, all of `product/` — ~44 filenames / ~160 rule cites total per the
-HANDOFF §9 audit.
+Migration is **complete**: all 53 entries across `agent/`, `models-bridge/`, and `product/` are on the
+glossary (18 glossary entries). The single-machine-contention rephrasing in [`TODO.md`](TODO.md) is the
+one deferred follow-up.

@@ -34,13 +34,13 @@ lints" and "enforce structure with analysis when available" discipline made conc
 ## Mechanism
 
 The lint fleet runs at commit and deploy. Each lint declares its `COMPONENT_TAGS`, `SEVERITY`, and a
-verb-of-checking docstring (#25); BLOCKING ones fail the build, AUDIT-ONLY ones surface. Escapes are
+verb-of-checking docstring (the lint-declaration discipline); BLOCKING ones fail the build, AUDIT-ONLY ones surface. Escapes are
 scoped `# noqa: <ban-name> — <reason>` comments. The fleet sits atop a maxed-out commodity floor
 (Roslyn analysis, pyright strict, ruff) rather than replacing it.
 
 ## Prerequisites
 
-- **A lint framework** with per-lint scope + severity declaration (#25).
+- **A lint framework** with per-lint scope + severity declaration.
 - **The invariants made mechanically detectable** — a rule you can't express as a check can't join.
 - **A runner wired into the gates**, and a scoped escape hatch for legitimate exceptions.
 
@@ -56,7 +56,8 @@ scoped `# noqa: <ban-name> — <reason>` comments. The fleet sits atop a maxed-o
 ## Known uses
 
 - `lint-banned-apis`, `no-silent-catch`, the config-field-in-sample lints, the sole-seam ban-lints.
-- Rule #25's declaration discipline; the scoped `noqa` escape convention.
+- The lint-declaration discipline (each lint declares its scope, severity, and a verb-of-checking
+  docstring); the scoped `noqa` escape convention.
 
 ## Related controls
 

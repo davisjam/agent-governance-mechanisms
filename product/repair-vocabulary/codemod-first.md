@@ -22,15 +22,16 @@ single deterministic transform*, and it recurs at every large mechanical backlog
 
 N agents on a *deterministic* fix is wasteful and yields per-site drift — each agent re-derives the same
 edit slightly differently, and 200 of them is 200 chances to diverge. A **single AST transformer**
-applies the *exact same* transform everywhere, deterministically, in one reviewable artifact. Rule #28
-sets the threshold: N≳50 + deterministic shape → codemod; genuine per-site *judgment* → Sonnet. The
+applies the *exact same* transform everywhere, deterministically, in one reviewable artifact. A
+codemod-first rule sets the threshold: N≳50 + deterministic shape → codemod; genuine per-site *judgment* → Sonnet. The
 distinction is *one deterministic AST transform* versus *N judgment-free agent edits*. Codemods are kept
 as **deprecated reference exemplars** so the next backlog starts from a working pattern.
 
 ## Mechanism
 
-Rule #28 triggers a codemod when N≳50 sites share a deterministic shape; the transformer operates at the
-AST level (e.g. `hoist_inline_imports.py`). Rule #31 lets a codemod-class commit skip the pre-commit
+The codemod-first rule triggers a codemod when N≳50 sites share a deterministic shape; the transformer
+operates at the AST level (e.g. an inline-import hoisting codemod). A pre-commit-skip rule lets a
+codemod-class commit skip the pre-commit
 *lint* stanza (with a `pre-commit-skip: <reason>` marker; unit-tier still runs), since the transform is
 mechanical. Finished codemods are marked deprecated and cross-referenced as paste-ready exemplars.
 
@@ -38,7 +39,7 @@ mechanical. Finished codemods are marked deprecated and cross-referenced as past
 
 - **An AST toolkit** for the language and a **deterministic fix shape**.
 - **The threshold judgment** (N≳50, deterministic vs per-site judgment).
-- **The pre-commit-skip protocol** for codemod waves (#31).
+- **The pre-commit-skip protocol** for codemod waves.
 
 ## Consequences & costs
 
@@ -46,13 +47,13 @@ mechanical. Finished codemods are marked deprecated and cross-referenced as past
   encodes.
 - **Only for deterministic shapes.** A backlog needing per-site judgment still goes to Sonnet, not a
   codemod.
-- **Skipping the lint stanza (#31) is a scoped hole** — justified by the transform's mechanical nature,
+- **Skipping the lint stanza is a scoped hole** — justified by the transform's mechanical nature,
   marker-audited.
 
 ## Known uses
 
-- Rule #28's N≳50 threshold; AST transformers such as `hoist_inline_imports.py`.
-- Rule #31's `pre-commit-skip` for codemod-class waves; codemods retained as deprecated exemplars.
+- The N≳50 codemod threshold; AST transformers such as an inline-import hoisting codemod.
+- The `pre-commit-skip` for codemod-class waves; codemods retained as deprecated exemplars.
 
 ## Related controls
 

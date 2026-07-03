@@ -31,9 +31,9 @@ that catches the "missing config field silently collapses batching" class that n
 ## Mechanism
 
 Each coherence lint reads two-or-more sources and asserts a consistency relation: the config-field
-lints check every deserialized field is explicit *and* present in the sample (#5); registry-agreement
-lints check a registry and its consumers list the same keys; the discipline prefers reading the
-meta-files at lint-time over codegen (#33). Companion deserialization tests pin the same relation.
+lints check every deserialized field is explicit *and* present in the sample (the config-completeness
+rule); registry-agreement lints check a registry and its consumers list the same keys; the discipline
+prefers reading the meta-files at lint-time over codegen. Companion deserialization tests pin the same relation.
 
 ## Prerequisites
 
@@ -51,9 +51,9 @@ meta-files at lint-time over codegen (#33). Companion deserialization tests pin 
 
 ## Known uses
 
-- The config-field ⊆ sample lints and the `ConfigDeserialization_*` companion tests (#5).
+- The config-field ⊆ sample lints and the `ConfigDeserialization_*` companion tests.
 - Registry-agreement lints (a registry and its consumers must list the same keys).
-- The meta-file consistency discipline (#33 / #42).
+- The meta-file consistency discipline (read the meta-file; never embed a snapshot).
 
 ## Related controls
 
