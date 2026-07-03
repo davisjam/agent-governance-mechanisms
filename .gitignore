@@ -8,3 +8,6 @@ node_modules/
 
 # local-only marketplace-submission blurb (not published, not committed)
 /SUBMISSION.md
+
+# internal continuity/handoff docs — kept locally, never shipped to the public repo
+/HANDOFF*.md
