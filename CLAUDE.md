@@ -45,6 +45,10 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
   section, not by habit.
 - **Describe, don't sell.** Give the mechanism and the failure it kills. Don't tell the reader every
   project should adopt it — that's their call.
+- **Instance entries lead with the portable pattern.** When an entry instantiates a general pattern,
+  open its Intent with the transferable claim, then name the project instance in parentheses —
+  *"…route all mutation of a format through one typed model with a ban-lint on the raw library (our
+  instance: `PdfModel`)."* A reader who doesn't share the domain still gets the idea.
 
 ## The content model
 

@@ -45,7 +45,8 @@ ABBR_CITE_RE = re.compile(r"\[\[([^\]|]+?)(?:\|([^\]]*))?\]\]")
 RAW_FILE_RE = re.compile(r"`([^`]+?\.(?:py|cs|jsonl|ya?ml))`")
 RULE_CITE_RE = re.compile(r"(?<![\w.])#\d{1,2}\b")  # bare project-rule citation (meaningless outside the parent)
 # Not served / not link-checked: internal continuity docs (the abstractions playbook is process, not content).
-NOSERVE = ("HANDOFF.md", "HANDOFF-catalogue-agent.md", "abstractions-playbook.md", "TODO.md")
+NOSERVE = ("HANDOFF.md", "HANDOFF-catalogue-agent.md", "abstractions-playbook.md", "TODO.md",
+           "WRITING-BACKLOG.md")
 
 
 class Entry:
@@ -367,6 +368,26 @@ def check_banned_terms() -> list[str]:
     return problems
 
 
+def check_summary_counts(entries: list[Entry]) -> list[str]:
+    """Drift guard: the INDEX prose role-totals + grand total must equal the parsed entries.
+    Rule #33 shape — a stable lint reads the meta (the entries) and asserts the hand-written summary
+    numbers, rather than codegen writing them back into the source. Catches the 'Agent (20)' class of rot
+    the row-count check (check_index) can't see because it only compares rows, not the prose footer."""
+    problems: list[str] = []
+    by_role = {r: sum(e.role == r for e in entries) for r in ROLES}
+    idx = open(os.path.join(ROOT, "INDEX.md"), encoding="utf-8").read()
+    for role, label in (("Agent", "Agent"), ("Bridge", "Models-bridge"), ("Product", "Product")):
+        m = re.search(rf"\*\*{re.escape(label)} \((\d+)\)", idx)
+        if not m:
+            problems.append(f"no '**{label} (N)**' role total in the INDEX summary")
+        elif int(m.group(1)) != by_role[role]:
+            problems.append(f"{label} ({m.group(1)}) != actual {by_role[role]} — update the INDEX summary")
+    m = re.search(r"(\d+) controls across \d+ families", idx)
+    if m and int(m.group(1)) != len(entries):
+        problems.append(f"'{m.group(1)} controls' != actual {len(entries)} — update the INDEX summary")
+    return problems
+
+
 def cmd_validate(_args) -> int:
     entries = all_entries()
     n_issues = 0
@@ -389,6 +410,9 @@ def cmd_validate(_args) -> int:
         n_issues += 1
     for msg in check_banned_terms():
         print(f"  [banned] {msg}")
+        n_issues += 1
+    for msg in check_summary_counts(entries):
+        print(f"  [census] {msg}")
         n_issues += 1
     for rel, summ in role_summaries().items():
         if not summ:

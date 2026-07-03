@@ -149,8 +149,8 @@ soft guidance with a hard counterpart.
 ---
 
 **Three roles complete — 53 controls across 11 families, all fully developed.**
-**Agent (20):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (3) ·
-Lifecycle & observability (5) · Governance-doc controls (4, incl. the **CLAUDE.md rule index**
+**Agent (22):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (3) ·
+Lifecycle & observability (5) · Governance-doc controls (6, incl. the **CLAUDE.md rule index**
 meta-control).
 **Models-bridge (11):** System models — 6 models (incl. **synchronization/meta-sync**) + 5 mechanisms;
 the MBSE substrate through which a bounded agent operates an unbounded codebase.
