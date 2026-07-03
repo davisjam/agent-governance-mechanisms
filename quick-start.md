@@ -1,10 +1,19 @@
-# Quick start — adopt these mechanisms in your own repo
+# Quick start — two ways to adopt these mechanisms
 
-This catalogue is descriptive, not a framework. There is nothing to install. The controls are
-patterns — you *adapt* them to your stack, your agents, and your failure modes. The fastest way to do
-that is to let your coding agent read the catalogue and propose a plan grounded in **your** codebase.
+Governance-centric agentic software engineering is an engineering **methodology**, not something you
+install and run. The mechanisms in this catalogue are patterns — you *adapt* them to your stack, your
+agents, and your failure modes.
 
-## The three-step loop
+However, Claude is capable of assisting you through **self-governance**: reading the catalogue and turning
+it on your own repository. There are **two on-ramps to the same destination** — pick by how much you want
+automated versus how much you want to keep in your own hands.
+
+## Path A — DIY with the catalogue (installs nothing)
+
+The **safe default**, and the right choice for a company — or anyone who can't or won't run a third-party
+plugin. Nothing executes in your agent loop that you didn't write: you read the patterns and adapt them
+by hand. The fastest way is to let your coding agent read the catalogue and propose a plan grounded in
+**your** codebase.
 
 1. **Install a governance doc.** Put a `CLAUDE.md` (or your agent's equivalent house-rules file) at your
    repo root — the [`claude-md-rule-index`](agent/governance-doc-controls/claude-md-rule-index.md) control
@@ -22,6 +31,59 @@ that is to let your coding agent read the catalogue and propose a plan grounded 
    > has it, or would benefit. Produce a prioritized plan: which controls to **adopt** as-is, which to
    > **adapt** to my stack, and which to **skip** (with the reason). Start with the highest-leverage,
    > lowest-cost controls, and tell me the one you'd build first.
+
+## Path B — the self-governance skill (batteries included)
+
+The **same loop, packaged as an installable Claude skill** that auto-triggers and runs it for you — no
+prompt to paste. Convenient, but understand what you're installing: a **third-party agentic plugin that
+reads, and on your approval writes, your repo**. It is source-visible (read its `SKILL.md`,
+`principles.md`, and `reference/` before you trust a line), MIT-licensed, **gated** (its *audit* mode only
+advises; its *interpret-failure* mode proposes and acts only on your greenlight), and does no network
+I/O. Still: vet it before enterprise use, and check it clears your org's plugin policy — Path A exists
+precisely for teams where installing it isn't an option.
+
+Install it directly — copy-paste these (you or Claude can run them); no marketplace needed:
+
+```bash
+# clone the catalogue (or reuse a clone you already have)
+git clone https://github.com/davisjam/agent-governance-mechanisms.git
+
+# install the skill for your user, across every project …
+mkdir -p ~/.claude/skills
+cp -R agent-governance-mechanisms/plugin/self-governance/skills/self-governance \
+      ~/.claude/skills/self-governance
+
+# … or scope it to a single repo instead
+mkdir -p .claude/skills
+cp -R agent-governance-mechanisms/plugin/self-governance/skills/self-governance \
+      .claude/skills/self-governance
+```
+
+Start a new Claude session and the skill loads. *(Want team-wide install with auto-updates? The repo also
+ships as a plugin marketplace — `/plugin marketplace add davisjam/agent-governance-mechanisms` — once you
+enable that route.)*
+
+Two modes:
+
+- **audit** — survey your repo against the catalogue → a prioritized adopt / adapt / skip plan (advises;
+  changes nothing).
+- **interpret-failure** — a failure just recurred → classify it and convert the *class* into a durable
+  control; proposes first, writes the lint/test/gate only on your go-ahead.
+
+It also carries the AI-First Engineering Method as an ambient operating stance, so the agent reasons the
+way the catalogue was built. The skill covers the **agent** and **models-bridge** roles — the "self" a
+coding agent governs; the **product** role stays in the full catalogue.
+
+## Which path?
+
+|  | Path A — catalogue (DIY) | Path B — self-governance skill |
+|---|---|---|
+| **Installs** | nothing | a Claude plugin |
+| **Runs in your loop** | only what you write | the skill (gated; greenlight to write) |
+| **Effort** | adapt by hand | auto-triggers, runs the loop |
+| **Best for** | companies, the security-conservative, full control | individuals / teams who want it automated |
+
+They're **not exclusive** — DIY org-wide, and use the skill on a personal project.
 
 ## What to reach for first
 

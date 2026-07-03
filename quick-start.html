@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Quick start — adopt these mechanisms in your own repo</title>
+<title>Quick start — two ways to adopt these mechanisms</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
@@ -61,14 +61,38 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Quick start — adopt these mechanisms in your own repo</nav>
-<h1>Quick start — adopt these mechanisms in your own repo</h1>
-<p>This catalogue is descriptive, not a framework. There is nothing to install. The controls are patterns — you <em>adapt</em> them to your stack, your agents, and your failure modes. The fastest way to do that is to let your coding agent read the catalogue and propose a plan grounded in <strong>your</strong> codebase.</p>
-<h2>The three-step loop</h2>
+<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Quick start — two ways to adopt these mechanisms</nav>
+<h1>Quick start — two ways to adopt these mechanisms</h1>
+<p>Governance-centric agentic software engineering is an engineering <strong>methodology</strong>, not something you install and run. The mechanisms in this catalogue are patterns — you <em>adapt</em> them to your stack, your agents, and your failure modes.</p>
+<p>However, Claude is capable of assisting you through <strong>self-governance</strong>: reading the catalogue and turning it on your own repository. There are <strong>two on-ramps to the same destination</strong> — pick by how much you want automated versus how much you want to keep in your own hands.</p>
+<h2>Path A — DIY with the catalogue (installs nothing)</h2>
+<p>The <strong>safe default</strong>, and the right choice for a company — or anyone who can't or won't run a third-party plugin. Nothing executes in your agent loop that you didn't write: you read the patterns and adapt them by hand. The fastest way is to let your coding agent read the catalogue and propose a plan grounded in <strong>your</strong> codebase.</p>
 <p>1. <strong>Install a governance doc.</strong> Put a <code>CLAUDE.md</code> (or your agent's equivalent house-rules file) at your repo root — the <a href="agent/governance-doc-controls/claude-md-rule-index.html"><code>claude-md-rule-index</code></a> control explains what earns a spot in it (regression-preventing · non-derivable-from-local-code · non-local). Start small; it grows as you codify each control you adopt.</p>
 <p>2. <strong>Point your agent at this catalogue.</strong> Vendor a copy of <code>governance-mechanisms/</code> into your repo (or just hand your agent the URL), and ask it to read the <a href="README.html"><code>README</code></a>, the <a href="INDEX.html"><code>INDEX</code></a>, and the role folders (<a href="agent/"><code>agent/</code></a> · <a href="models-bridge/"><code>models-bridge/</code></a> · <a href="product/"><code>product/</code></a>).</p>
 <p>3. <strong>Ask for an adopt / adapt / apply plan.</strong> A prompt that works:</p>
 <p>&gt; Read the governance-mechanisms catalogue. For each control, judge whether my repo needs it, already &gt; has it, or would benefit. Produce a prioritized plan: which controls to <strong>adopt</strong> as-is, which to &gt; <strong>adapt</strong> to my stack, and which to <strong>skip</strong> (with the reason). Start with the highest-leverage, &gt; lowest-cost controls, and tell me the one you'd build first.</p>
+<h2>Path B — the self-governance skill (batteries included)</h2>
+<p>The <strong>same loop, packaged as an installable Claude skill</strong> that auto-triggers and runs it for you — no prompt to paste. Convenient, but understand what you're installing: a <strong>third-party agentic plugin that reads, and on your approval writes, your repo</strong>. It is source-visible (read its <code>SKILL.md</code>, <code>principles.md</code>, and <code>reference/</code> before you trust a line), MIT-licensed, <strong>gated</strong> (its <em>audit</em> mode only advises; its <em>interpret-failure</em> mode proposes and acts only on your greenlight), and does no network I/O. Still: vet it before enterprise use, and check it clears your org's plugin policy — Path A exists precisely for teams where installing it isn't an option.</p>
+<p>Install it directly — copy-paste these (you or Claude can run them); no marketplace needed:</p>
+<pre><code># clone the catalogue (or reuse a clone you already have)
+git clone https://github.com/davisjam/agent-governance-mechanisms.git
+
+# install the skill for your user, across every project …
+mkdir -p ~/.claude/skills
+cp -R agent-governance-mechanisms/plugin/self-governance/skills/self-governance \
+      ~/.claude/skills/self-governance
+
+# … or scope it to a single repo instead
+mkdir -p .claude/skills
+cp -R agent-governance-mechanisms/plugin/self-governance/skills/self-governance \
+      .claude/skills/self-governance</code></pre>
+<p>Start a new Claude session and the skill loads. <em>(Want team-wide install with auto-updates? The repo also ships as a plugin marketplace — <code>/plugin marketplace add davisjam/agent-governance-mechanisms</code> — once you enable that route.)</em></p>
+<p>Two modes:</p>
+<ul><li><strong>audit</strong> — survey your repo against the catalogue → a prioritized adopt / adapt / skip plan (advises; changes nothing).</li><li><strong>interpret-failure</strong> — a failure just recurred → classify it and convert the <em>class</em> into a durable control; proposes first, writes the lint/test/gate only on your go-ahead.</li></ul>
+<p>It also carries the AI-First Engineering Method as an ambient operating stance, so the agent reasons the way the catalogue was built. The skill covers the <strong>agent</strong> and <strong>models-bridge</strong> roles — the "self" a coding agent governs; the <strong>product</strong> role stays in the full catalogue.</p>
+<h2>Which path?</h2>
+<table><thead><tr><th></th><th>Path A — catalogue (DIY)</th><th>Path B — self-governance skill</th></tr></thead><tbody><tr><td><strong>Installs</strong></td><td>nothing</td><td>a Claude plugin</td></tr><tr><td><strong>Runs in your loop</strong></td><td>only what you write</td><td>the skill (gated; greenlight to write)</td></tr><tr><td><strong>Effort</strong></td><td>adapt by hand</td><td>auto-triggers, runs the loop</td></tr><tr><td><strong>Best for</strong></td><td>companies, the security-conservative, full control</td><td>individuals / teams who want it automated</td></tr></tbody></table>
+<p>They're <strong>not exclusive</strong> — DIY org-wide, and use the skill on a personal project.</p>
 <h2>What to reach for first</h2>
 <ul><li>If you run <strong>more than one agent at a time</strong>: start with the <strong>agent</strong> role — a <a href="agent/context-and-dispatch/brief-linting.html">brief-linting</a> gate and a <a href="agent/gates-and-merge-train/pre-commit-hook.html">pre-commit hook</a> pay off immediately.</li><li>If your agents keep <strong>breaking things that "looked unrelated"</strong>: the <strong>models-bridge</strong> role — a typed <a href="models-bridge/system-models/executable-source-of-truth.html">executable source of truth</a> that agents read and that the codebase is generated from — is the scaling unlock.</li><li>If you ship a <strong>user-facing artifact</strong>: the <strong>product</strong> role — a <a href="product/validation-and-conformance/content-validator.html">content validator</a> and a closed <a href="product/repair-vocabulary/remediation-verbs.html">repair vocabulary</a> bound what the agent can get wrong.</li></ul>
 <h2>The mindset</h2>
