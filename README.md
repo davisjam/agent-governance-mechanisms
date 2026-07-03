@@ -33,24 +33,14 @@ or **soft** (probabilistic) or a mix.
 
 ## Why you might NOT want to use this
 
-Governance has a cost — every control taxes every future change and every agent's context budget. This
-catalogue was distilled from a **high-intensity** operation (many parallel agents, hundreds of commits a
-day). Most projects need far less, and adopting it wholesale is a real way to make your repo *worse*, not
-better. Be wary, or take only a little, if:
+Governance has a cost — every control taxes every future change and every agent's context budget. The
+failure mode of adopting it wholesale is a **tower of governance nobody wants** — controls manufactured
+faster than they earn their keep, until the overhead outweighs the failures they were meant to prevent
+(and there's an adverse selection: the people most drawn to a governance catalogue are the ones most at
+risk of over-building it).
 
-- **You run one agent, or a small team.** Most of the machinery here solves problems you don't have yet;
-  a house-rules doc and a couple of lints may be the entire right answer.
-- **You'd be adopting controls you can't tie to a failure you've actually seen recur.** A control you
-  can't attach to real, felt pain is pure tax.
-- **You're tempted to build the whole thing.** The primary failure mode is a **tower of governance nobody
-  wants** — controls manufactured faster than they earn their keep, until the repo is slower and more
-  confusing than the failures it feared. And there's an adverse selection: the people most drawn to a
-  governance catalogue are the ones most at risk of over-building it.
-
-The catalogue is **descriptive, not prescriptive** — a menu to adapt to your scale, not a bar to
-clear. Adopt the minimum that holds *your* recurring failures, default to skip, and remove controls that
-stop earning their keep. If you can't name the failure a control prevents in your own system, you don't
-need it yet. The *Start small* section below is the disciplined way in.
+So it's **descriptive, not prescriptive** — a menu to tailor to your needs, not a bar to clear. If you
+can't name the failure a control prevents in *your* system, you don't need it yet.
 
 ## Read the catalogue
 
@@ -77,12 +67,9 @@ schema and builds the web view (`catalog.py validate` · `build` · `deploy loca
 
 ## Start small, and make it yours
 
-**You probably don't need most of this yet.** The catalogue is a *census* of how far governance can go —
-not a checklist. A mature system covers all three roles; a new one shouldn't try to. Start with the
-highest-leverage, lowest-cost controls for the failures your agents *actually* make — a governance doc, a
-gate or two — and add mechanisms only as velocity surfaces the failures they prevent. Growing guardrails
-from real failure **is** the method (*governance conversion*); adopting the whole apparatus up front is
-the anti-pattern it warns against.
+Start with the highest-leverage, lowest-cost controls for the failures your agents *actually* make — a
+governance doc, a gate or two — and add mechanisms only as velocity surfaces the failures they prevent.
+Growing guardrails from real failure **is** the method (*governance conversion*).
 
 **Adapt the mechanisms to your environment** — your language, your agents, your CI; they are patterns, not
 a stack. But keep the part that travels furthest: most of the value lands **on the developer's own
