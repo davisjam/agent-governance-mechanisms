@@ -1,0 +1,21 @@
+{
+  "name": "self-governance",
+  "description": "Turn the agent-governance-mechanisms catalogue on the current repo: audit it for missing guardrails, or convert a recurring failure into a durable control. Ships the Davis AI-First Engineering Method as its operating stance plus the agent + models-bridge control catalogue as on-demand reference.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "James C. Davis, PhD",
+    "email": "davisjam@purdue.edu"
+  },
+  "homepage": "https://davisjam.github.io/agent-governance-mechanisms/",
+  "repository": "https://github.com/davisjam/agent-governance-mechanisms",
+  "keywords": [
+    "governance",
+    "agents",
+    "ai-engineering",
+    "linting",
+    "code-review",
+    "guardrails",
+    "mbse"
+  ]
+}

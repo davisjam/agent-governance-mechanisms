@@ -26,12 +26,10 @@ agents). Part B is the reference you consult per-task.
 
 # Part A — Davis AI-First Engineering Method
 
-**Copyright © 2026 Purdue University and/or James C. Davis
-(davisjam@purdue.edu). All rights reserved.** *Ownership language is
-provisional pending resolution between Purdue University and James C.
-Davis; this attribution governs in the interim. The methodology may be
-subject to additional IP claims, including pending patent claims on
-specific substrate components.*
+**Copyright © 2026 James C. Davis, PhD (davisjam@purdue.edu).**
+*Licensed under the MIT License — free to use, modify, and redistribute
+(including commercially), provided this copyright and permission notice are
+retained. Full terms in the LICENSE file distributed with this catalogue.*
 
 Portable principles for AI-collaborative software engineering, carried
 across the author's repos. They are about *how to make choices that fit
