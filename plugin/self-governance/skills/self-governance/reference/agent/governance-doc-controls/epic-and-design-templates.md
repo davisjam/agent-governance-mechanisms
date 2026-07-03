@@ -41,7 +41,7 @@ second-order-dynamics section. New Epics are **materialized from a stub tool** t
 sections + registers the effort in the ledger; registration and section-presence are then asserted by
 lints/gates so the template is enforced, not merely documented.
 
-**Adopt these — redacted, portable starters** distilled from the real system: the
+**Adopt these — portable starters** distilled from the real system: the
 [Epic template starter](../../downloads/EPIC-TEMPLATE-starter.md) (the section shape + the
 multi-criterion Definition-of-Done) and the
 [design-doc template starter](../../downloads/design-doc-template-starter.md) (the invariants-driven

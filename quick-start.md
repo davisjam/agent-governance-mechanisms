@@ -32,7 +32,7 @@ by hand. The fastest way is to let your coding agent read the catalogue and prop
    > **adapt** to my stack, and which to **skip** (with the reason). Start with the highest-leverage,
    > lowest-cost controls, and tell me the one you'd build first.
 
-**Ready-made starters** (redacted, adopt-and-adapt): a [`CLAUDE.md` starter](downloads/CLAUDE-starter.md);
+**Ready-made starters** (adopt-and-adapt): a [`CLAUDE.md` starter](downloads/CLAUDE-starter.md);
 the three artifacts an orchestrator authors — an [Epic template](downloads/EPIC-TEMPLATE-starter.md), a
 [design-doc template](downloads/design-doc-template-starter.md), and an
 [agent-brief template](downloads/agent-brief-starter.md); and an

@@ -60,7 +60,7 @@ development-workflow.html  HAND-AUTHORED dev-process figure (verbatim, ScholAcce
 .nojekyll              disables Jekyll on Pages
 hooks/pre-commit       regenerates + stages HTML on commit (install: catalog.py install-hooks)
 .github/workflows/pages.yml   CI: validate + build + deploy Pages on push
-downloads/CLAUDE-starter.md   redacted CLAUDE mirror (a download; NOT rendered)
+downloads/CLAUDE-starter.md   starter CLAUDE mirror (a download; NOT rendered)
 agent/  models-bridge/  product/    the 53 entries as <role>/<family>/<control>.md (+ generated .html)
 ```
 
@@ -186,8 +186,9 @@ Each entry `<role>/<family>/<control>.md`:
   figure use full width.
 - The catalogue is **representative (~53 patterns), not exhaustive** of every lint/gate/test.
 - The **`product/` role is flagged ScholAccess-specific** (a note renders above it in the census).
-- Redaction: the product name is scrubbed everywhere; **scholaccess.com** and the **paper** are the two
-  deliberate outward links.
+- Standalone posture: entries stay interpretable to a reader who has only this repo (no dangling internal
+  refs); **scholaccess.com** and the **paper** are the two deliberate outward links. It is fine to
+  reference ScholAccess by name.
 - Schema slimmed to **Summary · Target · Form · Enforcement** (Summary first); Novelty / Real artifact /
   Governing rule(s) removed. Census shows **Control · Summary · Enforcement** (no Form column, no ★, no
   hover tooltip). The event-bus mechanism is titled **"Orchestrator-as-reactor over an event bus"**.

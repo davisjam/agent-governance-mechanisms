@@ -6,7 +6,7 @@ its own directory, so the skill must vendor everything it references. This scrip
 the single writer of the generated half of the plugin — it mirrors the catalogue's
 `agent/` + `models-bridge/` entries (the two governance targets that make up "the
 self"; `product/` is deliberately excluded) into the skill's `reference/`, and lifts
-Part A of the redacted starter governance doc into `principles.md`.
+Part A of the starter governance doc into `principles.md`.
 
 It is the skill's analogue of `catalog.py build`: the bundle is GENERATED, never
 hand-edited, so it can't drift from the catalogue. Runs on every commit via
@@ -16,7 +16,9 @@ Exit codes (per the repo's subprocess convention): 0 = success, 1 = failure.
 """
 from __future__ import annotations
 
+import glob
 import os
+import re
 import shutil
 import sys
 
@@ -74,7 +76,7 @@ def _filtered_index() -> None:
 
 
 def _principles() -> None:
-    """Lift Part A (the portable method) out of the redacted starter governance doc."""
+    """Lift Part A (the portable method) out of the starter governance doc."""
     txt = open(STARTER, encoding="utf-8").read()
     a = txt.find("# Part A")
     b = txt.find("# Part B")
@@ -83,7 +85,7 @@ def _principles() -> None:
     part_a = txt[a:b].rstrip().rstrip("-").rstrip()  # drop the trailing '---' separator
     intro = (
         GEN_NOTE
-        + "<!-- Source: downloads/CLAUDE-starter.md (Part A), itself a redacted mirror of a "
+        + "<!-- Source: downloads/CLAUDE-starter.md (Part A), itself a starter mirror of a "
         "mature CLAUDE.md. The copyright / attribution header below is retained verbatim. -->\n\n"
         "# Operating principles — the Davis AI-First Engineering Method\n\n"
         "*These portable principles are the operating stance of the `self-governance` skill. "
@@ -106,6 +108,33 @@ def _reference_readme(n: int) -> None:
     )
 
 
+def _vendor_referenced_downloads() -> int:
+    """Copy any downloads/ template a BUNDLED entry references into reference/downloads/, so the
+    'Adopt it ->' handoff links resolve when the skill is installed (the plugin cache can't reach
+    outside its own dir). Only templates referenced by the bundled agent + models-bridge entries are
+    vendored — a download hung off an excluded product entry is not pulled in. The relative depth
+    matches: `../../downloads/X` from `reference/<role>/<family>/<control>.md` lands in reference/downloads/."""
+    dst_dir = os.path.join(REF, "downloads")
+    if os.path.isdir(dst_dir):
+        shutil.rmtree(dst_dir)  # regenerate fresh so a de-referenced template doesn't linger
+    referenced: set[str] = set()
+    for f in glob.glob(os.path.join(REF, "**", "*.md"), recursive=True):
+        with open(f, encoding="utf-8") as fh:
+            referenced.update(re.findall(r"\]\([^)]*downloads/([^)\s#]+)\)", fh.read()))
+    n = 0
+    for name in sorted(referenced):
+        src = os.path.join(ROOT, "downloads", name)
+        if os.path.isfile(src):
+            _write_copy(src, os.path.join(dst_dir, name))
+            n += 1
+    return n
+
+
+def _write_copy(src: str, dst: str) -> None:
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    shutil.copyfile(src, dst)
+
+
 def main() -> int:
     print("== bundle-skill plan ==")
     print(f"  roles: {', '.join(INCLUDE_ROLES)} (product excluded)")
@@ -114,7 +143,8 @@ def main() -> int:
     _filtered_index()
     _principles()
     _reference_readme(n)
-    print(f"bundled {n} control entries + INDEX + ABSTRACTIONS + principles.md")
+    d = _vendor_referenced_downloads()
+    print(f"bundled {n} control entries + INDEX + ABSTRACTIONS + principles.md + {d} referenced download(s)")
     return 0
 
 

@@ -729,7 +729,7 @@ LANDING_CARDS = [
     ("Views of the governance catalogue", "the whole catalogue at a glance — four views, controls clickable", "catalogue-figure.html", ""),
     ("Abstractions glossary", "the artifacts the mechanisms are built from — named by role, not filename", "ABSTRACTIONS.html", ""),
     ("Quick start", "two ways to adopt — DIY the catalogue, or install the self-governance skill", "quick-start.html", ""),
-    ("Starter CLAUDE.md", "a real, mature one — redacted; a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
+    ("Starter CLAUDE.md", "a real, mature one — a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
     ("Epic template", "the section shape + Definition-of-Done, portable", "downloads/EPIC-TEMPLATE-starter.md", " download"),
     ("Design-doc template", "invariants-driven; dynamics + observability blocks", "downloads/design-doc-template-starter.md", " download"),
     ("Agent-brief template", "the dispatch — scope, context, acceptance, hand-back", "downloads/agent-brief-starter.md", " download"),

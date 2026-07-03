@@ -77,8 +77,10 @@ This repo is embedded in a parent repo as a submodule. Edits happen **here** (co
 repo's `origin/main`); the parent then bumps its gitlink pointer separately. This repo has no knowledge
 of the parent — treat it as standalone.
 
-## Redaction posture
+## Standalone posture
 
-The catalogue is distilled from a real system; identities are redacted (product name, absolute paths).
-`scholaccess.com` and the paper are deliberately linked. Before pushing, check no product name leaked
-(`git grep -iE 'adatool|ada-tool'` should be empty except intended references).
+The catalogue is distilled from a real system (ScholAccess) — referencing it and the paper is fine. The
+real constraint is that every entry stays **standalone and interpretable**: no absolute paths, and no
+dangling internal file or rule-number references an outside reader can't resolve (the abstractions
+glossary exists for exactly this — see the interpretability principle above). `scholaccess.com` and the
+paper are the deliberate outward links.

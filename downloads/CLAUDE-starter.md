@@ -1,14 +1,14 @@
-<!-- Redacted starter mirror of a real, mature CLAUDE.md — the governance-rules half
-     (everything before the project's "## CLI Commands" section). Product identity is redacted;
-     doc/tool paths are kept as illustrative structure. This is a MENU, not a drop-in: adopt the
-     rules that fit your repo, adapt the rest, delete what doesn't apply. Companion to the
-     agent-governance-mechanisms catalogue — each rule here maps to a control writeup there. -->
+<!-- Starter mirror of a real, mature CLAUDE.md — the governance-rules half
+     (everything before the project's "## CLI Commands" section). The doc/tool paths are kept as
+     illustrative structure. This is a MENU, not a drop-in: adopt the rules that fit your repo, adapt
+     the rest, delete what doesn't apply. Companion to the agent-governance-mechanisms catalogue —
+     each rule here maps to a control writeup there. -->
 
 # CLAUDE.md — <Project>
 
-This is a **redacted starter** — the governance-rules half of a real, mature CLAUDE.md from an
+This is a **starter** — the governance-rules half of a real, mature CLAUDE.md from an
 **agent-team-as-team** codebase (most code is written by dispatched AI agents; the discipline below
-exists to make that safe at scale). Product-specific details are stripped; adapt the rest to your repo.
+exists to make that safe at scale). It's a menu: adopt the rules that fit your repo, adapt the rest.
 
 This file has two parts:
 
