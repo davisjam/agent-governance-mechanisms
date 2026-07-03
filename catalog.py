@@ -1068,9 +1068,25 @@ def build_abstractions_body(md: str, abbrs: dict) -> str:
     return "\n".join(out)
 
 
+def _sync_figure_census(entries: list[Entry]) -> None:
+    """Fill `data-census` spans in the static figure pages with live counts (single source of truth =
+    the catalogue), so a hand-authored figure can't drift (e.g. '51 controls' vs the real 53)."""
+    counts = {"controls": str(len(entries)), "families": str(len({e.family for e in entries if e.family}))}
+    for fig in ("catalogue-figure.html", "development-workflow.html"):
+        path = os.path.join(ROOT, fig)
+        if not os.path.isfile(path):
+            continue
+        txt = open(path, encoding="utf-8").read()
+        for key, val in counts.items():
+            txt = re.sub(rf'(<span data-census="{key}">)[^<]*(</span>)', rf"\g<1>{val}\g<2>", txt)
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(txt)
+
+
 def cmd_build(_args) -> int:
     global _ABBR_MAP, _ABBR_PREFIX
     entries = all_entries()
+    _sync_figure_census(entries)  # keep the static figures' counts equal to the census
     _ABBR_MAP = parse_abstractions()
     written = 0
     md_files = sorted(catalogue_md_files())
