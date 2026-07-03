@@ -286,6 +286,43 @@ def check_abstractions(entries: list[Entry], abbrs: dict) -> list[str]:
     return problems
 
 
+FIGURE_FILE = "catalogue-figure.html"  # the hand-authored governance-map figure
+
+
+def check_figure(entries: list[Entry]) -> list[str]:
+    """Governance-map figure invariants: every control is clickable, every link resolves, and no
+    clickable-styled node ('chip' / 'lat-node') is a slug without a link.
+
+    Deterministic backstop for the figure — it is hand-authored (build never regenerates it), so a
+    control added to the catalogue but forgotten in the figure, or a node styled clickable but left as
+    plain text, would silently ship without this gate.
+    """
+    p = os.path.join(ROOT, FIGURE_FILE)
+    if not os.path.exists(p):
+        return []
+    problems: list[str] = []
+    lines = open(p, encoding="utf-8").read().splitlines()
+    hrefs = re.findall(r'href="([^"]+\.html)"', "\n".join(lines))
+    local = {h for h in hrefs if not h.startswith(("http://", "https://", "#", "mailto:"))}
+
+    # (1) link integrity — every relative .html link resolves on disk.
+    for h in sorted(local):
+        if not os.path.exists(os.path.join(ROOT, os.path.normpath(h))):
+            problems.append(f"dead link -> {h}")
+
+    # (2) coverage — every control is linked at least once (no slug clickable nowhere in the figure).
+    for e in entries:
+        html = (e.path[:-3] + ".html").replace(os.sep, "/")
+        if html not in local:
+            problems.append(f"control not linked anywhere -> {html} (a slug without a link)")
+
+    # (3) no orphan node — a chip / lat-node element must carry a link.
+    for i, ln in enumerate(lines, 1):
+        if re.search(r'class="[^"]*\b(?:chip|lat-node)\b', ln) and "href=" not in ln:
+            problems.append(f"line {i}: clickable-styled node has no link -> {ln.strip()[:80]}")
+    return problems
+
+
 def cmd_validate(_args) -> int:
     entries = all_entries()
     n_issues = 0
@@ -302,6 +339,9 @@ def cmd_validate(_args) -> int:
     abbrs = parse_abstractions()
     for msg in check_abstractions(entries, abbrs):
         print(f"  [abbr]  {msg}")
+        n_issues += 1
+    for msg in check_figure(entries):
+        print(f"  [figure] {msg}")
         n_issues += 1
     for rel, summ in role_summaries().items():
         if not summ:

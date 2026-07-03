@@ -112,6 +112,8 @@
   .lat-node.t-s { border-left: 4px solid var(--s-bg-dark); }
   .lat-node .cpair { display: block; font-size: 9px; color: var(--rel-cp); font-family: ui-monospace, Menlo, monospace; }
   .lat-hard .grid2 { column-count: 2; column-gap: 8px; }
+  .grid2 a { color: inherit; text-decoration: none; border-bottom: 1px dotted #94a3b8; }
+  .grid2 a:hover { color: var(--link, #0b5cad); border-bottom-style: solid; }
   .takeaway { margin-top: 12px; background: var(--proc-bg); border: 1px solid #cbd5e1; border-radius: 7px; padding: 8px 12px; font-size: 11px; color: var(--env-ink); }
   .takeaway b { color: var(--env-ink); }
   .axis { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 800; color: var(--muted); margin: 2px 2px 8px; }
@@ -189,7 +191,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
         <a class="chip" href="agent/lifecycle-and-observability/cron-alerts-gate.html" title="Block new dispatch while a HIGH cron alert is unresolved.">cron-alerts-gate</a>
       </div>
       <div class="fam fam-a"><h4>Governance-docs</h4>
-        <span class="chip sh">CLAUDE.md index <span class="rel cp">═</span> cap-lint</span>
+        <span class="chip sh"><a href="agent/governance-doc-controls/claude-md-rule-index.html" title="The governance document itself, enforced by its own lints.">CLAUDE.md index</a> <span class="rel cp">═</span> cap-lint</span>
         <a class="chip" href="agent/governance-doc-controls/mandatory-snippet-table.html" title="Brief-linting asserts every required brief snippet is present.">snippet-table</a>
         <a class="chip" href="agent/governance-doc-controls/epic-definition-of-done.html" title="Close an Epic only after re-running its checks at HEAD.">epic-DoD</a>
         <a class="chip" href="agent/governance-doc-controls/doc-hygiene-lints.html" title="Lints keep docs indexed, provenance-headed, and cross-reference-valid.">doc-hygiene-lints</a>
@@ -207,8 +209,8 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
         <span class="chip"><a href="models-bridge/system-models/service-flow-model.html" title="The SOA source-of-truth NetworkPolicy and wiring are generated from.">service-flow</a> · <a href="models-bridge/system-models/deployment-topology-model.html" title="Typed models of where things run and how they layer.">deployment</a> · <a href="models-bridge/system-models/domain-registries.html" title="Frozen typed registries for the system's domain facts.">domain</a></span>
       </div>
       <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Kept true (map = territory)</h4>
-        <span class="chip">meta-sync <span class="rel cp">═</span> drift-parity gates</span>
-        <span class="chip">model-driven codegen <span class="rel en">──▶</span> artifacts</span>
+        <span class="chip">meta-sync <span class="rel cp">═</span> <a href="models-bridge/system-models/drift-parity-gates.html" title="Bidirectional model↔reality checks so models cannot drift.">drift-parity gates</a></span>
+        <span class="chip"><a href="models-bridge/system-models/model-driven-codegen.html" title="Generate real artifacts from the models, provenance-headed.">model-driven codegen</a> <span class="rel en">──▶</span> artifacts</span>
       </div>
       <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Consumed by agents</h4>
         <a class="chip soft" href="models-bridge/system-models/query-surface.html" title="repo-query — the agent-facing read API over the models.">query-surface (repo-query)</a>
@@ -220,8 +222,8 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="band-h band-s">PRODUCT TARGET <span class="band-note">· governs the shipped artifact</span></div>
     <div class="fam-grid">
       <div class="fam fam-s"><h4>Canonical models&nbsp;&amp;&nbsp;seams</h4>
-        <span class="chip">PdfModel <span class="rel cp">═</span> itext-ban</span>
-        <span class="chip">Office <span class="rel cp">═</span> openxml-ban</span>
+        <span class="chip"><a href="product/canonical-models-and-seams/pdf-model.html" title="All PDF I/O through one typed model; raw iText banned.">PdfModel</a> <span class="rel cp">═</span> itext-ban</span>
+        <span class="chip"><a href="product/canonical-models-and-seams/office-models.html" title="All OOXML through typed models; raw SDK access banned.">Office</a> <span class="rel cp">═</span> openxml-ban</span>
         <a class="chip" href="product/canonical-models-and-seams/service-client.html" title="A BinaryIO seam makes file-path-over-wire impossible.">ServiceClient</a>
         <a class="chip" href="product/canonical-models-and-seams/canonical-walkers.html" title="One canonical traversal per tree, not ad hoc recursion.">canonical-walkers</a>
         <a class="chip" href="product/canonical-models-and-seams/raw-redis-seam.html" title="All raw Redis in one seam; queue atomicity encoded once.">raw-Redis seam</a>
@@ -229,7 +231,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <div class="fam fam-s"><h4>Validation&nbsp;&amp;&nbsp;conf.</h4>
         <a class="chip" href="product/validation-and-conformance/content-validator.html" title="Assert input content survives remediation — a fidelity gate.">ContentValidator</a>
         <a class="chip" href="product/validation-and-conformance/semantic-lints.html" title="The blocking semantic-lint fleet over the tool's own source.">semantic-lints</a>
-        <span class="chip">WCAG-engine <span class="rel cp">═</span> scope-doc</span>
+        <span class="chip"><a href="product/validation-and-conformance/standards-rule-engine.html" title="Map each finding to the WCAG/508/PDF-UA criterion it closes.">WCAG-engine</a> <span class="rel cp">═</span> scope-doc</span>
         <a class="chip" href="product/validation-and-conformance/coherence-lints.html" title="Assert independent sources agree — catch cross-source drift.">coherence-lints</a>
       </div>
       <div class="fam fam-s"><h4>Regression tests</h4>
@@ -239,8 +241,8 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
         <a class="chip" href="product/regression-tests/ddt-pin-trailers.html" title="Doc-derived characterization pinned to a cited source.">DDT pin-trailers</a>
       </div>
       <div class="fam fam-s"><h4>Provenance&nbsp;&amp;&nbsp;attr.</h4>
-        <span class="chip">mutator-stamps <span class="rel cp">═</span> F10-lint</span>
-        <span class="chip">derive-changelog <span class="rel co">◀─</span> stamps</span>
+        <span class="chip"><a href="product/provenance-and-attribution/mutator-stamps.html" title="Every mutation embeds an attribution stamp in the artifact.">mutator-stamps</a> <span class="rel cp">═</span> F10-lint</span>
+        <span class="chip"><a href="product/provenance-and-attribution/derive-changelog.html" title="Reconstruct the attributed mutation history from the stamps.">derive-changelog</a> <span class="rel co">◀─</span> stamps</span>
         <a class="chip" href="product/provenance-and-attribution/a11y-prefix.html" title="Prefix invisible inserts so they're distinguishable and tracked.">a11y_ prefix</a>
       </div>
       <div class="fam fam-s"><h4>Repair vocabulary</h4>
@@ -317,17 +319,19 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
   <div class="axis"><span>SOFT · probabilistic (aims the fleet)</span><span class="arr"></span><span>HARD · deterministic (holds the line)</span></div>
   <div class="lat">
     <div class="lat-col lat-soft">
-      <h4>Soft <span style="font-weight:500;font-size:10px">(3)</span></h4>
+      <h4>Soft <span style="font-weight:500;font-size:10px">(4)</span></h4>
       <p class="cap">influence, not a gate — cannot block</p>
       <div class="lat-node t-a"><a href="agent/context-and-dispatch/dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a> <span class="cpair">reads the component model (bridge) · file-addr. rules</span></div>
+      <div class="lat-node t-a"><a href="agent/governance-doc-controls/operational-playbooks.html" title="Situation-keyed devops procedures agents follow instead of improvising.">operational-playbooks</a> <span class="cpair">the orchestrator consults, not improvises</span></div>
       <div class="lat-node t-s"><a href="product/repair-vocabulary/codemod-first.html" title="For 50+ deterministic sites, write one AST transformer.">codemod-first threshold</a> <span class="cpair">a discipline; the transform is deterministic</span></div>
       <div class="lat-node" style="border-left:4px solid var(--b-dark)"><a href="models-bridge/system-models/query-surface.html" title="repo-query — the agent-facing read API over the models.">query-surface (repo-query)</a> <span class="cpair">agent-facing read API over the models (bridge)</span></div>
     </div>
     <div class="lat-col lat-sh">
-      <h4>Soft · Hard <span style="font-weight:500;font-size:10px">(2)</span></h4>
+      <h4>Soft · Hard <span style="font-weight:500;font-size:10px">(3)</span></h4>
       <p class="cap">soft guidance kept honest by a hard counterpart</p>
       <div class="lat-node t-a"><a href="agent/governance-doc-controls/claude-md-rule-index.html" title="The governance document itself, enforced by its own lints.">CLAUDE.md rule index</a> <span class="cpair">═══ cap-lint + conformance-lint</span></div>
       <div class="lat-node t-a"><a href="agent/context-and-dispatch/docs-hierarchy.html" title="One enforced, numbered rule index every agent boots with.">docs-hierarchy</a> <span class="cpair">═══ its cap / conformance lints</span></div>
+      <div class="lat-node t-a"><a href="agent/governance-doc-controls/epic-and-design-templates.html" title="Fixed section-templates for Epics and design docs so plans are complete.">Epic &amp; design-doc templates</a> <span class="cpair">═══ stub scaffold + DoD / section lints</span></div>
     </div>
     <div class="lat-col lat-hard">
       <h4>Hard <span style="font-weight:500;font-size:10px">(46 — the bulk of the fleet)</span></h4>
@@ -337,7 +341,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
         <a href="agent/gates-and-merge-train/pre-commit-hook.html">pre-commit-hook</a> · <a href="agent/gates-and-merge-train/sentinel-first-commit.html">sentinel</a> · <a href="agent/gates-and-merge-train/merge-train-mis-batching.html">merge-train-batching</a> · <a href="agent/gates-and-merge-train/staged-deploy-gates.html">staged-deploy</a> ·
         <a href="agent/mediators-and-resource-locks/test-serializer.html">test-serializer</a> · <a href="agent/mediators-and-resource-locks/build-serializer.html">build-serializer</a> · <a href="agent/mediators-and-resource-locks/aggregate-compute-protection.html">lint-all-mutex</a> ·
         <a href="agent/lifecycle-and-observability/agent-registry.html">agent-registry</a> · <a href="agent/lifecycle-and-observability/typed-event-bus.html">event-bus</a> · <a href="agent/lifecycle-and-observability/deploy-heartbeats.html">heartbeats</a> · <a href="agent/lifecycle-and-observability/tombstone-commits.html">tombstones</a> · <a href="agent/lifecycle-and-observability/cron-alerts-gate.html">cron-alerts-gate</a> ·
-        <a href="agent/governance-doc-controls/mandatory-snippet-table.html">snippet-table</a> · <a href="agent/governance-doc-controls/epic-definition-of-done.html">epic-DoD</a> · <a href="agent/governance-doc-controls/doc-hygiene-lints.html">doc-hygiene-lints</a> · <a href="agent/governance-doc-controls/operational-playbooks.html">operational-playbooks</a> · <a href="agent/governance-doc-controls/epic-and-design-templates.html">epic&amp;design-templates</a> ·
+        <a href="agent/governance-doc-controls/mandatory-snippet-table.html">snippet-table</a> · <a href="agent/governance-doc-controls/epic-definition-of-done.html">epic-DoD</a> · <a href="agent/governance-doc-controls/doc-hygiene-lints.html">doc-hygiene-lints</a> ·
         <b style="color:var(--b-dark)">bridge:</b> <a href="models-bridge/system-models/executable-source-of-truth.html">executable-src-of-truth</a> · <a href="models-bridge/system-models/component-zone-model.html">component-zone</a> · <a href="models-bridge/system-models/synchronization-model.html">synchronization(meta-sync)</a> · <a href="models-bridge/system-models/concurrency-contracts.html">concurrency</a> · <a href="models-bridge/system-models/service-flow-model.html">service-flow</a> · <a href="models-bridge/system-models/deployment-topology-model.html">deployment-topology</a> · <a href="models-bridge/system-models/domain-registries.html">domain-registries</a> · <a href="models-bridge/system-models/drift-parity-gates.html">drift-parity</a> · <a href="models-bridge/system-models/model-driven-codegen.html">codegen</a> · <a href="models-bridge/system-models/meta-model-consumption.html">read-no-hardcode</a> ·
         <a href="product/canonical-models-and-seams/pdf-model.html">PdfModel</a> · <a href="product/canonical-models-and-seams/office-models.html">Office</a> · <a href="product/canonical-models-and-seams/service-client.html">ServiceClient</a> · <a href="product/canonical-models-and-seams/canonical-walkers.html">walkers</a> · <a href="product/canonical-models-and-seams/raw-redis-seam.html">raw-Redis</a> ·
         <a href="product/validation-and-conformance/content-validator.html">ContentValidator</a> · <a href="product/validation-and-conformance/semantic-lints.html">semantic-lints</a> · <a href="product/validation-and-conformance/standards-rule-engine.html">WCAG-engine</a> · <a href="product/validation-and-conformance/coherence-lints.html">coherence-lints</a> ·
@@ -360,7 +364,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
   </div>
 
   <div class="takeaway">
-    <b>The asymmetry is the finding:</b> of 51 controls, <b>46 are Hard</b>, only <b>3 Soft</b> and <b>2 Soft·Hard</b>.
+    <b>The asymmetry is the finding:</b> of 53 controls, <b>46 are Hard</b>, only <b>4 Soft</b> and <b>3 Soft·Hard</b>.
     Probabilistic guidance is used to <i>aim</i> agents; deterministic machinery is what is trusted to <i>hold the line</i> — and every soft control sits beside a hard counterpart.
   </div>
 </div>
