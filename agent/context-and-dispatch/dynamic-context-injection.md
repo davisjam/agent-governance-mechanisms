@@ -25,7 +25,7 @@ Across many concurrent agents, this wasted work multiplies.
 
 ## Why it's not just "it's in the docs"
 
-This is the crux, and it is **availability vs. binding.**
+It comes down to **availability vs. binding.**
 
 - **"It's in the docs" is a *pull* model** with four failure points in series: the agent must (1) know
   the doc exists, (2) infer it is relevant to *this* change, (3) choose to read it, (4) find the right

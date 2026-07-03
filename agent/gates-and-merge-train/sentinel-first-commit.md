@@ -24,7 +24,7 @@ run, not a small step.
 
 Failing at merge is failing *late* — after the agent has spent its budget. The sentinel moves the
 substrate-health check to the **first commit (t≈0)**, converting a 60-minute waste into a one-minute
-abort. Crucially it validates on the **production path** — the actual brief, the real dispatch — not a
+abort. It validates on the **production path** — the actual brief, the real dispatch — not a
 pin-test in isolation, so it catches the invisible feedback loops (caps, scope filters, priority
 inversions) that only manifest when the substrate runs end-to-end against real work. The
 distinction is *fail-fast at t=0 on the real path* versus *fail-late at t=60 after the budget is gone*.

@@ -20,7 +20,7 @@ its cited source*. It recurs before every structural change and whenever a cited
 
 ## Why it's not just "the existing tests already pin behaviour"
 
-Existing tests may not cover the exact behaviour about to churn, and — critically — a doc-derived test
+Existing tests may not cover the exact behaviour about to churn, and a doc-derived test
 can drift from its source with **no signal**. DDT pin-trailers are characterization tests with a
 **provenance block**: `DDT-source` names what the test was derived from, `DDT-pins` records the pinned
 points, and editing a cited source obliges regenerating the trailer in the *same commit* (the
