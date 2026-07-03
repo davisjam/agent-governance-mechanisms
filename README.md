@@ -42,7 +42,9 @@ or **soft** (probabilistic) or a mix.
 
 ## Using this repo
 
-This repo is meant to be **leveraged by your coding agent**, not browsed by hand. Vendor it (or the
+**To read it yourself, use the [web view](https://davisjam.github.io/agent-governance-mechanisms/)** —
+that's the pretty version, with the control-map figure, a clickable census, and a full writeup per
+mechanism. This raw repo is what you **hand to your coding agent**: vendor it (or the
 [starter `CLAUDE.md`](downloads/CLAUDE-starter.md)) into your project, point your agent at it, and ask it
 to produce a plan to adopt / adapt / apply the mechanisms in your context — see the
 [quick start](quick-start.md).
