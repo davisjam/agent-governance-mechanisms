@@ -728,7 +728,7 @@ LANDING_CSS = """
 LANDING_CARDS = [
     ("Views of the governance catalogue", "the whole catalogue at a glance — four views, controls clickable", "catalogue-figure.html", ""),
     ("Abstractions glossary", "the artifacts the mechanisms are built from — named by role, not filename", "ABSTRACTIONS.html", ""),
-    ("Quick start", "adopt these in your own repo", "quick-start.html", ""),
+    ("Quick start", "two ways to adopt — DIY the catalogue, or install the self-governance skill", "quick-start.html", ""),
     ("Starter CLAUDE.md", "a real, mature one — redacted; a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
     ("Download the catalogue", "all writeups as a markdown ZIP", "https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip", ""),
 ]
@@ -844,6 +844,9 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
   stops being writing code and becomes <span class="term">governing the conditions under which fast code
   can be trusted</span> — keeping it inspectable, correctable, and maintainable at speed.</p>
+
+  <p class="try-sg" style="margin:-0.4rem 0 1.4rem 1.6rem;"><a href="quick-start.html"><em>Try out Claude
+  in self-governance mode →</em></a></p>
 
   <h2 class="section-h">Between two schools of thought</h2>
   <p class="section-sub">Two common ways to build with agents sit at opposite poles. This site is about
