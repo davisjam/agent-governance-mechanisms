@@ -46,7 +46,11 @@ RAW_FILE_RE = re.compile(r"`([^`]+?\.(?:py|cs|jsonl|ya?ml))`")
 RULE_CITE_RE = re.compile(r"(?<![\w.])#\d{1,2}\b")  # bare project-rule citation (meaningless outside the parent)
 # Not served / not link-checked: internal continuity docs (the abstractions playbook is process, not content).
 NOSERVE = ("HANDOFF.md", "HANDOFF-catalogue-agent.md", "abstractions-playbook.md", "TODO.md",
-           "WRITING-BACKLOG.md", "SUBMISSION.md", "PRIVACY.md")
+           "WRITING-BACKLOG.md", "SUBMISSION.md", "PRIVACY.md", "DEVELOP.md")
+
+# Declared stats — the facts not derivable from the entries (LOC, case-study length). Everything else in
+# _stats() is computed from the catalogue itself. Edit a number here, once.
+DECLARED_STATS = {"loc_kloc": 430, "case_study_weeks": 12}
 
 
 class Entry:
@@ -1183,10 +1187,10 @@ def build_abstractions_body(md: str, abbrs: dict) -> str:
 
 
 def _stats(entries: list[Entry]) -> dict[str, str]:
-    """The single stat source. Derived numbers (computed from the catalogue) merged over declared ones
-    (`stats.json` — facts not derivable from the entries, e.g. LOC). Every value a string, ready to drop
-    into a `data-census` span. `_sync_figure_census` fills from this; `check_no_raw_stats` forbids a raw
-    stat literal that bypasses it."""
+    """The single stat source. Derived numbers (computed from the catalogue) merged over the declared ones
+    in `DECLARED_STATS` (facts not derivable from the entries, e.g. LOC). Every value a string, ready to
+    drop into a `data-census` span. `_sync_figure_census` fills from this; `check_no_raw_stats` forbids a
+    raw stat literal that bypasses it."""
     from collections import Counter
     rows = [r for fam in parse_census() for r in fam["rows"]]
 
@@ -1194,14 +1198,13 @@ def _stats(entries: list[Entry]) -> dict[str, str]:
         return "softhard" if "Soft·Hard" in e else ("soft" if e.strip().startswith("Soft") else "hard")
 
     split = Counter(enf(r["enf"]) for r in rows)
-    declared = json.load(open(os.path.join(ROOT, "stats.json"), encoding="utf-8"))
     stats: dict[str, object] = {
         "controls": len(entries),
         "families": len({e.family for e in entries if e.family}),
         "roles": len({e.role for e in entries if e.role}),
         "enf_hard": split["hard"], "enf_soft": split["soft"], "enf_softhard": split["softhard"],
     }
-    stats.update({k: v for k, v in declared.items() if not k.startswith("_")})
+    stats.update(DECLARED_STATS)
     return {k: str(v) for k, v in stats.items()}
 
 
@@ -1227,7 +1230,7 @@ def check_no_raw_stats(_entries: list[Entry]) -> list[str]:
 
 def _sync_figure_census(entries: list[Entry]) -> None:
     """Fill `data-census` spans in the static figure pages from `_stats` (single source of truth =
-    the catalogue + stats.json), so a hand-authored figure can't drift (e.g. '51 controls' vs 53)."""
+    the catalogue + DECLARED_STATS), so a hand-authored figure can't drift (e.g. '51 controls' vs 53)."""
     counts = _stats(entries)
     for fig in ("catalogue-figure.html", "development-workflow.html"):
         path = os.path.join(ROOT, fig)
