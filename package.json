@@ -1,0 +1,14 @@
+{
+  "name": "agent-governance-mechanisms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OPTIONAL dev/test tooling for the agent-governance-mechanisms catalogue: the axe-core accessibility test tier. The catalogue tool itself (catalog.py) is stdlib-Python and needs no Node.",
+  "license": "MIT",
+  "author": "James C. Davis, PhD (davisjam@purdue.edu)",
+  "scripts": {
+    "test": "python3 catalog.py test"
+  },
+  "devDependencies": {
+    "@axe-core/cli": "^4.10.0"
+  }
+}

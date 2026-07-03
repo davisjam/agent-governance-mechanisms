@@ -29,6 +29,9 @@ jobs:
         run: python3 catalog.py validate
       - name: Render markdown -> HTML
         run: python3 catalog.py build
+      - name: Test suite (audit-only — reports, does not block deploy yet)
+        continue-on-error: true
+        run: python3 catalog_tests.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

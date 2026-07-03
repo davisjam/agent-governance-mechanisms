@@ -4,3 +4,4 @@ __pycache__/
 /site/
 .claude/
 plugin/**/*.html
+node_modules/

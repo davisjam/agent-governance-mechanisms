@@ -1140,13 +1140,18 @@ def _git(*args: str, capture: bool = False) -> subprocess.CompletedProcess:
 def cmd_deploy(args) -> int:
     """Build the site, then serve it locally (--local) or publish it to GitHub (--github)."""
     print(f"== Deploy plan: target={args.target} ==")
-    print("  1. validate schema   2. build HTML   "
-          + ("3. serve on localhost" if args.target == "local"
-             else "3. commit + push to origin main (CI deploys)"))
+    print("  1. validate   2. build   3. test (audit-only)   "
+          + ("4. serve on localhost" if args.target == "local"
+             else "4. commit + push to origin main (CI deploys)"))
     if cmd_validate(None) != 0:
         print("ABORT: schema invalid — fix before deploying.")
         return 1
     cmd_build(None)
+    # predeploy gate — AUDIT-ONLY: the suite runs (axe included if installed) and reports, but does not
+    # block, because of a known backlog (README cross-anchors + a few site a11y findings). Flip to
+    # blocking (return 1 on failure) once `catalog.py test` is green.
+    if subprocess.run([sys.executable, "catalog_tests.py"], cwd=ROOT).returncode != 0:
+        print("WARNING: test suite reported findings (audit-only — not blocking deploy). See above.")
 
     if args.target == "local":
         url = f"http://127.0.0.1:{args.port}/"
@@ -1177,6 +1182,13 @@ def cmd_deploy(args) -> int:
     return 0
 
 
+def cmd_test(args) -> int:
+    """Build, then run the tiered catalogue + skill test suite (see catalog_tests.py)."""
+    cmd_build(None)
+    cmd = [sys.executable, "catalog_tests.py"] + (["--strict"] if getattr(args, "strict", False) else [])
+    return subprocess.run(cmd, cwd=ROOT).returncode
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description="Validate + query the governance-catalogue schema.")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -1190,6 +1202,8 @@ def main() -> int:
     s = sub.add_parser("summaries", help="dump role/family/entry summaries (tooltip source)")
     s.add_argument("--json", action="store_true")
     sub.add_parser("build", help="render every .md → .html + regenerate the landing census")
+    tp = sub.add_parser("test", help="build, then run the catalogue + skill test suite (markdown/html/skill; axe + claude validate)")
+    tp.add_argument("--strict", action="store_true", help="treat a Tier-2 SKIP (missing axe/claude) as failure")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
@@ -1197,7 +1211,8 @@ def main() -> int:
     d.add_argument("-m", "--message", default="deploy: rebuild site", help="commit message for github mode")
     args = p.parse_args()
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
-            "build": cmd_build, "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
+            "build": cmd_build, "test": cmd_test, "install-hooks": cmd_install_hooks,
+            "deploy": cmd_deploy}[args.cmd](args)
 
 
 if __name__ == "__main__":
