@@ -116,5 +116,5 @@ Every control is written as *the failure it kills* and *why it is not just the c
 already does*. When you adapt one, keep that framing: name the recurring failure in **your** system
 first, then borrow the mechanism. A control you can't attach to a real failure is one you don't need yet.
 
-The system that this catalogue was distilled from is live at **[scholaccess.com](https://scholaccess.com)**;
+The system that this catalogue was distilled from — **DocAble** — is live at **[scholaccess.com](https://scholaccess.com)**;
 the case study is the [paper](https://arxiv.org/pdf/2607.01087).

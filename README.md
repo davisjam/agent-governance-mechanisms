@@ -38,7 +38,7 @@ or **soft** (probabilistic) or a mix.
 - **[The paper](https://arxiv.org/pdf/2607.01087)** — *Cheap Code, Costly Judgment: A Case Study on
   Governable Agentic Software Engineering* — the theory, evidence, and testable propositions.
 - **[Quick start](quick-start.md)** — adopt these in your own repo.
-- **The live system** these controls govern: [scholaccess.com](https://scholaccess.com).
+- **The live system** these controls govern: **DocAble** ([scholaccess.com](https://scholaccess.com)).
 
 ## Using this repo
 

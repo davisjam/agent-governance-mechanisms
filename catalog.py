@@ -622,7 +622,7 @@ ROLE_HEADINGS = {
 }
 
 ROLE_NOTES = {
-    "Product": "This is the part that's specific to the ScholAccess project — you'll need your own for "
+    "Product": "This is the part that's specific to the DocAble project — you'll need your own for "
                "your project.",
 }
 
@@ -890,7 +890,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <div class="refs">
     <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
     Judgment: A Case Study on Governable Agentic Software Engineering</i></a></div>
-    <div class="r"><b>Live system it governs:</b> <a href="https://scholaccess.com">scholaccess.com</a></div>
+    <div class="r"><b>Live system it governs:</b> <a href="https://scholaccess.com">DocAble (scholaccess.com)</a></div>
   </div>
 
   <figure class="wf">

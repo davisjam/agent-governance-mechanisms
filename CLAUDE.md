@@ -10,7 +10,7 @@ fresh checkout with nothing installed). Do not add pip dependencies; keep it clo
 ## Core principle: this repo must be interpretable by an independent Claude
 
 **Every mechanism description must stand on its own to an agent that has no access to the parent
-(ada-tool) repo** — not its source, its docs, its tools, or its `CLAUDE.md` rule numbers. This is the
+repo** — not its source, its docs, its tools, or its `CLAUDE.md` rule numbers. This is the
 governing rule for all content here:
 
 - **Describe artifacts by role and shape, not by unshipped filename.** "A host-level flock wrapper that
@@ -18,10 +18,10 @@ governing rule for all content here:
   build time," not `` `lint-service-flow-model.py` ``.
 - **Explain a governing rule's *content*; never cite a bare rule number.** "A project rule that a new
   event-bus topic must ship an observability entry," not "rule #46". A number like `#46` is meaningless
-  outside ada-tool.
+  outside the parent repo.
 - **No dangling paths** into trees this repo does not ship (`services/…`, `deploy/…`, `docs/…`,
   `talks-and-notes/…`). Intra-catalogue links (`../<role>/<family>/<control>.md`) are fine — they ship.
-- **Prefer the conceptual statement over the concrete ScholAccess artifact** that happens to implement
+- **Prefer the conceptual statement over the concrete DocAble artifact** that happens to implement
   it. `Known uses` may name a real artifact *once* for grounding, but the mechanism must be understandable
   without it. The `product/` role is the catalogue's flagged project-specific exception; keep it
   self-contained too.
@@ -79,7 +79,7 @@ of the parent — treat it as standalone.
 
 ## Standalone posture
 
-The catalogue is distilled from a real system (ScholAccess) — referencing it and the paper is fine. The
+The catalogue is distilled from a real product (DocAble, live at scholaccess.com) — referencing it and the paper is fine. The
 real constraint is that every entry stays **standalone and interpretable**: no absolute paths, and no
 dangling internal file or rule-number references an outside reader can't resolve (the abstractions
 glossary exists for exactly this — see the interpretability principle above). `scholaccess.com` and the

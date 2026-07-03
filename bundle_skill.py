@@ -138,7 +138,7 @@ def _write_copy(src: str, dst: str) -> None:
 
 def _rewrite_outbound_links() -> None:
     """Repoint links that leave the bundle so none dangles once installed: excluded-product cross-refs
-    -> the live public product pages; ada-tool-internal `docs/` pointers -> plain text (no public target).
+    -> the live public product pages; source-project-internal `docs/` pointers -> plain text (no public target).
     Intra-bundle links (other agent/bridge entries, vendored downloads) are left untouched."""
     targets = glob.glob(os.path.join(REF, "**", "*.md"), recursive=True) + [os.path.join(SKILL, "principles.md")]
     for f in targets:
