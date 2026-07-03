@@ -166,7 +166,7 @@ the same logic in one PR is the extract-now signal.
 
 ### A.2.5. Unify for defect-class consolidation, not just capability
 
-Fix-once-benefits-all is the load-bearing affordance — capability parity is
+Fix-once-benefits-all is the core affordance — capability parity is
 sufficient justification to unify two parallel implementations; you do not
 need the merged path to be *more* capable. When two sites share logic, extract
 a shared helper — **on the second site, not the third** (DRY-drift hazard).
@@ -177,7 +177,7 @@ When unification also unlocks new capability, split the commit: consolidation
 
 When a refactor exposes a cleaner surface, migrate ALL call sites in the same
 change. No delegating shim "for backwards compatibility" — compatibility shims
-compound into a permanent two-paths tax that every future agent must reason
+compound into an ongoing two-paths tax that every future agent must reason
 about.
 
 ### A.2.7. Uniformity over fit — one codebase-wide pattern beats a locally-better bespoke one
@@ -189,8 +189,8 @@ loss for a large system-wide win: a uniform pattern an agent has already seen
 be re-derived from scratch by every future agent that meets it, and each
 re-derivation is a chance to get it subtly wrong. Uniformity lowers
 agent-confusion and defect *variance* more than local optimization raises
-capability. This is the principle behind the canonical-lib mandate, the
-sole-seam discipline, and the one-canonical-walker rule: the win is not that any
+capability. This is the principle behind single-canonical-library, sole-seam, and
+one-walker-per-tree disciplines: the win is not that any
 one library or model is the best conceivable tool, but that there is exactly
 *one* of them, so a fix or a constraint applied once holds everywhere. Deviate
 only when a site has a genuine, named reason the uniform pattern cannot serve —
@@ -272,7 +272,7 @@ detectable — audit signals are expensive, deferrable, and post-hoc; lint
 signals are cheap, at-PR, and deterministic. Today's audit finding should
 become tomorrow's lint: if a bug is in N>1 files, the right fix shape is "fix
 N sites + add a lint," not "fix N sites and wait for the next audit." For a
-class-level failure, propose a `[LINT]` in addition to the `[FIX]`.
+class-level failure, propose a lint that prevents the class — not just a one-off fix.
 
 ### A.3.2. Quality gates — grade on the commodity-lint floor
 
@@ -315,7 +315,7 @@ ones every time.
 
 ### A.3.5. Documentation — the invariants-driven pattern
 
-Subsystem / architecture docs earn their keep through four load-bearing
+Subsystem / architecture docs earn their keep through four essential
 elements; a doc without them is prose that rots: (1) **a section per real
 part** — one section/row per source, stage, module, or entity, mirroring the
 actual structure; (2) **invariants with stable IDs** — each invariant a
@@ -363,7 +363,7 @@ schema fact prevents stale-claim drift — verify brief premises before
 dispatching. When reviewing "done" work, **trust nothing at HEAD**: re-run the
 gates, pin-tests, and lints yourself; markers and counts rot when sibling
 sweeps break the substrate. Agent reports describe *intent*, not *reality* —
-verify. This is the load-bearing discipline of the final, independent
+verify. This is the central discipline of the final, independent
 "trust-nothing" definition-of-done review.
 
 ### A.4.4. Destructive-op care
@@ -386,6 +386,5 @@ sets with messages that state the intent; agents commit per meaningful step
 (never accumulate) and carry a co-author trailer, e.g.
 `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`.
 
-*Attribution: Part A distills principles from the author's own agent-collaborative
-repos; it is a portable method, reusable across projects, governed by the MIT license
-at the head of Part A.*
+*Attribution: Part A is a portable engineering method, reusable across projects, governed by the MIT
+license at the head of Part A.*
