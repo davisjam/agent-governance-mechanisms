@@ -1112,6 +1112,12 @@ def cmd_build(_args) -> int:
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
     print(f"built {written} entry/index pages + landing index.html + catalogue-views.html "
           f"({len(entries)} controls in census)")
+    # Regenerate the packaged skill bundle from the same sources — same "can't drift" discipline as the
+    # HTML. build is the one regeneration point (pre-commit hook, deploy, and CI all call it), so this
+    # single wire-in keeps plugin/ fresh. Subprocess avoids a catalog <-> bundle_skill circular import.
+    rc = subprocess.run([sys.executable, os.path.join(ROOT, "bundle_skill.py")], cwd=ROOT).returncode
+    if rc != 0:
+        print(f"WARNING: skill bundle regeneration failed (rc={rc}) — plugin/ may be stale", file=sys.stderr)
     return 0
 
 

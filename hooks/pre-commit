@@ -20,5 +20,6 @@ def _catalog(*args: str) -> None:
 
 
 _catalog("validate")   # refuse to build/commit an invalid schema
-_catalog("build")      # render .md -> .html + regenerate the landing census
+_catalog("build")      # render .md -> .html + regenerate the landing census + the skill bundle
 subprocess.run(["git", "add", "--", "*.html"], cwd=ROOT)
+subprocess.run(["git", "add", "--", "plugin"], cwd=ROOT)  # stage the regenerated skill bundle (plugin/**/*.html is gitignored)

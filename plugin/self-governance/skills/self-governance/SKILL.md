@@ -72,8 +72,10 @@ targets:
 Navigate via the census; **read individual `reference/<role>/<family>/<control>.md`
 entries on demand** — do not load them all. Each entry names *the failure it kills*
 and *why it is not just the cheaper thing everyone already does*.
-[`reference/ABSTRACTIONS.md`](reference/ABSTRACTIONS.md) de-references the
-`[[slug]]` terms entries cite.
+When an entry cites an artifact as `[[slug]]` (e.g. `[[component-registry]]`), look the slug up in
+[`reference/ABSTRACTIONS.md`](reference/ABSTRACTIONS.md) — a glossary of the concrete artifacts the
+mechanisms are built from, each with its definition, the real artifact it grounds, and the control that
+governs it.
 
 > The catalogue's **product** role (governing the shipped artifact) is deliberately
 > out of scope here — the "self" a coding agent governs is its fleet and its
