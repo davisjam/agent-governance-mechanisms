@@ -52,7 +52,12 @@ ban-lint on the raw library (our instance: `PdfModel` over the canonical PDF lib
 content-validator, domain-registries. Some already lead with the pattern — audit each Intent, only tweak
 the DocAble-first ones.
 
-## B3 — Family-level "pattern → instances" signal ✳ QUEUED (needs presentation sign-off)
+## B3 — Family-level "pattern → instances" signal ✅ DONE (presentation signed off)
+
+Swept: **mediators** (resource-mediator ×3 cardinalities) + **system-models** (executable-source-of-truth
+×6 domains) INDEX descriptors carry the pattern→instances line. Left the distinct-pattern families and
+**canonical-seams** (descriptor already signals "one sanctioned seam per concern, held by a ban-lint").
+Entries stay self-aware via their existing "Why it's not just…" sibling sections — no per-entry boilerplate.
 
 **Problem.** ~15 of 53 are same-pattern instances (mediators ×3 cardinalities; canonical-seams ×2
 patterns; system-models ×6 domains; gov-doc-lints ×3). Each defends its seam via "Why it's not just…",

@@ -73,7 +73,7 @@ soft guidance with a hard counterpart.
 
 ## 6. System models
 
-*The typed models the fleet reasons through and the codebase is generated from — the MBSE bridge.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*The typed models the fleet reasons through and the codebase is generated from — the MBSE bridge. The six models are one pattern — an executable source-of-truth — applied to six domains (components, service flow, deployment, sync, concurrency, domain facts); the five mechanisms below act over them.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|
