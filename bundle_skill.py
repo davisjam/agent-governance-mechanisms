@@ -71,9 +71,9 @@ def _filtered_index() -> None:
     # the source line says "All 53 entries…" (full catalogue); this bundle ships only agent+bridge, so
     # rewrite the count to the bundled total to avoid a 53-vs-33 confusion for a fresh reader.
     n_bundled = sum(1 for e in catalog.all_entries() if e.path.split(os.sep)[0] in INCLUDE_ROLES)
-    body = re.sub(r"All \d+ entries are fully written[^\n]*",
+    body = re.sub(r"All \d+ entries are fully\s+written[^.]*\.",
                   f"All {n_bundled} bundled entries are fully written "
-                  "(the product role's entries live in the full catalogue)", body)
+                  "(the product role's entries live in the full catalogue).", body)
     header = (
         GEN_NOTE
         + "<!-- Scope: the agent + models-bridge roles only. The product role is "
