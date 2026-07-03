@@ -1,9 +1,9 @@
 # Office Models ({Slides,Docs,Sheets}Model)
 
-**Intent** — The same typed-model-plus-ban-lint pattern as [pdf-model](pdf-model.md), applied to a second
-object model: all remediation of a format family routes through one typed model, with raw library access —
-and raw string-matching into the serialized form — banned by lint (our instance: `{Slides,Docs,Sheets}Model`
-for PPTX/DOCX/XLSX over `DocumentFormat.OpenXml`).
+**Intent** — Route all remediation of a format family through one typed model, with raw library access —
+and raw string-matching into the serialized form — banned by lint. The same construction+ban-lint pattern
+as [pdf-model](pdf-model.md), on a second object model (our instance: `{Slides,Docs,Sheets}Model` over
+`DocumentFormat.OpenXml`).
 
 | | |
 |---|---|
