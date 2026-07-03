@@ -689,7 +689,8 @@ LANDING_CSS = """
   .wf { position:relative; left:50%; transform:translateX(-50%); width:min(1400px,96vw); margin:14px 0 6px; }
   .wf-frame { width:100%; overflow:hidden; }
   .wf-frame iframe { display:block; border:none; background:#fff; }
-  .wf figcaption { font-size:12px; color:var(--muted); margin-top:8px; text-align:center; }
+  .wf figcaption { font-size:13px; color:var(--muted); margin:10px auto 0; text-align:center;
+                   max-width:780px; line-height:1.55; }
   hr.sep { border:none; border-top:1px solid var(--line); margin:26px 0 20px; }
   .walk-h { font-size:18px; margin:0 0 4px; letter-spacing:-.01em; }
   .walk-sub { font-size:13.5px; color:var(--muted); margin:0 0 14px; }
@@ -750,10 +751,12 @@ def _landing_flow() -> str:
         if i < len(_FLOW):
             steps.append('<div class="farrow">→</div>')
     row = '<div class="flow">\n    ' + "\n    ".join(steps) + '\n    </div>'
-    # return arc from the centre of box 4 (x≈885) back to the centre of box 1 (x≈115), arrowhead up into box 1
+    # orthogonal return loop: down from box 4 (x≈885), left across, then a clean VERTICAL run up into
+    # box 1 (x≈115) so the arrowhead attaches square to the line. Rounded corners (Q) keep it from looking
+    # harsh; the final `V17` segment is straight vertical into the arrowhead base at y=17.
     mustache = ('<svg class="mustache" viewBox="0 0 1000 76" aria-hidden="true">'
-                '<path d="M885 10 C 885 64, 560 70, 500 70 C 440 70, 115 64, 115 10" '
-                'fill="none" stroke="#9aa4b2" stroke-width="2.5"/>'
+                '<path d="M885 10 V52 Q885 62 875 62 H125 Q115 62 115 52 V17" '
+                'fill="none" stroke="#9aa4b2" stroke-width="2.5" stroke-linejoin="round"/>'
                 '<polygon points="115,3 107,17 123,17" fill="#9aa4b2"/></svg>')
     outcome = f'<p class="loop-outcome"><b>{_FLOW_OUTCOME[0]}.</b> {_FLOW_OUTCOME[1]}</p>'
     return row + "\n    " + mustache + "\n    " + outcome
@@ -885,17 +888,24 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <figure class="wf">
     <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
       title="The development-process figure" scrolling="no" onload="fitFig(this)"></iframe></div>
-    <figcaption>The development process — the control substrate wrapped around the human-directs-agents
-    loop. <a href="development-workflow.html">Open the figure full-screen ↗</a></figcaption>
+    <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
+    probably know up front — business requirements, security scanners you always run, etc. Others you
+    need to figure out through trial and
+    error, because they depend on the nature of the errors made by the models you're working with. The
+    mindset shift is from reviewing your agents' code, to reviewing their failures and constraining their
+    future moves as needed.</figcaption>
   </figure>
   <script>
   function fitFig(f){{
     try{{
       var d=f.contentWindow.document, w=d.documentElement.scrollWidth||1040, h=d.documentElement.scrollHeight||600;
-      var avail=f.parentElement.clientWidth, s=Math.min(1, avail/w);
+      var frame=f.parentElement, wf=frame.parentElement;
+      var avail=wf.clientWidth, s=Math.min(1, avail/w);
       f.style.width=w+'px'; f.style.height=h+'px';
       f.style.transformOrigin='top left'; f.style.transform='scale('+s+')';
-      f.parentElement.style.height=(h*s)+'px';
+      // size the frame to the SCALED figure and center it, so a figure narrower than the
+      // column isn't pinned left by the top-left transform origin
+      frame.style.width=(w*s)+'px'; frame.style.height=(h*s)+'px'; frame.style.margin='0 auto';
     }}catch(e){{}}
   }}
   window.addEventListener('resize', function(){{ var f=document.getElementById('wf-frame'); if(f) fitFig(f); }});
