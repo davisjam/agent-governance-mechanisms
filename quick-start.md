@@ -44,7 +44,7 @@ marketplace):
 
 ```
 /plugin marketplace add davisjam/agent-governance-mechanisms
-/plugin install agent-governance@agent-governance-mechanisms
+/plugin install self-governance@agent-governance-mechanisms
 ```
 
 Start a new session and the skill loads. Pull a later release with `/plugin marketplace update

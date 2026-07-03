@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "agent-governance",
+      "name": "self-governance",
       "source": "./plugin/self-governance",
       "description": "Audit a repo for missing agent-governance guardrails, or convert a recurring failure into a durable control — grounded in the agent-governance-mechanisms catalogue."
     }
