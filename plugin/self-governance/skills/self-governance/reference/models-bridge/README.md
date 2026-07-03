@@ -74,7 +74,7 @@ worse than none.
 
 Every model here carries a **bridge** edge — the one relationship that crosses the agent↔product
 boundary. The agent side *consumes* the model to reason; the model *governs or generates* the product;
-the drift gate keeps the two faces equal. See the umbrella [README](../README.md#relationships-between-controls).
+the drift gate keeps the two faces equal — the one cross-role edge in the catalogue.
 
 Naming note: per the catalogue's reference policy, these entries name the `system-models/` substrate and
 its files directly — that directory is their subject.

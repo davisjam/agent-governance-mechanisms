@@ -29,7 +29,7 @@ injection](context-and-dispatch/dynamic-context-injection.md) is purely *soft* (
 blocks nothing); two are *soft·hard* (a document kept honest by a lint); the rest are *hard*
 deterministic gates. Probabilistic guidance is used to *aim* agents at the right work; deterministic
 machinery is what is trusted to *hold the line*. See the umbrella README's
-[enforcement axis](../README.md#enforcement-soft-vs-hard-probabilistic-vs-deterministic).
+[soft/hard enforcement axis](../README.md#governance-has-two-mechanisms).
 
 The census, forms, soft/hard axis, relationships, and entry template are documented once in the
 [umbrella README](../README.md).
