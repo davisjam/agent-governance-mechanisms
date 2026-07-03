@@ -76,7 +76,11 @@
 <p>The whole loop as an installable Claude skill that auto-triggers — no prompt to paste. Know what you're installing, though: a <strong>third-party plugin that reads, and on your approval writes, your repo</strong>.</p>
 <ul><li><strong>Source-visible</strong> — read its <code>SKILL.md</code>, <code>principles.md</code>, and <code>reference/</code> before you trust it.</li><li><strong>MIT-licensed.</strong></li><li><strong>Gated</strong> — <em>audit</em> only advises; <em>interpret-failure</em> acts only on your greenlight.</li><li><strong>No network I/O.</strong></li></ul>
 <p>If a plugin isn't an option for your org, use Path B.</p>
-<p>Install it directly — copy-paste these (you or Claude can run them); no marketplace needed:</p>
+<p><strong>Quickest — install from the marketplace.</strong> In Claude Code, two commands (the repo <em>is</em> a plugin marketplace):</p>
+<pre tabindex="0"><code>/plugin marketplace add davisjam/agent-governance-mechanisms
+/plugin install self-governance@agent-governance-mechanisms</code></pre>
+<p>Start a new session and the skill loads. Pull a later release with <code>/plugin marketplace update agent-governance-mechanisms</code>.</p>
+<p><strong>Or copy-paste</strong> — no marketplace, e.g. if you'd rather vendor the folder yourself:</p>
 <pre tabindex="0"><code># clone the catalogue (or reuse a clone you already have)
 git clone https://github.com/davisjam/agent-governance-mechanisms.git
 

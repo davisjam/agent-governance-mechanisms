@@ -39,7 +39,18 @@ installing, though: a **third-party plugin that reads, and on your approval writ
 
 If a plugin isn't an option for your org, use Path B.
 
-Install it directly — copy-paste these (you or Claude can run them); no marketplace needed:
+**Quickest — install from the marketplace.** In Claude Code, two commands (the repo *is* a plugin
+marketplace):
+
+```
+/plugin marketplace add davisjam/agent-governance-mechanisms
+/plugin install self-governance@agent-governance-mechanisms
+```
+
+Start a new session and the skill loads. Pull a later release with `/plugin marketplace update
+agent-governance-mechanisms`.
+
+**Or copy-paste** — no marketplace, e.g. if you'd rather vendor the folder yourself:
 
 ```bash
 # clone the catalogue (or reuse a clone you already have)
