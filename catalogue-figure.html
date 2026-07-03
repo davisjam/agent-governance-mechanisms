@@ -121,6 +121,8 @@
   .wire-items { margin: 0; padding-left: 14px; line-height: 1.55; list-style: none; }
   .wire-items li { position: relative; margin: 0 0 1px; }
   .wire-items li::before { content: "·"; position: absolute; left: -9px; color: #94a3b8; }
+  .wire-items a { color: inherit; text-decoration: none; border-bottom: 1px dotted #94a3b8; }
+  .wire-items a:hover { color: var(--link, #0b5cad); border-bottom-style: solid; }
   .takeaway { margin-top: 12px; background: var(--proc-bg); border: 1px solid #cbd5e1; border-radius: 7px; padding: 8px 12px; font-size: 11px; color: var(--env-ink); }
   .takeaway b { color: var(--env-ink); }
   .axis { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 800; color: var(--muted); margin: 2px 2px 8px; }
@@ -365,47 +367,47 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <div class="wire-group">
         <div class="wire-h"><span class="cp">═══ counterpart</span> <span class="wire-sub">soft ↔ hard, or construction ↔ its detection</span></div>
         <ul class="wire-items">
-          <li>rule-index ═ cap-lint</li>
-          <li>docs-hierarchy ═ lints</li>
-          <li>mutator-stamps ═ F10-lint</li>
-          <li>PdfModel ═ itext-ban</li>
-          <li>Office ═ openxml-ban</li>
-          <li>WCAG-engine ═ scope-doc</li>
-          <li>epic-DoD ═ rule-index (audit)</li>
+          <li><a href="agent/governance-doc-controls/claude-md-rule-index.html">rule-index</a> ═ cap-lint</li>
+          <li><a href="agent/context-and-dispatch/docs-hierarchy.html">docs-hierarchy</a> ═ lints</li>
+          <li><a href="product/provenance-and-attribution/mutator-stamps.html">mutator-stamps</a> ═ <a href="product/provenance-and-attribution/f10-wiring-lint.html">F10-lint</a></li>
+          <li><a href="product/canonical-models-and-seams/pdf-model.html">PdfModel</a> ═ itext-ban</li>
+          <li><a href="product/canonical-models-and-seams/office-models.html">Office</a> ═ openxml-ban</li>
+          <li><a href="product/validation-and-conformance/standards-rule-engine.html">WCAG-engine</a> ═ scope-doc</li>
+          <li><a href="agent/governance-doc-controls/epic-definition-of-done.html">epic-DoD</a> ═ <a href="agent/governance-doc-controls/claude-md-rule-index.html">rule-index</a> (audit)</li>
         </ul>
       </div>
       <div class="wire-group">
         <div class="wire-h"><span class="en">──▶ enabler</span> <span class="wire-sub">A must exist before B</span></div>
         <ul class="wire-items">
-          <li>snippet-table ▶ brief-linting</li>
-          <li>file-addr. rules ▶ dyn-ctx-injection</li>
-          <li>agent-registry ▶ sentinel</li>
-          <li>bounded-verbs ▶ mutator-stamps + ContentValidator</li>
+          <li><a href="agent/governance-doc-controls/mandatory-snippet-table.html">snippet-table</a> ▶ <a href="agent/context-and-dispatch/brief-linting.html">brief-linting</a></li>
+          <li>file-addr. rules ▶ <a href="agent/context-and-dispatch/dynamic-context-injection.html">dyn-ctx-injection</a></li>
+          <li><a href="agent/lifecycle-and-observability/agent-registry.html">agent-registry</a> ▶ <a href="agent/gates-and-merge-train/sentinel-first-commit.html">sentinel</a></li>
+          <li><a href="product/repair-vocabulary/remediation-verbs.html">bounded-verbs</a> ▶ <a href="product/provenance-and-attribution/mutator-stamps.html">mutator-stamps</a> + <a href="product/validation-and-conformance/content-validator.html">ContentValidator</a></li>
         </ul>
       </div>
       <div class="wire-group">
         <div class="wire-h"><span class="co">◀── consumer</span> <span class="wire-sub">B reads A at runtime</span></div>
         <ul class="wire-items">
-          <li>dyn-ctx-injection ◀ component-registry</li>
-          <li>merge-train ◀ agent-registry</li>
-          <li>derive-changelog ◀ stamps</li>
-          <li>tombstone ◀ agent-registry</li>
-          <li>cron-alerts-gate ◀ event-bus</li>
-          <li>WCAG-engine ◀ walkers</li>
+          <li><a href="agent/context-and-dispatch/dynamic-context-injection.html">dyn-ctx-injection</a> ◀ <a href="models-bridge/system-models/component-zone-model.html">component-registry</a></li>
+          <li><a href="agent/gates-and-merge-train/merge-train-mis-batching.html">merge-train</a> ◀ <a href="agent/lifecycle-and-observability/agent-registry.html">agent-registry</a></li>
+          <li><a href="product/provenance-and-attribution/derive-changelog.html">derive-changelog</a> ◀ <a href="product/provenance-and-attribution/mutator-stamps.html">stamps</a></li>
+          <li><a href="agent/lifecycle-and-observability/tombstone-commits.html">tombstone</a> ◀ <a href="agent/lifecycle-and-observability/agent-registry.html">agent-registry</a></li>
+          <li><a href="agent/lifecycle-and-observability/cron-alerts-gate.html">cron-alerts-gate</a> ◀ <a href="agent/lifecycle-and-observability/typed-event-bus.html">event-bus</a></li>
+          <li><a href="product/validation-and-conformance/standards-rule-engine.html">WCAG-engine</a> ◀ <a href="product/canonical-models-and-seams/canonical-walkers.html">walkers</a></li>
         </ul>
       </div>
       <div class="wire-group">
         <div class="wire-h"><span class="ly">▼ layer</span> <span class="wire-sub">defense in depth — each a backstop for the last</span></div>
         <ul class="wire-items">
-          <li>pre-commit ▸ sentinel ▸ merge-train ▸ staged-deploy (the staircase)</li>
-          <li>the three mediators as one host tier</li>
+          <li><a href="agent/gates-and-merge-train/pre-commit-hook.html">pre-commit</a> ▸ <a href="agent/gates-and-merge-train/sentinel-first-commit.html">sentinel</a> ▸ <a href="agent/gates-and-merge-train/merge-train-mis-batching.html">merge-train</a> ▸ <a href="agent/gates-and-merge-train/staged-deploy-gates.html">staged-deploy</a> (the staircase)</li>
+          <li>the <a href="agent/mediators-and-resource-locks/test-serializer.html">test</a> · <a href="agent/mediators-and-resource-locks/build-serializer.html">build</a> · <a href="agent/mediators-and-resource-locks/aggregate-compute-protection.html">lint-all</a> mediators as one host tier</li>
         </ul>
       </div>
       <div class="wire-group">
         <div class="wire-h"><span style="color:var(--b-dark)">◀▶ bridge</span> <span class="wire-sub">the one cross-role edge — agent ↔ product via a model</span></div>
         <ul class="wire-items">
-          <li>component-model: dyn-ctx-injection (agent) ◀▶ boundary-lints (product)</li>
-          <li>service-flow: repo-query (agent) ◀▶ NetworkPolicy-gen (product)</li>
+          <li><a href="models-bridge/system-models/component-zone-model.html">component-model</a>: <a href="agent/context-and-dispatch/dynamic-context-injection.html">dyn-ctx-injection</a> (agent) ◀▶ <a href="models-bridge/system-models/drift-parity-gates.html">boundary-lints</a> (product)</li>
+          <li><a href="models-bridge/system-models/service-flow-model.html">service-flow</a>: <a href="models-bridge/system-models/query-surface.html">repo-query</a> (agent) ◀▶ <a href="models-bridge/system-models/model-driven-codegen.html">NetworkPolicy-gen</a> (product)</li>
         </ul>
       </div>
     </div>
