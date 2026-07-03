@@ -76,7 +76,7 @@ coding agent governs; the **product** role stays in the full catalogue.
 
 ## Which path?
 
-|  | Path A — catalogue (DIY) | Path B — self-governance skill |
+| Aspect | Path A — catalogue (DIY) | Path B — self-governance skill |
 |---|---|---|
 | **Installs** | nothing | a Claude plugin |
 | **Runs in your loop** | only what you write | the skill (gated; greenlight to write) |

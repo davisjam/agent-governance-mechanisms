@@ -13,7 +13,7 @@
          color:var(--ink); background:#fff; line-height:1.55; }
   main { width: 94vw; max-width: 1320px; margin: 0 auto; padding: 32px 26px 80px; }
   nav.crumb { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
-  nav.crumb a { color: var(--link); text-decoration: none; }
+  nav.crumb a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
   nav.crumb a:hover { text-decoration: underline; }
   h1 { font-size: 29px; margin: 6px 0 4px; letter-spacing:-0.02em; }
   h2 { font-size: 20.5px; margin: 30px 0 8px; padding-top: 6px; border-top:1px solid var(--line); }
@@ -52,7 +52,7 @@
   body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
   h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }
   .site-foot { max-width:1320px; margin:40px auto 0; padding:16px 26px 30px; border-top:1px solid #e2e8f0; font-size:12.5px; color:#666; text-align:center; }
-  .site-foot a { color:#0b5cad; text-decoration:none; } .site-foot a:hover { text-decoration:underline; }
+  .site-foot a { color:#0b5cad; text-decoration:underline; } .site-foot a:hover { text-decoration:none; }
   .site-foot .gh { white-space:nowrap; }
   .topnav { position:absolute; top:14px; right:20px; font-size:12px; display:flex; gap:16px; }
   .topnav a { color:#555; text-decoration:none; white-space:nowrap; } .topnav a:hover { color:#0b5cad; }
@@ -91,7 +91,7 @@ cp -R agent-governance-mechanisms/plugin/self-governance/skills/self-governance 
 <ul><li><strong>audit</strong> — survey your repo against the catalogue → a prioritized adopt / adapt / skip plan (advises; changes nothing).</li><li><strong>interpret-failure</strong> — a failure just recurred → classify it and convert the <em>class</em> into a durable control; proposes first, writes the lint/test/gate only on your go-ahead.</li></ul>
 <p>It also carries the AI-First Engineering Method as an ambient operating stance, so the agent reasons the way the catalogue was built. The skill covers the <strong>agent</strong> and <strong>models-bridge</strong> roles — the "self" a coding agent governs; the <strong>product</strong> role stays in the full catalogue.</p>
 <h2>Which path?</h2>
-<table><thead><tr><th></th><th>Path A — catalogue (DIY)</th><th>Path B — self-governance skill</th></tr></thead><tbody><tr><td><strong>Installs</strong></td><td>nothing</td><td>a Claude plugin</td></tr><tr><td><strong>Runs in your loop</strong></td><td>only what you write</td><td>the skill (gated; greenlight to write)</td></tr><tr><td><strong>Effort</strong></td><td>adapt by hand</td><td>auto-triggers, runs the loop</td></tr><tr><td><strong>Best for</strong></td><td>companies, the security-conservative, full control</td><td>individuals / teams who want it automated</td></tr></tbody></table>
+<table><thead><tr><th>Aspect</th><th>Path A — catalogue (DIY)</th><th>Path B — self-governance skill</th></tr></thead><tbody><tr><td><strong>Installs</strong></td><td>nothing</td><td>a Claude plugin</td></tr><tr><td><strong>Runs in your loop</strong></td><td>only what you write</td><td>the skill (gated; greenlight to write)</td></tr><tr><td><strong>Effort</strong></td><td>adapt by hand</td><td>auto-triggers, runs the loop</td></tr><tr><td><strong>Best for</strong></td><td>companies, the security-conservative, full control</td><td>individuals / teams who want it automated</td></tr></tbody></table>
 <p>They're <strong>not exclusive</strong> — DIY org-wide, and use the skill on a personal project.</p>
 <h2>What to reach for first</h2>
 <ul><li>If you run <strong>more than one agent at a time</strong>: start with the <strong>agent</strong> role — a <a href="agent/context-and-dispatch/brief-linting.html">brief-linting</a> gate and a <a href="agent/gates-and-merge-train/pre-commit-hook.html">pre-commit hook</a> pay off immediately.</li><li>If your agents keep <strong>breaking things that "looked unrelated"</strong>: the <strong>models-bridge</strong> role — a typed <a href="models-bridge/system-models/executable-source-of-truth.html">executable source of truth</a> that agents read and that the codebase is generated from — is the scaling unlock.</li><li>If you ship a <strong>user-facing artifact</strong>: the <strong>product</strong> role — a <a href="product/validation-and-conformance/content-validator.html">content validator</a> and a closed <a href="product/repair-vocabulary/remediation-verbs.html">repair vocabulary</a> bound what the agent can get wrong.</li></ul>

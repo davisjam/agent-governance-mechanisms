@@ -391,7 +391,7 @@ FONT_CSS = ('  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFo
             '  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }\n'
             '  .site-foot { max-width:1320px; margin:40px auto 0; padding:16px 26px 30px; border-top:1px solid #e2e8f0;'
             ' font-size:12.5px; color:#666; text-align:center; }\n'
-            '  .site-foot a { color:#0b5cad; text-decoration:none; } .site-foot a:hover { text-decoration:underline; }\n'
+            '  .site-foot a { color:#0b5cad; text-decoration:underline; } .site-foot a:hover { text-decoration:none; }\n'
             '  .site-foot .gh { white-space:nowrap; }\n'
             '  .topnav { position:absolute; top:14px; right:20px; font-size:12px; display:flex; gap:16px; }\n'
             '  .topnav a { color:#555; text-decoration:none; white-space:nowrap; } .topnav a:hover { color:#0b5cad; }\n'
@@ -404,7 +404,7 @@ PAGE_CSS = """
          color:var(--ink); background:#fff; line-height:1.55; }
   main { width: 94vw; max-width: 1320px; margin: 0 auto; padding: 32px 26px 80px; }
   nav.crumb { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
-  nav.crumb a { color: var(--link); text-decoration: none; }
+  nav.crumb a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
   nav.crumb a:hover { text-decoration: underline; }
   h1 { font-size: 29px; margin: 6px 0 4px; letter-spacing:-0.02em; }
   h2 { font-size: 20.5px; margin: 30px 0 8px; padding-top: 6px; border-top:1px solid var(--line); }
