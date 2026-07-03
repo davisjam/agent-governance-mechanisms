@@ -30,8 +30,8 @@ honest (Covered / Coverage-gap / Aspirational).
 
 ## Mechanism
 
-`CheckRunner.ComputeStandards` maps findings → the SCs they close; findings are produced by the
-`RuleWalkers` over the typed models. The PDF runtime gate emits `##PASS_RULE_FAIL##:{json}` on new
+`CheckRunner.ComputeStandards` maps findings → the SCs they close; the `RuleWalkers` produce those
+findings over the typed models. The PDF runtime gate emits `##PASS_RULE_FAIL##:{json}` on new
 findings per pass (staging). The WCAG-scope-mapping doc is the source of truth for which SCs are in
 scope, out of scope, and their coverage status.
 
