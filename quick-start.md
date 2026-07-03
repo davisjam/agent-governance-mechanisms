@@ -36,11 +36,14 @@ by hand. The fastest way is to let your coding agent read the catalogue and prop
 the three artifacts an orchestrator authors — an [Epic template](downloads/EPIC-TEMPLATE-starter.md), a
 [design-doc template](downloads/design-doc-template-starter.md), and an
 [agent-brief template](downloads/agent-brief-starter.md); and an
-[operational-playbook template](downloads/op-playbook-starter.md). The templates encode the required
-sections + Definition-of-Done so your plans *drive* the work instead of being written after the fact — the
-[Epic & design-doc templates](agent/governance-doc-controls/epic-and-design-templates.md) and
-[operational-playbooks](agent/governance-doc-controls/operational-playbooks.md) controls explain why each
-section is load-bearing.
+[operational-playbook template](downloads/op-playbook-starter.md); and a runnable
+[governance-lint example](downloads/governance-lint-example.py) (the real "regex-against-structured-formats"
+lint, self-contained — copy the shape, change the check). The templates encode the required sections +
+Definition-of-Done so your plans *drive* the work instead of being written after the fact — the
+[Epic & design-doc templates](agent/governance-doc-controls/epic-and-design-templates.md),
+[operational-playbooks](agent/governance-doc-controls/operational-playbooks.md), and
+[semantic-lints](product/validation-and-conformance/semantic-lints.md) controls explain why each is
+load-bearing.
 
 ## Path B — the self-governance skill (batteries included)
 

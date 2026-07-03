@@ -524,7 +524,7 @@ def render_md(md: str) -> str:
                 code.append(lines[i]); i += 1
             i += 1
             esc = "\n".join(code).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-            out.append(f"<pre><code>{esc}</code></pre>"); continue
+            out.append(f'<pre tabindex="0"><code>{esc}</code></pre>'); continue  # tabindex: scrollable code blocks must be keyboard-focusable (axe scrollable-region-focusable)
         if st.startswith("|"):
             tbl: list[str] = []
             while i < n and lines[i].strip().startswith("|"):
@@ -734,6 +734,7 @@ LANDING_CARDS = [
     ("Design-doc template", "invariants-driven; dynamics + observability blocks", "downloads/design-doc-template-starter.md", " download"),
     ("Agent-brief template", "the dispatch — scope, context, acceptance, hand-back", "downloads/agent-brief-starter.md", " download"),
     ("Op-playbook template", "situation → inspect → healthy → what-to-do", "downloads/op-playbook-starter.md", " download"),
+    ("Governance-lint example", "a real, runnable lint — copy the shape, change the check", "downloads/governance-lint-example.py", " download"),
     ("Download the catalogue", "all writeups as a markdown ZIP", "https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip", ""),
 ]
 

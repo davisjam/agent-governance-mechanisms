@@ -38,6 +38,13 @@ verb-of-checking docstring (the lint-declaration discipline); BLOCKING ones fail
 scoped `# noqa: <ban-name> — <reason>` comments. The fleet sits atop a maxed-out commodity floor
 (Roslyn analysis, pyright strict, ruff) rather than replacing it.
 
+**Adopt it — a concrete, runnable [governance-lint example](../../downloads/governance-lint-example.py)**:
+the *real* "regex-against-structured-formats" lint (an AST scan that flags a regex parsing HTML/YAML/JSON
+where a parser belongs), made self-contained. It shows the whole shape — the self-describing declaration
+block, `find_violations` → emit → exit-code, the `noqa` escape, and the AUDIT-ONLY→BLOCKING migration — and
+its header carries the field-note story (a regex-based lint that hung the deploy gate with catastrophic
+backtracking; the fix was *eliminate the surface*, not lint the bug class). Copy the shape; change the check.
+
 ## Prerequisites
 
 - **A lint framework** with per-lint scope + severity declaration.
