@@ -327,6 +327,26 @@ A specific test is a control; the *strategy* is the general means of building on
 Reach for the right *kind*, not one canonical suite; a strong-but-static unit suite misses the dynamics
 ones every time. Full discussion: `docs/dev/AI-FIRST-ENGINEERING.md` §4.
 
+## A.24. Proportion governance to the operation — the catalogue is a menu, not a mandate
+
+Governance has a cost: every control taxes every future change and every agent's context budget. The
+right amount is not "all of it" — it is the least that holds *your* recurring failures. This method and
+its catalogue were distilled from a high-intensity operation (many parallel agents, hundreds of commits a
+day); most repos need far less. Calibrate to your scale, and treat the catalogue as descriptive — to be
+adapted *down*:
+
+- **Match intensity to pain.** Adopt a control only against a failure you have seen recur — not because
+  the catalogue lists it. Default to *skip*; the burden of proof is on adding, not omitting.
+- **Small operation → light touch.** One agent or a small team rarely needs the mediators, registries, or
+  merge-train machinery; a house-rules doc and a couple of lints may be the whole right answer.
+- **Remove what stops earning.** A control that was "fix-once-benefits-all" at scale becomes a
+  tax-on-every-change below it; re-audit and delete controls whose failure no longer bites.
+
+The failure mode this guards against is a **tower of governance nobody wants** — controls manufactured
+faster than they earn their keep, until the repo is slower and more confusing than the failures it
+feared. Grandiosity is a smell; the people most drawn to a governance catalogue are the ones most at risk
+of over-building it. (→ A.20, A.22)
+
 *Attribution: Part A distills principles from the author's own agent-collaborative
 repos; it is a portable method, reusable across projects, governed by the MIT license
 at the head of Part A.*

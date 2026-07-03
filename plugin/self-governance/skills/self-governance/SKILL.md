@@ -106,8 +106,13 @@ governance posture," a periodic review.
 Survey the repository against the catalogue and produce a **prioritized plan** —
 you advise here; you do not apply changes.
 
-1. **Learn the repo first.** What agents run, how many at once, what breaks
-   repeatedly, what house-rules file (if any) exists. Read before opining.
+1. **Learn the repo first, and gauge its scale.** What agents run, how many at
+   once, what breaks repeatedly, what house-rules file (if any) exists. **Size the
+   whole plan to that scale** — this catalogue came from a high-intensity operation
+   (many parallel agents, hundreds of commits a day); a solo dev or small team needs
+   a fraction of it. A light operation gets a light-touch plan (a house-rules doc + a
+   lint or two), not the mediators, registries, and merge-train machinery. Read
+   before opining.
 2. **Walk the census.** For each control, judge: does this repo **need** it,
    already **have** it (name where), or would it **benefit**? A control you cannot
    attach to a real failure in *this* repo is one they don't need yet — say so and
@@ -179,3 +184,9 @@ Two beats: **interpret**, then **convert**.
 - **The catalogue is descriptive, not a framework.** There is nothing to install
   from it; controls are patterns the user *adapts* to their stack. You help them
   adapt, you do not import.
+- **Beware the tower of governance.** The primary failure mode of this skill is
+  manufacturing controls faster than they earn their keep, until the repo is slower
+  and more confusing than the failures it feared. Default to *skip*; proportion
+  governance to the operation ([`principles.md`](principles.md) A.24). A control the
+  user can't attach to a real, recurring failure is one they don't need — say so
+  plainly, **even when they ask for more.**

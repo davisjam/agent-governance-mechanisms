@@ -31,6 +31,27 @@ Every mechanism in the catalogue governs one of three **roles** — the **agent*
 that bridge agents and code, or the shipped **product** — and enforces either **hard** (deterministic)
 or **soft** (probabilistic) or a mix.
 
+## Why you might NOT want to use this
+
+Governance has a cost — every control taxes every future change and every agent's context budget. This
+catalogue was distilled from a **high-intensity** operation (many parallel agents, hundreds of commits a
+day). Most projects need far less, and adopting it wholesale is a real way to make your repo *worse*, not
+better. Be wary, or take only a little, if:
+
+- **You run one agent, or a small team.** Most of the machinery here solves problems you don't have yet;
+  a house-rules doc and a couple of lints may be the entire right answer.
+- **You'd be adopting controls you can't tie to a failure you've actually seen recur.** A control you
+  can't attach to real, felt pain is pure tax.
+- **You're tempted to build the whole thing.** The primary failure mode is a **tower of governance nobody
+  wants** — controls manufactured faster than they earn their keep, until the repo is slower and more
+  confusing than the failures it feared. And there's an adverse selection: the people most drawn to a
+  governance catalogue are the ones most at risk of over-building it.
+
+The catalogue is **descriptive, not prescriptive** — a menu to adapt *down* to your scale, not a bar to
+clear. Adopt the minimum that holds *your* recurring failures, default to skip, and remove controls that
+stop earning their keep. If you can't name the failure a control prevents in your own system, you don't
+need it yet. The *Start small* section below is the disciplined way in.
+
 ## Read the catalogue
 
 - **[The catalogue — interactive web view](https://davisjam.github.io/agent-governance-mechanisms/)** —
