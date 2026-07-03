@@ -275,7 +275,7 @@
 <tr><td class="c-name"><a href="agent/gates-and-merge-train/staged-deploy-gates.html">Staged deploy gates (canary → smoke → promote)</a></td><td class="c-sum">Canary → smoke → promote; gate before users see it.</td><td class="c-enf">Hard</td></tr>
 </tbody></table>
 <h4>Mediators &amp; resource locks</h4>
-<p class="fam-lede">Host-level wrappers that ration shared compute across concurrent worktrees.</p>
+<p class="fam-lede">Host-level wrappers that ration shared compute across concurrent worktrees. One pattern — a resource-mediator — at three lock cardinalities (exclusive <code>N=1</code> · bounded <code>M=8</code> · a global mutex); the three entries vary the cardinality, not the idea.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="agent/mediators-and-resource-locks/test-serializer.html">Test-serializer (N=1 flock on <code>dotnet test</code>)</a></td><td class="c-sum">Serialize dotnet test to a single writer per host.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="agent/mediators-and-resource-locks/build-serializer.html">Build-serializer (M=8 semaphore)</a></td><td class="c-sum">Cap concurrent heavy builds with an M=8 host semaphore.</td><td class="c-enf">Hard</td></tr>

@@ -1,8 +1,8 @@
 # Standards / WCAG rule engine
 
-**Intent** — A rule engine that maps each accessibility finding to the exact **WCAG 2.1 AA /
-Section 508 / PDF-UA** criterion it closes — turning "is this document accessible?" into a
-deterministic, standards-grounded conformance predicate.
+**Intent** — A rule engine that maps each finding to the exact external-standard clause it closes —
+turning "does this conform?" into a deterministic, standards-grounded predicate rather than a judgement
+call (our instance: the **WCAG 2.1 AA / Section 508 / PDF-UA** accessibility rule engine).
 
 | | |
 |---|---|

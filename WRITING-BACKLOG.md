@@ -35,7 +35,11 @@ The figures already fill `<span data-census="controls">53</span>` from the parse
 **Done when:** build regenerates the footer with 22/6; validate 0; the stale numbers can't recur
 (change an entry → build → footer updates).
 
-## B2 — Intent leads with the portable pattern ✳ QUEUED (style rule added)
+## B2 — Intent leads with the portable pattern ✅ DONE
+
+Audit: most instance entries already led with the pattern (the 6 system-models, content-validator). Only
+**4 were DocAble-first** — rewritten portable-first + "(our instance: …)": `pdf-model`, `office-models`,
+`standards-rule-engine`, `a11y-prefix`. Rule lives in CLAUDE Writing style.
 
 **Problem.** Instance entries lead their `**Intent**` with the DocAble specific, so a reader who doesn't
 process PDFs/Office/WCAG misses the transferable idea.
@@ -68,7 +72,20 @@ so they're distinct — but a reader learns the pattern once; instances 2..N sho
 Related-control to name the varying axis. Avoids a schema change; keeps entries standalone via the
 sibling link they already carry. Canary on mediators, get sign-off, then sweep.
 
-## B4 — Construction+enforcement pair consistency ✳ QUEUED (careful-thought done → mostly a convention)
+**✳ CANARY LANDED (mediators INDEX descriptor):** "*One pattern — a resource-mediator — at three lock
+cardinalities (exclusive `N=1` · bounded `M=8` · a global mutex); the three entries vary the cardinality,
+not the idea.*" Shows under the INDEX header + as the census tooltip. **Awaiting presentation sign-off**
+before sweeping system-models (6 = executable-source-of-truth ×6 domains) and confirming canonical-seams
+(family descriptor already signals "one sanctioned seam per concern, held by a ban-lint").
+
+## B4 — Construction+enforcement pair consistency ✅ DONE (principle stated; audit clean)
+
+Principle added to CLAUDE content model: *dedicated (one-to-one) enforcement bundles into the construction
+entry; cross-cutting (one-to-many) enforcement earns its own entry.* Audit: all pairs already obey it —
+seams bundle their dedicated ban-lints; `f10-wiring-lint` (all mutators) and `drift-parity-gates` (all
+models) are cross-cutting → correctly separate. **No merges needed** (earlier "merge f10" take retracted).
+
+--- original note ---
 
 **Apparent problem.** Seams bundle construction+ban-lint into ONE entry; provenance splits
 mutator-stamps + f10-wiring-lint into TWO; executable-source-of-truth + drift-parity-gates are TWO.

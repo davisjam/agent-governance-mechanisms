@@ -38,7 +38,7 @@ soft guidance with a hard counterpart.
 
 ## 3. Mediators & resource locks
 
-*Host-level wrappers that ration shared compute across concurrent worktrees.* — [family folder](agent/mediators-and-resource-locks/)
+*Host-level wrappers that ration shared compute across concurrent worktrees. One pattern — a resource-mediator — at three lock cardinalities (exclusive `N=1` · bounded `M=8` · a global mutex); the three entries vary the cardinality, not the idea.* — [family folder](agent/mediators-and-resource-locks/)
 
 | ✓ | Control | Form | Enf. | Entry |
 |---|---|---|---|---|

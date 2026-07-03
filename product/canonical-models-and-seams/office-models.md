@@ -1,7 +1,9 @@
 # Office Models ({Slides,Docs,Sheets}Model)
 
-**Intent** — The Office analogue of `PdfModel`: all PPTX/DOCX/XLSX remediation routes through the typed
-Office Models, with raw `DocumentFormat.OpenXml` access — and raw XML string-matching — banned by lint.
+**Intent** — The same typed-model-plus-ban-lint pattern as [pdf-model](pdf-model.md), applied to a second
+object model: all remediation of a format family routes through one typed model, with raw library access —
+and raw string-matching into the serialized form — banned by lint (our instance: `{Slides,Docs,Sheets}Model`
+for PPTX/DOCX/XLSX over `DocumentFormat.OpenXml`).
 
 | | |
 |---|---|

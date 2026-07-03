@@ -1,8 +1,9 @@
 # PdfModel (sole PDF mutation surface)
 
-**Intent** — Route *all* PDF reads and writes through one typed model, with raw canonical-PDF-library
-access banned by a lint — so PDF structure is compiler-checked and every mutation passes through a
-surface that encodes the format's invariants.
+**Intent** — Route *all* reads and writes of a complex file format through one typed model, with raw
+access to the underlying library banned by a lint — so the structure is compiler-checked and every
+mutation passes through a surface that encodes the format's invariants (our instance: `PdfModel` over
+the canonical PDF library).
 
 | | |
 |---|---|

@@ -1,8 +1,8 @@
 # `a11y_` prefix convention
 
-**Intent** — A naming convention for inserted artifacts — invisible-to-author insertions MUST start with
-`a11y_`, user-visible insertions MUST NOT — so tool-inserted content is distinguishable from authored
-content and the `InsertedContentValidator` can cover it.
+**Intent** — A reserved naming prefix that marks tool-inserted, invisible-to-author artifacts (user-visible
+insertions keep ordinary names) — so inserted content is distinguishable from authored content and a
+validator can cover it by prefix (our instance: the `a11y_` prefix + `InsertedContentValidator`).
 
 | | |
 |---|---|

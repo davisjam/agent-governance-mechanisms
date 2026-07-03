@@ -59,6 +59,12 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
 - **[`INDEX.md`](INDEX.md)** is the census — one row per entry, grouped by family. The `Form`, `Novelty`,
   and `Enf.` columns MUST match the entry's metadata card (the validator enforces this).
 - Cross-cuts: 9 **forms**, **soft/hard** enforcement, 5 **relationships** — all defined in `README.md`.
+- **One entry, or two, for a construction + its enforcement?** By enforcement scope. A **dedicated**
+  (one-to-one) enforcement — a ban-lint guarding *this one* seam — is **bundled into the construction
+  entry** (the typed model + its ban-lint is one control). A **cross-cutting** (one-to-many) enforcement
+  that governs *many* constructions earns **its own entry** (`drift-parity-gates` governs every model;
+  `f10-wiring-lint` governs every mutator verb). Don't split a dedicated pair; don't bundle a cross-cutting
+  one.
 
 **When you add or edit a control:** update both the entry and its `INDEX.md` row in the same change,
 then `python3 catalog.py validate` (must be 0 issues). The schema, INDEX-consistency, link-integrity,
