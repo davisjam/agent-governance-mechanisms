@@ -7,6 +7,23 @@ It is published as a static GitHub Pages site and embedded in a parent repo as a
 `catalog.py` is the one tool — **stdlib-only, no dependencies** (so `python3 catalog.py …` runs on a
 fresh checkout with nothing installed). Do not add pip dependencies; keep it clone-and-run.
 
+## What is a mechanism?
+
+A **mechanism** is a recurring, failure-killing pattern of governance — written like a Gang-of-Four design
+pattern: the failure class it prevents, the shape that prevents it, and why it is *not just* the cheaper
+thing everyone already does. A control earns its own entry only when it clears three bars:
+
+1. **It kills a failure class, not a one-off bug.** If you can't name the recurring failure, it isn't a
+   mechanism yet.
+2. **It's distinct.** It does something the naive or adjacent alternative can't — every entry must survive
+   its own "Why it's not just [X]" section. Two entries built on the same pattern are distinct only when
+   they vary a *named axis* (lock cardinality, object model, enforcement scope, domain); if nothing varies,
+   merge them.
+3. **Its examples instantiate it.** Every example — in Motivation, in "Why it's not just…", in Known uses —
+   must be a real case of *this* mechanism, not a sibling's. (A relational config-field ⊆ sample check is a
+   *coherence* lint, not a per-source *semantic* lint — so cite it under coherence only.) An example
+   borrowed from a neighbour blurs the exact boundary the catalogue exists to draw.
+
 ## Core principle: this repo must be interpretable by an independent Claude
 
 **Every mechanism description must stand on its own to an agent that has no access to the parent
