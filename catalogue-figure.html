@@ -81,7 +81,6 @@
   .chip { display: block; background: #fff; border: 1.2px solid #c9c9c9; border-radius: 4px; padding: 2px 5px; margin-bottom: 3px; font-size: 9.5px; line-height: 1.25; color: #222; }
   .chip.soft { border-style: dashed; border-color: #a78bfa; }
   .chip.sh   { border-left: 3px solid #38bdf8; }
-  .chip.flag { box-shadow: 0 0 0 1.4px #f59e0b inset; font-weight: 700; }
   .chip .rel { font-family: ui-monospace, Menlo, monospace; font-weight: 800; }
   .fam-a .chip { border-color: #eab08a; } .fam-s .chip { border-color: #86c79b; }
 
@@ -138,7 +137,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
 
 <div class="compare-note">
   <b>How to read the encodings (all four views):</b> node <b>colour</b> = target (coral=agent, green=product); node <b>style</b> = enforcement
-  (<span class="badge b-h">HARD</span> solid, <span class="badge b-s">SOFT</span> dashed, <span class="badge b-sh">S·H</span> blue-accent); gold outline = family flagship (★).
+  (<span class="badge b-h">HARD</span> solid, <span class="badge b-s">SOFT</span> dashed, <span class="badge b-sh">S·H</span> blue-accent).
   <b>Single-control nodes are clickable</b> — they link to the control's writeup; hover for its one-line summary.
 </div>
 
@@ -166,31 +165,31 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="band-h band-a">AGENT TARGET <span class="band-note">· governs the fleet + the work-producing substrate</span></div>
     <div class="fam-grid">
       <div class="fam fam-a"><h4>Context&nbsp;&amp;&nbsp;dispatch</h4>
-        <a class="chip flag" href="agent/context-and-dispatch/brief-linting.html" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a>
+        <a class="chip" href="agent/context-and-dispatch/brief-linting.html" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a>
         <a class="chip sh" href="agent/context-and-dispatch/docs-hierarchy.html" title="One enforced, numbered rule index every agent boots with.">docs-hierarchy</a>
         <a class="chip soft" href="agent/context-and-dispatch/dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dyn-ctx-injection</a>
         <a class="chip" href="agent/context-and-dispatch/role-typed-dispatch.html" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a>
       </div>
       <div class="fam fam-a"><h4>Gates&nbsp;&amp;&nbsp;merge-train</h4>
-        <a class="chip flag" href="agent/gates-and-merge-train/pre-commit-hook.html" title="Cheap changed-file checks gate every commit, marker-verified.">pre-commit-hook</a>
+        <a class="chip" href="agent/gates-and-merge-train/pre-commit-hook.html" title="Cheap changed-file checks gate every commit, marker-verified.">pre-commit-hook</a>
         <a class="chip" href="agent/gates-and-merge-train/sentinel-first-commit.html" title="Abort a broken agent at its first commit, not its last.">sentinel-first-commit</a>
         <a class="chip" href="agent/gates-and-merge-train/merge-train-mis-batching.html" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-MIS</a>
         <a class="chip" href="agent/gates-and-merge-train/staged-deploy-gates.html" title="Canary → smoke → promote; gate before users see it.">staged-deploy</a>
       </div>
       <div class="fam fam-a"><h4>Mediators&nbsp;&amp;&nbsp;locks</h4>
-        <a class="chip flag" href="agent/mediators-and-resource-locks/test-serializer.html" title="Serialize dotnet test to a single writer per host.">test-serializer</a>
+        <a class="chip" href="agent/mediators-and-resource-locks/test-serializer.html" title="Serialize dotnet test to a single writer per host.">test-serializer</a>
         <a class="chip" href="agent/mediators-and-resource-locks/build-serializer.html" title="Cap concurrent heavy builds with an M=8 host semaphore.">build-serializer</a>
         <a class="chip" href="agent/mediators-and-resource-locks/aggregate-compute-protection.html" title="One lint-all per host; one in flight per orchestrator.">lint-all mutex</a>
       </div>
       <div class="fam fam-a"><h4>Lifecycle&nbsp;&amp;&nbsp;obs.</h4>
-        <a class="chip flag" href="agent/lifecycle-and-observability/agent-registry.html" title="Authoritative record of which agents are live right now.">agent-registry</a>
+        <a class="chip" href="agent/lifecycle-and-observability/agent-registry.html" title="Authoritative record of which agents are live right now.">agent-registry</a>
         <a class="chip" href="agent/lifecycle-and-observability/typed-event-bus.html" title="Typed topics plus a playbook surface fleet health live.">typed-event-bus</a>
         <a class="chip" href="agent/lifecycle-and-observability/deploy-heartbeats.html" title="Periodic liveness so a hung deploy differs from a slow one.">deploy-heartbeats</a>
         <a class="chip" href="agent/lifecycle-and-observability/tombstone-commits.html" title="A close record proving a worktree is safe to reclaim.">tombstone-commits</a>
         <a class="chip" href="agent/lifecycle-and-observability/cron-alerts-gate.html" title="Block new dispatch while a HIGH cron alert is unresolved.">cron-alerts-gate</a>
       </div>
       <div class="fam fam-a"><h4>Governance-docs</h4>
-        <span class="chip flag sh">CLAUDE.md index <span class="rel cp">═</span> cap-lint</span>
+        <span class="chip sh">CLAUDE.md index <span class="rel cp">═</span> cap-lint</span>
         <a class="chip" href="agent/governance-doc-controls/mandatory-snippet-table.html" title="Brief-linting asserts every required brief snippet is present.">snippet-table</a>
         <a class="chip" href="agent/governance-doc-controls/epic-definition-of-done.html" title="Close an Epic only after re-running its checks at HEAD.">epic-DoD</a>
         <a class="chip" href="agent/governance-doc-controls/doc-hygiene-lints.html" title="Lints keep docs indexed, provenance-headed, and cross-reference-valid.">doc-hygiene-lints</a>
@@ -201,7 +200,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="band-h" style="background:var(--b-dark);color:#fff">MODELS-BRIDGE <span class="band-note">· typed models — agents read them ◀▶ the codebase is generated from them</span></div>
     <div class="fam-grid" style="grid-template-columns:repeat(3,1fr)">
       <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Models (source-of-truth)</h4>
-        <a class="chip flag" href="models-bridge/system-models/executable-source-of-truth.html" title="Typed models read every run and generated from — can't drift.">executable-source-of-truth</a>
+        <a class="chip" href="models-bridge/system-models/executable-source-of-truth.html" title="Typed models read every run and generated from — can't drift.">executable-source-of-truth</a>
         <a class="chip" href="models-bridge/system-models/component-zone-model.html" title="A typed map of every component's code zone and seams.">component-zone</a>
         <a class="chip" href="models-bridge/system-models/synchronization-model.html" title="A registry of every lock, what it guards, and its ordering.">synchronization (meta-sync)</a>
         <a class="chip" href="models-bridge/system-models/concurrency-contracts.html" title="Declared mediator and single-writer contracts, coverage-checked.">concurrency-contracts</a>
@@ -221,31 +220,31 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="band-h band-s">PRODUCT TARGET <span class="band-note">· governs the shipped artifact</span></div>
     <div class="fam-grid">
       <div class="fam fam-s"><h4>Canonical models&nbsp;&amp;&nbsp;seams</h4>
-        <span class="chip flag">PdfModel <span class="rel cp">═</span> itext-ban</span>
+        <span class="chip">PdfModel <span class="rel cp">═</span> itext-ban</span>
         <span class="chip">Office <span class="rel cp">═</span> openxml-ban</span>
         <a class="chip" href="product/canonical-models-and-seams/service-client.html" title="A BinaryIO seam makes file-path-over-wire impossible.">ServiceClient</a>
         <a class="chip" href="product/canonical-models-and-seams/canonical-walkers.html" title="One canonical traversal per tree, not ad hoc recursion.">canonical-walkers</a>
         <a class="chip" href="product/canonical-models-and-seams/raw-redis-seam.html" title="All raw Redis in one seam; queue atomicity encoded once.">raw-Redis seam</a>
       </div>
       <div class="fam fam-s"><h4>Validation&nbsp;&amp;&nbsp;conf.</h4>
-        <a class="chip flag" href="product/validation-and-conformance/content-validator.html" title="Assert input content survives remediation — a fidelity gate.">ContentValidator</a>
+        <a class="chip" href="product/validation-and-conformance/content-validator.html" title="Assert input content survives remediation — a fidelity gate.">ContentValidator</a>
         <a class="chip" href="product/validation-and-conformance/semantic-lints.html" title="The blocking semantic-lint fleet over the tool's own source.">semantic-lints</a>
         <span class="chip">WCAG-engine <span class="rel cp">═</span> scope-doc</span>
         <a class="chip" href="product/validation-and-conformance/coherence-lints.html" title="Assert independent sources agree — catch cross-source drift.">coherence-lints</a>
       </div>
       <div class="fam fam-s"><h4>Regression tests</h4>
-        <a class="chip flag" href="product/regression-tests/test-onion-tiers.html" title="Cost-stratified test tiers: Smoke, Lite, targeted, full.">test-onion tiers</a>
+        <a class="chip" href="product/regression-tests/test-onion-tiers.html" title="Cost-stratified test tiers: Smoke, Lite, targeted, full.">test-onion tiers</a>
         <a class="chip" href="product/regression-tests/property-tests.html" title="FsCheck invariants over generated inputs find hidden bugs.">property tests</a>
         <a class="chip" href="product/regression-tests/fuzz-campaigns.html" title="Malformed-input campaigns; fix to the spec, not the seed.">fuzz campaigns</a>
         <a class="chip" href="product/regression-tests/ddt-pin-trailers.html" title="Doc-derived characterization pinned to a cited source.">DDT pin-trailers</a>
       </div>
       <div class="fam fam-s"><h4>Provenance&nbsp;&amp;&nbsp;attr.</h4>
-        <span class="chip flag">mutator-stamps <span class="rel cp">═</span> F10-lint</span>
+        <span class="chip">mutator-stamps <span class="rel cp">═</span> F10-lint</span>
         <span class="chip">derive-changelog <span class="rel co">◀─</span> stamps</span>
         <a class="chip" href="product/provenance-and-attribution/a11y-prefix.html" title="Prefix invisible inserts so they're distinguishable and tracked.">a11y_ prefix</a>
       </div>
       <div class="fam fam-s"><h4>Repair vocabulary</h4>
-        <a class="chip flag" href="product/repair-vocabulary/typed-categories.html" title="Typed enums replace free-form failure strings.">typed enums</a>
+        <a class="chip" href="product/repair-vocabulary/typed-categories.html" title="Typed enums replace free-form failure strings.">typed enums</a>
         <a class="chip" href="product/repair-vocabulary/remediation-verbs.html" title="A closed, named set of remediation actions — bounded moves.">remediation-verbs</a>
         <a class="chip soft" href="product/repair-vocabulary/codemod-first.html" title="For 50+ deterministic sites, write one AST transformer.">codemod-first</a>
       </div>
@@ -393,7 +392,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <h4 style="margin:0 0 3px;color:var(--b-ink);font-size:12.5px;text-align:center">THE MODEL BRIDGE — system-models</h4>
       <p style="margin:0 0 7px;font-size:9.5px;color:var(--b-ink);text-align:center;font-style:italic">executable documentation that cannot drift</p>
       <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
-        <span class="chip flag" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/executable-source-of-truth.html" title="Typed models read every run and generated from — can't drift.">executable source-of-truth</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/executable-source-of-truth.html" title="Typed models read every run and generated from — can't drift.">executable source-of-truth</a></span>
         <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/component-zone-model.html" title="A typed map of every component's code zone and seams.">component</a> · <a href="models-bridge/system-models/synchronization-model.html" title="A registry of every lock, what it guards, and its ordering.">sync(meta-sync)</a> · <a href="models-bridge/system-models/service-flow-model.html" title="The SOA source-of-truth NetworkPolicy and wiring are generated from.">service-flow</a> · <a href="models-bridge/system-models/deployment-topology-model.html" title="Typed models of where things run and how they layer.">deploy</a> · <a href="models-bridge/system-models/domain-registries.html" title="Frozen typed registries for the system's domain facts.">domain</a></span>
       </div>
       <div style="text-align:center;margin:7px 0;font-size:11px;color:var(--b-ink)"><b>meta-sync ═══ drift-parity gates</b><br><span style="font-size:9px">keep the map = the territory</span></div>
