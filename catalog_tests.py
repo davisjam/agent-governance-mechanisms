@@ -141,6 +141,53 @@ def check_html_links():
     return (FAIL if issues else PASS), issues
 
 
+_VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param",
+         "source", "track", "wbr"}
+# strict containers that must balance + nest properly. Optional-close elements (p / li / tr / td …) are
+# deliberately NOT tracked, so lenient-but-valid HTML doesn't false-positive.
+_CONTAINERS = {"html", "head", "body", "main", "div", "section", "article", "aside", "header", "footer",
+               "nav", "figure", "figcaption", "table", "pre", "ul", "ol", "style", "script", "svg",
+               "iframe", "blockquote", "form"}
+
+
+class _Balance(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.stack: list[str] = []
+        self.errors: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in _CONTAINERS and tag not in _VOID:
+            self.stack.append(tag)
+
+    def handle_endtag(self, tag):
+        if tag not in _CONTAINERS:
+            return
+        if tag in self.stack:
+            while self.stack and self.stack[-1] != tag:  # closing across a still-open container = misnest
+                self.errors.append(f"</{tag}> closes across still-open <{self.stack.pop()}>")
+            if self.stack:
+                self.stack.pop()
+        else:
+            self.errors.append(f"stray </{tag}> (no matching open)")
+
+
+def check_html_valid():
+    """Cheap, stdlib well-formedness gate that runs BEFORE the expensive axe browser pass: every built
+    page's container tags (div/section/main/figure/table/pre/script/svg/...) must balance and nest.
+    A browser silently auto-corrects malformed HTML, so axe alone wouldn't necessarily catch a renderer
+    bug that drops a close tag; this does, in milliseconds."""
+    issues = []
+    for f in _html_files():
+        p = _Balance()
+        p.feed(open(f, encoding="utf-8").read())
+        p.close()
+        issues += [f"{_rel(f)}: {e}" for e in p.errors[:5]]
+        if p.stack:
+            issues.append(f"{_rel(f)}: unclosed at EOF -> {p.stack[:5]}")
+    return (FAIL if issues else PASS), issues
+
+
 def check_skill_structure():
     """SKILL.md frontmatter, manifests, and the bundled reference are present and well-formed."""
     issues = []
@@ -264,6 +311,7 @@ def check_claude_validate(strict: bool):
 CHECKS = [
     ("markdown: schema + md-link existence", 1, lambda strict: check_markdown_schema()),
     ("markdown: #anchor resolution", 1, lambda strict: check_markdown_anchors()),
+    ("html: well-formed (balanced containers)", 1, lambda strict: check_html_valid()),
     ("html: link + anchor resolution", 1, lambda strict: check_html_links()),
     ("skill: structure + manifests", 1, lambda strict: check_skill_structure()),
     ("skill: bundle freshness (no drift)", 1, lambda strict: check_skill_drift()),
@@ -278,11 +326,12 @@ def main() -> int:
     ap.add_argument("--strict", action="store_true", help="treat a Tier-2 SKIP (missing tool) as failure")
     args = ap.parse_args()
 
-    print(f"== Test plan: {len(CHECKS)} checks (Tier 1 stdlib always; Tier 2 external, "
-          f"{'strict' if args.strict else 'skip-if-absent'}) ==")
-    failed = 0
-    skipped = 0
-    for name, tier, fn in CHECKS:
+    print(f"== Test plan: {len(CHECKS)} checks (Tier 1 stdlib first; Tier 2 external — axe/claude — run "
+          f"only if Tier 1 is clean; {'strict' if args.strict else 'skip-if-absent'}) ==")
+    failed = skipped = 0
+
+    def _run(name, tier, fn):
+        nonlocal failed, skipped
         status, issues = fn(args.strict)
         mark = {PASS: "ok  ", FAIL: "FAIL", SKIP: "skip"}[status]
         print(f"  [{mark}] (T{tier}) {name}")
@@ -291,6 +340,18 @@ def main() -> int:
                 print(f"          {line}")
         failed += status == FAIL
         skipped += status == SKIP
+
+    for name, tier, fn in CHECKS:  # Tier 1: cheap, stdlib, always
+        if tier == 1:
+            _run(name, tier, fn)
+    tier2 = [c for c in CHECKS if c[1] == 2]
+    if failed:  # fail-fast: don't pay for the browser/CLI passes if a cheap check already failed
+        for name, tier, fn in tier2:
+            print(f"  [skip] (T{tier}) {name} — skipped: fix the failed Tier-1 check(s) first")
+        skipped += len(tier2)
+    else:
+        for name, tier, fn in tier2:
+            _run(name, tier, fn)
     print(f"== {len(CHECKS)} checks: {len(CHECKS) - failed - skipped} passed, {failed} failed, {skipped} skipped ==")
     return 1 if failed else 0
 
