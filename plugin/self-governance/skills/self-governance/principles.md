@@ -14,14 +14,11 @@
 (including commercially), provided this copyright and permission notice are
 retained. Full terms in the LICENSE file distributed with this catalogue.*
 
-Portable principles for AI-collaborative software engineering, carried
-across the author's repos. They are about *how to make choices that fit
-an agent-collaborative codebase*, independent of this project's domain.
-Each principle below is the crisp statement + the WHY; the full treatise —
-with worked examples, canonical commits, and anti-patterns — is
-`docs/dev/AI-FIRST-ENGINEERING.md`.
-Where a principle is also enforced as a numbered rule, the Part B rule
-number is cited; the rule text itself lives in Part B, unchanged.
+Portable principles for AI-collaborative software engineering, carried across the author's repos. They
+are about *how to make choices that fit an agent-collaborative codebase*, independent of this project's
+domain. Each principle below is the crisp statement + the WHY. Many are also enforced, in the source
+project, as a numbered Part B rule plus a lint or gate — adopt the principle here, and wire your own
+enforcement.
 
 ## A.1. Autonomy — carry work through; surface only load-bearing decisions
 
@@ -35,8 +32,7 @@ architectural and load-bearing ("should this whole subsystem be reshaped?").
 axis — ask the user; do NOT defer the call to a sub-agent.** A fuzzy brief
 lets the agent silently answer a narrower question than intended. Autonomy
 never lifts the quality gates — speed comes from fewer round-trips, not from
-skipping checks. Full discipline: `docs/dev/AI-FIRST-ENGINEERING.md` §3 +
-§4.12c.
+skipping checks.
 
 ## A.2. Implementation is cheap; architecture is expensive
 
@@ -46,8 +42,7 @@ agent-confusion, and drift. In an agent-collaborative codebase this asymmetry
 is sharper than usual: a bad shape confuses every future agent that reads it,
 and substantial refactoring is nearly free (dispatch an agent), so there is
 almost never a reason to enshrine a compromise. Corollary: **substantial
-refactoring is "free" and drives a recurring audit cadence** —
-`docs/dev/AI-FIRST-ENGINEERING.md` §2 + §2.3.
+refactoring is "free" and drives a recurring audit cadence.**
 
 ## A.3. Hyper-experimentation — pilot, compare, measure; the prototypes throw away, the learning stays
 
@@ -58,8 +53,7 @@ from becoming flailing: experiments must be **falsifiable** and grounded in
 **ground truth**, **negative results are wins** (a cheap pilot that kills a
 bad path saved an expensive build), and you must be willing to be wrong and
 **correct the record when the data contradicts you**. The prototype is
-disposable; the learning it produces is what you keep. Full principle:
-`docs/dev/AI-FIRST-ENGINEERING.md` §2.4.
+disposable; the learning it produces is what you keep.
 
 ## A.4. Types are how you name shapes; type-in-place before decomposing
 
@@ -68,8 +62,7 @@ reveal architecture that primitive-passing leaves anonymous. When decomposing:
 (1) annotate the types in-place; (2) let the types become the cross-module
 contract; (3) THEN move the typed cluster. Don't decompose what you haven't
 yet typed — the types reveal the seam. New Python lands strict-typed; new
-frontend lands as TypeScript (Part B rule #24). Full principle:
-`docs/dev/AI-FIRST-ENGINEERING.md` §2.5.
+frontend lands as TypeScript.
 
 ## A.5. Explicit models, states, and policies over implicit ones
 
@@ -77,10 +70,8 @@ Name the thing, encode it in types, write a test that walks the encoded
 structure. State machines beat scattered counter increments; typed enums beat
 magic strings; declared coverage tiers beat binary "covered" claims. Implicit
 invariants are invisible to future auditors (human or agent) and rot silently
-when surrounding code shifts. This is why job lifecycles use explicit
-`JobStateMachine` transition tables rather than ad-hoc increments (Part B
-"Architecture rules"). Full principle: `docs/dev/AI-FIRST-ENGINEERING.md` §2
-+ §4.5.
+when surrounding code shifts. This is why job lifecycles are better modelled as
+explicit state-machine transition tables than as ad-hoc status increments.
 
 ## A.6. Unify for defect-class consolidation, not just capability
 
@@ -89,16 +80,14 @@ sufficient justification to unify two parallel implementations; you do not
 need the merged path to be *more* capable. When two sites share logic, extract
 a shared helper — **on the second site, not the third** (DRY-drift hazard).
 When unification also unlocks new capability, split the commit: consolidation
-(correctness) separate from capability (feature). Full principle:
-`docs/dev/AI-FIRST-ENGINEERING.md` §2 + `docs/dev/CODE-STYLE.md` §3; Part B
-rule #11.
+(correctness) separate from capability (feature).
 
 ## A.7. Update call sites; don't preserve legacy shims
 
 When a refactor exposes a cleaner surface, migrate ALL call sites in the same
 change. No delegating shim "for backwards compatibility" — compatibility shims
 compound into a permanent two-paths tax that every future agent must reason
-about. Full rationale: `docs/dev/AI-FIRST-ENGINEERING.md` §2.3.
+about.
 
 ## A.8. Enforce structure with the compiler / static analysis — do not defer
 
@@ -109,8 +98,7 @@ detectable — audit signals are expensive, deferrable, and post-hoc; lint
 signals are cheap, at-PR, and deterministic. Today's audit finding should
 become tomorrow's lint: if a bug is in N>1 files, the right fix shape is "fix
 N sites + add a lint," not "fix N sites and wait for the next audit." For a
-class-level failure, propose a `[LINT]` in addition to the `[FIX]` (Part B
-rule #23). Full discussion: `docs/dev/AI-FIRST-ENGINEERING.md` §4.2 + §4.11.
+class-level failure, propose a `[LINT]` in addition to the `[FIX]`.
 
 ## A.9. Genre check before invent; single source of truth
 
@@ -120,8 +108,7 @@ we skip their runtime? **Adopt the schema even when the runtime is overkill**
 — you inherit hard-won constraints at naming-convention cost. And prefer a
 single source of truth wherever possible: a stable lint that reads meta-files
 at lint-time beats codegen-from-spec beats N hand-rolled lints (each step
-loses a drift hazard). Full principles: `docs/dev/AI-FIRST-ENGINEERING.md`
-§4.3, §4.3a, §4.16; Part B rules #22, #33.
+loses a drift hazard).
 
 ## A.10. Class-vs-module shape; extract on the second site
 
@@ -130,8 +117,7 @@ clusters. For a state-bearing cluster (≥2 mutable module-private vars shared
 across exported functions, a state machine, or a long-lived cache/handle),
 extract a **class** — state wants an owner. And extract the shared helper on
 the **second** site, not the third; two files with the same logic in one PR is
-the extract-now signal. Full rule: `docs/dev/CODE-STYLE.md` §1a + §3; Part B
-rules #11, #11a.
+the extract-now signal.
 
 ## A.11. Reason about second-order effects and dynamics
 
@@ -143,8 +129,7 @@ consumption? For any new substrate with repetition, concurrency, or
 time-delayed consumption, write an explicit "second-order dynamics" section in
 the design doc. **Dynamics-aimed tests find the real defects** — distributed
 bugs live in driving-conditions and cross-component dynamics, not in static
-structure; a strong-but-static unit suite will miss them. Full principle +
-worked examples: `docs/dev/AI-FIRST-ENGINEERING.md` §4.17; Part B rule #45.
+structure; a strong-but-static unit suite will miss them.
 
 ## A.12. Quality gates — grade on the commodity-lint floor
 
@@ -158,18 +143,17 @@ trust. **Dependency manifests must be complete (SBOM discipline):** every
 third-party package the code or the gates use MUST be declared in the matching
 manifest, and any out-of-band `pip install` / `npm install` an agent runs MUST
 be persisted in the same change — an undeclared tool is invisible to SBOM
-retrieval and breaks a fresh checkout's gates. Full discussion:
-`docs/dev/AI-FIRST-ENGINEERING.md` §4.13; `docs/dev/DEPENDENCIES.md`.
+retrieval and breaks a fresh checkout's gates.
 
 ## A.13. Regex policy — parser-first
 
 Regex is acceptable for genuinely simple string matching (literal patterns,
 fixed prefixes/suffixes, enum values). For anything that parses semantic
-structure, reach for the real parser / walker — PDF content streams, JSON from
-LLM output, C# source, and Office/PDF tree traversal each have a canonical
-parser (see Part B "Library and dependency discipline"). Catastrophic
-backtracking and "regex that was subtly wrong for months" are the motivators.
-Full audit: `docs/design/regex-usage-audit-260425.md`.
+structure, reach for the real parser / walker — content streams, JSON from
+LLM output, source code, and document tree traversal each have a canonical
+parser. Catastrophic backtracking and "regex that was subtly wrong for months"
+are the motivators. (The catalogue ships a runnable example lint for this — see
+the governance-lint example.)
 
 ## A.14. Never silent-catch
 
@@ -177,9 +161,8 @@ Every `except` / `catch` must log, re-throw, convert to a domain error, OR
 carry an inline comment justifying the swallow. A silent catch turns a
 fail-loud bug into a fail-quiet one — the worst failure mode for a pipeline
 where "ran successfully but produced garbage" is invisible. This composes with
-the **fail-fast / GenAI-first** posture: when a dependency is unreachable,
-fail loudly rather than degrade silently. Full rule + examples:
-`docs/dev/CODE-STYLE.md` §4; Part B rule #8.
+a **fail-fast** posture: when a dependency is unreachable, fail loudly rather
+than degrade silently.
 
 ## A.15. Comments and commits earn their place
 
@@ -187,8 +170,7 @@ fail loudly rather than degrade silently. Full rule + examples:
 *why* (a non-obvious invariant, a chosen trade-off, a footgun), not by
 restating *what* the code does. **Commits** land in reasonable, self-contained
 sets with messages that state the intent; agents commit per meaningful step
-(never accumulate) and carry the co-author trailer. Full rule:
-`docs/dev/CODE-STYLE.md` §2; Part B rule #13. Commit trailer:
+(never accumulate) and carry a co-author trailer, e.g.
 `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`.
 
 ## A.16. Verify factual claims; trust nothing stale
@@ -198,9 +180,8 @@ schema fact prevents stale-claim drift — verify brief premises before
 dispatching. When reviewing "done" work, **trust nothing at HEAD**: re-run the
 gates, pin-tests, and lints yourself; markers and counts rot when sibling
 sweeps break the substrate. Agent reports describe *intent*, not *reality* —
-verify. This is the load-bearing discipline of the Final Opus DoD review. Full
-principle: `docs/dev/AI-FIRST-ENGINEERING.md` §4.9; Part B "Final Opus DoD
-discipline."
+verify. This is the load-bearing discipline of the final, independent
+"trust-nothing" definition-of-done review.
 
 ## A.17. Destructive-op care
 
@@ -211,21 +192,21 @@ a path you did not create or whose contents contradict how it was described.
 Destructive `git` on `main` (`reset --hard`, reset to older refs, force-push)
 requires explicit user approval — the orchestrator's inline shell has no
 worktree backstop, so a flailing reset destroys work permanently. Undo a
-landed commit with `revert`, never `reset`. Full rule: Part B rules #21, #36.
+landed commit with `revert`, never `reset`.
 
 ## A.18. Documentation — the invariants-driven pattern
 
-Subsystem / architecture docs (the `docs/arch/` arch-vN family) earn their
-keep through four load-bearing elements; a doc without them is prose that rots:
-(1) **a section per real part** — one section/row per source, stage, module,
-or entity, mirroring the actual structure; (2) **invariants with stable IDs** —
-each invariant a tagged, testable predicate with a `file:line` cite, and the
-ID is the join key that tests and audits cite; (3) **as-built vs design,
-⚠️-marked** — call out where code diverges from design, because the ⚠️ gaps are
-where the next work is; (4) **enforcement: invariants → tests** — map each
-invariant ID to the test that pins it, or mark it UNTESTED, so the doc *drives*
-the test backlog. Design docs encode invariants, not just rationale. Full
-principle: `docs/dev/AI-FIRST-ENGINEERING.md` §4.5; `docs/arch/DESIGN.md`.
+Subsystem / architecture docs earn their keep through four load-bearing
+elements; a doc without them is prose that rots: (1) **a section per real
+part** — one section/row per source, stage, module, or entity, mirroring the
+actual structure; (2) **invariants with stable IDs** — each invariant a
+tagged, testable predicate with a `file:line` cite, and the ID is the join key
+that tests and audits cite; (3) **as-built vs design, ⚠️-marked** — call out
+where code diverges from design, because the ⚠️ gaps are where the next work
+is; (4) **enforcement: invariants → tests** — map each invariant ID to the
+test that pins it, or mark it UNTESTED, so the doc *drives* the test backlog.
+Design docs encode invariants, not just rationale. (The catalogue ships a
+design-doc template starter built on this pattern.)
 
 ## A.19. Uniformity over fit — one codebase-wide pattern beats a locally-better bespoke one
 
@@ -237,32 +218,29 @@ be re-derived from scratch by every future agent that meets it, and each
 re-derivation is a chance to get it subtly wrong. Uniformity lowers
 agent-confusion and defect *variance* more than local optimization raises
 capability. This is the principle behind the canonical-lib mandate, the
-sole-seam discipline, and the one-canonical-walker rule (Part B "Library and
-dependency discipline"; rules #15, #16, #52): the win is not that iText or
-`PdfModel` is the best conceivable tool, but that there is exactly *one* of them,
-so a fix or a constraint applied once holds everywhere. Deviate only when a site
-has a genuine, named reason the uniform pattern cannot serve — not merely because
-a bespoke shape would be marginally nicer here. Full principle:
-`docs/dev/AI-FIRST-ENGINEERING.md` §2.
+sole-seam discipline, and the one-canonical-walker rule: the win is not that any
+one library or model is the best conceivable tool, but that there is exactly
+*one* of them, so a fix or a constraint applied once holds everywhere. Deviate
+only when a site has a genuine, named reason the uniform pattern cannot serve —
+not merely because a bespoke shape would be marginally nicer here.
 
 ## A.20. Essence vs. accident — attack accidental complexity; budget for essential
 
 Brooks' distinction in "No Silver Bullet" is the sharpest triage tool we have.
-*Essential* complexity is inherent to the problem — accessibility remediation
-across PPTX / DOCX / XLSX / PDF, each with its own tag model, reading-order
-semantics, and conformance spec, genuinely *is* hard, and no tool erases that.
-*Accidental* complexity is the complexity our own tooling and choices introduce:
-parallel implementations, primitive-passing that hides shapes, hand-built argv,
-scattered state, drift between a doc and the code it describes. Spend effort
-attacking the accidental kind — that is the complexity our substrate keeps
-removing (unification for defect-class consolidation, typed seams, single
-sources of truth), and every removal is a permanent reduction. Accept and
-*budget* for the essential kind rather than pretending a cleverer abstraction
-will make it vanish; mis-labeling essential complexity as accidental produces
-leaky abstractions that cost more than the complexity they hid. The test before
-any big refactor: is this reducing accidental complexity, or just relocating
-essential complexity behind a prettier name? Full principle:
-`docs/dev/AI-FIRST-ENGINEERING.md` §2.
+*Essential* complexity is inherent to the problem — e.g. accessibility
+remediation across PPTX / DOCX / XLSX / PDF, each with its own tag model,
+reading-order semantics, and conformance spec, genuinely *is* hard, and no tool
+erases that. *Accidental* complexity is the complexity our own tooling and
+choices introduce: parallel implementations, primitive-passing that hides
+shapes, hand-built argv, scattered state, drift between a doc and the code it
+describes. Spend effort attacking the accidental kind — that is the complexity
+the substrate keeps removing (unification for defect-class consolidation, typed
+seams, single sources of truth), and every removal is a permanent reduction.
+Accept and *budget* for the essential kind rather than pretending a cleverer
+abstraction will make it vanish; mis-labeling essential complexity as accidental
+produces leaky abstractions that cost more than the complexity they hid. The
+test before any big refactor: is this reducing accidental complexity, or just
+relocating essential complexity behind a prettier name?
 
 ## A.21. Governance as a method — three complementary control targets
 
@@ -280,7 +258,7 @@ targets**, and a mature system covers all three:
   sentinel / merge-train / staged-deploy gate staircase, host-compute mediators,
   lifecycle + observability (agent-registry, event bus, tombstones, the
   cron-alerts gate), and governance-doc controls (this rule index and its
-  cap/conformance lints, the mandatory-snippet table, the Epic DoD).
+  cap/conformance lints, the mandatory-snippet table, the Epic definition-of-done).
 - **(b) Models-bridge** — the typed MBSE models the fleet reasons *through* and
   the codebase is generated / governed *from*: the component & zone model, the
   synchronization / mediator contracts, the service-flow model, the deployment
@@ -290,8 +268,8 @@ targets**, and a mature system covers all three:
   the territory, or the bridge would lie.
 - **(c) Product** — the shipped artifact: the canonical typed models & sole seams
   (held in place by ban-lints on the raw alternative), content-fidelity
-  validation and the WCAG / conformance rule engine, the regression-test onion,
-  provenance & attribution (per-mutator stamps, the F10 wiring lint, the `a11y_`
+  validation and the conformance rule engine, the regression-test onion,
+  provenance & attribution (per-mutator stamps, wiring lints, an inserted-artifact
   prefix), and the bounded repair vocabulary (closed remediation-verb sets, typed
   violation categories).
 
@@ -299,9 +277,8 @@ Each target is governed the same way — as a design pattern that holds the *cos
 of a failure within bounds* — and the axis that most clarifies any single control
 is soft (probabilistic — aims an agent, cannot block) vs. hard (deterministic —
 holds the line regardless of agent cooperation); guidance *aims*, machinery
-*holds*. The worked census — every control by role, family, form, novelty, and
-enforcement — is the governance catalog (`talks-and-notes/governance-catalog/`
-README + INDEX). Full principle: `docs/dev/AI-FIRST-ENGINEERING.md` §4.
+*holds*. The worked census — every control by role, family, form, and enforcement
+— is this catalogue (its README + INDEX).
 
 ## A.22. Right-size the fix — architecture-first, defense-in-depth
 
@@ -317,10 +294,6 @@ is as wrong as a hacky patch over a structural flaw. Aim for the middle.
 - **Belt-and-suspenders** where a failure is costly: do both. Defense-in-depth is a
   feature, not redundancy.
 
-Full discussion: `docs/dev/AI-FIRST-ENGINEERING.md` §2 + §4.
-
-*Attribution: Part A distills principles from the author's <Project> and
-tenure-packet-generator repos; it is a portable method, reusable across
-projects, governed by the copyright notice at the head of Part A. The full,
-canonical treatise for <Project> lives at
-`docs/dev/AI-FIRST-ENGINEERING.md`.*
+*Attribution: Part A distills principles from the author's own agent-collaborative
+repos; it is a portable method, reusable across projects, governed by the MIT license
+at the head of Part A.*
