@@ -187,6 +187,23 @@ def check_skill_drift():
     return PASS, []
 
 
+def check_bundle_links():
+    """Every relative link inside the installed skill must resolve. A plugin is copied to a cache and
+    can't reach outside its own dir, so a dangling `../../downloads/...` handoff (an entry citing a
+    template the bundler didn't vendor) would break once installed. External / anchor-only links are
+    out of scope (same as the markdown checks)."""
+    issues = []
+    for f in glob.glob(os.path.join(SKILLDIR, "**", "*.md"), recursive=True):
+        base = os.path.dirname(f)
+        for m in re.findall(r"\]\(([^)]+)\)", open(f, encoding="utf-8").read()):
+            if m.startswith(("http://", "https://", "mailto:", "#", "//")):
+                continue
+            tgt = m.split("#", 1)[0]
+            if tgt and not os.path.exists(os.path.normpath(os.path.join(base, tgt))):
+                issues.append(f"{os.path.relpath(f, SKILLDIR)} -> {m} (missing in bundle)")
+    return (FAIL if issues else PASS), issues
+
+
 # ── Tier 2 (degrade if the tool is absent) ─────────────────────────────────────
 
 def _free_port() -> int:
@@ -250,6 +267,7 @@ CHECKS = [
     ("html: link + anchor resolution", 1, lambda strict: check_html_links()),
     ("skill: structure + manifests", 1, lambda strict: check_skill_structure()),
     ("skill: bundle freshness (no drift)", 1, lambda strict: check_skill_drift()),
+    ("skill: bundle link integrity", 1, lambda strict: check_bundle_links()),
     ("html: axe-core accessibility", 2, check_axe),
     ("skill: claude plugin validate", 2, check_claude_validate),
 ]

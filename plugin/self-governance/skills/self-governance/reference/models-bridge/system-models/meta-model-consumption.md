@@ -63,7 +63,7 @@ scope.
 - **Bridge** — this is the *consumption* face: agent controls
   ([dynamic-context-injection](../../agent/context-and-dispatch/dynamic-context-injection.md),
   [docs-hierarchy](../../agent/context-and-dispatch/docs-hierarchy.md)) and product lints
-  ([coherence-lints](../../product/validation-and-conformance/coherence-lints.md),
+  ([coherence-lints](https://davisjam.github.io/agent-governance-mechanisms/product/validation-and-conformance/coherence-lints.html),
   [doc-hygiene-lints](../../agent/governance-doc-controls/doc-hygiene-lints.md)) all read the models
   through this discipline rather than copying them.
 - **Consumer** — [dynamic-context-injection](../../agent/context-and-dispatch/dynamic-context-injection.md)'s

@@ -60,5 +60,5 @@ Each has a coverage/parity lint + a doc-derived pin.
   surfaces (WCAG scope, competitor docs, cron behaviour) (product side).
 - **Consumer** — the rule-metadata registry feeds the
   [rule-index](../../agent/governance-doc-controls/claude-md-rule-index.md); the WCAG-gap registry feeds
-  the [standards rule-engine](../../product/validation-and-conformance/standards-rule-engine.md).
+  the [standards rule-engine](https://davisjam.github.io/agent-governance-mechanisms/product/validation-and-conformance/standards-rule-engine.html).
 - **Counterpart** — [drift-parity-gates](drift-parity-gates.md): each registry's coverage/parity lint.

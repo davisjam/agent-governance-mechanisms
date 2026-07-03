@@ -64,5 +64,5 @@ fails on divergence.
   [synchronization](synchronization-model.md) · [service-flow](service-flow-model.md) · … each typed
   model (construction) is *held true* by its drift gate (the counted control). This is the family's
   pervasive construction-held-by-detection pairing.
-- *See also (sibling)* — the product [coherence-lints](../../product/validation-and-conformance/coherence-lints.md):
+- *See also (sibling)* — the product [coherence-lints](https://davisjam.github.io/agent-governance-mechanisms/product/validation-and-conformance/coherence-lints.html):
   the same relational-invariant idea, there across product sources, here across model↔reality.

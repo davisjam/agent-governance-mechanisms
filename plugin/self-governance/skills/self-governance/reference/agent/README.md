@@ -6,7 +6,7 @@
 substrate that produces work**: how briefs are composed, how agents are dispatched and isolated, how
 their commits are gated and merged, how shared host compute is rationed, and how the fleet's lifecycle
 is observed. (What the fleet reasons *through* is the [models-bridge](../models-bridge/); what it
-*produces* is the [product](../product/).)*
+*produces* is the [product](https://davisjam.github.io/agent-governance-mechanisms/product/).)*
 
 ## The five families — the path an agent's work travels
 

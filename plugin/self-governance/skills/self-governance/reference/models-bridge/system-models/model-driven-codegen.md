@@ -61,5 +61,5 @@ carries a provenance marker (emitter + regen path), enforced by a provenance-hea
   what it generates from; without them there is nothing to generate.
 - **Bridge** — this is the *product-facing* face of the models: they don't just inform agents, they
   *build* the codebase's config and docs.
-- *See also (cross-target)* — the product [provenance & attribution](../../product/provenance-and-attribution/mutator-stamps.md)
+- *See also (cross-target)* — the product [provenance & attribution](https://davisjam.github.io/agent-governance-mechanisms/product/provenance-and-attribution/mutator-stamps.html)
   family: provenance headers here, mutation stamps there — both "the tool records what it produced."

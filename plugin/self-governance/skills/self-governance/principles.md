@@ -19,7 +19,7 @@ across the author's repos. They are about *how to make choices that fit
 an agent-collaborative codebase*, independent of this project's domain.
 Each principle below is the crisp statement + the WHY; the full treatise —
 with worked examples, canonical commits, and anti-patterns — is
-[`docs/dev/AI-FIRST-ENGINEERING.md`](docs/dev/AI-FIRST-ENGINEERING.md).
+`docs/dev/AI-FIRST-ENGINEERING.md`.
 Where a principle is also enforced as a numbered rule, the Part B rule
 number is cited; the rule text itself lives in Part B, unchanged.
 
@@ -323,4 +323,4 @@ Full discussion: `docs/dev/AI-FIRST-ENGINEERING.md` §2 + §4.
 tenure-packet-generator repos; it is a portable method, reusable across
 projects, governed by the copyright notice at the head of Part A. The full,
 canonical treatise for <Project> lives at
-[`docs/dev/AI-FIRST-ENGINEERING.md`](docs/dev/AI-FIRST-ENGINEERING.md).*
+`docs/dev/AI-FIRST-ENGINEERING.md`.*
