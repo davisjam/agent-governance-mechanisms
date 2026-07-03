@@ -66,6 +66,12 @@
 <p>Governance-centric agentic software engineering is a <strong>methodology</strong>, not something you install and run — the mechanisms are patterns you <em>adapt</em> to your stack, your agents, and your failure modes.</p>
 <p>Claude can help: it reads the catalogue and turns it on your own repo. Two ways in:</p>
 <ul><li><strong>Skill (Path A)</strong> — installable, auto-triggers, runs the loop for you.</li><li><strong>DIY (Path B)</strong> — read the patterns and adapt them by hand; the route when you can't run a plugin.</li></ul>
+<h2>Fold the method into your own <code>CLAUDE.md</code></h2>
+<p>Both paths give you the <em>mechanisms</em>. The <strong>method</strong> is the AI-First Engineering stance (Part A) plus the rule-index discipline; put it in your project's own governance doc, so it shapes how your agents reason on every boot — not only when the skill fires. Already have a <code>CLAUDE.md</code>? Integrate; don't start fresh. Two ways in:</p>
+<ul><li><strong>Before you install anything</strong> — point your agent at this repo:</li></ul>
+<p>&gt; Read the AI-First Engineering Method in <code>downloads/CLAUDE-starter.md</code> (Part A) and my existing &gt; <code>CLAUDE.md</code>. Propose edits that fold the method into my doc — adopt / adapt / skip per principle, &gt; preserving my current rules. Show me a diff.</p>
+<ul><li><strong>After you install the skill</strong> — have Claude introspect what it now carries:</li></ul>
+<p>&gt; self-governance: read your own <code>principles.md</code> and the <code>CLAUDE-starter</code> you bundle, compare against my &gt; repo's <code>CLAUDE.md</code>, and propose how to integrate the method — adopt / adapt / skip per principle, &gt; keeping what I already have.</p>
 <h2>Path A — the self-governance skill (batteries included)</h2>
 <p>The whole loop as an installable Claude skill that auto-triggers — no prompt to paste. Know what you're installing, though: a <strong>third-party plugin that reads, and on your approval writes, your repo</strong>.</p>
 <ul><li><strong>Source-visible</strong> — read its <code>SKILL.md</code>, <code>principles.md</code>, and <code>reference/</code> before you trust it.</li><li><strong>MIT-licensed.</strong></li><li><strong>Gated</strong> — <em>audit</em> only advises; <em>interpret-failure</em> acts only on your greenlight.</li><li><strong>No network I/O.</strong></li></ul>

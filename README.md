@@ -60,6 +60,11 @@ mechanism. This raw repo is what you **hand to your coding agent**: vendor it (o
 to produce a plan to adopt / adapt / apply the mechanisms in your context — see the
 [quick start](quick-start.md).
 
+**Already have a `CLAUDE.md`?** Don't start fresh — fold the *method* (the AI-First Engineering stance in
+[`downloads/CLAUDE-starter.md`](downloads/CLAUDE-starter.md)) into your existing doc, adopt / adapt / skip
+per principle. The [quick start](quick-start.md) has ready prompts for before *or* after you install the
+skill.
+
 The source is organized by role — [`agent/`](agent/) · [`models-bridge/`](models-bridge/) ·
 [`product/`](product/) — with the full census in [`INDEX.md`](INDEX.md). `catalog.py` validates the
 schema and builds the web view (`catalog.py validate` · `build` · `deploy local|github`; see

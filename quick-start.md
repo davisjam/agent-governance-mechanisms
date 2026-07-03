@@ -8,6 +8,25 @@ Claude can help: it reads the catalogue and turns it on your own repo. Two ways 
 - **Skill (Path A)** — installable, auto-triggers, runs the loop for you.
 - **DIY (Path B)** — read the patterns and adapt them by hand; the route when you can't run a plugin.
 
+## Fold the method into your own `CLAUDE.md`
+
+Both paths give you the *mechanisms*. The **method** is the AI-First Engineering stance (Part A) plus the
+rule-index discipline; put it in your project's own governance doc, so it shapes how your agents reason on
+every boot — not only when the skill fires. Already have a `CLAUDE.md`? Integrate; don't start fresh. Two
+ways in:
+
+- **Before you install anything** — point your agent at this repo:
+
+  > Read the AI-First Engineering Method in `downloads/CLAUDE-starter.md` (Part A) and my existing
+  > `CLAUDE.md`. Propose edits that fold the method into my doc — adopt / adapt / skip per principle,
+  > preserving my current rules. Show me a diff.
+
+- **After you install the skill** — have Claude introspect what it now carries:
+
+  > self-governance: read your own `principles.md` and the `CLAUDE-starter` you bundle, compare against my
+  > repo's `CLAUDE.md`, and propose how to integrate the method — adopt / adapt / skip per principle,
+  > keeping what I already have.
+
 ## Path A — the self-governance skill (batteries included)
 
 The whole loop as an installable Claude skill that auto-triggers — no prompt to paste. Know what you're

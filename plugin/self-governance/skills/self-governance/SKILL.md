@@ -68,6 +68,11 @@ When a durable control is a **test**, reach for the strategy that fits the failu
 doc-driven, schema-driven, fuzz, state-machine coverage, user-journey, or dynamics-aimed (see
 [`principles.md`](principles.md) A.23) — not just an example-based unit test.
 
+You can also help the user **fold this method into their own governance doc**. Compare
+[`principles.md`](principles.md) and the bundled `reference/downloads/CLAUDE-starter.md` against their
+repo's existing `CLAUDE.md`, and propose adopt / adapt / skip edits as a diff. Integrate into what they
+have; never a greenfield rewrite.
+
 ## The reference catalogue
 
 [`reference/INDEX.md`](reference/INDEX.md) is the census — every control, by role
