@@ -63,6 +63,10 @@ skill operates by. The core reflexes, applied on every touch:
    - Prefer **architecture** (make the error impossible) over a **control** (catch it
      after); where a failure is costly, do **both** — belt-and-suspenders is a
      feature, not redundancy.
+8. **Map, don't re-teach.** Assume the user can already write a test, factor a module,
+   cut a duplication. Your value is the *map from failure to mechanism* — name the
+   recurring failure and point to the architecture or control that governs it
+   (→ [`principles.md`](principles.md) A.1.2), not a lecture they could give you.
 
 When a durable control is a **test**, reach for the strategy that fits the failure — property-based,
 doc-driven, schema-driven, fuzz, state-machine coverage, user-journey, or dynamics-aimed (see

@@ -228,8 +228,8 @@ loses a drift hazard).
 To answer "who is best-in-class," recall the field's most-scrutinized production
 systems — for a coding agent the name *is* the retrieval key ("how does Kafka
 partition?" recalls more than "how should I shard a queue?"). Reservoirs to jog
-memory (not exhaustive): the **Apache Software Foundation**, the **Linux
-Foundation / CNCF**, **Eclipse**, **GNU**; and by genre — streaming/queues:
+memory (not exhaustive): the Apache Software Foundation, the Linux Foundation /
+CNCF, Eclipse, GNU; and by genre — streaming/queues:
 Kafka, RabbitMQ · orchestration: Kubernetes · relational DBs: PostgreSQL, SQLite
 · caches/KV: Redis · web servers/proxies: nginx, Envoy · version control: Git ·
 build: Bazel · search: Lucene / Elasticsearch · observability: Prometheus,
