@@ -9,7 +9,7 @@ Governing style: the CLAUDE.md **Writing style** section. Every prose change obe
 
 ---
 
-## B1 — Templated summary counts (drift-proof) ✳ IN PROGRESS
+## B1 — Templated summary counts (drift-proof) ✅ DONE (4a3f3ea)
 
 **Problem.** `INDEX.md` footer (L152–157) had stale hand-maintained numbers — "Agent (20)" and
 "Governance-doc controls (4)" while the tables hold 22 / 6. The row-count validator passes (rows are
@@ -85,6 +85,17 @@ So there is **likely no real inconsistency** — the rule is just implicit. **Ac
 explicitly (CLAUDE content-model or a short convention note), (2) quick audit that every pair obeys it
 (no dedicated pair split; no cross-cutting enforcement bundled). Correct the earlier "merge f10" take —
 f10 is cross-cutting, so it stays its own entry.
+
+## B5 — Stats meta-file + HTML fill + no-raw-stats guard ✅ DONE
+
+`stats.json` (declared facts: LOC 430, weeks 12) + `_stats(entries)` (merges declared + derived:
+controls/families/roles/enforcement split) → `data-census` spans filled by build → `check_no_raw_stats`
+forbids a stat literal (KLOC/controls/families/weeks) outside a span in the figure. Migrated the figure's
+hardcoded `53/46/4/3` + `280 KLOC` (→430) into spans. Verified: validate 0, build idempotent (2nd build
+empty diff), guard catches an injected `999 controls`. Prose numbers (N=8) exempt by vocabulary.
+
+**Split recap:** markdown counts → lint-check (B1, rule #33); HTML stats → fill + guard (B5). One source
+(entries + stats.json), two enforcement shapes matched to the medium.
 
 ## Bonus / follow-ups
 - The INDEX footer census-summary was the drift; B1 fixes the class.

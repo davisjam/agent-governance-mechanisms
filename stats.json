@@ -1,0 +1,5 @@
+{
+  "_comment": "Declared stats — the numbers NOT derivable from the entries. Derived stats (controls, families, roles, enforcement split) are computed from the catalogue by catalog.py:_stats() and merged over these. Edit a number HERE, once; build fills every data-census span from the merged set, and check_no_raw_stats forbids a raw stat literal outside a span.",
+  "loc_kloc": 430,
+  "case_study_weeks": 12
+}

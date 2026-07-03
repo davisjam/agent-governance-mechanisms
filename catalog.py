@@ -414,6 +414,9 @@ def cmd_validate(_args) -> int:
     for msg in check_summary_counts(entries):
         print(f"  [census] {msg}")
         n_issues += 1
+    for msg in check_no_raw_stats(entries):
+        print(f"  [stat]  {msg}")
+        n_issues += 1
     for rel, summ in role_summaries().items():
         if not summ:
             print(f"  [role]  {rel}: missing '<!-- summary: … -->' comment")
@@ -1179,17 +1182,60 @@ def build_abstractions_body(md: str, abbrs: dict) -> str:
     return "\n".join(out)
 
 
+def _stats(entries: list[Entry]) -> dict[str, str]:
+    """The single stat source. Derived numbers (computed from the catalogue) merged over declared ones
+    (`stats.json` — facts not derivable from the entries, e.g. LOC). Every value a string, ready to drop
+    into a `data-census` span. `_sync_figure_census` fills from this; `check_no_raw_stats` forbids a raw
+    stat literal that bypasses it."""
+    from collections import Counter
+    rows = [r for fam in parse_census() for r in fam["rows"]]
+
+    def enf(e: str) -> str:
+        return "softhard" if "Soft·Hard" in e else ("soft" if e.strip().startswith("Soft") else "hard")
+
+    split = Counter(enf(r["enf"]) for r in rows)
+    declared = json.load(open(os.path.join(ROOT, "stats.json"), encoding="utf-8"))
+    stats: dict[str, object] = {
+        "controls": len(entries),
+        "families": len({e.family for e in entries if e.family}),
+        "roles": len({e.role for e in entries if e.role}),
+        "enf_hard": split["hard"], "enf_soft": split["soft"], "enf_softhard": split["softhard"],
+    }
+    stats.update({k: v for k, v in declared.items() if not k.startswith("_")})
+    return {k: str(v) for k, v in stats.items()}
+
+
+STAT_VOCAB = re.compile(r"\b\d[\d,]*\s*(?:KLOC|MLOC|controls|families|weeks?)\b")
+
+
+def check_no_raw_stats(_entries: list[Entry]) -> list[str]:
+    """Forbid a raw stat literal in the hand-authored figure that bypasses the `data-census` fill —
+    the '280 KLOC' / '51 controls' class. A stat number MUST live in a `<span data-census="KEY">` so the
+    single source (`_stats`) owns it. Prose numbers (N=8, WCAG 2.1) are outside the vocabulary."""
+    problems: list[str] = []
+    fig = os.path.join(ROOT, "catalogue-figure.html")
+    if not os.path.isfile(fig):
+        return problems
+    txt = open(fig, encoding="utf-8").read()
+    stripped = re.sub(r'(<span data-census="[^"]+">)[^<]*(</span>)', r"\g<1>\g<2>", txt)
+    for m in STAT_VOCAB.finditer(stripped):
+        line = stripped[:m.start()].count("\n") + 1
+        problems.append(f"catalogue-figure.html:{line}: raw stat {m.group(0)!r} — wrap it in a "
+                        '<span data-census="KEY"> so _stats owns it')
+    return problems
+
+
 def _sync_figure_census(entries: list[Entry]) -> None:
-    """Fill `data-census` spans in the static figure pages with live counts (single source of truth =
-    the catalogue), so a hand-authored figure can't drift (e.g. '51 controls' vs the real 53)."""
-    counts = {"controls": str(len(entries)), "families": str(len({e.family for e in entries if e.family}))}
+    """Fill `data-census` spans in the static figure pages from `_stats` (single source of truth =
+    the catalogue + stats.json), so a hand-authored figure can't drift (e.g. '51 controls' vs 53)."""
+    counts = _stats(entries)
     for fig in ("catalogue-figure.html", "development-workflow.html"):
         path = os.path.join(ROOT, fig)
         if not os.path.isfile(path):
             continue
         txt = open(path, encoding="utf-8").read()
         for key, val in counts.items():
-            txt = re.sub(rf'(<span data-census="{key}">)[^<]*(</span>)', rf"\g<1>{val}\g<2>", txt)
+            txt = re.sub(rf'(<span data-census="{re.escape(key)}">)[^<]*(</span>)', rf"\g<1>{val}\g<2>", txt)
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(txt)
 
