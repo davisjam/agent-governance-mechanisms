@@ -54,6 +54,9 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
 - **Active voice; name the actor.** "The reclaim trusts the record," not "the record's correctness is
   what the reclaim trusts." Prefer "X does Y" to "Y is what X does."
 - **Short, declarative sentences — one idea each.** Break a clause-stacked sentence into two.
+- **Break up blocks; prefer bullets.** A wall of text goes unread. Keep paragraphs to 2–4 sentences —
+  lead a section with the frame, then break the detail out. An enumeration of three or more items is a
+  list, not a comma-run; give each bullet a **bold lead-in** naming what it is.
 - **Say it once.** State the point and move on. No "One line:", no "the heart of it", no closing
   sentence that restates the paragraph. And don't let two sections restate each other — the Motivation,
   the "Why it's not just", and the closing each make a *distinct* point.

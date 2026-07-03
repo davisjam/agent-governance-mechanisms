@@ -31,58 +31,56 @@ agents). Part B is the reference you build up per-project.
 (including commercially), provided this copyright and permission notice are
 retained. Full terms in the LICENSE file distributed with this catalogue.*
 
-Portable principles for AI-collaborative software engineering, carried across the author's repos — the
-*method* behind this catalogue. They are organized under the governance view the catalogue teaches: every
-mechanism is either an **architecture** that makes a failure impossible by construction, or a **control**
-that observes and guards against one it cannot prevent. The standard engineering playbook — types, tests,
-DRY, state machines, lints, docs — appears here *as* those mechanisms, not re-taught. Four groups: **the
-governance view** (A.1) frames the method; **architecture** (A.2) and **controls** (A.3) are the two
-mechanism kinds; **operating the method** (A.4) is the working discipline that wields them. Each principle
-is the crisp statement + the WHY; many are also enforced, in the source project, as a numbered rule plus a
-lint or gate — adopt the principle, and wire your own enforcement.
+The portable **method** behind this catalogue: principles for AI-collaborative software engineering,
+independent of any domain.
+
+They map onto the governance view the catalogue teaches — every mechanism is either an **architecture**
+that makes a failure impossible by construction, or a **control** that observes and guards against one it
+can't prevent. The standard engineering playbook (types, tests, DRY, state machines, lints, docs) appears
+here *as* those mechanisms, not re-taught.
+
+Four groups:
+
+- **[The governance view](#a1--the-governance-view) (A.1)** — frames the method.
+- **[Architecture](#a2--architecture-make-the-failure-impossible-by-construction) (A.2)** and
+  **[Controls](#a3--controls-observe-and-guard-what-you-cant-prevent) (A.3)** — the two mechanism kinds.
+- **[Operating the method](#a4--operating-the-method) (A.4)** — the working discipline that wields them.
+
+Each principle is the crisp statement + the WHY. Many are also enforced, in the source project, as a
+numbered rule plus a lint or gate — adopt the principle, and wire your own enforcement.
 
 ## A.1 — The governance view
 
 The frame the rest of the method hangs on: what governance is, how the standard playbook maps into it, and
 how to choose and size mechanisms.
 
-### A.1.1. Governance as a method — three complementary control targets
+### A.1.1. Governance as a method — three complementary targets
 
-Governance is not one thing. A **control** is a discrete, named artifact that
-fires on a violation — a lint, a quality gate, a validator, a regression /
-property / fuzz test, a conformance check, an observability assertion — and its
-organizing move is always the same: *convert a recurring failure into a control
-rather than re-inspect for it*, so a failure caught once is enforced on every
-subsequent agent without re-inspection. What makes governance a *method* rather
-than a pile of checks is that every control governs one of **three complementary
-targets**, and a mature system covers all three:
+Governance is not one thing. A governance **mechanism** is either an *architecture* that makes a failure
+impossible by construction, or a *control* that fires on a violation — a lint, gate, validator, regression
+/ property / fuzz test, conformance check, or observability assertion. Either way the organizing move is
+the same: *convert a recurring failure into a mechanism rather than re-inspect for it*, so a failure
+caught once is prevented on every later agent without re-inspection. What makes governance a *method*
+rather than a pile of checks is that every mechanism governs one of **three complementary targets**, and a
+mature system covers all three:
 
-- **(a) Agent** — the fleet and the substrate that *produces* work: briefs and
-  brief-linting, role-typed dispatch, worktree isolation, the pre-commit /
-  sentinel / merge-train / staged-deploy gate staircase, host-compute mediators,
-  lifecycle + observability (agent-registry, event bus, tombstones, the
-  cron-alerts gate), and governance-doc controls (this rule index and its
-  cap/conformance lints, the mandatory-snippet table, the Epic definition-of-done).
-- **(b) Models-bridge** — the typed MBSE models the fleet reasons *through* and
-  the codebase is generated / governed *from*: the component & zone model, the
-  synchronization / mediator contracts, the service-flow model, the deployment
-  topology, the domain registries — plus the drift / parity gates and query
-  surface over them. This is the interface through which a context-*bounded*
-  agent operates a context-*exceeding* codebase; meta-sync keeps the map equal to
-  the territory, or the bridge would lie.
-- **(c) Product** — the shipped artifact: the canonical typed models & sole seams
-  (held in place by ban-lints on the raw alternative), content-fidelity
-  validation and the conformance rule engine, the regression-test onion,
-  provenance & attribution (per-mutator stamps, wiring lints, an inserted-artifact
-  prefix), and the bounded repair vocabulary (closed remediation-verb sets, typed
-  violation categories).
+- **(a) Agent** — the fleet and the substrate that *produces* work. *e.g.* brief-linting, role-typed
+  dispatch, the pre-commit → merge-train gate staircase, agent-registry + lifecycle observability.
+- **(b) Models-bridge** — the typed models the fleet reasons *through* and the codebase is generated
+  *from*. *e.g.* a component/zone model, a service-flow model, drift/parity gates. This is how a
+  context-*bounded* agent operates a context-*exceeding* codebase — meta-sync keeps the map equal to the
+  territory, or the bridge lies.
+- **(c) Product** — the shipped artifact. *e.g.* canonical typed models held by ban-lints,
+  content-fidelity validation, a regression-test onion, per-mutator provenance stamps, a bounded repair
+  vocabulary.
 
-Each target is governed the same way — as a design pattern that holds the *cost
-of a failure within bounds* — and the axis that most clarifies any single control
-is soft (probabilistic — aims an agent, cannot block) vs. hard (deterministic —
-holds the line regardless of agent cooperation); guidance *aims*, machinery
-*holds*. The worked census — every control by role, family, form, and enforcement
-— is this catalogue (its README + INDEX).
+Each target is governed the same way — as a design pattern that holds the *cost of a failure within
+bounds*. The axis that most clarifies any single mechanism is **soft** (probabilistic — aims an agent,
+can't block) vs. **hard** (deterministic — holds the line regardless of agent cooperation): guidance
+*aims*, machinery *holds*.
+
+The worked census — every mechanism by target, family, form, and enforcement, with a full writeup per
+concept named above — is this catalogue: **https://davisjam.github.io/agent-governance-mechanisms/**
 
 ### A.1.2. Complement competence — map the playbook to the failures it governs
 
@@ -259,21 +257,20 @@ structure; a strong-but-static unit suite will miss them.
 
 ### A.2.11. Essence vs. accident — attack accidental complexity; budget for essential
 
-Brooks' distinction in "No Silver Bullet" is the sharpest triage tool we have.
-*Essential* complexity is inherent to the problem — e.g. accessibility
-remediation across PPTX / DOCX / XLSX / PDF, each with its own tag model,
-reading-order semantics, and conformance spec, genuinely *is* hard, and no tool
-erases that. *Accidental* complexity is the complexity our own tooling and
-choices introduce: parallel implementations, primitive-passing that hides
-shapes, hand-built argv, scattered state, drift between a doc and the code it
-describes. Spend effort attacking the accidental kind — that is the complexity
-the substrate keeps removing (unification for defect-class consolidation, typed
-seams, single sources of truth), and every removal is a permanent reduction.
-Accept and *budget* for the essential kind rather than pretending a cleverer
-abstraction will make it vanish; mis-labeling essential complexity as accidental
-produces leaky abstractions that cost more than the complexity they hid. The
-test before any big refactor: is this reducing accidental complexity, or just
-relocating essential complexity behind a prettier name?
+Brooks' distinction in "No Silver Bullet" is the sharpest triage tool we have. Two kinds of complexity,
+handled oppositely:
+
+- **Essential** — inherent to the problem: the business requirements, regulatory / compliance rules, and
+  domain semantics you're paid to get right. It genuinely *is* hard, and no tool erases it. **Budget**
+  for it — don't pretend a cleverer abstraction will make it vanish. Mis-labeling essential complexity as
+  accidental produces leaky abstractions that cost more than the complexity they hid.
+- **Accidental** — introduced by our own tooling and choices: parallel implementations, primitive-passing
+  that hides shapes, hand-built argv, scattered state, doc↔code drift. **Attack** it — this is the
+  complexity the substrate keeps removing (unification for defect-class consolidation, typed seams, single
+  sources of truth), and every removal is permanent.
+
+The test before any big refactor: are you *reducing* accidental complexity, or just *relocating*
+essential complexity behind a prettier name?
 
 ## A.3 — Controls: observe and guard what you can't prevent
 
