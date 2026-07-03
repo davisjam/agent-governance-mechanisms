@@ -34,7 +34,7 @@ or **soft** (probabilistic) or a mix.
 ## Read the catalogue
 
 - **[The catalogue — interactive web view](https://davisjam.github.io/agent-governance-mechanisms/)** —
-  the best way to read it: the control-map figure, a clickable census, and a full writeup per mechanism.
+  the best way to read it: the governance map, a clickable census, and a full writeup per mechanism.
 - **[The paper](https://arxiv.org/pdf/2607.01087)** — *Cheap Code, Costly Judgment: A Case Study on
   Governable Agentic Software Engineering* — the theory, evidence, and testable propositions.
 - **[Quick start](quick-start.md)** — adopt these in your own repo.
@@ -43,7 +43,7 @@ or **soft** (probabilistic) or a mix.
 ## Using this repo
 
 **To read it yourself, use the [web view](https://davisjam.github.io/agent-governance-mechanisms/)** —
-that's the pretty version, with the control-map figure, a clickable census, and a full writeup per
+that's the pretty version, with the governance map, a clickable census, and a full writeup per
 mechanism. This raw repo is what you **hand to your coding agent**: vendor it (or the
 [starter `CLAUDE.md`](downloads/CLAUDE-starter.md)) into your project, point your agent at it, and ask it
 to produce a plan to adopt / adapt / apply the mechanisms in your context — see the

@@ -55,7 +55,7 @@ catalog.py             the ONE tool (stdlib-only). validate/query/summaries/buil
 quick-start.md         "adopt these in your repo" guide
 index.html             GENERATED landing (do not hand-edit)
 catalogue-views.html   GENERATED metadata-driven views (do not hand-edit)
-catalogue-figure.html  HAND-AUTHORED control-map figure (4 views, clickable nodes)
+catalogue-figure.html  HAND-AUTHORED governance-map figure (4 views, clickable nodes)
 development-workflow.html  HAND-AUTHORED dev-process figure (verbatim, DocAble-flavoured)
 .nojekyll              disables Jekyll on Pages
 hooks/pre-commit       regenerates + stages HTML on commit (install: catalog.py install-hooks)

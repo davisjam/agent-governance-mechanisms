@@ -1045,7 +1045,7 @@ def build_views_page(entries: list[Entry]) -> str:
             f'<p class="sub">The same {len(entries)} controls, re-grouped live from card metadata. Every card is emitted by '
             '<code>renderForView(card)</code>; a view is just a grouping key + order, so <b>adding a control or a '
             'view is data, not layout</b>. Click a card for its writeup; hover for its one-line summary. '
-            '&nbsp;·&nbsp; <a href="catalogue-figure.html">the control-map figure</a> '
+            '&nbsp;·&nbsp; <a href="catalogue-figure.html">the governance map</a> '
             '&nbsp;·&nbsp; <a href="index.html">catalogue</a></p>\n'
             '<div id="tabs"></div>\n<div id="stage"></div>\n')
     script = "<script>\nconst CARDS = " + json.dumps(cards, ensure_ascii=False) + ";\n" + VIEWS_JS + "</script>\n"
