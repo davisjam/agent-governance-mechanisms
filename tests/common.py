@@ -37,6 +37,26 @@ def run(cmd: list[str], timeout: int | None = None) -> subprocess.CompletedProce
     return subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, timeout=timeout)
 
 
+def changed_vs_origin() -> frozenset[str] | None:
+    """Repo-relative paths that differ from `origin/main` — committed-but-unpushed + uncommitted +
+    new-untracked — used to skip a check whose declared inputs didn't change (see `needs_run`).
+
+    Returns None when no baseline is available (missing `origin/main` ref, or not a git tree); callers
+    then run every check. This is fail-SAFE, never fail-open: a stale baseline over-includes (runs more
+    checks), and a missing one runs all — neither can skip a check whose input really changed.
+    """
+    if run(["git", "rev-parse", "--verify", "--quiet", "origin/main"]).returncode != 0:
+        return None
+    diff = run(["git", "diff", "--name-only", "origin/main"])
+    if diff.returncode != 0:
+        return None
+    names = set(diff.stdout.splitlines())
+    untracked = run(["git", "ls-files", "--others", "--exclude-standard"])  # new files absent from origin
+    if untracked.returncode == 0:
+        names |= set(untracked.stdout.splitlines())
+    return frozenset(n for n in names if n)
+
+
 def html_files() -> list[str]:
     """Every built page, minus the plugin bundle (which is markdown, not a served site)."""
     return [f for f in glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True)
