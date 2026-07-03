@@ -47,7 +47,7 @@ verb cannot land un-wired.
 ## Consequences & costs
 
 - **The model must cover everything.** A missing operation forces either a `noqa` escape (a hole) or a
-  model extension (the right fix, but friction) — the seam's completeness is load-bearing.
+  model extension (the right fix, but friction) — an incomplete seam weakens the ban.
 - **Version lock-in.** Pinning the PDF library for tag-tree stability means upgrades are deliberate, gated work.
 - **Maintenance surface.** The typed mutators + the ban-lint are code to keep current as the format
   needs grow.

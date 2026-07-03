@@ -75,7 +75,7 @@
 <h2>Prerequisites</h2>
 <ul><li><strong>A detectable "mutator verb" pattern</strong> in the <code>Primitives</code> layer.</li><li><strong>A detectable stamp-wiring call</strong> so the lint can tell wired from unwired.</li><li><strong>A lint over the Primitives directories</strong> run in the gates.</li></ul>
 <h2>Consequences &amp; costs</h2>
-<ul><li><strong>The verb-detection heuristic is load-bearing.</strong> Miss a verb shape and a real gap passes; over-match and legitimate code fails.</li><li><strong>Coupled to the Primitives structure</strong> — a reorganization of the mutator layer needs the lint updated in step.</li></ul>
+<ul><li><strong>The verb-detection heuristic is the weak point.</strong> Miss a verb shape and a real gap passes; over-match and legitimate code fails.</li><li><strong>Coupled to the Primitives structure</strong> — a reorganization of the mutator layer needs the lint updated in step.</li></ul>
 <h2>Known uses</h2>
 <ul><li>The mutator-stamp wiring lint (F10, BLOCKING, 0 open gaps).</li></ul>
 <h2>Related controls</h2>

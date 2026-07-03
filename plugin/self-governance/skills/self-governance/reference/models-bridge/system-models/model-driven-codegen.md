@@ -2,7 +2,7 @@
 
 **Intent** — Generate real artifacts **from** the models — NetworkPolicy, service catalog, env wiring,
 public-API docs, competitor catalog, wire-contract types, docker — each carrying a provenance header, so
-the model is *load-bearing* (not merely descriptive) and hand-edits are caught.
+the model *drives the system* (not merely describes it) and hand-edits are caught.
 
 | | |
 |---|---|
@@ -14,7 +14,7 @@ the model is *load-bearing* (not merely descriptive) and hand-edits are caught.
 ## Motivation — the failure it kills
 
 If the models only *described* the system, they would be optional — nice docs, easy to ignore, quick to
-drift. The failure this addresses is **a model that isn't load-bearing**: nothing breaks if it's wrong,
+drift. The failure this addresses is **a model nothing depends on**: nothing breaks if it's wrong,
 so nothing keeps it right. And separately: a *generated* artifact that someone hand-edits loses the edit
 on the next regen, silently.
 
@@ -22,7 +22,7 @@ on the next regen, silently.
 
 Hand-writing NetworkPolicy, the service catalog, the API docs, or the competitor analysis means the same
 facts live in two places (model + artifact) and diverge. Generating them **from** the model makes the
-model load-bearing — change the artifact by changing the model — and a **provenance header**
+model authoritative — change the artifact by changing the model — and a **provenance header**
 on each generated file, re-emitted every run, plus a freshness lint, ensures a hand-edit is caught and a
 stale artifact fails the build. The distinction is *one model, N generated-and-provenance-checked
 consumers* versus *hand-maintained artifacts that drift from the model and swallow edits*.

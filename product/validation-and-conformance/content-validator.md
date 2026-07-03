@@ -43,7 +43,7 @@ emits `##PASS_FIDELITY##` and exit 3 so the offending pass is identified before 
 
 ## Consequences & costs
 
-- **The extractor is load-bearing.** A lossy or over-eager content extractor produces false positives
+- **Everything rests on the extractor.** A lossy or over-eager content extractor produces false positives
   (blocks good output) or false negatives (misses a real drop).
 - **Subset semantics are subtle.** Reordering, whitespace, and reformatting must be normalized or the
   gate cries wolf.

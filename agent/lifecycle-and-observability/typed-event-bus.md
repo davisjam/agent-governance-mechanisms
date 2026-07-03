@@ -42,7 +42,7 @@ orchestrator polls at session start and after cherry-pick waves, with named anom
 >3 in a row, `discard_lint`, `no_op` >30 min with tombstones queued). Together these are the **reactor
 loop**: emit → the orchestrator reads the queryable surface → matches the event to its playbook entry →
 takes the prescribed action (dispatch a fix, open a recovery playbook, hold new work). The playbook is
-the load-bearing half — it is what turns a raw signal into a *reaction* rather than a passive read.
+the active half — it turns a raw signal into a *reaction* rather than a passive read.
 
 ## Prerequisites
 

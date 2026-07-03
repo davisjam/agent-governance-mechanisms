@@ -49,7 +49,7 @@ mass-tombstoning requires an explicit `--id-file` — runtime enumeration of wor
   mechanism, but a gap that rests on honest use.
 - **Dedup depends on the registry.** If the `tombstoning_started` event is missed, two closers can race.
 - **A wrong disposition is dangerous.** A tombstone that mis-records "skipped" for un-landed work would
-  greenlight an unsafe reclaim — the record's *correctness* is load-bearing.
+  greenlight an unsafe reclaim — the reclaim trusts the record's *correctness*.
 - **Mass-tombstone id-lists are manual.** The `--id-file` discipline is a human step (deliberately, to
   prevent runtime enumeration).
 

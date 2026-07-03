@@ -14,7 +14,7 @@ of guessing from filesystem timestamps.
 ## Motivation — the failure it kills
 
 With a fleet of concurrent agents living in worktrees, *"which agents are live right now?"* is the
-load-bearing question for every reclaim decision — cleanup, tombstoning, merge readiness. Answer it by
+central question for every reclaim decision — cleanup, tombstoning, merge readiness. Answer it by
 scanning worktree directories and comparing mtimes and you get a **heuristic that races with live
 agents**: an agent mid-work can look identical to a stale one and have its worktree destroyed under
 it (the worktree-destruction-mid-flight incident). The failure is *unsafe reclaim of live work*, and
@@ -46,7 +46,7 @@ marker cache is a fast index that the registry wins over on any divergence.
 
 ## Consequences & costs
 
-- **Dual-write discipline is load-bearing and fragile.** One tool that mutates lifecycle without
+- **The whole registry rests on dual-write discipline — and it's fragile.** One tool that mutates lifecycle without
   writing the registry silently brings the mtime-race back; the guarantee is only as strong as the
   weakest writer.
 - **Append-only growth.** The JSONL grows unboundedly and needs rotation.

@@ -29,6 +29,23 @@ governing rule for all content here:
 The test: *could a Claude that has only this repo read an entry and understand the mechanism well enough
 to adapt it?* If it depends on a file, path, or rule number it can't see, the entry fails this rule.
 
+## Writing style
+
+An entry is read by a busy engineer and a coding agent. Write for both: plain, direct, no padding. Aim
+for Hemingway — short sentences, strong verbs, few qualifiers.
+
+- **Active voice; name the actor.** "The reclaim trusts the record," not "the record's correctness is
+  what the reclaim trusts." Prefer "X does Y" to "Y is what X does."
+- **Short, declarative sentences — one idea each.** Break a clause-stacked sentence into two.
+- **Say it once.** State the point and move on. No "One line:", no "the heart of it", no closing
+  sentence that restates the paragraph. If you summarized your own paragraph, cut one of the two.
+- **Concrete words, not reflex labels.** Reach for the precise term — *central*, *authoritative*, *the
+  weak point*, *essential*. Use "load-bearing" very sparingly, if at all.
+- **Cut qualifiers.** Drop *very, quite, essentially, arguably, precisely*. Bold one or two phrases per
+  section, not by habit.
+- **Describe, don't sell.** Give the mechanism and the failure it kills. Don't tell the reader every
+  project should adopt it — that's their call.
+
 ## The content model
 
 - **Entries** live at `<role>/<family>/<control>.md` — roles are `agent/`, `models-bridge/`, `product/`.

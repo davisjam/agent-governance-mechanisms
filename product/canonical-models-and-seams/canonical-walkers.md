@@ -44,7 +44,7 @@ library access.
 ## Consequences & costs
 
 - **The walker must expose what callers need.** A missing traversal shape pushes a caller back to raw
-  recursion — coverage is load-bearing, same as the models.
+  recursion — coverage matters here, same as the models.
 - **Low novelty.** This is a well-understood pattern; its value is DRY + invariant-centralization, not
   invention.
 

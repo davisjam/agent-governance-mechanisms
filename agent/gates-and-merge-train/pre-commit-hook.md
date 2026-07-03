@@ -55,7 +55,7 @@ waves use an explicit `pre-commit-skip: <reason>` marker (lint stanza skipped, u
   bypass* — the gate's cost is a direct incentive against it.
 - **Bypass prefixes are a real hole.** `sentinel:`/`tombstone:`/`chore(worktree):` commits skip
   entirely; correctness there rests on those prefixes being used honestly (auditable, not prevented).
-- **Marker logic is load-bearing and subtle.** If the tree-sha keying drifts, markers silently stop
+- **Marker logic is subtle and easy to break.** If the tree-sha keying drifts, markers silently stop
   matching and either block good commits or vouch for the wrong tree.
 
 ## Known uses

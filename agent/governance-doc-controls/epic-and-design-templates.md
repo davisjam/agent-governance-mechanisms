@@ -1,6 +1,6 @@
 # Epic & design-doc templates
 
-**Intent** — Fixed section-templates for the two load-bearing planning artifacts — **Epics**
+**Intent** — Fixed section-templates for the two core planning artifacts — **Epics**
 (multi-dispatch efforts) and **design docs** — so every effort is framed with the same required sections
 (scope, phase decomposition, second-order dynamics, definition-of-done, observability), and the planning
 artifact *drives* the work instead of being written after the fact.
@@ -10,7 +10,7 @@ artifact *drives* the work instead of being written after the fact.
 | Summary | Fixed section-templates for Epics and design docs so plans are complete. |
 | Target | Agent · **Governance-doc controls** |
 | Form | `agent-output` |
-| Enforcement | **Soft·Hard** — the template is soft guidance on the doc's shape, held by a hard counterpart: a stub scaffold materializes the sections and lints/gates assert the load-bearing ones (registration, DoD criteria, an observability block for topic-emitting designs). |
+| Enforcement | **Soft·Hard** — the template is soft guidance on the doc's shape, held by a hard counterpart: a stub scaffold materializes the sections and lints/gates assert the required ones (registration, DoD criteria, an observability block for topic-emitting designs). |
 
 ## Motivation — the failure it kills
 
@@ -18,13 +18,13 @@ A planning artifact written free-form omits exactly the sections that matter. Th
 *second-order dynamics* ships a substrate that deadlocks at tick T+100; the Epic with no explicit
 *Definition-of-Done* is "done" by assertion; the design that introduces an event-bus topic with no
 *observability* section leaves the substrate unmonitorable. Without a template, each author frames
-differently and the load-bearing sections — the ones that prevent production incidents — are the first to
+differently and the sections that prevent production incidents are the first to
 be dropped under time pressure. The failure is *incomplete plans whose gaps resurface as incidents*.
 
 ## Why it's not just "write a good design doc"
 
-"Write a good doc" leaves *which sections are load-bearing* to the author's memory — and the load-bearing
-ones (scope conditions, phase decomposition, second-order dynamics, a DoD with functional invariants, an
+"Write a good doc" leaves *which sections matter* to the author's memory — and the ones that matter
+(scope conditions, phase decomposition, second-order dynamics, a DoD with functional invariants, an
 observability/event-bus block) are precisely the ones a hurried author drops. A **template makes the
 required sections structural**: the doc is not complete without them, a scaffold pre-places them, and a
 lint can check for them. The distinction is *a structural section-contract* versus *an unenforced norm of
@@ -52,7 +52,7 @@ observability block, and an invariants→tests enforcement map). Drop them into 
 
 - **A repeatable artifact genre worth standardizing** — Epics and design docs recur; a one-off memo does
   not need a template.
-- **The set of load-bearing sections, identified from failure** — each required section earns its place
+- **The set of required sections, identified from failure** — each required section earns its place
   because omitting it caused an incident (a deadlock, a false "done," an unmonitorable substrate).
 - **A scaffold + lints** so the template is materialized and checked; a template that is only *described*
   in docs decays to advisory prose.

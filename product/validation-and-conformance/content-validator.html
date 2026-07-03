@@ -75,7 +75,7 @@
 <h2>Prerequisites</h2>
 <ul><li><strong>A content extraction comparable across input and output</strong> — the subset check is only as good as what "content" is defined to be.</li><li><strong>A subset predicate</strong> that tolerates legitimate reformatting/reordering without false positives.</li><li><strong>A run point</strong> post-remediation and pre-delivery, plus a per-pass hook for localization.</li></ul>
 <h2>Consequences &amp; costs</h2>
-<ul><li><strong>The extractor is load-bearing.</strong> A lossy or over-eager content extractor produces false positives (blocks good output) or false negatives (misses a real drop).</li><li><strong>Subset semantics are subtle.</strong> Reordering, whitespace, and reformatting must be normalized or the gate cries wolf.</li><li><strong>It runs on every job</strong> — a real but accepted cost for a fidelity guarantee.</li></ul>
+<ul><li><strong>Everything rests on the extractor.</strong> A lossy or over-eager content extractor produces false positives (blocks good output) or false negatives (misses a real drop).</li><li><strong>Subset semantics are subtle.</strong> Reordering, whitespace, and reformatting must be normalized or the gate cries wolf.</li><li><strong>It runs on every job</strong> — a real but accepted cost for a fidelity guarantee.</li></ul>
 <h2>Known uses</h2>
 <ul><li><code>ContentValidator</code> — the production input-⊆-output fidelity gate.</li><li>The <code>##PASS_FIDELITY##</code> staging per-pass variant (localizes the offending pass).</li><li>The accessibility-remediation policy it enforces (never drop content the user wrote).</li></ul>
 <h2>Related controls</h2>

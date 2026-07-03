@@ -41,7 +41,7 @@ HIGH-severity finding. The invariant has been held at 0 open gaps.
 
 ## Consequences & costs
 
-- **The verb-detection heuristic is load-bearing.** Miss a verb shape and a real gap passes; over-match
+- **The verb-detection heuristic is the weak point.** Miss a verb shape and a real gap passes; over-match
   and legitimate code fails.
 - **Coupled to the Primitives structure** — a reorganization of the mutator layer needs the lint updated
   in step.

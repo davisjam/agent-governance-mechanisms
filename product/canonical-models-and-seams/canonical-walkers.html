@@ -75,7 +75,7 @@
 <h2>Prerequisites</h2>
 <ul><li><strong>A walker per tree type</strong>, exposing the traversal shape callers actually need.</li><li><strong>A discipline (and lint coverage) that routes traversal through it</strong>, closing the raw-recursion and regex-into-tree escapes.</li></ul>
 <h2>Consequences &amp; costs</h2>
-<ul><li><strong>The walker must expose what callers need.</strong> A missing traversal shape pushes a caller back to raw recursion — coverage is load-bearing, same as the models.</li><li><strong>Low novelty.</strong> This is a well-understood pattern; its value is DRY + invariant-centralization, not invention.</li></ul>
+<ul><li><strong>The walker must expose what callers need.</strong> A missing traversal shape pushes a caller back to raw recursion — coverage matters here, same as the models.</li><li><strong>Low novelty.</strong> This is a well-understood pattern; its value is DRY + invariant-centralization, not invention.</li></ul>
 <h2>Known uses</h2>
 <ul><li><code>PdfStructTreeWalker</code>, the <code>RuleWalkers</code>, <code>DocxTopLevelPartWalker</code>, and the other per-tree walkers.</li><li>The canonical-walker discipline (traversal routed through the walker, raw recursion banned).</li></ul>
 <h2>Related controls</h2>
