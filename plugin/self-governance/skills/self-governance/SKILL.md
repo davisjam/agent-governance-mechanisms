@@ -54,6 +54,15 @@ skill operates by. The load-bearing reflexes, applied on every touch:
    narrower question.
 6. **Care with destructive ops.** In-repo / scratch is fine; anything outside the
    working tree, or any history rewrite, gets an explicit ask first.
+7. **Right-size the fix.** Over- and under-engineering are symmetric failures: a
+   sweeping redesign for a one-off is as wrong as a hacky patch over a structural
+   flaw. Close the structural issue with the smallest sound change; when a larger
+   scheme is warranted, **float it as an option** rather than reflexively building
+   it — offer both the local fix and the elaborate one, bias toward the local, and
+   let the cost of the failure justify the elaborate. Prefer **architecture** (make
+   the error impossible) over a **control** (catch it after) as the first reach;
+   where a failure is costly, do **both** — belt-and-suspenders is a feature, not
+   redundancy.
 
 ## The reference catalogue
 
@@ -137,9 +146,15 @@ Two beats: **interpret**, then **convert**.
    what happens at T+10, under concurrency, if state drifts between dispatch and
    consumption? A control correct in isolation can be pathological under
    repetition.
-5. **Propose.** Show the user the control you would build — the exact failure it
-   kills, hard-vs-soft, and how it fires — plus the point fix for the instance in
-   hand. Offer alternatives where the shape is contested.
+5. **Propose — right-sized.** Show the user the control you would build — the exact
+   failure it kills, hard-vs-soft, and how it fires — plus the point fix for the
+   instance in hand. Present it at **two scales**: the smallest sound structural fix
+   (recommended default, biased toward *architecture* — making the class impossible —
+   over a *control* that only catches it), and, only when the failure is costly or
+   recurring enough to justify it, the larger scheme *floated as an option*, not
+   assumed. Don't over-build for a one-off or under-patch a structural flaw; where the
+   cost warrants it, propose belt-and-suspenders (both an architectural seam and a
+   catching control).
 6. **On greenlight, do it.** Write the lint / test / gate / typed-seam change and
    the point fix, following the ambient stance. Then state plainly what is now
    **enforced** (the hard control you wrote and verified) versus **recommended**

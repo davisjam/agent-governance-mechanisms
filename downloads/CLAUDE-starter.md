@@ -320,6 +320,21 @@ holds the line regardless of agent cooperation); guidance *aims*, machinery
 enforcement — is the governance catalog (`talks-and-notes/governance-catalog/`
 README + INDEX). Full principle: `docs/dev/AI-FIRST-ENGINEERING.md` §4.
 
+## A.22. Right-size the fix — architecture-first, defense-in-depth, neither over- nor under-engineered
+
+Every fix is bounded by two symmetric failures: **over-engineering** (a sweeping
+redesign for a one-off) and **under-engineering** (a hacky patch over a structural
+flaw). Aim for the middle — close the structural issue with the smallest sound
+change, and when a larger scheme is genuinely warranted, *float it as an option*
+rather than reflexively building it: offer both the local fix and the elaborate one,
+bias toward the local, and let the cost of the failure justify the elaborate. Prefer
+**architecture** (make the error impossible by construction) over a **control** (catch
+it after the fact) as the first reach; where prevention isn't possible, add the
+control; where a failure is costly, do **both** — belt-and-suspenders defense-in-depth
+is a feature, not redundancy. The test before any fix: is it proportionate to the
+failure it prevents, and does it close the *class* or merely the instance? Full
+discussion: `docs/dev/AI-FIRST-ENGINEERING.md` §2 + §4.
+
 *Attribution: Part A distills principles from the author's <Project> and
 tenure-packet-generator repos; it is a portable method, reusable across
 projects, governed by the copyright notice at the head of Part A. The full,
