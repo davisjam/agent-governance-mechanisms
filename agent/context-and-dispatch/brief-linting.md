@@ -39,6 +39,12 @@ exists on disk, every mandatory snippet's marker string present, `subagent_type`
 as a required prepare step and rolls back the just-written marker file if the lint fails, so the
 dispatch path *is* the enforcement.
 
+**Adopt it — the [agent-brief starter](../../downloads/agent-brief-starter.md)** is the portable shape a
+brief takes (Epic cite · trigger · role/model · time cap · scope allowlist + non-goals · pre-pasted
+`file:line` context · verification · acceptance · trust-nothing hand-back). It is the third of the three
+artifacts an orchestrator authors — the Epic is the effort, the design doc is the plan, the brief is the
+dispatch. The marker/snippet plumbing this lint checks is the harness-specific enforcement layered on top.
+
 ## Prerequisites
 
 - Briefs are **structured text with grep-able marker strings**, not free prose — the lint's checks

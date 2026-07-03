@@ -732,6 +732,8 @@ LANDING_CARDS = [
     ("Starter CLAUDE.md", "a real, mature one — redacted; a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
     ("Epic template", "the section shape + Definition-of-Done, portable", "downloads/EPIC-TEMPLATE-starter.md", " download"),
     ("Design-doc template", "invariants-driven; dynamics + observability blocks", "downloads/design-doc-template-starter.md", " download"),
+    ("Agent-brief template", "the dispatch — scope, context, acceptance, hand-back", "downloads/agent-brief-starter.md", " download"),
+    ("Op-playbook template", "situation → inspect → healthy → what-to-do", "downloads/op-playbook-starter.md", " download"),
     ("Download the catalogue", "all writeups as a markdown ZIP", "https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip", ""),
 ]
 
@@ -892,7 +894,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
 
   <figure class="wf">
     <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
-      title="The development-process figure" scrolling="no" onload="fitFig(this)"></iframe></div>
+      title="The development-process figure" scrolling="no" tabindex="0" onload="fitFig(this)"></iframe></div>
     <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
     probably know up front — business requirements, security scanners you always run, etc. Others you
     need to figure out through trial and
@@ -1010,7 +1012,7 @@ function label(k){
 function renderView(v){
   document.getElementById("stage").innerHTML = '<p class="blurb">'+v.blurb+'</p>' +
     groupsFor(v).map(([k,cs]) =>
-      '<section class="grp"><h3>'+label(k)+' <span class="cnt">('+cs.length+')</span></h3>'
+      '<section class="grp"><h2>'+label(k)+' <span class="cnt">('+cs.length+')</span></h2>'
       + '<div class="cards">'+cs.map(renderForView).join("")+'</div></section>').join("");
 }
 function setView(id){
@@ -1046,7 +1048,7 @@ def build_views_page(entries: list[Entry]) -> str:
             '&nbsp;·&nbsp; <a href="index.html">catalogue</a></p>\n'
             '<div id="tabs"></div>\n<div id="stage"></div>\n')
     script = "<script>\nconst CARDS = " + json.dumps(cards, ensure_ascii=False) + ";\n" + VIEWS_JS + "</script>\n"
-    return head + body + script + SITE_FOOTER + "\n</body>\n</html>\n"
+    return head + "<main>\n" + body + script + SITE_FOOTER + "\n</main>\n</body>\n</html>\n"
 
 
 def build_abstractions_body(md: str, abbrs: dict) -> str:

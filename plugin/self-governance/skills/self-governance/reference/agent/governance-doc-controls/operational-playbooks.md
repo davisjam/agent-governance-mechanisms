@@ -40,6 +40,11 @@ the observability surface for a topic carries "baseline-healthy · what-looks-wr
 open**." The orchestrator is instructed, at the trigger, to consult the relevant playbook rather than
 improvise.
 
+**Adopt it — the [operational-playbook starter](../../downloads/op-playbook-starter.md)** gives the
+per-situation entry shape: the triggering question, the inspect command, baseline-healthy (quantified),
+and *what-looks-wrong → what-it-means → what-to-do* (with the deadlock/wedge escape where a substrate can
+get stuck). Add one entry per signal the substrate emits.
+
 ## Prerequisites
 
 - **A recurring, nameable operational situation** — a one-off doesn't earn a playbook.
