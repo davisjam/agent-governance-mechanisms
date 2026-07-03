@@ -294,6 +294,22 @@ is as wrong as a hacky patch over a structural flaw. Aim for the middle.
 - **Belt-and-suspenders** where a failure is costly: do both. Defense-in-depth is a
   feature, not redundancy.
 
+## A.23. Testing strategies — reach for the kind that fits the failure
+
+A specific test is a control; the *strategy* is the general means of building one that catches the
+*class*, not just the example in front of you. Match strategy to failure mode — all fair game:
+
+- **Property-based** — invariants over generated inputs.
+- **Doc-driven** — pin a doc's claims to the code so the two can't drift.
+- **Schema-driven** — structural conformance to a typed shape / registry.
+- **Fuzz** — adversarial inputs against a stable point in the spec.
+- **State-machine coverage** — walk the declared transitions; catch the illegal ones.
+- **User-journey** — end-to-end flows over real driving conditions.
+- **Dynamics-aimed** — repetition / concurrency / stale-state, where distributed bugs live (→ A.11).
+
+Reach for the right *kind*, not one canonical suite; a strong-but-static unit suite misses the dynamics
+ones every time. Full discussion: `docs/dev/AI-FIRST-ENGINEERING.md` §4.
+
 *Attribution: Part A distills principles from the author's own agent-collaborative
 repos; it is a portable method, reusable across projects, governed by the MIT license
 at the head of Part A.*

@@ -97,6 +97,11 @@ is governed, because it is one.
   owned rules/lints at HEAD rather than trusting the index's claims — the audit that keeps the
   enforced document honest.
 
+**Adopt it — the starter governance doc**, distilled from a real, mature CLAUDE.md:
+[`CLAUDE-starter.md`](../../downloads/CLAUDE-starter.md) — Part A is the portable *method* (the
+principles the rules instantiate); Part B is a "write your own" scaffold for the numbered
+project-reference rules, with the three-part "what earns a spot" admission test built in.
+
 ## Related controls
 
 - *See also (two lenses)* — [docs-hierarchy](../context-and-dispatch/docs-hierarchy.md): the *same

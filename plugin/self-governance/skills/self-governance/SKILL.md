@@ -64,6 +64,10 @@ skill operates by. The load-bearing reflexes, applied on every touch:
      after); where a failure is costly, do **both** — belt-and-suspenders is a
      feature, not redundancy.
 
+When a durable control is a **test**, reach for the strategy that fits the failure — property-based,
+doc-driven, schema-driven, fuzz, state-machine coverage, user-journey, or dynamics-aimed (see
+[`principles.md`](principles.md) A.23) — not just an example-based unit test.
+
 ## The reference catalogue
 
 [`reference/INDEX.md`](reference/INDEX.md) is the census — every control, by role
