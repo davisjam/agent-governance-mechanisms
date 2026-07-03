@@ -68,6 +68,12 @@ def _filtered_index() -> None:
     full = open(os.path.join(ROOT, "INDEX.md"), encoding="utf-8").read()
     cut = full.find("# Product target")  # everything above product is agent + models-bridge
     body = full[:cut].rstrip() if cut != -1 else full.rstrip()
+    # the source line says "All 53 entries…" (full catalogue); this bundle ships only agent+bridge, so
+    # rewrite the count to the bundled total to avoid a 53-vs-33 confusion for a fresh reader.
+    n_bundled = sum(1 for e in catalog.all_entries() if e.path.split(os.sep)[0] in INCLUDE_ROLES)
+    body = re.sub(r"All \d+ entries are fully written[^\n]*",
+                  f"All {n_bundled} bundled entries are fully written "
+                  "(the product role's entries live in the full catalogue)", body)
     header = (
         GEN_NOTE
         + "<!-- Scope: the agent + models-bridge roles only. The product role is "
@@ -86,8 +92,8 @@ def _principles() -> None:
     part_a = txt[a:b].rstrip().rstrip("-").rstrip()  # drop the trailing '---' separator
     intro = (
         GEN_NOTE
-        + "<!-- Source: downloads/CLAUDE-starter.md (Part A), itself a starter mirror of a "
-        "mature CLAUDE.md. The copyright / attribution header below is retained verbatim. -->\n\n"
+        + "<!-- Source: Part A of the project's starter governance doc (a portable mirror of a "
+        "mature CLAUDE.md). The copyright / attribution header below is retained verbatim. -->\n\n"
         "# Operating principles — the Davis AI-First Engineering Method\n\n"
         "*These portable principles are the operating stance of the `self-governance` skill. "
         "The catalogue in `reference/` is the set of concrete controls; these principles are the "
