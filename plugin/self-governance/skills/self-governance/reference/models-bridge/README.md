@@ -18,22 +18,23 @@ scale past a toy.*
                                    └ codegen · read-no-copy ┘
 ```
 
-## Why this is the crux
+## Why this matters
 
 **1 · Executable documentation that cannot drift.** These models are not prose — they are *data that
 tools, lints, and deploy scripts read on every run, and that generate real artifacts* (NetworkPolicy,
 service wiring, API docs, docker). Because they are continuously *used* and *validated*, the build fails
-the moment a model diverges from the code — that is what the
-[drift & parity gates](system-models/drift-parity-gates.md) enforce, the one control the rest here
-depends on: a bridge is only useful if the map equals the territory, and a lying map is worse than none.
+the moment a model diverges from the code — the
+[drift & parity gates](system-models/drift-parity-gates.md) enforce exactly that, the one control the
+rest here depends on: a bridge is only useful if the map equals the territory, and a lying map is worse
+than none.
 
 **2 · The barrier was always human.** Model-Based Systems Engineering — modelling your system as typed
 source-of-truth — has long been *possible* and rarely *done*: maintaining the models and satisfying the
 drift gates is tedious, and humans resent the nagging.
 
 **3 · Agents dissolve the barrier.** That disciplined, repetitive upkeep is exactly what agents do
-without complaint — so agentic engineering is what finally makes MBSE practical, and the same models are
-what let an agent operate a codebase larger than its context in the first place.
+without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
+agent operate a codebase larger than its context in the first place.
 
 ## The eleven controls (one family: `system-models/`)
 

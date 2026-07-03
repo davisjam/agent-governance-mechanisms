@@ -28,7 +28,7 @@ is observed. (What the fleet reasons *through* is the [models-bridge](../models-
 injection](context-and-dispatch/dynamic-context-injection.md) is purely *soft* (it injects context but
 blocks nothing); two are *soft·hard* (a document kept honest by a lint); the rest are *hard*
 deterministic gates. Probabilistic guidance is used to *aim* agents at the right work; deterministic
-machinery is what is trusted to *hold the line*. See the umbrella README's
+machinery *holds the line*. See the umbrella README's
 [soft/hard enforcement axis](../README.md#governance-has-two-mechanisms).
 
 The census, forms, soft/hard axis, relationships, and entry template are documented once in the

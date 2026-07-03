@@ -33,13 +33,11 @@ wiring, API docs). Because they are continuously *used* and *validated*, they **
 build fails the moment a model diverges from the code. The distinction is *executable, continuously-
 exercised source-of-truth* versus *prose that is trusted and rots*.
 
-**Why now, and why every project should:** MBSE — modelling your system as typed source-of-truth — has
-always been *possible* and rarely *done*, because maintaining the models and satisfying the drift gates
-is **tedious**, and humans resent the nagging, so it stays aspirational. Agents dissolve that barrier:
-maintaining the model, running the parity gates, regenerating artifacts is exactly the disciplined,
-repetitive upkeep they do without complaint. So agentic engineering is what finally makes MBSE
-*practical* — and since the same models are what let agents scale to a large codebase, the model bridge
-is not optional infrastructure, it is *the* enabling substrate.
+**Why now:** MBSE — modelling your system as typed source-of-truth — has long been *possible* and
+rarely *done*: maintaining the models and satisfying the drift gates is tedious, and humans resent the
+nagging. Agents dissolve that barrier — regenerating artifacts and running the parity gates is exactly
+the disciplined, repetitive upkeep they do without complaint. So agentic engineering finally makes MBSE
+practical, and the same models let an agent operate a codebase larger than its context.
 
 ## Mechanism
 

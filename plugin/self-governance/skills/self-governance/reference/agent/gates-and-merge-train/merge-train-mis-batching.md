@@ -65,5 +65,5 @@ Landed commits are checked by patch-id / ancestry reachability.
   [sentinel-first-commit](sentinel-first-commit.md) and upstream of [staged-deploy-gates](staged-deploy-gates.md).
 - **Consumer** — reads the [agent-registry](../lifecycle-and-observability/agent-registry.md) (Lifecycle & observability family) to know which worktrees
   are ready to land.
-- **Enabler** — disjoint-footprint dispatch discipline is what makes the batch large; the
+- **Enabler** — disjoint-footprint dispatch discipline makes the batch large; the
   algorithm alone cannot beat a hot-spot file.

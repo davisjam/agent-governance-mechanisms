@@ -43,7 +43,7 @@ hand, trusted to stay honest. CLAUDE.md is a control because it inverts all thre
 - **Self-governing.** It carries its own admission rule — the three-part *earns-its-spot* test
   (regression-preventing **and** non-derivable-from-local-code **and** non-local) — and a router that
   sends anything failing the test to a sub-doc, an XML-doc comment, or an inline `WHY:`. The index
-  governs *what may enter it*, which is what keeps the cap lint satisfiable without deleting real rules.
+  governs *what may enter it*, which keeps the cap lint satisfiable without deleting real rules.
 
 The distinction from "a good doc" is therefore not quality of prose. It is that this document has a
 *budget, an admission predicate, and lints that fail the pipeline* — it is governed the way an artifact

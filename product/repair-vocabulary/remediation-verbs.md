@@ -26,8 +26,8 @@ every insert validated? are all moves on-policy?* — because the set of possibl
 wires a stamp ([F10](../provenance-and-attribution/f10-wiring-lint.md)), every insert registers
 ([`a11y_`](../provenance-and-attribution/a11y-prefix.md)), and the
 [ContentValidator](../validation-and-conformance/content-validator.md) covers the outcome. The
-distinction is *a bounded, named action-space* versus *free-form mutation* — bounding the moves is what
-makes attribution, validation, and policy tractable *at all*.
+distinction is *a bounded, named action-space* versus *free-form mutation* — bounding the moves makes
+attribution, validation, and policy tractable *at all*.
 
 ## Mechanism
 
@@ -55,6 +55,6 @@ registry. Nothing mutates the document outside this set.
 ## Related controls
 
 - **Enabler** — of [mutator-stamps](../provenance-and-attribution/mutator-stamps.md) and
-  [content-validator](../validation-and-conformance/content-validator.md): a *bounded* move-space is what
-  makes "stamp every move / validate every outcome" finite and achievable.
+  [content-validator](../validation-and-conformance/content-validator.md): a *bounded* move-space makes
+  "stamp every move / validate every outcome" finite and achievable.
 - *See also (sibling)* — [typed-categories](typed-categories.md), [codemod-first](codemod-first.md).

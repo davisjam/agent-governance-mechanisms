@@ -32,7 +32,7 @@ architecture applied to a service boundary.
 
 `ServiceClient.post_file(BinaryIO, …)` is the one way to make a cross-service call; the IPC module is
 the sole cross-service-HTTP seam, lint-enforced; direct `requests.post` against another service URL is
-banned. The signature refusing a `str` path is what closes the bug class.
+banned. The signature refusing a `str` path closes the bug class.
 
 ## Prerequisites
 

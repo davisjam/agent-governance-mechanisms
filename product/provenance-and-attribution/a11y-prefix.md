@@ -25,7 +25,7 @@ drifts. The `a11y_` prefix is a **convention with a rule** (invisible → `a11y_
 spec-mandated → the spec name) that the `InsertedContentValidator` *relies on*, and every new inserter
 calls `registry.Record(...)` so it is covered **automatically**. The distinction is *a checkable naming
 convention plus auto-registration* versus *ad-hoc naming and a manual list*. It is a repair-vocabulary
-control: it bounds *how inserts are named and tracked*, which is what makes validating them possible.
+control: it bounds *how inserts are named and tracked*, which makes validating them possible.
 
 ## Mechanism
 

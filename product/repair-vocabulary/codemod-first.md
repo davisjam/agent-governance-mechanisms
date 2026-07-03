@@ -43,7 +43,7 @@ mechanical. Finished codemods are marked deprecated and cross-referenced as past
 
 ## Consequences & costs
 
-- **Writing the transformer is upfront cost** — it pays off only at scale, which is what the threshold
+- **Writing the transformer is upfront cost** — it pays off only at scale, which the threshold
   encodes.
 - **Only for deterministic shapes.** A backlog needing per-site judgment still goes to Sonnet, not a
   codemod.

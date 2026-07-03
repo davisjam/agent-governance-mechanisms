@@ -57,5 +57,5 @@ PDF mutations stamp via `MutatorStampHelper.WriteStamp` (never the raw stamp mut
 - **Counterpart** — [f10-wiring-lint](f10-wiring-lint.md) (hard) guarantees *every* mutator verb stamps;
   it is the counted control that makes this audit-trail complete.
 - **Consumer** — [derive-changelog](derive-changelog.md) reads these stamps to reconstruct the history.
-- **Enabler** — the closed [remediation-verb set](../repair-vocabulary/remediation-verbs.md) is what
-  makes "stamp every verb" a finite, achievable requirement.
+- **Enabler** — the closed [remediation-verb set](../repair-vocabulary/remediation-verbs.md) makes
+  "stamp every verb" a finite, achievable requirement.

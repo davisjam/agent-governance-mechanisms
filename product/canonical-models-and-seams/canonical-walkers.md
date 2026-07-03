@@ -25,7 +25,7 @@ Hand-rolled recursion **duplicates the traversal logic**, and duplicated logic d
 each site. A canonical walker **centralizes** the traversal so those invariants are fixed once and
 inherited everywhere. The distinction is *a single canonical traversal* versus *N ad hoc recursions
 that each re-introduce the same class of omission*. (A standard DRY-plus-walker-discipline move, so its
-"why not" is thinner than the novel controls' — but it is what keeps the typed models actually usable
+"why not" is thinner than the novel controls' — but it keeps the typed models usable
 without re-opening the raw-access door.)
 
 ## Mechanism
@@ -57,5 +57,5 @@ library access.
 
 - *See also* — [pdf-model](pdf-model.md), [office-models](office-models.md): walkers are *how you
   traverse* those typed models; they are part of the same sole-seam discipline.
-- **Enabler** — a canonical walker is what makes routing traversal through the typed models practical;
+- **Enabler** — a canonical walker makes routing traversal through the typed models practical;
   without it, callers reach for raw recursion and re-open the ban-lint's door.

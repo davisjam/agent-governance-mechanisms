@@ -75,7 +75,7 @@
 <h2>Prerequisites</h2>
 <ul><li><strong>An AST toolkit</strong> for the language and a <strong>deterministic fix shape</strong>.</li><li><strong>The threshold judgment</strong> (N≳50, deterministic vs per-site judgment).</li><li><strong>The pre-commit-skip protocol</strong> for codemod waves.</li></ul>
 <h2>Consequences &amp; costs</h2>
-<ul><li><strong>Writing the transformer is upfront cost</strong> — it pays off only at scale, which is what the threshold encodes.</li><li><strong>Only for deterministic shapes.</strong> A backlog needing per-site judgment still goes to Sonnet, not a codemod.</li><li><strong>Skipping the lint stanza is a scoped hole</strong> — justified by the transform's mechanical nature, marker-audited.</li></ul>
+<ul><li><strong>Writing the transformer is upfront cost</strong> — it pays off only at scale, which the threshold encodes.</li><li><strong>Only for deterministic shapes.</strong> A backlog needing per-site judgment still goes to Sonnet, not a codemod.</li><li><strong>Skipping the lint stanza is a scoped hole</strong> — justified by the transform's mechanical nature, marker-audited.</li></ul>
 <h2>Known uses</h2>
 <ul><li>The N≳50 codemod threshold; AST transformers such as an inline-import hoisting codemod.</li><li>The <code>pre-commit-skip</code> for codemod-class waves; codemods retained as deprecated exemplars.</li></ul>
 <h2>Related controls</h2>

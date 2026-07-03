@@ -3,7 +3,7 @@
 **Intent** — A typed event bus with a closed, const-string topic registry and a companion **playbook**,
 over which substrate emits lifecycle/health events — turning the orchestrator into a **reactor** over the
 fleet: it reads health from a *queryable, self-documenting* signal surface and *reacts* to each event
-with a playbook-prescribed response, which is what keeps a fleet of agents productive over long-running
+with a playbook-prescribed response, which keeps a fleet of agents productive over long-running
 sessions rather than drifting into silent breakage.
 
 | | |

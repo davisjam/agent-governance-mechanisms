@@ -60,7 +60,7 @@ verb cannot land un-wired.
 
 ## Related controls
 
-- **Counterpart** — the raw-PDF-library ban-lint (hard) is what holds this construction-mode seam
+- **Counterpart** — the raw-PDF-library ban-lint (hard) holds this construction-mode seam
   in place; without it, "route through PdfModel" is an unenforced convention.
 - *See also (sibling)* — [office-models](office-models.md): the same typed-model + ban-lint pattern for
   the OpenXML formats — the pair is the *defect-class consolidation* of raw-library corruption across

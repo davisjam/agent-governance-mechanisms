@@ -52,6 +52,6 @@ the produced artifact.
 
 - **Consumer** — reads [mutator-stamps](mutator-stamps.md): it is the read side of the attribution
   substrate.
-- **Enabler** — of RCA and user-facing change transparency (the ChangeLog is what a human reads).
+- **Enabler** — of RCA and user-facing change transparency (a human reads the ChangeLog).
 - *See also (counterpart)* — [f10-wiring-lint](f10-wiring-lint.md) guarantees the stamps this reader
   depends on are complete.

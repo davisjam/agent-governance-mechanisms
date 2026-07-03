@@ -26,8 +26,8 @@ destructively regardless of process isolation. The serializer acquires an **excl
 invoking `dotnet test`** — N=1 writer — and, decisively, a `[ModuleInitializer]` **enforcer inside the
 test assembly makes the un-mediated path impossible**: a raw `dotnet test` launched from an
 agent-worktree CWD is *refused*. The distinction is *a mediated single-writer whose raw call is
-structurally banned* versus *uncoordinated processes contending for a shared machine*. The ban is what
-makes the serialization real rather than a convention agents forget under time pressure.
+structurally banned* versus *uncoordinated processes contending for a shared machine*. The ban makes
+the serialization real rather than a convention agents forget under time pressure.
 
 ## Mechanism
 
@@ -62,7 +62,7 @@ auto-appended. Adjacent heavy tools (build, tsc, pyright, …) route through the
 
 ## Related controls
 
-- **Counterpart** — the `[ModuleInitializer]` enforcer (hard) is what holds the serializer's
+- **Counterpart** — the `[ModuleInitializer]` enforcer (hard) holds the serializer's
   discipline in place: without the ban, the flock is just an unenforced convention.
 - *See also (sibling)* — [build-serializer](build-serializer.md): the same mediator pattern at **M=8**
   instead of N=1 — the pair illustrates the *lock-cardinality* choice (below).

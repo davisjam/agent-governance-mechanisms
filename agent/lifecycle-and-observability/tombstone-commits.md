@@ -24,8 +24,8 @@ forever. The failure is one of those two, and it recurs at every agent completio
 cannot tell the difference. A **tombstone commit records the disposition at the branch tip**, so
 `cleanup-stale` can verify a precise predicate — *tombstone at tip AND every non-tombstone commit is
 cherry-picked-or-declared-skipped* — before removing the directory. The distinction is *a durable,
-disposition-bearing close record* versus *a "looks finished, delete it" guess*; the record is what
-makes the whole cleanup-stale safety chain sound.
+disposition-bearing close record* versus *a "looks finished, delete it" guess*; the record makes
+the whole cleanup-stale safety chain sound.
 
 ## Mechanism
 
@@ -63,7 +63,7 @@ mass-tombstoning requires an explicit `--id-file` — runtime enumeration of wor
 
 - **Consumer** — reads [agent-registry](agent-registry.md) live markers before writing a close record
   (the live-worktree guard).
-- **Enabler** — the record it writes is what `worktree.py cleanup-stale` verifies before reclaiming a
+- **Enabler** — `worktree.py cleanup-stale` verifies the record it writes before reclaiming a
   directory.
 - **Counterpart** — the live-worktree guard (hard) prevents this audit record from ever being
   written for an agent that is still working.
