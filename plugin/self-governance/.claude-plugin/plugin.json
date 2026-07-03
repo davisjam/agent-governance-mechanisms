@@ -1,5 +1,5 @@
 {
-  "name": "self-governance",
+  "name": "agent-governance",
   "description": "Turn the agent-governance-mechanisms catalogue on the current repo: audit it for missing guardrails, or convert a recurring failure into a durable control. Ships the Davis AI-First Engineering Method as its operating stance plus the agent + models-bridge control catalogue as on-demand reference.",
   "version": "0.1.0",
   "license": "MIT",
