@@ -51,3 +51,24 @@ The source is organized by role — [`agent/`](agent/) · [`models-bridge/`](mod
 [`product/`](product/) — with the full census in [`INDEX.md`](INDEX.md). `catalog.py` validates the
 schema and builds the web view (`catalog.py validate` · `build` · `deploy local|github`; see
 [`CLAUDE.md`](CLAUDE.md)).
+
+## Start small, and make it yours
+
+**You probably don't need most of this yet.** The catalogue is a *census* of how far governance can go —
+not a checklist. A mature system covers all three roles; a new one shouldn't try to. Start with the
+highest-leverage, lowest-cost controls for the failures your agents *actually* make — a governance doc, a
+gate or two — and add mechanisms only as velocity surfaces the failures they prevent. Growing guardrails
+from real failure **is** the method (*governance conversion*); adopting the whole apparatus up front is
+the anti-pattern it warns against.
+
+**Adapt the mechanisms to your environment** — your language, your agents, your CI; they are patterns, not
+a stack. But keep the part that travels furthest: most of the value lands **on the developer's own
+machine, before CI ever runs**. Every developer already works locally; this method makes that local loop
+unusually productive — the agent fails fast against the same gates a reviewer would apply, so defects are
+caught and fixed *before the push*, and CI becomes confirmation rather than the first line of defense.
+Whatever your stack, that "trustworthy locally, not just in CI" property is the part most worth porting.
+
+---
+
+To learn more about the experience behind this repository, see the
+[*Cheap Code, Costly Judgment*](https://arxiv.org/pdf/2607.01087) paper.
