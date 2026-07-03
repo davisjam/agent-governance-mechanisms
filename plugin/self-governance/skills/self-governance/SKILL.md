@@ -38,7 +38,7 @@ Two facts shape everything you do here:
 ## Ambient stance (always, while this skill is loaded)
 
 Read [`principles.md`](principles.md) — the portable engineering principles this
-skill operates by. The load-bearing reflexes, applied on every touch:
+skill operates by. The core reflexes, applied on every touch:
 
 1. **Convert, don't just repair.** When a failure smells class-level, propose the
    durable control that kills the class — not only the point fix.

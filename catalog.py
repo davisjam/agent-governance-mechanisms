@@ -899,7 +899,7 @@ WAYS = [
         "No compatibility shims — migrate every call site in the same change.",
     ]),
     ("Keep judgment scarce & central", [
-        "Carry work autonomously; surface only the load-bearing, architectural calls.",
+        "Carry work autonomously; surface only the architectural calls.",
         "Hyper-experimentation — pilot, compare, measure; a cheap experiment beats a debate, and negative results are wins.",
         "Verify claims and trust nothing stale — re-run the gates yourself, because markers rot.",
         "Reason about second-order dynamics — what happens at T+100, or under concurrency?",
