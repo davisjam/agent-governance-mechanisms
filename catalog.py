@@ -339,6 +339,34 @@ def check_figure(entries: list[Entry]) -> list[str]:
     return problems
 
 
+BANNED_TERMS = {
+    # A named term that must not appear + the phrasing to use instead. The canonical PDF library is under
+    # licensing review, so the catalogue must not name it — describe it by role.
+    "itext": "the canonical PDF library",
+}
+
+
+def check_banned_terms() -> list[str]:
+    """Fail if a banned term is named anywhere in the catalogue SOURCES — entries, docs, downloads, and the
+    hand-authored figures. Scans sources, not generated HTML (which derives from them and is rebuilt after
+    validate), and skips the bundled plugin (regenerated from the entries)."""
+    problems: list[str] = []
+    figures = ["catalogue-figure.html", "development-workflow.html"]
+    sources = [f for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True)
+               if os.sep + "plugin" + os.sep not in f]
+    sources += [os.path.join(ROOT, f) for f in figures]
+    for f in sources:
+        if not os.path.isfile(f):
+            continue
+        rel = os.path.relpath(f, ROOT)
+        for i, ln in enumerate(open(f, encoding="utf-8").read().splitlines(), 1):
+            low = ln.lower()
+            for term, instead in BANNED_TERMS.items():
+                if term in low:
+                    problems.append(f"{rel}:{i}: banned term {term!r} — say {instead!r} instead")
+    return problems
+
+
 def cmd_validate(_args) -> int:
     entries = all_entries()
     n_issues = 0
@@ -358,6 +386,9 @@ def cmd_validate(_args) -> int:
         n_issues += 1
     for msg in check_figure(entries):
         print(f"  [figure] {msg}")
+        n_issues += 1
+    for msg in check_banned_terms():
+        print(f"  [banned] {msg}")
         n_issues += 1
     for rel, summ in role_summaries().items():
         if not summ:

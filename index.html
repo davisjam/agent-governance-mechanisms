@@ -321,7 +321,7 @@
 <h4>Canonical models &amp; seams</h4>
 <p class="fam-lede">The one sanctioned typed model or seam per concern, each held in place by a ban-lint.</p>
 <table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
-<tr><td class="c-name"><a href="product/canonical-models-and-seams/pdf-model.html">PdfModel (sole PDF mutation surface)</a></td><td class="c-sum">All PDF I/O through one typed model; raw iText banned.</td><td class="c-enf">Hard</td></tr>
+<tr><td class="c-name"><a href="product/canonical-models-and-seams/pdf-model.html">PdfModel (sole PDF mutation surface)</a></td><td class="c-sum">All PDF I/O through one typed model; raw canonical-PDF-library access banned.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/canonical-models-and-seams/office-models.html">Office Models ({Slides,Docs,Sheets}Model)</a></td><td class="c-sum">All OOXML through typed models; raw SDK access banned.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/canonical-models-and-seams/service-client.html">ServiceClient (typed cross-service seam)</a></td><td class="c-sum">A BinaryIO seam makes file-path-over-wire impossible.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/canonical-models-and-seams/canonical-walkers.html">Canonical walkers (one traversal per tree)</a></td><td class="c-sum">One canonical traversal per tree, not ad hoc recursion.</td><td class="c-enf">Hard</td></tr>

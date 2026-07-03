@@ -27,8 +27,8 @@ and how the repair move-space is bounded. (The artifact is *produced by* the [ag
 — which the catalogue elsewhere says it "shows by example, never counts" (that is *construction*, not
 detection). The reconciliation is the catalogue's own rule: the typed model/seam is the construction
 mechanism (shown by example), and the entry's **counted, enforced control is the ban-lint that holds it
-in place** ([`itext-direct-access`](canonical-models-and-seams/pdf-model.md),
-[`openxml-direct-access`](canonical-models-and-seams/office-models.md), the sole-seam lints). Each entry
+in place** (the [raw-PDF-library ban-lint](canonical-models-and-seams/pdf-model.md),
+the [raw-OpenXML ban-lint](canonical-models-and-seams/office-models.md), the sole-seam lints). Each entry
 documents both; the Enforcement row is the lint. This is the same construction-held-by-detection
 pairing the [models-bridge](../models-bridge/) uses for its models and drift gates.
 

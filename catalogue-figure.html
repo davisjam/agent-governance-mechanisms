@@ -147,7 +147,7 @@ the full writeups: <a href="index.html">catalogue</a> ·
 the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped live from metadata).</p>
 
 <div class="compare-note">
-  <b>How to read the encodings (all four views):</b> node <b>colour</b> = target (coral=agent, green=product); node <b>style</b> = enforcement
+  <b>How to read the encodings (all four views):</b> node <b>colour</b> = target (coral=agent, blue=models-bridge, green=product); node <b>style</b> = enforcement
   (<span class="badge b-h">HARD</span> solid, <span class="badge b-s">SOFT</span> dashed, <span class="badge b-sh">S·H</span> blue-accent).
   <b>Single-control nodes are clickable</b> — they link to the control's writeup; hover for its one-line summary.
 </div>
@@ -231,7 +231,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="band-h band-s">PRODUCT TARGET <span class="band-note">· governs the shipped artifact</span></div>
     <div class="fam-grid">
       <div class="fam fam-s"><h4>Canonical models&nbsp;&amp;&nbsp;seams</h4>
-        <span class="chip"><a href="product/canonical-models-and-seams/pdf-model.html" title="All PDF I/O through one typed model; raw iText banned.">PdfModel</a> <span class="rel cp">═</span> itext-ban</span>
+        <span class="chip"><a href="product/canonical-models-and-seams/pdf-model.html" title="All PDF I/O through one typed model; raw canonical-PDF-library access banned.">PdfModel</a> <span class="rel cp">═</span> PDF-lib ban</span>
         <span class="chip"><a href="product/canonical-models-and-seams/office-models.html" title="All OOXML through typed models; raw SDK access banned.">Office</a> <span class="rel cp">═</span> openxml-ban</span>
         <a class="chip" href="product/canonical-models-and-seams/service-client.html" title="A BinaryIO seam makes file-path-over-wire impossible.">ServiceClient</a>
         <a class="chip" href="product/canonical-models-and-seams/canonical-walkers.html" title="One canonical traversal per tree, not ad hoc recursion.">canonical-walkers</a>
@@ -262,7 +262,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     </div>
   </div>
   <div style="margin-top:9px;font-size:10px;color:var(--muted);font-style:italic">
-    Inline edges shown: <span class="cp" style="font-weight:800">═</span> counterpart pairs (e.g. rule-index═cap-lint, PdfModel═itext-ban, stamps═F10-lint) ·
+    Inline edges shown: <span class="cp" style="font-weight:800">═</span> counterpart pairs (e.g. rule-index═cap-lint, PdfModel═PDF-lib-ban, stamps═F10-lint) ·
     <span class="co" style="font-weight:800">◀─</span> consumer (derive-changelog◀─stamps). Cross-family edges (enabler/consumer) are omitted here for legibility — see View 3.
   </div>
 </div>
@@ -370,7 +370,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
           <li><a href="agent/governance-doc-controls/claude-md-rule-index.html">rule-index</a> ═ cap-lint</li>
           <li><a href="agent/context-and-dispatch/docs-hierarchy.html">docs-hierarchy</a> ═ lints</li>
           <li><a href="product/provenance-and-attribution/mutator-stamps.html">mutator-stamps</a> ═ <a href="product/provenance-and-attribution/f10-wiring-lint.html">F10-lint</a></li>
-          <li><a href="product/canonical-models-and-seams/pdf-model.html">PdfModel</a> ═ itext-ban</li>
+          <li><a href="product/canonical-models-and-seams/pdf-model.html">PdfModel</a> ═ PDF-lib ban</li>
           <li><a href="product/canonical-models-and-seams/office-models.html">Office</a> ═ openxml-ban</li>
           <li><a href="product/validation-and-conformance/standards-rule-engine.html">WCAG-engine</a> ═ scope-doc</li>
           <li><a href="agent/governance-doc-controls/epic-definition-of-done.html">epic-DoD</a> ═ <a href="agent/governance-doc-controls/claude-md-rule-index.html">rule-index</a> (audit)</li>

@@ -13,7 +13,7 @@ Office Models, with raw `DocumentFormat.OpenXml` access — and raw XML string-m
 ## Motivation — the failure it kills
 
 Raw OpenXML SDK access, and the sneakier path of *regexing into the XML*, are the Office equivalent of
-the iText minefield: brittle, corruption-prone, and with no single point to enforce structural
+the raw-PDF-library minefield: brittle, corruption-prone, and with no single point to enforce structural
 invariants. Left ad hoc, the same raw-library corruption class recurs across three separate document
 formats.
 
