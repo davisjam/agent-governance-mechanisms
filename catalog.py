@@ -45,7 +45,7 @@ ABBR_CITE_RE = re.compile(r"\[\[([^\]|]+?)(?:\|([^\]]*))?\]\]")
 RAW_FILE_RE = re.compile(r"`([^`]+?\.(?:py|cs|jsonl|ya?ml))`")
 RULE_CITE_RE = re.compile(r"(?<![\w.])#\d{1,2}\b")  # bare project-rule citation (meaningless outside the parent)
 # Not served / not link-checked: internal continuity docs (the abstractions playbook is process, not content).
-NOSERVE = ("HANDOFF.md", "abstractions-playbook.md", "TODO.md")
+NOSERVE = ("HANDOFF.md", "HANDOFF-catalogue-agent.md", "abstractions-playbook.md", "TODO.md")
 
 
 class Entry:
@@ -1248,7 +1248,7 @@ def _git(*args: str, capture: bool = False) -> subprocess.CompletedProcess:
 def cmd_deploy(args) -> int:
     """Build the site, then serve it locally (--local) or publish it to GitHub (--github)."""
     print(f"== Deploy plan: target={args.target} ==")
-    print("  1. validate   2. build   3. test (audit-only)   "
+    print("  1. validate   2. build   3. test (BLOCKING — aborts on any failure)   "
           + ("4. serve on localhost" if args.target == "local"
              else "4. commit + push to origin main (CI deploys)"))
     if cmd_validate(None) != 0:
