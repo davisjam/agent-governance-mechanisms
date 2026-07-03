@@ -12,9 +12,7 @@ files* (lints, conventions, component boundaries, tests) and inject that subset 
 | Enforcement | **Soft** (probabilistic) — forward injection influences behavior; it does not block. (The *reverse* direction feeds a **hard** self-heal gate, but forward injection is advisory by nature.) |
 
 > **★ Flagship entry.** This is the canonical example of the "why it's not just the naive
-> alternative" move that the whole catalog is built around. The standalone, forwardable long-form
-> version is `talks-and-notes/dynamic-context-injection-explainer.md`; a failure→governance episode
-> is in the artifact's `analysis/episodes/`.
+> alternative" move that the whole catalogue is built around.
 
 ## Motivation — the failure it kills
 
@@ -33,20 +31,15 @@ This is the crux, and it is **availability vs. binding.**
   the doc exists, (2) infer it is relevant to *this* change, (3) choose to read it, (4) find the right
   passage. Each is a coin flip; at agentic velocity you flip too many. Injection is **push**: the
   applicable rules land in context whether or not the agent would have gone looking.
-- **The docs hold the *rules*; the missing thing is *which rules apply here*.** The rule is already
-  written down. What used to live only in the engineer's head is the **relevance mapping** — given
-  *these* files, which of the hundreds of documented rules govern them? The slicing operator
-  (`files → constraints`) *is* that externalized relevance judgment.
-- **The brief's status differs from a doc's — the heart of it.** A doc is something an agent *may
-  consult*; a brief is something an agent *acts on*. A doc is optional, ambient reference; a brief is
-  the task specification, **mandatory reading by construction** — an agent cannot perform the task
-  without processing its brief, and treats its content as operative terms. So injecting the applicable
-  constraints into the brief is not *adding information* — it is a **change of status**, relocating a
-  rule from "available/discoverable" to "binding/constitutive."
+- **The docs hold the *rules*; the missing thing is *which rules apply here*.** The relevance mapping —
+  given *these* files, which of the hundreds of documented rules govern them? — used to live only in the
+  engineer's head. The slicing operator (`files → constraints`) *is* that externalized judgment.
+- **A brief binds where a doc only informs.** A doc is optional, ambient reference; a brief is the task
+  specification, **mandatory reading by construction**. So injecting the constraints into the brief is
+  not *adding information* — it is a **change of status**, relocating a rule from "available" to "binding."
 
-**One line:** docs make a rule *knowable*; the brief makes it *governing*. Dynamic context injection
-is the mechanism that promotes the rules relevant to *these files* from knowable to governing,
-automatically, at dispatch time. That promotion — not the existence of the docs — is the control.
+**One line:** docs make a rule *knowable*; the brief makes it *governing* — and that promotion, done
+automatically at dispatch time, is the control.
 
 ## Mechanism
 

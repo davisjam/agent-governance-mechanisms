@@ -22,25 +22,18 @@ scale past a toy.*
 
 **1 · Executable documentation that cannot drift.** These models are not prose — they are *data that
 tools, lints, and deploy scripts read on every run, and that generate real artifacts* (NetworkPolicy,
-service wiring, API docs, docker). Because they are continuously *used* and *validated*, they can't go
-stale: the build fails the moment a model diverges from the code (that is what [meta-sync /
-drift-parity-gates](system-models/drift-parity-gates.md) enforces). Prose docs drift because nothing
-forces them true; executable models can't, because something *breaks* when they lie.
+service wiring, API docs, docker). Because they are continuously *used* and *validated*, the build fails
+the moment a model diverges from the code — that is what the
+[drift & parity gates](system-models/drift-parity-gates.md) enforce, the one control the rest here
+depends on: a bridge is only useful if the map equals the territory, and a lying map is worse than none.
 
 **2 · The barrier was always human.** Model-Based Systems Engineering — modelling your system as typed
-source-of-truth — has been *possible* and rarely *done*, because maintaining the models and satisfying
-the drift gates is **tedious**, and humans resent the nagging. So it stays aspirational.
+source-of-truth — has long been *possible* and rarely *done*: maintaining the models and satisfying the
+drift gates is tedious, and humans resent the nagging.
 
-**3 · Agents dissolve the barrier.** Maintaining the model, running the parity gates, regenerating
-artifacts is exactly the disciplined, repetitive upkeep agents do without complaint. So agentic
-engineering is what finally makes MBSE *practical* — and since the same models are what let agents
-operate a large codebase at all, the conclusion is strong: **every project doing serious agentic
-engineering should adopt the model bridge.**
-
-The single load-bearing control is **[meta-sync](system-models/synchronization-model.md)**'s cousin,
-the [drift & parity gates](system-models/drift-parity-gates.md): a bridge is only useful if the map
-equals the territory. Without bidirectional drift enforcement the bridge *lies*, and a lying map is
-worse than none.
+**3 · Agents dissolve the barrier.** That disciplined, repetitive upkeep is exactly what agents do
+without complaint — so agentic engineering is what finally makes MBSE practical, and the same models are
+what let an agent operate a codebase larger than its context in the first place.
 
 ## The eleven controls (one family: `system-models/`)
 
