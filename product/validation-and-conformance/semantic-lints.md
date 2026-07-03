@@ -1,7 +1,7 @@
 # Blocking semantic lints
 
 **Intent** — A fleet of blocking semantic lints over the tool's *own source* — banned APIs, silent-catch
-bans, config-field discipline, sole-seam violations — that fail the build on domain-invariant
+bans, `Console.WriteLine`-in-prod, sole-seam violations — that fail the build on domain-invariant
 violations the compiler and review can't catch.
 
 | | |
@@ -17,16 +17,15 @@ violations the compiler and review can't catch.
 ## Motivation — the failure it kills
 
 The codebase carries hundreds of structural invariants — no silent `catch`, no banned API in prod, every
-config field present in the sample JSON, every cross-boundary call through its seam. Code review cannot
+cross-boundary call through its seam. Code review cannot
 reliably enforce hundreds of invariants, and the compiler enforces none of them (a silent catch, a
-banned API, a missing config field all compile fine). The failure is *structural drift that quietly
+banned API, a raw `Console.WriteLine` all compile fine). The failure is *structural drift that quietly
 reintroduces a defect class*, and it recurs continuously as code is written.
 
 ## Why it's not just "code review" (or "rely on the compiler")
 
 The compiler checks *types*, not *domain invariants*: a `catch {}` that swallows an error, a
-`Console.WriteLine` in prod, a config field missing from the sample (which then silently defaults to
-`false` and collapses batching) all type-check. Review misses them because they look normal. Semantic
+`Console.WriteLine` in prod, a banned API call all type-check. Review misses them because they look normal. Semantic
 lints **encode the domain invariant** and fail the build. The distinction is *domain-invariant
 enforcement* versus *the compiler (types only) plus review (unreliable)* — this is the "move audits to
 lints" and "enforce structure with analysis when available" discipline made concrete.
@@ -62,7 +61,7 @@ backtracking; the fix was *eliminate the surface*, not lint the bug class). Copy
 
 ## Known uses
 
-- `lint-banned-apis`, `no-silent-catch`, the config-field-in-sample lints, the sole-seam ban-lints.
+- `lint-banned-apis`, `no-silent-catch`, `console-singleton-mutation`, the sole-seam ban-lints.
 - The lint-declaration discipline (each lint declares its scope, severity, and a verb-of-checking
   docstring); the scoped `noqa` escape convention.
 
