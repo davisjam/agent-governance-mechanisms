@@ -32,6 +32,13 @@ by hand. The fastest way is to let your coding agent read the catalogue and prop
    > **adapt** to my stack, and which to **skip** (with the reason). Start with the highest-leverage,
    > lowest-cost controls, and tell me the one you'd build first.
 
+**Ready-made starters** (redacted, adopt-and-adapt): a [`CLAUDE.md` starter](downloads/CLAUDE-starter.md),
+an [Epic template](downloads/EPIC-TEMPLATE-starter.md), and a
+[design-doc template](downloads/design-doc-template-starter.md). The two planning-artifact templates encode
+the required sections + Definition-of-Done, so your plans *drive* the work instead of being written after
+the fact — the [Epic & design-doc templates](agent/governance-doc-controls/epic-and-design-templates.md)
+control explains why each section is load-bearing.
+
 ## Path B — the self-governance skill (batteries included)
 
 The **same loop, packaged as an installable Claude skill** that auto-triggers and runs it for you — no

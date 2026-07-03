@@ -719,7 +719,7 @@ LANDING_CSS = """
   .mechanisms { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:4px 0 8px; }
   .mech { border:1.4px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:12px 15px; background:#fff; }
   .mech.right { border-left:1.4px solid var(--line); border-right:4px solid var(--accent); text-align:right; }
-  .mech h4 { margin:0 0 5px; font-size:14px; }
+  .mech h3 { margin:0 0 5px; font-size:14px; }
   .mech p { margin:0; font-size:13.5px; color:#444; line-height:1.5; }
   @media (max-width:720px){ .spectrum, .cols3, .mechanisms { grid-template-columns:1fr; } }
 """
@@ -730,6 +730,8 @@ LANDING_CARDS = [
     ("Abstractions glossary", "the artifacts the mechanisms are built from — named by role, not filename", "ABSTRACTIONS.html", ""),
     ("Quick start", "two ways to adopt — DIY the catalogue, or install the self-governance skill", "quick-start.html", ""),
     ("Starter CLAUDE.md", "a real, mature one — redacted; a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
+    ("Epic template", "the section shape + Definition-of-Done, portable", "downloads/EPIC-TEMPLATE-starter.md", " download"),
+    ("Design-doc template", "invariants-driven; dynamics + observability blocks", "downloads/design-doc-template-starter.md", " download"),
     ("Download the catalogue", "all writeups as a markdown ZIP", "https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip", ""),
 ]
 
@@ -865,11 +867,11 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <h2 class="section-h">Governance has two mechanisms</h2>
   <p class="section-sub">A guardrail is one of two kinds — prevent the error, or catch it.</p>
   <div class="mechanisms">
-    <div class="mech"><h4>Architecture</h4><p>Make the error <b>impossible by construction</b>: a typed
+    <div class="mech"><h3>Architecture</h3><p>Make the error <b>impossible by construction</b>: a typed
     model with one sanctioned seam, a state that cannot be represented wrongly. Software
     <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a> — error-<i>proofing</i>, so the bad
     move can’t happen in the first place.</p></div>
-    <div class="mech right"><h4>Control</h4><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
+    <div class="mech right"><h3>Control</h3><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
     a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
     deterministically, before the failure escapes.</p></div>
   </div>
