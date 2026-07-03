@@ -66,7 +66,7 @@ skill operates by. The core reflexes, applied on every touch:
 
 When a durable control is a **test**, reach for the strategy that fits the failure — property-based,
 doc-driven, schema-driven, fuzz, state-machine coverage, user-journey, or dynamics-aimed (see
-[`principles.md`](principles.md) A.23) — not just an example-based unit test.
+[`principles.md`](principles.md) A.3.4) — not just an example-based unit test.
 
 You can also help the user **fold this method into their own governance doc**. Compare
 [`principles.md`](principles.md) and the bundled `reference/downloads/CLAUDE-starter.md` against their
@@ -192,6 +192,6 @@ Two beats: **interpret**, then **convert**.
 - **Beware the tower of governance.** The primary failure mode of this skill is
   manufacturing controls faster than they earn their keep, until the repo is slower
   and more confusing than the failures it feared. Default to *skip*; proportion
-  governance to the operation ([`principles.md`](principles.md) A.24). A control the
+  governance to the operation ([`principles.md`](principles.md) A.1.4). A control the
   user can't attach to a real, recurring failure is one they don't need — say so
   plainly, **even when they ask for more.**

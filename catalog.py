@@ -909,7 +909,7 @@ SCHOOLS = [
       ("vibe-OS / vibe-tools (formal tooling for AI)", "https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html")]),
 ]
 
-# The three-column "way of thinking" — the AI-First Engineering Method (A.1–A.21), engineering-oriented
+# The three-column "way of thinking" — the AI-First Engineering Method (A.1–A.4 groups), engineering-oriented
 WAYS = [
     ("Architect deliberately", [
         "Implementation is cheap; architecture compounds — buy the right design, not the fast one.",
@@ -995,7 +995,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
 
   <h2 class="section-h">The way of thinking</h2>
   <p class="section-sub">Three stances that make the midway work — distilled from the AI-First Engineering
-  Method (21 principles); the full set ships in the
+  Method (architecture, controls, and the stance that wields them); the full set ships in the
   <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
   <div class="cols3">
   {ways}
