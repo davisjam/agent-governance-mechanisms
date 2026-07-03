@@ -65,8 +65,10 @@ and `issues` is a list of strings; add it to the `CHECKS` table with its tier. T
 `strict` bool and should return `SKIP` (not `FAIL`) when their tool is missing unless `strict`.
 
 **Where they run:** `catalog.py deploy` runs the suite before serving/publishing (axe runs here if
-installed), and the Pages CI runs it on every push. Both are **audit-only** today (they report but don't
-block) because of a known backlog; flip to blocking once `catalog.py test` is green.
+installed), and the Pages CI runs it on every push. Both are **blocking** (the suite is green): a failure
+aborts the deploy / fails CI. Tier-2 checks (axe, `claude plugin validate`) auto-**skip** when their tool
+is absent — so a browser-less CI enforces the Tier-1 stdlib checks and skips axe, while a local deploy
+(with Node + a browser) enforces axe too.
 
 ## Dependencies
 

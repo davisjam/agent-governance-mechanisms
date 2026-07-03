@@ -1152,11 +1152,11 @@ def cmd_deploy(args) -> int:
         print("ABORT: schema invalid — fix before deploying.")
         return 1
     cmd_build(None)
-    # predeploy gate — AUDIT-ONLY: the suite runs (axe included if installed) and reports, but does not
-    # block, because of a known backlog (README cross-anchors + a few site a11y findings). Flip to
-    # blocking (return 1 on failure) once `catalog.py test` is green.
+    # predeploy gate — BLOCKING (the suite is green as of the a11y remediation): abort the deploy if any
+    # check fails. Tier-2 (axe/claude) SKIPs when the tool is absent, so a browser-less env won't block.
     if subprocess.run([sys.executable, "catalog_tests.py"], cwd=ROOT).returncode != 0:
-        print("WARNING: test suite reported findings (audit-only — not blocking deploy). See above.")
+        print("ABORT: test suite failed — fix before deploying (run `catalog.py test` to see).")
+        return 1
 
     if args.target == "local":
         url = f"http://127.0.0.1:{args.port}/"
