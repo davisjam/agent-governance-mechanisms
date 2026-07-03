@@ -173,7 +173,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <div class="fam fam-a"><h4>Gates&nbsp;&amp;&nbsp;merge-train</h4>
         <a class="chip" href="agent/gates-and-merge-train/pre-commit-hook.html" title="Cheap changed-file checks gate every commit, marker-verified.">pre-commit-hook</a>
         <a class="chip" href="agent/gates-and-merge-train/sentinel-first-commit.html" title="Abort a broken agent at its first commit, not its last.">sentinel-first-commit</a>
-        <a class="chip" href="agent/gates-and-merge-train/merge-train-mis-batching.html" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-MIS</a>
+        <a class="chip" href="agent/gates-and-merge-train/merge-train-mis-batching.html" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-batching</a>
         <a class="chip" href="agent/gates-and-merge-train/staged-deploy-gates.html" title="Canary → smoke → promote; gate before users see it.">staged-deploy</a>
       </div>
       <div class="fam fam-a"><h4>Mediators&nbsp;&amp;&nbsp;locks</h4>
@@ -278,8 +278,8 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="drop">▼</div>
     <div class="step" style="margin-left:52px">
       <span class="st-stage">cron · merge</span>
-      <div class="st-h">Merge-train (MIS batching)</div>
-      <div class="st-ctrls"><b><a href="agent/gates-and-merge-train/merge-train-mis-batching.html" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-MIS</a></b> lands non-conflicting worktrees <span class="co" style="font-weight:800">◀──</span> reads <b><a href="agent/lifecycle-and-observability/agent-registry.html" title="Authoritative record of which agents are live right now.">agent-registry</a></b></div>
+      <div class="st-h">Merge-train (independent-set batching)</div>
+      <div class="st-ctrls"><b><a href="agent/gates-and-merge-train/merge-train-mis-batching.html" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-batching</a></b> lands non-conflicting worktrees <span class="co" style="font-weight:800">◀──</span> reads <b><a href="agent/lifecycle-and-observability/agent-registry.html" title="Authoritative record of which agents are live right now.">agent-registry</a></b></div>
     </div>
     <div class="drop">▼</div>
     <div class="step" style="margin-left:78px">
@@ -335,7 +335,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
       <p class="cap">deterministic: blocking gates · lints · mediators · signals · audit records</p>
       <div class="grid2" style="font-size:9.5px;color:#334155;line-height:1.7">
         brief-linting · role-typed-dispatch ·
-        pre-commit-hook · sentinel · merge-train-MIS · staged-deploy ·
+        pre-commit-hook · sentinel · merge-train-batching · staged-deploy ·
         test-serializer · build-serializer · lint-all-mutex ·
         agent-registry · event-bus · heartbeats · tombstones · cron-alerts-gate ·
         snippet-table · epic-DoD · doc-hygiene-lints ·
@@ -406,9 +406,9 @@ the <a href="catalogue-views.html">codegen'd views</a> (same controls, grouped l
     <div class="actor-s" style="background:var(--s-bg);border:1.5px solid var(--s-bg-dark);border-radius:0 8px 8px 0;padding:10px 11px">
       <h4 style="margin:0 0 5px;color:var(--s-ink);font-size:12px">CODEBASE / PRODUCT</h4>
       <p style="margin:0 0 7px;font-size:10px;color:var(--s-ink)">context-exceeding — 280 KLOC, unbounded</p>
-      <div class="chip">NetworkPolicy · service wiring (gen)</div>
+      <div class="chip"><a href="models-bridge/system-models/model-driven-codegen.html" title="Generate real artifacts from the models, provenance-headed.">NetworkPolicy · service wiring (gen)</a></div>
       <div class="chip"><a href="models-bridge/system-models/deployment-topology-model.html" title="Typed models of where things run and how they layer.">deployment topology · tiers</a></div>
-      <div class="chip">boundary / seam lints</div>
+      <div class="chip"><a href="models-bridge/system-models/drift-parity-gates.html" title="Bidirectional model↔reality checks so models cannot drift.">boundary / seam lints</a></div>
       <p style="margin:7px 0 0;font-size:9.5px;font-style:italic;color:var(--s-ink)">generated &amp; governed <b>from</b> the model</p>
     </div>
   </div>
