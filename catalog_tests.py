@@ -67,10 +67,16 @@ CHECKS = [
 def main() -> int:
     ap = argparse.ArgumentParser(description="Governance-catalogue + skill test suite.")
     ap.add_argument("--strict", action="store_true", help="treat a Tier-2 SKIP (missing tool) as failure")
+    ap.add_argument("--full", action="store_true", help="run every check regardless of needs_run — the "
+                    "authoritative pass. CI MUST use this: post-push, HEAD == origin/main, so incremental "
+                    "gating would skip everything. Local predeploy stays incremental and trusts CI's green.")
     args = ap.parse_args()
 
-    changed = changed_vs_origin()  # None => no baseline => run everything (fail-safe)
-    base = "no origin/main baseline — running all" if changed is None else f"{len(changed)} path(s) changed vs origin/main"
+    # --full forces the run-everything path (reusing the no-baseline fail-safe). Incremental otherwise.
+    changed = None if args.full else changed_vs_origin()
+    base = ("full scan (--full)" if args.full else
+            "no origin/main baseline — running all" if changed is None else
+            f"{len(changed)} path(s) changed vs origin/main")
     print(f"== Test plan: {len(CHECKS)} checks (Tier 1 stdlib first; Tier 2 external — axe/claude — run "
           f"only if Tier 1 is clean; {'strict' if args.strict else 'skip-if-absent'}); {base} ==")
     failed = skipped = 0
