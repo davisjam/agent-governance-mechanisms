@@ -47,7 +47,7 @@ better. Be wary, or take only a little, if:
   confusing than the failures it feared. And there's an adverse selection: the people most drawn to a
   governance catalogue are the ones most at risk of over-building it.
 
-The catalogue is **descriptive, not prescriptive** — a menu to adapt *down* to your scale, not a bar to
+The catalogue is **descriptive, not prescriptive** — a menu to adapt to your scale, not a bar to
 clear. Adopt the minimum that holds *your* recurring failures, default to skip, and remove controls that
 stop earning their keep. If you can't name the failure a control prevents in your own system, you don't
 need it yet. The *Start small* section below is the disciplined way in.

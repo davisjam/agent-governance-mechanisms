@@ -332,8 +332,8 @@ ones every time. Full discussion: `docs/dev/AI-FIRST-ENGINEERING.md` §4.
 Governance has a cost: every control taxes every future change and every agent's context budget. The
 right amount is not "all of it" — it is the least that holds *your* recurring failures. This method and
 its catalogue were distilled from a high-intensity operation (many parallel agents, hundreds of commits a
-day); most repos need far less. Calibrate to your scale, and treat the catalogue as descriptive — to be
-adapted *down*:
+day); most repos need less than that — though a larger fleet or a higher-stakes domain may need more.
+Calibrate to your scale, and treat the catalogue as descriptive — adapt it to fit:
 
 - **Match intensity to pain.** Adopt a control only against a failure you have seen recur — not because
   the catalogue lists it. Default to *skip*; the burden of proof is on adding, not omitting.
