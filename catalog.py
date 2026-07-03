@@ -320,6 +320,22 @@ def check_figure(entries: list[Entry]) -> list[str]:
     for i, ln in enumerate(lines, 1):
         if re.search(r'class="[^"]*\b(?:chip|lat-node)\b', ln) and "href=" not in ln:
             problems.append(f"line {i}: clickable-styled node has no link -> {ln.strip()[:80]}")
+
+    # (4) legend usage — every encoding the legend declares must actually be used in the diagram body,
+    # or the legend over-promises. Split the explanatory blocks (legend + compare-note) from the body.
+    full = "\n".join(lines)
+    explain = "".join(re.findall(r'<div class="(?:legend|compare-note)">.*?</div>', full, flags=re.S))
+    body = re.sub(r'<div class="(?:legend|compare-note)">.*?</div>', "", full, flags=re.S)
+    rels = {"cp": "counterpart", "en": "enabler", "co": "consumer", "ly": "layer"}
+    for cls, name in rels.items():
+        if re.search(rf"\blg-rel {cls}\b", explain) and not re.search(rf'class="(?:rel )?{cls}[" ]', body):
+            problems.append(f"legend declares the '{name}' relationship but nothing in the figure uses it")
+    if "◀▶" in explain and "◀▶" not in body:  # bridge relationship
+        problems.append("legend declares the 'bridge' relationship (◀▶) but nothing in the figure uses it")
+    for cls, name in {"soft": "Soft", "sh": "Soft·Hard"}.items():
+        if re.search(rf"badge b-s{'h' if cls == 'sh' else ''}\b", explain) and \
+                not re.search(rf'class="chip[^"]*\b{cls}\b', body):
+            problems.append(f"legend declares enforcement '{name}' but no node in the figure carries it")
     return problems
 
 
