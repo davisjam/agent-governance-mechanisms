@@ -43,11 +43,11 @@ is not optional infrastructure, it is *the* enabling substrate.
 
 ## Mechanism
 
-`system-models/` holds typed models (Backstage-dialect YAML for services, typed Python loaders for the
-rest) that **import nothing** — pure data. Consumers read them at run/lint-time (rule #33: a lint that
-reads the meta-file beats codegen beats a hand-rolled copy). Every model is (a) *pinned* by a
-doc-derived characterization test, (b) *held true* by a drift/parity gate, and (c) frequently *read* or
-*generated-from* — so it is exercised constantly.
+The model catalog holds typed models (Backstage-dialect YAML for services, typed loaders for the rest)
+that **import nothing** — pure data. Consumers read them at run/lint-time (a lint that *reads* the
+meta-file is preferred over codegen, which is preferred over a hand-rolled copy). Every model is (a)
+*pinned* by a doc-derived characterization test, (b) *held true* by a drift/parity gate, and (c)
+frequently *read* or *generated-from* — so it is exercised constantly.
 
 ## Prerequisites
 
@@ -66,9 +66,9 @@ doc-derived characterization test, (b) *held true* by a drift/parity gate, and (
 
 ## Known uses
 
-- The `system-models/` catalog (typed YAML/JSON + Python loaders; imports nothing).
-- Rule #33's stable-lint-reads-meta-files preference order.
-- Each model's `test__*_doc_derived.py` characterization pin.
+- The model catalog (typed YAML/JSON + loaders; imports nothing).
+- The preference order: a stable lint that reads the meta-file, over codegen, over a hand-rolled copy.
+- Each model's doc-derived characterization pin.
 
 ## Related controls
 

@@ -31,10 +31,10 @@ drift*.
 
 ## Mechanism
 
-`services/*.yaml` uses the Backstage entity dialect (`kind: Component | API | System`) with
-`<org>.dev/*` annotations for SOA fields; `web-api/` holds OpenAPI fragments; `wire-contracts/` and
-`config/` model the inter-service wire schemas and config. Generators emit NetworkPolicy, the service
-catalog, env, and public-API docs *from* these (see [model-driven-codegen](model-driven-codegen.md)).
+The service YAML uses the Backstage entity dialect (`kind: Component | API | System`) with
+`<org>.dev/*` annotations for the SOA fields; a web-API model holds OpenAPI fragments; wire-contract and
+config models capture the inter-service wire schemas and config. Generators emit NetworkPolicy, the
+service catalog, env, and public-API docs *from* these (see [model-driven-codegen](model-driven-codegen.md)).
 The drift lints enforce parity in both directions.
 
 ## Prerequisites
@@ -46,15 +46,16 @@ The drift lints enforce parity in both directions.
 ## Consequences & costs
 
 - **A new service/endpoint/tree ⇒ a model edit** or a parity-gate failure (deliberately).
-- **Dialect lock-in** — adopting Backstage's schema inherits its conventions (a deliberate rule-#22
+- **Dialect lock-in** — adopting Backstage's schema inherits its conventions (a deliberate
   "adopt the canonical schema" trade).
 - **Generator + gate maintenance** across several surfaces.
 
 ## Known uses
 
-- `services/*.yaml` (Backstage) — source of truth for inter-service auth, URLs, NetworkPolicy, SOA table.
-- `web-api/` OpenAPI + `wire-contracts/` + `config/` schemas.
-- Drift gates: `lint-service-flow-model.py` (tree↔yaml parity), `lint-public-api-drift.py` (handler↔spec).
+- The Backstage-dialect service YAML — source of truth for inter-service auth, URLs, NetworkPolicy, and
+  the SOA deploy table.
+- The web-API (OpenAPI), wire-contract, and config schemas.
+- Drift gates: the service-flow parity lint (tree↔yaml), the public-API drift lint (handler↔spec).
 
 ## Related controls
 

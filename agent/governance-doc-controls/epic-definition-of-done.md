@@ -30,7 +30,7 @@ index: the index's lints keep its *form* honest; this re-run keeps an Epic's *cl
 
 ## Mechanism
 
-`epic_close.py` enforces that every cited commit is reachable from main by ancestry or patch-id (a
+An Epic-close tool enforces that every cited commit is reachable from main by ancestry or patch-id (a
 missing one requires a logged `--override '<reason ≥30 chars>'`); it rewrites Status + Closed
 atomically, moves the file to `closed/`, and regenerates the index. The §4 DoD carries 11 mandatory
 criteria — including the Final-Opus re-run of owned pins/lints at HEAD, docs + index updates, the tag

@@ -29,10 +29,10 @@ lints read it for scope, DCI reads it to slice constraints.
 
 ## Mechanism
 
-`components.py` is the `Component` dataclass registry (leaf/group/meta kinds, `focus_dirs`, `tags`,
-`docs`, dockerfile, k8s manifest); `boundary_kinds.py` / `external_seams.py` /
-`canonical_read_surfaces.py` classify each component's boundary, its outside-touching seams, and its
-read-side surfaces. `test_components_reverse_mapping.py` holds the model↔reality parity.
+The [[component-registry]] is a typed dataclass set (leaf/group/meta kinds, `focus_dirs`, `tags`,
+`docs`, dockerfile, k8s manifest); the [[boundary-seam-classifiers]] classify each component's boundary,
+its outside-touching seams, and its read-side surfaces. A [[reverse-mapping-test]] holds the
+model↔reality parity.
 
 ## Prerequisites
 
@@ -49,9 +49,9 @@ read-side surfaces. `test_components_reverse_mapping.py` holds the model↔reali
 
 ## Known uses
 
-- `components.py` `Component` registry (read by the lint fleet, dispatch, audit surfaces).
-- `boundary_kinds` / `external_seams` / `canonical_read_surfaces` classification helpers.
-- `test_components_reverse_mapping.py` (model↔tree parity).
+- The [[component-registry]] (read by the lint fleet, dispatch, and audit surfaces).
+- The [[boundary-seam-classifiers|boundary / seam / read-surface classifiers]].
+- The [[reverse-mapping-test]] (model↔tree parity).
 
 ## Related controls
 
@@ -61,4 +61,4 @@ read-side surfaces. `test_components_reverse_mapping.py` holds the model↔reali
 - **Counterpart** — [drift-parity-gates](drift-parity-gates.md): the reverse-mapping test that keeps it
   honest.
 - *See also* — [meta-model-consumption](meta-model-consumption.md) (read it, don't hardcode) ·
-  [query-surface](query-surface.md) (`repo-query component`).
+  [query-surface](query-surface.md) (the [[repo-query]] `component` subcommand).

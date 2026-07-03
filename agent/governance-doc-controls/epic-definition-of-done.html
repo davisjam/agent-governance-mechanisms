@@ -30,6 +30,13 @@
   th { background:#f8fafc; font-weight:700; }
   hr { border:none; border-top:1px solid var(--line); margin: 22px 0; }
   .subtitle { font-size: 15px; color:#444; font-style: italic; margin: 0 0 6px; }
+  a.abbr { color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--accent);
+           cursor:help; }
+  a.abbr:hover { color:var(--accent); border-bottom-style:solid; }
+  section.abbr-entry { scroll-margin-top:14px; }
+  section.abbr-entry h2 code.slug { font-size:12.5px; font-weight:400; color:var(--accent);
+           background:#fff8f0; vertical-align:middle; margin-left:8px; }
+  p.abbr-grounds { font-size:13px; color:var(--muted); margin:4px 0 2px; }
   .tag { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:#c2410c; border-top:2px solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:12.5px; color:#8a5320; background:#fff8f0; border-left:3px solid var(--accent);
@@ -64,7 +71,7 @@
 <h2>Why it's not just "trust the phase markers" (or "the agent said it's done")</h2>
 <p>Phase markers and self-reports are <strong>exactly what rots</strong>: a sibling sweep can break your lint while your marker still reads green, and a self-marked-DONE is not verification. The DoD mandates <strong>re-running every owned pin test and lint at HEAD</strong> and comparing against the claims, plus scanning the Epic's design docs for dropped <code>[DESIGN]</code>/<code>[LINT]</code> follow-ups and doc rot. The distinction is <em>trust-nothing re-verification at HEAD</em> versus <em>trusting recorded claims</em>. It is the <strong>audit counterpart</strong> to the rule index: the index's lints keep its <em>form</em> honest; this re-run keeps an Epic's <em>claims</em> honest.</p>
 <h2>Mechanism</h2>
-<p><code>epic_close.py</code> enforces that every cited commit is reachable from main by ancestry or patch-id (a missing one requires a logged <code>--override '&lt;reason ≥30 chars&gt;'</code>); it rewrites Status + Closed atomically, moves the file to <code>closed/</code>, and regenerates the index. The §4 DoD carries 11 mandatory criteria — including the Final-Opus re-run of owned pins/lints at HEAD, docs + index updates, the tag routing-audit, and design-doc follow-up filing.</p>
+<p>An Epic-close tool enforces that every cited commit is reachable from main by ancestry or patch-id (a missing one requires a logged <code>--override '&lt;reason ≥30 chars&gt;'</code>); it rewrites Status + Closed atomically, moves the file to <code>closed/</code>, and regenerates the index. The §4 DoD carries 11 mandatory criteria — including the Final-Opus re-run of owned pins/lints at HEAD, docs + index updates, the tag routing-audit, and design-doc follow-up filing.</p>
 <h2>Prerequisites</h2>
 <ul><li><strong>A machine-checkable close</strong> (reachability / patch-id over the cited commits).</li><li><strong>A well-defined "owned" set</strong> of pin tests and lints per Epic to re-run.</li><li><strong>A Final-Opus reviewer</strong> with the judgment to re-verify rather than rubber-stamp.</li><li><strong>A follow-up routing mechanism</strong> so what the re-run surfaces becomes filed work, not a footnote.</li></ul>
 <h2>Consequences &amp; costs</h2>

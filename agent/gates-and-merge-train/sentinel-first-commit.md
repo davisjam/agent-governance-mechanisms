@@ -26,16 +26,16 @@ Failing at merge is failing *late* — after the agent has spent its budget. The
 substrate-health check to the **first commit (t≈0)**, converting a 60-minute waste into a one-minute
 abort. Crucially it validates on the **production path** — the actual brief, the real dispatch — not a
 pin-test in isolation, so it catches the invisible feedback loops (caps, scope filters, priority
-inversions) that only manifest when the substrate runs end-to-end against real work (rule #43). The
+inversions) that only manifest when the substrate runs end-to-end against real work. The
 distinction is *fail-fast at t=0 on the real path* versus *fail-late at t=60 after the budget is gone*.
 
 ## Mechanism
 
-On the agent's first commit, `sentinel_first_commit.py` asserts the substrate is healthy — worktree
+On the agent's first commit, the sentinel check asserts the substrate is healthy — worktree
 root matches, per-agent marker exists, branch is the expected `worktree-agent-<id>`, CWD is under the
 worktree — and aborts the run if any assertion fails. It is the commit-time twin of the *boot-time*
-self-check (`assert-agent-canonical-dispatch.py`) an agent runs as its first step: boot-check catches
-a bad start, sentinel catches a substrate that broke *after* boot. Per rule #43 it lands AUDIT-ONLY
+[[dispatch-self-check]] an agent runs as its first step: boot-check catches
+a bad start, sentinel catches a substrate that broke *after* boot. It lands AUDIT-ONLY
 and is promoted to BLOCKING after a session of clean events.
 
 ## Prerequisites
@@ -55,15 +55,16 @@ and is promoted to BLOCKING after a session of clean events.
 
 ## Known uses
 
-- `sentinel_first_commit.py` — the first-commit substrate assertion + early abort.
-- `assert-agent-canonical-dispatch.py` — the boot-time self-check sibling.
-- Rule #43's sentinel-check discipline (AUDIT-ONLY → BLOCKING).
+- The sentinel check — the first-commit substrate assertion + early abort.
+- The [[dispatch-self-check]] — the boot-time sibling.
+- The sentinel-check discipline: land a substrate check at the first commit that runs end-to-end against
+  the real brief (AUDIT-ONLY → BLOCKING).
 
 ## Related controls
 
 - **Layer** — runs at the same commit-time stair as [pre-commit-hook](pre-commit-hook.md): this guards
   *substrate* health, the hook guards *content* correctness.
-- **Counterpart** — the boot-time self-check (`assert-agent-canonical-dispatch.py`): boot-check at
+- **Counterpart** — the boot-time [[dispatch-self-check]]: boot-check at
   t=0-start, sentinel at first-commit; together they bracket the window a substrate can break in.
 - **Enabler** — the [agent-registry](../lifecycle-and-observability/agent-registry.md) markers (Lifecycle & observability family) are the facts this check
   reads; without that substrate there is nothing to assert against.

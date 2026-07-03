@@ -30,7 +30,7 @@ bounded-concurrency semaphore for parallel-safe-but-heavy work. Same mediator pa
 
 ## Mechanism
 
-`build-serializer.py` holds a **byte-range semaphore** (M slots) on a shared host lock; the five
+The build serializer holds a **byte-range semaphore** (M slots) on a shared host lock; the five
 adjacent tools acquire a slot before running and release after. Per-run logs are written with
 timestamps. Each of the five tools has an active enforcer that refuses the un-mediated call. The
 *sibling* [test-serializer](test-serializer.md) handles `dotnet test` at N=1.
@@ -53,7 +53,7 @@ timestamps. Each of the five tools has an active enforcer that refuses the un-me
 
 ## Known uses
 
-- `build-serializer.py` — the M=8 byte-range semaphore over the five tools.
+- The build serializer — the M=8 byte-range semaphore over the five tools.
 - The five active per-tool enforcers (`dotnet build` / `tsc` / `csharp-query` / jedi / `pyright`).
 
 ## Related controls

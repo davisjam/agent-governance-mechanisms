@@ -33,9 +33,9 @@ independently auditable.
 ## Mechanism
 
 Three stanzas fire in order: (1) changed-file lints; (2) unit-tier tests; (3) marker write. Markers
-are keyed by the **tree-sha** so a marker from one tree cannot vouch for another. `worktree.py
-merge-check` refuses to advance an agent commit that lacks a valid marker for its tree. Bypass-prefix
-subjects (`sentinel:`, `tombstone:`, `chore(worktree):`) skip the hook by design; rule #31 codemod
+are keyed by the **tree-sha** so a marker from one tree cannot vouch for another. A worktree
+merge-check step refuses to advance an agent commit that lacks a valid marker for its tree. Bypass-prefix
+subjects (`sentinel:`, `tombstone:`, `chore(worktree):`) skip the hook by design; codemod-class
 waves use an explicit `pre-commit-skip: <reason>` marker (lint stanza skipped, unit-tier still runs);
 `--no-verify` is banned for agents because it also skips the CWD-drift fences.
 
@@ -60,8 +60,8 @@ waves use an explicit `pre-commit-skip: <reason>` marker (lint stanza skipped, u
 
 ## Known uses
 
-- The 3-stanza hook + `worktree.py merge-check` verification.
-- Rule #31's `pre-commit-skip` marker for codemod-class waves.
+- The 3-stanza hook + the worktree merge-check verification.
+- The `pre-commit-skip` marker for codemod-class waves (skips the lint stanza; unit-tier still runs).
 - The Commit-of `i/N` trailer the hook requires on agent commits.
 
 ## Related controls

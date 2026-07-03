@@ -37,12 +37,12 @@ The role is a small closed enum. Each role maps to a policy tuple:
 
 | Role | Model | Isolation | Notable policy |
 |---|---|---|---|
-| `sonnet-active` | Sonnet | worktree | refused by the `lint-all` role gate |
+| `sonnet-active` | Sonnet | worktree | refused by the aggregate-lint role gate |
 | `opus` | Opus | worktree | architecture / RCA / multi-file |
 | `lint-runner` | — | worktree | may run aggregate lint |
-| `commit-slave` | Sonnet | **none (on `main`)** | commits via `agent_commit.py` so the hook fires |
+| `commit-slave` | Sonnet | **none (on `main`)** | commits via an agent commit helper so the hook fires |
 
-`dispatch.py --role <r>` selects the tuple; downstream enforcers refuse calls that don't match the
+The dispatch tool's `--role <r>` selects the tuple; downstream enforcers refuse calls that don't match the
 declared role. Because the role is declared once and read everywhere, the correlated decisions can't
 silently diverge.
 
@@ -69,8 +69,8 @@ silently diverge.
 ## Known uses
 
 - The four roles above (`sonnet-active` / `opus` / `lint-runner` / `commit-slave`).
-- The `lint-all` role-enforcement policy gate that refuses `sonnet-active`.
-- Rule #37: `commit-slave` operates on `main` directly (no `isolation`), unlike every other role.
+- The [[aggregate-lint-runner|aggregate lint runner]]'s role-enforcement policy gate that refuses `sonnet-active`.
+- A dispatch rule: `commit-slave` operates on `main` directly (no `isolation`), unlike every other role.
 - Build-pool exception: the build-pool agent must *not* export `ADA_TOOL_AGENT_ROLE` (it would
   propagate into deploy subprocesses and trip the role guard) — a documented edge of the same
   enforcement.

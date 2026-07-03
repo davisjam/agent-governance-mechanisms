@@ -32,7 +32,7 @@ does for file-scoped rules: the table answers "which snippets every brief must c
 ## Mechanism
 
 The include-table lists each snippet with its include-when condition and its grep-able marker string;
-verbatim snippet blocks live in the snippets directory. `agent_prompt_lint.py` greps the brief for the
+verbatim snippet blocks live in the snippets directory. The [[brief-lint]] greps the brief for the
 required markers and exits non-zero on any absence. Some snippets are always-include (worktree-path,
 rebase-first); others are conditional on the brief's shape (touches tests, brings up a stack, …).
 
@@ -56,7 +56,7 @@ rebase-first); others are conditional on the brief's shape (touches tests, bring
 ## Known uses
 
 - The agent-snippet include-table (snippet → include-when → marker).
-- `agent_prompt_lint.py`'s marker-presence assertions.
+- The [[brief-lint]]'s marker-presence assertions.
 - Always-include snippets (worktree-path, rebase-first) vs conditional ones.
 
 ## Related controls

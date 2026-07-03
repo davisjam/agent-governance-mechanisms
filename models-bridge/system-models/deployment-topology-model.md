@@ -28,10 +28,10 @@ the system* versus *deploy-time constants that drift*.
 
 ## Mechanism
 
-`deployment_topology.py` is the typed L3 loader for the managed-deployment topology; `service_tiers.py`
-classifies each service-flow Component's tier; `agent_substrate_layering.py` declares the
-layer-boundary contracts for the agent substrate. Deploy scripts and layering lints
-(`lint-deploy-phase-table-parity`, the import-layer checks) read them and gate on divergence.
+The [[deployment-topology-loader]] is the typed loader for the managed-deployment topology; the
+[[service-tier-registry]] classifies each service's tier; the [[layer-boundary-contracts]] declare the
+layer boundaries for the agent substrate. Deploy scripts and layering lints (the deploy-phase-table
+parity lint, the import-layer checks) read them and gate on divergence.
 
 ## Prerequisites
 
@@ -48,8 +48,8 @@ layer-boundary contracts for the agent substrate. Deploy scripts and layering li
 
 ## Known uses
 
-- `deployment_topology.py` (L3) · `service_tiers.py` · `agent_substrate_layering.py`.
-- `lint-deploy-phase-table-parity.py` + the import-layer boundary lints.
+- The [[deployment-topology-loader]] · [[service-tier-registry]] · [[layer-boundary-contracts]].
+- The deploy-phase-table parity lint + the import-layer boundary lints.
 
 ## Related controls
 

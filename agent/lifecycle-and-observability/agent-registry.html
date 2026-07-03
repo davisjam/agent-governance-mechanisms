@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Agent-registry (`agent-registry.jsonl` + marker cache)</title>
+<title>Agent registry (append-only log + marker cache)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
@@ -30,6 +30,13 @@
   th { background:#f8fafc; font-weight:700; }
   hr { border:none; border-top:1px solid var(--line); margin: 22px 0; }
   .subtitle { font-size: 15px; color:#444; font-style: italic; margin: 0 0 6px; }
+  a.abbr { color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--accent);
+           cursor:help; }
+  a.abbr:hover { color:var(--accent); border-bottom-style:solid; }
+  section.abbr-entry { scroll-margin-top:14px; }
+  section.abbr-entry h2 code.slug { font-size:12.5px; font-weight:400; color:var(--accent);
+           background:#fff8f0; vertical-align:middle; margin-left:8px; }
+  p.abbr-grounds { font-size:13px; color:var(--muted); margin:4px 0 2px; }
   .tag { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:#c2410c; border-top:2px solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:12.5px; color:#8a5320; background:#fff8f0; border-left:3px solid var(--accent);
@@ -54,9 +61,9 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../agent/README.html">Agent</a> &nbsp;/&nbsp; Lifecycle &amp; observability &nbsp;/&nbsp; Agent-registry (`agent-registry.jsonl` + marker cache)</nav>
+<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../agent/README.html">Agent</a> &nbsp;/&nbsp; Lifecycle &amp; observability &nbsp;/&nbsp; Agent registry (append-only log + marker cache)</nav>
 <p class="subtitle">Authoritative record of which agents are live right now.</p>
-<h1>Agent-registry (<code>agent-registry.jsonl</code> + marker cache)</h1>
+<h1>Agent registry (append-only log + marker cache)</h1>
 <p><strong>Intent</strong> — An append-only registry, dual-written by every lifecycle tool, that is the <em>authoritative</em> record of which agents are in flight — so cleanup, tombstone, and merge decisions read a fact instead of guessing from filesystem timestamps.</p>
 <table><tbody><tr><td>Summary</td><td>Authoritative record of which agents are live right now.</td></tr><tr><td>Target</td><td>Agent · <strong>Lifecycle &amp; observability</strong></td></tr><tr><td>Form</td><td><code>observability</code></td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>signal/record</em> — every lifecycle tool dual-writes; destructive-op gates query it before acting</td></tr></tbody></table>
 <h2>Motivation — the failure it kills</h2>
@@ -64,13 +71,13 @@
 <h2>Why it's not just "list the worktree dirs and check mtimes"</h2>
 <p>Directory-listing plus mtime is an <em>inference</em> about liveness, and it races: nothing in a timestamp tells you whether a process is still working. The registry is an <strong>authoritative append-only log that every lifecycle tool dual-writes</strong> (the JSONL record plus a fast per-agent marker cache), so "is this agent live?" becomes a <strong>lookup against a recorded fact</strong>, not a guess from the filesystem. The distinction is <em>an authoritative, dual-written lifecycle record</em> versus <em>a racy filesystem heuristic</em> — and the heuristic was <strong>retired precisely because it destroyed in-flight work.</strong></p>
 <h2>Mechanism</h2>
-<p><code>dispatch_agent.prepare()</code> dual-writes the JSONL registry and the per-agent marker cache at dispatch; lifecycle tools update both. <code>cleanup-stale</code> queries a <strong>three-gate chain</strong> — registry-gate, then marker-gate, then git-lock-gate — before removing anything. Tombstone and worktree-clean <strong>refuse</strong> to operate on an agent whose marker exists (#39). The registry is authoritative; the marker cache is a fast index that the registry wins over on any divergence.</p>
+<p>The dispatch wrapper's prepare step dual-writes the JSONL registry and the per-agent marker cache at dispatch; lifecycle tools update both. <code>cleanup-stale</code> queries a <strong>three-gate chain</strong> — registry-gate, then marker-gate, then git-lock-gate — before removing anything. Tombstone and worktree-clean <strong>refuse</strong> to operate on an agent whose marker exists (the live-worktree guard). The registry is authoritative; the marker cache is a fast index that the registry wins over on any divergence.</p>
 <h2>Prerequisites</h2>
 <ul><li><strong>Universal dual-write</strong> — every lifecycle tool writes the registry; a side-door mutation that skips it reintroduces the exact race the registry removes.</li><li><strong>An append-only log plus a fast cache</strong>, and a rule for which wins on divergence (registry).</li><li><strong>Destructive-op gates that query it</strong> before acting — the record is only protective if consulted.</li></ul>
 <h2>Consequences &amp; costs</h2>
 <ul><li><strong>Dual-write discipline is load-bearing and fragile.</strong> One tool that mutates lifecycle without writing the registry silently brings the mtime-race back; the guarantee is only as strong as the weakest writer.</li><li><strong>Append-only growth.</strong> The JSONL grows unboundedly and needs rotation.</li><li><strong>Registry/marker divergence</strong> is possible if one write fails; resolved by "registry authoritative," but the cache can briefly mislead a tool that trusts it alone.</li></ul>
 <h2>Known uses</h2>
-<ul><li><code>agent-registry.jsonl</code> + per-agent marker cache, dual-written by <code>dispatch_agent.prepare()</code>.</li><li>The 3-gate <code>cleanup-stale</code> chain (registry → marker → git-lock).</li><li>Rule #39's live-worktree guard; rule #41's dedup-via-registry.</li></ul>
+<ul><li>An append-only registry log + per-agent marker cache, dual-written by the dispatch wrapper's prepare step.</li><li>The 3-gate <code>cleanup-stale</code> chain (registry → marker → git-lock).</li><li>The live-worktree guard (never operate on an agent whose marker exists); the dedup-via-registry pattern.</li></ul>
 <h2>Related controls</h2>
 <ul><li><strong>Enabler</strong> — <a href="../gates-and-merge-train/merge-train-mis-batching.html">merge-train-mis-batching</a> reads it for worktree readiness; <a href="../gates-and-merge-train/sentinel-first-commit.html">sentinel-first-commit</a> reads its markers for substrate health.</li><li><strong>Consumer</strong> — <a href="tombstone-commits.html">tombstone-commits</a> checks live markers before writing a close record; cleanup-stale consults it before removing a dir.</li><li><strong>Counterpart</strong> — it <em>replaced</em> the mtime heuristic (now retired): the authoritative record is the hard fact that the racy signal could never be.</li></ul>
 <footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a></footer>

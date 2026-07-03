@@ -23,7 +23,7 @@ un-gated bad build reaches users.
 Rollback is *reactive and user-visible*: by the time you roll back, users have already hit the break.
 Staged gates are *proactive* — a **canary** revision is deployed taking **no production traffic**,
 **smoke**-tested against its own URL, and **promoted** only on green. The distinction is
-*gate-before-users* versus *detect-after-users*. Rule #34 pushes the gate even earlier: don't even
+*gate-before-users* versus *detect-after-users*. A pre-launch rule pushes the gate even earlier: don't even
 *launch* a deploy that will predictably fail — confirm lints are green, no known flaky class is live,
 and `--changed-since main` is green *before* paying for build minutes. (Being a standard practice, its
 "why not" is thinner than the novel controls' — the value is defense-in-depth, not novelty.)
@@ -31,7 +31,7 @@ and `--changed-since main` is green *before* paying for build minutes. (Being a 
 ## Mechanism
 
 Version bump → build → tag a canary revision (traffic-free) → smoke against the canary URL → promote
-to production → GC old revisions. The pre-launch predicate (rule #34) gates the whole thing on
+to production → GC old revisions. The pre-launch predicate gates the whole thing on
 cheaper signals so a doomed deploy is never started. Heartbeats emit liveness during the long phases.
 
 ## Prerequisites
@@ -39,7 +39,7 @@ cheaper signals so a doomed deploy is never started. Heartbeats emit liveness du
 - **Canary capability** — the ability to deploy a revision that takes no production traffic.
 - **A smoke suite** that meaningfully exercises the canary URL (real dependencies, not stubs).
 - **Promotion + rollback primitives** and revision GC.
-- **A pre-launch green signal** (lints / changed-since-main / flaky-class check) to satisfy rule #34.
+- **A pre-launch green signal** (lints / changed-since-main / flaky-class check) as the pre-launch predicate.
 
 ## Consequences & costs
 
@@ -54,7 +54,7 @@ cheaper signals so a doomed deploy is never started. Heartbeats emit liveness du
 ## Known uses
 
 - The staged deploy driver (canary tag → smoke → promote → revision GC).
-- Rule #34's pre-deploy predicate (lints green · no flaky class · changed-since-main green).
+- The pre-deploy predicate (lints green · no flaky class · changed-since-main green).
 - Per-phase deploy heartbeats (see Lifecycle & observability).
 
 ## Related controls

@@ -22,18 +22,18 @@ on the next regen, silently.
 
 Hand-writing NetworkPolicy, the service catalog, the API docs, or the competitor analysis means the same
 facts live in two places (model + artifact) and diverge. Generating them **from** the model makes the
-model load-bearing — change the artifact by changing the model — and a **provenance header** (rule #35)
+model load-bearing — change the artifact by changing the model — and a **provenance header**
 on each generated file, re-emitted every run, plus a freshness lint, ensures a hand-edit is caught and a
 stale artifact fails the build. The distinction is *one model, N generated-and-provenance-checked
 consumers* versus *hand-maintained artifacts that drift from the model and swallow edits*.
 
 ## Mechanism
 
-`gen-*` generators read the models and emit artifacts: `gen-network-policies` (from service-flow),
-`gen-service-catalog` / `gen-service-env`, `gen-web-api-entities` + `gen-public-api-doc` (from web-api),
-`gen-competitive-analysis` (from `competitors/`), `gen-wire-contracts` + the C# wire codegen (from
-`wire-contracts/`), `docker_codegen`. Each emitted file carries the rule-#35 provenance marker (emitter
-+ regen path), enforced by `lint-autogen-files-have-provenance-header.py`.
+A family of generators read the models and emit artifacts: a NetworkPolicy generator (from the
+service-flow model), the service-catalog and env generators, the web-API entity and public-API-doc
+generators (from the web-API model), a competitor-catalog generator (from the competitor registry), the
+wire-contract generators (from the wire-contract schemas), and a docker generator. Each emitted file
+carries a provenance marker (emitter + regen path), enforced by a provenance-header lint.
 
 ## Prerequisites
 
@@ -50,9 +50,9 @@ consumers* versus *hand-maintained artifacts that drift from the model and swall
 
 ## Known uses
 
-- `gen-network-policies` · `gen-service-catalog` · `gen-web-api-entities` · `gen-public-api-doc` ·
-  `gen-competitive-analysis` · `gen-wire-contracts` · `docker_codegen`.
-- Rule #35's provenance header + `lint-autogen-files-have-provenance-header.py`.
+- The NetworkPolicy, service-catalog, web-API-entity, public-API-doc, competitor-catalog,
+  wire-contract, and docker generators.
+- The provenance-header requirement + its enforcing lint.
 
 ## Related controls
 

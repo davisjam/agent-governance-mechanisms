@@ -14,7 +14,7 @@ concurrency contracts are declared and checkable, not tribal.
 ## Motivation — the failure it kills
 
 A fleet of agents on one host contends over shared resources through OS locks — the test-serializer's
-`dotnet test` flock, the build-serializer semaphore, the `lint-all` mutex, the commit-slave serializer.
+`dotnet test` flock, the build-serializer semaphore, the [[aggregate-lint-runner|whole-repo lint mutex]], the commit-slave serializer.
 Left undocumented, two failures lurk: an *undeclared* lock nobody knows guards what, and an *inverted
 acquisition order* between two locks that deadlocks. Both are invisible in the code and catastrophic at
 runtime, and they recur as new locks are added.
@@ -31,8 +31,8 @@ locks whose interactions are only discoverable by deadlock*.
 
 ## Mechanism
 
-`synchronization.py` composes three records — `SyncLock` (one OS primitive), `LockAcquirer` (one
-declared acquisition site, or `lock="none"` with a rationale), `LockOrdering` (before/after with
+The [[synchronization-registry]] composes three records — `SyncLock` (one OS primitive), `LockAcquirer`
+(one declared acquisition site, or `lock="none"` with a rationale), `LockOrdering` (before/after with
 rationale). A coverage lint scans the `fcntl.flock`/`lockf` call sites and requires
 each to be declared or carry a `# noqa: not-a-sync-lock` annotation; an ordering lint walks the
 declared `ORDERINGS` + call-graph to catch inverted acquisition.
@@ -51,7 +51,7 @@ declared `ORDERINGS` + call-graph to catch inverted acquisition.
 
 ## Known uses
 
-- `synchronization.py` — `SyncLock` / `LockAcquirer` / `LockOrdering` registry for the dev-time locks.
+- The [[synchronization-registry]] — the `SyncLock` / `LockAcquirer` / `LockOrdering` records for the dev-time locks.
 - The sync-coverage lint (undeclared-`flock` gate) + the ordering-constraint lint (deadlock-risk gate).
 
 ## Related controls

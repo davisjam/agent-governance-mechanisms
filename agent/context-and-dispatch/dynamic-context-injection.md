@@ -93,7 +93,7 @@ pull** (the agent calls `get-constraints-for-files.py <files…>` once it knows 
 
 ## Known uses
 
-- `get-constraints-for-files.py` (forward slicing / discovery-time pull).
+- A constraint-extraction tool (forward slicing / discovery-time pull).
 - The diff-line-range attribution machinery (reverse) that powers CI self-heal.
 - Consumes the [component-zone model](../../models-bridge/system-models/component-zone-model.md) and the
   lint fleet's scope tags as its addressable registries (via the

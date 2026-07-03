@@ -32,12 +32,12 @@ cost of the omission is unrecoverable. Review is advice; the lint is a gate.
 
 ## Mechanism
 
-`agent_prompt_lint.py` runs a battery of grep-style checks over the brief text — worktree-isolation
+The brief linter runs a battery of grep-style checks over the brief text — worktree-isolation
 marker present, `dispatch-id: agent-<id>` token present *and* the matching per-agent marker file
 exists on disk, every mandatory snippet's marker string present, `subagent_type` declared. Exit 1 ⇒
-**do not launch**. It is not a standalone habit: the canonical dispatch path (`dispatch.py` →
-`dispatch_agent.py prepare()`) calls it as a required step and rolls back the just-written marker file
-if the lint fails, so the dispatch path *is* the enforcement.
+**do not launch**. It is not a standalone habit: the canonical [[dispatch-tool|dispatch path]] calls it
+as a required prepare step and rolls back the just-written marker file if the lint fails, so the
+dispatch path *is* the enforcement.
 
 ## Prerequisites
 
@@ -54,8 +54,8 @@ if the lint fails, so the dispatch path *is* the enforcement.
   *well-scoped* — a brief with every marker present can still task the agent with the wrong thing. A
   green lint buys safety-marker coverage, not a good brief; the human still owns scoping judgment.
 - **Authoring tax.** Every brief must now carry boilerplate markers, making hand-authoring heavier —
-  mitigated only because `brief-template.py` pre-places them by construction. Without the generator the
-  markers become friction the author routes around.
+  mitigated only because a brief-template generator pre-places them by construction. Without the generator
+  the markers become friction the author routes around.
 - **Each new marker is a maintenance edge.** A new mandatory snippet means both a new lint check *and*
   threading the marker into the template; drift between the two produces false rejections.
 - **Bypassable by design.** `ADA_TOOL_BYPASS_AGENT_FENCE=1` exists for humans; the control's floor is
@@ -63,9 +63,9 @@ if the lint fails, so the dispatch path *is* the enforcement.
 
 ## Known uses
 
-- Rule #29 (agent CWD-drift defense): `isolation: "worktree"` marker is BLOCKING and lint-verified.
-- `dispatch_agent.prepare()` emits a `DispatchPrep` only after the brief passes.
-- Check #9 verifies the dispatch-id token *and* the on-disk marker together, closing the
+- The agent CWD-drift-defense rule: the `isolation: "worktree"` marker is BLOCKING and lint-verified.
+- The dispatch wrapper's prepare step emits its go-ahead only after the brief passes.
+- A dedicated check verifies the dispatch-id token *and* the on-disk marker together, closing the
   "token present but no live agent" gap.
 
 ## Related controls

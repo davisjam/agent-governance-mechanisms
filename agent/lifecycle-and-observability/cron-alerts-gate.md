@@ -9,7 +9,7 @@ possibly-broken substrate.
 | Summary | Block new dispatch while a HIGH cron alert is unresolved. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `observability` |
-| Enforcement | **Hard** (deterministic) · *blocking* — refuses `dispatch.py`, `worktree create`, `merge_train run/stage/attest`, `brief-template new` · resolve via `dispatch.py --resolves-alert` |
+| Enforcement | **Hard** (deterministic) · *blocking* — refuses new dispatch, worktree creation, merge-train run/stage/attest, and new-brief creation · resolved by an alert-resolving dispatch |
 
 ## Motivation — the failure it kills
 
@@ -31,9 +31,10 @@ member that stops the line.
 ## Mechanism
 
 At session start the orchestrator polls the cron-alerts channel for alerts unconsumed since
-`last_seen_ts` (rule #47). A HIGH alert without a terminal ack blocks `dispatch.py` (new sonnet/opus),
-`worktree create`, `merge_train run/stage/attest`, and `brief-template new` (rule #48). The canonical
-resolution is `dispatch.py --resolves-alert <id> <brief>`, which auto-acks and dispatches the fix.
+`last_seen_ts` (the session-start poll discipline). A HIGH alert without a terminal ack blocks new
+dispatch (sonnet/opus), worktree creation, merge-train run/stage/attest, and new-brief creation (the
+HIGH-alert dispatch block). The canonical resolution is an alert-resolving dispatch
+(`--resolves-alert <id> <brief>`), which auto-acks and dispatches the fix.
 Deadlock-freedom is designed in: EXEMPT tools plus the resolves-alert path mean the gate can always be
 cleared.
 
@@ -58,9 +59,9 @@ cleared.
 
 ## Known uses
 
-- The cron-alerts channel (`cron-alerts.jsonl`) + acks log.
-- Rule #47's session-start poll; rule #48's dispatch block on unresolved HIGH.
-- `dispatch.py --resolves-alert` (auto-ack + dispatch fix).
+- The cron-alerts channel (an append-only alerts log) + acks log.
+- The session-start poll discipline; the dispatch block on unresolved HIGH alerts.
+- The alert-resolving dispatch (`--resolves-alert`, auto-ack + dispatch fix).
 
 ## Related controls
 

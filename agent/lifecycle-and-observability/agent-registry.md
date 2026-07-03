@@ -1,4 +1,4 @@
-# Agent-registry (`agent-registry.jsonl` + marker cache)
+# Agent registry (append-only log + marker cache)
 
 **Intent** — An append-only registry, dual-written by every lifecycle tool, that is the *authoritative*
 record of which agents are in flight — so cleanup, tombstone, and merge decisions read a fact instead
@@ -31,11 +31,11 @@ and the heuristic was **retired precisely because it destroyed in-flight work.**
 
 ## Mechanism
 
-`dispatch_agent.prepare()` dual-writes the JSONL registry and the per-agent marker cache at dispatch;
-lifecycle tools update both. `cleanup-stale` queries a **three-gate chain** — registry-gate, then
-marker-gate, then git-lock-gate — before removing anything. Tombstone and worktree-clean **refuse** to
-operate on an agent whose marker exists (#39). The registry is authoritative; the marker cache is a
-fast index that the registry wins over on any divergence.
+The dispatch wrapper's prepare step dual-writes the JSONL registry and the per-agent marker cache at
+dispatch; lifecycle tools update both. `cleanup-stale` queries a **three-gate chain** — registry-gate,
+then marker-gate, then git-lock-gate — before removing anything. Tombstone and worktree-clean **refuse**
+to operate on an agent whose marker exists (the live-worktree guard). The registry is authoritative; the
+marker cache is a fast index that the registry wins over on any divergence.
 
 ## Prerequisites
 
@@ -55,9 +55,9 @@ fast index that the registry wins over on any divergence.
 
 ## Known uses
 
-- `agent-registry.jsonl` + per-agent marker cache, dual-written by `dispatch_agent.prepare()`.
+- An append-only registry log + per-agent marker cache, dual-written by the dispatch wrapper's prepare step.
 - The 3-gate `cleanup-stale` chain (registry → marker → git-lock).
-- Rule #39's live-worktree guard; rule #41's dedup-via-registry.
+- The live-worktree guard (never operate on an agent whose marker exists); the dedup-via-registry pattern.
 
 ## Related controls
 

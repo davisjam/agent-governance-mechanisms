@@ -66,7 +66,7 @@ it does not accrete local rules that should be doc-comments.
 ## Known uses
 
 - `CLAUDE.md` — the numbered rule index, boot context for every agent; enforced by
-  `lint-claude-md-bloat.py` and a rule-conformance lint.
+  a governance-doc bloat lint and a rule-conformance lint.
 - The repository documentation index — the complete doc index with one-line summaries.
 - The "what belongs in CLAUDE.md" three-part test (regression-preventing / non-derivable / non-local)
   that keeps the index minimal.

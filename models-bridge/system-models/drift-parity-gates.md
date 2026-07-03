@@ -31,10 +31,12 @@ neither side may drift unilaterally.
 
 ## Mechanism
 
-A family of drift/parity checks, one (or a pair) per model: `lint-service-flow-model.py`
-(tree↔yaml, both ways), `lint-public-api-drift.py` (handler↔spec), `lint-service-call-graph-drift.py`,
-`lint-deploy-phase-table-parity.py`, the k8s parity lints, the sync-coverage lint, and the
-`test_*_reverse_mapping.py` tests. Each reads the model at lint-time (rule #33) and fails on divergence.
+A family of drift/parity checks, one (or a pair) per model: a service-flow parity lint (tree↔yaml, both
+ways), a public-API drift lint (handler↔spec), a service-call-graph drift lint, a deploy-phase-table
+parity lint, the k8s parity lints, the sync-coverage lint, and the
+[[reverse-mapping-test|model↔tree reverse-mapping tests]]. Each reads the model at lint-time — a lint
+that *reads* the meta-file is preferred over codegen, which is preferred over a hand-rolled copy — and
+fails on divergence.
 
 ## Prerequisites
 
@@ -52,9 +54,9 @@ A family of drift/parity checks, one (or a pair) per model: `lint-service-flow-m
 
 ## Known uses
 
-- `lint-service-flow-model.py`, `lint-public-api-drift.py`, `lint-service-call-graph-drift.py`,
-  `lint-deploy-phase-table-parity.py`, k8s parity lints, the sync-coverage lint.
-- The `test_*_reverse_mapping.py` model↔tree parity tests.
+- The service-flow, public-API-drift, service-call-graph-drift, and deploy-phase-table parity lints;
+  the k8s parity lints; the sync-coverage lint.
+- The [[reverse-mapping-test|model↔tree reverse-mapping tests]].
 
 ## Related controls
 

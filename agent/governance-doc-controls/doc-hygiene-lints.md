@@ -23,16 +23,16 @@ trust as ground truth* — and it recurs continuously as the doc corpus grows.
 Doc review is the **least reliable** review — reviewers skim prose and never notice a missing index
 entry or a broken cross-ref, because those aren't visible in the change itself. Doc-hygiene lints make
 the invariants **mechanical**: an auto-generated file must carry a provenance header declaring its
-emitter (rule #35), every doc must appear in the index, cross-references must resolve — or the pipeline
+emitter (a provenance-header rule), every doc must appear in the index, cross-references must resolve — or the pipeline
 fails. The distinction is *mechanical doc invariants* versus *human doc review*. It is the same
 "documentation as enforced infrastructure" stance as the [rule index](claude-md-rule-index.md),
 generalized from one governance file to the whole doc corpus.
 
 ## Mechanism
 
-The index-coverage lint checks every doc is indexed; the autogen-provenance lint (rule #35) checks each
+The index-coverage lint checks every doc is indexed; the autogen-provenance lint checks each
 git-tracked emitted file carries its emitter + regen-path marker in the first non-blank lines, with new
-targets registered in `_AUTOGEN_TARGETS` and the emitter re-emitting the marker on every run;
+targets registered in an autogen-targets registry and the emitter re-emitting the marker on every run;
 cross-reference/link lints check pointers resolve. Lints land AUDIT-ONLY and migrate to BLOCKING.
 
 ## Prerequisites
@@ -56,7 +56,7 @@ cross-reference/link lints check pointers resolve. Lints land AUDIT-ONLY and mig
 ## Known uses
 
 - The index-coverage lint (every doc indexed).
-- The autogen-provenance lint + `_AUTOGEN_TARGETS` registry (rule #35).
+- The autogen-provenance lint + its autogen-targets registry.
 - Cross-reference / link-resolution lints.
 
 ## Related controls

@@ -29,9 +29,10 @@ makes the whole cleanup-stale safety chain sound.
 
 ## Mechanism
 
-`tombstone_commit.py` writes a tombstone at the branch tip carrying a disposition. Concurrent tombstone
+The tombstone tool writes a tombstone at the branch tip carrying a disposition. Concurrent tombstone
 processes are **deduplicated via a registry event** (`tombstoning_started`, exits 78 on a second
-starter — rule #41). It **refuses** to operate on any agent-id whose live marker exists (rule #39), and
+starter — the dedup-via-registry pattern). It **refuses** to operate on any agent-id whose live marker
+exists (the live-worktree guard), and
 mass-tombstoning requires an explicit `--id-file` — runtime enumeration of worktree dirs is banned.
 `cleanup-stale` then reads the tombstone as its safe-to-reclaim proof.
 
@@ -54,8 +55,8 @@ mass-tombstoning requires an explicit `--id-file` — runtime enumeration of wor
 
 ## Known uses
 
-- `tombstone_commit.py` — writes the disposition-bearing close record.
-- Rule #41's dedup event (`tombstoning_started`, exit 78); rule #39's id-list + live guard.
+- The tombstone tool — writes the disposition-bearing close record.
+- The dedup event (`tombstoning_started`, exit 78); the explicit-id-list + live-worktree guard.
 - The `cleanup-stale` predicate (tombstone-at-tip AND all commits cherry-picked/skipped).
 
 ## Related controls
@@ -64,5 +65,5 @@ mass-tombstoning requires an explicit `--id-file` — runtime enumeration of wor
   (the live-worktree guard).
 - **Enabler** — the record it writes is what `worktree.py cleanup-stale` verifies before reclaiming a
   directory.
-- **Counterpart** — the rule-#39 live-worktree guard (hard) prevents this audit record from ever being
+- **Counterpart** — the live-worktree guard (hard) prevents this audit record from ever being
   written for an agent that is still working.

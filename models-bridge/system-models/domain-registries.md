@@ -29,11 +29,11 @@ fact, consumed and validated* versus *scattered hardcoded snapshots*.
 
 ## Mechanism
 
-Each is a small typed model: `supported_filetypes.py` (the frozen four), `wcag_coverage_gaps.py` (the
-gap registry, feeding the WCAG-scope status), `cron_entries.py` (periodic-GC — distinct from the
-per-minute merge-train), `ux_surfaces.py` (frontend write-authority), `competitors/` (Backstage-style
-Competitor dialect → competitive-analysis doc), `claude-md-rules.py` (rule metadata extracted from
-inline `<!-- rule-meta: -->` blocks, feeding the [rule-index](../../agent/governance-doc-controls/claude-md-rule-index.md)).
+Each is a small typed registry: a supported-filetypes registry (the frozen four), a WCAG-gap registry
+(feeding the WCAG-scope status), a periodic-GC cron registry (distinct from the per-minute
+merge-train), a UX write-authority registry, a competitor registry (a Backstage-style Competitor
+dialect → the competitive-analysis doc), and a rule-metadata registry (extracted from inline
+`<!-- rule-meta: -->` blocks, feeding the [rule-index](../../agent/governance-doc-controls/claude-md-rule-index.md)).
 Each has a coverage/parity lint + a doc-derived pin.
 
 ## Prerequisites
@@ -50,15 +50,15 @@ Each has a coverage/parity lint + a doc-derived pin.
 
 ## Known uses
 
-- `supported_filetypes` · `wcag_coverage_gaps` · `cron_entries` · `ux_surfaces` · `competitors/` ·
-  `claude-md-rules`.
-- Their generators (e.g. competitor catalog → `gen-competitive-analysis.py`) and coverage/parity lints.
+- The supported-filetypes, WCAG-gap, periodic-GC-cron, UX-write-authority, competitor, and
+  rule-metadata registries.
+- Their generators (e.g. the competitor-catalog generator) and coverage/parity lints.
 
 ## Related controls
 
 - **Bridge** — agents/checkers *read* these facts (agent side) ◀──▶ they *govern & generate* product
   surfaces (WCAG scope, competitor docs, cron behaviour) (product side).
-- **Consumer** — `claude-md-rules` feeds the
-  [rule-index](../../agent/governance-doc-controls/claude-md-rule-index.md); `wcag_coverage_gaps` feeds
+- **Consumer** — the rule-metadata registry feeds the
+  [rule-index](../../agent/governance-doc-controls/claude-md-rule-index.md); the WCAG-gap registry feeds
   the [standards rule-engine](../../product/validation-and-conformance/standards-rule-engine.md).
 - **Counterpart** — [drift-parity-gates](drift-parity-gates.md): each registry's coverage/parity lint.

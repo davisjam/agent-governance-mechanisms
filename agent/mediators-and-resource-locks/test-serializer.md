@@ -31,7 +31,7 @@ makes the serialization real rather than a convention agents forget under time p
 
 ## Mechanism
 
-`test-serializer.py` flocks a host-global lock, then runs `dotnet test`; a 30-minute wait cap fails
+The test serializer flocks a host-global lock, then runs `dotnet test`; a 30-minute wait cap fails
 loud if the lock is stuck. `TestMediatorEnforcer` (a `[ModuleInitializer]`) refuses raw invocation
 from agent-worktree CWDs. When the filter contains `Fuzz`/`Campaign`, coverage collection is
 auto-appended. Adjacent heavy tools (build, tsc, pyright, …) route through the *sibling*
@@ -56,7 +56,7 @@ auto-appended. Adjacent heavy tools (build, tsc, pyright, …) route through the
 
 ## Known uses
 
-- `test-serializer.py` — the N=1 flock wrapper (+ auto-coverage for fuzz filters).
+- The test serializer — the N=1 flock wrapper (+ auto-coverage for fuzz filters).
 - `TestMediatorEnforcer` `[ModuleInitializer]` — refuses raw `dotnet test` from agent CWDs.
 - `ADA_TOOL_TEST_BYPASS_MEDIATOR=1` — the audited human escape.
 

@@ -1,6 +1,6 @@
 # Model query surface (`repo-query`)
 
-**Intent** — One canonical, self-describing query API over all the models — `repo-query.py` with
+**Intent** — One canonical, self-describing query API over all the models — a `repo-query` CLI with
 deterministic `--json` subcommands — so an agent reads the system's compressed truth *through a tool*
 rather than parsing raw files, and the tool itself documents how the models load.
 
@@ -21,16 +21,16 @@ loading + traversal, gets the dialect subtly wrong, and produces brittle one-off
 ## Why it's not just "import the model / cat the file"
 
 Direct import works for Python tools, but agents and the orchestrator need a **stable, self-describing
-query interface** — not to re-derive how services or components load each time. `repo-query.py` is that
+query interface** — not to re-derive how services or components load each time. `repo-query` is that
 surface: deterministic subcommands (`component`, `service-flow`, `frontend-flow`, `design`, `callers`,
-`xrefs`, `epic`, `task`, …) with a `--json` contract, and it *lives in* `system-models/` so its
-top-of-file import pattern is the documented canonical example of loading the models. The distinction is
+`xrefs`, `epic`, `task`, …) with a `--json` contract, and it *lives alongside the models* so its
+loader pattern is the documented canonical example of loading them. The distinction is
 *a self-describing, structured query API an agent acts on* versus *each consumer re-implementing model
 access*.
 
 ## Mechanism
 
-`repo-query.py` exposes a `models` meta-command (self-describing) plus ~15 subcommands over the model
+`repo-query` exposes a `models` meta-command (self-describing) plus ~15 subcommands over the model
 set, each with atomic writes where relevant and a `--json` mode so downstream agents consume structure,
 not prose (an `agent-output` contract). It is the read half of the bridge — the agent-facing surface
 over the models the codebase is governed by.
@@ -50,9 +50,9 @@ over the models the codebase is governed by.
 
 ## Known uses
 
-- `repo-query.py` — `models` / `component` / `service-flow` / `frontend-flow` / `design` / `callers` /
+- `repo-query` — `models` / `component` / `service-flow` / `frontend-flow` / `design` / `callers` /
   `xrefs` / `epic` / `task` / `web-api` / `config` subcommands (`--json`).
-- The `repo-query` skill (orchestrator-facing).
+- The `repo-query` orchestrator skill.
 
 ## Related controls
 

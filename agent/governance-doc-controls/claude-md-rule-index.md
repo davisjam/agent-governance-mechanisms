@@ -10,7 +10,7 @@ other control cannot silently rot.
 | Summary | The governance document itself, enforced by its own lints. |
 | Target | Agent · **Governance-doc controls** |
 | Form | `validation` |
-| Enforcement | **Soft·Hard** — the rules are guidance to the agent (soft, booted into every context); the cap lint `lint-claude-md-bloat.py` + the rule-conformance lint are *blocking* (the hard counterpart) |
+| Enforcement | **Soft·Hard** — the rules are guidance to the agent (soft, booted into every context); a governance-doc bloat/cap lint + the rule-conformance lint are *blocking* (the hard counterpart) |
 
 > **★ The meta-control.** Every other entry in this catalog names a control. *This* is the control
 > that records the others. CLAUDE.md is the durability mechanism for the whole "convert a failure into
@@ -36,7 +36,7 @@ hand, trusted to stay honest. CLAUDE.md is a control because it inverts all thre
   the minimum shared world-model an agent executes against, not reference it might consult. (This is
   the same availability-vs-binding distinction as [dynamic-context-injection](../context-and-dispatch/dynamic-context-injection.md),
   applied to the whole index rather than a sliced subset.)
-- **Enforced, not trusted.** Its **hard counterpart** — a cap/bloat lint (`lint-claude-md-bloat.py`)
+- **Enforced, not trusted.** Its **hard counterpart** — a cap/bloat lint
   that fails the build if the index grows past its scannable budget, plus a rule-conformance lint that
   fails if a rule stops cross-referencing its canonical doc — holds the document to checks exactly as
   code is.
@@ -54,11 +54,11 @@ is governed, because it is one.
 - **Stable-numbered index.** Each rule is a short boot-context statement + a cross-reference to the
   canonical deep doc that carries it in full ("CLAUDE.md carries the rule index; the sub-doc carries
   the principle"). Numbers are *stable, never renumbered* — they are cited by number across the
-  codebase, so the index doubles as a **citable namespace** (rule #29, rule #42, …).
+  codebase, so the index doubles as a **citable namespace** — each rule is addressable by a stable number.
 - **The earns-its-spot test.** A rule belongs only if all three hold: (1) an agent touching unrelated
   code could accidentally violate it; (2) reading the local file wouldn't surface it; (3) it crosses
   files/subsystems. Anything else is routed out.
-- **The hard counterpart (two lints).** `lint-claude-md-bloat.py` enforces the cap; the
+- **The hard counterpart (two lints).** A governance-doc bloat lint enforces the cap; the
   rule-conformance lint enforces the cross-reference discipline. Both are BLOCKING — a bloating or
   drifting index fails the gate.
 
@@ -90,7 +90,7 @@ is governed, because it is one.
 ## Known uses
 
 - `CLAUDE.md` — the numbered, stable-numbered rule index; boot context for every agent.
-- `lint-claude-md-bloat.py` — the cap/bloat gate.
+- The governance-doc bloat lint — the cap/bloat gate.
 - The rule-conformance lint — enforces the per-rule canonical-doc cross-reference.
 - The *"What belongs in this file"* meta-section — the self-governing admission rule and router.
 - The [Epic Definition-of-Done](epic-definition-of-done.md)'s "trust nothing" re-run, which re-reads

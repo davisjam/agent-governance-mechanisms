@@ -30,10 +30,11 @@ guard what someone remembered to route through them*.
 
 ## Mechanism
 
-`mediators.py` is the registry of dev-time subprocess serializers (the test/build serializers, the
-`lint-all` mutex, the commit-slave serializer) — what each mediates, its cap, its bypass-env.
-`state_mutator_registry.py` declares single-writer / monopoly contracts for state-mutation functions.
-Enforcers and coverage lints read these to refuse unmediated calls and flag uncovered mutators.
+The [[mediator-registry]] holds the dev-time subprocess serializers (the test/build serializers, the
+[[aggregate-lint-runner|whole-repo lint mutex]], the commit-slave serializer) — what each mediates, its
+cap, its bypass-env. The [[single-writer-registry]] declares single-writer / monopoly contracts for
+state-mutation functions. Enforcers and coverage lints read these to refuse unmediated calls and flag
+uncovered mutators.
 
 ## Prerequisites
 
@@ -49,8 +50,9 @@ Enforcers and coverage lints read these to refuse unmediated calls and flag unco
 
 ## Known uses
 
-- `mediators.py` — the dev-mediator (subprocess-serializer) registry (rule #44 host locks).
-- `state_mutator_registry.py` — single-writer / monopoly contracts.
+- The [[mediator-registry]] — the dev-mediator (subprocess-serializer) registry for the host's
+  concurrency locks.
+- The [[single-writer-registry]] — single-writer / monopoly contracts.
 - The mediator enforcers ([test-serializer](../../agent/mediators-and-resource-locks/test-serializer.md) et al.).
 
 ## Related controls

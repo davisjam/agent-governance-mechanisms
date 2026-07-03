@@ -36,6 +36,20 @@ SECTION_ORDER = [
 REL_TAGS = ("Counterpart", "Enabler", "Layer", "Consumer", "Bridge", "See also")
 ROLE_DIRS = ["agent", "models-bridge", "product"]
 
+# ── Abstractions glossary (the interpretability de-referencer) ──
+# Entries cite concrete artifacts as [[slug]] / [[slug|text]] rather than by unshipped filename.
+ABBR_SRC = "ABSTRACTIONS.md"
+ABBR_CITE_RE = re.compile(r"\[\[([^\]|]+?)(?:\|([^\]]*))?\]\]")
+# Families whose entries are migrated onto the glossary → the raw-filename + rule-number bans are BLOCKING
+# there. Grow this as each family is cleaned; when every family is in, drop the gate to "all entries".
+ABBR_MIGRATED_DIRS = ("agent", "models-bridge")
+# An "unshipped" reference = a backticked path with one of these extensions whose basename is NOT present
+# anywhere in this repo (so `catalog.py` — which ships here — is allowed; `components.py` is not).
+RAW_FILE_RE = re.compile(r"`([^`]+?\.(?:py|cs|jsonl|ya?ml))`")
+RULE_CITE_RE = re.compile(r"(?<![\w.])#\d{1,2}\b")  # bare project-rule citation (meaningless outside the parent)
+# Not served / not link-checked: internal continuity docs (the abstractions playbook is process, not content).
+NOSERVE = ("HANDOFF.md", "abstractions-playbook.md", "TODO.md")
+
 
 class Entry:
     """A parsed catalogue entry with its metadata card and section structure."""
@@ -123,11 +137,27 @@ def all_entries() -> list[Entry]:
     return [Entry(p) for p in paths]
 
 
+def catalogue_md_files() -> list[str]:
+    """Every markdown file that IS the catalogue: root-level docs + the role trees.
+
+    Deliberately excludes non-catalogue trees under ROOT (e.g. an untracked packaged-skill copy in
+    `plugin/`) and the raw-asset / internal-continuity files, so the tooling never processes a mirror.
+    """
+    out = []
+    for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True):
+        rel = os.path.relpath(f, ROOT)
+        top = rel.split(os.sep)[0]
+        if os.sep in rel and top not in ROLE_DIRS:
+            continue  # nested under a non-catalogue dir (packaged copy, downloads, etc.)
+        if os.path.basename(f) in NOSERVE:
+            continue  # internal continuity docs: not rendered/served
+        out.append(f)
+    return out
+
+
 def check_links() -> list[str]:
     dead = []
-    for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True):
-        if os.sep + "downloads" + os.sep in f or os.path.basename(f) == "HANDOFF.md":
-            continue  # raw assets (redacted CLAUDE mirror) + the internal HANDOFF: not rendered/served
+    for f in catalogue_md_files():
         base = os.path.dirname(f)
         body = open(f, encoding="utf-8").read()
         for m in re.finditer(r"\]\(([^)]+\.md)(#[^)]*)?\)", body):
@@ -187,6 +217,80 @@ def family_summaries() -> dict:
             for m in re.finditer(r"^## \d+\. (.+?)\n\n\*(.+?)\*", text, re.M)}
 
 
+def parse_abstractions() -> dict:
+    """Parse ABSTRACTIONS.md → {slug: {headword, definition, tail(md), raw}}.
+
+    Entry shape: `## Headword` · `<!-- slug: x -->` · a definition paragraph · a `**Grounds** … **See** …`
+    tail. The definition (plain-texted) is the hover tooltip; the tail names the real artifact once.
+    """
+    p = os.path.join(ROOT, ABBR_SRC)
+    if not os.path.exists(p):
+        return {}
+    text = open(p, encoding="utf-8").read()
+    out: dict = {}
+    for block in re.split(r"^## ", text, flags=re.M)[1:]:
+        lines = block.splitlines()
+        headword = lines[0].strip()
+        m = re.search(r"<!-- slug: (\S+) -->", block)
+        if not m:
+            continue
+        slug = m.group(1)
+        body = [ln for ln in lines[1:] if not ln.strip().startswith("<!-- slug:")]
+        defn, tail = [], []
+        for ln in body:
+            (tail if ln.strip().startswith("**Grounds**") or tail else defn).append(ln)
+        out[slug] = {
+            "headword": headword,
+            "definition": " ".join(l.strip() for l in defn if l.strip()),
+            "tail": " ".join(l.strip() for l in tail if l.strip()),
+        }
+    return out
+
+
+def _plain(s: str) -> str:
+    """Strip the inline markdown a tooltip attribute can't carry (links/code/bold/italic)."""
+    s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", s)
+    s = re.sub(r"[`*]", "", s)
+    return s.strip()
+
+
+_REPO_BASENAMES: set | None = None
+
+
+def _repo_basenames() -> set:
+    """Every filename present in this repo (basename), so a backticked ref to one is 'shipped' (allowed)."""
+    global _REPO_BASENAMES
+    if _REPO_BASENAMES is None:
+        _REPO_BASENAMES = set()
+        for dp, dns, fns in os.walk(ROOT):
+            dns[:] = [d for d in dns if d != ".git"]
+            _REPO_BASENAMES.update(fns)
+    return _REPO_BASENAMES
+
+
+def check_abstractions(entries: list[Entry], abbrs: dict) -> list[str]:
+    """(1) every [[slug]] citation resolves; (2) in migrated families, no unshipped filename / rule number."""
+    problems: list[str] = []
+    shipped = _repo_basenames()
+    for f in catalogue_md_files():
+        rel = os.path.relpath(f, ROOT)
+        if rel == ABBR_SRC:
+            continue
+        body = open(f, encoding="utf-8").read()
+        for m in ABBR_CITE_RE.finditer(body):
+            if m.group(1) not in abbrs:
+                problems.append(f"{rel}: [[{m.group(1)}]] — no such abstraction slug")
+    for e in entries:
+        if not e.path.replace(os.sep, "/").startswith(ABBR_MIGRATED_DIRS):
+            continue
+        for m in RAW_FILE_RE.finditer(e.text):
+            if os.path.basename(m.group(1)) not in shipped:
+                problems.append(f"{e.path}: unshipped filename `{m.group(1)}` — route through an abstraction")
+        for m in RULE_CITE_RE.finditer(e.text):
+            problems.append(f"{e.path}: bare rule citation '{m.group(0)}' — state the rule's content instead")
+    return problems
+
+
 def cmd_validate(_args) -> int:
     entries = all_entries()
     n_issues = 0
@@ -199,6 +303,10 @@ def cmd_validate(_args) -> int:
         n_issues += 1
     for msg in check_links():
         print(f"  [link]  DEAD {msg}")
+        n_issues += 1
+    abbrs = parse_abstractions()
+    for msg in check_abstractions(entries, abbrs):
+        print(f"  [abbr]  {msg}")
         n_issues += 1
     for rel, summ in role_summaries().items():
         if not summ:
@@ -318,6 +426,13 @@ PAGE_CSS = """
   th { background:#f8fafc; font-weight:700; }
   hr { border:none; border-top:1px solid var(--line); margin: 22px 0; }
   .subtitle { font-size: 15px; color:#444; font-style: italic; margin: 0 0 6px; }
+  a.abbr { color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--accent);
+           cursor:help; }
+  a.abbr:hover { color:var(--accent); border-bottom-style:solid; }
+  section.abbr-entry { scroll-margin-top:14px; }
+  section.abbr-entry h2 code.slug { font-size:12.5px; font-weight:400; color:var(--accent);
+           background:#fff8f0; vertical-align:middle; margin-left:8px; }
+  p.abbr-grounds { font-size:13px; color:var(--muted); margin:4px 0 2px; }
   .tag { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:#c2410c; border-top:2px solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:12.5px; color:#8a5320; background:#fff8f0; border-left:3px solid var(--accent);
@@ -350,10 +465,27 @@ def _attr(s: str) -> str:
              .replace("<", "&lt;").replace(">", "&gt;"))
 
 
+# Render context for [[slug]] abstraction citations, set per-file in cmd_build (map + relative path to root).
+_ABBR_MAP: dict = {}
+_ABBR_PREFIX = ""
+
+
+def _abbr_link(slug: str, text: str | None) -> str:
+    a = _ABBR_MAP.get(slug)
+    disp = text if text else (a["headword"] if a else slug)
+    if not a:
+        return disp  # unresolved — validate flags it; render the words so the page still reads
+    return (f'<a class="abbr" href="{_ABBR_PREFIX}{ABBR_SRC[:-3]}.html#{slug}" '
+            f'title="{_attr(_plain(a["definition"]))}">{disp}</a>')
+
+
 def _inline(s: str) -> str:
-    """Inline markdown → HTML: code spans, links, bold, italic. Order-sensitive."""
+    """Inline markdown → HTML: code spans, [[abstraction]] cites, links, bold, italic. Order-sensitive."""
     spans: list[str] = []
+    raw: list[str] = []
     s = re.sub(r"`([^`]+)`", lambda m: spans.append(m.group(1)) or f"\x00{len(spans)-1}\x00", s)
+    s = ABBR_CITE_RE.sub(
+        lambda m: raw.append(_abbr_link(m.group(1), m.group(2))) or f"\x01{len(raw)-1}\x01", s)
     s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)",
                lambda m: f'<a href="{_attr(_md_link_rewrite(m.group(2)))}">{m.group(1)}</a>', s)
@@ -362,6 +494,7 @@ def _inline(s: str) -> str:
     s = re.sub(r"\x00(\d+)\x00",
                lambda m: "<code>{}</code>".format(
                    spans[int(m.group(1))].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")), s)
+    s = re.sub(r"\x01(\d+)\x01", lambda m: raw[int(m.group(1))], s)
     return s
 
 
@@ -589,6 +722,7 @@ LANDING_CSS = """
   .ways-note { font-size:11.5px; color:var(--muted); margin:2px 0 22px; }
   .mechanisms { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:4px 0 8px; }
   .mech { border:1.4px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:12px 15px; background:#fff; }
+  .mech.right { border-left:1.4px solid var(--line); border-right:4px solid var(--accent); text-align:right; }
   .mech h4 { margin:0 0 5px; font-size:14px; }
   .mech p { margin:0; font-size:13.5px; color:#444; line-height:1.5; }
   @media (max-width:720px){ .spectrum, .cols3, .mechanisms { grid-template-columns:1fr; } }
@@ -597,6 +731,7 @@ LANDING_CSS = """
 # (title, subtitle, href, extra-attrs) for the landing action cards
 LANDING_CARDS = [
     ("Views of the governance catalogue", "the whole catalogue at a glance — four views, controls clickable", "catalogue-figure.html", ""),
+    ("Abstractions glossary", "the artifacts the mechanisms are built from — named by role, not filename", "ABSTRACTIONS.html", ""),
     ("Quick start", "adopt these in your own repo", "quick-start.html", ""),
     ("Starter CLAUDE.md", "a real, mature one — redacted; a menu to adapt", "downloads/CLAUDE-starter.md", " download"),
     ("Download the catalogue", "all writeups as a markdown ZIP", "https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip", ""),
@@ -733,7 +868,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
     model with one sanctioned seam, a state that cannot be represented wrongly. Software
     <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a> — error-<i>proofing</i>, so the bad
     move can’t happen in the first place.</p></div>
-    <div class="mech"><h4>Control</h4><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
+    <div class="mech right"><h4>Control</h4><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
     a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
     deterministically, before the failure escapes.</p></div>
   </div>
@@ -904,21 +1039,41 @@ def build_views_page(entries: list[Entry]) -> str:
     return head + body + script + SITE_FOOTER + "\n</body>\n</html>\n"
 
 
+def build_abstractions_body(md: str, abbrs: dict) -> str:
+    """Render ABSTRACTIONS.md with an id-anchored <section> per entry (so `#slug` targets resolve)."""
+    head, *blocks = re.split(r"^## ", md, flags=re.M)
+    out = [render_md(head)]
+    for block in blocks:
+        m = re.search(r"<!-- slug: (\S+) -->", block)
+        slug = m.group(1) if m else ""
+        # keep the '## Headword' heading; drop the slug comment; render the rest as normal markdown
+        cleaned = re.sub(r"^<!-- slug: \S+ -->\s*$", "", block, flags=re.M)
+        heading, _, rest = cleaned.partition("\n")
+        body = (f'<h2>{_inline(heading.strip())} <code class="slug">[[{slug}]]</code></h2>\n'
+                + render_md(rest))
+        out.append(f'<section class="abbr-entry" id="{_attr(slug)}">{body}</section>')
+    return "\n".join(out)
+
+
 def cmd_build(_args) -> int:
+    global _ABBR_MAP, _ABBR_PREFIX
     entries = all_entries()
+    _ABBR_MAP = parse_abstractions()
     written = 0
-    md_files = sorted(f for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True)
-                      if os.sep + "downloads" + os.sep not in f     # raw assets, shipped as-is
-                      and os.path.basename(f) != "HANDOFF.md")       # internal handoff, not served
+    md_files = sorted(catalogue_md_files())
     by_path = {e.path: e for e in entries}
     for f in md_files:
         rel = os.path.relpath(f, ROOT)
         depth = rel.count(os.sep)
         rel_root = "../" * depth
+        _ABBR_PREFIX = rel_root
         md = open(f, encoding="utf-8").read()
         e = by_path.get(rel)
         title = (re.search(r"^# (.+)$", md, re.M) or [None, rel])[1]
-        if e:  # a control entry
+        if rel == ABBR_SRC:  # the glossary — id-anchored sections so `#slug` targets resolve
+            body = build_abstractions_body(md, _ABBR_MAP)
+            html = _page(title, _crumb(rel_root, [(title, "")]), body)
+        elif e:  # a control entry
             seg0 = rel.split(os.sep)[0]
             trail = [(ROLE_DISPLAY.get(seg0, e.role or ""), f"{rel_root}{seg0}/README.html"),
                      (e.family or "", ""), (e.title_only(), "")]  # family has no page → plain text

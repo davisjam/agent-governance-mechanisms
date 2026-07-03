@@ -30,10 +30,10 @@ overlap.
 
 ## Mechanism
 
-`lint-all.py` flocks a host instance-lock at entry (hard cap 1800s, fail-loud). Every code-writing
+The aggregate lint runner flocks a host instance-lock at entry (hard cap 1800s, fail-loud). Every code-writing
 brief declares a `compute-class` (`lint-all-on-commit` | `lint-all-explicit` | `read-only`); the
-orchestrator keeps only **one** `lint-all`-class brief in flight. The role-enforcement gate refuses to
-run `lint-all` under the `sonnet-active` role (see [role-typed-dispatch](../context-and-dispatch/role-typed-dispatch.md)).
+orchestrator keeps only **one** aggregate-lint-class brief in flight. The role-enforcement gate refuses to
+run the aggregate lint under the `sonnet-active` role (see [role-typed-dispatch](../context-and-dispatch/role-typed-dispatch.md)).
 A merge-train staging fast-path avoids redundant sweeps.
 
 ## Prerequisites
@@ -55,8 +55,8 @@ A merge-train staging fast-path avoids redundant sweeps.
 
 ## Known uses
 
-- The `lint-all.py` host instance-lock (hard cap 1800s).
-- Rule #44's `compute-class` brief declaration + one-in-flight discipline.
+- The aggregate-lint host instance-lock (hard cap 1800s).
+- The `compute-class` brief declaration + one-in-flight discipline.
 - The role-enforcement gate refusing `sonnet-active`.
 
 ## Related controls

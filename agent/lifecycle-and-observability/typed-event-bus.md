@@ -28,15 +28,16 @@ Free-form logs are a **pull** model: you have to know to look, and then parse pr
 bus gives a *queryable* surface, and its topics are a **closed const-string namespace** (a typed
 registry, lint-enforced) — so a typo can't silently create a dead topic that disables a signal. Most
 important, every topic carries a **playbook entry**: baseline-healthy, what-looks-wrong, and a target
-§Q lookup (rule #46 makes a missing playbook entry an *incomplete substrate design*). The distinction
+§Q lookup (a substrate-observability rule makes a missing playbook entry an *incomplete substrate design*). The distinction
 is *a typed, queryable, self-documenting signal with an owned playbook* versus *unstructured logs you
 must remember to grep and know how to read*.
 
 ## Mechanism
 
-Emitters call `event-bus.py` with a topic drawn from the const-string registry. The playbook maps each
-topic → healthy / wrong / §Q entry. Rule #46 requires any design doc that introduces a topic to carry
-an Observability block (lint AUDIT-ONLY → BLOCKING). Rule #47 sets the *consumption* cadence: the
+Emitters call the event bus with a topic drawn from the const-string registry. The playbook maps each
+topic → healthy / wrong / §Q entry. A substrate-observability rule requires any design doc that
+introduces a topic to carry an Observability block (lint AUDIT-ONLY → BLOCKING). A monitoring-cadence
+rule sets the *consumption* cadence: the
 orchestrator polls at session start and after cherry-pick waves, with named anomaly triggers (yields
 >3 in a row, `discard_lint`, `no_op` >30 min with tombstones queued). Together these are the **reactor
 loop**: emit → the orchestrator reads the queryable surface → matches the event to its playbook entry →
@@ -54,7 +55,7 @@ the load-bearing half — it is what turns a raw signal into a *reaction* rather
 ## Consequences & costs
 
 - **Only as useful as playbook coverage.** A topic without a §Q entry is emitted but not
-  interpretable — rule #46 exists because that gap is the common failure.
+  interpretable — the substrate-observability rule exists because that gap is the common failure.
 - **Consumption is discipline.** The bus is Hard emission, but *acting* on it depends on the
   orchestrator honoring the poll cadence — the signal can be perfect and still ignored.
 - **Registry + emit-point maintenance.** New topics need registry rows, emit wiring, and playbook
@@ -62,9 +63,10 @@ the load-bearing half — it is what turns a raw signal into a *reaction* rather
 
 ## Known uses
 
-- `event-bus.py` + the const-string topic registry.
-- The event-bus playbook (topic → healthy / wrong / §Q); rule #46's Observability-block requirement.
-- Rule #47's session-start + post-cherry-pick monitoring cadence.
+- The event bus + its const-string topic registry.
+- The event-bus playbook (topic → healthy / wrong / §Q); the Observability-block requirement for any
+  topic-introducing design doc.
+- The session-start + post-cherry-pick monitoring cadence.
 
 ## Related controls
 
@@ -73,7 +75,7 @@ the load-bearing half — it is what turns a raw signal into a *reaction* rather
   entry is the situation-keyed procedure the orchestrator runs when the event fires.
 - **Enabler** — [cron-alerts-gate](cron-alerts-gate.md): alerts are *derived events* on this bus,
   promoted into a blocking gate.
-- **Counterpart** — the rule-#46 Observability-block lint keeps every emitting substrate's topics
+- **Counterpart** — the Observability-block lint keeps every emitting substrate's topics
   documented (the playbook honest).
 - *See also (sibling)* — [agent-registry](agent-registry.md), [deploy-heartbeats](deploy-heartbeats.md):
   the fleet's other signal surfaces.

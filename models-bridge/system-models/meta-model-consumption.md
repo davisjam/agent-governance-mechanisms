@@ -9,7 +9,7 @@ the model it was copied from.
 | Summary | Read the model at runtime; never hardcode a snapshot. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
-| Enforcement | **Hard** (deterministic) · *blocking* — rule #42's forward-policing lint fails on embedded snapshots (verify the named lint is built before relying on it as a live gate) |
+| Enforcement | **Hard** (deterministic) · *blocking* — a forward-policing lint fails on embedded snapshots (verify the lint is built before relying on it as a live gate) |
 
 ## Motivation — the failure it kills
 
@@ -26,17 +26,18 @@ A hardcoded list is a *snapshot*; a queried model is a *source of truth*. With a
 authority is duplicated into every consumer and each copy is a future drift bug; with a query, there is
 one authoritative answer and consumers *derive* it — so a model change updates every consumer at once.
 Grepping the source is no better: it re-implements a fragile parser and couples the consumer to
-file layout. The rule is **read the meta-model, never embed a copy** — itself lint-enforced (#42),
-because the temptation to snapshot is constant. The distinction is *consume-by-query* versus
+file layout. The rule is **read the meta-model, never embed a copy** — itself lint-enforced, because
+the temptation to snapshot is constant. The distinction is *consume-by-query* versus
 *consume-by-copy*.
 
 ## Mechanism
 
-Consumers read the models at run/lint-time — via [`repo-query`](query-surface.md) for agents and
-orchestration, via direct import for Python tools — rather than embedding values. Rule #33 codifies the
-preference (a lint that *reads* the meta-file beats codegen beats a hand-rolled copy); rule #42's
-forward-policing lint fails a test that embeds a snapshot of a queryable value; rule #25 has lints
-declare their `COMPONENT_TAGS` against the component model rather than hardcoding scope.
+Consumers read the models at run/lint-time — via the [model query tool](query-surface.md) for agents and
+orchestration, via direct import for other tools — rather than embedding values. A preference order
+codifies it (a lint that *reads* the meta-file beats codegen beats a hand-rolled copy); a
+forward-policing lint fails a test that embeds a snapshot of a queryable value; a further rule has lints
+declare their component tags against the [[component-registry|component model]] rather than hardcoding
+scope.
 
 ## Prerequisites
 
@@ -53,8 +54,9 @@ declare their `COMPONENT_TAGS` against the component model rather than hardcodin
 
 ## Known uses
 
-- `components.py` / `repo-query.py` read at runtime by the lint fleet + dispatch.
-- Rule #42 (`lint-test-hardcodes-queryable-value.py`, per CLAUDE.md); rule #33; rule #25.
+- The [[component-registry]] and [[repo-query|model query tool]] read at runtime by the lint fleet + dispatch.
+- The snapshot-ban lint (fails a test embedding a queryable value); the meta-file-preference rule; the
+  lint-scope-declares-against-the-model rule.
 
 ## Related controls
 

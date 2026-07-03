@@ -30,6 +30,13 @@
   th { background:#f8fafc; font-weight:700; }
   hr { border:none; border-top:1px solid var(--line); margin: 22px 0; }
   .subtitle { font-size: 15px; color:#444; font-style: italic; margin: 0 0 6px; }
+  a.abbr { color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--accent);
+           cursor:help; }
+  a.abbr:hover { color:var(--accent); border-bottom-style:solid; }
+  section.abbr-entry { scroll-margin-top:14px; }
+  section.abbr-entry h2 code.slug { font-size:12.5px; font-weight:400; color:var(--accent);
+           background:#fff8f0; vertical-align:middle; margin-left:8px; }
+  p.abbr-grounds { font-size:13px; color:var(--muted); margin:4px 0 2px; }
   .tag { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:#c2410c; border-top:2px solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:12.5px; color:#8a5320; background:#fff8f0; border-left:3px solid var(--accent);
@@ -103,6 +110,7 @@
   .ways-note { font-size:11.5px; color:var(--muted); margin:2px 0 22px; }
   .mechanisms { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:4px 0 8px; }
   .mech { border:1.4px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:12px 15px; background:#fff; }
+  .mech.right { border-left:1.4px solid var(--line); border-right:4px solid var(--accent); text-align:right; }
   .mech h4 { margin:0 0 5px; font-size:14px; }
   .mech p { margin:0; font-size:13.5px; color:#444; line-height:1.5; }
   @media (max-width:720px){ .spectrum, .cols3, .mechanisms { grid-template-columns:1fr; } }
@@ -150,7 +158,7 @@
     model with one sanctioned seam, a state that cannot be represented wrongly. Software
     <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a> — error-<i>proofing</i>, so the bad
     move can’t happen in the first place.</p></div>
-    <div class="mech"><h4>Control</h4><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
+    <div class="mech right"><h4>Control</h4><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
     a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
     deterministically, before the failure escapes.</p></div>
   </div>
@@ -224,6 +232,7 @@
   production system.</p>
   <div class="cards-grid">
   <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, controls clickable</span></a>
+  <a class="lcard" href="ABSTRACTIONS.html"><b>Abstractions glossary</b><span>the artifacts the mechanisms are built from — named by role, not filename</span></a>
   <a class="lcard" href="quick-start.html"><b>Quick start</b><span>adopt these in your own repo</span></a>
   <a class="lcard" href="downloads/CLAUDE-starter.md" download><b>Starter CLAUDE.md</b><span>a real, mature one — redacted; a menu to adapt</span></a>
   <a class="lcard" href="https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip"><b>Download the catalogue</b><span>all writeups as a markdown ZIP</span></a>

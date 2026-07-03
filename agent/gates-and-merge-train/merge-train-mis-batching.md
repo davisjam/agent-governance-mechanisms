@@ -32,7 +32,7 @@ by graph independence* versus *a sequence that hopes for the best and retries on
 
 Each tick: build the conflict graph from per-worktree file footprints, compute an independent set,
 land that set this tick, defer the rest to the next. Throughput is maximized upstream, at dispatch:
-rule #50 says to launch waves with **disjoint footprints** so the MIS is large — and warns that
+the scheduling discipline launches waves with **disjoint footprints** so the MIS is large — and warns that
 hot-spot files (touched by many agents) cap the MIS to size 1 no matter how many agents are ready.
 Landed commits are checked by patch-id / ancestry reachability.
 
@@ -49,14 +49,14 @@ Landed commits are checked by patch-id / ancestry reachability.
 - **MIS is approximate.** The batch is a greedy independent set, not provably maximum every tick — good
   enough, but not optimal.
 - **Hot-spot files hard-cap throughput.** If eight agents all touch one file, the MIS is 1 regardless
-  of the algorithm — the win depends entirely on dispatch-side footprint disjointness (rule #50).
+  of the algorithm — the win depends entirely on dispatch-side footprint disjointness.
 - **It moves complexity upstream.** The orchestrator must now think about footprints when composing
   waves; a mis-declared footprint can let a real conflict slip into a batch.
 
 ## Known uses
 
-- `merge_train.py` — the conflict-graph MIS batcher.
-- Rule #50's 8-pool disjoint-footprint dispatch recipe.
+- The merge-train batcher — the conflict-graph MIS batcher.
+- The disjoint-footprint dispatch recipe (compose waves with non-overlapping file sets).
 - Patch-id / ancestry reachability verification of landed commits.
 
 ## Related controls
@@ -65,5 +65,5 @@ Landed commits are checked by patch-id / ancestry reachability.
   [sentinel-first-commit](sentinel-first-commit.md) and upstream of [staged-deploy-gates](staged-deploy-gates.md).
 - **Consumer** — reads the [agent-registry](../lifecycle-and-observability/agent-registry.md) (Lifecycle & observability family) to know which worktrees
   are ready to land.
-- **Enabler** — disjoint-footprint dispatch discipline (rule #50) is what makes the batch large; the
+- **Enabler** — disjoint-footprint dispatch discipline is what makes the batch large; the
   algorithm alone cannot beat a hot-spot file.
