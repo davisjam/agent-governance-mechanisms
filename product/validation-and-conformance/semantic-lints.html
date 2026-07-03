@@ -77,7 +77,7 @@
 <h2>Prerequisites</h2>
 <ul><li><strong>A lint framework</strong> with per-lint scope + severity declaration.</li><li><strong>The invariants made mechanically detectable</strong> — a rule you can't express as a check can't join.</li><li><strong>A runner wired into the gates</strong>, and a scoped escape hatch for legitimate exceptions.</li></ul>
 <h2>Consequences &amp; costs</h2>
-<ul><li><strong>A large maintenance surface.</strong> Hundreds of lints are hundreds of things to keep current; this is the very "500+ lints" magnitude that the support-apparatus ratio counts.</li><li><strong>False positives need escapes.</strong> A too-strict lint blocks legitimate code until a <code>noqa</code> is added — a small, audited hole.</li><li><strong>Floor vs fleet.</strong> The custom fleet only earns its keep atop the commodity analysis floor; without that floor the grade rests on the wrong thing.</li></ul>
+<ul><li><strong>A large maintenance surface.</strong> Hundreds of lints are hundreds of things to keep current — the "500+ lints" magnitude the support-apparatus ratio counts.</li><li><strong>False positives need escapes.</strong> A too-strict lint blocks legitimate code until a <code>noqa</code> is added — a small, audited hole.</li><li><strong>Floor vs fleet.</strong> The custom fleet only earns its keep atop the commodity analysis floor; without that floor the grade rests on the wrong thing.</li></ul>
 <h2>Known uses</h2>
 <ul><li><code>lint-banned-apis</code>, <code>no-silent-catch</code>, <code>console-singleton-mutation</code>, the sole-seam ban-lints.</li><li>The lint-declaration discipline (each lint declares its scope, severity, and a verb-of-checking docstring); the scoped <code>noqa</code> escape convention.</li></ul>
 <h2>Related controls</h2>

@@ -15,12 +15,12 @@ wiring — so a new mutator cannot land producing unattributable mutations.
 [Attribution stamps](mutator-stamps.md) only work if **every** mutator stamps. Add one new verb without
 wiring and it silently produces unattributable mutations — a hole in the audit trail that no one sees
 until an RCA hits it and finds no stamp. The failure is *an unstamped mutator (an attribution gap)*, and
-it recurs precisely when a new verb is added — usually under time pressure, when "remember to stamp" is
+it recurs when a new verb is added — usually under time pressure, when "remember to stamp" is
 most likely to be forgotten.
 
 ## Why it's not just "remember to add the stamp" (or "review new mutators")
 
-"Remember" fails exactly when a new verb is added in a hurry, and review reliably misses a *missing*
+A reviewer scanning a diff sees a *present* stamp but rarely notices a *missing*
 call (nothing in the diff shouts "no stamp here"). The F10 lint **mechanically checks that every mutator
 verb** in the `Primitives` directories calls stamp wiring, and fails the build on a gap — HIGH-severity,
 held at 0 open gaps. The distinction is *a mechanical completeness check over all verbs* versus *a

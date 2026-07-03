@@ -77,7 +77,7 @@
 <h2>Prerequisites</h2>
 <ul><li><strong>Typed models that import nothing</strong> — data, not code, so anything can read them cheaply.</li><li><strong>Continuous consumption</strong> — the model must be read on real runs, or it is just another doc.</li><li><strong>A drift gate per model</strong> (<a href="drift-parity-gates.html">drift-parity-gates</a>) — without enforcement the "cannot drift" claim is a hope.</li></ul>
 <h2>Consequences &amp; costs</h2>
-<ul><li><strong>Upkeep is real</strong> — the models must be maintained and the drift gates satisfied on every change; this is exactly the tedium that stops humans, and the reason it needs agents.</li><li><strong>A wrong model is worse than none</strong> — an authoritative-looking model that has drifted misleads everything downstream; hence the drift gates are load-bearing, not optional.</li><li><strong>Modelling discipline up front</strong> — deciding what to model, and in what dialect, is design work.</li></ul>
+<ul><li><strong>Upkeep is real</strong> — the models must be maintained and the drift gates satisfied on every change; this is exactly the tedium that stops humans, and the reason it needs agents.</li><li><strong>A wrong model is worse than none</strong> — an authoritative-looking model that has drifted misleads everything downstream; hence the drift gates are not optional.</li><li><strong>Modelling discipline up front</strong> — deciding what to model, and in what dialect, is design work.</li></ul>
 <h2>Known uses</h2>
 <ul><li>The model catalog (typed YAML/JSON + loaders; imports nothing).</li><li>The preference order: a stable lint that reads the meta-file, over codegen, over a hand-rolled copy.</li><li>Each model's doc-derived characterization pin.</li></ul>
 <h2>Related controls</h2>

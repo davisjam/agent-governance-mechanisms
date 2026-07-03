@@ -14,7 +14,7 @@ users see it, not after.
 ## Motivation — the failure it kills
 
 Shipping a build straight to production means a regression lands on users; the failure *is* the
-incident. This is standard practice everywhere, but it is load-bearing at agentic velocity precisely
+incident. This is standard practice everywhere, but it matters far more at agentic velocity, precisely
 because deploys are frequent and agent-initiated — the more often you ship, the more often an
 un-gated bad build reaches users.
 

@@ -55,13 +55,16 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
   what the reclaim trusts." Prefer "X does Y" to "Y is what X does."
 - **Short, declarative sentences — one idea each.** Break a clause-stacked sentence into two.
 - **Say it once.** State the point and move on. No "One line:", no "the heart of it", no closing
-  sentence that restates the paragraph. If you summarized your own paragraph, cut one of the two.
+  sentence that restates the paragraph. And don't let two sections restate each other — the Motivation,
+  the "Why it's not just", and the closing each make a *distinct* point.
 - **Concrete words, not reflex labels.** Reach for the precise term — *central*, *authoritative*, *the
   weak point*, *essential*. Use "load-bearing" very sparingly, if at all.
-- **Cut qualifiers.** Drop *very, quite, essentially, arguably, precisely*. Bold one or two phrases per
-  section, not by habit.
-- **Describe, don't sell.** Give the mechanism and the failure it kills. Don't tell the reader every
-  project should adopt it — that's their call.
+- **Cut qualifiers.** Drop *very, quite, essentially, arguably, reliably*, and "the whole point". Keep
+  *precisely because* / *exactly when* only where they sharpen a causal claim — cut them as bare
+  intensifiers. Bold one or two phrases per section, not by habit.
+- **Describe, don't sell.** Give the mechanism and the failure it kills. Don't crown it (*the best*, *the
+  highest-leverage*), don't tell the reader every project should adopt it, and don't comment on the
+  entry's own novelty or thinness — those are the reader's calls.
 - **Instance entries lead with the portable pattern.** When an entry instantiates a general pattern,
   open its Intent with the transferable claim, then name the project instance in parentheses —
   *"…route all mutation of a format through one typed model with a ban-lint on the raw library (our

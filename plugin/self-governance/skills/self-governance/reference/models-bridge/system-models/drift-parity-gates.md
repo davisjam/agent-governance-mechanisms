@@ -21,8 +21,8 @@ without the code.
 
 ## Why it's not just "regenerate the model from the code" (or "trust people to update it)"
 
-Regenerating the model from the code makes the code the source of truth — but the whole point is that
-the *model* is the source of truth that *generates* parts of the code (NetworkPolicy, wiring). One-way
+Regenerating the model from the code makes the code the source of truth — but the *model* must be the
+source of truth that *generates* parts of the code (NetworkPolicy, wiring). One-way
 regeneration can't express that. Trusting people to update both sides is exactly what fails. Parity
 gates instead enforce the invariant **in both directions**: every frontend tree ↔ a matching entity
 *and* every entity ↔ a real tree; every handler ↔ its spec; every `flock` ↔ a declared lock; every

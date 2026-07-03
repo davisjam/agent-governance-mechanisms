@@ -38,8 +38,7 @@ It comes down to **availability vs. binding.**
   specification, **mandatory reading by construction**. So injecting the constraints into the brief is
   not *adding information* — it is a **change of status**, relocating a rule from "available" to "binding."
 
-**One line:** docs make a rule *knowable*; the brief makes it *governing* — and that promotion, done
-automatically at dispatch time, is the control.
+Docs make a rule *knowable*; the brief makes it *governing*.
 
 ## Mechanism
 

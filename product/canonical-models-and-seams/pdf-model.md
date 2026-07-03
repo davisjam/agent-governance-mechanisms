@@ -23,7 +23,7 @@ class recur at every call site.
 ## Why it's not just "use the library carefully" (or "code-review the PDF calls")
 
 The library's sharp edges are invisible where they're used — a missing `SetModified()` looks like correct
-code, and reviewers miss it reliably because nothing in the diff flags it. `PdfModel` makes the raw
+code, and reviewers miss it because nothing in the diff flags it. `PdfModel` makes the raw
 API **unreachable**: typed mutators encode the invariants (they can't forget `SetModified()`), and the
 raw-PDF-library ban-lint fails the build on any raw constructor, `AddTag`, `dict.Put`, or
 `structRoot.AddKid`. The distinction is *a typed sole-seam whose raw alternative is lint-banned* versus

@@ -23,8 +23,8 @@ Examples check *points*; you cannot enumerate a document's input space by hand, 
 always in the case you didn't write. A property test asserts an **invariant over generated inputs**
 (FsCheck synthesizes them) and, on failure, **shrinks** to a minimal counterexample you can debug. The
 distinction is *an invariant checked over generated inputs* versus *a finite set of hand-picked
-examples*. It is the highest-leverage tool for the bug-finding-affordance goal — a good property surfaces
-latent bugs a hundred examples would miss.
+examples*. A good property surfaces
+latent bugs a hundred hand-picked examples would miss.
 
 ## Mechanism
 

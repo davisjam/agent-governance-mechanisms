@@ -16,7 +16,7 @@ rather than parsing raw files, and the tool itself documents how the models load
 The models are the agent's compressed map of the codebase — but only if the agent can *read them
 cheaply and correctly*. Left to `cat`/`grep` the model files, an agent (or a tool) re-implements
 loading + traversal, gets the dialect subtly wrong, and produces brittle one-offs. The failure is
-*ad-hoc, error-prone model access* — which undermines the whole point of having a queryable map.
+*ad-hoc, error-prone model access* — which defeats a queryable map's purpose.
 
 ## Why it's not just "import the model / cat the file"
 

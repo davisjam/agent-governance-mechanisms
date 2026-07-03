@@ -24,9 +24,8 @@ Hand-rolled recursion **duplicates the traversal logic**, and duplicated logic d
 (visit every node type, in the right order, resolving indirect references) get re-derived — badly — at
 each site. A canonical walker **centralizes** the traversal so those invariants are fixed once and
 inherited everywhere. The distinction is *a single canonical traversal* versus *N ad hoc recursions
-that each re-introduce the same class of omission*. (A standard DRY-plus-walker-discipline move, so its
-"why not" is thinner than the novel controls' — but it keeps the typed models usable
-without re-opening the raw-access door.)
+that each re-introduce the same class of omission*. (A standard DRY-plus-walker-discipline move that
+keeps the typed models usable without re-opening the raw-access door.)
 
 ## Mechanism
 

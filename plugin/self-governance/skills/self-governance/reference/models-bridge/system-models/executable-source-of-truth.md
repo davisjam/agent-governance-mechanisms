@@ -59,7 +59,7 @@ frequently *read* or *generated-from* — so it is exercised constantly.
 - **Upkeep is real** — the models must be maintained and the drift gates satisfied on every change;
   this is exactly the tedium that stops humans, and the reason it needs agents.
 - **A wrong model is worse than none** — an authoritative-looking model that has drifted misleads
-  everything downstream; hence the drift gates are load-bearing, not optional.
+  everything downstream; hence the drift gates are not optional.
 - **Modelling discipline up front** — deciding what to model, and in what dialect, is design work.
 
 ## Known uses

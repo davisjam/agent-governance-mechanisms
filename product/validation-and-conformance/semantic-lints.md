@@ -52,8 +52,8 @@ backtracking; the fix was *eliminate the surface*, not lint the bug class). Copy
 
 ## Consequences & costs
 
-- **A large maintenance surface.** Hundreds of lints are hundreds of things to keep current; this is
-  the very "500+ lints" magnitude that the support-apparatus ratio counts.
+- **A large maintenance surface.** Hundreds of lints are hundreds of things to keep current — the
+  "500+ lints" magnitude the support-apparatus ratio counts.
 - **False positives need escapes.** A too-strict lint blocks legitimate code until a `noqa` is added —
   a small, audited hole.
 - **Floor vs fleet.** The custom fleet only earns its keep atop the commodity analysis floor; without

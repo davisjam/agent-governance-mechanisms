@@ -20,7 +20,7 @@ the author wrote. The failure recurs on every remediation pass.
 
 ## Why it's not just "trust the remediation code" (or "spot-check outputs")
 
-"Trust the code" is exactly what fails when a mutator has a bug, and spot-checking outputs misses
+"Trust the code" breaks the moment a mutator has a bug, and spot-checking outputs misses
 *silent* drops — you don't notice the paragraph that's gone. `ContentValidator` makes fidelity a
 **deterministic post-condition**: the input's content must be a subset of the output's, checked
 mechanically, on every production job. The distinction is *a fidelity post-condition gate that fails
