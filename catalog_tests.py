@@ -196,36 +196,36 @@ def _free_port() -> int:
 
 
 def check_axe(strict: bool):
-    """Run axe-core over representative built pages. SKIP if npx/browser unavailable."""
+    """Run axe-core over EVERY built page (the whole site, minus the plugin bundle). SKIP if
+    npx/browser unavailable. `--load-delay` lets async content (the figure iframes) settle so the
+    scan is deterministic — without it a heavy page can be scanned before it finishes loading and
+    return a silent partial result."""
     if not shutil.which("npx"):
-        return (FAIL if strict else SKIP), ["npx not found — install Node to enable axe"]
-    pages = ["index.html", "quick-start.html", "ABSTRACTIONS.html",
-             "agent/context-and-dispatch/brief-linting.html"]
-    pages = [p for p in pages if os.path.isfile(os.path.join(ROOT, p))]
+        return (FAIL if strict else SKIP), ["npx not found — run ./setup.sh (installs @axe-core/cli)"]
+    pages = sorted(f for f in glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True)
+                   if os.sep + "plugin" + os.sep not in f)
     if not pages:
-        return (FAIL if strict else SKIP), ["no built pages to scan (run build first)"]
+        return (FAIL if strict else SKIP), ["no built pages to scan (run `catalog.py build` first)"]
     port = _free_port()
-    handler = partial(SimpleHTTPRequestHandler, directory=ROOT)
-    httpd = ThreadingHTTPServer(("127.0.0.1", port), handler)
-    t = threading.Thread(target=httpd.serve_forever, daemon=True)
-    t.start()
+    httpd = ThreadingHTTPServer(("127.0.0.1", port), partial(SimpleHTTPRequestHandler, directory=ROOT))
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        urls = [f"http://127.0.0.1:{port}/{p}" for p in pages]
-        r = _run(["npx", "--yes", "@axe-core/cli", "--exit", *urls], timeout=300)
+        urls = [f"http://127.0.0.1:{port}/{os.path.relpath(p, ROOT)}" for p in pages]
+        r = _run(["npx", "--yes", "@axe-core/cli", "--exit", "--load-delay", "1000",
+                  "--timeout", "120", *urls], timeout=900)
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as ex:
         return (FAIL if strict else SKIP), [f"axe could not run ({type(ex).__name__}) — treating as skip"]
     finally:
         httpd.shutdown()
     out = r.stdout + r.stderr
-    # axe-core/cli --exit returns non-zero when violations are found; a launch failure (no browser) also
-    # returns non-zero but without a violations summary — distinguish so a missing browser SKIPs.
-    if re.search(r"\bviolation", out, re.I):
-        if r.returncode != 0:
-            hits = [ln.strip() for ln in out.splitlines() if re.search(r"violation|WCAG|\bfail", ln, re.I)]
-            return FAIL, hits[:20] or ["axe reported violations (see build log)"]
-        return PASS, []
-    if r.returncode != 0:
-        return (FAIL if strict else SKIP), [f"axe did not complete (likely no headless browser): {out.strip()[:200]}"]
+    found = re.findall(r'Violation of "([^"]+)" with (\d+)', out)
+    if found:  # real a11y violations — aggregate by rule across all pages
+        agg: dict[str, int] = {}
+        for name, n in found:
+            agg[name] = agg.get(name, 0) + int(n)
+        return FAIL, [f"{name}: {cnt} occurrence(s)" for name, cnt in sorted(agg.items(), key=lambda kv: -kv[1])]
+    if r.returncode != 0:  # non-zero without a violations summary = launch/browser failure
+        return (FAIL if strict else SKIP), [f"axe did not complete (no headless browser?): {out.strip()[:200]}"]
     return PASS, []
 
 
