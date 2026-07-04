@@ -75,7 +75,7 @@ is absent — so a browser-less CI enforces the Tier-1 stdlib checks and skips a
 | Layer | Needs | Notes |
 |---|---|---|
 | Catalogue tool + Tier-1 tests | **Python 3 stdlib only** | zero install; `git clone` and go |
-| Tier-2 axe (a11y) | Node.js + `@axe-core/cli` + a Chrome/Chromium browser | `./setup.sh` installs the npm dep; `node_modules/` is gitignored |
+| Tier-2 axe (a11y) | Node.js + `@axe-core/cli` + a Chrome/Chromium browser | `./setup.sh` runs `npm ci` — the exact tree pinned in `package-lock.json`; `node_modules/` is gitignored |
 | Tier-2 manifest validation | the `claude` CLI | ships with Claude Code |
 
 The core tool stays dependency-free on purpose; the Node dep exists **only** for the optional a11y tier
@@ -86,3 +86,34 @@ and never blocks a fresh clone.
 The site is GitHub Pages, built in CI from the `.md` on every push (the "executable, can't-drift" build).
 The tracked `hooks/pre-commit` keeps the committed HTML + skill bundle in sync locally
 (`python3 catalog.py install-hooks` to enable). Never hand-edit `.html` — it's regenerated and overwritten.
+
+## Security analysis
+
+This is a public static-site repo. The only privileged automation is the Pages deploy workflow
+([`.github/workflows/pages.yml`](.github/workflows/pages.yml)) — it holds a `GITHUB_TOKEN` and can publish
+to the site, so it is the one thing worth attacking. There are no runtime secrets, no server, and the
+skill itself executes nothing (see [`PRIVACY.md`](PRIVACY.md)). The workflow is hardened along five axes:
+
+- **Trusted-only triggers.** It runs on `push` to `main` and manual `workflow_dispatch` — both require
+  write access. There is **no `pull_request_target`**, so a fork or PR can never run it with the repo's
+  token. This designs out the "pwn request" class (the most common Actions compromise).
+- **No injection surface.** Every `run:` step is a static command. No untrusted input
+  (`${{ github.event.* }}` — a commit message, branch name, PR title) is interpolated into a shell.
+- **Job-scoped least privilege.** The `build` job runs third-party test code (axe-core) and so holds
+  **no write capability** — only `contents: read` + `pages: read`. The deploy credentials
+  (`pages: write` + OIDC `id-token: write`) live solely on the `deploy` job, which runs one first-party
+  action and no repo/test code. A compromised test dependency therefore cannot deploy.
+- **Pinned test tooling.** CI installs axe via `npm ci` against a committed `package-lock.json` — the
+  exact transitive tree, verified by sha512 integrity hashes. The a11y check invokes it with
+  `npx --no-install`, so it never fetches from the npm registry at run time (an unpinned `--yes` fetch
+  inside a CI job is the supply-chain hole this closes).
+- **SHA-pinned actions.** Every `uses:` is pinned to an immutable commit SHA, not a movable tag like
+  `v4` (a tag can be re-pointed at new code; a SHA cannot). The trailing `# v4` comment tracks the human
+  version for upgrades.
+
+The published artifact is assembled into `_site/` with `.git`, `node_modules`, and `.github` excluded —
+nothing secret on a public repo, but it keeps the deployed tree to the served site only.
+
+**If you change the workflow:** keep the trigger set trusted-only, never interpolate event data into a
+`run:`, and keep deploy permissions off the `build` job. When bumping a pinned action or `@axe-core/cli`,
+update the SHA / `package-lock.json` deliberately — that is the pin doing its job.

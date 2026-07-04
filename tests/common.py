@@ -57,10 +57,16 @@ def changed_vs_origin() -> frozenset[str] | None:
     return frozenset(n for n in names if n)
 
 
+# Path segments that hold .html but are NOT part of the served site: the plugin bundle (markdown, not a
+# site) and node_modules (dev-only axe tree — its packages ship demo .html that would otherwise get
+# scanned/served). Kept as a tuple so a11y + link + orphan scanners share one definition of "the site".
+_NON_SITE_DIRS = ("plugin", "node_modules", "site", "_site")
+
+
 def html_files() -> list[str]:
-    """Every built page, minus the plugin bundle (which is markdown, not a served site)."""
+    """Every built page, minus non-site dirs (the plugin bundle + node_modules)."""
     return [f for f in glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True)
-            if os.sep + "plugin" + os.sep not in f]
+            if not any(os.sep + d + os.sep in f for d in _NON_SITE_DIRS)]
 
 
 def free_port() -> int:

@@ -1,6 +1,18 @@
 # Build the catalogue site from its markdown and deploy to GitHub Pages.
 # Source = "GitHub Actions" (Settings → Pages). Running `catalog.py build` in CI is the
 # "executable, can't-drift" build: the deployed HTML is regenerated from the .md on every push.
+#
+# Security posture (see DEVELOP.md § "Security analysis"):
+#   - Triggers are trusted-only (push to main / manual dispatch). NO pull_request_target, so no
+#     fork/PR can run this with the repo's token ("pwn request" class is designed out).
+#   - No untrusted input is interpolated into any `run:` (no script-injection surface).
+#   - Permissions are job-scoped: the `build` job (which runs third-party test code — axe-core) holds
+#     NO deploy/write capability; only the `deploy` job gets `pages: write` + `id-token: write`.
+#   - Third-party test tooling is pinned: `npm ci` installs the exact tree in package-lock.json
+#     (integrity-hash verified); axe runs via `npx --no-install` so it never fetches at run time.
+#   - Every action is pinned to an immutable commit SHA (a tag like `v4` is movable; a SHA is not).
+#   - The published artifact excludes `.git`, `node_modules`, and `.github` (nothing secret on a public
+#     repo, but it keeps the deploy tree minimal and avoids serving node_modules).
 name: Deploy Pages
 
 on:
@@ -8,10 +20,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Default (inherited) permissions: read-only. Each job narrows/adds from here.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -20,28 +31,47 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # The build job runs repo + third-party (axe-core) code. It deliberately has NO write/deploy
+    # capability — only what it needs to check out and read Pages config.
+    permissions:
+      contents: read
+      pages: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.x"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+      - name: Install pinned test tooling (axe-core, exact tree from lockfile)
+        run: npm ci
       - name: Validate schema
         run: python3 catalog.py validate
       - name: Render markdown -> HTML
         run: python3 catalog.py build
       - name: Test suite (blocking — authoritative --full run; post-push HEAD==origin, so incremental would skip Tier 2)
         run: python3 catalog_tests.py --full
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Assemble site artifact (exclude .git / node_modules / .github)
+        run: |
+          mkdir -p _site
+          rsync -a --exclude='.git' --exclude='node_modules' --exclude='.github' \
+                --exclude='__pycache__' --exclude='_site' ./ _site/
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
-          path: .
+          path: _site
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    # Only the deploy job gets the deploy credentials (OIDC id-token + pages:write).
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

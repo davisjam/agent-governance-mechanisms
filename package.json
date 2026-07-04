@@ -9,6 +9,6 @@
     "test": "python3 catalog.py test"
   },
   "devDependencies": {
-    "@axe-core/cli": "^4.10.0"
+    "@axe-core/cli": "4.12.1"
   }
 }

@@ -1254,7 +1254,8 @@ def check_orphan_pages() -> list[str]:
     The gitignored skill bundle (`plugin/`) and the serve dir (`site/`) are out of scope."""
     pages: list[str] = []
     for dirpath, dirnames, filenames in os.walk(ROOT):
-        dirnames[:] = [d for d in dirnames if d not in ("plugin", "site", ".git", "__pycache__", "hooks")]
+        dirnames[:] = [d for d in dirnames
+                       if d not in ("plugin", "node_modules", "site", "_site", ".git", "__pycache__", "hooks")]
         for fn in filenames:
             if fn.endswith(".html"):
                 pages.append(os.path.join(dirpath, fn))

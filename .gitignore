@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 .DS_Store
 /site/
+/_site/
 .claude/
 plugin/**/*.html
 node_modules/

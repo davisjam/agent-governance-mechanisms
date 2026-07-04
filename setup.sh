@@ -15,7 +15,9 @@ if ! command -v npm >/dev/null 2>&1; then
 fi
 
 echo "Installing axe-core CLI (Tier-2 a11y test dependency)…"
-npm install
+# `npm ci` installs the EXACT tree pinned in package-lock.json (with integrity hashes) — deterministic,
+# and it never silently bumps a dependency the way `npm install` can. Same command CI uses.
+npm ci
 
 echo
 echo "Done. Run the full test suite with:   python3 catalog.py test"
