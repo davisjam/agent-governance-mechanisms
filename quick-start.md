@@ -39,8 +39,7 @@ installing, though: a **third-party plugin that reads, and on your approval writ
 
 If a plugin isn't an option for your org, use Path B.
 
-**Quickest — install from the marketplace.** In Claude Code, two commands (the repo *is* a plugin
-marketplace):
+**Quickest — install from the marketplace.** In Claude Code, two commands:
 
 ```
 /plugin marketplace add davisjam/agent-governance-mechanisms

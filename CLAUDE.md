@@ -53,6 +53,9 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
 
 - **Active voice; name the actor.** "The reclaim trusts the record," not "the record's correctness is
   what the reclaim trusts." Prefer "X does Y" to "Y is what X does."
+- **Avoid the "the X *is* a Y" copula, except very rarely.** An equative sentence stalls — reach for the
+  verb that says what X *does*. "The pre-commit hook gates every commit," not "the pre-commit hook *is* a
+  gate." Keep the copula only when the identity claim itself is the point and no verb captures it.
 - **Short, declarative sentences — one idea each.** Break a clause-stacked sentence into two.
 - **Break up blocks; prefer bullets.** A wall of text goes unread. Keep paragraphs to 2–4 sentences —
   lead a section with the frame, then break the detail out. An enumeration of three or more items is a
