@@ -11,7 +11,23 @@ import threading
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
-from tests.common import FAIL, PASS, ROOT, SKILL, SKIP, free_port, html_files, run
+from tests.common import _NON_SITE_DIRS, FAIL, PASS, ROOT, SKILL, SKIP, free_port, html_files, run
+
+
+class _SiteHandler(SimpleHTTPRequestHandler):
+    """Serve ONLY the built site. axe fetches an explicit page list, but a bare handler would expose the
+    whole repo root (incl. `.git`) on the ephemeral localhost port for the run's duration — so refuse any
+    path under a non-site dir or a dotfile. 404 (not 403) so it doesn't confirm what exists."""
+
+    def send_head(self):
+        rel = self.path.lstrip("/").split("?", 1)[0].split("#", 1)[0]
+        if any(seg in _NON_SITE_DIRS or seg.startswith(".") for seg in rel.split("/") if seg):
+            self.send_error(404)
+            return None
+        return super().send_head()
+
+    def log_message(self, *_args):  # keep the suite output clean (no per-request GET spam)
+        pass
 
 
 def check_axe(strict: bool):
@@ -30,7 +46,7 @@ def check_axe(strict: bool):
     if not pages:
         return (FAIL if strict else SKIP), ["no built pages to scan (run `catalog.py build` first)"]
     port = free_port()
-    httpd = ThreadingHTTPServer(("127.0.0.1", port), partial(SimpleHTTPRequestHandler, directory=ROOT))
+    httpd = ThreadingHTTPServer(("127.0.0.1", port), partial(_SiteHandler, directory=ROOT))
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
         urls = [f"http://127.0.0.1:{port}/{os.path.relpath(p, ROOT)}" for p in pages]

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import glob
+import html
 import json
 import os
 import re
@@ -394,9 +395,43 @@ def check_summary_counts(entries: list[Entry]) -> list[str]:
     return problems
 
 
+_ALLOWED_LINK_SCHEMES = ("http://", "https://", "mailto:")
+
+
+def check_link_schemes() -> list[str]:
+    """Every markdown link resolves to an allowed scheme (http/https/mailto), an anchor (#…), or a
+    relative path. The renderer neutralizes anything else to `#` (so an unsafe href is impossible on the
+    built site); this flags it loudly so the author fixes the *source* rather than shipping a dead link."""
+    problems: list[str] = []
+    for f in catalogue_md_files():
+        for i, ln in enumerate(open(f, encoding="utf-8"), 1):
+            for m in re.finditer(r"\]\(\s*([^)]+?)\s*\)", ln):
+                u = m.group(1).strip()
+                if u.startswith(_ALLOWED_LINK_SCHEMES) or u.startswith("#"):
+                    continue
+                if re.match(r"[a-zA-Z][a-zA-Z0-9+.\-]*:", u):  # a scheme, and not an allowed one
+                    problems.append(f"{os.path.relpath(f, ROOT)}:{i}: disallowed link scheme -> {u[:60]}")
+    return problems
+
+
+def check_escape_seam() -> list[str]:
+    """HTML escaping goes through `_esc` (the stdlib `html.escape`) — NEVER a hand-rolled replace-chain,
+    the class the abbr-display XSS + the stray-`&` came from. Forbid the chain anywhere in the source."""
+    src = open(os.path.join(ROOT, "catalog.py"), encoding="utf-8").read().splitlines()
+    needle = '.replace("&", "&amp;")' + '.replace("<", "&lt;")'  # concat so THIS line can't self-match
+    return [f"catalog.py:{i + 1}: hand-rolled HTML-escape chain — use `_esc` (html.escape) instead"
+            for i, ln in enumerate(src) if needle in ln]
+
+
 def cmd_validate(_args) -> int:
     entries = all_entries()
     n_issues = 0
+    for msg in check_link_schemes():
+        print(f"  [scheme] {msg}")
+        n_issues += 1
+    for msg in check_escape_seam():
+        print(f"  [seam]  {msg}")
+        n_issues += 1
     for e in entries:
         for msg in e.issues:
             print(f"  [entry] {e.path}: {msg}")
@@ -566,8 +601,13 @@ ROLE_DISPLAY = {"agent": "Agent", "models-bridge": "Models-bridge", "product": "
 
 
 def _md_link_rewrite(url: str) -> str:
-    if url.startswith(("http://", "https://", "#", "mailto:")):
+    u = url.strip()
+    if u.startswith(("http://", "https://", "mailto:", "#")):
         return url
+    if re.match(r"[a-zA-Z][a-zA-Z0-9+.\-]*:", u):
+        # Any OTHER scheme (javascript:/data:/vbscript:/file:…) — neutralize. An unsafe href is impossible
+        # by construction here; `check_link_schemes` (validate) also fails loudly so the author sees it.
+        return "#"
     if "downloads/" in url:
         return url  # raw asset (CLAUDE starter) — shipped as .md, not rendered
     if url.endswith(".md"):
@@ -575,9 +615,16 @@ def _md_link_rewrite(url: str) -> str:
     return url.replace(".md#", ".html#")
 
 
+def _esc(s: str) -> str:
+    """The ONE text->HTML escaper — the stdlib canonical `html.escape` (NOT a hand-rolled replace-chain).
+    All rendered text routes through here — body, code, abbr display, and `_attr` for attribute values —
+    so 'unescaped output' has a single owner. `check_escape_seam` (validate) forbids the hand-rolled chain
+    anywhere in the source."""
+    return html.escape(s, quote=False)  # & < >  (quote handled by _attr for attribute contexts)
+
+
 def _attr(s: str) -> str:
-    return (s.replace("&", "&amp;").replace('"', "&quot;")
-             .replace("<", "&lt;").replace(">", "&gt;"))
+    return html.escape(s, quote=True)  # & < > " '  — full attribute-safe escaping
 
 
 # Render context for [[slug]] abstraction citations, set per-file in cmd_build (map + relative path to root).
@@ -587,10 +634,10 @@ _ABBR_PREFIX = ""
 
 def _abbr_link(slug: str, text: str | None) -> str:
     a = _ABBR_MAP.get(slug)
-    disp = text if text else (a["headword"] if a else slug)
+    disp = _esc(text if text else (a["headword"] if a else slug))  # display text is user-supplied — escape it
     if not a:
-        return disp  # unresolved — validate flags it; render the words so the page still reads
-    return (f'<a class="abbr" href="{_ABBR_PREFIX}{ABBR_SRC[:-3]}.html#{slug}" '
+        return disp  # unresolved — validate flags it; render the (escaped) words so the page still reads
+    return (f'<a class="abbr" href="{_ABBR_PREFIX}{ABBR_SRC[:-3]}.html#{_attr(slug)}" '
             f'title="{_attr(_plain(a["definition"]))}">{disp}</a>')
 
 
@@ -601,14 +648,13 @@ def _inline(s: str) -> str:
     s = re.sub(r"`([^`]+)`", lambda m: spans.append(m.group(1)) or f"\x00{len(spans)-1}\x00", s)
     s = ABBR_CITE_RE.sub(
         lambda m: raw.append(_abbr_link(m.group(1), m.group(2))) or f"\x01{len(raw)-1}\x01", s)
-    s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    s = _esc(s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)",
                lambda m: f'<a href="{_attr(_md_link_rewrite(m.group(2)))}">{m.group(1)}</a>', s)
     s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", s)
     s = re.sub(r"\x00(\d+)\x00",
-               lambda m: "<code>{}</code>".format(
-                   spans[int(m.group(1))].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")), s)
+               lambda m: "<code>{}</code>".format(_esc(spans[int(m.group(1))])), s)
     s = re.sub(r"\x01(\d+)\x01", lambda m: raw[int(m.group(1))], s)
     return s
 
@@ -643,7 +689,7 @@ def render_md(md: str) -> str:
             while i < n and not lines[i].strip().startswith("```"):
                 code.append(lines[i]); i += 1
             i += 1
-            esc = "\n".join(code).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            esc = _esc("\n".join(code))
             out.append(f'<pre tabindex="0"><code>{esc}</code></pre>'); continue  # tabindex: scrollable code blocks must be keyboard-focusable (axe scrollable-region-focusable)
         if st.startswith("|"):
             tbl: list[str] = []

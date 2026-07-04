@@ -16,7 +16,24 @@ def check_markdown_schema():
     if r.returncode == 0:
         return PASS, []
     return FAIL, [ln.strip() for ln in r.stdout.splitlines()
-                  if re.search(r"\[(entry|index|link|abbr|role|family)", ln)]
+                  if re.search(r"\[(entry|index|link|abbr|role|family|scheme|seam|census|stat|figure|banned)", ln)]
+
+
+def check_render_safety():
+    """Pin the renderer's XSS neutralization — regression for the abbr-display and link-scheme vectors.
+    Adversarial inputs must not survive as executable HTML or a dangerous href scheme."""
+    cases = [
+        ("[x](javascript:alert(1))", 'href="#"', "javascript:"),
+        ("[x](data:text/html,z)", 'href="#"', "data:"),
+        ("[[zz|<img src=x onerror=alert(1)>]]", "&lt;img", "<img"),
+        ("<script>alert(1)</script>", "&lt;script", "<script>"),
+    ]
+    issues = []
+    for src, want, forbid in cases:
+        out = catalog._inline(src)
+        if forbid in out or want not in out:
+            issues.append(f"unsafe render of {src!r} -> {out!r}")
+    return (FAIL if issues else PASS), issues
 
 
 def check_markdown_anchors():
