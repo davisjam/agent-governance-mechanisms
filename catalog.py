@@ -977,7 +977,7 @@ WAYS = [
         "Never fail quiet — every caught error logs, re-throws, or is justified in a comment.",
         "No compatibility shims — migrate every call site in the same change.",
     ]),
-    ("Keep judgment scarce & central", [
+    ("Keep judgment scarce &amp; central", [
         "Carry work autonomously; surface only the architectural calls.",
         "Hyper-experimentation — pilot, compare, measure; a cheap experiment beats a debate, and negative results are wins.",
         "Verify claims and trust nothing stale — re-run the gates yourself, because markers rot.",
@@ -1061,7 +1061,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
 
   <figure class="wf">
     <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
-      title="The development-process figure" scrolling="no" tabindex="0" onload="fitFig(this)"></iframe></div>
+      title="The development-process figure" tabindex="0" onload="fitFig(this)"></iframe></div>
     <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
     probably know up front — business requirements, security scanners you always run, etc. Others you
     need to figure out through trial and

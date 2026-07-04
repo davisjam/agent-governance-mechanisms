@@ -68,6 +68,28 @@ def check_axe(strict: bool):
     return PASS, []
 
 
+def check_html_valid(strict: bool):
+    """Full HTML validity via html-validate — the canonical validator (rules in `.htmlvalidate.json`),
+    NOT a hand-rolled definition. Tier-2: needs Node + the pinned html-validate from `npm ci`/`setup.sh`;
+    runs offline via `npx --no-install`. SKIP if npx/tool absent (same posture as axe)."""
+    if not shutil.which("npx"):
+        return (FAIL if strict else SKIP), ["npx not found — run ./setup.sh (installs the pinned html-validate)"]
+    pages = sorted(os.path.relpath(p, ROOT) for p in html_files())
+    if not pages:
+        return (FAIL if strict else SKIP), ["no built pages to validate (run `catalog.py build` first)"]
+    try:
+        r = run(["npx", "--no-install", "html-validate", *pages], timeout=300)
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as ex:
+        return (FAIL if strict else SKIP), [f"html-validate could not run ({type(ex).__name__}) — treating as skip"]
+    if r.returncode == 0:
+        return PASS, []
+    out = r.stdout + r.stderr
+    errs = [ln.strip() for ln in out.splitlines() if re.search(r"\d+:\d+\s+error", ln)]
+    if errs:
+        return FAIL, errs[:30]  # real validation errors
+    return (FAIL if strict else SKIP), [f"html-validate did not complete: {out.strip()[:200]}"]
+
+
 def check_claude_validate(strict: bool):
     """`claude plugin validate` on the plugin dir + the marketplace root. SKIP if the CLI is absent."""
     if not shutil.which("claude"):

@@ -27,8 +27,8 @@ import sys
 from typing import Callable, NamedTuple
 
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
-from tests.external import check_axe, check_claude_validate
-from tests.html import check_html_links, check_html_valid
+from tests.external import check_axe, check_claude_validate, check_html_valid
+from tests.html import check_html_links
 from tests.markdown import check_markdown_anchors, check_markdown_schema, check_render_safety
 from tests.skill import check_bundle_links, check_skill_drift, check_skill_structure
 
@@ -55,11 +55,11 @@ CHECKS = [
     Check("markdown: schema + md-link existence", 1, lambda strict: check_markdown_schema()),
     Check("markdown: #anchor resolution", 1, lambda strict: check_markdown_anchors()),
     Check("render: XSS neutralization (escape seam + link scheme)", 1, lambda strict: check_render_safety()),
-    Check("html: well-formed (balanced containers)", 1, lambda strict: check_html_valid()),
     Check("html: link + anchor resolution", 1, lambda strict: check_html_links()),
     Check("skill: structure + manifests", 1, lambda strict: check_skill_structure()),
     Check("skill: bundle freshness (no drift)", 1, lambda strict: check_skill_drift()),
     Check("skill: bundle link integrity", 1, lambda strict: check_bundle_links()),
+    Check("html: validity (html-validate)", 2, check_html_valid, needs_run=_html_changed),
     Check("html: axe-core accessibility", 2, check_axe, needs_run=_html_changed),
     Check("skill: claude plugin validate", 2, check_claude_validate, needs_run=_plugin_changed),
 ]

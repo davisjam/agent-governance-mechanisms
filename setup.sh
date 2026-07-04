@@ -3,7 +3,7 @@
 #
 # The catalogue tool (catalog.py) and its test suite's Tier 1 are stdlib-Python and need NOTHING —
 # `git clone && python3 catalog.py build` just works. This script installs the OPTIONAL Node tooling
-# used by the Tier-2 accessibility check (axe-core). Requires Node.js + a Chrome/Chromium browser.
+# used by the Tier-2 checks (axe-core a11y + html-validate HTML validity). axe also needs a Chrome/Chromium browser.
 #
 # See DEVELOP.md for the full dependency map and how the test tiers work.
 set -euo pipefail
@@ -14,7 +14,7 @@ if ! command -v npm >/dev/null 2>&1; then
   exit 2
 fi
 
-echo "Installing axe-core CLI (Tier-2 a11y test dependency)…"
+echo "Installing Tier-2 test tooling (axe-core + html-validate)…"
 # `npm ci` installs the EXACT tree pinned in package-lock.json (with integrity hashes) — deterministic,
 # and it never silently bumps a dependency the way `npm install` can. Same command CI uses.
 npm ci

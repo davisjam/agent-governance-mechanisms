@@ -6,10 +6,10 @@
 #   - Triggers are trusted-only (push to main / manual dispatch). NO pull_request_target, so no
 #     fork/PR can run this with the repo's token ("pwn request" class is designed out).
 #   - No untrusted input is interpolated into any `run:` (no script-injection surface).
-#   - Permissions are job-scoped: the `build` job (which runs third-party test code — axe-core) holds
+#   - Permissions are job-scoped: the `build` job (which runs third-party test code — axe-core + html-validate) holds
 #     NO deploy/write capability; only the `deploy` job gets `pages: write` + `id-token: write`.
 #   - Third-party test tooling is pinned: `npm ci` installs the exact tree in package-lock.json
-#     (integrity-hash verified); axe runs via `npx --no-install` so it never fetches at run time.
+#     (integrity-hash verified); axe + html-validate run via `npx --no-install` so they never fetch at run time.
 #   - Every action is pinned to an immutable commit SHA (a tag like `v4` is movable; a SHA is not).
 #   - The published artifact excludes `.git`, `node_modules`, and `.github` (nothing secret on a public
 #     repo, but it keeps the deploy tree minimal and avoids serving node_modules).
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
-      - name: Install pinned test tooling (axe-core, exact tree from lockfile)
+      - name: Install pinned test tooling (axe-core + html-validate, exact tree from lockfile)
         run: npm ci
       - name: Validate schema
         run: python3 catalog.py validate
