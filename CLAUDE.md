@@ -101,7 +101,7 @@ The site is generated from the markdown — **never hand-edit the `.html`** (it 
 | Command | What it does |
 |---|---|
 | `python3 catalog.py validate` | schema + INDEX + link + summary checks; exit 1 on any violation |
-| `python3 catalog.py build` | render every `.md` → sibling `.html` + regenerate `index.html` (census) + `catalogue-views.html` |
+| `python3 catalog.py build` | render every `.md` → sibling `.html` + regenerate `index.html` (census) + `catalogue-views.html`; BLOCKING reachability gate — fails (exit 1) if any built page is an orphan (rendered but nothing links to it) |
 | `python3 catalog.py deploy local` | validate → build → serve at `http://127.0.0.1:8137/` (`--port` to change; **not** 8080) |
 | `python3 catalog.py deploy github` | validate → build → commit changes → `git push origin main` (GitHub Actions then deploys Pages) |
 | `python3 catalog.py install-hooks` | one-time: `core.hooksPath=hooks` so `pre-commit` auto-runs validate+build+stage |

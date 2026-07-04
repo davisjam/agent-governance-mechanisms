@@ -46,7 +46,7 @@ RAW_FILE_RE = re.compile(r"`([^`]+?\.(?:py|cs|jsonl|ya?ml))`")
 RULE_CITE_RE = re.compile(r"(?<![\w.])#\d{1,2}\b")  # bare project-rule citation (meaningless outside the parent)
 # Not served / not link-checked: internal continuity docs (the abstractions playbook is process, not content).
 NOSERVE = ("HANDOFF.md", "HANDOFF-catalogue-agent.md", "abstractions-playbook.md", "TODO.md",
-           "WRITING-BACKLOG.md", "SUBMISSION.md", "PRIVACY.md", "DEVELOP.md")
+           "WRITING-BACKLOG.md", "SUBMISSION.md", "PRIVACY.md", "DEVELOP.md", "CLAUDE.md")
 
 # Declared stats — the facts not derivable from the entries (LOC, case-study length). Everything else in
 # _stats() is computed from the catalogue itself. Edit a number here, once.
@@ -163,6 +163,8 @@ def check_links() -> list[str]:
         base = os.path.dirname(f)
         body = open(f, encoding="utf-8").read()
         for m in re.finditer(r"\]\(([^)]+\.md)(#[^)]*)?\)", body):
+            if m.group(1).startswith(("http://", "https://")):
+                continue  # external URL (e.g. a GitHub blob link) — not a local path to resolve
             tgt = os.path.normpath(os.path.join(base, m.group(1)))
             if not os.path.exists(tgt):
                 dead.append(f"{os.path.relpath(f, ROOT)} -> {m.group(1)}")
@@ -1243,6 +1245,34 @@ def _sync_figure_census(entries: list[Entry]) -> None:
             fh.write(txt)
 
 
+def check_orphan_pages() -> list[str]:
+    """Post-build reachability gate: every built `.html` must have at least one inbound `href`/`src` from
+    another built page. A page nothing links to is an orphan — rendered but unreachable (the DEVELOP.html
+    class: a page whose `.md` was NOSERVE'd or never linked, left stranded on the site). The root landing
+    `index.html` is the entry point and is exempt. Static scan only: entry pages get their inbound links
+    from `index.html`'s census (`<a href>`), so JS-built links (`catalogue-views`) need not be followed.
+    The gitignored skill bundle (`plugin/`) and the serve dir (`site/`) are out of scope."""
+    pages: list[str] = []
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if d not in ("plugin", "site", ".git", "__pycache__", "hooks")]
+        for fn in filenames:
+            if fn.endswith(".html"):
+                pages.append(os.path.join(dirpath, fn))
+    referenced: set[str] = set()
+    ref_re = re.compile(r'(?:href|src)="([^"#]+\.html)(?:#[^"]*)?"')
+    for p in pages:
+        base = os.path.dirname(p)
+        for m in ref_re.finditer(open(p, encoding="utf-8").read()):
+            tgt = m.group(1)
+            if tgt.startswith(("http://", "https://")):
+                continue
+            referenced.add(os.path.normpath(os.path.join(base, tgt)))
+    root_index = os.path.normpath(os.path.join(ROOT, "index.html"))
+    orphans = [os.path.relpath(p, ROOT) for p in pages
+               if os.path.normpath(p) != root_index and os.path.normpath(p) not in referenced]
+    return sorted(orphans)
+
+
 def cmd_build(_args) -> int:
     global _ABBR_MAP, _ABBR_PREFIX
     entries = all_entries()
@@ -1299,6 +1329,16 @@ def cmd_build(_args) -> int:
     rc = subprocess.run([sys.executable, os.path.join(ROOT, "bundle_skill.py")], cwd=ROOT).returncode
     if rc != 0:
         print(f"WARNING: skill bundle regeneration failed (rc={rc}) — plugin/ may be stale", file=sys.stderr)
+    # Reachability gate (BLOCKING): a built page nothing links to is an orphan — fail the build so it can't
+    # be committed (pre-commit `_catalog("build")`) or deployed. This is the DEVELOP.html class as a control.
+    orphans = check_orphan_pages()
+    if orphans:
+        print(f"ORPHAN PAGES ({len(orphans)}) — rendered but nothing links to them:", file=sys.stderr)
+        for o in orphans:
+            print(f"  - {o}", file=sys.stderr)
+        print("  Fix: link the page from the site, or add its `.md` to NOSERVE and `git rm` the `.html`.",
+              file=sys.stderr)
+        return 1
     return 0
 
 
@@ -1327,7 +1367,9 @@ def cmd_deploy(args) -> int:
     if cmd_validate(None) != 0:
         print("ABORT: schema invalid — fix before deploying.")
         return 1
-    cmd_build(None)
+    if cmd_build(None) != 0:
+        print("ABORT: build failed (orphan pages / bundle) — fix before deploying.")
+        return 1
     # predeploy gate — BLOCKING (the suite is green as of the a11y remediation): abort the deploy if any
     # check fails. Tier-2 (axe/claude) SKIPs when the tool is absent, so a browser-less env won't block.
     if subprocess.run([sys.executable, "catalog_tests.py"], cwd=ROOT).returncode != 0:
