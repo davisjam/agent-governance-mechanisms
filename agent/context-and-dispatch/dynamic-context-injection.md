@@ -91,7 +91,7 @@ pull** (the agent calls `get-constraints-for-files.py <files…>` once it knows 
   lint fleet's scope tags as its addressable registries (via the
   [read-don't-hardcode](../../models-bridge/system-models/meta-model-consumption.md) discipline).
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — the [component-zone model](../../models-bridge/system-models/component-zone-model.md) (a
   models-bridge control) supplies the file → component → checks mapping the forward slicer reads. DCI is

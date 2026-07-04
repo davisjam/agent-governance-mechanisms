@@ -55,7 +55,7 @@ scope, out of scope, and their coverage status.
 - The `##PASS_RULE_FAIL##` staging per-pass rule-engine check.
 - The WCAG-scope-mapping doc (Covered / Coverage-gap / Aspirational status).
 
-## Related controls
+## Related mechanisms
 
 - **Layer** — with [content-validator](content-validator.md): fidelity (nothing lost) + conformance
   (standards met) are the two product gates over the artifact.

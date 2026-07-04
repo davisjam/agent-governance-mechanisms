@@ -59,7 +59,7 @@ Landed commits are checked by patch-id / ancestry reachability.
 - The disjoint-footprint dispatch recipe (compose waves with non-overlapping file sets).
 - Patch-id / ancestry reachability verification of landed commits.
 
-## Related controls
+## Related mechanisms
 
 - **Layer** — the cron → merge-train stair, downstream of [pre-commit-hook](pre-commit-hook.md) /
   [sentinel-first-commit](sentinel-first-commit.md) and upstream of [staged-deploy-gates](staged-deploy-gates.md).

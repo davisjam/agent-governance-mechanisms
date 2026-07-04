@@ -1,8 +1,8 @@
-# Agent controls — governing the fleet
+# Agent mechanisms — governing the fleet
 
-<!-- summary: Controls that govern the agent fleet and the substrate that produces its work. -->
+<!-- summary: Mechanisms that govern the agent fleet and the substrate that produces its work. -->
 
-*One of three roles in the [catalogue](../README.md). Agent controls govern the **fleet and the
+*One of three roles in the [catalogue](../README.md). Agent mechanisms govern the **fleet and the
 substrate that produces work**: how briefs are composed, how agents are dispatched and isolated, how
 their commits are gated and merged, how shared host compute is rationed, and how the fleet's lifecycle
 is observed. (What the fleet reasons *through* is the [models-bridge](../models-bridge/); what it
@@ -19,8 +19,8 @@ is observed. (What the fleet reasons *through* is the [models-bridge](../models-
 4. **[Lifecycle & observability](lifecycle-and-observability/)** — live signal surfaces over the fleet:
    the agent-registry, the typed event bus, heartbeats, tombstones, the cron-alerts gate.
 5. **[Governance-doc controls](governance-doc-controls/)** — documentation treated as enforced
-   infrastructure, including the **CLAUDE.md rule index** — the *meta-control* that records and delivers
-   every other control.
+   infrastructure, including the **CLAUDE.md rule index** — the *meta-mechanism* that records and delivers
+   every other mechanism.
 
 ## The pattern that recurs here
 

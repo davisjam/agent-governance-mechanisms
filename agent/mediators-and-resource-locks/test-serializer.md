@@ -60,7 +60,7 @@ auto-appended. Adjacent heavy tools (build, tsc, pyright, …) route through the
 - `TestMediatorEnforcer` `[ModuleInitializer]` — refuses raw `dotnet test` from agent CWDs.
 - `ADA_TOOL_TEST_BYPASS_MEDIATOR=1` — the audited human escape.
 
-## Related controls
+## Related mechanisms
 
 - **Counterpart** — the `[ModuleInitializer]` enforcer (hard) holds the serializer's
   discipline in place: without the ban, the flock is just an unenforced convention.

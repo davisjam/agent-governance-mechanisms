@@ -68,7 +68,7 @@ the active half — it turns a raw signal into a *reaction* rather than a passiv
   topic-introducing design doc.
 - The session-start + post-cherry-pick monitoring cadence.
 
-## Related controls
+## Related mechanisms
 
 - **Consumer** — the *reaction* half is an
   [operational playbook](../governance-doc-controls/operational-playbooks.md): each topic's playbook

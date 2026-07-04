@@ -54,7 +54,7 @@ over the models the codebase is governed by.
   `xrefs` / `epic` / `task` / `web-api` / `config` subcommands (`--json`).
 - The `repo-query` orchestrator skill.
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — this is the *agent-facing* face of the models: how a bounded agent reads the unbounded
   codebase's compressed truth.

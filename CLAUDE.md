@@ -1,6 +1,6 @@
 # CLAUDE.md — agent-governance-mechanisms
 
-This repo is a **pattern catalogue**: 53 governance controls that keep a fleet of autonomous coding
+This repo is a **pattern catalogue**: 53 governance mechanisms that keep a fleet of autonomous coding
 agents productive while bounding their failures, each written as a Gang-of-Four-style design pattern.
 It is published as a static GitHub Pages site and embedded in a parent repo as a git submodule.
 
@@ -11,7 +11,7 @@ fresh checkout with nothing installed). Do not add pip dependencies; keep it clo
 
 A **mechanism** is a recurring, failure-killing pattern of governance — written like a Gang-of-Four design
 pattern: the failure class it prevents, the shape that prevents it, and why it is *not just* the cheaper
-thing everyone already does. A control earns its own entry only when it clears three bars:
+thing everyone already does. A mechanism earns its own entry only when it clears three bars:
 
 1. **It kills a failure class, not a one-off bug.** If you can't name the recurring failure, it isn't a
    mechanism yet.
@@ -37,7 +37,7 @@ governing rule for all content here:
   event-bus topic must ship an observability entry," not "rule #46". A number like `#46` is meaningless
   outside the parent repo.
 - **No dangling paths** into trees this repo does not ship (`services/…`, `deploy/…`, `docs/…`,
-  `talks-and-notes/…`). Intra-catalogue links (`../<role>/<family>/<control>.md`) are fine — they ship.
+  `talks-and-notes/…`). Intra-catalogue links (`../<role>/<family>/<mechanism>.md`) are fine — they ship.
 - **Prefer the conceptual statement over the concrete DocAble artifact** that happens to implement
   it. `Known uses` may name a real artifact *once* for grounding, but the mechanism must be understandable
   without it. The `product/` role is the catalogue's flagged project-specific exception; keep it
@@ -78,21 +78,21 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
 
 ## The content model
 
-- **Entries** live at `<role>/<family>/<control>.md` — roles are `agent/`, `models-bridge/`, `product/`.
+- **Entries** live at `<role>/<family>/<mechanism>.md` — roles are `agent/`, `models-bridge/`, `product/`.
   Every entry follows the template documented in [`README.md`](README.md): a title, an `**Intent** —`
   line, a 4-row metadata card (`Summary · Target · Form · Enforcement`), then the sections
-  (`Motivation` … `Related controls`).
+  (`Motivation` … `Related mechanisms`).
 - **[`INDEX.md`](INDEX.md)** is the census — one row per entry, grouped by family. The `Form`, `Novelty`,
   and `Enf.` columns MUST match the entry's metadata card (the validator enforces this).
 - Cross-cuts: 9 **forms**, **soft/hard** enforcement, 5 **relationships** — all defined in `README.md`.
 - **One entry, or two, for a construction + its enforcement?** By enforcement scope. A **dedicated**
   (one-to-one) enforcement — a ban-lint guarding *this one* seam — is **bundled into the construction
-  entry** (the typed model + its ban-lint is one control). A **cross-cutting** (one-to-many) enforcement
+  entry** (the typed model + its ban-lint is one mechanism). A **cross-cutting** (one-to-many) enforcement
   that governs *many* constructions earns **its own entry** (`drift-parity-gates` governs every model;
   `f10-wiring-lint` governs every mutator verb). Don't split a dedicated pair; don't bundle a cross-cutting
   one.
 
-**When you add or edit a control:** update both the entry and its `INDEX.md` row in the same change,
+**When you add or edit a mechanism:** update both the entry and its `INDEX.md` row in the same change,
 then `python3 catalog.py validate` (must be 0 issues). The schema, INDEX-consistency, link-integrity,
 and hover-summary checks all live there.
 

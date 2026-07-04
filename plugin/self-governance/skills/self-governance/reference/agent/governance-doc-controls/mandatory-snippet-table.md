@@ -59,7 +59,7 @@ rebase-first); others are conditional on the brief's shape (touches tests, bring
 - The [[brief-lint]]'s marker-presence assertions.
 - Always-include snippets (worktree-path, rebase-first) vs conditional ones.
 
-## Related controls
+## Related mechanisms
 
 - **Consumer** — [brief-linting](../context-and-dispatch/brief-linting.md) reads this table and asserts
   each snippet's marker; this registry is [brief-linting](../context-and-dispatch/brief-linting.md)'s **enabler** (it must exist before the lint can

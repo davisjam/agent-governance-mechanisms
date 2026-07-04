@@ -58,7 +58,7 @@ routing-audit, and design-doc follow-up filing.
 - The Epic template §4 11-criterion DoD; the Final-Opus "trust nothing" re-run.
 - The tag routing-audit + design-doc follow-up filing at close.
 
-## Related controls
+## Related mechanisms
 
 - **Counterpart (audit)** — [claude-md-rule-index](claude-md-rule-index.md): the index's cap/conformance
   lints keep its *form* honest; this re-run keeps *claims* honest (presence ≠ obedience). Together they

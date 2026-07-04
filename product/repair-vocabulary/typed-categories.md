@@ -51,7 +51,7 @@ handler to cover every case.
 - `ViolationCategory` / `FailureCategory` enums in place of bare failure strings.
 - Enum-value comparison instead of regex-on-strings (the regex-usage discipline).
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [remediation-verbs](remediation-verbs.md), [codemod-first](codemod-first.md):
   the other bounded-move-space controls.

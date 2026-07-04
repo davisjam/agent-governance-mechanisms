@@ -60,7 +60,7 @@ and is promoted to BLOCKING after a session of clean events.
 - The sentinel-check discipline: land a substrate check at the first commit that runs end-to-end against
   the real brief (AUDIT-ONLY → BLOCKING).
 
-## Related controls
+## Related mechanisms
 
 - **Layer** — runs at the same commit-time stair as [pre-commit-hook](pre-commit-hook.md): this guards
   *substrate* health, the hook guards *content* correctness.

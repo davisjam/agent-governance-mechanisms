@@ -54,7 +54,7 @@ declared `ORDERINGS` + call-graph to catch inverted acquisition.
 - The [[synchronization-registry]] — the `SyncLock` / `LockAcquirer` / `LockOrdering` records for the dev-time locks.
 - The sync-coverage lint (undeclared-`flock` gate) + the ordering-constraint lint (deadlock-risk gate).
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — the agent fleet's [mediators](../../agent/mediators-and-resource-locks/test-serializer.md)
   *acquire* these locks (agent side) ◀──▶ the model *governs* the concurrency contracts the codebase

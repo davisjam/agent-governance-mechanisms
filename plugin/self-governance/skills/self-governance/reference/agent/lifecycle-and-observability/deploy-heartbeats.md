@@ -52,7 +52,7 @@ them for cleanup.
 - The startup concurrency guard (refuses overlapping deploys).
 - The stale-worker detection sweep.
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [agent-registry](agent-registry.md), [typed-event-bus](typed-event-bus.md):
   the fleet's other signal surfaces; heartbeats are the deploy-specific one.

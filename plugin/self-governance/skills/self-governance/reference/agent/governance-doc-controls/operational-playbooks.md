@@ -70,7 +70,7 @@ get stuck). Add one entry per signal the substrate emits.
 - The cron-alerts-gate recovery playbook (how to clear a wedged HIGH-severity gate).
 - Deploy-failure pattern tables (symptom → cause → section) consulted before investigating.
 
-## Related controls
+## Related mechanisms
 
 - **Counterpart** — the [typed event bus](../lifecycle-and-observability/typed-event-bus.md) *emits* the
   signals; a playbook says what to *do* about them. A signal with no playbook is unactioned noise; a

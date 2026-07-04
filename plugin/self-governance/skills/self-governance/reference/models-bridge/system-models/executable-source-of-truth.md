@@ -13,7 +13,7 @@ operable by a context-bounded agent.
 
 > **★ The bridge.** This is the flagship of the third role: the model layer is the **interface through
 > which a context-bounded agent operates a context-exceeding codebase.** It faces both ways — agents
-> read it to reason; the codebase is generated and governed from it. The other bridge entries are its
+> read it to reason; the codebase is governed from it (a limited slice — config, docs, IPC contracts — is generated from it too). The other bridge entries are its
 > models and mechanisms.
 
 ## Motivation — the failure it kills
@@ -68,7 +68,7 @@ frequently *read* or *generated-from* — so it is exercised constantly.
 - The preference order: a stable lint that reads the meta-file, over codegen, over a hand-rolled copy.
 - Each model's doc-derived characterization pin.
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — every model here couples an agent-side use (query/inject) to a product-side use
   (govern/generate); see the individual models below.

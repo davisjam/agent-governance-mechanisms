@@ -54,7 +54,7 @@ Each has a coverage/parity lint + a doc-derived pin.
   rule-metadata registries.
 - Their generators (e.g. the competitor-catalog generator) and coverage/parity lints.
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — agents/checkers *read* these facts (agent side) ◀──▶ they *govern & generate* product
   surfaces (WCAG scope, competitor docs, cron behaviour) (product side).

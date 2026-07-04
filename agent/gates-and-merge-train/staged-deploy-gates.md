@@ -57,7 +57,7 @@ cheaper signals so a doomed deploy is never started. Heartbeats emit liveness du
 - The pre-deploy predicate (lints green · no flaky class · changed-since-main green).
 - Per-phase deploy heartbeats (see Lifecycle & observability).
 
-## Related controls
+## Related mechanisms
 
 - **Layer** — the *last* stair of the staircase, downstream of [merge-train-mis-batching](merge-train-mis-batching.md);
   the most expensive gate, reached only after the cheap ones passed.

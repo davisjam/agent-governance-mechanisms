@@ -52,7 +52,7 @@ Lite. The **Tier-3 escalation** rule names the high-blast-radius surfaces that r
 - The `Suite=Smoke` / `Suite=Lite` / targeted / `Format=` full tiers.
 - The 1-second rule for new pre-deploy tests; the Tier-3 escalation surfaces.
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [property-tests](property-tests.md), [fuzz-campaigns](fuzz-campaigns.md),
   [ddt-pin-trailers](ddt-pin-trailers.md): the other behaviour-pinning bodies in this family.

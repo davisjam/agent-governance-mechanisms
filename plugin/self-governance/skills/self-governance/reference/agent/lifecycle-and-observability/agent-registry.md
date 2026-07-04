@@ -59,7 +59,7 @@ marker cache is a fast index that the registry wins over on any divergence.
 - The 3-gate `cleanup-stale` chain (registry → marker → git-lock).
 - The live-worktree guard (never operate on an agent whose marker exists); the dedup-via-registry pattern.
 
-## Related controls
+## Related mechanisms
 
 - **Enabler** — [merge-train-mis-batching](../gates-and-merge-train/merge-train-mis-batching.md) reads
   it for worktree readiness; [sentinel-first-commit](../gates-and-merge-train/sentinel-first-commit.md)

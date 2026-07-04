@@ -71,7 +71,7 @@ it does not accrete local rules that should be doc-comments.
 - The "what belongs in CLAUDE.md" three-part test (regression-preventing / non-derivable / non-local)
   that keeps the index minimal.
 
-## Related controls
+## Related mechanisms
 
 - *See also (two lenses)* — [claude-md-rule-index](../governance-doc-controls/claude-md-rule-index.md):
   the *same artifact* viewed as **enforced infrastructure** (its hard-counterpart cap/conformance

@@ -58,7 +58,7 @@ scope.
 - The snapshot-ban lint (fails a test embedding a queryable value); the meta-file-preference rule; the
   lint-scope-declares-against-the-model rule.
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — this is the *consumption* face: agent controls
   ([dynamic-context-injection](../../agent/context-and-dispatch/dynamic-context-injection.md),

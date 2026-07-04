@@ -52,7 +52,7 @@ registry. Nothing mutates the document outside this set.
 - The `Primitives` mutator verb sets across the document models; the masked-pass architecture.
 - Each verb's F10 stamp wiring and inserted-content registration.
 
-## Related controls
+## Related mechanisms
 
 - **Enabler** — of [mutator-stamps](../provenance-and-attribution/mutator-stamps.md) and
   [content-validator](../validation-and-conformance/content-validator.md): a *bounded* move-space makes

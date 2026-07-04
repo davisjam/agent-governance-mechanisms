@@ -73,7 +73,7 @@ observability block, and an invariants→tests enforcement map). Drop them into 
 - The design-doc rule that a new event-bus topic requires an observability/event-bus block.
 - The rule that any substrate with repetition/concurrency carries a second-order-dynamics section.
 
-## Related controls
+## Related mechanisms
 
 - **Counterpart** — the [Epic Definition-of-Done](epic-definition-of-done.md) is the *hard* gate that
   verifies, at close, that an Epic's template was actually satisfied (criteria met, pins re-run); the

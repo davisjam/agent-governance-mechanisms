@@ -53,7 +53,7 @@ model↔reality parity.
 - The [[boundary-seam-classifiers|boundary / seam / read-surface classifiers]].
 - The [[reverse-mapping-test]] (model↔tree parity).
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — agents *consume* it ([dynamic-context-injection](../../agent/context-and-dispatch/dynamic-context-injection.md)
   slices constraints by component; [role-typed-dispatch](../../agent/context-and-dispatch/role-typed-dispatch.md)

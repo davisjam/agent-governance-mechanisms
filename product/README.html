@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Product controls — governing the shipped artifact</title>
+<title>Product mechanisms — governing the shipped artifact</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
@@ -62,9 +62,9 @@
 <body>
 <main>
 <nav class="crumb"><a href="../index.html">Home</a> &nbsp;/&nbsp; Product</nav>
-<h1>Product controls — governing the shipped artifact</h1>
-<p>&lt;!-- summary: Controls that govern the shipped accessibility-remediation artifact. --&gt;</p>
-<p><em>One of three roles in the <a href="../README.html">catalogue</a>. Product controls govern the <strong>shipped accessibility-remediation artifact</strong>: how the document is modelled and accessed, how the remediation is validated and conformance-checked, how behaviour is regression-pinned, how mutations are made auditable, and how the repair move-space is bounded. (The artifact is </em>produced by<em> the <a href="../agent/">agent</a> fleet, </em>through<em> the <a href="../models-bridge/">models-bridge</a>.)</em></p>
+<h1>Product mechanisms — governing the shipped artifact</h1>
+<p>&lt;!-- summary: Mechanisms that govern the shipped accessibility-remediation artifact. --&gt;</p>
+<p><em>One of three roles in the <a href="../README.html">catalogue</a>. Product mechanisms govern the <strong>shipped accessibility-remediation artifact</strong>: how the document is modelled and accessed, how the remediation is validated and conformance-checked, how behaviour is regression-pinned, how mutations are made auditable, and how the repair move-space is bounded. (The artifact is </em>produced by<em> the <a href="../agent/">agent</a> fleet, </em>through<em> the <a href="../models-bridge/">models-bridge</a>.)</em></p>
 <h2>The five families</h2>
 <p>1. <strong><a href="canonical-models-and-seams/">Canonical models &amp; seams</a></strong> — the one sanctioned typed model or seam per concern (document models, walkers, the cross-service client, the sole raw-Redis seam). 2. <strong><a href="validation-and-conformance/">Validation &amp; conformance</a></strong> — deterministic pass/fail checks over the artifact: content-fidelity, semantic lints, the standards/WCAG rule engine, cross-source coherence. 3. <strong><a href="regression-tests/">Regression tests</a></strong> — repeatable behaviour-pinning: the test-onion tiers, FsCheck property tests, fuzz campaigns, doc-derived-test pin-trailers. 4. <strong><a href="provenance-and-attribution/">Provenance &amp; attribution</a></strong> — durable records of what the tool changed: per-mutator stamps, the F10 wiring lint, changelog derivation, the <code>a11y_</code> prefix. 5. <strong><a href="repair-vocabulary/">Repair vocabulary</a></strong> — the bounded move-space of the remediator: closed remediation-verb sets, typed violation/failure categories, the codemod-first threshold.</p>
 <h2>The reconciliation that lives here</h2>

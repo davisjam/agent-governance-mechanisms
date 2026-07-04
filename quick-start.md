@@ -129,16 +129,17 @@ They're **not exclusive** — use the skill on a personal project, and go DIY or
   [pre-commit hook](agent/gates-and-merge-train/pre-commit-hook.md) pay off immediately.
 - If your agents keep **breaking things that "looked unrelated"**: the **models-bridge** role — a typed
   [executable source of truth](models-bridge/system-models/executable-source-of-truth.md) that agents
-  read and that the codebase is generated from — is the scaling unlock.
+  read and that governs the codebase — is the scaling unlock.
 - If you ship a **user-facing artifact**: the **product** role — a
   [content validator](product/validation-and-conformance/content-validator.md) and a closed
   [repair vocabulary](product/repair-vocabulary/remediation-verbs.md) bound what the agent can get wrong.
 
 ## The mindset
 
-Every control is written as *the failure it kills* and *why it is not just the cheaper thing everyone
-already does*. When you adapt one, keep that framing: name the recurring failure in **your** system
-first, then borrow the mechanism. A control you can't attach to a real failure is one you don't need yet.
+Every governance mechanism is written as *the failure it kills* and *why it is not just the cheaper thing
+everyone already does*. When you adapt one, keep that framing: name the failure in **your** system — one
+you've hit, or one you can see coming — then borrow the mechanism. A mechanism you can't attach to any
+failure, real or anticipated, is one you might not need yet.
 
-The system that this catalogue was distilled from — **DocAble** — is live at **[scholaccess.com](https://scholaccess.com)**;
-the case study is the [paper](https://arxiv.org/pdf/2607.01087).
+To read more about one engineer's experience with this method, see the
+[paper](https://arxiv.org/pdf/2607.01087).

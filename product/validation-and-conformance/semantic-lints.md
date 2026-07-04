@@ -65,7 +65,7 @@ backtracking; the fix was *eliminate the surface*, not lint the bug class). Copy
 - The lint-declaration discipline (each lint declares its scope, severity, and a verb-of-checking
   docstring); the scoped `noqa` escape convention.
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [coherence-lints](coherence-lints.md): relational lints across sources;
   [content-validator](content-validator.md) / [standards-rule-engine](standards-rule-engine.md): the

@@ -55,7 +55,7 @@ mechanical. Finished codemods are marked deprecated and cross-referenced as past
 - The N≳50 codemod threshold; AST transformers such as an inline-import hoisting codemod.
 - The `pre-commit-skip` for codemod-class waves; codemods retained as deprecated exemplars.
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [typed-categories](typed-categories.md), [remediation-verbs](remediation-verbs.md):
   the other bounded-move controls; this one bounds *how a mechanical change is executed*.

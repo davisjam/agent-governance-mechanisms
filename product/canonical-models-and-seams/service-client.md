@@ -55,7 +55,7 @@ banned. The signature refusing a `str` path closes the bug class.
 - The IPC sole-seam lint (the one cross-service-HTTP surface for the web tier).
 - The file-path-over-wire bug class the `BinaryIO` signature eliminates.
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [raw-redis-seam](raw-redis-seam.md): the same `bounded-service` pattern for the
   Redis boundary — one lint-enforced seam owning a whole class of dangerous raw calls.

@@ -51,7 +51,7 @@ lists — never `ZPOPMIN` + `LPUSH` as two commands. A sole-seam lint bans raw R
 - Atomic pop-and-move (Lua `EVAL` for ZSETs, `RPOPLPUSH` for lists).
 - The sole-raw-Redis-seam lint.
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [service-client](service-client.md): the same `bounded-service` pattern for
   the cross-service-HTTP boundary — one lint-enforced seam owning a dangerous class of raw calls.

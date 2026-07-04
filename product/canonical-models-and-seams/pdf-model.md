@@ -59,7 +59,7 @@ verb cannot land un-wired.
 - The raw-PDF-library ban-lints (one on the raw constructors/calls, one on helper leakage).
 - The v172 `/StructTreeRoot` corruption — the defect class this seam eliminates.
 
-## Related controls
+## Related mechanisms
 
 - **Counterpart** — the raw-PDF-library ban-lint (hard) holds this construction-mode seam
   in place; without it, "route through PdfModel" is an unenforced convention.

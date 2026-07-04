@@ -59,7 +59,7 @@ cross-reference/link lints check pointers resolve. Lints land AUDIT-ONLY and mig
 - The autogen-provenance lint + its autogen-targets registry.
 - Cross-reference / link-resolution lints.
 
-## Related controls
+## Related mechanisms
 
 - *See also (family)* — [claude-md-rule-index](claude-md-rule-index.md): the flagship "documentation
   with a hard-counterpart lint" this control generalizes to the whole corpus.

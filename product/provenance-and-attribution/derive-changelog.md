@@ -48,7 +48,7 @@ the produced artifact.
 
 - The `derive-changelog` command (stamp registry → ChangeLog JSON, per pass, with visibility).
 
-## Related controls
+## Related mechanisms
 
 - **Consumer** — reads [mutator-stamps](mutator-stamps.md): it is the read side of the attribution
   substrate.

@@ -52,7 +52,7 @@ PDF mutations stamp via `MutatorStampHelper.WriteStamp` (never the raw stamp mut
 - `MutatorStampHelper.WriteStamp` (PDF); `OoxmlAttributionRegistry.AppendEntry` (OOXML).
 - The `Debug` / `Preserved` visibility model; `strip-attribution` before delivery.
 
-## Related controls
+## Related mechanisms
 
 - **Counterpart** — [f10-wiring-lint](f10-wiring-lint.md) (hard) guarantees *every* mutator verb stamps;
   it is the counted control that makes this audit-trail complete.

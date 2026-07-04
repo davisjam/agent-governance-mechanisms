@@ -59,7 +59,7 @@ mass-tombstoning requires an explicit `--id-file` — runtime enumeration of wor
 - The dedup event (`tombstoning_started`, exit 78); the explicit-id-list + live-worktree guard.
 - The `cleanup-stale` predicate (tombstone-at-tip AND all commits cherry-picked/skipped).
 
-## Related controls
+## Related mechanisms
 
 - **Consumer** — reads [agent-registry](agent-registry.md) live markers before writing a close record
   (the live-worktree guard).

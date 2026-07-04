@@ -102,7 +102,7 @@ is governed, because it is one.
 principles the rules instantiate); Part B is a "write your own" scaffold for the numbered
 project-reference rules, with the three-part "what earns a spot" admission test built in.
 
-## Related controls
+## Related mechanisms
 
 - *See also (two lenses)* — [docs-hierarchy](../context-and-dispatch/docs-hierarchy.md): the *same
   artifact* seen as **dispatch-time shared context**. This entry is the **enforced-infrastructure**

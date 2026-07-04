@@ -54,7 +54,7 @@ baseline. On a finding, the RCA discipline mandates RCA to the stable spec point
 - The `*Fuzz*` / `*Campaign*` harnesses + auto-coverage collection and aggregation.
 - The fix-to-the-stable-spec-point RCA discipline.
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [property-tests](property-tests.md) (structured generation),
   [test-onion-tiers](test-onion-tiers.md) (example tiers).

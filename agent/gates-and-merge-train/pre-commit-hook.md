@@ -64,7 +64,7 @@ waves use an explicit `pre-commit-skip: <reason>` marker (lint stanza skipped, u
 - The `pre-commit-skip` marker for codemod-class waves (skips the lint stanza; unit-tier still runs).
 - The Commit-of `i/N` trailer the hook requires on agent commits.
 
-## Related controls
+## Related mechanisms
 
 - **Layer** — the *first* stair of the commit → cron → merge-train → deploy staircase; escalates into
   [merge-train-mis-batching](merge-train-mis-batching.md) and [staged-deploy-gates](staged-deploy-gates.md).

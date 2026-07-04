@@ -59,7 +59,7 @@ A merge-train staging fast-path avoids redundant sweeps.
 - The `compute-class` brief declaration + one-in-flight discipline.
 - The role-enforcement gate refusing `sonnet-active`.
 
-## Related controls
+## Related mechanisms
 
 - **Consumer** — reads the role from [role-typed-dispatch](../context-and-dispatch/role-typed-dispatch.md):
   the role-enforcement gate is how it refuses the wrong caller.

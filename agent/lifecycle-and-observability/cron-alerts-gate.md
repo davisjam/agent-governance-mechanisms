@@ -63,7 +63,7 @@ cleared.
 - The session-start poll discipline; the dispatch block on unresolved HIGH alerts.
 - The alert-resolving dispatch (`--resolves-alert`, auto-ack + dispatch fix).
 
-## Related controls
+## Related mechanisms
 
 - **Consumer** — reads [typed-event-bus](typed-event-bus.md): alerts are derived events promoted to a
   gate.

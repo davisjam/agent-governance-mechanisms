@@ -242,7 +242,7 @@
   <p class="section-sub">53 governance mechanisms — the repertoire this loop produced in one real
   production system.</p>
   <div class="cards-grid">
-  <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, controls clickable</span></a>
+  <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, mechanisms clickable</span></a>
   <a class="lcard" href="ABSTRACTIONS.html"><b>Abstractions glossary</b><span>the artifacts the mechanisms are built from — named by role, not filename</span></a>
   <a class="lcard" href="quick-start.html"><b>Quick start</b><span>two ways to adopt — DIY the catalogue, or install the self-governance skill</span></a>
   <a class="lcard" href="downloads/CLAUDE-starter.md" download><b>Starter CLAUDE.md</b><span>a mature one — have Claude fold it into your CLAUDE.md (see Quick start)</span></a>
@@ -256,11 +256,11 @@
 
 <section class="census">
 <h2>The catalogue</h2>
-<p class="census-legend">A <b>representative</b> selection — control <i>patterns</i>, not an exhaustive list of every lint and gate in the system. Each row is one control with its one-line <b>Summary</b> and how it <b>Enforces</b>: <b>Hard</b> is deterministic (blocks, audits, or signals regardless of agent cooperation), <b>Soft</b> is probabilistic (aims an agent but cannot block), and <b>Soft·Hard</b> is soft guidance with a hard counterpart. Click a name for the full writeup.</p>
+<p class="census-legend">A <b>representative</b> selection — mechanism <i>patterns</i>, not an exhaustive list of every lint and gate in the system. Each row is one mechanism with its one-line <b>Summary</b> and how it <b>Enforces</b>: <b>Hard</b> is deterministic (blocks, audits, or signals regardless of agent cooperation), <b>Soft</b> is probabilistic (aims an agent but cannot block), and <b>Soft·Hard</b> is soft guidance with a hard counterpart. Click a name for the full writeup.</p>
 <h3 class="role-h">Governance: Agents</h3>
 <h4>Context &amp; dispatch substrate</h4>
 <p class="fam-lede">What an agent knows and how it is launched.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="agent/context-and-dispatch/brief-linting.html">Brief-linting</a></td><td class="c-sum">Reject a malformed dispatch brief before it can launch.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="agent/context-and-dispatch/docs-hierarchy.html">Docs hierarchy + governance index</a></td><td class="c-sum">One enforced, numbered rule index every agent boots with.</td><td class="c-enf">Soft·Hard</td></tr>
 <tr><td class="c-name"><a href="agent/context-and-dispatch/dynamic-context-injection.html">Dynamic context injection</a></td><td class="c-sum">Inject the rules governing these files into the brief.</td><td class="c-enf">Soft</td></tr>
@@ -268,7 +268,7 @@
 </tbody></table>
 <h4>Gates &amp; merge-train</h4>
 <p class="fam-lede">The path-to-production staircase for agent work.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="agent/gates-and-merge-train/pre-commit-hook.html">Pre-commit hook (3-stanza, tree-sha markers)</a></td><td class="c-sum">Cheap changed-file checks gate every commit, marker-verified.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="agent/gates-and-merge-train/sentinel-first-commit.html">Sentinel first-commit early-abort</a></td><td class="c-sum">Abort a broken agent at its first commit, not its last.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="agent/gates-and-merge-train/merge-train-mis-batching.html">Merge-train MIS batching</a></td><td class="c-sum">Land non-conflicting worktrees together via a maximum independent set.</td><td class="c-enf">Hard</td></tr>
@@ -276,14 +276,14 @@
 </tbody></table>
 <h4>Mediators &amp; resource locks</h4>
 <p class="fam-lede">Host-level wrappers that ration shared compute across concurrent worktrees. One pattern — a resource-mediator — at three lock cardinalities (exclusive <code>N=1</code> · bounded <code>M=8</code> · a global mutex); the three entries vary the cardinality, not the idea.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="agent/mediators-and-resource-locks/test-serializer.html">Test-serializer (N=1 flock on <code>dotnet test</code>)</a></td><td class="c-sum">Serialize dotnet test to a single writer per host.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="agent/mediators-and-resource-locks/build-serializer.html">Build-serializer (M=8 semaphore)</a></td><td class="c-sum">Cap concurrent heavy builds with an M=8 host semaphore.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="agent/mediators-and-resource-locks/aggregate-compute-protection.html">Aggregate-compute protection (<code>lint-all</code> host mutex)</a></td><td class="c-sum">One lint-all per host; one in flight per orchestrator.</td><td class="c-enf">Hard</td></tr>
 </tbody></table>
 <h4>Lifecycle &amp; observability</h4>
 <p class="fam-lede">Live signal surfaces over the fleet.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="agent/lifecycle-and-observability/agent-registry.html">Agent-registry (<code>agent-registry.jsonl</code> + marker cache)</a></td><td class="c-sum">Authoritative record of which agents are live right now.</td><td class="c-enf">Hard (signal)</td></tr>
 <tr><td class="c-name"><a href="agent/lifecycle-and-observability/typed-event-bus.html">Orchestrator-as-reactor over an event bus</a></td><td class="c-sum">The orchestrator reacts to typed fleet events via a per-topic playbook.</td><td class="c-enf">Hard (signal)</td></tr>
 <tr><td class="c-name"><a href="agent/lifecycle-and-observability/deploy-heartbeats.html">Deploy heartbeats + stale-worker detection</a></td><td class="c-sum">Periodic liveness so a hung deploy differs from a slow one.</td><td class="c-enf">Hard (signal)</td></tr>
@@ -292,7 +292,7 @@
 </tbody></table>
 <h4>Governance-doc controls</h4>
 <p class="fam-lede">Documentation treated as enforced infrastructure.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="agent/governance-doc-controls/claude-md-rule-index.html">CLAUDE.md rule index + cap lint</a></td><td class="c-sum">The governance document itself, enforced by its own lints.</td><td class="c-enf">Soft·Hard</td></tr>
 <tr><td class="c-name"><a href="agent/governance-doc-controls/mandatory-snippet-table.html">Mandatory snippet-table enforcement</a></td><td class="c-sum">Brief-linting asserts every required brief snippet is present.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="agent/governance-doc-controls/epic-definition-of-done.html">Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></td><td class="c-sum">Close an Epic only after re-running its checks at HEAD.</td><td class="c-enf">Hard</td></tr>
@@ -302,8 +302,8 @@
 </tbody></table>
 <h3 class="role-h">Governance: Models — a bridge between agents and product</h3>
 <h4>System models</h4>
-<p class="fam-lede">The typed models the fleet reasons through and the codebase is generated from — the MBSE bridge. The six models are one pattern — an executable source-of-truth — applied to six domains (components, service flow, deployment, sync, concurrency, domain facts); the five mechanisms below act over them.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<p class="fam-lede">The typed models the fleet reasons through and governs the codebase from — the MBSE bridge. The six models are one pattern — an executable source-of-truth — applied to six domains (components, service flow, deployment, sync, concurrency, domain facts); the five mechanisms below act over them.</p>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth (data-not-code, can't drift)</a></td><td class="c-sum">Typed models read every run and generated from — can't drift.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/component-zone-model.html">Component &amp; zone model</a></td><td class="c-sum">A typed map of every component's code zone and seams.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/synchronization-model.html">Synchronization model (meta-sync)</a></td><td class="c-sum">A registry of every lock, what it guards, and its ordering.</td><td class="c-enf">Hard</td></tr>
@@ -320,7 +320,7 @@
 <p class="role-note">This is the part that&#x27;s specific to the DocAble project — you&#x27;ll need your own for your project.</p>
 <h4>Canonical models &amp; seams</h4>
 <p class="fam-lede">The one sanctioned typed model or seam per concern, each held in place by a ban-lint.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="product/canonical-models-and-seams/pdf-model.html">PdfModel (sole PDF mutation surface)</a></td><td class="c-sum">All PDF I/O through one typed model; raw canonical-PDF-library access banned.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/canonical-models-and-seams/office-models.html">Office Models ({Slides,Docs,Sheets}Model)</a></td><td class="c-sum">All OOXML through typed models; raw SDK access banned.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/canonical-models-and-seams/service-client.html">ServiceClient (typed cross-service seam)</a></td><td class="c-sum">A BinaryIO seam makes file-path-over-wire impossible.</td><td class="c-enf">Hard</td></tr>
@@ -329,7 +329,7 @@
 </tbody></table>
 <h4>Validation &amp; conformance</h4>
 <p class="fam-lede">Deterministic pass/fail checks over the artifact.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="product/validation-and-conformance/content-validator.html">ContentValidator (input ⊆ output fidelity)</a></td><td class="c-sum">Assert input content survives remediation — a fidelity gate.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/validation-and-conformance/semantic-lints.html">Blocking semantic lints</a></td><td class="c-sum">The blocking semantic-lint fleet over the tool's own source.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/validation-and-conformance/standards-rule-engine.html">Standards / WCAG rule engine</a></td><td class="c-sum">Map each finding to the WCAG/508/PDF-UA criterion it closes.</td><td class="c-enf">Hard</td></tr>
@@ -337,7 +337,7 @@
 </tbody></table>
 <h4>Regression tests</h4>
 <p class="fam-lede">Repeatable behaviour-pinning bodies.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="product/regression-tests/test-onion-tiers.html">Test-onion tiers (Smoke / Lite / targeted / full)</a></td><td class="c-sum">Cost-stratified test tiers: Smoke, Lite, targeted, full.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/regression-tests/property-tests.html">FsCheck property tests</a></td><td class="c-sum">FsCheck invariants over generated inputs find hidden bugs.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/regression-tests/fuzz-campaigns.html">Fuzz campaigns (+ auto-coverage)</a></td><td class="c-sum">Malformed-input campaigns; fix to the spec, not the seed.</td><td class="c-enf">Hard</td></tr>
@@ -345,7 +345,7 @@
 </tbody></table>
 <h4>Provenance &amp; attribution</h4>
 <p class="fam-lede">Durable records of what the tool changed.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="product/provenance-and-attribution/mutator-stamps.html">Per-mutator attribution stamps</a></td><td class="c-sum">Every mutation embeds an attribution stamp in the artifact.</td><td class="c-enf">Hard (audit)</td></tr>
 <tr><td class="c-name"><a href="product/provenance-and-attribution/f10-wiring-lint.html">F10 mutator-stamp-wiring lint</a></td><td class="c-sum">Fail the build if any mutator verb lacks a stamp.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/provenance-and-attribution/derive-changelog.html"><code>derive-changelog</code> (reconstruct mutations)</a></td><td class="c-sum">Reconstruct the attributed mutation history from the stamps.</td><td class="c-enf">Hard (audit)</td></tr>
@@ -353,7 +353,7 @@
 </tbody></table>
 <h4>Repair vocabulary</h4>
 <p class="fam-lede">The bounded move-space of the remediator.</p>
-<table class="census-t"><thead><tr><th>Control</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
+<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="product/repair-vocabulary/typed-categories.html">Typed <code>ViolationCategory</code> / <code>FailureCategory</code> enums</a></td><td class="c-sum">Typed enums replace free-form failure strings.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/repair-vocabulary/remediation-verbs.html">Closed remediation-verb sets</a></td><td class="c-sum">A closed, named set of remediation actions — bounded moves.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="product/repair-vocabulary/codemod-first.html">Codemod-first threshold (N≳50 → AST transformer)</a></td><td class="c-sum">For 50+ deterministic sites, write one AST transformer.</td><td class="c-enf">Soft</td></tr>

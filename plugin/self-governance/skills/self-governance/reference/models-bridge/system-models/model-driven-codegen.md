@@ -54,7 +54,7 @@ carries a provenance marker (emitter + regen path), enforced by a provenance-hea
   wire-contract, and docker generators.
 - The provenance-header requirement + its enforcing lint.
 
-## Related controls
+## Related mechanisms
 
 - **Enabler** — the models ([service-flow](service-flow-model.md),
   [domain-registries](domain-registries.md), [deployment-topology](deployment-topology-model.md)) are

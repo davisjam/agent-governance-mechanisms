@@ -56,7 +56,7 @@ timestamps. Each of the five tools has an active enforcer that refuses the un-me
 - The build serializer — the M=8 byte-range semaphore over the five tools.
 - The five active per-tool enforcers (`dotnet build` / `tsc` / `csharp-query` / jedi / `pyright`).
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [test-serializer](test-serializer.md): the same pattern at **N=1**. Together
   they are the worked example of choosing lock cardinality by contention profile (destructive ⇒ N=1;

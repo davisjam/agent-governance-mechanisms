@@ -55,7 +55,7 @@ prefers reading the meta-files at lint-time over codegen. Companion deserializat
 - Registry-agreement lints (a registry and its consumers must list the same keys).
 - The meta-file consistency discipline (read the meta-file; never embed a snapshot).
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [semantic-lints](semantic-lints.md): per-source structural lints; this family
   is the *relational* complement.

@@ -58,7 +58,7 @@ fails on divergence.
   the k8s parity lints; the sync-coverage lint.
 - The [[reverse-mapping-test|model↔tree reverse-mapping tests]].
 
-## Related controls
+## Related mechanisms
 
 - **Counterpart** — of every model here: [component-zone](component-zone-model.md) ·
   [synchronization](synchronization-model.md) · [service-flow](service-flow-model.md) · … each typed

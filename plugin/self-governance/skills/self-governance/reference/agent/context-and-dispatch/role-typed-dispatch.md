@@ -75,7 +75,7 @@ silently diverge.
   propagate into deploy subprocesses and trip the role guard) — a documented edge of the same
   enforcement.
 
-## Related controls
+## Related mechanisms
 
 - **Consumer** — [pre-commit-hook](../gates-and-merge-train/pre-commit-hook.md): the commit path
   consumes the role fixed at dispatch — the `commit-slave` role is shaped precisely so the hook fires.

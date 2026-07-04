@@ -55,7 +55,7 @@ uncovered mutators.
 - The [[single-writer-registry]] — single-writer / monopoly contracts.
 - The mediator enforcers ([test-serializer](../../agent/mediators-and-resource-locks/test-serializer.md) et al.).
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — the agent [mediators & resource locks](../../agent/mediators-and-resource-locks/test-serializer.md)
   family *enforces* these contracts (agent side) ◀──▶ the model *declares* the concurrency the codebase

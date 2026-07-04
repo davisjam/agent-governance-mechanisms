@@ -54,7 +54,7 @@ informational).
 - The doc-derived test files + the `DDT-audited` / `DDT-source` / `DDT-pins` trailer.
 - The trailer regenerator; the trailer-present lint (BLOCKING) + the trailer-freshness lint (WARNING).
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [test-onion-tiers](test-onion-tiers.md), [property-tests](property-tests.md):
   the other behaviour-pinning bodies.

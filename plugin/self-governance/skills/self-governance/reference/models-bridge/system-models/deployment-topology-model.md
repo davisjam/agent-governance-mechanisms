@@ -51,7 +51,7 @@ parity lint, the import-layer checks) read them and gate on divergence.
 - The [[deployment-topology-loader]] · [[service-tier-registry]] · [[layer-boundary-contracts]].
 - The deploy-phase-table parity lint + the import-layer boundary lints.
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — agents reason about layering/tiers *through* these models (agent side) ◀──▶ they
   *govern* the real deployment + import structure of the codebase (product side).

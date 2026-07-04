@@ -54,7 +54,7 @@ Checking layer routes through `RuleWalkers/`. `openxml-direct-access` bans raw
 - `SlidesModel` / `DocsModel` / `SheetsModel` + `OpenXmlCommon`; `RuleWalkers/` for the checking path.
 - `openxml-direct-access` + `no-raw-xml-string-match` ban-lints.
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [pdf-model](pdf-model.md): the PDF half of the unified "typed model + ban-lint"
   pattern; together they consolidate the raw-library corruption defect class across all four formats.

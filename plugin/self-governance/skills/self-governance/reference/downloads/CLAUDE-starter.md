@@ -66,8 +66,9 @@ mature system covers all three:
 
 - **(a) Agent** — the fleet and the substrate that *produces* work. *e.g.* brief-linting, role-typed
   dispatch, the pre-commit → merge-train gate staircase, agent-registry + lifecycle observability.
-- **(b) Models-bridge** — the typed models the fleet reasons *through* and the codebase is generated
-  *from*. *e.g.* a component/zone model, a service-flow model, drift/parity gates. This is how a
+- **(b) Models-bridge** — the typed models the fleet reasons *through* and governs the codebase *from*
+  (a limited slice — config, docs, IPC contracts — is generated from them too). *e.g.* a component/zone
+  model, a service-flow model, drift/parity gates. This is how a
   context-*bounded* agent operates a context-*exceeding* codebase — meta-sync keeps the map equal to the
   territory, or the bridge lies.
 - **(c) Product** — the shipped artifact. *e.g.* canonical typed models held by ban-lints,

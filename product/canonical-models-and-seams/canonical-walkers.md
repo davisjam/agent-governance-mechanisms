@@ -52,7 +52,7 @@ library access.
 - `PdfStructTreeWalker`, the `RuleWalkers`, `DocxTopLevelPartWalker`, and the other per-tree walkers.
 - The canonical-walker discipline (traversal routed through the walker, raw recursion banned).
 
-## Related controls
+## Related mechanisms
 
 - *See also* — [pdf-model](pdf-model.md), [office-models](office-models.md): walkers are *how you
   traverse* those typed models; they are part of the same sole-seam discipline.

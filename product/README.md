@@ -1,8 +1,8 @@
-# Product controls — governing the shipped artifact
+# Product mechanisms — governing the shipped artifact
 
-<!-- summary: Controls that govern the shipped accessibility-remediation artifact. -->
+<!-- summary: Mechanisms that govern the shipped accessibility-remediation artifact. -->
 
-*One of three roles in the [catalogue](../README.md). Product controls govern the **shipped
+*One of three roles in the [catalogue](../README.md). Product mechanisms govern the **shipped
 accessibility-remediation artifact**: how the document is modelled and accessed, how the remediation is
 validated and conformance-checked, how behaviour is regression-pinned, how mutations are made auditable,
 and how the repair move-space is bounded. (The artifact is *produced by* the [agent](../agent/) fleet,

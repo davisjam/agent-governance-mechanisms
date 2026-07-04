@@ -32,7 +32,7 @@ META_ORDER = ["Summary", "Target", "Form", "Enforcement"]  # Summary first; nove
 SUMMARY_MAX = 100  # chars — a tooltip-friendly gloss, deliberately shorter than Intent
 SECTION_ORDER = [
     "Motivation", "Why it's not just", "Mechanism", "Prerequisites",
-    "Consequences & costs", "Known uses", "Related controls",
+    "Consequences & costs", "Known uses", "Related mechanisms",
 ]
 REL_TAGS = ("Counterpart", "Enabler", "Layer", "Consumer", "Bridge", "See also")
 ROLE_DIRS = ["agent", "models-bridge", "product"]
@@ -114,12 +114,12 @@ class Entry:
         if idxs != sorted(idxs):
             self.issues.append(f"sections out of order: {secs}")
 
-        rel = t.split("## Related controls")[-1] if "## Related controls" in t else ""
+        rel = t.split("## Related mechanisms")[-1] if "## Related mechanisms" in t else ""
         bullets = re.findall(r"^- (.+)$", rel, re.M)
         if not bullets:
-            self.issues.append("no Related-controls bullets")
+            self.issues.append("no Related-mechanisms bullets")
         elif not any(any(tag in b for tag in REL_TAGS) for b in bullets):
-            self.issues.append("Related-controls: no relationship tags")
+            self.issues.append("Related-mechanisms: no relationship tags")
 
     def title_only(self) -> str:
         m = re.search(r"^# (.+)$", self.text, re.M)
@@ -298,7 +298,7 @@ FIGURE_FILE = "catalogue-figure.html"  # the hand-authored governance-map figure
 
 
 def check_figure(entries: list[Entry]) -> list[str]:
-    """Governance-map figure invariants: every control is clickable, every link resolves, and no
+    """Governance-map figure invariants: every mechanism is clickable, every link resolves, and no
     clickable-styled node ('chip' / 'lat-node') is a slug without a link.
 
     Deterministic backstop for the figure — it is hand-authored (build never regenerates it), so a
@@ -318,11 +318,11 @@ def check_figure(entries: list[Entry]) -> list[str]:
         if not os.path.exists(os.path.join(ROOT, os.path.normpath(h))):
             problems.append(f"dead link -> {h}")
 
-    # (2) coverage — every control is linked at least once (no slug clickable nowhere in the figure).
+    # (2) coverage — every mechanism is linked at least once (no slug clickable nowhere in the figure).
     for e in entries:
         html = (e.path[:-3] + ".html").replace(os.sep, "/")
         if html not in local:
-            problems.append(f"control not linked anywhere -> {html} (a slug without a link)")
+            problems.append(f"mechanism not linked anywhere -> {html} (a slug without a link)")
 
     # (3) no orphan node — a chip / lat-node element must carry a link.
     for i, ln in enumerate(lines, 1):
@@ -389,7 +389,7 @@ def check_summary_counts(entries: list[Entry]) -> list[str]:
             problems.append(f"no '**{label} (N)**' role total in the INDEX summary")
         elif int(m.group(1)) != by_role[role]:
             problems.append(f"{label} ({m.group(1)}) != actual {by_role[role]} — update the INDEX summary")
-    m = re.search(r"(\d+) controls across \d+ families", idx)
+    m = re.search(r"(\d+) mechanisms across \d+ families", idx)
     if m and int(m.group(1)) != len(entries):
         problems.append(f"'{m.group(1)} controls' != actual {len(entries)} — update the INDEX summary")
     return problems
@@ -774,8 +774,8 @@ def parse_census() -> list[dict]:
 
 
 CENSUS_LEGEND = (
-    '<p class="census-legend">A <b>representative</b> selection — control <i>patterns</i>, not an '
-    'exhaustive list of every lint and gate in the system. Each row is one control with its one-line '
+    '<p class="census-legend">A <b>representative</b> selection — mechanism <i>patterns</i>, not an '
+    'exhaustive list of every lint and gate in the system. Each row is one mechanism with its one-line '
     '<b>Summary</b> and how it <b>Enforces</b>: <b>Hard</b> is deterministic (blocks, audits, or signals '
     'regardless of agent cooperation), <b>Soft</b> is probabilistic (aims an agent but cannot block), and '
     '<b>Soft·Hard</b> is soft guidance with a hard counterpart. Click a name for the full writeup.</p>')
@@ -808,7 +808,7 @@ def build_census(entries: list[Entry]) -> str:
         out.append(f'<h4>{_attr(fam["family"])}</h4>')
         if fam["oneliner"]:
             out.append(f'<p class="fam-lede">{_inline(fam["oneliner"])}</p>')
-        out.append('<table class="census-t"><thead><tr><th>Control</th><th>Summary</th>'
+        out.append('<table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th>'
                    "<th>Enforcement</th></tr></thead><tbody>")
         for r in fam["rows"]:
             href = _md_link_rewrite(r["path"])
@@ -892,7 +892,7 @@ LANDING_CSS = """
 
 # (title, subtitle, href, extra-attrs) for the landing action cards
 LANDING_CARDS = [
-    ("Views of the governance catalogue", "the whole catalogue at a glance — four views, controls clickable", "catalogue-figure.html", ""),
+    ("Views of the governance catalogue", "the whole catalogue at a glance — four views, mechanisms clickable", "catalogue-figure.html", ""),
     ("Abstractions glossary", "the artifacts the mechanisms are built from — named by role, not filename", "ABSTRACTIONS.html", ""),
     ("Quick start", "two ways to adopt — DIY the catalogue, or install the self-governance skill", "quick-start.html", ""),
     ("Starter CLAUDE.md", "a mature one — have Claude fold it into your CLAUDE.md (see Quick start)", "downloads/CLAUDE-starter.md", " download"),
@@ -1208,8 +1208,8 @@ def build_views_page(entries: list[Entry]) -> str:
             f"<title>Governance catalogue — codegen'd views</title>\n{FONTS_LINK}\n"
             f"<style>{VIEWS_CSS}{FONT_CSS}</style>\n</head>\n<body>\n")
     body = ("<h1>Governance catalogue — codegen'd views</h1>\n"
-            f'<p class="sub">The same {len(entries)} controls, re-grouped live from card metadata. Every card is emitted by '
-            '<code>renderForView(card)</code>; a view is just a grouping key + order, so <b>adding a control or a '
+            f'<p class="sub">The same {len(entries)} mechanisms, re-grouped live from card metadata. Every card is emitted by '
+            '<code>renderForView(card)</code>; a view is just a grouping key + order, so <b>adding a mechanism or a '
             'view is data, not layout</b>. Click a card for its writeup; hover for its one-line summary. '
             '&nbsp;·&nbsp; <a href="catalogue-figure.html">the governance map</a> '
             '&nbsp;·&nbsp; <a href="index.html">catalogue</a></p>\n'
@@ -1256,7 +1256,7 @@ def _stats(entries: list[Entry]) -> dict[str, str]:
     return {k: str(v) for k, v in stats.items()}
 
 
-STAT_VOCAB = re.compile(r"\b\d[\d,]*\s*(?:KLOC|MLOC|controls|families|weeks?)\b")
+STAT_VOCAB = re.compile(r"\b\d[\d,]*\s*(?:KLOC|MLOC|controls|mechanisms|families|weeks?)\b")
 
 
 def check_no_raw_stats(_entries: list[Entry]) -> list[str]:
@@ -1369,7 +1369,7 @@ def cmd_build(_args) -> int:
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
     print(f"built {written} entry/index pages + landing index.html + catalogue-views.html "
-          f"({len(entries)} controls in census)")
+          f"({len(entries)} mechanisms in census)")
     # Regenerate the packaged skill bundle from the same sources — same "can't drift" discipline as the
     # HTML. build is the one regeneration point (pre-commit hook, deploy, and CI all call it), so this
     # single wire-in keeps plugin/ fresh. Subprocess avoids a catalog <-> bundle_skill circular import.

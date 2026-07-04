@@ -1,6 +1,6 @@
-# Control census
+# Mechanism census
 
-Every control, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
+Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
 the two); families **7–11** = the **product** role (the shipped artifact). All 53 entries are fully
@@ -16,7 +16,7 @@ soft guidance with a hard counterpart.
 
 *What an agent knows and how it is launched.* — [family folder](agent/context-and-dispatch/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Brief-linting | `validation` | Hard | [brief-linting.md](agent/context-and-dispatch/brief-linting.md) |
 | ✅ | Docs hierarchy + governance index | `validation` | Soft·Hard | [docs-hierarchy.md](agent/context-and-dispatch/docs-hierarchy.md) |
@@ -27,7 +27,7 @@ soft guidance with a hard counterpart.
 
 *The path-to-production staircase for agent work.* — [family folder](agent/gates-and-merge-train/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Pre-commit hook (3-stanza, tree-sha markers) | `quality-gate` | Hard | [pre-commit-hook.md](agent/gates-and-merge-train/pre-commit-hook.md) |
 | ✅ | Sentinel first-commit early-abort | `quality-gate` | Hard | [sentinel-first-commit.md](agent/gates-and-merge-train/sentinel-first-commit.md) |
@@ -38,7 +38,7 @@ soft guidance with a hard counterpart.
 
 *Host-level wrappers that ration shared compute across concurrent worktrees. One pattern — a resource-mediator — at three lock cardinalities (exclusive `N=1` · bounded `M=8` · a global mutex); the three entries vary the cardinality, not the idea.* — [family folder](agent/mediators-and-resource-locks/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Test-serializer (N=1 flock on `dotnet test`) | `regression` | Hard | [test-serializer.md](agent/mediators-and-resource-locks/test-serializer.md) |
 | ✅ | Build-serializer (M=8 semaphore) | `validation` | Hard | [build-serializer.md](agent/mediators-and-resource-locks/build-serializer.md) |
@@ -48,7 +48,7 @@ soft guidance with a hard counterpart.
 
 *Live signal surfaces over the fleet.* — [family folder](agent/lifecycle-and-observability/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Agent-registry (`agent-registry.jsonl` + marker cache) | `observability` | Hard (signal) | [agent-registry.md](agent/lifecycle-and-observability/agent-registry.md) |
 | ✅ | Orchestrator-as-reactor over an event bus | `observability` | Hard (signal) | [typed-event-bus.md](agent/lifecycle-and-observability/typed-event-bus.md) |
@@ -60,7 +60,7 @@ soft guidance with a hard counterpart.
 
 *Documentation treated as enforced infrastructure.* — [family folder](agent/governance-doc-controls/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | CLAUDE.md rule index + cap lint | `validation` | Soft·Hard | [claude-md-rule-index.md](agent/governance-doc-controls/claude-md-rule-index.md) |
 | ✅ | Mandatory snippet-table enforcement | `validation` | Hard | [mandatory-snippet-table.md](agent/governance-doc-controls/mandatory-snippet-table.md) |
@@ -73,9 +73,9 @@ soft guidance with a hard counterpart.
 
 ## 6. System models
 
-*The typed models the fleet reasons through and the codebase is generated from — the MBSE bridge. The six models are one pattern — an executable source-of-truth — applied to six domains (components, service flow, deployment, sync, concurrency, domain facts); the five mechanisms below act over them.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*The typed models the fleet reasons through and governs the codebase from — the MBSE bridge. The six models are one pattern — an executable source-of-truth — applied to six domains (components, service flow, deployment, sync, concurrency, domain facts); the five mechanisms below act over them.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Executable source-of-truth (data-not-code, can't drift) | `typed-ir` | Hard | [executable-source-of-truth.md](models-bridge/system-models/executable-source-of-truth.md) |
 | ✅ | Component & zone model | `typed-ir` | Hard | [component-zone-model.md](models-bridge/system-models/component-zone-model.md) |
@@ -95,7 +95,7 @@ soft guidance with a hard counterpart.
 
 *The one sanctioned typed model or seam per concern, each held in place by a ban-lint.* — [family folder](product/canonical-models-and-seams/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | PdfModel (sole PDF mutation surface) | `typed-ir` | Hard | [pdf-model.md](product/canonical-models-and-seams/pdf-model.md) |
 | ✅ | Office Models ({Slides,Docs,Sheets}Model) | `typed-ir` | Hard | [office-models.md](product/canonical-models-and-seams/office-models.md) |
@@ -107,7 +107,7 @@ soft guidance with a hard counterpart.
 
 *Deterministic pass/fail checks over the artifact.* — [family folder](product/validation-and-conformance/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | ContentValidator (input ⊆ output fidelity) | `validation` | Hard | [content-validator.md](product/validation-and-conformance/content-validator.md) |
 | ✅ | Blocking semantic lints | `validation` | Hard | [semantic-lints.md](product/validation-and-conformance/semantic-lints.md) |
@@ -118,7 +118,7 @@ soft guidance with a hard counterpart.
 
 *Repeatable behaviour-pinning bodies.* — [family folder](product/regression-tests/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Test-onion tiers (Smoke / Lite / targeted / full) | `regression` | Hard | [test-onion-tiers.md](product/regression-tests/test-onion-tiers.md) |
 | ✅ | FsCheck property tests | `regression` | Hard | [property-tests.md](product/regression-tests/property-tests.md) |
@@ -129,7 +129,7 @@ soft guidance with a hard counterpart.
 
 *Durable records of what the tool changed.* — [family folder](product/provenance-and-attribution/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Per-mutator attribution stamps | `audit-trail` | Hard (audit) | [mutator-stamps.md](product/provenance-and-attribution/mutator-stamps.md) |
 | ✅ | F10 mutator-stamp-wiring lint | `validation` | Hard | [f10-wiring-lint.md](product/provenance-and-attribution/f10-wiring-lint.md) |
@@ -140,7 +140,7 @@ soft guidance with a hard counterpart.
 
 *The bounded move-space of the remediator.* — [family folder](product/repair-vocabulary/)
 
-| ✓ | Control | Form | Enf. | Entry |
+| ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Typed `ViolationCategory` / `FailureCategory` enums | `repair-vocab` | Hard | [typed-categories.md](product/repair-vocabulary/typed-categories.md) |
 | ✅ | Closed remediation-verb sets | `repair-vocab` | Hard | [remediation-verbs.md](product/repair-vocabulary/remediation-verbs.md) |
@@ -148,10 +148,10 @@ soft guidance with a hard counterpart.
 
 ---
 
-**Three roles complete — 53 controls across 11 families, all fully developed.**
+**Three roles complete — 53 mechanisms across 11 families, all fully developed.**
 **Agent (22):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (3) ·
 Lifecycle & observability (5) · Governance-doc controls (6, incl. the **CLAUDE.md rule index**
-meta-control).
+meta-mechanism).
 **Models-bridge (11):** System models — 6 models (incl. **synchronization/meta-sync**) + 5 mechanisms;
 the MBSE substrate through which a bounded agent operates an unbounded codebase.
 **Product (20):** Canonical models & seams (5) · Validation & conformance (4) · Regression tests (4) ·

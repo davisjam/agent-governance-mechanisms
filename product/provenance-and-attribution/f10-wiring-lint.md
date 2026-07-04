@@ -50,7 +50,7 @@ HIGH-severity finding. The invariant has been held at 0 open gaps.
 
 - The mutator-stamp wiring lint (F10, BLOCKING, 0 open gaps).
 
-## Related controls
+## Related mechanisms
 
 - **Counterpart** — of [mutator-stamps](mutator-stamps.md): the stamps are the *construction* (the audit
   record), this lint is the *counted control* that guarantees they're complete. The canonical

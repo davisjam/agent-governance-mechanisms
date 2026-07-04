@@ -4,7 +4,7 @@
 
 *The third role in the [catalogue](../README.md). Not "agent" and not "product," but the layer that
 **couples** them: typed models of the system that agents **read** to reason about the codebase, and
-that the codebase is **generated and governed from**. This is the interface through which a
+that **govern** it (a limited slice — config, docs, IPC contracts — is generated from them too). This is the interface through which a
 context-bounded agent operates a context-exceeding codebase — the thing that lets agentic engineering
 scale past a toy.*
 
@@ -24,7 +24,7 @@ scale past a toy.*
 tools, lints, and deploy scripts read on every run, and that generate real artifacts* (NetworkPolicy,
 service wiring, API docs, docker). Because they are continuously *used* and *validated*, the build fails
 the moment a model diverges from the code — the
-[drift & parity gates](system-models/drift-parity-gates.md) enforce exactly that, the one control the
+[drift & parity gates](system-models/drift-parity-gates.md) enforce exactly that, the one gate the
 rest here depends on: a bridge is only useful if the map equals the territory, and a lying map is worse
 than none.
 
@@ -36,7 +36,7 @@ drift gates is tedious, and humans resent the nagging.
 without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
 agent operate a codebase larger than its context in the first place.
 
-## The eleven controls (one family: `system-models/`)
+## The eleven mechanisms (one family: `system-models/`)
 
 **Six models** — each a typed source-of-truth for one slice of the system:
 

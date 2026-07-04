@@ -74,7 +74,7 @@ dispatch. The marker/snippet plumbing this lint checks is the harness-specific e
 - A dedicated check verifies the dispatch-id token *and* the on-disk marker together, closing the
   "token present but no live agent" gap.
 
-## Related controls
+## Related mechanisms
 
 - **Enabler** — [mandatory-snippet-table](../governance-doc-controls/mandatory-snippet-table.md)
   supplies the snippet markers this lint asserts; the registry must exist before the lint can check

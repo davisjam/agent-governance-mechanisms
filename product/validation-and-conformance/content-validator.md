@@ -55,7 +55,7 @@ emits `##PASS_FIDELITY##` and exit 3 so the offending pass is identified before 
 - The `##PASS_FIDELITY##` staging per-pass variant (localizes the offending pass).
 - The accessibility-remediation policy it enforces (never drop content the user wrote).
 
-## Related controls
+## Related mechanisms
 
 - **Layer** — with [standards-rule-engine](standards-rule-engine.md): both are product gates over the
   artifact — fidelity (nothing lost) and conformance (standards met).

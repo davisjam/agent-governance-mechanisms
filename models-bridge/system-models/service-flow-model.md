@@ -57,7 +57,7 @@ The drift lints enforce parity in both directions.
 - The web-API (OpenAPI), wire-contract, and config schemas.
 - Drift gates: the service-flow parity lint (tree↔yaml), the public-API drift lint (handler↔spec).
 
-## Related controls
+## Related mechanisms
 
 - **Bridge** — agents *query* it ([query-surface](query-surface.md) `service-flow`/`web-api`) to reason
   about the SOA (agent side) ◀──▶ it *generates & governs* the deployed system — NetworkPolicy, wiring,

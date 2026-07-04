@@ -51,7 +51,7 @@ Per-site corollaries live in the placement-audit doc.
 - The `a11y_` prefix convention and its per-site corollaries.
 - `registry.Record(...)` + the `InsertedContentValidator` (automatic coverage of registered inserts).
 
-## Related controls
+## Related mechanisms
 
 - **Consumer** — the `InsertedContentValidator` reads the registered inserts (naming + registration are
   what it depends on).

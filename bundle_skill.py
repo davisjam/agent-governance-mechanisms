@@ -108,7 +108,7 @@ def _reference_readme(n: int) -> None:
         GEN_NOTE
         + "\n# Reference catalogue (bundled)\n\n"
         f"A vendored copy of the **agent** and **models-bridge** roles of the "
-        f"agent-governance-mechanisms catalogue ({n} control entries), assembled by "
+        f"agent-governance-mechanisms catalogue ({n} mechanism entries), assembled by "
         "`bundle_skill.py` so the skill is self-contained when installed. Start at "
         "[`INDEX.md`](INDEX.md); read individual entries on demand. Canonical source + the "
         "product role: https://davisjam.github.io/agent-governance-mechanisms/\n",
@@ -168,7 +168,7 @@ def main() -> int:
     _reference_readme(n)
     d = _vendor_referenced_downloads()
     _rewrite_outbound_links()
-    print(f"bundled {n} control entries + INDEX + ABSTRACTIONS + principles.md + {d} referenced download(s)")
+    print(f"bundled {n} mechanism entries + INDEX + ABSTRACTIONS + principles.md + {d} referenced download(s)")
     return 0
 
 

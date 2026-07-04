@@ -50,7 +50,7 @@ shrinks any failure to the smallest input that still breaks it.
 - FsCheck.Xunit properties across the test projects (round-trip / combinatorial invariants).
 - Added per-class when a property-shaped invariant exists (the pilot + triage discipline).
 
-## Related controls
+## Related mechanisms
 
 - *See also (sibling)* — [test-onion-tiers](test-onion-tiers.md), [fuzz-campaigns](fuzz-campaigns.md):
   examples-in-tiers and adversarial-fuzzing complement invariant-checking.
