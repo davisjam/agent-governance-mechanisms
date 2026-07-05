@@ -9,7 +9,12 @@ description: >-
   harden an agent-collaborative codebase, reduce recurring agent-caused
   regressions, set up guardrails / lints / gates / typed seams for multi-agent
   development, review their governance posture, or when a bug or failure class just
-  recurred and should be prevented structurally rather than only patched.
+  recurred and should be prevented structurally rather than only patched. ALSO use
+  at DESIGN time — when designing or reviewing a new subsystem, component, state
+  machine, queue, cross-service seam, or data model; choosing between architectural
+  approaches; or introducing concurrency, a trust boundary, an irreversible
+  operation, or duplicated state/logic — to catch the predictive smells whose
+  failure class can be anticipated and prevented by construction.
 ---
 
 # Self-governance
@@ -110,10 +115,13 @@ governs it.
 ## Mode: AUDIT (advise)
 
 **Trigger:** "harden this repo," "what guardrails am I missing," "review my
-governance posture," a periodic review.
+governance posture," a periodic review — OR a **design-time** review ("I'm
+designing / adding X — what governance does it warrant?").
 
-Survey the repository against the catalogue and produce a **prioritized plan** —
-you advise here; you do not apply changes.
+Survey the repository — or a **proposed design** — against the catalogue and produce
+a **prioritized plan**; you advise here, you do not apply changes. For a design, scan
+it for the predictive smells ([`principles.md`](principles.md) A.1.5) and name the
+mechanism each warrants — sized to the operation's scale.
 
 1. **Learn the repo first, and gauge its scale.** What agents run, how many at
    once, what breaks repeatedly, what house-rules file (if any) exists. **Size the

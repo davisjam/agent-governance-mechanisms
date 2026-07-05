@@ -154,6 +154,8 @@ def catalogue_md_files() -> list[str]:
             continue  # nested under a non-catalogue dir (packaged copy, downloads, etc.)
         if os.path.basename(f) in NOSERVE:
             continue  # internal continuity docs: not rendered/served
+        if ".local." in os.path.basename(f):
+            continue  # local scratch (gitignored `*.local.md` convention) — never rendered/served
         out.append(f)
     return out
 

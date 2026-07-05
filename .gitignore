@@ -12,3 +12,6 @@ node_modules/
 
 # internal continuity/handoff docs — kept locally, never shipped to the public repo
 /HANDOFF*.md
+
+# local scratch (never rendered/served — see catalog.py catalogue_md_files)
+*.local.html

@@ -120,6 +120,38 @@ faster than they earn their keep, until the repo is slower and more confusing th
 feared. Grandiosity is a smell; the people most drawn to a governance catalogue are the ones most at risk
 of over-building it. (→ A.2.11, A.1.3)
 
+### A.1.5. Reach proactively on the predictive smells — design-time governance
+
+Most governance is failure-driven (A.1.4): default to skip; convert a failure once it *recurs*. But a few
+structural traits make a failure class near-certain *before* you've felt it — and for those, reaching for
+the mechanism at design time is cheap insurance, not premature. **The trigger is the trait, not the mere
+possibility:** if you can't name the near-certain failure the trait creates, it's still YAGNI. Reach when
+you see:
+
+- **Concurrency, shared mutable state, or a multi-step mutation that can tear** → a lock/mediator, or make
+  the step atomic (transaction / CAS / Lua); walk the T+1…T+N dynamics (→ A.2.10).
+- **A stateful lifecycle** (states + transitions) → an explicit state machine, not scattered flags (→ A.2.3).
+- **The second copy of the same logic** → unify now, on the second site (→ A.2.5).
+- **A raw seam to a powerful resource** (a query language, a subprocess, the filesystem, a format library)
+  → one typed seam + a ban-lint on the raw path; a typed signature can make the bug class *unrepresentable*
+  (→ A.2.7).
+- **The same fact re-derived or hardcoded in more than one place → model it.** Name it once as a typed
+  source of truth the tools query, instead of restating it. Two things are worth modeling: **the world**
+  (domain state, config, statuses, entities hardcoded across files) and **the codebase itself** (its own
+  structure — ownership, zones, seams — re-analyzed by each tool). Model whichever you keep repeating.
+- **Retried / queued / time-delayed consumption** → design the second-order dynamics up front (→ A.2.10).
+- **A trust boundary** — untrusted input, user content, a cross-service call, a secret, or a broad
+  capability → validate / escape at the boundary, externalize secrets, grant least privilege.
+- **An irreversible op** (delete, overwrite, migrate, force-push) → a guard, a dry-run, or a backup.
+- **An invariant that lives only in prose or a head** → encode it + a test that walks it (→ A.3.5).
+- **A hot path doing per-item what a bulk, cached, or incremental op could do** (N+1, unbounded fan-out,
+  recompute-what-you-could-reuse) → batch it, bound it, make it incremental.
+- **An advisory "remember to…"** → make it a hard gate; guidance you must remember rots (→ A.3.1).
+
+These are the *named exceptions* to default-skip — not a license to govern everything. Everything not on
+this list stays failure-driven; this is the design-time complement to A.1.2 (which maps a failure to its
+mechanism *after* it recurs).
+
 ## A.2 — Architecture: make the failure impossible by construction
 
 The first-choice mechanism. Shape the system so the failure class cannot be represented — a typed model
