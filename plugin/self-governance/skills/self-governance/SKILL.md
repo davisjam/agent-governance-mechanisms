@@ -164,7 +164,10 @@ Two beats: **interpret**, then **convert**.
    (agent / models-bridge)? which family? which existing control is nearest — is
    this a *gap in* an existing control, or a *missing* one? Decide whether the
    durable form is **hard** (a lint / gate / typed seam / parity test) or **soft**
-   (a brief reflex / house-rule).
+   (a brief reflex / house-rule). **And check diagnosability:** if you could not
+   pin this failure from the signal already emitted, the durable form is *also* an
+   **observability upgrade** — the structured, per-decision signal that would have
+   pinned it — not only a lint or gate. An un-pinnable diagnosis is itself a finding.
 3. **Genre-check before inventing.** If the fix is a new control, ask: what is its
    genre, who is the canonical best-in-class, can we adopt an existing schema even
    if we skip its runtime? Prefer a single source of truth.

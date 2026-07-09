@@ -140,6 +140,9 @@ you see:
   (domain state, config, statuses, entities hardcoded across files) and **the codebase itself** (its own
   structure — ownership, zones, seams — re-analyzed by each tool). Model whichever you keep repeating.
 - **Retried / queued / time-delayed consumption** → design the second-order dynamics up front (→ A.2.10).
+- **A decision point that changes state on a timer or threshold and emits no structured record of what it
+  decided** → emit the signal (inputs, computed value, decision, reason) at design time; a silent
+  decision core is a near-certain future un-pinnable RCA (→ A.3.6).
 - **A trust boundary** — untrusted input, user content, a cross-service call, a secret, or a broad
   capability → validate / escape at the boundary, externalize secrets, grant least privilege.
 - **An irreversible op** (delete, overwrite, migrate, force-push) → a guard, a dry-run, or a backup.
@@ -359,6 +362,21 @@ is; (4) **enforcement: invariants → tests** — map each invariant ID to the
 test that pins it, or mark it UNTESTED, so the doc *drives* the test backlog.
 Design docs encode invariants, not just rationale. (The catalogue ships a
 design-doc template starter built on this pattern.)
+
+### A.3.6. Diagnosability-driven observability — an un-pinnable diagnosis is a finding about the signal
+
+When a root-cause analysis **cannot pin the cause from the signal you already have** (logs, events,
+traces), treat that inability as a finding in its own right — not a dead end. Add the observability that
+*would* have pinned it, so this failure and the ones like it are diagnosable next time **without a
+re-run**. This is the runtime analogue of A.3.1's audit→lint reflex: **today's un-pinnable diagnosis
+becomes tomorrow's standing signal.** It composes with the fix — close the bug *and* the signal gap —
+and never replaces it.
+
+The shape that pays off: a decision point that changes system state — a scaler, a retry, a router, a
+gate — emits a **structured, per-decision record** of its inputs, the value it computed, the decision it
+took, and why. A later anomaly is then reconstructable from the record alone. Guidance *aims* ("look for
+the missing signal"); the emitted signal holds — and a substrate that emits a signal owns it end to end:
+whatever emits it also says what healthy looks like and where to look when it isn't.
 
 ## A.4 — Operating the method
 
