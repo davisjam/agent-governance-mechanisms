@@ -74,8 +74,8 @@ skill operates by. The core reflexes, applied on every touch:
    (→ [`principles.md`](principles.md) A.1.2), not a lecture they could give you.
 
 When a durable control is a **test**, reach for the strategy that fits the failure — property-based,
-doc-driven, schema-driven, fuzz, state-machine coverage, user-journey, or dynamics-aimed (see
-[`principles.md`](principles.md) A.3.4) — not just an example-based unit test.
+doc-driven, schema-driven, fuzz, state-machine coverage, user-journey, dynamics-aimed, or error-path
+enumeration (see [`principles.md`](principles.md) A.3.4) — not just an example-based unit test.
 
 You can also help the user **fold this method into their own governance doc**. Compare
 [`principles.md`](principles.md) and the bundled `reference/downloads/CLAUDE-starter.md` against their

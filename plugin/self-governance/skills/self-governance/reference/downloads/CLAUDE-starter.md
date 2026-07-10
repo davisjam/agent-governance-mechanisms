@@ -160,6 +160,10 @@ you see:
 - **A decision point that changes state on a timer or threshold and emits no structured record of what it
   decided** → emit the signal (inputs, computed value, decision, reason) at design time; a silent
   decision core is a near-certain future un-pinnable RCA (→ A.3.6).
+- **Multi-writer mutable state with more than one terminal transition** (a row several code paths can move
+  to a final state — cancel, fail, complete — or a cancel/timeout edge crossing a concurrency boundary)
+  → enumerate the error edges against each other and make each writer resolve consistently (compare-and-
+  swap, not blind write); if a wrong terminal state is costly, prove the enumeration complete (→ A.3.4).
 - **A trust boundary** — untrusted input, user content, a cross-service call, a secret, or a broad
   capability → validate / escape at the boundary, externalize secrets, grant least privilege.
 - **An irreversible op** (delete, overwrite, migrate, force-push) → a guard, a dry-run, or a backup.
@@ -362,9 +366,16 @@ A specific test is a control; the *strategy* is the general means of building on
 - **State-machine coverage** — walk the declared transitions; catch the illegal ones.
 - **User-journey** — end-to-end flows over real driving conditions.
 - **Dynamics-aimed** — repetition / concurrency / stale-state, where distributed bugs live (→ A.2.10).
+- **Error-path enumeration** — walk each *named failure edge* (cancel / timeout / crash / preemption /
+  partial-write / concurrent-terminal) and ask: does every participant resolve to a consistent terminal
+  state? Sibling to *dynamics-aimed* — that asks "what at T+N under concurrency?", this asks "is each
+  error edge's resolution clean?" — and it catches what a happy-path *or* dynamics suite sails past
+  (e.g. two different terminal writers racing one row). It presupposes *typed* error edges (you can't
+  enumerate string-land); where a wrong terminal state is costly, prove the walk complete with an
+  exhaustive state-space check.
 
 Reach for the right *kind*, not one canonical suite; a strong-but-static unit suite misses the dynamics
-ones every time.
+and error-path ones every time.
 
 ### A.3.5. Documentation — the invariants-driven pattern
 

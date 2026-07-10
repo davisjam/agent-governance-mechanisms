@@ -58,3 +58,6 @@ handler to cover every case.
 - *See also (cross-target)* — the agent side's const-string topic registry
   ([typed-event-bus](../../agent/lifecycle-and-observability/typed-event-bus.md)) is the same "typed namespace
   over free-form strings" move for event topics.
+- *Enables* — typing a failure/violation space is the **precondition** for *error-path enumeration* (the
+  testing strategy in the method's stance): you can only walk "every error edge" and ask "did we cover
+  them all?" when the edges are a finite, named set, not ad-hoc strings.
