@@ -73,3 +73,6 @@ waves use an explicit `pre-commit-skip: <reason>` marker (lint stanza skipped, u
 - *See also (complement)* — [role-typed-dispatch](../context-and-dispatch/role-typed-dispatch.md): the
   commit path this hook guards *consumes* the role fixed at dispatch (the `commit-slave` role is shaped
   so the hook fires).
+- **Counterpart** — [lifecycle-hooks](../lifecycle-and-observability/lifecycle-hooks.md): the other kind
+  of hook. This one fires on a *commit* and guards what gets **written**; that one fires on a *runtime
+  lifecycle event* (turn-stop, compaction, session-start) and guards what the operator's loop **does**.
