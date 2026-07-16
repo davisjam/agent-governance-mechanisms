@@ -416,15 +416,23 @@ ratified work still queued, compacting context without first writing a hand-off,
 without reading the alert backlog, editing outside the sanctioned worktree. A lint can't reach these —
 there's no source artifact to analyze, and the omission happens at runtime. The control is a **lifecycle
 hook**: a script the runtime fires deterministically on a named event — turn-stop, pre-compaction,
-session-start, before-a-tool-call — that runs the check whether or not the operator remembered.
+session-start, before-a-tool-call. It is A.3.1's audit→lint reflex moved from the codebase to the agent
+runtime, and the runtime counterpart to the commit-content pre-commit gate — that guards what gets
+*written*; this guards what the loop *does*.
 
-This is A.3.1's audit→lint reflex moved from the codebase to the agent runtime, and the runtime
-counterpart to the commit-content pre-commit gate — that guards what gets *written*; this guards what the
-loop *does*. It is the sharpest form of *guidance aims, machinery holds* (→ A.1.1): a house-rule
-"remember to…" aims a probabilistic operator and rots (→ A.1.5); a stop-hook that refuses to end a turn
-while work remains simply holds. Right-size it (→ A.1.3): a hook fires on *every* occurrence of its
-event and can stall the loop, so reach for one once a soft reflex has demonstrably failed to hold — not
-on first sight — and keep its check cheap and fail-open, so a bug in the hook can't brick the session.
+A lifecycle hook is neither purely hard nor purely soft — it **splits the two halves of enforcement a
+lint fuses**. Its *firing* is hard: the runtime guarantees the hook runs at the event, so the operator
+cannot forget to invoke it. Its *payload* is either — a hard **block** that denies the action (a pre-edit
+guard refusing a write outside the worktree), or **soft guidance** injected back into the agent's own
+context (a stop-hook that re-states "work still queued" and leaves the agent to judge). The reflex case —
+*hard delivery of soft guidance* — is the one to understand: it doesn't swap judgment for machinery, it
+makes the *aiming* deterministic. A house-rule "remember to…" (→ A.1.5) depends on the agent recalling it
+at the right moment and rots; the hook fires that same guidance *exactly* at the decision point, every
+time. Guidance still aims (→ A.1.1) — the hook guarantees the aim is taken when it matters.
+
+Right-size it (→ A.1.3): a hook fires on *every* occurrence of its event and can stall the loop, so reach
+for one once a soft reflex has demonstrably failed to hold — not on first sight — keep its check cheap,
+and make a soft-guidance hook fail-open, so a bug in the hook can't brick the session.
 
 ## A.4 — Operating the method
 

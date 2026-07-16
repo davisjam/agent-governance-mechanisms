@@ -167,7 +167,9 @@ Two beats: **interpret**, then **convert**.
    failure is a step the *operator's own loop* omits at a lifecycle moment, a
    **runtime hook** on turn-stop / compaction / session-start / before-an-action) or
    **soft** (a brief reflex / house-rule). A "remember to…" house-rule aimed at the
-   orchestrator is soft and rots; the hook is its hard form
+   orchestrator is soft and rots; a hook splits enforcement — its firing is hard
+   (guaranteed at the event) even when its payload is soft guidance the agent still
+   judges, so it fires that guidance deterministically at the decision point
    ([`principles.md`](principles.md) A.3.7). **And check diagnosability:** if you could not
    pin this failure from the signal already emitted, the durable form is *also* an
    **observability upgrade** — the structured, per-decision signal that would have
