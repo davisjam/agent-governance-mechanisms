@@ -52,7 +52,8 @@ agent operate a codebase larger than its context in the first place.
 6. [Domain registries](system-models/domain-registries.md) — filetypes, WCAG gaps, cron, UX surfaces,
    competitors, rule metadata.
 7. [User-journey model](system-models/user-journey-model.md) — the product-goal→implementation bridge:
-   journeys joined to the endpoints / tests / resources they exercise (the one *goal-anchored* model).
+   journeys (actor / goal / ordered steps) joined to the endpoints and tests they exercise, hosted as a
+   `Journey` kind in the service-flow dialect (the one *goal-anchored* model).
 
 **Five mechanisms** over the models:
 
