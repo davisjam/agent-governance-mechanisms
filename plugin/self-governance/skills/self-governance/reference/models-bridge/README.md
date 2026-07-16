@@ -36,9 +36,9 @@ drift gates is tedious, and humans resent the nagging.
 without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
 agent operate a codebase larger than its context in the first place.
 
-## The eleven mechanisms (one family: `system-models/`)
+## The twelve mechanisms (one family: `system-models/`)
 
-**Six models** — each a typed source-of-truth for one slice of the system:
+**Seven models** — each a typed source-of-truth for one slice of the system:
 
 1. [Component & zone model](system-models/component-zone-model.md) — the code-zone / boundary / seam map.
 2. [Synchronization model (meta-sync)](system-models/synchronization-model.md) — the OS-lock / `flock`
@@ -51,17 +51,19 @@ agent operate a codebase larger than its context in the first place.
    they layer.
 6. [Domain registries](system-models/domain-registries.md) — filetypes, WCAG gaps, cron, UX surfaces,
    competitors, rule metadata.
+7. [User-journey model](system-models/user-journey-model.md) — the product-goal→implementation bridge:
+   journeys joined to the endpoints / tests / resources they exercise (the one *goal-anchored* model).
 
 **Five mechanisms** over the models:
 
-7. [Executable source-of-truth](system-models/executable-source-of-truth.md) ★ — the pattern itself:
+8. [Executable source-of-truth](system-models/executable-source-of-truth.md) ★ — the pattern itself:
    data-not-code, read every run, generated-from, can't drift.
-8. [Drift & parity gates](system-models/drift-parity-gates.md) — bidirectional model↔reality
+9. [Drift & parity gates](system-models/drift-parity-gates.md) — bidirectional model↔reality
    enforcement (the counterpart that makes "can't drift" true).
-9. [Model-driven codegen](system-models/model-driven-codegen.md) — generate artifacts *from* the
-   models, provenance-headed.
-10. [Query surface](system-models/query-surface.md) — `repo-query`, the agent-facing read API.
-11. [Read-don't-hardcode consumption](system-models/meta-model-consumption.md) — consume by query,
+10. [Model-driven codegen](system-models/model-driven-codegen.md) — generate artifacts *from* the
+    models, provenance-headed.
+11. [Query surface](system-models/query-surface.md) — `repo-query`, the agent-facing read API.
+12. [Read-don't-hardcode consumption](system-models/meta-model-consumption.md) — consume by query,
     never by copied snapshot.
 
 ## The bridge relationship

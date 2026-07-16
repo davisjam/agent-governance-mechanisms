@@ -151,7 +151,7 @@
 
   <p class="lead">The midway has a name — <span class="term">governance conversion</span> — and a working
   rule: <b>don't specify everything up front, and don't trust the vibes; let velocity surface the
-  failures, and convert each recurring one into a durable guardrail.</b> The result is <b>54 governance
+  failures, and convert each recurring one into a durable guardrail.</b> The result is <b>55 governance
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
 
@@ -239,7 +239,7 @@
   <hr class="sep" />
 
   <h2 class="section-h">Explore the catalogue</h2>
-  <p class="section-sub">54 governance mechanisms — the repertoire this loop produced in one real
+  <p class="section-sub">55 governance mechanisms — the repertoire this loop produced in one real
   production system.</p>
   <div class="cards-grid">
   <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, mechanisms clickable</span></a>
@@ -303,13 +303,14 @@
 </tbody></table>
 <h3 class="role-h">Governance: Models — a bridge between agents and product</h3>
 <h4>System models</h4>
-<p class="fam-lede">The typed models the fleet reasons through and governs the codebase from — the MBSE bridge. The six models are one pattern — an executable source-of-truth — applied to six domains (components, service flow, deployment, sync, concurrency, domain facts); the five mechanisms below act over them.</p>
+<p class="fam-lede">The typed models the fleet reasons through and governs the codebase from — the MBSE bridge. The seven models are one pattern — an executable source-of-truth — applied to seven domains (components, service flow, deployment, sync, concurrency, domain facts, user journeys); the five mechanisms below act over them.</p>
 <table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth (data-not-code, can't drift)</a></td><td class="c-sum">Typed models read every run and generated from — can't drift.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/component-zone-model.html">Component &amp; zone model</a></td><td class="c-sum">A typed map of every component's code zone and seams.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/synchronization-model.html">Synchronization model (meta-sync)</a></td><td class="c-sum">A registry of every lock, what it guards, and its ordering.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/concurrency-contracts.html">Mediator &amp; single-writer contracts</a></td><td class="c-sum">Declared mediator and single-writer contracts, coverage-checked.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/service-flow-model.html">Service-flow / API model</a></td><td class="c-sum">The SOA source-of-truth NetworkPolicy and wiring are generated from.</td><td class="c-enf">Hard</td></tr>
+<tr><td class="c-name"><a href="models-bridge/system-models/user-journey-model.html">User-journey model (product-goal → implementation)</a></td><td class="c-sum">A typed model of user journeys — product goals joined to the endpoints and tests each exercises.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/deployment-topology-model.html">Deployment &amp; tier topology</a></td><td class="c-sum">Typed models of where things run and how they layer.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/domain-registries.html">Domain registries</a></td><td class="c-sum">Frozen typed registries for the system's domain facts.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/drift-parity-gates.html">Drift &amp; parity gates (model↔reality)</a></td><td class="c-sum">Bidirectional model↔reality checks so models cannot drift.</td><td class="c-enf">Hard</td></tr>

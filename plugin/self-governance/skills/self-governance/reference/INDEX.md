@@ -6,7 +6,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All 34 bundled entries are fully written (the product role's entries live in the full catalogue).
+the two); families **7–11** = the **product** role (the shipped artifact). All 35 bundled entries are fully written (the product role's entries live in the full catalogue).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
 (blocking / audit / signal); **`Soft`** = probabilistic (influences, cannot block); **`Soft·Hard`** =
@@ -76,7 +76,7 @@ soft guidance with a hard counterpart.
 
 ## 6. System models
 
-*The typed models the fleet reasons through and governs the codebase from — the MBSE bridge. The six models are one pattern — an executable source-of-truth — applied to six domains (components, service flow, deployment, sync, concurrency, domain facts); the five mechanisms below act over them.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*The typed models the fleet reasons through and governs the codebase from — the MBSE bridge. The seven models are one pattern — an executable source-of-truth — applied to seven domains (components, service flow, deployment, sync, concurrency, domain facts, user journeys); the five mechanisms below act over them.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
@@ -85,6 +85,7 @@ soft guidance with a hard counterpart.
 | ✅ | Synchronization model (meta-sync) | `typed-ir` | Hard | [synchronization-model.md](models-bridge/system-models/synchronization-model.md) |
 | ✅ | Mediator & single-writer contracts | `typed-ir` | Hard | [concurrency-contracts.md](models-bridge/system-models/concurrency-contracts.md) |
 | ✅ | Service-flow / API model | `typed-ir` | Hard | [service-flow-model.md](models-bridge/system-models/service-flow-model.md) |
+| ✅ | User-journey model (product-goal → implementation) | `typed-ir` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
 | ✅ | Deployment & tier topology | `typed-ir` | Hard | [deployment-topology-model.md](models-bridge/system-models/deployment-topology-model.md) |
 | ✅ | Domain registries | `typed-ir` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |
 | ✅ | Drift & parity gates (model↔reality) | `validation` | Hard | [drift-parity-gates.md](models-bridge/system-models/drift-parity-gates.md) |
