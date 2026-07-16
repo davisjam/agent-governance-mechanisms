@@ -163,8 +163,12 @@ Two beats: **interpret**, then **convert**.
 2. **Interpret.** Classify the failure into the catalogue: which role
    (agent / models-bridge)? which family? which existing control is nearest — is
    this a *gap in* an existing control, or a *missing* one? Decide whether the
-   durable form is **hard** (a lint / gate / typed seam / parity test) or **soft**
-   (a brief reflex / house-rule). **And check diagnosability:** if you could not
+   durable form is **hard** (a lint / gate / typed seam / parity test — or, when the
+   failure is a step the *operator's own loop* omits at a lifecycle moment, a
+   **runtime hook** on turn-stop / compaction / session-start / before-an-action) or
+   **soft** (a brief reflex / house-rule). A "remember to…" house-rule aimed at the
+   orchestrator is soft and rots; the hook is its hard form
+   ([`principles.md`](principles.md) A.3.7). **And check diagnosability:** if you could not
    pin this failure from the signal already emitted, the durable form is *also* an
    **observability upgrade** — the structured, per-decision signal that would have
    pinned it — not only a lint or gate. An un-pinnable diagnosis is itself a finding.

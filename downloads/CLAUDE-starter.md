@@ -170,7 +170,9 @@ you see:
 - **An invariant that lives only in prose or a head** → encode it + a test that walks it (→ A.3.5).
 - **A hot path doing per-item what a bulk, cached, or incremental op could do** (N+1, unbounded fan-out,
   recompute-what-you-could-reuse) → batch it, bound it, make it incremental.
-- **An advisory "remember to…"** → make it a hard gate; guidance you must remember rots (→ A.3.1).
+- **An advisory "remember to…"** → make it a hard gate; guidance you must remember rots. A rule about the
+  *code* → a lint (→ A.3.1); a step the *operator's own loop* keeps skipping (end-of-turn, context
+  compaction, session-start, before-an-action) → a lifecycle hook (→ A.3.7).
 
 These are the *named exceptions* to default-skip — not a license to govern everything. Everything not on
 this list stays failure-driven; this is the design-time complement to A.1.2 (which maps a failure to its
@@ -405,6 +407,24 @@ gate — emits a **structured, per-decision record** of its inputs, the value it
 took, and why. A later anomaly is then reconstructable from the record alone. Guidance *aims* ("look for
 the missing signal"); the emitted signal holds — and a substrate that emits a signal owns it end to end:
 whatever emits it also says what healthy looks like and where to look when it isn't.
+
+### A.3.7. Hook the operator's own loop — interpose on the runtime's lifecycle events
+
+Some recurring failures live not in the code an agent writes but in the *loop that drives it* — the
+operator (a human, or an orchestrator agent) omitting a step at a predictable moment: ending a turn with
+ratified work still queued, compacting context without first writing a hand-off, opening a session
+without reading the alert backlog, editing outside the sanctioned worktree. A lint can't reach these —
+there's no source artifact to analyze, and the omission happens at runtime. The control is a **lifecycle
+hook**: a script the runtime fires deterministically on a named event — turn-stop, pre-compaction,
+session-start, before-a-tool-call — that runs the check whether or not the operator remembered.
+
+This is A.3.1's audit→lint reflex moved from the codebase to the agent runtime, and the runtime
+counterpart to the commit-content pre-commit gate — that guards what gets *written*; this guards what the
+loop *does*. It is the sharpest form of *guidance aims, machinery holds* (→ A.1.1): a house-rule
+"remember to…" aims a probabilistic operator and rots (→ A.1.5); a stop-hook that refuses to end a turn
+while work remains simply holds. Right-size it (→ A.1.3): a hook fires on *every* occurrence of its
+event and can stall the loop, so reach for one once a soft reflex has demonstrably failed to hold — not
+on first sight — and keep its check cheap and fail-open, so a bug in the hook can't brick the session.
 
 ## A.4 — Operating the method
 
