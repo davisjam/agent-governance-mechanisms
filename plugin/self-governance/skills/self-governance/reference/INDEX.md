@@ -76,19 +76,19 @@ soft guidance with a hard counterpart.
 
 ## 6. System models
 
-*The typed models the fleet reasons through and governs the codebase from — the MBSE bridge. The seven models are one pattern — an executable source-of-truth — applied to seven domains (components, service flow, deployment, sync, concurrency, domain facts, user journeys); the five mechanisms below act over them.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — five subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). Seven models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization) · shared-spine (component-zone, concurrency, deployment — both faces); the five method-mechanisms hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
-| ✅ | Executable source-of-truth (data-not-code, can't drift) | `typed-ir` | Hard | [executable-source-of-truth.md](models-bridge/system-models/executable-source-of-truth.md) |
-| ✅ | Component & zone model | `typed-ir` | Hard | [component-zone-model.md](models-bridge/system-models/component-zone-model.md) |
-| ✅ | Synchronization model (meta-sync) | `typed-ir` | Hard | [synchronization-model.md](models-bridge/system-models/synchronization-model.md) |
-| ✅ | Mediator & single-writer contracts | `typed-ir` | Hard | [concurrency-contracts.md](models-bridge/system-models/concurrency-contracts.md) |
-| ✅ | Service-flow / API model | `typed-ir` | Hard | [service-flow-model.md](models-bridge/system-models/service-flow-model.md) |
-| ✅ | User-journey model (product-goal → implementation) | `typed-ir` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
-| ✅ | Deployment & tier topology | `typed-ir` | Hard | [deployment-topology-model.md](models-bridge/system-models/deployment-topology-model.md) |
-| ✅ | Domain registries | `typed-ir` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |
-| ✅ | Drift & parity gates (model↔reality) | `validation` | Hard | [drift-parity-gates.md](models-bridge/system-models/drift-parity-gates.md) |
-| ✅ | Model-driven codegen | `validation` | Hard | [model-driven-codegen.md](models-bridge/system-models/model-driven-codegen.md) |
-| ✅ | Model query surface (`repo-query`) | `agent-output` | Soft | [query-surface.md](models-bridge/system-models/query-surface.md) |
-| ✅ | Meta-model consumption (read, don't hardcode) | `typed-ir` | Hard | [meta-model-consumption.md](models-bridge/system-models/meta-model-consumption.md) |
+| ✅ | Executable source-of-truth (data-not-code, can't drift) — *trunk / method* | `typed-ir` | Hard | [executable-source-of-truth.md](models-bridge/system-models/executable-source-of-truth.md) |
+| ✅ | Drift & parity gates (model↔reality) — *trunk / method* | `validation` | Hard | [drift-parity-gates.md](models-bridge/system-models/drift-parity-gates.md) |
+| ✅ | Model-driven codegen — *trunk / method* | `validation` | Hard | [model-driven-codegen.md](models-bridge/system-models/model-driven-codegen.md) |
+| ✅ | Model query surface (`repo-query`) — *trunk / method* | `agent-output` | Soft | [query-surface.md](models-bridge/system-models/query-surface.md) |
+| ✅ | Meta-model consumption (read, don't hardcode) — *trunk / method* | `typed-ir` | Hard | [meta-model-consumption.md](models-bridge/system-models/meta-model-consumption.md) |
+| ✅ | Service-flow / API model — *product-facing* | `typed-ir` | Hard | [service-flow-model.md](models-bridge/system-models/service-flow-model.md) |
+| ✅ | User-journey model (product-goal → implementation) — *product-facing* | `typed-ir` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
+| ✅ | Domain registries — *product-facing* | `typed-ir` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |
+| ✅ | Synchronization model (meta-sync) — *orchestration-facing* | `typed-ir` | Hard | [synchronization-model.md](models-bridge/system-models/synchronization-model.md) |
+| ✅ | Component & zone model — *shared spine* | `typed-ir` | Hard | [component-zone-model.md](models-bridge/system-models/component-zone-model.md) |
+| ✅ | Mediator & single-writer contracts — *shared spine* | `typed-ir` | Hard | [concurrency-contracts.md](models-bridge/system-models/concurrency-contracts.md) |
+| ✅ | Deployment & tier topology — *shared spine* | `typed-ir` | Hard | [deployment-topology-model.md](models-bridge/system-models/deployment-topology-model.md) |
