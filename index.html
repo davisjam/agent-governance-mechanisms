@@ -151,7 +151,7 @@
 
   <p class="lead">The midway has a name — <span class="term">governance conversion</span> — and a working
   rule: <b>don't specify everything up front, and don't trust the vibes; let velocity surface the
-  failures, and convert each recurring one into a durable guardrail.</b> The result is <b>55 governance
+  failures, and convert each recurring one into a durable guardrail.</b> The result is <b>56 governance
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
 
@@ -239,7 +239,7 @@
   <hr class="sep" />
 
   <h2 class="section-h">Explore the catalogue</h2>
-  <p class="section-sub">55 governance mechanisms — the repertoire this loop produced in one real
+  <p class="section-sub">56 governance mechanisms — the repertoire this loop produced in one real
   production system.</p>
   <div class="cards-grid">
   <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, mechanisms clickable</span></a>
@@ -307,6 +307,7 @@
 <table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth (data-not-code, can't drift) — <em>trunk / method</em></a></td><td class="c-sum">Typed models read every run and generated from — can't drift.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/drift-parity-gates.html">Drift &amp; parity gates (model↔reality) — <em>trunk / method</em></a></td><td class="c-sum">Bidirectional model↔reality checks so models cannot drift.</td><td class="c-enf">Hard</td></tr>
+<tr><td class="c-name"><a href="models-bridge/system-models/formal-invariant-verification.html">Formal invariant verification (temporal form → model check) — <em>trunk / method</em></a></td><td class="c-sum">Each invariant's temporal-logic form derives its checker — proven, not sampled.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/model-driven-codegen.html">Model-driven codegen — <em>trunk / method</em></a></td><td class="c-sum">Generate real artifacts from the models, provenance-headed.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/query-surface.html">Model query surface (<code>repo-query</code>) — <em>trunk / method</em></a></td><td class="c-sum">repo-query — the agent-facing read API over the models.</td><td class="c-enf">Soft</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/meta-model-consumption.html">Meta-model consumption (read, don't hardcode) — <em>trunk / method</em></a></td><td class="c-sum">Read the model at runtime; never hardcode a snapshot.</td><td class="c-enf">Hard</td></tr>

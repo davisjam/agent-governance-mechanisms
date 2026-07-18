@@ -36,47 +36,50 @@ drift gates is tedious, and humans resent the nagging.
 without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
 agent operate a codebase larger than its context in the first place.
 
-## The twelve mechanisms — one method, two subjects (a Y)
+## The thirteen mechanisms — one method, two subjects (a Y)
 
 The role is a **Y**: one **method** (the trunk) reified toward the two subjects the bridge couples — the
-**product** it ships and the **orchestration** that builds it. The five method-mechanisms are
+**product** it ships and the **orchestration** that builds it. The six method-mechanisms are
 subject-agnostic; the seven models split by subject, with three that serve both faces (the *shared spine*).
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:
 
-1. [Executable source-of-truth](system-models/executable-source-of-truth.md) ★ — the pattern itself:
-   data-not-code, read every run, generated-from, can't drift.
-2. [Drift & parity gates](system-models/drift-parity-gates.md) — bidirectional model↔reality enforcement
-   (the counterpart that makes "can't drift" true).
-3. [Model-driven codegen](system-models/model-driven-codegen.md) — generate artifacts *from* the models,
-   provenance-headed.
-4. [Query surface](system-models/query-surface.md) — `repo-query`, the agent-facing read API.
-5. [Read-don't-hardcode consumption](system-models/meta-model-consumption.md) — consume by query, never
-   by copied snapshot.
+- [Executable source-of-truth](system-models/executable-source-of-truth.md) ★ — the pattern itself:
+  data-not-code, read every run, generated-from, can't drift.
+- [Drift & parity gates](system-models/drift-parity-gates.md) — bidirectional model↔reality enforcement
+  (the counterpart that makes "can't drift" true).
+- [Formal invariant verification](system-models/formal-invariant-verification.md) — each invariant carries
+  a temporal-logic form (`[]P` safety / `P ~> Q` liveness) that *derives* its exhaustive checker
+  (state-space BFS / a model checker) — proven across every interleaving, not sampled.
+- [Model-driven codegen](system-models/model-driven-codegen.md) — generate artifacts *from* the models,
+  provenance-headed.
+- [Query surface](system-models/query-surface.md) — `repo-query`, the agent-facing read API.
+- [Read-don't-hardcode consumption](system-models/meta-model-consumption.md) — consume by query, never by
+  copied snapshot.
 
 **Product-facing models** — the method pointed at the shipped artifact:
 
-6. [Service-flow / API model](system-models/service-flow-model.md) — the Backstage-dialect SOA model
-   (auth, wiring, NetworkPolicy, API contract).
-7. [User-journey model](system-models/user-journey-model.md) — the product-goal→implementation bridge:
-   journeys (actor / goal / ordered steps) joined to the endpoints and tests they exercise (the one
-   *goal-anchored* model).
-8. [Domain registries](system-models/domain-registries.md) — filetypes, WCAG gaps, cron, UX surfaces,
-   competitors, rule metadata.
+- [Service-flow / API model](system-models/service-flow-model.md) — the Backstage-dialect SOA model
+  (auth, wiring, NetworkPolicy, API contract).
+- [User-journey model](system-models/user-journey-model.md) — the product-goal→implementation bridge:
+  journeys (actor / goal / ordered steps) joined to the endpoints and tests they exercise (the one
+  *goal-anchored* model).
+- [Domain registries](system-models/domain-registries.md) — filetypes, WCAG gaps, cron, UX surfaces,
+  competitors, rule metadata.
 
 **Orchestration-facing models** — the method pointed at the agent fleet / dev substrate:
 
-9. [Synchronization model (meta-sync)](system-models/synchronization-model.md) — the OS-lock / `flock`
-   registry + acquisition ordering that serializes the fleet's shared-resource access.
+- [Synchronization model (meta-sync)](system-models/synchronization-model.md) — the OS-lock / `flock`
+  registry + acquisition ordering that serializes the fleet's shared-resource access.
 
 **Shared-spine models** — one model, both faces:
 
-10. [Component & zone model](system-models/component-zone-model.md) — the code-zone / boundary / seam map
-    the product *and* the fleet reason over.
-11. [Mediator & single-writer contracts](system-models/concurrency-contracts.md) — subprocess
-    serialization (fleet mediators) + single-writer state contracts (product lifecycles).
-12. [Deployment & tier topology](system-models/deployment-topology-model.md) — where the product's
-    services run *and* the agent-substrate's layer boundaries.
+- [Component & zone model](system-models/component-zone-model.md) — the code-zone / boundary / seam map
+  the product *and* the fleet reason over.
+- [Mediator & single-writer contracts](system-models/concurrency-contracts.md) — subprocess serialization
+  (fleet mediators) + single-writer state contracts (product lifecycles).
+- [Deployment & tier topology](system-models/deployment-topology-model.md) — where the product's services
+  run *and* the agent-substrate's layer boundaries.
 
 ## The bridge relationship — the Y's two exits
 

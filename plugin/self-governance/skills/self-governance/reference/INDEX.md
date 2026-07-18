@@ -6,7 +6,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All 35 bundled entries are fully written (the product role's entries live in the full catalogue).
+the two); families **7–11** = the **product** role (the shipped artifact). All 36 bundled entries are fully written (the product role's entries live in the full catalogue).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
 (blocking / audit / signal); **`Soft`** = probabilistic (influences, cannot block); **`Soft·Hard`** =
@@ -76,12 +76,13 @@ soft guidance with a hard counterpart.
 
 ## 6. System models
 
-*One MBSE **method** (the trunk — five subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). Seven models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization) · shared-spine (component-zone, concurrency, deployment — both faces); the five method-mechanisms hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — six subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). Seven models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization) · shared-spine (component-zone, concurrency, deployment — both faces); the six method-mechanisms — including formal, temporal-logic invariant verification — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Executable source-of-truth (data-not-code, can't drift) — *trunk / method* | `typed-ir` | Hard | [executable-source-of-truth.md](models-bridge/system-models/executable-source-of-truth.md) |
 | ✅ | Drift & parity gates (model↔reality) — *trunk / method* | `validation` | Hard | [drift-parity-gates.md](models-bridge/system-models/drift-parity-gates.md) |
+| ✅ | Formal invariant verification (temporal form → model check) — *trunk / method* | `validation` | Hard | [formal-invariant-verification.md](models-bridge/system-models/formal-invariant-verification.md) |
 | ✅ | Model-driven codegen — *trunk / method* | `validation` | Hard | [model-driven-codegen.md](models-bridge/system-models/model-driven-codegen.md) |
 | ✅ | Model query surface (`repo-query`) — *trunk / method* | `agent-output` | Soft | [query-surface.md](models-bridge/system-models/query-surface.md) |
 | ✅ | Meta-model consumption (read, don't hardcode) — *trunk / method* | `typed-ir` | Hard | [meta-model-consumption.md](models-bridge/system-models/meta-model-consumption.md) |

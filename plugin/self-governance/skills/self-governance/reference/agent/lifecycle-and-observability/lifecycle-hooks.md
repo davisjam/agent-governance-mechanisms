@@ -44,6 +44,13 @@ operator's state of mind — that is the whole point — so the two design const
 cheap (it runs on *every* occurrence of the event), and make a guidance hook fail-open (a crash must not
 wedge the loop; reserve fail-closed for the deliberate blocking case).
 
+A hook's output is a **typed contract with the runtime**, not free text — the runtime accepts one specific
+shape and *silently drops* anything else. Validate a hook's output against the runtime's *actual* schema,
+never against the hook's self-declared idea of the contract: a hook checked only against its own shape can
+emit a form the runtime rejects, pass its own test green, and be dropped on every fire in production — the
+worst fail-open, since it *looks* wired and does nothing. A build-time conformance check over every wired
+hook — output validated against the real runtime schema — kills that class.
+
 ## Prerequisites
 
 - **A runtime that exposes lifecycle events** plus a registration surface — without the seam there is
@@ -77,6 +84,9 @@ wedge the loop; reserve fail-closed for the deliberate blocking case).
   before the first action of a resumed or compacted session.
 - A **before-a-tool-call guard**: the hard-block variant denies an edit outside the sanctioned worktree;
   a guidance variant surfaces unresolved alerts before a dispatch.
+- A **build-time output-conformance check** validating every wired hook's output against the runtime's
+  actual schema — so a hook emitting a shape the runtime silently drops (wired-but-dead) is a build error,
+  not an invisible no-op.
 
 ## Related mechanisms
 
