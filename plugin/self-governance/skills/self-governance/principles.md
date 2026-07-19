@@ -161,6 +161,27 @@ These are the *named exceptions* to default-skip — not a license to govern eve
 this list stays failure-driven; this is the design-time complement to A.1.2 (which maps a failure to its
 mechanism *after* it recurs).
 
+### A.1.6. Place the control at the right semantic level — minimize the semantic gap
+
+Once you decide to convert a failure into a control, *where* you put it is a second choice — and the
+mechanisms available sit at different **semantic levels**, the level of meaning at which each can *reason*.
+A git pre-commit hook sees a syntactic diff. A reasoning hook sees the diff *plus* a model's judgment. A
+final-commit (N-of-N) check sees the whole worktree as one unit. An Epic definition-of-done sees the whole
+change against its *design intent* and the models. The **semantic gap** is the distance between the level
+a decision actually lives at and the level of the mechanism you try to enforce it with. Enforce too
+low — ask a syntactic hook *"does this change warrant a test?"* — and the gap is unbridgeable: the
+mechanism cannot express the policy, so you get noise or nothing.
+
+**The rule: place each check at the mechanism whose semantic level is at, or just above, the decision's** —
+high enough to *see* what the decision needs, low enough to fire *early*. A trailer-present check belongs
+at the cheap syntactic hook; *"does this diff warrant a test or doc?"* belongs at a reasoning hook or the
+whole-worktree N-of-N check; *"did this Epic deliver what it promised?"* belongs at the definition-of-done,
+where the intent and the models are in view. Moving a decision to the wrong level is the mistake in both
+directions — too low can't express it, too high finds it late and expensive. The concept is borrowed from
+systems and security: VM introspection, firewalls, and access control all fail when enforcement sits below
+the semantics of the policy it must apply. (→ A.3.7 lifecycle hooks — the mechanism menu; → A.1.3
+right-size — the sibling axis of *how much*, where this is *at what level*.)
+
 ## A.2 — Architecture: make the failure impossible by construction
 
 The first-choice mechanism. Shape the system so the failure class cannot be represented — a typed model

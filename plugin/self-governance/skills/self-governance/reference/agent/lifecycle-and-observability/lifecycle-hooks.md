@@ -51,6 +51,14 @@ emit a form the runtime rejects, pass its own test green, and be dropped on ever
 worst fail-open, since it *looks* wired and does nothing. A build-time conformance check over every wired
 hook — output validated against the real runtime schema — kills that class.
 
+Which mechanism a check belongs on is a **semantic-level** choice. A control can fire at a syntactic
+diff-check (a commit hook), a reasoning hook that judges the diff, a whole-worktree final-commit check, or
+an Epic close review — each sees more meaning than the last. Put the check where its level matches the
+decision: an operator-loop omission belongs at a *runtime* hook because that is where the loop's state is
+visible, and asking a syntactic commit hook to judge *intent* leaves a gap it cannot bridge. This is the
+**semantic gap** — the same reason VM introspection and firewalls fail when they sit below the semantics
+of the policy they must apply.
+
 ## Prerequisites
 
 - **A runtime that exposes lifecycle events** plus a registration surface — without the seam there is
