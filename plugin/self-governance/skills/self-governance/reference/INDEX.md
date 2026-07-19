@@ -6,7 +6,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All 36 bundled entries are fully written (the product role's entries live in the full catalogue).
+the two); families **7–11** = the **product** role (the shipped artifact). All 37 bundled entries are fully written (the product role's entries live in the full catalogue).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
 (blocking / audit / signal); **`Soft`** = probabilistic (influences, cannot block); **`Soft·Hard`** =
@@ -38,13 +38,14 @@ soft guidance with a hard counterpart.
 
 ## 3. Mediators & resource locks
 
-*Host-level wrappers that ration shared compute across concurrent worktrees. One pattern — a resource-mediator — at three lock cardinalities (exclusive `N=1` · bounded `M=8` · a global mutex); the three entries vary the cardinality, not the idea.* — [family folder](agent/mediators-and-resource-locks/)
+*Host-level wrappers that ration shared compute across concurrent worktrees. Three cap by **cardinality** — one resource-mediator pattern at three lock cardinalities (exclusive `N=1` · bounded `M=8` · a global mutex); the fourth caps by **live pressure** instead of count (an admit-before / shed-during gate on a GREEN/YELLOW/RED signal).* — [family folder](agent/mediators-and-resource-locks/)
 
 | ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
 | ✅ | Test-serializer (N=1 flock on `dotnet test`) | `regression` | Hard | [test-serializer.md](agent/mediators-and-resource-locks/test-serializer.md) |
 | ✅ | Build-serializer (M=8 semaphore) | `validation` | Hard | [build-serializer.md](agent/mediators-and-resource-locks/build-serializer.md) |
 | ✅ | Aggregate-compute protection (`lint-all` host mutex) | `validation` | Hard | [aggregate-compute-protection.md](agent/mediators-and-resource-locks/aggregate-compute-protection.md) |
+| ✅ | Resource-pressure gating (admit before, shed during) | `quality-gate` | Hard | [resource-pressure-gating.md](agent/mediators-and-resource-locks/resource-pressure-gating.md) |
 
 ## 4. Lifecycle & observability
 
