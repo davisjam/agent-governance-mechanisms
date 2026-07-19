@@ -17,6 +17,18 @@ Two common ways to build with agents sit at opposite poles. This catalogue is ab
 | *all velocity — no guardrails* | *velocity + guardrails grown from failure* | *all oversight — everything checked* |
 | e.g. [Karpathy](https://x.com/karpathy/status/1886192184808149383) · [Gas Town](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04) | | e.g. [Meyer, CACM](https://dl.acm.org/doi/full/10.1145/3773295) · [vibe-OS / vibe-tools](https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html) |
 
+## The genre — high-assurance process, made live
+
+This middle column isn't new. It's the agentic-era instantiation of quality practices long standard in
+regulated industry — documented process, requirements traceability, verification tiers scaled to
+criticality, corrective-and-preventive action. What's new is the **substrate**. Those programs run on
+manually-maintained dead documents — Word, Excel, DOORS — that drift the moment they're written and need
+dedicated staff to keep. Here the same process runs on **executable, agent-maintained models that can't
+drift**: the traceability matrix is a queried model behind a drift gate, the process rules are enforced
+infrastructure, the verification records are machine-checked against the code rather than filed in a
+spreadsheet. The contribution isn't the assurance discipline — it's making it *live*, and tractable for a
+team of one.
+
 ## Governance has two mechanisms
 
 A guardrail is one of two kinds:
