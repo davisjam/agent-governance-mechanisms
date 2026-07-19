@@ -3,7 +3,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All 57 entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All 58 entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
@@ -69,6 +69,7 @@ soft guidance with a hard counterpart.
 | ✅ | Epic Definition-of-Done (Final-Opus trust-nothing re-run) | `quality-gate` | Hard | [epic-definition-of-done.md](agent/governance-doc-controls/epic-definition-of-done.md) |
 | ✅ | Doc-hygiene lints (index coverage, autogen provenance) | `validation` | Hard | [doc-hygiene-lints.md](agent/governance-doc-controls/doc-hygiene-lints.md) |
 | ✅ | Operational playbooks (situation-keyed devops procedures) | `agent-output` | Soft | [operational-playbooks.md](agent/governance-doc-controls/operational-playbooks.md) |
+| ✅ | Operator runbook skill (positive map + symptom index, ref-lint-kept) | `agent-output` | Soft·Hard | [operator-runbook-skill.md](agent/governance-doc-controls/operator-runbook-skill.md) |
 | ✅ | Epic & design-doc templates | `agent-output` | Soft·Hard | [epic-and-design-templates.md](agent/governance-doc-controls/epic-and-design-templates.md) |
 
 # Models-bridge
@@ -152,9 +153,9 @@ soft guidance with a hard counterpart.
 
 ---
 
-**Three roles complete — 57 mechanisms across 11 families, all fully developed.**
-**Agent (24):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
-Lifecycle & observability (6) · Governance-doc controls (6, incl. the **CLAUDE.md rule index**
+**Three roles complete — 58 mechanisms across 11 families, all fully developed.**
+**Agent (25):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
+Lifecycle & observability (6) · Governance-doc controls (7, incl. the **CLAUDE.md rule index**
 meta-mechanism).
 **Models-bridge (13):** the MBSE **method** (6 subject-agnostic mechanisms, incl. **formal temporal-logic invariant verification**) reified as a **Y** over 7 models — product-facing 3 (service-flow · user-journey · domain-registries) · orchestration-facing 1 (synchronization) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
 the MBSE substrate through which a bounded agent operates an unbounded codebase.
