@@ -107,7 +107,12 @@ quietly* from one that is *silently dead*; without it the two look identical.
 - A **turn-stop self-check hook** that, at most once per long window, re-arms the operator's reflex to
   convert a *recurring* failure into a durable control — the operate→harden handoff fired as a runtime
   event. It ships a firing-telemetry log and a yield query correlating its nudges against real
-  conversions, and biases its payload hard toward silence — it lives on the measured leash above.
+  conversions, and biases its payload hard toward silence. Its first organic firing closed the whole
+  loop on itself: the telemetry had shown the convert-a-recurrence-into-a-control discipline was reached
+  for ~never (its knowledge applied ambiently instead); the hook turned that dormant reflex into a
+  deterministic nudge; the nudge produced the discipline's first real invocation; and that invocation
+  routed a failure recurring all session into a control — the yield query's first positive correlation,
+  and the keep-signal that says *don't pull the hook.*
 - A **pre-compaction hook** that writes a hand-off before context is compacted, so in-flight state
   survives the summarization.
 - A **session-start hook** that runs the session-start ritual — reading the unconsumed alert backlog —

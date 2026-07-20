@@ -344,7 +344,13 @@ change*, not another tuning pass.
 - **Reprice as a measured trade, not an aesthetic.** A paradigm change swaps one lunch for another;
   whether the new bill is smaller is an *experiment* (→ A.4.2), gated on the numbers that decide it —
   not a preference for the newer thing. The prototype that measures the trade is disposable; the number
-  it produces is the decision.
+  it produces is the decision. Name the *specific* tradeoffs the swap makes and assess each against
+  evidence — for example:
+  - **Cost against latency** — a cheaper idle bill often buys a slower cold path; measure both, not
+    only the axis you came for.
+  - **Operational simplicity against flexibility** — a managed substrate deletes machinery you
+    maintain, at the price of what you can express.
+  - **Control against reuse** — a gradient in its own right; see the build-vs-adopt bullet below.
 - **This is the essence/accident test at the substrate level (→ A.2.11).** Ask whether the machinery
   the ceiling forces you to keep is *essential* to the problem or *accidental* to the paradigm.
   Machinery that exists only to serve the substrate's shape — a bespoke autoscaler, a fairness queue
