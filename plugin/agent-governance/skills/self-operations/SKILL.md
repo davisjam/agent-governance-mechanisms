@@ -76,13 +76,18 @@ shape before you commit it.*
 Need the shape before you write? Read a shipped example under [`examples/`](examples/) and adapt it in
 place. Pick by what you want to see:
 
-- **A lifecycle model** → [`examples/lifecycle-L1-manage-agents.md`](examples/lifecycle-L1-manage-agents.md) —
-  a filled-in model: purpose, healthy baseline, the symptom classes it owns.
-- **A runbook** → [`examples/runbook-recover-the-fleet.md`](examples/runbook-recover-the-fleet.md),
-  [`examples/runbook-reclaim-a-full-disk.md`](examples/runbook-reclaim-a-full-disk.md) — a complete runbook
-  showing the typed steps end to end (a RUNNABLE line, a JUDGMENT-AUTOMATABLE carried brief, a
-  JUDGMENT-IRREDUCIBLE escalation). Each opens with its universal problem statement, then illustrative
-  solution steps.
+- **A lifecycle model** → one per lifecycle in [`examples/`](examples/):
+  [L1 manage-agents](examples/lifecycle-L1-manage-agents.md) ·
+  [L2 manage-context](examples/lifecycle-L2-manage-context.md) ·
+  [L3 manage-git-repo](examples/lifecycle-L3-manage-git-repo.md) ·
+  [L4 manage-deploy](examples/lifecycle-L4-manage-deploy.md) ·
+  [L5 manage-dev-env](examples/lifecycle-L5-manage-dev-env.md) — each a filled-in model (purpose, healthy
+  baseline, symptom classes, owned runbooks).
+- **A runbook** → [recover-the-fleet](examples/runbook-recover-the-fleet.md) ·
+  [drain-an-un-releasable-mainline](examples/runbook-drain-unreleasable-mainline.md) ·
+  [reclaim-a-full-disk](examples/runbook-reclaim-a-full-disk.md) — each shows the typed steps end to end
+  (a RUNNABLE line, a JUDGMENT-AUTOMATABLE carried brief, a JUDGMENT-IRREDUCIBLE escalation), opening with
+  its universal problem statement, then illustrative solution steps.
 
 Copy a sample's shape, swap in this repo's tools, drop the rest.
 
