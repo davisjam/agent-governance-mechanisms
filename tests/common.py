@@ -15,8 +15,14 @@ import subprocess
 import catalog  # the catalogue's shared model (ROOT, all_entries, catalogue_md_files, ...)
 
 ROOT = catalog.ROOT
-SKILL = os.path.join(ROOT, "plugin", "agent-governance")
-SKILLDIR = os.path.join(SKILL, "skills", "self-governance")
+SKILL = os.path.join(ROOT, "plugin", "agent-governance")  # the umbrella plugin dir
+# Every skill the plugin ships: (name, skill_dir, has_reference_mirror). The skill checks iterate this;
+# a skill with no catalogue mirror (has_reference=False) ships its reference in its authored SKILL.md.
+SKILLS = (
+    ("self-governance", os.path.join(SKILL, "skills", "self-governance"), True),
+    ("self-operations", os.path.join(SKILL, "skills", "self-operations"), False),
+)
+SKILLDIR = SKILLS[0][1]  # back-compat alias: the flagship (self-governance) skill dir
 SKILLREF = os.path.join(SKILLDIR, "reference")
 
 PASS, FAIL, SKIP = "PASS", "FAIL", "SKIP"

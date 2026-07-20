@@ -67,7 +67,21 @@ SELF_GOVERNANCE = SkillSpec(
     ),
 )
 
-SPECS = [SELF_GOVERNANCE]
+SELF_OPERATIONS = SkillSpec(
+    name="self-operations",
+    starter_doc=os.path.join(ROOT, "downloads", "self-operations-starter.md"),
+    include_roles=(),  # no catalogue mirror — its reference is the authored SKILL.md map + examples/
+    principles_intro=(
+        GEN_NOTE
+        + "<!-- Source: Part A of the self-operations starter (the portable operating mindset). -->\n\n"
+        "# Operating principles — the self-operations mindset\n\n"
+        "*The operating stance of the `self-operations` skill: how to run an agent-fleet substrate as a "
+        "DevOps engineer. The skill's `SKILL.md` carries the lifecycle map and the bootstrap; these "
+        "principles are the mindset you operate with. Partner to the `self-governance` skill.*\n\n---\n\n"
+    ),
+)
+
+SPECS = [SELF_GOVERNANCE, SELF_OPERATIONS]
 
 
 def _write(path: str, text: str) -> None:

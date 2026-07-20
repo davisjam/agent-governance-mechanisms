@@ -8,20 +8,13 @@ import os
 import re
 import sys
 
-from tests.common import FAIL, PASS, ROOT, SKILL, SKILLDIR, SKILLREF, run
+from tests.common import FAIL, PASS, ROOT, SKILL, SKILLS, run
 
 
 def check_skill_structure():
-    """SKILL.md frontmatter, manifests, and the bundled reference are present and well-formed."""
+    """For every shipped skill: SKILL.md frontmatter + principles.md; the reference mirror for skills that
+    carry one. Plus the plugin + marketplace manifests (once, at plugin level)."""
     issues = []
-    skmd = os.path.join(SKILLDIR, "SKILL.md")
-    if not os.path.isfile(skmd):
-        return FAIL, ["SKILL.md missing"]
-    fm = re.match(r"^---\n(.*?)\n---\n", open(skmd, encoding="utf-8").read(), re.S)
-    if not fm:
-        issues.append("SKILL.md: no YAML frontmatter")
-    elif not re.search(r"^description:\s*\S", fm.group(1), re.M):
-        issues.append("SKILL.md: frontmatter has no non-empty `description`")
     try:
         pj = json.load(open(os.path.join(SKILL, ".claude-plugin", "plugin.json"), encoding="utf-8"))
         issues += [f"plugin.json: missing `{k}`" for k in ("name", "description") if not pj.get(k)]
@@ -32,16 +25,28 @@ def check_skill_structure():
         issues += [f"marketplace.json: missing `{k}`" for k in ("name", "owner", "plugins") if not mj.get(k)]
     except Exception as ex:  # noqa: BLE001 — surfaced as a test issue
         issues.append(f"marketplace.json: {ex}")
-    principles = os.path.join(SKILLDIR, "principles.md")
-    if not (os.path.isfile(principles) and os.path.getsize(principles) > 500):
-        issues.append("principles.md: missing or too small")
-    for name in ("INDEX.md", "ABSTRACTIONS.md", "README.md"):
-        if not os.path.isfile(os.path.join(SKILLREF, name)):
-            issues.append(f"reference/{name}: missing")
-    n = len(glob.glob(os.path.join(SKILLREF, "agent", "*", "*.md"))) + \
-        len(glob.glob(os.path.join(SKILLREF, "models-bridge", "*", "*.md")))
-    if n < 30:
-        issues.append(f"reference: only {n} entries bundled (expected 30+)")
+    for name, sdir, has_ref in SKILLS:
+        skmd = os.path.join(sdir, "SKILL.md")
+        if not os.path.isfile(skmd):
+            issues.append(f"{name}: SKILL.md missing")
+            continue
+        fm = re.match(r"^---\n(.*?)\n---\n", open(skmd, encoding="utf-8").read(), re.S)
+        if not fm:
+            issues.append(f"{name}: SKILL.md has no YAML frontmatter")
+        elif not re.search(r"^description:\s*\S", fm.group(1), re.M):
+            issues.append(f"{name}: SKILL.md frontmatter has no non-empty `description`")
+        principles = os.path.join(sdir, "principles.md")
+        if not (os.path.isfile(principles) and os.path.getsize(principles) > 500):
+            issues.append(f"{name}: principles.md missing or too small")
+        if has_ref:
+            ref = os.path.join(sdir, "reference")
+            for fn in ("INDEX.md", "ABSTRACTIONS.md", "README.md"):
+                if not os.path.isfile(os.path.join(ref, fn)):
+                    issues.append(f"{name}: reference/{fn} missing")
+            n = len(glob.glob(os.path.join(ref, "agent", "*", "*.md"))) + \
+                len(glob.glob(os.path.join(ref, "models-bridge", "*", "*.md")))
+            if n < 30:
+                issues.append(f"{name}: reference has only {n} entries (expected 30+)")
     return (FAIL if issues else PASS), issues
 
 
@@ -63,12 +68,13 @@ def check_bundle_links():
     template the bundler didn't vendor) would break once installed. External / anchor-only links are
     out of scope (same as the markdown checks)."""
     issues = []
-    for f in glob.glob(os.path.join(SKILLDIR, "**", "*.md"), recursive=True):
-        base = os.path.dirname(f)
-        for m in re.findall(r"\]\(([^)]+)\)", open(f, encoding="utf-8").read()):
-            if m.startswith(("http://", "https://", "mailto:", "#", "//")):
-                continue
-            tgt = m.split("#", 1)[0]
-            if tgt and not os.path.exists(os.path.normpath(os.path.join(base, tgt))):
-                issues.append(f"{os.path.relpath(f, SKILLDIR)} -> {m} (missing in bundle)")
+    for name, sdir, _ in SKILLS:
+        for f in glob.glob(os.path.join(sdir, "**", "*.md"), recursive=True):
+            base = os.path.dirname(f)
+            for m in re.findall(r"\]\(([^)]+)\)", open(f, encoding="utf-8").read()):
+                if m.startswith(("http://", "https://", "mailto:", "#", "//")):
+                    continue
+                tgt = m.split("#", 1)[0]
+                if tgt and not os.path.exists(os.path.normpath(os.path.join(base, tgt))):
+                    issues.append(f"{name}/{os.path.relpath(f, sdir)} -> {m} (missing in bundle)")
     return (FAIL if issues else PASS), issues
