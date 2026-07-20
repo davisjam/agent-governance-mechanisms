@@ -24,6 +24,12 @@ badly, under time pressure — a recovery a doc already spells out. And the rout
 moves, the pointer dangles, the next operator is sent on a chase. The failure is *re-derivation of known
 operations* plus *silent pointer rot*, and it recurs every session and every incident.
 
+Underneath is a stance: **the fleet is cattle, not pets.** You operate an agent fleet with *repeatable
+runbooks*, not by re-reasoning each incident from scratch or *chatting* the orchestrator toward a goal —
+that is the pet stance ("sysadmin-ing a pet server"), and it is a category error at fleet scale. This
+mechanism is the cattle stance made concrete for repo operations: a routed, lint-kept index of typed
+operations, so an operator runs the herd instead of nursing it.
+
 ## Why it's not just "a folder of runbooks" (or the docs index)
 
 A runbook collection answers "what do I do when X breaks" — but only the *failure* half, and only if you
