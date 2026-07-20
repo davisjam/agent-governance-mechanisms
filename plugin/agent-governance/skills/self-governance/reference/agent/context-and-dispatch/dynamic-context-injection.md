@@ -106,7 +106,9 @@ pull** (the agent calls `get-constraints-for-files.py <files…>` once it knows 
   Same move (meet the loop with the right policy at the right lifecycle moment), opposite direction in
   time. And just as injection *slices* one registry per file-set, a reflection substrate generalizes
   across policy facets (convert-a-recurrence, spot-a-second-copy, a stale runbook) — consolidated into one
-  paced emission so the facets don't compound into the alarm fatigue each was biased to avoid.
+  paced emission so the facets don't compound into the alarm fatigue each was biased to avoid. The deeper
+  unity: both are delivery *modalities over the same policy source of truth* — push it in comprehensively
+  at entry, or surface a slice of it selectively at tempo — so one policy-materials registry could feed both.
 - **Generalization:** *every meta-substrate authored for human discipline — the lint fleet, the
   component registry, the doc index, the banned-API registry, the test corpus — becomes a
   just-in-time constraint registry the moment you add a slicing operator over it.* Lint pre-briefing

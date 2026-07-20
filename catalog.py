@@ -462,6 +462,9 @@ def cmd_validate(_args) -> int:
     for msg in check_no_raw_stats(entries):
         print(f"  [stat]  {msg}")
         n_issues += 1
+    for msg in check_census_tokens(entries):
+        print(f"  [census] {msg}")
+        n_issues += 1
     for rel, summ in role_summaries().items():
         if not summ:
             print(f"  [role]  {rel}: missing '<!-- summary: … -->' comment")
@@ -1256,11 +1259,17 @@ def _stats(entries: list[Entry]) -> dict[str, str]:
         return "softhard" if "Soft·Hard" in e else ("soft" if e.strip().startswith("Soft") else "hard")
 
     split = Counter(enf(r["enf"]) for r in rows)
+    by_role = Counter(e.role for e in entries)
+    bridge_method = sum("trunk / method" in r["control"] for r in rows)  # models-bridge trunk rows carry the tag
     stats: dict[str, object] = {
         "controls": len(entries),
         "families": len({e.family for e in entries if e.family}),
         "roles": len({e.role for e in entries if e.role}),
         "enf_hard": split["hard"], "enf_soft": split["soft"], "enf_softhard": split["softhard"],
+        # per-role + models-bridge trunk/models split — consumed by the markdown census tokens
+        "agent": by_role.get("Agent", 0), "bridge": by_role.get("Bridge", 0),
+        "product": by_role.get("Product", 0),
+        "bridge_method": bridge_method, "bridge_models": by_role.get("Bridge", 0) - bridge_method,
     }
     stats.update(DECLARED_STATS)
     return {k: str(v) for k, v in stats.items()}
@@ -1301,6 +1310,80 @@ def _sync_figure_census(entries: list[Entry]) -> None:
             fh.write(txt)
 
 
+# --- Markdown census tokens: the prose analogue of the figure's `data-census` spans. ---
+# A hand-typed count in README/INDEX/CLAUDE/models-bridge drifts on every add (the '53 mechanisms' rot).
+# A token `<!--census:KEY-->VALUE<!--/census-->` (an HTML comment, invisible on GitHub) is filled from
+# `_stats` by the build precompiler, so the count is DERIVED, not maintained. `:word` fills the number-word.
+_MD_CENSUS_FILES = ("README.md", "INDEX.md", "CLAUDE.md", os.path.join("models-bridge", "README.md"))
+_CENSUS_TOKEN = re.compile(r"(<!--census:([a-z_]+)(:word|:Word)?-->)(.*?)(<!--/census-->)", re.DOTALL)
+_NUM_WORDS = ("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+              "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+              "nineteen", "twenty")
+
+
+def _num2word(n: int) -> str:
+    return _NUM_WORDS[n] if 0 <= n < len(_NUM_WORDS) else str(n)
+
+
+def _census_token_value(counts: dict[str, str], key: str, mod: str | None) -> str | None:
+    """The filled value for a `<!--census:KEY[:word|:Word]-->` token — digit, number-word, or Titlecased."""
+    if key not in counts:
+        return None
+    if mod == ":word":
+        return _num2word(int(counts[key]))
+    if mod == ":Word":
+        return _num2word(int(counts[key])).capitalize()
+    return counts[key]
+
+
+def _sync_markdown_census(entries: list[Entry]) -> None:
+    """Fill `<!--census:KEY-->…<!--/census-->` tokens in the tracked prose from `_stats` — the markdown
+    twin of `_sync_figure_census`, so a hand-typed mechanism count can't drift from the census."""
+    counts = _stats(entries)
+
+    def repl(m: "re.Match[str]") -> str:
+        val = _census_token_value(counts, m.group(2), m.group(3))
+        return m.group(0) if val is None else f"{m.group(1)}{val}{m.group(5)}"
+
+    for rel in _MD_CENSUS_FILES:
+        path = os.path.join(ROOT, rel)
+        if not os.path.isfile(path):
+            continue
+        txt = open(path, encoding="utf-8").read()
+        new = _CENSUS_TOKEN.sub(repl, txt)
+        if new != txt:
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(new)
+
+
+def check_census_tokens(entries: list[Entry]) -> list[str]:
+    """Every census token names a known key and carries the current census value (the build fills them;
+    this asserts it stuck — so a stale hand-edit between builds is caught, and an unknown key is flagged)."""
+    counts = _stats(entries)
+    problems: list[str] = []
+    for rel in _MD_CENSUS_FILES:
+        path = os.path.join(ROOT, rel)
+        if not os.path.isfile(path):
+            continue
+        txt = open(path, encoding="utf-8").read()
+        for m in _CENSUS_TOKEN.finditer(txt):
+            key, mod, val = m.group(2), m.group(3), m.group(4)
+            want = _census_token_value(counts, key, mod)
+            if want is None:
+                problems.append(f"{rel}: census token unknown key {key!r}")
+            elif val != want:
+                problems.append(f"{rel}: census:{key} is {val!r}, census says {want!r} — run `catalog.py build`")
+    # The README summary lives inside an HTML comment, so it can't hold a nested census token — assert its
+    # mechanism count against the census directly (the one derived count a token can't reach).
+    readme = os.path.join(ROOT, "README.md")
+    if os.path.isfile(readme):
+        head = open(readme, encoding="utf-8").read()[:600]
+        m = re.search(r"<!--\s*summary:.*?\b(\d+)\s+across\b", head, re.DOTALL)
+        if m and m.group(1) != counts["controls"]:
+            problems.append(f"README.md: summary count {m.group(1)} != census {counts['controls']} — update the summary")
+    return problems
+
+
 def check_orphan_pages() -> list[str]:
     """Post-build reachability gate: every built `.html` must have at least one inbound `href`/`src` from
     another built page. A page nothing links to is an orphan — rendered but unreachable (the DEVELOP.html
@@ -1334,6 +1417,7 @@ def cmd_build(_args) -> int:
     global _ABBR_MAP, _ABBR_PREFIX
     entries = all_entries()
     _sync_figure_census(entries)  # keep the static figures' counts equal to the census
+    _sync_markdown_census(entries)  # keep the prose census tokens equal to the census (README/INDEX/CLAUDE/bridge)
     _ABBR_MAP = parse_abstractions()
     written = 0
     md_files = sorted(catalogue_md_files())
