@@ -1019,7 +1019,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   can be trusted</span> — keeping it inspectable, correctable, and maintainable at speed.</p>
 
   <p class="try-sg" style="margin:-0.4rem 0 1.4rem 1.6rem;"><a href="quick-start.html"><em>Try out Claude
-  in self-governance mode →</em></a></p>
+  in self-governance or self-operations mode →</em></a></p>
 
   <h2 class="section-h">Between two schools of thought</h2>
   <p class="section-sub">Two common ways to build with agents sit at opposite poles. This site is about
