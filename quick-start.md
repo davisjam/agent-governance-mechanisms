@@ -43,10 +43,13 @@ If a plugin isn't an option for your org, use Path B.
 
 ```
 /plugin marketplace add davisjam/agent-governance-mechanisms
-/plugin install self-governance@agent-governance-mechanisms
+/plugin install agent-governance@agent-governance-mechanisms
 ```
 
-Start a new session and the skill loads. Pull a later release with `/plugin marketplace update
+The `agent-governance` plugin ships **two partner skills**: **self-governance** (*harden* — audit for
+missing guardrails, or convert a recurring failure into a durable control) and **self-operations**
+(*operate* — run the agent-fleet substrate day-to-day; when a break recurs, hand it to self-governance).
+Start a new session and both load. Pull a later release with `/plugin marketplace update
 agent-governance-mechanisms`.
 
 **Or copy-paste** — no marketplace, e.g. if you'd rather vendor the folder yourself:
@@ -55,18 +58,20 @@ agent-governance-mechanisms`.
 # clone the catalogue (or reuse a clone you already have)
 git clone https://github.com/davisjam/agent-governance-mechanisms.git
 
-# install the skill for your user, across every project …
+# install BOTH skills for your user, across every project …
 mkdir -p ~/.claude/skills
 cp -R agent-governance-mechanisms/plugin/agent-governance/skills/self-governance \
-      ~/.claude/skills/self-governance
+      agent-governance-mechanisms/plugin/agent-governance/skills/self-operations \
+      ~/.claude/skills/
 
-# … or scope it to a single repo instead
+# … or scope them to a single repo instead
 mkdir -p .claude/skills
 cp -R agent-governance-mechanisms/plugin/agent-governance/skills/self-governance \
-      .claude/skills/self-governance
+      agent-governance-mechanisms/plugin/agent-governance/skills/self-operations \
+      .claude/skills/
 ```
 
-Start a new Claude session and the skill loads.
+Start a new Claude session and the skills load. (Want only one? Copy just that skill's folder.)
 
 Two modes:
 

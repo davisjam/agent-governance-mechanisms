@@ -63,6 +63,20 @@ can't name the failure a mechanism prevents in *your* system, you might not need
 - **[Quick start](quick-start.md)** — adopt these in your own repo.
 - **The live system** these mechanisms govern: **DocAble** ([scholaccess.com](https://scholaccess.com)).
 
+## The two skills
+
+The catalogue also ships as **two partner Claude skills** (one plugin, `agent-governance`):
+
+- **self-governance** — *harden.* Audit your repo for missing guardrails, or convert a recurring failure
+  into a durable control. Carries the AI-First Engineering Method as its operating stance, plus the
+  agent + models-bridge control census as on-demand reference.
+- **self-operations** — *operate.* Run the agent-fleet substrate day to day: the positive lifecycle map
+  (agents, context, git, deploy, dev-env, cron) plus a symptom → resolving-doc catalog when something
+  breaks. It bootstraps to your repo by inspection.
+
+They partner: **operate routes a break to its fix; when a failure recurs, it hands the class to
+self-governance to convert into a control.** Install both from the [quick start](quick-start.md).
+
 ## Using this repo
 
 **To read it yourself, use the [web view](https://davisjam.github.io/agent-governance-mechanisms/)** —

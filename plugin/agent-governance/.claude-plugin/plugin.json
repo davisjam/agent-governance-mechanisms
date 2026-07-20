@@ -1,6 +1,6 @@
 {
   "name": "agent-governance",
-  "description": "The agent-governance toolkit — the Davis AI-First Engineering Method plus the control catalogue, packaged as installable skills. Ships the self-governance skill: audit a repo for missing guardrails, or convert a recurring failure into a durable control.",
+  "description": "The agent-governance toolkit — the Davis AI-First Engineering Method plus the control catalogue, packaged as installable skills. Ships two partner skills: self-governance (harden — audit a repo for missing guardrails, or convert a recurring failure into a durable control) and self-operations (operate — run the agent-fleet substrate; route a break to its fix, and escalate a recurring one to self-governance).",
   "version": "0.1.0",
   "license": "MIT",
   "author": {

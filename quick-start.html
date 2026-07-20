@@ -78,22 +78,24 @@
 <p>If a plugin isn't an option for your org, use Path B.</p>
 <p><strong>Quickest — install from the marketplace.</strong> In Claude Code, two commands:</p>
 <pre tabindex="0"><code>/plugin marketplace add davisjam/agent-governance-mechanisms
-/plugin install self-governance@agent-governance-mechanisms</code></pre>
-<p>Start a new session and the skill loads. Pull a later release with <code>/plugin marketplace update agent-governance-mechanisms</code>.</p>
+/plugin install agent-governance@agent-governance-mechanisms</code></pre>
+<p>The <code>agent-governance</code> plugin ships <strong>two partner skills</strong>: <strong>self-governance</strong> (<em>harden</em> — audit for missing guardrails, or convert a recurring failure into a durable control) and <strong>self-operations</strong> (<em>operate</em> — run the agent-fleet substrate day-to-day; when a break recurs, hand it to self-governance). Start a new session and both load. Pull a later release with <code>/plugin marketplace update agent-governance-mechanisms</code>.</p>
 <p><strong>Or copy-paste</strong> — no marketplace, e.g. if you'd rather vendor the folder yourself:</p>
 <pre tabindex="0"><code># clone the catalogue (or reuse a clone you already have)
 git clone https://github.com/davisjam/agent-governance-mechanisms.git
 
-# install the skill for your user, across every project …
+# install BOTH skills for your user, across every project …
 mkdir -p ~/.claude/skills
 cp -R agent-governance-mechanisms/plugin/agent-governance/skills/self-governance \
-      ~/.claude/skills/self-governance
+      agent-governance-mechanisms/plugin/agent-governance/skills/self-operations \
+      ~/.claude/skills/
 
-# … or scope it to a single repo instead
+# … or scope them to a single repo instead
 mkdir -p .claude/skills
 cp -R agent-governance-mechanisms/plugin/agent-governance/skills/self-governance \
-      .claude/skills/self-governance</code></pre>
-<p>Start a new Claude session and the skill loads.</p>
+      agent-governance-mechanisms/plugin/agent-governance/skills/self-operations \
+      .claude/skills/</code></pre>
+<p>Start a new Claude session and the skills load. (Want only one? Copy just that skill's folder.)</p>
 <p>Two modes:</p>
 <ul><li><strong>audit</strong> — survey your repo against the catalogue → a prioritized adopt / adapt / skip plan (advises; changes nothing).</li><li><strong>interpret-failure</strong> — a failure just recurred → classify it and convert the <em>class</em> into a durable control; proposes first, writes the lint/test/gate only on your go-ahead.</li></ul>
 <p>It also carries the AI-First Engineering Method as an ambient operating stance, so the agent reasons the way the catalogue was built. The skill covers the <strong>agent</strong> and <strong>models-bridge</strong> roles — the "self" a coding agent governs; the <strong>product</strong> role stays in the full catalogue.</p>

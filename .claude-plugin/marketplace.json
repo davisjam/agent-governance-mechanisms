@@ -12,7 +12,7 @@
     {
       "name": "agent-governance",
       "source": "./plugin/agent-governance",
-      "description": "Audit a repo for missing agent-governance guardrails, or convert a recurring failure into a durable control — grounded in the agent-governance-mechanisms catalogue."
+      "description": "Two partner skills for agent-fleet repos — self-governance (harden: audit for missing guardrails, or convert a recurring failure into a durable control) and self-operations (operate: run the substrate, route breaks to their fix). Grounded in the agent-governance-mechanisms catalogue."
     }
   ]
 }
