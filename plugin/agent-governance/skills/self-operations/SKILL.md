@@ -28,7 +28,7 @@ skill is the map you operate against and the bootstrap that fits it to *this* re
 
 ## How to use this skill
 
-1. **Orient positive first.** Read the five-lifecycle map below — know the healthy baseline before you hunt
+1. **Orient positive first.** Read the lifecycle map below — know the healthy baseline before you hunt
    a break. Most sessions are steady-state operation.
 2. **When something breaks,** find the symptom's *class* in your Part B catalog (match the class, not the
    example that seeded the row), follow its resolving doc, and run the matching runbook's typed steps.
@@ -38,10 +38,10 @@ skill is the map you operate against and the bootstrap that fits it to *this* re
    skill (interpret-failure mode) to classify the class and design the control — a registered, designed
    control, never an inline hack. Governance is design.
 
-## The five lifecycles (the map — know normal before you hunt a break)
+## The core lifecycles (the map — know normal before you hunt a break)
 
-Every agent-fleet repo manages the same five lifecycles (plus cron/scheduling if present). The *structure*
-is shared; only the bindings differ (your Part B).
+Every agent-fleet repo manages the same five core lifecycles (plus cron/scheduling and the operator's own
+hooks where present). The *structure* is shared; only the bindings differ (your Part B).
 
 | Lifecycle | The resource you manage | Healthy baseline | Symptom classes |
 |---|---|---|---|
@@ -51,6 +51,7 @@ is shared; only the bindings differ (your Part B).
 | **L4 · manage-deploy** | shipping | staged deploys reach green; hotfixes don't ship HEAD | deploy won't green; smoke hangs on one case; a prod bug report; hotfix-without-HEAD |
 | **L5 · manage-dev-env** | the machine/host | disk/compute headroom; toolchain present; VM healthy | pressure sheds work; disk exhausted; a host tool vanished; VM mis-sized |
 | **(L-cron)** | scheduled automation | scheduler live; its alerts consumed | an alert blocks new work; the scheduler broke its own fix; a queued conflict needs hands |
+| **(L6 · govern-your-own-loop)** | the operator's own decision loop — hooks that fire a skipped reflex at its moment | each ambient must-do judgment is backed by a fail-open, windowed, telemetered hook | a recurrence never converted to a control; a durable lesson written to the wrong store |
 
 The problems above are **universal**; only the *solutions* (your tools, your docs) are repo-specific.
 
@@ -62,8 +63,8 @@ shape before you commit it.*
 - **Auto-discover (inspect the repo, don't ask).** Find how agents are dispatched, where the operational
   docs live, the deploy command(s), the host/VM (container runtime, disk sites), the scheduler/cron if any,
   and the mainline-landing path. Read the house-rules doc and the docs index if present.
-- **Map to the five lifecycles.** For each L1–L5 (+cron), fill the healthy baseline and the symptom→doc
-  rows from what you found. Cite real files/sections; the ref-lint checks them.
+- **Map to the lifecycles.** For each L1–L5 (+cron and your own loop where present), fill the healthy
+  baseline and the symptom→doc rows from what you found. Cite real files/sections; the ref-lint checks them.
 - **Ask the human only for the gaps** — and *state your assumptions so they correct rather than supply.*
 - **Confirm the lifecycle models + runbooks with the human.** Walk them through the drafted models (right
   five? a baseline they'd state differently?) and runbooks (does each problem match a real failure? are the
@@ -81,8 +82,9 @@ place. Pick by what you want to see:
   [L2 manage-context](examples/lifecycle-L2-manage-context.md) ·
   [L3 manage-git-repo](examples/lifecycle-L3-manage-git-repo.md) ·
   [L4 manage-deploy](examples/lifecycle-L4-manage-deploy.md) ·
-  [L5 manage-dev-env](examples/lifecycle-L5-manage-dev-env.md) — each a filled-in model (purpose, healthy
-  baseline, symptom classes, owned runbooks).
+  [L5 manage-dev-env](examples/lifecycle-L5-manage-dev-env.md) ·
+  [L6 govern-your-own-loop](examples/lifecycle-L6-govern-your-own-loop.md) — each a filled-in model
+  (purpose, healthy baseline, symptom classes, owned runbooks).
 - **A runbook** → [recover-the-fleet](examples/runbook-recover-the-fleet.md) ·
   [drain-an-un-releasable-mainline](examples/runbook-drain-unreleasable-mainline.md) ·
   [reclaim-a-full-disk](examples/runbook-reclaim-a-full-disk.md) — each shows the typed steps end to end
