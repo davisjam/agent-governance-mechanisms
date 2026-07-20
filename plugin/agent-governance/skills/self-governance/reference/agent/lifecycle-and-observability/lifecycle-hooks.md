@@ -100,6 +100,13 @@ one"* — because for a soft reminder the default outcome must be doing nothing,
 before the telemetry can catch it. Instrumentation is what separates a soft control that is *working
 quietly* from one that is *silently dead*; without it the two look identical.
 
+The failure sharpens as reflection facets accrue. Once you want the operator to reflect on more than one
+policy — convert-a-recurrence *and* spot-a-second-copy *and* a stale runbook — firing each as its own hook
+is the alarm-fatigue trap by another door: N soft nudges a turn compound into the noise each was biased to
+avoid. Consolidate them into a **single tempo-gated reflection** that rotates or batches the facets, so the
+operator gets one paced prompt rather than a chorus — each facet still default-silent, the *substrate*
+paced so the whole never overwhelms.
+
 ## Known uses
 
 - A **turn-stop hook** that refuses to let the loop rest while ratified work remains and the worker pool
@@ -131,5 +138,10 @@ quietly* from one that is *silently dead*; without it the two look identical.
 - **See also** — [cron-alerts-gate](cron-alerts-gate.md): a before-a-tool-call hook is one delivery
   surface for its "an unresolved high-severity alert blocks new work" rule — the gate supplies the
   state, the hook fires the check at the moment of action.
+- *See also (temporal complement)* — [dynamic-context-injection](../context-and-dispatch/dynamic-context-injection.md):
+  the feed-forward twin. Injection pushes the governing constraints *into* an agent at dispatch, before it
+  acts; a tempo-gated **reflection** hook pulls the *operator* back to the same kind of policy at
+  turn-tempo, while or after acting. Forward-priming versus backward-reflection — the same "right policy at
+  the right lifecycle moment" move, mirrored in time.
 - **Layer** — it sits at the agent runtime, upstream of the commit → cron → merge-train → deploy
   staircase; it governs the operator *driving* that staircase, not the work flowing through it.
