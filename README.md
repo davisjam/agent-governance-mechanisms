@@ -17,7 +17,11 @@ Two common ways to build with agents sit at opposite poles. This catalogue is ab
 | *all velocity — no guardrails* | *velocity + guardrails grown from failure* | *all oversight — everything checked* |
 | e.g. [Karpathy](https://x.com/karpathy/status/1886192184808149383) · [Gas Town](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04) | | e.g. [Meyer, CACM](https://dl.acm.org/doi/full/10.1145/3773295) · [vibe-OS / vibe-tools](https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html) |
 
-## The genre — high-assurance process, made live
+**Both poles pay the *pet tax.*** Each gives per-change human attention — *coaxing* the output (left) or
+*inspecting* it (right) — and that attention scales linearly with the herd, so it becomes the bottleneck.
+The midway is **cattle, not pets**: you build the fences and chutes once, and the *guardrails* ride each
+change, not a person. One pole pets the fleet out of affection, the other out of anxiety; only the middle
+runs the herd.
 
 This middle column isn't new. It's the agentic-era instantiation of quality practices long standard in
 regulated industry — documented process, requirements traceability, verification tiers scaled to
