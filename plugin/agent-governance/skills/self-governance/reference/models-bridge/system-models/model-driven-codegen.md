@@ -32,8 +32,10 @@ consumers* versus *hand-maintained artifacts that drift from the model and swall
 A family of generators read the models and emit artifacts: a NetworkPolicy generator (from the
 service-flow model), the service-catalog and env generators, the web-API entity and public-API-doc
 generators (from the web-API model), a competitor-catalog generator (from the competitor registry), the
-wire-contract generators (from the wire-contract schemas), and a docker generator. Each emitted file
-carries a provenance marker (emitter + regen path), enforced by a provenance-header lint.
+wire-contract generators (from the wire-contract schemas), a docker generator, and a model-visualization
+generator that emits **human-readable diagrams** (e.g. Mermaid) from the same models. Each emitted file
+carries a provenance marker (emitter + regen path), enforced by a provenance-header lint — so even the
+*picture a human reads* is generated, and can't drift from the model it depicts.
 
 ## Prerequisites
 
@@ -52,6 +54,8 @@ carries a provenance marker (emitter + regen path), enforced by a provenance-hea
 
 - The NetworkPolicy, service-catalog, web-API-entity, public-API-doc, competitor-catalog,
   wire-contract, and docker generators.
+- A model-visualization generator (human diagrams — e.g. Mermaid — from the models), so the picture can't
+  drift from the model.
 - The provenance-header requirement + its enforcing lint.
 
 ## Related mechanisms

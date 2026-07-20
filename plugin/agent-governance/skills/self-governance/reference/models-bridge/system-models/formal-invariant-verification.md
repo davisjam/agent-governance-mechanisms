@@ -77,6 +77,9 @@ parallel one — an established model checker already subsumes the temporal logi
   the reachable state space.
 - The match lint (temporal shape ↔ routed checker) that makes a mis-routed invariant a build error rather
   than a silent gap.
+- The state model named in **SysML vocabulary** (blocks / parts / state machines) — adopting the canonical
+  systems-modeling terms even where its heavyweight tooling is skipped, the same "adopt the schema, skip
+  the runtime" move as a service-topology dialect.
 
 ## Related mechanisms
 

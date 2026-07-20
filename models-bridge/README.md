@@ -36,10 +36,10 @@ drift gates is tedious, and humans resent the nagging.
 without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
 agent operate a codebase larger than its context in the first place.
 
-## The thirteen mechanisms — one method, two subjects (a Y)
+## The fourteen mechanisms — one method, two subjects (a Y)
 
 The role is a **Y**: one **method** (the trunk) reified toward the two subjects the bridge couples — the
-**product** it ships and the **orchestration** that builds it. The six method-mechanisms are
+**product** it ships and the **orchestration** that builds it. The seven method-mechanisms are
 subject-agnostic; the seven models split by subject, with three that serve both faces (the *shared spine*).
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:
@@ -51,6 +51,9 @@ subject-agnostic; the seven models split by subject, with three that serve both 
 - [Formal invariant verification](system-models/formal-invariant-verification.md) — each invariant carries
   a temporal-logic form (`[]P` safety / `P ~> Q` liveness) that *derives* its exhaustive checker
   (state-space BFS / a model checker) — proven across every interleaving, not sampled.
+- [Coverage → model-node mapping](system-models/coverage-model-mapping.md) — project test coverage onto the
+  model's nodes (states, seams, invariants) so an *untested* invariant is a visible gap, not hidden inside
+  a line-coverage percentage.
 - [Model-driven codegen](system-models/model-driven-codegen.md) — generate artifacts *from* the models,
   provenance-headed.
 - [Query surface](system-models/query-surface.md) — `repo-query`, the agent-facing read API.
