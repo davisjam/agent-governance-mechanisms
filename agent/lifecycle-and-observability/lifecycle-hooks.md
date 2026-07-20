@@ -82,10 +82,32 @@ of the policy they must apply.
   legitimately blocked on a decision — produces repeated false prompts, and a signal that cries wolf
   gets tuned out.
 
+## The measured leash — a soft payload must instrument its own firing
+
+A hard **block** is self-evident: the action it denies doesn't happen, and the failure it prevents stops
+recurring — the absence *is* the signal. A **soft** payload has no such tell, and it dies two silent
+ways. It stops firing — a wiring change, a stuck dedupe flag — and no one notices the reminder went
+missing. Or it fires so often the operator learns to tune it out, and it becomes the tower-of-governance
+it was meant to prevent. Neither failure shows in the code or the runtime.
+
+So a soft hook ships **its own firing telemetry**: one record per fire with a session key, a query over
+the log, and a *yield* check that correlates each firing against the thing it was meant to provoke — did
+a nudge to convert a recurrence into a control actually precede one? The hook then lives on a **measured
+leash** — an evaluation plan with a written pull condition: if it over-fires, or shows near-zero yield
+across many sessions, you pull it. You cannot manage a probabilistic control you cannot watch fire. And
+the payload itself biases hard toward silence — *"usually a no-op; a false nudge is worse than a missed
+one"* — because for a soft reminder the default outcome must be doing nothing, or the fatigue sets in
+before the telemetry can catch it. Instrumentation is what separates a soft control that is *working
+quietly* from one that is *silently dead*; without it the two look identical.
+
 ## Known uses
 
 - A **turn-stop hook** that refuses to let the loop rest while ratified work remains and the worker pool
   is under its cap — *hard delivery of soft guidance*: it re-prompts, the agent decides.
+- A **turn-stop self-check hook** that, at most once per long window, re-arms the operator's reflex to
+  convert a *recurring* failure into a durable control — the operate→harden handoff fired as a runtime
+  event. It ships a firing-telemetry log and a yield query correlating its nudges against real
+  conversions, and biases its payload hard toward silence — it lives on the measured leash above.
 - A **pre-compaction hook** that writes a hand-off before context is compacted, so in-flight state
   survives the summarization.
 - A **session-start hook** that runs the session-start ritual — reading the unconsumed alert backlog —

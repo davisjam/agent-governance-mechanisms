@@ -367,6 +367,15 @@ change*, not another tuning pass.
   Machinery that exists only to serve the substrate's shape — a bespoke autoscaler, a fairness queue
   rationing a scarcity the substrate itself created — is accidental, and a paradigm change can delete it
   wholesale. That is a permanent win the in-paradigm optimization could never reach.
+- **The build-vs-adopt line moves with the substrate — the more managed it is, the more you adopt.**
+  A more-managed substrate is a bargain with a catch: it hands you built-ins (retries, autoscale,
+  queueing, identity, telemetry) *and* takes away the room for custom work (no durable state, a
+  short-lived constrained runtime). Both point the same way — on the managed end, handrolling what the
+  platform provides earns diminishing, then negative, returns. So a move toward it is a mandate to
+  *retire* handrolls for platform-native, never to carry them across, and least of all to *add* new
+  custom machinery the substrate already offers (handrolling telemetry on the way into serverless is
+  exactly backwards). The trade is **reuse for control** — the con-side of the paradigm swap, and the
+  posture that pays it well (→ A.2.8 adopt-canonical, A.2.11 accidental complexity).
 
 Reach for this only when an in-paradigm optimization has *recurred* against the same ceiling. A single
 hard problem is not a reason to re-platform.
