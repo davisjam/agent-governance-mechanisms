@@ -329,6 +329,62 @@ Two kinds of complexity, handled oppositely (Brooks' "No Silver Bullet"):
 The test before any big refactor: are you *reducing* accidental complexity, or just *relocating*
 essential complexity behind a prettier name?
 
+### A.2.12. Reprice the paradigm when in-paradigm optimization keeps hitting its own ceiling
+
+Every architecture has a shape of pain — there is no free lunch, only a different lunch. Most
+optimization stays *within* the paradigm: keep the substrate, tune its dials, squeeze out the cost.
+That is right until it keeps hitting the paradigm's *own* ceiling — the pain no dial removes because it
+is inherent to the shape. A recurring in-paradigm ceiling is the signal to price out a *paradigm
+change*, not another tuning pass.
+
+- **Name the ceiling, not the symptom.** An in-paradigm fix that keeps almost-working and then hits
+  the same wall from a new angle is diagnostic: the wall belongs to the paradigm, not the
+  implementation. (Scaling a fixed cluster down to zero kept running into cold-start and scaler
+  complexity — both intrinsic to "we operate the cluster.")
+- **Reprice as a measured trade, not an aesthetic.** A paradigm change swaps one lunch for another;
+  whether the new bill is smaller is an *experiment* (→ A.4.2), gated on the numbers that decide it —
+  not a preference for the newer thing. The prototype that measures the trade is disposable; the number
+  it produces is the decision.
+- **This is the essence/accident test at the substrate level (→ A.2.11).** Ask whether the machinery
+  the ceiling forces you to keep is *essential* to the problem or *accidental* to the paradigm.
+  Machinery that exists only to serve the substrate's shape — a bespoke autoscaler, a fairness queue
+  rationing a scarcity the substrate itself created — is accidental, and a paradigm change can delete it
+  wholesale. That is a permanent win the in-paradigm optimization could never reach.
+
+Reach for this only when an in-paradigm optimization has *recurred* against the same ceiling. A single
+hard problem is not a reason to re-platform.
+
+### A.2.13. An architecture change is an X-ray for embedded assumptions — walk it through the models
+
+Changing the architecture — the deployment substrate, the storage engine, the concurrency model —
+forces every assumption the old substrate silently carried out into the open. A decision that read as
+obviously right *given the old shape* (embed the runtime rather than add a network hop; stash
+correctness-carrying state in the fast in-memory sidecar) becomes visibly a *choice* under the new one.
+Surfacing and re-deciding those assumptions is a win independent of whether you migrate: the codebase
+ends with its substrate assumptions *explicit*, so the next shift is cheaper.
+
+- **The change reveals where the substrate carried a guarantee.** The places that *have* to change are
+  precisely where the old substrate had absorbed a semantic guarantee the design never modeled. (A
+  pop-from-queue that was atomic *by accident of the in-memory primitive* must become an explicit
+  single-consumer claim under a managed queue — the migration forces a latent guarantee into the open.)
+  That is not breakage; it is the model getting more truthful. The same X-ray re-decides where
+  *computation lives* and *how services talk* once the substrate that made the old answer free is gone.
+- **If you have typed models, the change is a bounded walk, not a leap.** Enumerate each modeled
+  element and classify it **orthogonal** (unchanged — the model abstracted the substrate correctly) or
+  **shifts** (the substrate leaked in). A mismatch is a *localizing diagnostic*: it names exactly where
+  to look, and closing it is a model *improvement*, not a rescue. The product-semantic core riding
+  through untouched is the map being *validated* against a paradigm change of the territory — the
+  deepest dividend of keeping the map equal to the territory (→ the models-bridge target).
+- **Start the hunt from the user-journey model and follow the threads.** A component-deep view has a
+  blind spot: everything a user touches that is *not* the core pipeline. Walk each journey, and at each
+  touchpoint ask "does the change reach here?" — that is how the non-obvious implications surface
+  (billing, invoicing, admin views), the ones a pipeline-shaped analysis misses.
+
+**YAGNI governs the whole lens.** Reach for the X-ray only when you are actually contemplating or doing
+an architecture change — do not hunt for embedded assumptions in a stable system. And the exhaustive
+element-by-element orthogonality pass earns its cost only when a change is live *and* the design keeps
+dancing near the substrate boundary; a one-off is not a reason to walk the whole model.
+
 ## A.3 — Controls: observe and guard what you can't prevent
 
 Where architecture can't make a failure impossible, catch it: a lint, a gate, a test, a validator that

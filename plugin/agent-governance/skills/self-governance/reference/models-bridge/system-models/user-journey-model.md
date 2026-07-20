@@ -102,6 +102,10 @@ model enables, gated on the governance that keeps the model true.
   the two-way endpoint-coverage audits (undertested-journey + dead-endpoint).
 - A journey-aware wake/scale capability keyed to the active journey's declared deps — gated on the drift
   lint being blocking.
+- A **migration completeness-critic sweep**: when re-platforming, walk every journey and ask at each
+  touchpoint "does the substrate change reach here?" A component-deep migration plan is blind to
+  everything a user touches that is *not* the core pipeline; the journey model is the entry point that
+  surfaces the missed threads — billing, invoicing, admin views — before the build wave starts.
 
 ## Related mechanisms
 

@@ -3,7 +3,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All 59 entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All 60 entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
@@ -76,7 +76,7 @@ soft guidance with a hard counterpart.
 
 ## 6. System models
 
-*One MBSE **method** (the trunk — seven subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). Seven models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization) · shared-spine (component-zone, concurrency, deployment — both faces); the seven method-mechanisms — incl. formal temporal-logic verification and coverage→model-node mapping — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — eight subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). Seven models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization) · shared-spine (component-zone, concurrency, deployment — both faces); the eight method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, and computed control↔substrate blast-radius — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
@@ -87,6 +87,7 @@ soft guidance with a hard counterpart.
 | ✅ | Model-driven codegen — *trunk / method* | `validation` | Hard | [model-driven-codegen.md](models-bridge/system-models/model-driven-codegen.md) |
 | ✅ | Model query surface (`repo-query`) — *trunk / method* | `agent-output` | Soft | [query-surface.md](models-bridge/system-models/query-surface.md) |
 | ✅ | Meta-model consumption (read, don't hardcode) — *trunk / method* | `typed-ir` | Hard | [meta-model-consumption.md](models-bridge/system-models/meta-model-consumption.md) |
+| ✅ | Control↔substrate dependency (computed blast-radius) — *trunk / method* | `typed-ir` | Hard | [control-substrate-dependency.md](models-bridge/system-models/control-substrate-dependency.md) |
 | ✅ | Service-flow / API model — *product-facing* | `typed-ir` | Hard | [service-flow-model.md](models-bridge/system-models/service-flow-model.md) |
 | ✅ | User-journey model (product-goal → implementation) — *product-facing* | `typed-ir` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
 | ✅ | Domain registries — *product-facing* | `typed-ir` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |
@@ -154,11 +155,11 @@ soft guidance with a hard counterpart.
 
 ---
 
-**Three roles complete — 59 mechanisms across 11 families, all fully developed.**
+**Three roles complete — 60 mechanisms across 11 families, all fully developed.**
 **Agent (25):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
 Lifecycle & observability (6) · Governance-doc controls (7, incl. the **CLAUDE.md rule index**
 meta-mechanism).
-**Models-bridge (14):** the MBSE **method** (7 subject-agnostic mechanisms, incl. **formal temporal-logic verification** + **coverage→model-node mapping**) reified as a **Y** over 7 models — product-facing 3 (service-flow · user-journey · domain-registries) · orchestration-facing 1 (synchronization) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
+**Models-bridge (15):** the MBSE **method** (8 subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, + **computed control↔substrate blast-radius**) reified as a **Y** over 7 models — product-facing 3 (service-flow · user-journey · domain-registries) · orchestration-facing 1 (synchronization) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
 the MBSE substrate through which a bounded agent operates an unbounded codebase.
 **Product (20):** Canonical models & seams (5) · Validation & conformance (4) · Regression tests (4) ·
 Provenance & attribution (4) · Repair vocabulary (3).

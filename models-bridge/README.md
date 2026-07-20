@@ -26,7 +26,10 @@ service wiring, API docs, docker). Because they are continuously *used* and *val
 the moment a model diverges from the code — the
 [drift & parity gates](system-models/drift-parity-gates.md) enforce exactly that, the one gate the
 rest here depends on: a bridge is only useful if the map equals the territory, and a lying map is worse
-than none.
+than none. The deepest dividend shows under a *re-platforming*: change the substrate (deployment engine,
+storage, concurrency model) and a faithful map mostly survives untouched — the elements that *do* move
+localize precisely where the old substrate had leaked a semantic guarantee into the design, turning a
+migration from a leap into a bounded, checkable walk over the model.
 
 **2 · The barrier was always human.** Model-Based Systems Engineering — modelling your system as typed
 source-of-truth — has long been *possible* and rarely *done*: maintaining the models and satisfying the
@@ -36,10 +39,10 @@ drift gates is tedious, and humans resent the nagging.
 without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
 agent operate a codebase larger than its context in the first place.
 
-## The fourteen mechanisms — one method, two subjects (a Y)
+## The fifteen mechanisms — one method, two subjects (a Y)
 
 The role is a **Y**: one **method** (the trunk) reified toward the two subjects the bridge couples — the
-**product** it ships and the **orchestration** that builds it. The seven method-mechanisms are
+**product** it ships and the **orchestration** that builds it. The eight method-mechanisms are
 subject-agnostic; the seven models split by subject, with three that serve both faces (the *shared spine*).
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:
@@ -59,6 +62,9 @@ subject-agnostic; the seven models split by subject, with three that serve both 
 - [Query surface](system-models/query-surface.md) — `repo-query`, the agent-facing read API.
 - [Read-don't-hardcode consumption](system-models/meta-model-consumption.md) — consume by query, never by
   copied snapshot.
+- [Control↔substrate dependency](system-models/control-substrate-dependency.md) — each control declares the
+  substrate assumption it bakes as typed metadata, so a substrate change's static-analysis blast radius is
+  a *computed query*, not a grep (read-don't-hardcode turned on the control fleet's own dependency edges).
 
 **Product-facing models** — the method pointed at the shipped artifact:
 
