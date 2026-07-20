@@ -156,31 +156,40 @@ you see:
 - **An advisory "remember to…"** → make it a hard gate; guidance you must remember rots. A rule about the
   *code* → a lint (→ A.3.1); a step the *operator's own loop* keeps skipping (end-of-turn, context
   compaction, session-start, before-an-action) → a lifecycle hook (→ A.3.7).
+- **A control you're about to place** → name its load-bearing *terms* (the nouns the rule is about), then
+  put it at the *lowest* layer whose native vocabulary already names them — not higher (re-derives
+  vocabulary → drift + false positives) nor below the policy's semantics (→ A.1.6).
 
 These are the *named exceptions* to default-skip — not a license to govern everything. Everything not on
 this list stays failure-driven; this is the design-time complement to A.1.2 (which maps a failure to its
 mechanism *after* it recurs).
 
-### A.1.6. Place the control at the right semantic level — minimize the semantic gap
+### A.1.6. Place the control at the right layer — the semantic gap has a floor *and* a ceiling
 
 Once you decide to convert a failure into a control, *where* you put it is a second choice — and the
-mechanisms available sit at different **semantic levels**, the level of meaning at which each can *reason*.
-A git pre-commit hook sees a syntactic diff. A reasoning hook sees the diff *plus* a model's judgment. A
-final-commit (N-of-N) check sees the whole worktree as one unit. An Epic definition-of-done sees the whole
-change against its *design intent* and the models. The **semantic gap** is the distance between the level
-a decision actually lives at and the level of the mechanism you try to enforce it with. Enforce too
-low — ask a syntactic hook *"does this change warrant a test?"* — and the gap is unbridgeable: the
-mechanism cannot express the policy, so you get noise or nothing.
+mechanisms sit at different **semantic levels**, the level of meaning at which each can *reason*. A git
+pre-commit hook sees a syntactic diff; a reasoning hook sees the diff *plus* a model's judgment; a
+whole-worktree (N-of-N) check sees the change as one unit; an Epic definition-of-done sees it against its
+*design intent* and the models. Placement is bracketed — a **floor** below which a control can't work and a
+**ceiling** above which it rots:
 
-**The rule: place each check at the mechanism whose semantic level is at, or just above, the decision's** —
-high enough to *see* what the decision needs, low enough to fire *early*. A trailer-present check belongs
-at the cheap syntactic hook; *"does this diff warrant a test or doc?"* belongs at a reasoning hook or the
-whole-worktree N-of-N check; *"did this Epic deliver what it promised?"* belongs at the definition-of-done,
-where the intent and the models are in view. Moving a decision to the wrong level is the mistake in both
-directions — too low can't express it, too high finds it late and expensive. The concept is borrowed from
-systems and security: VM introspection, firewalls, and access control all fail when enforcement sits below
-the semantics of the policy it must apply. (→ A.3.7 lifecycle hooks — the mechanism menu; → A.1.3
-right-size — the sibling axis of *how much*, where this is *at what level*.)
+- **Floor — don't place it too low to *express* the policy (the *semantic gap*).** A mechanism below the
+  policy's semantics can't name what the rule is about: ask a syntactic hook *"does this change warrant a
+  test?"* and the gap is unbridgeable — noise or nothing. (From systems + security: VM introspection,
+  firewalls, and access control all fail when enforcement sits below the policy's semantics.)
+- **Ceiling — don't place it *higher* than the lowest layer whose native vocabulary already *names* the
+  policy's terms.** A control above that layer **re-derives** vocabulary a lower layer already models — a
+  regex re-deriving what a parser exposes, a lint string-matching identifiers a typed query already types —
+  and re-derived vocabulary breeds false positives and drift (→ A.2.9 regex parser-first; → A.2.8 adopt the
+  canonical schema — the same reflexes, applied to *placement*).
+
+**The rule, in one line: place the check at the *lowest* mechanism whose native vocabulary names the
+policy's load-bearing terms — which is never below the policy's semantics.** A trailer-present check belongs
+at the cheap syntactic hook; *"does this diff warrant a test or doc?"* at a reasoning hook or the N-of-N
+check; *"did this Epic deliver its promise?"* at the definition-of-done, where intent and the models are in
+view. Calibrating placement is a *judgment* — the lowest-naming-layer isn't mechanically decidable — so it
+is a design-time reflex (→ A.1.5), not a lint. (→ A.3.7 lifecycle hooks — the mechanism menu; → A.1.3
+right-size — the sibling axis of *how much*, where this is *at what layer*.)
 
 ## A.2 — Architecture: make the failure impossible by construction
 
