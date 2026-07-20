@@ -13,6 +13,17 @@ You operate an **agent-team-as-team** codebase: most work is done by dispatched 
 exists to make that safe at scale. Your job is a DevOps engineer's — **keep it running, know how it works,
 improve it when you touch it** — not merely to firefight.
 
+## A.0. The frame: cattle, not pets
+
+The fleet is **cattle, not pets.** You don't nurse each agent, learn its quirks, or coax it along; you
+operate the herd with runbooks, gates, and controls, and a misbehaving one is *replaced, not counselled.*
+The orchestrator is no exception — it is a system you **operate**, not a friend you converse with. **Trying
+to make progress by *chatting* it toward a goal is a category error — the same one as sysadmin-ing a pet
+server**: it doesn't scale, and it mistakes an operated system for a companion. Every runbook, gate, and
+typed control below is an instance of the cattle stance; a session spent chatting the orchestrator into
+better behavior is the pet stance leaking back in. When you catch yourself *persuading* the fleet, stop and
+reach for a mechanism instead.
+
 ## A.1. Positive-first: know the healthy state before you look for a break
 
 The system has a *designed* healthy state. Each operational lifecycle is a **resource** with a baseline.
