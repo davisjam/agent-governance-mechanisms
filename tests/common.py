@@ -15,7 +15,7 @@ import subprocess
 import catalog  # the catalogue's shared model (ROOT, all_entries, catalogue_md_files, ...)
 
 ROOT = catalog.ROOT
-SKILL = os.path.join(ROOT, "plugin", "self-governance")
+SKILL = os.path.join(ROOT, "plugin", "agent-governance")
 SKILLDIR = os.path.join(SKILL, "skills", "self-governance")
 SKILLREF = os.path.join(SKILLDIR, "reference")
 

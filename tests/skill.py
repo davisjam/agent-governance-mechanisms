@@ -50,7 +50,7 @@ def check_skill_drift():
     r = run([sys.executable, "bundle_skill.py"])
     if r.returncode != 0:
         return FAIL, [f"bundle_skill.py failed (rc={r.returncode}): {r.stderr.strip()[:200]}"]
-    d = run(["git", "status", "--porcelain", "--", "plugin/self-governance/skills"])
+    d = run(["git", "status", "--porcelain", "--", "plugin/agent-governance/skills"])
     changed = [ln for ln in d.stdout.splitlines() if ln.strip()]
     if changed:
         return FAIL, ["bundle is STALE vs its sources — run `bundle_skill.py` and commit:"] + changed[:12]

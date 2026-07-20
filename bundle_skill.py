@@ -26,7 +26,7 @@ import catalog  # shared Entry model + ROOT; import-safe (main() is __main__-gua
 
 ROOT = catalog.ROOT
 INCLUDE_ROLES = ("agent", "models-bridge")  # product/ excluded: it governs the artifact, not the self
-SKILL = os.path.join(ROOT, "plugin", "self-governance", "skills", "self-governance")
+SKILL = os.path.join(ROOT, "plugin", "agent-governance", "skills", "self-governance")
 REF = os.path.join(SKILL, "reference")
 STARTER = os.path.join(ROOT, "downloads", "CLAUDE-starter.md")
 PUBLIC = "https://davisjam.github.io/agent-governance-mechanisms/"  # base for links that leave the bundle

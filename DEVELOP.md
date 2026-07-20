@@ -32,7 +32,7 @@ path into a tree this repo doesn't ship.
 
 ## The packaged skill
 
-The `plugin/self-governance/` skill is **generated** from the catalogue by `bundle_skill.py`, which
+The `plugin/agent-governance/` skill is **generated** from the catalogue by `bundle_skill.py`, which
 `catalog.py build` runs automatically — so it can't drift from the entries. It mirrors the `agent` +
 `models-bridge` roles into `reference/` (the `product` role is intentionally excluded) and lifts Part A of
 `downloads/CLAUDE-starter.md` into `principles.md`. **Never hand-edit** `principles.md` or anything under
