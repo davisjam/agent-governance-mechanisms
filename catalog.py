@@ -1027,24 +1027,28 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   in self-governance or self-operations mode →</em></a></p>
 
   <h2 class="section-h">Between two schools of thought</h2>
-  <p class="section-sub">Two common ways to build with agents sit at opposite poles. This site is about
-  the midway.</p>
+  <p class="section-sub">Two common ways to build with agents sit at opposite ends of a spectrum. This
+  site is about the midway.</p>
   <div class="spectrum">
   {schools}
   </div>
   <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
 
-  <p class="section-sub" style="margin-top:0.7rem;"><b>Both poles pay the <em>pet tax</em></b> — each gives
-  per-change human attention, whether you're <em>coaxing</em> the output (left) or <em>inspecting</em> it
-  (right), and that attention scales with the herd, so it becomes the bottleneck. The midway is
-  <b>cattle, not pets</b>: you build the fences and chutes once, and the guardrails ride each change, not a
-  person. One pole pets the fleet out of affection, the other out of anxiety; only the middle runs the herd.</p>
+  <p class="section-sub" style="margin-top:0.7rem;"><b>Both ends of the spectrum pay the <em>pet tax</em></b>
+  — each spends per-change human attention, whether you're <em>coaxing</em> the output at one end or
+  <em>inspecting</em> it at the other, and that attention grows with the size of the fleet until it becomes
+  the bottleneck. The midway is <b>cattle, not pets</b>: build the fences and chutes once, and the
+  guardrails ride every change instead of a person.</p>
 
-  <p class="lead">The midway has a name — <span class="term">governance conversion</span> — and a working
-  rule: <b>don't specify everything up front, and don't trust the vibes; let velocity surface the
-  failures, and convert each recurring one into a durable guardrail.</b> The result is <b>{n} governance
-  mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
-  and why it is <i>not</i> just the cheaper thing everyone already does.</p>
+  <p class="lead">The midway isn't a point on that dial — it's a discipline: <span class="term">establishing
+  and maintaining a governed engineering environment</span>. It works in two directions at once.
+  <b>Up front</b>, you specify what you can — the architecture that makes a class of error impossible, the
+  templates and checklists that put a change on rails before it's written. <b>In flight</b>, you let velocity
+  surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. Both
+  halves ship here: the guidance on what to fix in advance, and the machinery for responding when something
+  slips through. The result is <b>{n} governance mechanisms across three roles</b>, each written like a design
+  pattern — the recurring failure it kills, and why it is <i>not</i> just the cheaper thing everyone already
+  does.</p>
 
   <h2 class="section-h">Governance has two mechanisms</h2>
   <p class="section-sub">A guardrail is one of two kinds — prevent the error, or catch it.</p>
