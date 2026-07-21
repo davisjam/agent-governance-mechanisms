@@ -81,6 +81,14 @@ The catalogue also ships as **two partner Claude skills** (one plugin, `agent-go
 They partner: **operate routes a break to its fix; when a failure recurs, it hands the class to
 self-governance to convert into a control.** Install both from the [quick start](quick-start.md).
 
+They're **two lenses on one substrate, not competitors.** self-governance is the *census of controls* and
+the engine that mints new ones — the **design-time** view (what controls exist, which you're missing, how
+to add one). self-operations *runs the substrate those controls govern* — the **run-time** view (the
+lifecycle you operate, the runbook you follow, the hook you wire). The same mechanism appears in
+self-governance's census *and* is operated day-to-day through self-operations — one substrate seen
+design-time vs run-time, not two copies. The loop closes between them: operate surfaces a recurring break →
+harden mints the control → it joins the census *and* the running substrate.
+
 ## Using this repo
 
 **To read it yourself, use the [web view](https://davisjam.github.io/agent-governance-mechanisms/)** —

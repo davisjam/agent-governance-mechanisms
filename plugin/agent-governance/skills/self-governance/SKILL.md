@@ -206,6 +206,11 @@ Two beats: **interpret**, then **convert**.
 
 ## Notes
 
+- **Partner with self-operations — two lenses on one substrate.** This skill is the *design-time* lens: the
+  census of controls + the engine that mints new ones. `self-operations` is the *run-time* lens: it operates
+  the substrate those controls govern (the lifecycle map, the runbooks, the hooks). A mechanism lives in
+  this census **and** is run through self-operations — the same thing seen two ways, not two copies. The
+  loop: operate surfaces a recurring break → *this skill* mints the control → it joins both.
 - **Make it fire — cite, don't mirror.** When you fold this method into a repo's CLAUDE.md, do **not**
   copy the principles or the INTERPRET-FAILURE beats into that always-loaded doc. A mirrored skill is
   applied *ambiently* and never *invoked*, so when a failure actually recurs the operator reaches for the

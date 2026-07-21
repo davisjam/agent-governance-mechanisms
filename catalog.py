@@ -1066,6 +1066,19 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   {ways}
   </div>
 
+  <h2 class="section-h">The two skills — two lenses on one substrate</h2>
+  <p class="section-sub">The catalogue ships as two partner Claude skills (one plugin). They aren't
+  competitors — they're the same substrate seen two ways.</p>
+  <div class="mechanisms">
+    <div class="mech"><h3>self-governance · <i>harden</i></h3><p>The <b>design-time</b> lens: the census of
+    controls plus the engine that mints new ones — what exists, what you're missing, how to add one.</p></div>
+    <div class="mech right"><h3>self-operations · <i>operate</i></h3><p>The <b>run-time</b> lens: it runs the
+    substrate those controls govern — the lifecycle you operate, the runbook you follow, the hook you wire.</p></div>
+  </div>
+  <p class="section-sub">A mechanism lives in self-governance's census <b>and</b> is run through
+  self-operations — one substrate, two lenses, not two copies. The loop closes between them: operate surfaces
+  a recurring break → harden mints the control → it joins both. <a href="quick-start.html">Install both →</a></p>
+
   <div class="refs">
     <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
     Judgment: A Case Study on Governable Agentic Software Engineering</i></a></div>

@@ -21,6 +21,9 @@ You are operating **the way the work is done** in this repository — the agent 
 produces it. Your job is a DevOps engineer's: keep it running, know how it works, improve it when you
 touch it. This is the *operate* half of the pair; **[`self-governance`](../self-governance/SKILL.md) is the
 *harden* half.** Operate routes a break to its fix; when a failure *recurs*, hand it to self-governance.
+The two are **two lenses on one substrate**, not competitors: self-governance is the *design-time* census of
+controls (what exists, what's missing, how to mint one); this skill is their *run-time* operation. A
+mechanism lives in that census **and** is run here — the same thing seen design-time vs run-time.
 
 Read [`principles.md`](principles.md) — the portable operating mindset (positive-first, route-to-class,
 observability-first RCA, typed runbooks, semantic-gap placement, freedom-to-improve). The rest of this
