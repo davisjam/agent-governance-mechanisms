@@ -959,17 +959,17 @@ def _landing_cards() -> str:
 # The two schools + the midway (title, blurb, pole-label, is-midway, [(ref-label, url), ...])
 SCHOOLS = [
     ("Vibe coding",
-     "Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on "
+     "Prompt an agent, accept what looks right, iterate by feel. Fast and fluid, but quality rests on "
      "the model and your eye. At scale the same failures keep recurring, and human review becomes the "
      "bottleneck.", "all velocity — no durable guardrails", False,
      [("Karpathy — coined “vibe coding”", "https://x.com/karpathy/status/1886192184808149383"),
       ("Steve Yegge’s Gas Town", "https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04")]),
     ("Governance-centric",
-     "The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail "
-     "— a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> "
+     "The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail: "
+     "a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> "
      "stays trustworthy.", "velocity + guardrails grown from failure", True, []),
     ("Oversight-centric",
-     "Check <i>everything</i> before you trust it — whether a human reviews every change or a formal "
+     "Check <i>everything</i> before you trust it, whether a human reviews every change or a formal "
      "specification is verified against. Rigorous and safe, but checking becomes the bottleneck: all of it "
      "must be vetted, and neither humans nor specs anticipate the failures that only appear at velocity. "
      "(Spec-driven development is this, with the spec as the checker.)",
@@ -981,24 +981,24 @@ SCHOOLS = [
 # The three-column "way of thinking" — the AI-First Engineering Method (A.1–A.4 groups), engineering-oriented
 WAYS = [
     ("Architect deliberately", [
-        "Implementation is cheap; architecture compounds — buy the right design, not the fast one.",
+        "Implementation is cheap; architecture compounds. Buy the right design, not the fast one.",
         "Name shapes with types; primitive-passing leaves the architecture anonymous.",
-        "Make models, state, and policy explicit — state machines over scattered counters, enums over magic strings.",
-        "One canonical way beats many clever ones — agents will apply patterns they see 200× with no debate.",
+        "Make models, state, and policy explicit: state machines over scattered counters, enums over magic strings.",
+        "One canonical way beats many clever ones. Agents will apply patterns they see 200× with no debate.",
         "Attack accidental complexity; budget for the essential kind.",
     ]),
     ("Convert failure into machinery", [
-        "When a failure recurs, encode it — a lint, type, gate, or schema — instead of re-inspecting for it.",
+        "When a failure recurs, encode it (a lint, type, gate, or schema) instead of re-inspecting for it.",
         "Move audits to lints: cheap, at-commit, deterministic beats expensive and post-hoc.",
-        "Let the compiler and gates hold the line — review is not a substitute for static analysis.",
-        "Never fail quiet — every caught error logs, re-throws, or is justified in a comment.",
-        "No compatibility shims — migrate every call site in the same change.",
+        "Let the compiler and gates hold the line; review is not a substitute for static analysis.",
+        "Never fail quiet: every caught error logs, re-throws, or is justified in a comment.",
+        "No compatibility shims. Migrate every call site in the same change.",
     ]),
     ("Keep judgment scarce &amp; central", [
         "Carry work autonomously; surface only the architectural calls.",
-        "Hyper-experimentation — pilot, compare, measure; a cheap experiment beats a debate, and negative results are wins.",
-        "Verify claims and trust nothing stale — re-run the gates yourself, because markers rot.",
-        "Reason about second-order dynamics — what happens at T+100, or under concurrency?",
+        "Hyper-experimentation: pilot, compare, measure; a cheap experiment beats a debate, and negative results are wins.",
+        "Verify claims and trust nothing stale. Re-run the gates yourself, because markers rot.",
+        "Reason about second-order dynamics: what happens at T+100, or under concurrency?",
         "Documentation encodes invariants that drive tests, not prose that rots.",
     ]),
 ]
@@ -1053,7 +1053,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
 
   <p class="lead">The midway is a discipline: <span class="term">establishing and maintaining a governed
   engineering environment</span>. It works in two directions at once.
-  <b>Up front</b>, you specify what you can — the architecture that makes a class of error impossible, the
+  <b>Up front</b>, you specify what you can: the architecture that makes a class of error impossible, the
   model the fleet reasons through (more on that below), the templates and checklists that put a change on
   rails before it's written. <b>In flight</b>, you let velocity
   surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. This
@@ -1072,31 +1072,31 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
 
   <p class="section-sub" style="margin-top:0.7rem;">A context-bounded agent working on a
   context-<em>exceeding</em> system needs a <b>typed, queryable, drift-checked model</b> of that system to
-  reason through — the blueprint for a structure too large to hold in one view. That is
+  reason through, the blueprint for a structure too large to hold in one view. That is
   <span class="term">model-based software engineering</span>, and it is the bridge between the agent and the
   codebase it cannot fit in its head. Two things make it more than a tidier README:</p>
 
   <div class="mechanisms">
     <div class="mech"><h3>Agent-legible &amp; precise</h3><p>A six-state machine with typed invariants is
     something an agent reasons over <b>without error</b> the way it never could over 300,000 lines of
-    prose-and-code. Abstraction shrinks the space it can be wrong in, not just the token count — a model is
+    prose-and-code. Abstraction shrinks the space it can be wrong in, not just the token count. A model is
     more precise than any document.</p></div>
     <div class="mech right"><h3>It can’t lie</h3><p>A document rots the moment the code moves; a model wired
-    to a <b>build-time drift check cannot</b> — the gate stays red until the map matches the territory again.
+    to a <b>build-time drift check cannot</b>: the gate stays red until the map matches the territory again.
     That guarantee is what prose can never give.</p></div>
   </div>
 
   <p class="section-sub">Because agents build and maintain the model the way they maintain docs and tests,
-  pointing them at it costs almost nothing — and it pays back in <b>higher code quality, fewer tokens spent
+  pointing them at it costs almost nothing, and it pays back in <b>higher code quality, fewer tokens spent
   rederiving what the model already states, and fewer mistakes.</b> The catalogue's <b>models-bridge</b> role
   is this bridge, made concrete.</p>
 
   <h2 class="section-h">Governance has two mechanisms</h2>
-  <p class="section-sub">A guardrail is one of two kinds — prevent the error, or catch it.</p>
+  <p class="section-sub">A guardrail is one of two kinds: prevent the error, or catch it.</p>
   <div class="mechanisms">
-    <div class="mech"><h3>Architecture</h3><p>Make the error <b>impossible by construction</b> — the typed
+    <div class="mech"><h3>Architecture</h3><p>Make the error <b>impossible by construction</b>: the typed
     model above, a state that cannot be represented wrongly, one sanctioned seam. Software
-    <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a> — error-<i>proofing</i>, so the bad
+    <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a>, error-<i>proofing</i>, so the bad
     move can’t happen in the first place.</p></div>
     <div class="mech right"><h3>Control</h3><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
     a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
@@ -1104,7 +1104,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   </div>
 
   <h2 class="section-h">The way of thinking</h2>
-  <p class="section-sub">Three stances that make the midway work — distilled from the AI-First Engineering
+  <p class="section-sub">Three stances that make the midway work, distilled from the AI-First Engineering
   Method (architecture, controls, and the stance that wields them); the full set ships in the
   <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
   <div class="cols3">
@@ -1113,8 +1113,8 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
 
   <h2 class="section-h">The three skills — govern, operate, communicate</h2>
   <p class="section-sub">The catalogue ships as three partner Claude skills (one plugin). Two are one
-  substrate seen from opposite ends — self-governance <i>designs</i> the controls, self-operations
-  <i>runs</i> them — and self-communicate makes what they produce legible: the docs, and the operator's own
+  substrate seen from opposite ends (self-governance <i>designs</i> the controls, self-operations
+  <i>runs</i> them), and self-communicate makes what they produce legible: the docs, and the operator's own
   reports to the human.</p>
   <div class="cols3">
     <div class="mech"><h3>self-governance · <i>harden</i></h3><p>The <b>design-time</b> lens: the census of
@@ -1140,7 +1140,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
     <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
       title="The development-process figure" tabindex="0" onload="fitFig(this)"></iframe></div>
     <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
-    probably know up front — business requirements, security scanners you always run, etc. Others you
+    probably know up front: business requirements, security scanners you always run, etc. Others you
     need to figure out through trial and
     error, because they depend on the nature of the errors made by the models you're working with. The
     mindset shift is from reviewing your agents' code, to reviewing their failures and constraining their

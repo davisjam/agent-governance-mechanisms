@@ -35,7 +35,7 @@ shape declared rather than remembered.
 
 An Epic template declares the mandatory sections (an N-section shape plus a multi-criterion §Definition-of-Done
 covering functional invariants, docs, lints, tests, and a final trust-nothing review). Design docs carry
-required blocks — for instance, any design that introduces an event-bus topic must include an
+required blocks. For instance, any design that introduces an event-bus topic must include an
 Observability/event-bus section, and any substrate with repetition or concurrency must include a
 second-order-dynamics section. New Epics are **materialized from a stub tool** that atomically places the
 sections + registers the effort in the ledger; registration and section-presence are then asserted by

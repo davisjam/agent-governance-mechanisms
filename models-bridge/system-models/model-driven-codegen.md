@@ -22,10 +22,10 @@ on the next regen, silently.
 
 Hand-writing NetworkPolicy, the service catalog, the API docs, or the competitor analysis means the same
 facts live in two places (model + artifact) and diverge. Generating them **from** the model makes the
-model authoritative — change the artifact by changing the model — and a **provenance header**
+model authoritative (change the artifact by changing the model), and a **provenance header**
 on each generated file, re-emitted every run, plus a freshness lint, ensures a hand-edit is caught and a
 stale artifact fails the build. What keeps a hand-written config honest with the model it mirrors?
-Nothing does — the two facts sit in two files and drift, and an edit to the wrong copy simply vanishes on
+Nothing does. The two facts sit in two files and drift, and an edit to the wrong copy simply vanishes on
 the next regen. Generating from the model leaves one authoritative source and marks every output so a
 stray hand-edit is caught before it is lost.
 
@@ -48,15 +48,15 @@ carries a provenance marker (emitter + regen path), enforced by a provenance-hea
 ## Consequences & costs
 
 - **A generator per artifact class** to author + keep current with the model schema.
-- **Generated files must not be hand-edited** — a real constraint (the provenance lint enforces it).
-- **Regen discipline** — the artifact must be regenerated when the model changes (the freshness lint
+- **Generated files must not be hand-edited.** A real constraint (the provenance lint enforces it).
+- **Regen discipline.** The artifact must be regenerated when the model changes (the freshness lint
   catches misses).
 
 ## Known uses
 
 - The NetworkPolicy, service-catalog, web-API-entity, public-API-doc, competitor-catalog,
   wire-contract, and docker generators.
-- A model-visualization generator (human diagrams — e.g. Mermaid — from the models), so the picture can't
+- A model-visualization generator (human diagrams, e.g. Mermaid, from the models), so the picture can't
   drift from the model.
 - The provenance-header requirement + its enforcing lint.
 

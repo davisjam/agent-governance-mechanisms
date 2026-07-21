@@ -1,6 +1,6 @@
 # Coverage → model-node mapping (which invariants are actually tested)
 
-**Intent** — Project test coverage onto the *model's nodes* — its states, seams, and invariants — so "is
+**Intent** — Project test coverage onto the *model's nodes* (its states, seams, and invariants), so "is
 this invariant tested?" is a queried fact, not a guess from a line-coverage percentage. The map turns the
 model into a test **work-list**: an invariant node with no covering test is a visible gap that drives the
 next test (our instance: a coverage-reference mapping test coverage onto the cross-service state-machine
@@ -24,19 +24,19 @@ coverage number sitting over an untested critical invariant.
 
 ## Why it's not just "line coverage" (or a coverage threshold)
 
-A coverage percentage is over *lines*, aggregated; this map is over *model nodes* — a state, an IPC seam,
-an invariant. It joins the coverage data to the typed model, so the question becomes "which invariants /
-states / seams have a covering test, and which have none?" — answerable **per node**, not as one number. A
+A coverage percentage is over *lines*, aggregated; this map is over *model nodes* (a state, an IPC seam,
+an invariant). It joins the coverage data to the typed model, so the question becomes "which invariants /
+states / seams have a covering test, and which have none?", answerable **per node**, not as one number. A
 line-coverage threshold can be met while a specific invariant is untested; a per-node map cannot hide
 that. And it is *actionable*: an uncovered node is a concrete next test, so the model becomes the test
 **work-list** ("cover *this* invariant"), not a percentage to chase. A line-coverage number aggregates
-away the one fact you needed — whether the invariant that matters ran at all. The per-node map keeps that
+away the one fact you needed: whether the invariant that matters ran at all. The per-node map keeps that
 fact, one row per meaning of the system.
 
 ## Mechanism
 
-A mapping projects the test suite's coverage data onto the model's nodes. Each node — a state-machine
-state, an IPC seam, an invariant — is joined to the tests that exercise it (e.g. at function granularity:
+A mapping projects the test suite's coverage data onto the model's nodes. Each node (a state-machine
+state, an IPC seam, an invariant) is joined to the tests that exercise it (e.g. at function granularity:
 which covered functions realize the node). The result is a per-node coverage fact: covered / uncovered /
 by-which-tests. Two uses ride on it — a **backlog** (the uncovered critical nodes are the next tests
 to write; a sweep walks them), and, promoted, a **gate** (a critical invariant node with no covering
@@ -59,7 +59,7 @@ verification *proves* an invariant, this *measures* whether any test exercises i
 
 - **The join is only as good as the node→code mapping.** A node mapped to the wrong functions gets
   mis-attributed coverage; the map inherits that fidelity.
-- **Coverage ≠ correctness.** A node with a covering test is *exercised*, not *proven* — pair it with
+- **Coverage ≠ correctness.** A node with a covering test is *exercised*, not *proven*. Pair it with
   formal verification for invariants that need proof.
 - **Granularity limits sharpness.** Function-granularity coverage can't separate two invariants realized
   by the same function; the map is only as sharp as the coverage.
@@ -77,9 +77,9 @@ verification *proves* an invariant, this *measures* whether any test exercises i
 
 - **Counterpart** — [formal-invariant-verification](formal-invariant-verification.md): that *proves* an
   invariant holds across every interleaving; this *measures* whether any test exercises the node at all.
-  Proof vs exercise — complementary, and a critical node ideally has both.
+  Proof vs exercise: complementary, and a critical node ideally has both.
 - **Enabler** — [executable-source-of-truth](executable-source-of-truth.md): the nodes coverage joins to
   are fields on the typed model; this is one more consumer of that substrate.
-- *See also* — [drift-parity-gates](drift-parity-gates.md): three angles on trusting the model — parity
+- *See also* — [drift-parity-gates](drift-parity-gates.md): three angles on trusting the model. Parity
   keeps it matching the world, formal verification keeps its claims *true*, and this keeps its claims
   *exercised*.

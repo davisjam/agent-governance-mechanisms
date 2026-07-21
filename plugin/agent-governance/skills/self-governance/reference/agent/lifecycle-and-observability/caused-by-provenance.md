@@ -46,8 +46,8 @@ Four adjacent things each carry part of this, and each falls short on a differen
   [measured leash](reflection-facet-substrate.md). The leash joins firings to actions by a *session key*:
   co-occurrence within a window, which cannot show one caused the other. Caused-by threads an explicit
   cause-id minted at the cause and carried to the effect: a deterministic join wherever an artifact holds
-  the cause, an honest `_proxy` label wherever none can. It answers the same question — did this control
-  change behavior — by causation where the evidence exists rather than correlation everywhere.
+  the cause, an honest `_proxy` label wherever none can. It answers the same question (did this control
+  change behavior?) by causation where the evidence exists rather than correlation everywhere.
 - **A soft commit trailer rots.** An unenforced "remember to note the reason" convention decays into
   blanks and guesses. This is a *hard* pre-commit assertion of a closed-taxonomy field: the commit does
   not land without a cause naming a known value. Presence is gated deterministically; only the choice
@@ -73,7 +73,7 @@ Four adjacent things each carry part of this, and each falls short on a differen
 - **A commit gate to assert at**, here the code-agent pre-commit hook.
 - **A closed taxonomy of causes** small enough to be exhaustive and typed.
 - **A dispatch that carries the cause** so the known-cause path is deterministic, not reconstructed.
-- **An honesty discipline** — the `_proxy` labeling and the no-reward-for-a-rate stance — without which
+- **An honesty discipline**, the `_proxy` labeling and the no-reward-for-a-rate stance, without which
   the trace drifts toward a flattering number.
 
 ## Consequences & costs

@@ -47,7 +47,7 @@ The drift lints enforce parity in both directions.
 ## Consequences & costs
 
 - **A new service/endpoint/tree ⇒ a model edit** or a parity-gate failure (deliberately).
-- **Dialect lock-in** — adopting Backstage's schema inherits its conventions (a deliberate
+- **Dialect lock-in.** Adopting Backstage's schema inherits its conventions (a deliberate
   "adopt the canonical schema" trade).
 - **Generator + gate maintenance** across several surfaces.
 

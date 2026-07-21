@@ -13,8 +13,8 @@ the model it was copied from.
 
 ## Motivation — the failure it kills
 
-The models are only a bridge if consumers *read* them. The moment a consumer **hardcodes a snapshot** —
-"our packages are [A, B, C]" pasted into a lint or test — that copy drifts the instant the model
+The models are only a bridge if consumers *read* them. The moment a consumer **hardcodes a snapshot**
+("our packages are [A, B, C]" pasted into a lint or test), that copy drifts the instant the model
 changes, and the consumer keeps passing while reasoning about a stale world. This is the single most
 common **substrate-drift** recurrence vector: the model migrates, the copy is left behind, the check
 now verifies the wrong thing. It recurs at every consumer that reaches for a quick literal instead of a
@@ -24,7 +24,7 @@ query.
 
 A hardcoded list is a *snapshot*; a queried model is a *source of truth*. With a snapshot, the answer's
 authority is duplicated into every consumer and each copy is a future drift bug; with a query, there is
-one authoritative answer and consumers *derive* it — so a model change updates every consumer at once.
+one authoritative answer and consumers *derive* it, so a model change updates every consumer at once.
 Grepping the source is no better: it re-implements a fragile parser and couples the consumer to
 file layout. The rule is **read the meta-model, never embed a copy** — itself lint-enforced, because
 the temptation to snapshot is constant. Querying keeps one authoritative answer that every consumer
@@ -32,8 +32,8 @@ derives; copying mints a private answer at each site, and each is a drift bug th
 
 ## Mechanism
 
-Consumers read the models at run/lint-time — via the [model query tool](query-surface.md) for agents and
-orchestration, via direct import for other tools — rather than embedding values. A preference order
+Consumers read the models at run/lint-time (via the [model query tool](query-surface.md) for agents and
+orchestration, via direct import for other tools) rather than embedding values. A preference order
 codifies it (a lint that *reads* the meta-file beats codegen beats a hand-rolled copy); a
 forward-policing lint fails a test that embeds a snapshot of a queryable value; a further rule has lints
 declare their component tags against the [[component-registry|component model]] rather than hardcoding
@@ -47,9 +47,9 @@ scope.
 
 ## Consequences & costs
 
-- **Slightly more ceremony per consumer** — a query call instead of a literal (the intended trade).
-- **Runtime/lint-time coupling** — the consumer depends on the model being loadable when it runs.
-- **The ban-lint's accuracy** — it must recognise a "queryable value" to flag its snapshot (verify it
+- **Slightly more ceremony per consumer.** A query call instead of a literal (the intended trade).
+- **Runtime/lint-time coupling.** The consumer depends on the model being loadable when it runs.
+- **The ban-lint's accuracy.** It must recognise a "queryable value" to flag its snapshot (verify it
   is built).
 
 ## Known uses

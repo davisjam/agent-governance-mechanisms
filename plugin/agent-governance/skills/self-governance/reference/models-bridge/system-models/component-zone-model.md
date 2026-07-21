@@ -1,7 +1,7 @@
 # Component & zone model
 
-**Intent** — A typed catalogue of every component's code zone — focus-dirs, tags, boundary kind,
-external seams, read surfaces — so "which component owns this file, and what may touch it" is a queried
+**Intent** — A typed catalogue of every component's code zone (focus-dirs, tags, boundary kind,
+external seams, read surfaces), so "which component owns this file, and what may touch it" is a queried
 fact, not a guess.
 
 | | |
@@ -14,7 +14,7 @@ fact, not a guess.
 ## Motivation — the failure it kills
 
 Governance constantly asks "which component owns this file? what zone is it in? what boundary kind, what
-seams?" Answered ad hoc — a hardcoded path list here, a grep there — those answers drift the moment a
+seams?" Answered ad hoc, with a hardcoded path list here and a grep there, those answers drift the moment a
 component is added or a directory moves, and the tool keeps passing while reasoning about a stale map.
 It is also the map an agent needs to know *where it is* in a large codebase.
 
@@ -25,7 +25,7 @@ of a zone (its boundary kind, its sanctioned seams, its read surfaces) isn't in 
 component model **names** those facts once, in a typed registry, and a reverse-mapping test asserts the
 model matches the real tree in both directions. Ownership becomes a fact you query from one authoritative
 place, so every tool reads the same answer and a moved directory fails the parity test instead of
-silently staling each tool's private inference. This is the map agents operate through — dispatch reads
+silently staling each tool's private inference. This is the map agents operate through: dispatch reads
 it for zones, lints read it for scope, dynamic context-injection reads it to slice constraints.
 
 ## Mechanism

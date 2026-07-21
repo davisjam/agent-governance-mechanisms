@@ -64,7 +64,7 @@
 <nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../agent/README.html">Agent</a> &nbsp;/&nbsp; Context &amp; dispatch substrate &nbsp;/&nbsp; Dynamic context injection</nav>
 <p class="subtitle">Inject the rules governing these files into the brief.</p>
 <h1>Dynamic context injection</h1>
-<p><strong>Intent</strong> — Map the files an agent is about to touch to the <em>exact constraints that govern those files</em> (lints, conventions, component boundaries, tests) and inject that subset into the agent's brief <strong>before it writes code</strong> — moving detection left of the cheapest CI gate.</p>
+<p><strong>Intent</strong> — Map the files an agent is about to touch to the <em>exact constraints that govern those files</em> (lints, conventions, component boundaries, tests) and inject that subset into the agent's brief <strong>before it writes code</strong>, moving detection left of the cheapest CI gate.</p>
 <table><tbody><tr><td>Summary</td><td>Inject the rules governing these files into the brief.</td></tr><tr><td>Target</td><td>Agent · <strong>Context &amp; dispatch substrate</strong></td></tr><tr><td>Form</td><td><code>agent-output</code></td></tr><tr><td>Enforcement</td><td><strong>Soft</strong> (probabilistic) — forward injection influences behavior; it does not block. (The <em>reverse</em> direction feeds a <strong>hard</strong> self-heal gate, but forward injection is advisory by nature.)</td></tr></tbody></table>
 <p>&gt; <strong>★ Flagship entry.</strong> This is the canonical example of the "why it's not just the naive &gt; alternative" move that the whole catalogue is built around.</p>
 <h2>Motivation — the failure it kills</h2>

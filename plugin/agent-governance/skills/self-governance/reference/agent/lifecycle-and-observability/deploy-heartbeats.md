@@ -23,7 +23,7 @@ Process-alive does not mean *progressing*; a deadlocked process is alive. Waitin
 mid-flight signal at all. Heartbeats emit **phase + elapsed every 30 s**, so both *liveness* and
 *progress* (is the phase advancing?) are observable, and the stale-worker sweep flags a worker that has
 stopped heartbeating. Can a deploy brief tell a slow build from a hung one by asking whether the process
-exists? No — a hung process exists too. It can only tell them apart by watching the phase advance, which is
+exists? No. A hung process exists too. It can only tell them apart by watching the phase advance, which is
 what the heartbeat gives it.
 
 ## Mechanism

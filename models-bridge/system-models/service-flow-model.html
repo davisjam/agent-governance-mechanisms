@@ -75,7 +75,7 @@
 <h2>Prerequisites</h2>
 <ul><li><strong>A service-architecture dialect</strong> (here Backstage) expressive enough for the SOA fields.</li><li><strong>Generators</strong> that emit the real artifacts from the model.</li><li><strong>Bidirectional parity gates</strong> so neither the model nor reality can drift unilaterally.</li></ul>
 <h2>Consequences &amp; costs</h2>
-<ul><li><strong>A new service/endpoint/tree ⇒ a model edit</strong> or a parity-gate failure (deliberately).</li><li><strong>Dialect lock-in</strong> — adopting Backstage's schema inherits its conventions (a deliberate "adopt the canonical schema" trade).</li><li><strong>Generator + gate maintenance</strong> across several surfaces.</li></ul>
+<ul><li><strong>A new service/endpoint/tree ⇒ a model edit</strong> or a parity-gate failure (deliberately).</li><li><strong>Dialect lock-in.</strong> Adopting Backstage's schema inherits its conventions (a deliberate "adopt the canonical schema" trade).</li><li><strong>Generator + gate maintenance</strong> across several surfaces.</li></ul>
 <h2>Known uses</h2>
 <ul><li>The Backstage-dialect service YAML — source of truth for inter-service auth, URLs, NetworkPolicy, and the SOA deploy table.</li><li>The web-API (OpenAPI), wire-contract, and config schemas.</li><li>Drift gates: the service-flow parity lint (tree↔yaml), the public-API drift lint (handler↔spec).</li></ul>
 <h2>Related mechanisms</h2>

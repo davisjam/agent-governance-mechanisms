@@ -72,7 +72,7 @@ admission layer closes.
   too-lax one still admits overload. The thresholds are a tuning surface, not set-and-forget.
 - **Admission must *defer*, not drop.** A heavy brief refused under sustained RED needs a retry/defer
   policy, or it starves; the gate degrades to a deferral with a wake condition, never a silent drop.
-- **Two readers, one signal — keep them consistent.** If the admission gate and the shed read different
+- **Two readers, one signal; keep them consistent.** If the admission gate and the shed read different
   signals or thresholds, you reintroduce the churn the mechanism exists to kill. One shared signal is
   what makes the two layers agree.
 - **The advisory read is soft.** Its value is the operator *choosing* to consult it; unlike the gates, it

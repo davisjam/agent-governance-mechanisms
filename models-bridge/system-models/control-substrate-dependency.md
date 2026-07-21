@@ -4,7 +4,7 @@
 "which controls depend on which part of the substrate, and what will break when I change it" is a
 **computed query**, not a grep-and-read. Before a cross-cutting substrate change, the static-analysis
 blast radius is known up front (our instance: each lint that reads the deployment-topology model declares
-a typed `plane-assumption` — GKE-only / Cloud-Run-only / plane-aware / plane-agnostic — joined against the
+a typed `plane-assumption` (GKE-only / Cloud-Run-only / plane-aware / plane-agnostic) joined against the
 topology to print exactly which lints a migration puts in scope).
 
 | | |

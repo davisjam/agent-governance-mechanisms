@@ -24,8 +24,8 @@ runtime, and they recur as new locks are added.
 Ad-hoc `flock` calls scattered across tools give no answer to "which locks exist, what do they guard,
 in what order must they be taken?" — so a deadlock-inducing ordering can't be *detected*, only suffered.
 The synchronization model **declares** each lock (`SyncLock`: path, cap, model, bypass-env, audit-log),
-each acquisition site (`LockAcquirer`), and each ordering constraint (`LockOrdering`) — so a coverage
-lint can flag an *undeclared* `flock`, and an ordering lint can flag an *inverted* acquisition against
+each acquisition site (`LockAcquirer`), and each ordering constraint (`LockOrdering`). A coverage
+lint can then flag an *undeclared* `flock`, and an ordering lint can flag an *inverted* acquisition against
 the declared graph. A declared model lets a lint answer "which locks exist and in what order" before the
 code runs, so an inverted acquisition fails at author time. Scattered locks answer that question only by
 deadlocking in production, where the lesson arrives too late to act on.
@@ -46,9 +46,9 @@ declared `ORDERINGS` + call-graph to catch inverted acquisition.
 
 ## Consequences & costs
 
-- **Every new lock is a registry entry** — an undeclared `flock` fails the coverage lint (deliberately).
-- **The ordering graph must be maintained** — a missing edge lets a real inversion through.
-- **Exempt sites need a rationale** — the closed-set `EXEMPT_RATIONALES` is a small carve-out surface.
+- **Every new lock is a registry entry.** An undeclared `flock` fails the coverage lint (deliberately).
+- **The ordering graph must be maintained.** A missing edge lets a real inversion through.
+- **Exempt sites need a rationale.** The closed-set `EXEMPT_RATIONALES` is a small carve-out surface.
 
 ## Known uses
 

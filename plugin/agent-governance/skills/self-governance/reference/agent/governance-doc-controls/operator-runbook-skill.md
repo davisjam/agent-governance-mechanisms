@@ -16,7 +16,7 @@ agent-fleet substrate, rendered from two typed YAML sources: a pointer catalog a
 
 ## Motivation — the failure it kills
 
-An operator — a human or an orchestrator agent — running a complex substrate must know two things: how it
+An operator (a human or an orchestrator agent) running a complex substrate must know two things: how it
 *works* when healthy, and what to do when it *breaks*. Both live scattered across a house-rules doc, a
 docs index, and incident memories that a fresh or post-compaction operator does not reliably hold. So the
 operator **re-derives the substrate's shape from scratch** under load, and during an incident re-derives,

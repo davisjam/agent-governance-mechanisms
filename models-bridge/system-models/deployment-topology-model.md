@@ -1,7 +1,7 @@
 # Deployment & tier topology
 
-**Intent** — Typed models of *where things run and how they layer* — the managed-deployment topology,
-each service's tier class, and the agent-substrate's layer boundaries — so deploy scripts and layering
+**Intent** — Typed models of *where things run and how they layer* (the managed-deployment topology,
+each service's tier class, and the agent-substrate's layer boundaries), so deploy scripts and layering
 lints reason about a declared topology, not scattered constants.
 
 | | |
@@ -13,14 +13,14 @@ lints reason about a declared topology, not scattered constants.
 
 ## Motivation — the failure it kills
 
-Deployment facts — which layer a service is in, its tier, what may depend on what — end up hardcoded in
+Deployment facts (which layer a service is in, its tier, what may depend on what) end up hardcoded in
 deploy scripts and import checks. Hardcoded, they drift from the real topology: a service moves tier, a
 layer boundary is quietly crossed, and the deploy or an architectural invariant breaks. And an agent
 reasoning about "can layer X import layer Y?" needs the boundary declared, not inferred.
 
 ## Why it's not just "encode the topology in the deploy scripts"
 
-Topology in the deploy scripts is a *copy* — it drifts from the real service set and from the layering
+Topology in the deploy scripts is a *copy*. It drifts from the real service set and from the layering
 the code actually has. These typed models **declare** the topology once (managed-deployment loader,
 tier classification, layer-boundary contracts), and parity lints check the declaration against reality
 (deploy phase tables, import-layer checks). One declared topology, validated against the running system,

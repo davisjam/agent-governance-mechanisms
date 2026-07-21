@@ -13,7 +13,7 @@ rather than parsing raw files, and the tool itself documents how the models load
 
 ## Motivation — the failure it kills
 
-The models are the agent's compressed map of the codebase — but only if the agent can *read them
+The models are the agent's compressed map of the codebase, but only if the agent can *read them
 cheaply and correctly*. Left to `cat`/`grep` the model files, an agent (or a tool) re-implements
 loading + traversal, gets the dialect subtly wrong, and produces brittle one-offs. The failure is
 *ad-hoc, error-prone model access* — which defeats a queryable map's purpose.
@@ -25,7 +25,7 @@ query interface** — not to re-derive how services or components load each time
 surface: deterministic subcommands (`component`, `service-flow`, `frontend-flow`, `design`, `callers`,
 `xrefs`, `epic`, `task`, …) with a `--json` contract, and it *lives alongside the models* so its
 loader pattern is the documented canonical example of loading them. Direct import does the job for a
-Python tool that only needs one model — and it leaves every agent and one-off script to re-derive the
+Python tool that only needs one model, but it leaves every agent and one-off script to re-derive the
 loading dialect, getting it subtly wrong each time. A self-describing query surface with a stable `--json`
 contract gives them one structured answer to act on, and documents the load path once.
 

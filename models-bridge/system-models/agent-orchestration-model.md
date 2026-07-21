@@ -69,8 +69,8 @@ fleet becomes as checkable as the product, on the same rails.
 
 ## Prerequisites
 
-- **The trunk method already exists** — the tier-derivation, the coordination/temporal types, the drift-gate
-  machinery — so the orchestration arm *reuses* it rather than reinventing. That reuse is why this subject
+- **The trunk method already exists** (the tier-derivation, the coordination/temporal types, the drift-gate
+  machinery), so the orchestration arm *reuses* it rather than reinventing. That reuse is why this subject
   is modeled as a second arm rather than as a bespoke fleet doc.
 - **The fleet lifecycle is enacted through addressable substrate** (a registry, a tombstone record, a
   worktree tool) the model can reconcile against. Without a real event vocabulary to check the states

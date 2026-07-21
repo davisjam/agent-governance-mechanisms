@@ -20,7 +20,7 @@ whenever cron breaks and the orchestrator doesn't stop.
 
 ## Why it's not just "the event bus already surfaces the alert"
 
-Surfacing a signal is **not** enforcing a response. An orchestrator can see — or miss, or ignore — a
+Surfacing a signal is **not** enforcing a response. An orchestrator can see (or miss, or ignore) a
 HIGH alert and keep dispatching. This gate makes the response **mandatory**: an unresolved HIGH alert
 without a terminal ack **refuses the dispatch tools outright**. The gate promotes an observability signal
 into a blocking barrier: the same availability-vs-binding move as dynamic context injection, applied to

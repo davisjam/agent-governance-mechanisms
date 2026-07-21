@@ -1,7 +1,7 @@
 # Doc-hygiene lints (index coverage, autogen provenance)
 
-**Intent** — A family of lints that hold *documentation* to mechanical checks — index coverage,
-auto-generated-file provenance headers, cross-reference validity — so docs cannot silently drift, go
+**Intent** — A family of lints that hold *documentation* to mechanical checks (index coverage,
+auto-generated-file provenance headers, cross-reference validity), so docs cannot silently drift, go
 stale, or be hand-edited where they will be overwritten.
 
 | | |

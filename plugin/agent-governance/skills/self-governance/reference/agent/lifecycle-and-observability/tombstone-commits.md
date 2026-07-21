@@ -20,7 +20,7 @@ forever. The failure is one of those two, and it recurs at every agent completio
 
 ## Why it's not just "delete the worktree when the agent is done"
 
-"Done" is ambiguous — are all commits cherry-picked, or some intentionally abandoned? A bare delete
+"Done" is ambiguous: are all commits cherry-picked, or some intentionally abandoned? A bare delete
 cannot tell the difference. A **tombstone commit records the disposition at the branch tip**, so
 `cleanup-stale` can verify a precise predicate — *tombstone at tip AND every non-tombstone commit is
 cherry-picked-or-declared-skipped* — before removing the directory. The alternative that fails is the
@@ -33,7 +33,7 @@ The tombstone tool writes a tombstone at the branch tip carrying a disposition. 
 processes are **deduplicated via a registry event** (`tombstoning_started`, exits 78 on a second
 starter — the dedup-via-registry pattern). It **refuses** to operate on any agent-id whose live marker
 exists (the live-worktree guard), and
-mass-tombstoning requires an explicit `--id-file` — runtime enumeration of worktree dirs is banned.
+mass-tombstoning requires an explicit `--id-file`; runtime enumeration of worktree dirs is banned.
 `cleanup-stale` then reads the tombstone as its safe-to-reclaim proof.
 
 ## Prerequisites

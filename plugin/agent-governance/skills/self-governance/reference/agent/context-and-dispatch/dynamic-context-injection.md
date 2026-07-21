@@ -2,7 +2,7 @@
 
 **Intent** — Map the files an agent is about to touch to the *exact constraints that govern those
 files* (lints, conventions, component boundaries, tests) and inject that subset into the agent's brief
-**before it writes code** — moving detection left of the cheapest CI gate.
+**before it writes code**, moving detection left of the cheapest CI gate.
 
 | | |
 |---|---|

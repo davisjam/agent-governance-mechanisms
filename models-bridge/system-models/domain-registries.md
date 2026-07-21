@@ -1,8 +1,8 @@
 # Domain registries
 
-**Intent** — A set of frozen, typed registries for the system's *domain facts* — the supported
+**Intent** — A set of frozen, typed registries for the system's *domain facts* (the supported
 filetypes, the WCAG coverage gaps, the periodic-GC cron entries, the UX write-authority surfaces, the
-competitor set, the CLAUDE.md rule metadata — each the single source of truth for its slice.
+competitor set, the CLAUDE.md rule metadata), each the single source of truth for its slice.
 
 | | |
 |---|---|
@@ -13,9 +13,9 @@ competitor set, the CLAUDE.md rule metadata — each the single source of truth 
 
 ## Motivation — the failure it kills
 
-Domain facts — "which four filetypes do we support," "which WCAG SCs are coverage-gaps," "which cron
-entries run," "who may write UX surface X," "who are our competitors," "what metadata does each
-CLAUDE.md rule carry" — get restated in code, docs, and dashboards. Restated, they drift: a filetype
+Domain facts get restated in code, docs, and dashboards: "which four filetypes do we support," "which
+WCAG SCs are coverage-gaps," "which cron entries run," "who may write UX surface X," "who are our
+competitors," "what metadata does each CLAUDE.md rule carry." Restated, they drift: a filetype
 list diverges, a rule's metadata goes stale, a competitor doc is out of date. Each is a small
 correctness or a stale-doc failure, multiplied across many domain slices.
 
