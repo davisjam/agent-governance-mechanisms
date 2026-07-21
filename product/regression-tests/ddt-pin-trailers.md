@@ -14,7 +14,7 @@ edited.
 ## Motivation — the failure it kills
 
 Before a big refactor you want to **pin current behaviour** so the change is provably behaviour-
-preserving — and doc-derived tests can silently drift from the doc or source they were derived from. The
+preserving, and doc-derived tests can silently drift from the doc or source they were derived from. The
 failure is two-sided: *unpinned behaviour lost in churn*, or *a doc-derived test that no longer matches
 its cited source*. It recurs before every structural change and whenever a cited source is edited.
 
@@ -26,7 +26,7 @@ can drift from its source with **no signal**. DDT pin-trailers are characterizat
 points, and editing a cited source obliges regenerating the trailer in the *same commit* (the
 trailer-regeneration discipline). An ordinary test carries no link back to the source it characterizes,
 so a source edit leaves it silently stale; the provenance block is what ties the pin to a cited source
-and forces the regen. And note: **near-zero defect yield is success here** — these pin correct behaviour
+and forces the regen. And note: **near-zero defect yield is success here.** These pin correct behaviour
 before change; they are not meant to find bugs, they are meant to catch the change that alters behaviour.
 
 ## Mechanism
@@ -44,7 +44,7 @@ informational).
 
 ## Consequences & costs
 
-- **Trailer maintenance.** Editing a cited source obliges a regen — a real, if small, per-edit cost.
+- **Trailer maintenance.** Editing a cited source obliges a regen, a real if small per-edit cost.
 - **Low defect yield by design.** These are characterization pins; a near-zero find rate is the success
   condition, not a sign they aren't working.
 - **Freshness is informational only** — the fresh lint never blocks, so a stale trailer can linger.

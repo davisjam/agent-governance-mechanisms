@@ -5,6 +5,7 @@ stable-numbered rule index, loaded into every agent's boot context, held honest 
 counterpart (a bloat/cap lint plus a rule-conformance lint), so the document that carries every
 other control cannot silently rot.
 
+
 | | |
 |---|---|
 | Summary | The governance document itself, enforced by its own lints. |

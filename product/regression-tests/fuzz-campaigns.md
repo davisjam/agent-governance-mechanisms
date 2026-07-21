@@ -1,7 +1,7 @@
 # Fuzz campaigns (+ auto-coverage)
 
 **Intent** — Campaigns that feed malformed and adversarial inputs to the tool to find crashes and
-corruption, with coverage collected automatically — and an RCA discipline that fixes to the *spec*, not
+corruption, with coverage collected automatically, plus an RCA discipline that fixes to the *spec*, not
 the failing seed.
 
 | | |
@@ -23,7 +23,7 @@ an input space far too large to enumerate.
 Property tests check invariants over *structured, generated* inputs; fuzzing throws **malformed,
 adversarial bytes** to find crashes and spec-edge failures the structured generators don't reach. And
 the payoff is multiplied by an **RCA discipline**: fix to the *stable point in the format spec*, not to
-the failing seed — so the fix passes *every* spec-allowed input, not just the one that crashed.
+the failing seed, so the fix passes *every* spec-allowed input, not just the one that crashed.
 Structured generation is a good tool, and it does find bugs — until the corruption lives in bytes no
 generator would produce. Adversarial campaigns reach that space, and fixing to the spec closes the whole
 class the seed exposed rather than the one seed. Auto-coverage tracks what the campaign actually reached
@@ -43,7 +43,7 @@ baseline. On a finding, the RCA discipline mandates RCA to the stable spec point
 
 ## Consequences & costs
 
-- **Compute-heavy.** Campaigns cost real time; that's why coverage is tracked to know when they've
+- **Compute-heavy.** Campaigns cost real time; coverage is tracked to know when they've
   saturated.
 - **Baseline maintenance.** The coverage baseline must be re-based only on intentional coverage-shape
   changes.

@@ -1,8 +1,8 @@
 # Mediator & single-writer contracts
 
-**Intent** — Typed registries of the system's *concurrency contracts* — which subprocess invocations are
-serialized by a mediator, and which state-mutation functions are single-writer / monopoly — so "who may
-run this, and how many at once" is declared and enforceable.
+**Intent** — Typed registries of the system's *concurrency contracts*: which subprocess invocations are
+serialized by a mediator, and which state-mutation functions are single-writer / monopoly. "Who may
+run this, and how many at once" becomes declared and enforceable.
 
 | | |
 |---|---|

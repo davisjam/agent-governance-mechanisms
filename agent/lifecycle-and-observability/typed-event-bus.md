@@ -4,7 +4,7 @@
 over which substrate emits lifecycle/health events. The bus turns the orchestrator into a **reactor** over
 the fleet: it reads health from a *queryable, self-documenting* signal surface and *reacts* to each event
 with a playbook-prescribed response, which keeps a fleet of agents productive over long-running
-sessions rather than drifting into silent breakage.
+sessions instead of drifting into silent breakage.
 
 | | |
 |---|---|
@@ -19,7 +19,7 @@ A fleet's health — is cron running, is the merge-train yielding, are tombstone
 without a signal surface**, so degradation accretes silently (cron broken for hours before anyone
 notices). Worse, without a reaction loop the orchestrator is a passive observer: it can only steer the
 fleet if it *reacts* to what the substrate reports. The failure is *silent substrate degradation and an
-un-reacting orchestrator*, and it recurs continuously across a long session — the fleet slowly stops
+un-reacting orchestrator*, and it recurs continuously across a long session. The fleet slowly stops
 being productive while each dispatch still looks locally fine.
 
 ## Why it's not just "log it and grep the logs"
@@ -30,7 +30,7 @@ registry, lint-enforced), so a typo can't silently create a dead topic that disa
 important, every topic carries a **playbook entry**: baseline-healthy, what-looks-wrong, and a target
 lookup into the playbook (a substrate-observability rule makes a missing entry an *incomplete substrate
 design*). The bus is a typed, queryable, self-documenting signal with an owned playbook. Unstructured
-logs are none of those — you must remember to grep them and know how to read what you find.
+logs are none of those: you must remember to grep them and know how to read what you find.
 
 ## Mechanism
 
@@ -43,7 +43,7 @@ anomaly triggers (repeated merge-train yields, a discard event, a prolonged no-o
 queued). Together these are the **reactor loop**: emit, then the orchestrator reads the queryable
 surface, matches the event to its playbook entry, and takes the prescribed action (dispatch a fix, open a
 recovery playbook, hold new work). The playbook is the active half; it turns a raw signal into a
-*reaction* rather than a passive read.
+*reaction* instead of a passive read.
 
 ## Prerequisites
 
@@ -56,9 +56,9 @@ recovery playbook, hold new work). The playbook is the active half; it turns a r
 ## Consequences & costs
 
 - **Only as useful as playbook coverage.** A topic without a playbook entry is emitted but not
-  interpretable — the substrate-observability rule exists because that gap is the common failure.
+  interpretable; the substrate-observability rule exists because that gap is the common failure.
 - **Consumption is discipline.** The bus is Hard emission, but *acting* on it depends on the
-  orchestrator honoring the poll cadence — the signal can be perfect and still ignored.
+  orchestrator honoring the poll cadence. The signal can be perfect and still ignored.
 - **Registry + emit-point maintenance.** New topics need registry rows, emit wiring, and playbook
   entries kept in sync.
 
@@ -82,5 +82,5 @@ recovery playbook, hold new work). The playbook is the active half; it turns a r
   the fleet's other signal surfaces.
 - *See also (a small flavor)* — [lifecycle-hooks](lifecycle-hooks.md) §"the measured leash": a soft
   guidance hook that ships its own per-firing telemetry log + a yield query is this telemetry idea in
-  miniature — a probabilistic control instrumented so you can tell *working quietly* from *silently
+  miniature, a probabilistic control instrumented so you can tell *working quietly* from *silently
   dead*.
