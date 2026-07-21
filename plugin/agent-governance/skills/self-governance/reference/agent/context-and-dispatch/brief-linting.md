@@ -45,6 +45,22 @@ brief takes (Epic cite · trigger · role/model · time cap · scope allowlist +
 artifacts an orchestrator authors — the Epic is the effort, the design doc is the plan, the brief is the
 dispatch. The marker/snippet plumbing this lint checks is the harness-specific enforcement layered on top.
 
+## Genre-gate the content checks (so the lint can grow without crying wolf)
+
+Marker-presence is the *structural* layer. A mature brief lint adds a *content* layer — does the brief
+cite a real `file:line`, declare its footprint, cite a **reachable** commit SHA? — and that layer has a
+trap: a content check that fires on any *mention* (a filename, a path, a SHA-shaped token)
+**false-positives on briefs where it isn't load-bearing**. A doc-only brief that merely names a source
+file trips the "cite the code you touch" check; the operator learns the lint cries wolf and starts
+ignoring its output — the exact failure the whole mechanism exists to prevent.
+
+The fix: the brief declares its **genre**. It carries a `brief-genre` marker (emitted by the same template
+that lays down the structural markers), and each content check *gates* on it — firing only when the genre
+makes it load-bearing (the "cite the code" check on a code brief, not a design-doc one; the
+SHA-reachability check only where a citation is actually required). No genre marker → every check fires,
+the safe default. Genre-gating is what lets the content layer keep growing — more checks, more precision —
+without eroding the trust the structural layer earned. A lint tuned out is worse than a check not written.
+
 ## Prerequisites
 
 - Briefs are **structured text with grep-able marker strings**, not free prose — the lint's checks

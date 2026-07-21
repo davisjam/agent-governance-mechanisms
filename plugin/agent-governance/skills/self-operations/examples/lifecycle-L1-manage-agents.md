@@ -18,6 +18,9 @@ State yours concretely — the operator should be able to check it in one glance
 - Landed work is cherry-picked to the mainline and its worktree cleaned up (tombstoned); no orphaned
   worktrees accreting.
 - No agent has committed onto the mainline branch instead of its own worktree branch.
+- Every dispatch clears a **brief validator** before launch — the structural markers present, *and* the
+  content checks gated by the brief's declared genre so the lint doesn't false-fire and get tuned out — so
+  a malformed brief *can't* launch (the dispatch path calls the validator; there is no un-validated door).
 
 ## Symptom classes → resolving docs (Part B fills the doc column for your repo)
 
