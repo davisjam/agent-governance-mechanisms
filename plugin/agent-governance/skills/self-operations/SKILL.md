@@ -99,6 +99,11 @@ place. Pick by what you want to see:
   memory-vs-runbook), and the measured-leash query. The runnable complement to the
   [L6 govern-your-own-loop](examples/lifecycle-L6-govern-your-own-loop.md) model — read its
   [`README.md`](hooks/README.md) for the wiring + how-to-add-a-facet.
+- **Design + Epic templates** → [`templates/`](templates/) — when operating spills into *building* (an
+  infra change, or the design → ratify → build → DoD feature-dev flow), author from the shipped
+  [Epic template](templates/EPIC-TEMPLATE-starter.md) and [design-doc template](templates/design-doc-template-starter.md):
+  they carry the required sections + Definition-of-Done, so a design's ratification lands *committed in the
+  doc* (a `§G` block), not stranded in conversation.
 
 Copy a sample's shape, swap in this repo's tools, drop the rest.
 

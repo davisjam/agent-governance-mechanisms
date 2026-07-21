@@ -41,6 +41,8 @@ class SkillSpec(NamedTuple):
     starter_doc: str          # abs path to the Part-A source doc (its Part A → principles.md)
     include_roles: tuple      # catalogue roles mirrored into reference/ ; () = no mirror
     principles_intro: str     # preamble prepended to the lifted Part A in principles.md
+    vendor_downloads: tuple = ()  # downloads/ templates shipped in <skill>/templates/ — explicit, so a
+    #                               skill with no bundled entries (no reference-based vendoring) still gets them
 
     @property
     def skill_dir(self) -> str:
@@ -79,6 +81,10 @@ SELF_OPERATIONS = SkillSpec(
         "DevOps engineer. The skill's `SKILL.md` carries the lifecycle map and the bootstrap; these "
         "principles are the mindset you operate with. Partner to the `self-governance` skill.*\n\n---\n\n"
     ),
+    # The operate skill authors design docs + Epics (infra changes, the feature-dev flow) — ship the
+    # templates locally so it never has to reach outside its own dir (self-governance already vendors
+    # these via its reference/downloads/ mirror).
+    vendor_downloads=("EPIC-TEMPLATE-starter.md", "design-doc-template-starter.md"),
 )
 
 SPECS = [SELF_GOVERNANCE, SELF_OPERATIONS]
@@ -183,6 +189,24 @@ def _vendor_referenced_downloads(spec: SkillSpec) -> int:
     return n
 
 
+def _vendor_explicit_downloads(spec: SkillSpec) -> int:
+    """Copy each template named in spec.vendor_downloads into <skill>/templates/ — explicit templates a
+    skill ships regardless of what its (possibly empty) bundled entry set references. Regenerated fresh so
+    a de-listed template doesn't linger."""
+    if not spec.vendor_downloads:
+        return 0
+    dst_dir = os.path.join(spec.skill_dir, "templates")
+    if os.path.isdir(dst_dir):
+        shutil.rmtree(dst_dir)
+    n = 0
+    for name in spec.vendor_downloads:
+        src = os.path.join(ROOT, "downloads", name)
+        if os.path.isfile(src):
+            _write_copy(src, os.path.join(dst_dir, name))
+            n += 1
+    return n
+
+
 def _rewrite_outbound_links(spec: SkillSpec) -> None:
     """Repoint links that leave the bundle so none dangles once installed: excluded-product cross-refs
     -> the live public product pages; source-project-internal `docs/` pointers -> plain text (no public
@@ -213,7 +237,9 @@ def _bundle(spec: SkillSpec) -> None:
         _reference_readme(spec, n)
         d = _vendor_referenced_downloads(spec)
     _rewrite_outbound_links(spec)
-    print(f"  -> {os.path.relpath(spec.skill_dir, ROOT)}/ : {n} mechanism entries + principles.md + {d} referenced download(s)")
+    v = _vendor_explicit_downloads(spec)
+    extra = f" + {v} vendored template(s)" if v else ""
+    print(f"  -> {os.path.relpath(spec.skill_dir, ROOT)}/ : {n} mechanism entries + principles.md + {d} referenced download(s){extra}")
 
 
 def main() -> int:

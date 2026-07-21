@@ -192,7 +192,12 @@ Two beats: **interpret**, then **convert**.
    - **When the failure is costly:** belt-and-suspenders — both an architectural seam
      *and* a catching control.
 6. **On greenlight, do it.** Write the lint / test / gate / typed-seam change and
-   the point fix, following the ambient stance. Then state plainly what is now
+   the point fix, following the ambient stance. When the control is substantial
+   enough to warrant a design doc or an Epic, author it from the bundled templates
+   ([`reference/downloads/EPIC-TEMPLATE-starter.md`](reference/downloads/EPIC-TEMPLATE-starter.md) +
+   [`design-doc-template-starter.md`](reference/downloads/design-doc-template-starter.md)) — they carry
+   the required sections + DoD, so the design's ratification lands *committed in the doc*, not in chat.
+   Then state plainly what is now
    **enforced** (the hard control you wrote and verified) versus **recommended**
    (anything left for a human/harness to wire — e.g. registering the lint in a
    blocking gate, or a CI step). Do not overstate enforcement.
