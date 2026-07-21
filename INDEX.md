@@ -3,7 +3,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All 60 entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->61<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
@@ -57,6 +57,7 @@ soft guidance with a hard counterpart.
 | ✅ | Tombstone commits (lifecycle close records) | `audit-trail` | Hard (audit) | [tombstone-commits.md](agent/lifecycle-and-observability/tombstone-commits.md) |
 | ✅ | Cron-alerts gate | `observability` | Hard (blocking) | [cron-alerts-gate.md](agent/lifecycle-and-observability/cron-alerts-gate.md) |
 | ✅ | Lifecycle hooks (turn-stop / compaction / session-start / pre-action) | `quality-gate` | Soft·Hard | [lifecycle-hooks.md](agent/lifecycle-and-observability/lifecycle-hooks.md) |
+| ✅ | Reflection-facet substrate (tempo-gated policy nudges) | `quality-gate` | Soft·Hard | [reflection-facet-substrate.md](agent/lifecycle-and-observability/reflection-facet-substrate.md) |
 
 ## 5. Governance-doc controls
 
@@ -155,9 +156,9 @@ soft guidance with a hard counterpart.
 
 ---
 
-**Three roles complete — 60 mechanisms across 11 families, all fully developed.**
-**Agent (25):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
-Lifecycle & observability (6) · Governance-doc controls (7, incl. the **CLAUDE.md rule index**
+**Three roles complete — 61 mechanisms across 11 families, all fully developed.**
+**Agent (26):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
+Lifecycle & observability (7) · Governance-doc controls (7, incl. the **CLAUDE.md rule index**
 meta-mechanism).
 **Models-bridge (15):** the MBSE **method** (<!--census:bridge_method-->8<!--/census--> subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, + **computed control↔substrate blast-radius**) reified as a **Y** over <!--census:bridge_models-->7<!--/census--> models — product-facing 3 (service-flow · user-journey · domain-registries) · orchestration-facing 1 (synchronization) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
 the MBSE substrate through which a bounded agent operates an unbounded codebase.

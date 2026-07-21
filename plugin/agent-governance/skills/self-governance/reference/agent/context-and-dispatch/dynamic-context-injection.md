@@ -99,9 +99,11 @@ pull** (the agent calls `get-constraints-for-files.py <files…>` once it knows 
   boundary lints — DCI is one end of the bridge.
 - *See also (complement)* — [brief-linting](brief-linting.md): the structural check on the brief; this
   is the content injected *into* it.
-- *See also (temporal complement)* — [lifecycle-hooks](../lifecycle-and-observability/lifecycle-hooks.md):
+- **Temporal complement (the feed-back twin)** —
+  [reflection-facet-substrate](../lifecycle-and-observability/reflection-facet-substrate.md) (built on
+  [lifecycle-hooks](../lifecycle-and-observability/lifecycle-hooks.md)):
   injection is **feed-forward** — the constraints governing a task pushed into an agent *before* it acts,
-  at dispatch. A tempo-gated **reflection** hook is the mirror image: it pulls the *operator* back to the
+  at dispatch. A tempo-gated **reflection** facet is the mirror image: it pulls the *operator* back to the
   same kind of repo policy *while or after* acting, at turn-tempo — **feed-back** instead of feed-forward.
   Same move (meet the loop with the right policy at the right lifecycle moment), opposite direction in
   time. And just as injection *slices* one registry per file-set, a reflection substrate generalizes

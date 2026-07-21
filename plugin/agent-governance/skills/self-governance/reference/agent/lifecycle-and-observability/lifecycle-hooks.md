@@ -138,6 +138,10 @@ paced so the whole never overwhelms.
 - **See also** — [cron-alerts-gate](cron-alerts-gate.md): a before-a-tool-call hook is one delivery
   surface for its "an unresolved high-severity alert blocks new work" rule — the gate supplies the
   state, the hook fires the check at the moment of action.
+- **Specialized by** — [reflection-facet-substrate](reflection-facet-substrate.md): what you build once a
+  *second* reflection hook appears. A single hook re-arms one omitted reflex; the substrate consolidates
+  many policy-reflection facets over one shared tempo budget (≤1 emission/window), so N soft nudges don't
+  compound into the alarm fatigue the measured leash above warns about.
 - *See also (temporal complement)* — [dynamic-context-injection](../context-and-dispatch/dynamic-context-injection.md):
   the feed-forward twin. Injection pushes the governing constraints *into* an agent at dispatch, before it
   acts; a tempo-gated **reflection** hook pulls the *operator* back to the same kind of policy at

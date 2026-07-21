@@ -1,6 +1,6 @@
 # Agent Governance Mechanisms
 
-<!-- summary: A pattern catalogue of the mechanisms for governable agentic software engineering — 60 across three roles. -->
+<!-- summary: A pattern catalogue of the mechanisms for governable agentic software engineering — 61 across three roles. -->
 
 *A catalogue of the **governance mechanisms** that keep a fleet of AI coding agents productive while
 holding the cost of their failures within bounds — distilled from a 12-week case study of building a
