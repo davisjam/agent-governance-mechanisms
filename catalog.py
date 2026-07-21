@@ -1044,11 +1044,12 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   and maintaining a governed engineering environment</span>. It works in two directions at once.
   <b>Up front</b>, you specify what you can — the architecture that makes a class of error impossible, the
   templates and checklists that put a change on rails before it's written. <b>In flight</b>, you let velocity
-  surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. Both
-  halves ship here: the guidance on what to fix in advance, and the machinery for responding when something
-  slips through. The result is <b>{n} governance mechanisms across three roles</b>, each written like a design
-  pattern — the recurring failure it kills, and why it is <i>not</i> just the cheaper thing everyone already
-  does.</p>
+  surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. This
+  site describes both halves — the guidance on what to fix in advance, and the machinery for responding when
+  something slips through — and packages them as two Claude skills with a
+  <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>{n} governance mechanisms across
+  three roles</b>, each written like a design pattern — the recurring failure it kills, and why it is
+  <i>not</i> just the cheaper thing everyone already does.</p>
 
   <h2 class="section-h">Governance has two mechanisms</h2>
   <p class="section-sub">A guardrail is one of two kinds — prevent the error, or catch it.</p>
