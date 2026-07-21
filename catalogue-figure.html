@@ -445,15 +445,54 @@ the <a href="catalogue-views.html">codegen'd views</a> (same mechanisms, grouped
       <div style="position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--b-dark);font-size:20px;font-weight:800">▶</div>
       <h4 style="margin:0 0 3px;color:var(--b-ink);font-size:12.5px;text-align:center">THE MODEL BRIDGE — system-models</h4>
       <p style="margin:0 0 7px;font-size:9.5px;color:var(--b-ink);text-align:center;font-style:italic">executable documentation that cannot drift</p>
-      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
+
+      <!-- Y-VISUAL: trunk (the method) → fork into two subject-arms → shared spine straddling both -->
+
+      <!-- TRUNK — the method: subject-agnostic mechanisms that hold ANY model true -->
+      <div style="text-align:center;font-size:8.5px;font-weight:700;letter-spacing:.4px;color:var(--b-ink);text-transform:uppercase;margin-bottom:3px">the method (trunk) — holds any model true</div>
+      <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
         <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/executable-source-of-truth.html" title="Typed models read every run and generated from — can't drift.">executable source-of-truth</a></span>
-        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/component-zone-model.html" title="A typed map of every component's code zone and seams.">component</a> · <a href="models-bridge/system-models/synchronization-model.html" title="A registry of every lock, what it guards, and its ordering.">sync(meta-sync)</a> · <a href="models-bridge/system-models/agent-orchestration-model.html" title="The agent fleet + orchestrator loop modeled with the product's own MBSE method — developer journeys.">agent-orch</a> · <a href="models-bridge/system-models/service-flow-model.html" title="The SOA source-of-truth NetworkPolicy and wiring are generated from.">service-flow</a> · <a href="models-bridge/system-models/user-journey-model.html" title="A typed model of user journeys — product goals joined to the endpoints and tests each exercises.">user-journey</a> · <a href="models-bridge/system-models/deployment-topology-model.html" title="Typed models of where things run and how they layer.">deploy</a> · <a href="models-bridge/system-models/domain-registries.html" title="Frozen typed registries for the system's domain facts.">domain</a></span>
-      </div>
-      <div style="text-align:center;margin:7px 0;font-size:11px;color:var(--b-ink)"><b>meta-sync ═══ drift-parity gates</b><br><span style="font-size:9px">keep the map = the territory</span></div>
-      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
-        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/model-driven-codegen.html" title="Generate real artifacts from the models, provenance-headed.">codegen ──▶</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/drift-parity-gates.html" title="Bidirectional model↔reality checks so models cannot drift.">drift-parity</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/formal-invariant-verification.html" title="Prove the model's invariants hold — model-check / property test.">formal-invariant</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/coverage-model-mapping.html" title="Map test coverage back onto model nodes.">coverage→node</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/model-driven-codegen.html" title="Generate real artifacts from the models, provenance-headed.">codegen</a></span>
         <span class="chip soft" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/query-surface.html" title="repo-query — the agent-facing read API over the models.">query-surface</a></span>
         <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/meta-model-consumption.html" title="Read the model at runtime; never hardcode a snapshot.">read-don't-hardcode</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/control-substrate-dependency.html" title="Model which controls depend on which substrate.">control↔substrate</a></span>
+      </div>
+
+      <!-- meta-sync drift-gate tagline straddles the trunk before the fork -->
+      <div style="text-align:center;margin:6px 0 3px;font-size:11px;color:var(--b-ink)"><b>meta-sync ═══ drift-parity gates</b><br><span style="font-size:9px">keep the map = the territory</span></div>
+
+      <!-- FORK — the trunk reifies toward two subjects -->
+      <div style="text-align:center;font-size:15px;line-height:.9;color:var(--b-dark);font-weight:800">┴</div>
+      <div style="text-align:center;font-size:8px;font-style:italic;color:var(--b-ink);margin-bottom:4px">↳ reified toward two subjects ↴</div>
+      <div style="display:flex;gap:6px;align-items:stretch">
+        <!-- PRODUCT-facing arm -->
+        <div style="flex:1 1 0;min-width:0;border-top:2px solid var(--b-dark);padding-top:4px">
+          <div style="text-align:center;font-size:8.5px;font-weight:700;letter-spacing:.3px;color:var(--s-ink);text-transform:uppercase;margin-bottom:3px">PRODUCT</div>
+          <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
+            <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/service-flow-model.html" title="The SOA source-of-truth NetworkPolicy and wiring are generated from.">service-flow</a></span>
+            <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/user-journey-model.html" title="A typed model of user journeys — product goals joined to the endpoints and tests each exercises.">user-journey</a></span>
+            <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/domain-registries.html" title="Frozen typed registries for the system's domain facts.">domain-registries</a></span>
+          </div>
+        </div>
+        <!-- ORCHESTRATION-facing arm -->
+        <div style="flex:1 1 0;min-width:0;border-top:2px solid var(--b-dark);padding-top:4px">
+          <div style="text-align:center;font-size:8.5px;font-weight:700;letter-spacing:.3px;color:var(--a-ink);text-transform:uppercase;margin-bottom:3px">ORCHESTRATION</div>
+          <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
+            <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/synchronization-model.html" title="A registry of every lock, what it guards, and its ordering.">sync(meta-sync)</a></span>
+            <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/agent-orchestration-model.html" title="The agent fleet + orchestrator loop modeled with the product's own MBSE method — developer journeys.">agent-orch</a></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHARED SPINE — one model, both faces; straddles the fork -->
+      <div style="text-align:center;font-size:8.5px;font-weight:700;letter-spacing:.3px;color:var(--b-ink);text-transform:uppercase;margin:6px 0 3px;border-top:1px dashed var(--b-dark);padding-top:4px">shared spine — both faces</div>
+      <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;font-size:9.5px">
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/component-zone-model.html" title="A typed map of every component's code zone and seams.">component-zone</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/concurrency-contracts.html" title="Typed contracts for concurrent access across services.">concurrency</a></span>
+        <span class="chip" style="border-color:var(--b-dark)"><a href="models-bridge/system-models/deployment-topology-model.html" title="Typed models of where things run and how they layer.">deployment-topology</a></span>
       </div>
     </div>
     <!-- CODEBASE -->
