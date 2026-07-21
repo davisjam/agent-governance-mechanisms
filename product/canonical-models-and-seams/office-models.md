@@ -22,13 +22,13 @@ formats.
 ## Why it's not just "PdfModel already solves this" (or "handle Office ad hoc")
 
 Office is a *different object model* (the OpenXML SDK), so `PdfModel` cannot cover it — but the **same
-defect class** (raw-library corruption) applies. The Office Models are the parallel sole-seam, and
+defect class** (raw-library corruption) applies. The Office Models are the parallel typed seam, and
 routing all three formats through the same typed-model + ban-lint pattern is **defect-class
 consolidation**: a fix to the pattern benefits all four formats at once, which is sufficient
-justification on its own — capability parity, not new capability. The distinction is *the same
-construction + ban-lint pattern applied per object-model* versus *per-format ad hoc handling that lets
-the corruption class recur three more times*. The `no-raw-xml-string-match` lint closes the sneaky
-regex-into-XML escape that a plain "no raw SDK" rule would miss.
+justification on its own — capability parity, not new capability. Applying one construction + ban-lint
+pattern per object-model keeps the corruption class killed everywhere; per-format ad hoc handling lets
+it recur three more times. A second ban-lint on raw-XML string-matching closes the sneaky
+regex-into-serialized-form escape that a plain "no raw SDK" rule would miss.
 
 ## Mechanism
 

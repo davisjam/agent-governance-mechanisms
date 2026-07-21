@@ -25,9 +25,10 @@ Per-piece configuration means the same fact (a service's auth, its URL, its APIs
 in deploy YAML, in NetworkPolicy — and restated facts diverge. The service-flow model is the **single
 Backstage-dialect source of truth**: NetworkPolicy, service catalog, and env wiring are *generated from
 it*, and **bidirectional drift gates** enforce it (every frontend tree ↔ a matching entity *and* every
-entity ↔ a real tree; every handler ↔ its OpenAPI spec; the call-graph ↔ the declared model). The
-distinction is *one generated-and-validated source of truth* versus *N hand-synced restatements that
-drift*.
+entity ↔ a real tree; every handler ↔ its OpenAPI spec; the call-graph ↔ the declared model).
+Hand-synced restatements are the failure: the same auth header lives in code, in deploy YAML, and in the
+NetworkPolicy, and the day one moves the others keep the old value with no gate to notice. One generated,
+parity-checked source leaves nothing to hand-sync and nowhere for the three copies to disagree.
 
 ## Mechanism
 

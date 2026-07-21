@@ -20,13 +20,13 @@ someone reaches for the raw HTTP library.
 
 ## Why it's not just "use requests.post carefully" (or "document the convention")
 
-The file-path-over-wire bug is a **type confusion** — a path `str` where bytes were meant — and a
-convention cannot prevent it, because the next caller passes a path again. `ServiceClient.post_file`
-takes a **`BinaryIO`**, so passing a path is a **type error**, not a runtime bug: the entire bug class
-is *unrepresentable*. The IPC seam is the lint-enforced *sole* cross-service-HTTP surface. The
-distinction is *a typed bounded interface whose signature encodes the invariant* versus *a convention
-that hopes callers remember* — the `BinaryIO` signature **is** the enforcement. This is types-reveal-
-architecture applied to a service boundary.
+The file-path-over-wire bug is a **type confusion**: a path `str` where bytes were meant. A documented
+convention nearly holds — until the next caller passes a path again, and the receiver in another
+container cannot open it. Making the signature refuse the path removes the convention's reliance on
+memory: `ServiceClient.post_file` takes a **`BinaryIO`**, so passing a path is a **type error**, not a
+runtime bug, and the entire bug class is *unrepresentable*. The IPC seam is the lint-enforced *sole*
+cross-service-HTTP surface. The `BinaryIO` signature **is** the enforcement — types-reveal-architecture
+applied to a service boundary.
 
 ## Mechanism
 

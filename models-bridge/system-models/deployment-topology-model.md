@@ -21,10 +21,11 @@ reasoning about "can layer X import layer Y?" needs the boundary declared, not i
 ## Why it's not just "encode the topology in the deploy scripts"
 
 Topology in the deploy scripts is a *copy* — it drifts from the real service set and from the layering
-the code actually has. These typed models **declare** the topology once (managed-deployment L3 loader,
+the code actually has. These typed models **declare** the topology once (managed-deployment loader,
 tier classification, layer-boundary contracts), and parity lints check the declaration against reality
-(deploy phase tables, import-layer checks). The distinction is *a declared topology validated against
-the system* versus *deploy-time constants that drift*.
+(deploy phase tables, import-layer checks). One declared topology, validated against the running system,
+means a moved tier or a crossed boundary fails a lint at author time — the scattered constants had no
+such check, so they drifted until a deploy broke.
 
 ## Mechanism
 

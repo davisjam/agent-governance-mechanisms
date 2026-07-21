@@ -24,8 +24,10 @@ correctness or a stale-doc failure, multiplied across many domain slices.
 A hardcoded domain list is a snapshot that drifts and can't be queried as a set. Each registry is the
 **frozen typed source of truth** for its slice, read by the tools that need it and *generated into* the
 docs that present it (the competitor catalog → competitive-analysis doc; the rule metadata → rule
-index). A coverage/parity lint keeps each honest. The distinction is *one typed registry per domain
-fact, consumed and validated* versus *scattered hardcoded snapshots*.
+index). A coverage/parity lint keeps each honest. Where does the supported-filetype list actually live
+when it is hardcoded in five places? Nowhere — there are five snapshots, each free to drift. A registry
+gives the fact one home the tools read and the docs generate from, and a lint fails the build the moment
+a consumer diverges.
 
 ## Mechanism
 

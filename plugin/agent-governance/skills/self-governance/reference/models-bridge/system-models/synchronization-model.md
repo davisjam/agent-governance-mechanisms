@@ -26,8 +26,9 @@ in what order must they be taken?" — so a deadlock-inducing ordering can't be 
 The synchronization model **declares** each lock (`SyncLock`: path, cap, model, bypass-env, audit-log),
 each acquisition site (`LockAcquirer`), and each ordering constraint (`LockOrdering`) — so a coverage
 lint can flag an *undeclared* `flock`, and an ordering lint can flag an *inverted* acquisition against
-the declared graph. The distinction is *a declared, checkable concurrency model* versus *scattered
-locks whose interactions are only discoverable by deadlock*.
+the declared graph. A declared model lets a lint answer "which locks exist and in what order" before the
+code runs, so an inverted acquisition fails at author time. Scattered locks answer that question only by
+deadlocking in production, where the lesson arrives too late to act on.
 
 ## Mechanism
 

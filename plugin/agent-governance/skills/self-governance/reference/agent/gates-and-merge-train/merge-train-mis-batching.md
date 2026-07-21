@@ -25,8 +25,8 @@ Sequential merge is O(n) wall-clock and conflict-prone; "let git sort it" turns 
 manual conflict-resolution session. MIS batching instead builds a **conflict graph** — worktrees are
 nodes, a shared file is an edge — and computes the largest set of worktrees with **disjoint file
 footprints**, landing that set together. The batch is **non-conflicting by construction**: because no
-two members touch the same file, they cannot collide. The distinction is *a conflict-free batch proven
-by graph independence* versus *a sequence that hopes for the best and retries on failure*.
+two members touch the same file, they cannot collide. Graph independence proves the batch conflict-free
+before it lands; sequential merge only hopes each merge misses the last one's files, and retries when it doesn't.
 
 ## Mechanism
 

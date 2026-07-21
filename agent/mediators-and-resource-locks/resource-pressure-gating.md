@@ -22,7 +22,7 @@ already-saturated machine because the only pre-dispatch check guards a *differen
 say); the agent starts, reaches the compute mediators, and is refused — so it **polls and sheds**, burning
 wall-clock (a heavy agent has burned ~10 minutes polling) on work that never had headroom. **Run into
 overload:** pressure rises *after* a job was admitted, and nothing stops the now-too-heavy job mid-flight.
-Cardinality caps and single-resource admission checks miss both — the missing ingredient is a *live
+Cardinality caps and single-resource admission checks miss both. The missing ingredient is a *live
 pressure reading* consulted at the two moments work is **admitted** and **executed**.
 
 ## Why it's not just "the compute mediators already shed under pressure"
@@ -32,9 +32,9 @@ dispatched, spun up a worktree, and reached the compute step — so the cost of 
 already paid (the poll-and-shed waste). An **admission gate** moves the same pressure check *left*, to
 dispatch time: it refuses or defers the heavy brief before a worktree is ever created, so the doomed work
 never starts. The two are not redundant — admission prevents the *startup* cost; execution shedding
-catches pressure that **rose after** admission, which the gate could not foresee. The distinction is
-*refuse-before-you-spend* versus *stop-if-it-changed*; a resource that can saturate wants **both**, driven
-by one signal so the two layers cannot disagree.
+catches pressure that **rose after** admission, which the gate could not foresee. Shedding does stop a
+job pressure has overtaken — but only after the host paid to start it. Admission refuses before you spend;
+a saturable resource wants both, driven by one signal so the two layers cannot disagree.
 
 ## Mechanism
 
@@ -73,8 +73,8 @@ admission layer closes.
 - **Admission must *defer*, not drop.** A heavy brief refused under sustained RED needs a retry/defer
   policy, or it starves; the gate degrades to a deferral with a wake condition, never a silent drop.
 - **Two readers, one signal — keep them consistent.** If the admission gate and the shed read different
-  signals or thresholds, you reintroduce the churn the mechanism exists to kill. The single-signal
-  discipline is load-bearing.
+  signals or thresholds, you reintroduce the churn the mechanism exists to kill. One shared signal is
+  what makes the two layers agree.
 - **The advisory read is soft.** Its value is the operator *choosing* to consult it; unlike the gates, it
   cannot enforce.
 

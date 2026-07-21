@@ -23,10 +23,10 @@ say so" is unfalsifiable and unenforceable — there is no agreed place the rule
 
 A docs folder is a **pile**; this is an **index with two enforced properties**. First, it is *loaded
 into every agent's boot context* — it is the minimum shared world-model, not optional reference an
-agent might browse. Second, it has a **hard counterpart**: a bloat/cap lint keeps it scannable and a
+agent might browse. Second, it is **enforced**: a bloat/cap lint keeps it scannable and a
 conformance lint keeps every rule cross-referencing exactly one canonical doc, so the index cannot rot
-into a second pile. The distinction from "we have docs" is **canonicality + enforcement**: there is one
-place each rule lives, one place each rule points, and a lint that fails if that stops being true.
+into a second pile. What does a docs folder lack that this has? Canonicality and enforcement — one
+place each rule lives, one place each rule points, and a lint that fails the moment that stops being true.
 (The complementary *dispatch-time* move — pushing the subset of rules relevant to *this* change into
 the brief — is [dynamic-context-injection](dynamic-context-injection.md); this control supplies the
 map, that one delivers the relevant page.)

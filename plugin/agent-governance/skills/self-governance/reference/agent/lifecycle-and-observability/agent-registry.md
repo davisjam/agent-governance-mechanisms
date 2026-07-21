@@ -25,9 +25,9 @@ it recurs on every cleanup pass.
 Directory-listing plus mtime is an *inference* about liveness, and it races: nothing in a timestamp
 tells you whether a process is still working. The registry is an **authoritative append-only log that
 every lifecycle tool dual-writes** (the JSONL record plus a fast per-agent marker cache), so "is this
-agent live?" becomes a **lookup against a recorded fact**, not a guess from the filesystem. The
-distinction is *an authoritative, dual-written lifecycle record* versus *a racy filesystem heuristic* —
-and the heuristic was **retired precisely because it destroyed in-flight work.**
+agent live?" becomes a **lookup against a recorded fact**, not a guess from the filesystem. The mtime
+heuristic is the alternative that fails, and it failed concretely: it destroyed in-flight work, which is
+why it was retired. A recorded fact cannot race the way an inferred one does.
 
 ## Mechanism
 

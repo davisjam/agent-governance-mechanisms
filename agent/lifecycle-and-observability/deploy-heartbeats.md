@@ -22,8 +22,9 @@ one. It recurs on every long-running operation.
 Process-alive does not mean *progressing* — a deadlocked process is alive. Waiting-for-finish gives no
 mid-flight signal at all. Heartbeats emit **phase + elapsed every 30 s**, so both *liveness* and
 *progress* (is the phase advancing?) are observable, and the stale-worker sweep flags a worker that has
-stopped heartbeating. The distinction is *a progress-liveness signal* versus *mere process existence* —
-it is exactly what lets a deploy brief tell **SLOW-BUILD apart from ERROR** instead of guessing.
+stopped heartbeating. Can a deploy brief tell a slow build from a hung one by asking whether the process
+exists? No — a hung process exists too. It can only tell them apart by watching the phase advance, which is
+what the heartbeat gives it.
 
 ## Mechanism
 

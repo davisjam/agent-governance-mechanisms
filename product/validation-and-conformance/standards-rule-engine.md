@@ -9,7 +9,7 @@ call (our instance: the **WCAG 2.1 AA / Section 508 / PDF-UA** accessibility rul
 | Summary | Map each finding to the WCAG/508/PDF-UA criterion it closes. |
 | Target | Product · **Validation & conformance** |
 | Form | `validation` |
-| Enforcement | **Hard** (deterministic) · *blocking* — a conformance predicate; the PDF runtime gate emits `##PASS_RULE_FAIL##` on new findings per pass (staging) |
+| Enforcement | **Hard** (deterministic) · *blocking* — a conformance predicate; the PDF runtime gate flags new findings per pass on a dedicated marker (staging) |
 
 ## Motivation — the failure it kills
 
@@ -24,16 +24,17 @@ Heuristics produce a fuzzy score, not a **conformance claim tied to specific suc
 rule engine maps each finding to the exact WCAG/508/PDF-UA criterion it closes, so conformance is a
 deterministic, auditable predicate — you can say *which* SC each check satisfies. And the discipline is
 enforced across the boundary: adding a check that closes an SC gap must update *both* the engine and the
-scope doc's Status column in the same commit. The distinction is *standards-grounded conformance
-mapping* versus *heuristic scoring* — the scope doc is the counterpart that keeps the coverage claim
-honest (Covered / Coverage-gap / Aspirational).
+scope doc's Status column in the same commit. The distinction is that every finding names the criterion
+it closes, so the conformance claim is auditable clause by clause rather than a single opaque score. The
+scope doc is the counterpart that keeps the coverage claim honest (Covered / Coverage-gap / Aspirational).
 
 ## Mechanism
 
-`CheckRunner.ComputeStandards` maps findings → the SCs they close; the `RuleWalkers` produce those
-findings over the typed models. The PDF runtime gate emits `##PASS_RULE_FAIL##:{json}` on new
-findings per pass (staging). The WCAG-scope-mapping doc is the source of truth for which SCs are in
-scope, out of scope, and their coverage status.
+A standards-mapping step maps findings → the SCs they close (our instance:
+`CheckRunner.ComputeStandards`); the canonical rule walkers produce those findings over the typed
+models. The PDF runtime gate emits new findings per pass on a dedicated JSON marker (staging). The
+WCAG-scope-mapping doc is the source of truth for which SCs are in scope, out of scope, and their
+coverage status.
 
 ## Prerequisites
 
@@ -52,7 +53,7 @@ scope, out of scope, and their coverage status.
 ## Known uses
 
 - `CheckRunner.ComputeStandards` — the finding → SC mapping.
-- The `##PASS_RULE_FAIL##` staging per-pass rule-engine check.
+- The staging per-pass rule-engine check (new findings surfaced on a dedicated JSON marker).
 - The WCAG-scope-mapping doc (Covered / Coverage-gap / Aspirational status).
 
 ## Related mechanisms

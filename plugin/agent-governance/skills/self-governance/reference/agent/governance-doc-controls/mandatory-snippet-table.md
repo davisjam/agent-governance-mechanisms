@@ -24,8 +24,9 @@ as snippets are added — and the failure recurs on every hand-authored brief.
 A docs checklist is **advisory and unenforced** — authors skim it and forget, and nothing catches the
 omission until the agent fails. The mandatory-snippet **table is a registry that brief-linting reads
 and asserts**: each required snippet's marker string must be present in the brief, or the pre-dispatch
-lint fails. The distinction is *an enforced registry consumed by a hard lint* versus *an advisory
-checklist*. It is the *universal-snippet* analogue of what [dynamic context injection](../context-and-dispatch/dynamic-context-injection.md)
+lint fails. What makes a checklist fail where the table holds? The checklist has no reader; the table
+has one — a lint that greps for every required marker and refuses the dispatch on any absence. It is the
+*universal-snippet* analogue of what [dynamic context injection](../context-and-dispatch/dynamic-context-injection.md)
 does for file-scoped rules: the table answers "which snippets every brief must carry," DCI answers
 "which rules *these files* need."
 

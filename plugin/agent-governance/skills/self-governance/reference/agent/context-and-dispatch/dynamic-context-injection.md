@@ -38,7 +38,7 @@ It comes down to **availability vs. binding.**
   specification, **mandatory reading by construction**. So injecting the constraints into the brief is
   not *adding information* — it is a **change of status**, relocating a rule from "available" to "binding."
 
-Docs make a rule *knowable*; the brief makes it *governing*.
+Docs do make a rule knowable — they just leave it optional. The brief makes it governing.
 
 ## Mechanism
 
@@ -52,7 +52,7 @@ One piece of machinery run in **two directions**:
 
 Two firing modes for the forward direction: **brief-time auto-injection** (the orchestrator declares
 target files; the dispatch path renders a constraint block into the prompt) and **agent-discovery-time
-pull** (the agent calls `get-constraints-for-files.py <files…>` once it knows what it will touch).
+pull** (the agent asks a constraints-for-files CLI once it knows what it will touch).
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ pull** (the agent calls `get-constraints-for-files.py <files…>` once it knows 
    component tags) and lives in a **registry you can query by file**. Anything not addressable by file
    scope cannot be sliced.
 2. **Self-documenting constraints** — each rule carries a name, docstring, and an actionable
-   "How to fix" line. Load-bearing, per the guiding principle: *the value of an injected constraint is
+   "How to fix" line. This is the decisive prerequisite: *the value of an injected constraint is
    bounded by the agent's ability to act on it* — and its inverse, *if you can't clearly explain a
    rule to an agent, the rule's own defense value is questionable.*
 3. **A slicing operator** at two granularities — file-scope (forward) and line-range (reverse) — built

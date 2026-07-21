@@ -20,12 +20,12 @@ single deterministic transform*, and it recurs at every large mechanical backlog
 
 ## Why it's not just "dispatch an agent per site" (or "fix them by hand")
 
-N agents on a *deterministic* fix is wasteful and yields per-site drift — each agent re-derives the same
-edit slightly differently, and 200 of them is 200 chances to diverge. A **single AST transformer**
-applies the *exact same* transform everywhere, deterministically, in one reviewable artifact. A
-codemod-first rule sets the threshold: N≳50 + deterministic shape → codemod; genuine per-site *judgment* → Sonnet. The
-distinction is *one deterministic AST transform* versus *N judgment-free agent edits*. Codemods are kept
-as **deprecated reference exemplars** so the next backlog starts from a working pattern.
+N agents on a *deterministic* fix is the wasteful path: each agent re-derives the same edit slightly
+differently, and 200 of them is 200 chances to diverge. A **single AST transformer** applies the *exact
+same* transform everywhere, deterministically, in one reviewable artifact. A codemod-first rule sets the
+threshold: N≳50 + deterministic shape → codemod; genuine per-site *judgment* → an agent per site. One
+deterministic AST transform replaces N judgment-free agent edits and cannot drift between sites. Codemods
+are kept as **deprecated reference exemplars** so the next backlog starts from a working pattern.
 
 ## Mechanism
 
@@ -45,8 +45,8 @@ mechanical. Finished codemods are marked deprecated and cross-referenced as past
 
 - **Writing the transformer is upfront cost** — it pays off only at scale, which the threshold
   encodes.
-- **Only for deterministic shapes.** A backlog needing per-site judgment still goes to Sonnet, not a
-  codemod.
+- **Only for deterministic shapes.** A backlog needing per-site judgment still goes to a per-site agent,
+  not a codemod.
 - **Skipping the lint stanza is a scoped hole** — justified by the transform's mechanical nature,
   marker-audited.
 

@@ -24,9 +24,9 @@ drift*, recurring whenever paired sources evolve independently.
 
 A single-source lint cannot catch a **relational** invariant — there is nothing wrong with either file
 alone; the defect is in their *disagreement*. Coherence lints assert the relation itself (A's fields ⊆
-B's; registry keys = consumer keys; enum cases = handler cases) and fail when the two diverge. The
-distinction is *a relational, cross-source invariant* versus *per-file validation*. This is the control
-that catches the "missing config field silently collapses batching" class that no per-file check could.
+B's; registry keys = consumer keys; enum cases = handler cases) and fail when the two diverge. A
+per-file lint checks one source against itself and can never see a cross-source relation; only a lint
+that reads both files at once catches the "missing config field silently collapses batching" class.
 
 ## Mechanism
 

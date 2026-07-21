@@ -24,17 +24,18 @@ recurs at every Epic boundary.
 Phase markers and self-reports are **exactly what rots**: a sibling sweep can break your lint while your
 marker still reads green, and a self-marked-DONE is not verification. The DoD mandates **re-running
 every owned pin test and lint at HEAD** and comparing against the claims, plus scanning the Epic's
-design docs for dropped `[DESIGN]`/`[LINT]` follow-ups and doc rot. The distinction is *trust-nothing
-re-verification at HEAD* versus *trusting recorded claims*. It is the **audit counterpart** to the rule
+design docs for dropped follow-up tags and doc rot. The gate trusts nothing recorded; it re-derives the
+verdict from the substrate as it stands now. It is the **audit counterpart** to the rule
 index: the index's lints keep its *form* honest; this re-run keeps an Epic's *claims* honest.
 
 ## Mechanism
 
-An Epic-close tool enforces that every cited commit is reachable from main by ancestry or patch-id (a
-missing one requires a logged `--override '<reason ≥30 chars>'`); it rewrites Status + Closed
-atomically, moves the file to `closed/`, and regenerates the index. The §4 DoD carries 11 mandatory
-criteria — including the Final-Opus re-run of owned pins/lints at HEAD, docs + index updates, the tag
-routing-audit, and design-doc follow-up filing.
+An Epic-close tool enforces that every cited commit is reachable from main by ancestry or patch-id; a
+missing one requires a logged override carrying a reason. On a clean close it rewrites the status and
+closed-date fields atomically, moves the file into the closed tree, and regenerates the index. The
+Definition-of-Done itself carries a fixed set of mandatory criteria — among them the Final-Opus re-run
+of owned pins/lints at HEAD, docs + index updates, the tag routing-audit, and the filing of any design-doc
+follow-up.
 
 ## Prerequisites
 
@@ -55,7 +56,7 @@ routing-audit, and design-doc follow-up filing.
 ## Known uses
 
 - `epic_close.py close --commits …` / `--override` (reachability-gated close).
-- The Epic template §4 11-criterion DoD; the Final-Opus "trust nothing" re-run.
+- The Epic template's multi-criterion Definition-of-Done; the Final-Opus "trust nothing" re-run.
 - The tag routing-audit + design-doc follow-up filing at close.
 
 ## Related mechanisms

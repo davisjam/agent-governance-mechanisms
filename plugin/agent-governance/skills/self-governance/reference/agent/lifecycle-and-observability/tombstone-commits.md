@@ -23,9 +23,9 @@ forever. The failure is one of those two, and it recurs at every agent completio
 "Done" is ambiguous — are all commits cherry-picked, or some intentionally abandoned? A bare delete
 cannot tell the difference. A **tombstone commit records the disposition at the branch tip**, so
 `cleanup-stale` can verify a precise predicate — *tombstone at tip AND every non-tombstone commit is
-cherry-picked-or-declared-skipped* — before removing the directory. The distinction is *a durable,
-disposition-bearing close record* versus *a "looks finished, delete it" guess*; the record makes
-the whole cleanup-stale safety chain sound.
+cherry-picked-or-declared-skipped* — before removing the directory. The alternative that fails is the
+"looks finished, delete it" guess: it cannot read intent off a branch, so it either destroys unlanded
+work or leaks. The disposition-bearing record is what makes the whole cleanup-stale safety chain sound.
 
 ## Mechanism
 

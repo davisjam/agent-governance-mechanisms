@@ -1,8 +1,8 @@
 # CLAUDE.md rule index (the governance document as a control)
 
 **Intent** — Treat the top-level governance document as *enforced infrastructure*: a numbered,
-stable-numbered rule index — loaded into every agent's boot context — that is itself held honest by a
-**hard counterpart** (a bloat/cap lint + a rule-conformance lint), so the document that carries every
+stable-numbered rule index, loaded into every agent's boot context, held honest by its own enforcement
+counterpart (a bloat/cap lint plus a rule-conformance lint), so the document that carries every
 other control cannot silently rot.
 
 | | |
@@ -36,18 +36,17 @@ hand, trusted to stay honest. CLAUDE.md is a control because it inverts all thre
   the minimum shared world-model an agent executes against, not reference it might consult. (This is
   the same availability-vs-binding distinction as [dynamic-context-injection](../context-and-dispatch/dynamic-context-injection.md),
   applied to the whole index rather than a sliced subset.)
-- **Enforced, not trusted.** Its **hard counterpart** — a cap/bloat lint
-  that fails the build if the index grows past its scannable budget, plus a rule-conformance lint that
-  fails if a rule stops cross-referencing its canonical doc — holds the document to checks exactly as
-  code is.
+- **Enforced, not trusted.** Its enforcement counterpart holds the document to checks exactly as code
+  is: a cap/bloat lint fails the build if the index grows past its scannable budget, and a
+  rule-conformance lint fails if a rule stops cross-referencing its canonical doc.
 - **Self-governing.** It carries its own admission rule — the three-part *earns-its-spot* test
   (regression-preventing **and** non-derivable-from-local-code **and** non-local) — and a router that
   sends anything failing the test to a sub-doc, an XML-doc comment, or an inline `WHY:`. The index
   governs *what may enter it*, which keeps the cap lint satisfiable without deleting real rules.
 
-The distinction from "a good doc" is therefore not quality of prose. It is that this document has a
-*budget, an admission predicate, and lints that fail the pipeline* — it is governed the way an artifact
-is governed, because it is one.
+So what separates this from "a good doc"? Not prose quality. This document carries a budget, an
+admission predicate, and lints that fail the pipeline; it is governed the way an artifact is governed,
+because it is one.
 
 ## Mechanism
 

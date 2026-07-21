@@ -55,8 +55,10 @@ stance toward the substrate* are one queryable fact.
   "read the model," but "declare which part of the model you assume," so the edge itself is typed and
   joinable. It is the self-application — the governance fleet becomes a modeled element.
 
-The distinct axis is the **control→substrate dependency edge as a first-class, typed, queryable fact**,
-existing to compute a *pre-change* blast radius. No neighbour provides that.
+Each neighbour handles a real slice — parity keeps the model honest, read-don't-copy removes value
+drift — and both are green right up to a migration that then misfires half the fleet. What neither
+supplies is the **control→substrate dependency edge as a first-class, typed, queryable fact**, and that
+edge is what computes the blast radius *before* you touch the substrate.
 
 ## Mechanism
 

@@ -1,8 +1,9 @@
 # Per-mutator attribution stamps
 
 **Intent** — Every remediation verb that mutates a document emits an attribution stamp *embedded in the
-artifact*, so every change is durably attributable and the mutation history is reconstructable after the
-fact.
+artifact* through one sanctioned stamp-writer per format, so every change is durably attributable and the
+mutation history is reconstructable after the fact (our instances: a single PDF stamp-writer held as the
+sole surface by a ban-lint, and an append-only OOXML attribution registry).
 
 | | |
 |---|---|
@@ -20,19 +21,20 @@ un-debuggable output*, and it recurs on every mutation.
 
 ## Why it's not just "log what each pass does"
 
-Logs are ephemeral and *detached from the artifact* — they scroll away and aren't there when someone
-inspects the document months later. A stamp is embedded **in the document, at the mutation site**, so
-[derive-changelog](derive-changelog.md) can reconstruct the full attributed history *from the artifact
-itself*, any time. The distinction is *durable in-artifact attribution* versus *ephemeral external
-logs*. A visibility model keeps it honest for delivery: stamps default to `Debug` and are stripped
-before delivery, while user-visible passes opt into `Preserved`.
+Logging what each pass does works — until someone inspects the delivered document months later, and the
+logs have scrolled away and were never attached to the artifact in the first place. A stamp lives
+**in the document, at the mutation site**, so [derive-changelog](derive-changelog.md) can reconstruct the
+full attributed history *from the artifact itself*, any time. A visibility model keeps it honest for
+delivery: stamps default to `Debug` and are stripped before delivery, while user-visible passes opt into
+`Preserved`.
 
 ## Mechanism
 
-PDF mutations stamp via `MutatorStampHelper.WriteStamp` (never the raw stamp mutator directly — a
-`lint-mutator-stamp-helper-only` lint enforces the sole surface); OOXML via
-`OoxmlAttributionRegistry.AppendEntry` / `TryAppendEntryForElement`. Visibility is `Debug` by default,
-`Preserved` for user-visible passes; `strip-attribution` removes `Debug` stamps before delivery.
+Each format has one sanctioned stamp-writer, and the raw stamp mutator is lint-banned so the writer is
+the sole surface — PDF mutations stamp through a stamp-writer helper (our instance:
+`MutatorStampHelper.WriteStamp`), OOXML through an append-only attribution registry (our instance:
+`OoxmlAttributionRegistry.AppendEntry` / `TryAppendEntryForElement`). Visibility is `Debug` by default,
+`Preserved` for user-visible passes; a strip step removes `Debug` stamps before delivery.
 
 ## Prerequisites
 

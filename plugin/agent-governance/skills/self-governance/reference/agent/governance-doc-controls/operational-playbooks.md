@@ -23,13 +23,12 @@ exactly when time is shortest.
 
 ## Why it's not just "let the agent reason it out from the docs"
 
-An agent reasoning from scratch during an incident re-derives — badly, under time pressure — a procedure
-a human already worked out and debugged once. A playbook is a **pre-reasoned, incident-tested procedure
-keyed to a situation**: it names the trigger, gives the ordered steps, and lists the
-*reflexes to avoid* (the `reset`-that-destroys, the restart-that-loops). The distinction is *a curated,
-situation-keyed procedure* versus *ad-hoc reasoning at the worst possible moment*. It is the devops
-runbook promoted to a first-class governance document the orchestrator is explicitly told to consult —
-closer to a reusable **skill** than to prose documentation.
+An agent can reason a response out from the docs — and it will, badly, under time pressure, re-deriving a
+procedure a human already worked out and debugged once. A playbook removes the re-derivation: it names the
+trigger, gives the ordered steps, and lists the *reflexes to avoid* (the `reset`-that-destroys, the
+restart-that-loops), all reasoned once when no incident was burning. It is the devops runbook promoted to a
+first-class governance document the orchestrator is explicitly told to consult — closer to a reusable
+**skill** than to prose documentation.
 
 ## Mechanism
 

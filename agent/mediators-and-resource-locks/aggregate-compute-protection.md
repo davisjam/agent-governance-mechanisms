@@ -24,9 +24,8 @@ The build-serializer caps *per-invocation* tools at M=8 — but `lint-all` is an
 *internally* fans out over the entire tree, so a *single* run already saturates the machine. Bounding
 it needs a coarser instrument: a **whole-sweep singleton mutex** (one per host) plus an
 **orchestrator-side in-flight declaration** (only one `lint-all`-class brief dispatched at a time),
-not a per-call semaphore slot. The distinction is *rationing the aggregate as an indivisible unit*
-versus *rationing its pieces* — a semaphore over the pieces would still allow two whole sweeps to
-overlap.
+not a per-call semaphore slot. A semaphore over the pieces still lets two whole sweeps overlap; only a
+mutex over the sweep as an indivisible unit keeps the host from melting.
 
 ## Mechanism
 

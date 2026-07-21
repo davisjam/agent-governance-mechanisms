@@ -27,8 +27,8 @@ authority is duplicated into every consumer and each copy is a future drift bug;
 one authoritative answer and consumers *derive* it — so a model change updates every consumer at once.
 Grepping the source is no better: it re-implements a fragile parser and couples the consumer to
 file layout. The rule is **read the meta-model, never embed a copy** — itself lint-enforced, because
-the temptation to snapshot is constant. The distinction is *consume-by-query* versus
-*consume-by-copy*.
+the temptation to snapshot is constant. Querying keeps one authoritative answer that every consumer
+derives; copying mints a private answer at each site, and each is a drift bug the day the model moves.
 
 ## Mechanism
 

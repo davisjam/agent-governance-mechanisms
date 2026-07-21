@@ -1,8 +1,9 @@
 # Canonical walkers (one traversal per tree)
 
-**Intent** — One canonical walker per tree (`PdfStructTreeWalker`, the `RuleWalkers`,
-`DocxTopLevelPartWalker`, …) that all traversal must route through, instead of ad hoc recursion — so a
-tree's traversal invariants live in exactly one place.
+**Intent** — Give each tree exactly one canonical walker that owns its traversal invariants, and route
+all traversal through it instead of ad hoc recursion, so those invariants live in one place (our
+instances: one walker for the PDF structure tree, one for the checking pass, one per Office part —
+`PdfStructTreeWalker`, the `RuleWalkers`, `DocxTopLevelPartWalker`).
 
 | | |
 |---|---|
@@ -21,18 +22,19 @@ others.
 ## Why it's not just "recurse the tree where you need it"
 
 Hand-rolled recursion **duplicates the traversal logic**, and duplicated logic drifts: the invariants
-(visit every node type, in the right order, resolving indirect references) get re-derived — badly — at
+(visit every node type, in the right order, resolving indirect references) get re-derived, badly, at
 each site. A canonical walker **centralizes** the traversal so those invariants are fixed once and
-inherited everywhere. The distinction is *a single canonical traversal* versus *N ad hoc recursions
-that each re-introduce the same class of omission*. (A standard DRY-plus-walker-discipline move that
-keeps the typed models usable without re-opening the raw-access door.)
+inherited everywhere. N ad hoc recursions each re-introduce the same class of omission; one canonical
+walker cannot, because there is only one copy of the traversal to get right. A standard
+DRY-plus-walker-discipline move, it keeps the typed models usable without re-opening the raw-access
+door.
 
 ## Mechanism
 
-Each tree type has one canonical walker (`PdfStructTreeWalker` for the PDF struct tree, `RuleWalkers`
-for the checking pass, `DocxTopLevelPartWalker` for DOCX parts, …). The canonical-walker discipline
-routes all traversal through them; regexing into the tree or hand-recursing is banned together with raw
-library access.
+Each tree type has one canonical walker that owns its traversal shape — one for the PDF structure tree,
+one for the checking pass, one per Office part (our instances: `PdfStructTreeWalker`, the `RuleWalkers`,
+`DocxTopLevelPartWalker`). The canonical-walker discipline routes all traversal through them; regexing
+into the tree or hand-recursing is banned together with raw library access.
 
 ## Prerequisites
 
@@ -55,6 +57,6 @@ library access.
 ## Related mechanisms
 
 - *See also* — [pdf-model](pdf-model.md), [office-models](office-models.md): walkers are *how you
-  traverse* those typed models; they are part of the same sole-seam discipline.
+  traverse* those typed models; they are part of the same typed-seam discipline.
 - **Enabler** — a canonical walker makes routing traversal through the typed models practical;
   without it, callers reach for raw recursion and re-open the ban-lint's door.

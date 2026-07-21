@@ -19,7 +19,7 @@ downstream — dispatch, codegen, deploy — reasons from a lie. Because the mod
 drift is worse than absence. It recurs whenever code changes without the model, or the model changes
 without the code.
 
-## Why it's not just "regenerate the model from the code" (or "trust people to update it)"
+## Why it's not just "regenerate the model from the code" (or "trust people to update it")
 
 Regenerating the model from the code makes the code the source of truth — but the *model* must be the
 source of truth that *generates* parts of the code (NetworkPolicy, wiring). One-way

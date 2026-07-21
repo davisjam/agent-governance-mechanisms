@@ -20,11 +20,11 @@ trust as ground truth* — and it recurs continuously as the doc corpus grows.
 
 ## Why it's not just "review docs in the PR" (or "trust authors to update the index")
 
-Doc review is the **least reliable** review — reviewers skim prose and never notice a missing index
-entry or a broken cross-ref, because those aren't visible in the change itself. Doc-hygiene lints make
-the invariants **mechanical**: an auto-generated file must carry a provenance header declaring its
-emitter (a provenance-header rule), every doc must appear in the index, cross-references must resolve — or the pipeline
-fails. The distinction is *mechanical doc invariants* versus *human doc review*. It is the same
+Doc review catches prose. It is the **least reliable** review for structure, because a missing index
+entry or a broken cross-ref isn't visible in the change itself — reviewers skim right past it. So
+doc-hygiene lints make the invariants **mechanical**: an auto-generated file must carry a provenance
+header declaring its emitter, every doc must appear in the index, cross-references must resolve, or the
+pipeline fails. Review sees the words; the lint sees the wiring the words hang on. It is the same
 "documentation as enforced infrastructure" stance as the [rule index](claude-md-rule-index.md),
 generalized from one governance file to the whole doc corpus.
 
@@ -47,8 +47,8 @@ cross-reference/link lints check pointers resolve. Lints land AUDIT-ONLY and mig
 
 - **Mechanical only.** These lints verify a doc is *indexed and fresh*, never that its prose is
   *correct* — a well-formed, well-indexed, wrong document passes.
-- **Registry maintenance.** `_AUTOGEN_TARGETS` and the provenance convention are surfaces that need
-  upkeep as emitters are added.
+- **Registry maintenance.** The autogen-target registry and the provenance convention are surfaces that
+  need upkeep as emitters are added.
 - **False positives on legitimate exceptions** require an escape hatch, which is itself a small hole.
 - **AUDIT → BLOCKING migration risk.** Flipping to blocking before the corpus is clean wedges the
   pipeline on pre-existing drift.

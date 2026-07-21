@@ -114,8 +114,8 @@ model enables, gated on the governance that keeps the model true.
   blocking, live journey-aware scaling (product side). One model, both faces.
 - **Enabler** — [service-flow-model](service-flow-model.md): the structural service model whose dialect,
   loader, query surface, and lint this journey model *reuses* — a new goal-anchored `kind`, not a
-  parallel model. The named axis between them is *product-goal traversal* versus *service topology*; the
-  shared substrate is the uniformity win.
+  parallel model. What separates the two? One traverses a product goal, the other maps service topology;
+  that named axis is the only thing that differs, and the shared substrate is the uniformity win.
 - *See also* — [drift-parity-gates](drift-parity-gates.md): the call-site drift lint and the two coverage
   audits are that parity mechanism applied to this model.
 - *See also* — [executable-source-of-truth](executable-source-of-truth.md): the pattern this instantiates

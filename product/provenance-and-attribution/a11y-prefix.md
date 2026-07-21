@@ -20,12 +20,13 @@ inserted content*, and it recurs per inserter and per insertion site.
 
 ## Why it's not just "name things sensibly" (or "keep a list of inserts")
 
-An ad-hoc naming choice isn't *checkable* — nothing enforces it, and a hand-maintained list of inserts
-drifts. The `a11y_` prefix is a **convention with a rule** (invisible → `a11y_`, user-visible → not,
-spec-mandated → the spec name) that the `InsertedContentValidator` *relies on*, and every new inserter
-calls `registry.Record(...)` so it is covered **automatically**. The distinction is *a checkable naming
-convention plus auto-registration* versus *ad-hoc naming and a manual list*. It is a repair-vocabulary
-control: it bounds *how inserts are named and tracked*, which makes validating them possible.
+Ad-hoc naming and a hand-maintained list are the two ways to fail here: neither is *checkable*, and the
+list drifts the moment an inserter forgets to append. The `a11y_` prefix is a **convention with a rule**
+(invisible → `a11y_`, user-visible → not, spec-mandated → the spec name) that the inserted-content
+validator *relies on*, and every new inserter records itself with the registry so the validator covers
+it **automatically**. Naming by rule plus auto-registration is what makes the coverage mechanical rather
+than a promise. It is a repair-vocabulary control: it bounds *how inserts are named and tracked*, which
+makes validating them possible.
 
 ## Mechanism
 

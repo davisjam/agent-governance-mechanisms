@@ -23,9 +23,11 @@ Scattered raw Redis lets the **atomicity bug class recur** — every non-atomic 
 silent-job-loss waiting for a crash — and lets key names drift from the schema until a depth metric
 reads the wrong structures. The dispatch module is the **sole raw-Redis seam**: all keys are declared
 there, atomic pop-and-move is encoded once (Lua `EVAL` for sorted sets, `RPOPLPUSH` for lists), and a
-lint bans raw Redis elsewhere. The distinction is *a bounded seam that encodes atomicity and schema
-once* versus *scattered raw calls that each re-risk the silent-loss bug*. Centralizing is also what
-makes "a queue-depth metric must query *all* queue structures" enforceable at all.
+lint bans raw Redis elsewhere. Can a convention guarantee no one ever writes a two-command pop-and-move?
+It cannot — the next caller who reaches for the raw client re-risks the silent loss. A typed seam that
+encodes atomicity and schema in one place can, because there is no other place to write the bug.
+Centralizing is also what makes "a queue-depth metric must query *all* queue structures" enforceable at
+all.
 
 ## Mechanism
 

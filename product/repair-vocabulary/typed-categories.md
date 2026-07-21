@@ -20,11 +20,12 @@ mistyped category → silent misbehaviour*, recurring at every place a category 
 ## Why it's not just "use descriptive strings"
 
 Strings are an *open* set: nothing makes them exhaustive, a typo is a runtime bug rather than a compile
-error, and adding a case doesn't force the existing handlers to deal with it. A **typed enum** makes the
-set *closed* and its handling *exhaustively checkable* — add a case and the non-exhaustive `switch`
-lights up. The distinction is *a closed, typed vocabulary* versus *open free-form strings*. This is
-"explicit models over implicit," and "types are how you name shapes," applied to the failure/violation
-space — the enum *names* the categorical shape the strings left anonymous.
+error, and adding a case doesn't force the existing handlers to deal with it. Can you ask a string
+vocabulary whether every category is handled? You cannot — the set has no edges to check against. A
+**typed enum** makes the set *closed* and its handling *exhaustively checkable*: add a case and the
+non-exhaustive `switch` lights up. This is "explicit models over implicit," and "types are how you name
+shapes," applied to the failure/violation space — the enum *names* the categorical shape the strings left
+anonymous.
 
 ## Mechanism
 

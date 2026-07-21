@@ -13,8 +13,8 @@ the failing seed.
 
 ## Motivation — the failure it kills
 
-Real-world documents are malformed in ways no hand-written test anticipates — truncated streams, odd
-encodings, spec-edge structures. A fuzzer finds the crash or corruption on inputs you would never think
+Real-world documents are malformed in ways no hand-written test anticipates: a truncated stream, an odd
+encoding, a structure right at the edge of what the spec allows. A fuzzer finds the crash or corruption on inputs you would never think
 to write. The failure is *crashes / corruption on adversarial or spec-edge inputs*, and it hides across
 an input space far too large to enumerate.
 
@@ -23,10 +23,11 @@ an input space far too large to enumerate.
 Property tests check invariants over *structured, generated* inputs; fuzzing throws **malformed,
 adversarial bytes** to find crashes and spec-edge failures the structured generators don't reach. And
 the payoff is multiplied by an **RCA discipline**: fix to the *stable point in the format spec*, not to
-the failing seed — so the fix passes *every* spec-allowed input, not just the one that crashed. The
-distinction is *adversarial/malformed campaigns plus fix-to-spec RCA* versus *structured property
-generation or more examples*. Auto-coverage tracks what the campaign actually reached so gains are
-measurable, not assumed.
+the failing seed — so the fix passes *every* spec-allowed input, not just the one that crashed.
+Structured generation is a good tool, and it does find bugs — until the corruption lives in bytes no
+generator would produce. Adversarial campaigns reach that space, and fixing to the spec closes the whole
+class the seed exposed rather than the one seed. Auto-coverage tracks what the campaign actually reached
+so gains are measurable, not assumed.
 
 ## Mechanism
 

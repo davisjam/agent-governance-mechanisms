@@ -27,9 +27,9 @@ output ships or the gate is bypassed.
 under load and gets skipped under time pressure. A **role is a typed enum** that binds the whole
 bundle — model, isolation, permission mode, and the set of gates — once, and is then **enforced**: the
 `lint-all` role-enforcement gate *refuses* to run under `sonnet-active`; `commit-slave` is defined to
-operate on `main` (no worktree) so the commit hook fires; enforcers key on `ADA_TOOL_AGENT_ROLE`. The
-distinction from "pick a model" is that the correlated choices travel together as *one named type with
-policy attached*, rather than as four independent judgments a dispatcher has to get right each time.
+operate on `main` (no worktree) so the commit hook fires; enforcers key on `ADA_TOOL_AGENT_ROLE`. Four independent judgments a dispatcher
+re-makes each time drift apart under load. One named type carries the model, isolation, permissions,
+and gate set together, so they cannot silently diverge.
 
 ## Mechanism
 

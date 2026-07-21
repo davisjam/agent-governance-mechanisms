@@ -23,10 +23,10 @@ constant.
 Running all 4000 on every iteration is unusable; a *fixed* subset misses regressions that fall outside
 it. The onion stratifies by **cost matched to the decision being gated**: Smoke (~9 tests, <30s) as a
 deploy pre-gate, Lite (hundreds, single-digit seconds), a targeted `ClassName` filter (<5s) for the
-edit loop, and the full tier (~4min) at deploy. The distinction is *cost-stratified tiers, each sized
-to what it gates* versus *one-size-fits-all*. **Escalation rules** close the "fixed subset misses
-things" gap: touching a Runner, Validator, Registry, or a prompt constant forces the full tier before
-"done."
+edit loop, and the full tier (~4min) at deploy. One tier for every decision is the failing alternative
+— it either runs the full suite on every keystroke or gates deploy on the fast subset; each tier sized
+to its decision avoids both. **Escalation rules** close the "fixed subset misses things" gap: touching a
+Runner, Validator, Registry, or a prompt constant forces the full tier before "done."
 
 ## Mechanism
 

@@ -22,8 +22,8 @@ consumed*, which shows up exactly when someone needs the history for RCA or user
 
 Reading raw stamps by hand is tedious and error-prone, and an input-vs-output **diff shows *what*
 changed but not *who* (which pass) or *why*.** `derive-changelog` reconstructs the *attributed* history
-— pass → change, with visibility — from the stamp registry. The distinction is *an attributed
-reconstruction from provenance* versus *a raw diff*. It is the consumer that makes emitting the stamps
+from the stamp registry: pass → change, each entry carrying its visibility. An attributed reconstruction
+from provenance answers questions a raw diff cannot. It is the consumer that makes emitting the stamps
 worthwhile: no reader, no reason to stamp.
 
 ## Mechanism

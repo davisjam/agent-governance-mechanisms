@@ -22,10 +22,10 @@ un-gated bad build reaches users.
 
 Rollback is *reactive and user-visible*: by the time you roll back, users have already hit the break.
 Staged gates are *proactive* — a **canary** revision is deployed taking **no production traffic**,
-**smoke**-tested against its own URL, and **promoted** only on green. The distinction is
-*gate-before-users* versus *detect-after-users*. A pre-launch rule pushes the gate even earlier: don't even
+**smoke**-tested against its own URL, and **promoted** only on green. Rollback detects the break after
+users hit it; the staged gate catches it on a revision no user can reach. A pre-launch rule pushes the gate even earlier: don't even
 *launch* a deploy that will predictably fail — confirm lints are green, no known flaky class is live,
-and `--changed-since main` is green *before* paying for build minutes. (Being a standard practice, its
+and the changed-since-main lint pass is green *before* paying for build minutes. (Being a standard practice, its
 "why not" is thinner than the novel controls' — the value is defense-in-depth, not novelty.)
 
 ## Mechanism

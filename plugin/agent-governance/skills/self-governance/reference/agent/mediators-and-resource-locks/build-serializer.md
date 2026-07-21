@@ -24,8 +24,8 @@ cores and stall the fleet).
 `dotnet test` is *mutually destructive* (port/artifact contention), so single-writer is correct there.
 Builds are *parallel-safe but heavy* and far more frequent, so N=1 would leave most cores idle and
 throttle throughput needlessly. The right primitive is a **bounded semaphore (M=8)**: allow
-concurrency up to the host's capacity, cap it there. The distinction is *lock cardinality matched to
-the resource's contention profile* — a single-writer lock for mutually-destructive work, a
+concurrency up to the host's capacity, cap it there. What decides the lock's cardinality? The
+resource's contention profile: a single-writer lock for mutually-destructive work, a
 bounded-concurrency semaphore for parallel-safe-but-heavy work. Same mediator pattern, different M.
 
 ## Mechanism

@@ -28,7 +28,8 @@ precisely because they are boring. Brief-linting is a **deterministic** check at
 return — it greps for each required marker string and exits non-zero if any is absent, so a
 malformed brief *cannot be dispatched* rather than *is unlikely to be*. It also moves the check to
 the one moment that matters: the pre-dispatch instant, after which the agent is autonomous and the
-cost of the omission is unrecoverable. Review is advice; the lint is a gate.
+cost of the omission is unrecoverable. A gate catches the boring marker every
+time; review catches it only when the reviewer thinks to look.
 
 ## Mechanism
 
@@ -50,13 +51,13 @@ dispatch. The marker/snippet plumbing this lint checks is the harness-specific e
 Marker-presence is the *structural* layer. A mature brief lint adds a *content* layer — does the brief
 cite a real `file:line`, declare its footprint, cite a **reachable** commit SHA? — and that layer has a
 trap: a content check that fires on any *mention* (a filename, a path, a SHA-shaped token)
-**false-positives on briefs where it isn't load-bearing**. A doc-only brief that merely names a source
+**false-positives on briefs where the citation isn't required**. A doc-only brief that merely names a source
 file trips the "cite the code you touch" check; the operator learns the lint cries wolf and starts
 ignoring its output — the exact failure the whole mechanism exists to prevent.
 
 The fix: the brief declares its **genre**. It carries a `brief-genre` marker (emitted by the same template
 that lays down the structural markers), and each content check *gates* on it — firing only when the genre
-makes it load-bearing (the "cite the code" check on a code brief, not a design-doc one; the
+requires that citation (the "cite the code" check on a code brief, not a design-doc one; the
 SHA-reachability check only where a citation is actually required). No genre marker → every check fires,
 the safe default. Genre-gating is what lets the content layer keep growing — more checks, more precision —
 without eroding the trust the structural layer earned. A lint tuned out is worse than a check not written.

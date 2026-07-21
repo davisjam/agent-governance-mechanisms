@@ -24,8 +24,10 @@ Hand-writing NetworkPolicy, the service catalog, the API docs, or the competitor
 facts live in two places (model + artifact) and diverge. Generating them **from** the model makes the
 model authoritative — change the artifact by changing the model — and a **provenance header**
 on each generated file, re-emitted every run, plus a freshness lint, ensures a hand-edit is caught and a
-stale artifact fails the build. The distinction is *one model, N generated-and-provenance-checked
-consumers* versus *hand-maintained artifacts that drift from the model and swallow edits*.
+stale artifact fails the build. What keeps a hand-written config honest with the model it mirrors?
+Nothing does — the two facts sit in two files and drift, and an edit to the wrong copy simply vanishes on
+the next regen. Generating from the model leaves one authoritative source and marks every output so a
+stray hand-edit is caught before it is lost.
 
 ## Mechanism
 

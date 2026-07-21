@@ -24,9 +24,10 @@ Direct import works for Python tools, but agents and the orchestrator need a **s
 query interface** — not to re-derive how services or components load each time. `repo-query` is that
 surface: deterministic subcommands (`component`, `service-flow`, `frontend-flow`, `design`, `callers`,
 `xrefs`, `epic`, `task`, …) with a `--json` contract, and it *lives alongside the models* so its
-loader pattern is the documented canonical example of loading them. The distinction is
-*a self-describing, structured query API an agent acts on* versus *each consumer re-implementing model
-access*.
+loader pattern is the documented canonical example of loading them. Direct import does the job for a
+Python tool that only needs one model — and it leaves every agent and one-off script to re-derive the
+loading dialect, getting it subtly wrong each time. A self-describing query surface with a stable `--json`
+contract gives them one structured answer to act on, and documents the load path once.
 
 ## Mechanism
 
@@ -43,7 +44,7 @@ over the models the codebase is governed by.
 
 ## Consequences & costs
 
-- **Not a sole seam** — Python tools still import models directly; `repo-query` is the *canonical*
+- **Not the sole path** — Python tools still import models directly; `repo-query` is the *canonical*
   read/query path for agents + orchestration, not a lint-banned monopoly. So it's a Soft convenience,
   not a Hard gate.
 - **Subcommand surface to maintain** as models are added.

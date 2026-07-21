@@ -22,11 +22,10 @@ whenever cron breaks and the orchestrator doesn't stop.
 
 Surfacing a signal is **not** enforcing a response. An orchestrator can see — or miss, or ignore — a
 HIGH alert and keep dispatching. This gate makes the response **mandatory**: an unresolved HIGH alert
-whose latest ack row is not `ACK`/`RESOLVE`/`BYPASS_AUDIT` **refuses the dispatch tools outright**. The
-distinction is *an observability signal promoted into a blocking gate* — the same availability-vs-
-binding move as dynamic context injection, applied to alerts. This is the point where an observability
-*channel* (Hard signal, non-blocking) crosses into a **Hard blocking gate**: it is the family's one
-member that stops the line.
+without a terminal ack **refuses the dispatch tools outright**. The gate promotes an observability signal
+into a blocking barrier — the same availability-vs-binding move as dynamic context injection, applied to
+alerts. This is the point where an observability *channel* (Hard signal, non-blocking) crosses into a
+**Hard blocking gate**: it is the family's one member that stops the line.
 
 ## Mechanism
 

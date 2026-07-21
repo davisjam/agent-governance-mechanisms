@@ -24,9 +24,9 @@ Existing tests may not cover the exact behaviour about to churn, and a doc-deriv
 can drift from its source with **no signal**. DDT pin-trailers are characterization tests with a
 **provenance block**: `DDT-source` names what the test was derived from, `DDT-pins` records the pinned
 points, and editing a cited source obliges regenerating the trailer in the *same commit* (the
-trailer-regeneration discipline). The
-distinction is *characterization-with-provenance, linked to a cited source* versus *ordinary tests with
-no source linkage*. And note: **near-zero defect yield is success here** — these pin correct behaviour
+trailer-regeneration discipline). An ordinary test carries no link back to the source it characterizes,
+so a source edit leaves it silently stale; the provenance block is what ties the pin to a cited source
+and forces the regen. And note: **near-zero defect yield is success here** — these pin correct behaviour
 before change; they are not meant to find bugs, they are meant to catch the change that alters behaviour.
 
 ## Mechanism

@@ -26,8 +26,9 @@ Failing at merge is failing *late* — after the agent has spent its budget. The
 substrate-health check to the **first commit (t≈0)**, converting a 60-minute waste into a one-minute
 abort. It validates on the **production path** — the actual brief, the real dispatch — not a
 pin-test in isolation, so it catches the invisible feedback loops (caps, scope filters, priority
-inversions) that only manifest when the substrate runs end-to-end against real work. The
-distinction is *fail-fast at t=0 on the real path* versus *fail-late at t=60 after the budget is gone*.
+inversions) that only manifest when the substrate runs end-to-end against real work. Failing at merge does surface
+the break — but only at t=60, after the budget is spent. The sentinel surfaces the same break at t=0 on
+the real path, while the run still costs a minute to abandon.
 
 ## Mechanism
 

@@ -44,8 +44,10 @@ tool draws or a solver checks**, not code your own lints execute. Three things n
 
 **Not bare Pydantic / dataclasses either.** Frozen dataclasses (or Pydantic records) give you *validated
 typed records* — the raw material, not the method. This mechanism is the **five-discipline layer on top**:
-the look-up seam, derive-and-assert, auto-discovery, the drift-lint, and the query projection. A bare
-record model has none of those; it is a schema, not a bridge that can't drift.
+the look-up seam, derive-and-assert, auto-discovery, the drift-lint, and the query projection. Typed
+records get you a schema that validates its own shape — and a schema still drifts from the code it
+describes, because nothing reconciles the two. The five disciplines add that reconciliation: they are
+what turns a snapshot into a bridge that cannot lie about the code.
 
 ## Mechanism — five recurring harness disciplines
 

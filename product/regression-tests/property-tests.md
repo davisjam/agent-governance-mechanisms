@@ -21,10 +21,10 @@ invariant-shaped contract that hand-picked examples under-cover.
 
 Examples check *points*; you cannot enumerate a document's input space by hand, and the bug is almost
 always in the case you didn't write. A property test asserts an **invariant over generated inputs**
-(FsCheck synthesizes them) and, on failure, **shrinks** to a minimal counterexample you can debug. The
-distinction is *an invariant checked over generated inputs* versus *a finite set of hand-picked
-examples*. A good property surfaces
-latent bugs a hundred hand-picked examples would miss.
+(FsCheck synthesizes them) and, on failure, **shrinks** to a minimal counterexample you can debug. Can a
+finite set of hand-picked examples cover a document's input space? It cannot — and the bug is almost
+always in the case no one wrote. A property checked over generated inputs surfaces the latent bug that a
+hundred examples would miss.
 
 ## Mechanism
 

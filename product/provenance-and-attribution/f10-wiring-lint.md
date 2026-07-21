@@ -20,12 +20,12 @@ most likely to be forgotten.
 
 ## Why it's not just "remember to add the stamp" (or "review new mutators")
 
-A reviewer scanning a diff sees a *present* stamp but rarely notices a *missing*
-call (nothing in the diff shouts "no stamp here"). The F10 lint **mechanically checks that every mutator
-verb** in the `Primitives` directories calls stamp wiring, and fails the build on a gap — HIGH-severity,
-held at 0 open gaps. The distinction is *a mechanical completeness check over all verbs* versus *a
-per-author reminder*. This is the counterpart that turns "we attribute mutations" from an aspiration
-into a guarantee.
+Will a reviewer scanning a diff catch the stamp that *isn't* there? A present stamp is visible; a missing
+call is not — nothing in the diff shouts "no stamp here." The F10 lint answers by not relying on the
+reviewer at all: it **mechanically checks that every mutator verb** in the `Primitives` directories calls
+stamp wiring, and fails the build on a gap (HIGH-severity, held at 0 open gaps). A completeness check
+over all verbs sees the absence a per-author reminder misses. This is the counterpart that turns "we
+attribute mutations" from an aspiration into a guarantee.
 
 ## Mechanism
 

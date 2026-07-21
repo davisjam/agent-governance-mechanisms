@@ -26,9 +26,9 @@ far from the moment and context of authoring. The pre-commit hook is the **first
 of the path-to-production staircase — changed-file-scoped lints plus unit-tier tests, run at the
 instant of commit. And it does something CI-on-PR does not: it writes **tree-sha-keyed marker files**
 that a downstream verifier (`merge-check`) *checks*, so "the cheap checks ran green on **this** tree"
-becomes a **deterministic, forgeable-proof fact** rather than a trust assumption. The distinction is
-*left-of-CI timing* plus *marker-verified provenance* — the gate is not just early, its passing is
-independently auditable.
+becomes a **deterministic, forgeable-proof fact** rather than a trust assumption. What does CI-on-PR
+give the merge step to trust? Only that the PR exists. This hook hands it a tree-keyed marker: the gate
+fired early, and its passing is independently auditable.
 
 ## Mechanism
 

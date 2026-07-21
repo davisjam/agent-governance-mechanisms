@@ -36,9 +36,10 @@ what the system does *for users*. This describes what the *fleet does to produce
 axis is the **subject** — product runtime versus agent fleet + orchestrator loop. Everything else, the
 *method*, is **reused**: the same tier-derivation maps a fleet invariant's temporal shape to its checker
 tier; the same coordination-primitive and temporal-form types annotate its seams; the same drift-gate
-discipline holds it to reality. It is the trunk method reified toward the **orchestration** subject, exactly
-as the product models reify it toward the product — the **second arm of the bridge's Y**, long a placeholder,
-now populated.
+discipline holds it to reality. Leave the fleet as a prose runbook and it rots the moment the dispatch
+tool changes, with no gate to catch the divergence. This model reifies the trunk method toward the
+**orchestration** subject exactly as the product models reify it toward the product — the second arm of
+the bridge's Y, long a placeholder, now populated.
 
 ## The fleet, made executable (not a doc)
 
@@ -69,8 +70,8 @@ fleet becomes as checkable as the product, on the same rails.
 ## Prerequisites
 
 - **The trunk method already exists** — the tier-derivation, the coordination/temporal types, the drift-gate
-  machinery — so the orchestration arm *reuses* it rather than reinventing. That reuse is the whole point of
-  modeling this subject as a second arm rather than a bespoke fleet doc.
+  machinery — so the orchestration arm *reuses* it rather than reinventing. That reuse is why this subject
+  is modeled as a second arm rather than as a bespoke fleet doc.
 - **The fleet lifecycle is enacted through addressable substrate** (a registry, a tombstone record, a
   worktree tool) the model can reconcile against — without a real event vocabulary to check the states
   against, it is a hand-authored doc, not a checked model.

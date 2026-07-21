@@ -27,9 +27,9 @@ be dropped under time pressure. The failure is *incomplete plans whose gaps resu
 (scope conditions, phase decomposition, second-order dynamics, a DoD with functional invariants, an
 observability/event-bus block) are precisely the ones a hurried author drops. A **template makes the
 required sections structural**: the doc is not complete without them, a scaffold pre-places them, and a
-lint can check for them. The distinction is *a structural section-contract* versus *an unenforced norm of
-"be thorough."* It is the planning-artifact analogue of a typed schema — the shape is declared, not
-remembered.
+lint can check for them. "Be thorough" is a norm nothing enforces; it fails the moment the author is
+rushed. A section-contract holds regardless — it is the planning-artifact analogue of a typed schema, the
+shape declared rather than remembered.
 
 ## Mechanism
 

@@ -30,8 +30,10 @@ Prose architecture docs **drift**, because nothing forces them true — they are
 occasionally and validated never. These models are **executable**: they are *data that tools, lints,
 and deploy scripts read on every run*, and that *generate* real artifacts (NetworkPolicy, service
 wiring, API docs). Because they are continuously *used* and *validated*, they **cannot** go stale — the
-build fails the moment a model diverges from the code. The distinction is *executable, continuously-
-exercised source-of-truth* versus *prose that is trusted and rots*.
+build fails the moment a model diverges from the code. A prose doc can be accurate too — on the day it
+is written. What it lacks is the thing that keeps it accurate: nothing reads it on every run, so nothing
+notices when it falls behind. An executable model is read and checked continuously, so drift surfaces as
+a failed build instead of a stale paragraph nobody reopened.
 
 **Why now:** MBSE — modelling your system as typed source-of-truth — has long been *possible* and
 rarely *done*: maintaining the models and satisfying the drift gates is tedious, and humans resent the

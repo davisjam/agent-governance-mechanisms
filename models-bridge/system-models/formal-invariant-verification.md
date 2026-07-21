@@ -1,11 +1,11 @@
 # Formal invariant verification (temporal form → model checking)
 
 **Intent** — Give every model invariant a **temporal form** — a temporal-logic operator saying whether it
-is *safety* (`[]P` — always holds) or *liveness* (`P ~> Q` — eventually leads to) — and make that form
-**load-bearing**: it derives *which exhaustive checker verifies the invariant*. An invariant is then
-proven by the method its shape demands (a state-space model-check, not a sampled test), and it cannot be
-silently mis-verified (our instance: TLA+ temporal operators on the cross-service state model, checked by
-TLC plus a bounded-BFS "simworld").
+is *safety* (`[]P`, always holds) or *liveness* (`P ~> Q`, eventually leads to), and make that form **the
+routing input**: it derives *which exhaustive checker verifies the invariant*. An invariant is then
+proven by the method its shape demands — a state-space model-check, not a sampled test — and it cannot be
+silently mis-verified (our instance: temporal-logic operators on the cross-service state model, checked by
+a model checker plus a bounded-BFS "simworld").
 
 | | |
 |---|---|
@@ -29,11 +29,12 @@ invariant gets routed to a safety runtime that structurally cannot see its viola
 A property test generates inputs and checks a predicate — it *samples* a space it cannot exhaust, so it
 raises confidence without proving. A model-check **exhaustively explores** the (bounded) state space:
 it either proves the invariant across every interleaving or returns a concrete counterexample trace. And
-the temporal *form* does something a property test conflates — it names **safety vs liveness** explicitly
-(`[]P` vs `P ~> Q`), and, the load-bearing move, that operator **derives which checker runs**. The form
-is *consumed*, not decorative: a lint rejects an invariant whose temporal shape doesn't match its routed
-checker, so "a liveness property checked by a safety runtime" becomes impossible rather than silent.
-Sampling raises confidence; the temporal form plus the model-check *routes and proves*.
+the temporal *form* does something a property test conflates: it names **safety vs liveness** explicitly
+(`[]P` vs `P ~> Q`), and that operator **derives which checker runs**. The form is *consumed*, not
+decorative. A lint rejects an invariant whose temporal shape doesn't match its routed checker, so "a
+liveness property checked by a safety runtime" becomes impossible rather than silent. A sampled test that
+misses the one adversarial schedule reports green and moves on; the exhaustive check routed from the
+temporal form has no un-visited schedule to hide the bug in.
 
 ## Mechanism
 
@@ -53,7 +54,7 @@ parallel one — an established model checker already subsumes the temporal logi
 - **A required, consumed temporal-form field** — optional or defaulted, it rots; the point is that the
   form is *the* routing input, so it must be present *and* acted on.
 - **At least one exhaustive checker** (a state-space BFS and/or a temporal model checker) the derived tier
-  can route to — the form is only load-bearing if something reads it.
+  can route to — the form routes nothing if no checker reads it.
 - **A bounded state space** — a model-check is exhaustive only within bounds; an unbounded model is checked
   to a depth, not proven absolutely.
 
@@ -67,7 +68,7 @@ parallel one — an established model checker already subsumes the temporal logi
   hairy multi-actor races that earn it.
 - **The form must stay honest.** Its whole value is being *consumed* — deriving the tier, validated by the
   match lint. A decorative temporal string no checker reads is worse than none: it *looks* verified and
-  isn't. The match lint is what keeps it load-bearing.
+  isn't. The match lint is what keeps the form true to the checker it names.
 
 ## Known uses
 

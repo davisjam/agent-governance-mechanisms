@@ -49,9 +49,10 @@ it varies four named axes an independent hook can't:
 - **A typed facet registry + a measured leash.** One place says which facets exist (a typed key set, not
   free strings); per-firing telemetry and a yield query make a dead or over-firing facet *visible*.
 
-The distinction is *single hook* versus *a registry of facets over one shared budget*: the consolidation is
-the mechanism, and it exists precisely because more than one soft reflection, run independently, destroys
-itself.
+A single hook works — for exactly one reflex. Add a second and the independent-hook path starts
+destroying itself: N nudges a turn, N copies of the tempo machinery, N policy strings rotting in place.
+The consolidation into a registry over one shared budget is the mechanism, and it earns its keep the
+moment there is a second soft reflection to hold.
 
 ## Mechanism
 
