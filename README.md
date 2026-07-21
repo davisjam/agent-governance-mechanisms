@@ -9,7 +9,8 @@ recurring failure it kills, and why it is **not** just the cheaper thing everyon
 
 ## Between two schools of thought
 
-Two common ways to build with agents sit at opposite poles. This catalogue is about the **midway**.
+Two common ways to build with agents sit at opposite ends of a spectrum. This catalogue is about the
+**midway**.
 
 | Vibe coding | · Governance-centric · — **the midway** | Oversight-centric |
 |:---|:---:|:---|
@@ -17,11 +18,10 @@ Two common ways to build with agents sit at opposite poles. This catalogue is ab
 | *all velocity — no guardrails* | *velocity + guardrails grown from failure* | *all oversight — everything checked* |
 | e.g. [Karpathy](https://x.com/karpathy/status/1886192184808149383) · [Gas Town](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04) | | e.g. [Meyer, CACM](https://dl.acm.org/doi/full/10.1145/3773295) · [vibe-OS / vibe-tools](https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html) |
 
-**Both poles pay the *pet tax.*** Each gives per-change human attention — *coaxing* the output (left) or
-*inspecting* it (right) — and that attention scales linearly with the herd, so it becomes the bottleneck.
-The midway is **cattle, not pets**: you build the fences and chutes once, and the *guardrails* ride each
-change, not a person. One pole pets the fleet out of affection, the other out of anxiety; only the middle
-runs the herd.
+**Both ends of the spectrum pay the *pet tax.*** Each spends per-change human attention — *coaxing* the
+output at one end or *inspecting* it at the other — and that attention grows with the size of the fleet
+until it becomes the bottleneck. The midway is **cattle, not pets**: build the fences and chutes once, and
+the *guardrails* ride every change instead of a person.
 
 This middle column isn't new. It's the agentic-era instantiation of quality practices long standard in
 regulated industry — documented process, requirements traceability, verification tiers scaled to
@@ -32,6 +32,30 @@ drift**: the traceability matrix is a queried model behind a drift gate, the pro
 infrastructure, the verification records are machine-checked against the code rather than filed in a
 spreadsheet. The contribution isn't the assurance discipline — it's making it *live*, and tractable for a
 team of one.
+
+## The bridge: documentation, taken to its limit
+
+This is the right way to read the whole catalogue. Anyone who has built with agents has found the first move
+on their own: give them good documentation and tests, then point them at it. Agents write and maintain those
+artifacts as fast as they write code, so the cost that always made thorough docs a fantasy is gone. The step
+the training data won't suggest is the next one — **documentation has a hierarchy, and its top is not prose.
+It is a typed model.**
+
+A context-bounded agent working on a context-*exceeding* system needs a **typed, queryable, drift-checked
+model** of that system to reason through — the blueprint for a structure too large to hold in one view. That
+is **model-based software engineering**, and it is the bridge between the agent and the codebase it can't fit
+in its head. Two things make it more than a tidier README:
+
+- **Agent-legible and precise.** A six-state machine with typed invariants is something an agent reasons over
+  *without error* the way it never could over 300,000 lines of prose-and-code. Abstraction shrinks the space
+  it can be wrong in, not just the token count — a model is more precise than any document.
+- **It can't lie.** A document rots the moment the code moves; a model wired to a build-time drift check
+  *cannot* — the gate stays red until the map matches the territory again. That guarantee is what prose can
+  never give.
+
+Because agents build and maintain the model the way they maintain docs and tests, pointing them at it costs
+almost nothing — and it pays back in **higher code quality, fewer tokens spent rederiving what the model
+already states, and fewer mistakes.** The catalogue's **models-bridge** role is this bridge, made concrete.
 
 ## Governance has two mechanisms
 

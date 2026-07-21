@@ -1026,6 +1026,34 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <p class="try-sg" style="margin:-0.4rem 0 1.4rem 1.6rem;"><a href="quick-start.html"><em>Try out Claude
   in self-governance or self-operations mode →</em></a></p>
 
+  <h2 class="section-h">The bridge: documentation, taken to its limit</h2>
+  <p class="lead">Anyone who has built with agents has found the first move on their own: give them good
+  documentation and tests, then point them at it. Agents write and maintain those artifacts as fast as they
+  write code, so the cost that always made thorough docs a fantasy is gone. The step the training data won't
+  suggest is the next one — <b>documentation has a hierarchy, and its top is not prose. It is a typed
+  model.</b></p>
+
+  <p class="section-sub" style="margin-top:0.7rem;">A context-bounded agent working on a
+  context-<em>exceeding</em> system needs a <b>typed, queryable, drift-checked model</b> of that system to
+  reason through — the blueprint for a structure too large to hold in one view. That is
+  <span class="term">model-based software engineering</span>, and it is the bridge between the agent and the
+  codebase it cannot fit in its head. Two things make it more than a tidier README:</p>
+
+  <div class="mechanisms">
+    <div class="mech"><h3>Agent-legible &amp; precise</h3><p>A six-state machine with typed invariants is
+    something an agent reasons over <b>without error</b> the way it never could over 300,000 lines of
+    prose-and-code. Abstraction shrinks the space it can be wrong in, not just the token count — a model is
+    more precise than any document.</p></div>
+    <div class="mech right"><h3>It can’t lie</h3><p>A document rots the moment the code moves; a model wired
+    to a <b>build-time drift check cannot</b> — the gate stays red until the map matches the territory again.
+    That guarantee is what prose can never give.</p></div>
+  </div>
+
+  <p class="section-sub">Because agents build and maintain the model the way they maintain docs and tests,
+  pointing them at it costs almost nothing — and it pays back in <b>higher code quality, fewer tokens spent
+  rederiving what the model already states, and fewer mistakes.</b> The catalogue's <b>models-bridge</b> role
+  is this bridge, made concrete.</p>
+
   <h2 class="section-h">Between two schools of thought</h2>
   <p class="section-sub">Two common ways to build with agents sit at opposite ends of a spectrum. This
   site is about the midway.</p>
