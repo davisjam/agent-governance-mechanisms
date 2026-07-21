@@ -21,11 +21,22 @@ ways in:
   > `CLAUDE.md`. Propose edits that fold the method into my doc — adopt / adapt / skip per principle,
   > preserving my current rules. Show me a diff.
 
-- **After you install the skill** — have Claude introspect what it now carries:
+- **After you install the skills** — have Claude introspect what each now carries and adapt it to your repo.
+  One prompt per skill:
 
   > self-governance: read your own `principles.md` and the `CLAUDE-starter` you bundle, compare against my
   > repo's `CLAUDE.md`, and propose how to integrate the method — adopt / adapt / skip per principle,
   > keeping what I already have.
+
+  self-operations is the heavier adopt — it has to *author* your Part B (the lifecycle map, the symptom→doc
+  pointers, the typed runbooks) and propose which operator-loop hooks to wire:
+
+  > self-operations: read your `SKILL.md` + the `examples/` (the lifecycle models and runbooks), then
+  > inspect *my* repo — how agents are dispatched, where ops docs live, the deploy path, the host/VM, cron.
+  > Draft my **Part B**: the lifecycle map filled in, a symptom→resolving-doc pointer catalog, and the typed
+  > runbooks, citing real files. Then propose which **operator-loop hooks** (turn-end reflection nudge,
+  > memory-routing nudge) are worth wiring, and adapt the shipped hook library to my repo. **State your
+  > assumptions so I correct rather than supply, and confirm the models before you emit anything.**
 
 ## Path A — the self-governance skill (batteries included)
 
