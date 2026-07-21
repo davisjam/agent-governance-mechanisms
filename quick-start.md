@@ -30,12 +30,14 @@ your approval writes, your repo**. It is source-visible, MIT-licensed, gated (*a
 /plugin install agent-governance@agent-governance-mechanisms
 ```
 
-The `agent-governance` plugin ships **two partner skills**: **self-governance** (*harden* — audit for
-missing guardrails, or convert a recurring failure into a durable control) and **self-operations**
-(*operate* — run the agent-fleet substrate day-to-day). Start a new session and both load. Pull a later
-release with `/plugin marketplace update agent-governance-mechanisms`. No marketplace? Vendor the folder —
-copy `plugin/agent-governance/skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/` (one
-repo), then start a fresh session.
+The `agent-governance` plugin ships **three partner skills**: **self-governance** (*harden* — audit for
+missing guardrails, or convert a recurring failure into a durable control), **self-operations**
+(*operate* — run the agent-fleet substrate day-to-day), and **self-communicate** (*communicate* — write
+and diagram engineer-facing docs well: the rhetoric toolkit, the Diátaxis register, a house lexicon, and a
+prose+diagram audit). All three install with the same plugin — start a new session and they load. Pull a
+later release with `/plugin marketplace update agent-governance-mechanisms`. No marketplace? Vendor the
+folder — copy `plugin/agent-governance/skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/`
+(one repo), then start a fresh session.
 
 **Path B — DIY (installs nothing).** The conservative choice — for a company, or anyone who can't run a
 third-party plugin. Nothing runs in your agent loop that you didn't write. Vendor a copy of the catalogue
@@ -137,7 +139,23 @@ Read the operational-playbook starter (downloads/op-playbook-starter.md) and the
 mechanism under agent/governance-doc-controls/. Pick the substrate in my repo that breaks most often (deploy,
 the queue, the host VM, cron — your call, tell me why). Draft a situation-keyed playbook for it: per failure,
 the symptom, the cause, and the fix, citing real files. Show me the draft before writing it.
+===
+@TITLE: Bootstrap your house lexicon, then write and audit prose with the skill
+@PATH: both
+@EXPLAIN: The controls, design docs, runbooks, and handoffs you adopt above are all *prose* — and prose an engineer or agent must read cleanly. The self-communicate skill supplies the craft: a house lexicon (so a term means the same thing everywhere), the Diátaxis register (so a doc has the right shape), and an audit that grades a passage and emits fixes. Bootstrap the lexicon first by walking your codebase and confirming the terms with the maintainer; then write and audit prose against the skill.
+@PROMPT:
+(Path A) self-communicate: bootstrap my house lexicon — walk my codebase (sample my house-rules doc, a
+handful of design docs, and my typed enums / registries / schema constants), extract every term I use with a
+specific meaning more than once, classify each as portable (link the established name) or house (note the
+concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
+when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
+run the audit procedure over the draft and show me the fixes.
+(Path B) Read the self-communicate skill resources (its SKILL.md plus the STYLE-LEXICON, STYLE-ENGINEERING,
+STYLE-RHETORIC, STYLE-VOICE, STYLE-DIAGRAMS, and STYLE-AUDIT files under the skills/self-communicate folder).
+Bootstrap my house lexicon by walking my codebase per the lexicon's bootstrap recipe, confirm the terms with
+me, then use the engineering register to write my docs and the audit procedure to grade them.
 -->
+
 
 ## Run the sequence — Auto mode
 
@@ -197,6 +215,18 @@ Read the operational-playbook starter (downloads/op-playbook-starter.md) and the
 mechanism under agent/governance-doc-controls/. Pick the substrate in my repo that breaks most often (deploy,
 the queue, the host VM, cron — your call, tell me why). Draft a situation-keyed playbook for it: per failure,
 the symptom, the cause, and the fix, citing real files. Show me the draft before writing it.
+
+# Step 8 — Bootstrap your house lexicon, then write and audit prose with the skill  [either path]
+(Path A) self-communicate: bootstrap my house lexicon — walk my codebase (sample my house-rules doc, a
+handful of design docs, and my typed enums / registries / schema constants), extract every term I use with a
+specific meaning more than once, classify each as portable (link the established name) or house (note the
+concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
+when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
+run the audit procedure over the draft and show me the fixes.
+(Path B) Read the self-communicate skill resources (its SKILL.md plus the STYLE-LEXICON, STYLE-ENGINEERING,
+STYLE-RHETORIC, STYLE-VOICE, STYLE-DIAGRAMS, and STYLE-AUDIT files under the skills/self-communicate folder).
+Bootstrap my house lexicon by walking my codebase per the lexicon's bootstrap recipe, confirm the terms with
+me, then use the engineering register to write my docs and the audit procedure to grade them.
 ```
 <!--/adoption-auto-->
 
@@ -303,6 +333,23 @@ the symptom, the cause, and the fix, citing real files. Show me the draft before
 ```
 
 **Read more:** [op-playbook starter](downloads/op-playbook-starter.md) · [operational playbooks](agent/governance-doc-controls/operational-playbooks.md) · [operator-runbook skill](agent/governance-doc-controls/operator-runbook-skill.md)
+
+### Step 8 — Bootstrap your house lexicon, then write and audit prose with the skill
+
+The controls, design docs, runbooks, and handoffs you adopt above are all *prose* — and prose an engineer or agent must read cleanly. The self-communicate skill supplies the craft: a house lexicon (so a term means the same thing everywhere), the Diátaxis register (so a doc has the right shape), and an audit that grades a passage and emits fixes. Bootstrap the lexicon first by walking your codebase and confirming the terms with the maintainer; then write and audit prose against the skill.
+
+```
+(Path A) self-communicate: bootstrap my house lexicon — walk my codebase (sample my house-rules doc, a
+handful of design docs, and my typed enums / registries / schema constants), extract every term I use with a
+specific meaning more than once, classify each as portable (link the established name) or house (note the
+concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
+when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
+run the audit procedure over the draft and show me the fixes.
+(Path B) Read the self-communicate skill resources (its SKILL.md plus the STYLE-LEXICON, STYLE-ENGINEERING,
+STYLE-RHETORIC, STYLE-VOICE, STYLE-DIAGRAMS, and STYLE-AUDIT files under the skills/self-communicate folder).
+Bootstrap my house lexicon by walking my codebase per the lexicon's bootstrap recipe, confirm the terms with
+me, then use the engineering register to write my docs and the audit procedure to grade them.
+```
 <!--/adoption-interactive-->
 
 ## Which path?

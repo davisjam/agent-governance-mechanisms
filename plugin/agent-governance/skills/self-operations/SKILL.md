@@ -129,4 +129,8 @@ Copy a sample's shape, swap in this repo's tools, drop the rest.
   execute or block. The one hard control it recommends is a reference-validity lint over your Part B.
 - **Partner with self-governance.** This routes to the fix; that classifies a recurring failure's class
   and designs the durable control. Two soft skills — one operates the substrate, one hardens it.
+- **Partner with self-communicate — write the operations prose well.** When you write a runbook, a
+  handoff, or a banking doc, reach for [`self-communicate`](../self-communicate/SKILL.md): the shared
+  lexicon (its **Operations** cluster) names operations concepts consistently, and its engineering register
+  keeps a runbook readable and correctly shaped.
 - **Stay in the operations lane.** This governs *operating the repo*, not the product's domain logic.

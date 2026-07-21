@@ -91,9 +91,9 @@ can't name the failure a mechanism prevents in *your* system, you might not need
 - **[Quick start](quick-start.md)** — adopt these in your own repo.
 - **The live system** these mechanisms govern: **DocAble** ([scholaccess.com](https://scholaccess.com)).
 
-## The two skills
+## The three skills
 
-The catalogue also ships as **two partner Claude skills** (one plugin, `agent-governance`):
+The catalogue also ships as **three partner Claude skills** (one plugin, `agent-governance`):
 
 - **self-governance** — *harden.* Audit your repo for missing guardrails, or convert a recurring failure
   into a durable control. Carries the AI-First Engineering Method as its operating stance, plus the
@@ -101,17 +101,24 @@ The catalogue also ships as **two partner Claude skills** (one plugin, `agent-go
 - **self-operations** — *operate.* Run the agent-fleet substrate day to day: the positive lifecycle map
   (agents, context, git, deploy, dev-env, cron) plus a symptom → resolving-doc catalog when something
   breaks. It bootstraps to your repo by inspection.
+- **self-communicate** — *communicate.* Write and diagram engineer-facing docs well: a rhetoric toolkit
+  (classical figures used with variety), the Diátaxis engineering register, a house lexicon that names
+  concepts consistently, a target voice, and an audit that grades a passage and emits fixes — plus a
+  Mermaid-first diagram leg. It bootstraps its lexicon from a codebase walk and keeps it living.
 
 They partner: **operate routes a break to its fix; when a failure recurs, it hands the class to
-self-governance to convert into a control.** Install both from the [quick start](quick-start.md).
+self-governance to convert into a control; and self-communicate writes the result up in the shared
+register.** Install all three from the [quick start](quick-start.md).
 
-They're **two lenses on one substrate, not competitors.** self-governance is the *census of controls* and
-the engine that mints new ones — the **design-time** view (what controls exist, which you're missing, how
-to add one). self-operations *runs the substrate those controls govern* — the **run-time** view (the
-lifecycle you operate, the runbook you follow, the hook you wire). The same mechanism appears in
-self-governance's census *and* is operated day-to-day through self-operations — one substrate seen
-design-time vs run-time, not two copies. The loop closes between them: operate surfaces a recurring break →
-harden mints the control → it joins the census *and* the running substrate.
+Govern and operate are **two lenses on one substrate, not competitors.** self-governance is the *census of
+controls* and the engine that mints new ones — the **design-time** view (what controls exist, which you're
+missing, how to add one). self-operations *runs the substrate those controls govern* — the **run-time** view
+(the lifecycle you operate, the runbook you follow, the hook you wire). The same mechanism appears in
+self-governance's census *and* is operated through self-operations — one substrate seen design-time vs
+run-time, not two copies. **self-communicate sits alongside as a third leg** — not a lens on that substrate,
+but the craft that keeps its output legible: the controls, design docs, runbooks, and handoffs are all prose,
+and this skill supplies the register and the shared vocabulary they're written in. govern / operate /
+communicate.
 
 ## Using this repo
 

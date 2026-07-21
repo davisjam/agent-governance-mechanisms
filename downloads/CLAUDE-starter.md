@@ -632,13 +632,19 @@ If a rule fails any of these, route it out: to a subsystem doc, a class doc-comm
 carries the minimum agent boot context; the referenced doc carries the complete rationale.
 
 **The skill case — cite, don't mirror.** If the depth lives in an *invocable skill* (a hardening skill,
-an operating skill), do **not** copy its content here. A mirrored skill fires ~never — agents apply the
-always-loaded copy ambiently and never *invoke* the skill, losing its depth-on-demand (its typed modes,
-its on-demand reference, its recurrence gate), while the two copies drift (→ A.2.5). Keep only the thin,
-always-on **reflex** in CLAUDE.md, **cite** the skill for the machinery, and add a **trigger** — a
-lifecycle hook that pushes "invoke `<skill>`" at the decision point where its structured mode earns its
-keep (the reflection-facet / lifecycle-hook controls in the catalogue). It is the single-source-of-truth
-move (→ A.9) — but here the copy doesn't merely drift, it *suppresses the skill.*
+an operating skill, a communicating skill), do **not** copy its content here. A mirrored skill fires ~never
+— agents apply the always-loaded copy ambiently and never *invoke* the skill, losing its depth-on-demand
+(its typed modes, its on-demand reference, its recurrence gate), while the two copies drift (→ A.2.5). Keep
+only the thin, always-on **reflex** in CLAUDE.md, **cite** the skill for the machinery, and add a
+**trigger** — a lifecycle hook that pushes "invoke `<skill>`" at the decision point where its structured
+mode earns its keep (the reflection-facet / lifecycle-hook controls in the catalogue). It is the
+single-source-of-truth move (→ A.9) — but here the copy doesn't merely drift, it *suppresses the skill.*
+
+**Keep the house lexicon living.** The communicating skill (self-communicate) owns a **house lexicon** —
+the vocabulary of terms-of-art your prose reuses. Bootstrap it once by walking your codebase (sample the
+house-rules doc, design docs, and typed enums / registries), then confirm the terms with the maintainer.
+Keep it living: update it whenever you coin a term or notice two words for one idea. A consistent
+vocabulary is what lets a control mean the same thing everywhere it is cited.
 
 ## The shape of a rule (one worked example)
 

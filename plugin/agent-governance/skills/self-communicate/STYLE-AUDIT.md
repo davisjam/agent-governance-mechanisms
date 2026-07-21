@@ -1,0 +1,229 @@
+# STYLE-AUDIT.md — a playbook for auditing prose
+
+This is an **agent-facing** style doc — a resource of the `self-communicate` skill, not a catalogue entry.
+It is not rendered to HTML or served; it is read by an agent authoring or auditing prose.
+
+## What this is
+
+A procedure an LLM runs over a passage of prose to grade it and emit concrete fixes. It operationalizes
+the three style sources into a checklist:
+
+- [`STYLE-RHETORIC.md`](STYLE-RHETORIC.md) — the rhetoric toolkit and the sameness/density tells.
+- [`STYLE-VOICE.md`](STYLE-VOICE.md) — the target voice (Prof. Davis) with verbatim exemplars.
+- The house-rules writing-style discipline — active voice, say-it-once, cut-qualifiers, describe-don't-sell,
+  and the interpretability principle (a passage must stand alone; describe artifacts by role, not by
+  unshipped filename).
+
+Run the passes **in order**. Each pass says what to DETECT (a heuristic mechanical enough to actually
+apply) and the FIX. Collect findings as you go; rank and format them at the end.
+
+---
+
+## Pass 1 — LLM-tells / density scan
+
+The mechanical pass. Count things; a count over threshold is a finding.
+
+- **Em-dash density.** Count em-dashes (`—`) per 100 words, and flag any single sentence with two or more.
+  **Detect:** more than ~1 dash per 40–50 words, or a passage that uses the dash for *every* aside,
+  insertion, and pivot — the "universal joint" pattern. **Fix:** convert most to a period (two sentences),
+  a comma (a light aside), or a colon (a setup→payoff). Keep the dash only for a genuine interruption. Aim
+  to cut dash count by at least half.
+- **A single figure on a fixed beat.** **Detect:** the same rhetorical figure recurring paragraph after
+  paragraph — most often the **mechanical tricolon** (three-item parallel lists on repeat) or the
+  **reflexive "not X, but Y"** (count these two phrasings specifically; two in a short passage is a smell,
+  three is a finding). Also watch for anaphora or antithesis on every beat. **Fix:** keep the strongest
+  one instance; rewrite the rest. Swap in a *different* figure from `STYLE-RHETORIC.md` (list two items
+  instead of three, or four; turn one "not X, but Y" into a plain assertion; replace a tricolon with a
+  single sharp claim). Variety is the fix, not deletion.
+- **Uniform sentence length / cadence.** **Detect:** a run of sentences all roughly the same length
+  (say, 5+ sentences all 15–25 words with the same subject-verb-object shape). Machine prose drones at one
+  tempo. **Fix:** break the beat. Put a short 3–6-word sentence next to a long one. Front-load a
+  fragment. The house voice alternates aphoristic declaratives with longer explanatory chains — mirror
+  that rhythm (see `STYLE-VOICE.md`).
+- **Ornament burying the argument.** **Detect:** a paragraph so dense with figures that the point is hard
+  to extract on one read. **Fix:** state the point plainly first, then add back *one* figure where it
+  sharpens the sentence.
+
+## Pass 2 — Voice match (vs `STYLE-VOICE.md`)
+
+Compare against the target voice. The exemplars in [`STYLE-VOICE.md`](STYLE-VOICE.md) are the reference.
+
+**Match the ENGINEERING register by default.** `STYLE-VOICE.md` carries three registers, and for repo
+prose — mechanism entries, design docs, CLAUDE rules, code comments, runbooks — the target is the
+**engineering / documentation** register (the third-party Apache-docs exemplars E1–E8), NOT the essay or
+academic ones. Grade against the engineering exemplars and against [`STYLE-ENGINEERING.md`](STYLE-ENGINEERING.md)
+(the Diátaxis discourse layer). Reach for the discursive register only in a genuinely persuading
+**Motivation**, and the academic register only in a scoped **Intent** / "Why it's not just X" claim. If a
+reference or how-to passage reads like an essay, that is a register-drift finding — flag it and pull it
+back to the engineering register.
+
+- **Hedging.** **Detect:** stacked qualifiers softening a claim the writer clearly believes — "it seems
+  that perhaps this might arguably…". **Fix:** state it. The house voice is confident; it does not perform
+  uncertainty.
+- **Absolutism with no caveat.** **Detect:** a sweeping claim ("this always works", "never fails") with no
+  acknowledged limit. **Fix:** pair confidence with an explicit caveat, in the exemplar cadence — "YES,
+  with an important caveat" / "But it is not a silver bullet." Add the real limit right after the claim.
+- **Abstract claim with no concrete anchor.** **Detect:** a generalization that arrives before (or
+  without) any instance — a number, a named event, a worked example. **Fix:** put the anchor first. The
+  voice earns the abstraction with the instance ("72 minutes", "the CrowdStrike outage", the Ship of
+  Theseus), never floats it alone.
+- **Register drift — jargon where a plain word would carry it.** **Detect:** an inflated or abstract word
+  doing a job a common word does better. **Fix:** reach for the plain word ("pickle", "silver bullet")
+  when it carries the idea, and the exact technical term only when the plain word won't.
+- **Missing direct address where it would help.** **Detect:** instructional prose that lectures past the
+  reader when a "you" would land it. **Fix:** address the reader once, at the point that matters ("You'll
+  hit this the first time two agents share a worktree"). Keep it occasional — constant second-person turns
+  preachy.
+
+## Pass 3 — House style (the writing-style rulebook)
+
+The house rulebook — the writing-style discipline (active voice, say-it-once, cut-qualifiers,
+describe-don't-sell). Each item below is a named rule in that discipline.
+
+- **Passive / actor-less voice.** **Detect:** "Y is what X does", "the record's correctness is what the
+  reclaim trusts", any subject that is not the actor. **Fix:** "X does Y" — name the actor, use the strong
+  verb. "The reclaim trusts the record."
+- **The "X *is* a Y" copula.** **Detect:** an equative sentence that stalls on "is a / are a". **Fix:**
+  reach for the verb that says what X *does*. "The pre-commit hook gates every commit," not "the
+  pre-commit hook *is* a gate." Keep the copula only when the identity claim itself is the point.
+- **Restating the same point (say-it-once).** **Detect:** a "One line:" / "the heart of it" opener, a
+  closing sentence that restates the paragraph, or two sections making the same point. **Fix:** cut the
+  restatement. Make each section carry a *distinct* claim.
+- **Bare qualifiers.** **Detect:** *very, quite, essentially, arguably, reliably*, "the whole point", "the
+  heart of". **Fix:** delete them. Keep *precisely because* / *exactly when* only where they sharpen a
+  causal claim.
+- **Reflex labels.** **Detect:** "load-bearing" and similar filler labels used by habit. **Fix:** the
+  precise term — *central*, *authoritative*, *the weak point*, *essential*.
+- **Selling / crowning.** **Detect:** "the best", "the highest-leverage", "every project should adopt
+  this", or the prose commenting on its own novelty or thinness. **Fix:** state the mechanism and the
+  failure it kills. Let the reader judge value.
+- **Wall of text where bullets fit.** **Detect:** a paragraph over ~4 sentences, or a comma-run of three+
+  parallel items inside one sentence. **Fix:** break to bullets with a **bold lead-in** per item; lead the
+  section with the frame, break the detail out.
+
+## Pass 4 — Structure & flow
+
+Read the passage as a whole, top to bottom.
+
+- **Weak transitions.** **Detect:** paragraphs that jump with no connective logic, or lean on "Moreover /
+  Furthermore / Additionally" as filler glue. **Fix:** open each paragraph with the claim that follows
+  from the last; cut the filler adverb.
+- **Non-parallel headings.** **Detect:** a heading set that mixes grammatical shapes (one noun phrase, one
+  imperative, one gerund). **Fix:** pick one shape and apply it across the set.
+- **Sections restating each other.** **Detect:** two sections (e.g. an intro and a "why it matters") that
+  make the same point in different words. **Fix:** merge them, or sharpen each to a distinct job — the
+  house rule is that Motivation, "Why it's not just", and the closing each land a *different* point.
+- **Buried lede.** **Detect:** the main claim arriving in the third paragraph after setup. **Fix:** lead
+  with the frame, then support it.
+
+## Pass 5 — Visualization
+
+Ask whether a picture would carry the content better, and whether any picture already present is the right
+kind and readable. Grade against [`STYLE-DIAGRAMS.md`](STYLE-DIAGRAMS.md) (diagram vocabulary + realization
+rule). This pass applies to any passage that describes a shape, and to any passage that already has a
+diagram — not only catalogue entries.
+
+- **A diagram is warranted but missing.** **Detect:** a wall of prose describing a *shape* — an
+  architecture, a multi-actor interaction over time, a lifecycle with states, a data schema, a branching
+  procedure. Prose that spends three-plus sentences tracing "A connects to B, which calls C, which returns
+  to A" is carrying a shape the reader has to reassemble in their head. **Fix:** draw it. Add the diagram
+  type that fits the shape (per STYLE-DIAGRAMS: structure→C4/component/deployment, behavior→sequence/
+  state/flow, data→ER/class), and cut the prose down to the frame plus the diagram's takeaway.
+- **Wrong diagram type.** **Detect:** a diagram whose type fights its content — a flowchart drawing a
+  lifecycle (its "steps" are really states), a sequence diagram for standing structure, a schema where an
+  interaction was meant. **Fix:** swap to the right type. Ordered actor messages → sequence; one entity's
+  states → state; standing parts → component; persistent data → ER. A flowchart used where a state diagram
+  belongs is the most common miss.
+- **Bespoke SVG where Mermaid would do.** **Detect:** a hand-authored HTML/inline-SVG diagram whose layout
+  is an ordinary graph, sequence, or state shape Mermaid can lay out — with no stated reason for the drop.
+  **Fix:** rewrite it as a fenced `mermaid` block (text-authored, renders in Markdown, diffs like code).
+  Keep bespoke SVG only for a geometry Mermaid can't express (the catalogue's own "Y" figure) — and note
+  the reason.
+- **Inaccessible diagram.** **Detect:** labels too small to read or distinctions carried by color alone;
+  no alt text / description (`accTitle` / `accDescr` for Mermaid, `<title>`/`<desc>` + `aria-labelledby`
+  for SVG); or an interactive SVG with clickable children marked `role="img"` (which hides them) instead
+  of `role="group"`. **Fix:** enlarge labels and add a non-color channel; add a description stating the
+  diagram's *content* and takeaway; switch an interactive SVG to `role="group"`. Test by reading the alt
+  text alone with the picture hidden — if it doesn't convey the point, the diagram is decoration.
+
+## Pass 6 — Interpretability (catalogue entries only)
+
+Skip this pass for agent-facing docs. Run it only on catalogue entries, against the
+**interpretability principle** — an entry must stand alone to an agent with no access to the parent repo.
+
+- **Dangling paths into unshipped trees.** **Detect:** a path into `services/…`, `deploy/…`, `docs/…`,
+  `talks-and-notes/…`, or a `` `filename.py` `` this repo doesn't ship. **Fix:** describe the artifact by
+  role and shape — "a host-level flock wrapper that serializes the test runner", not the filename.
+  Intra-catalogue links (`../<role>/<family>/<mechanism>.md`) are fine — they ship.
+- **Bare rule-number citations.** **Detect:** "rule #46", "#29a", any bare `#N`. **Fix:** state the rule's
+  *content* — "a project rule that a new event-bus topic must ship an observability entry."
+- **Artifact-by-unshipped-filename instead of by role.** **Detect:** the mechanism explained *through* a
+  concrete file the reader can't see. **Fix:** state the conceptual mechanism; name a real artifact at
+  most once, for grounding, in a way that stays understandable without it.
+
+---
+
+## Prioritization — rank the findings
+
+Report findings hardest-first. A voice nitpick on a sentence that also fails interpretability is noise
+until the interpretability break is fixed.
+
+1. **Correctness & interpretability (blocking).** Anything from Pass 6 — dangling paths, bare rule
+   numbers, unshipped-filename dependence — plus any factual or logical error you spot, plus an
+   **inaccessible diagram** from Pass 5 (a picture a reader can't perceive fails the same "reaches its
+   reader" bar). These break the passage for its actual reader.
+2. **Voice & tells (substantive).** Pass 1 density findings, Pass 2 voice/register mismatches, and the
+   **communication-mode** findings from Pass 5 (a shape buried in prose that a diagram should carry, or
+   the wrong diagram type). The prose reads as machine-generated, off-register, or picture-starved; fixing
+   these is the main editorial work.
+3. **House-style & structure (polish).** Pass 3 and Pass 4 — copulas, qualifiers, transitions, headings —
+   plus the **bespoke-SVG-where-Mermaid-would-do** finding from Pass 5. Real but lower-stakes; batch them.
+
+Within a tier, order by how much the fix improves the passage, not by reading order.
+
+## Output format — the audit report
+
+Emit a report in this shape. Model it on a good editorial review: specific, actionable, quote the before
+and give the after.
+
+1. **Verdict — one line.** A single sentence: overall grade plus the dominant problem. *"Solid argument,
+   but em-dash-heavy and voiced too abstractly — anchor the claims and vary the punctuation."*
+2. **Findings — a prioritized list**, hardest-first per the ranking above. Each item has exactly three
+   parts:
+   - **Location** — a quoted snippet or a section/line reference so the fix is unambiguous.
+   - **Problem** — which pass caught it and why, in one clause.
+   - **Suggested rewrite** — the concrete *after*. Quote the before, give the after. Don't say "vary the
+     cadence" — show the rewritten sentence. For a Pass-5 finding the *after* is the concrete diagram:
+     name the type and give the Mermaid source (or the `role`/alt fix), not just "add a diagram."
+3. **What works — keep.** A short list (2–4 items) of what the passage does well, so a revision doesn't
+   sand off its strengths. Name the specific move — "the CrowdStrike anchor in ¶2 earns the abstraction;
+   keep it."
+
+Keep the report as long as the findings warrant and no longer. If the passage is clean, say so in the
+verdict and list only the "keep" items.
+
+## Worked example (before → after)
+
+**Before:**
+
+> The gate is a mechanism that is essential to the pipeline. It blocks bad commits — it catches lint
+> failures — it stops broken tests — and it is the load-bearing defense of the whole system. It is very
+> reliable and arguably the best part of the design.
+
+**Audit:**
+
+- *Verdict:* Off-voice and tell-heavy — copula, dash-run, bare qualifiers, and selling in three
+  sentences.
+- *Finding (voice/tells):* "It blocks… — it catches… — it stops…" is a dash-joined tricolon on one beat,
+  and the sentence stacks three dashes. → **Rewrite:** "It blocks bad commits: it catches lint failures
+  and stops broken tests before they land."
+- *Finding (house style):* "is a mechanism that is essential", "load-bearing defense", "very reliable",
+  "arguably the best" — copula, reflex label, bare qualifiers, selling. → **Rewrite:** drop them; state
+  what it does.
+- *Keep:* the three concrete failures it catches (lint, tests, bad commits) — that specificity is good;
+  just don't list them as a dashed tricolon.
+
+**After:**
+
+> The gate blocks bad commits: it catches lint failures and stops broken tests before they land. When it
+> fires, a regression that would have shipped never leaves the developer's machine.

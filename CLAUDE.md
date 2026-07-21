@@ -71,6 +71,18 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
 - **Describe, don't sell.** Give the mechanism and the failure it kills. Don't crown it (*the best*, *the
   highest-leverage*), don't tell the reader every project should adopt it, and don't comment on the
   entry's own novelty or thinness — those are the reader's calls.
+- **Avoid excessive LLM tells — vary, don't ban.** The em-dash-as-universal-joint, the mechanical
+  tricolon (rule of three), the reflexive "not X, but Y", and a uniform antithesis cadence are the giveaways
+  of machine prose. The fix is not prohibition — these are classical rhetorical figures that land when used
+  deliberately. The tell is *sameness and density*: the same figure on a fixed beat. So cap em-dash density
+  (prefer a period, comma, or colon; reach for the dash only for a genuine aside), and don't let any one
+  figure recur on every beat. Draw variety from the toolkit in
+  [`STYLE-RHETORIC.md`](plugin/agent-governance/skills/self-communicate/STYLE-RHETORIC.md),
+  and match the house voice in
+  [`STYLE-VOICE.md`](plugin/agent-governance/skills/self-communicate/STYLE-VOICE.md). To audit existing
+  prose against all of these rules and emit concrete fixes, follow
+  [`STYLE-AUDIT.md`](plugin/agent-governance/skills/self-communicate/STYLE-AUDIT.md). These style files are
+  the resources of the `self-communicate` skill.
 - **Instance entries lead with the portable pattern.** When an entry instantiates a general pattern,
   open its Intent with the transferable claim, then name the project instance in parentheses —
   *"…route all mutation of a format through one typed model with a ban-lint on the raw library (our

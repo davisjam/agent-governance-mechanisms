@@ -21,7 +21,12 @@ SKILL = os.path.join(ROOT, "plugin", "agent-governance")  # the umbrella plugin 
 SKILLS = (
     ("self-governance", os.path.join(SKILL, "skills", "self-governance"), True),
     ("self-operations", os.path.join(SKILL, "skills", "self-operations"), False),
+    ("self-communicate", os.path.join(SKILL, "skills", "self-communicate"), False),
 )
+# The subset that `bundle_skill.py` GENERATES from catalogue sources (drift-checked). An authored skill
+# (self-communicate) is not generated — it is a plain skill dir hand-written under `plugin/`, so it neither
+# perturbs bundle freshness nor ships a bundler-emitted `principles.md`.
+BUNDLED_SKILLS = frozenset({"self-governance", "self-operations"})
 SKILLDIR = SKILLS[0][1]  # back-compat alias: the flagship (self-governance) skill dir
 SKILLREF = os.path.join(SKILLDIR, "reference")
 
