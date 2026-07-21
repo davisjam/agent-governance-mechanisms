@@ -201,6 +201,14 @@ Two beats: **interpret**, then **convert**.
 
 ## Notes
 
+- **Make it fire — cite, don't mirror.** When you fold this method into a repo's CLAUDE.md, do **not**
+  copy the principles or the INTERPRET-FAILURE beats into that always-loaded doc. A mirrored skill is
+  applied *ambiently* and never *invoked*, so when a failure actually recurs the operator reaches for the
+  paraphrased reflex instead of turning this skill's structured mode on it — losing the
+  failure→mechanism map, the recurrence gate, and the genre-check→exemplar step. Keep a one-line reflex in
+  CLAUDE.md, **cite** this skill, and wire a **trigger** (a recurring-failure reflection nudge) that
+  pushes "invoke self-governance (INTERPRET-FAILURE)" at the moment a class recurs. Cite, don't mirror —
+  or the skill fires ~never.
 - **This skill is soft.** Its whole output is guidance and *scaffolded* hard
   controls. When you generate a lint or gate, it becomes hard only once the
   user/harness wires it into a blocking path — say so.

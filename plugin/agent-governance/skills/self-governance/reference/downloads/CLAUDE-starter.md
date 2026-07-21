@@ -631,6 +631,15 @@ If a rule fails any of these, route it out: to a subsystem doc, a class doc-comm
 `WHY:` comment. Every rule here should cross-reference the doc that explains it in full — CLAUDE.md
 carries the minimum agent boot context; the referenced doc carries the complete rationale.
 
+**The skill case — cite, don't mirror.** If the depth lives in an *invocable skill* (a hardening skill,
+an operating skill), do **not** copy its content here. A mirrored skill fires ~never — agents apply the
+always-loaded copy ambiently and never *invoke* the skill, losing its depth-on-demand (its typed modes,
+its on-demand reference, its recurrence gate), while the two copies drift (→ A.2.5). Keep only the thin,
+always-on **reflex** in CLAUDE.md, **cite** the skill for the machinery, and add a **trigger** — a
+lifecycle hook that pushes "invoke `<skill>`" at the decision point where its structured mode earns its
+keep (the reflection-facet / lifecycle-hook controls in the catalogue). It is the single-source-of-truth
+move (→ A.9) — but here the copy doesn't merely drift, it *suppresses the skill.*
+
 ## The shape of a rule (one worked example)
 
 **Number your rules and never renumber them** — the number becomes a citable namespace ("rule #15")

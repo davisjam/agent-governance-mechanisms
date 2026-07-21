@@ -95,6 +95,13 @@ Copy a sample's shape, swap in this repo's tools, drop the rest.
 
 ## Notes
 
+- **Make it fire — cite, don't mirror.** Don't paraphrase this skill's map into your always-loaded
+  CLAUDE.md: a mirrored skill is applied *ambiently* and never *invoked*, so you lose its structured value
+  (the lifecycle map, the symptom→doc routing, the typed runbooks) and the two copies drift. Instead —
+  keep a one-line reflex in CLAUDE.md, **cite** this skill, and wire a **trigger** (a turn-end /
+  operations reflection nudge) that pushes "invoke the operate skill" the moment a substrate break or an
+  RCA is in hand. The skill earns its keep when *invoked* at the decision point, not paraphrased in boot
+  context. (The failure it prevents: skills that fire ~never because their content was mirrored, not cited.)
 - **This skill is soft.** It aims you at how the substrate works and where a break resolves; it doesn't
   execute or block. The one hard control it recommends is a reference-validity lint over your Part B.
 - **Partner with self-governance.** This routes to the fix; that classifies a recurring failure's class
