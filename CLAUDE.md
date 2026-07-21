@@ -1,6 +1,6 @@
 # CLAUDE.md — agent-governance-mechanisms
 
-This repo is a **pattern catalogue**: <!--census:controls-->61<!--/census--> governance mechanisms that keep a fleet of autonomous coding
+This repo is a **pattern catalogue**: <!--census:controls-->62<!--/census--> governance mechanisms that keep a fleet of autonomous coding
 agents productive while bounding their failures, each written as a Gang-of-Four-style design pattern.
 It is published as a static GitHub Pages site and embedded in a parent repo as a git submodule.
 

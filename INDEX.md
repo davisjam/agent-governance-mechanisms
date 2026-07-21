@@ -3,7 +3,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->61<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->62<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
@@ -77,7 +77,7 @@ soft guidance with a hard counterpart.
 
 ## 6. System models
 
-*One MBSE **method** (the trunk — <!--census:bridge_method:word-->eight<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Seven<!--/census--> models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->eight<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, and computed control↔substrate blast-radius — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — <!--census:bridge_method:word-->eight<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Eight<!--/census--> models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization, agent-orch) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->eight<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, and computed control↔substrate blast-radius — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
@@ -93,6 +93,7 @@ soft guidance with a hard counterpart.
 | ✅ | User-journey model (product-goal → implementation) — *product-facing* | `typed-ir` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
 | ✅ | Domain registries — *product-facing* | `typed-ir` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |
 | ✅ | Synchronization model (meta-sync) — *orchestration-facing* | `typed-ir` | Hard | [synchronization-model.md](models-bridge/system-models/synchronization-model.md) |
+| ✅ | Agent-orchestration model (developer journeys) — *orchestration-facing* | `typed-ir` | Hard | [agent-orchestration-model.md](models-bridge/system-models/agent-orchestration-model.md) |
 | ✅ | Component & zone model — *shared spine* | `typed-ir` | Hard | [component-zone-model.md](models-bridge/system-models/component-zone-model.md) |
 | ✅ | Mediator & single-writer contracts — *shared spine* | `typed-ir` | Hard | [concurrency-contracts.md](models-bridge/system-models/concurrency-contracts.md) |
 | ✅ | Deployment & tier topology — *shared spine* | `typed-ir` | Hard | [deployment-topology-model.md](models-bridge/system-models/deployment-topology-model.md) |
@@ -156,11 +157,11 @@ soft guidance with a hard counterpart.
 
 ---
 
-**Three roles complete — 61 mechanisms across 11 families, all fully developed.**
+**Three roles complete — 62 mechanisms across 11 families, all fully developed.**
 **Agent (26):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
 Lifecycle & observability (7) · Governance-doc controls (7, incl. the **CLAUDE.md rule index**
 meta-mechanism).
-**Models-bridge (15):** the MBSE **method** (<!--census:bridge_method-->8<!--/census--> subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, + **computed control↔substrate blast-radius**) reified as a **Y** over <!--census:bridge_models-->7<!--/census--> models — product-facing 3 (service-flow · user-journey · domain-registries) · orchestration-facing 1 (synchronization) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
+**Models-bridge (16):** the MBSE **method** (<!--census:bridge_method-->8<!--/census--> subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, + **computed control↔substrate blast-radius**) reified as a **Y** over <!--census:bridge_models-->8<!--/census--> models — product-facing 3 (service-flow · user-journey · domain-registries) · orchestration-facing 2 (synchronization · agent-orch) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
 the MBSE substrate through which a bounded agent operates an unbounded codebase.
 **Product (20):** Canonical models & seams (5) · Validation & conformance (4) · Regression tests (4) ·
 Provenance & attribution (4) · Repair vocabulary (3).
