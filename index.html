@@ -139,6 +139,34 @@
   <p class="try-sg" style="margin:-0.4rem 0 1.4rem 1.6rem;"><a href="quick-start.html"><em>Try out Claude
   in self-governance or self-operations mode →</em></a></p>
 
+  <h2 class="section-h">Between two schools of thought</h2>
+  <p class="section-sub">Two common ways to build with agents sit at opposite ends of a spectrum. This
+  site is about the midway.</p>
+  <div class="spectrum">
+  <div class="school"><h3>Vibe coding</h3><p>Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on the model and your eye. At scale the same failures keep recurring, and human review becomes the bottleneck.</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://x.com/karpathy/status/1886192184808149383">Karpathy — coined “vibe coding”</a></li><li><a href="https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04">Steve Yegge’s Gas Town</a></li></ul></div><span class="pole">all velocity — no durable guardrails</span></div>
+  <div class="school mid"><h3>Governance-centric</h3><p>The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail — a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> stays trustworthy.</p><span class="pole">velocity + guardrails grown from failure</span></div>
+  <div class="school"><h3>Oversight-centric</h3><p>Check <i>everything</i> before you trust it — whether a human reviews every change or a formal specification is verified against. Rigorous and safe, but checking becomes the bottleneck: all of it must be vetted, and neither humans nor specs anticipate the failures that only appear at velocity. (Spec-driven development is this, with the spec as the checker.)</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://dl.acm.org/doi/full/10.1145/3773295">Meyer, CACM — “From Probable to Provable”</a></li><li><a href="https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html">vibe-OS / vibe-tools (formal tooling for AI)</a></li></ul></div><span class="pole">all oversight — everything checked</span></div>
+  </div>
+  <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
+
+  <p class="section-sub" style="margin-top:0.7rem;"><b>Both ends of the spectrum pay the <em>pet tax</em></b>
+  — each spends per-change human attention, whether you're <em>coaxing</em> the output at one end or
+  <em>inspecting</em> it at the other, and that attention grows with the size of the fleet until it becomes
+  the bottleneck. The midway is <b>cattle, not pets</b>: build the fences and chutes once, and the
+  guardrails ride every change instead of a person.</p>
+
+  <p class="lead">The midway isn't a point on that dial — it's a discipline: <span class="term">establishing
+  and maintaining a governed engineering environment</span>. It works in two directions at once.
+  <b>Up front</b>, you specify what you can — the architecture that makes a class of error impossible, a typed
+  model the fleet reasons through, the templates and checklists that put a change on rails before it's
+  written. <b>In flight</b>, you let velocity
+  surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. This
+  site describes both halves — the guidance on what to fix in advance, and the machinery for responding when
+  something slips through — and packages them as two Claude skills with a
+  <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>62 governance mechanisms across
+  three roles</b>, each written like a design pattern — the recurring failure it kills, and why it is
+  <i>not</i> just the cheaper thing everyone already does.</p>
+
   <h2 class="section-h">The bridge: documentation, taken to its limit</h2>
   <p class="lead">Anyone who has built with agents has found the first move on their own: give them good
   documentation and tests, then point them at it. Agents write and maintain those artifacts as fast as they
@@ -166,33 +194,6 @@
   pointing them at it costs almost nothing — and it pays back in <b>higher code quality, fewer tokens spent
   rederiving what the model already states, and fewer mistakes.</b> The catalogue's <b>models-bridge</b> role
   is this bridge, made concrete.</p>
-
-  <h2 class="section-h">Between two schools of thought</h2>
-  <p class="section-sub">Two common ways to build with agents sit at opposite ends of a spectrum. This
-  site is about the midway.</p>
-  <div class="spectrum">
-  <div class="school"><h3>Vibe coding</h3><p>Prompt an agent, accept what looks right, iterate by feel. Fast and fluid — but quality rests on the model and your eye. At scale the same failures keep recurring, and human review becomes the bottleneck.</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://x.com/karpathy/status/1886192184808149383">Karpathy — coined “vibe coding”</a></li><li><a href="https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04">Steve Yegge’s Gas Town</a></li></ul></div><span class="pole">all velocity — no durable guardrails</span></div>
-  <div class="school mid"><h3>Governance-centric</h3><p>The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail — a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> stays trustworthy.</p><span class="pole">velocity + guardrails grown from failure</span></div>
-  <div class="school"><h3>Oversight-centric</h3><p>Check <i>everything</i> before you trust it — whether a human reviews every change or a formal specification is verified against. Rigorous and safe, but checking becomes the bottleneck: all of it must be vetted, and neither humans nor specs anticipate the failures that only appear at velocity. (Spec-driven development is this, with the spec as the checker.)</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://dl.acm.org/doi/full/10.1145/3773295">Meyer, CACM — “From Probable to Provable”</a></li><li><a href="https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html">vibe-OS / vibe-tools (formal tooling for AI)</a></li></ul></div><span class="pole">all oversight — everything checked</span></div>
-  </div>
-  <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
-
-  <p class="section-sub" style="margin-top:0.7rem;"><b>Both ends of the spectrum pay the <em>pet tax</em></b>
-  — each spends per-change human attention, whether you're <em>coaxing</em> the output at one end or
-  <em>inspecting</em> it at the other, and that attention grows with the size of the fleet until it becomes
-  the bottleneck. The midway is <b>cattle, not pets</b>: build the fences and chutes once, and the
-  guardrails ride every change instead of a person.</p>
-
-  <p class="lead">The midway isn't a point on that dial — it's a discipline: <span class="term">establishing
-  and maintaining a governed engineering environment</span>. It works in two directions at once.
-  <b>Up front</b>, you specify what you can — the architecture that makes a class of error impossible, the
-  templates and checklists that put a change on rails before it's written. <b>In flight</b>, you let velocity
-  surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. This
-  site describes both halves — the guidance on what to fix in advance, and the machinery for responding when
-  something slips through — and packages them as two Claude skills with a
-  <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>62 governance mechanisms across
-  three roles</b>, each written like a design pattern — the recurring failure it kills, and why it is
-  <i>not</i> just the cheaper thing everyone already does.</p>
 
   <h2 class="section-h">Governance has two mechanisms</h2>
   <p class="section-sub">A guardrail is one of two kinds — prevent the error, or catch it.</p>
