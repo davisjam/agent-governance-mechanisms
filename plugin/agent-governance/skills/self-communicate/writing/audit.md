@@ -25,9 +25,12 @@ The mechanical pass. Count things; a count over threshold is a finding.
 
 - **Em-dash density.** Count em-dashes (`—`) per 100 words, and flag any single sentence with two or more.
   **Detect:** more than ~1 dash per 40–50 words, or a passage that uses the dash for *every* aside,
-  insertion, and pivot — the "universal joint" pattern. **Fix:** convert most to a period (two sentences),
-  a comma (a light aside), or a colon (a setup→payoff). Keep the dash only for a genuine interruption. Aim
-  to cut dash count by at least half.
+  insertion, and pivot — the "universal joint" pattern. **Fix:** vary the punctuation *and the structure* —
+  a period (two sentences), a comma (a light aside), a semicolon (two linked clauses), or a **bullet /
+  numbered list** where you are really enumerating; a colon only for a genuine setup→payoff. Do **not**
+  reflexively swap every dash for a colon — that just trades one tell for another. Plain declarative
+  sentences and lists are first-class in this register; a doc need not be all flowing prose. Keep the dash
+  only for a genuine interruption. Aim to cut dash count by at least half.
 - **A single figure on a fixed beat.** **Detect:** the same rhetorical figure recurring paragraph after
   paragraph — most often the **mechanical tricolon** (three-item parallel lists on repeat) or the
   **reflexive "not X, but Y"** (count these two phrasings specifically; two in a short passage is a smell,
@@ -113,6 +116,11 @@ Read the passage as a whole, top to bottom.
 - **Sections restating each other.** **Detect:** two sections (e.g. an intro and a "why it matters") that
   make the same point in different words. **Fix:** merge them, or sharpen each to a distinct job — the
   house rule is that Motivation, "Why it's not just", and the closing each land a *different* point.
+- **Cross-document duplication.** **Detect:** a passage that appears near-verbatim in a *sibling* doc (a
+  landing page and a README, two overlapping guides). Each reads clean in isolation, so the per-passage
+  passes above miss it. **Fix:** this is a **[DESIGN] drift hazard**, not a per-passage rewrite — flag it to
+  single-source the shared text (generate both copies from one constant), because an edit to one copy won't
+  propagate to the other and they silently diverge.
 - **Buried lede.** **Detect:** the main claim arriving in the third paragraph after setup. **Fix:** lead
   with the frame, then support it.
 

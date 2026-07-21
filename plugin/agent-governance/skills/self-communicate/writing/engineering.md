@@ -7,6 +7,11 @@ It gives the *method* for the engineering register — the target voice for almo
 in [`voice.md`](voice.md). Voice says what the prose should *sound* like; this file says what
 *shape* each doc should take. The shape comes from [Diátaxis](https://diataxis.fr/).
 
+This register favors the **plain and scannable**. Short declaratives, bullet and numbered lists, and tables
+are first-class here — a doc need not flow as continuous prose. A reader hunting one fact is better served
+by a list or a table than by a paragraph, so reach for the structure that surfaces the answer fastest, not
+for prettier sentences.
+
 ## Adopt Diátaxis — one framework, four modes
 
 Before inventing a house doc taxonomy, adopt the best-in-class one. [Diátaxis](https://diataxis.fr/) is the

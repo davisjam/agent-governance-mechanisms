@@ -1,7 +1,8 @@
 # Quick start — walk Claude through adopting these mechanisms
 
-Governance-centric agentic software engineering is a **methodology**, not something you install and run —
-the mechanisms are patterns you *adapt* to your stack, your agents, and your failure modes.
+Governance-centric agentic software engineering is a **methodology** — patterns you *adapt* to your stack,
+your agents, and your failure modes, not a framework you drop in unchanged. The self-* skills are **aids to
+that mindset**; you *do* install and run them, but they carry a stance to apply, not a black box to adopt.
 
 Claude can help: it reads the catalogue and turns it on your own repo. This page gives you the whole
 adoption sequence as **paste-ready prompts** — each one asks Claude to examine a shipped starter and adapt

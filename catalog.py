@@ -1031,7 +1031,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
   implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
   stops being writing code and becomes <span class="term">governing the conditions under which fast code
-  can be trusted</span> — keeping it inspectable, correctable, and maintainable at speed.</p>
+  can be trusted</span>. That means keeping it inspectable, correctable, and maintainable at speed.</p>
 
   <p class="try-sg" style="margin:-0.4rem 0 1.4rem 1.6rem;"><a href="quick-start.html"><em>Try out Claude
   in self-governance, self-operations, or self-communicate mode →</em></a></p>
@@ -1044,20 +1044,21 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   </div>
   <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
 
-  <p class="section-sub" style="margin-top:0.7rem;"><b>Both ends of the spectrum pay the <em>pet tax</em></b>
-  — each spends per-change human attention, whether you're <em>coaxing</em> the output at one end or
+  <p class="section-sub" style="margin-top:0.7rem;"><b>Both ends of the spectrum pay the <em>pet tax</em>.</b>
+  Each spends per-change human attention, whether you're <em>coaxing</em> the output at one end or
   <em>inspecting</em> it at the other, and that attention grows with the size of the fleet until it becomes
-  the bottleneck. The midway is <b>cattle, not pets</b>: build the fences and chutes once, and the
-  guardrails ride every change instead of a person.</p>
+  the bottleneck. The midway is
+  <b><a href="https://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/">cattle, not
+  pets</a></b>: build the fences and chutes once, and the guardrails ride every change instead of a person.</p>
 
-  <p class="lead">The midway isn't a point on that dial — it's a discipline: <span class="term">establishing
-  and maintaining a governed engineering environment</span>. It works in two directions at once.
+  <p class="lead">The midway is a discipline: <span class="term">establishing and maintaining a governed
+  engineering environment</span>. It works in two directions at once.
   <b>Up front</b>, you specify what you can — the architecture that makes a class of error impossible, the
   model the fleet reasons through (more on that below), the templates and checklists that put a change on
   rails before it's written. <b>In flight</b>, you let velocity
   surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. This
-  site describes both halves — the guidance on what to fix in advance, and the machinery for responding when
-  something slips through — and packages them as two Claude skills with a
+  site describes both halves. The first is the guidance on what to fix in advance; the second is the
+  machinery for responding when something slips through. It packages both as three Claude skills with a
   <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>{n} governance mechanisms across
   three roles</b>, each written like a design pattern — the recurring failure it kills, and why it is
   <i>not</i> just the cheaper thing everyone already does.</p>
@@ -1066,7 +1067,7 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <p class="lead">Start with the up-front half. Anyone who has built with agents has found the first move on
   their own: give them good documentation and tests, then point them at it. Agents write and maintain those artifacts as fast as they
   write code, so the cost that always made thorough docs a fantasy is gone. The step the training data won't
-  suggest is the next one — <b>documentation has a hierarchy, and its top is not prose. It is a typed
+  suggest is the next one. <b>Documentation has a hierarchy, and its top is not prose. It is a typed
   model.</b></p>
 
   <p class="section-sub" style="margin-top:0.7rem;">A context-bounded agent working on a

@@ -18,27 +18,28 @@ Two common ways to build with agents sit at opposite ends of a spectrum. This ca
 | *all velocity — no guardrails* | *velocity + guardrails grown from failure* | *all oversight — everything checked* |
 | e.g. [Karpathy](https://x.com/karpathy/status/1886192184808149383) · [Gas Town](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04) | | e.g. [Meyer, CACM](https://dl.acm.org/doi/full/10.1145/3773295) · [vibe-OS / vibe-tools](https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html) |
 
-**Both ends of the spectrum pay the *pet tax.*** Each spends per-change human attention — *coaxing* the
-output at one end or *inspecting* it at the other — and that attention grows with the size of the fleet
-until it becomes the bottleneck. The midway is **cattle, not pets**: build the fences and chutes once, and
-the *guardrails* ride every change instead of a person.
+**Both ends of the spectrum pay the *pet tax.*** Each spends per-change human attention. You *coax* the
+output at one end or *inspect* it at the other, and that attention grows with the size of the fleet until
+it becomes the bottleneck. The midway is
+[**cattle, not pets**](https://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/): build
+the fences and chutes once, and the *guardrails* ride every change instead of a person.
 
-This middle column isn't new. It's the agentic-era instantiation of quality practices long standard in
-regulated industry — documented process, requirements traceability, verification tiers scaled to
-criticality, corrective-and-preventive action. What's new is the **substrate**. Those programs run on
-manually-maintained dead documents — Word, Excel, DOORS — that drift the moment they're written and need
-dedicated staff to keep. Here the same process runs on **executable, agent-maintained models that can't
-drift**: the traceability matrix is a queried model behind a drift gate, the process rules are enforced
-infrastructure, the verification records are machine-checked against the code rather than filed in a
-spreadsheet. The contribution isn't the assurance discipline — it's making it *live*, and tractable for a
-team of one.
+This middle column isn't new; what's new is the **substrate**. The process itself is the agentic-era
+instantiation of quality practices long standard in regulated industry: documented process, requirements
+traceability, verification tiers scaled to criticality, corrective-and-preventive action. Those programs
+have always run on manually-maintained dead documents — Word, Excel, DOORS — that drift the moment they're
+written and need dedicated staff to keep. Here the same process runs on **executable, agent-maintained
+models that can't drift**. The traceability matrix is a queried model behind a drift gate. The process
+rules are enforced infrastructure. The verification records are machine-checked against the code rather
+than filed in a spreadsheet. The contribution isn't the assurance discipline; it's making that discipline
+*live*, and tractable for a team of one.
 
 ## Documentation, taken to its limit
 
 This is the right way to read the whole catalogue. Anyone who has built with agents has found the first move
 on their own: give them good documentation and tests, then point them at it. Agents write and maintain those
 artifacts as fast as they write code, so the cost that always made thorough docs a fantasy is gone. The step
-the training data won't suggest is the next one — **documentation has a hierarchy, and its top is not prose.
+the training data won't suggest is the next one. **Documentation has a hierarchy, and its top is not prose.
 It is a typed model.**
 
 A context-bounded agent working on a context-*exceeding* system needs a **typed, queryable, drift-checked
