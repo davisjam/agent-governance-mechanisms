@@ -1,10 +1,10 @@
-# STYLE-ENGINEERING.md — the engineering-discourse register (Diátaxis)
+# engineering.md — the engineering-discourse register (Diátaxis)
 
 This is an **agent-facing** style doc — a resource of the `self-communicate` skill, not a catalogue entry.
 It is not rendered to HTML or served.
 
 It gives the *method* for the engineering register — the target voice for almost all repo prose, defined
-in [`STYLE-VOICE.md`](STYLE-VOICE.md). Voice says what the prose should *sound* like; this file says what
+in [`voice.md`](voice.md). Voice says what the prose should *sound* like; this file says what
 *shape* each doc should take. The shape comes from [Diátaxis](https://diataxis.fr/).
 
 ## Adopt Diátaxis — one framework, four modes
@@ -47,7 +47,7 @@ the explanation job. Do not braid them into one paragraph.
 The engineering register is drawn from best-in-class third-party docs — Apache Software Foundation
 projects. Each mode has an exemplar below (project · Diátaxis mode), so the abstraction is grounded in a
 real doc a reader can open. These are *third-party* docs, not the house author's voice — they teach the
-register, not personal idiom. [`STYLE-VOICE.md`](STYLE-VOICE.md) carries the fuller verbatim set with the
+register, not personal idiom. [`voice.md`](voice.md) carries the fuller verbatim set with the
 rule each teaches.
 
 - **Reference** — Flink · *glossary*. A definition is one precise sentence: the term, then its genus and
@@ -67,18 +67,18 @@ rule each teaches.
 
 ## How this register composes with the rest of the style kit
 
-- **[`STYLE-VOICE.md`](STYLE-VOICE.md)** — the target voice. This file gives the doc's *shape* (mode);
+- **[`voice.md`](voice.md)** — the target voice. This file gives the doc's *shape* (mode);
   VOICE gives its *sensibility* (plain diction, concrete anchor before abstract claim, claim paired with
   caveat). Write in the mode's shape, in the house voice.
-- **[`STYLE-RHETORIC.md`](STYLE-RHETORIC.md)** — the device toolkit. Each mode favors different figures:
+- **[`rhetoric.md`](rhetoric.md)** — the device toolkit. Each mode favors different figures:
   reference leans on precise definition and parallelism; explanation on hypophora and procatalepsis (raise
   the objection, answer it); how-to on plain imperatives; tutorial on direct address. Reach for the figure
   that fits the mode, and vary it.
-- **[`STYLE-LEXICON.md`](STYLE-LEXICON.md)** — the house vocabulary. Diátaxis fixes the *shape* of a doc but
+- **[`lexicon.md`](lexicon.md)** — the house vocabulary. Diátaxis fixes the *shape* of a doc but
   says nothing about *which term* to prefer. The lexicon does: name the established pattern ("strangler
   fig", not "gradual replacement"), so a reader can look it up. This register serves the lexicon and the
   lexicon serves this register.
-- **[`STYLE-DIAGRAMS.md`](STYLE-DIAGRAMS.md)** — the visualization leg. A diagram type suits a mode: a
+- **[`../drawing/diagrams.md`](../drawing/diagrams.md)** — the visualization leg. A diagram type suits a mode: a
   reference wants a component or class diagram; an explanation wants a sequence or state diagram that walks
   the dynamics; a how-to wants a flowchart of the procedure; a tutorial wants the simplest possible picture.
   Pick the diagram to match the mode, per that file.
@@ -90,5 +90,5 @@ rule each teaches.
    doc with the modes kept apart.
 2. **Write to the mode's method.** Reference defines; explanation walks the why; how-to commands the steps
    and names their cost; tutorial takes one beginner to one success.
-3. **Voice it in the house register.** Apply [`STYLE-VOICE.md`](STYLE-VOICE.md) and vary devices per
-   [`STYLE-RHETORIC.md`](STYLE-RHETORIC.md). Then audit against [`STYLE-AUDIT.md`](STYLE-AUDIT.md).
+3. **Voice it in the house register.** Apply [`voice.md`](voice.md) and vary devices per
+   [`rhetoric.md`](rhetoric.md). Then audit against [`audit.md`](audit.md).

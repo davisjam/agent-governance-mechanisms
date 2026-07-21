@@ -150,8 +150,8 @@ specific meaning more than once, classify each as portable (link the established
 concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
 when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
 run the audit procedure over the draft and show me the fixes.
-(Path B) Read the self-communicate skill resources (its SKILL.md plus the STYLE-LEXICON, STYLE-ENGINEERING,
-STYLE-RHETORIC, STYLE-VOICE, STYLE-DIAGRAMS, and STYLE-AUDIT files under the skills/self-communicate folder).
+(Path B) Read the self-communicate skill resources (its SKILL.md plus the writing/lexicon.md, writing/engineering.md,
+writing/rhetoric.md, writing/voice.md, writing/audit.md, and drawing/diagrams.md files under the skills/self-communicate folder).
 Bootstrap my house lexicon by walking my codebase per the lexicon's bootstrap recipe, confirm the terms with
 me, then use the engineering register to write my docs and the audit procedure to grade them.
 -->
@@ -223,8 +223,8 @@ specific meaning more than once, classify each as portable (link the established
 concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
 when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
 run the audit procedure over the draft and show me the fixes.
-(Path B) Read the self-communicate skill resources (its SKILL.md plus the STYLE-LEXICON, STYLE-ENGINEERING,
-STYLE-RHETORIC, STYLE-VOICE, STYLE-DIAGRAMS, and STYLE-AUDIT files under the skills/self-communicate folder).
+(Path B) Read the self-communicate skill resources (its SKILL.md plus the writing/lexicon.md, writing/engineering.md,
+writing/rhetoric.md, writing/voice.md, writing/audit.md, and drawing/diagrams.md files under the skills/self-communicate folder).
 Bootstrap my house lexicon by walking my codebase per the lexicon's bootstrap recipe, confirm the terms with
 me, then use the engineering register to write my docs and the audit procedure to grade them.
 ```
@@ -345,8 +345,8 @@ specific meaning more than once, classify each as portable (link the established
 concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
 when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
 run the audit procedure over the draft and show me the fixes.
-(Path B) Read the self-communicate skill resources (its SKILL.md plus the STYLE-LEXICON, STYLE-ENGINEERING,
-STYLE-RHETORIC, STYLE-VOICE, STYLE-DIAGRAMS, and STYLE-AUDIT files under the skills/self-communicate folder).
+(Path B) Read the self-communicate skill resources (its SKILL.md plus the writing/lexicon.md, writing/engineering.md,
+writing/rhetoric.md, writing/voice.md, writing/audit.md, and drawing/diagrams.md files under the skills/self-communicate folder).
 Bootstrap my house lexicon by walking my codebase per the lexicon's bootstrap recipe, confirm the terms with
 me, then use the engineering register to write my docs and the audit procedure to grade them.
 ```

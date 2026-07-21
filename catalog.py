@@ -1113,15 +1113,16 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <h2 class="section-h">The three skills — govern, operate, communicate</h2>
   <p class="section-sub">The catalogue ships as three partner Claude skills (one plugin). Two are one
   substrate seen from opposite ends — self-governance <i>designs</i> the controls, self-operations
-  <i>runs</i> them — and self-communicate writes and draws the docs the other two produce.</p>
+  <i>runs</i> them — and self-communicate makes what they produce legible: the docs, and the operator's own
+  reports to the human.</p>
   <div class="cols3">
     <div class="mech"><h3>self-governance · <i>harden</i></h3><p>The <b>design-time</b> lens: the census of
     controls plus the engine that mints new ones — what exists, what you're missing, how to add one.</p></div>
     <div class="mech"><h3>self-operations · <i>operate</i></h3><p>The <b>run-time</b> lens: it runs the
     substrate those controls govern — the lifecycle you operate, the runbook you follow, the hook you wire.</p></div>
     <div class="mech"><h3>self-communicate · <i>communicate</i></h3><p>The <b>prose-and-diagram</b> craft: a
-    rhetoric toolkit, the Diátaxis register, a house lexicon, and an audit that emits fixes — so the docs the
-    other two produce read cleanly.</p></div>
+    rhetoric toolkit, the Diátaxis register, a house lexicon, and an audit that emits fixes — for the docs the
+    other two produce <i>and</i> the operator's own reports to the human.</p></div>
   </div>
   <p class="section-sub">Govern and operate are one substrate seen two ways; communicate is the craft that
   keeps their output legible. The loop closes across all three: operate surfaces a recurring break, govern

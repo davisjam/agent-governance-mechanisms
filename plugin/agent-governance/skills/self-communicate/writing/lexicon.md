@@ -1,9 +1,9 @@
-# STYLE-LEXICON.md — the house engineering vocabulary
+# lexicon.md — the house engineering vocabulary
 
 This is an **agent-facing** style doc — a resource of the `self-communicate` skill, not a catalogue entry.
 It is not rendered to HTML or served.
 
-[`STYLE-ENGINEERING.md`](STYLE-ENGINEERING.md) fixes the *shape* of a doc via Diátaxis. It says nothing
+[`engineering.md`](engineering.md) fixes the *shape* of a doc via Diátaxis. It says nothing
 about *which term* to reach for. This file does: a vocabulary of engineering terms-of-art, so the prose
 names the established idea and links it, rather than describing the same idea freshly each time.
 

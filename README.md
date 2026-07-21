@@ -101,10 +101,11 @@ The catalogue also ships as **three partner Claude skills** (one plugin, `agent-
 - **self-operations** — *operate.* Run the agent-fleet substrate day to day: the positive lifecycle map
   (agents, context, git, deploy, dev-env, cron) plus a symptom → resolving-doc catalog when something
   breaks. It bootstraps to your repo by inspection.
-- **self-communicate** — *communicate.* Write and diagram engineer-facing docs well: a rhetoric toolkit
-  (classical figures used with variety), the Diátaxis engineering register, a house lexicon that names
-  concepts consistently, a target voice, and an audit that grades a passage and emits fixes — plus a
-  Mermaid-first diagram leg. It bootstraps its lexicon from a codebase walk and keeps it living.
+- **self-communicate** — *communicate.* Write and diagram engineer-facing docs — and the operator's own
+  reports to the human — well: a rhetoric toolkit (classical figures used with variety), the Diátaxis
+  engineering register, a house lexicon that names concepts consistently, a target voice, and an audit that
+  grades a passage and emits fixes — plus a Mermaid-first diagram leg. It bootstraps its lexicon from a
+  codebase walk and keeps it living.
 
 They partner: **operate routes a break to its fix; when a failure recurs, it hands the class to
 self-governance to convert into a control; and self-communicate writes the result up in the shared
@@ -116,9 +117,9 @@ missing, how to add one). self-operations *runs the substrate those controls gov
 (the lifecycle you operate, the runbook you follow, the hook you wire). The same mechanism appears in
 self-governance's census *and* is operated through self-operations — one substrate seen design-time vs
 run-time, not two copies. **self-communicate sits alongside as a third leg** — not a lens on that substrate,
-but the craft that keeps its output legible: the controls, design docs, runbooks, and handoffs are all prose,
-and this skill supplies the register and the shared vocabulary they're written in. govern / operate /
-communicate.
+but the craft that keeps its output legible: the controls, design docs, runbooks, handoffs, and the
+operator's own reports to the human are all prose, and this skill supplies the register and the shared
+vocabulary they're written in. govern / operate / communicate.
 
 ## Using this repo
 

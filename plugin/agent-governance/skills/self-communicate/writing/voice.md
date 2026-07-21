@@ -1,11 +1,11 @@
-# STYLE-VOICE.md — the house author's voice
+# voice.md — the house author's voice
 
 This is an **agent-facing** style doc — a resource of the `self-communicate` skill, not a catalogue entry.
 It is not rendered to HTML or served. It exists to give the writer a concrete
 target when matching prose to the house author's actual voice — Prof. James Davis
 (davisjam), whose own published writing supplies the exemplars below.
 
-Read this alongside [`STYLE-RHETORIC.md`](STYLE-RHETORIC.md) (the device toolkit) and the
+Read this alongside [`rhetoric.md`](rhetoric.md) (the device toolkit) and the
 house-rules writing-style discipline. The rhetoric file says *what tools exist*;
 this file says *how the author actually swings them*.
 

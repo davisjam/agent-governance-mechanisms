@@ -1,13 +1,13 @@
-# STYLE-DIAGRAMS.md — technical-diagram types and how to realize them
+# diagrams.md — technical-diagram types and how to realize them
 
-This is an **agent-facing** style doc (a sibling of `STYLE-VOICE.md`), not a catalogue entry.
+This is an **agent-facing** style doc (the drawing leg of the `self-communicate` skill, alongside the writing files), not a catalogue entry.
 It is not rendered to HTML or served. It is the **visualization leg** of
 self-communicate: the standard technical-diagram types, when to reach for each, and how to realize one.
 
-Read it alongside its prose siblings — [`STYLE-ENGINEERING.md`](STYLE-ENGINEERING.md) (the
-engineering-discourse layer: Diátaxis modes, docs-as-code), [`STYLE-VOICE.md`](STYLE-VOICE.md) (the
-target register), [`STYLE-RHETORIC.md`](STYLE-RHETORIC.md) (the prose device toolkit), and
-[`STYLE-LEXICON.md`](STYLE-LEXICON.md) (term discipline). Prose carries the argument; a diagram carries
+Read it alongside its prose siblings — [`../writing/engineering.md`](../writing/engineering.md) (the
+engineering-discourse layer: Diátaxis modes, docs-as-code), [`../writing/voice.md`](../writing/voice.md) (the
+target register), [`../writing/rhetoric.md`](../writing/rhetoric.md) (the prose device toolkit), and
+[`../writing/lexicon.md`](../writing/lexicon.md) (term discipline). Prose carries the argument; a diagram carries
 the *shape* — a structure, a flow, a lifecycle, a schema. When the thing you are explaining has a shape,
 draw it.
 
@@ -283,7 +283,7 @@ classDiagram
 ### 1. Diátaxis mode ↔ diagram type
 
 The [Diátaxis](https://diataxis.fr/) mode of a passage predicts which diagram it wants — the same modes
-that structure the engineering register in [`STYLE-ENGINEERING.md`](STYLE-ENGINEERING.md).
+that structure the engineering register in [`../writing/engineering.md`](../writing/engineering.md).
 
 - **Explanation** (orienting a reader to how something works) pulls **structure and state** — a C4 or
   component diagram for the architecture, a state diagram for a lifecycle. Explanation earns a claim by

@@ -1,4 +1,4 @@
-# STYLE-RHETORIC.md — a rhetoric toolkit for technical prose
+# rhetoric.md — a rhetoric toolkit for technical prose
 
 This is an **agent-facing** style doc — a resource of the `self-communicate` skill, not a catalogue entry.
 It is not rendered to HTML or served.
@@ -17,7 +17,7 @@ lands when it is the *only* tricolon on the page; it becomes a tic when every pa
   same one twice in a row.
 - **Any single figure on repeat is the tell.** Count your em-dashes. Count your rule-of-threes. If one
   device recurs on a fixed beat, that recurrence — not the device — is what a reader clocks as artificial.
-- **Match the house voice.** See [`STYLE-VOICE.md`](STYLE-VOICE.md) for how the house author actually
+- **Match the house voice.** See [`voice.md`](voice.md) for how the house author actually
   deploys these. He uses many of them; he varies constantly; he leans on the period and the plain word as
   often as the dash.
 

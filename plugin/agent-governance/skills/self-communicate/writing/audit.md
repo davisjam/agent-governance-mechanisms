@@ -1,4 +1,4 @@
-# STYLE-AUDIT.md — a playbook for auditing prose
+# audit.md — a playbook for auditing prose
 
 This is an **agent-facing** style doc — a resource of the `self-communicate` skill, not a catalogue entry.
 It is not rendered to HTML or served; it is read by an agent authoring or auditing prose.
@@ -8,8 +8,8 @@ It is not rendered to HTML or served; it is read by an agent authoring or auditi
 A procedure an LLM runs over a passage of prose to grade it and emit concrete fixes. It operationalizes
 the three style sources into a checklist:
 
-- [`STYLE-RHETORIC.md`](STYLE-RHETORIC.md) — the rhetoric toolkit and the sameness/density tells.
-- [`STYLE-VOICE.md`](STYLE-VOICE.md) — the target voice (Prof. Davis) with verbatim exemplars.
+- [`rhetoric.md`](rhetoric.md) — the rhetoric toolkit and the sameness/density tells.
+- [`voice.md`](voice.md) — the target voice (Prof. Davis) with verbatim exemplars.
 - The house-rules writing-style discipline — active voice, say-it-once, cut-qualifiers, describe-don't-sell,
   and the interpretability principle (a passage must stand alone; describe artifacts by role, not by
   unshipped filename).
@@ -32,26 +32,26 @@ The mechanical pass. Count things; a count over threshold is a finding.
   paragraph — most often the **mechanical tricolon** (three-item parallel lists on repeat) or the
   **reflexive "not X, but Y"** (count these two phrasings specifically; two in a short passage is a smell,
   three is a finding). Also watch for anaphora or antithesis on every beat. **Fix:** keep the strongest
-  one instance; rewrite the rest. Swap in a *different* figure from `STYLE-RHETORIC.md` (list two items
+  one instance; rewrite the rest. Swap in a *different* figure from `rhetoric.md` (list two items
   instead of three, or four; turn one "not X, but Y" into a plain assertion; replace a tricolon with a
   single sharp claim). Variety is the fix, not deletion.
 - **Uniform sentence length / cadence.** **Detect:** a run of sentences all roughly the same length
   (say, 5+ sentences all 15–25 words with the same subject-verb-object shape). Machine prose drones at one
   tempo. **Fix:** break the beat. Put a short 3–6-word sentence next to a long one. Front-load a
   fragment. The house voice alternates aphoristic declaratives with longer explanatory chains — mirror
-  that rhythm (see `STYLE-VOICE.md`).
+  that rhythm (see `voice.md`).
 - **Ornament burying the argument.** **Detect:** a paragraph so dense with figures that the point is hard
   to extract on one read. **Fix:** state the point plainly first, then add back *one* figure where it
   sharpens the sentence.
 
-## Pass 2 — Voice match (vs `STYLE-VOICE.md`)
+## Pass 2 — Voice match (vs `voice.md`)
 
-Compare against the target voice. The exemplars in [`STYLE-VOICE.md`](STYLE-VOICE.md) are the reference.
+Compare against the target voice. The exemplars in [`voice.md`](voice.md) are the reference.
 
-**Match the ENGINEERING register by default.** `STYLE-VOICE.md` carries three registers, and for repo
+**Match the ENGINEERING register by default.** `voice.md` carries three registers, and for repo
 prose — mechanism entries, design docs, CLAUDE rules, code comments, runbooks — the target is the
 **engineering / documentation** register (the third-party Apache-docs exemplars E1–E8), NOT the essay or
-academic ones. Grade against the engineering exemplars and against [`STYLE-ENGINEERING.md`](STYLE-ENGINEERING.md)
+academic ones. Grade against the engineering exemplars and against [`engineering.md`](engineering.md)
 (the Diátaxis discourse layer). Reach for the discursive register only in a genuinely persuading
 **Motivation**, and the academic register only in a scoped **Intent** / "Why it's not just X" claim. If a
 reference or how-to passage reads like an essay, that is a register-drift finding — flag it and pull it
@@ -119,7 +119,7 @@ Read the passage as a whole, top to bottom.
 ## Pass 5 — Visualization
 
 Ask whether a picture would carry the content better, and whether any picture already present is the right
-kind and readable. Grade against [`STYLE-DIAGRAMS.md`](STYLE-DIAGRAMS.md) (diagram vocabulary + realization
+kind and readable. Grade against [`../drawing/diagrams.md`](../drawing/diagrams.md) (diagram vocabulary + realization
 rule). This pass applies to any passage that describes a shape, and to any passage that already has a
 diagram — not only catalogue entries.
 
@@ -127,7 +127,7 @@ diagram — not only catalogue entries.
   architecture, a multi-actor interaction over time, a lifecycle with states, a data schema, a branching
   procedure. Prose that spends three-plus sentences tracing "A connects to B, which calls C, which returns
   to A" is carrying a shape the reader has to reassemble in their head. **Fix:** draw it. Add the diagram
-  type that fits the shape (per STYLE-DIAGRAMS: structure→C4/component/deployment, behavior→sequence/
+  type that fits the shape (per `../drawing/diagrams.md`: structure→C4/component/deployment, behavior→sequence/
   state/flow, data→ER/class), and cut the prose down to the frame plus the diagram's takeaway.
 - **Wrong diagram type.** **Detect:** a diagram whose type fights its content — a flowchart drawing a
   lifecycle (its "steps" are really states), a sequence diagram for standing structure, a schema where an

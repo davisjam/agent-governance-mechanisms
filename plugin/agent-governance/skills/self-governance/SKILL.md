@@ -225,10 +225,11 @@ Two beats: **interpret**, then **convert**.
   the substrate those controls govern (the lifecycle map, the runbooks, the hooks). A mechanism lives in
   this census **and** is run through self-operations — the same thing seen two ways, not two copies. The
   loop: operate surfaces a recurring break → *this skill* mints the control → it joins both.
-- **Partner with self-communicate — write the governance prose well.** When you write a control's
-  description, a mechanism entry, or a design doc, reach for [`self-communicate`](../self-communicate/SKILL.md):
-  its engineering register (Diátaxis) fixes the doc's shape, and the shared lexicon (its **Governance &
-  controls** cluster) keeps the terms consistent, so a control means the same thing everywhere it is cited.
+- **Use the `self-communicate` skill to write the governance prose** — control descriptions, mechanism
+  entries, design docs — in the engineering register, with the shared lexicon. Reach for
+  [`self-communicate`](../self-communicate/SKILL.md) whenever you author that prose: its engineering register
+  (Diátaxis) fixes the doc's shape, and its **Governance & controls** lexicon cluster keeps the terms
+  consistent, so a control means the same thing everywhere it is cited.
 - **Make it fire — cite, don't mirror.** When you fold this method into a repo's CLAUDE.md, do **not**
   copy the principles or the INTERPRET-FAILURE beats into that always-loaded doc. A mirrored skill is
   applied *ambiently* and never *invoked*, so when a failure actually recurs the operator reaches for the
