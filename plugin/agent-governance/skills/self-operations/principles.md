@@ -46,6 +46,11 @@ When the cause is unknown, follow this spine — grounded in evidence, no goose 
 - **Assess observability first.** Do you have the evidence to pin this? If not — *stop hypothesizing.*
   **The missing signal IS the first finding.** Add the observability that would have pinned it, then
   reproduce.
+- **When you add the signal, measure one level deeper (Ousterhout).** Instrument for the *decision* the
+  signal must drive — one level *below* the surface symptom — so the reading can point at the fix, not
+  merely report the fault. A reading that only reports is a level too shallow the moment its job is to
+  change something: the un-pinnable diagnosis is a gap in the signal's *presence*, an un-actionable reading
+  a gap in its *depth*.
 - **Ground the hypothesis in the evidence** — only once the signal exists. Root-cause work is
   judgment-heavy; give it your strongest model.
 - **Reproduce at the cheapest tier** — locally before anything remote; a failure to reproduce locally *is*

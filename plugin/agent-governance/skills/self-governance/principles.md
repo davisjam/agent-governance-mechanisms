@@ -492,6 +492,15 @@ took, and why. A later anomaly is then reconstructable from the record alone. Gu
 the missing signal"); the emitted signal holds — and a substrate that emits a signal owns it end to end:
 whatever emits it also says what healthy looks like and where to look when it isn't.
 
+**And measure one level deeper (Ousterhout).** A signal has a *depth* as well as a presence. Ask what
+DECISION the measurement must drive, then instrument one level *below* the surface number, so the data can
+**act**, not merely **report**. A metric that only reports is a level too shallow the moment its purpose
+is to *change* something: a blended fleet-wide compute cost affords an invoice, but not the engineering
+question — *which job, on which service, costs the most, so we know what to optimize* — which needs the
+per-service-per-job breakdown underneath. The un-pinnable diagnosis is a finding about the signal's
+*presence*; the un-actionable metric is a finding about its *depth*. Same reflex, one level down:
+instrument for the decision, not for the surface reading.
+
 ### A.3.7. Hook the operator's own loop — interpose on the runtime's lifecycle events
 
 Some recurring failures live not in the code an agent writes but in the *loop that drives it* — the
