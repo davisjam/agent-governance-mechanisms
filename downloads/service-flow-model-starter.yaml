@@ -1,0 +1,79 @@
+# Service-flow model starter — the SCENARIOS (+1) view of the 4+1 model (adopt & adapt).
+#
+# THE GENRE-CHECK PAYOFF, made concrete: this file ADOPTS the canonical schema (Backstage
+# Software Catalog entities — apiVersion / kind / metadata / spec) and SKIPS its runtime. You inherit
+# a hard-won, well-documented dialect for describing services + their relationships at
+# naming-convention cost, without running a Backstage instance. Before inventing a bespoke
+# service-registry schema, this is the move: identify the genre (a service catalogue), find the
+# canonical best-in-class (Backstage), adopt its schema.
+#
+# WHAT THIS VIEW ANSWERS (the scenarios view): how the parts collaborate over a real request — who
+# calls whom, with what auth, timeout, and request cap. Author it when an agent needs typed
+# inter-service contracts instead of grepping call sites.
+#
+# ONE FILE PER SERVICE (or per API). A `kind: Component` describes a service; a `kind: API` describes
+# an endpoint contract it provides. The loader (service-flow-loader-starter.py) reads every such file
+# in this directory into a typed model, and the model-drift lint asserts each `component-ref`
+# annotation resolves to a real component in your component-zone model.
+#
+# Replace every <TODO ...>. Keep the schema shape.
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: <TODO-service-name>          # canonical service name — the lookup key
+  description: <TODO one-line role of this service>
+  tags: [<TODO-language>, <TODO-facet>]   # e.g. [python, fastapi] or [dotnet, cli]
+  annotations:
+    # Cross-reference back to the LOGICAL/DEVELOPMENT view (component-zone model). The drift-lint
+    # asserts this resolves to a real Component there — that link is what keeps the two views coherent.
+    example.dev/component-ref: <TODO-component-name-in-component-zone-model>
+    # The auth boundary this service enforces (the trust-boundary facet the scenarios view carries).
+    example.dev/auth-header: <TODO-e.g. X-Service-Token>
+    # Who is ALLOWED to call this service — the drift-lint can assert callers exist in the catalogue.
+    example.dev/expected-callers: "[<TODO-caller-a>, <TODO-caller-b>]"
+spec:
+  type: service
+  lifecycle: production            # production | experimental | deprecated
+  owner: <TODO-team>
+  system: <TODO-system-grouping>
+  # The APIs this service PROVIDES — each name must match a `kind: API` entity (below or in a sibling file).
+  providesApis:
+    - <TODO-api-name>
+  # The services this one DEPENDS ON — the edges of the scenarios/collaboration graph.
+  dependsOn: []                    # e.g. [component:other-service]
+
+---
+# An endpoint contract this service provides. Keeping the contract typed (request cap, latency budget,
+# timeouts, auth) is what lets an agent reason about a call WITHOUT reading the server code.
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: <TODO-api-name>
+  description: <TODO what this endpoint does>
+  annotations:
+    example.dev/expected-callers: "[<TODO-caller-a>]"
+spec:
+  type: openapi
+  lifecycle: production
+  owner: <TODO-team>
+  system: <TODO-system-grouping>
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: <TODO-service-name> <TODO-endpoint-path>
+      version: "1.0"
+    paths:
+      <TODO-/endpoint>:
+        post:
+          # Custom `x-` fields carry the per-endpoint CONTRACT the loader parses into typed fields.
+          # These are the facts an agent needs to reason about a call correctly.
+          x-request-body-cap: <TODO-e.g. 200MiB>
+          x-expected-latency-p99-ms: <TODO-e.g. 30000>
+          x-client-timeout-ms: <TODO-e.g. 60000>
+          x-server-timeout-ms: <TODO-e.g. 60000>
+          x-requires-auth: true
+          responses:
+            "200": { description: <TODO-success-shape> }
+            "401": { description: missing or invalid auth token }
+            "413": { description: payload too large }

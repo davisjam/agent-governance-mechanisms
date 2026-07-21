@@ -1,11 +1,34 @@
-# The reflection-hook library — a runnable, portable substrate
+# The hook library — a runnable, portable substrate
 
 *A self-contained, stdlib-only Claude Code hook library. Copy this whole `hooks/`
-directory into your `.claude/`, wire the Stop hook, and adapt the example facets.
-This is the runnable complement to the catalogue's
+directory into your `.claude/`, wire the hooks, and adapt the example facets. This is
+the runnable complement to the catalogue's
 [reflection-facet-substrate](../../../../../agent/lifecycle-and-observability/reflection-facet-substrate.md)
 mechanism and the [L6 · govern-your-own-loop](../examples/lifecycle-L6-govern-your-own-loop.md)
 lifecycle model.*
+
+It ships three layers you adopt independently:
+
+1. **The reflection substrate** — tempo-gated, default-silent nudges that fire a
+   skipped reflex at its moment (the bulk of this README).
+2. **The typed hook substrate** — a machine-checkable Claude Code hook-output schema
+   + a typed hook registry that catches an "inject on a block-only event" bug *at
+   construction*, not in production (see [The typed hook substrate](#the-typed-hook-substrate)).
+3. **The banking substrate** — the runnable half of L2 (manage-context): an atomic
+   dual-write status banker + a paired-artifact consistency facet + a
+   machine-generated handoff scaffold (see [The banking substrate](#the-banking-substrate)).
+
+**Every hook here holds the same five-part discipline** — the value is the discipline,
+not any one hook:
+
+- **(a) fail-open** — a hook error never blocks a turn (it falls back to silence);
+- **(b) kill-switched** — every hook honours an env-var off switch;
+- **(c) context-guarded** — a hook meant for the operator no-ops inside a sub-agent
+  session (guard on your fleet's worktree/agent marker);
+- **(d) telemetered** — every firing (and every was-eligible-but-silent) writes a line
+  to a jsonl leash you can read;
+- **(e) capability-derived** — a hook's allowed output shape is *derived from the
+  vendored schema*, never hand-declared (so a block-only event can't claim to inject).
 
 ## The pattern
 
@@ -30,7 +53,7 @@ consolidates them into ONE tempo-gated substrate:
   reflection per window**. Adding a facet does not raise the reflection *rate* — it
   only changes which dimension a given window's single reflection covers.
 
-Two example facets ship, both generic:
+Three example facets ship, all generic:
 
 - **`reflection_facet_recurrence.py`** — the `failure_control` facet. On a turn-end,
   "did the same failure surface ≥2× this session? convert the *class* into a control
@@ -38,6 +61,10 @@ Two example facets ship, both generic:
 - **`reflection_facet_memory_routing.py`** — the `knowledge_routing` facet. On a
   memory-file write, "is this a true one-off, or durable know-how that belongs in a
   shared runbook / design doc instead?"
+- **`reflection_facet_bank_consistency.py`** — the `bank_consistency` facet. On a write
+  to one member of a paired status set (e.g. a strategy doc + a handoff doc), "you
+  updated one; the other is now stale — bank the pair before you end the turn." The
+  facet shape the other two don't cover: *paired-artifact freshness*.
 
 ## Files
 
@@ -47,9 +74,16 @@ Two example facets ship, both generic:
 | `hook_reflection_turn_end.py` | The runnable **Stop** hook (the ON_TURN_END emitter): the ≤1-per-window round-robin gate + dedupe flag + telemetry. |
 | `reflection_facet_recurrence.py` | Example facet: failure→control (ON_TURN_END). |
 | `reflection_facet_memory_routing.py` | Example facet: memory-vs-runbook routing (ON_MEMORY_WRITE). |
+| `reflection_facet_bank_consistency.py` | Example facet: paired-status-artifact freshness (ON_MEMORY_WRITE). |
 | `reflection_turn_end_query.py` | The measured-leash query (per-facet firing + silence counts). |
 | `_hook_harness.py` | Minimal self-contained Claude Code hook harness (stdin parse + decision emit). No project coupling. |
-| `settings.snippet.json` | How to register the Stop hook + set the kill-switch / window env vars. |
+| `_claude_hook_output_schema.py` | The vendored, machine-checkable Claude Code hook-output contract (which events may inject; the block-only set). No project coupling. |
+| `_hook_registry.py` | The typed hook registry — declares what each hook may output (INJECT/BLOCK derived from the schema); catches inject-on-block-only at construction. |
+| `test_hook_output_schema_conformance.py` | The conformance control — drives every wired hook and validates its real output against the schema; asserts no wired hook is untested. |
+| `hook_skill_usage_telemetry.py` | PreToolUse hook: logs every `Skill` invocation to the measured leash (are your skills firing at all?). |
+| `skill_usage_query.py` | Cross-log query: did a reflection nudge precede an actual skill invocation in the same session? |
+| `bank_status.py` | The atomic dual-write status banker (both-or-nothing write of a parameterized status-artifact set). |
+| `settings.snippet.json` | How to register the Stop + PreToolUse hooks and set the kill-switch / window / bank-pair env vars. |
 
 ## How to wire it
 
@@ -138,3 +172,65 @@ the `reflection-facet-substrate` mechanism's "held hard" note):
 
 Start with ONE facet if that's all you need — the registry and the shared window are
 overhead until the *second*. This substrate earns its keep at facet two.
+
+## The typed hook substrate
+
+A Claude Code hook may emit different output shapes at different events — and a
+`Stop` / `SubagentStop` / `PreCompact` / `Notification` hook may emit **no**
+`hookSpecificOutput` at all (it is block-only). A hook that tries to *inject* context
+on one of those events fails silently in production: the output is ignored and the
+hook looks dead. This layer makes that a *construction-time* error instead.
+
+- **`_claude_hook_output_schema.py`** vendors the contract: `KNOWN_EVENTS`,
+  `hook_specific_output_allowed(event)`, and `validate_hook_output(event, payload)`
+  (returns the list of violations; `[]` = valid). It is pure Claude-Code knowledge —
+  zero project coupling — so it is the one file to copy near-verbatim and keep current
+  with the hooks docs.
+- **`_hook_registry.py`** builds on it: a frozen `OrchestratorHook` declares its event,
+  and its allowed `HookOutputKind` (INJECT / BLOCK) is **derived from the schema**, not
+  hand-set. Declaring INJECT on a block-only event raises `HookCapabilityError` when the
+  hook object is *constructed* — the (e) discipline made mechanical. A `HookRegistry.run`
+  driver owns kill-switch honouring + fail-open in one place.
+- **`test_hook_output_schema_conformance.py`** is the hard control that makes the schema
+  load-bearing: it reads the hooks wired in `settings.snippet.json`, drives each
+  end-to-end with a representative payload, validates the *actual* stdout against the
+  schema, and asserts every wired hook has a test case (no silent gaps). Run it with
+  `python3 test_hook_output_schema_conformance.py`.
+
+**Recommended:** wire the conformance test into your pre-commit / CI alongside the
+closed-surface and pointer-resolve lints above — it is the third standing control over
+the hook substrate.
+
+## The banking substrate
+
+Some judgments recur every session at the substrate's *edges*: bank the in-flight
+state before a context window compacts; keep a strategy doc and its handoff in sync;
+know whether your own skills are even firing. This layer ships the runnable half of the
+[L2 · manage-context](../examples/lifecycle-L2-manage-context.md) lifecycle — the part
+the model only described in prose.
+
+- **`bank_status.py`** — the atomic dual-write status banker. You hand it a
+  parameterized set of `StatusArtifact` records (name, path, render-callable); it
+  renders them all into memory, then writes each via temp-file + `os.replace`. A render
+  failure aborts the whole bank with **nothing written** — both-or-nothing, so a
+  compaction can never catch a half-updated pair. Runs 1, 2, or N artifacts; nothing is
+  hardcoded. `python3 bank_status.py --set STRATEGY=path --set HANDOFF=path`.
+- **`reflection_facet_bank_consistency.py`** — the soft complement (an `ON_MEMORY_WRITE`
+  reflection facet): write one member of the paired set and, if the other is now stale,
+  it nudges FINISH-THE-BANK. Point it at the pair with `REFLECTION_BANK_PAIR` (two
+  `os.pathsep`-joined absolute paths); silent no-op until you do.
+- **`hook_skill_usage_telemetry.py`** + **`skill_usage_query.py`** — the measured leash
+  for the skills themselves. The PreToolUse hook logs every `Skill` invocation; the
+  query joins that log against the reflection-firing log by `session_id` to answer *"did
+  a nudge ever precede an actual skill invocation?"* — the keep-or-pull evidence the
+  reflection query alone can't produce.
+- **`emit-handoff-starter.py`** (shipped in [`../templates/`](../templates/), not here)
+  — a fill-in scaffold that machine-generates the *reconstructable* handoff sections
+  from live git state (HEAD, worktrees, status, recent commits) and leaves
+  `<!-- TODO: narrative -->` for judgment. Banking becomes a narrative diff, not a
+  rewrite — which is what makes frequent re-banking actually happen. Adapt its
+  `# TODO(adapt)` seam to your own queryable sources.
+
+The `ON_MEMORY_WRITE` facet needs the same optional `PostToolUse` emitter as the
+memory-routing facet (see step 3 of *How to wire it*); `bank_status.py`,
+`hook_skill_usage_telemetry.py`, and the query run standalone.

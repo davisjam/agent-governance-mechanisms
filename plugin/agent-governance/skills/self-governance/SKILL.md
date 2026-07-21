@@ -201,6 +201,20 @@ Two beats: **interpret**, then **convert**.
    **enforced** (the hard control you wrote and verified) versus **recommended**
    (anything left for a human/harness to wire — e.g. registering the lint in a
    blocking gate, or a CI step). Do not overstate enforcement.
+7. **When the durable control is a whole model view, reach for the MBSE starter kit.**
+   Some failure classes aren't closed by one lint — they need a *typed model view* the
+   fleet reasons through: a lifecycle whose races need a state machine, a subsystem map,
+   a service-flow or deployment topology. Author it as **model-based software
+   engineering** — a typed source of truth realized as the 4+1 architectural views
+   (logical, development, process, physical, scenarios), each kept equal to the code by
+   a build-time drift check. Start from
+   [`templates/system-models-starter-kit.md`](templates/system-models-starter-kit.md):
+   it ships fill-in scaffolds (a state-machine/process model, a component-zone/logical
+   model, a Backstage-dialect service-flow model, a deployment-topology model) built
+   around the two load-bearing disciplines — *look up, don't copy* and *derive, don't
+   hand-type* — plus the drift-lint contract that makes a model unable to lie. Reach for
+   it to *extend the model / author a view*, not to fill a boilerplate form — and heed
+   its first rule: model only the view where a failure actually lives.
 
 ---
 

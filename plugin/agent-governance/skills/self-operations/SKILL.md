@@ -96,17 +96,23 @@ place. Pick by what you want to see:
   [recover-a-broken-scheduler](examples/runbook-recover-a-broken-scheduler.md) — each shows the typed steps
   end to end (a RUNNABLE line, a JUDGMENT-AUTOMATABLE carried brief, a JUDGMENT-IRREDUCIBLE escalation),
   opening with its universal problem statement, then illustrative solution steps.
-- **The runnable reflection-hook library** → [`hooks/`](hooks/) — a self-contained, stdlib-only Claude Code
-  hook substrate you copy into your `.claude/` and adapt: a Template-Method `ReflectionFacet` base + typed
-  registry, a shared once-per-window Stop emitter, two generic example facets (failure→control,
-  memory-vs-runbook), and the measured-leash query. The runnable complement to the
-  [L6 govern-your-own-loop](examples/lifecycle-L6-govern-your-own-loop.md) model — read its
-  [`README.md`](hooks/README.md) for the wiring + how-to-add-a-facet.
-- **Design + Epic templates** → [`templates/`](templates/) — when operating spills into *building* (an
-  infra change, or the design → ratify → build → DoD feature-dev flow), author from the shipped
-  [Epic template](templates/EPIC-TEMPLATE-starter.md) and [design-doc template](templates/design-doc-template-starter.md):
-  they carry the required sections + Definition-of-Done, so a design's ratification lands *committed in the
-  doc* (a `§G` block), not stranded in conversation.
+- **The runnable hook library** → [`hooks/`](hooks/) — a self-contained, stdlib-only Claude Code hook
+  substrate you copy into your `.claude/` and adapt, in three independently-adoptable layers: **(1)** the
+  reflection substrate (a Template-Method `ReflectionFacet` base + typed registry, a shared once-per-window
+  Stop emitter, three generic example facets — failure→control, memory-vs-runbook, bank-consistency — and
+  the measured-leash query); **(2)** the typed hook substrate (a machine-checkable hook-output schema + a
+  registry that catches an inject-on-a-block-only-event bug *at construction*, plus a conformance test);
+  **(3)** the banking substrate (an atomic dual-write status banker + a skill-usage measured leash) — the
+  runnable half of [L2 manage-context](examples/lifecycle-L2-manage-context.md). The runnable complement to
+  the [L6 govern-your-own-loop](examples/lifecycle-L6-govern-your-own-loop.md) model — read its
+  [`README.md`](hooks/README.md) for the wiring + how-to-add-a-facet, and its five-part hook discipline.
+- **Design + Epic + handoff templates** → [`templates/`](templates/) — when operating spills into
+  *building* (an infra change, or the design → ratify → build → DoD feature-dev flow), author from the
+  shipped [Epic template](templates/EPIC-TEMPLATE-starter.md) and
+  [design-doc template](templates/design-doc-template-starter.md): they carry the required sections +
+  Definition-of-Done, so a design's ratification lands *committed in the doc* (a `§G` block), not stranded in
+  conversation. For L2 banking, the [emit-handoff scaffold](templates/emit-handoff-starter.py) machine-fills
+  the reconstructable handoff sections from git state so re-banking is a narrative diff, not a rewrite.
 
 Copy a sample's shape, swap in this repo's tools, drop the rest.
 

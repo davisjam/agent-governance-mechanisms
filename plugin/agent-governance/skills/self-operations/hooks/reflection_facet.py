@@ -70,6 +70,7 @@ class FacetKey(str, Enum):
 
     FAILURE_CONTROL = "failure_control"      # recurrence-nudge (failure → control).
     KNOWLEDGE_ROUTING = "knowledge_routing"  # memory-vs-runbook routing.
+    BANK_CONSISTENCY = "bank_consistency"    # paired-status-artifact freshness (bank the pair).
     # Add your own, e.g.:
     #   ARCHITECTURE = "architecture"        # DRY / structural drift.
     #   OPERATIONS = "operations"            # runbook / playbook gaps.

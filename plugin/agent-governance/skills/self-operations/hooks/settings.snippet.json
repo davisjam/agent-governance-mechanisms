@@ -1,17 +1,20 @@
 {
-  "__comment__": "Reflection-hook wiring for .claude/settings.json. MERGE the `hooks` block below into your existing settings.json (don't overwrite the whole file). Adjust the paths to where you copied this `hooks/` directory. See README.md.",
+  "__comment__": "Hook wiring for .claude/settings.json. MERGE the `hooks` block below into your existing settings.json (don't overwrite the whole file). Adjust the paths to where you copied this `hooks/` directory. See README.md.",
 
   "__how_to_wire__": [
     "1. Copy the whole hooks/ directory into your .claude/ (e.g. .claude/hooks/reflection/).",
     "2. Merge the `hooks` block below into .claude/settings.json, fixing the `command` paths.",
-    "3. The Stop hook drives the ON_TURN_END facets (failure->control). The PostToolUse hook is OPTIONAL and only needed for the memory-routing facet; wire it plus a sibling memory-write emitter, and set REFLECTION_MEMORY_DIRS to your private-memory store(s).",
-    "4. Kill switches (set in `env` below or your shell): REFLECTION_TURN_END_OFF=1 disables the whole family; each facet has its own, e.g. REFLECTION_FAILURE_CONTROL_OFF=1."
+    "3. The Stop hook drives the ON_TURN_END reflection facets (failure->control). The PreToolUse hook logs Skill invocations to the measured leash (are your skills firing?). The PostToolUse hook is OPTIONAL and only needed for the ON_MEMORY_WRITE facets (memory-routing, bank-consistency); wire it plus a sibling memory-write emitter, and set REFLECTION_MEMORY_DIRS / REFLECTION_BANK_PAIR.",
+    "4. Kill switches (set in `env` below or your shell): REFLECTION_TURN_END_OFF=1 disables the reflection family; SELFOPS_SKILL_TELEMETRY_OFF=1 disables skill-usage logging; each facet has its own, e.g. REFLECTION_FAILURE_CONTROL_OFF=1, REFLECTION_BANK_CONSISTENCY_OFF=1."
   ],
 
   "env": {
     "REFLECTION_TURN_END_OFF": "0",
     "REFLECTION_TURN_END_WINDOW_S": "1800",
-    "REFLECTION_MEMORY_DIRS": "/absolute/path/to/your/private-memory-dir"
+    "REFLECTION_MEMORY_DIRS": "/absolute/path/to/your/private-memory-dir",
+    "REFLECTION_BANK_PAIR": "/absolute/path/to/status-doc-A:/absolute/path/to/status-doc-B",
+    "REFLECTION_BANK_FRESH_S": "900",
+    "SELFOPS_SKILL_TELEMETRY_OFF": "0"
   },
 
   "hooks": {
@@ -21,6 +24,17 @@
           {
             "type": "command",
             "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/reflection/hook_reflection_turn_end.py\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/reflection/hook_skill_usage_telemetry.py\""
           }
         ]
       }

@@ -67,6 +67,16 @@ SELF_GOVERNANCE = SkillSpec(
         "The catalogue in `reference/` is the set of concrete controls; these principles are the "
         "reasoning that decides when to reach for one.*\n\n---\n\n"
     ),
+    # The model-based-software-engineering starter kit: fill-in scaffolds for authoring the 4+1
+    # model views (the catalogue documents them as mechanisms; these let a fresh project BUILD them).
+    vendor_downloads=(
+        "system-models-starter-kit.md",
+        "state-machine-model-starter.py",
+        "component-zone-model-starter.py",
+        "service-flow-model-starter.yaml",
+        "service-flow-loader-starter.py",
+        "deployment-topology-starter.py",
+    ),
 )
 
 SELF_OPERATIONS = SkillSpec(
@@ -84,7 +94,11 @@ SELF_OPERATIONS = SkillSpec(
     # The operate skill authors design docs + Epics (infra changes, the feature-dev flow) — ship the
     # templates locally so it never has to reach outside its own dir (self-governance already vendors
     # these via its reference/downloads/ mirror).
-    vendor_downloads=("EPIC-TEMPLATE-starter.md", "design-doc-template-starter.md"),
+    vendor_downloads=(
+        "EPIC-TEMPLATE-starter.md",
+        "design-doc-template-starter.md",
+        "emit-handoff-starter.py",  # machine-generate the reconstructable handoff sections (L2 banking).
+    ),
 )
 
 SPECS = [SELF_GOVERNANCE, SELF_OPERATIONS]
