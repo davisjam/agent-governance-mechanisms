@@ -14,7 +14,7 @@ Two common ways to build with agents sit at opposite ends of a spectrum. This ca
 
 | Vibe coding | · Governance-centric · — **the midway** | Oversight-centric |
 |:---|:---:|:---|
-| Prompt, accept what looks right, iterate by feel. Fast, but the same failures keep recurring and human review becomes the bottleneck. | Let velocity **expose** failures, and **convert** each recurring one into a durable guardrail. The guardrails grow from real failures, so code stays fast **and** trustworthy. This is **governance conversion**. | Check *everything* before you trust it: a human reviewing every change, or a formal spec verified against (spec-driven development is this). Rigorous, but checking is the bottleneck, and neither humans nor specs anticipate what only breaks at velocity. |
+| Prompt, accept what looks right, iterate by feel. Fast, but the same failures keep recurring and human review becomes the bottleneck. | Let velocity **expose** failures, and **convert** each recurring one into a durable guardrail. The guardrails grow from real failures, so code stays fast **and** trustworthy. | Check *everything* before you trust it: a human reviewing every change, or a formal spec verified against (spec-driven development is this). Rigorous, but checking is the bottleneck, and neither humans nor specs anticipate what only breaks at velocity. |
 | *all velocity — no guardrails* | *velocity + guardrails grown from failure* | *all oversight — everything checked* |
 | e.g. [Karpathy](https://x.com/karpathy/status/1886192184808149383) · [Gas Town](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04) | | e.g. [Meyer, CACM](https://dl.acm.org/doi/full/10.1145/3773295) · [vibe-OS / vibe-tools](https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html) |
 
@@ -23,6 +23,13 @@ output at one end or *inspect* it at the other, and that attention grows with th
 it becomes the bottleneck. The midway is
 [**cattle, not pets**](https://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/): build
 the fences and chutes once, and the *guardrails* ride every change instead of a person.
+
+The midway is a discipline: **establishing and maintaining a governed engineering environment**. It works
+in two directions at once. **Up front**, you specify what you can: the architecture that makes a class of
+error impossible, the model the fleet reasons through, the templates and checklists that put a change on
+rails before it's written. **In flight**, you let velocity surface the failures you couldn't foresee, and
+convert each recurring one into a durable guardrail. This catalogue describes both halves: the guidance on
+what to fix in advance, and the machinery for responding when something slips through.
 
 This middle column isn't new; what's new is the **substrate**. The process itself is the agentic-era
 instantiation of quality practices long standard in regulated industry: documented process, requirements
@@ -145,7 +152,8 @@ schema and builds the web view (`catalog.py validate` · `build` · `deploy loca
 
 Start with the highest-leverage, lowest-cost mechanisms for the failures your agents *actually* make (a
 governance doc, a gate or two), and add mechanisms only as velocity surfaces the failures they prevent.
-Growing guardrails from real failure **is** the method (*governance conversion*).
+Growing guardrails from real failure is the **in-flight** half of the discipline: what you couldn't
+specify up front, you convert from failure.
 
 **Adapt the mechanisms to your environment**: your language, your agents, your CI; they are patterns, not
 a stack. But keep the part that travels furthest: most of the value lands **on the developer's own
