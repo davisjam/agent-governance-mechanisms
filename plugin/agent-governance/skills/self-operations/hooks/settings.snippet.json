@@ -1,0 +1,29 @@
+{
+  "__comment__": "Reflection-hook wiring for .claude/settings.json. MERGE the `hooks` block below into your existing settings.json (don't overwrite the whole file). Adjust the paths to where you copied this `hooks/` directory. See README.md.",
+
+  "__how_to_wire__": [
+    "1. Copy the whole hooks/ directory into your .claude/ (e.g. .claude/hooks/reflection/).",
+    "2. Merge the `hooks` block below into .claude/settings.json, fixing the `command` paths.",
+    "3. The Stop hook drives the ON_TURN_END facets (failure->control). The PostToolUse hook is OPTIONAL and only needed for the memory-routing facet; wire it plus a sibling memory-write emitter, and set REFLECTION_MEMORY_DIRS to your private-memory store(s).",
+    "4. Kill switches (set in `env` below or your shell): REFLECTION_TURN_END_OFF=1 disables the whole family; each facet has its own, e.g. REFLECTION_FAILURE_CONTROL_OFF=1."
+  ],
+
+  "env": {
+    "REFLECTION_TURN_END_OFF": "0",
+    "REFLECTION_TURN_END_WINDOW_S": "1800",
+    "REFLECTION_MEMORY_DIRS": "/absolute/path/to/your/private-memory-dir"
+  },
+
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/reflection/hook_reflection_turn_end.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

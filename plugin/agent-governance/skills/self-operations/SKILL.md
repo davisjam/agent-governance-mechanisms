@@ -87,9 +87,18 @@ place. Pick by what you want to see:
   (purpose, healthy baseline, symptom classes, owned runbooks).
 - **A runbook** → [recover-the-fleet](examples/runbook-recover-the-fleet.md) ·
   [drain-an-un-releasable-mainline](examples/runbook-drain-unreleasable-mainline.md) ·
-  [reclaim-a-full-disk](examples/runbook-reclaim-a-full-disk.md) — each shows the typed steps end to end
-  (a RUNNABLE line, a JUDGMENT-AUTOMATABLE carried brief, a JUDGMENT-IRREDUCIBLE escalation), opening with
-  its universal problem statement, then illustrative solution steps.
+  [reclaim-a-full-disk](examples/runbook-reclaim-a-full-disk.md) ·
+  [get-a-red-deploy-green](examples/runbook-get-a-red-deploy-green.md) ·
+  [rca-an-ambiguous-signal](examples/runbook-rca-an-ambiguous-signal.md) ·
+  [recover-a-broken-scheduler](examples/runbook-recover-a-broken-scheduler.md) — each shows the typed steps
+  end to end (a RUNNABLE line, a JUDGMENT-AUTOMATABLE carried brief, a JUDGMENT-IRREDUCIBLE escalation),
+  opening with its universal problem statement, then illustrative solution steps.
+- **The runnable reflection-hook library** → [`hooks/`](hooks/) — a self-contained, stdlib-only Claude Code
+  hook substrate you copy into your `.claude/` and adapt: a Template-Method `ReflectionFacet` base + typed
+  registry, a shared once-per-window Stop emitter, two generic example facets (failure→control,
+  memory-vs-runbook), and the measured-leash query. The runnable complement to the
+  [L6 govern-your-own-loop](examples/lifecycle-L6-govern-your-own-loop.md) model — read its
+  [`README.md`](hooks/README.md) for the wiring + how-to-add-a-facet.
 
 Copy a sample's shape, swap in this repo's tools, drop the rest.
 
