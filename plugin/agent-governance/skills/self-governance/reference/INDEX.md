@@ -6,7 +6,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->63<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->64<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
@@ -61,6 +61,7 @@ soft guidance with a hard counterpart.
 | ✅ | Cron-alerts gate | `observability` | Hard (blocking) | [cron-alerts-gate.md](agent/lifecycle-and-observability/cron-alerts-gate.md) |
 | ✅ | Lifecycle hooks (turn-stop / compaction / session-start / pre-action) | `quality-gate` | Soft·Hard | [lifecycle-hooks.md](agent/lifecycle-and-observability/lifecycle-hooks.md) |
 | ✅ | Reflection-facet substrate (tempo-gated policy nudges) | `quality-gate` | Soft·Hard | [reflection-facet-substrate.md](agent/lifecycle-and-observability/reflection-facet-substrate.md) |
+| ✅ | Caused-by provenance (agent-side change traceability) | `audit-trail` | Hard | [caused-by-provenance.md](agent/lifecycle-and-observability/caused-by-provenance.md) |
 
 ## 5. Governance-doc controls
 

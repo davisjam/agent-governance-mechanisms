@@ -23,8 +23,7 @@ quietly isn't what the author wrote. The failure recurs on every remediation pas
 "Trust the code" breaks the moment a mutator has a bug, and spot-checking outputs misses
 *silent* drops — you don't notice the paragraph that's gone. The fidelity gate makes the guarantee a
 **deterministic post-condition**: the input's content must be a subset of the output's, checked
-mechanically on every production job. Trusting mutators to preserve content works right up until one
-doesn't, and the drop is silent when it fails; a post-condition that fails the job removes the trust
+mechanically on every production job. A post-condition that fails the job removes the trust
 from the loop. The staging per-pass variant adds localization — it tells you *which* pass violated the
 subset, turning "content was lost somewhere" into "pass N lost it."
 

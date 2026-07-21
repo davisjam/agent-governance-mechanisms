@@ -164,7 +164,7 @@
   surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. This
   site describes both halves. The first is the guidance on what to fix in advance; the second is the
   machinery for responding when something slips through. It packages both as three Claude skills with a
-  <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>63 governance mechanisms across
+  <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>64 governance mechanisms across
   three roles</b>, each written like a design pattern — the recurring failure it kills, and why it is
   <i>not</i> just the cheaper thing everyone already does.</p>
 
@@ -299,7 +299,7 @@
   <hr class="sep" />
 
   <h2 class="section-h">Explore the catalogue</h2>
-  <p class="section-sub">63 governance mechanisms — the repertoire this loop produced in one real
+  <p class="section-sub">64 governance mechanisms — the repertoire this loop produced in one real
   production system.</p>
   <div class="cards-grid">
   <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, mechanisms clickable</span></a>
@@ -352,6 +352,7 @@
 <tr><td class="c-name"><a href="agent/lifecycle-and-observability/cron-alerts-gate.html">Cron-alerts gate</a></td><td class="c-sum">Block new dispatch while a HIGH cron alert is unresolved.</td><td class="c-enf">Hard (blocking)</td></tr>
 <tr><td class="c-name"><a href="agent/lifecycle-and-observability/lifecycle-hooks.html">Lifecycle hooks (turn-stop / compaction / session-start / pre-action)</a></td><td class="c-sum">A hook on a runtime lifecycle event so an operator's omitted step can't be forgotten.</td><td class="c-enf">Soft·Hard</td></tr>
 <tr><td class="c-name"><a href="agent/lifecycle-and-observability/reflection-facet-substrate.html">Reflection-facet substrate (tempo-gated policy nudges)</a></td><td class="c-sum">Many policy-reflection nudges as one facet registry over a shared tempo budget — ≤1 emission/window.</td><td class="c-enf">Soft·Hard</td></tr>
+<tr><td class="c-name"><a href="agent/lifecycle-and-observability/caused-by-provenance.html">Caused-by provenance (agent-side change traceability)</a></td><td class="c-sum">A typed <code>caused-by</code> field, minted at the cause and gated at commit, threads a change to its reason.</td><td class="c-enf">Hard</td></tr>
 </tbody></table>
 <h4>Governance-doc controls</h4>
 <p class="fam-lede">Documentation treated as enforced infrastructure.</p>

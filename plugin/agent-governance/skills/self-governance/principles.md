@@ -156,6 +156,9 @@ you see:
 - **An advisory "remember to…"** → make it a hard gate; guidance you must remember rots. A rule about the
   *code* → a lint (→ A.3.1); a step the *operator's own loop* keeps skipping (end-of-turn, context
   compaction, session-start, before-an-action) → a lifecycle hook (→ A.3.7).
+- **A design selecting a niche tool / DSL / library over a mainstream alternative, unweighed** → surface
+  training-data density as a tiebreaker; the out-of-distribution tool gets re-derived and mis-derived by
+  every future agent (→ A.2.8a). A heuristic to raise, not a veto.
 - **A control you're about to place** → name its load-bearing *terms* (the nouns the rule is about), then
   put it at the *lowest* layer whose native vocabulary already names them — not higher (re-derives
   vocabulary → drift + false positives) nor below the policy's semantics (→ A.1.6).
@@ -287,6 +290,23 @@ Kafka, RabbitMQ · orchestration: Kubernetes · relational DBs: PostgreSQL, SQLi
 · caches/KV: Redis · web servers/proxies: nginx, Envoy · version control: Git ·
 build: Bazel · search: Lucene / Elasticsearch · observability: Prometheus,
 OpenTelemetry. Treat these as prior art to adapt, not designs to reinvent.
+
+### A.2.8a. Training-data density is a first-class tool-selection factor
+
+When choosing between a locally-better niche tool and a widely-adopted
+mainstream one (a bespoke DSL vs. Rego/OPA, an obscure library vs. a mainstream
+framework), weigh that agents produce more reliable output for tools the
+training corpus has seen more of. The niche tool is out-of-distribution: every
+future agent that meets it re-derives it from thinner evidence, and mis-derives
+it more often. This is the agent-era corollary to
+[Linus's Law](https://en.wikipedia.org/wiki/Linus%27s_law): with agents, prefer
+the thing many eyes — and thus the corpus — have already seen. A **heuristic,
+not a mandate** (a genuinely-better niche tool still wins on a large enough
+capability gap; no reward for maximizing mainstream-ness). It complements
+**uniformity over fit (→ A.2.7)** on a different axis: A.2.7 lowers *intra-repo*
+variance; this lowers *agent-error* variance. Pair it with the genre check
+(→ A.2.8) as the tiebreaker once two candidates clear best-in-class. The factor
+is invisible in the code, so it must be named for an agent to weigh it.
 
 ### A.2.9. Regex policy — parser-first
 
@@ -500,6 +520,12 @@ question — *which job, on which service, costs the most, so we know what to op
 per-service-per-job breakdown underneath. The un-pinnable diagnosis is a finding about the signal's
 *presence*; the un-actionable metric is a finding about its *depth*. Same reflex, one level down:
 instrument for the decision, not for the surface reading.
+
+**Prefer causation to correlation.** A co-occurrence metric only reports ("a nudge and a fix shared a
+session"); a cause-key the actor mints at the moment of action and carries to the effect can act — drive a
+pull decision, an ablation, a defensible claim. Where the cause is known when the change is made, stamp it
+from a closed taxonomy and assert it at the gate; where it can only be inferred, name the metric `_proxy`
+and never reward a rate — the trace exists to explain, not to be optimized.
 
 ### A.3.7. Hook the operator's own loop — interpose on the runtime's lifecycle events
 

@@ -93,7 +93,9 @@ place. Pick by what you want to see:
   [reclaim-a-full-disk](examples/runbook-reclaim-a-full-disk.md) ·
   [get-a-red-deploy-green](examples/runbook-get-a-red-deploy-green.md) ·
   [rca-an-ambiguous-signal](examples/runbook-rca-an-ambiguous-signal.md) ·
-  [recover-a-broken-scheduler](examples/runbook-recover-a-broken-scheduler.md) — each shows the typed steps
+  [recover-a-broken-scheduler](examples/runbook-recover-a-broken-scheduler.md) ·
+  [keep-the-tree-clean](examples/runbook-keep-the-tree-clean.md) ·
+  [query-the-caused-by-mix](examples/runbook-query-the-caused-by-mix.md) — each shows the typed steps
   end to end (a RUNNABLE line, a JUDGMENT-AUTOMATABLE carried brief, a JUDGMENT-IRREDUCIBLE escalation),
   opening with its universal problem statement, then illustrative solution steps.
 - **The runnable hook library** → [`hooks/`](hooks/) — a self-contained, stdlib-only Claude Code hook

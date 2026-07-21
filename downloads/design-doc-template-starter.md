@@ -37,6 +37,11 @@ single source of truth: a stable check that reads a meta-file at build time beat
 beats N hand-rolled copies. Record the alternatives you considered and why you rejected them — a
 design doc with no rejected alternatives usually didn't look for them.
 
+When two candidates clear the genre check, weigh **training-data density** as a tiebreaker: agents
+produce more reliable output for a widely-adopted mainstream tool than for a niche one, which is
+out-of-distribution and gets re-derived (and mis-derived) by every future agent. A heuristic, not a
+mandate — record it as one factor among capability, fit, licensing, and uniformity.
+
 ## §3 The design
 
 One subsection **per real part** — one heading (or table row) per source, stage, module, service, or

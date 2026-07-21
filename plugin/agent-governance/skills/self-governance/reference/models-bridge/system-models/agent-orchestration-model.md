@@ -79,7 +79,7 @@ fleet becomes as checkable as the product, on the same rails.
 
 ## Consequences & costs
 
-- **The fleet lifecycle gains one authoritative SSOT.** A new fleet state, or a new reflection facet, is now
+- **The fleet lifecycle gains one authoritative source of truth (SSOT).** A new fleet state, or a new reflection facet, is now
   a model edit — or the drift gate fails. Deliberately; that is the freshness gate working.
 - **Modeling the operator's own loop can feel like navel-gazing** — until the first time it catches the
   orchestrator resting with ratified work queued, or a facet silently drifting from the registry. Those are

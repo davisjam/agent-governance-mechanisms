@@ -14,6 +14,8 @@ that has become un-releasable.
   green).
 - Landed worktrees are tombstoned and cleaned; stale branches are reaped, their tips preserved first.
 - No wrong or half-landed commit sits on the mainline; undo is by *revert*, never a history rewrite.
+- The working tree stays clean — run-artifacts (measurement outputs, logs, session flags) go to
+  ignore-rules, not the tree; accumulated WIP is triaged promptly, not left where a stray commit can sweep it.
 
 ## Symptom classes → resolving docs (Part B fills the doc column)
 
@@ -23,6 +25,7 @@ that has become un-releasable.
 | The mainline is un-releasable — the deploy gate is red with no baseline | *your* drain-to-green procedure (see `runbook-drain-unreleasable-mainline.md`) |
 | A landed commit is wrong and must be undone | `git revert <sha>` — never `git reset` on a shared mainline |
 | Stale worktrees have accreted | *your* bulk cleanup (dry-run then apply; preserve tips) |
+| The working tree has accreted untracked WIP, or a stray commit swept that WIP into the mainline under an unrelated message | commit-or-wipe triage, then a forward-only un-bundle (unstage into a new commit; never a history rewrite on the shared mainline) — see `runbook-keep-the-tree-clean.md` |
 
 ## Owned runbooks
 

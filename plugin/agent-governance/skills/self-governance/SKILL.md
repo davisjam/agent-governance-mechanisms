@@ -121,7 +121,10 @@ designing / adding X — what governance does it warrant?").
 Survey the repository — or a **proposed design** — against the catalogue and produce
 a **prioritized plan**; you advise here, you do not apply changes. For a design, scan
 it for the predictive smells ([`principles.md`](principles.md) A.1.5) and name the
-mechanism each warrants — sized to the operation's scale.
+mechanism each warrants — sized to the operation's scale. When a proposed design selects
+a niche tool / DSL / library over a widely-adopted mainstream alternative without weighing
+it, recommend weighing training-data density ([`principles.md`](principles.md) A.2.8a) — a
+heuristic to surface, not a veto.
 
 1. **Learn the repo first, and gauge its scale.** What agents run, how many at
    once, what breaks repeatedly, what house-rules file (if any) exists. **Size the
