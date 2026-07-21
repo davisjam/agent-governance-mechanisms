@@ -156,6 +156,8 @@ def catalogue_md_files() -> list[str]:
             continue  # internal continuity docs: not rendered/served
         if os.path.basename(f).startswith("HANDOFF"):
             continue  # gitignored per-run handoff records (/HANDOFF*.md) — never rendered/served
+        if os.path.basename(f).startswith("BOOK-PROPOSAL"):
+            continue  # gitignored local book-proposal drafts (/BOOK-PROPOSAL*.md) — never rendered/served
         if ".local." in os.path.basename(f):
             continue  # local scratch (gitignored `*.local.md` convention) — never rendered/served
         out.append(f)
