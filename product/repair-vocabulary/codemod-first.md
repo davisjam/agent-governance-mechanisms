@@ -1,7 +1,7 @@
 # Codemod-first threshold (N≳50 → AST transformer)
 
 **Intent** — For a large mechanical backlog (N≳50 sites with a deterministic fix shape), author *one
-AST-level transformer* instead of dispatching N agents — bounding *how* large mechanical changes are
+AST-level transformer* instead of dispatching N agents, bounding *how* large mechanical changes are
 made.
 
 | | |
@@ -13,7 +13,7 @@ made.
 
 ## Motivation — the failure it kills
 
-A large mechanical lint backlog — say 200 sites all needing the same deterministic edit — tempts one of
+A large mechanical lint backlog (say 200 sites all needing the same deterministic edit) tempts one of
 two bad responses: dispatch N agents (expensive, and each introduces per-site drift) or hand-edit them
 (slow and inconsistent). The failure is *N inconsistent hand/agent fixes for a change that is actually a
 single deterministic transform*, and it recurs at every large mechanical backlog.
@@ -43,7 +43,7 @@ mechanical. Finished codemods are marked deprecated and cross-referenced as past
 
 ## Consequences & costs
 
-- **Writing the transformer is upfront cost** — it pays off only at scale, which the threshold
+- **Writing the transformer is upfront cost.** It pays off only at scale, which the threshold
   encodes.
 - **Only for deterministic shapes.** A backlog needing per-site judgment still goes to a per-site agent,
   not a codemod.

@@ -1,7 +1,7 @@
 # `a11y_` prefix convention
 
 **Intent** — A reserved naming prefix that marks tool-inserted, invisible-to-author artifacts (user-visible
-insertions keep ordinary names) — so inserted content is distinguishable from authored content and a
+insertions keep ordinary names), so inserted content is distinguishable from authored content and a
 validator can cover it by prefix (our instance: the `a11y_` prefix + `InsertedContentValidator`).
 
 | | |
@@ -13,7 +13,7 @@ validator can cover it by prefix (our instance: the `a11y_` prefix + `InsertedCo
 
 ## Motivation — the failure it kills
 
-The tool *inserts* content — alt text, tags, off-canvas scaffolding. Mixing tool-inserted content with
+The tool *inserts* content: alt text, tags, off-canvas scaffolding. Mixing tool-inserted content with
 author-written content risks two failures: presenting invisible scaffolding *as if* the user wrote it,
 or an insert that isn't tracked and so isn't validated. The failure is *untracked or mislabelled
 inserted content*, and it recurs per inserter and per insertion site.

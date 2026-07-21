@@ -16,23 +16,23 @@ run this, and how many at once" becomes declared and enforceable.
 Concurrent agent worktrees share a host and shared state. Two contract classes keep them from trampling
 each other: **mediators** (a subprocess like `dotnet test` must run through the serializer, not raw) and
 **single-writer contracts** (a state-mutation function must have exactly one writer, no concurrent
-mutation). Undeclared, both silently break — a raw `dotnet test` slips the serializer; a second writer
-corrupts state — and the breakage is a race, discovered late and hard.
+mutation). Undeclared, both silently break. A raw `dotnet test` slips the serializer; a second writer
+corrupts state; and the breakage is a race, discovered late and hard.
 
 ## Why it's not just "the mediators/enforcers already handle it"
 
 The enforcers (test-serializer, build-serializer, the role guard) *act*, but they need a **declared
-contract** to act against — "which subprocesses are mediated, which functions are single-writer" — or a
+contract** to act against ("which subprocesses are mediated, which functions are single-writer"), or a
 newly-added subprocess/mutator is simply *not covered* and nobody notices. These registries **declare**
 the contracts, so a coverage lint can flag a mediated-class call or a state mutator that isn't wired.
-Can an enforcer guard a call nobody remembered to route through it? It cannot — it only sees what
+Can an enforcer guard a call nobody remembered to route through it? It cannot; it only sees what
 reaches it. The declared contract closes that gap: coverage checks the registry against the code and
 names the mutator that should be contracted but isn't.
 
 ## Mechanism
 
 The [[mediator-registry]] holds the dev-time subprocess serializers (the test/build serializers, the
-[[aggregate-lint-runner|whole-repo lint mutex]], the commit-slave serializer) — what each mediates, its
+[[aggregate-lint-runner|whole-repo lint mutex]], the commit-slave serializer): what each mediates, its
 cap, its bypass-env. The [[single-writer-registry]] declares single-writer / monopoly contracts for
 state-mutation functions. Enforcers and coverage lints read these to refuse unmediated calls and flag
 uncovered mutators.
@@ -47,13 +47,13 @@ uncovered mutators.
 ## Consequences & costs
 
 - **New mediated subprocess / new mutator ⇒ a registry entry** or a coverage-lint failure.
-- **The contract is only as good as the enforcer** — a declared-but-unenforced contract is documentation.
+- **The contract is only as good as the enforcer.** A declared-but-unenforced contract is documentation.
 
 ## Known uses
 
-- The [[mediator-registry]] — the dev-mediator (subprocess-serializer) registry for the host's
+- The [[mediator-registry]]: the dev-mediator (subprocess-serializer) registry for the host's
   concurrency locks.
-- The [[single-writer-registry]] — single-writer / monopoly contracts.
+- The [[single-writer-registry]]: single-writer / monopoly contracts.
 - The mediator enforcers ([test-serializer](../../agent/mediators-and-resource-locks/test-serializer.md) et al.).
 
 ## Related mechanisms

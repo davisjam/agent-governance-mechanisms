@@ -1,7 +1,7 @@
 # Epic Definition-of-Done (Final-Opus trust-nothing re-run)
 
 **Intent** — An Epic-close gate mandating a "trust nothing" Final-Opus review that re-runs every owned
-pin test and lint *at HEAD* — rather than trusting phase markers or prior claims — so an Epic cannot
+pin test and lint *at HEAD*, rather than trusting phase markers or prior claims, so an Epic cannot
 close on stale or rotted assertions.
 
 | | |
@@ -13,7 +13,7 @@ close on stale or rotted assertions.
 
 ## Motivation — the failure it kills
 
-An Epic spanning many dispatches accumulates *claims* — phase markers, "lints pass," pin-test counts —
+An Epic spanning many dispatches accumulates *claims* (phase markers, "lints pass," pin-test counts),
 and those claims **rot** as sibling Epic sweeps churn the substrate underneath them. Close on the stale
 claims and you ship an Epic whose defenses no longer actually hold (empirically: 7/7 back-catalogue
 Epics self-marked DONE had quality-of-defense gaps). The failure is *a premature/false close*, and it
@@ -33,7 +33,7 @@ index: the index's lints keep its *form* honest; this re-run keeps an Epic's *cl
 An Epic-close tool enforces that every cited commit is reachable from main by ancestry or patch-id; a
 missing one requires a logged override carrying a reason. On a clean close it rewrites the status and
 closed-date fields atomically, moves the file into the closed tree, and regenerates the index. The
-Definition-of-Done itself carries a fixed set of mandatory criteria — among them the Final-Opus re-run
+Definition-of-Done itself carries a fixed set of mandatory criteria: among them the Final-Opus re-run
 of owned pins/lints at HEAD, docs + index updates, the tag routing-audit, and the filing of any design-doc
 follow-up.
 
@@ -46,9 +46,9 @@ follow-up.
 
 ## Consequences & costs
 
-- **The re-run is expensive.** Opus time plus a full pass of owned pins/lints at close — deliberately
+- **The re-run is expensive.** Opus time plus a full pass of owned pins/lints at close, deliberately
   heavyweight, because a false close is worse.
-- **`--override` is a hole.** It exists for legitimately-unreachable commits, logged — but it is a way
+- **`--override` is a hole.** It exists for legitimately-unreachable commits, logged, but it is a way
   past the reachability check.
 - **"Owned" must be accurate.** An Epic that under-declares what it owns re-runs too little and can
   still close on a rotted-but-unlisted defense.

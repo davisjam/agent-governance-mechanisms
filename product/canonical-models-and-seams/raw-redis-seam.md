@@ -1,6 +1,6 @@
 # Sole raw-Redis seam (the dispatch module)
 
-**Intent** — Confine *all* raw-Redis access to one module, with every queue key declared there — so the
+**Intent** — Confine *all* raw-Redis access to one module, with every queue key declared there, so the
 queue's atomicity and schema invariants live in exactly one lint-enforced place.
 
 | | |
@@ -19,12 +19,12 @@ misses a structure. Both recur wherever someone reaches for the raw client.
 
 ## Why it's not just "call Redis where you need it"
 
-Scattered raw Redis lets the **atomicity bug class recur** — every non-atomic pop-and-move is a
-silent-job-loss waiting for a crash — and lets key names drift from the schema until a depth metric
+Scattered raw Redis lets the **atomicity bug class recur** (every non-atomic pop-and-move is a
+silent-job-loss waiting for a crash) and lets key names drift from the schema until a depth metric
 reads the wrong structures. The dispatch module is the **sole raw-Redis seam**: all keys are declared
 there, atomic pop-and-move is encoded once (Lua `EVAL` for sorted sets, `RPOPLPUSH` for lists), and a
 lint bans raw Redis elsewhere. Can a convention guarantee no one ever writes a two-command pop-and-move?
-It cannot — the next caller who reaches for the raw client re-risks the silent loss. A typed seam that
+It cannot: the next caller who reaches for the raw client re-risks the silent loss. A typed seam that
 encodes atomicity and schema in one place can, because there is no other place to write the bug.
 Centralizing is also what makes "a queue-depth metric must query *all* queue structures" enforceable at
 all.
@@ -32,8 +32,8 @@ all.
 ## Mechanism
 
 The dispatch module is the one raw-Redis surface; all queue keys are declared in its schema (a flat
-re-export name exists as a transitional shim). Pop-and-move is atomic — Lua for ZSETs, `RPOPLPUSH` for
-lists — never `ZPOPMIN` + `LPUSH` as two commands. A sole-seam lint bans raw Redis outside the module.
+re-export name exists as a transitional shim). Pop-and-move is atomic (Lua for ZSETs, `RPOPLPUSH` for
+lists), never `ZPOPMIN` + `LPUSH` as two commands. A sole-seam lint bans raw Redis outside the module.
 
 ## Prerequisites
 
@@ -56,5 +56,5 @@ lists — never `ZPOPMIN` + `LPUSH` as two commands. A sole-seam lint bans raw R
 ## Related mechanisms
 
 - *See also (sibling)* — [service-client](service-client.md): the same `bounded-service` pattern for
-  the cross-service-HTTP boundary — one lint-enforced seam owning a dangerous class of raw calls.
+  the cross-service-HTTP boundary: one lint-enforced seam owning a dangerous class of raw calls.
 - **Counterpart** — the sole-seam lint (hard) that bans raw Redis outside the dispatch module.

@@ -1,11 +1,11 @@
 # Operator runbook skill (positive map first, symptom index fallback)
 
 **Intent** — A loadable skill that gives an operating agent the *positive* map of how the operational
-substrate works — its lifecycles and healthy baselines — **first**, and a *symptom → resolving-doc*
+substrate works (its lifecycles and healthy baselines) **first**, and a *symptom → resolving-doc*
 catalog as the fallback when something breaks. Generate its content from a typed source-of-truth so a
-reference-validity lint (not tests — it executes nothing) keeps every pointer honest, and type each
+reference-validity lint (not tests; it executes nothing) keeps every pointer honest, and type each
 recovery step by how automatable it is (our instance: an `operate-ada-tool-repo` skill over the
-agent-fleet substrate, rendered from two typed YAML sources — a pointer catalog and a runbook catalog).
+agent-fleet substrate, rendered from two typed YAML sources: a pointer catalog and a runbook catalog).
 
 | | |
 |---|---|
@@ -19,51 +19,51 @@ agent-fleet substrate, rendered from two typed YAML sources — a pointer catalo
 An operator — a human or an orchestrator agent — running a complex substrate must know two things: how it
 *works* when healthy, and what to do when it *breaks*. Both live scattered across a house-rules doc, a
 docs index, and incident memories that a fresh or post-compaction operator does not reliably hold. So the
-operator **re-derives the substrate's shape from scratch** under load, and during an incident re-derives —
-badly, under time pressure — a recovery a doc already spells out. And the routing itself **rots**: a doc
+operator **re-derives the substrate's shape from scratch** under load, and during an incident re-derives,
+badly and under time pressure, a recovery a doc already spells out. And the routing itself **rots**: a doc
 moves, the pointer dangles, the next operator is sent on a chase. The failure is *re-derivation of known
 operations* plus *silent pointer rot*, and it recurs every session and every incident.
 
 Underneath is a stance: **the fleet is cattle, not pets.** You operate an agent fleet with *repeatable
-runbooks*, not by re-reasoning each incident from scratch or *chatting* the orchestrator toward a goal —
-that is the pet stance ("sysadmin-ing a pet server"), and it is a category error at fleet scale. This
+runbooks*, not by re-reasoning each incident from scratch or *chatting* the orchestrator toward a goal.
+That is the pet stance ("sysadmin-ing a pet server"), and it is a category error at fleet scale. This
 mechanism is the cattle stance made concrete for repo operations: a routed, lint-kept index of typed
 operations, so an operator runs the herd instead of nursing it.
 
 ## Why it's not just "a folder of runbooks" (or the docs index)
 
-A runbook collection answers "what do I do when X breaks" — but only the *failure* half, and only if you
-already know which runbook. A docs index answers "what docs exist" — *doc-keyed*, not operator-keyed.
-This skill does three things neither does. It **leads with the positive map** — the substrate's lifecycles
-and healthy baselines — so the operator knows *normal* before hunting a break (most of the time the system
-is healthy, and you cannot spot a fault without the baseline). It is **symptom-keyed** — you start from
+A runbook collection answers "what do I do when X breaks," but only the *failure* half, and only if you
+already know which runbook. A docs index answers "what docs exist": *doc-keyed*, not operator-keyed.
+This skill does three things neither does. It **leads with the positive map** (the substrate's lifecycles
+and healthy baselines) so the operator knows *normal* before hunting a break (most of the time the system
+is healthy, and you cannot spot a fault without the baseline). It is **symptom-keyed**: you start from
 what you *observe*, not the doc you'd have to already know. And it is **generated from a typed
 source-of-truth**, so a **reference-validity lint** resolves every pointer's file *and* heading anchor on
-every build — a moved doc or renamed section is a build error, not a dangling chase. The distinction is
+every build, making a moved doc or renamed section a build error, not a dangling chase. The distinction is
 *an operator-keyed, positive-first, lint-kept map* versus *a doc-keyed pile you must already know your way
 around*.
 
 ## Mechanism
 
-The skill has two halves. A **portable stance** — how to operate, how to RCA observability-first, the
-standing freedom to propose governance improvements — and a **project-specific catalog generated from
-typed YAML**: the positive lifecycle map, the symptom→doc rows, and the runbooks. Each runbook decomposes
+The skill has two halves: a **portable stance** (how to operate, how to RCA observability-first, the
+standing freedom to propose governance improvements) and a **project-specific catalog generated from
+typed YAML** (the positive lifecycle map, the symptom→doc rows, and the runbooks). Each runbook decomposes
 into **typed step-kinds** — *runnable* (a command), *carried-brief* (a dispatchable judgment step),
 *surface-to-user* (needs a human decision) — so the judgment-automatable middle is a first-class, lintable
-resource rather than under-specified prose. Two controls keep it honest: the **reference-validity lint**
-resolves every pointer's file and anchor; and the skill **partners with a failure-interpretation skill** —
+resource rather than under-specified prose. Two controls keep it honest. The **reference-validity lint**
+resolves every pointer's file and anchor. And the skill **partners with a failure-interpretation skill**:
 after a failure recurs, it routes to *classify the class → register an Epic → design the control*, never a
 DIY inline fix (a control is architecture and earns a design pass). Part of that design is choosing the
-control's **placement by semantic level** — the *semantic gap*: a syntactic check at a commit hook, a
+control's **placement by semantic level**, the *semantic gap*: a syntactic check at a commit hook, a
 judgment check at a reasoning hook or the whole-worktree final commit, an intent-level check at the Epic's
 definition-of-done. Putting a check *below* the semantics it must apply is the classic gap that leaves the
 policy unenforceable, so the level is chosen to match the decision, not the convenience.
 
 ## Prerequisites
 
-- **A typed source-of-truth** the skill renders from — hand-authored markdown drifts from the docs it
-  points at; the YAML is single-sourced and lint-checkable.
-- **A reference-validity lint that resolves file *and* anchor** — file-exists alone lets a renamed section
+- **A typed source-of-truth** the skill renders from; hand-authored markdown drifts from the docs it
+  points at, while the YAML is single-sourced and lint-checkable.
+- **A reference-validity lint that resolves file *and* anchor.** File-exists alone lets a renamed section
   dangle.
 - **Typed step-kinds** on runbook steps, so "which of these is runnable vs needs judgment" is declared,
   not guessed by the operator mid-incident.
@@ -78,7 +78,7 @@ policy unenforceable, so the level is chosen to match the decision, not the conv
   cannot guarantee every *real* symptom is listed. Completeness rots unless new incidents are appended
   (the second-time-not-the-third discipline).
 - **Anchor-resolution is a maintenance tax.** Resolving heading anchors (not only files) catches more rot
-  but fires on every heading rename — the price of the higher fidelity.
+  but fires on every heading rename; that is the price of the higher fidelity.
 - **Generation adds a build step.** The YAML→markdown render must run, or the served skill drifts from its
   source.
 
@@ -95,7 +95,7 @@ policy unenforceable, so the level is chosen to match the decision, not the conv
 ## Related mechanisms
 
 - **Counterpart** — [operational-playbooks](operational-playbooks.md): those are the situation-keyed
-  runbooks themselves (the failure half); this skill is the operator-keyed *map over* them —
+  runbooks themselves (the failure half); this skill is the operator-keyed *map over* them:
   positive-lifecycle-first, symptom-indexed, lint-kept. The named axis is *the runbooks* versus *the
   indexed, generated map into them*.
 - **See also** — [claude-md-rule-index](claude-md-rule-index.md): both treat a governance *document* as

@@ -1,7 +1,7 @@
 # `derive-changelog` (reconstruct mutations)
 
 **Intent** — A command that reconstructs the document's mutation history from the embedded stamp
-registry — turning the [attribution stamps](mutator-stamps.md) into a readable, attributed ChangeLog
+registry, turning the [attribution stamps](mutator-stamps.md) into a readable, attributed ChangeLog
 after the fact.
 
 | | |
@@ -28,13 +28,13 @@ worthwhile: no reader, no reason to stamp.
 
 ## Mechanism
 
-`derive-changelog` reads the embedded stamp registry and emits a ChangeLog JSON — each entry a mutation
+`derive-changelog` reads the embedded stamp registry and emits a ChangeLog JSON: each entry is a mutation
 attributed to its pass, with its visibility (`Debug` / `Preserved`). It runs after remediation against
 the produced artifact.
 
 ## Prerequisites
 
-- **The stamps must exist and be structured** — [mutator-stamps](mutator-stamps.md) is a hard
+- **The stamps must exist and be structured.** [mutator-stamps](mutator-stamps.md) is a hard
   dependency.
 - **A reader** that knows the stamp schema and reconstructs the ordered, attributed history.
 

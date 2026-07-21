@@ -14,7 +14,7 @@ checks actually passed on *exactly this tree*.
 ## Motivation — the failure it kills
 
 Agents commit fast and often. Without a cheap gate *at commit time*, a broken change flows downstream
-to the expensive gates — merge-train, deploy — where the context of *what the agent was doing* is gone
+to the expensive gates (merge-train, deploy) where the context of *what the agent was doing* is gone
 and the cost of diagnosis is highest. Worse, because the merge-train batches many agents' work, one
 un-checked broken commit can poison an entire batch. The failure recurs on every commit and compounds
 with fleet size: the later the break is found, the more work is entangled with it.
@@ -23,7 +23,7 @@ with fleet size: the later the break is found, the more work is entangled with i
 
 CI-on-PR is *late and coarse*: it discovers the break after the commit exists and has been batched,
 far from the moment and context of authoring. The pre-commit hook is the **first and cheapest stair**
-of the path-to-production staircase — changed-file-scoped lints plus unit-tier tests, run at the
+of the path-to-production staircase: changed-file-scoped lints plus unit-tier tests, run at the
 instant of commit. And it does something CI-on-PR does not: it writes **tree-sha-keyed marker files**
 that a downstream verifier (`merge-check`) *checks*, so "the cheap checks ran green on **this** tree"
 becomes a **deterministic, forgeable-proof fact** rather than a trust assumption. What does CI-on-PR
@@ -41,18 +41,18 @@ waves use an explicit `pre-commit-skip: <reason>` marker (lint stanza skipped, u
 
 ## Prerequisites
 
-- **Changed-file-scoped lints** fast enough to run on every commit — a whole-tree sweep here would
+- **Changed-file-scoped lints** fast enough to run on every commit; a whole-tree sweep here would
   make commit unbearable (that is what the aggregate-lint mediator is for, later in the staircase).
 - **A unit-tier test set** that runs in seconds (the "1-second rule" discipline).
 - **A marker store keyed to tree identity**, so a pass cannot be replayed onto a different tree.
-- **A downstream verifier** (`merge-check`) that refuses unmarked commits — without it the markers are
+- **A downstream verifier** (`merge-check`) that refuses unmarked commits; without it the markers are
   advisory and the gate is skippable.
 
 ## Consequences & costs
 
 - **Per-commit latency tax.** Every commit pays the lint + unit-tier cost; mitigated by changed-file
   scoping and unit-tier-only, but a slow unit-tier erodes commit cadence and *creates pressure to
-  bypass* — the gate's cost is a direct incentive against it.
+  bypass*. The gate's cost is a direct incentive against it.
 - **Bypass prefixes are a real hole.** `sentinel:`/`tombstone:`/`chore(worktree):` commits skip
   entirely; correctness there rests on those prefixes being used honestly (auditable, not prevented).
 - **Marker logic is subtle and easy to break.** If the tree-sha keying drifts, markers silently stop

@@ -12,7 +12,7 @@ closed, enumerable set that the compiler and lints can check for exhaustive hand
 
 ## Motivation — the failure it kills
 
-Bare failure strings — `"timeout"`, `"corrupt"`, `"rate_limit"` — are typo-prone, un-enumerable, and let
+Bare failure strings (`"timeout"`, `"corrupt"`, `"rate_limit"`) are typo-prone, un-enumerable, and let
 a `switch` silently miss a case. A typo compiles and mis-routes; a new category isn't forced into every
 handler; and you can't even ask "are all categories handled?" The failure is *an unhandled or
 mistyped category → silent misbehaviour*, recurring at every place a category is produced or consumed.
@@ -21,7 +21,7 @@ mistyped category → silent misbehaviour*, recurring at every place a category 
 
 Strings are an *open* set: nothing makes them exhaustive, a typo is a runtime bug rather than a compile
 error, and adding a case doesn't force the existing handlers to deal with it. Can you ask a string
-vocabulary whether every category is handled? You cannot — the set has no edges to check against. A
+vocabulary whether every category is handled? You cannot: the set has no edges to check against. A
 **typed enum** makes the set *closed* and its handling *exhaustively checkable*: add a case and the
 non-exhaustive `switch` lights up. This is "explicit models over implicit," and "types are how you name
 shapes," applied to the failure/violation space — the enum *names* the categorical shape the strings left
@@ -36,7 +36,7 @@ handler to cover every case.
 
 ## Prerequisites
 
-- **A closed, identifiable category set** — the space must actually be enumerable.
+- **A closed, identifiable category set.** The space must actually be enumerable.
 - **The enums**, and callers switched from strings to enum values.
 - **Boundary mapping** from external/serialized strings into the enum.
 
@@ -45,7 +45,7 @@ handler to cover every case.
 - **Adding a category touches every handler** — which is the point (it forces handling), but it is real
   work.
 - **Boundary translation.** External strings (LLM output, wire formats) still arrive as strings and must
-  be mapped in — a controlled seam, but a seam.
+  be mapped in at a controlled seam, but a seam nonetheless.
 
 ## Known uses
 

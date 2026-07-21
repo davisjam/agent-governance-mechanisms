@@ -1,7 +1,7 @@
 # Role-typed dispatch
 
 **Intent** — Dispatch every agent under a **typed role** (`sonnet-active` / `opus` / `lint-runner` /
-`commit-slave`) that determines its model, isolation mode, permissions, and which gates apply — so
+`commit-slave`) that determines its model, isolation mode, permissions, and which gates apply, so
 those choices are policy-by-type, not a per-dispatch judgment call.
 
 | | |
@@ -25,7 +25,7 @@ output ships or the gate is bypassed.
 
 "Pick the right model" is a per-dispatch judgment, and per-dispatch judgment is exactly what drifts
 under load and gets skipped under time pressure. A **role is a typed enum** that binds the whole
-bundle — model, isolation, permission mode, and the set of gates — once, and is then **enforced**: the
+bundle (model, isolation, permission mode, and the set of gates) once, and is then **enforced**: the
 `lint-all` role-enforcement gate *refuses* to run under `sonnet-active`; `commit-slave` is defined to
 operate on `main` (no worktree) so the commit hook fires; enforcers key on `ADA_TOOL_AGENT_ROLE`. Four independent judgments a dispatcher
 re-makes each time drift apart under load. One named type carries the model, isolation, permissions,
@@ -48,7 +48,7 @@ silently diverge.
 
 ## Prerequisites
 
-- A **role registry** — the closed enum plus its policy tuple. Free-form role strings reintroduce the
+- A **role registry**: the closed enum plus its policy tuple. Free-form role strings reintroduce the
   drift the control removes.
 - **Enforcers that read the role** at each gated operation (via an env var like
   `ADA_TOOL_AGENT_ROLE`), so a mis-roled agent is refused rather than merely mislabeled.
@@ -58,11 +58,11 @@ silently diverge.
 
 - **A closed enum is rigid.** A task that fits no role forces a mis-fit or a new role. The enum's
   virtue (no per-dispatch drift) is also its cost (no per-dispatch flexibility).
-- **The role leaks.** `ADA_TOOL_AGENT_ROLE` propagates into subprocesses — the build-pool agent must
+- **The role leaks.** `ADA_TOOL_AGENT_ROLE` propagates into subprocesses; the build-pool agent must
   *not* export it or it trips the role guard in a downstream deploy. The type that fixes dispatch
   policy also becomes ambient state that has to be special-cased.
 - **Declaring ≠ matching.** A role fixes model/isolation/gates but does not verify the *work* suits the
-  role — a Sonnet mis-dispatched onto an architecture change still ships. Routing judgment (Opus vs
+  role: a Sonnet mis-dispatched onto an architecture change still ships. Routing judgment (Opus vs
   Sonnet) stays with the human; the role only makes the choice legible and enforceable, not correct.
 - **Bypassable** via the orchestrator-check escape (audit-logged).
 
@@ -72,13 +72,13 @@ silently diverge.
 - The [[aggregate-lint-runner|aggregate lint runner]]'s role-enforcement policy gate that refuses `sonnet-active`.
 - A dispatch rule: `commit-slave` operates on `main` directly (no `isolation`), unlike every other role.
 - Build-pool exception: the build-pool agent must *not* export `ADA_TOOL_AGENT_ROLE` (it would
-  propagate into deploy subprocesses and trip the role guard) — a documented edge of the same
+  propagate into deploy subprocesses and trip the role guard), a documented edge of the same
   enforcement.
 
 ## Related mechanisms
 
 - **Consumer** — [pre-commit-hook](../gates-and-merge-train/pre-commit-hook.md): the commit path
-  consumes the role fixed at dispatch — the `commit-slave` role is shaped precisely so the hook fires.
+  consumes the role fixed at dispatch; the `commit-slave` role is shaped precisely so the hook fires.
 - *See also (complement)* — [brief-linting](brief-linting.md): checks the brief carries the isolation
   marker the role implies.
 - *See also (complement)* — [dynamic-context-injection](dynamic-context-injection.md): the other

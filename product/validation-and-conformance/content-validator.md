@@ -1,7 +1,7 @@
 # ContentValidator (input ⊆ output fidelity)
 
 **Intent** — A deterministic gate asserting that every piece of the user's original content survives
-remediation — *input content ⊆ output content* — run in production, with a per-pass variant in staging
+remediation (*input content ⊆ output content*), run in production, with a per-pass variant in staging
 that pinpoints which pass dropped content (our instance: the `ContentValidator` fidelity gate).
 
 | | |
@@ -21,10 +21,10 @@ quietly isn't what the author wrote. The failure recurs on every remediation pas
 ## Why it's not just "trust the remediation code" (or "spot-check outputs")
 
 "Trust the code" breaks the moment a mutator has a bug, and spot-checking outputs misses
-*silent* drops — you don't notice the paragraph that's gone. The fidelity gate makes the guarantee a
+*silent* drops: you don't notice the paragraph that's gone. The fidelity gate makes the guarantee a
 **deterministic post-condition**: the input's content must be a subset of the output's, checked
 mechanically on every production job. A post-condition that fails the job removes the trust
-from the loop. The staging per-pass variant adds localization — it tells you *which* pass violated the
+from the loop. The staging per-pass variant adds localization: it tells you *which* pass violated the
 subset, turning "content was lost somewhere" into "pass N lost it."
 
 ## Mechanism
@@ -58,7 +58,7 @@ delivery.
 ## Related mechanisms
 
 - **Layer** — with [standards-rule-engine](standards-rule-engine.md): both are product gates over the
-  artifact — fidelity (nothing lost) and conformance (standards met).
+  artifact, fidelity (nothing lost) and conformance (standards met).
 - **Counterpart** — the per-pass staging variant localizes what the prod gate only detects.
 - *See also (sibling)* — [coherence-lints](coherence-lints.md): the other deterministic checks in this
   family.

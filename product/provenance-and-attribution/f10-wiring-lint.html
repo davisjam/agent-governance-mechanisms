@@ -64,10 +64,10 @@
 <nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../product/README.html">Product</a> &nbsp;/&nbsp; Provenance &amp; attribution &nbsp;/&nbsp; F10 mutator-stamp-wiring lint</nav>
 <p class="subtitle">Fail the build if any mutator verb lacks a stamp.</p>
 <h1>F10 mutator-stamp-wiring lint</h1>
-<p><strong>Intent</strong> — A lint that fails the build if <em>any</em> mutator verb in the Model <code>Primitives</code> lacks stamp wiring — so a new mutator cannot land producing unattributable mutations.</p>
+<p><strong>Intent</strong> — A lint that fails the build if <em>any</em> mutator verb in the Model <code>Primitives</code> lacks stamp wiring, so a new mutator cannot land producing unattributable mutations.</p>
 <table><tbody><tr><td>Summary</td><td>Fail the build if any mutator verb lacks a stamp.</td></tr><tr><td>Target</td><td>Product · <strong>Provenance &amp; attribution</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking</em> — scans every mutator verb; fails the build on an unwired one (0 open gaps)</td></tr></tbody></table>
 <h2>Motivation — the failure it kills</h2>
-<p><a href="mutator-stamps.html">Attribution stamps</a> only work if <strong>every</strong> mutator stamps. Add one new verb without wiring and it silently produces unattributable mutations — a hole in the audit trail that no one sees until an RCA hits it and finds no stamp. The failure is <em>an unstamped mutator (an attribution gap)</em>, and it recurs when a new verb is added — usually under time pressure, when "remember to stamp" is most likely to be forgotten.</p>
+<p><a href="mutator-stamps.html">Attribution stamps</a> only work if <strong>every</strong> mutator stamps. Add one new verb without wiring and it silently produces unattributable mutations, a hole in the audit trail that no one sees until an RCA hits it and finds no stamp. The failure is <em>an unstamped mutator (an attribution gap)</em>, and it recurs when a new verb is added — usually under time pressure, when "remember to stamp" is most likely to be forgotten.</p>
 <h2>Why it's not just "remember to add the stamp" (or "review new mutators")</h2>
 <p>Will a reviewer scanning a diff catch the stamp that <em>isn't</em> there? A present stamp is visible; a missing call is not — nothing in the diff shouts "no stamp here." The F10 lint answers by not relying on the reviewer at all: it <strong>mechanically checks that every mutator verb</strong> in the <code>Primitives</code> directories calls stamp wiring, and fails the build on a gap (HIGH-severity, held at 0 open gaps). A completeness check over all verbs sees the absence a per-author reminder misses. This is the counterpart that turns "we attribute mutations" from an aspiration into a guarantee.</p>
 <h2>Mechanism</h2>
@@ -75,7 +75,7 @@
 <h2>Prerequisites</h2>
 <ul><li><strong>A detectable "mutator verb" pattern</strong> in the <code>Primitives</code> layer.</li><li><strong>A detectable stamp-wiring call</strong> so the lint can tell wired from unwired.</li><li><strong>A lint over the Primitives directories</strong> run in the gates.</li></ul>
 <h2>Consequences &amp; costs</h2>
-<ul><li><strong>The verb-detection heuristic is the weak point.</strong> Miss a verb shape and a real gap passes; over-match and legitimate code fails.</li><li><strong>Coupled to the Primitives structure</strong> — a reorganization of the mutator layer needs the lint updated in step.</li></ul>
+<ul><li><strong>The verb-detection heuristic is the weak point.</strong> Miss a verb shape and a real gap passes; over-match and legitimate code fails.</li><li><strong>Coupled to the Primitives structure.</strong> A reorganization of the mutator layer needs the lint updated in step.</li></ul>
 <h2>Known uses</h2>
 <ul><li>The mutator-stamp wiring lint (F10, BLOCKING, 0 open gaps).</li></ul>
 <h2>Related mechanisms</h2>

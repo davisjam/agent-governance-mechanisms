@@ -13,14 +13,14 @@ triggered by many agents at once.
 
 ## Motivation — the failure it kills
 
-`lint-all` is the single heaviest compute in the system — it fans out over the whole tree. Two
+`lint-all` is the single heaviest compute in the system; it fans out over the whole tree. Two
 concurrent runs, or many agents each triggering one, melt the host. The failure is *host
 exhaustion / OOM* from aggregate work that individually looks fine, and it recurs whenever more than
 one lint-all-class job is set in motion at once.
 
 ## Why it's not just "the build-serializer already caps heavy compute"
 
-The build-serializer caps *per-invocation* tools at M=8 — but `lint-all` is an **aggregate** that
+The build-serializer caps *per-invocation* tools at M=8, but `lint-all` is an **aggregate** that
 *internally* fans out over the entire tree, so a *single* run already saturates the machine. Bounding
 it needs a coarser instrument: a **whole-sweep singleton mutex** (one per host) plus an
 **orchestrator-side in-flight declaration** (only one `lint-all`-class brief dispatched at a time),
@@ -39,7 +39,7 @@ A merge-train staging fast-path avoids redundant sweeps.
 
 - **A host mutex** with a hard timeout and fail-loud behavior.
 - **A `compute-class` declaration** on briefs so the orchestrator can *count* in-flight aggregate work.
-- **Orchestrator-side in-flight accounting** — the one-at-a-time rule is partly discipline, not purely
+- **Orchestrator-side in-flight accounting**: the one-at-a-time rule is partly discipline, not purely
   mechanical.
 - **The role gate** to stop the wrong role from triggering the sweep.
 
@@ -65,4 +65,4 @@ A merge-train staging fast-path avoids redundant sweeps.
 - **Counterpart** — the brief-side `compute-class` declaration is the soft-ish orchestrator half that
   the hard host mutex backstops.
 - *See also (sibling)* — [test-serializer](test-serializer.md), [build-serializer](build-serializer.md):
-  the finer-grained mediators; this one rations the aggregate they cannot.
+  the finer-grained mediators. This one rations the aggregate they cannot.

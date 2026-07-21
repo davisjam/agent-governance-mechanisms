@@ -100,4 +100,4 @@ without eroding the trust the structural layer earned. A lint tuned out is worse
   side of dispatch (injects the rules relevant to the target files) where brief-linting is the
   *structure* side (checks the brief is well-formed). Same stage, orthogonal jobs.
 - *See also (complement)* — [role-typed-dispatch](role-typed-dispatch.md): the other half of a
-  well-formed dispatch — the role that fixes model, isolation, and gate set.
+  well-formed dispatch, the role that fixes model, isolation, and gate set.

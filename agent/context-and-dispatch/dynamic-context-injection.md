@@ -19,7 +19,7 @@ files* (lints, conventions, component boundaries, tests) and inject that subset 
 The recurring failure class is **constraint under-specification at dispatch time.** A coding agent
 lacks the tacit knowledge an experienced engineer has of *which* rules apply to a given change, so it
 makes plausible edits that violate them, then spends rounds (and tokens) discovering and repairing the
-violations — "pinball." A layered validation hierarchy (pre-commit → merge check → deploy gate) makes
+violations. Call it "pinball." A layered validation hierarchy (pre-commit → merge check → deploy gate) makes
 it worse: context is lost between where the agent authored the change and where the failure surfaces.
 Across many concurrent agents, this wasted work multiplies.
 
@@ -31,14 +31,14 @@ It comes down to **availability vs. binding.**
   the doc exists, (2) infer it is relevant to *this* change, (3) choose to read it, (4) find the right
   passage. Each is a coin flip; at agentic velocity you flip too many. Injection is **push**: the
   applicable rules land in context whether or not the agent would have gone looking.
-- **The docs hold the *rules*; the missing thing is *which rules apply here*.** The relevance mapping —
-  given *these* files, which of the hundreds of documented rules govern them? — used to live only in the
+- **The docs hold the *rules*; the missing thing is *which rules apply here*.** The relevance mapping
+  (given *these* files, which of the hundreds of documented rules govern them?) used to live only in the
   engineer's head. The slicing operator (`files → constraints`) *is* that externalized judgment.
 - **A brief binds where a doc only informs.** A doc is optional, ambient reference; a brief is the task
   specification, **mandatory reading by construction**. So injecting the constraints into the brief is
-  not *adding information* — it is a **change of status**, relocating a rule from "available" to "binding."
+  not *adding information*. It is a **change of status**, relocating a rule from "available" to "binding."
 
-Docs do make a rule knowable — they just leave it optional. The brief makes it governing.
+Docs do make a rule knowable; they just leave it optional. The brief makes it governing.
 
 ## Mechanism
 
@@ -46,7 +46,7 @@ One piece of machinery run in **two directions**:
 
 - **Reverse** (`diff → findings`): given a change, attribute which findings *this change introduced*
   by intersecting checker output with `git diff --unified=0` line ranges (no snapshot cache ⇒ no
-  staleness, no cross-agent contention). Powers CI self-heal — ask an agent to fix only what it broke.
+  staleness, no cross-agent contention). Powers CI self-heal: ask an agent to fix only what it broke.
 - **Forward** (`files → constraints`): given the target files, predict which constraints *will* apply
   and pull their declarations + fix-hints. Powers pre-briefing.
 
@@ -56,14 +56,14 @@ pull** (the agent asks a constraints-for-files CLI once it knows what it will to
 
 ## Prerequisites
 
-1. **File-addressable constraints** — every constraint declares its **scope** (file patterns /
+1. **File-addressable constraints.** Every constraint declares its **scope** (file patterns /
    component tags) and lives in a **registry you can query by file**. Anything not addressable by file
    scope cannot be sliced.
-2. **Self-documenting constraints** — each rule carries a name, docstring, and an actionable
+2. **Self-documenting constraints.** Each rule carries a name, docstring, and an actionable
    "How to fix" line. This is the decisive prerequisite: *the value of an injected constraint is
-   bounded by the agent's ability to act on it* — and its inverse, *if you can't clearly explain a
+   bounded by the agent's ability to act on it*, and its inverse, *if you can't clearly explain a
    rule to an agent, the rule's own defense value is questionable.*
-3. **A slicing operator** at two granularities — file-scope (forward) and line-range (reverse) — built
+3. **A slicing operator** at two granularities, file-scope (forward) and line-range (reverse), built
    as **multiple adapters**, one per registry (lint fleet, component registry, banned-API list, test
    corpus, doc index).
 4. **An injection point** in the dispatch pipeline (the brief-authoring step) plus the on-demand CLI.
@@ -72,9 +72,9 @@ pull** (the agent asks a constraints-for-files CLI once it knows what it will to
 
 - **Garbage-in.** The control is only as good as the constraint declarations it slices: a rule with no
   scope tag can't be selected, and one with no actionable fix-hint can't be acted on. It *depends on*
-  prerequisite 2 being true fleet-wide — it does not create that discipline.
+  prerequisite 2 being true fleet-wide; it does not create that discipline.
 - **Advisory, not binding.** Because forward injection is augmentation (see Enforcement), an agent can
-  still ignore an injected constraint. It shifts the *odds* — raising salience at point-of-need — but a
+  still ignore an injected constraint. It shifts the *odds*, raising salience at point-of-need, but a
   gate downstream is still what guarantees the rule; DCI reduces pinball, it does not eliminate
   violation.
 - **The relevance operator is itself fallible.** Over-injection floods a brief with noise (lowering the
@@ -96,22 +96,22 @@ pull** (the agent asks a constraints-for-files CLI once it knows what it will to
 - **Bridge** — the [component-zone model](../../models-bridge/system-models/component-zone-model.md) (a
   models-bridge control) supplies the file → component → checks mapping the forward slicer reads. DCI is
   the *agent-facing* consumer of that bridge model; the same model *governs the product* via the
-  boundary lints — DCI is one end of the bridge.
+  boundary lints, so DCI is one end of the bridge.
 - *See also (complement)* — [brief-linting](brief-linting.md): the structural check on the brief; this
   is the content injected *into* it.
 - **Temporal complement (the feed-back twin)** —
   [reflection-facet-substrate](../lifecycle-and-observability/reflection-facet-substrate.md) (built on
   [lifecycle-hooks](../lifecycle-and-observability/lifecycle-hooks.md)):
-  injection is **feed-forward** — the constraints governing a task pushed into an agent *before* it acts,
+  injection is **feed-forward**, the constraints governing a task pushed into an agent *before* it acts,
   at dispatch. A tempo-gated **reflection** facet is the mirror image: it pulls the *operator* back to the
-  same kind of repo policy *while or after* acting, at turn-tempo — **feed-back** instead of feed-forward.
+  same kind of repo policy *while or after* acting, at turn-tempo, so it is **feed-back** instead of feed-forward.
   Same move (meet the loop with the right policy at the right lifecycle moment), opposite direction in
   time. And just as injection *slices* one registry per file-set, a reflection substrate generalizes
-  across policy facets (convert-a-recurrence, spot-a-second-copy, a stale runbook) — consolidated into one
+  across policy facets (convert-a-recurrence, spot-a-second-copy, a stale runbook), consolidated into one
   paced emission so the facets don't compound into the alarm fatigue each was biased to avoid. The deeper
-  unity: both are delivery *modalities over the same policy source of truth* — push it in comprehensively
-  at entry, or surface a slice of it selectively at tempo — so one policy-materials registry could feed both.
-- **Generalization:** *every meta-substrate authored for human discipline — the lint fleet, the
-  component registry, the doc index, the banned-API registry, the test corpus — becomes a
+  unity: both are delivery *modalities over the same policy source of truth*. Push it in comprehensively
+  at entry, or surface a slice of it selectively at tempo, so one policy-materials registry could feed both.
+- **Generalization:** *every meta-substrate authored for human discipline (the lint fleet, the
+  component registry, the doc index, the banned-API registry, the test corpus) becomes a
   just-in-time constraint registry the moment you add a slicing operator over it.* Lint pre-briefing
   is only the first adapter.

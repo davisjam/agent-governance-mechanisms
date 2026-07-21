@@ -1,7 +1,7 @@
 # Closed remediation-verb sets
 
-**Intent** — Route the remediator's mutations through a *bounded, named set* of typed verbs — a closed
-typed-mutator layer — rather than free-form edits, so the move-space is enumerable and every move can be
+**Intent** — Route the remediator's mutations through a *bounded, named set* of typed verbs (a closed
+typed-mutator layer) rather than free-form edits, so the move-space is enumerable and every move can be
 stamped, validated, and policy-checked (our instance: the document models' `Primitives`).
 
 | | |
@@ -13,16 +13,16 @@ stamped, validated, and policy-checked (our instance: the document models' `Prim
 
 ## Motivation — the failure it kills
 
-Free-form document editing is *unbounded* — any pass could do anything, and an unbounded edit cannot be
+Free-form document editing is *unbounded*: any pass could do anything, and an unbounded edit cannot be
 stamped, validated, or checked against policy as a set. The failure is *an unbounded mutation that is
 un-attributed, un-validated, or off-policy*, and it recurs per pass unless the move-space itself is
 constrained.
 
 ## Why it's not just "let passes edit the document as needed"
 
-If passes can edit freely, you cannot answer basic governance questions — *is every mutation stamped? is
-every insert validated? are all moves on-policy?* — because the set of possible moves is open. A
-**closed verb set** — the typed mutators of the document models' `Primitives` — makes the move-space
+If passes can edit freely, you cannot answer basic governance questions: *is every mutation stamped? is
+every insert validated? are all moves on-policy?* The set of possible moves is open. A
+**closed verb set**, the typed mutators of the document models' `Primitives`, makes the move-space
 **enumerable**: every verb wires a stamp ([F10](../provenance-and-attribution/f10-wiring-lint.md)), every
 insert registers ([`a11y_`](../provenance-and-attribution/a11y-prefix.md)), and the
 [ContentValidator](../validation-and-conformance/content-validator.md) covers the outcome. A bounded,

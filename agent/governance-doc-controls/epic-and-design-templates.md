@@ -1,7 +1,7 @@
 # Epic & design-doc templates
 
-**Intent** — Fixed section-templates for the two core planning artifacts — **Epics**
-(multi-dispatch efforts) and **design docs** — so every effort is framed with the same required sections
+**Intent** — Fixed section-templates for the two core planning artifacts, **Epics**
+(multi-dispatch efforts) and **design docs**, so every effort is framed with the same required sections
 (scope, phase decomposition, second-order dynamics, definition-of-done, observability), and the planning
 artifact *drives* the work instead of being written after the fact.
 
@@ -23,12 +23,12 @@ be dropped under time pressure. The failure is *incomplete plans whose gaps resu
 
 ## Why it's not just "write a good design doc"
 
-"Write a good doc" leaves *which sections matter* to the author's memory — and the ones that matter
+"Write a good doc" leaves *which sections matter* to the author's memory, and the ones that matter
 (scope conditions, phase decomposition, second-order dynamics, a DoD with functional invariants, an
 observability/event-bus block) are precisely the ones a hurried author drops. A **template makes the
 required sections structural**: the doc is not complete without them, a scaffold pre-places them, and a
 lint can check for them. "Be thorough" is a norm nothing enforces; it fails the moment the author is
-rushed. A section-contract holds regardless — it is the planning-artifact analogue of a typed schema, the
+rushed. A section-contract holds regardless. It is the planning-artifact analogue of a typed schema, the
 shape declared rather than remembered.
 
 ## Mechanism
@@ -41,7 +41,7 @@ second-order-dynamics section. New Epics are **materialized from a stub tool** t
 sections + registers the effort in the ledger; registration and section-presence are then asserted by
 lints/gates so the template is enforced, not merely documented.
 
-**Adopt these — portable starters** distilled from the real system: the
+**Adopt these — portable starters,** distilled from the real system: the
 [Epic template starter](../../downloads/EPIC-TEMPLATE-starter.md) (the section shape + the
 multi-criterion Definition-of-Done) and the
 [design-doc template starter](../../downloads/design-doc-template-starter.md) (the invariants-driven
@@ -50,9 +50,9 @@ observability block, and an invariants→tests enforcement map). Drop them into 
 
 ## Prerequisites
 
-- **A repeatable artifact genre worth standardizing** — Epics and design docs recur; a one-off memo does
+- **A repeatable artifact genre worth standardizing.** Epics and design docs recur; a one-off memo does
   not need a template.
-- **The set of required sections, identified from failure** — each required section earns its place
+- **The set of required sections, identified from failure.** Each required section earns its place
   because omitting it caused an incident (a deadlock, a false "done," an unmonitorable substrate).
 - **A scaffold + lints** so the template is materialized and checked; a template that is only *described*
   in docs decays to advisory prose.
@@ -64,7 +64,7 @@ observability block, and an invariants→tests enforcement map). Drop them into 
 - **Maintenance surface.** A new required section means updating the template + the scaffold + the lint
   together; drift among them yields false rejections or silent gaps.
 - **Over-templating adds ceremony.** Forcing the full Epic shape onto a trivial change is friction the
-  author routes around — the template must be scoped to efforts that warrant it.
+  author routes around; the template must be scoped to efforts that warrant it.
 
 ## Known uses
 

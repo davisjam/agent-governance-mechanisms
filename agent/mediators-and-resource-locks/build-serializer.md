@@ -15,7 +15,7 @@ parallelism up to the machine's capacity without oversubscribing it.
 
 The heavy build tools are the same shared-host hazard as `dotnet test`: N worktrees compiling,
 type-checking, and running Roslyn queries at once saturate CPU and memory and slow *everyone*. But
-unlike `dotnet test`, these tools are numerous and mostly parallel-safe — so the failure to avoid is
+unlike `dotnet test`, these tools are numerous and mostly parallel-safe, so the failure to avoid is
 both *oversubscription* (too many at once melts the host) **and** *over-serialization* (N=1 would waste
 cores and stall the fleet).
 
@@ -38,13 +38,13 @@ timestamps. Each of the five tools has an active enforcer that refuses the un-me
 ## Prerequisites
 
 - **A counting-semaphore primitive** (here byte-range flock over M offsets).
-- **An identified set of adjacent heavy tools** to route — anything left out leaks past the cap.
+- **An identified set of adjacent heavy tools** to route; anything left out leaks past the cap.
 - **A per-tool enforcer** for each, so the mediated path is the only path.
 - **A tuned M** appropriate to the host's core/memory budget.
 
 ## Consequences & costs
 
-- **M is a fixed guess.** Eight is a static ceiling, not adaptive to host size or current load — too
+- **M is a fixed guess.** Eight is a static ceiling, not adaptive to host size or current load: too
   high oversubscribes a small host, too low wastes a big one.
 - **Coverage is only as complete as the routed set.** A new heavy tool not wired through the semaphore
   silently escapes the cap.
@@ -53,7 +53,7 @@ timestamps. Each of the five tools has an active enforcer that refuses the un-me
 
 ## Known uses
 
-- The build serializer — the M=8 byte-range semaphore over the five tools.
+- The build serializer: the M=8 byte-range semaphore over the five tools.
 - The five active per-tool enforcers (`dotnet build` / `tsc` / `csharp-query` / jedi / `pyright`).
 
 ## Related mechanisms

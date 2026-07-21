@@ -13,13 +13,13 @@ stale-worker sweep, so a *hung* deploy or worker is distinguishable from a merel
 ## Motivation — the failure it kills
 
 A long deploy (25–40 min) or a worker that stalls is **indistinguishable from progress** without a
-liveness signal — you cannot tell "slow build" from "hung process." The failure is *blind waiting and
+liveness signal: you cannot tell "slow build" from "hung process." The failure is *blind waiting and
 undetected hangs*: the orchestrator either kills a healthy-but-slow deploy or waits forever on a dead
 one. It recurs on every long-running operation.
 
 ## Why it's not just "check the process is alive / wait for it to finish"
 
-Process-alive does not mean *progressing* — a deadlocked process is alive. Waiting-for-finish gives no
+Process-alive does not mean *progressing*; a deadlocked process is alive. Waiting-for-finish gives no
 mid-flight signal at all. Heartbeats emit **phase + elapsed every 30 s**, so both *liveness* and
 *progress* (is the phase advancing?) are observable, and the stale-worker sweep flags a worker that has
 stopped heartbeating. Can a deploy brief tell a slow build from a hung one by asking whether the process
@@ -35,7 +35,7 @@ them for cleanup.
 
 ## Prerequisites
 
-- **A phase loop with a periodic emit** — the operation must be structured into observable phases.
+- **A phase loop with a periodic emit.** The operation must be structured into observable phases.
 - **A parseable heartbeat format** (`phase=` / `elapsed=`) a consumer can grep.
 - **A consumer that knows the expected cadence**, so "no heartbeat for N×30 s" reads as stale.
 

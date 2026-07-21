@@ -13,7 +13,7 @@ service is banned.
 
 ## Motivation — the failure it kills
 
-Cross-service calls that pass a **file path over the wire** — instead of the file's *bytes* — are a
+Cross-service calls that pass a **file path over the wire** (instead of the file's *bytes*) are a
 recurring bug: the receiving service, in a different container, cannot open a path from the sender's
 filesystem. Ad hoc `requests.post` at each call site lets this exact type-confusion recur wherever
 someone reaches for the raw HTTP library.
@@ -25,7 +25,7 @@ convention nearly holds — until the next caller passes a path again, and the r
 container cannot open it. Making the signature refuse the path removes the convention's reliance on
 memory: `ServiceClient.post_file` takes a **`BinaryIO`**, so passing a path is a **type error**, not a
 runtime bug, and the entire bug class is *unrepresentable*. The IPC seam is the lint-enforced *sole*
-cross-service-HTTP surface. The `BinaryIO` signature **is** the enforcement — types-reveal-architecture
+cross-service-HTTP surface. The `BinaryIO` signature **is** the enforcement: types-reveal-architecture
 applied to a service boundary.
 
 ## Mechanism
@@ -36,7 +36,7 @@ banned. The signature refusing a `str` path closes the bug class.
 
 ## Prerequisites
 
-- **A typed client whose signature encodes the invariant** (`BinaryIO`, not `str`) — the type *is* the
+- **A typed client whose signature encodes the invariant** (`BinaryIO`, not `str`): the type *is* the
   control.
 - **A sole-seam lint** banning the raw HTTP call to other services.
 - **Migration** of existing cross-service calls onto the client.
@@ -45,18 +45,18 @@ banned. The signature refusing a `str` path closes the bug class.
 
 - **All cross-service calls funnel through one client** — a coupling point that must cover every HTTP
   shape callers need.
-- **Slightly more ceremony** — callers must open a file handle rather than pass a path string (the
+- **Slightly more ceremony.** Callers must open a file handle rather than pass a path string (the
   point, but it is friction).
-- **The seam is a bottleneck for evolution** — new call patterns require extending the one client.
+- **The seam is a bottleneck for evolution.** New call patterns require extending the one client.
 
 ## Known uses
 
-- `ServiceClient.post_file(BinaryIO)` — the typed cross-service seam.
+- `ServiceClient.post_file(BinaryIO)`: the typed cross-service seam.
 - The IPC sole-seam lint (the one cross-service-HTTP surface for the web tier).
 - The file-path-over-wire bug class the `BinaryIO` signature eliminates.
 
 ## Related mechanisms
 
 - *See also (sibling)* — [raw-redis-seam](raw-redis-seam.md): the same `bounded-service` pattern for the
-  Redis boundary — one lint-enforced seam owning a whole class of dangerous raw calls.
+  Redis boundary: one lint-enforced seam owning a whole class of dangerous raw calls.
 - **Counterpart** — the sole-seam lint (hard) that bans the raw `requests.post` alternative.

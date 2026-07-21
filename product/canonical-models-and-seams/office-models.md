@@ -1,7 +1,7 @@
 # Office Models ({Slides,Docs,Sheets}Model)
 
-**Intent** — Route all remediation of a format family through one typed model, with raw library access —
-and raw string-matching into the serialized form — banned by lint. The same construction+ban-lint pattern
+**Intent** — Route all remediation of a format family through one typed model, with raw library access
+(and raw string-matching into the serialized form) banned by lint. The same construction+ban-lint pattern
 as [pdf-model](pdf-model.md), on a second object model (our instance: `{Slides,Docs,Sheets}Model` over
 `DocumentFormat.OpenXml`).
 
@@ -21,11 +21,11 @@ formats.
 
 ## Why it's not just "PdfModel already solves this" (or "handle Office ad hoc")
 
-Office is a *different object model* (the OpenXML SDK), so `PdfModel` cannot cover it — but the **same
+Office is a *different object model* (the OpenXML SDK), so `PdfModel` cannot cover it, but the **same
 defect class** (raw-library corruption) applies. The Office Models are the parallel typed seam, and
 routing all three formats through the same typed-model + ban-lint pattern is **defect-class
 consolidation**: a fix to the pattern benefits all four formats at once, which is sufficient
-justification on its own — capability parity, not new capability. Applying one construction + ban-lint
+justification on its own: capability parity, not new capability. Applying one construction + ban-lint
 pattern per object-model keeps the corruption class killed everywhere; per-format ad hoc handling lets
 it recur three more times. A second ban-lint on raw-XML string-matching closes the sneaky
 regex-into-serialized-form escape that a plain "no raw SDK" rule would miss.
@@ -39,7 +39,7 @@ Checking layer routes through `RuleWalkers/`. `openxml-direct-access` bans raw
 ## Prerequisites
 
 - **A typed model per Office format** plus a shared common layer for cross-format primitives.
-- **Two ban-lints** — one on the raw SDK, one on raw-XML string-matching (the sneaky path).
+- **Two ban-lints**: one on the raw SDK, one on raw-XML string-matching (the sneaky path).
 - **Call-site migration** across all three formats.
 
 ## Consequences & costs

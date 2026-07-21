@@ -24,7 +24,7 @@ Property tests check invariants over *structured, generated* inputs; fuzzing thr
 adversarial bytes** to find crashes and spec-edge failures the structured generators don't reach. And
 the payoff is multiplied by an **RCA discipline**: fix to the *stable point in the format spec*, not to
 the failing seed, so the fix passes *every* spec-allowed input, not just the one that crashed.
-Structured generation is a good tool, and it does find bugs — until the corruption lives in bytes no
+Structured generation is a good tool, and it does find bugs, until the corruption lives in bytes no
 generator would produce. Adversarial campaigns reach that space, and fixing to the spec closes the whole
 class the seed exposed rather than the one seed. Auto-coverage tracks what the campaign actually reached
 so gains are measurable, not assumed.

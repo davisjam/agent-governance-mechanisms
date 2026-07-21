@@ -1,7 +1,7 @@
 # Agent registry (append-only log + marker cache)
 
 **Intent** — An append-only registry, dual-written by every lifecycle tool, that is the *authoritative*
-record of which agents are in flight — so cleanup, tombstone, and merge decisions read a fact instead
+record of which agents are in flight, so cleanup, tombstone, and merge decisions read a fact instead
 of guessing from filesystem timestamps.
 
 | | |
@@ -14,7 +14,7 @@ of guessing from filesystem timestamps.
 ## Motivation — the failure it kills
 
 With a fleet of concurrent agents living in worktrees, *"which agents are live right now?"* is the
-central question for every reclaim decision — cleanup, tombstoning, merge readiness. Answer it by
+central question for every reclaim decision: cleanup, tombstoning, merge readiness. Answer it by
 scanning worktree directories and comparing mtimes and you get a **heuristic that races with live
 agents**: an agent mid-work can look identical to a stale one and have its worktree destroyed under
 it (the worktree-destruction-mid-flight incident). The failure is *unsafe reclaim of live work*, and
@@ -32,21 +32,21 @@ why it was retired. A recorded fact cannot race the way an inferred one does.
 ## Mechanism
 
 The dispatch wrapper's prepare step dual-writes the JSONL registry and the per-agent marker cache at
-dispatch; lifecycle tools update both. `cleanup-stale` queries a **three-gate chain** — registry-gate,
-then marker-gate, then git-lock-gate — before removing anything. Tombstone and worktree-clean **refuse**
+dispatch; lifecycle tools update both. `cleanup-stale` queries a **three-gate chain** (registry-gate,
+then marker-gate, then git-lock-gate) before removing anything. Tombstone and worktree-clean **refuse**
 to operate on an agent whose marker exists (the live-worktree guard). The registry is authoritative; the
 marker cache is a fast index that the registry wins over on any divergence.
 
 ## Prerequisites
 
-- **Universal dual-write** — every lifecycle tool writes the registry; a side-door mutation that skips
+- **Universal dual-write.** Every lifecycle tool writes the registry; a side-door mutation that skips
   it reintroduces the exact race the registry removes.
 - **An append-only log plus a fast cache**, and a rule for which wins on divergence (registry).
-- **Destructive-op gates that query it** before acting — the record is only protective if consulted.
+- **Destructive-op gates that query it** before acting; the record is only protective if consulted.
 
 ## Consequences & costs
 
-- **The whole registry rests on dual-write discipline — and it's fragile.** One tool that mutates lifecycle without
+- **The whole registry rests on dual-write discipline, and it's fragile.** One tool that mutates lifecycle without
   writing the registry silently brings the mtime-race back; the guarantee is only as strong as the
   weakest writer.
 - **Append-only growth.** The JSONL grows unboundedly and needs rotation.

@@ -16,12 +16,12 @@ stale, or be hand-edited where they will be overwritten.
 Docs drift silently in ways a diff doesn't reveal: an auto-generated file gets hand-edited and is then
 overwritten (the edit lost), a new doc never gets added to the index (unfindable), a cross-reference
 points at a moved or renamed file (dead). The failure is *stale or misleading docs that agents then
-trust as ground truth* — and it recurs continuously as the doc corpus grows.
+trust as ground truth*, and it recurs continuously as the doc corpus grows.
 
 ## Why it's not just "review docs in the PR" (or "trust authors to update the index")
 
 Doc review catches prose. It is the **least reliable** review for structure, because a missing index
-entry or a broken cross-ref isn't visible in the change itself — reviewers skim right past it. So
+entry or a broken cross-ref isn't visible in the change itself; reviewers skim right past it. So
 doc-hygiene lints make the invariants **mechanical**: an auto-generated file must carry a provenance
 header declaring its emitter, every doc must appear in the index, cross-references must resolve, or the
 pipeline fails. Review sees the words; the lint sees the wiring the words hang on. It is the same
@@ -46,7 +46,7 @@ cross-reference/link lints check pointers resolve. Lints land AUDIT-ONLY and mig
 ## Consequences & costs
 
 - **Mechanical only.** These lints verify a doc is *indexed and fresh*, never that its prose is
-  *correct* — a well-formed, well-indexed, wrong document passes.
+  *correct*: a well-formed, well-indexed, wrong document passes.
 - **Registry maintenance.** The autogen-target registry and the provenance convention are surfaces that
   need upkeep as emitters are added.
 - **False positives on legitimate exceptions** require an escape hatch, which is itself a small hole.

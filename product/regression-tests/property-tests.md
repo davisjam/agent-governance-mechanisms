@@ -12,8 +12,8 @@ machine-*generated* inputs, catching bugs in the input space that example-based 
 
 ## Motivation — the failure it kills
 
-Example-based tests only check the cases you *thought of*. Invariants — read∘write = identity, a
-combinatorial property that must hold for all inputs — fail on inputs you never imagined and never
+Example-based tests only check the cases you *thought of*. Invariants (read∘write = identity, a
+combinatorial property that must hold for all inputs) fail on inputs you never imagined and never
 wrote a test for. The failure is *a bug living in the untested input space*, and it recurs for any
 invariant-shaped contract that hand-picked examples under-cover.
 
@@ -22,7 +22,7 @@ invariant-shaped contract that hand-picked examples under-cover.
 Examples check *points*; you cannot enumerate a document's input space by hand, and the bug is almost
 always in the case you didn't write. A property test asserts an **invariant over generated inputs**
 (FsCheck synthesizes them) and, on failure, **shrinks** to a minimal counterexample you can debug. Can a
-finite set of hand-picked examples cover a document's input space? It cannot — and the bug is almost
+finite set of hand-picked examples cover a document's input space? It cannot, and the bug is almost
 always in the case no one wrote. A property checked over generated inputs surfaces the latent bug that a
 hundred examples would miss.
 

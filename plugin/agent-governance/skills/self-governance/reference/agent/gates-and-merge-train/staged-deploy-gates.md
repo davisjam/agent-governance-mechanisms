@@ -1,7 +1,7 @@
 # Staged deploy gates (canary → smoke → promote)
 
 **Intent** — A deploy pipeline that escalates **canary → smoke → promote**, blocking promotion to
-production until each cheaper stage passes on a traffic-free revision — so a bad build is caught before
+production until each cheaper stage passes on a traffic-free revision, so a bad build is caught before
 users see it, not after.
 
 | | |
@@ -15,18 +15,18 @@ users see it, not after.
 
 Shipping a build straight to production means a regression lands on users; the failure *is* the
 incident. This is standard practice everywhere, but it matters far more at agentic velocity, precisely
-because deploys are frequent and agent-initiated — the more often you ship, the more often an
+because deploys are frequent and agent-initiated: the more often you ship, the more often an
 un-gated bad build reaches users.
 
 ## Why it's not just "deploy and roll back if it breaks"
 
 Rollback is *reactive and user-visible*: by the time you roll back, users have already hit the break.
-Staged gates are *proactive* — a **canary** revision is deployed taking **no production traffic**,
+Staged gates are *proactive*: a **canary** revision is deployed taking **no production traffic**,
 **smoke**-tested against its own URL, and **promoted** only on green. Rollback detects the break after
 users hit it; the staged gate catches it on a revision no user can reach. A pre-launch rule pushes the gate even earlier: don't even
-*launch* a deploy that will predictably fail — confirm lints are green, no known flaky class is live,
+*launch* a deploy that will predictably fail. Confirm lints are green, no known flaky class is live,
 and the changed-since-main lint pass is green *before* paying for build minutes. (Being a standard practice, its
-"why not" is thinner than the novel controls' — the value is defense-in-depth, not novelty.)
+"why not" is thinner than the novel controls': the value is defense-in-depth, not novelty.)
 
 ## Mechanism
 
@@ -36,7 +36,7 @@ cheaper signals so a doomed deploy is never started. Heartbeats emit liveness du
 
 ## Prerequisites
 
-- **Canary capability** — the ability to deploy a revision that takes no production traffic.
+- **Canary capability**: the ability to deploy a revision that takes no production traffic.
 - **A smoke suite** that meaningfully exercises the canary URL (real dependencies, not stubs).
 - **Promotion + rollback primitives** and revision GC.
 - **A pre-launch green signal** (lints / changed-since-main / flaky-class check) as the pre-launch predicate.
@@ -45,7 +45,7 @@ cheaper signals so a doomed deploy is never started. Heartbeats emit liveness du
 
 - **Staging costs real build minutes.** The gate is not free; the pre-launch predicate exists to avoid
   spending them on a deploy that was never going to pass.
-- **Smoke ≠ full coverage.** A thin smoke suite lets real breaks through the gate — the canary is only
+- **Smoke ≠ full coverage.** A thin smoke suite lets real breaks through the gate; the canary is only
   as good as what the smoke actually checks.
 - **The gate infrastructure itself can drift.** Validating via the deploy pipeline assumes the pipeline
   is sound; a drifted canary/smoke path gives false confidence (don't validate via untested infra).

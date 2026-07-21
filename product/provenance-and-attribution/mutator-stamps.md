@@ -14,7 +14,7 @@ sole surface by a ban-lint, and an append-only OOXML attribution registry).
 
 ## Motivation — the failure it kills
 
-When a remediated document comes out wrong, you need to know *which pass made which change* — otherwise
+When a remediated document comes out wrong, you need to know *which pass made which change*; otherwise
 RCA is guesswork across many passes and four formats. Without attribution, a mutation is anonymous: you
 can see the output is wrong but not who wrote it or why. The failure is *unattributable mutations →
 un-debuggable output*, and it recurs on every mutation.
@@ -31,7 +31,7 @@ delivery: stamps default to `Debug` and are stripped before delivery, while user
 ## Mechanism
 
 Each format has one sanctioned stamp-writer, and the raw stamp mutator is lint-banned so the writer is
-the sole surface — PDF mutations stamp through a stamp-writer helper (our instance:
+the sole surface: PDF mutations stamp through a stamp-writer helper (our instance:
 `MutatorStampHelper.WriteStamp`), OOXML through an append-only attribution registry (our instance:
 `OoxmlAttributionRegistry.AppendEntry` / `TryAppendEntryForElement`). Visibility is `Debug` by default,
 `Preserved` for user-visible passes; a strip step removes `Debug` stamps before delivery.
@@ -40,13 +40,13 @@ the sole surface — PDF mutations stamp through a stamp-writer helper (our inst
 
 - **A stamp surface per format** and a **helper as the sole stamp API** (so stamps are uniform).
 - **A visibility model** (Debug vs Preserved) and a **strip step** before delivery.
-- **A completeness guarantee** that every verb stamps — supplied by the F10 lint.
+- **A completeness guarantee** that every verb stamps, supplied by the F10 lint.
 
 ## Consequences & costs
 
 - **Document overhead.** Stamps add content; `Debug` stamps are stripped before delivery to avoid
   shipping scaffolding.
-- **Helper-only discipline.** Bypassing the helper produces an un-uniform stamp — lint-guarded.
+- **Helper-only discipline.** Bypassing the helper produces an un-uniform stamp; it is lint-guarded.
 - **Every new verb must wire it** — the cost that the F10 lint turns from "remember to" into "must."
 
 ## Known uses

@@ -1,7 +1,7 @@
 # Test-onion tiers (Smoke / Lite / targeted / full)
 
-**Intent** — A tiered test suite that stratifies ~4000+ tests by cost and coverage — Smoke, Lite,
-targeted, full — so cheap tiers gate fast iterations and the full tier gates deploy, pinning behaviour
+**Intent** — A tiered test suite that stratifies ~4000+ tests by cost and coverage (Smoke, Lite,
+targeted, full) so cheap tiers gate fast iterations and the full tier gates deploy, pinning behaviour
 at the right price per decision.
 
 | | |
@@ -15,7 +15,7 @@ at the right price per decision.
 
 Four thousand-plus tests are too slow to run on every change, but skipping them lets regressions land.
 Left unstratified you get one of two failures: *unusably slow iteration* (run everything, always) or
-*missed regressions* (run nothing, hope). It recurs on every change and every deploy — the tension is
+*missed regressions* (run nothing, hope). It recurs on every change and every deploy; the tension is
 constant.
 
 ## Why it's not just "run all the tests" (or "run a fixed subset")
@@ -23,8 +23,8 @@ constant.
 Running all 4000 on every iteration is unusable; a *fixed* subset misses regressions that fall outside
 it. The onion stratifies by **cost matched to the decision being gated**: Smoke (~9 tests, <30s) as a
 deploy pre-gate, Lite (hundreds, single-digit seconds), a targeted `ClassName` filter (<5s) for the
-edit loop, and the full tier (~4min) at deploy. One tier for every decision is the failing alternative
-— it either runs the full suite on every keystroke or gates deploy on the fast subset; each tier sized
+edit loop, and the full tier (~4min) at deploy. One tier for every decision is the failing alternative:
+it either runs the full suite on every keystroke or gates deploy on the fast subset; each tier sized
 to its decision avoids both. **Escalation rules** close the "fixed subset misses things" gap: touching a
 Runner, Validator, Registry, or a prompt constant forces the full tier before "done."
 

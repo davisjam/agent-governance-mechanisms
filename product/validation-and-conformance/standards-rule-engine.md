@@ -1,6 +1,6 @@
 # Standards / WCAG rule engine
 
-**Intent** — A rule engine that maps each finding to the exact external-standard clause it closes —
+**Intent** — A rule engine that maps each finding to the exact external-standard clause it closes,
 turning "does this conform?" into a deterministic, standards-grounded predicate rather than a judgement
 call (our instance: the **WCAG 2.1 AA / Section 508 / PDF-UA** accessibility rule engine).
 
@@ -22,7 +22,7 @@ checks that aren't tied to any standard (so "we check X" doesn't map to "we clos
 
 Heuristics produce a fuzzy score, not a **conformance claim tied to specific success criteria**. The
 rule engine maps each finding to the exact WCAG/508/PDF-UA criterion it closes, so conformance is a
-deterministic, auditable predicate — you can say *which* SC each check satisfies. And the discipline is
+deterministic, auditable predicate: you can say *which* SC each check satisfies. And the discipline is
 enforced across the boundary: adding a check that closes an SC gap must update *both* the engine and the
 scope doc's Status column in the same commit. The distinction is that every finding names the criterion
 it closes, so the conformance claim is auditable clause by clause rather than a single opaque score. The
@@ -45,8 +45,8 @@ coverage status.
 
 ## Consequences & costs
 
-- **Coverage is only as complete as the mapped checks.** Unmapped SCs are coverage-gaps or aspirational
-  — honesty about this is the scope doc's whole job.
+- **Coverage is only as complete as the mapped checks.** Unmapped SCs are coverage-gaps or aspirational;
+  honesty about this is the scope doc's whole job.
 - **The mapping must track the standard.** WCAG revisions and new SCs require engine + doc updates.
 - **Per-pass rule-fail is staging-only** (the prod gate is coarser).
 

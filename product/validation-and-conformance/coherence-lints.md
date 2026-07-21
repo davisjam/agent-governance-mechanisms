@@ -1,7 +1,7 @@
 # Cross-source coherence lints
 
-**Intent** — Lints that assert two or more independent sources *agree* — config record ↔ sample JSON,
-registry ↔ its consumers, enum ↔ its uses — catching drift *between* sources that each look valid on
+**Intent** — Lints that assert two or more independent sources *agree* (config record ↔ sample JSON,
+registry ↔ its consumers, enum ↔ its uses), catching drift *between* sources that each look valid on
 their own.
 
 | | |
@@ -15,14 +15,14 @@ their own.
 
 Some invariants live *between* files: a config record and its sample JSON must list the same fields; a
 registry and its consumers must share the same keys; an enum and its handlers must stay in step. Each
-file is individually valid, so the bug is invisible per-file — but together they disagree. The canonical
+file is individually valid, so the bug is invisible per-file, but together they disagree. The canonical
 case: a new field on a config record that is *missing from the sample* defaults to `false` at
 deserialization and **silently collapses batching to single-call in prod.** The failure is *cross-source
 drift*, recurring whenever paired sources evolve independently.
 
 ## Why it's not just "lint each source on its own"
 
-A single-source lint cannot catch a **relational** invariant — there is nothing wrong with either file
+A single-source lint cannot catch a **relational** invariant: there is nothing wrong with either file
 alone; the defect is in their *disagreement*. Coherence lints assert the relation itself (A's fields ⊆
 B's; registry keys = consumer keys; enum cases = handler cases) and fail when the two diverge. A
 per-file lint checks one source against itself and can never see a cross-source relation; only a lint
@@ -60,6 +60,6 @@ prefers reading the meta-files at lint-time over codegen. Companion deserializat
 - *See also (sibling)* — [semantic-lints](semantic-lints.md): per-source structural lints; this family
   is the *relational* complement.
 - *See also (cross-target)* — [meta-model-consumption](../../models-bridge/system-models/meta-model-consumption.md): the agent
-  side's "read the substrate, don't hardcode" — coherence lints enforce that two substrates *stay*
+  side's "read the substrate, don't hardcode." Coherence lints enforce that two substrates *stay*
   consistent.
 - **Layer** — with the other [validation-and-conformance](content-validator.md) checks over the artifact.

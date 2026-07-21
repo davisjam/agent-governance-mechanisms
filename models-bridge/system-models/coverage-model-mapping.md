@@ -15,11 +15,11 @@ model's nodes at function granularity).
 
 ## Motivation — the failure it kills
 
-Line and branch coverage tell you what *fraction of the code* ran under test — not *which of the system's
+Line and branch coverage tell you what *fraction of the code* ran under test, not *which of the system's
 invariants* are actually exercised. A model can show 90% line coverage while a critical race invariant
 has zero tests touching its states, because coverage counts lines, not *meanings*. So the invariants you
 most need verified hide inside a high aggregate number, and "are we testing the thing that matters?" is
-unanswerable from the coverage report. The failure is **a false sense of test adequacy** — a green
+unanswerable from the coverage report. The failure is **a false sense of test adequacy**: a green
 coverage number sitting over an untested critical invariant.
 
 ## Why it's not just "line coverage" (or a coverage threshold)

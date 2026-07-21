@@ -17,18 +17,18 @@ In a large codebase, the knowledge an agent needs to not-break-things is spread 
 docs. Left to discover that knowledge on its own, an agent re-derives an invariant (badly), or
 violates a cross-file rule it never found. The failure recurs every time the doc corpus grows: more
 documentation makes any *single* fact *less* findable, not more. Without a canonical index, "the docs
-say so" is unfalsifiable and unenforceable — there is no agreed place the rule lives.
+say so" is unfalsifiable and unenforceable; there is no agreed place the rule lives.
 
 ## Why it's not just "we have a docs folder"
 
 A docs folder is a **pile**; this is an **index with two enforced properties**. First, it is *loaded
-into every agent's boot context* — it is the minimum shared world-model, not optional reference an
+into every agent's boot context*: it is the minimum shared world-model, not optional reference an
 agent might browse. Second, it is **enforced**: a bloat/cap lint keeps it scannable and a
 conformance lint keeps every rule cross-referencing exactly one canonical doc, so the index cannot rot
-into a second pile. What does a docs folder lack that this has? Canonicality and enforcement — one
+into a second pile. What does a docs folder lack that this has? Canonicality and enforcement: one
 place each rule lives, one place each rule points, and a lint that fails the moment that stops being true.
-(The complementary *dispatch-time* move — pushing the subset of rules relevant to *this* change into
-the brief — is [dynamic-context-injection](dynamic-context-injection.md); this control supplies the
+(The complementary *dispatch-time* move, pushing the subset of rules relevant to *this* change into
+the brief, is [dynamic-context-injection](dynamic-context-injection.md); this control supplies the
 map, that one delivers the relevant page.)
 
 ## Mechanism
@@ -36,26 +36,26 @@ map, that one delivers the relevant page.)
 `CLAUDE.md` is a stable-numbered rule index: each rule is a short boot-context statement plus a
 cross-reference to the canonical doc that carries it in full ("CLAUDE.md carries the rule index; the
 sub-doc carries the principle"). The repository documentation index gives a one-line summary per doc. Rule numbers are
-*stable, never renumbered* — they are cited by number across the codebase, so the index doubles as a
+*stable, never renumbered*; they are cited by number across the codebase, so the index doubles as a
 citable namespace. The index self-describes what belongs in it (a three-part earns-its-spot test) so
 it does not accrete local rules that should be doc-comments.
 
 ## Prerequisites
 
-- A **discipline that every rule cross-references a canonical deep doc** — the index carries the
+- A **discipline that every rule cross-references a canonical deep doc**: the index carries the
   minimum, the doc carries the detail. Without this the index either bloats or is uselessly terse.
 - A **cap/bloat lint** and an **index-coverage lint** (see
-  [doc-hygiene-lints](../governance-doc-controls/doc-hygiene-lints.md)) — otherwise the index rots.
+  [doc-hygiene-lints](../governance-doc-controls/doc-hygiene-lints.md)); otherwise the index rots.
 - A **stable-numbering convention** so rules can be cited by number without churn.
 
 ## Consequences & costs
 
 - **Per-invocation context tax.** The index is booted by *every* agent on *every* dispatch, so every
   bullet is paid for continuously across the fleet. This cost is real enough that it needs its own
-  control — the cap lint (see [claude-md-rule-index](../governance-doc-controls/claude-md-rule-index.md))
+  control: the cap lint (see [claude-md-rule-index](../governance-doc-controls/claude-md-rule-index.md))
   exists precisely to bound it.
 - **Small index ⇒ detail lives elsewhere ⇒ back to pull.** Keeping the index scannable means a rule's
-  *detail* sits in a sub-doc the agent must still fetch — re-introducing the availability-vs-binding gap
+  *detail* sits in a sub-doc the agent must still fetch, re-introducing the availability-vs-binding gap
   for everything past the one-line summary. [Dynamic context injection](dynamic-context-injection.md)
   is the answer to that regress, not this control.
 - **Cross-refs rot.** A rule can point at a moved or renamed doc; the conformance lint catches broken
@@ -65,9 +65,9 @@ it does not accrete local rules that should be doc-comments.
 
 ## Known uses
 
-- `CLAUDE.md` — the numbered rule index, boot context for every agent; enforced by
+- `CLAUDE.md`: the numbered rule index, boot context for every agent; enforced by
   a governance-doc bloat lint and a rule-conformance lint.
-- The repository documentation index — the complete doc index with one-line summaries.
+- The repository documentation index: the complete doc index with one-line summaries.
 - The "what belongs in CLAUDE.md" three-part test (regression-preventing / non-derivable / non-local)
   that keeps the index minimal.
 

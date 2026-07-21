@@ -1,7 +1,7 @@
 # Blocking semantic lints
 
-**Intent** — A fleet of blocking semantic lints over the tool's *own source* — banned APIs, silent-catch
-bans, `Console.WriteLine`-in-prod, typed-seam violations — that fail the build on domain-invariant
+**Intent** — A fleet of blocking semantic lints over the tool's *own source* (banned APIs, silent-catch
+bans, `Console.WriteLine`-in-prod, typed-seam violations) that fail the build on domain-invariant
 violations the compiler and review can't catch.
 
 | | |
@@ -16,7 +16,7 @@ violations the compiler and review can't catch.
 
 ## Motivation — the failure it kills
 
-The codebase carries hundreds of structural invariants — no silent `catch`, no banned API in prod, every
+The codebase carries hundreds of structural invariants: no silent `catch`, no banned API in prod, every
 cross-boundary call through its seam. Code review cannot hold hundreds of invariants in a reviewer's
 head, and the compiler enforces none of them (a silent catch, a banned API, a raw `Console.WriteLine`
 all compile fine). The failure is *structural drift that quietly reintroduces a defect class*, and it
@@ -26,24 +26,24 @@ recurs continuously as code is written.
 
 The compiler checks *types*, not *domain invariants*: a `catch {}` that swallows an error, a
 `Console.WriteLine` in prod, a banned API call all type-check. Review misses them because they look
-normal. What is left to enforce the domain rule the type system can't express? A semantic lint —
-it **encodes the invariant** and fails the build, doing mechanically what review does by attention and
+normal. What is left to enforce the domain rule the type system can't express? A semantic lint. It
+**encodes the invariant** and fails the build, doing mechanically what review does by attention and
 the compiler doesn't do at all. This is the "move audits to lints" and "enforce structure with analysis
 when available" discipline made concrete.
 
 ## Mechanism
 
-The lint fleet runs at commit and deploy. Each lint declares — in a self-describing header — which
+The lint fleet runs at commit and deploy. Each lint declares, in a self-describing header, which
 components it scopes to, its severity, and a verb-of-checking docstring (the lint-declaration
 discipline); BLOCKING ones fail the build, AUDIT-ONLY ones surface. A legitimate exception escapes
 through a scoped, reason-bearing suppression comment on the offending line. The fleet sits atop a
 maxed-out commodity floor (Roslyn analysis, pyright strict, ruff) rather than replacing it.
 
-**Adopt it — a concrete, runnable [governance-lint example](../../downloads/governance-lint-example.py)**:
+**Adopt it, a concrete, runnable [governance-lint example](../../downloads/governance-lint-example.py)**:
 the *real* "regex-against-structured-formats" lint (an AST scan that flags a regex parsing HTML/YAML/JSON
-where a parser belongs), made self-contained. It shows the whole shape — the self-describing declaration
-block, `find_violations` → emit → exit-code, the `noqa` escape, and the AUDIT-ONLY→BLOCKING migration — and
-its header carries the field-note story (a regex-based lint that hung the deploy gate with catastrophic
+where a parser belongs), made self-contained. It shows the whole shape: the self-describing declaration
+block, `find_violations` → emit → exit-code, the `noqa` escape, and the AUDIT-ONLY→BLOCKING migration. Its
+header carries the field-note story (a regex-based lint that hung the deploy gate with catastrophic
 backtracking; the fix was *eliminate the surface*, not lint the bug class). Copy the shape; change the check.
 
 ## Prerequisites
@@ -54,9 +54,9 @@ backtracking; the fix was *eliminate the surface*, not lint the bug class). Copy
 
 ## Consequences & costs
 
-- **A large maintenance surface.** Hundreds of lints are hundreds of things to keep current — the
+- **A large maintenance surface.** Hundreds of lints are hundreds of things to keep current: the
   "500+ lints" magnitude the support-apparatus ratio counts.
-- **False positives need escapes.** A too-strict lint blocks legitimate code until a `noqa` is added —
+- **False positives need escapes.** A too-strict lint blocks legitimate code until a `noqa` is added,
   a small, audited hole.
 - **Floor vs fleet.** The custom fleet only earns its keep atop the commodity analysis floor; without
   that floor the grade rests on the wrong thing.

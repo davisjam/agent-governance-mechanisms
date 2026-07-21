@@ -1,7 +1,7 @@
 # F10 mutator-stamp-wiring lint
 
 **Intent** — A lint that fails the build if *any* mutator verb in the Model `Primitives` lacks stamp
-wiring — so a new mutator cannot land producing unattributable mutations.
+wiring, so a new mutator cannot land producing unattributable mutations.
 
 | | |
 |---|---|
@@ -13,7 +13,7 @@ wiring — so a new mutator cannot land producing unattributable mutations.
 ## Motivation — the failure it kills
 
 [Attribution stamps](mutator-stamps.md) only work if **every** mutator stamps. Add one new verb without
-wiring and it silently produces unattributable mutations — a hole in the audit trail that no one sees
+wiring and it silently produces unattributable mutations, a hole in the audit trail that no one sees
 until an RCA hits it and finds no stamp. The failure is *an unstamped mutator (an attribution gap)*, and
 it recurs when a new verb is added — usually under time pressure, when "remember to stamp" is
 most likely to be forgotten.
@@ -43,7 +43,7 @@ HIGH-severity finding. The invariant has been held at 0 open gaps.
 
 - **The verb-detection heuristic is the weak point.** Miss a verb shape and a real gap passes; over-match
   and legitimate code fails.
-- **Coupled to the Primitives structure** — a reorganization of the mutator layer needs the lint updated
+- **Coupled to the Primitives structure.** A reorganization of the mutator layer needs the lint updated
   in step.
 
 ## Known uses
