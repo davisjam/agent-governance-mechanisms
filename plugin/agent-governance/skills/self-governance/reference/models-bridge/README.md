@@ -39,10 +39,10 @@ drift gates is tedious, and humans resent the nagging.
 without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
 agent operate a codebase larger than its context in the first place.
 
-## The <!--census:bridge:word-->sixteen<!--/census--> mechanisms — one method, two subjects (a Y)
+## The <!--census:bridge:word-->seventeen<!--/census--> mechanisms — one method, two subjects (a Y)
 
 The role is a **Y**: one **method** (the trunk) reified toward the two subjects the bridge couples — the
-**product** it ships and the **orchestration** that builds it. The <!--census:bridge_method:word-->eight<!--/census--> method-mechanisms are
+**product** it ships and the **orchestration** that builds it. The <!--census:bridge_method:word-->nine<!--/census--> method-mechanisms are
 subject-agnostic; the <!--census:bridge_models:word-->eight<!--/census--> models split by subject, with three that serve both faces (the *shared spine*).
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:

@@ -157,19 +157,19 @@
 
   <p class="lead">The midway isn't a point on that dial — it's a discipline: <span class="term">establishing
   and maintaining a governed engineering environment</span>. It works in two directions at once.
-  <b>Up front</b>, you specify what you can — the architecture that makes a class of error impossible, a typed
-  model the fleet reasons through, the templates and checklists that put a change on rails before it's
-  written. <b>In flight</b>, you let velocity
+  <b>Up front</b>, you specify what you can — the architecture that makes a class of error impossible, the
+  model the fleet reasons through (more on that below), the templates and checklists that put a change on
+  rails before it's written. <b>In flight</b>, you let velocity
   surface the failures you couldn't foresee, and convert each recurring one into a durable guardrail. This
   site describes both halves — the guidance on what to fix in advance, and the machinery for responding when
   something slips through — and packages them as two Claude skills with a
-  <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>62 governance mechanisms across
+  <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>63 governance mechanisms across
   three roles</b>, each written like a design pattern — the recurring failure it kills, and why it is
   <i>not</i> just the cheaper thing everyone already does.</p>
 
-  <h2 class="section-h">The bridge: documentation, taken to its limit</h2>
-  <p class="lead">Anyone who has built with agents has found the first move on their own: give them good
-  documentation and tests, then point them at it. Agents write and maintain those artifacts as fast as they
+  <h2 class="section-h">Documentation, taken to its limit</h2>
+  <p class="lead">Start with the up-front half. Anyone who has built with agents has found the first move on
+  their own: give them good documentation and tests, then point them at it. Agents write and maintain those artifacts as fast as they
   write code, so the cost that always made thorough docs a fantasy is gone. The step the training data won't
   suggest is the next one — <b>documentation has a hierarchy, and its top is not prose. It is a typed
   model.</b></p>
@@ -198,8 +198,8 @@
   <h2 class="section-h">Governance has two mechanisms</h2>
   <p class="section-sub">A guardrail is one of two kinds — prevent the error, or catch it.</p>
   <div class="mechanisms">
-    <div class="mech"><h3>Architecture</h3><p>Make the error <b>impossible by construction</b>: a typed
-    model with one sanctioned seam, a state that cannot be represented wrongly. Software
+    <div class="mech"><h3>Architecture</h3><p>Make the error <b>impossible by construction</b> — the typed
+    model above, a state that cannot be represented wrongly, one sanctioned seam. Software
     <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a> — error-<i>proofing</i>, so the bad
     move can’t happen in the first place.</p></div>
     <div class="mech right"><h3>Control</h3><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
@@ -292,7 +292,7 @@
   <hr class="sep" />
 
   <h2 class="section-h">Explore the catalogue</h2>
-  <p class="section-sub">62 governance mechanisms — the repertoire this loop produced in one real
+  <p class="section-sub">63 governance mechanisms — the repertoire this loop produced in one real
   production system.</p>
   <div class="cards-grid">
   <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, mechanisms clickable</span></a>
@@ -363,6 +363,7 @@
 <table class="census-t"><thead><tr><th>Mechanism</th><th>Summary</th><th>Enforcement</th></tr></thead><tbody>
 <tr><td class="c-name"><a href="models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth (data-not-code, can't drift) — <em>trunk / method</em></a></td><td class="c-sum">Typed models read every run and generated from — can't drift.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/drift-parity-gates.html">Drift &amp; parity gates (model↔reality) — <em>trunk / method</em></a></td><td class="c-sum">Bidirectional model↔reality checks so models cannot drift.</td><td class="c-enf">Hard</td></tr>
+<tr><td class="c-name"><a href="models-bridge/system-models/agent-first-mbse-harness.html">Agent-first MBSE harness (frozen records; adopt schema, skip runtime) — <em>trunk / method</em></a></td><td class="c-sum">Typed frozen-record models + five hand-rolled disciplines — adopt the schema, skip the runtime.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/formal-invariant-verification.html">Formal invariant verification (temporal form → model check) — <em>trunk / method</em></a></td><td class="c-sum">Each invariant's temporal-logic form derives its checker — proven, not sampled.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/coverage-model-mapping.html">Coverage → model-node mapping (which invariants are tested) — <em>trunk / method</em></a></td><td class="c-sum">Project test coverage onto model nodes (states, seams, invariants) so untested ones are visible.</td><td class="c-enf">Soft·Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/model-driven-codegen.html">Model-driven codegen — <em>trunk / method</em></a></td><td class="c-sum">Generate real artifacts from the models, provenance-headed.</td><td class="c-enf">Hard</td></tr>

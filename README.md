@@ -1,6 +1,6 @@
 # Agent Governance Mechanisms
 
-<!-- summary: A pattern catalogue of the mechanisms for governable agentic software engineering — 62 across three roles. -->
+<!-- summary: A pattern catalogue of the mechanisms for governable agentic software engineering — 63 across three roles. -->
 
 *A catalogue of the **governance mechanisms** that keep a fleet of AI coding agents productive while
 holding the cost of their failures within bounds — distilled from a 12-week case study of building a
@@ -33,7 +33,7 @@ infrastructure, the verification records are machine-checked against the code ra
 spreadsheet. The contribution isn't the assurance discipline — it's making it *live*, and tractable for a
 team of one.
 
-## The bridge: documentation, taken to its limit
+## Documentation, taken to its limit
 
 This is the right way to read the whole catalogue. Anyone who has built with agents has found the first move
 on their own: give them good documentation and tests, then point them at it. Agents write and maintain those

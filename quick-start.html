@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Quick start — two ways to adopt these mechanisms</title>
+<title>Quick start — walk Claude through adopting these mechanisms</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
@@ -61,58 +61,134 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Quick start — two ways to adopt these mechanisms</nav>
-<h1>Quick start — two ways to adopt these mechanisms</h1>
+<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Quick start — walk Claude through adopting these mechanisms</nav>
+<h1>Quick start — walk Claude through adopting these mechanisms</h1>
 <p>Governance-centric agentic software engineering is a <strong>methodology</strong>, not something you install and run — the mechanisms are patterns you <em>adapt</em> to your stack, your agents, and your failure modes.</p>
-<p>Claude can help: it reads the catalogue and turns it on your own repo. Two ways in:</p>
+<p>Claude can help: it reads the catalogue and turns it on your own repo. This page gives you the whole adoption sequence as <strong>paste-ready prompts</strong> — each one asks Claude to examine a shipped starter and adapt it to your repo. Two ways to run the same sequence:</p>
+<ul><li><strong>Auto mode</strong> — paste one block; Claude runs the sequence end to end, pausing for your approval at each write.</li><li><strong>Interactive mode</strong> — walk it step by step, each prompt paired with what it does and where to read more.</li></ul>
+<p>Two ways to <em>bring</em> the mechanisms in, orthogonal to the two run modes:</p>
 <ul><li><strong>Skill (Path A)</strong> — installable, auto-triggers, runs the loop for you.</li><li><strong>DIY (Path B)</strong> — read the patterns and adapt them by hand; the route when you can't run a plugin.</li></ul>
-<h2>Fold the method into your own <code>CLAUDE.md</code></h2>
-<p>Both paths give you the <em>mechanisms</em>. The <strong>method</strong> is the AI-First Engineering stance (Part A) plus the rule-index discipline; put it in your project's own governance doc, so it shapes how your agents reason on every boot — not only when the skill fires. Already have a <code>CLAUDE.md</code>? Integrate; don't start fresh. Two ways in:</p>
-<ul><li><strong>Before you install anything</strong> — point your agent at this repo:</li></ul>
-<p>&gt; Read the AI-First Engineering Method in <code>downloads/CLAUDE-starter.md</code> (Part A) and my existing &gt; <code>CLAUDE.md</code>. Propose edits that fold the method into my doc — adopt / adapt / skip per principle, &gt; preserving my current rules. Show me a diff.</p>
-<ul><li><strong>After you install the skills</strong> — have Claude introspect what each now carries and adapt it to your repo. One prompt per skill:</li></ul>
-<p>&gt; self-governance: read your own <code>principles.md</code> and the <code>CLAUDE-starter</code> you bundle, compare against my &gt; repo's <code>CLAUDE.md</code>, and propose how to integrate the method — adopt / adapt / skip per principle, &gt; keeping what I already have.</p>
-<p>self-operations is the heavier adopt — it has to <em>author</em> your Part B (the lifecycle map, the symptom→doc pointers, the typed runbooks) and propose which operator-loop hooks to wire:</p>
-<p>&gt; self-operations: read your <code>SKILL.md</code> + the <code>examples/</code> (the lifecycle models and runbooks), then &gt; inspect <em>my</em> repo — how agents are dispatched, where ops docs live, the deploy path, the host/VM, cron. &gt; Draft my <strong>Part B</strong>: the lifecycle map filled in, a symptom→resolving-doc pointer catalog, and the typed &gt; runbooks, citing real files. Then propose which <strong>operator-loop hooks</strong> (turn-end reflection nudge, &gt; memory-routing nudge) are worth wiring, and adapt the shipped hook library to my repo. <strong>State your &gt; assumptions so I correct rather than supply, and confirm the models before you emit anything.</strong></p>
-<h2>Path A — the self-governance skill (batteries included)</h2>
-<p>The whole loop as an installable Claude skill that auto-triggers — no prompt to paste. Know what you're installing, though: a <strong>third-party plugin that reads, and on your approval writes, your repo</strong>.</p>
-<ul><li><strong>Source-visible</strong> — read its <code>SKILL.md</code>, <code>principles.md</code>, and <code>reference/</code> before you trust it.</li><li><strong>MIT-licensed.</strong></li><li><strong>Gated</strong> — <em>audit</em> only advises; <em>interpret-failure</em> acts only on your greenlight.</li><li><strong>No network I/O.</strong></li></ul>
-<p>If a plugin isn't an option for your org, use Path B.</p>
-<p><strong>Quickest — install from the marketplace.</strong> In Claude Code, two commands:</p>
+<p>The adoption prompts below say <strong>(Path A)</strong> or <strong>(Path B)</strong> where the two diverge. Do step 0 first; the rest is the same sequence either way.</p>
+<h2>Step 0 — bring the mechanisms in</h2>
+<p><strong>Path A — install the skill (batteries included).</strong> The whole loop as an installable Claude skill that auto-triggers — no prompt to paste. Know what you're installing: a <strong>third-party plugin that reads, and on your approval writes, your repo</strong>. It is source-visible, MIT-licensed, gated (<em>audit</em> only advises; <em>interpret-failure</em> acts only on your greenlight), and does no network I/O. In Claude Code:</p>
 <pre tabindex="0"><code>/plugin marketplace add davisjam/agent-governance-mechanisms
 /plugin install agent-governance@agent-governance-mechanisms</code></pre>
-<p>The <code>agent-governance</code> plugin ships <strong>two partner skills</strong>: <strong>self-governance</strong> (<em>harden</em> — audit for missing guardrails, or convert a recurring failure into a durable control) and <strong>self-operations</strong> (<em>operate</em> — run the agent-fleet substrate day-to-day; when a break recurs, hand it to self-governance). Start a new session and both load. Pull a later release with <code>/plugin marketplace update agent-governance-mechanisms</code>.</p>
-<p><strong>Or copy-paste</strong> — no marketplace, e.g. if you'd rather vendor the folder yourself:</p>
-<pre tabindex="0"><code># clone the catalogue (or reuse a clone you already have)
-git clone https://github.com/davisjam/agent-governance-mechanisms.git
+<p>The <code>agent-governance</code> plugin ships <strong>two partner skills</strong>: <strong>self-governance</strong> (<em>harden</em> — audit for missing guardrails, or convert a recurring failure into a durable control) and <strong>self-operations</strong> (<em>operate</em> — run the agent-fleet substrate day-to-day). Start a new session and both load. Pull a later release with <code>/plugin marketplace update agent-governance-mechanisms</code>. No marketplace? Vendor the folder — copy <code>plugin/agent-governance/skills/</code> into <code>~/.claude/skills/</code> (all projects) or <code>.claude/skills/</code> (one repo), then start a fresh session.</p>
+<p><strong>Path B — DIY (installs nothing).</strong> The conservative choice — for a company, or anyone who can't run a third-party plugin. Nothing runs in your agent loop that you didn't write. Vendor a copy of the catalogue into your repo (or hand your agent the URL), and let your coding agent read the <a href="README.html"><code>README</code></a>, the <a href="INDEX.html"><code>INDEX</code></a>, and the role folders (<a href="agent/README.html"><code>agent/</code></a> · <a href="models-bridge/README.html"><code>models-bridge/</code></a> · <a href="product/README.html"><code>product/</code></a>) before you start the sequence.</p>
+<p>If a plugin isn't an option for your org, use Path B; the two are <strong>not exclusive</strong> — install the skill on a personal project, and go DIY org-wide.</p>
+<h2>Run the sequence — Auto mode</h2>
+<p>Paste this once. Claude runs the whole adoption sequence, pausing for your approval before each write. Replace the <code>(Path A)</code> / <code>(Path B)</code> forks with the line that matches how you brought the mechanisms in (Step 0).</p>
+<pre tabindex="0"><code>Read this whole block, then work through the steps in order. For each step, propose
+before you write, and wait for my approval.
 
-# install BOTH skills for your user, across every project …
-mkdir -p ~/.claude/skills
-cp -R agent-governance-mechanisms/plugin/agent-governance/skills/self-governance \
-      agent-governance-mechanisms/plugin/agent-governance/skills/self-operations \
-      ~/.claude/skills/
+# Step 1 — Fold the method into your CLAUDE.md  [either path]
+Read the AI-First Engineering Method in downloads/CLAUDE-starter.md (Part A) and my existing
+CLAUDE.md (or create one if I have none). Propose edits that fold the method into my doc —
+adopt / adapt / skip per principle, preserving my current rules. For the rule index, apply the
+"earns a spot" test from the claude-md-rule-index mechanism: regression-preventing,
+non-derivable-from-local-code, non-local. Show me a diff before writing anything.
 
-# … or scope them to a single repo instead
-mkdir -p .claude/skills
-cp -R agent-governance-mechanisms/plugin/agent-governance/skills/self-governance \
-      agent-governance-mechanisms/plugin/agent-governance/skills/self-operations \
-      .claude/skills/</code></pre>
-<p>Start a new Claude session and the skills load. (Want only one? Copy just that skill's folder.)</p>
-<p>Two modes:</p>
-<ul><li><strong>audit</strong> — survey your repo against the catalogue → a prioritized adopt / adapt / skip plan (advises; changes nothing).</li><li><strong>interpret-failure</strong> — a failure just recurred → classify it and convert the <em>class</em> into a durable control; proposes first, writes the lint/test/gate only on your go-ahead.</li></ul>
-<p>It also carries the AI-First Engineering Method as an ambient operating stance, so the agent reasons the way the catalogue was built. The skill covers the <strong>agent</strong> and <strong>models-bridge</strong> roles — the "self" a coding agent governs; the <strong>product</strong> role stays in the full catalogue.</p>
-<h2>Path B — DIY with the catalogue (installs nothing)</h2>
-<p>The <strong>conservative choice</strong> — for a company, or anyone who can't run a third-party plugin. Nothing runs in your agent loop that you didn't write; you adapt the patterns by hand. Fastest is to let your coding agent read the catalogue and propose a plan grounded in <strong>your</strong> codebase.</p>
-<p>1. <strong>Install a governance doc.</strong> Put a <code>CLAUDE.md</code> (or your agent's equivalent house-rules file) at your repo root — the <a href="agent/governance-doc-controls/claude-md-rule-index.html"><code>claude-md-rule-index</code></a> control explains what earns a spot in it (regression-preventing · non-derivable-from-local-code · non-local). Start small; it grows as you codify each control you adopt.</p>
-<p>2. <strong>Point your agent at this catalogue.</strong> Vendor a copy of <code>governance-mechanisms/</code> into your repo (or just hand your agent the URL), and ask it to read the <a href="README.html"><code>README</code></a>, the <a href="INDEX.html"><code>INDEX</code></a>, and the role folders (<a href="agent/"><code>agent/</code></a> · <a href="models-bridge/"><code>models-bridge/</code></a> · <a href="product/"><code>product/</code></a>).</p>
-<p>3. <strong>Ask for an adopt / adapt / apply plan.</strong> A prompt that works:</p>
-<p>&gt; Read the governance-mechanisms catalogue. For each control, judge whether my repo needs it, already &gt; has it, or would benefit. Produce a prioritized plan: which controls to <strong>adopt</strong> as-is, which to &gt; <strong>adapt</strong> to my stack, and which to <strong>skip</strong> (with the reason). Start with the highest-leverage, &gt; lowest-cost controls, and tell me the one you'd build first.</p>
-<p><strong>Ready-made starters</strong> (adopt-and-adapt) — drop these in your repo and edit:</p>
-<ul><li>a <a href="downloads/CLAUDE-starter.md"><code>CLAUDE.md</code> starter</a> — the governance-doc shape;</li><li>an <a href="downloads/EPIC-TEMPLATE-starter.md">Epic template</a>, a <a href="downloads/design-doc-template-starter.md">design-doc template</a>, and an <a href="downloads/agent-brief-starter.md">agent-brief template</a> — the three artifacts an orchestrator authors;</li><li>an <a href="downloads/op-playbook-starter.md">operational-playbook template</a>;</li><li>a runnable <a href="downloads/governance-lint-example.py">governance-lint example</a> — the real "regex-against-structured-formats" lint, self-contained: copy the shape, change the check.</li></ul>
-<p>The templates encode the required sections + Definition-of-Done so your plans <em>drive</em> the work instead of being written after the fact.</p>
+# Step 2 — Survey the repo for missing guardrails  [either path]
+(Path A) self-governance: run audit mode against my repo. Survey it against the catalogue and produce a
+prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one control
+you'd build first. Advise only; change nothing.
+(Path B) Read the governance-mechanisms catalogue (README, INDEX, and the agent/ models-bridge/ product/
+role folders). For each control, judge whether my repo needs it, already has it, or would benefit.
+Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost controls,
+and tell me the one you'd build first. Advise only; change nothing.
+
+# Step 3 — Adopt the model-based-engineering kit  [either path]
+Read the model-based-engineering starter kit in downloads/system-models-starter-kit.md and the
+executable-source-of-truth mechanism under models-bridge/. Then look at my repo — its services,
+state machines, cross-service seams, and deploy topology. Tell me which model views (state-machine,
+component/zone, service-flow, deployment-topology) would earn their keep for MY system and which to
+skip. For the ones worth it, draft the first view from the matching scaffold, citing real files.
+State your assumptions so I correct rather than supply, and confirm the model before you emit anything.
+
+# Step 4 — Adapt the agent-brief validator  [either path]
+Read the agent-brief starter in downloads/agent-brief-starter.md and the brief-linting mechanism under
+agent/context-and-dispatch/. Look at how I dispatch agents today — what a brief contains, where it lives,
+what a bad one looks like. Adapt the brief template to my fields, then draft a brief-linting check that
+refuses to launch a brief missing the required markers. Show me the template and the check before writing.
+
+# Step 5 — Wire the operator-loop hooks (reflection + banking)  [Path A]
+(Path A) self-operations: read your SKILL.md and the shipped hook library (the reflection, memory-routing,
+and banking hooks behind the typed hook substrate). Inspect my repo — how agents run, where a turn ends,
+where context is banked. Propose which operator-loop hooks are worth wiring for me, adapt the shipped hook
+library and its settings snippet to my repo, and show me the wiring before enabling anything.
+
+# Step 6 — Adopt the Epic / design-doc / handoff templates  [either path]
+Read the Epic template (downloads/EPIC-TEMPLATE-starter.md), the design-doc template
+(downloads/design-doc-template-starter.md), and the handoff scaffold (downloads/emit-handoff-starter.py),
+plus the epic-and-design-templates mechanism under agent/governance-doc-controls/. Compare against how I
+plan and track multi-step work today. Adapt the three artifacts to my repo — keep the required sections
+and the Definition-of-Done — and wire the handoff generator to my session-boundary. Show me the drafts first.
+
+# Step 7 — Adopt an operational playbook for one substrate  [Path B]
+Read the operational-playbook starter (downloads/op-playbook-starter.md) and the operational-playbooks
+mechanism under agent/governance-doc-controls/. Pick the substrate in my repo that breaks most often (deploy,
+the queue, the host VM, cron — your call, tell me why). Draft a situation-keyed playbook for it: per failure,
+the symptom, the cause, and the fix, citing real files. Show me the draft before writing it.</code></pre>
+<h2>Run the sequence — Interactive mode</h2>
+<p>Walk it one step at a time. Each step pairs its prompt with what it does and where to read more. <code>(Path A)</code> / <code>(Path B)</code> tags mark the steps that differ by how you installed; unmarked steps are the same either way.</p>
+<h3>Step 1 — Fold the method into your CLAUDE.md</h3>
+<p>The mechanisms are the <em>what</em>; the method is the <em>how</em> — the AI-First Engineering stance plus the rule-index discipline that decides what earns a spot in a governance doc. Put it in your own house-rules file so it shapes how your agents reason on every boot, not only when a skill fires. Already have a <code>CLAUDE.md</code>? Integrate; don't start fresh.</p>
+<pre tabindex="0"><code>Read the AI-First Engineering Method in downloads/CLAUDE-starter.md (Part A) and my existing
+CLAUDE.md (or create one if I have none). Propose edits that fold the method into my doc —
+adopt / adapt / skip per principle, preserving my current rules. For the rule index, apply the
+"earns a spot" test from the claude-md-rule-index mechanism: regression-preventing,
+non-derivable-from-local-code, non-local. Show me a diff before writing anything.</code></pre>
+<p><strong>Read more:</strong> <a href="downloads/CLAUDE-starter.md">CLAUDE-starter (the method)</a> · <a href="agent/governance-doc-controls/claude-md-rule-index.html">claude-md-rule-index</a></p>
+<h3>Step 2 — Survey the repo for missing guardrails</h3>
+<p>Before adopting any single control, get the map: which mechanisms your repo needs, already has, or would benefit from. Path A runs this as the skill's <strong>audit</strong> mode (advises, changes nothing). Path B asks the same of a plain agent pointed at the catalogue.</p>
+<pre tabindex="0"><code>(Path A) self-governance: run audit mode against my repo. Survey it against the catalogue and produce a
+prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one control
+you'd build first. Advise only; change nothing.
+(Path B) Read the governance-mechanisms catalogue (README, INDEX, and the agent/ models-bridge/ product/
+role folders). For each control, judge whether my repo needs it, already has it, or would benefit.
+Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost controls,
+and tell me the one you'd build first. Advise only; change nothing.</code></pre>
+<p><strong>Read more:</strong> <a href="INDEX.html">INDEX (the census)</a> · <a href="catalogue-views.html">catalogue views</a></p>
+<h3>Step 3 — Adopt the model-based-engineering kit</h3>
+<p>The scaling unlock for agents that keep breaking things that "looked unrelated": model your system as typed data that tools read on every run — a state-machine view, a component/zone view, a service-flow view, a deployment-topology view. The starter kit ships fill-in scaffolds for each; the mechanism entry explains why an <em>executable</em> model that governs the code beats prose that drifts.</p>
+<pre tabindex="0"><code>Read the model-based-engineering starter kit in downloads/system-models-starter-kit.md and the
+executable-source-of-truth mechanism under models-bridge/. Then look at my repo — its services,
+state machines, cross-service seams, and deploy topology. Tell me which model views (state-machine,
+component/zone, service-flow, deployment-topology) would earn their keep for MY system and which to
+skip. For the ones worth it, draft the first view from the matching scaffold, citing real files.
+State your assumptions so I correct rather than supply, and confirm the model before you emit anything.</code></pre>
+<p><strong>Read more:</strong> <a href="downloads/system-models-starter-kit.md">system-models starter kit</a> · <a href="models-bridge/system-models/executable-source-of-truth.html">executable source of truth</a> · <a href="models-bridge/README.html">models-bridge role</a></p>
+<h3>Step 4 — Adapt the agent-brief validator</h3>
+<p>If you run more than one agent at a time, a brief-linting gate pays off immediately: it statically checks a task brief <em>before</em> the agent spawns and refuses to launch a malformed one. Start from the brief template, then adapt the genre-aware validator to the fields your dispatch actually uses.</p>
+<pre tabindex="0"><code>Read the agent-brief starter in downloads/agent-brief-starter.md and the brief-linting mechanism under
+agent/context-and-dispatch/. Look at how I dispatch agents today — what a brief contains, where it lives,
+what a bad one looks like. Adapt the brief template to my fields, then draft a brief-linting check that
+refuses to launch a brief missing the required markers. Show me the template and the check before writing.</code></pre>
+<p><strong>Read more:</strong> <a href="downloads/agent-brief-starter.md">agent-brief starter</a> · <a href="agent/context-and-dispatch/brief-linting.html">brief-linting</a> · <a href="agent/context-and-dispatch/role-typed-dispatch.html">role-typed dispatch</a></p>
+<h3>Step 5 — Wire the operator-loop hooks (reflection + banking) <em>(Path A)</em></h3>
+<p>The self-operations skill ships a runnable hook library: a turn-end reflection nudge, a memory-routing nudge, and a context-banking check, all gated behind one typed hook substrate so they fire on tempo instead of every turn. Have the skill inspect your runtime and propose which hooks are worth wiring, then adapt the shipped library to your repo.</p>
+<pre tabindex="0"><code>(Path A) self-operations: read your SKILL.md and the shipped hook library (the reflection, memory-routing,
+and banking hooks behind the typed hook substrate). Inspect my repo — how agents run, where a turn ends,
+where context is banked. Propose which operator-loop hooks are worth wiring for me, adapt the shipped hook
+library and its settings snippet to my repo, and show me the wiring before enabling anything.</code></pre>
+<p><strong>Read more:</strong> <a href="downloads/self-operations-starter.md">self-operations starter</a> · <a href="agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle hooks</a> · <a href="agent/lifecycle-and-observability/reflection-facet-substrate.html">reflection-facet substrate</a></p>
+<h3>Step 6 — Adopt the Epic / design-doc / handoff templates</h3>
+<p>The three planning artifacts an orchestrator authors — the Epic (the effort, with its Definition-of-Done), the design doc (the plan), and the machine-generated handoff (the context carried across sessions). Adopt the templates so your plans <em>drive</em> the work instead of being written after the fact.</p>
+<pre tabindex="0"><code>Read the Epic template (downloads/EPIC-TEMPLATE-starter.md), the design-doc template
+(downloads/design-doc-template-starter.md), and the handoff scaffold (downloads/emit-handoff-starter.py),
+plus the epic-and-design-templates mechanism under agent/governance-doc-controls/. Compare against how I
+plan and track multi-step work today. Adapt the three artifacts to my repo — keep the required sections
+and the Definition-of-Done — and wire the handoff generator to my session-boundary. Show me the drafts first.</code></pre>
+<p><strong>Read more:</strong> <a href="downloads/EPIC-TEMPLATE-starter.md">Epic template</a> · <a href="downloads/design-doc-template-starter.md">design-doc template</a> · <a href="downloads/emit-handoff-starter.py">handoff generator</a> · <a href="agent/governance-doc-controls/epic-and-design-templates.html">epic-and-design-templates</a></p>
+<h3>Step 7 — Adopt an operational playbook for one substrate <em>(Path B)</em></h3>
+<p>A playbook is a situation-keyed operating manual for a substrate: for each thing that can go wrong, the symptom, the cause, and the fix. Start with the substrate that breaks most, and let the operator-runbook discipline turn tribal knowledge into a doc your agent can follow.</p>
+<pre tabindex="0"><code>Read the operational-playbook starter (downloads/op-playbook-starter.md) and the operational-playbooks
+mechanism under agent/governance-doc-controls/. Pick the substrate in my repo that breaks most often (deploy,
+the queue, the host VM, cron — your call, tell me why). Draft a situation-keyed playbook for it: per failure,
+the symptom, the cause, and the fix, citing real files. Show me the draft before writing it.</code></pre>
+<p><strong>Read more:</strong> <a href="downloads/op-playbook-starter.md">op-playbook starter</a> · <a href="agent/governance-doc-controls/operational-playbooks.html">operational playbooks</a> · <a href="agent/governance-doc-controls/operator-runbook-skill.html">operator-runbook skill</a></p>
 <h2>Which path?</h2>
 <table><thead><tr><th>Aspect</th><th>Path A — self-governance skill</th><th>Path B — catalogue (DIY)</th></tr></thead><tbody><tr><td><strong>Installs</strong></td><td>a Claude plugin</td><td>nothing</td></tr><tr><td><strong>Runs in your loop</strong></td><td>the skill (gated; greenlight to write)</td><td>only what you write</td></tr><tr><td><strong>Effort</strong></td><td>auto-triggers, runs the loop</td><td>adapt by hand</td></tr><tr><td><strong>Best for</strong></td><td>individuals / teams who want it automated</td><td>companies, the security-conservative, full control</td></tr></tbody></table>
-<p>They're <strong>not exclusive</strong> — use the skill on a personal project, and go DIY org-wide.</p>
 <h2>What to reach for first</h2>
 <ul><li>If you run <strong>more than one agent at a time</strong>: start with the <strong>agent</strong> role — a <a href="agent/context-and-dispatch/brief-linting.html">brief-linting</a> gate and a <a href="agent/gates-and-merge-train/pre-commit-hook.html">pre-commit hook</a> pay off immediately.</li><li>If your agents keep <strong>breaking things that "looked unrelated"</strong>: the <strong>models-bridge</strong> role — a typed <a href="models-bridge/system-models/executable-source-of-truth.html">executable source of truth</a> that agents read and that governs the codebase — is the scaling unlock.</li><li>If you ship a <strong>user-facing artifact</strong>: the <strong>product</strong> role — a <a href="product/validation-and-conformance/content-validator.html">content validator</a> and a closed <a href="product/repair-vocabulary/remediation-verbs.html">repair vocabulary</a> bound what the agent can get wrong.</li></ul>
 <h2>The mindset</h2>
