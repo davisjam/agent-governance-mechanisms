@@ -103,6 +103,9 @@ itself.
 - A closed-surface lint (each facet implements exactly the sanctioned steps), a pointer-resolve lint (every
   facet's policy-material pointer resolves), and a per-firing telemetry log + yield query (the measured
   leash). The facet registry is itself modeled as a typed node behind a drift gate (model = territory).
+- A runnable, portable form of the whole substrate — the Template-Method base, the once-per-window emitter,
+  two generic example facets, and the measured-leash query — ships as a stdlib-only, copy-and-adapt library
+  with this catalogue's operating skill, the runnable complement to the pattern described here.
 
 ## Related mechanisms
 
