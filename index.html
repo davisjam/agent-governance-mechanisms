@@ -168,7 +168,7 @@
 
   <p class="lead">This site describes both halves. The first is the guidance on what to fix in advance; the
   second is the machinery for responding when something slips through. It packages both as three Claude
-  skills with a <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>65 governance
+  skills with a <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>66 governance
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
 
@@ -303,7 +303,7 @@
   <hr class="sep" />
 
   <h2 class="section-h">Explore the catalogue</h2>
-  <p class="section-sub">65 governance mechanisms — the repertoire this loop produced in one real
+  <p class="section-sub">66 governance mechanisms — the repertoire this loop produced in one real
   production system.</p>
   <div class="cards-grid">
   <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, mechanisms clickable</span></a>
@@ -379,6 +379,7 @@
 <tr><td class="c-name"><a href="models-bridge/system-models/formal-invariant-verification.html">Formal invariant verification (temporal form → model check) — <em>trunk / method</em></a></td><td class="c-sum">Each invariant's temporal-logic form derives its checker — proven, not sampled.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/coverage-model-mapping.html">Coverage → model-node mapping (which invariants are tested) — <em>trunk / method</em></a></td><td class="c-sum">Project test coverage onto model nodes (states, seams, invariants) so untested ones are visible.</td><td class="c-enf">Soft·Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/journey-criticality-test-placement.html">Journey-criticality → test-tier placement (which host a test runs on) — <em>trunk / method</em></a></td><td class="c-sum">A journey's criticality derives its test's host tier; a lint holds the local-coverage floor.</td><td class="c-enf">Soft·Hard</td></tr>
+<tr><td class="c-name"><a href="models-bridge/system-models/invariant-dag-execution-policy.html">Invariant-DAG execution policy (typed Scheduler: correctness vs resource + cost) — <em>trunk / method</em></a></td><td class="c-sum">A DAG holds correctness + cost-gate edges only; a typed Scheduler rations load + budget per host.</td><td class="c-enf">Soft·Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/model-driven-codegen.html">Model-driven codegen — <em>trunk / method</em></a></td><td class="c-sum">Generate real artifacts from the models, provenance-headed.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/query-surface.html">Model query surface (<code>repo-query</code>) — <em>trunk / method</em></a></td><td class="c-sum">repo-query — the agent-facing read API over the models.</td><td class="c-enf">Soft</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/meta-model-consumption.html">Meta-model consumption (read, don't hardcode) — <em>trunk / method</em></a></td><td class="c-sum">Read the model at runtime; never hardcode a snapshot.</td><td class="c-enf">Hard</td></tr>

@@ -39,10 +39,10 @@ drift gates is tedious, and humans resent the nagging.
 without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
 agent operate a codebase larger than its context in the first place.
 
-## The <!--census:bridge:word-->eighteen<!--/census--> mechanisms — one method, two subjects (a Y)
+## The <!--census:bridge:word-->nineteen<!--/census--> mechanisms — one method, two subjects (a Y)
 
 The role is a **Y**: one **method** (the trunk) reified toward the two subjects the bridge couples — the
-**product** it ships and the **orchestration** that builds it. The <!--census:bridge_method:word-->ten<!--/census--> method-mechanisms are
+**product** it ships and the **orchestration** that builds it. The <!--census:bridge_method:word-->eleven<!--/census--> method-mechanisms are
 subject-agnostic; the <!--census:bridge_models:word-->eight<!--/census--> models split by subject, with three that serve both faces (the *shared spine*).
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:
@@ -63,6 +63,10 @@ subject-agnostic; the <!--census:bridge_models:word-->eight<!--/census--> models
 - [Journey-criticality → test-tier placement](system-models/journey-criticality-test-placement.md) — a
   journey's criticality *derives* which environment tier its tests run in, and a coverage-floor lint holds
   the invariant that every major journey-part has a fast-tier test — so local-green means the major paths ran.
+- [Invariant-DAG execution policy](system-models/invariant-dag-execution-policy.md) — a deploy graph carries
+  `CORRECTNESS`/`COST_GATE`/`LOAD` edge intents and stays host-identical; a typed Scheduler reads a per-host
+  `(concurrency-ceiling, budget)` profile and rations load + cost over it, so contention is a semaphore in
+  the plan, never a dependency edge — held by a no-LOAD-edge lint and a cross-host superset lint.
 - [Model-driven codegen](system-models/model-driven-codegen.md) — generate artifacts *from* the models,
   provenance-headed.
 - [Query surface](system-models/query-surface.md) — `repo-query`, the agent-facing read API.

@@ -2,4 +2,4 @@
 
 # Reference catalogue (bundled)
 
-A vendored copy of the **agent** and **models-bridge** roles of the agent-governance-mechanisms catalogue (45 mechanism entries), assembled by `bundle_skill.py` so the skill is self-contained when installed. Start at [`INDEX.md`](INDEX.md); read individual entries on demand. Canonical source + the product role: https://davisjam.github.io/agent-governance-mechanisms/
+A vendored copy of the **agent** and **models-bridge** roles of the agent-governance-mechanisms catalogue (46 mechanism entries), assembled by `bundle_skill.py` so the skill is self-contained when installed. Start at [`INDEX.md`](INDEX.md); read individual entries on demand. Canonical source + the product role: https://davisjam.github.io/agent-governance-mechanisms/
