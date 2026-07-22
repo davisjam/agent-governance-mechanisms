@@ -51,6 +51,9 @@ subject-agnostic; the <!--census:bridge_models:word-->eight<!--/census--> models
   data-not-code, read every run, generated-from, can't drift.
 - [Drift & parity gates](system-models/drift-parity-gates.md) — bidirectional model↔reality enforcement
   (the counterpart that makes "can't drift" true).
+- [Agent-first MBSE harness](system-models/agent-first-mbse-harness.md) — build the models as a thin harness
+  over frozen records: adopt the modeling genre's schema, skip its runtime, hold the disciplines that keep
+  the snapshot honest.
 - [Formal invariant verification](system-models/formal-invariant-verification.md) — each invariant carries
   a temporal-logic form (`[]P` safety / `P ~> Q` liveness) that *derives* its exhaustive checker
   (state-space BFS / a model checker) — proven across every interleaving, not sampled.
