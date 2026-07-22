@@ -73,9 +73,14 @@ Three parts sit on the typed model.
 
 A **selector** closes the loop: a pure function from a deploy context to the concrete test roster, reading
 the model and the derivation. It emits the local set (the major-part floor), the staging set (the full
-matrix), or a lighter production smoke — replacing the hand-curated per-environment roster. Because the
-selector is a pure function over the tiers, the "staging covers everything local covers" containment is a
-property you check by *calling the function*, not by auditing a deploy matrix.
+matrix), or a lighter production smoke — the roster a hand-curated per-environment list would otherwise
+hold. Each selectable test carries the derived *set* of contexts it runs in, not a single ordinal threshold,
+because the host order is a **semilattice, not a chain**. Staging is the top that runs a superset of both
+the others; local and production are incomparable, each a different reduction of the staging superset with
+neither containing the other. The derivation always puts staging in a test's context set, so "staging
+covers everything local covers," and everything production covers, is a containment you check by *calling
+the function* on each pair rather than by auditing a deploy matrix. That algebraic shape is enforced by both
+a property test over any spec universe and a lint that recomputes containment against the live model.
 
 ## Prerequisites
 
@@ -107,8 +112,13 @@ property you check by *calling the function*, not by auditing a deploy matrix.
 - The coverage-floor lint: every major journey-part must map to a `@journey`-tagged real-gesture spec in a
   sanctioned local test home, or it is a finding (landed audit-only first, since the composed
   editor-remediate journey has a known gap).
-- The per-context selector: a pure function from a deploy context to the test roster, replacing the
-  hand-curated per-environment list and making the staging-covers-local containment a callable property.
+- The per-context selector: a landed pure function from a deploy context to a frozen set of typed
+  test-specs, reading the model to emit the local floor, the full staging matrix, or the light production
+  smoke. Each spec's context set is derived, always including staging, so the staging-covers-each
+  containment is a property the accompanying test suite and a live-model lint check by calling the function
+  — not by auditing a deploy matrix. It is the roster the hand-curated per-environment list will be replaced
+  by; the module ships as a pure, tested unit ahead of the wiring that swaps the environment guards for its
+  membership.
 
 ## Related mechanisms
 
