@@ -73,11 +73,10 @@ Three parts sit on the typed model.
 
 A **selector** closes the loop: a pure function from a deploy context to the concrete test roster, reading
 the model and the derivation. It emits the local set (the major-part floor), the staging set (the full
-matrix), or a lighter production smoke. The deploy driver calls the selector and gates each browser and
-UX-smoke phase on membership in the returned roster — the selector *is* the roster the deploy path runs.
-The hand-drawn per-environment lines it replaced are gone: a phase that once ran behind a raw
-"if this is the staging environment" guard now runs when, and only when, the selector's context set
-contains it, so the production context finally picks up the browser smoke set it was missing. Each
+matrix), or a lighter production smoke. The deploy path calls the selector and gates each phase on
+membership in the returned roster — the selector *is* the roster the deploy path runs, in place of the
+per-environment conditional guards that used to decide, in control flow, which phases a host runs. A phase
+runs exactly when the selector's context set contains it. Each
 selectable test carries the derived *set* of contexts it runs in, not a single ordinal threshold,
 because the host order is a **semilattice, not a chain**. Staging is the top that runs a superset of both
 the others; local and production are incomparable, each a different reduction of the staging superset with
@@ -118,9 +117,8 @@ a property test over any spec universe and a lint that recomputes containment ag
   editor-remediate journey has a known gap).
 - The per-context selector: a pure function from a deploy context to a frozen set of typed test-specs,
   reading the model to emit the local floor, the full staging matrix, or the light production smoke. The
-  cluster-deploy driver imports it and gates each browser and UX-smoke phase on membership in the selected
-  set, in place of the old per-environment guards — so the selector now drives which smoke phases the live
-  deploy runs, and the production context picks up the browser smoke the guards used to fence to staging.
+  cluster-deploy driver imports it and gates each phase on membership in the selected set, in place of the
+  per-environment guards, so the selector drives which phases the live deploy runs.
   Each spec's context set is derived, always including staging, so the staging-covers-each containment is a
   property the accompanying test suite and a live-model lint check by calling the function — not by auditing
   a deploy matrix.
