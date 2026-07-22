@@ -69,6 +69,31 @@ before"). The em-dash is a *tool he varies with*, not a reflex — note in the e
 period, a colon, or a plain comma does the work instead. He avoids flowery flourish, passive-voice
 drift, performative hedging, and abstraction untethered from an example.
 
+## Economy — less is more
+
+The prose leg of the skill's governing stance (SKILL.md, §"The governing stance: less is more"): **Hemingway's
+economy.** The word count is not the target; the target is that every word carries the idea. Strip the ones
+that don't.
+
+- **No fluffy adjectives.** Cut the decorative modifier that adds heat but no information — *powerful,
+  seamless, robust, elegant, comprehensive, cutting-edge, sophisticated*. "A validator that checks output ⊆
+  input," not "a powerful, comprehensive validator." Keep an adjective only when it is a claim the reader can
+  check (*idempotent*, *at-least-once*, *148-line*) — those carry information; the fluffy ones carry mood.
+  This sharpens the same edge as the "cut qualifiers" rule below, one level up: qualifiers weaken a claim,
+  fluffy adjectives inflate it, and both are ornament.
+- **Reserve flowery language for the contexts that earn it — and use it sparingly even there.** A blog post
+  or a keynote is *persuading*, and a well-placed flourish earns its keep; that is the discursive register
+  above, and the extended analogy is a tool in it. Repo prose — a reference, a runbook, a design doc — is
+  not persuading; it is *informing*, and there the flourish is noise. Match the ornament to the register: a
+  touch of it in a Motivation that genuinely persuades, none of it in a reference definition. Even in the
+  contexts that earn it, one flourish that lands beats three that decorate.
+- **The plain word beats the ornamental one when it carries the idea.** This is the "plain diction carrying
+  technical weight" characteristic, stated as a rule: reach for the common word ("pickle", "silver bullet")
+  when it will carry the idea, and the exact technical term only when the plain word won't. An inflated word
+  doing a plain word's job is the failure this catches.
+
+The [`audit.md`](audit.md) procedure flags a fluffy adjective as a Pass-3 house-style finding.
+
 ## Exemplars — verbatim, with the rule each teaches
 
 The exemplars split by register. The **engineering/documentation** set (best-in-class third-party docs)

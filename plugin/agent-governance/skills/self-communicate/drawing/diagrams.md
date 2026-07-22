@@ -41,6 +41,35 @@ and justify the escape.**
 
 ---
 
+## Less is more — the simplest form that carries the idea
+
+The drawing leg of the skill's governing stance (SKILL.md, §"The governing stance: less is more"): **a visual
+aid is the simplest form that carries the idea.** Tufte's data-ink ratio and Picasso's *Bull* name the
+discipline — every mark on the page should earn its place by carrying part of the idea; strip the marks that
+only decorate.
+
+- **Pick the simplest type that carries the shape.** Before a C4 four-box context diagram, ask whether a
+  one-line "A → B → C" flow says the same thing. A three-node point is a sentence, not a diagram; two nodes
+  and an arrow are often enough. The eleven-plate *Bull* reduces a bull to a few lines because each removed
+  line was one the idea could spare — reduce a diagram the same way, and stop at the plate where the next
+  cut would lose the thing.
+- **Strip the chartjunk.** Drop the ornament that decorates without informing — gratuitous color, gradients,
+  3-D bevels, drop shadows, redundant gridlines, a legend for two colors a label would name. Mermaid's plain
+  default *is* the low-chartjunk choice; do not reach for custom styling to dress a diagram up. Color should
+  carry a distinction (and never carry it *alone* — see the accessibility section), not brighten the picture.
+- **Do not elaborate when simple works.** A ten-node diagram with three-word labels that a reader can't parse
+  on one look is usually two clearer diagrams, or one prose sentence plus a three-node picture of the part
+  that has a real shape. The failure is drawing more than the idea needs, not less. When you are tempted to
+  add a node, an annotation, or a second color, ask what part of the idea it carries; if the answer is
+  "none, it looks more complete," cut it.
+
+This is the visual twin of the prose economy rule in [`../writing/voice.md`](../writing/voice.md)
+(§"Economy — less is more"): there, cut the fluffy adjective; here, cut the decorative mark. The
+[`../writing/audit.md`](../writing/audit.md) procedure flags an over-elaborate diagram in its visualization
+pass.
+
+---
+
 ## The diagram vocabulary
 
 The types below are locked. They group into **structure** (what the system *is*), **behavior** (what it

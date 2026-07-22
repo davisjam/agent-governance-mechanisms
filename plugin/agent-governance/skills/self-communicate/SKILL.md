@@ -36,6 +36,33 @@ supplies the devices; Diátaxis fixes the doc's shape; a lexicon fixes the vocab
 register; an audit procedure grades the result. Diagrams are the same craft for shapes prose can't carry.
 None of this is invented per document — you reach into a toolkit and apply it.
 
+## The governing stance: less is more — the representation must not distract from the idea
+
+One principle governs every resource below, prose and drawing alike: **the representation is a carrier for
+the idea; strip anything that does not carry it.** Three touchstones name the discipline:
+
+- **Hemingway** — economy of words. Plain, concrete, load-bearing prose. No fluffy adjective, no ornamental
+  flourish where a plain word carries the idea.
+- **Tufte** — the data-ink ratio. A visual aid is the simplest form that carries its idea; strip the
+  chartjunk — the gridlines, gradients, and 3-D bevels that decorate without informing.
+- **Early Picasso, the bull lithographs** — the eleven-plate *Bull* reduces a bull to a few lines, each
+  plate removing what the last could spare, until only the essence remains. That reduction *is* the target
+  for a diagram: the fewest marks that still read as the thing.
+
+The stance specializes per representation, and each specialization lives in its own resource rather than
+being restated here:
+
+- **In prose** — economy of words; no fluffy adjectives. Reserve flowery, ornamental language for the
+  contexts that earn it (a blog post, a keynote) and use it sparingly even there. Repo prose — a reference,
+  a runbook, a design doc — is plain. This extends the existing "cut qualifiers / describe don't sell"
+  discipline; see [`writing/voice.md`](writing/voice.md) (§"Economy — less is more").
+- **In drawing** — the simplest representation that carries the idea. Do not elaborate a diagram if a
+  simpler one would read; strip ornament. See [`drawing/diagrams.md`](drawing/diagrams.md) (§"Less is more —
+  the simplest form that carries the idea").
+
+The [`writing/audit.md`](writing/audit.md) procedure flags violations of this stance in both legs — a fluffy
+adjective in prose, ornament in a diagram.
+
 ## The two legs
 
 - **Prose** — the argument, carried in sentences. Five resources, applied in order.

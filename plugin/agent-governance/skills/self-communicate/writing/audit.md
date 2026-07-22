@@ -95,6 +95,14 @@ describe-don't-sell). Each item below is a named rule in that discipline.
 - **Bare qualifiers.** **Detect:** *very, quite, essentially, arguably, reliably*, "the whole point", "the
   heart of". **Fix:** delete them. Keep *precisely because* / *exactly when* only where they sharpen a
   causal claim.
+- **Fluffy adjectives (the economy / less-is-more rule).** **Detect:** a decorative modifier that adds heat
+  but no checkable information — *powerful, seamless, robust, elegant, comprehensive, cutting-edge,
+  sophisticated, blazing-fast, world-class*. Qualifiers weaken a claim; fluffy adjectives inflate it, and
+  both are ornament the idea does not need. **Fix:** delete the adjective and let the mechanism carry the
+  claim ("a validator that checks output ⊆ input", not "a powerful validator"), or replace it with an
+  adjective the reader can check (*idempotent*, *148-line*, *at-least-once*). Ornamental language is reserved
+  for a genuinely persuading blog or keynote and used sparingly even there; in repo prose flag it. Grounds:
+  [`voice.md`](voice.md) §"Economy — less is more".
 - **Reflex labels.** **Detect:** "load-bearing" and similar filler labels used by habit. **Fix:** the
   precise term — *central*, *authoritative*, *the weak point*, *essential*.
 - **Selling / crowning.** **Detect:** "the best", "the highest-leverage", "every project should adopt
@@ -147,6 +155,14 @@ diagram — not only catalogue entries.
   **Fix:** rewrite it as a fenced `mermaid` block (text-authored, renders in Markdown, diffs like code).
   Keep bespoke SVG only for a geometry Mermaid can't express (the catalogue's own "Y" figure) — and note
   the reason.
+- **Over-elaborate diagram / chartjunk (the less-is-more rule).** **Detect:** a diagram carrying more than
+  the idea needs — a C4 four-box context where an "A → B → C" flow says the same thing, a two-or-three-node
+  picture that is really one sentence, or ornament that decorates without informing (gratuitous color or
+  gradients, 3-D bevels, drop shadows, redundant gridlines, a legend for two colors a label would name).
+  **Fix:** reduce to the simplest form that still reads as the thing — Picasso's *Bull*, cutting each mark
+  the idea can spare; strip the chartjunk to Mermaid's plain default; collapse a diagram-of-a-sentence back
+  to the sentence. Grounds: [`../drawing/diagrams.md`](../drawing/diagrams.md) §"Less is more — the simplest
+  form that carries the idea".
 - **Inaccessible diagram.** **Detect:** labels too small to read or distinctions carried by color alone;
   no alt text / description (`accTitle` / `accDescr` for Mermaid, `<title>`/`<desc>` + `aria-labelledby`
   for SVG); or an interactive SVG with clickable children marked `role="img"` (which hides them) instead
