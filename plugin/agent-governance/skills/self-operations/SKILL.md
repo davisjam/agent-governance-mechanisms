@@ -95,9 +95,14 @@ place. Pick by what you want to see:
   [rca-an-ambiguous-signal](examples/runbook-rca-an-ambiguous-signal.md) ·
   [recover-a-broken-scheduler](examples/runbook-recover-a-broken-scheduler.md) ·
   [keep-the-tree-clean](examples/runbook-keep-the-tree-clean.md) ·
-  [query-the-caused-by-mix](examples/runbook-query-the-caused-by-mix.md) — each shows the typed steps
+  [query-the-caused-by-mix](examples/runbook-query-the-caused-by-mix.md) ·
+  [audit-model-code-drift](examples/runbook-audit-model-code-drift.md) — each shows the typed steps
   end to end (a RUNNABLE line, a JUDGMENT-AUTOMATABLE carried brief, a JUDGMENT-IRREDUCIBLE escalation),
-  opening with its universal problem statement, then illustrative solution steps.
+  opening with its universal problem statement, then illustrative solution steps. The
+  [drift-audit](examples/runbook-audit-model-code-drift.md) one is the sharpest case of the split this
+  skill's runbooks are built on: it mechanizes the enumerate-and-diff of a typed model against the code it
+  claims, and reserves the human for the one question a machine can't answer — is this drift a real
+  divergence or an intended as-built gap?
 - **The runnable hook library** → [`hooks/`](hooks/) — a self-contained, stdlib-only Claude Code hook
   substrate you copy into your `.claude/` and adapt, in three independently-adoptable layers: **(1)** the
   reflection substrate (a Template-Method `ReflectionFacet` base + typed registry, a shared once-per-window

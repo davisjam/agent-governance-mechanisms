@@ -19,9 +19,10 @@
     keeps all five from drifting away from the code.</desc>
 
   <defs>
-    <marker id="tvUp" markerWidth="9" markerHeight="9" refX="4.5" refY="7.5"
+    <marker id="tvUp" markerWidth="9" markerHeight="9" refX="9" refY="4.5"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M4.5,0 L9,8 L0,8 Z" fill="#1a4a7a"/>
+      <!-- +x convention: apex at max-x; orient="auto" rotates it onto the line -->
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#1a4a7a"/>
     </marker>
   </defs>
 

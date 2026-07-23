@@ -39,7 +39,7 @@ from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import check_html_links
 from tests.markdown import check_markdown_anchors, check_markdown_schema, check_render_safety
 from tests.skill import check_bundle_links, check_skill_drift, check_skill_structure
-from tests.svg_fit import check_svg_text_fit
+from tests.svg_fit import check_svg_drawing_hygiene, check_svg_text_fit
 
 
 class Check(NamedTuple):
@@ -78,6 +78,11 @@ CHECKS = [
     # its box or the canvas. Reports candidates, never fails. See tests/svg_fit.py for why it starts here.
     Check("svg: text-fit (box/canvas overflow) [AUDIT-ONLY]", 1,
           lambda strict: check_svg_text_fit(), audit_only=True),
+    # AUDIT-ONLY: native-construct discipline — a <marker orient=auto> arrowhead not drawn in the +x
+    # convention (lands off-axis), a hand-stitched arrowhead outside a marker, or a <line> stroke running
+    # through a <text> glyph box. Enforces the self-communicate drawing rule the text-fit heuristic can't see.
+    Check("svg: drawing hygiene (marker +x / stitched arrowhead / stroke-through-glyph) [AUDIT-ONLY]", 1,
+          lambda strict: check_svg_drawing_hygiene(), audit_only=True),
 ]
 
 REAL_CHECKS = [c for c in CHECKS if not c.audit_only]  # the gate — the count the summary reports

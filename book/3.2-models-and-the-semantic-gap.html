@@ -455,9 +455,10 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
     enforcing here. The lesson: lift the check to the level where the meaning is legible.</desc>
 
   <defs>
-    <marker id="sgUp" markerWidth="9" markerHeight="9" refX="4.5" refY="7.5"
+    <marker id="sgUp" markerWidth="9" markerHeight="9" refX="9" refY="4.5"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M4.5,0 L9,8 L0,8 Z" fill="#1a4a7a"/>
+      <!-- drawn in the +x convention: apex at max-x; orient="auto" rotates it onto the line -->
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#1a4a7a"/>
     </marker>
   </defs>
 
@@ -473,9 +474,10 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <circle cx="840" cy="101" r="22" fill="#2e7d32"/>
   <path d="M829,101 L837,110 L852,92" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- the lift arrow: from the low events up to the whole-unit box -->
-  <line x1="480" y1="300" x2="480" y2="146" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#sgUp)"/>
-  <text x="503" y="228" font-size="20" font-style="italic" fill="#1a4a7a">lift the check up</text>
+  <!-- the lift arrow: rises from just above the events label up to the whole-unit box.
+       Starts at y=278 so the stroke clears the bracket label (baseline y=296) — a line must never cross a glyph. -->
+  <line x1="480" y1="278" x2="480" y2="146" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#sgUp)"/>
+  <text x="503" y="223" font-size="20" font-style="italic" fill="#1a4a7a">lift the check up</text>
 
   <!-- ================= BOTTOM RUNG — too low ================= -->
   <!-- the property bracket spanning several events -->

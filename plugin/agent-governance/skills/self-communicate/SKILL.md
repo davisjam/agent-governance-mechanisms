@@ -63,6 +63,27 @@ being restated here:
 The [`writing/audit.md`](writing/audit.md) procedure flags violations of this stance in both legs — a fluffy
 adjective in prose, ornament in a diagram.
 
+## The second stance: name the concept, then use the name
+
+A second principle governs both legs: **name the concept, then use the name — reach for the established,
+native construct rather than re-deriving it from parts.** A name is a handle. It carries the concept's
+meaning, its constraints, and its correct behavior in a single token, so using the name is shorter,
+clearer, and less error-prone than re-describing or re-assembling the concept each time it appears. The
+failure it prevents is the same in both legs: a concept re-derived from scratch on every appearance drifts,
+and a construct hand-stitched from primitives is fragile in ways the native, named form is not.
+
+The stance specializes per representation, and each specialization lives in its own resource:
+
+- **In prose** — use the established TERM and the named design PATTERN, then link it, rather than
+  re-describing the idea in fresh words each time. A recognized name — a "circuit breaker", a "state
+  machine" — hands the reader the whole concept and its constraints at once. See
+  [`writing/lexicon.md`](writing/lexicon.md) (§"How to use this lexicon" — "Name the established term").
+- **In drawing** — use the native, named drawing construct rather than stitching one from primitives. An
+  SVG `<marker>` with `orient="auto"` *is* an arrowhead: it rotates to its line and pins to the endpoint,
+  so it cannot land rotated or off-target the way a hand-placed triangle `<path>` can. Reach for the
+  format's own named shape before composing one. See [`drawing/diagrams.md`](drawing/diagrams.md)
+  (§"Use the native construct, not stitched primitives").
+
 ## The two legs
 
 - **Prose** — the argument, carried in sentences. Five resources, applied in order.

@@ -87,6 +87,17 @@ scope where its property is legible, not the cheapest hook.
   catalog for breaks.
 - Runbooks with typed step-kinds (runnable / carried-brief / surface-to-user), making the
   judgment-automatable middle a lintable resource.
+- **A drift-audit runbook that reads a typed model to know what changed** — the sharpest case of the step
+  typing. Given a typed model and the code it claims, its *runnable* steps mechanize the determinizable
+  work (enumerate every claim-to-code anchor, resolve each symbol to flag a broken one, batch-re-run the
+  model's own owned checks for any gone red since the work closed) and its *surface-to-user* step reserves
+  the one question a machine can't take: is a mismatch a real divergence, or an intended as-built gap the
+  model should record rather than treat as an error? The judgment residual shrinks by one for a
+  formally-anchored claim, where re-running its checker *is* the semantic verdict — so that slice's
+  irreducible step becomes runnable. This is a runbook whose mechanizable steps are driven off the model
+  the definition-of-done reads to learn what drifted (its instance: a DoD drift-audit over the system
+  models, minted from an audit that harvested roughly two dozen drift instances at near-one
+  signal-to-noise across recently-closed work).
 - The reference-validity lint resolving every pointer's file and heading anchor from a typed YAML
   source-of-truth.
 - The handoff to a failure-interpretation skill: recurring failure → classify → Epic → designed control.

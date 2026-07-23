@@ -41,6 +41,42 @@ and justify the escape.**
 
 ---
 
+## Use the native construct, not stitched primitives
+
+The drawing leg of the second governing stance (SKILL.md, §"The second stance: name the concept, then use
+the name"): **when a format gives you a named construct for a thing, use it — do not re-assemble the thing
+from lower-level primitives.** The native construct carries its own correct behavior; the hand-stitched
+version reproduces the *appearance* and loses the *behavior*, which is exactly where it breaks.
+
+The canonical case is the arrowhead. SVG has a native arrow: a `<marker>` referenced by `marker-end` (or
+`marker-start`) on a `<line>` or `<path>`. With `orient="auto"` the marker rotates to the direction of its
+line and pins to the endpoint, so it always points along the line, at the target — it *cannot* land rotated
+or off-target. A hand-placed triangle `<path>` at a guessed position and angle has none of that: it looks
+right in the one layout the author eyeballed and drifts the moment the line moves. Use the marker.
+
+- **Draw the marker in the `+x` convention.** `orient="auto"` aligns the marker's local +x axis with the
+  line's direction, then rotates the whole marker. So draw the arrowhead pointing along +x — apex at the
+  right, e.g. `M0,0 L10,5 L0,10 Z` with `refX="10" refY="5"` — NOT pointing "up" or "down". A triangle
+  drawn pointing along its own +y renders *perpendicular* to the line after auto-rotation; drawing the head
+  in screen-up orientation is the single most common way a native marker still lands wrong. Let `orient` do
+  the rotating.
+- **A stroke must never cross a glyph.** A line running through its own label, or through another element's
+  text, is never acceptable — route the connector to one side, break it, or move the text. (The width
+  heuristic in the figure text-fit checker is blind to this; the line-through-text audit catches it, and
+  otherwise watch for it by eye.)
+- **Reach for the format's named shape in general** — `<rect rx>` for a rounded box, `<marker>` for an
+  arrow, a `<pattern>` / `<symbol>` for a repeated motif, a Mermaid edge label for an edge label — before
+  composing one from strokes. The named form is shorter to write, reads correctly to a tool and a screen
+  reader, and holds its behavior when the layout shifts.
+
+A dependency-free starter that audits a directory of SVGs for all of the above — the marker-not-`+x`
+arrowhead, a stitched arrowhead outside a `<marker>`, a stroke through a glyph, and text that overflows
+its box or the canvas — ships beside this doc as [`svg-audit.py`](svg-audit.py): `python3 svg-audit.py
+<dir>`. It is a heuristic (audit-only), but it catches the arrowhead and stroke-through-glyph mistakes a
+width check is blind to.
+
+---
+
 ## Less is more — the simplest form that carries the idea
 
 The drawing leg of the skill's governing stance (SKILL.md, §"The governing stance: less is more"): **a visual

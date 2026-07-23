@@ -1,30 +1,27 @@
-"""SVG text-fit check (AUDIT-ONLY): does a hand-authored figure's text overflow its box or the canvas?
+"""svg-audit.py — GENERIC STARTER (self-communicate / drawing).
 
-Some `book/assets/*.svg` figures render with a label spilling past its `<rect>` box, or past the
-`viewBox` edge — the author has seen both. This check estimates each `<text>`'s rendered width from a
-cheap average-glyph heuristic and flags the two priority cases:
+A dependency-free audit for hand-authored SVG figures, shipped with the skill so you can drop it into
+any project. Two AUDIT-ONLY heuristics:
+  - text-fit: a <text> label estimated to overflow its <rect> box or the viewBox.
+  - drawing hygiene: a <marker orient="auto"> arrowhead NOT in the +x convention (lands off-axis
+    after rotation), a hand-stitched arrowhead outside a <marker>, or a <line> stroke through a
+    <text> glyph box.
 
-  - **box overflow** — a `<text>` that sits inside a `<rect>` whose estimated horizontal extent exceeds
-    the box's inner width (box width minus a small padding); the label likely spills its box.
-  - **canvas overflow** — a `<text>` whose estimated horizontal extent runs past the `viewBox` width;
-    the label likely spills the whole figure.
-
-**This is a HEURISTIC.** Rendered glyph width varies by font, kerning, and the actual glyph mix, so an
-average-ratio estimate (`len(text) * font-size * ~0.55`, `~0.6` bold) WILL produce false positives. So the
-check runs **AUDIT-ONLY**: it reports candidates and returns exit-neutral (never contributes to the suite's
-fail count). A follow-up promotes it to blocking once the ratio and padding are tuned against the real
-corpus. Label-over-arrow overlap is a known gap (precise geometry is hard); box + canvas overflow are the
-priority the author asked for.
-
-When it flags a figure, the report points the reader at the fix runbook so an agent knows where to go.
+Run:  python3 svg-audit.py <dir-of-svgs>   (defaults to ./). Prints candidates; exit 0 always.
+Reusable logic behind diagrams.md ("Use the native construct, not stitched primitives"). Adapt freely.
 """
 from __future__ import annotations
 
 import os
 import re
+import sys
 import xml.etree.ElementTree as ET
 
-from tests.common import PASS, ROOT, rel
+PASS = "PASS"
+_SCAN_DIR = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.getcwd()
+ROOT = _SCAN_DIR
+def rel(p):
+    return os.path.relpath(p, ROOT)
 
 # Where an agent goes when a figure is flagged. Repo-relative; the check echoes it on every finding.
 RUNBOOK = "book/_design/figure-text-fit-runbook.md"
@@ -214,7 +211,7 @@ def check_svg_text_fit():
     AUDIT-ONLY: always returns PASS (exit-neutral). Findings print as guidance, each pointing at the
     runbook. Returns (PASS, issues) — `issues` is the human-readable candidate list.
     """
-    assets_dir = os.path.join(ROOT, "book", "assets")
+    assets_dir = _SCAN_DIR
     if not os.path.isdir(assets_dir):
         return PASS, ["no book/assets/ dir — nothing to scan"]
 
@@ -347,7 +344,7 @@ def check_svg_drawing_hygiene():
         (hand-composed; use a native marker so it can't drift off the line).
       - **stroke through glyph** — a `<line>` whose stroke passes through a `<text>`'s estimated bbox.
     Heuristic; audit-only. Fix guidance -> the drawing style doc."""
-    assets_dir = os.path.join(ROOT, "book", "assets")
+    assets_dir = _SCAN_DIR
     if not os.path.isdir(assets_dir):
         return PASS, ["no book/assets/ dir — nothing to scan"]
 
@@ -453,3 +450,11 @@ def check_svg_drawing_hygiene():
         issues.append("")
         issues.append(f"AUDIT-ONLY (heuristic; false positives expected). Fix guidance -> {DRAWING_DOC}")
     return PASS, issues  # AUDIT-ONLY: never FAIL
+
+
+if __name__ == "__main__":
+    for _fn in (check_svg_text_fit, check_svg_drawing_hygiene):
+        _status, _msgs = _fn()
+        for _m in _msgs:
+            print(_m)
+        print()

@@ -100,30 +100,10 @@ _PART_TITLES = {
 # to-Work opener the working method of that part (candidates a human editor may swap). The
 # Ecclesiastes line that once opened Part 5 now lands only in the conclusion, where it sets up the
 # closing "machines search, not wisdom" — kept to one appearance to avoid the reader meeting it twice.
-_PART_EPIGRAPHS: dict[int, tuple[str, str]] = {
-    1: (
-        "Just as stairs can exclude people who use wheelchairs, inaccessible web content "
-        "and mobile apps can exclude people with disabilities.",
-        "U.S. Department of Justice, Title II Final Rule, 2024",
-    ),
-    2: (
-        "It is a tale told by an idiot, full of sound and fury, signifying nothing.",
-        "William Shakespeare, Macbeth",
-    ),
-    3: (
-        "Govern the conditions under which fast code can be trusted.",
-        "the thesis of this book",
-    ),
-    4: (
-        "All models are wrong, but some are useful.",
-        "George E. P. Box",
-    ),
-    5: (
-        "You do not govern a codebase into existence all at once. You find the worst tangle, "
-        "give it a name, and move to the next.",
-        "the working method of this part",
-    ),
-}
+# The book carries ONE epigraph — the Ecclesiastes verse at the opening of the Conclusion, placed
+# inline there. The per-Part opener epigraphs were removed (author's call); this map stays empty so
+# `_epigraph_html` is a no-op for every Part.
+_PART_EPIGRAPHS: dict[int, tuple[str, str]] = {}
 
 _PART_CHAP_RE = re.compile(r"^(\d+)\.(\d+)-")
 

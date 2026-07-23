@@ -9,6 +9,11 @@ names the established idea and links it, rather than describing the same idea fr
 
 ## How to use this lexicon
 
+This lexicon is the **prose specialization of a general stance** — *name the concept, then use the name*
+([`SKILL.md`](../SKILL.md) §"The second stance") — carried into writing: a named term hands the reader the
+whole concept at once, so reach for it instead of re-describing the idea in fresh words each time. (The
+drawing leg specializes the same stance as *use the native construct, not stitched primitives*.)
+
 The value is **consistency, not correctness** — pick one word for a concept and say it everywhere. Say
 "gating," not "quality checkpoint." Say "strangler fig," not "gradual replacement." A reader who has met the
 term once recognizes it on sight; a reader who hasn't can follow the reference link and learn it. Two rules
