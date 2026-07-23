@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Appendix · Appendix B - 4. Mediator &amp; single-writer contracts</title><style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>About the Author · About the Author</title><style>
 :root { --accent: #1a4a7a; }
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -252,7 +252,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li><a class="" href="6.2-glossary.html">Glossary</a></li>
-<li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
+<li><a class="current" href="6.3-about-the-author.html">About the Author</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
 <li><a class="" href="appendix-a-brief-linting.html">Appendix A - 1. Brief-linting</a></li>
@@ -287,7 +287,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1. The agent-first MBSE harness</a></li>
 <li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B - 2. Agent-orchestration model (developer journeys)</a></li>
 <li><a class="" href="appendix-b-component-zone-model.html">Appendix B - 3. Component &amp; zone model</a></li>
-<li><a class="current" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
 <li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</a></li>
 <li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B - 6. Coverage → model-node mapping (which invariants are actually tested)</a></li>
 <li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B - 7. Deployment &amp; tier topology</a></li>
@@ -336,50 +336,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">⇐ Beginning of this part</a><a href="appendix-c-canonical-walkers.html">Next part ⇒</a><a href="appendix-b-control-substrate-dependency.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix B - 4. Mediator &amp; single-writer contracts"><header class="chap"><div class="kicker"><a href="appendix-b-agent-first-mbse-harness.html" aria-label="Beginning of Appendix B — Models-bridge patterns">Appendix B — Models-bridge patterns</a></div><h1>Appendix B - 4. Mediator &amp; single-writer contracts</h1></header><p><em>The Structure of Mediator &amp; single-writer contracts — its shape at a glance:</em></p>
-<p>Two registries declare the contracts. A coverage lint reads them, scans the code for the contracted call classes, and names any call site that is not wired to its mediator.</p>
-<pre class="mermaid">flowchart LR
-  MR[(Mediator registry)] --&gt; Cov{{Coverage lint}}
-  SW[(Single-writer registry)] --&gt; Cov
-  Code[(Call sites)] --&gt; Cov
-  Cov --&gt;|uncovered call| Finding([build blocked])</pre>
-<p><em>Accessible description: a mediator registry and a single-writer registry both feed a coverage lint, which also scans the code's call sites. When a contracted call class appears at a site not wired to its mediator, the lint reports it and blocks the build.</em></p>
-<p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/concurrency-contracts.html">system-models / Mediator &amp; single-writer contracts</a>.</em></p>
-<p><strong>On this page:</strong> <a href="#concurrency-contracts">Intent</a> · <a href="#el-motivation">Motivation</a> · <a href="#el-applicability">Applicability</a> · <a href="#el-structure">Structure</a> · <a href="#el-sample-code">Sample Code</a> · <a href="#el-consequences">Consequences</a> · <a href="#el-known-uses">Example use within DocAble</a> · <a href="#el-related-patterns">Related Patterns</a></p>
-<h2 id="concurrency-contracts">Intent</h2>
-<p><strong>Intent</strong> — Typed registries of the system's <em>concurrency contracts</em>: which subprocess invocations are serialized by a mediator, and which state-mutation functions are single-writer / monopoly. "Who may run this, and how many at once" becomes declared and enforceable.</p>
-<h2 id="el-motivation">Motivation</h2>
-<p>Concurrent agent worktrees share a host and shared state. Two contract classes keep them from trampling each other: <strong>mediators</strong> (a subprocess like <code>dotnet test</code> must run through the serializer, not raw) and <strong>single-writer contracts</strong> (a state-mutation function must have exactly one writer, no concurrent mutation). Undeclared, both silently break. A raw <code>dotnet test</code> slips the serializer; a second writer corrupts state; and the breakage is a race, discovered late and hard.</p>
-<h2 id="el-applicability">Applicability</h2>
-<ul><li><strong>A mediator registry</strong> (subprocess → serializer, cap, bypass) and a <strong>single-writer registry</strong> (function → monopoly contract).</li><li><strong>Enforcers keyed on the registry</strong> so an unmediated call is refused.</li><li><strong>Coverage lints</strong> so a new subprocess/mutator that should be contracted is flagged.</li></ul>
-<h2 id="el-structure">Structure</h2>
-<p>The Structure diagram appears at the top of this page.</p>
-<h2 id="el-sample-code">Sample Code</h2>
-<p>The registry declares which subprocess each mediator serializes. A coverage lint walks the code for calls to those subprocesses and fails on any that isn't routed through the declared mediator — closing the gap where an enforcer can't guard a call nobody routed to it.</p>
-<pre><code>import ast, sys
-
-# Declared contracts: subprocess name -&gt; the mediator that must wrap it.
-MEDIATED = {"run_tests": "test-serializer", "build_image": "build-semaphore"}
-MEDIATOR_MODULE = "mediators"   # the file allowed to invoke the raw subprocess
-
-def lint(path: str, source: str) -&gt; list[str]:
-    if path.endswith(f"{MEDIATOR_MODULE}.py"):
-        return []               # the mediator is the sanctioned caller
-    findings = []
-    for node in ast.walk(ast.parse(source)):
-        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
-            if node.func.id in MEDIATED:
-                need = MEDIATED[node.func.id]
-                findings.append(f"{path}:{node.lineno}: '{node.func.id}' must route through {need}")
-    return findings
-
-if __name__ == "__main__":
-    hits = [f for p in sys.argv[1:] for f in lint(p, open(p).read())]
-    print("\n".join(hits))
-    sys.exit(1 if hits else 0)</code></pre>
-<h2 id="el-consequences">Consequences</h2>
-<ul><li><strong>New mediated subprocess / new mutator ⇒ a registry entry</strong> or a coverage-lint failure.</li><li><strong>The contract is only as good as the enforcer.</strong> A declared-but-unenforced contract is documentation.</li></ul>
-<h2 id="el-known-uses">Example use within DocAble</h2>
-<ul><li>The <a href="../ABSTRACTIONS.html#mediator-registry">mediator-registry</a>: the dev-mediator (subprocess-serializer) registry for the host's concurrency locks.</li><li>The <a href="../ABSTRACTIONS.html#single-writer-registry">single-writer-registry</a>: single-writer / monopoly contracts.</li><li>The mediator enforcers (<a href="../agent/mediators-and-resource-locks/test-serializer.html">test-serializer</a> et al.).</li></ul>
-<h2 id="el-related-patterns">Related Patterns</h2>
-<ul><li><strong>Bridge</strong> — the agent <a href="../agent/mediators-and-resource-locks/test-serializer.html">mediators &amp; resource locks</a> family <em>enforces</em> these contracts (agent side) ◀──▶ the model <em>declares</em> the concurrency the codebase must honour (product side).</li><li><em>See also</em> — <a href="../models-bridge/system-models/synchronization-model.html">synchronization-model</a>: the OS-lock layer beneath these higher-level contracts.</li><li><strong>Counterpart</strong> — <a href="../models-bridge/system-models/drift-parity-gates.html">drift-parity-gates</a>: the coverage lints keeping the registries complete.</li></ul><div class="pager"><a class="prev" href="appendix-b-component-zone-model.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix B - 3. Component &amp; zone model</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-b-control-substrate-dependency.html"><span class="dir">Next ›</span><span class="ttl">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">⇐ Beginning of this part</a><a href="appendix-c-canonical-walkers.html">Next part ⇒</a><a href="appendix-b-control-substrate-dependency.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', themeVariables: { fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '20px' }, flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 }, sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 }, state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {} });</script></body></html>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="6.0-implications-for-se.html">⇐ Beginning of this part</a><a href="appendix-patterns.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="About the Author · About the Author"><header class="chap"><div class="kicker"><a href="6.0-implications-for-se.html" aria-label="Beginning of Back Matter">Back Matter</a></div><h1>About the Author</h1></header><figure class="book-figure"><img src="assets/author-headshot.jpg" alt="James C. Davis."><figcaption>James C. Davis.</figcaption></figure>
+<p>James C. Davis is an assistant professor in the Elmore Family School of Electrical and Computer Engineering at Purdue University, where he leads a research group in software engineering with applications in systems and cybersecurity. His work appears at venues such as ICSE and IEEE S&amp;P and has been recognized with three ACM SIGSOFT distinguished paper awards; he received the NSF CAREER award in 2026. His lab is supported by the NSF, Google, Rolls-Royce, Cisco, Socket, and OpenAI.</p>
+<p>He came to the professoriate by way of industry. He spent five years as a software engineer at IBM (2012–2015), where he wrote roughly a hundred thousand lines of Perl and C/C++ test infrastructure, trained engineers at international sites, and — a distinction he offers with a straight face — held his team's one-year record for defects <em>opened</em>: the badge of someone whose job was to find the bugs, not to ship them. He earned his PhD from Virginia Tech in 2020. Counting the five years in industry, five in graduate school, and six on the faculty, the methodology in this book rests on sixteen years of software engineering that straddles the GenAI divide — the pre-GenAI half spent writing that same hundred thousand lines by hand, in C/C++, Perl, and Python, and the recent half spent, as these chapters describe, building a production system almost entirely by directing a fleet of coding agents.</p>
+<p>This book is the field report from that build. <a href="https://scholaccess.com">DocAble</a>, the document-accessibility service it describes, is live at scholaccess.com.</p><div class="pager"><a class="prev" href="6.2-glossary.html"><span class="dir">‹ Previous</span><span class="ttl">Glossary</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-patterns.html"><span class="dir">Next ›</span><span class="ttl">Appendix — the pattern language</span></a></div><div class="pager-jump"><div class="jump"><a href="6.0-implications-for-se.html">⇐ Beginning of this part</a><a href="appendix-patterns.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

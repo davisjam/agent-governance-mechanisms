@@ -584,7 +584,7 @@ SITE_FOOTER = (f'<footer class="site-foot">© <a href="https://davisjam.github.i
                f'<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
                f'{GITHUB_SVG} agent-governance-mechanisms</a>'
                f'&nbsp;·&nbsp; <a class="book-foot" href="{{book_prefix}}book/index.html">'
-               f'Read the WIP book draft →</a></footer>')
+               f'Read the book →</a></footer>')
 
 TOPNAV = ('<div class="topnav"><a href="https://davisjam.github.io">James C. Davis, Purdue University</a>'
           '<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
@@ -601,7 +601,7 @@ NAV_GRID = (
     '<a class="ng-cell" href="quick-start.html">'
     '<span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a>'
     '<a class="ng-cell ng-book" href="book/index.html">'
-    '<span class="ng-t">Book</span><span class="ng-s">the WIP book draft</span></a>'
+    '<span class="ng-t">Book</span><span class="ng-s">read the book</span></a>'
     '</nav>')
 
 
