@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): a two-way fork with a distinct icon per arm
+     (a sensor that detects a mistake that already happened vs. a wall that makes the
+     class impossible). Mermaid's flowchart would draw the fork but not the
+     detect-after / forbid-before contrast that is the whole point; the side-by-side
+     "smoke detector vs. firewall" framing wants bespoke placement. Accent #1a4a7a. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440"
+     role="group" aria-labelledby="caTitle caDesc"
+     font-family="'Helvetica Neue', Arial, sans-serif">
+  <title id="caTitle">Two forms a failure-to-mechanism conversion can take: a control or an architecture</title>
+  <desc id="caDesc">A recurring failure, seen twice, is converted into a mechanism, which takes
+    one of two forms. On the left, a control — a sensor: it lets the mistake happen but detects
+    it and surfaces it in time to stop the damage, like a test suite in CI or a smoke detector.
+    On the right, an architecture — a wall: it makes the whole class of mistake impossible by
+    construction, like choosing a typed enumeration over free-form strings so an unlisted value
+    cannot be represented, like a firewall. The control watches for the bug; the wall forbids it.
+    The wall is cheaper to live behind than the sensor is to keep reading.</desc>
+
+  <defs>
+    <marker id="caArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
+    </marker>
+  </defs>
+
+  <!-- source: recurring failure -->
+  <rect x="330" y="30" width="300" height="66" rx="8" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2"/>
+  <text x="480" y="63" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">A recurring failure</text>
+  <text x="480" y="88" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">seen twice — convert it into a mechanism</text>
+
+  <!-- fork edges -->
+  <g fill="none" stroke="#33383d" stroke-width="2" marker-end="url(#caArrow)">
+    <path d="M400,96 C360,128 300,132 250,158"/>
+    <path d="M560,96 C600,128 660,132 710,158"/>
+  </g>
+
+  <!-- ================= LEFT — control / sensor ================= -->
+  <rect x="70" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Control — a sensor</text>
+
+  <!-- sensor icon: a dish detecting a spark -->
+  <circle cx="250" cy="252" r="26" fill="none" stroke="#1a4a7a" stroke-width="2.5"/>
+  <circle cx="250" cy="252" r="6" fill="#1a4a7a"/>
+  <path d="M250,226 A26,26 0 0,1 276,252" fill="none" stroke="#8a2f2f" stroke-width="3"/>
+
+  <text x="250" y="312" text-anchor="middle" font-size="20" fill="#33383d">Lets the mistake happen,</text>
+  <text x="250" y="337" text-anchor="middle" font-size="20" fill="#33383d">detects it before it ships.</text>
+  <text x="250" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">test suite in CI · smoke detector</text>
+
+  <!-- ================= RIGHT — architecture / wall ================= -->
+  <rect x="530" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Architecture — a wall</text>
+
+  <!-- wall icon: brick courses -->
+  <g stroke="#1a4a7a" stroke-width="2" fill="none">
+    <rect x="676" y="230" width="68" height="44"/>
+    <line x1="676" y1="252" x2="744" y2="252"/>
+    <line x1="710" y1="230" x2="710" y2="252"/>
+    <line x1="693" y1="252" x2="693" y2="274"/>
+    <line x1="727" y1="252" x2="727" y2="274"/>
+  </g>
+
+  <text x="710" y="312" text-anchor="middle" font-size="20" fill="#33383d">Makes the whole class</text>
+  <text x="710" y="337" text-anchor="middle" font-size="20" fill="#33383d">of mistake impossible.</text>
+  <text x="710" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">typed enum over strings · firewall</text>
+</svg>
