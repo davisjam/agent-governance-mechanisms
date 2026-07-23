@@ -50,10 +50,10 @@ bridge is how an engineer hands the agent the priors its training never gave it,
 further the system sits from the well-trodden path, the more the model must reason
 through the map instead of through a guess.
 
-## The <!--census:bridge:word-->nineteen<!--/census--> mechanisms — one method, two subjects (a Y)
+## The <!--census:bridge:word-->twenty<!--/census--> mechanisms — one method, two subjects (a Y)
 
 The role is a **Y**: one **method** (the trunk) reified toward the two subjects the bridge couples — the
-**product** it ships and the **orchestration** that builds it. The <!--census:bridge_method:word-->eleven<!--/census--> method-mechanisms are
+**product** it ships and the **orchestration** that builds it. The <!--census:bridge_method:word-->twelve<!--/census--> method-mechanisms are
 subject-agnostic; the <!--census:bridge_models:word-->eight<!--/census--> models split by subject, with three that serve both faces (the *shared spine*).
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:
@@ -86,6 +86,10 @@ subject-agnostic; the <!--census:bridge_models:word-->eight<!--/census--> models
 - [Control↔substrate dependency](system-models/control-substrate-dependency.md) — each control declares the
   substrate assumption it bakes as typed metadata, so a substrate change's static-analysis blast radius is
   a *computed query*, not a grep (read-don't-hardcode turned on the control fleet's own dependency edges).
+- [Symbol-anchored traceability graph](system-models/symbol-anchored-traceability-graph.md) — a typed graph
+  joining each model to its lint, code entry-point, proof, related models, and registry, every edge
+  *derived* (a lint re-resolves its symbol anchor at scan time) so a code move that breaks a join reddens —
+  derived edges defend, snapshotted ones drift.
 
 **Product-facing models** — the method pointed at the shipped artifact:
 
