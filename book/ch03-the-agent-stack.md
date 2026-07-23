@@ -1,0 +1,83 @@
+<!-- part: 2 -->
+<!-- part-title: The Governed Engineering Environment -->
+<!-- chapter: 3 -->
+<!-- chapter-title: The Agent Stack -->
+
+# Chapter 3 · The Agent Stack
+
+If governing an agent means conditioning where it searches, the practical question is:
+*where do you reach in to do it?* The answer is that there is not one place — there are
+four, stacked on top of each other, and each one gives you a different kind of grip.
+Understand the stack and you will see every control in this book as an instance of
+"pick a layer, inject a constraint." This chapter walks the stack from the bottom up.
+
+## The four layers
+
+**At the bottom sits the foundation model.** It comes from a commercial vendor or an
+open-weight release, and it is a general language reasoner that can *induce* an
+understanding of your environment — but that induction is expensive, and it happens
+fresh every time. So the whole game at this layer is to spare the model that cost: tell
+it, up front, where to look. Sometimes you tell it deterministically, with an
+executable program. Sometimes you tell it softly, with written-down pseudocode — the
+algorithm to follow, the playbook for a root-cause analysis. Often it is a hybrid. Every
+time you do, you remove a stretch of reasoning the model would otherwise have to
+reconstruct.
+
+**On top of the model sits the agentic harness** — Claude Code, OpenCode, and their
+kin. The harness takes your prompts, feeds them to the model, and manages the context
+window: the fixed budget of tokens the model can hold. Exceed it and the harness must
+compact, which is a lossy compression of everything that has happened so far. The
+harness is also where two of the most useful control points live.
+
+- **Skills are soft controls.** A skill has trigger criteria and a body of guidance:
+  "about to touch a PDF? enter this skill." Inside, it holds instructions — pure prose
+  ("be careful editing PDFs"), or a mix of prose and code. The code half is a **tool**:
+  a library or command-line entry point that lets the model take a *deterministic*
+  action — add a page, delete a page, rewrite a run of text — instead of guessing.
+- **Hooks are hard controls.** Before or after the harness does something — passing a
+  prompt, dispatching a sub-agent, calling a tool — you can run a deterministic program
+  that inspects the action and, if it likes, *forbids* it. A hook can look at an
+  outbound network call and refuse it; catch an email about to go out with a typo, or
+  with sensitive information in it, and block the send. Run after the fact, the same
+  hook logs what happened. Either way, you have authoritative control over the agent's
+  behavior at the moment it acts.
+
+**Above the harness sits the engineering environment** — the tools and conventions your
+team already uses. Jira holds the tickets. Git holds the code. A named server is where
+you deploy; a named node is the head of your compute cluster. Engineers usually carry
+this in their heads, but it can be written down, and for agents it *must* be, because an
+agent has none of it by default. This layer also holds your processes: the standard
+operating procedures for handling a bug report, running a design review, triaging an
+incident. And it, too, offers a concrete injection point. Git has hooks on every command
+— before and after commit, pull, push. The classic use is a pre-commit hook that runs a
+fast quality check before a change is allowed into the tree, moving feedback as far left
+as it will go. Above that, your CI pipeline is another set of stages where controls
+attach.
+
+**At the top sits your application** — the product code itself, which can carry
+governance of its own: models describing how it is supposed to work, and static analyses
+that check the code against them. A static analysis at this layer is where a whole class
+of mistakes can be made structurally impossible. The companion catalogue's sharpest
+examples live here: a **ban-lint that routes all mutation of a document format through a
+single typed model**, so that no agent can reach the raw library and silently corrupt the
+file. The rule is enforced once, at the seam, and it holds for every agent that ever
+touches that code.
+
+## Every layer is a place to steer
+
+Read the stack as a list of opportunities, because that is what it is. The harness
+noticing it is near its context limit and writing out a reliable summary of state and
+plan — instead of waiting for a lossy compaction — is an opportunity to help the model
+reconstruct less after the window resets. The pre-commit hook is an opportunity to catch
+a defect while everything that produced it is still fresh in the model's window, rather
+than surfacing it from a failed test three compactions later. The CI pipeline turning a
+failure into a message the agent can read is an opportunity to point it back toward the
+fix.
+
+The single goal underneath all of it never changes. At every layer, you are trying to
+prevent the agent from making a bad choice, and to narrow its search toward the choices
+you want. This matters more than it first appears, because the context window is too
+small to hold any serious system — the US tax code, a real web application — all at
+once. Give the model no structure, and it has no choice but to induce that structure as
+it goes, burning most of its window just working out the rules of the road. Every
+control you place on the stack is a rule of the road you handed it for free.

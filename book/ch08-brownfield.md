@@ -1,0 +1,163 @@
+<!-- part: 3 -->
+<!-- part-title: Putting It to Work -->
+<!-- chapter: 8 -->
+<!-- chapter-title: Brownfield -->
+
+# Chapter 8 · Brownfield
+
+Everything so far has assumed a clean start. Greenfield is the easy case: sketch the new
+thing, have an agent vibe-code a first prototype, and work your way down into an
+increasingly governed environment, avoiding the mistakes your last project taught you.
+But most readers are not on a clean start. Most are staring at a legacy codebase —
+started before agents existed, and since made worse by an agent that added a hundred
+thousand lines nobody can read. This chapter is the recipe for getting that codebase from
+spaghetti to a real model-based engineering environment, step by step.
+
+## The starting point and the destination
+
+Name both ends before you move. The starting point is familiar: some spaghetti, thin
+documentation, and invariants that live only in one person's head — the person you hope
+never retires. The destination is specific. You want the models needed to express every
+view of the system that bears on a quality you care about — performance, correctness,
+security, privacy. You want code that reflects those models, so the map equals the
+territory: zoom in on the map and you see county lines, not Switzerland dropped in by
+surprise. And you want **traceability** for your quality case — the ability to make the
+argument automatically. For any property you claim, you should be able to point to the
+code that implements it, the static analysis that enforces it, the protocol you model-check
+it against, the tests that confirm it across the inputs you try, and the record of every
+change and why it was made. That is the output. With it, soft and hard governance can hold
+the whole thing in place and keep it current. There are three ways to get there, and a real
+migration uses all three.
+
+## Approach one: top-down, from a whiteboard
+
+Start coarse and refine. Your first model can be as crude as "on this input, the test
+suite passes and we get the right output" — and you should be able to write that today.
+From there you ask what happens *between* input and output: insert a file, and out comes a
+score, a spreadsheet, whatever your program produces; insert a picture, and out come the
+cats and antelopes it found. Refine until the model captures the abstractions you need,
+and stop when you hit diminishing returns — the territory is the territory, and the map
+only has to be detailed enough to carry the assurance you are after.
+
+You can seed this from a literal whiteboard: photograph the diagram, hand it to the agent,
+and have it produce a data-flow diagram in whatever representation you like. Then iterate
+against the code — "what nodes am I missing, what flows am I missing?" — and tighten the
+policies as the model sharpens: static assertions ("we never call `exec`"), then the
+invariants of each module (its preconditions, its post-conditions), then the properties
+preserved across module interactions. As you do this, every mismatch between model and
+code means one of exactly three things: the model is wrong and needs refining; the model
+is at the wrong level of abstraction for what you are checking, so you need a different
+model; or there is a genuine bug in the code — and the modeling just found it. Expect to
+find many. Shifting a legacy codebase from "the tests pass" to "these properties hold
+across all behaviors" surfaces defects by design. Some you will fix; some you will decide
+are working-as-intended and fix the *model*; some you will scope out by narrowing the
+model's assumed inputs. All three are legitimate moves.
+
+## Approach two: bottom-up, inducing the model from code
+
+The second approach starts from the code and flies upward. Ask the agent to induce the
+model: "look at the codebase and help me develop the model inductively." Where the first
+approach starts from your coarse whiteboard understanding and refines *down* toward the
+code, this one starts on the ground and rises. Picture standing on a street and flying a
+drone up: the individual buildings blur, the street grid appears, then the highways, then
+the cities. As you climb, the levels of abstraction reveal themselves — and whether you
+came top-down or bottom-up, you are trying to meet in the middle, at the level that lets
+you enforce the properties you care about.
+
+Which level that is depends entirely on the assurance you need, and it is worth being
+concrete about the trade. For low assurance, just run the tests — the coarsest model is
+"this input, that output, checked dynamically." For strong guarantees you need a refined
+model and stronger assertions; for the strongest, elaborate analyses over the control-flow
+graph and every function's inputs and outputs — which is expensive both to write and to
+run, because the checker must search every acre of the whole county. So begin by writing
+down what *correct* even means, because correctness is not one thing: it means one thing
+for security, another for semantics, another for privacy, and the definition tells you the
+abstraction level you need. Memory safety demands a fine-grained model that sees every
+access — and you will pay for it. A semantic property is often far cheaper.
+
+Take an audit trail on a spreadsheet: "every modification is stamped." You do not model
+every function to enforce that. You just require that every code path which modifies the
+ledger calls the stamp routine on the way out — a property about the *order* of two calls
+in the control-flow graph, not about what either call does. That is a high level of
+abstraction and therefore cheap to enforce. The companion catalogue ships this exact
+pattern as a product control: a lint that checks every format-mutating routine is wired to
+its provenance stamp, so an unstamped mutation cannot ship. Proving the stamp routine
+*itself* is correct would need a much finer model — but if a human review or a test covers
+that, the coarse model is enough. Choosing the fitness function, then the abstraction that
+enforces it cheaply, is the new job, and it varies by codebase. It is yours to think
+through.
+
+## Approach three: lint, cover, then induce
+
+Both approaches assume you can make sense of the code — and often you cannot, because it is
+a mess. Models read code the way humans do: they like comments that give rationale, names
+that reflect purpose, and shallow nesting, because deep nesting has to be held in working
+memory, and an agent pays for that context just as a human pays in confusion. So before you
+extract models from spaghetti, improve the code — and there is a loop for that, the same
+loop from Chapter 2. Define the inputs, the judgment, the output, and the metric. The
+metric here is a **smell detector**.
+
+A smell is code that works but will break the moment it is touched, because no one can
+reason over it. You measure smells with cheap static analyses — **lints** (the dryer-lint
+kind, the stuff you pull out to make things tidy) — that parse the syntax tree and count
+the tells: a high density of bare `int`s and strings, deeply nested conditionals. Some
+rules are universal. No codebase should have a 2,000-line function, a module imported by
+every other file, a switch with 400 string cases, structs nested three anonymous levels
+deep, or functions returning unnamed many-element tuples. So run the lints, and have the
+agent fix them in a behavior-preserving way — which means you need tests. If you have none,
+start there: have the agent write tests for line or branch coverage, module by module,
+because coverage is what lets you refactor safely, using the tests and the lints together
+as your success metric.
+
+Then comes the move that makes it stick: **as each lint reaches zero, make it blocking.**
+Now the success metric is "all tests pass *and* that lint still passes" — no more unnamed
+tuples, no more imports buried mid-function, ever again. The companion repository does this
+deliberately and in a specific order, because turning a lint blocking while it still has
+findings would break every agent's commit at once: a new lint lands in an audit-only mode
+first, a wave of fixes drains it to zero, and only then is it promoted to blocking. Squash,
+zero, promote — and the smells that leave never return. When you are done, you have
+cleaned-up spaghetti with enough shape that model induction has something to grip:
+introduced classes and enums and named structs give the induction real structure to reason
+over, the structure that spaghetti hid. The catalogue's coverage-to-model mapping closes
+the loop from the other side — it projects your test coverage onto the model's nodes, so an
+untested invariant shows up as a visible gap rather than hiding inside a line-coverage
+percentage.
+
+You will need all three approaches in combination. It is not magic; it is hard work and
+judgment. But applied together, and scaled to the quality of your starting point, they land
+you at the destination: the right models, encoding the right views, with the right
+correctness criteria, traceable to where each is enforced — statically, dynamically, or by a
+model check.
+
+[FILL IN: one measured before/after from a real migration — a defect count, a velocity
+number, or the lint-burndown curve as each lint went blocking. The chapter argues the case
+well; a single number makes a skeptical reader believe it.]
+
+[FILL IN: a decision rule for *how much* governance is enough. The trade is named
+("it depends") but the reader needs a heuristic tied to the assurance level they are
+targeting — including when to stop, so they do not build the teetering tower Chapter 9
+warns against.]
+
+## How I know this
+
+I know this because I lived it. I vibe-coded a couple hundred thousand lines of production
+code, and it worked — but I had imposed real control only on the parts I knew were
+sensitive, where I pushed hard for a strong architecture. The rest — the web layer, the
+front end — I hoped the agent would just get right. It did not, and those parts turned
+crufty. I told it to use Python; it did, without types. I told it to retrofit types; it
+turned on the type checker and made everything strings and ints, without building the type
+abstractions I actually wanted. The same thing happened porting JavaScript to TypeScript
+that same week — a hundred thousand lines of "typed" Python and a hundred and fifty thousand
+of TypeScript, each ported the cheapest way possible, because the agent had no model and did
+not know the names of things. It is probably better that it did not guess.
+
+So I retrofitted the models onto the mess — moving the code toward a clean model-view-
+controller architecture, moving the web stack to reactive, loop-based structures friendly
+to auto-scaling. And I did it exactly the way this chapter describes. I turned on every lint
+from Ruff, Pylint, and ESLint — hundreds of commodity smell checks — and for several weeks I
+burned through four Claude Max subscriptions squashing them, making each one blocking as it
+went to zero so it could never come back. I knew the coarse architecture I wanted and said
+"pursue this model," but I had to get there iteratively: find the dense primitive regions,
+induce structure there, and inch toward the target. After a while, it worked. Now I have the
+models, the architecture, the code that implements it, and enforcement holding all three
+together every time the code changes.

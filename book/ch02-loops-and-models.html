@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 2 · Loops and Models</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc summary::before { content: "☰  Contents"; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
+.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
+            border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+<li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
+<li><a class="current" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
+<li class="part">Part 2 — The Governed Engineering Environment</li>
+<li><a class="" href="ch03-the-agent-stack.html">Ch 3 · The Agent Stack</a></li>
+<li><a class="" href="ch04-models-and-the-semantic-gap.html">Ch 4 · Models and the Semantic Gap</a></li>
+<li><a class="" href="ch05-the-governed-environment.html">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="ch06-the-model-zoo.html">Ch 6 · The Model Zoo</a></li>
+<li><a class="" href="ch07-lifecycles-and-runbooks.html">Ch 7 · Lifecycles and Runbooks</a></li>
+<li class="part">Part 3 — Putting It to Work</li>
+<li><a class="" href="ch08-brownfield.html">Ch 8 · Brownfield</a></li>
+<li><a class="" href="ch09-the-skills.html">Ch 9 · The Skills</a></li>
+<li><a class="" href="ch10-transformations.html">Ch 10 · Everything Is a Transformation</a></li>
+<li><a class="" href="ch11-training-data.html">Ch 11 · Training Data and the Novelty Axis</a></li>
+<li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 1 · The Mindset &nbsp;::&nbsp; Chapter 2</div><h1>Loops and Models</h1></header><p>Two ideas carry the rest of this book, and everything else is a consequence of them. The first is that all agent work is a <em>loop</em>. The second is that an agent steers that loop well only when you hand it a <em>model</em> of the world it is working in. Get these two right and the agent finds your answer fast; get them wrong and it wanders. Let me take them in turn.</p>
+<h2>Everything is a loop</h2>
+<p>An agent does not run in a straight line — it runs in a loop, and the loop has a fixed shape. It takes an input: the current problem, plus some notion of what success looks like. It reasons, and it acts in its operating environment. It produces a result. And that result folds back into the input for the next turn. Input, reasoning, output, fed around again. I call the practice of shaping that loop <strong>loop engineering</strong>, and nearly everything in this book is an instance of it.</p>
+<p>Engineering a loop well starts with the metric, because the metric is what the agent steers by. The agent does not magically know your goals or your environment. You have to make its progress <em>measurable</em> — deterministically, through a quantitative check, or through a rubric that scores a qualitative result. Skip this, and you have told the agent nothing about what "done" means, so it searches, and searches, and searches, and never knows when to stop.</p>
+<p>The orchestration layer of this book's companion repository is itself a worked example of a loop engineered this way. The catalogue models the orchestrator — the process that dispatches agents, waits for them to land work, and cleans up after them — as an explicit reactive loop with a typed lifecycle: <em>dispatch → work → land → tombstone</em>, then refill and go again. The loop is not left implicit in the code; it is written down as a model the agent can read, which is exactly the second idea.</p>
+<h2>Give it a model of the world</h2>
+<p>The second piece is the input the agent reasons <em>over</em>. You have to give it a sense of the environment: when it pulls this lever, what happens, and what is it even allowed to do? That sense of the world is itself an input, and when you supply it, the agent knows what kind of reasoning the situation calls for.</p>
+<p>It is worth being blunt about why this works, because it is easy to feel like you are writing documentation into a void. A foundation model is, very loosely, a probabilistic reasoning machine. <em>Probabilistic</em> means it does not always do exactly what you want. <em>Reasoning machine</em> means it genuinely reasons — the interpretability work probing world-models inside these networks settled that question — so writing the model down is not wasted breath. It reads it, and it reasons over it.</p>
+<p>The most useful way to hold this is as a search. The agent is searching an enormous space: every place the answer might live, every configuration it might try, every function that might implement what you asked. That space is far too large to sweep. So when you structure the loop and hand over a model, what you are really doing is <strong>conditioning the probability distribution of the agent's behavior</strong> — biasing it to search where the answer actually is. Done well, this can take the agent from failing your task to completing it. And when it was already completing the task, it now does so in fewer tokens and less time, so you get back to the interesting parts of your job.</p>
+<aside class="marker marker-fill"><span class="marker-tag">FILL IN</span> the metaphor seam. A real 3D printer is deterministic; this one is
+probabilistic. Say so explicitly, once — it is <em>because</em> the agent is a probabilistic
+search that we condition it rather than merely instruct it. Naming the tension keeps a
+sharp reader from feeling the metaphor and the thesis pull apart.</aside><div class="pager"><a class="prev" href="ch01-the-printer.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 1 · The Printer</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch03-the-agent-stack.html"><span class="dir">Next ›</span><span class="ttl">Ch 3 · The Agent Stack</span></a></div></div></body></html>

@@ -50,6 +50,29 @@
   .fam-lede { font-size:13px; color:var(--muted); font-style:italic; margin:2px 0 6px; }
   .foot { font-size: 12.5px; color: var(--muted); border-top:1px solid var(--line); padding-top:14px; margin-top: 34px; }
 
+  .nav-grid { position:absolute; top:16px; right:20px; display:grid; grid-template-columns:1fr 1fr;
+              gap:9px; width:min(340px,52vw); z-index:5; }
+  .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:2px;
+              border:1.6px solid #cbd5e1; border-radius:10px; padding:9px 12px; background:#fff;
+              text-decoration:none; color:var(--ink); min-height:52px; transition:box-shadow .12s, border-color .12s, background .12s; }
+  .nav-grid .ng-cell:hover { border-color:var(--accent); box-shadow:0 3px 12px rgba(0,0,0,.10); background:#fffaf3; }
+  .nav-grid .ng-t { font-size:15px; font-weight:700; color:var(--link); letter-spacing:-.01em; }
+  .nav-grid .ng-t svg { fill:currentColor; }
+  .nav-grid .ng-s { font-size:11px; color:var(--muted); line-height:1.25; }
+  .nav-grid .ng-book { border-color:var(--accent); background:#fff8f0; }
+  .nav-grid .ng-book .ng-t { color:var(--accent); }
+  @media (max-width:820px){ .nav-grid { position:static; width:100%; margin:0 0 14px; } }
+  .wip-book-banner { display:flex; flex-wrap:wrap; align-items:center; gap:12px; text-decoration:none;
+              margin:6px 0 22px; padding:12px 16px; border:1.6px solid var(--accent); border-radius:11px;
+              background:linear-gradient(90deg,#fff8f0,#fffdfb); color:var(--ink);
+              transition:box-shadow .12s, background .12s; }
+  .wip-book-banner:hover { box-shadow:0 3px 14px rgba(180,83,9,.16); background:#fff5e9; }
+  .wip-book-banner .wbb-tag { flex:0 0 auto; font-size:11px; font-weight:800; letter-spacing:.06em;
+              color:#fff; background:var(--accent); padding:3px 9px; border-radius:20px; }
+  .wip-book-banner .wbb-txt { flex:1 1 320px; font-size:14px; color:#333; line-height:1.45; }
+  .wip-book-banner .wbb-txt b { color:var(--ink); }
+  .wip-book-banner .wbb-go { flex:0 0 auto; font-size:13.5px; font-weight:700; color:var(--accent); white-space:nowrap; }
+  .site-foot .book-foot { white-space:nowrap; font-weight:600; }
   .loop { border:1px solid var(--line); border-radius:11px; padding:16px 17px 15px; margin:4px 0 20px; background:#fbfcfd; }
   .loop .hd { margin:0 0 12px; font-size:14px; color:#222; }
   .flow { display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; }
@@ -127,7 +150,8 @@
 </head>
 <body>
 <main>
-<div class="topnav"><a href="https://davisjam.github.io">James C. Davis, Purdue University</a><a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> GitHub</a></div>
+<nav class="nav-grid" aria-label="Primary"><a class="ng-cell" href="https://davisjam.github.io"><span class="ng-t">Author</span><span class="ng-s">James C. Davis · Purdue</span></a><a class="ng-cell" href="https://github.com/davisjam/agent-governance-mechanisms"><span class="ng-t"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> GitHub</span><span class="ng-s">the source repository</span></a><a class="ng-cell" href="quick-start.html"><span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a><a class="ng-cell ng-book" href="book/index.html"><span class="ng-t">Book</span><span class="ng-s">the WIP book draft</span></a></nav>
+<a class="wip-book-banner" href="book/index.html"><span class="wbb-tag">NEW · DRAFT</span><span class="wbb-txt">Read the work-in-progress book — <em>draft, with placeholders</em>: <b>3D Printing Production Software</b>, the method behind this catalogue.</span><span class="wbb-go">Open the book →</span></a>
   <div class="tag">Governance-centric agentic software engineering</div>
   <h1>Agent Governance Mechanisms</h1>
 
@@ -436,7 +460,7 @@
 <tr><td class="c-name"><a href="product/repair-vocabulary/codemod-first.html">Codemod-first threshold (N≳50 → AST transformer)</a></td><td class="c-sum">For 50+ deterministic sites, write one AST transformer.</td><td class="c-enf">Soft</td></tr>
 </tbody></table>
 </section>
-<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a></footer>
+<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the WIP book draft →</a></footer>
 </main>
 </body>
 </html>

@@ -1,0 +1,52 @@
+<!-- part: 1 -->
+<!-- part-title: The Mindset -->
+<!-- chapter: 1 -->
+<!-- chapter-title: The Printer -->
+
+# Chapter 1 · The Printer
+
+A 3D printer will build almost anything you can imagine — a replacement gear, a
+prosthetic hand, a scale model of a building — out of nothing but spooled filament.
+Its only hard limits are the material and your own creativity. That machine is the
+metaphor that drives this entire book, because building software with a coding agent
+is far more like running a 3D printer than most people expect. And the difference
+between the two is the difference between blaming the tool and blaming yourself.
+
+## A picture is not enough
+
+Everyone can sketch a piece of software. We have all used Google Maps, spreadsheets,
+a document editor — programs that take in data and do something useful with it. The
+concept is easy to picture. But a picture is not a thing you can print.
+
+Hand a 3D printer a photograph of the object you want and nothing comes out. The
+printer needs instructions: a CAD model that shows not just the outer shape but the
+internal structure — how the pieces fit, where the load is carried — and then a set
+of print notes on top of that. You slice the model into layers, and you think about
+how those layers compose as the machine lays them down. Different materials have
+different minimum thicknesses, different strengths, different joints that hold and
+joints that fail. There are a hundred ways to misprint a part that looked fine as a
+picture.
+
+Software agents are the same. You cannot hand an agent only the picture of what you
+want. You must also give it — or work out how to give it — the detailed instructions
+for how to build it. Good instructions, and it works beautifully. Bad instructions,
+and you have not got a hope.
+
+## Whose fault is it?
+
+Here is the shift in posture the whole book turns on. When you use a stapler and the
+staple jams, that is the stapler's fault, not yours. A stapler is supposed to just
+work. But an agent is not a stapler — it is a printer, and a printer only ever builds
+what its instructions describe. So when the agent produces the wrong thing, the first
+suspect is not the model. It is the instructions.
+
+In my own experience, every single time an agent has failed to produce what I wanted,
+it turned out to be my fault. The state-of-the-art models can build essentially
+anything we can envision in software, as far as I can tell — *so long as you can
+explain it to them*. That "so long as" is the entire job, and it is a real engineering
+discipline, not a knack. This book teaches it.
+
+[FILL IN: introduce the single running example we will build across the whole book — a
+real product, or the "CodePrinter" sandbox — so the reader watches one system get
+printed correctly, chapter by chapter, from this sketch through model, control,
+architecture, and migration. Every later chapter should return to it.]

@@ -1,0 +1,63 @@
+<!-- part: 3 -->
+<!-- part-title: Putting It to Work -->
+<!-- chapter: 10 -->
+<!-- chapter-title: Everything Is a Transformation -->
+
+# Chapter 10 · Everything Is a Transformation
+
+There is one more habit of mind that makes all of this click, and it comes from the shape of
+the machine underneath. A large language model is a transformer, and it is extraordinarily
+good at one thing: turning an input into an output. So the most useful way to frame any task
+you hand it is as a series of transformations — and the skill in using an agent is sizing each
+transformation to the model and to the guarantee you need. This chapter is about that sizing,
+and about how the three skills are all built from it.
+
+## Size the leap to the model and the guarantee
+
+Give a model an input and either examples of a transformation or a precise description of it,
+and it will apply that transformation to something new — as long as the new thing is close
+enough to the examples, or the rule is precise enough. The stronger the model, the bigger the
+*leap* it can make reliably. A strong model turns abstract instructions into working code; a
+weak one turns the same instructions into a dumpster fire, or nothing that compiles. So you
+tune two things together: the level of abstraction you speak at, and the size of the leap you
+ask for — against the model's strength and against how much guarantee you want.
+
+The trade has a sweet spot, and you can feel for it by counting reasoning steps. Want high
+guarantees? Ask for smaller leaps, and check the result of each one as it lands. Want speed?
+There is a middle: demand tiny changes and you pay in many steps and many tokens; demand a huge
+leap and you pay in the long reasoning it takes to make it. The right size is big enough to use
+the model's full power, but not so big it needs an exhausting chain of thought. And there is a
+hard reason not to let the chain run long: probabilities compound. A one-percent chance of going
+wrong per step is nothing over two steps and almost a certainty over a hundred. Size the
+transformation to the task's complexity and the model's scale, and you keep the failure
+probability where you can live with it.
+
+## The skills are transformations all the way down
+
+Once you see everything as a sized transformation, the three skills reveal a common skeleton.
+Each holds a set of models the agent reasons over, and each names the steps — the transformations
+— that carry an input to an output. What you supply, in your own context, is the breakdown: the
+playbooks and runbooks for the steps your work actually takes.
+
+- **Self-communicate** stacks its transformations on the model's language weights, then layers
+  the rhetorical figures (the "not X, but Y" among many others), then the writing genre from
+  Diátaxis, then the lexicon for this context — and leaves the top layer to you: who is the
+  audience, and what do they know? The skill cannot know that; you tell it.
+- **Self-operate** puts the lifecycle models at the base, maps an incoming event to the kind of
+  activity it is (development, bug fix, resource management, deploy), and then transforms forward:
+  event to defect characterization or design document, design to steps, steps to distinct agent
+  launches with their briefs. Each arrow is one transformation of input to output toward a goal.
+- **Self-governance** holds a model of governance itself — architecture versus controls, the
+  properties that should hold of any codebase (don't-repeat-yourself among them), the kinds of
+  control (static analysis, dynamic tests), the invariants you write over models, the languages
+  you write them in, the checkers that validate them. Each catalogue entry is itself a
+  transformation: from the *symptom* — the recurring failure you are living with — to the
+  *mechanism* that ends it.
+
+That last point is the through-line of the whole book, so it is worth stating plainly: each skill
+takes a general reasoning task and breaks it into a series of transformations over inputs into
+outputs, with steps the model can follow. This is not a coincidence of design — it is the shape of
+working with a transformer at all. It is why the companion catalogue can be *read* like a lookup
+table: you arrive with a symptom and leave with the mechanism, because the entry is the
+transformation between them. Work with agents through this lens — every task a sized sequence of
+input-to-output steps — and you will find yourself a much happier engineer.

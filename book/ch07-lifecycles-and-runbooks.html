@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 7 · Lifecycles and Runbooks</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc summary::before { content: "☰  Contents"; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
+.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
+            border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+<li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
+<li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
+<li class="part">Part 2 — The Governed Engineering Environment</li>
+<li><a class="" href="ch03-the-agent-stack.html">Ch 3 · The Agent Stack</a></li>
+<li><a class="" href="ch04-models-and-the-semantic-gap.html">Ch 4 · Models and the Semantic Gap</a></li>
+<li><a class="" href="ch05-the-governed-environment.html">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="ch06-the-model-zoo.html">Ch 6 · The Model Zoo</a></li>
+<li><a class="current" href="ch07-lifecycles-and-runbooks.html">Ch 7 · Lifecycles and Runbooks</a></li>
+<li class="part">Part 3 — Putting It to Work</li>
+<li><a class="" href="ch08-brownfield.html">Ch 8 · Brownfield</a></li>
+<li><a class="" href="ch09-the-skills.html">Ch 9 · The Skills</a></li>
+<li><a class="" href="ch10-transformations.html">Ch 10 · Everything Is a Transformation</a></li>
+<li><a class="" href="ch11-training-data.html">Ch 11 · Training Data and the Novelty Axis</a></li>
+<li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 2 · The Governed Engineering Environment &nbsp;::&nbsp; Chapter 7</div><h1>Lifecycles and Runbooks</h1></header><p>You know what to do when the disk fills up, when two branches conflict, when an incident pages you at 2 a.m. You know it so well you barely notice you know it. The agent knows none of it. It has no operating context and no sense of "how we do things around here," and so a governed environment for real work has to write that knowledge down — as lifecycles and as the runbooks that ride on top of them. This chapter is about capturing the operational judgment you carry in your head so an agent can act on it.</p>
+<h2>Lifecycles first, then the failure map</h2>
+<p>Start with the lifecycles, because everything else hangs off them. A lifecycle is the correct operation of one recurring activity: how a bug report moves from filed to fixed, how a feature moves from design to shipped. Write the healthy path first. Then, from each node on that path, map the failure states — the ways this step can go wrong — and for each failure, the action to take. Think of it as a grid: every node crossed with every symptom, and in each cell, what to do.</p>
+<p>The formal name for building that grid is <strong>failure mode and effects analysis</strong>. You enumerate what can go wrong, then the consequence of each, and then — the part people skip — how to get <em>out</em> of it again. You know how to get out. If two branches conflict, you read both sides, work out what each was trying to accomplish, and reconcile them. If the disk fills, you find the fat part of the system — the cache, usually — and wipe it. The agent knows none of this. It does not know where to find each commit's intent during a merge conflict, and it does not know where your system's fat points are — and it may, just maybe, decide the fix for a full disk is `rm -rf /`. You think I am joking. Read Twitter; agents do it all the time. So you coach it: where the hot points are, and, in every failure path, what is <em>not allowed</em>. Encode the prohibition as a control at the right level where you can — a Git hook, an agent hook — and where you cannot, at least tell the agent plainly.</p>
+<blockquote><em>A footnote on the pink elephant.</em> Telling an agent not to do something raises an honest question: does naming the forbidden act make it more likely? A human cannot help picturing a pink elephant once told not to — though without the telling, the thought would never have come. The apostle Paul said the law taught him what sin was, and that without the law he would not have known. It is genuinely useful to name the sin. It is also true you may never have considered an act until someone forbade it. Worth holding in mind; then back to the SOPs.</blockquote>
+<h2>Runbooks: split the deterministic from the judgment</h2>
+<p>Once the healthy path and the failure map are written, the thing you hand the agent is a <strong>runbook</strong> (or playbook): the steps to take, whether recovering from a failure or working a fresh ticket. The one discipline that makes a runbook work is to split it into two kinds of step, because they are governed completely differently.</p>
+<p><strong>The deterministic parts get tools.</strong> Anything that has a single correct outcome should be an executable script the agent runs, not a procedure it improvises. Leave it to improvisation and it will get it right most of the time — and you will wish you had automated it the one time it does not.</p>
+<p><strong>The judgment parts get the roughest algorithm that still fits.</strong> For a well-constrained decision, write the algorithm down and let the agent do the glue. For an open-ended one — a cyber threat hunt, where the whole point is that the attacker did something you never anticipated — do not over-constrain: give heuristics and strategies to explore, and stop there. Remember you are conditioning a probability distribution; steer it down the wrong path and it will never reach the place you wanted. So if you do not know how to do it, do not write confidently — give hints. If you truly do not know, say "solve this open-endedly," and accept that the looser the guidance, the more tokens it spends and the less likely it is to land.</p>
+<p>When a judgment step is really a <em>measurement</em>, give it a <strong>rubric</strong>. You cannot write a checker for "is this painting good" or "is this student essay good," but you can operationalize it: how are the topic sentences, how is the technique, are there grammatical errors, are there blotches from bad storage? The agent will not deliver a final verdict on taste, but with a rubric it gives feedback good enough to act on.</p>
+<p>The strongest form of this is the <strong>pre-canned brief</strong>. When an orchestrator agent has to hand work to a sub-agent, you do not want it inventing, each time, how to explain the task. You want a template it adapts — the work already articulated in writing. The companion repository leans on exactly this: every dispatch is composed from a template that pre-places the required instructions, and a brief-linter checks the template is intact before the agent launches. Templates constrain how work is described to agents, which is the whole business of this book, applied to the act of delegation itself.</p><div class="pager"><a class="prev" href="ch06-the-model-zoo.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 6 · The Model Zoo</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch08-brownfield.html"><span class="dir">Next ›</span><span class="ttl">Ch 8 · Brownfield</span></a></div></div></body></html>

@@ -548,11 +548,35 @@ GITHUB_SVG = ('<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true
 SITE_FOOTER = (f'<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, '
                f'Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; '
                f'<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
-               f'{GITHUB_SVG} agent-governance-mechanisms</a></footer>')
+               f'{GITHUB_SVG} agent-governance-mechanisms</a>'
+               f'&nbsp;·&nbsp; <a class="book-foot" href="{{book_prefix}}book/index.html">'
+               f'Read the WIP book draft →</a></footer>')
 
 TOPNAV = ('<div class="topnav"><a href="https://davisjam.github.io">James C. Davis, Purdue University</a>'
           '<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
           f'{GITHUB_SVG} GitHub</a></div>')
+
+# Landing top-right 2×2 nav grid — bigger, higher-contrast tap targets than the old topnav link pair.
+# Layout:  Author | GitHub  /  Quick Start | Book.
+NAV_GRID = (
+    '<nav class="nav-grid" aria-label="Primary">'
+    '<a class="ng-cell" href="https://davisjam.github.io">'
+    '<span class="ng-t">Author</span><span class="ng-s">James C. Davis · Purdue</span></a>'
+    '<a class="ng-cell" href="https://github.com/davisjam/agent-governance-mechanisms">'
+    f'<span class="ng-t">{GITHUB_SVG} GitHub</span><span class="ng-s">the source repository</span></a>'
+    '<a class="ng-cell" href="quick-start.html">'
+    '<span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a>'
+    '<a class="ng-cell ng-book" href="book/index.html">'
+    '<span class="ng-t">Book</span><span class="ng-s">the WIP book draft</span></a>'
+    '</nav>')
+
+# Top-of-site work-in-progress book banner (prominent, explicitly a DRAFT).
+BOOK_BANNER = (
+    '<a class="wip-book-banner" href="book/index.html">'
+    '<span class="wbb-tag">NEW · DRAFT</span>'
+    '<span class="wbb-txt">Read the work-in-progress book — <em>draft, with placeholders</em>: '
+    '<b>3D Printing Production Software</b>, the method behind this catalogue.</span>'
+    '<span class="wbb-go">Open the book →</span></a>')
 
 FONT_CSS = ('  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }\n'
             '  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }\n'
@@ -747,13 +771,19 @@ def render_md(md: str) -> str:
     return "\n".join(out)
 
 
-def _page(title: str, crumb: str, body: str, subtitle: str = "", rel: str = "") -> str:
+def _site_footer(rel_root: str = "") -> str:
+    """The shared page footer with a book link, its `book/index.html` href resolved for the page's depth
+    (rel_root is the `../`-string from the page back to the catalogue root)."""
+    return SITE_FOOTER.replace("{book_prefix}", rel_root)
+
+
+def _page(title: str, crumb: str, body: str, subtitle: str = "", rel_root: str = "") -> str:
     sub = f'<p class="subtitle">{_inline(subtitle)}</p>\n' if subtitle else ""
     return (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
             f'<meta charset="utf-8" />\n'
             f'<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
             f"<title>{_attr(title)}</title>\n{FONTS_LINK}\n<style>{PAGE_CSS}{FONT_CSS}</style>\n</head>\n<body>\n"
-            f"<main>\n{crumb}\n{sub}{body}\n{SITE_FOOTER}\n</main>\n</body>\n</html>\n")
+            f"<main>\n{crumb}\n{sub}{body}\n{_site_footer(rel_root)}\n</main>\n</body>\n</html>\n")
 
 
 def _crumb(rel_root: str, trail: list[tuple[str, str]]) -> str:
@@ -842,6 +872,29 @@ def build_census(entries: list[Entry]) -> str:
 
 
 LANDING_CSS = """
+  .nav-grid { position:absolute; top:16px; right:20px; display:grid; grid-template-columns:1fr 1fr;
+              gap:9px; width:min(340px,52vw); z-index:5; }
+  .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:2px;
+              border:1.6px solid #cbd5e1; border-radius:10px; padding:9px 12px; background:#fff;
+              text-decoration:none; color:var(--ink); min-height:52px; transition:box-shadow .12s, border-color .12s, background .12s; }
+  .nav-grid .ng-cell:hover { border-color:var(--accent); box-shadow:0 3px 12px rgba(0,0,0,.10); background:#fffaf3; }
+  .nav-grid .ng-t { font-size:15px; font-weight:700; color:var(--link); letter-spacing:-.01em; }
+  .nav-grid .ng-t svg { fill:currentColor; }
+  .nav-grid .ng-s { font-size:11px; color:var(--muted); line-height:1.25; }
+  .nav-grid .ng-book { border-color:var(--accent); background:#fff8f0; }
+  .nav-grid .ng-book .ng-t { color:var(--accent); }
+  @media (max-width:820px){ .nav-grid { position:static; width:100%; margin:0 0 14px; } }
+  .wip-book-banner { display:flex; flex-wrap:wrap; align-items:center; gap:12px; text-decoration:none;
+              margin:6px 0 22px; padding:12px 16px; border:1.6px solid var(--accent); border-radius:11px;
+              background:linear-gradient(90deg,#fff8f0,#fffdfb); color:var(--ink);
+              transition:box-shadow .12s, background .12s; }
+  .wip-book-banner:hover { box-shadow:0 3px 14px rgba(180,83,9,.16); background:#fff5e9; }
+  .wip-book-banner .wbb-tag { flex:0 0 auto; font-size:11px; font-weight:800; letter-spacing:.06em;
+              color:#fff; background:var(--accent); padding:3px 9px; border-radius:20px; }
+  .wip-book-banner .wbb-txt { flex:1 1 320px; font-size:14px; color:#333; line-height:1.45; }
+  .wip-book-banner .wbb-txt b { color:var(--ink); }
+  .wip-book-banner .wbb-go { flex:0 0 auto; font-size:13.5px; font-weight:700; color:var(--accent); white-space:nowrap; }
+  .site-foot .book-foot { white-space:nowrap; font-weight:600; }
   .loop { border:1px solid var(--line); border-radius:11px; padding:16px 17px 15px; margin:4px 0 20px; background:#fbfcfd; }
   .loop .hd { margin:0 0 12px; font-size:14px; color:#222; }
   .flow { display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; }
@@ -1298,7 +1351,7 @@ def build_views_page(entries: list[Entry]) -> str:
             '&nbsp;·&nbsp; <a href="index.html">catalogue</a></p>\n'
             '<div id="tabs"></div>\n<div id="stage"></div>\n')
     script = "<script>\nconst CARDS = " + json.dumps(cards, ensure_ascii=False) + ";\n" + VIEWS_JS + "</script>\n"
-    return head + "<main>\n" + body + script + SITE_FOOTER + "\n</main>\n</body>\n</html>\n"
+    return head + "<main>\n" + body + script + _site_footer("") + "\n</main>\n</body>\n</html>\n"
 
 
 def build_abstractions_body(md: str, abbrs: dict) -> str:
@@ -1633,13 +1686,13 @@ def cmd_build(_args) -> int:
         title = (re.search(r"^# (.+)$", md, re.M) or [None, rel])[1]
         if rel == ABBR_SRC:  # the glossary — id-anchored sections so `#slug` targets resolve
             body = build_abstractions_body(md, _ABBR_MAP)
-            html = _page(title, _crumb(rel_root, [(title, "")]), body)
+            html = _page(title, _crumb(rel_root, [(title, "")]), body, rel_root=rel_root)
         elif e:  # a control entry
             seg0 = rel.split(os.sep)[0]
             trail = [(ROLE_DISPLAY.get(seg0, e.role or ""), f"{rel_root}{seg0}/README.html"),
                      (e.family or "", ""), (e.title_only(), "")]  # family has no page → plain text
             body = render_md(md)
-            html = _page(e.title_only(), _crumb(rel_root, trail), body, subtitle=e.summary)
+            html = _page(e.title_only(), _crumb(rel_root, trail), body, subtitle=e.summary, rel_root=rel_root)
         else:  # README / INDEX
             trail = []
             if depth >= 1:
@@ -1648,19 +1701,19 @@ def cmd_build(_args) -> int:
             if os.path.basename(rel) != "README.md" or depth == 0:
                 trail.append((title, ""))
             body = render_md(md)
-            html = _page(title, _crumb(rel_root, trail), body)
+            html = _page(title, _crumb(rel_root, trail), body, rel_root=rel_root)
         out_path = f[:-3] + ".html"
         open(out_path, "w", encoding="utf-8").write(html)
         written += 1
     # landing index.html = intro + census (overwrites the hand-authored placeholder)
-    landing_body = TOPNAV + "\n" + LANDING_INTRO.format(
+    landing_body = NAV_GRID + "\n" + BOOK_BANNER + "\n" + LANDING_INTRO.format(
         n=len(entries), flow=_landing_flow(), cards=_landing_cards(),
         schools=_landing_schools(), ways=_landing_ways()) + "\n" + build_census(entries)
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
                f"<title>Agent Governance Mechanisms</title>\n{FONTS_LINK}\n"
                f"<style>{PAGE_CSS}{LANDING_CSS}{FONT_CSS}</style>\n</head>\n"
-               f"<body>\n<main>\n{landing_body}\n{SITE_FOOTER}\n</main>\n</body>\n</html>\n")
+               f"<body>\n<main>\n{landing_body}\n{_site_footer('')}\n</main>\n</body>\n</html>\n")
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
     print(f"built {written} entry/index pages + landing index.html + catalogue-views.html "
@@ -1671,6 +1724,17 @@ def cmd_build(_args) -> int:
     rc = subprocess.run([sys.executable, os.path.join(ROOT, "bundle_skill.py")], cwd=ROOT).returncode
     if rc != 0:
         print(f"WARNING: skill bundle regeneration failed (rc={rc}) — plugin/ may be stale", file=sys.stderr)
+    # Build the WIP book HTML as part of the same pipeline (so `deploy github` publishes it too). Its
+    # standalone renderer generates the chapters + a GoF-format appendix projected from the catalogue
+    # entries. Subprocess keeps `catalog.py` stdlib-only and avoids importing the book builder. The book
+    # pages are subject to the reachability gate below — the landing links the book index; the book's own
+    # pages link each other — so the book must build BEFORE the gate runs.
+    book_builder = os.path.join(ROOT, "book", "build_book_html.py")
+    if os.path.isfile(book_builder):
+        rc_book = subprocess.run([sys.executable, book_builder], cwd=os.path.join(ROOT, "book")).returncode
+        if rc_book != 0:
+            print(f"ABORT: book build failed (rc={rc_book}).", file=sys.stderr)
+            return 1
     # Reachability gate (BLOCKING): a built page nothing links to is an orphan — fail the build so it can't
     # be committed (pre-commit `_catalog("build")`) or deployed. This is the DEVELOP.html class as a control.
     orphans = check_orphan_pages()

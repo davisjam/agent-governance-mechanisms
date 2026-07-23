@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 1 · The Printer</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc summary::before { content: "☰  Contents"; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
+.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
+            border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+<li><a class="current" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
+<li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
+<li class="part">Part 2 — The Governed Engineering Environment</li>
+<li><a class="" href="ch03-the-agent-stack.html">Ch 3 · The Agent Stack</a></li>
+<li><a class="" href="ch04-models-and-the-semantic-gap.html">Ch 4 · Models and the Semantic Gap</a></li>
+<li><a class="" href="ch05-the-governed-environment.html">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="ch06-the-model-zoo.html">Ch 6 · The Model Zoo</a></li>
+<li><a class="" href="ch07-lifecycles-and-runbooks.html">Ch 7 · Lifecycles and Runbooks</a></li>
+<li class="part">Part 3 — Putting It to Work</li>
+<li><a class="" href="ch08-brownfield.html">Ch 8 · Brownfield</a></li>
+<li><a class="" href="ch09-the-skills.html">Ch 9 · The Skills</a></li>
+<li><a class="" href="ch10-transformations.html">Ch 10 · Everything Is a Transformation</a></li>
+<li><a class="" href="ch11-training-data.html">Ch 11 · Training Data and the Novelty Axis</a></li>
+<li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 1 · The Mindset &nbsp;::&nbsp; Chapter 1</div><h1>The Printer</h1></header><p>A 3D printer will build almost anything you can imagine — a replacement gear, a prosthetic hand, a scale model of a building — out of nothing but spooled filament. Its only hard limits are the material and your own creativity. That machine is the metaphor that drives this entire book, because building software with a coding agent is far more like running a 3D printer than most people expect. And the difference between the two is the difference between blaming the tool and blaming yourself.</p>
+<h2>A picture is not enough</h2>
+<p>Everyone can sketch a piece of software. We have all used Google Maps, spreadsheets, a document editor — programs that take in data and do something useful with it. The concept is easy to picture. But a picture is not a thing you can print.</p>
+<p>Hand a 3D printer a photograph of the object you want and nothing comes out. The printer needs instructions: a CAD model that shows not just the outer shape but the internal structure — how the pieces fit, where the load is carried — and then a set of print notes on top of that. You slice the model into layers, and you think about how those layers compose as the machine lays them down. Different materials have different minimum thicknesses, different strengths, different joints that hold and joints that fail. There are a hundred ways to misprint a part that looked fine as a picture.</p>
+<p>Software agents are the same. You cannot hand an agent only the picture of what you want. You must also give it — or work out how to give it — the detailed instructions for how to build it. Good instructions, and it works beautifully. Bad instructions, and you have not got a hope.</p>
+<h2>Whose fault is it?</h2>
+<p>Here is the shift in posture the whole book turns on. When you use a stapler and the staple jams, that is the stapler's fault, not yours. A stapler is supposed to just work. But an agent is not a stapler — it is a printer, and a printer only ever builds what its instructions describe. So when the agent produces the wrong thing, the first suspect is not the model. It is the instructions.</p>
+<p>In my own experience, every single time an agent has failed to produce what I wanted, it turned out to be my fault. The state-of-the-art models can build essentially anything we can envision in software, as far as I can tell — <em>so long as you can explain it to them</em>. That "so long as" is the entire job, and it is a real engineering discipline, not a knack. This book teaches it.</p>
+<aside class="marker marker-fill"><span class="marker-tag">FILL IN</span> introduce the single running example we will build across the whole book — a
+real product, or the "CodePrinter" sandbox — so the reader watches one system get
+printed correctly, chapter by chapter, from this sketch through model, control,
+architecture, and migration. Every later chapter should return to it.</aside><div class="pager"><a class="prev disabled" href="#"></a><a class="home" href="index.html">Contents</a><a class="next" href="ch02-loops-and-models.html"><span class="dir">Next ›</span><span class="ttl">Ch 2 · Loops and Models</span></a></div></div></body></html>

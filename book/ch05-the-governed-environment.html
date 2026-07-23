@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 5 · The Governed Environment: Ex-Ante and Ex-Post</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc summary::before { content: "☰  Contents"; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
+.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
+            border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+<li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
+<li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
+<li class="part">Part 2 — The Governed Engineering Environment</li>
+<li><a class="" href="ch03-the-agent-stack.html">Ch 3 · The Agent Stack</a></li>
+<li><a class="" href="ch04-models-and-the-semantic-gap.html">Ch 4 · Models and the Semantic Gap</a></li>
+<li><a class="current" href="ch05-the-governed-environment.html">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="ch06-the-model-zoo.html">Ch 6 · The Model Zoo</a></li>
+<li><a class="" href="ch07-lifecycles-and-runbooks.html">Ch 7 · Lifecycles and Runbooks</a></li>
+<li class="part">Part 3 — Putting It to Work</li>
+<li><a class="" href="ch08-brownfield.html">Ch 8 · Brownfield</a></li>
+<li><a class="" href="ch09-the-skills.html">Ch 9 · The Skills</a></li>
+<li><a class="" href="ch10-transformations.html">Ch 10 · Everything Is a Transformation</a></li>
+<li><a class="" href="ch11-training-data.html">Ch 11 · Training Data and the Novelty Axis</a></li>
+<li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 2 · The Governed Engineering Environment &nbsp;::&nbsp; Chapter 5</div><h1>The Governed Environment: Ex-Ante and Ex-Post</h1></header><p>Everything so far assumes you know, in advance, what should be true about your software. If you do, the path is easy: write it all into a specification up front and hold the agent to it. But real software engineering rarely works that way — you discover what you are building by building part of it. So a governed environment has two halves: what you can decide <em>before</em> you start, and what you can only learn <em>along the way</em>. This chapter is about both halves, and about the two forms every governance mechanism finally takes.</p>
+<h2>Ex-ante: everything you can decide up front</h2>
+<p>Some things you genuinely know from the beginning, and you should write every one of them down. This is specification-driven development, and where you can do it, you should. A coding style guide is the everyday example — Google has one, Airbnb has one — full of rules like "every function carries a comment" or "we never call `exec` outside this one approved place." Give the agent those rules, and then write <em>deterministic checks</em> for them. If a program's output has a required format, write the checker that confirms it — or, better, have the agent write the checker. Determinizing what you know up front gives you a much stronger starting point, and it costs you almost nothing, because the checks are cheap and the agent writes them.</p>
+<h2>Ex-post: everything you learn by building</h2>
+<p>But you will not know everything, and pretending otherwise is the mistake. You will discover that performance is a problem and you have no performance model. You will discover that a particular model version has a tic — every LLM's fondness for the em-dash is the running joke — and that the tics move when you upgrade. So you will build governance <em>ex-post</em>: after the fact, iteratively, strapping on new controls as the failures reveal themselves and as the software's real properties emerge. You define what you can up front, and you stay willing to discover the rest — the mistakes you are making, the mistakes the model is making, the gap between what you thought the customer wanted and what they did, between how you thought the code would perform and how it did.</p>
+<p>The engine of the whole discipline is what you do with those recurring mistakes: <strong>you convert each one into a mechanism.</strong> This is the organizing move of the companion catalogue — a failure seen twice becomes a control, so it is enforced on every agent thereafter instead of re-caught by inspection. A mistake caught in yesterday's manual audit becomes today's automatic check. There are two forms that conversion can take, and the difference between them is the difference between a smoke detector and a firewall.</p>
+<h2>Controls and architecture</h2>
+<p><strong>A control is a sensor.</strong> It detects that a mistake has happened and surfaces it in time to stop the damage. Your test suite in CI is a control: it would be better if the model never wrote the bug, but if it does, the control catches it before the code ships. Controls observe and prevent; they are the sensors wired through the stack.</p>
+<p><strong>Architecture is a wall.</strong> Instead of detecting the mistake, architecture makes the whole <em>class</em> of mistake impossible. The cleanest example is types. Models are, by default, careless with types — and a compiler exists precisely to confirm that functions are called with the right arguments. Suppose the agent has represented a state with bare strings. Because it is a language model, it will cheerfully reach for a synonym next time, and the synonym silently fails to match. Tell it to use an enumeration instead, and the whole failure mode evaporates: it can no longer invent an unlisted value, and if it tries, the compiler rejects it immediately, rather than the test suite crashing much later. Choosing the enum over the string is not a control that watches for the bug — it is an architecture that forbids it. This is why the catalogue leans so hard on typed models and closed enumerations over free-form strings: the wall is cheaper to live behind than the sensor is to keep reading.</p>
+<p>You will place some of each up front, from what you know about the domain, and add more of both as you go. That combination — determinize what you can, then convert every recurring surprise into a control or a wall — <em>is</em> the governed engineering environment.</p><div class="pager"><a class="prev" href="ch04-models-and-the-semantic-gap.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 4 · Models and the Semantic Gap</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch06-the-model-zoo.html"><span class="dir">Next ›</span><span class="ttl">Ch 6 · The Model Zoo</span></a></div></div></body></html>

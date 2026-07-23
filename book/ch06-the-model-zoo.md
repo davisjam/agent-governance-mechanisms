@@ -1,0 +1,80 @@
+<!-- part: 2 -->
+<!-- part-title: The Governed Engineering Environment -->
+<!-- chapter: 6 -->
+<!-- chapter-title: The Model Zoo -->
+
+# Chapter 6 · The Model Zoo
+
+You may have a computing degree and still have never really used a model. That is not a
+gap in you — it is a gap in what the field chose to teach, and it is about to matter a
+great deal. Models fell out of fashion for reasons that made sense at the time and no
+longer do. This chapter says why the time for models has come back, then walks the main
+kinds you will reach for and shows what it means to write a policy over one.
+
+## Why models fell out of fashion — and came back
+
+Models were big in the 1970s and 80s, when computing built expensive things — big
+government systems, the Space Shuttle — and cared deeply about high assurance, partly
+because compute itself was too costly to waste. Then the personal computer arrived,
+Moore's Law made cycles cheap, and a global supply of developers made it cheap to write
+code and cheap to change it. The industry shifted from careful up-front modeling to
+ad-hoc agile methods that assume everything will change anyway. Curricula followed:
+models stayed in the textbooks but got de-emphasized as "not industry-relevant," and any
+student back from an internship would tell you, correctly, that nobody used them.
+
+Nobody used them — because the expensive part was a human keeping them in sync, and
+humans resent that chore. That is exactly the constraint agents dissolve. An agent will
+do the disciplined, repetitive upkeep without complaint, which is why the companion
+catalogue treats its models as an **executable source of truth**: not diagrams that rot,
+but typed data that tools, lints, and deploy scripts read on every run and generate real
+artifacts from. Because the models are continuously *used*, they cannot quietly drift —
+the build fails the moment they do. The time for models has come back, and it is worth
+knowing the zoo.
+
+## The kinds of model
+
+Every model gives you a different view of the one thing computers do — computation over
+data — and you choose the model by the view you need.
+
+- **Data-flow diagrams** trace where data goes and who may touch it — the natural model
+  for security and privacy.
+- **User journeys** (or user stories) name the interfaces a user moves through and the
+  actions they take to accomplish something of value.
+- **Inheritance hierarchies** show which specializations of an abstract concept exist and
+  can be extended.
+- **Bills of materials** capture a project's dependencies, direct and transitive.
+- **State-machine diagrams** represent computation as the states a system can occupy — a
+  microwave that is on, or has its door open, or is taking keypad input — and the
+  transitions between them.
+
+If performance is your concern, you model the computation itself: what does this cost to
+run, what does it cost to move the data across the network, should I compute locally or
+remotely, cache this, memoize that. Different question, different model. The point is
+that there is a right model for each view, and they are meant to be **orthogonal** —
+complementary, non-overlapping, often interlocking. Repetition across models is the
+thing to avoid, because two models that say the same thing must now be kept in sync; far
+better a body of models over which you can write one policy per model, or a policy that
+joins across several.
+
+## Writing a policy over a model
+
+A model earns its keep when you write a policy over it — a statement of what must be
+true. The policy can be plain business English, or it can be formal and unambiguous.
+Take the microwave state machine. The unsafe state is easy to name: the magnetron is
+powered and cooking while the door is open. Write the policy "never cooking with the
+door open," apply it over the state machine, and you can ask whether *any path* reaches
+that state. Ideally a circuit breaker cuts the magnetron when the door opens — but if
+that breaker can trip and a path still leads back to powered-on, you have a way to cook
+yourself, and the model will show it to you.
+
+Finding that path is not eyeballing the diagram. This is where the strongest form of
+verification lives, and the companion catalogue makes it a first-class idea: an
+invariant carries a temporal-logic shape — a safety property ("this bad state never
+happens") or a liveness property ("this good thing eventually does") — and that shape
+*derives* the checker that proves it, exhaustively, across every interleaving rather than
+on sampled inputs. The microwave rule is a safety property, and a state-space search
+settles it for good. Kruchten's classic **4+1 views** is the reason one model is never
+enough here: a system wants several complementary views at once, and it is true not just
+of software but of any complicated system — the whole field of systems engineering runs
+on it. This book will take you through each model type, on real code, with real
+invariants, and show you how to keep the code from drifting away from them.
