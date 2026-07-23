@@ -1051,6 +1051,115 @@ Read a single page to adopt one mechanism. Read a family in order to see how a c
 each other. The map below is the fast index: click any mechanism to open its pattern."""
 
 
+# ─────────────────────────── Appendix D — Mechanism Stacks ───────────────────────────
+# A "stack" is a package of mechanisms that travel together, attached to a concept (the MBSE stack, the
+# self-operations stack, …). Each stack is authored as a markdown file under `appendix-stacks/`, holding a
+# `### Concept` frame, a `### Mandatory members` list, and a `### Complementary members` list. Member
+# bullets reference a catalogue mechanism by a `role:<entry-slug>` token, which the builder resolves to a
+# live link into that mechanism's Appendix A/B/C pattern page (with its numbered locator prepended).
+
+_STACKS_DIR = HERE / "appendix-stacks"
+
+# The slug that heads Appendix D's Part — the stacks front-door page.
+_APPENDIX_STACKS_OPENING_SLUG = "appendix-stacks"
+
+# Stack files in reading order → (page-slug stem, display title). Each becomes one D.N page; the opening
+# front-door page (D's chapter 0) precedes them. A file listed here but absent on disk is skipped.
+_STACKS: list[tuple[str, str]] = [
+    ("mbse-stack", "The MBSE stack"),
+    ("self-operations-stack", "The self-operations stack"),
+    ("semantic-lint-stack", "The semantic-lint stack"),
+    ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
+    ("canonical-seam-stack", "The canonical-seam stack"),
+    ("observability-stack", "The observability stack"),
+]
+
+_APPENDIX_STACKS_OPENING_PROSE = """\
+**Packages of mechanisms that travel together**
+
+A single pattern in the preceding appendices kills one failure class. In practice, though, mechanisms \
+arrive in *packages* — a concept you want to adopt (model-based engineering, a self-operating \
+orchestrator, an auditable format seam) is not one mechanism but a cluster that reinforce each other. \
+This appendix names those clusters. Each **stack** attaches to a concept, lists the mechanisms that make \
+it up, and — most usefully — says which of them you can leave out.
+
+Every stack sorts its members into two kinds:
+
+- **Mandatory** — the stack *fails* without this member. Model-based engineering needs both the typed \
+models AND the drift control that keeps them equal to the code; adopt the models alone and you ship a \
+map the fleet will trust while it quietly lies. A self-operating orchestrator needs its work-templates. \
+These are the members you cannot skip without breaking the concept.
+- **Complementary** — layers on top for extra value, not required for correctness. Dynamic \
+context-injection can sit on top of a semantic-lint stack to *prevent* the violation the lint already \
+*catches*; heartbeats sharpen an observability stack that already sees and responds. Worth adopting, \
+but the stack stands without them.
+
+Each member links to its own pattern page in the earlier appendices. Read a stack to see which \
+mechanisms you must adopt as a set, and which you can add later."""
+
+_STACK_MEMBER_RE = re.compile(r"\brole:([a-z0-9-]+)\b")
+
+
+def _resolve_stack_members(md: str, page_by_slug: dict[str, dict]) -> str:
+    """Replace each `role:<entry-slug>` token in a stack file with a live link into that mechanism's
+    Appendix A/B/C pattern page, prefixed by its numbered locator — e.g. `role:pdf-model` →
+    `[Appendix C - 3. PdfModel](appendix-c-pdf-model.html)`. An unknown slug is a build-loud error (catches
+    a typo before it silently ships a bare `role:foo` string). `page_by_slug` maps entry slug → the ordered
+    pattern record (carrying `page_slug`, `appendix_letter`, `appendix_num`, `name`)."""
+    def repl(m: "re.Match[str]") -> str:
+        slug = m.group(1)
+        rec = page_by_slug.get(slug)
+        if rec is None:
+            raise SystemExit(
+                f"appendix stack references unknown mechanism slug 'role:{slug}' — it matches no "
+                f"catalogue entry under agent/ · models-bridge/ · product/")
+        label = f"Appendix {rec['appendix_letter']} - {rec['appendix_num']}. {rec['name']}"
+        return f"[{label}]({rec['page_slug']}.html)"
+    return _STACK_MEMBER_RE.sub(repl, md)
+
+
+def build_stack_chapters(part: int, page_by_slug: dict[str, dict]) -> list[dict]:
+    """Build the Appendix D chapter records: one opening front-door page (chapter 0), then one page per
+    stack (D.1, D.2, …). Mirrors the role-appendix page shape — same Part, pager chain, and index locator
+    machinery — so the book's TOC/pager/index render it with no special-casing. `page_by_slug` resolves each
+    stack's `role:<slug>` member tokens to links into the role-appendix pages. Returns [] if no stack files
+    are present."""
+    stack_files = [(stem, title) for stem, title in _STACKS if (_STACKS_DIR / f"{stem}.md").is_file()]
+    if not stack_files:
+        return []
+
+    chapters: list[dict] = []
+    part_title = "Appendix D — Mechanism Stacks"
+
+    # OPENING FRONT-DOOR PAGE — heads Appendix D (chapter 0, sorts before every stack).
+    chapters.append({
+        "slug": _APPENDIX_STACKS_OPENING_SLUG,
+        "part": part,
+        "part_title": part_title,
+        "chapter": 0,
+        "chapter_title": "Appendix D — Mechanism Stacks",
+        "body_md": _APPENDIX_STACKS_OPENING_PROSE.strip(),
+        "is_appendix": True,
+        "mermaid": False,
+    })
+
+    # ONE PAGE PER STACK — D.1, D.2, … in the authored order.
+    for i, (stem, title) in enumerate(stack_files, start=1):
+        raw = (_STACKS_DIR / f"{stem}.md").read_text(encoding="utf-8")
+        body = _resolve_stack_members(_fold_wrapped_bullets(raw.strip()), page_by_slug)
+        chapters.append({
+            "slug": f"appendix-d-{stem}",
+            "part": part,
+            "part_title": part_title,
+            "chapter": i,                       # sorts after the opening page's chapter 0
+            "chapter_title": f"Appendix D - {i}. {title}",
+            "body_md": body,
+            "is_appendix": True,
+            "mermaid": False,
+        })
+    return chapters
+
+
 def _family_order_from_index() -> dict[str, int]:
     """Read the family ordering from the census (`INDEX.md`) at build time, so the appendix order can't
     drift from it. Parses each `## <N>. <name>` census heading, then the `[family folder](<role>/<dir>/)`
@@ -1086,7 +1195,8 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
     """The opening page's text table of contents, in census-map hierarchy: an `## ` (h2) heading per target
     (Agent / Models-bridge / Product), an `### ` (h3) sub-heading per family, and a linked bullet list of
     the family's patterns under it. `ordered` is the already role/family-ordered pattern-record list; each
-    record carries the page slug the pattern renders at."""
+    record carries the page slug the pattern renders at, plus its per-appendix locator (`appendix_letter`,
+    `appendix_num`) set by `build_appendix_chapters`, so the bullet reads `Appendix A - 1. <name>`."""
     parts: list[str] = ["## Contents", ""]
     last_group: str | None = None
     last_family: str | None = None
@@ -1097,7 +1207,8 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
         if rec["family"] != last_family:
             parts += [f"**{_family_display(rec['family'])}**", ""]
             last_family = rec["family"]
-        parts += [f"- [{rec['name']}]({rec['page_slug']}.html)"]
+        locator = f"Appendix {rec['appendix_letter']} - {rec['appendix_num']}."
+        parts += [f"- {locator} [{rec['name']}]({rec['page_slug']}.html)"]
     return "\n".join(parts).strip()
 
 
@@ -1124,8 +1235,15 @@ def build_appendix_chapters(next_part: int) -> list[dict]:
             rec["slug"],
         )
     ordered = sorted(entries, key=_sort_key)
+    # Per-appendix-letter running number (A-1, A-2, …, B-1, …) — the locator shown in the TOC, on each
+    # pattern page's title, and in the book index. Assigned in reading order within each role letter.
+    appendix_counter: dict[str, int] = {}
     for rec in ordered:
-        rec["page_slug"] = f"appendix-{role_letter[rec['group']].lower()}-{rec['slug']}"
+        letter = role_letter[rec["group"]]
+        rec["page_slug"] = f"appendix-{letter.lower()}-{rec['slug']}"
+        appendix_counter[letter] = appendix_counter.get(letter, 0) + 1
+        rec["appendix_letter"] = letter
+        rec["appendix_num"] = appendix_counter[letter]
 
     # Precompute the slug→pattern-page anchor map, then emit the rewired figure once (embedded on the
     # opening page only).
@@ -1177,11 +1295,17 @@ def build_appendix_chapters(next_part: int) -> list[dict]:
             # chapter sort key within the Part: family census number, then within-family index. +1 keeps
             # every pattern above the opening page's chapter 0 in Appendix A.
             "chapter": fam_n * 100 + within_family_index + 1,
-            "chapter_title": f"Appendix {letter} · {rec['name']}",
+            "chapter_title": f"Appendix {letter} - {rec['appendix_num']}. {rec['name']}",
             "body_md": _appendix_pattern_page_md(rec),
             "is_appendix": True,
             "mermaid": True,
         })
+
+    # APPENDIX D — Mechanism Stacks. A NEW Part after the three role appendices (A/B/C), one opening page +
+    # one page per stack. Each stack's member tokens link back into the role-appendix pages built above.
+    page_by_slug = {rec["slug"]: rec for rec in ordered}
+    stacks_part = next_part + len(_APPENDIX_ROLES)
+    chapters += build_stack_chapters(part=stacks_part, page_by_slug=page_by_slug)
     return chapters
 
 
@@ -1433,9 +1557,14 @@ def _scan_term_refs(term: str, pages: list[dict]) -> list[dict]:
 def _index_ref_label(pg: dict) -> str:
     """The short locator shown beside an index term for one page: 'Appendix A', 'Preface', or 'N.M'."""
     if pg.get("is_appendix"):
-        # 'Appendix A · Brief-linting' → 'Appendix A'; the opening 'Appendix — the pattern language'
-        # (no '·') → 'Appendix'. Prefer the '·' split (per-pattern titles), then the '—' split (opening).
+        # Per-pattern titles read 'Appendix A - 1. Brief-linting' → locator 'Appendix A - 1'; a stack page
+        # 'Appendix D - 1. The MBSE stack' → 'Appendix D - 1'. An opening front-door page
+        # ('Appendix — the pattern language' / 'Appendix D — Mechanism Stacks', no numbered '. ') → its
+        # 'Appendix …' prefix via the '—' split. Prefer the '<letter> - <n>.' numbered split.
         title = pg["chapter_title"]
+        m = re.match(r"^(Appendix\s+[A-Z]\s+-\s+\d+)\.", title)
+        if m:
+            return m.group(1).strip()
         if "·" in title:
             return title.split("·")[0].strip()
         if "—" in title:
