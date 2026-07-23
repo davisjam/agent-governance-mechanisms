@@ -4,9 +4,9 @@
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
        color: #1a1a1a; margin: 0; background: #fdfdfc; }
-.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
 nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
-nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
@@ -122,6 +122,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
 <li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="current" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
@@ -130,6 +131,8 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li class="part">Appendix C — Product patterns</li>
 <li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="appendix-a-agent.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Conclusion · Conclusion"><header class="chap"><div class="kicker">Back Matter</div><h1>Conclusion</h1></header><p>I set out to learn what engineering becomes when implementation is nearly free. Here is what I found: the code got cheap, and the judgment got expensive. That is the whole book in a sentence, and everything in it has been an attempt to make the sentence operational — to say concretely what the expensive judgment <em>is</em> and how you organize a system so a fast, unreliable machine can exercise the cheap part without wrecking the rest.</p>
 <p>The method reduces to one loop, repeated until the system holds. Velocity surfaces a failure. Judgment classifies it — a local bug to patch, or the symptom of a missing control. The structural ones you convert into something durable: a type that makes the error unrepresentable, a lint that catches it at commit, a gate that blocks it before production, a model the next agent reasons through. Then you go again. Each conversion narrows the space the next agent can fail in, so governability compounds. The apparatus that results is large — in the system this book is drawn from, the tests and lints and tooling outweighed the product code — and it is not overhead. At the volumes agents produce, no one reads the diffs, so the apparatus <em>is</em> the review. It is what you buy the velocity with.</p>
+<blockquote><p>The future of software engineering is not just faster implementation. It is the ability to convert judgment into infrastructure.</p></blockquote>
+<p>That is the method in a sentence. Velocity surfaces a failure; judgment classifies it; and the structural failures you convert into something durable — a type, a lint, a gate, a model — that the next agent cannot fail past. Let the machinery hold what your attention cannot, and spend your scarce judgment on the decisions the machinery cannot make.</p>
 <p>Two things stay firmly with the human, and neither is going anywhere. The first is vision: deciding what should exist, what "correct" means for this problem, and which failures deserve a real fix versus a redesign. The second is abstraction: seeing the shape the code is groping toward and naming it, so the machine has a model to build against instead of a blank space to guess into. The agent supplies tireless implementation. You supply direction and structure. Where you supply neither, it will happily build you a hundred thousand lines nobody can read — I have the commits to prove it.</p>
 <h2>This book showed how</h2>
 <p>Set the method against the two touchstones from the preface, and the shape of the contribution comes clear.</p>
@@ -141,4 +144,4 @@ nav.toc .jump { margin-top: 0.7rem; }
 <p>If there is a single instruction to carry out of this book, it is this. Govern the conditions under which fast code can be trusted, and know when to stop governing — put a guardrail on the smells that predict a real failure, and nowhere else, because every guardrail taxes every future change. The machine can search faster than any of us. It cannot tell you what is worth searching for. That part is still yours, and it is the part worth getting good at.</p>
 <blockquote><p>I applied mine heart to know, and to search, and to seek out wisdom, and the reason of things.</p>
 <p>— King Solomon (Ecclesiastes 7:25)</p></blockquote>
-<p>Machines can help us search. They cannot give us wisdom.</p><div class="pager"><a class="prev" href="5.5-lessons-learned.html"><span class="dir">‹ Previous</span><span class="ttl">5.5 · Lessons Learned</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-a-agent.html"><span class="dir">Next ›</span><span class="ttl">Appendix A — Agent patterns</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-a-agent.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>Machines can help us search. They cannot give us wisdom.</p><div class="pager"><a class="prev" href="6.0-implications-for-se.html"><span class="dir">‹ Previous</span><span class="ttl">Implications for Software Engineering</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-a-agent.html"><span class="dir">Next ›</span><span class="ttl">Appendix A — Agent patterns</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-a-agent.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

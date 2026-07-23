@@ -1,8 +1,7 @@
-# *3D Printing Production Software* — the book
+# *3-D Printing Production Software* — the book
 
-Draft chapters, polished from the dictated manuscript and the author's field notes using the
-**self-communicate** skill. The book renders to a small static HTML site by
-`build_book_html.py` (wired into `catalog.py build`).
+*Architecture, Validation, and Control for Agentic Software Engineering.* The book renders to a
+small static HTML site by `build_book_html.py` (wired into `catalog.py build`).
 
 ## Part/Chapter filesystem hierarchy
 

@@ -51,7 +51,7 @@ that shape is to walk one. Here is a config-parameter-space optimization runbook
 whether a setting is better." An agent runs the loop; each pass turns some knobs, measures, and
 decides what to try next.
 
-<!-- figure: config-optimization-runbook.svg | A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice. -->
+<!-- figure: assets/config-optimization-runbook.svg | A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice. -->
 
 The runbook is anchored to a lifecycle the reader already knows: **run, measure, assess**, then
 around again. Every pass of the loop moves through three steps, and the discipline is in how the

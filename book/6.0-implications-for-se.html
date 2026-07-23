@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Implications for Software Engineering · Implications for Software Engineering</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote h3 { font-style: normal; margin-top: 0; }
+blockquote pre.mermaid { font-style: normal; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="current" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="appendix-a-agent.html">Next part ⇒</a><a href="6.1-conclusion.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Implications for Software Engineering · Implications for Software Engineering"><header class="chap"><div class="kicker">Back Matter</div><h1>Implications for Software Engineering</h1></header><p>I built one system, alone, with a fleet of agents, and I have tried through this book to say what I learned from it without pretending it was ten systems or a controlled trial. It was neither. But the shape of what happened is general enough that I want to step back from the particular product and ask what it implies for the discipline. If code is becoming cheap and judgment is becoming the scarce thing, then a number of assumptions the field has carried for decades were priced for a world that is ending. This section is about which ones.</p>
+<p>I will state the through-line first and defend it in pieces. The single mechanism under all of this is that <strong>velocity exposes failure</strong>. Agents produce change fast enough that the ambiguities, the missing abstractions, the weak boundaries, and the absent oracles surface in a matter of hours instead of quarters. That speed is not only a source of risk. It is also a source of <em>perception</em> — related failures that would ordinarily arrive weeks apart now arrive inside a single afternoon, close enough together that you can see the structure they share. What you do with that perception is the whole game.</p>
+<h2>From governing what you know to discovering what you don't</h2>
+<p>The tidy version of governance says: figure out your obligations in advance, encode them as controls, and let the agents run inside the fence. Do that. It works, up to a point. For the accessibility product I had conformance checkers, content-preservation and provenance checks, and the ordinary commodity linters, all of them known before a single agent touched the code. These were necessary. They were not sufficient, and the gap between necessary and sufficient is where the interesting part lives.</p>
+<p>The claim I want to make is that under agentic velocity, <em>many of the controls you need cannot be written down before the work begins.</em> You discover them by failing. An agent makes a plausible, confident, wrong change; you look at it and ask not merely "is this acceptable?" but "does this failure reveal a hole in my governance?"; and when the answer is yes, you convert the hole into a durable control. Governance stops being a fixed layer bolted onto agent work from outside. It becomes something the environment <em>learns</em> — a process, running continuously, that turns agent-produced failures into architecture and lints and gates that constrain the next agent.</p>
+<p>This is why oversight, on its own, does not scale. The oversight model asks a human to supervise each change. At the volumes agents produce, no one reads the diffs, and a human who tries becomes the bottleneck the velocity was supposed to remove. The move that scales is different: you do not inspect each instance of a failure class, you convert the class <em>once</em> so that future instances need no inspection. Work that produced no failure signal gets admitted. Work that exposed a recurring failure class earns a new control. The leverage comes from the conversion, not the vigilance.</p>
+<h2>Soft controls saturate; the substrate has to become machine-actionable</h2>
+<p>Here is a proposition I would put money on, though I have only a single case behind it. <strong>As velocity rises, tacit and review-centered controls saturate, and deterministic ones do not.</strong></p>
+<p>The reason is arithmetic. A convention that an agent follows ninety-nine times in a hundred looks like a working control when one engineer works at human speed. Run it across a fleet at agentic velocity and the hundredth violation stops being rare and becomes a certainty, many times a day. A low-probability harness violation, at volume, is not a risk. It is a schedule. Words are soft, and softness is fine until the sample size gets large enough to find every edge you left in.</p>
+<p>So the governance has to move down into the substrate where a machine can enforce it: into types the compiler checks, schemas a validator reads, lints and analyses that gate a commit before a human ever sees it. This is not a rejection of the soft controls. The briefs, the templates, the prose conventions still aim the agents; they do real work. But they must be <em>mated</em> to deterministic controls that hold the line whether or not the agent cooperates. The soft layer guides; the hard layer holds. At velocity you need both, and the failure mode of relying on the soft one alone is quiet. The convention looks obeyed right up until the day the volume finds the gap.</p>
+<p>There is a counterintuitive corollary here that took me a while to trust. Stronger controls do not always tax velocity. Often they compound it. An agent that hits a deterministic guardrail gets an immediate, legible signal it can act on, and recovers from its own mistake without a human in the loop. The guardrail that would have felt like friction to a human team is, to an agent fleet, the thing that lets the throughput continue at all.</p>
+<h2>The judgment moved, and it moved toward you</h2>
+<p>If implementation is abundant, the human's comparative advantage is no longer producing code. It is the work that surrounds the code: framing the problem, discovering the abstraction, making the architectural call, and designing the governance under which fast code can be trusted. Better agents do not shrink this work. They make it <em>more</em> consequential, because better agents raise your ambition and your concurrency, and the decisions about what to build and how to bound it are what determine whether all that throughput becomes durable progress or an expensive pile of churn.</p>
+<p>Two things gate whether this works, and they are worth naming because they are the conditions under which the whole method holds or fails.</p>
+<p>- <strong>Capability-fit.</strong> The agents have to be matched to human judgment good enough to interpret their failures. Give a capable fleet to someone who cannot tell a local defect from a structural one and you get motion without direction. The governance does not design itself; a person has to look at a failure and decide it is the symptom of a missing abstraction. In my case the model itself was unreliable at drawing that line, and only began proposing sensible structural fixes once the codebase had accumulated enough worked examples to imitate. - <strong>Authority.</strong> The person who sees the recurring failure has to be able to <em>change the environment</em> — the architecture, the controls, the gates. This sounds trivial when one engineer owns the whole system. It is not trivial in an organization, where authority is split across teams, owners, review boards, and deployment pipelines. Split the authority and the same failure signal produces a local patch instead of a shared control, and the class never dies. Agentic tools compress team-scale coordination into a single workflow; that compression is exactly what makes authority the pressure point.</p>
+<h2>What this changes for how we measure, staff, and teach</h2>
+<p>A few consequences follow, and I will keep them short because each could be its own argument.</p>
+<p><strong>Measure governed throughput, not volume.</strong> Commits landed, lines changed, tasks completed — these count activity. They do not tell you whether the activity became durable software. The question that separates progress from churn is whether agent-produced failures are getting converted into reusable governance, and whether later work benefits from those conversions without the whole thing losing coherence. Optimize for volume and you will get volume; you will also get a fast pile of slop with no one able to read it. I have the commits to prove that too.</p>
+<p><strong>The marginal cost of quality dropped, so treat quality work as affordable.</strong> The refactors and architectural improvements that a conventional team defers because they are too expensive become feasible when an agent fleet can carry out the mechanical part in a day. I moved an entire front end to a typed language over a weekend and saw no defects under the project's own checks. The same speed that manufactures technical debt can also pay it down — and, because related failures cluster in time, can make the architectural gap <em>visible</em> in the first place. Speed cuts both ways; which way depends on whether you convert what it exposes.</p>
+<p><strong>Read model failure as a framing problem before a capability ceiling.</strong> When an agent fails a delegated task, the tempting inference is that the model cannot do it. Sometimes that is true. Far more often, in my experience, the task simply had not been framed as an inspectable, controllable process — the difficulty was mine, not the model's. The working disposition I ended up with was to assume that <em>I</em> was the problem: to treat a failure as a cue to decompose further and constrain harder, not as evidence of a ceiling. There is a paradox worth sitting with here. The model is valuable <em>because</em> it reasons over open-ended inputs, and yet the method is largely about systematically removing its opportunities to reason unconstrained. That is not a contradiction. It is a response to a machine that flips a probabilistic coin at every step: you do not exclude the probabilistic behavior, you bound it — soft guidance going in, deterministic guardrails on the actions, and a deterministic envelope on what gets admitted out.</p>
+<p><strong>For research and education, attend to the environment, not only the agent.</strong> We already know agents can generate. The open question is which engineering environments make that generation <em>governable</em> — and whether agents can be taught to notice inadequate governance themselves, rather than waiting for a human to convert every failure by hand. For teaching, the implication is uncomfortable but clear: the comparative advantage is shifting away from syntax-level production and toward specification, abstraction design, validation, and process. That is not a softer curriculum. It is a harder one, and it is the one that will matter.</p>
+<h2>What I have not shown you</h2>
+<p>I should be plain about the edges of this. My evidence is one system — a real production service, but a single-author one, without a crowd of stakeholders pulling the design in directions I could not veto, and run against one vendor's models over a few months. The shape of the method feels durable to me. The specifics will not all generalize, and I would be suspicious of anyone who told you theirs did.</p>
+<p>And I have done <em>some</em> of this, not all of it. The parts I knew were sensitive, I governed hard — a strong architecture, typed models, enforcement that fails the build when the map and the territory disagree. The parts I hoped the agent would simply get right, it did not, and those turned crufty; the honest recipe for digging them back out is <a href="5.1-brownfield.html">the brownfield chapter</a>, and I am still walking that recipe on my own codebase as I write this. So read the method as a direction I am convinced of and a destination I have reached in patches, not a finished tour of a system that is governed end to end. It is genuinely hard work. It trades the friction that used to live in typing for a different friction — the up-front judgment of deciding what to model, where to enforce it, and when to stop — and that friction does not disappear, it moves.</p>
+<p>If you try this on a codebase of your own, I want to hear how it goes — where it held, where it broke, where your setting behaved differently from mine. A single-author study is a starting point, not a proof, and the only way the shape gets sharper is more people running the experiment and reporting back. Come tell me what you found.</p><div class="pager"><a class="prev" href="5.5-lessons-learned.html"><span class="dir">‹ Previous</span><span class="ttl">5.5 · Lessons Learned</span></a><a class="home" href="index.html">Contents</a><a class="next" href="6.1-conclusion.html"><span class="dir">Next ›</span><span class="ttl">Conclusion</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-a-agent.html">Next part ⇒</a><a href="6.1-conclusion.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

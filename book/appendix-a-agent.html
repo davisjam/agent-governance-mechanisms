@@ -4,9 +4,9 @@
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
        color: #1a1a1a; margin: 0; background: #fdfdfc; }
-.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
 nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
-nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
@@ -122,6 +122,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
 <li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="current" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
@@ -705,7 +706,87 @@ if __name__ == "__main__":
   Book --&gt; Avoid[Reflexes to avoid]</pre>
 <p><em>Accessible description: a triggering signal and the rule index both route to a situation-keyed playbook, which supplies the ordered response steps and the anti-pattern reflexes to avoid, reasoned once when no incident was burning.</em></p>
 <h3>Sample Code</h3>
-<p>No sample code — this is a process/policy control. A playbook is human-authored operational judgment, not an executable artifact. The shape it standardizes is a per-situation entry: the triggering question, the inspect command, the quantified healthy baseline, and <em>what-looks-wrong → what-it-means → what-to-do</em>, with an explicit escape for the case where a substrate wedges. The value is that the correct steps — and the reflexes to avoid — are written down once and discoverable at the moment they're needed, not re-derived under pressure.</p>
+<p>A playbook is human-authored operational judgment, so there is no executable artifact to show. What a good playbook standardizes is the <em>shape</em> of a recurring procedure, and the sharpest way to teach that shape is to walk one. Here is a config-parameter-space optimization runbook: the situation is "I want to optimize this system over its config knobs, and I have the performance metrics to say whether a setting is better." An agent runs the loop; each pass turns some knobs, measures, and decides what to try next.</p>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="cor-title cor-desc">
+  <title id="cor-title">A config-optimization runbook with a determinize / judgment / determinize split</title>
+  <desc id="cor-desc">A lifecycle loop labelled run then measure then assess wraps a three-step spine. Step one, determinize the data space: a mechanical, automatable step that fixes where the metrics live, their schema, and models of normal versus anomalous values. Step two, judgment in reasoning space: the agent reasons over that data to decide which configuration knobs to turn. Step three, determinize again in experiment space: applying the chosen configuration is made mechanical, which lets the step capture and log the reasoning trace, the rationale for why this configuration was chosen. That logged trace feeds two consumers: it becomes an input to the next iteration of the loop, so the optimizer learns from its own recorded reasoning, and it becomes a decision trace a secondary checker reads, which evaluates the choice far better than it could from the raw output alone.</desc>
+
+  <defs>
+    <marker id="cor-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a4a7a"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== LIFECYCLE LOOP (run -> measure -> assess), wrapping the spine ===================== -->
+  <!-- top arc: run (left) -> measure (center) -> assess (right) -->
+  <text x="150" y="46" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">run</text>
+  <text x="480" y="46" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">measure</text>
+  <text x="810" y="46" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">assess</text>
+
+  <!-- run -> measure -->
+  <path d="M180,52 C300,74 380,74 442,58" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <!-- measure -> assess -->
+  <path d="M520,58 C600,74 690,74 792,52" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- assess -> down the right side -> across the bottom -> up the left side -> back into "run" (the loop closes) -->
+  <path d="M832,58 C905,150 905,470 812,540 C640,610 300,610 150,540 C56,470 56,150 128,60"
+        fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- ===================== SPINE: Determinize -> Judgment -> Determinize ===================== -->
+  <text x="480" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#12324a">A determinize &#8594; judgment &#8594; determinize split</text>
+
+  <!-- Step 1: Determinize (data-space) -->
+  <rect x="70" y="196" width="230" height="118" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
+  <text x="185" y="234" text-anchor="middle" font-size="19" font-weight="700" fill="#12324a">Determinize</text>
+  <text x="185" y="264" text-anchor="middle" font-size="13" fill="#3a4a58">mechanical &#183; automatable</text>
+  <text x="185" y="284" text-anchor="middle" font-size="13" font-style="italic" fill="#3a4a58">data-space</text>
+
+  <!-- arrow: determinize -> judgment -->
+  <line x1="300" y1="255" x2="372" y2="255" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- Step 2: Judgment (reasoning decides) -->
+  <polygon points="480,192 606,255 480,318 354,255" fill="#1a4a7a" stroke="#12324a" stroke-width="1.5"/>
+  <text x="480" y="250" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">Judgment</text>
+  <text x="480" y="274" text-anchor="middle" font-size="13" fill="#dbe6f0">reasoning decides</text>
+
+  <!-- arrow: judgment -> determinize (right) -->
+  <line x1="606" y1="255" x2="678" y2="255" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- Step 3: Determinize again (experiment-space) — accented border to mark it as the punchline step -->
+  <rect x="680" y="196" width="230" height="118" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="795" y="234" text-anchor="middle" font-size="19" font-weight="700" fill="#12324a">Determinize</text>
+  <text x="795" y="264" text-anchor="middle" font-size="13" fill="#3a4a58">mechanical &#183; automatable</text>
+  <text x="795" y="284" text-anchor="middle" font-size="13" font-style="italic" fill="#3a4a58">experiment-space</text>
+
+  <!-- ===================== THE PUNCHLINE: logged reasoning trace, two consumers ===================== -->
+  <!-- from the determinized step 3, drop down to the logged trace -->
+  <line x1="795" y1="314" x2="795" y2="356" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- logged reasoning trace box -->
+  <rect x="640" y="358" width="310" height="80" rx="6" fill="#ffffff" stroke="#1a4a7a" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="795" y="386" text-anchor="middle" font-size="15" font-weight="700" fill="#1a4a7a">Logged reasoning trace</text>
+  <text x="795" y="410" text-anchor="middle" font-size="13" fill="#3a4a58">why this configuration was chosen</text>
+  <text x="795" y="428" text-anchor="middle" font-size="13" font-style="italic" fill="#3a4a58">captured because step 3 is deterministic</text>
+
+  <!-- consumer (a): input to next iteration — arrow curving back toward the loop's left "run" edge -->
+  <path d="M640,398 C440,420 200,400 138,360" fill="none" stroke="#1a4a7a" stroke-width="2" marker-end="url(#cor-ah)"/>
+  <rect x="150" y="360" width="300" height="66" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
+  <text x="300" y="388" text-anchor="middle" font-size="14" font-weight="700" fill="#12324a">(a) Input to the next iteration</text>
+  <text x="300" y="410" text-anchor="middle" font-size="12.5" fill="#3a4a58">the loop learns from its own logged reasoning</text>
+
+  <!-- consumer (b): decision trace for a secondary checker — straight down -->
+  <line x1="795" y1="438" x2="795" y2="484" stroke="#1a4a7a" stroke-width="2" marker-end="url(#cor-ah)"/>
+  <rect x="628" y="486" width="334" height="66" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
+  <text x="795" y="514" text-anchor="middle" font-size="14" font-weight="700" fill="#12324a">(b) Decision trace for a secondary checker</text>
+  <text x="795" y="536" text-anchor="middle" font-size="12.5" fill="#3a4a58">the trace evaluates better than the raw output alone</text>
+
+  <!-- ===================== BOTTOM LABEL ===================== -->
+  <text x="345" y="572" text-anchor="middle" font-size="15" font-weight="700" fill="#12324a">A lifecycle the runbook is anchored to</text>
+</svg><figcaption>A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice.</figcaption></figure>
+<p>The runbook is anchored to a lifecycle the reader already knows: <strong>run, measure, assess</strong>, then around again. Every pass of the loop moves through three steps, and the discipline is in how the steps are typed.</p>
+<p>- <strong>Step 1 — determinize the data space.</strong> Fix where the metrics live, their schema, and a model of what a normal value looks like against an anomalous one. This step is mechanical. It takes no reasoning, so an agent should never improvise it; write it down as an ordered procedure the playbook names, and the agent follows it the same way every pass. - <strong>Step 2 — apply judgment.</strong> From that data, decide which knobs to turn and by how much. This is the step that genuinely needs reasoning: reading the measurements, weighing a heuristic against a hunch, choosing the next configuration to try. It is where the agent earns its keep, and the one step the playbook cannot reduce to a fixed procedure. - <strong>Step 3 — determinize again.</strong> Render the judgment back into the world. Take the knob choices the reasoning produced and apply them to the next experiment. Applying a configuration is mechanical, so this step, like the first, should be deterministic rather than improvised.</p>
+<p>The two mechanical steps bracket the judgment. That is the pattern the slide names a <em>determinize → judgment → determinize</em> split, and it is worth stating plainly why the split pays off. The mechanical steps are cheap, repeatable, and auditable. The judgment step is expensive and variable, so you want as little of the procedure sitting inside it as the problem allows. Determinize everything that does not need to reason, and the reasoning that remains is smaller, sharper, and easier to check.</p>
+<p><strong>The determinized third step is where the leverage is.</strong> The natural instinct is to treat step 3 as plumbing: the reasoning already happened, so just apply the choice and move on. That undersells it. Because the third step is deterministic, it can capture and log the reasoning trace — the record of <em>why</em> this configuration was chosen — as a first-class output of the pass, not a side effect thrown away when the experiment starts. That logged trace then does two jobs. It becomes <strong>an input to the next iteration</strong>, so the loop reads back the rationale it recorded last time and reasons from its own history instead of from the raw numbers alone. And it becomes <strong>a decision trace for a secondary checker</strong>: hand a reviewer only the raw output and it can tell you whether the result looks good; hand it the trace of what was chosen and why and it can tell you whether the <em>reasoning</em> was sound, catch a choice that got a lucky result for a bad reason, and flag a rationale that will not generalize. Determinize the third step because a deterministic step affords a logged reasoning trace, and that trace is what lets the loop learn from itself and lets a second checker judge the decision rather than just the output.</p>
 <h3>Consequences</h3>
 <ul><li><strong>Soft: an agent can ignore it.</strong> A playbook informs; nothing forces the agent to open or follow it. Its leverage is entirely discoverability + habit.</li><li><strong>Playbooks rot.</strong> When the substrate changes, a playbook whose steps aren't updated actively mis-directs the response, worse than no playbook.</li><li><strong>Dead weight if the situation stops recurring.</strong> A playbook for a retired failure mode is noise.</li><li><strong>Not a substitute for prevention.</strong> A situation that recurs often enough should be <em>designed out</em> (architecture) or <em>gated</em> (a hard control), not merely playbooked.</li></ul>
 <h3>Known Uses</h3>
@@ -767,9 +848,41 @@ if __name__ == "__main__":
 <h3>Applicability</h3>
 <ul><li><strong>A ladder of enforcement points at distinct scopes.</strong> Without a runtime that exposes a commit event, a task-return event, and a unit-close gate, there is nowhere to place a control but the one hook you have. The ladder is what makes placement a <em>choice</em>.</li><li><strong>The property stated as a predicate</strong>, sharp enough that "where is this legible?" has an answer. A vague property ("the code is good") has no legibility scope and cannot be placed.</li><li><strong>A reviewer who asks the placement question at design time.</strong> This is a soft judgment; it holds only if someone reaching for a new control asks <em>at what scope is this legible?</em> before defaulting to the cheapest hook. A failure-interpretation handoff that routes a recurrence to <em>design a control</em> is the natural place to force the question.</li></ul>
 <h3>Structure</h3>
-<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> a Structure diagram for <em>Enforce at the right semantic level</em> is not yet authored.</div>
+<p>Rank the candidate placements as a ladder of widening scope; find the rung where the property is legible; place the control there. Below that rung the check is blind or false-fires; at or above it, the property is decidable.</p>
+<pre class="mermaid">flowchart TB
+  Prop[Property to enforce] --&gt; Q{At what scope is&lt;br/&gt;the property legible?}
+  Q --&gt; L1[Rung 1 · one changed file&lt;br/&gt;syntactic check]
+  Q --&gt; L2[Rung 2 · reasoning over the diff]
+  Q --&gt; L3[Rung 3 · whole worktree / final commit]
+  Q --&gt; L4[Rung 4 · whole task on agent return]
+  L1 -. below legible scope .-&gt; Miss([Misses, or false-fires])
+  L4 ==&gt;|legible here| Fire([Control decides correctly])</pre>
+<p><em>Accessible description: a property to enforce is matched against a ladder of placements ordered by widening scope — one changed file, reasoning over the diff, the whole worktree, the whole task on agent return. A control placed below the scope at which the property is legible either misses it or false-fires on a partial state; a control placed at the rung where the property is legible decides correctly.</em></p>
 <h3>Sample Code</h3>
-<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> a Sample Code snippet for <em>Enforce at the right semantic level</em> is not yet authored.</div>
+<p>Placement is a design-time judgment, so the "code" is the decision procedure, not a runtime call: for a given property, pick the coarsest window it needs, and refuse to wire the control any lower. Here the property <code>model_and_code_agree</code> is a claim about a <em>finished</em> unit, so it is legible only at agent-return scope; wiring it at the commit rung is the mis-placement the procedure rejects.</p>
+<pre><code>from enum import IntEnum
+
+class Scope(IntEnum):                 # the ladder, ordered by widening semantic scope
+    CHANGED_FILE   = 1                # a syntactic check over one file
+    DIFF_REASONING = 2                # a pass that reasons over the whole diff
+    WORKTREE       = 3                # the whole worktree / final commit
+    TASK_RETURN    = 4                # the whole unit of work, when the agent returns
+
+def legible_scope(prop: str) -&gt; Scope:
+    # the smallest window in which the property's evidence is fully visible
+    if prop == "banned_api_absent":      return Scope.CHANGED_FILE     # evidence is in one file
+    if prop == "no_data_exfiltration":   return Scope.DIFF_REASONING   # a SEQUENCE, not one call
+    if prop == "model_and_code_agree":   return Scope.TASK_RETURN      # a FINISHED-unit claim
+    raise ValueError(f"unranked property: {prop}")
+
+def place_control(prop: str, chosen: Scope) -&gt; None:
+    need = legible_scope(prop)
+    if chosen &lt; need:                                                  # below legible scope = blind / false-fires
+        raise SystemExit(
+            f"'{prop}' is legible at {need.name}, not {chosen.name}: "
+            "the control would miss it or reject a legitimate partial state"
+        )
+    wire_control(prop, chosen)                                         # at or above: the property is decidable</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>The higher rung costs latency.</strong> A property legible only at agent-return is caught later than a per-commit author would like; the intermediate work proceeds un-checked on that dimension until the unit closes. That is the price of soundness, not a defect — a lower placement would be <em>wrong</em>, not merely faster.</li><li><strong>It is a judgment, not a gate.</strong> Nothing forces a designer to place a control correctly; a mis-placed control still ships and still looks wired. The defense is the design-time question, and a soft question can be skipped. The tell of a skipped one is a control that fires forever and never catches its class.</li><li><strong>Over-placing is its own waste.</strong> Lifting a property that <em>is</em> legible in one file up to an Epic-close review buys nothing and delays the catch. The rule is the <em>lowest sound</em> rung, not the highest.</li></ul>
 <h3>Known Uses</h3>

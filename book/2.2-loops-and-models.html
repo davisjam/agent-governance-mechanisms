@@ -4,9 +4,9 @@
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
        color: #1a1a1a; margin: 0; background: #fdfdfc; }
-.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
 nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
-nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
@@ -122,6 +122,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
 <li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
@@ -130,10 +131,12 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li class="part">Appendix C — Product patterns</li>
 <li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="3.1-the-agent-stack.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 2.2 · Loops and Models"><header class="chap"><div class="kicker">Part 2 — The Mindset &nbsp;::&nbsp; Chapter 2.2</div><h1>Loops and Models</h1></header><p>Two ideas carry the rest of this book, and everything else is a consequence of them. The first is that all agent work is a <em>loop</em>. The second is that an agent steers that loop well only when you hand it a <em>model</em> of the world it is working in. Get these two right and the agent finds your answer fast; get them wrong and it wanders. Let me take them in turn.</p>
 <h2>Everything is a loop</h2>
-<p>An agent does not run in a straight line — it runs in a loop, and the loop has a fixed shape. It takes an input: the current problem, plus some notion of what success looks like. It reasons, and it acts in its operating environment. It produces a result. And that result folds back into the input for the next turn. Input, reasoning, output, fed around again. I call the practice of shaping that loop <strong>loop engineering</strong>, and nearly everything in this book is an instance of it.</p>
+<p>An agent does not run in a straight line — it runs in a loop, and the loop has a fixed shape. It takes an input: the current problem, plus some notion of what success looks like. It reasons, and it acts in its operating environment. It produces a result. And that result folds back into the input for the next turn. Input, reasoning, output, fed around again. Shaping that loop is <strong>commonly called loop engineering</strong>, and nearly everything in this book is an instance of it.</p>
 <p>Engineering a loop well starts with the metric, because the metric is what the agent steers by. The agent does not magically know your goals or your environment. You have to make its progress <em>measurable</em> — deterministically, through a quantitative check, or through a rubric that scores a qualitative result. Skip this, and you have told the agent nothing about what "done" means, so it searches, and searches, and searches, and never knows when to stop.</p>
 <p>The orchestration layer of this book's companion repository is itself a worked example of a loop engineered this way. The catalogue models the orchestrator — the process that dispatches agents, waits for them to land work, and cleans up after them — as an explicit reactive loop with a typed lifecycle: <em>dispatch → work → land → tombstone</em>, then refill and go again. The loop is not left implicit in the code; it is written down as a model the agent can read, which is exactly the second idea.</p>
 <h2>Give it a model of the world</h2>
+<blockquote><p>Vibe coding treats the program as an I/O device; engineering treats it as a system.</p></blockquote>
+<p>The difference is not aesthetic. It is what counts as proof that a change is good. Treat the program as an I/O device and the only question is whether the right thing came out this time. Treat it as a system and you ask what must stay true across every input, and you build the structure that holds the answer. Agents make both modes cheap, which is why you have to choose deliberately. The fast, seductive default is the I/O device, and the I/O device is what turns a hundred thousand lines into a mess nobody can reason over.</p>
 <p>The second piece is the input the agent reasons <em>over</em>. You have to give it a sense of the environment: when it pulls this lever, what happens, and what is it even allowed to do? That sense of the world is itself an input, and when you supply it, the agent knows what kind of reasoning the situation calls for.</p>
 <p>It is worth being blunt about why this works, because it is easy to feel like you are writing documentation into a void. A foundation model is, very loosely, a probabilistic reasoning machine. <em>Probabilistic</em> means it does not always do exactly what you want. <em>Reasoning machine</em> means it genuinely reasons — the interpretability work probing world-models inside these networks settled that question — so writing the model down is not wasted breath. It reads it, and it reasons over it.</p>
 <p>The most useful way to hold this is as a search. The agent is searching an enormous space: every place the answer might live, every configuration it might try, every function that might implement what you asked. That space is far too large to sweep. So when you structure the loop and hand over a model, what you are really doing is <strong>conditioning the probability distribution of the agent's behavior</strong> — biasing it to search where the answer actually is. Done well, this can take the agent from failing your task to completing it. And when it was already completing the task, it now does so in fewer tokens and less time, so you get back to the interesting parts of your job.</p>
