@@ -1,18 +1,25 @@
 {
   "_provenance": "AUTHORED source of truth for the book's headline numbers. Referenced from chapter prose via {{token}} substitution in build_book_html.py. A later pass refreshes the repo-derived figures from history-mining; the cost-model and policy figures are the book's canonical estimates. Edit here, never in the prose.",
 
-  "study_weeks": "16",
+  "_loc_provenance": "LoC tokens (prod_loc, support_loc, iac_loc, system_model_loc, total_loc, support_ratio) are POINT-IN-TIME source-tree category counts measured 2026-07-23 on /Users/davisjam/Projects/ada-tool (parent repo, HEAD at measurement) via the categorized cloc tool: `python3 tools/dev/run-cloc.py --json`. Category map: prod_loc=Production Code (490,231); support_loc=support-apparatus rollup (1,420,335 = everything except production; support_ratio 2.9 = support_loc/prod_loc); iac_loc=Infrastructure as Code (8,446); system_model_loc=System-model meta-files (7,380); total_loc=whole-tree code (2,593,580). These are source-tree counts, NOT the 15.5M engineering-line churn figure from repo-activity-histogram.py (which measures added+deleted lines over time).",
+
+  "_commit_provenance": "Commit tokens (commits_total, commits_per_week, commits_per_day, peak_week_commits, study_weeks) from `python3 talks-and-notes/history-mining/repo-activity-histogram.py --metric commits` on the parent repo, measured 2026-07-23 (19 full weeks, 2026-03-12 -> 2026-07-16). commits_total=22,024 over 19 weeks; sustained rate ~200 commits/day (~1,000-1,400/week); peak_week_commits=3,329 (week of 2026-05-21). commits_per_day was corrected 500 -> 200 (500/day implied ~3,500/week, a rate only the single peak week approached).",
+
+  "study_weeks": "19",
   "study_window": "March–July 2026",
   "model_vendor": "Anthropic Claude (Opus and Sonnet, March–July 2026)",
   "peak_accounts": "four",
 
-  "prod_loc": "431,901",
-  "support_loc": "1,212,628",
-  "iac_loc": "8,105",
-  "system_model_loc": "7,058",
-  "support_ratio": "2.7",
+  "prod_loc": "490,231",
+  "support_loc": "1,420,335",
+  "iac_loc": "8,446",
+  "system_model_loc": "7,380",
+  "total_loc": "2,593,580",
+  "support_ratio": "2.9",
+  "commits_total": "22,024",
   "commits_per_week": "1,000",
-  "commits_per_day": "500",
+  "commits_per_day": "200",
+  "peak_week_commits": "3,329",
   "agents_parallel": "six to eight",
 
   "corpus_decks": "~100 slide decks",
