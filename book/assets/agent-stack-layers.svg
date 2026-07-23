@@ -6,7 +6,7 @@
      outer shell, bottom = narrowest core) to hint an onion of nested layers. The
      model's only port points UP into the harness (internal to the stack), never
      out to the governance bar. See the .md for the rationale. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" width="900" height="540"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" width="1000" height="540"
      font-family="'Helvetica Neue', Arial, sans-serif" role="group"
      aria-labelledby="diagTitle diagDesc">
   <title id="diagTitle">The four-layer stack, its governance hooks, and the methodology that plugs into them</title>
@@ -14,12 +14,12 @@
 
   <style>
     .block  { fill:#f4f4f4; stroke:#333; stroke-width:1.5; }
-    .btitle { font-size:19px; font-weight:700; fill:#111; }
-    .bsub   { font-size:13px; font-style:italic; fill:#555; }
+    .btitle { font-size:30px; font-weight:700; fill:#111; }
+    .bsub   { font-size:22px; font-style:italic; fill:#4a4a4a; }
     .tab    { fill:#ffffff; stroke:#333; stroke-width:1.5; }
-    .tablbl { font-size:12.5px; font-weight:600; fill:#111; }
-    .govlbl { font-size:16px; font-weight:700; fill:#ffffff; }
-    .intlbl { font-size:11.5px; font-weight:600; fill:#333; }
+    .tablbl { font-size:21px; font-weight:600; fill:#111; }
+    .govlbl { font-size:30px; font-weight:700; fill:#ffffff; }
+    .intlbl { font-size:20px; font-weight:600; fill:#333; }
   </style>
 
   <!-- ===== The four conventional layer blocks (top = Application, bottom = model) ===== -->
@@ -51,42 +51,43 @@
   <!-- A tab on the model's TOP edge bridging the 28px gap up into the harness
        bottom. Not a governance hook; it says the model is reached THROUGH the
        harness. -->
-  <rect class="tab" x="205" y="354" width="96" height="28" rx="3"/>
-  <text class="intlbl" x="253" y="372" text-anchor="middle">via harness</text>
+  <rect class="tab" x="195" y="352" width="130" height="30" rx="3"/>
+  <text class="intlbl" x="260" y="372" text-anchor="middle">via harness</text>
   <!-- small upward arrowhead nudged into the harness underside -->
-  <path d="M253 348 l6 8 h-12 z" fill="#333"/>
+  <path d="M260 346 l6 8 h-12 z" fill="#333"/>
 
   <!-- ===== The "sticky-outy" tabs — small protrusions on the right edge ===== -->
-  <!-- Each tab sticks out from x=560 (block right edge) to x=626, centered on the
-       (arced) vertical midline of its block. -->
+  <!-- Each tab sticks out from x=560 (block right edge) rightward, centered on the
+       (arced) vertical midline of its block. Widened so the larger hook labels fit
+       without clipping; the governance bar and its fingers shift right to match. -->
 
   <!-- L4 tab: tests / CI   (block center y=85) -->
-  <rect class="tab" x="560" y="70"  width="66" height="30" rx="3"/>
-  <text class="tablbl" x="593" y="89"  text-anchor="middle">tests / CI</text>
+  <rect class="tab" x="560" y="66"  width="150" height="38" rx="3"/>
+  <text class="tablbl" x="635" y="91"  text-anchor="middle">tests / CI</text>
 
   <!-- L3 tab: git-hooks    (block center y=195) -->
-  <rect class="tab" x="560" y="180" width="66" height="30" rx="3"/>
-  <text class="tablbl" x="593" y="199" text-anchor="middle">git-hooks</text>
+  <rect class="tab" x="560" y="176" width="150" height="38" rx="3"/>
+  <text class="tablbl" x="635" y="201" text-anchor="middle">git-hooks</text>
 
   <!-- L2 tabs: claude-hooks + claude-skills  (block center y=309) -->
-  <rect class="tab" x="560" y="280" width="86" height="28" rx="3"/>
-  <text class="tablbl" x="603" y="298" text-anchor="middle">claude-hooks</text>
-  <rect class="tab" x="560" y="314" width="86" height="28" rx="3"/>
-  <text class="tablbl" x="603" y="332" text-anchor="middle">claude-skills</text>
+  <rect class="tab" x="560" y="272" width="180" height="34" rx="3"/>
+  <text class="tablbl" x="650" y="296" text-anchor="middle">claude-hooks</text>
+  <rect class="tab" x="560" y="312" width="180" height="34" rx="3"/>
+  <text class="tablbl" x="650" y="336" text-anchor="middle">claude-skills</text>
 
   <!-- ===== Governance bar with fingers that notch into the tabs ===== -->
-  <!-- Bar body x=680..800; fingers reach left from x=680 to the tab right edge x=626. -->
+  <!-- Bar body x=850..980; fingers reach left from the bar to each tab's right edge. -->
 
   <!-- fingers (drawn first, behind the bar) -->
   <g fill="#1a4a7a">
-    <rect x="626" y="78"  width="60" height="14" rx="2"/>  <!-- to tests/CI -->
-    <rect x="626" y="188" width="60" height="14" rx="2"/>  <!-- to git-hooks -->
-    <rect x="646" y="287" width="40" height="14" rx="2"/>  <!-- to claude-hooks -->
-    <rect x="646" y="321" width="40" height="14" rx="2"/>  <!-- to claude-skills -->
+    <rect x="710" y="78"  width="146" height="16" rx="2"/>  <!-- to tests/CI -->
+    <rect x="710" y="188" width="146" height="16" rx="2"/>  <!-- to git-hooks -->
+    <rect x="740" y="281" width="116" height="16" rx="2"/>  <!-- to claude-hooks -->
+    <rect x="740" y="321" width="116" height="16" rx="2"/>  <!-- to claude-skills -->
   </g>
 
   <!-- governance bar -->
-  <rect x="680" y="40" width="120" height="432" rx="6" fill="#1a4a7a" stroke="#0f3050" stroke-width="1.5"/>
-  <text class="govlbl" x="740" y="256" text-anchor="middle" transform="rotate(90 740 256)">Methodology + governance</text>
+  <rect x="850" y="40" width="130" height="432" rx="6" fill="#1a4a7a" stroke="#0f3050" stroke-width="1.5"/>
+  <text class="govlbl" x="915" y="256" text-anchor="middle" transform="rotate(90 915 256)">Methodology + governance</text>
 
 </svg>

@@ -1,30 +1,30 @@
 # Quick start — walk Claude through adopting these mechanisms
 
-Governance-centric agentic software engineering is a **methodology** — patterns you *adapt* to your stack,
-your agents, and your failure modes, not a framework you drop in unchanged. The self-* skills are **aids to
-that mindset**; you *do* install and run them, but they carry a stance to apply, not a black box to adopt.
+Governance-centric agentic software engineering is a **methodology**: you adapt these patterns to your
+stack, your agents, and your failure modes. It is not a framework you drop in unchanged. The self-* skills
+aid the mindset. You install and run them, but they carry a stance to apply, not a black box to adopt.
 
-Claude can help: it reads the catalogue and turns it on your own repo. This page gives you the whole
-adoption sequence as **paste-ready prompts** — each one asks Claude to examine a shipped starter and adapt
-it to your repo. Two ways to run the same sequence:
+Claude reads the catalogue and turns it on your own repo. This page hands you the whole adoption sequence as
+**paste-ready prompts** — each asks Claude to examine a shipped starter and adapt it to your repo. You run
+the same sequence one of two ways:
 
-- **Auto mode** — paste one block; Claude runs the sequence end to end, pausing for your approval at each write.
-- **Interactive mode** — walk it step by step, each prompt paired with what it does and where to read more.
+- **Auto mode** — paste one block. Claude runs the sequence end to end, pausing for your approval at each write.
+- **Interactive mode** — walk it step by step. Each prompt pairs with what it does and where to read more.
 
-Two ways to *bring* the mechanisms in, orthogonal to the two run modes:
+You also choose how to *bring* the mechanisms in, a choice orthogonal to the two run modes:
 
 - **Skill (Path A)** — installable, auto-triggers, runs the loop for you.
-- **DIY (Path B)** — read the patterns and adapt them by hand; the route when you can't run a plugin.
+- **DIY (Path B)** — read the patterns and adapt them by hand. Take this route when you can't run a plugin.
 
-The adoption prompts below say **(Path A)** or **(Path B)** where the two diverge. Do step 0 first; the rest
-is the same sequence either way.
+The prompts below mark **(Path A)** or **(Path B)** where the two diverge. Do step 0 first; the rest is the
+same sequence either way.
 
 ## Step 0 — bring the mechanisms in
 
-**Path A — install the skill (batteries included).** The whole loop as an installable Claude skill that
-auto-triggers — no prompt to paste. Know what you're installing: a **third-party plugin that reads, and on
-your approval writes, your repo**. It is source-visible, MIT-licensed, gated (*audit* only advises;
-*interpret-failure* acts only on your greenlight), and does no network I/O. In Claude Code:
+**Path A — install the skill (batteries included).** The whole loop installs as a Claude skill that
+auto-triggers — no prompt to paste. Know what you install: a **third-party plugin that reads your repo and,
+on your approval, writes it**. It is source-visible, MIT-licensed, and does no network I/O; *audit* only
+advises, and *interpret-failure* acts only on your greenlight. In Claude Code:
 
 ```
 /plugin marketplace add davisjam/agent-governance-mechanisms
@@ -35,19 +35,18 @@ The `agent-governance` plugin ships **three partner skills**: **self-governance*
 missing guardrails, or convert a recurring failure into a durable control), **self-operations**
 (*operate* — run the agent-fleet substrate day-to-day), and **self-communicate** (*communicate* — write
 and diagram engineer-facing docs well: the rhetoric toolkit, the Diátaxis register, a house lexicon, and a
-prose+diagram audit). All three install with the same plugin — start a new session and they load. Pull a
+prose-plus-diagram audit). All three install with the one plugin; start a new session and they load. Pull a
 later release with `/plugin marketplace update agent-governance-mechanisms`. No marketplace? Vendor the
-folder — copy `plugin/agent-governance/skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/`
+folder: copy `plugin/agent-governance/skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/`
 (one repo), then start a fresh session.
 
-**Path B — DIY (installs nothing).** The conservative choice — for a company, or anyone who can't run a
+**Path B — DIY (installs nothing).** The conservative choice, for a company or anyone who can't run a
 third-party plugin. Nothing runs in your agent loop that you didn't write. Vendor a copy of the catalogue
-into your repo (or hand your agent the URL), and let your coding agent read the [`README`](README.md), the
+into your repo (or hand your agent the URL), and have your coding agent read the [`README`](README.md), the
 [`INDEX`](INDEX.md), and the role folders ([`agent/`](agent/README.md) · [`models-bridge/`](models-bridge/README.md) ·
 [`product/`](product/README.md)) before you start the sequence.
 
-If a plugin isn't an option for your org, use Path B; the two are **not exclusive** — install the skill on a
-personal project, and go DIY org-wide.
+The two paths are **not exclusive**: install the skill on a personal project, and go DIY org-wide.
 
 <!--adoption-source
   SINGLE SOURCE OF TRUTH for the adoption sequence. Author each STEP once here; the build
@@ -364,22 +363,21 @@ me, then use the engineering register to write my docs and the audit procedure t
 
 ## What to reach for first
 
-- If you run **more than one agent at a time**: start with the **agent** role — a
+- **Running more than one agent at a time?** Start with the **agent** role. A
   [brief-linting](agent/context-and-dispatch/brief-linting.md) gate and a
   [pre-commit hook](agent/gates-and-merge-train/pre-commit-hook.md) pay off immediately.
-- If your agents keep **breaking things that "looked unrelated"**: the **models-bridge** role — a typed
-  [executable source of truth](models-bridge/system-models/executable-source-of-truth.md) that agents
-  read and that governs the codebase — is the scaling unlock.
-- If you ship a **user-facing artifact**: the **product** role — a
+- **Agents keep breaking things that "looked unrelated"?** Reach for the **models-bridge** role. A typed
+  [executable source of truth](models-bridge/system-models/executable-source-of-truth.md) that agents read
+  and that governs the codebase is the scaling unlock.
+- **Shipping a user-facing artifact?** Reach for the **product** role. A
   [content validator](product/validation-and-conformance/content-validator.md) and a closed
   [repair vocabulary](product/repair-vocabulary/remediation-verbs.md) bound what the agent can get wrong.
 
 ## The mindset
 
-Every governance mechanism is written as *the failure it kills* and *why it is not just the cheaper thing
-everyone already does*. When you adapt one, keep that framing: name the failure in **your** system — one
-you've hit, or one you can see coming — then borrow the mechanism. A mechanism you can't attach to any
-failure, real or anticipated, is one you might not need yet.
+Every mechanism is written as *the failure it kills* and *why it is not just the cheaper thing everyone
+already does*. Keep that framing when you adapt one. Name the failure in **your** system — one you've hit,
+or one you can see coming — then borrow the mechanism. A mechanism you can't attach to any failure, real or
+anticipated, is one you don't need yet.
 
-To read more about one engineer's experience with this method, see the
-[paper](https://arxiv.org/pdf/2607.01087).
+For one engineer's experience with this method, see the [paper](https://arxiv.org/pdf/2607.01087).

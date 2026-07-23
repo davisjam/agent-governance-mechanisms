@@ -364,6 +364,61 @@ the diagram is decoration, and decoration that carries load is an accessibility 
 
 ---
 
+## Annotation — three tiers, and the fonts they demand
+
+Text in a figure does three different jobs, and each job wants a different size. Name the tier, then size
+for it. The "Legible labels" bullet above sets the bar; this section says how to hit it.
+
+- **Headings — the largest text.** The figure's title, or a panel title when the figure splits into
+  panels. One per figure (or one per panel). It names what the reader is looking at before they parse the
+  parts. This is the biggest type on the page.
+- **In-figure labels — the medium text.** The names of the things: a node, a box, an axis, a lane. This
+  is the working text of the diagram — the reader reads these to know what each shape *is*. Most text in a
+  figure is a label.
+- **In-figure annotations — the smallest text.** The marginal notes: an aside, a callout, a caption under
+  a box explaining an element, an arrow label naming what flows. An annotation comments on a label; it is
+  never the primary name of a shape. Smallest, but still legible without effort.
+
+The tiers are a *hierarchy of size*, and the ordering is the rule: a heading reads larger than a label,
+a label larger than an annotation. When two pieces of text are the same job, they are the same size.
+
+### The fonts are too small — recalibrate up
+
+**State it plainly: the prevailing figure fonts are uniformly too small.** They force the reader to zoom,
+and zooming is a failure — a reader on a laptop, a reader presenting to a room, a reader who does not
+think to pinch the page all read a too-small label as no label. Calibrate for a fifty-year-old's eyes on
+an ordinary screen, not a twenty-five-year-old's on a retina display. If *you* have to lean in, the font
+lost.
+
+The principle, before any number:
+
+- **A primary label is never smaller than the body text around it.** The figure sits inline in prose at
+  book width; a node's name should read at least as large as the paragraph beside it. A label the reader
+  must work harder to read than the sentence that introduced it has failed.
+- **Size for the rendered width, not the viewBox width.** A font size in SVG user units renders smaller
+  the wider the viewBox, because the whole thing is scaled down to fit the column. A 12-unit label in a
+  520-wide viewBox and a 12-unit label in a 960-wide viewBox are *not* the same apparent size — the second
+  is nearly half as tall on screen. Reason in apparent size, and scale the user-unit number up for a wider
+  viewBox.
+- **Contrast backs the size.** A large label in a low-contrast grey still fails. Dark text on light, light
+  on dark; never mid-grey on mid-grey.
+
+Concrete minimums, for a figure shown inline at book width (~50rem) with a **~500-unit-wide viewBox**:
+
+| Tier | Minimum (500-wide viewBox) | Job |
+|---|---|---|
+| **Heading** | ~20–24 user units | figure / panel title |
+| **In-figure label** | ~15–17 user units | node, box, axis names |
+| **In-figure annotation** | ~12–13 user units | asides, callouts, arrow labels |
+
+**Scale the numbers up for a wider viewBox.** These minimums are for a ~500-unit viewBox. For a 900-unit
+viewBox, multiply by ~1.8; for a 960-unit one, by ~1.9 — so a label wants ~28–32 user units, not 15–17, to
+render at the same apparent size. The table is a floor in *apparent* size; convert it to user units for the
+viewBox you are drawing in. When in doubt, go one step larger — a label that is slightly too big costs
+nothing; one that is too small costs the reader the figure.
+
+---
+
 ## The short version
 
 Draw the shape when the content has one. Author it in Mermaid — it is text, it renders in Markdown, it
@@ -371,4 +426,5 @@ diffs like code — and drop to hand-authored SVG only for a geometry Mermaid ca
 catalogue's "Y" figure does. Pick the type that fits the shape: structure for what the system *is*,
 behavior for what it *does*, data for what it *stores* — and matched to the Diátaxis mode of the prose
 around it. Generate the diagram from a model where one exists. And label it so a reader who can't see it
-still gets the point.
+still gets the point — headings largest, labels medium, annotations smallest, and every tier sized to read
+without zooming at book width, for older eyes on an ordinary screen.
