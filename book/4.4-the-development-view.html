@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 4.4 · The Development View</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="current" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.5-the-physical-view.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.4 · The Development View"><header class="chap"><div class="kicker">Part 4 — The Model Zoo &nbsp;::&nbsp; Chapter 4.4</div><h1>The Development View</h1></header><p>The Process view held the running system consistent. The Development view steps off the runtime entirely and looks at the source: how the code is packaged into modules, which layer may depend on which, and who owns each piece. It is the view the people and agents who <em>build</em> the system reason through — the map an agent needs to answer "where am I in this codebase, and what may this file touch?" before it changes a line.</p>
+<p>One general type anchors the view. A <strong>bill of materials</strong> captures a project's dependencies, direct and transitive — the software supply chain a build rests on. Two real models embody the view on live code: the component and zone model, which is the ownership and boundary map, and the rule-metadata registry, the slice of the domain registries that models the governance substrate's own rules — the model the book itself is partly governed by.</p>
+<p>A <strong>bill of materials</strong> — the view's general type — is the dependency graph of a build: every third-party package it pulls in, direct and transitive, the SBOM lens on the code. It is a development-view concern because a dependency is a packaging fact, not a runtime one: it decides what the build fetches and what a fresh checkout must resolve. The discipline it enforces is completeness. Every package the code or the quality gates use must appear in the matching manifest, or a fresh checkout's build breaks on a resolve the developer never saw fail. An out-of-band install that never lands in the manifest is invisible to the bill of materials, and invisible is where a supply-chain surprise lives.</p>
+<h2 id="component-zone-model">The component &amp; zone model</h2>
+<p><em>A typed catalog of every component's code zone — its focus directories, its tags, its boundary kind, its external seams, its read surfaces — so "which component owns this file, and what may touch it" is a queried fact rather than a per-tool guess.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Two, both drifting silently the moment a directory moves.</p>
+<p>- <strong>Ownership correctness</strong> — <em>which component owns this file, and does that answer match the real directory tree?</em> A reverse-mapping test reconciles the declared zones against the tree in both directions, so a moved directory fails the test instead of quietly staling every tool's private inference. - <strong>Boundary soundness</strong> — <em>may this component's zone reach that seam?</em> The declared boundary kind and sanctioned seams make an out-of-bounds reach a lint finding, not a slow erosion.</p>
+<p><strong>(b) Constructs and relations.</strong> A typed registry keyed by component.</p>
+<p>- <strong>`Component`</strong> — one unit of ownership: its focus directories, its tags, its boundary kind (internal, a trust edge, an external seam), and its declared read surfaces. - <strong>The zone relation</strong> — each `Component` claims a set of directories; the union must partition the real tree, and the reverse-mapping test asserts the match both ways. - <strong>The seam relation</strong> — each boundary component declares the external seams it may cross, so a reach outside the declared set is a finding.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a component flow — the registry feeding the tools that read it, with a reverse-mapping test joining registry to real tree. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">flowchart LR
+  Reg[(Component registry)] --&gt; Lints[Boundary lints]
+  Reg --&gt; Dispatch[Dispatch]
+  Reg --&gt; Inject[Context injection]
+  Tree[(Real directory tree)] --&gt; RM{{Reverse-mapping test}}
+  Reg --&gt; RM</pre>
+<p><em>Accessible description: the component registry feeds the boundary lints, the agent dispatch, and the dynamic context injection, so every tool reads the same ownership answer. A reverse-mapping test joins the registry to the real directory tree and fails the build if the declared zones and the tree disagree in either direction.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> A reverse-mapping test and boundary lints:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every declared zone matches a real directory | `[]P` (safety) | Reverse-mapping test, model ⊆ reality — a declared zone with no directory is a finding. | | Every source directory is owned by exactly one component | `[]P` (safety) | Reverse-mapping test, reality ⊆ model — an unowned or double-owned directory is a finding. | | No component reaches a seam its boundary kind forbids | `[]P` (safety) | Boundary lint over the declared seam set. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The reverse-mapping test re-reads the real directory tree and reconciles the declared zones against it, so the tree is the ground truth. The join key is the focus directory: a reader round-trips from a `Component` record to the files it owns by that path prefix, and dispatch, lints, and context injection all resolve ownership through the same key.</p>
+<p><em>Also seen in:</em> Logical (a component is a functional-structure unit). Rendered in full here.</p>
+<h2 id="rule-metadata-registry">The rule-metadata registry</h2>
+<p><em>The self-referential slice of the domain registries: the governance rules' own metadata, extracted from inline blocks in the codebase and generated into the rule index — the model the governance substrate, and this book, are partly governed by.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Two properties about the governance rules themselves.</p>
+<p>- <strong>Rule-index consistency</strong> — <em>does the published rule index match the rule metadata declared in the code?</em> The index is generated from the metadata, so a rule added in the code but missing from the index, or an index entry with no backing rule, is a drift finding. - <strong>Metadata completeness</strong> — <em>does every governance rule carry the metadata its class requires?</em> A rule that omits a required field — its enforcement scope, its bypass, its owning component — fails the completeness lint before it can ship half-specified.</p>
+<p><strong>(b) Constructs and relations.</strong> A registry keyed by rule, extracted from the source.</p>
+<p>- <strong>`Rule`</strong> — one governance rule: its stable identifier, its enforcement scope, its severity, its owning component, and its bypass path if any. - <strong>The extraction relation</strong> — each `Rule` is induced from an inline metadata block at the rule's own site in the code, so the metadata lives next to the thing it governs. - <strong>The generation relation</strong> — the rule index is generated from the set of `Rule` records, each index entry carrying a provenance header so a hand-edit is caught.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a data-flow — inline blocks extracted to the registry, the registry generated to the index, with drift gates on both hops. Authored for this self-referential slice, distinct from the generic domain-registries ER diagram:</p>
+<pre class="mermaid">flowchart LR
+  Inline[(Inline rule blocks&lt;br/&gt;at each rule site)] --&gt;|extract| Reg[(Rule-metadata registry)]
+  Reg --&gt;|generate| Index[/Rule index&lt;br/&gt;+ provenance header/]
+  Reg --&gt; Complete{{Completeness lint}}
+  Index --&gt; Fresh{{Freshness lint}}
+  Reg --&gt; Fresh
+  Complete --&gt;|missing field| Fail([build blocked])
+  Fresh --&gt;|index differs| Fail</pre>
+<p><em>Accessible description: inline metadata blocks at each rule's own site in the code are extracted into the rule-metadata registry, which is then generated into the published rule index with a provenance header. A completeness lint fails the build if a rule omits a required field, and a freshness lint fails it if the committed index differs from a regeneration — so the index cannot drift from the rules and no rule can ship half-specified.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> A completeness lint and a freshness lint:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every rule in the index has a backing metadata block | `[]P` (safety) | Freshness lint, index ⊆ registry — an index entry with no rule is a finding. | | Every rule's metadata block appears in the index | `[]P` (safety) | Freshness lint, registry ⊆ index — regenerate and diff. | | Every rule carries the metadata its class requires | `[]P` (safety) | Completeness lint over the required-field set for the rule's class. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Bidirectional.</em> The registry is model-from-code — extracted from inline blocks at each rule's site — and the index is model-to-code, generated from the registry with a provenance header. The join key is the rule identifier, which indexes the inline block, the registry record, and the index entry, so a reader round-trips from a published rule straight to the code site that declares it.</p>
+<p><em>Also seen in:</em> Logical (it is one slice of the domain registries). Rendered in full here as the governance substrate's own model.</p>
+<p>---</p>
+<p>The Development view maps how the source is organized for the people who build it. The next chapter maps where the built parts actually run — across which hosts and network boundaries, under what per-host cost and load policy. That is the Physical view.</p><div class="pager"><a class="prev" href="4.3-the-process-view.html"><span class="dir">‹ Previous</span><span class="ttl">4.3 · The Process View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.5-the-physical-view.html"><span class="dir">Next ›</span><span class="ttl">4.5 · The Physical View</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.5-the-physical-view.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

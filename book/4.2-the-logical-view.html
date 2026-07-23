@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 4.2 · The Logical View</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="current" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.3-the-process-view.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.2 · The Logical View"><header class="chap"><div class="kicker">Part 4 — The Model Zoo &nbsp;::&nbsp; Chapter 4.2</div><h1>The Logical View</h1></header><p>The Logical view is the functional structure — the objects, the types, and how they relate. It answers the designer's question: <em>what is this system, as a set of concepts?</em> Before you ask what runs at once, or where the parts live, or how the source is packaged, you ask what the parts <em>are</em>. That is the logical view, and it is the one most engineers already draw without naming — the boxes-and-arrows sketch of the domain.</p>
+<p>Two general model types live here. A <strong>data-flow diagram</strong> traces what data exists and who may touch it. An <strong>inheritance hierarchy</strong> shows which specializations of an abstract concept exist. Two of the catalogue's real models embody the view on live code: the service-flow model, which is the functional structure of a service-oriented architecture, and the domain registries, which are the typed facts that functional model rests on.</p>
+<blockquote>### Inset I5 — What is a data-flow diagram? {#inset-dataflow}  A <strong>data-flow diagram</strong> traces <em>data</em> moving through transforms — a source, the stages that reshape it, and the sink — where each edge names <em>what flows across it</em>, not <em>what decides</em>. It differs from a control flowchart: a flowchart's diamonds branch on decisions; a data-flow's edges carry a document, a JSON blob, a rendered page. It is the natural lens for <strong>security and privacy</strong>, because the question there is exactly "where does this data go, and who may touch it on the way?" Draw it left to right, label each edge with the data on the wire, and a reader sees the path a piece of data takes and every component that handles it.  ```mermaid flowchart LR Doc[/Raw document/] --&gt;|bytes| Parse[Parse] Parse --&gt;|typed model| Remediate[Remediate] Remediate --&gt;|stamped model| Write[/Output document/] ```  <em>Accessible description: a raw document enters as bytes, is parsed into a typed model, remediated into a stamped model, and written out — each edge naming the data that crosses it, so a reader can see every component that touches the document.</em></blockquote>
+<p>An <strong>inheritance hierarchy</strong> — the second logical-view type — shows an abstract concept and its concrete specializations, so an engineer sees which extensions exist and where a new one would attach. A remediation tool's inheritance hierarchy names the abstract "document format" and its concrete leaves — the slide format, the word-processor format, the spreadsheet, the PDF — each carrying the same operations against a different file model. The hierarchy is the logical statement of <em>what kinds of thing the system knows how to handle</em>, and it is where a reader looks to answer "can this system be extended to a new format, and what must the new leaf provide?"</p>
+<p>The two real models below carry the view. The data-flow and inheritance types are the vocabulary; these are the worked embodiments.</p>
+<h2 id="service-flow-model">The service-flow / API model</h2>
+<p><em>The typed source-of-truth for a service-oriented architecture — its services, their endpoints, their authentication, and the wiring between them — from which the access policy and environment wiring are generated and against which the real call graph is checked.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Three, each a question the scattered deploy config and handler code cannot answer without a single model.</p>
+<p>- <strong>Wiring correctness</strong> — <em>does every declared caller-to-callee edge have a real call site, and every real cross-service call a declared edge?</em> An undeclared call is an ungoverned one. - <strong>Access-policy soundness</strong> — <em>does the generated network access policy match the wiring the model declares?</em> The policy is emitted from the model, so a service can reach only what the model says it may. - <strong>Contract parity</strong> — <em>does each endpoint's declared request and response shape match the handler that serves it?</em> A drifted contract is a runtime failure the model turns into a build failure.</p>
+<p><strong>(b) Constructs and relations.</strong> A typed catalog in the dialect of a service-catalog schema, adopted for its hard-won structure and read by the project's own tools.</p>
+<p>- <strong>`Service`</strong> — one deployable unit, with its name, its owning layer, and the endpoints it serves. - <strong>`Endpoint`</strong> — one API surface on a service: its path, its auth requirement, and its declared request and response contract. - <strong>`Wire`</strong> — one declared caller-to-callee edge, joining a calling service to a called endpoint. The set of wires is the graph the access policy is generated from and the call graph is checked against.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a data-flow — the model on the left, the generators and parity gates it feeds on the right. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">flowchart LR
+  M[(Service model)] --&gt; Gen[Generators]
+  Gen --&gt; Policy[/Access policy/]
+  Gen --&gt; Env[/Env wiring/]
+  Reality[(Trees + handlers)] --&gt; P{Parity gates}
+  M --&gt; P
+  P --&gt;|either side diverges| Fail([build blocked])</pre>
+<p><em>Accessible description: the service model feeds generators that emit the access policy and environment wiring, and it feeds parity gates that compare it against the real service trees and handlers. When either the model or reality diverges, the build is blocked. The model is authoritative for what it generates and reconciled against reality for what it checks.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> The checkers are the trunk drift-and-parity machinery, pointed at the service graph:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every declared wire has a real call site | `[]P` (safety) | Call-graph parity lint: each `Wire` edge must resolve to a real cross-service call. | | Every real cross-service call is a declared wire | `[]P` (safety) | Same lint, reverse direction — an undeclared call is a finding. | | The generated access policy matches the wiring | `[]P` (safety) | Freshness lint over the generated policy: regenerate from the model, diff against the committed artifact. | | Each endpoint's contract matches its handler | `[]P` (safety) | Contract parity check joining the `Endpoint` shape to the handler signature. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Bidirectional.</em> The access policy and environment wiring are model-to-code — generated from the declared model. The call-graph parity runs model-from-code — it re-reads the real call sites and reconciles. The join key from a model row to the code is the endpoint path, which indexes both a `Wire` edge and the handler that serves it.</p>
+<p><em>Also seen in:</em> Physical (the generated access policy is a placement artifact). Rendered in full here; referenced from the Physical chapter.</p>
+<h2 id="domain-registries">The domain registries</h2>
+<p><em>Frozen typed registries for the system's domain facts — the file types it handles, its known conformance gaps, its scheduled jobs, its user-facing surfaces, its competitor set — each the single source of truth for its slice, read by the tools and docs that present it.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Two properties the raw code and scattered docs cannot hold on their own.</p>
+<p>- <strong>Fact consistency</strong> — <em>does every place that presents a domain fact agree with the one registry?</em> The competitor doc, the conformance-coverage table, and the code that switches on file type all read the same frozen registry, so they cannot disagree. - <strong>Coverage completeness</strong> — <em>is every value the system must handle actually declared?</em> A new file type the code handles but the registry omits, or a conformance gap the code closes but the coverage table never listed, is a drift finding.</p>
+<p><strong>(b) Constructs and relations.</strong> Each registry is a frozen table keyed by its slice.</p>
+<p>- <strong>`Registry`</strong> — one domain slice (file types, conformance gaps, scheduled jobs, surfaces). - <strong>`Entry`</strong> — one fact in a slice: a key and its typed value. A file-type entry carries the extension and its handler class; a conformance-gap entry carries the criterion and its coverage status. - <strong>The single-source relation</strong> — every consumer of a fact joins to the registry by key rather than embedding a copy, so the fact is stated once.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is an ER schema — a registry holding many typed entries. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">erDiagram
+  REGISTRY ||--o{ ENTRY : "holds"
+  REGISTRY {
+    string slice PK
+  }
+  ENTRY {
+    string key PK
+    string slice FK
+    string value
+  }</pre>
+<p><em>Accessible description: a registry record holds many entry records, each an entry keyed within its slice and carrying a typed value. Every consumer of a domain fact joins to the registry by key rather than copying the fact, so the fact lives in one place.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> The checkers are coverage lints and a read-don't-hardcode ban:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every value the code handles is declared in the registry | `[]P` (safety) | Coverage lint: the switch arms in the code must each map to a declared entry. | | No consumer embeds a snapshot of a registry fact | `[]P` (safety) | Snapshot-ban lint: a hardcoded copy of a registry value is a finding. | | Every presenting doc agrees with the registry | `[]P` (safety) | Freshness lint over the generated doc: regenerate from the registry, diff against the committed doc. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code for coverage, model-to-code for the generated docs.</em> The coverage lint reconciles the registry against the code's switch arms; the presenting docs are generated from the registry. The join key from a model row to the code is the entry key — the file-type extension, the conformance criterion — which indexes both the registry and the code path that consumes it.</p>
+<p><em>Also seen in:</em> Development (a registry of scheduled jobs or user surfaces is a development-substrate fact). One slice, the governance rules' own metadata, is rendered separately in the Development chapter as the rule-metadata registry. Rendered in full here; referenced from the Development chapter.</p>
+<p>---</p>
+<p>The Logical view names what the system is. The next chapter asks the question the logical view cannot: not <em>what are the parts</em> but <em>what happens when many of them run at once</em>. That is the Process view, and it is where invariants stop being predicates over one state and start being predicates over an interleaving.</p><div class="pager"><a class="prev" href="4.1-the-executable-zoo.html"><span class="dir">‹ Previous</span><span class="ttl">4.1 · The Executable Zoo</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.3-the-process-view.html"><span class="dir">Next ›</span><span class="ttl">4.3 · The Process View</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.3-the-process-view.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

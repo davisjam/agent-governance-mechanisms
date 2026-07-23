@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 4.4 · Training Data and the Novelty Axis</title><style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 5.4 · Training Data and the Novelty Axis</title><style>
 :root { --accent: #1a4a7a; }
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -99,22 +99,28 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
 <li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
 <li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
-<li><a class="" href="3.4-the-model-zoo.html">3.4&nbsp; The Model Zoo</a></li>
-<li><a class="" href="3.5-lifecycles-and-runbooks.html">3.5&nbsp; Lifecycles and Runbooks</a></li>
-<li class="part">Part 4 — Putting It to Work</li>
-<li><a class="" href="4.1-brownfield.html">4.1&nbsp; Brownfield</a></li>
-<li><a class="" href="4.2-the-skills.html">4.2&nbsp; The Skills</a></li>
-<li><a class="" href="4.3-transformations.html">4.3&nbsp; Everything Is a Transformation</a></li>
-<li><a class="current" href="4.4-training-data.html">4.4&nbsp; Training Data and the Novelty Axis</a></li>
-<li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="current" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
-<li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
 <li class="part">Appendix C — Product patterns</li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-conclusion.html">Next part ⇒</a><a href="4.5-lessons-learned.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.4 · Training Data and the Novelty Axis"><header class="chap"><div class="kicker">Part 4 — Putting It to Work &nbsp;::&nbsp; Chapter 4.4</div><h1>Training Data and the Novelty Axis</h1></header><p>There is one last property of a coding agent you have to reason about, and it decides how much of this book you will actually need: its training data. Everything in these chapters is about conditioning a probability distribution — telling the agent the path through its search space. But that distribution did not start neutral. It was shaped by what the model was trained on, and that shape determines where the discipline is optional and where it is the only thing that will save you. This chapter is about that axis, from the common case to the hard one.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="6.1-conclusion.html">Next part ⇒</a><a href="5.5-lessons-learned.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 5.4 · Training Data and the Novelty Axis"><header class="chap"><div class="kicker">Part 5 — Putting It to Work &nbsp;::&nbsp; Chapter 5.4</div><h1>Training Data and the Novelty Axis</h1></header><p>There is one last property of a coding agent you have to reason about, and it decides how much of this book you will actually need: its training data. Everything in these chapters is about conditioning a probability distribution — telling the agent the path through its search space. But that distribution did not start neutral. It was shaped by what the model was trained on, and that shape determines where the discipline is optional and where it is the only thing that will save you. This chapter is about that axis, from the common case to the hard one.</p>
 <h2>The model is biased toward what it has seen</h2>
 <p>Treat the training data as the whole internet and every book ever written, and treat the model as biased toward whatever it saw a lot of. Read one book with one position and a hundred with the opposite, and it leans to the hundred. Except where trainers worked hard to force a particular behavior, it simply weights the common over the rare. This has a moral dimension the labs fight with reinforcement learning from human feedback — you teach it not to lie, and they lie anyway; not to steal, and they steal; not to break into other people's computers, and they will, given the chance. Training data has its limits. But the same bias has an engineering consequence that is more useful to us: the kinds of systems the model has seen a great deal of, it can build a variation on almost effortlessly; the kinds it has never seen, it struggles with.</p>
 <p>That divides the world of software neatly. If you are building your own version of something standard, the model has read the documentation and watched the walkthroughs of a hundred competing products and can reproduce the class in its sleep. (One caution: building a competitor this way can infringe a <em>patent</em> even though you copied no <em>code</em> — a patent covers the concept, not the text — so tread carefully.) A to-do list, a recipe tracker, a fitness app — GitHub holds a million of each, and the agent knows them cold. Any "typical web application" — a form-driven UI, a backend storing to a database, a compute layer producing outputs over it — it can build without breaking a sweat, because you are asking it to regurgitate a class it has seen a thousand times and then specialize it. This is exactly why a lab can credibly claim it built a whole C compiler in a week, or ported one runtime to another language in three days: the training data is full of compilers, and in the porting case, full of the very code being ported. Impressive, and entirely unsurprising.</p>
@@ -126,4 +132,4 @@ nav.toc .jump { margin-top: 0.7rem; }
 <div class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> governing an untrusted agent. This chapter notes in passing that agents lie,
 steal, and break into machines given the chance, and that a hook can block a network call — but the
 security thread deserves its own treatment: prompt injection, exfiltration through the very tools you
-granted, and supply-chain exposure. Consolidate it rather than leaving it scattered.</div><div class="pager"><a class="prev" href="4.3-transformations.html"><span class="dir">‹ Previous</span><span class="ttl">4.3 · Everything Is a Transformation</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.5-lessons-learned.html"><span class="dir">Next ›</span><span class="ttl">4.5 · Lessons Learned</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-conclusion.html">Next part ⇒</a><a href="4.5-lessons-learned.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+granted, and supply-chain exposure. Consolidate it rather than leaving it scattered.</div><div class="pager"><a class="prev" href="5.3-transformations.html"><span class="dir">‹ Previous</span><span class="ttl">5.3 · Everything Is a Transformation</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.5-lessons-learned.html"><span class="dir">Next ›</span><span class="ttl">5.5 · Lessons Learned</span></a></div><div class="pager-jump"><div class="jump"><a href="6.1-conclusion.html">Next part ⇒</a><a href="5.5-lessons-learned.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

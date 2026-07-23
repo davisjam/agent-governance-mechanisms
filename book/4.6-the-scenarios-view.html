@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 4.6 · The Scenarios View</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="current" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.6 · The Scenarios View"><header class="chap"><div class="kicker">Part 4 — The Model Zoo &nbsp;::&nbsp; Chapter 4.6</div><h1>The Scenarios View</h1></header><p>The four views so far are static portraits. The Logical view says what the system is, the Process view what it does at once, the Development view how it is packaged, the Physical view where it runs. The +1 view sets them in motion. A <strong>scenario</strong> — a use case, a journey — walks a real goal end to end, and in walking it exercises the other four and validates that they hold up. Kruchten made scenarios the +1 for exactly this reason: they are how you check that the four architectural views describe a system that actually works.</p>
+<p>One general type anchors the view. A <strong>user journey</strong> names the interfaces a user moves through and the actions they take to accomplish something of value. Four real models embody the view: the user-journey model (the product-goal-to-code bridge), the agent-orchestration model (the <em>developer</em>-journey counterpart, the scenarios view pointed at the fleet rather than the user), journey-criticality-to-test-placement, and coverage-to-model-node mapping. The chapter closes with the zoo's flagship demonstration — four models joined so a product goal reaches all the way to how the deploy rations its tests.</p>
+<p>Two insets a reader needs for this view's model pages:</p>
+<blockquote>### Inset I10 — Coverage over model nodes vs line coverage {#inset-node-coverage}  <strong>Line coverage</strong> counts <em>lines</em> — which source lines a test suite executed. It is easy to game and easy to misread: a high percentage can hide the one untested branch that matters. Node coverage counts <em>meanings</em> instead. Project the coverage onto a model's nodes — its states, its seams, its invariants, its journey endpoints — and ask which <em>nodes</em> a test exercised. Now an untested invariant cannot hide inside a 95% line number, because the invariant is a node, and the node is either covered or it is a visible gap. The shift is from "how much code ran" to "which meanings are checked," and only the second answers "is the thing I care about tested?"</blockquote>
+<blockquote>### Inset I7 — Protocols and TLA+ {#inset-tla}  When a property is not about one component but a <em>protocol</em> — many actors interleaving over time, each taking steps in an order you do not control — a single state assertion is not enough and even a bounded walk of one component misses the cross-actor races. You specify the protocol in a <strong>temporal-logic language</strong> (TLA+ is the best-known), stating the actors, their steps, and the safety and liveness properties the interleaving must satisfy. A model checker then explores <em>every</em> interleaving the actors can produce and either proves the properties or hands you a trace. This is the heaviest tool in the zoo, reserved for the invariant whose failure lives in a schedule no example test will ever pick — a distributed reservation, a lease-and-preempt loop, a two-phase hand-off between services.</blockquote>
+<h2 id="user-journey-model">The user-journey model</h2>
+<p><em>Model the product's user journeys as first-class typed entities — each an actor pursuing a goal through ordered steps, every boundary-crossing step joined to the endpoint it calls — so the path from what the product is for to what the code must provide is a queryable model.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Two, both about the goal-to-code path.</p>
+<p>- <strong>Dependency correctness</strong> — <em>does every step a journey declares have a real call site, and is every real call declared?</em> A call-site drift lint checks both directions, so a journey cannot claim a dependency it does not exercise, nor exercise one it does not declare. - <strong>Goal reachability</strong> — <em>is every product goal backed by a journey whose steps reach real endpoints?</em> A goal with no journey, or a journey step that names no endpoint, is a gap between intent and implementation.</p>
+<p><strong>(b) Constructs and relations.</strong> A `Journey` entity grafted into the service-flow dialect.</p>
+<p>- <strong>`Journey`</strong> — an actor, a goal, and ordered steps. It reuses the service dialect rather than standing up a parallel model. - <strong>`Step`</strong> — one action in the journey. A boundary-crossing step names the endpoint it calls and records a call-site anchor — the join keys the coverage and placement models reach through. - <strong>The join relation</strong> — a step's endpoint joins to the service-flow model's endpoint; its call-site anchor joins to the real code. The journey copies neither; it references both.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a data-flow — an actor through a journey's steps to the endpoints they call, with a drift lint on the declared-versus-real join. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">flowchart LR
+  Actor([Actor]) --&gt; J[Journey: goal]
+  J --&gt; S1[Step 1] --&gt; S2[Step 2]
+  S1 --&gt;|calls| E1[/endpoint/]
+  S2 --&gt;|calls| E2[/endpoint/]
+  E1 -.-&gt;|declared ↔ real| Drift{{Call-site drift lint}}</pre>
+<p><em>Accessible description: an actor moves through a journey's ordered steps, each boundary-crossing step calling an endpoint. A call-site drift lint checks the declared endpoints against the real call sites in both directions, so a journey's dependencies stay equal to the code it exercises.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> A call-site drift lint:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every declared journey dependency has a real call site | `[]P` (safety) | Call-site drift lint, model ⊆ reality. | | Every real call from a journey step is declared | `[]P` (safety) | Call-site drift lint, reality ⊆ model. | | Every boundary-crossing step names a real endpoint | `[]P` (safety) | Endpoint join against the service-flow model; an unresolvable endpoint is a finding. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The dependency list is derived from the real call sites and reconciled. The join key is the endpoint (ties a step to the service-flow model) and the call-site anchor (ties a step to the code). This model is the entry point of the flagship join below.</p>
+<p><em>Also seen in:</em> Logical (a journey references the service-flow structure). Rendered in full here.</p>
+<h2 id="agent-orchestration-model">The agent-orchestration model</h2>
+<p><em>Model the agent fleet and the orchestrator's own loop with the same MBSE method you point at the product — typed lifecycle states, typed seams, derived verification tiers, held true by a drift gate — so the substrate that produces the software is as checkable as the software.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Two, about the fleet's own correctness.</p>
+<p>- <strong>Lifecycle soundness</strong> — <em>can an agent reach an illegal lifecycle state, or skip a required transition?</em> The dispatch-to-work-to-land-to-tombstone lifecycle is a typed state machine, so a landed-but-never-tombstoned agent, or a tombstone before a commit, is an illegal transition the checker catches. - <strong>Method parity</strong> — <em>is the orchestration substrate governed as strictly as the product?</em> The model reuses the product's own tier-derivation and drift machinery, so the answer is a checked property, not an aspiration.</p>
+<p><strong>(b) Constructs and relations.</strong> A developer-journey state machine.</p>
+<p>- <strong>The lifecycle states</strong> — `Dispatched`, `Working`, `Landed`, `Abandoned`, `Tombstoned`, and the legal transitions between them (prepare, commit-and-verify, recover, clean). - <strong>The refill/bank loop</strong> — the orchestrator's own steps modeled as a journey: land a freed slot, dispatch the next, bank progress. The developer is the actor; the fleet is the system. - <strong>The reflection-facet registry</strong> — a first-class modeled node, so the fleet's self-review surfaces are governed like any other.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a state machine — the agent lifecycle with its legal transitions. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">stateDiagram-v2
+  [*] --&gt; Dispatched
+  Dispatched --&gt; Working: prepare
+  Working --&gt; Landed: commit + verify
+  Working --&gt; Abandoned: stream-silence
+  Abandoned --&gt; Working: recover
+  Landed --&gt; Tombstoned: clean
+  Tombstoned --&gt; [*]</pre>
+<p><em>Accessible description: an agent moves from dispatched to working on prepare, to landed on commit and verify, and to tombstoned on clean. A working agent silenced mid-flight goes to abandoned, from which a recover returns it to working. The lifecycle is a typed state machine, so an illegal transition — a tombstone before a commit — is a checker finding.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> A lifecycle state-machine check and a derived tier:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | No agent reaches an illegal lifecycle state | `[]P` (safety) | State-space search over the lifecycle machine; an unreachable-should-be state is a finding. | | A tombstone follows a landed commit | `P ~&gt; Q` (liveness) | A landed agent eventually reaches tombstoned; a temporal check over the lifecycle. | | Each invariant's verification tier is derived, not hand-typed | `[]P` (safety) | Derive-and-assert: a hand-stored tier is a finding. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The lifecycle states are reconciled against the real agent-registry records. The join key is the agent identifier, which indexes both a lifecycle node and the registry record for that agent.</p>
+<p><em>Also seen in:</em> Process (the lifecycle is a concurrency machine). Rendered in full here as the developer-journey counterpart to the user-journey model.</p>
+<h2 id="journey-criticality-test-placement">Journey-criticality → test-placement</h2>
+<p><em>Derive which environment tier a journey's tests run in from the journey's criticality — a major journey-part runs in the fast local tier and the full staging matrix, a minor one runs staging only — with a coverage-floor lint holding "every major part has a fast-tier test."</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Two, about test placement.</p>
+<p>- <strong>Placement soundness</strong> — <em>is any major journey mis-filed as staging-only?</em> Because the tier is derived from criticality and stored nowhere by hand, you cannot quietly push a major path off the local gate to speed it up; you must demote it to minor, a visible edit. - <strong>Local-gate adequacy</strong> — <em>does a green local run mean every major journey ran?</em> The coverage floor makes "local-green implies every major part was exercised locally" a checked property.</p>
+<p><strong>(b) Constructs and relations.</strong> A criticality axis and a total derivation function.</p>
+<p>- <strong>The criticality level</strong> — each journey-part carries `MAJOR` or `MINOR`. - <strong>The derivation function</strong> — a total map: `MAJOR` to local-plus-staging, `MINOR` to staging-only. The tier is derived, never stored, so a stored tier literal is banned. - <strong>The coverage floor</strong> — a lint asserting every major part has a test in the fast local tier.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a decision flow — criticality derives the tier, and a floor lint guards the local gate. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">flowchart TD
+  Part[Journey-part&lt;br/&gt;criticality] --&gt; Derive{major?}
+  Derive --&gt;|yes| Local[local + staging]
+  Derive --&gt;|no| Staging[staging only]
+  Local --&gt; Floor{{Coverage-floor lint}}
+  Floor --&gt;|major part, no local test| Fail([finding])</pre>
+<p><em>Accessible description: a journey-part's criticality routes on major-or-not — a major part derives to the local-plus-staging tier, a minor one to staging only. A coverage-floor lint then fails the build if a major part has no test in the fast local tier. The tier is derived from criticality, never hand-stored.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> A derive-and-assert and a coverage floor:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | The host tier is a pure function of criticality | `[]P` (safety) | Derive-and-assert: a stored tier literal is banned; the lint recomputes the derivation. | | Every major journey-part has a test in the fast local tier | `[]P` (safety) | Coverage-floor lint walks the model; a major part with no local test is a finding. | | Staging's test set contains local's | `[]P` (safety) | Containment check by recomputing the derivation, not auditing a matrix. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The tier is a pure function of the criticality field; nothing is hand-stored. The join key is the journey-part name, which indexes the criticality field and the derived test roster.</p>
+<p><em>Also seen in:</em> Physical (the derived tier joins to the deploy Scheduler). Rendered in full here; its join to the Scheduler is the flagship example below.</p>
+<h2 id="coverage-model-mapping">Coverage → model-node mapping</h2>
+<p><em>Project the test suite's coverage onto the model's nodes — states, seams, invariants, journey endpoints — so an untested node is a visible gap rather than hidden inside a line-coverage percentage.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> One property line coverage cannot express.</p>
+<p>- <strong>Node-coverage adequacy</strong> — <em>is every meaning I care about — every invariant, every journey endpoint — exercised by some test?</em> An uncovered node is a backlog item; an uncovered <em>critical</em> node is a build-blocking gate.</p>
+<p><strong>(b) Constructs and relations.</strong> A join between coverage data and model nodes.</p>
+<p>- <strong>The model node</strong> — a state, a seam, an invariant, or a journey endpoint: the unit coverage is projected onto. - <strong>The coverage join</strong> — the test run's coverage data joined to the nodes: covered, uncovered, and by-which-tests. - <strong>The critical-node gate</strong> — a subset of nodes marked critical; an uncovered critical node fails the build rather than joining the backlog.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a data-flow — coverage and nodes joined, splitting into a backlog and a gate. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">flowchart LR
+  Cov[(Coverage data)] --&gt; Join{Node join}
+  Nodes[(Model nodes)] --&gt; Join
+  Join --&gt; Backlog[Uncovered = backlog]
+  Join --&gt; Gate{{Critical-node gate}}</pre>
+<p><em>Accessible description: coverage data and model nodes feed a node join, which sorts each node into covered or uncovered. Uncovered nodes become a backlog; an uncovered node in the critical subset trips a gate that blocks the build. Coverage is measured over meanings, not lines.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> A node join and a critical-node gate:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every critical model node is exercised by some test | `[]P` (safety) | Critical-node gate: an uncovered critical node blocks the build. | | Every journey endpoint is covered or on the backlog | `[]P` (safety) | Undertested-journey audit joins coverage to the endpoint nodes. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The join is computed from the real coverage run against the model nodes. The join key is the node identity — an invariant id, an endpoint path — which ties a coverage row to the model element it exercises.</p>
+<p><em>Also seen in:</em> Process (an invariant node is a concurrency contract). Rendered in full here.</p>
+<p>---</p>
+<h2 id="worked-join">Worked join — the journey↔coverage↔deploy-policy composition</h2>
+<p><em>Four models composed on a shared key so a product goal reaches all the way to how the deploy runs its tests: a journey's criticality derives which tests run on which host tier, and that placement joins to the deploy execution policy, which rations each host by fanning tests out or serializing them.</em></p>
+<p>This is the zoo's central thesis made concrete — <strong>models join, they do not repeat.</strong> The other model pages each show a single model. This one traces one fact — a journey is <em>major</em> — through four models with no fact stated twice. The user-journey model (M13) names the journey and its endpoints. The coverage-to-node map (M5) asks whether those endpoints are tested at all. The journey-criticality-to-test-placement model (M6, the <strong>Selector</strong>) derives which host tier each test runs on from the journey's criticality. And the invariant-DAG execution policy (M7, the <strong>Scheduler</strong>) decides <em>how</em> each host runs the tests it was handed — fan out, or serialize. No model owns another's facts; each joins on the journey and its endpoints.</p>
+<p><strong>(a) Quality property it helps assess.</strong> Three questions the raw deploy scripts and test config cannot answer.</p>
+<p>- <strong>Goal-to-gate coverage</strong> — <em>does a green local run mean every major journey actually ran?</em> The criticality floor makes "local-green implies every major path was exercised locally" a checked property, not a hope. - <strong>Placement soundness</strong> — <em>is any major journey mis-filed as staging-only?</em> Because the host tier is derived from criticality and stored nowhere by hand, you cannot quietly shove a major path off the local gate; you must demote it to minor, a visible edit. - <strong>Rationing correctness under cost and resource pressure</strong> — <em>does the deploy fan tests out when it safely can, and serialize them only when it must?</em> The Scheduler honors a cost gate everywhere but rations concurrency only where a scarce box demands it, so a single-worker host serializes while an elastic host fans out, from one profile table.</p>
+<p><strong>(b) Constructs and relations.</strong> The four models compose through shared keys.</p>
+<p>- <strong>The `Journey` (M13)</strong> — an actor, a goal, ordered steps; each boundary-crossing step names its <strong>endpoint</strong> and records a <strong>call-site anchor</strong>. These are the join keys the other three reach through. - <strong>The criticality axis (M6)</strong> — each journey-part carries `MAJOR` or `MINOR`. A total derivation maps `MAJOR` to local-depth and `MINOR` to staging-only. The tier is derived, never stored. - <strong>The coverage join (M5)</strong> — the suite's coverage projected onto the journey's endpoint nodes: covered, uncovered, by-which-tests. An uncovered major endpoint is a floor violation. - <strong>The edge-intent axis and Scheduler (M7)</strong> — the deploy graph's edges carry `CORRECTNESS`, `COST_GATE`, or `LOAD`; `LOAD` is banned from the graph and migrated to the Scheduler, which reads a per-host `HostLoadProfile` and emits a `ConcurrencyPlan`.</p>
+<p>The through-line: a journey's endpoint is the coverage join key (M13→M5); its criticality is the Selector's input (M13/M6); the Selector's per-host test set is what the deploy phase runs; and the Scheduler's profile decides whether that host fans those tests out or serializes them (M6→M7). One fact, four models, no repetition.</p>
+<p><strong>(c) Visual depiction.</strong> The join has no single appendix diagram, so this composite is composed from the four real panels, adding only the join edges between them. The data-flow reads left to right — criticality derives placement, placement joins to coverage, and the deploy Scheduler rations the resulting test set per host:</p>
+<pre class="mermaid">flowchart LR
+  subgraph M13 ["Journey (M13)"]
+    J[Journey: goal&lt;br/&gt;criticality: MAJOR] --&gt;|calls| E[/endpoint/]
+  end
+  subgraph M6 ["Selector (M6)"]
+    E --&gt; Derive{major?}
+    Derive --&gt;|yes| TierLocal[local + staging]
+    Derive --&gt;|no| TierStg[staging only]
+    TierLocal --&gt; Floor{{Coverage-floor lint}}
+  end
+  subgraph M5 ["Coverage (M5)"]
+    E -.-&gt;|node join| Cov[(covered?)]
+    Cov --&gt; Floor
+  end
+  subgraph M7 ["Scheduler (M7)"]
+    TierLocal --&gt; Plan[plan_for host]
+    TierStg --&gt; Plan
+    Prof[(HostLoadProfile:&lt;br/&gt;ceiling, budget)] --&gt; Plan
+    Plan --&gt;|$ gate only| FanOut([fan out — parallel])
+    Plan --&gt;|$ gate AND scarce box| Serialize([fan/join — serialize])
+  end</pre>
+<p><em>Accessible description: a major journey names an endpoint. The Selector derives that endpoint's tests to the local-plus-staging tier (a minor one to staging only), and a coverage-floor lint fails if a major endpoint has no local test. The coverage model joins to the same endpoint to check it is tested at all. The resulting test set flows to the deploy Scheduler, which reads a per-host profile: when only a cost gate applies it fans the tests out in parallel, but when both a cost gate and a scarce-resource gate apply it serializes them.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> The join's invariants span all four models; two are the trunk derive-the-checker discipline:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every major journey-part has a test in the fast local tier | `[]P` (safety) | Coverage-floor lint (M6) walks the model; a major part with no local test is a finding. | | A journey's declared deps match its real call sites, both ways | `[]P` (safety) | Call-site drift lint (M13): every declared dep has a real call site, every call site is declared. | | Every declared journey endpoint is exercised by some test | `[]P` (safety) | Undertested-journey audit (M5): join coverage to the endpoint nodes; an uncovered endpoint is a gap. | | The host tier is a pure function of criticality | `[]P` (safety) | Derive-and-assert (M6): a stored tier literal is banned; the lint recomputes the derivation. | | No deploy edge carries the `LOAD` intent | `[]P` (safety) | Load-edge lint (M7) reads the graph and the Scheduler's graph-resident intents; a `LOAD` edge is a finding. | | Staging's test set is a superset of local's and of prod's | `[]P` (safety) | Containment property test plus a live-model lint (M6): recompute containment by calling the selector, not auditing a matrix. |</p>
+<p>Two pieces of real policy code show the join landing on code, not prose. The <strong>Selector</strong> derives a host's test roster from the journey model; the <strong>Scheduler</strong> decides how that host runs it:</p>
+<pre><code>from dataclasses import dataclass
+from enum import Enum
+
+# --- M6: the Selector — criticality derives the host tier, tier derives the test roster ---
+class Criticality(Enum):
+    MAJOR = "major"
+    MINOR = "minor"
+
+def tier_for(crit: Criticality) -&gt; frozenset[str]:
+    """Pure derivation: a MAJOR part runs local + staging; a MINOR part runs staging only.
+       Stored nowhere by hand — a tier literal is banned, so moving a part off the local
+       floor forces a visible MAJOR-&gt;MINOR demotion, not a silent tier edit."""
+    if crit is Criticality.MAJOR:
+        return frozenset({"local", "staging"})
+    return frozenset({"staging"})
+
+def roster_for(host: str, journey_parts: dict[str, Criticality]) -&gt; list[str]:
+    """The test set this host runs: every part whose derived tier contains this host."""
+    return [name for name, crit in journey_parts.items() if host in tier_for(crit)]
+
+# --- M7: the Scheduler — a per-host profile decides fan-out vs serialize for that roster ---
+@dataclass(frozen=True)
+class HostLoadProfile:
+    concurrency_ceiling: int   # 1 = single scarce box; large = elastic
+    budget: float              # inf = unbounded (cost gates relaxable); finite = honor $ gates
+
+@dataclass(frozen=True)
+class ConcurrencyPlan:
+    permits: int               # how many roster items may run at once
+    honor_cost_gate: bool      # run an expensive test only if its cheap gate passed
+
+def plan_for(profile: HostLoadProfile) -&gt; ConcurrencyPlan:
+    """The load + cost rationing decision, per host, from the profile alone.
+       Fan OUT freely when only a $ (COST_GATE) gate applies (elastic box, permits high);
+       fan/join — SERIALIZE — when a $ gate AND a scarce-resource (LOAD) gate both apply
+       (single box: permits collapse to 1, the queue-drain that used to be a graph edge)."""
+    permits = profile.concurrency_ceiling          # LOAD rationing: a semaphore, not an edge
+    honor_cost_gate = profile.budget != float("inf")  # COST_GATE: honored unless budget unbounded
+    return ConcurrencyPlan(permits=permits, honor_cost_gate=honor_cost_gate)
+
+# Three named host profiles — moving the stress burst between hosts is a one-row edit:
+PROFILES = {
+    "local":   HostLoadProfile(concurrency_ceiling=1,    budget=100.0),   # scarce VM: serialize
+    "staging": HostLoadProfile(concurrency_ceiling=999,  budget=float("inf")),  # elastic: fan out
+    "prod":    HostLoadProfile(concurrency_ceiling=4,    budget=50.0),    # low finite smoke ceiling
+}</code></pre>
+<p>The behavior the code makes concrete: on <strong>staging</strong> (ceiling 999, unbounded budget) the plan permits the whole ready wave at once and relaxes cost gates — pure fan-out, because no box is scarce. On <strong>local</strong> (ceiling 1, budget 100) the plan collapses to one permit <em>and</em> honors cost gates — the fan/join serialize case, where both a cost gate and a scarce-box load gate apply, so the tests the Selector placed locally run one at a time behind their cheap gates. Raising the local ceiling is a one-cell profile edit, never a graph edit — the whole point of keeping `LOAD` out of the DAG.</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code, joined.</em> Every leg derives from the code: the journey's deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7). Nothing is hand-stored — a stored tier or a `LOAD` edge is banned outright. The join keys chain: the <strong>endpoint</strong> ties M13 to M5, the <strong>criticality</strong> ties M13 to M6, the <strong>derived tier</strong> ties M6 to M7's roster, and the <strong>host profile</strong> ties the roster to the plan. A reader round-trips from "this journey is major" to "these tests serialize on the local box" by following those four keys, and the drift lints mechanize each hop.</p>
+<p><em>Also seen in:</em> Physical (the Scheduler half). This join is why the Physical and Scenarios chapters cross-reference each other most; it is rendered in full here.</p>
+<p>---</p>
+<p>Five views, walked on real code, each with its invariants and the checker that holds them true. The zoo has twenty-nine named models, and the point of the number is the one Kruchten made: no single view is ever the whole picture. What the safety-critical world did because lives were at stake — keep the models honest, trace every requirement to the code that realizes it — the rest of us now do because an agent will pay the upkeep, and because it is the cheapest way to trust what the fleet ships.</p><div class="pager"><a class="prev" href="4.5-the-physical-view.html"><span class="dir">‹ Previous</span><span class="ttl">4.5 · The Physical View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.1-brownfield.html"><span class="dir">Next ›</span><span class="ttl">5.1 · Brownfield</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

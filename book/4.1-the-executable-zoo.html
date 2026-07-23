@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 4.1 · The Executable Zoo</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="current" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.2-the-logical-view.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.1 · The Executable Zoo"><header class="chap"><div class="kicker">Part 4 — The Model Zoo &nbsp;::&nbsp; Chapter 4.1</div><h1>The Executable Zoo</h1><div class="part-epigraph">All models are wrong, but some are useful.<span class="attr">— George E. P. Box</span></div></header><p>The previous chapter argued that a model is the sweet spot between prose too vague to enforce and code too verbose to reason over, and that agents dissolve the one cost that kept models out of fashion — a human keeping the map in sync with the territory. It ended on a promise: this book would walk each kind of model on real code, with real invariants, and show how to keep the code from drifting away from them. This Part cashes that promise.</p>
+<p>The move is to stop listing kinds of model and start walking them. The companion catalogue holds nineteen real, typed, drift-checked system-models — the actual embodiments of every kind the last chapter named. Reconciled with the general model types a systems-engineering course teaches, the zoo runs to twenty-nine named models. That number is not a target to hit. It is evidence for a single claim: the zoo is large enough that one model is never the whole picture, which is exactly Philippe Kruchten's thesis about architecture.</p>
+<h2>Kruchten's 4+1, promoted from a closing sentence to the spine</h2>
+<p>The last chapter invoked Kruchten's <strong>4+1 views</strong> in a final sentence — "the reason one model is never enough." This Part promotes that sentence to its organizing structure. Kruchten observed that no single diagram captures a software architecture, and that four complementary views plus a fifth that ties them together cover what a working engineer needs to see:</p>
+<p>- <strong>The Logical view</strong> — the functional structure: the objects, the types, and how they relate. What the system <em>is</em>, as a designer sees it. - <strong>The Process view</strong> — concurrency and synchronization: what runs at once, the locks, the runtime dynamics. What stays consistent under interleaving. - <strong>The Development view</strong> — the module and organization structure: how the source is packaged, layered, and owned. How the code is arranged for the people and agents who build it. - <strong>The Physical view</strong> — the mapping of software to hardware: where processes run, across which hosts and network boundaries. Where the parts live. - <strong>The Scenarios view (the +1)</strong> — the use cases and journeys that animate the other four and validate them. What the system does for someone, walked end to end.</p>
+<p>One chapter of this Part takes each view. A reader leaves with four views seen built on real code, plus the scenarios that validate them — each view with its invariants and the checker that holds them true.</p>
+<p>Kruchten described the views. He did not have a drift gate. That is this book's contribution on top of 4+1: every view here is not a diagram a human maintains but a typed model a tool reads on every build, and a gate that fails the build the moment the model and the code disagree. 4+1 tells you <em>which views you need</em>. The drift gate is what keeps each view from becoming a diagram that rots.</p>
+<h2>The trunk: machinery that holds any view true</h2>
+<p>Before the views, one chapter of framing. Most of the catalogue's method models do not belong to a single view. They are the machinery that makes <em>every</em> view executable and drift-proof, and rather than re-explain the drift gate in each view chapter, this chapter introduces it once and each later chapter revisits it.</p>
+<p>- <strong>The executable source-of-truth.</strong> Model the system as typed data that tools read every run and generate artifacts from, so it cannot drift. This is the pattern behind every view. - <strong>The drift and parity gates.</strong> The lints and tests that enforce model-and-reality parity in both directions, so no model drifts unilaterally. - <strong>The agent-first harness.</strong> Build the models as a thin hand-rolled layer over frozen records under a few disciplines: adopt the genre's schema, skip its heavyweight runtime. - <strong>The read and generate surfaces.</strong> One canonical query API over every model (read-don't-hardcode consumption), and generators that emit real artifacts <em>from</em> the models, each provenance-headed so a hand-edit is caught.</p>
+<p>These are the framing chapter's home. The view chapters name them again where each view's model reconnects to them. The insets a reader needs before the views begin — what an invariant is, how you write one, what model checking buys you, what drift is — live here too, placed at the point they are first needed.</p>
+<p>Three beats frame the whole Part.</p>
+<h3>Beat 1 — a model is derived and joined, never repeated</h3>
+<p>The last chapter warned against repetition: two models that say the same thing must now be kept in sync. This Part sharpens that warning into the zoo's organizing rule. A model here does not sit beside the code as a parallel document. It is <strong>derived</strong> from the code, or the code is derived from it. And it <strong>joins</strong> to its neighbours on a shared key rather than restating them.</p>
+<p>The service-flow model does not re-list the endpoints. It <em>is</em> the list the access policy is generated from and the call graph is checked against. The journey model does not copy those endpoints either. It <em>joins</em> to them by call-site. Repetition is the failure. Derivation and join are the cure. The flagship demonstration is the third worked example in the Scenarios chapter, where four models join so a journey's criticality reaches all the way to which host a test runs on, with no fact stated twice.</p>
+<h3>Beat 2 — name the direction of derivation</h3>
+<p>A model and the code it concerns stay equal by derivation, and derivation runs in one of two directions. Say which up front, because the machinery differs.</p>
+<p>- <strong>Model-from-code (induce and reconcile).</strong> The code is authoritative; the model is a projection of it, reconciled at build time. The component-zone model reads the real directory tree; a journey's dependency list is derived from its real call sites. Here the drift gate is a <em>reconciler</em>: it re-induces the model from the code and fails on divergence. Reach for this when the code is the ground truth and the model is a compact, queryable view of it — the usual case for a large codebase an agent must operate. - <strong>Model-to-code (specify and generate).</strong> The model is authoritative; the code, config, or docs are generated from it. The access policy, the service catalog, the wire-contract types are emitted from the service-flow model. Here the drift gate is a <em>freshness and provenance check</em>: the generated artifact carries a header, and a hand-edit or a stale regeneration is a finding. Reach for this when the model is the design intent and you want the artifact to obey it.</p>
+<p>Most models in the zoo are model-from-code, because the codebase pre-existed the models. The service-flow model is the clearest model-to-code case, and it is bidirectional — some fields generated to code, others reconciled from it — which is why its gate checks both directions. Each model page names its direction.</p>
+<h3>Beat 3 — every model traces to the code</h3>
+<p>A model earns trust only if you can get from a model element back to the lines that realize it, and forward from a line to the model element that governs it. That round-trip is <strong>traceability</strong>. It is exactly what the safety-critical standards demanded and exactly what the drift gate mechanizes: the reconciler <em>is</em> a traceability check that runs on every build.</p>
+<p>Traceability is why the per-model template folds a one-line note into each page — the direction the model derives, and the join key from a model row back to the code. A reader always knows how to round-trip from the picture to the lines.</p>
+<h2>How to read a model page</h2>
+<p>Every model in this Part is rendered by filling the same five-field template. The uniformity is deliberate: a reader who has read one page can read any of them on reflex.</p>
+<p>- <strong>(a) Quality property it helps assess.</strong> The property this model lets you <em>check</em> — stated as the question the model answers that the raw code cannot. Not "it models X" but "it lets you ask, and answer, <em>is Q true?</em>" A model with no quality property to assess is a diagram, not a model. - <strong>(b) Constructs and relations.</strong> The typed elements the model is built from and how they relate — the record kinds, the fields that carry meaning, the edges between them. This is the reference content: what a reader consults to understand the model's shape. - <strong>(c) Visual depiction.</strong> The diagram of the real model, matched to its natural type — a state machine gets a state diagram, a topology gets a deployment diagram, a registry of related records gets an ER diagram. Each carries an accessible description that states the content <em>and</em> the takeaway. - <strong>(d) Invariants, and how they are checked.</strong> The predicates that must hold, each with the mechanism that holds it true — a drift lint, a coverage floor, a model check, a parity gate. Rendered as a table of invariant, its temporal shape, and how it is checked. A model whose invariants are prose with no checker is flagged UNTESTED. - <strong>(e) Traceability and derivation direction.</strong> One line: which direction the model derives, and the join key from a model element back to the code.</p>
+<p>The first four fields map onto the four questions a reader brings to a model: what is it for, what is it made of, what does it look like, how do I trust it. Field (e) answers the fifth this chapter raised: how does the model stay tied to the code. Each view chapter opens with the Kruchten view it embodies, then walks its models through this template.</p>
+<p>---</p>
+<!-- The concept-primer insets a reader needs before the views begin. Each is self-contained;
+     later chapters link back rather than re-explain. -->
+<blockquote>### Inset I1 — What is an invariant, and how do you write one? {#inset-invariant}  An <strong>invariant</strong> is a statement that must be true in <em>every</em> state your system can reach — a property the system promises never to violate. You write one as a predicate over the model's state, then you ask the model whether any reachable state breaks it. Take a job that can be `free`, `leased`, or `done`. The invariant "a job is never both leased and free" is a predicate over one state: `not (leased and free)`. Because it concerns a single state, you check it by visiting every reachable state and evaluating the predicate there. If none breaks it, the invariant holds. The move that makes this more than a comment: the predicate is <em>checked</em>, exhaustively, by a tool, not eyeballed on a diagram. That is the step from "we believe this holds" to "we proved it holds."  ``` STATES = {"free", "leased", "done"} def invariant(state): return not (state == "leased" and state == "free")   # never both assert all(invariant(s) for s in reachable_states())   # check every reachable state ```</blockquote>
+<blockquote>### Inset I8 — Derivation direction, boxed for reference {#inset-derivation}  Two directions, from Beat 2. <strong>Model-from-code</strong>: the code is authoritative, the model is a projection reconciled from it, and the gate re-induces the model and fails on divergence. <strong>Model-to-code</strong>: the model is authoritative, the code or config is generated from it, and the gate is a freshness-plus-provenance check that catches a hand-edit or a stale regeneration. Reach for model-from-code when a large codebase pre-exists the model; reach for model-to-code when the model is the design intent you want the artifact to obey. A model can be both at once, on different fields.</blockquote>
+<blockquote>### Inset I9 — What is drift, and what is a drift gate? {#inset-drift}  <strong>Drift</strong> is the condition where a model and the code it describes disagree — the map no longer matches the territory. A human-maintained diagram drifts silently the first time a developer changes the code and forgets the diagram. A <strong>drift gate</strong> is the build-time check that set-diffs the model against reality in both directions and fails the build on any divergence. Model ⊆ reality catches a model element with no code behind it; reality ⊆ model catches code the model never declared. Because the gate runs on every build, drift cannot accumulate: the first divergent commit fails, not the fiftieth. This is what makes an executable model different from a diagram — the diagram <em>can</em> drift, the gated model cannot.</blockquote>
+<p>The remaining insets appear in the view chapters where they are first needed: assertions over sequences and the temporal-logic step-up, bounded model checking, automata, data-flow diagrams, safety versus liveness, protocols and TLA+, and coverage over model nodes.</p><div class="pager"><a class="prev" href="3.4-lifecycles-and-runbooks.html"><span class="dir">‹ Previous</span><span class="ttl">3.4 · Lifecycles and Runbooks</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.2-the-logical-view.html"><span class="dir">Next ›</span><span class="ttl">4.2 · The Logical View</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.2-the-logical-view.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

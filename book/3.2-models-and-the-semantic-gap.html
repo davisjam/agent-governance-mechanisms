@@ -99,22 +99,28 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
 <li><a class="current" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
 <li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
-<li><a class="" href="3.4-the-model-zoo.html">3.4&nbsp; The Model Zoo</a></li>
-<li><a class="" href="3.5-lifecycles-and-runbooks.html">3.5&nbsp; Lifecycles and Runbooks</a></li>
-<li class="part">Part 4 — Putting It to Work</li>
-<li><a class="" href="4.1-brownfield.html">4.1&nbsp; Brownfield</a></li>
-<li><a class="" href="4.2-the-skills.html">4.2&nbsp; The Skills</a></li>
-<li><a class="" href="4.3-transformations.html">4.3&nbsp; Everything Is a Transformation</a></li>
-<li><a class="" href="4.4-training-data.html">4.4&nbsp; Training Data and the Novelty Axis</a></li>
-<li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
-<li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
 <li class="part">Appendix C — Product patterns</li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.3-the-governed-environment.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 3.2 · Models and the Semantic Gap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.2</div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject control. This one is about the single most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. Models are the sweet spot between prose that is too vague and code that is too verbose. But a model only helps if you check it where checking makes sense.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="4.1-the-executable-zoo.html">Next part ⇒</a><a href="3.3-the-governed-environment.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 3.2 · Models and the Semantic Gap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.2</div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject control. This one is about the single most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. Models are the sweet spot between prose that is too vague and code that is too verbose. But a model only helps if you check it where checking makes sense.</p>
 <h2>Words are soft, code is verbose, a model is the sweet spot</h2>
 <p>Your first instrument of control is the prompt, because the agent is a language model and words are how you talk to it. But words are soft. They are ambiguous, and the more ambiguity you leave in, the less happy you will be. You can push ambiguity down by writing documentation — describing the environment, the product, its goals, its policies — and if you were briefing a <em>human</em> team, that would be enough. Humans are not dumb; they remember, they know what matters, they know where to look it up, and they know they will be fired if they misbehave. Agents are different: brilliant reasoners who need to be told exactly what to reason over, and for whom loose documents are simply not precise enough.</p>
 <p>Code is the opposite failure. Code is perfectly precise — it is exactly what will happen — but it is far too verbose to reason over in bulk. What you want sits between the two: something accurate and unambiguous, yet compact. The word for that thing is a <strong>model</strong>.</p>
@@ -133,4 +139,4 @@ temporal-logic checker) earns its keep. This is the reader's biggest unanswered
 question after this chapter.</div>
 <div class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> a dedicated chapter on how you actually <em>author</em> a model in a
 repo — is it a typed record, a diagram, a lint, a schema file? The reader now believes
-models matter but cannot yet build one.</div><div class="pager"><a class="prev" href="3.1-the-agent-stack.html"><span class="dir">‹ Previous</span><span class="ttl">3.1 · The Agent Stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.3-the-governed-environment.html"><span class="dir">Next ›</span><span class="ttl">3.3 · The Governed Environment: Ex-Ante and Ex-Post</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.3-the-governed-environment.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+models matter but cannot yet build one.</div><div class="pager"><a class="prev" href="3.1-the-agent-stack.html"><span class="dir">‹ Previous</span><span class="ttl">3.1 · The Agent Stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.3-the-governed-environment.html"><span class="dir">Next ›</span><span class="ttl">3.3 · The Governed Environment: Ex-Ante and Ex-Post</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-the-executable-zoo.html">Next part ⇒</a><a href="3.3-the-governed-environment.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

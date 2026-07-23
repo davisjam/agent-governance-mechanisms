@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 4.5 · The Physical View</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="current" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.6-the-scenarios-view.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.5 · The Physical View"><header class="chap"><div class="kicker">Part 4 — The Model Zoo &nbsp;::&nbsp; Chapter 4.5</div><h1>The Physical View</h1></header><p>The Development view mapped how the source is organized. The Physical view — Kruchten's deployment view — maps where the built software actually runs: which process lands on which host, across which network boundaries, under what per-host cost and load policy. It is the placement lens. A model that is functionally correct can still be mis-deployed, and only a view that names <em>where things run</em> catches it.</p>
+<p>One general type anchors the view, and it is the honest exception in this zoo. A <strong>performance and cost model</strong> models the computation itself — what it costs to run, what it costs to move data, whether to compute locally or remotely, whether to cache or recompute. The next section takes that gap head-on: the framework supports the cost view, and one real model <em>embodies</em> the load-and-cost half of it, but the pure-latency slice has no dedicated instance, because no failure has yet justified building one. Three real models carry the view: the deployment and tier topology model (the flagship, our first worked example), the invariant-DAG execution policy (per-host cost and load rationing), and the control-to-substrate dependency model (a computed migration blast radius).</p>
+<h2>The performance/cost view: mostly embodied, one honest gap</h2>
+<p>The zoo names a performance and cost model as a general type, and the framework supports it. But the catalogue holds only a partial instance, and the book states that flat rather than inventing a model to fill the slot.</p>
+<p>The load-and-cost half of the view <em>is</em> embodied — by the invariant-DAG execution policy below. Its Scheduler reads a per-host profile of a concurrency ceiling and a budget, and rations both: it fans work out on an elastic host and serializes it on a scarce one, and it honors a cost gate everywhere but a scarce-resource gate only where a box demands it. That is a real cost model in action — cost-to-run and resource-contention, driven from a declared per-host profile.</p>
+<p>What has no dedicated instance is the <em>pure-latency</em> slice: a model of request latency, cache-hit ratios, and compute-local-versus-remote data-movement cost, the kind a performance engineer draws to decide where a computation should run for speed. The framework would carry it the same way it carries the others — a typed profile, invariants over it, a drift gate — but no failure has yet justified building it. The zoo names the gap rather than padding it, on the same discipline the whole harness leads with: <strong>model only where a failure lives.</strong> A model built ahead of a failure is a diagram that will rot before it is ever checked.</p>
+<h2 id="deployment-topology-model">The deployment &amp; tier topology model</h2>
+<p><em>Typed models of where things run and how they layer — the managed-deployment topology, each service's tier class, and the substrate's layer boundaries — so deploy scripts and layering lints reason about a declared topology, not scattered constants.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Three, each a question the raw deploy scripts cannot answer without this model.</p>
+<p>- <strong>Deployment parity</strong> — <em>does every service the model declares deploy at the tier the model says, and does every deployed service appear in the model?</em> A drifted tier or an unmodeled service is a failed check, not a silent production surprise. - <strong>Layering soundness</strong> — <em>may this layer import that one?</em> A declared boundary makes a cross-layer import a build failure rather than a slow architectural erosion. - <strong>Migration blast radius</strong> — <em>if I move a service to a new substrate, which controls assume the old one?</em> The topology is the ground truth the control-to-substrate query joins against.</p>
+<p><strong>(b) Constructs and relations.</strong> A small typed record set, importing nothing.</p>
+<p>- <strong>`Service`</strong> — one deployable unit: its name, its layer (web, worker, shared), and its tier (critical, batch). The tier is the placement fact the parity check guards. - <strong>The layer axis</strong> — a service's layer names its architectural stratum; the layer-boundary contracts declare which layers may depend on which, and the import-layer lint holds that graph. - <strong>The parity relation</strong> — the declared service-to-tier map is joined bidirectionally against the live deploy table: model ⊆ reality (no declared service missing or mis-tiered) and reality ⊆ model (no deployed service unmodeled).</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a deployment diagram — subgraphs are runtime boundaries, edges cross them. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">flowchart TB
+  subgraph Host ["Build host"]
+    T[Test serializer]
+    B[Build semaphore]
+  end
+  subgraph Cluster ["Runtime cluster"]
+    Web[Web] --&gt; Q[(Queue)]
+    Q --&gt; Wk[Worker]
+  end
+  Host --&gt;|produces image| Cluster</pre>
+<p><em>Accessible description: a build host runs the test serializer and build semaphore and produces the image the runtime cluster deploys, where the web service enqueues onto a queue drained by a worker. The model declares this placement; parity lints hold it to the real deploy tables.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> The checkers are the trunk drift-and-parity gates:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every declared service deploys at its declared tier | `[]P` (safety) | Deploy-table parity lint: joins the model's name-to-tier map against the live deploy table, fails on any mismatch. | | No deployed service is absent from the model | `[]P` (safety) | Same parity lint, reverse direction — a deployed name not in the model is a finding. | | No layer imports a layer its contract forbids | `[]P` (safety) | Import-layer boundary lint over the declared layer graph. | | Every topology-reading control declares its substrate assumption | `[]P` (safety) | Declaration lint; the computed blast-radius table rides on it. |</p>
+<p>The parity check is real code — the model is a frozen record, the check reads the live deploy table and set-diffs it both ways:</p>
+<pre><code>from dataclasses import dataclass
+import sys
+
+@dataclass(frozen=True)
+class Service:
+    name: str
+    layer: str      # e.g. "web" / "worker" / "shared"
+    tier: str       # e.g. "critical" / "batch"
+
+MODEL = [Service("web", "web", "critical"), Service("worker", "worker", "batch")]
+
+def parity(deploy_table: dict[str, str]) -&gt; list[str]:
+    """Declared tier must match the real deploy table; no service may go unmodeled."""
+    findings = []
+    declared = {s.name: s.tier for s in MODEL}
+    for name, tier in declared.items():
+        if deploy_table.get(name) != tier:
+            findings.append(f"'{name}': model tier '{tier}' != deploy '{deploy_table.get(name)}'")
+    for name in deploy_table.keys() - declared.keys():
+        findings.append(f"'{name}' is deployed but absent from the topology model")
+    return findings
+
+if __name__ == "__main__":
+    findings = parity(read_deploy_table())   # live service-&gt;tier map the deploy scripts use
+    for f in findings:
+        print(f"TOPOLOGY-DRIFT: {f}")
+    sys.exit(1 if findings else 0)</code></pre>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Bidirectional.</em> The tier facts are model-to-code — the deploy env and access policy are generated from the declared topology. The parity check runs the model-from-code direction too — it re-reads the live deploy table and set-diffs, so a service that moved tier in the code without a model edit fails. The join key from a model row to the code is the service `name`, which indexes both the model's name-to-tier map and the live deploy table.</p>
+<p><em>Also seen in:</em> Development (the layer graph is a packaging fact) and, through the next model, the migration story. Rendered in full here; referenced from the Development chapter.</p>
+<h2 id="invariant-dag-execution-policy">The invariant-DAG execution policy</h2>
+<p><em>A deploy graph whose edges carry a typed intent — correctness, cost-gate, or load — kept host-identical, plus a typed Scheduler that reads a per-host profile and rations load and cost so one host fans work out while a scarce one serializes it.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> Two, both about how a host runs the work it was handed.</p>
+<p>- <strong>Graph portability</strong> — <em>is the deploy graph the same on every host?</em> Load-specific edges are banned from the graph and migrated to the Scheduler, so the graph itself carries only host- identical correctness and cost intents, and cannot fork per host. - <strong>Rationing correctness under cost and resource pressure</strong> — <em>does the deploy fan work out when it safely can, and serialize only when it must?</em> The Scheduler honors a cost gate everywhere but rations concurrency only where a scarce box demands it, all from one profile table.</p>
+<p><strong>(b) Constructs and relations.</strong> An edge-intent axis plus a per-host Scheduler.</p>
+<p>- <strong>The edge intent</strong> — each deploy-graph edge carries a typed intent: `CORRECTNESS` (B is wrong without A — honored on every host), `COST_GATE` (A is a cheap check gating an expensive B — honored by default, relaxable only under an unbounded budget), and `LOAD` (B contends with A for a scarce box — <em>banned in the graph</em>, migrated to the Scheduler). - <strong>`HostLoadProfile`</strong> — a per-host record: a concurrency ceiling (1 for a single scarce box, large for an elastic one) and a budget (finite to honor cost gates, unbounded to relax them). - <strong>The Scheduler</strong> — reads a host's profile and emits an execution plan: how many roster items may run at once, and whether to honor the cost gate. Load rationing is a semaphore, not a graph edge.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a data-flow — edge intents route, load leaves the graph for the Scheduler, and a per-host profile drives the plan. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">flowchart LR
+  Edge[Edge intent] --&gt; Corr[CORRECTNESS&lt;br/&gt;in graph]
+  Edge --&gt; Cost[COST_GATE&lt;br/&gt;in graph]
+  Edge --&gt; Load[LOAD&lt;br/&gt;banned in graph]
+  Load --&gt; Sched[Scheduler]
+  Prof[(Per-host profile)] --&gt; Sched
+  Sched --&gt; Plan([Execution plan])</pre>
+<p><em>Accessible description: a deploy-graph edge carries one of three intents. Correctness and cost-gate edges stay in the graph, host-identical. A load edge is banned from the graph and migrated to the Scheduler, which reads a per-host profile and emits an execution plan — the concurrency and cost-gate decisions for that host. Moving the stress burden between hosts is a profile edit, never a graph edit.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> A load-edge ban and a plan derivation:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | No deploy edge carries the `LOAD` intent | `[]P` (safety) | Load-edge lint reads the graph and the Scheduler's graph-resident intent set; a `LOAD` edge is a finding. | | The deploy graph is identical on every host | `[]P` (safety) | Graph-parity check: the same graph is emitted for every host; a per-host fork is a finding. | | The execution plan is a pure function of the host profile | `[]P` (safety) | Derive-and-assert: the plan is recomputed from the profile, never hand-stored. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The plan is derived from the per-host profile by a pure function, and a hand-stored plan or a `LOAD` edge is banned outright. The join key is the host name, which indexes both the `HostLoadProfile` and the deploy phase that runs under the emitted plan. This model is walked in full, with its Scheduler code, in the Scenarios chapter's join example — here it is the Physical-view resident that the join reaches into.</p>
+<p><em>Also seen in:</em> Process (concurrency rationing is a runtime-dynamics concern) and Scenarios (the join example). Rendered in full in the Scenarios chapter; referenced here for the placement and cost half.</p>
+<h2 id="control-substrate-dependency">The control↔substrate dependency model</h2>
+<p><em>Make each control declare the substrate assumption it bakes in as typed metadata, so "which controls depend on which part of the substrate, and what breaks when I change it" is a computed query rather than a grep.</em></p>
+<p><strong>(a) Quality property it helps assess.</strong> One property no grep can hold reliably.</p>
+<p>- <strong>Migration safety</strong> — <em>before a cross-cutting substrate change, exactly which controls assume the old substrate?</em> The blast radius is computed by joining each control's declared assumption against the topology model, so a migration's in-scope set is a table, not a hopeful search.</p>
+<p><strong>(b) Constructs and relations.</strong> A typed assumption on each control, joined to the topology.</p>
+<p>- <strong>The stance</strong> — each substrate-reading control declares a typed assumption: bound to one substrate, substrate-aware, or substrate-agnostic. A declaration lint requires it. - <strong>The blast-radius join</strong> — the query joins the set of stances against the deployment-topology model on the target being migrated, and prints exactly the controls the change puts in scope.</p>
+<p><strong>(c) Visual depiction.</strong> The natural diagram is a data-flow — controls with stances and the substrate model both feed a blast-radius query. Reused from the model's appendix Structure slot:</p>
+<pre class="mermaid">flowchart LR
+  C1[Control A&lt;br/&gt;stance: plane-X] --&gt; Q{Blast-radius query}
+  C2[Control B&lt;br/&gt;stance: agnostic] --&gt; Q
+  Sub[(Substrate model)] --&gt; Q
+  Q --&gt;|join on target| Table([in-scope controls])</pre>
+<p><em>Accessible description: each control declares its substrate stance, and those stances plus the substrate model feed a blast-radius query that joins on the migration target and prints the in-scope controls. A substrate change's blast radius becomes a computed table rather than a grep.</em></p>
+<p><strong>(d) Invariants, and how they are checked.</strong> A declaration lint and the computed join:</p>
+<p>| Invariant | Temporal shape | How it is checked | |---|---|---| | Every substrate-reading control declares its assumption | `[]P` (safety) | Declaration lint: a control that reads the substrate with no declared stance is a finding. | | The blast-radius table matches the declared stances | `[]P` (safety) | The table is computed from the stances joined to the topology, never hand-maintained. |</p>
+<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> Each stance is declared at the control's own site and joined to the topology model. The join key is the migration target — a substrate element — which indexes both a control's stance and the topology row it depends on.</p>
+<p><em>Also seen in:</em> Development (a control is a dev-substrate artifact). Rendered in full here.</p>
+<p>---</p>
+<p>The Physical view places the parts and rations their cost. The four views so far are static — they say what the system is, does at once, is packaged as, and runs where. The final view sets them in motion: the scenarios that walk a real goal end to end and validate that the other four actually hold up. That is the +1.</p><div class="pager"><a class="prev" href="4.4-the-development-view.html"><span class="dir">‹ Previous</span><span class="ttl">4.4 · The Development View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.6-the-scenarios-view.html"><span class="dir">Next ›</span><span class="ttl">4.6 · The Scenarios View</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.6-the-scenarios-view.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

@@ -45,16 +45,17 @@ book/
   frontmatter/    0.1-preface.md, 0.2-acknowledgments.md   (Part 0 — Front Matter)
   part1/          1.1-…, 1.2-…                              (Part 1 — The Context)
   part2/          2.1-…, 2.2-…                              (Part 2 — The Mindset)
-  part3/          3.1-… … 3.5-…                             (Part 3 — The Governed Engineering Environment)
-  part4/          4.1-… … 4.5-…                             (Part 4 — Putting It to Work)
-  backmatter/     5.1-conclusion.md                         (Part 5 — Back Matter)
+  part3/          3.1-… … 3.4-…                             (Part 3 — The Governed Engineering Environment)
+  part4/          4.1-… … 4.6-…                             (Part 4 — The Model Zoo)
+  part5/          5.1-… … 5.5-…                             (Part 5 — Putting It to Work)
+  backmatter/     6.1-conclusion.md                         (Part 6 — Back Matter)
   data/metrics.json          # headline numbers, referenced from prose via {{token}}
   assets/                     # figure assets (inline SVGs, rasters)
   appendix-fills/<role>/<slug>.md   # per-entry Structure + Sample Code fills for the appendix
   index-terms.md             # curated supplement to the term index
 ```
 
-- **Part numbers:** front matter is Part 0, the numbered Parts are 1–4, back matter is Part 5. Appendix
+- **Part numbers:** front matter is Part 0, the numbered Parts are 1–5, back matter is Part 6. Appendix
   Parts (A/B/C) are numbered after these.
 - **The filename's leading digit must match its directory** — a `2.1-…md` under `part1/` fails the build
   loud (guards a misfiled chapter).
@@ -75,8 +76,9 @@ freely. Front and back matter render without a "Chapter N" kicker.
 
 The first chapter of each **numbered** Part opens with an epigraph. These are not in the markdown — they
 live in `_PART_EPIGRAPHS` in `build_book_html.py`, one `(quote, attribution)` pair per Part. The Macbeth
-(Part 2) and Ecclesiastes (Part 4) quotations are verbatim from the source memoir; the Part 1 and Part 3
-openers are editor-swappable candidates.
+(Part 2) and Ecclesiastes (Part 5) quotations are verbatim from the source memoir; the Part 1, Part 3, and
+Part 4 (the George Box "all models are wrong" line for the Model Zoo) openers are editor-swappable
+candidates.
 
 ### Copyright footer
 

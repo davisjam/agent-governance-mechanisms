@@ -21,7 +21,7 @@ flat `<slug>.html` per chapter (Part/Chapter TOC nav on top, prev/next at the bo
 an `index.html` landing page, and — appended after the back matter — a Gang-of-Four
 appendix projected from the sibling catalogue entries.
 
-Front matter (part 0) and back matter (part 5) render without a "Chapter N" kicker; the
+Front matter (part 0) and back matter (part 6) render without a "Chapter N" kicker; the
 first chapter of each numbered Part opens with a verbatim epigraph. Chapter prose may
 reference the shared metrics file (`data/metrics.json`) through `{{token}}` placeholders,
 substituted at build time so the headline numbers live in one place.
@@ -48,7 +48,7 @@ MERMAID_CDN = (
 META_RE = re.compile(r"<!--\s*([a-z-]+):\s*(.*?)\s*-->")
 
 # Part number → the source subdirectory that holds its chapters. Front matter is part 0, the
-# four numbered parts are 1–4, back matter is part 5. Appendix parts are assigned after these.
+# five numbered parts are 1–5 (Part 4 is the Model Zoo), back matter is part 6. Appendix parts follow.
 _PART_DIRS = {
     0: "frontmatter",
     1: "part1",
@@ -142,6 +142,9 @@ def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str
         "chapter_title": meta.get("chapter-title", path.stem),
         "body_md": "\n".join(lines).strip(),
         "is_matter": part in (0, 6),  # front / back matter — no "Chapter N" kicker
+        # Pull the Mermaid runtime onto this page only if the chapter carries a ```mermaid fence
+        # (the Model Zoo chapters reuse the appendix Structure diagrams; other chapters do not).
+        "mermaid": "```mermaid" in body,
     }
 
 

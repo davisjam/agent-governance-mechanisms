@@ -49,6 +49,29 @@ chapter (filled as chapters settle; the generator still scans all chapters for s
 - state-machine diagram @ch06
 - invariant / policy over a model @ch06
 - orthogonal (complementary) models @ch06
+- 4+1 views @ch06
+- Logical view @ch06
+- Process view @ch06
+- Development view @ch06
+- Physical view @ch06
+- Scenarios view @ch06
+- executable source-of-truth @ch06
+- drift gate @ch06
+- derivation direction @ch06
+- model-from-code @ch06
+- model-to-code @ch06
+- traceability round-trip @ch06
+- join key @ch06
+- safety property @ch06
+- liveness property @ch06
+- bounded model checking @ch06
+- temporal logic (LTL) @ch06
+- deployment topology @ch06
+- synchronization model @ch06
+- mediator registry @ch06
+- single-writer registry @ch06
+- coverage over model nodes @ch06
+- per-host load profile @ch06
 - standard operating procedure (SOP) @ch07
 - lifecycle @ch07
 - runbook / playbook @ch07
