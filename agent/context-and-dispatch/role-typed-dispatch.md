@@ -49,7 +49,7 @@ silently diverge.
 ## Prerequisites
 
 - A **role registry**: the closed enum plus its policy tuple. Free-form role strings reintroduce the
-  drift the control removes.
+  drift the mechanism removes.
 - **Enforcers that read the role** at each gated operation (via an env var like
   `ADA_TOOL_AGENT_ROLE`), so a mis-roled agent is refused rather than merely mislabeled.
 - A **dispatch wrapper** that is the sole way to set the role, so it cannot be set inconsistently.

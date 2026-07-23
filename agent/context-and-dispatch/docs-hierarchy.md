@@ -28,7 +28,7 @@ conformance lint keeps every rule cross-referencing exactly one canonical doc, s
 into a second pile. What does a docs folder lack that this has? Canonicality and enforcement: one
 place each rule lives, one place each rule points, and a lint that fails the moment that stops being true.
 (The complementary *dispatch-time* move, pushing the subset of rules relevant to *this* change into
-the brief, is [dynamic-context-injection](dynamic-context-injection.md); this control supplies the
+the brief, is [dynamic-context-injection](dynamic-context-injection.md); this mechanism supplies the
 map, that one delivers the relevant page.)
 
 ## Mechanism
@@ -52,12 +52,12 @@ it does not accrete local rules that should be doc-comments.
 
 - **Per-invocation context tax.** The index is booted by *every* agent on *every* dispatch, so every
   bullet is paid for continuously across the fleet. This cost is real enough that it needs its own
-  control: the cap lint (see [claude-md-rule-index](../governance-doc-controls/claude-md-rule-index.md))
+  mechanism: the cap lint (see [claude-md-rule-index](../governance-doc-controls/claude-md-rule-index.md))
   exists precisely to bound it.
 - **Small index ⇒ detail lives elsewhere ⇒ back to pull.** Keeping the index scannable means a rule's
   *detail* sits in a sub-doc the agent must still fetch, re-introducing the availability-vs-binding gap
   for everything past the one-line summary. [Dynamic context injection](dynamic-context-injection.md)
-  is the answer to that regress, not this control.
+  is the answer to that regress, not this mechanism.
 - **Cross-refs rot.** A rule can point at a moved or renamed doc; the conformance lint catches broken
   *links* but not a doc body that has drifted out from under its summary.
 - **Admission is judgment-heavy.** The earns-its-spot test ("non-local", "non-derivable") is a human

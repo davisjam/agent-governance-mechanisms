@@ -81,7 +81,7 @@ if __name__ == "__main__":
 ### Consequences
 
 - **Garbage-in.** A rule with no scope tag can't be selected; one with no fix-hint can't be acted on. The
-  control depends on that discipline holding fleet-wide.
+  mechanism depends on that discipline holding fleet-wide.
 - **Advisory, not binding.** Forward injection shifts the odds; a downstream gate still guarantees the
   rule.
 - **The relevance operator is fallible.** Over-injection floods the brief; under-injection omits a

@@ -91,7 +91,7 @@ def handle(cat: FailureCategory) -> str:
 ### Related Patterns
 
 - **See also (sibling)** — closed remediation-verb sets and the codemod-first threshold: the other
-  bounded-move controls.
+  bounded-move constraints.
 - **See also (cross-target)** — the agent side's const-string topic registry: the same
   typed-namespace-over-strings move for event topics.
 - **Enables** — typing a failure space is the precondition for walking every error edge and asking "did we

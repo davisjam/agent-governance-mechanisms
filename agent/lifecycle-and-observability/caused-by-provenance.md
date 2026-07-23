@@ -46,7 +46,7 @@ Four adjacent things each carry part of this, and each falls short on a differen
   [measured leash](reflection-facet-substrate.md). The leash joins firings to actions by a *session key*:
   co-occurrence within a window, which cannot show one caused the other. Caused-by threads an explicit
   cause-id minted at the cause and carried to the effect: a deterministic join wherever an artifact holds
-  the cause, an honest `_proxy` label wherever none can. It answers the same question (did this control
+  the cause, an honest `_proxy` label wherever none can. It answers the same question (did this mechanism
   change behavior?) by causation where the evidence exists rather than correlation everywhere.
 - **A soft commit trailer rots.** An unenforced "remember to note the reason" convention decays into
   blanks and guesses. This is a *hard* pre-commit assertion of a closed-taxonomy field: the commit does

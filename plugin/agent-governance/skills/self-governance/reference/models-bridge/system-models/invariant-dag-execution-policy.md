@@ -171,6 +171,6 @@ Four parts.
   [drift-parity-gates](drift-parity-gates.md) keep the model's graph matching the real deploy phases the
   lint reads.
 - **Kin** — [control-substrate-dependency](control-substrate-dependency.md): both attach *typed metadata to
-  edges* and compute a decision from it — there a control's blast radius over the substrate it guards, here
+  edges* and compute a decision from it — there a mechanism's blast radius over the substrate it guards, here
   an edge's intent driving whether the Scheduler honors, rations, or ignores it. Same reflex of making an
   edge's meaning a typed field a tool reads, applied to a different graph.

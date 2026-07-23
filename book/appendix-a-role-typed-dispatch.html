@@ -274,7 +274,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
 <li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
 <li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li>
 <li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
 <li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
 <li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
@@ -351,7 +351,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2 id="el-motivation">Motivation</h2>
 <p>Every dispatch bundles several correlated decisions: which LLM (Opus for architecture, Sonnet for mechanical work), whether the agent runs in an isolated worktree or on <code>main</code>, and which compute gates it must respect. Made ad hoc, these decisions drift apart from the work: a Sonnet gets pointed at an architecture change whose incorrect output would cause an incident; a commit agent runs in a worktree when it needs to be on <code>main</code> for the hook to fire; a resource-hungry agent runs the aggregate lint it should never trigger. The failure recurs on <em>every</em> dispatch and is invisible until the wrong-tier output ships or the gate is bypassed.</p>
 <h2 id="el-applicability">Applicability</h2>
-<ul><li>A <strong>role registry</strong>: the closed enum plus its policy tuple. Free-form role strings reintroduce the drift the control removes.</li><li><strong>Enforcers that read the role</strong> at each gated operation (via an env var like <code>ADA_TOOL_AGENT_ROLE</code>), so a mis-roled agent is refused rather than merely mislabeled.</li><li>A <strong>dispatch wrapper</strong> that is the sole way to set the role, so it cannot be set inconsistently.</li></ul>
+<ul><li>A <strong>role registry</strong>: the closed enum plus its policy tuple. Free-form role strings reintroduce the drift the mechanism removes.</li><li><strong>Enforcers that read the role</strong> at each gated operation (via an env var like <code>ADA_TOOL_AGENT_ROLE</code>), so a mis-roled agent is refused rather than merely mislabeled.</li><li>A <strong>dispatch wrapper</strong> that is the sole way to set the role, so it cannot be set inconsistently.</li></ul>
 <h2 id="el-structure">Structure</h2>
 <p>The Structure diagram appears at the top of this page.</p>
 <h2 id="el-sample-code">Sample Code</h2>

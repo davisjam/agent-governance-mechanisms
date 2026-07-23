@@ -274,7 +274,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
 <li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
 <li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li>
 <li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
 <li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
 <li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
@@ -352,7 +352,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2 id="el-motivation">Motivation</h2>
 <p>The raw canonical PDF library is a minefield of silent, invisible-at-the-call-site failures. Forget <code>SetModified()</code> on an indirect object and the write is <strong>silently dropped</strong> on save. Call <code>tagPointer.AddTag</code> or <code>dict.Put</code> directly and you can corrupt the <code>/StructTreeRoot</code>, the exact class that produced the v172 corruption. There is no single place to enforce these invariants, so scattered raw calls make the <em>same</em> PDF bug class recur at every call site.</p>
 <h2 id="el-applicability">Applicability</h2>
-<ul><li><strong>A typed model covering the domain surface.</strong> Every operation callers need must exist as a typed mutator, or they're forced back to the raw API.</li><li><strong>A ban-lint on the raw API</strong> (the counted control) plus a migration of <em>all</em> existing call sites.</li><li><strong>A pinned library version.</strong> Minor bumps of the canonical PDF library can silently change auto-tagging, so the seam pins it and gates upgrades behind a regression suite.</li></ul>
+<ul><li><strong>A typed model covering the domain surface.</strong> Every operation callers need must exist as a typed mutator, or they're forced back to the raw API.</li><li><strong>A ban-lint on the raw API</strong> (the counted sensor) plus a migration of <em>all</em> existing call sites.</li><li><strong>A pinned library version.</strong> Minor bumps of the canonical PDF library can silently change auto-tagging, so the seam pins it and gates upgrades behind a regression suite.</li></ul>
 <h2 id="el-structure">Structure</h2>
 <p>The Structure diagram appears at the top of this page.</p>
 <h2 id="el-sample-code">Sample Code</h2>

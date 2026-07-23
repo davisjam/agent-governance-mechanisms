@@ -96,6 +96,6 @@ if __name__ == "__main__":
 
 - **Bridge** — every model here couples an agent-side use (query/inject) to a product-side use
   (govern/generate).
-- **Counterpart** — drift & parity gates: the hard control that makes "cannot drift" true.
+- **Counterpart** — drift & parity gates: the hard mechanism that makes "cannot drift" true.
 - **See also** — the models it names (component-zone, synchronization, service-flow, topology, registries)
   and the mechanisms over them (codegen, query surface, consumption).

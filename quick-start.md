@@ -32,7 +32,7 @@ advises, and *interpret-failure* acts only on your greenlight. In Claude Code:
 ```
 
 The `agent-governance` plugin ships **three partner skills**: **self-governance** (*harden* — audit for
-missing guardrails, or convert a recurring failure into a durable control), **self-operations**
+missing guardrails, or convert a recurring failure into a durable mechanism), **self-operations**
 (*operate* — run the agent-fleet substrate day-to-day), and **self-communicate** (*communicate* — write
 and diagram engineer-facing docs well: the rhetoric toolkit, the Diátaxis register, a house lexicon, and a
 prose-plus-diagram audit). All three install with the one plugin; start a new session and they load. Pull a
@@ -76,15 +76,15 @@ non-derivable-from-local-code, non-local. Show me a diff before writing anything
 ===
 @TITLE: Survey the repo for missing guardrails
 @PATH: both
-@EXPLAIN: Before adopting any single control, get the map: which mechanisms your repo needs, already has, or would benefit from. Path A runs this as the skill's **audit** mode (advises, changes nothing). Path B asks the same of a plain agent pointed at the catalogue.
+@EXPLAIN: Before adopting any single mechanism, get the map: which mechanisms your repo needs, already has, or would benefit from. Path A runs this as the skill's **audit** mode (advises, changes nothing). Path B asks the same of a plain agent pointed at the catalogue.
 @LINKS: [INDEX (the census)](INDEX.md) · [catalogue views](catalogue-views.html)
 @PROMPT:
 (Path A) self-governance: run audit mode against my repo. Survey it against the catalogue and produce a
-prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one control
+prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one mechanism
 you'd build first. Advise only; change nothing.
 (Path B) Read the governance-mechanisms catalogue (README, INDEX, and the agent/ models-bridge/ product/
-role folders). For each control, judge whether my repo needs it, already has it, or would benefit.
-Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost controls,
+role folders). For each mechanism, judge whether my repo needs it, already has it, or would benefit.
+Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost mechanisms,
 and tell me the one you'd build first. Advise only; change nothing.
 ===
 @TITLE: Adopt the model-based-engineering kit
@@ -142,13 +142,13 @@ the symptom, the cause, and the fix, citing real files. Show me the draft before
 ===
 @TITLE: Bootstrap your house lexicon, then write and audit prose with the skill
 @PATH: both
-@EXPLAIN: The controls, design docs, runbooks, and handoffs you adopt above are all *prose* — and prose an engineer or agent must read cleanly. The self-communicate skill supplies the craft: a house lexicon (so a term means the same thing everywhere), the Diátaxis register (so a doc has the right shape), and an audit that grades a passage and emits fixes. Bootstrap the lexicon first by walking your codebase and confirming the terms with the maintainer; then write and audit prose against the skill.
+@EXPLAIN: The mechanisms, design docs, runbooks, and handoffs you adopt above are all *prose* — and prose an engineer or agent must read cleanly. The self-communicate skill supplies the craft: a house lexicon (so a term means the same thing everywhere), the Diátaxis register (so a doc has the right shape), and an audit that grades a passage and emits fixes. Bootstrap the lexicon first by walking your codebase and confirming the terms with the maintainer; then write and audit prose against the skill.
 @PROMPT:
 (Path A) self-communicate: bootstrap my house lexicon — walk my codebase (sample my house-rules doc, a
 handful of design docs, and my typed enums / registries / schema constants), extract every term I use with a
 specific meaning more than once, classify each as portable (link the established name) or house (note the
 concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
-when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
+when I write a mechanism description, a design doc, a runbook, or a handoff, apply the engineering register and
 run the audit procedure over the draft and show me the fixes.
 (Path B) Read the self-communicate skill resources (its SKILL.md plus the writing/lexicon.md, writing/engineering.md,
 writing/rhetoric.md, writing/voice.md, writing/audit.md, and drawing/diagrams.md files under the skills/self-communicate folder).
@@ -176,11 +176,11 @@ non-derivable-from-local-code, non-local. Show me a diff before writing anything
 
 # Step 2 — Survey the repo for missing guardrails  [either path]
 (Path A) self-governance: run audit mode against my repo. Survey it against the catalogue and produce a
-prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one control
+prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one mechanism
 you'd build first. Advise only; change nothing.
 (Path B) Read the governance-mechanisms catalogue (README, INDEX, and the agent/ models-bridge/ product/
-role folders). For each control, judge whether my repo needs it, already has it, or would benefit.
-Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost controls,
+role folders). For each mechanism, judge whether my repo needs it, already has it, or would benefit.
+Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost mechanisms,
 and tell me the one you'd build first. Advise only; change nothing.
 
 # Step 3 — Adopt the model-based-engineering kit  [either path]
@@ -221,7 +221,7 @@ the symptom, the cause, and the fix, citing real files. Show me the draft before
 handful of design docs, and my typed enums / registries / schema constants), extract every term I use with a
 specific meaning more than once, classify each as portable (link the established name) or house (note the
 concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
-when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
+when I write a mechanism description, a design doc, a runbook, or a handoff, apply the engineering register and
 run the audit procedure over the draft and show me the fixes.
 (Path B) Read the self-communicate skill resources (its SKILL.md plus the writing/lexicon.md, writing/engineering.md,
 writing/rhetoric.md, writing/voice.md, writing/audit.md, and drawing/diagrams.md files under the skills/self-communicate folder).
@@ -252,15 +252,15 @@ non-derivable-from-local-code, non-local. Show me a diff before writing anything
 
 ### Step 2 — Survey the repo for missing guardrails
 
-Before adopting any single control, get the map: which mechanisms your repo needs, already has, or would benefit from. Path A runs this as the skill's **audit** mode (advises, changes nothing). Path B asks the same of a plain agent pointed at the catalogue.
+Before adopting any single mechanism, get the map: which mechanisms your repo needs, already has, or would benefit from. Path A runs this as the skill's **audit** mode (advises, changes nothing). Path B asks the same of a plain agent pointed at the catalogue.
 
 ```
 (Path A) self-governance: run audit mode against my repo. Survey it against the catalogue and produce a
-prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one control
+prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one mechanism
 you'd build first. Advise only; change nothing.
 (Path B) Read the governance-mechanisms catalogue (README, INDEX, and the agent/ models-bridge/ product/
-role folders). For each control, judge whether my repo needs it, already has it, or would benefit.
-Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost controls,
+role folders). For each mechanism, judge whether my repo needs it, already has it, or would benefit.
+Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost mechanisms,
 and tell me the one you'd build first. Advise only; change nothing.
 ```
 
@@ -336,14 +336,14 @@ the symptom, the cause, and the fix, citing real files. Show me the draft before
 
 ### Step 8 — Bootstrap your house lexicon, then write and audit prose with the skill
 
-The controls, design docs, runbooks, and handoffs you adopt above are all *prose* — and prose an engineer or agent must read cleanly. The self-communicate skill supplies the craft: a house lexicon (so a term means the same thing everywhere), the Diátaxis register (so a doc has the right shape), and an audit that grades a passage and emits fixes. Bootstrap the lexicon first by walking your codebase and confirming the terms with the maintainer; then write and audit prose against the skill.
+The mechanisms, design docs, runbooks, and handoffs you adopt above are all *prose* — and prose an engineer or agent must read cleanly. The self-communicate skill supplies the craft: a house lexicon (so a term means the same thing everywhere), the Diátaxis register (so a doc has the right shape), and an audit that grades a passage and emits fixes. Bootstrap the lexicon first by walking your codebase and confirming the terms with the maintainer; then write and audit prose against the skill.
 
 ```
 (Path A) self-communicate: bootstrap my house lexicon — walk my codebase (sample my house-rules doc, a
 handful of design docs, and my typed enums / registries / schema constants), extract every term I use with a
 specific meaning more than once, classify each as portable (link the established name) or house (note the
 concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
-when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
+when I write a mechanism description, a design doc, a runbook, or a handoff, apply the engineering register and
 run the audit procedure over the draft and show me the fixes.
 (Path B) Read the self-communicate skill resources (its SKILL.md plus the writing/lexicon.md, writing/engineering.md,
 writing/rhetoric.md, writing/voice.md, writing/audit.md, and drawing/diagrams.md files under the skills/self-communicate folder).

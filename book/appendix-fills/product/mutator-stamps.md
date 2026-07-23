@@ -91,7 +91,7 @@ def strip_for_delivery(artifact) -> None:
 
 ### Related Patterns
 
-- **Counterpart** — the wiring lint guarantees every mutator verb stamps; it is the counted control that
+- **Counterpart** — the wiring lint guarantees every mutator verb stamps; it is the counted sensor that
   makes this audit trail complete.
 - **Consumer** — the change-log reader reads these stamps to reconstruct the history.
 - **Enabler** — the closed remediation-verb set makes "stamp every verb" a finite, achievable

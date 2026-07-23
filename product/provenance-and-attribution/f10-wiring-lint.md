@@ -60,10 +60,10 @@ HIGH-severity finding. The invariant has been held at 0 open gaps.
 ## Related mechanisms
 
 - **Counterpart** — of [mutator-stamps](mutator-stamps.md): the stamps are the *construction* (the audit
-  record), this lint is the *counted control* that guarantees they're complete. The canonical
+  record), this lint is the *counted sensor* that guarantees they're complete. The canonical
   construction-held-by-detection pairing on the product side.
 - *See also (sibling)* — [semantic-lints](../validation-and-conformance/semantic-lints.md): the F10 lint
   is a member of that fleet doing a completeness-over-verbs job.
 - **Instance of** — [semantic-level-enforcement](../../agent/governance-doc-controls/semantic-level-enforcement.md):
   pitching the guarantee at "was the call made" rather than "was the work correct" is one case of the
-  general move — place a control at the semantic level where its property is legible *and* cheap to check.
+  general move — place a mechanism at the semantic level where its property is legible *and* cheap to check.

@@ -69,17 +69,18 @@ already states, and fewer mistakes.** The catalogue's **models-bridge** role is 
 
 A guardrail is one of two kinds:
 
-- **Architecture** — make the error **impossible by construction**: a typed model with one sanctioned
+- **Constraint** — make the error **impossible by construction**: a typed model with one sanctioned
   seam, a state that can't be represented wrongly. Software
-  [poka-yoke](https://en.wikipedia.org/wiki/Poka-yoke), error-*proofing*.
-- **Control** — where you can't prevent it, **observe and guard** the behavior: a lint, a gate, a
+  [poka-yoke](https://en.wikipedia.org/wiki/Poka-yoke), error-*proofing*. Building a constraint is the
+  work we call *architecture*.
+- **Sensor** — where you can't prevent it, **observe and guard** the behavior: a lint, a gate, a
   validator, an audit that fires on a violation and holds the line. Error-*catching*.
 
-A control works like a sensor: it detects a mistake and surfaces it after the fact. Architecture works
-like a wall: it makes the whole class of mistake impossible to make. Reach for the wall first, because a
-sensor still lets the mistake happen. But a wall built across the only exit blocks the people trying to
-leave — an over-constrained design stops legitimate work as surely as it stops the error, so the wall
-belongs around the class you can name, not across the whole floor.
+A sensor detects a mistake and surfaces it after the fact. A constraint works like a wall: it makes the
+whole class of mistake impossible to make. Reach for the wall first, because a sensor still lets the
+mistake happen. But a wall built across the only exit blocks the people trying to leave — an
+over-constrained design stops legitimate work as surely as it stops the error, so the wall belongs around
+the class you can name, not across the whole floor.
 
 Every mechanism in the catalogue governs one of three **roles** (the **agent** fleet, the **models**
 that bridge agents and code, or the shipped **product**) and enforces either **hard** (deterministic)
@@ -110,8 +111,8 @@ can't name the failure a mechanism prevents in *your* system, you might not need
 The catalogue also ships as **three partner Claude skills** (one plugin, `agent-governance`):
 
 - **self-governance** — *harden.* Audit your repo for missing guardrails, or convert a recurring failure
-  into a durable control. Carries the AI-First Engineering Method as its operating stance, plus the
-  agent + models-bridge control census as on-demand reference.
+  into a durable mechanism. Carries the AI-First Engineering Method as its operating stance, plus the
+  agent + models-bridge mechanism census as on-demand reference.
 - **self-operations** — *operate.* Run the agent-fleet substrate day to day: the positive lifecycle map
   (agents, context, git, deploy, dev-env, cron) plus a symptom → resolving-doc catalog when something
   breaks. It bootstraps to your repo by inspection.
@@ -122,16 +123,16 @@ The catalogue also ships as **three partner Claude skills** (one plugin, `agent-
   codebase walk and keeps it living.
 
 They partner: **operate routes a break to its fix; when a failure recurs, it hands the class to
-self-governance to convert into a control; and self-communicate writes the result up in the shared
+self-governance to convert into a mechanism; and self-communicate writes the result up in the shared
 register.** Install all three from the [quick start](quick-start.md).
 
 Govern and operate are **two lenses on one substrate, not competitors.** self-governance is the *census of
-controls* and the engine that mints new ones: the **design-time** view (what controls exist, which you're
-missing, how to add one). self-operations *runs the substrate those controls govern*, the **run-time** view
+mechanisms* and the engine that mints new ones: the **design-time** view (what mechanisms exist, which you're
+missing, how to add one). self-operations *runs the substrate those mechanisms govern*, the **run-time** view
 (the lifecycle you operate, the runbook you follow, the hook you wire). The same mechanism appears in
 self-governance's census *and* is operated through self-operations — one substrate seen design-time vs
 run-time, not two copies. **self-communicate sits alongside as a third leg**, not a lens on that substrate,
-but the craft that keeps its output legible: the controls, design docs, runbooks, handoffs, and the
+but the craft that keeps its output legible: the mechanisms, design docs, runbooks, handoffs, and the
 operator's own reports to the human are all prose, and this skill supplies the register and the shared
 vocabulary they're written in. govern / operate / communicate.
 

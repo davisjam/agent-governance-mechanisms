@@ -8,7 +8,7 @@ recovery) get a consistent, pre-reasoned, incident-tested response.
 | | |
 |---|---|
 | Summary | Situation-keyed devops procedures agents follow instead of improvising. |
-| Target | Agent · **Governance-doc controls** |
+| Target | Agent · **Governance-doc mechanisms** |
 | Form | `agent-output` |
 | Enforcement | **Soft** (probabilistic) — a playbook *aims* the response; it informs, it does not block. Its value is that the correct steps are written down and discoverable at the moment they're needed. |
 
@@ -60,7 +60,7 @@ get stuck). Add one entry per signal the substrate emits.
   mis-directs the response, worse than no playbook.
 - **Dead weight if the situation stops recurring.** A playbook for a retired failure mode is noise.
 - **Not a substitute for prevention.** A situation that recurs often enough should be *designed out*
-  (architecture) or *gated* (a hard control), not merely playbooked.
+  (architecture) or *gated* (a hard sensor), not merely playbooked.
 
 ## Known uses
 

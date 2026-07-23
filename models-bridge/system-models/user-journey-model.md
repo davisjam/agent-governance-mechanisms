@@ -60,7 +60,7 @@ O(1)-at-PR correction. Two coverage audits ride on the same model:
   endpoint no journey needs is dead surface (dead code plus needless attack surface), safe to retire.
 
 All three are the existing drift/parity machinery applied to a new model: the model is the new thing, the
-controls come from machinery that already exists.
+mechanisms come from machinery that already exists.
 
 ## Prerequisites
 
@@ -70,13 +70,13 @@ controls come from machinery that already exists.
 - **Endpoints already addressable as stable entities** the journey can reference. The join needs no new
   endpoint registry invented if one already exists.
 - **The reconciliation machinery pointed at the model.** A journey model is only trustworthy because a
-  control keeps it fresh; without the drift lint it rots exactly as an unmaintained dependency list does.
+  mechanism keeps it fresh; without the drift lint it rots exactly as an unmaintained dependency list does.
 
 ## Consequences & costs
 
 - **A new journey, or a new service call in a journey's code, ⇒ a model edit**, or the drift lint fails
   at that PR. Deliberately; that is the freshness gate working.
-- **The controls land audit-only first**, and promote to blocking once the drift they surface is drained.
+- **The mechanisms land audit-only first**, and promote to blocking once the drift they surface is drained.
   A blocking model-reconciliation lint dropped in red would break every in-flight change and flood a
   no-baseline deploy gate; so the honest landing is audit-only → fix-wave → promote.
 - **Journey granularity is a modeling choice.** Drawn too coarse the audits are toothless, too fine the
@@ -91,7 +91,7 @@ requires** instead of the whole fleet: an editor session need not warm the batch
 But the capability is *safe* only because the governance is: a stale journey→deps map would wake too few
 services and fail a request cold, so journey-aware scaling is **gated on the drift lint being blocking**,
 the map provably equal to the territory. This is the sharpest version of the model's value: the same
-control that keeps the audits honest is what makes the optimization safe to turn on. A capability the
+mechanism that keeps the audits honest is what makes the optimization safe to turn on. A capability the
 model enables, gated on the governance that keeps the model true.
 
 ## Known uses

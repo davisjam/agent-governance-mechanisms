@@ -25,11 +25,11 @@ chapter (filled as chapters settle; the generator still scans all chapters for s
 - foundation model / model tier @ch03
 - agentic harness @ch03
 - context window / compaction @ch03
-- skill (soft control) @ch03
-- hook (hard control) @ch03
+- skill (soft mechanism) @ch03
+- hook (hard mechanism) @ch03
 - tool (deterministic action) @ch03
 - engineering environment @ch03
-- injection point (where control attaches) @ch03
+- injection point (where a mechanism attaches) @ch03
 - model (as map / cheaper approximation) @ch04
 - map and territory @ch04
 - model drift @ch04
@@ -148,8 +148,8 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: foundation-model | The foundation model
 - concept: agentic-harness | The agentic harness
 - concept: context-window | The context window
-- concept: skill-soft-control | Skill (soft control)
-- concept: hook-hard-control | Hook (hard control)
+- concept: skill-soft-control | Skill (soft mechanism)
+- concept: hook-hard-control | Hook (hard mechanism)
 - concept: tool-deterministic-action | Tool (deterministic action)
 - concept: engineering-environment | The engineering environment
 - concept: injection-point | Injection point

@@ -7,7 +7,7 @@ stale, or be hand-edited where they will be overwritten.
 | | |
 |---|---|
 | Summary | Lints keep docs indexed, provenance-headed, and cross-reference-valid. |
-| Target | Agent · **Governance-doc controls** |
+| Target | Agent · **Governance-doc mechanisms** |
 | Form | `validation` |
 | Enforcement | **Hard** (deterministic) · *blocking* — a doc missing its index entry or provenance header fails the lint |
 
@@ -62,7 +62,7 @@ cross-reference/link lints check pointers resolve. Lints land AUDIT-ONLY and mig
 ## Related mechanisms
 
 - *See also (family)* — [claude-md-rule-index](claude-md-rule-index.md): the flagship "documentation
-  with a hard-counterpart lint" this control generalizes to the whole corpus.
+  with a hard-counterpart lint" this mechanism generalizes to the whole corpus.
 - *See also (sibling)* — [meta-model-consumption](../../models-bridge/system-models/meta-model-consumption.md): the same
   "read the substrate at lint-time" move, applied to queryable models rather than prose docs.
 - *See also (sibling)* — [mandatory-snippet-table](mandatory-snippet-table.md): documentation (snippets)

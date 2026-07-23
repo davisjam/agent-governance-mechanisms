@@ -33,7 +33,7 @@ them and emits at most one reflection per window — the aggregate ceiling no in
 
 ```mermaid
 flowchart LR
-  F1[Facet: failure→control] --> Reg[(Facet registry)]
+  F1[Facet: failure→mechanism] --> Reg[(Facet registry)]
   F2[Facet: knowledge-routing] --> Reg
   F3[Facet: structural-drift] --> Reg
   Reg --> Emitter{{Shared emitter}}
@@ -86,7 +86,7 @@ class Emitter:
 
 ### Known Uses
 
-- A Template-Method facet base plus a typed registry, with facets for failure→control, knowledge-routing,
+- A Template-Method facet base plus a typed registry, with facets for failure→mechanism, knowledge-routing,
   and structural drift.
 - A shared turn-end emitter that round-robins facets and emits at most one reflection per window.
 

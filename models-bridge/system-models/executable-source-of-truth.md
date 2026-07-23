@@ -9,7 +9,7 @@ operable by a context-bounded agent.
 | Summary | Typed models read every run and generated from; can't drift. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
-| Enforcement | **Hard** (deterministic) — the models are *construction* (typed IR); the counted controls are the [drift/parity gates](drift-parity-gates.md) that fail the build when a model diverges from reality |
+| Enforcement | **Hard** (deterministic) — the models are *construction* (typed IR); the counted sensors are the [drift/parity gates](drift-parity-gates.md) that fail the build when a model diverges from reality |
 
 > **★ The bridge.** This is the flagship of the third role: the model layer is the **interface through
 > which a context-bounded agent operates a context-exceeding codebase.** It faces both ways. Agents
@@ -74,7 +74,7 @@ frequently *read* or *generated-from*, so it is exercised constantly.
 
 - **Bridge** — every model here couples an agent-side use (query/inject) to a product-side use
   (govern/generate); see the individual models below.
-- **Counterpart** — [drift-parity-gates](drift-parity-gates.md): the hard control that makes "cannot
+- **Counterpart** — [drift-parity-gates](drift-parity-gates.md): the hard mechanism that makes "cannot
   drift" true.
 - *See also* — the six models: [component-zone](component-zone-model.md) ·
   [synchronization](synchronization-model.md) · [concurrency-contracts](concurrency-contracts.md) ·

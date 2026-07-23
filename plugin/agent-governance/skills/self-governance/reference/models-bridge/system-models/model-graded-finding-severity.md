@@ -3,7 +3,7 @@
 **Intent** — Grade each lint finding's severity — **block, warn, or silence** — by the finding's
 *distance*, in a typed component model, from the files the commit actually changed, computed by **one
 central join the gate runs over every finding** rather than by each lint scoping itself. The pre-commit
-hook reads the model at check time and dogfoods it to run a control. (Our instance grades a
+hook reads the model at check time and dogfoods it to run a mechanism. (Our instance grades a
 governed-doc commit's deploy-scope lints against the component-and-zone model.)
 
 | | |
@@ -125,7 +125,7 @@ at worst let an unrelated finding slip to the downstream backstop; it cannot fab
 ## Related mechanisms
 
 - **Enabler** — [component & zone model](component-zone-model.md): the typed model the grader reads at
-  check time. This is the sharpest instance of a model *consumed to run a control* — the gate dogfoods the
+  check time. This is the sharpest instance of a model *consumed to run a mechanism* — the gate dogfoods the
   component map on every governed commit, not as documentation but as the thing that decides severity.
 - **Enabler** — [meta-model consumption](meta-model-consumption.md): the read-don't-snapshot discipline
   the grader follows when it imports the model at check time rather than baking a copy.

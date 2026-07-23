@@ -26,7 +26,7 @@ Staged gates are *proactive*: a **canary** revision is deployed taking **no prod
 users hit it; the staged gate catches it on a revision no user can reach. A pre-launch rule pushes the gate even earlier: don't even
 *launch* a deploy that will predictably fail. Confirm lints are green, no known flaky class is live,
 and the changed-since-main lint pass is green *before* paying for build minutes. (Being a standard practice, its
-"why not" is thinner than the novel controls': the value is defense-in-depth, not novelty.)
+"why not" is thinner than the novel mechanisms': the value is defense-in-depth, not novelty.)
 
 ## Mechanism
 

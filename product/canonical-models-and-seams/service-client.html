@@ -73,7 +73,7 @@
 <h2>Mechanism</h2>
 <p><code>ServiceClient.post_file(BinaryIO, …)</code> is the one way to make a cross-service call; the IPC module is the sole cross-service-HTTP seam, lint-enforced; direct <code>requests.post</code> against another service URL is banned. The signature refusing a <code>str</code> path closes the bug class.</p>
 <h2>Prerequisites</h2>
-<ul><li><strong>A typed client whose signature encodes the invariant</strong> (<code>BinaryIO</code>, not <code>str</code>): the type <em>is</em> the control.</li><li><strong>A sole-seam lint</strong> banning the raw HTTP call to other services.</li><li><strong>Migration</strong> of existing cross-service calls onto the client.</li></ul>
+<ul><li><strong>A typed client whose signature encodes the invariant</strong> (<code>BinaryIO</code>, not <code>str</code>): the type <em>is</em> the constraint.</li><li><strong>A sole-seam lint</strong> banning the raw HTTP call to other services.</li><li><strong>Migration</strong> of existing cross-service calls onto the client.</li></ul>
 <h2>Consequences &amp; costs</h2>
 <ul><li><strong>All cross-service calls funnel through one client</strong> — a coupling point that must cover every HTTP shape callers need.</li><li><strong>Slightly more ceremony.</strong> Callers must open a file handle rather than pass a path string (the point, but it is friction).</li><li><strong>The seam is a bottleneck for evolution.</strong> New call patterns require extending the one client.</li></ul>
 <h2>Known uses</h2>

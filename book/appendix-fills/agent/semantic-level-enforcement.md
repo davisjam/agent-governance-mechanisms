@@ -9,7 +9,7 @@
 
 ## Enforce at the right semantic level
 
-**Intent** — Place a control at the granularity where the property it checks first becomes *legible*, not
+**Intent** — Place a mechanism at the granularity where the property it checks first becomes *legible*, not
 at the cheapest or earliest point; a check fired below that scope either can't see the property or rejects
 a legitimate partial state (our instance: model↔code drift is checked when an agent *returns* from a
 multi-commit task, never at a per-commit hook where the model is legitimately mid-flight).
@@ -17,7 +17,7 @@ multi-commit task, never at a per-commit hook where the model is legitimately mi
 ### Motivation
 
 A property has a scope at which it becomes legible — the smallest window in which enough of the world is
-visible to decide it true or false. Place a control below that scope and it fails one of two ways. It
+visible to decide it true or false. Place a mechanism below that scope and it fails one of two ways. It
 *misses* the property, because the slice it sees cannot contain the evidence: a monitor judging one system
 call at a time never sees a data leak, because a leak is a sequence — the call that reads the secret and
 the call that ships it are legible together, never apart. Or it *false-fires* on a legitimate partial
@@ -28,15 +28,15 @@ placement is wrong.
 
 ### Applicability
 
-Reach for this when you are placing any control — a lint, a gate, a hook, a validator, a monitor — and the
-property it checks is a claim about a *unit* larger than the smallest thing the control could fire on.
+Reach for this when you are placing any mechanism — a lint, a gate, a hook, a validator, a monitor — and the
+property it checks is a claim about a *unit* larger than the smallest thing the mechanism could fire on.
 Signals: the property is a *sequence* (legible only across several events), or a claim about a *finished*
 unit (correctly inconsistent mid-way).
 
 ### Structure
 
 Rank the candidate placements as a ladder of widening scope; find the rung where the property is legible;
-place the control there. Below that rung the check is blind or false-fires; at or above it, the property is
+place the mechanism there. Below that rung the check is blind or false-fires; at or above it, the property is
 decidable.
 
 ```mermaid
@@ -47,18 +47,18 @@ flowchart TB
   Q --> L3[Rung 3 · whole worktree / final commit]
   Q --> L4[Rung 4 · whole task on agent return]
   L1 -. below legible scope .-> Miss([Misses, or false-fires])
-  L4 ==>|legible here| Fire([Control decides correctly])
+  L4 ==>|legible here| Fire([Mechanism decides correctly])
 ```
 
 *Accessible description: a property to enforce is matched against a ladder of placements ordered by widening
 scope — one changed file, reasoning over the diff, the whole worktree, the whole task on agent return. A
-control placed below the scope at which the property is legible either misses it or false-fires on a partial
-state; a control placed at the rung where the property is legible decides correctly.*
+mechanism placed below the scope at which the property is legible either misses it or false-fires on a partial
+state; a mechanism placed at the rung where the property is legible decides correctly.*
 
 ### Sample Code
 
 Placement is a design-time judgment, so the "code" is the decision procedure, not a runtime call: for a
-given property, pick the coarsest window it needs, and refuse to wire the control any lower. Here the
+given property, pick the coarsest window it needs, and refuse to wire the mechanism any lower. Here the
 property `model_and_code_agree` is a claim about a *finished* unit, so it is legible only at agent-return
 scope; wiring it at the commit rung is the mis-placement the procedure rejects.
 
@@ -78,23 +78,23 @@ def legible_scope(prop: str) -> Scope:
     if prop == "model_and_code_agree":   return Scope.TASK_RETURN      # a FINISHED-unit claim
     raise ValueError(f"unranked property: {prop}")
 
-def place_control(prop: str, chosen: Scope) -> None:
+def place_mechanism(prop: str, chosen: Scope) -> None:
     need = legible_scope(prop)
     if chosen < need:                                                  # below legible scope = blind / false-fires
         raise SystemExit(
             f"'{prop}' is legible at {need.name}, not {chosen.name}: "
-            "the control would miss it or reject a legitimate partial state"
+            "the mechanism would miss it or reject a legitimate partial state"
         )
-    wire_control(prop, chosen)                                         # at or above: the property is decidable
+    wire_mechanism(prop, chosen)                                       # at or above: the property is decidable
 ```
 
 ### Consequences
 
 - **It is a soft, design-time judgment.** Nothing blocks a mis-placement automatically; the discipline is
-  applied when a control is built or reviewed, so a careless author can still wire a check too low.
+  applied when a mechanism is built or reviewed, so a careless author can still wire a check too low.
 - **The right rung costs more.** Legibility often lives at a coarser scope than convenience, so the correct
   placement runs later and over more context than the cheap one — a task-return audit over a per-commit hook.
-- **The ladder is per-property.** Two controls guarding the same subsystem can belong on different rungs;
+- **The ladder is per-property.** Two mechanisms guarding the same subsystem can belong on different rungs;
   there is no single "correct" scope for a codebase, only for a property.
 
 ### Known Uses

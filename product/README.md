@@ -26,7 +26,7 @@ and how the repair move-space is bounded. (The artifact is *produced by* the [ag
 **Construction, held by a ban-lint.** The *Canonical models & seams* family is *typed models and seams*
 — which the catalogue elsewhere says it "shows by example, never counts" (that is *construction*, not
 detection). The reconciliation is the catalogue's own rule: the typed model/seam is the construction
-mechanism (shown by example), and the entry's **counted, enforced control is the ban-lint that holds it
+mechanism (shown by example), and the entry's **counted, enforced sensor is the ban-lint that holds it
 in place** (the [raw-PDF-library ban-lint](canonical-models-and-seams/pdf-model.md),
 the [raw-OpenXML ban-lint](canonical-models-and-seams/office-models.md), the sole-seam lints). Each entry
 documents both; the Enforcement row is the lint. This is the same construction-held-by-detection

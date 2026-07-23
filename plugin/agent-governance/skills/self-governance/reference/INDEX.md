@@ -63,7 +63,7 @@ soft guidance with a hard counterpart.
 | ✅ | Reflection-facet substrate (tempo-gated policy nudges) | `quality-gate` | Soft·Hard | [reflection-facet-substrate.md](agent/lifecycle-and-observability/reflection-facet-substrate.md) |
 | ✅ | Caused-by provenance (agent-side change traceability) | `audit-trail` | Hard | [caused-by-provenance.md](agent/lifecycle-and-observability/caused-by-provenance.md) |
 
-## 5. Governance-doc controls
+## 5. Governance-doc mechanisms
 
 *Documentation treated as enforced infrastructure.* — [family folder](agent/governance-doc-controls/)
 

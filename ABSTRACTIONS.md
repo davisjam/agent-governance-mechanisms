@@ -6,7 +6,7 @@ descriptions give you ideas for yours.
 
 Every abstraction below carries a **slug** (the citation key, shown in brackets), a definition, the
 artifact it **grounds** in the reference system (named once, for concreteness), and a **see** link to the
-control that governs it. To cite one from an entry, write `[[slug]]` (renders the headword) or
+mechanism that governs it. To cite one from an entry, write `[[slug]]` (renders the headword) or
 `[[slug|custom text]]` (renders your own words) — hovering shows the definition.
 
 ---

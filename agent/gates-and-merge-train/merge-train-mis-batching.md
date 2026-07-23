@@ -42,7 +42,7 @@ Landed commits are checked by patch-id / ancestry reachability.
 - **A conflict predicate** (shared file ⇒ edge) and a **(greedy) MIS routine**.
 - **Reachability / patch-id checks** so a "landed" claim is verifiable.
 - **Footprint discipline at dispatch**: the orchestrator has to *plan* disjoint waves for the MIS to
-  pay off; the control pushes work upstream into scheduling.
+  pay off; the mechanism pushes work upstream into scheduling.
 
 ## Consequences & costs
 

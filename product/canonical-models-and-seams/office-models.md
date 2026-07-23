@@ -10,7 +10,7 @@ as [pdf-model](pdf-model.md), on a second object model (our instance: `{Slides,D
 | Summary | All OOXML through typed models; raw SDK access banned. |
 | Target | Product · **Canonical models & seams** |
 | Form | `typed-ir` |
-| Enforcement | **Hard** (deterministic) · *blocking* — the two lints fail the build on raw OpenXml / raw-XML string-match; the typed models are *construction*, the lints are the counted controls |
+| Enforcement | **Hard** (deterministic) · *blocking* — the two lints fail the build on raw OpenXml / raw-XML string-match; the typed models are *construction*, the lints are the counted sensors |
 
 ## Motivation — the failure it kills
 

@@ -24,7 +24,7 @@ itself rots: a doc moves, the pointer dangles, the next operator is sent on a ch
 
 Reach for this when a typed source-of-truth can be rendered into the skill, a reference-validity lint can
 resolve both file and heading anchor, runbook steps can be typed by how automatable they are, and a
-partner path routes a recurring failure to a designed control.
+partner path routes a recurring failure to a designed mechanism.
 
 ### Structure
 

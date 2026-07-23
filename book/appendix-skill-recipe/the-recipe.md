@@ -18,7 +18,7 @@ The book's three self-* skills each turn on such a model:
   matter of taste. Once you see prose as classical figures applied with variety, the register, the
   lexicon, the voice, and the audit all attach to that one frame.
 - **The governance skill reasons through two kinds of governance.** Every guardrail is either an
-  *architecture* that makes a failure impossible by construction or a *control* that fires on a violation.
+  *architecture* that makes a failure impossible by construction or a *sensor* that fires on a violation.
   That single distinction decides, for any failure, what you build.
 - **The operations skill reasons through the engineering lifecycles.** A fleet repo manages the same few
   lifecycles — the agents, the context, the git repo, the deploy, the machine. Every symptom belongs to
@@ -35,8 +35,8 @@ Each self-* skill layers a different set of facets on its fundamental model:
 - **The prose skill** layers the engineering register (the four Diátaxis modes), a house lexicon, a target
   voice, an audit procedure, and a diagram toolkit — one facet for the doc's shape, one for its
   vocabulary, one for its register, one for its grading, one for the shapes prose cannot carry.
-- **The governance skill** layers the census of controls, the two enforcement modes (soft aims, hard
-  holds), and a set of ambient principles — the catalogue you draw from, the axis you place a control on,
+- **The governance skill** layers the census of mechanisms, the two enforcement modes (soft aims, hard
+  holds), and a set of ambient principles — the catalogue you draw from, the axis you place a mechanism on,
   and the reflexes that run while the skill is loaded.
 - **The operations skill** layers a symptom-to-doc catalog, a set of typed runbooks, and a runnable hook
   library — the routing table, the procedures it routes to, and the substrate that fires a skipped reflex
@@ -66,8 +66,8 @@ skill's answer to that step.
 
 | Step | self-communicate | self-governance | self-operations |
 |---|---|---|---|
-| **1 · Fundamental model** | Rhetoric — prose is a craft with named parts | Two kinds of governance — architecture vs control | The engineering lifecycles — agents, context, repo, deploy, machine |
-| **2 · Orthogonal facets** | Register (Diátaxis), lexicon, voice, audit, diagrams | The control census, soft/hard enforcement, ambient principles | Symptom→doc catalog, typed runbooks, the hook library |
+| **1 · Fundamental model** | Rhetoric — prose is a craft with named parts | Two kinds of governance — architecture vs sensor | The engineering lifecycles — agents, context, repo, deploy, machine |
+| **2 · Orthogonal facets** | Register (Diátaxis), lexicon, voice, audit, diagrams | The mechanism census, soft/hard enforcement, ambient principles | Symptom→doc catalog, typed runbooks, the hook library |
 | **3 · Tying principle** | Less is more — name genre, draft in voice, name concepts, draw the shape, audit | Convert failures to guardrails; guidance aims, machinery holds | Orient positive first; route a break to its class |
 
 ## What the recipe buys you
@@ -77,7 +77,7 @@ from any one resource.
 
 - **It composes.** Because each skill turns on a clean fundamental model, another skill can cite it by that
   model instead of duplicating its content. The three self-* skills do exactly this: the prose skill owns
-  the writing that the other two produce, governance mints the control that operations surfaces, and
+  the writing that the other two produce, governance mints the mechanism that operations surfaces, and
   operations runs the substrate governance designs. Three skills, one substrate, cross-cited — no copy
   drifts because each names the others rather than mirroring them.
 - **It adopts in layers.** A reader can take the fundamental model alone and get most of the value, then

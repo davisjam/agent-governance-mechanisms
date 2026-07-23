@@ -60,7 +60,7 @@ scope.
 
 ## Related mechanisms
 
-- **Bridge** — this is the *consumption* face: agent controls
+- **Bridge** — this is the *consumption* face: agent mechanisms
   ([dynamic-context-injection](../../agent/context-and-dispatch/dynamic-context-injection.md),
   [docs-hierarchy](../../agent/context-and-dispatch/docs-hierarchy.md)) and product lints
   ([coherence-lints](https://davisjam.github.io/agent-governance-mechanisms/product/validation-and-conformance/coherence-lints.html),

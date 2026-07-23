@@ -53,7 +53,7 @@ hook (output validated against the real runtime schema) kills that class.
 
 A runtime lifecycle event is the **rung** an operator-loop omission belongs on: it is the only scope where
 the loop's state is visible, so a syntactic commit hook asking the same question sits below the semantics it
-must judge and leaves a gap it cannot bridge. Which rung a control belongs on is the general placement
+must judge and leaves a gap it cannot bridge. Which rung a mechanism belongs on is the general placement
 question — see [semantic-level-enforcement](../governance-doc-controls/semantic-level-enforcement.md).
 
 ## Prerequisites
@@ -89,12 +89,12 @@ it was meant to prevent. Neither failure shows in the code or the runtime.
 
 So a soft hook ships **its own firing telemetry**: one record per fire with a session key, a query over
 the log, and a *yield* check that correlates each firing against the thing it was meant to provoke. Did
-a nudge to convert a recurrence into a control actually precede one? The hook then lives on a **measured
+a nudge to convert a recurrence into a mechanism actually precede one? The hook then lives on a **measured
 leash**, an evaluation plan with a written pull condition: if it over-fires, or shows near-zero yield
-across many sessions, you pull it. You cannot manage a probabilistic control you cannot watch fire. And
+across many sessions, you pull it. You cannot manage a probabilistic mechanism you cannot watch fire. And
 the payload itself biases hard toward silence (*"usually a no-op; a false nudge is worse than a missed
 one"*) because for a soft reminder the default outcome must be doing nothing, or the fatigue sets in
-before the telemetry can catch it. Instrumentation is what separates a soft control that is *working
+before the telemetry can catch it. Instrumentation is what separates a soft mechanism that is *working
 quietly* from one that is *silently dead*; without it the two look identical.
 
 The failure sharpens as reflection facets accrue. Once you want the operator to reflect on more than one
@@ -109,13 +109,13 @@ paced so the whole never overwhelms.
 - A **turn-stop hook** that refuses to let the loop rest while ratified work remains and the worker pool
   is under its cap (*hard delivery of soft guidance*): it re-prompts, the agent decides.
 - A **turn-stop self-check hook** that, at most once per long window, re-arms the operator's reflex to
-  convert a *recurring* failure into a durable control, the operate→harden handoff fired as a runtime
+  convert a *recurring* failure into a durable mechanism, the operate→harden handoff fired as a runtime
   event. It ships a firing-telemetry log and a yield query correlating its nudges against real
   conversions, and biases its payload hard toward silence. Its first organic firing closed the whole
-  loop on itself: the telemetry had shown the convert-a-recurrence-into-a-control discipline was reached
+  loop on itself: the telemetry had shown the convert-a-recurrence-into-a-mechanism discipline was reached
   for ~never (its knowledge applied ambiently instead); the hook turned that dormant reflex into a
   deterministic nudge; the nudge produced the discipline's first real invocation; and that invocation
-  routed a failure recurring all session into a control: the yield query's first positive correlation,
+  routed a failure recurring all session into a mechanism: the yield query's first positive correlation,
   and the keep-signal that says *don't pull the hook.*
 - A **pre-compaction hook** that writes a hand-off before context is compacted, so in-flight state
   survives the summarization.
@@ -146,6 +146,6 @@ paced so the whole never overwhelms.
   the right lifecycle moment" move, mirrored in time.
 - *See also (placement)* — [semantic-level-enforcement](../governance-doc-controls/semantic-level-enforcement.md):
   a runtime lifecycle event is the rung that judgment picks for an operator-loop omission; this entry is a
-  control *placed* by it.
+  mechanism *placed* by it.
 - **Layer** — it sits at the agent runtime, upstream of the commit → cron → merge-train → deploy
   staircase; it governs the operator *driving* that staircase, not the work flowing through it.

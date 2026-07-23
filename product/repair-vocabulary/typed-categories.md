@@ -55,7 +55,7 @@ handler to cover every case.
 ## Related mechanisms
 
 - *See also (sibling)* — [remediation-verbs](remediation-verbs.md), [codemod-first](codemod-first.md):
-  the other bounded-move-space controls.
+  the other bounded-move-space constraints.
 - *See also (cross-target)* — the agent side's const-string topic registry
   ([typed-event-bus](../../agent/lifecycle-and-observability/typed-event-bus.md)) is the same "typed namespace
   over free-form strings" move for event topics.

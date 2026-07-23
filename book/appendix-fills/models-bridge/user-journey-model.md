@@ -75,7 +75,7 @@ if __name__ == "__main__":
 ### Consequences
 
 - **A new journey, or a new call in a journey's code, ⇒ a model edit**, or the drift lint fails at that PR.
-- **The controls land audit-only first**, then promote to blocking once the drift they surface is drained.
+- **The sensors land audit-only first**, then promote to blocking once the drift they surface is drained.
 - **Journey granularity is a modeling choice** — too coarse and the audits are toothless, too fine and the
   model is noise.
 

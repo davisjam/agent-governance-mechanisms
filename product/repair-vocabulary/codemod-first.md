@@ -58,6 +58,6 @@ mechanical. Finished codemods are marked deprecated and cross-referenced as past
 ## Related mechanisms
 
 - *See also (sibling)* — [typed-categories](typed-categories.md), [remediation-verbs](remediation-verbs.md):
-  the other bounded-move controls; this one bounds *how a mechanical change is executed*.
+  the other bounded-move constraints; this one bounds *how a mechanical change is executed*.
 - *See also (cross-target)* — this is the product-side face of the same codemod-first discipline the
   agent fleet uses for its own mechanical lint backlogs.

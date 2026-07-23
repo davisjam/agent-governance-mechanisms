@@ -73,7 +73,7 @@
 <p><strong>Path A — install the skill (batteries included).</strong> The whole loop installs as a Claude skill that auto-triggers — no prompt to paste. Know what you install: a <strong>third-party plugin that reads your repo and, on your approval, writes it</strong>. It is source-visible, MIT-licensed, and does no network I/O; <em>audit</em> only advises, and <em>interpret-failure</em> acts only on your greenlight. In Claude Code:</p>
 <pre tabindex="0"><code>/plugin marketplace add davisjam/agent-governance-mechanisms
 /plugin install agent-governance@agent-governance-mechanisms</code></pre>
-<p>The <code>agent-governance</code> plugin ships <strong>three partner skills</strong>: <strong>self-governance</strong> (<em>harden</em> — audit for missing guardrails, or convert a recurring failure into a durable control), <strong>self-operations</strong> (<em>operate</em> — run the agent-fleet substrate day-to-day), and <strong>self-communicate</strong> (<em>communicate</em> — write and diagram engineer-facing docs well: the rhetoric toolkit, the Diátaxis register, a house lexicon, and a prose-plus-diagram audit). All three install with the one plugin; start a new session and they load. Pull a later release with <code>/plugin marketplace update agent-governance-mechanisms</code>. No marketplace? Vendor the folder: copy <code>plugin/agent-governance/skills/</code> into <code>~/.claude/skills/</code> (all projects) or <code>.claude/skills/</code> (one repo), then start a fresh session.</p>
+<p>The <code>agent-governance</code> plugin ships <strong>three partner skills</strong>: <strong>self-governance</strong> (<em>harden</em> — audit for missing guardrails, or convert a recurring failure into a durable mechanism), <strong>self-operations</strong> (<em>operate</em> — run the agent-fleet substrate day-to-day), and <strong>self-communicate</strong> (<em>communicate</em> — write and diagram engineer-facing docs well: the rhetoric toolkit, the Diátaxis register, a house lexicon, and a prose-plus-diagram audit). All three install with the one plugin; start a new session and they load. Pull a later release with <code>/plugin marketplace update agent-governance-mechanisms</code>. No marketplace? Vendor the folder: copy <code>plugin/agent-governance/skills/</code> into <code>~/.claude/skills/</code> (all projects) or <code>.claude/skills/</code> (one repo), then start a fresh session.</p>
 <p><strong>Path B — DIY (installs nothing).</strong> The conservative choice, for a company or anyone who can't run a third-party plugin. Nothing runs in your agent loop that you didn't write. Vendor a copy of the catalogue into your repo (or hand your agent the URL), and have your coding agent read the <a href="README.html"><code>README</code></a>, the <a href="INDEX.html"><code>INDEX</code></a>, and the role folders (<a href="agent/README.html"><code>agent/</code></a> · <a href="models-bridge/README.html"><code>models-bridge/</code></a> · <a href="product/README.html"><code>product/</code></a>) before you start the sequence.</p>
 <p>The two paths are <strong>not exclusive</strong>: install the skill on a personal project, and go DIY org-wide.</p>
 <h2>Run the sequence — Auto mode</h2>
@@ -90,11 +90,11 @@ non-derivable-from-local-code, non-local. Show me a diff before writing anything
 
 # Step 2 — Survey the repo for missing guardrails  [either path]
 (Path A) self-governance: run audit mode against my repo. Survey it against the catalogue and produce a
-prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one control
+prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one mechanism
 you'd build first. Advise only; change nothing.
 (Path B) Read the governance-mechanisms catalogue (README, INDEX, and the agent/ models-bridge/ product/
-role folders). For each control, judge whether my repo needs it, already has it, or would benefit.
-Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost controls,
+role folders). For each mechanism, judge whether my repo needs it, already has it, or would benefit.
+Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost mechanisms,
 and tell me the one you'd build first. Advise only; change nothing.
 
 # Step 3 — Adopt the model-based-engineering kit  [either path]
@@ -135,7 +135,7 @@ the symptom, the cause, and the fix, citing real files. Show me the draft before
 handful of design docs, and my typed enums / registries / schema constants), extract every term I use with a
 specific meaning more than once, classify each as portable (link the established name) or house (note the
 concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
-when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
+when I write a mechanism description, a design doc, a runbook, or a handoff, apply the engineering register and
 run the audit procedure over the draft and show me the fixes.
 (Path B) Read the self-communicate skill resources (its SKILL.md plus the writing/lexicon.md, writing/engineering.md,
 writing/rhetoric.md, writing/voice.md, writing/audit.md, and drawing/diagrams.md files under the skills/self-communicate folder).
@@ -152,13 +152,13 @@ adopt / adapt / skip per principle, preserving my current rules. For the rule in
 non-derivable-from-local-code, non-local. Show me a diff before writing anything.</code></pre>
 <p><strong>Read more:</strong> <a href="downloads/CLAUDE-starter.md">CLAUDE-starter (the method)</a> · <a href="agent/governance-doc-controls/claude-md-rule-index.html">claude-md-rule-index</a></p>
 <h3>Step 2 — Survey the repo for missing guardrails</h3>
-<p>Before adopting any single control, get the map: which mechanisms your repo needs, already has, or would benefit from. Path A runs this as the skill's <strong>audit</strong> mode (advises, changes nothing). Path B asks the same of a plain agent pointed at the catalogue.</p>
+<p>Before adopting any single mechanism, get the map: which mechanisms your repo needs, already has, or would benefit from. Path A runs this as the skill's <strong>audit</strong> mode (advises, changes nothing). Path B asks the same of a plain agent pointed at the catalogue.</p>
 <pre tabindex="0"><code>(Path A) self-governance: run audit mode against my repo. Survey it against the catalogue and produce a
-prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one control
+prioritized adopt / adapt / skip plan — highest-leverage, lowest-cost first — and name the one mechanism
 you'd build first. Advise only; change nothing.
 (Path B) Read the governance-mechanisms catalogue (README, INDEX, and the agent/ models-bridge/ product/
-role folders). For each control, judge whether my repo needs it, already has it, or would benefit.
-Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost controls,
+role folders). For each mechanism, judge whether my repo needs it, already has it, or would benefit.
+Produce a prioritized adopt / adapt / skip plan, start with the highest-leverage lowest-cost mechanisms,
 and tell me the one you'd build first. Advise only; change nothing.</code></pre>
 <p><strong>Read more:</strong> <a href="INDEX.html">INDEX (the census)</a> · <a href="catalogue-views.html">catalogue views</a></p>
 <h3>Step 3 — Adopt the model-based-engineering kit</h3>
@@ -200,12 +200,12 @@ the queue, the host VM, cron — your call, tell me why). Draft a situation-keye
 the symptom, the cause, and the fix, citing real files. Show me the draft before writing it.</code></pre>
 <p><strong>Read more:</strong> <a href="downloads/op-playbook-starter.md">op-playbook starter</a> · <a href="agent/governance-doc-controls/operational-playbooks.html">operational playbooks</a> · <a href="agent/governance-doc-controls/operator-runbook-skill.html">operator-runbook skill</a></p>
 <h3>Step 8 — Bootstrap your house lexicon, then write and audit prose with the skill</h3>
-<p>The controls, design docs, runbooks, and handoffs you adopt above are all <em>prose</em> — and prose an engineer or agent must read cleanly. The self-communicate skill supplies the craft: a house lexicon (so a term means the same thing everywhere), the Diátaxis register (so a doc has the right shape), and an audit that grades a passage and emits fixes. Bootstrap the lexicon first by walking your codebase and confirming the terms with the maintainer; then write and audit prose against the skill.</p>
+<p>The mechanisms, design docs, runbooks, and handoffs you adopt above are all <em>prose</em> — and prose an engineer or agent must read cleanly. The self-communicate skill supplies the craft: a house lexicon (so a term means the same thing everywhere), the Diátaxis register (so a doc has the right shape), and an audit that grades a passage and emits fixes. Bootstrap the lexicon first by walking your codebase and confirming the terms with the maintainer; then write and audit prose against the skill.</p>
 <pre tabindex="0"><code>(Path A) self-communicate: bootstrap my house lexicon — walk my codebase (sample my house-rules doc, a
 handful of design docs, and my typed enums / registries / schema constants), extract every term I use with a
 specific meaning more than once, classify each as portable (link the established name) or house (note the
 concept it renames), and draft the lexicon table. Confirm the terms with me before you commit them. Then,
-when I write a control description, a design doc, a runbook, or a handoff, apply the engineering register and
+when I write a mechanism description, a design doc, a runbook, or a handoff, apply the engineering register and
 run the audit procedure over the draft and show me the fixes.
 (Path B) Read the self-communicate skill resources (its SKILL.md plus the writing/lexicon.md, writing/engineering.md,
 writing/rhetoric.md, writing/voice.md, writing/audit.md, and drawing/diagrams.md files under the skills/self-communicate folder).

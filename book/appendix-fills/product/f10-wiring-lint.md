@@ -86,7 +86,7 @@ if __name__ == "__main__":
 ### Related Patterns
 
 - **Counterpart** — of the per-mutator attribution stamps: the stamps are the construction, this lint is
-  the counted control that guarantees they're complete. The canonical construction-held-by-detection
+  the counted sensor that guarantees they're complete. The canonical construction-held-by-detection
   pairing on the product side.
 - **See also (sibling)** — the blocking semantic-lint fleet: this lint is a member of that fleet doing a
   completeness-over-verbs job.

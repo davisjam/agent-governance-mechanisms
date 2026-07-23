@@ -4,7 +4,7 @@ Model-based systems engineering for an agent fleet: a context-bounded agent oper
 context-exceeding codebase by reasoning *through* a typed map of the system rather than by reading
 the whole territory. The map only earns that trust while it stays equal to the territory — so the
 models and the machinery that pins them to reality travel as one package. Adopt the models without
-the drift control and you ship a lie the fleet will act on.
+the drift sensor and you ship a lie the fleet will act on.
 
 ## Mandatory members
 

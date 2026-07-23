@@ -274,7 +274,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
 <li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
 <li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li>
 <li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
 <li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
 <li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
@@ -350,7 +350,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2 id="el-motivation">Motivation</h2>
 <p>With 6–8 agents committing concurrently, a naïve <em>sequential</em> merge serializes all of them and conflicts thrash: each merge risks colliding with the last, and the throughput of the whole fleet collapses toward one-at-a-time. Hot-spot files that many agents touch (the merge tool itself, <code>CLAUDE.md</code>, shared config) become bottlenecks that stall everything behind them. The failure recurs every merge tick and worsens as the fleet grows: more agents, more collisions.</p>
 <h2 id="el-applicability">Applicability</h2>
-<ul><li><strong>Known per-worktree file footprints</strong>: you must be able to say which files each worktree changed.</li><li><strong>A conflict predicate</strong> (shared file ⇒ edge) and a <strong>(greedy) MIS routine</strong>.</li><li><strong>Reachability / patch-id checks</strong> so a "landed" claim is verifiable.</li><li><strong>Footprint discipline at dispatch</strong>: the orchestrator has to <em>plan</em> disjoint waves for the MIS to pay off; the control pushes work upstream into scheduling.</li></ul>
+<ul><li><strong>Known per-worktree file footprints</strong>: you must be able to say which files each worktree changed.</li><li><strong>A conflict predicate</strong> (shared file ⇒ edge) and a <strong>(greedy) MIS routine</strong>.</li><li><strong>Reachability / patch-id checks</strong> so a "landed" claim is verifiable.</li><li><strong>Footprint discipline at dispatch</strong>: the orchestrator has to <em>plan</em> disjoint waves for the MIS to pay off; the mechanism pushes work upstream into scheduling.</li></ul>
 <h2 id="el-structure">Structure</h2>
 <p>The Structure diagram appears at the top of this page.</p>
 <h2 id="el-sample-code">Sample Code</h2>

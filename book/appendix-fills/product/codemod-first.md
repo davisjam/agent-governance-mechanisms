@@ -94,6 +94,6 @@ def apply(source: str) -> str:
 ### Related Patterns
 
 - **See also (sibling)** — typed categories and closed remediation-verb sets: the other bounded-move
-  controls; this one bounds *how a mechanical change is executed*.
+  constraints; this one bounds *how a mechanical change is executed*.
 - **See also (cross-target)** — the product-side face of the same codemod-first discipline the agent fleet
   uses for its own mechanical lint backlogs.

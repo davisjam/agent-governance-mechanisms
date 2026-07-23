@@ -274,7 +274,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
 <li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
 <li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li>
 <li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
 <li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
 <li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
@@ -351,7 +351,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2 id="el-motivation">Motivation</h2>
 <p>Cross-service calls that pass a <strong>file path over the wire</strong> (instead of the file's <em>bytes</em>) are a recurring bug: the receiving service, in a different container, cannot open a path from the sender's filesystem. Ad hoc <code>requests.post</code> at each call site lets this exact type-confusion recur wherever someone reaches for the raw HTTP library.</p>
 <h2 id="el-applicability">Applicability</h2>
-<ul><li><strong>A typed client whose signature encodes the invariant</strong> (<code>BinaryIO</code>, not <code>str</code>): the type <em>is</em> the control.</li><li><strong>A sole-seam lint</strong> banning the raw HTTP call to other services.</li><li><strong>Migration</strong> of existing cross-service calls onto the client.</li></ul>
+<ul><li><strong>A typed client whose signature encodes the invariant</strong> (<code>BinaryIO</code>, not <code>str</code>): the type <em>is</em> the constraint.</li><li><strong>A sole-seam lint</strong> banning the raw HTTP call to other services.</li><li><strong>Migration</strong> of existing cross-service calls onto the client.</li></ul>
 <h2 id="el-structure">Structure</h2>
 <p>The Structure diagram appears at the top of this page.</p>
 <h2 id="el-sample-code">Sample Code</h2>

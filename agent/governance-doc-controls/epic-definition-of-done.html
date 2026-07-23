@@ -61,11 +61,11 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../agent/README.html">Agent</a> &nbsp;/&nbsp; Governance-doc controls &nbsp;/&nbsp; Epic Definition-of-Done (Final-Opus trust-nothing re-run)</nav>
+<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../agent/README.html">Agent</a> &nbsp;/&nbsp; Governance-doc mechanisms &nbsp;/&nbsp; Epic Definition-of-Done (Final-Opus trust-nothing re-run)</nav>
 <p class="subtitle">Close an Epic only after re-running its checks at HEAD.</p>
 <h1>Epic Definition-of-Done (Final-Opus trust-nothing re-run)</h1>
 <p><strong>Intent</strong> — An Epic-close gate mandating a "trust nothing" Final-Opus review that re-runs every owned pin test and lint <em>at HEAD</em>, rather than trusting phase markers or prior claims, so an Epic cannot close on stale or rotted assertions.</p>
-<table><tbody><tr><td>Summary</td><td>Close an Epic only after re-running its checks at HEAD.</td></tr><tr><td>Target</td><td>Agent · <strong>Governance-doc controls</strong></td></tr><tr><td>Form</td><td><code>quality-gate</code></td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking close</em> — reachability/patch-id checks must pass, or a logged <code>--override</code> is required</td></tr></tbody></table>
+<table><tbody><tr><td>Summary</td><td>Close an Epic only after re-running its checks at HEAD.</td></tr><tr><td>Target</td><td>Agent · <strong>Governance-doc mechanisms</strong></td></tr><tr><td>Form</td><td><code>quality-gate</code></td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking close</em> — reachability/patch-id checks must pass, or a logged <code>--override</code> is required</td></tr></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p>An Epic spanning many dispatches accumulates <em>claims</em> (phase markers, "lints pass," pin-test counts), and those claims <strong>rot</strong> as sibling Epic sweeps churn the substrate underneath them. Close on the stale claims and you ship an Epic whose defenses no longer actually hold (empirically: 7/7 back-catalogue Epics self-marked DONE had quality-of-defense gaps). The failure is <em>a premature/false close</em>, and it recurs at every Epic boundary.</p>
 <h2>Why it's not just "trust the phase markers" (or "the agent said it's done")</h2>

@@ -60,7 +60,7 @@ soft guidance with a hard counterpart.
 | ✅ | Reflection-facet substrate (tempo-gated policy nudges) | `quality-gate` | Soft·Hard | [reflection-facet-substrate.md](agent/lifecycle-and-observability/reflection-facet-substrate.md) |
 | ✅ | Caused-by provenance (agent-side change traceability) | `audit-trail` | Hard | [caused-by-provenance.md](agent/lifecycle-and-observability/caused-by-provenance.md) |
 
-## 5. Governance-doc controls
+## 5. Governance-doc mechanisms
 
 *Documentation treated as enforced infrastructure.* — [family folder](agent/governance-doc-controls/)
 
@@ -166,7 +166,7 @@ soft guidance with a hard counterpart.
 
 **Three roles complete — 69 mechanisms across 11 families, all fully developed.**
 **Agent (28):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
-Lifecycle & observability (8) · Governance-doc controls (8, incl. the **CLAUDE.md rule index**
+Lifecycle & observability (8) · Governance-doc mechanisms (8, incl. the **CLAUDE.md rule index**
 meta-mechanism).
 **Models-bridge (21):** the MBSE **method** (<!--census:bridge_method-->13<!--/census--> subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, **journey-criticality → test-tier placement**, **invariant-DAG execution policy**, **computed control↔substrate blast-radius**, + the **symbol-anchored traceability graph**) reified as a **Y** over <!--census:bridge_models-->8<!--/census--> models — product-facing 3 (service-flow · user-journey · domain-registries) · orchestration-facing 2 (synchronization · agent-orch) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
 the MBSE substrate through which a bounded agent operates an unbounded codebase.

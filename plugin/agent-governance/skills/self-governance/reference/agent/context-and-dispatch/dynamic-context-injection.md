@@ -70,7 +70,7 @@ pull** (the agent asks a constraints-for-files CLI once it knows what it will to
 
 ## Consequences & costs
 
-- **Garbage-in.** The control is only as good as the constraint declarations it slices: a rule with no
+- **Garbage-in.** The mechanism is only as good as the constraint declarations it slices: a rule with no
   scope tag can't be selected, and one with no actionable fix-hint can't be acted on. It *depends on*
   prerequisite 2 being true fleet-wide; it does not create that discipline.
 - **Advisory, not binding.** Because forward injection is augmentation (see Enforcement), an agent can
@@ -78,7 +78,7 @@ pull** (the agent asks a constraints-for-files CLI once it knows what it will to
   gate downstream is still what guarantees the rule; DCI reduces pinball, it does not eliminate
   violation.
 - **The relevance operator is itself fallible.** Over-injection floods a brief with noise (lowering the
-  salience the control trades on); under-injection silently omits a governing rule. Precision/recall of
+  salience the mechanism trades on); under-injection silently omits a governing rule. Precision/recall of
   `files → constraints` is a real, tunable failure surface, not a solved mapping.
 - **Adapter maintenance.** One adapter per registry (lint fleet, component registry, banned-API list,
   test corpus, doc index) must be kept in sync with its registry, or the sliced set drifts from truth.
@@ -94,7 +94,7 @@ pull** (the agent asks a constraints-for-files CLI once it knows what it will to
 ## Related mechanisms
 
 - **Bridge** — the [component-zone model](../../models-bridge/system-models/component-zone-model.md) (a
-  models-bridge control) supplies the file → component → checks mapping the forward slicer reads. DCI is
+  models-bridge mechanism) supplies the file → component → checks mapping the forward slicer reads. DCI is
   the *agent-facing* consumer of that bridge model; the same model *governs the product* via the
   boundary lints, so DCI is one end of the bridge.
 - *See also (complement)* — [brief-linting](brief-linting.md): the structural check on the brief; this

@@ -30,13 +30,13 @@ reads as truth, and the blow-up lands days later in a downstream gate instead of
 caused it.
 
 The design was not guessed. The models were left deliberately **ungoverned** after creation and the
-fleet allowed to drift them, so the controls could be designed from real observed drift instead of a
+fleet allowed to drift them, so the mechanisms could be designed from real observed drift instead of a
 hypothesis. An exhaustive audit of recently-closed work — each with a green definition-of-done at
 close — harvested roughly two dozen drift instances at a signal-to-noise ratio near one and zero false
 positives: a checker made stricter than the producer it now rejects, a subsystem retired from the code
 but still present-tense in the model, a fully typed function wired to zero production consumers, a
 reconciliation lint gone red the moment its Epic closed. That corpus is what "derived defends,
-snapshotted drifts" was read *off of*, not asserted into — the clean cases all had a control that read
+snapshotted drifts" was read *off of*, not asserted into — the clean cases all had a mechanism that read
 the source of truth at check time; the drifted ones all had a parallel hand-maintained list that rotted.
 
 ## Why it's not just a drift gate, a manifest, or codegen
@@ -94,7 +94,7 @@ the source of truth at check time; the drifted ones all had a parallel hand-main
   cross-reference round-trip per symbol), so the re-derivation lint runs at definition-of-done / audit
   cadence, not on every commit — the cadence follows the cost. It lands audit-only (a fresh graph has
   stale edges), a fix wave drains them, then it promotes to blocking.
-- **Guard the anchors themselves — the pointer-drift control.** One drift class needs its own guard: a
+- **Guard the anchors themselves — the pointer-drift mechanism.** One drift class needs its own guard: a
   *replacement* implementation is built but the surfaces that name **which one to run** are never
   repointed, so the system defaults to the retired one — a loaded gun that fires on the next routine
   command. A small registry declares, per seam, the one live implementation plus the full census of
@@ -134,7 +134,7 @@ unresolved anchor routes to a refactoring target, not an error.
 ## Consequences & costs
 
 - **Resolution is expensive, so the check is not per-commit.** A cross-reference per symbol over a large
-  tree is slow; the re-derivation lint is a scan-time / definition-of-done control, and a fast keyword
+  tree is slow; the re-derivation lint is a scan-time / definition-of-done mechanism, and a fast keyword
   companion catches the cheap cases inline. Force it per-commit and it taxes every change.
 - **A weak-prover fallback is a standing ⚠️.** A code anchor that resolves only by textual presence is a
   declared weak edge the coverage view surfaces; left un-burned-down it re-admits the drift the strong
@@ -156,7 +156,7 @@ unresolved anchor routes to a refactoring target, not an error.
   prose cite the code had moved away from. The load-bearing result: for most of them **no existing lint
   fired**, so the graph was their first mechanical detection. That reprised the audit's near-one
   signal-to-noise and zero false positives on an independent, freshly-observed drift set — evidence that
-  a control designed from real drift catches real drift.
+  a mechanism designed from real drift catches real drift.
 - The clean-versus-drifted split, on that same fan-out, re-confirming the governing principle: the
   models carrying a standing anchor-resolution lint drifted zero times; the drift concentrated in the
   registries with no such lint. Derived defended; snapshotted drifted.

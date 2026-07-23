@@ -81,7 +81,7 @@ without eroding the trust the structural layer earned. A lint tuned out is worse
   the markers become friction the author routes around.
 - **Each new marker is a maintenance edge.** A new mandatory snippet means both a new lint check *and*
   threading the marker into the template; drift between the two produces false rejections.
-- **Bypassable by design.** `ADA_TOOL_BYPASS_AGENT_FENCE=1` exists for humans; the control's floor is
+- **Bypassable by design.** `ADA_TOOL_BYPASS_AGENT_FENCE=1` exists for humans; the mechanism's floor is
   the discipline of not misusing the escape hatch (audit-logged, but still a hole).
 
 ## Known uses

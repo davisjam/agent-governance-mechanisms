@@ -8,7 +8,7 @@ artifact *drives* the work instead of being written after the fact.
 | | |
 |---|---|
 | Summary | Fixed section-templates for Epics and design docs so plans are complete. |
-| Target | Agent · **Governance-doc controls** |
+| Target | Agent · **Governance-doc mechanisms** |
 | Form | `agent-output` |
 | Enforcement | **Soft·Hard** — the template is soft guidance on the doc's shape, held by a hard counterpart: a stub scaffold materializes the sections and lints/gates assert the required ones (registration, DoD criteria, an observability block for topic-emitting designs). |
 

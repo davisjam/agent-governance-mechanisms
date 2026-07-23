@@ -274,7 +274,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
 <li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
 <li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li>
 <li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
 <li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
 <li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
@@ -336,13 +336,13 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">⇐ Beginning of this part</a><a href="appendix-c-canonical-walkers.html">Next part ⇒</a><a href="appendix-b-coverage-model-mapping.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix B - 5. Control↔substrate dependency (computed blast-radius)"><header class="chap"><div class="kicker"><a href="appendix-b-agent-first-mbse-harness.html" aria-label="Beginning of Appendix B — Models-bridge patterns">Appendix B — Models-bridge patterns</a></div><h1>Appendix B - 5. Control↔substrate dependency (computed blast-radius)</h1></header><p><em>The Structure of Control↔substrate dependency (computed blast-radius) — its shape at a glance:</em></p>
-<p>Each substrate-reading control declares its stance in a typed field. A query joins those declarations against the substrate model and, given a migration target, prints exactly which controls a change puts in scope — the blast radius, computed before you touch the substrate.</p>
+<p>Each substrate-reading mechanism declares its stance in a typed field. A query joins those declarations against the substrate model and, given a migration target, prints exactly which mechanisms a change puts in scope — the blast radius, computed before you touch the substrate.</p>
 <pre class="mermaid">flowchart LR
   C1[Control A&lt;br/&gt;stance: plane-X] --&gt; Q{Blast-radius query}
   C2[Control B&lt;br/&gt;stance: agnostic] --&gt; Q
   Sub[(Substrate model)] --&gt; Q
-  Q --&gt;|join on target| Table([in-scope controls])</pre>
-<p><em>Accessible description: two controls each declare a substrate stance. A query joins those declarations against the substrate model and, for a migration target, emits the table of controls that change puts in scope. The table is derived, not hand-maintained.</em></p>
+  Q --&gt;|join on target| Table([in-scope mechanisms])</pre>
+<p><em>Accessible description: two mechanisms each declare a substrate stance. A query joins those declarations against the substrate model and, for a migration target, emits the table of mechanisms that change puts in scope. The table is derived, not hand-maintained.</em></p>
 <p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/control-substrate-dependency.html">system-models / Control↔substrate dependency (computed blast-radius)</a>.</em></p>
 <p><strong>On this page:</strong> <a href="#control-substrate-dependency">Intent</a> · <a href="#el-motivation">Motivation</a> · <a href="#el-applicability">Applicability</a> · <a href="#el-structure">Structure</a> · <a href="#el-sample-code">Sample Code</a> · <a href="#el-consequences">Consequences</a> · <a href="#el-known-uses">Example use within DocAble</a> · <a href="#el-related-patterns">Related Patterns</a></p>
 <h2 id="control-substrate-dependency">Intent</h2>
@@ -357,7 +357,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2 id="el-structure">Structure</h2>
 <p>The Structure diagram appears at the top of this page.</p>
 <h2 id="el-sample-code">Sample Code</h2>
-<p>Each control carries a typed stance toward the substrate. A join reads every declaration and, given a migration target, returns the controls that assume the old shape — the blast radius, computed from declarations rather than grepped and read body-by-body.</p>
+<p>Each mechanism carries a typed stance toward the substrate. A join reads every declaration and, given a migration target, returns the mechanisms that assume the old shape — the blast radius, computed from declarations rather than grepped and read body-by-body.</p>
 <pre><code>from dataclasses import dataclass
 
 # A small closed enum keeps the stance exhaustive and typed.

@@ -82,5 +82,5 @@ recovery playbook, hold new work). The playbook is the active half; it turns a r
   the fleet's other signal surfaces.
 - *See also (a small flavor)* — [lifecycle-hooks](lifecycle-hooks.md) §"the measured leash": a soft
   guidance hook that ships its own per-firing telemetry log + a yield query is this telemetry idea in
-  miniature, a probabilistic control instrumented so you can tell *working quietly* from *silently
+  miniature, a probabilistic mechanism instrumented so you can tell *working quietly* from *silently
   dead*.

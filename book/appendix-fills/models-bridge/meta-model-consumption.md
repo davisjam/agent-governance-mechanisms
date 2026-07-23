@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
 ### Related Patterns
 
-- **Bridge** — the *consumption* face: agent controls and product lints all read the models through this
+- **Bridge** — the *consumption* face: agent mechanisms and product lints all read the models through this
   discipline rather than copying them.
 - **Consumer** — dynamic context injection's forward slicer reads the component-zone model this way.
 - **See also** — the query surface, the canonical read path this discipline uses.

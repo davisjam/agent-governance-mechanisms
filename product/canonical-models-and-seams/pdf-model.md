@@ -10,7 +10,7 @@ the canonical PDF library).
 | Summary | All PDF I/O through one typed model; raw canonical-PDF-library access banned. |
 | Target | Product · **Canonical models & seams** |
 | Form | `typed-ir` |
-| Enforcement | **Hard** (deterministic) · *blocking* — a raw-PDF-library ban-lint fails the build on any raw library call; the typed model is *construction*, the ban-lint is the counted control |
+| Enforcement | **Hard** (deterministic) · *blocking* — a raw-PDF-library ban-lint fails the build on any raw library call; the typed model is *construction*, the ban-lint is the counted sensor |
 
 ## Motivation — the failure it kills
 
@@ -28,7 +28,7 @@ API **unreachable**: typed mutators encode the invariants (they can't forget `Se
 raw-PDF-library ban-lint fails the build on any raw constructor, `AddTag`, `dict.Put`, or
 `structRoot.AddKid`. The distinction is *a typed sole-seam whose raw alternative is lint-banned* versus
 *disciplined use of a raw API*. The typed model is **construction**: the bug becomes unrepresentable.
-The ban-lint is the **counted detection control** that keeps every call site on the seam.
+The ban-lint is the **counted detection sensor** that keeps every call site on the seam.
 
 ## Mechanism
 
@@ -41,7 +41,7 @@ verb cannot land un-wired.
 
 - **A typed model covering the domain surface.** Every operation callers need must exist as a typed
   mutator, or they're forced back to the raw API.
-- **A ban-lint on the raw API** (the counted control) plus a migration of *all* existing call sites.
+- **A ban-lint on the raw API** (the counted sensor) plus a migration of *all* existing call sites.
 - **A pinned library version.** Minor bumps of the canonical PDF library can silently change
   auto-tagging, so the seam pins it and gates upgrades behind a regression suite.
 

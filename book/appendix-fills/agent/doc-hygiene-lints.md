@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
 ### Related Patterns
 
-- **Family** — the rule-index control is the flagship "documentation with a hard-counterpart lint" this
+- **Family** — the rule-index mechanism is the flagship "documentation with a hard-counterpart lint" this
   generalizes to the whole corpus.
 - **Sibling** — the same "read the substrate at lint-time" move, applied to queryable models rather than
   prose docs.

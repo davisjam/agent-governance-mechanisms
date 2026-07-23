@@ -9,7 +9,7 @@ fact, not a guess.
 | Summary | A typed map of every component's code zone and seams. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
-| Enforcement | **Hard** (deterministic) — a typed model *held true* by its reverse-mapping test + boundary lints (the drift gate is the counted control) |
+| Enforcement | **Hard** (deterministic) — a typed model *held true* by its reverse-mapping test + boundary lints (the drift gate is the counted sensor) |
 
 ## Motivation — the failure it kills
 

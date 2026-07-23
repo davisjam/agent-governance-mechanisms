@@ -37,7 +37,7 @@ banned. The signature refusing a `str` path closes the bug class.
 ## Prerequisites
 
 - **A typed client whose signature encodes the invariant** (`BinaryIO`, not `str`): the type *is* the
-  control.
+  constraint.
 - **A sole-seam lint** banning the raw HTTP call to other services.
 - **Migration** of existing cross-service calls onto the client.
 

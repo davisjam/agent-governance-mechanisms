@@ -10,7 +10,7 @@ agent-fleet substrate, rendered from two typed YAML sources: a pointer catalog a
 | | |
 |---|---|
 | Summary | Positive substrate map + symptom→doc routing, generated from typed YAML, ref-lint-checked. |
-| Target | Agent · **Governance-doc controls** |
+| Target | Agent · **Governance-doc mechanisms** |
 | Form | `agent-output` |
 | Enforcement | **Soft·Hard** — the skill *routes*, it cannot execute or block; its correctness is a hard reference-validity lint that resolves every pointer's file *and* heading anchor against disk (a non-executable index earns trust from a ref-check, not tests) |
 
@@ -50,11 +50,11 @@ standing freedom to propose governance improvements) and a **project-specific ca
 typed YAML** (the positive lifecycle map, the symptom→doc rows, and the runbooks). Each runbook decomposes
 into **typed step-kinds** — *runnable* (a command), *carried-brief* (a dispatchable judgment step),
 *surface-to-user* (needs a human decision) — so the judgment-automatable middle is a first-class, lintable
-resource rather than under-specified prose. Two controls keep it honest. The **reference-validity lint**
+resource rather than under-specified prose. Two mechanisms keep it honest. The **reference-validity lint**
 resolves every pointer's file and anchor. And the skill **partners with a failure-interpretation skill**:
-after a failure recurs, it routes to *classify the class → register an Epic → design the control*, never a
-DIY inline fix (a control is architecture and earns a design pass). Part of that design is choosing the
-control's **placement by semantic level** — see
+after a failure recurs, it routes to *classify the class → register an Epic → design the mechanism*, never a
+DIY inline fix (designing a mechanism is architecture and earns a design pass). Part of that design is choosing the
+mechanism's **placement by semantic level** — see
 [semantic-level-enforcement](semantic-level-enforcement.md) for the general move — so the check lands at the
 scope where its property is legible, not the cheapest hook.
 
@@ -66,7 +66,7 @@ scope where its property is legible, not the cheapest hook.
   dangle.
 - **Typed step-kinds** on runbook steps, so "which of these is runnable vs needs judgment" is declared,
   not guessed by the operator mid-incident.
-- **A partner failure-interpretation path**, so a recurring failure becomes a *designed* control rather
+- **A partner failure-interpretation path**, so a recurring failure becomes a *designed* mechanism rather
   than an inline patch.
 
 ## Consequences & costs
@@ -100,7 +100,7 @@ scope where its property is legible, not the cheapest hook.
   signal-to-noise across recently-closed work).
 - The reference-validity lint resolving every pointer's file and heading anchor from a typed YAML
   source-of-truth.
-- The handoff to a failure-interpretation skill: recurring failure → classify → Epic → designed control.
+- The handoff to a failure-interpretation skill: recurring failure → classify → Epic → designed mechanism.
 
 ## Related mechanisms
 

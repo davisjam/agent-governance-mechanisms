@@ -1,21 +1,21 @@
-# CLAUDE.md rule index (the governance document as a control)
+# CLAUDE.md rule index (the governance document as a mechanism)
 
 **Intent** — Treat the top-level governance document as *enforced infrastructure*: a numbered,
 stable-numbered rule index, loaded into every agent's boot context, held honest by its own enforcement
 counterpart (a bloat/cap lint plus a rule-conformance lint), so the document that carries every
-other control cannot silently rot.
+other mechanism cannot silently rot.
 
 
 | | |
 |---|---|
 | Summary | The governance document itself, enforced by its own lints. |
-| Target | Agent · **Governance-doc controls** |
+| Target | Agent · **Governance-doc mechanisms** |
 | Form | `validation` |
 | Enforcement | **Soft·Hard** — the rules are guidance to the agent (soft, booted into every context); a governance-doc bloat/cap lint + the rule-conformance lint are *blocking* (the hard counterpart) |
 
-> **★ The meta-control.** Every other entry in this catalog names a control. *This* is the control
+> **★ The meta-mechanism.** Every other entry in this catalog names a mechanism. *This* is the mechanism
 > that records the others. CLAUDE.md is the durability mechanism for the whole "convert a failure into
-> a control" move: a rule written here is enforced on every subsequent agent boot without
+> a mechanism" move: a rule written here is enforced on every subsequent agent boot without
 > re-inspection. It is both a member of the catalog and its delivery vehicle.
 
 ## Motivation — the failure it kills
@@ -32,7 +32,7 @@ or misleads every dispatch, continuously.
 ## Why it's not just "write a good CONTRIBUTING.md / a README"
 
 An ordinary project doc is **advisory and unenforced**: read at contributor discretion, edited by
-hand, trusted to stay honest. CLAUDE.md is a control because it inverts all three:
+hand, trusted to stay honest. CLAUDE.md is a mechanism because it inverts all three:
 
 - **Binding, not advisory.** It is loaded into *every* agent's boot context by construction. It is
   the minimum shared world-model an agent executes against, not reference it might consult. (This is
@@ -82,11 +82,11 @@ because it is one.
 - **Presence ≠ obedience.** A rule being in the index does not make agents follow it; the index can
   claim a discipline that has quietly rotted. This is exactly why the
   [Epic DoD](epic-definition-of-done.md) re-runs owned lints/tests at HEAD rather than trusting the
-  index: the meta-control needs its own audit.
+  index: the meta-mechanism needs its own audit.
 - **Stable numbering accretes history.** Never renumbering means retired rules leave gaps or tombstones;
   the citable namespace is durable but carries dead entries forever.
 - **It taxes every dispatch.** The same load that makes it binding makes it a per-invocation cost across
-  the whole fleet. The control's benefit and its price are the same mechanism.
+  the whole fleet. The mechanism's benefit and its price are the same thing.
 
 ## Known uses
 
@@ -116,4 +116,4 @@ project-reference rules, with the three-part "what earns a spot" admission test 
 - *See also (sibling)* — [mandatory-snippet-table](mandatory-snippet-table.md): another governance
   document enforced the same way (via [brief-linting](../context-and-dispatch/brief-linting.md) rather than a bloat lint).
 - *See also (family)* — [doc-hygiene-lints](doc-hygiene-lints.md): the general family of
-  "documentation with a hard-counterpart lint" this control is the flagship of.
+  "documentation with a hard-counterpart lint" this mechanism is the flagship of.

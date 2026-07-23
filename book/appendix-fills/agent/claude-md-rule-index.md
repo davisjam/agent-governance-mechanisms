@@ -10,7 +10,7 @@
 
 **Intent** — Treat the top-level governance document as enforced infrastructure: a stable-numbered rule
 index, loaded into every agent's boot context, held honest by its own enforcement counterpart — a
-bloat/cap lint plus a rule-conformance lint — so the document that carries every other control cannot
+bloat/cap lint plus a rule-conformance lint — so the document that carries every other mechanism cannot
 silently rot.
 
 ### Motivation

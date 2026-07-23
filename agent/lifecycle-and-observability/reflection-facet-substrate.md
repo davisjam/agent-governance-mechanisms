@@ -4,7 +4,7 @@
 of Template-Method **facets**, each reflecting the running context against a single repo-policy dimension it
 *references* (never copies), the whole family emitting **at most one reflection per window**, so several
 soft reflections can't compound into the alarm fatigue that would kill them all (our instance: a
-`ReflectionFacet` base + facet registry with four facets over a shared turn-end window: failure→control,
+`ReflectionFacet` base + facet registry with four facets over a shared turn-end window: failure→mechanism,
 knowledge-routing, structural-drift, operations).
 
 | | |
@@ -18,7 +18,7 @@ knowledge-routing, structural-drift, operations).
 
 A single [lifecycle hook](lifecycle-hooks.md) that re-arms one omitted reflex is cheap and clear. The
 trouble starts at the **second** one. Once you want the operator to reflect on more than one recurring
-policy (*convert this recurrence into a control*, *route this lesson to the right store*, *this looks like a
+policy (*convert this recurrence into a mechanism*, *route this lesson to the right store*, *this looks like a
 second copy*, *this runbook is stale*), the naive path is N independent hooks, each firing on its own event.
 
 Three failures follow, and they compound:
@@ -95,8 +95,8 @@ moment there is a second soft reflection to hold.
 
 ## Known uses
 
-- A `ReflectionFacet` Template-Method base + a typed facet registry, with four facets on it: *failure→control*
-  (convert a recurring failure into a control), *knowledge-routing* (a lesson belongs in memory vs a durable
+- A `ReflectionFacet` Template-Method base + a typed facet registry, with four facets on it: *failure→mechanism*
+  (convert a recurring failure into a mechanism), *knowledge-routing* (a lesson belongs in memory vs a durable
   runbook), *structural-drift* (a second copy, i.e. DRY), *operations* (a runbook/playbook gap). Two are
   built, two interface-ready.
 - A shared turn-end emitter that round-robins the facets of a tempo class and emits ≤1 reflection per window;

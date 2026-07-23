@@ -18,13 +18,13 @@ is observed. (What the fleet reasons *through* is the [models-bridge](../models-
    shared compute across concurrent worktrees, each enforced so the raw call is impossible.
 4. **[Lifecycle & observability](lifecycle-and-observability/)** — live signal surfaces over the fleet:
    the agent-registry, the typed event bus, heartbeats, tombstones, the cron-alerts gate.
-5. **[Governance-doc controls](governance-doc-controls/)** — documentation treated as enforced
+5. **[Governance-doc mechanisms](governance-doc-controls/)** — documentation treated as enforced
    infrastructure, including the **CLAUDE.md rule index** — the *meta-mechanism* that records and delivers
    every other mechanism.
 
 ## The pattern that recurs here
 
-**Soft aims, hard holds.** Of the agent controls, only [dynamic context
+**Soft aims, hard holds.** Of the agent mechanisms, only [dynamic context
 injection](context-and-dispatch/dynamic-context-injection.md) is purely *soft* (it injects context but
 blocks nothing); two are *soft·hard* (a document kept honest by a lint); the rest are *hard*
 deterministic gates. Probabilistic guidance is used to *aim* agents at the right work; deterministic

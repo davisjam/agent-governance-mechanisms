@@ -28,7 +28,7 @@ abstraction* and stay standalone.
      entries: `components.py`, `mediators.py`, `repo-query.py`, `state_mutator_registry.py`. Add it to
      `ABSTRACTIONS.md` (if not present) and cite it `[[slug]]`.
 
-3. **A definitional page** (the control *about* that artifact, e.g. `query-surface.md` for the query
+3. **A definitional page** (the mechanism *about* that artifact, e.g. `query-surface.md` for the query
    tool) → naming the artifact once here for grounding is sanctioned. Strip the extension
    (`repo-query.py` → `repo-query`) rather than citing the abstraction that points back to this very
    page (avoid the self-referential loop).
@@ -49,14 +49,14 @@ Strict per-entry shape the parser reads (`parse_abstractions()` in `catalog.py`)
 <!-- slug: kebab-case-slug -->
 <one definition paragraph: role + shape, tooltip-friendly. This becomes the hover text.>
 
-**Grounds** — <the real artifact, named ONCE> (`filename.py`). **See** — [control](role/family/control.md).
+**Grounds** — <the real artifact, named ONCE> (`filename.py`). **See** — [mechanism](role/family/mechanism.md).
 ```
 
 - **Headword = the abstract role**, never the filename ("Component registry", not `components.py`). The
   page is keyed on concepts so it stands alone.
 - **slug** is the citation key; keep it stable even if the headword is reworded.
 - **Grounds** is the *only* place a raw parent filename may appear in the whole served site.
-- **See** points to the control that governs the artifact (validated as a live link).
+- **See** points to the mechanism that governs the artifact (validated as a live link).
 
 ## Citing from an entry
 

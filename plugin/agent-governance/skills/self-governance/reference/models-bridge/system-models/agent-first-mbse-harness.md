@@ -11,7 +11,7 @@ five recurring disciplines, not a SysML tool).
 | Summary | Typed frozen-record models + five hand-rolled disciplines; adopt the schema, skip the runtime. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
-| Enforcement | **Hard** (deterministic) — the harness *is* construction (typed records); the counted controls are the per-view drift lints that fail the build when a stored value or a model row diverges from the code |
+| Enforcement | **Hard** (deterministic) — the harness *is* construction (typed records); the counted sensors are the per-view drift lints that fail the build when a stored value or a model row diverges from the code |
 
 ## Motivation — the failure it kills
 
@@ -67,7 +67,7 @@ than a snapshot:
    loader discovers it, no central manifest to edit. Clone-and-run, zero ceremony.
 4. **The drift-lint contract.** Per view, one stable check: load the model view, load the code the same
    way the model does, set-diff, re-run every derived field's derivation, exit non-zero on any
-   divergence. This is the gate that makes the model **unable to lie**, the counted control of this
+   divergence. This is the gate that makes the model **unable to lie**, the counted sensor of this
    mechanism.
 5. **The generic query projection.** One introspection pass turns any typed-record model into JSON,
    giving the fleet a read-API over the model without a bespoke serializer per view.

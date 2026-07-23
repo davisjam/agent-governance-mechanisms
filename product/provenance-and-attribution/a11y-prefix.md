@@ -25,7 +25,7 @@ list drifts the moment an inserter forgets to append. The `a11y_` prefix is a **
 (invisible → `a11y_`, user-visible → not, spec-mandated → the spec name) that the inserted-content
 validator *relies on*, and every new inserter records itself with the registry so the validator covers
 it **automatically**. Naming by rule plus auto-registration is what makes the coverage mechanical rather
-than a promise. It is a repair-vocabulary control: it bounds *how inserts are named and tracked*, which
+than a promise. It is a repair-vocabulary constraint: it bounds *how inserts are named and tracked*, which
 makes validating them possible.
 
 ## Mechanism
