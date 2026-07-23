@@ -53,12 +53,25 @@ MAX_SECTION_WORDS = 400   # a heading-to-heading section over this many words is
 MAX_SECTION_PARAS = 6     # ...or over this many paragraphs
 THESIS_TERMS = ("Modeling Thesis", "Alignment Thesis")  # the named theses the book weaves
 THESIS_MIN_CHAPTERS = 4   # each thesis should recur across at least this many chapters
-PLACEHOLDER_MARKERS = ("[FILL IN]", "[MORE CHAPTERS FOLLOW]")
+# Placeholder markers are matched by BRACKET+PHRASE, with an optional `: <body>` — authors write both the
+# bare `[FILL IN]` and the annotated `[FILL IN: introduce the running example ...]`. Matching the exact
+# string `[FILL IN]` (the old bug) missed every colon-and-body instance. The phrases only; the regex below
+# adds the `[`, the optional `: body`, and the closing `]`.
+PLACEHOLDER_PHRASES = ("FILL IN", "MORE CHAPTERS FOLLOW")
+# `[<phrase>]` or `[<phrase>: any body up to the closing bracket]`. Scanned over SOURCE .md (never the
+# built HTML, where the brackets may be escaped/rendered differently).
+_PLACEHOLDER_RE = re.compile(
+    r"\[(?P<phrase>" + "|".join(re.escape(p) for p in PLACEHOLDER_PHRASES) + r")(?::[^\]]*)?\]")
 DELIMITER_PAIRS = (("(", ")"), ("{", "}"))  # pairs checked for balance in prose (after masking)
 
 BOOK = os.path.join(ROOT, "book")
 # Source chapters live under these dirs (part1..5, plus front/back matter); appendix + meta files excluded.
 _CHAPTER_SRC_DIRS = ("part1", "part2", "part3", "part4", "part5", "frontmatter", "backmatter")
+# Front/back matter (Preface, Acknowledgments, Conclusion, Implications) is narrative but not a numbered
+# body chapter — it does not plausibly want a figure, so the visual-per-chapter rule EXEMPTS it by default.
+# A front/back-matter page that DOES want the rule can still opt in via source dir; a body chapter that
+# genuinely needs no figure opts out with a per-file `<!-- noqa: book-visual — <reason> -->`.
+_VISUAL_EXEMPT_SRC_DIRS = ("frontmatter", "backmatter")
 
 # ---- the finding + suppression model -------------------------------------------------------------
 
@@ -188,6 +201,15 @@ def _src_for_html(html_path: str) -> str | None:
     return None
 
 
+def _is_visual_exempt(src_md: str | None) -> bool:
+    """True when the chapter SOURCE .md sits in a front/back-matter dir the visual-per-chapter rule
+    exempts by default (Preface / Acknowledgments / Conclusion / Implications)."""
+    if src_md is None:
+        return False
+    parent = os.path.basename(os.path.dirname(src_md))
+    return parent in _VISUAL_EXEMPT_SRC_DIRS
+
+
 def _main_body(html: str) -> str:
     """The <main>...</main> content of a chapter page (the chapter's own prose, minus the nav sidebar)."""
     m = re.search(r"<main\b.*?</main>", html, re.S)
@@ -242,20 +264,25 @@ def check_intra_book_links() -> tuple[list[Finding], dict]:
 
 
 def check_visual_per_chapter() -> tuple[list[Finding], dict]:
-    """Every built chapter page carries at least one visual: a <figure>, a bare <svg>, or a mermaid block.
-    A chapter that genuinely needs none suppresses with `<!-- noqa: book-visual — <reason> -->` in its
-    source .md."""
+    """Every built NARRATIVE-BODY chapter page carries at least one visual: a <figure>, a bare <svg>, or a
+    mermaid block. Front/back matter (Preface, Acknowledgments, Conclusion, Implications — source dirs in
+    `_VISUAL_EXEMPT_SRC_DIRS`) is EXEMPT by default. A body chapter that genuinely needs no figure suppresses
+    with `<!-- noqa: book-visual — <reason> -->` in its source .md."""
     findings: list[Finding] = []
     pages = _chapter_html_pages()
-    without = 0
+    without = exempt = 0
     for p in pages:
+        src_md = _src_for_html(p)
+        if _is_visual_exempt(src_md):
+            exempt += 1
+            continue
         body = _main_body(open(p, encoding="utf-8").read())
         has_visual = bool(re.search(r"<figure\b|<svg\b|class=\"mermaid\"|pre class=\"mermaid\"", body))
         if not has_visual:
             without += 1
-            findings.append(Finding(_src_for_html(p), "",
+            findings.append(Finding(src_md, "",
                                     f"{rel(p)} — no <figure>/<svg>/mermaid in chapter body"))
-    return findings, {"chapters": len(pages), "without_visual": without}
+    return findings, {"chapters": len(pages), "front_back_exempt": exempt, "without_visual": without}
 
 
 # ---- rule 3: section-length cap ------------------------------------------------------------------
@@ -342,18 +369,23 @@ def check_figure_hygiene() -> tuple[list[Finding], dict]:
 
 
 def check_placeholders() -> tuple[list[Finding], dict]:
-    """Count placeholder markers across chapter sources. Reported for visibility; suppress a deliberately
-    retained marker with `<!-- noqa: book-placeholder — <reason> -->` in the source .md."""
+    """Count placeholder markers across chapter SOURCE .md files. Matches `[FILL IN]` / `[MORE CHAPTERS
+    FOLLOW]` AND their colon-and-body forms (`[FILL IN: <text>]`) via `_PLACEHOLDER_RE`. Reported for
+    visibility; suppress a deliberately retained marker with `<!-- noqa: book-placeholder — <reason> -->`
+    in the source .md."""
     findings: list[Finding] = []
-    counts: dict[str, int] = {mk: 0 for mk in PLACEHOLDER_MARKERS}
+    counts: dict[str, int] = {p: 0 for p in PLACEHOLDER_PHRASES}
     for f in _chapter_src_files():
         txt = open(f, encoding="utf-8").read()
-        for mk in PLACEHOLDER_MARKERS:
-            n = txt.count(mk)
+        per_file: dict[str, int] = {p: 0 for p in PLACEHOLDER_PHRASES}
+        for m in _PLACEHOLDER_RE.finditer(txt):
+            per_file[m.group("phrase")] += 1
+        for phrase, n in per_file.items():
             if n:
-                counts[mk] += n
-                findings.append(Finding(f, mk, f"{rel(f)} — {n}x {mk}"))
-    return findings, {"total": sum(counts.values()), **counts}
+                counts[phrase] += n
+                # label is the bracketed phrase, so a per-marker suppression scope can name it.
+                findings.append(Finding(f, f"[{phrase}]", f"{rel(f)} — {n}x [{phrase}]"))
+    return findings, {"total": sum(counts.values()), **{f"[{k}]": v for k, v in counts.items()}}
 
 
 # ---- rule 7: delimiter balance (after masking the legitimate carriers) ---------------------------
