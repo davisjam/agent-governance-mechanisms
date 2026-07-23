@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): a two-rung "enforcement level" figure with a
+     property spanning several low-level events, drawn as a bracket over a row of
+     event ticks. Mermaid has no primitive for "one predicate spans N nodes and is
+     invisible in any single one" (a bracket over a sequence), which is the whole
+     point of the picture. Palette matches the book accent (#1a4a7a). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470"
+     role="group" aria-labelledby="sgTitle sgDesc"
+     font-family="'Helvetica Neue', Arial, sans-serif">
+  <title id="sgTitle">The semantic gap: enforce at the level where the property is legible</title>
+  <desc id="sgDesc">A property is invisible at the low level and legible one level up. Bottom
+    row: a sequence of small low-level events — individual commits, single system calls,
+    single turns — where the property you care about is spread across many of them and cannot
+    be seen in any one. A red cross marks enforcing here as the mistake. Top row: the whole
+    unit of work — the agent returning from its task, the ten calls stitched together, the
+    session's durable record — where the same property becomes checkable. A green check marks
+    enforcing here. The lesson: lift the check to the level where the meaning is legible.</desc>
+
+  <defs>
+    <marker id="sgUp" markerWidth="9" markerHeight="9" refX="4.5" refY="7.5"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M4.5,0 L9,8 L0,8 Z" fill="#1a4a7a"/>
+    </marker>
+  </defs>
+
+  <!-- ================= TOP RUNG — the right level ================= -->
+  <text x="480" y="46" text-anchor="middle" font-size="30" font-weight="700" fill="#1a1a1a">Enforce here — the property is legible</text>
+
+  <!-- one wide box = the whole unit of work -->
+  <rect x="150" y="66" width="660" height="70" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="480" y="103" text-anchor="middle" font-size="24" fill="#1a4a7a">The whole unit of work is in view</text>
+  <text x="480" y="128" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">agent returns · ten calls stitched · the session's record</text>
+
+  <!-- green check -->
+  <circle cx="840" cy="101" r="22" fill="#2e7d32"/>
+  <path d="M829,101 L837,110 L852,92" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- the lift arrow: from the low events up to the whole-unit box -->
+  <line x1="480" y1="300" x2="480" y2="146" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#sgUp)"/>
+  <text x="503" y="228" font-size="20" font-style="italic" fill="#1a4a7a">lift the check up</text>
+
+  <!-- ================= BOTTOM RUNG — too low ================= -->
+  <!-- the property bracket spanning several events -->
+  <path d="M170,318 L170,306 L790,306 L790,318" fill="none" stroke="#8a2f2f" stroke-width="2"/>
+  <text x="480" y="296" text-anchor="middle" font-size="20" font-style="italic" fill="#8a2f2f">the property spans many events — invisible in any one</text>
+
+  <!-- row of low-level event ticks -->
+  <g fill="#ffffff" stroke="#33383d" stroke-width="1.6">
+    <rect x="170" y="330" width="86" height="44" rx="4"/>
+    <rect x="276" y="330" width="86" height="44" rx="4"/>
+    <rect x="382" y="330" width="86" height="44" rx="4"/>
+    <rect x="492" y="330" width="86" height="44" rx="4"/>
+    <rect x="598" y="330" width="86" height="44" rx="4"/>
+    <rect x="704" y="330" width="86" height="44" rx="4"/>
+  </g>
+  <g font-size="19" fill="#33383d" text-anchor="middle">
+    <text x="213" y="358">commit</text>
+    <text x="319" y="358">commit</text>
+    <text x="425" y="358">commit</text>
+    <text x="535" y="358">call</text>
+    <text x="641" y="358">call</text>
+    <text x="747" y="358">call</text>
+  </g>
+
+  <!-- red cross = enforcing here is the mistake -->
+  <circle cx="90" cy="352" r="22" fill="#8a2f2f"/>
+  <path d="M80,342 L100,362 M100,342 L80,362" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+
+  <text x="480" y="410" text-anchor="middle" font-size="26" font-weight="700" fill="#1a1a1a">Enforce here — the property is not yet legible</text>
+  <text x="480" y="440" text-anchor="middle" font-size="20" font-style="italic" fill="#5f5f5f">a single commit, a single system call, a single turn</text>
+</svg>
