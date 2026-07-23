@@ -1245,7 +1245,7 @@ A single pattern in the preceding appendices kills one failure class. In practic
 arrive in *packages* — a concept you want to adopt (model-based engineering, a self-operating \
 orchestrator, an auditable format seam) is not one mechanism but a cluster that reinforce each other. \
 This appendix names those clusters. Each **stack** attaches to a concept, lists the mechanisms that make \
-it up, and — most usefully — says which of them you can leave out.
+it up, and says which of them you can leave out.
 
 Every stack sorts its members into two kinds:
 
@@ -1346,10 +1346,10 @@ loads when a task in that domain arrives, so it reasons through the domain's own
 from scratch. You met three of them earlier in this book: the skills that let the fleet write its prose, \
 harden its own substrate, and operate itself. Here is how they were made.
 
-The useful fact is that all three were built the same way. A skill is not a bag of instructions that grew \
-by accretion. Each of the book's skills started from one abstraction, layered independent facets on it, \
-and tied them together with a governing principle — and that construction is itself a reusable pattern. \
-Name the pattern and you can write the next skill deliberately instead of by feel.
+All three were built the same way. A skill is not a bag of instructions that grew by accretion. Each of \
+the book's skills started from one abstraction, layered independent facets on it, and tied them together \
+with a governing principle. That construction is itself a reusable pattern: name it and you can write the \
+next skill deliberately instead of by feel.
 
 This appendix names that pattern as a three-step recipe and grounds each step in the three self-* skills \
 you already met. Read the [Skills chapter](5.2-the-skills.html) for what those skills *do*; read on here \
