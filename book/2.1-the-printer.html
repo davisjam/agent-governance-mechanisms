@@ -419,7 +419,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p><strong>Supervised autonomy</strong> is the down branch, and it is where most of this book lives. The task is hard, especially if it includes reasoning, and it is too large to hold in a single context window or to trust to a single pass. So you do not hand the agent the whole job and hope. You supply four things, in two groups. The system side shapes what gets built:</p>
 <ul><li><strong>Correctness conditions</strong> — what a right answer looks like.</li><li><strong>Sub-tasks</strong> — the breakdown you have proposed to divide the work.</li></ul>
 <p>The development side shapes how the building runs:</p>
-<p>- <strong>Tools that determinize recurring processes</strong>, so the same operation runs the same way every time. - <strong>Monitoring and intervention</strong>, so you can watch the work and step in when it drifts.</p>
+<ul><li><strong>Tools that determinize recurring processes</strong>, so the same operation runs the same way every time.</li><li><strong>Monitoring and intervention</strong>, so you can watch the work and step in when it drifts.</li></ul>
 <p>Those four are the skeleton of supervised autonomy, and each later part of the book fills one of them out.</p>
 <h3>Where the emphasis falls</h3>
 <p>This book is about both modes. It has to be, because the first skill is telling them apart, and getting that wrong in either direction is expensive. Treat a one-shot task as if it needed supervised autonomy and you drown a five-minute script in ceremony. Treat a supervised-autonomy task as if it were one-shot and you get confident, plausible, subtly wrong output at a scale no human can read.</p>

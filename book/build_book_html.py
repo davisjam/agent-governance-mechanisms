@@ -505,9 +505,22 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
         if _is_pipe_table(block):
             _emit(_render_pipe_table(block))
             continue
-        # Unordered list (all lines start with - ).
-        if all(ln.strip().startswith("- ") for ln in block.splitlines()):
-            items = "".join(f"<li>{inline(ln.strip()[2:])}</li>" for ln in block.splitlines())
+        # Unordered list — the first line opens an item with `- `; a following line that does NOT
+        # start with `- ` is a wrapped continuation of the current item (source bullets often wrap
+        # across lines with a 2-space hanging indent). Join continuations into their item so a wrapped
+        # bullet still renders as one <li>, not a <p> full of literal dashes.
+        _lines = block.splitlines()
+        if _lines and _lines[0].strip().startswith("- "):
+            li_texts: list[str] = []
+            for ln in _lines:
+                s = ln.strip()
+                if s.startswith("- "):
+                    li_texts.append(s[2:])
+                elif li_texts:  # continuation of the current item
+                    li_texts[-1] += " " + s
+                else:  # a stray non-bullet leading line — keep it so nothing is dropped
+                    li_texts.append(s)
+            items = "".join(f"<li>{inline(t)}</li>" for t in li_texts)
             _emit(f"<ul>{items}</ul>")
             continue
         # Paragraph (join wrapped lines).
