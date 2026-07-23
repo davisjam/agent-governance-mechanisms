@@ -135,8 +135,8 @@
 <main aria-describedby="cf-desc">
 <h1>Governance map</h1>
 <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">The governance map</h2>
-<p id="cf-desc" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">A governance map of the catalogue: <span data-census="controls">66</span> controls across <span data-census="families">11</span> families and three roles — agent (the fleet that produces the work), models-bridge (the typed models the fleet reasons through), and product (the shipped artifact). The catalogue is shown in four concern-specific views in the spirit of the 4+1 architectural view model; colour encodes role — human blue, agent coral, product green, environment slate.</p>
-<p class="sub"><span data-census="controls">66</span> controls · <span data-census="families">11</span> families · three roles (agent · models-bridge · product), inside the governed engineering environment.
+<p id="cf-desc" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">A governance map of the catalogue: <span data-census="controls">67</span> controls across <span data-census="families">11</span> families and three roles — agent (the fleet that produces the work), models-bridge (the typed models the fleet reasons through), and product (the shipped artifact). The catalogue is shown in four concern-specific views in the spirit of the 4+1 architectural view model; colour encodes role — human blue, agent coral, product green, environment slate.</p>
+<p class="sub"><span data-census="controls">67</span> controls · <span data-census="families">11</span> families · three roles (agent · models-bridge · product), inside the governed engineering environment.
 <b>Four views of one catalogue</b> — each answers a different question, in the spirit of the
 <a href="https://en.wikipedia.org/wiki/4%2B1_architectural_view_model">4+1 architectural view model</a>
 (a system is understood through several concern-specific views, not one master diagram). Same palette
@@ -330,10 +330,11 @@ the <a href="catalogue-views.html">codegen'd views</a> (same mechanisms, grouped
   <div class="axis"><span>SOFT · probabilistic (aims the fleet)</span><span class="arr"></span><span>HARD · deterministic (holds the line)</span></div>
   <div class="lat">
     <div class="lat-col lat-soft">
-      <h4>Soft <span style="font-weight:500;font-size:10px">(4)</span></h4>
+      <h4>Soft <span style="font-weight:500;font-size:10px">(5)</span></h4>
       <p class="cap">influence, not a gate — cannot block</p>
       <div class="lat-node t-a"><a href="agent/context-and-dispatch/dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a> <span class="cpair">reads the component model (bridge) · file-addr. rules</span></div>
       <div class="lat-node t-a"><a href="agent/governance-doc-controls/operational-playbooks.html" title="Situation-keyed devops procedures agents follow instead of improvising.">operational-playbooks</a> <span class="cpair">the orchestrator consults, not improvises</span></div>
+      <div class="lat-node t-a"><a href="agent/governance-doc-controls/semantic-level-enforcement.html" title="Place a control at the scope where its property is legible, not the cheapest hook.">semantic-level-enforcement</a> <span class="cpair">a design-time placement judgment</span></div>
       <div class="lat-node t-s"><a href="product/repair-vocabulary/codemod-first.html" title="For 50+ deterministic sites, write one AST transformer.">codemod-first threshold</a> <span class="cpair">a discipline; the transform is deterministic</span></div>
       <div class="lat-node" style="border-left:4px solid var(--b-dark)"><a href="models-bridge/system-models/query-surface.html" title="repo-query — the agent-facing read API over the models.">query-surface (repo-query)</a> <span class="cpair">agent-facing read API over the models (bridge)</span></div>
     </div>
@@ -416,7 +417,7 @@ the <a href="catalogue-views.html">codegen'd views</a> (same mechanisms, grouped
   </div>
 
   <div class="takeaway">
-    <b>The asymmetry is the finding:</b> of <span data-census="controls">66</span> controls, <b><span data-census="enf_hard">53</span> are Hard</b>, only <b><span data-census="enf_soft">4</span> Soft</b> and <b><span data-census="enf_softhard">9</span> Soft·Hard</b>.
+    <b>The asymmetry is the finding:</b> of <span data-census="controls">67</span> controls, <b><span data-census="enf_hard">53</span> are Hard</b>, only <b><span data-census="enf_soft">5</span> Soft</b> and <b><span data-census="enf_softhard">9</span> Soft·Hard</b>.
     Probabilistic guidance <i>aims</i> agents; deterministic machinery <i>holds the line</i> — and every soft control sits beside a hard counterpart.
   </div>
 </div>

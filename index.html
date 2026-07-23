@@ -192,7 +192,7 @@
 
   <p class="lead">This site describes both halves. The first is the guidance on what to fix in advance; the
   second is the machinery for responding when something slips through. It packages both as three Claude
-  skills with a <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>66 governance
+  skills with a <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>67 governance
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
 
@@ -235,6 +235,11 @@
     a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
     deterministically, before the failure escapes.</p></div>
   </div>
+  <p class="section-sub">A control works like a <b>sensor</b>: it detects a mistake and surfaces it after
+  the fact. Architecture works like a <b>wall</b>: it makes the whole class of mistake impossible to make.
+  Reach for the wall first, because a sensor still lets the mistake happen. But a wall built across the only
+  exit blocks the people trying to leave — an over-constrained design stops legitimate work as surely as it
+  stops the error, so the wall belongs around the class you can name, not across the whole floor.</p>
 
   <h2 class="section-h">The way of thinking</h2>
   <p class="section-sub">Three stances that make the midway work, distilled from the AI-First Engineering
@@ -327,7 +332,7 @@
   <hr class="sep" />
 
   <h2 class="section-h">Explore the catalogue</h2>
-  <p class="section-sub">66 governance mechanisms — the repertoire this loop produced in one real
+  <p class="section-sub">67 governance mechanisms — the repertoire this loop produced in one real
   production system.</p>
   <div class="cards-grid">
   <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, mechanisms clickable</span></a>
@@ -352,7 +357,7 @@
 <tr><td class="c-name"><a href="agent/context-and-dispatch/brief-linting.html">Brief-linting</a></td><td class="c-sum">Reject a malformed dispatch brief before it can launch.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="agent/context-and-dispatch/docs-hierarchy.html">Docs hierarchy + governance index</a></td><td class="c-sum">One enforced, numbered rule index every agent boots with.</td><td class="c-enf">Soft·Hard</td></tr>
 <tr><td class="c-name"><a href="agent/context-and-dispatch/dynamic-context-injection.html">Dynamic context injection</a></td><td class="c-sum">Inject the rules governing these files into the brief.</td><td class="c-enf">Soft</td></tr>
-<tr><td class="c-name"><a href="agent/context-and-dispatch/role-typed-dispatch.html">Role-typed dispatch</a></td><td class="c-sum">A typed role fixes model, isolation, and gates per dispatch.</td><td class="c-enf">Hard</td></tr>
+<tr><td class="c-name"><a href="agent/context-and-dispatch/role-typed-dispatch.html">Role-typed dispatch</a></td><td class="c-sum">A typed role fixes LLM, isolation, and gates per dispatch.</td><td class="c-enf">Hard</td></tr>
 </tbody></table>
 <h4>Gates &amp; merge-train</h4>
 <p class="fam-lede">The path-to-production staircase for agent work.</p>
@@ -392,6 +397,7 @@
 <tr><td class="c-name"><a href="agent/governance-doc-controls/operational-playbooks.html">Operational playbooks (situation-keyed devops procedures)</a></td><td class="c-sum">Situation-keyed devops procedures agents follow instead of improvising.</td><td class="c-enf">Soft</td></tr>
 <tr><td class="c-name"><a href="agent/governance-doc-controls/operator-runbook-skill.html">Operator runbook skill (positive map + symptom index, ref-lint-kept)</a></td><td class="c-sum">Positive substrate map + symptom→doc routing, generated from typed YAML, ref-lint-checked.</td><td class="c-enf">Soft·Hard</td></tr>
 <tr><td class="c-name"><a href="agent/governance-doc-controls/epic-and-design-templates.html">Epic &amp; design-doc templates</a></td><td class="c-sum">Fixed section-templates for Epics and design docs so plans are complete.</td><td class="c-enf">Soft·Hard</td></tr>
+<tr><td class="c-name"><a href="agent/governance-doc-controls/semantic-level-enforcement.html">Enforce at the right semantic level</a></td><td class="c-sum">Match a control's enforcement scope to the semantic scope of the property it checks.</td><td class="c-enf">Soft</td></tr>
 </tbody></table>
 <h3 class="role-h">Governance: Models — a bridge between agents and product</h3>
 <h4>System models</h4>

@@ -54,10 +54,9 @@ resource rather than under-specified prose. Two controls keep it honest. The **r
 resolves every pointer's file and anchor. And the skill **partners with a failure-interpretation skill**:
 after a failure recurs, it routes to *classify the class → register an Epic → design the control*, never a
 DIY inline fix (a control is architecture and earns a design pass). Part of that design is choosing the
-control's **placement by semantic level**, the *semantic gap*: a syntactic check at a commit hook, a
-judgment check at a reasoning hook or the whole-worktree final commit, an intent-level check at the Epic's
-definition-of-done. Putting a check *below* the semantics it must apply is the classic gap that leaves the
-policy unenforceable, so the level is chosen to match the decision, not the convenience.
+control's **placement by semantic level** — see
+[semantic-level-enforcement](semantic-level-enforcement.md) for the general move — so the check lands at the
+scope where its property is legible, not the cheapest hook.
 
 ## Prerequisites
 

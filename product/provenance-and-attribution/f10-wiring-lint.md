@@ -27,6 +27,13 @@ stamp wiring, and fails the build on a gap (HIGH-severity, held at 0 open gaps).
 over all verbs sees the absence a per-author reminder misses. This is the counterpart that turns "we
 attribute mutations" from an aspiration into a guarantee.
 
+The lint stays cheap because it checks so little. It never models what a mutator *does* — it reads none
+of the remediation logic, verifies no output, understands no format. It asserts one control-flow-order
+property: every path that performs the guarded action calls the stamp routine on the way out.
+Completeness over the whole verb set costs almost nothing to check precisely because the property lives
+at the level of "was the call made," not "was the work correct." Pitch the guarantee at the exit and a
+scan of the call graph settles it; pitch it at the behavior and no lint could.
+
 ## Mechanism
 
 The mutator-stamp wiring lint scans the `{Pdf,Slides,Docs,Sheets}Model` `Primitives` directories for
@@ -57,3 +64,6 @@ HIGH-severity finding. The invariant has been held at 0 open gaps.
   construction-held-by-detection pairing on the product side.
 - *See also (sibling)* — [semantic-lints](../validation-and-conformance/semantic-lints.md): the F10 lint
   is a member of that fleet doing a completeness-over-verbs job.
+- **Instance of** — [semantic-level-enforcement](../../agent/governance-doc-controls/semantic-level-enforcement.md):
+  pitching the guarantee at "was the call made" rather than "was the work correct" is one case of the
+  general move — place a control at the semantic level where its property is legible *and* cheap to check.

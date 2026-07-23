@@ -1,6 +1,6 @@
 # Agent Governance Mechanisms
 
-<!-- summary: A pattern catalogue of the mechanisms for governable agentic software engineering — 66 across three roles. -->
+<!-- summary: A pattern catalogue of the mechanisms for governable agentic software engineering — 67 across three roles. -->
 
 *A catalogue of the **governance mechanisms** that keep a fleet of AI coding agents productive while
 holding the cost of their failures within bounds, distilled from a 12-week case study of building a
@@ -74,6 +74,12 @@ A guardrail is one of two kinds:
   [poka-yoke](https://en.wikipedia.org/wiki/Poka-yoke), error-*proofing*.
 - **Control** — where you can't prevent it, **observe and guard** the behavior: a lint, a gate, a
   validator, an audit that fires on a violation and holds the line. Error-*catching*.
+
+A control works like a sensor: it detects a mistake and surfaces it after the fact. Architecture works
+like a wall: it makes the whole class of mistake impossible to make. Reach for the wall first, because a
+sensor still lets the mistake happen. But a wall built across the only exit blocks the people trying to
+leave — an over-constrained design stops legitimate work as surely as it stops the error, so the wall
+belongs around the class you can name, not across the whole floor.
 
 Every mechanism in the catalogue governs one of three **roles** (the **agent** fleet, the **models**
 that bridge agents and code, or the shipped **product**) and enforces either **hard** (deterministic)

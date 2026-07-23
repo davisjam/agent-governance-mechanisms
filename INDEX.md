@@ -3,7 +3,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->66<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->67<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
@@ -73,6 +73,7 @@ soft guidance with a hard counterpart.
 | ✅ | Operational playbooks (situation-keyed devops procedures) | `agent-output` | Soft | [operational-playbooks.md](agent/governance-doc-controls/operational-playbooks.md) |
 | ✅ | Operator runbook skill (positive map + symptom index, ref-lint-kept) | `agent-output` | Soft·Hard | [operator-runbook-skill.md](agent/governance-doc-controls/operator-runbook-skill.md) |
 | ✅ | Epic & design-doc templates | `agent-output` | Soft·Hard | [epic-and-design-templates.md](agent/governance-doc-controls/epic-and-design-templates.md) |
+| ✅ | Enforce at the right semantic level | `agent-output` | Soft | [semantic-level-enforcement.md](agent/governance-doc-controls/semantic-level-enforcement.md) |
 
 # Models-bridge
 
@@ -161,9 +162,9 @@ soft guidance with a hard counterpart.
 
 ---
 
-**Three roles complete — 66 mechanisms across 11 families, all fully developed.**
-**Agent (27):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
-Lifecycle & observability (8) · Governance-doc controls (7, incl. the **CLAUDE.md rule index**
+**Three roles complete — 67 mechanisms across 11 families, all fully developed.**
+**Agent (28):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
+Lifecycle & observability (8) · Governance-doc controls (8, incl. the **CLAUDE.md rule index**
 meta-mechanism).
 **Models-bridge (19):** the MBSE **method** (<!--census:bridge_method-->11<!--/census--> subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, **journey-criticality → test-tier placement**, **invariant-DAG execution policy**, + **computed control↔substrate blast-radius**) reified as a **Y** over <!--census:bridge_models-->8<!--/census--> models — product-facing 3 (service-flow · user-journey · domain-registries) · orchestration-facing 2 (synchronization · agent-orch) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
 the MBSE substrate through which a bounded agent operates an unbounded codebase.

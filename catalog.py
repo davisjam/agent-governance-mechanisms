@@ -1161,6 +1161,11 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
     a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
     deterministically, before the failure escapes.</p></div>
   </div>
+  <p class="section-sub">A control works like a <b>sensor</b>: it detects a mistake and surfaces it after
+  the fact. Architecture works like a <b>wall</b>: it makes the whole class of mistake impossible to make.
+  Reach for the wall first, because a sensor still lets the mistake happen. But a wall built across the only
+  exit blocks the people trying to leave — an over-constrained design stops legitimate work as surely as it
+  stops the error, so the wall belongs around the class you can name, not across the whole floor.</p>
 
   <h2 class="section-h">The way of thinking</h2>
   <p class="section-sub">Three stances that make the midway work, distilled from the AI-First Engineering

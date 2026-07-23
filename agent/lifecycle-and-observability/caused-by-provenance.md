@@ -13,7 +13,7 @@ pre-commit hook).
 | Summary | A typed `caused-by` field, minted at the cause and gated at commit, threads a change to its reason. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `audit-trail` |
-| Enforcement | **Hard** (deterministic) — the pre-commit hook asserts the typed field is present and names a taxonomy value. Soft·hard split: the taxonomy *value* is the agent's choice (soft); its *presence* is gated (hard); the `_proxy` suffix on an inferred cause is the honesty-by-construction half |
+| Enforcement | **Hard** (deterministic) — the pre-commit hook asserts the typed field is present and names a taxonomy value. Soft·Hard split: the taxonomy *value* is the agent's choice (soft); its *presence* is gated (hard); the `_proxy` suffix on an inferred cause is the honesty-by-construction half |
 
 ## Motivation — the failure it kills
 

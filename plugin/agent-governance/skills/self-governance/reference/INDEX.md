@@ -6,7 +6,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->66<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->67<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
@@ -76,6 +76,7 @@ soft guidance with a hard counterpart.
 | ✅ | Operational playbooks (situation-keyed devops procedures) | `agent-output` | Soft | [operational-playbooks.md](agent/governance-doc-controls/operational-playbooks.md) |
 | ✅ | Operator runbook skill (positive map + symptom index, ref-lint-kept) | `agent-output` | Soft·Hard | [operator-runbook-skill.md](agent/governance-doc-controls/operator-runbook-skill.md) |
 | ✅ | Epic & design-doc templates | `agent-output` | Soft·Hard | [epic-and-design-templates.md](agent/governance-doc-controls/epic-and-design-templates.md) |
+| ✅ | Enforce at the right semantic level | `agent-output` | Soft | [semantic-level-enforcement.md](agent/governance-doc-controls/semantic-level-enforcement.md) |
 
 # Models-bridge
 

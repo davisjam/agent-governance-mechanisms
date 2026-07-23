@@ -51,13 +51,10 @@ emit a form the runtime rejects, pass its own test green, and be dropped on ever
 worst fail-open, since it *looks* wired and does nothing. A build-time conformance check over every wired
 hook (output validated against the real runtime schema) kills that class.
 
-Which mechanism a check belongs on is a **semantic-level** choice. A control can fire at a syntactic
-diff-check (a commit hook), a reasoning hook that judges the diff, a whole-worktree final-commit check, or
-an Epic close review; each sees more meaning than the last. Put the check where its level matches the
-decision: an operator-loop omission belongs at a *runtime* hook because that is where the loop's state is
-visible, and asking a syntactic commit hook to judge *intent* leaves a gap it cannot bridge. This is the
-**semantic gap**: the same reason VM introspection and firewalls fail when they sit below the semantics
-of the policy they must apply.
+A runtime lifecycle event is the **rung** an operator-loop omission belongs on: it is the only scope where
+the loop's state is visible, so a syntactic commit hook asking the same question sits below the semantics it
+must judge and leaves a gap it cannot bridge. Which rung a control belongs on is the general placement
+question — see [semantic-level-enforcement](../governance-doc-controls/semantic-level-enforcement.md).
 
 ## Prerequisites
 
@@ -147,5 +144,8 @@ paced so the whole never overwhelms.
   acts; a tempo-gated **reflection** hook pulls the *operator* back to the same kind of policy at
   turn-tempo, while or after acting. Forward-priming versus backward-reflection: the same "right policy at
   the right lifecycle moment" move, mirrored in time.
+- *See also (placement)* — [semantic-level-enforcement](../governance-doc-controls/semantic-level-enforcement.md):
+  a runtime lifecycle event is the rung that judgment picks for an operator-loop omission; this entry is a
+  control *placed* by it.
 - **Layer** — it sits at the agent runtime, upstream of the commit → cron → merge-train → deploy
   staircase; it governs the operator *driving* that staircase, not the work flowing through it.

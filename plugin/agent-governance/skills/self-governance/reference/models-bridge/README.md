@@ -9,7 +9,7 @@ context-bounded agent operates a context-exceeding codebase — the thing that l
 scale past a toy.*
 
 ```
-     AGENT CONTROLS   ◀────  THE MODEL BRIDGE  ────▶   PRODUCT / CODEBASE
+     AGENT CONTROLS   ◀────  THE MODELS-BRIDGE  ────▶   PRODUCT / CODEBASE
      (govern fleet)    read    (typed system-models)   govern & generate   (the artifact)
 
   brief-linting  ┐                 ┌ system-model catalog ┐               ┌ NetworkPolicy / wiring gen
@@ -38,6 +38,17 @@ drift gates is tedious, and humans resent the nagging.
 **3 · Agents dissolve the barrier.** That disciplined, repetitive upkeep is exactly what agents do
 without complaint — so agentic engineering finally makes MBSE practical, and the same models let an
 agent operate a codebase larger than its context in the first place.
+
+**4 · The bridge earns most where the model has never been.** A frontier model carries
+strong priors for the code it saw often — a CRUD web app, a REST service, the popular
+framework. Point it at novel, obscure, or research and HPC software and those priors
+turn against you: the model reaches for the nearest reference class it knows and
+imposes the wrong one, confidently. The bridge's value rises as the code departs from
+that training distribution. A typed model states the domain's real shapes — its states,
+its seams, its invariants — where the model's own prior states the wrong ones. The
+bridge is how an engineer hands the agent the priors its training never gave it, so the
+further the system sits from the well-trodden path, the more the model must reason
+through the map instead of through a guess.
 
 ## The <!--census:bridge:word-->nineteen<!--/census--> mechanisms — one method, two subjects (a Y)
 

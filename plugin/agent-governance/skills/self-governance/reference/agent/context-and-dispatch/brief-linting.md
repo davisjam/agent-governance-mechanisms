@@ -41,7 +41,7 @@ as a required prepare step and rolls back the just-written marker file if the li
 dispatch path *is* the enforcement.
 
 **Adopt it — the [agent-brief starter](../../downloads/agent-brief-starter.md)** is the portable shape a
-brief takes (Epic cite · trigger · role/model · time cap · scope allowlist + non-goals · pre-pasted
+brief takes (Epic cite · trigger · role/LLM · time cap · scope allowlist + non-goals · pre-pasted
 `file:line` context · verification · acceptance · trust-nothing hand-back). It is the third of the three
 artifacts an orchestrator authors: the Epic is the effort, the design doc is the plan, the brief is the
 dispatch. The marker/snippet plumbing this lint checks is the harness-specific enforcement layered on top.
@@ -100,4 +100,4 @@ without eroding the trust the structural layer earned. A lint tuned out is worse
   side of dispatch (injects the rules relevant to the target files) where brief-linting is the
   *structure* side (checks the brief is well-formed). Same stage, orthogonal jobs.
 - *See also (complement)* — [role-typed-dispatch](role-typed-dispatch.md): the other half of a
-  well-formed dispatch, the role that fixes model, isolation, and gate set.
+  well-formed dispatch, the role that fixes LLM, isolation, and gate set.
