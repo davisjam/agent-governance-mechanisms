@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" width="760" height="500" role="group" aria-labelledby="dsl-title dsl-desc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="dsl-title">Two producers of one edit language, and the task-to-edit function</title>
+  <desc id="dsl-desc">Two producers converge on one shared edit language, which drives one document model. The top producer is the human path: a person working in the editor emits edit operations by hand. The bottom producer is the automated path: a remediation task, such as a figure that needs alt text, becomes an edit operation through a task-to-edit function. Inside that function, the bounded task is packed into a typed input and handed to a model as a typed function call; the model returns a candidate; a deterministic validator checks it before it is allowed through. This is the same LLM-as-function-call shape described earlier in the chapter, applied here. Both producers emit the same closed set of edit operations, and both flow into one document model that applies them and stamps each change. A note marks the task-to-edit mapping as mostly hardcoded today, to be fleshed out, so this is the concept and the trajectory rather than a finished implementation. Two takeaways sit at the bottom. First, routing both producers through one language and one validated boundary buys traceability, every edit is a typed, validated, stamped result you can explain and reverse, and confidence, the deterministic validator holds the line. Second, scoping each call to one bounded task also scopes the reasoning, which lowers token cost. That scoping is the same move as building the whole remediation as a series of small, bounded transformations, seen from the cost angle instead of the pipeline angle.</desc>
+
+  <rect x="0" y="0" width="760" height="500" fill="#ffffff"/>
+
+  <defs>
+    <marker id="dsl-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2B2416"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="40" font-size="30" font-weight="bold" fill="#12324f">Two producers, one edit language</text>
+
+  <!-- HUMAN PATH (top) -->
+  <rect x="24" y="62" width="200" height="72" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="124" y="92" text-anchor="middle" font-size="22" font-weight="bold" fill="#12324f">Editor (human)</text>
+  <text x="124" y="118" text-anchor="middle" font-size="16.5" fill="#3d5a70">emits ops by hand</text>
+
+  <!-- AUTOMATED PATH (bottom): task -> function -->
+  <rect x="24" y="212" width="160" height="72" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="104" y="242" text-anchor="middle" font-size="21" font-weight="bold" fill="#12324f">Remediation</text>
+  <text x="104" y="266" text-anchor="middle" font-size="16.5" fill="#3d5a70">task (e.g. alt text)</text>
+
+  <!-- task->edit function box (dashed model inside) -->
+  <line x1="184" y1="248" x2="228" y2="248" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <rect x="232" y="176" width="252" height="150" rx="3" fill="#fbfaf4" stroke="#7a6a2a" stroke-width="1.8"/>
+  <text x="358" y="204" text-anchor="middle" font-size="21" font-weight="bold" fill="#5a4a10">task-to-edit function</text>
+  <text x="358" y="226" text-anchor="middle" font-size="16" font-style="italic" fill="#7a6a2a">an instance of LLM-as-function-call</text>
+  <!-- model (dashed) inside -->
+  <rect x="252" y="240" width="96" height="66" rx="3" fill="#FFFBEA" stroke="#BFA45A" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="300" y="270" text-anchor="middle" font-size="19" font-weight="bold" fill="#2B2416">Model</text>
+  <text x="300" y="292" text-anchor="middle" font-size="15" fill="#6b6250">bounded call</text>
+  <!-- validator inside -->
+  <rect x="368" y="240" width="96" height="66" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
+  <text x="416" y="264" text-anchor="middle" font-size="18" font-weight="bold" fill="#12324f">Validator</text>
+  <text x="416" y="288" text-anchor="middle" font-size="15" fill="#3d5a70">checks candidate</text>
+  <line x1="348" y1="273" x2="366" y2="273" stroke="#2B2416" stroke-width="1.4" marker-end="url(#dsl-arrow)"/>
+
+  <!-- both converge to DSL -->
+  <line x1="224" y1="98" x2="512" y2="98" stroke="#2B2416" stroke-width="1.6"/>
+  <line x1="512" y1="98" x2="512" y2="176" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <line x1="484" y1="248" x2="540" y2="248" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+
+  <!-- SHARED DSL -->
+  <rect x="512" y="120" width="224" height="60" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="2"/>
+  <text x="624" y="147" text-anchor="middle" font-size="20" font-weight="bold" fill="#3a2350">Shared edit</text>
+  <text x="624" y="170" text-anchor="middle" font-size="20" font-weight="bold" fill="#3a2350">language</text>
+
+  <!-- DSL -> document model -->
+  <rect x="544" y="220" width="192" height="70" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="640" y="250" text-anchor="middle" font-size="20" font-weight="bold" fill="#12324f">Document model</text>
+  <text x="640" y="274" text-anchor="middle" font-size="16" fill="#3d5a70">applies + stamps each edit</text>
+
+  <!-- hardcoded note -->
+  <text x="232" y="348" font-size="16" font-style="italic" fill="#7a5a2a">The task-to-edit mapping is mostly hardcoded today — to be fleshed out. Concept and trajectory, not a finished build.</text>
+
+  <!-- takeaway strip -->
+  <line x1="24" y1="372" x2="736" y2="372" stroke="#c8d6e5" stroke-width="1.4"/>
+  <text x="30" y="404" font-size="19" font-weight="bold" fill="#12324f">Traceability and confidence — plus cheaper reasoning</text>
+  <text x="30" y="430" font-size="17" fill="#333">One language and one validated boundary make every edit a typed, validated, stamped result you can explain and reverse</text>
+  <text x="30" y="452" font-size="17" fill="#333">(traceability), and the deterministic validator holds the line (confidence).</text>
+  <text x="30" y="478" font-size="17" fill="#333">Scoping each call to one bounded task also scopes the reasoning — the same move as a series of small transformations, priced.</text>
+</svg>
