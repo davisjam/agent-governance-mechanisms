@@ -97,9 +97,11 @@ def md_to_html(md: str) -> str:
             kind = "fill" if stripped.startswith("[FILL IN:") else "more"
             label = "FILL IN" if kind == "fill" else "MORE CHAPTERS FOLLOW"
             inner = stripped[stripped.index(":") + 1:].rstrip("]").strip()
+            # A plain <div> (not <aside>): <aside> is a `complementary` landmark, and two markers on one
+            # page trip html-validate's unique-landmark rule (each landmark needs a unique accessible name).
             out.append(
-                f'<aside class="marker marker-{kind}">'
-                f'<span class="marker-tag">{label}</span> {inline(inner)}</aside>'
+                f'<div class="marker marker-{kind}">'
+                f'<span class="marker-tag">{label}</span> {inline(inner)}</div>'
             )
             continue
         # A standalone HTML comment (e.g. the TODO markers) — emit it raw so it stays an invisible
@@ -143,7 +145,6 @@ nav.toc .toc-inner {{ max-width: 44rem; margin: 0 auto; }}
 nav.toc details {{ margin: 0; }}
 nav.toc summary {{ cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }}
 nav.toc summary::-webkit-details-marker {{ display: none; }}
-nav.toc summary::before {{ content: "☰  Contents"; }}
 nav.toc ol {{ list-style: none; padding: 0.6rem 0 0; margin: 0; }}
 nav.toc .part {{ font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }}
@@ -164,19 +165,19 @@ blockquote {{ margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #
               color: #555; font-style: italic; background: #faf9f6; }}
 code {{ background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }}
 a {{ color: var(--accent); }}
-aside.marker {{ margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }}
-aside.marker-fill {{ background: #fff6e5; border: 1px dashed #d8a23a; }}
-aside.marker-more {{ background: #eef3f7; border: 1px dashed #7aa0bd; }}
+.marker {{ margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }}
+.marker-fill {{ background: #fff6e5; border: 1px dashed #d8a23a; }}
+.marker-more {{ background: #eef3f7; border: 1px dashed #7aa0bd; }}
 .marker-tag {{ display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }}
-.marker-fill .marker-tag {{ background: #d8a23a; color: #fff; }}
-.marker-more .marker-tag {{ background: #7aa0bd; color: #fff; }}
+.marker-fill .marker-tag {{ background: #a06a12; color: #fff; }}
+.marker-more .marker-tag {{ background: #4a6f8c; color: #fff; }}
 .pager {{ display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }}
-.pager a {{ text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }}
+.pager a, .pager .disabled {{ text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }}
 .pager a:hover {{ border-color: var(--accent); }}
-.pager .dir {{ display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }}
+.pager .dir {{ display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }}
 .pager .ttl {{ color: var(--accent); font-weight: 600; }}
 .pager .next {{ text-align: right; }}
 .pager .disabled {{ visibility: hidden; }}
@@ -190,7 +191,7 @@ aside.marker-more {{ background: #eef3f7; border: 1px dashed #7aa0bd; }}
 .idx ol {{ list-style: none; padding: 0; margin: 0; }}
 .idx li {{ margin: 0.35rem 0; }}
 .idx a {{ text-decoration: none; }}
-.idx .cnum {{ color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }}
+.idx .cnum {{ color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }}
 """
 
 
@@ -218,18 +219,19 @@ def toc_html(chapters: list[dict], current_slug: str | None) -> str:
     inner = "\n".join(rows)
     return (
         '<nav class="toc"><div class="toc-inner"><details>'
-        "<summary></summary>"
+        "<summary>☰&nbsp; Contents</summary>"
         f'<ol>{inner}</ol></details></div></nav>'
     )
 
 
 def page(title: str, toc: str, main: str, mermaid: bool = False) -> str:
     runtime = MERMAID_CDN if mermaid else ""
+    # <main> landmark so the content is a single main region (axe landmark-one-main / region).
     return (
         "<!DOCTYPE html>\n<html lang=\"en\"><head><meta charset=\"utf-8\">"
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
         f"<title>{html.escape(title)}</title><style>{CSS}</style></head><body>"
-        f"{toc}<div class=\"wrap\">{main}</div>{runtime}</body></html>\n"
+        f"{toc}<main class=\"wrap\">{main}</main>{runtime}</body></html>\n"
     )
 
 
@@ -482,7 +484,9 @@ def build() -> int:
                 f'<span class="ttl">{html.escape(_pager_label(prev_c))}</span></a>'
             )
         else:
-            prev_html = '<a class="prev disabled" href="#"></a>'
+            # A disabled pager is not a link — render an empty <span> (an empty <a href="#"> trips
+            # html-validate's wcag/h30 "anchor must have text" rule).
+            prev_html = '<span class="prev disabled" aria-hidden="true"></span>'
         home_html = '<a class="home" href="index.html">Contents</a>'
         if next_c:
             next_html = (
@@ -490,7 +494,7 @@ def build() -> int:
                 f'<span class="ttl">{html.escape(_pager_label(next_c))}</span></a>'
             )
         else:
-            next_html = '<a class="next disabled" href="#"></a>'
+            next_html = '<span class="next disabled" aria-hidden="true"></span>'
         pager = f'<div class="pager">{prev_html}{home_html}{next_html}</div>'
         main = header + body + pager
         toc = toc_html(chapters, c["slug"])

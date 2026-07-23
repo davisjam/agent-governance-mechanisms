@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
 <li><a class="current" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
 <li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
@@ -75,7 +74,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 1 · The Mindset &nbsp;::&nbsp; Chapter 1</div><h1>The Printer</h1></header><p>A 3D printer will build almost anything you can imagine — a replacement gear, a prosthetic hand, a scale model of a building — out of nothing but spooled filament. Its only hard limits are the material and your own creativity. That machine is the metaphor that drives this entire book, because building software with a coding agent is far more like running a 3D printer than most people expect. And the difference between the two is the difference between blaming the tool and blaming yourself.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 1 · The Mindset &nbsp;::&nbsp; Chapter 1</div><h1>The Printer</h1></header><p>A 3D printer will build almost anything you can imagine — a replacement gear, a prosthetic hand, a scale model of a building — out of nothing but spooled filament. Its only hard limits are the material and your own creativity. That machine is the metaphor that drives this entire book, because building software with a coding agent is far more like running a 3D printer than most people expect. And the difference between the two is the difference between blaming the tool and blaming yourself.</p>
 <h2>A picture is not enough</h2>
 <p>Everyone can sketch a piece of software. We have all used Google Maps, spreadsheets, a document editor — programs that take in data and do something useful with it. The concept is easy to picture. But a picture is not a thing you can print.</p>
 <p>Hand a 3D printer a photograph of the object you want and nothing comes out. The printer needs instructions: a CAD model that shows not just the outer shape but the internal structure — how the pieces fit, where the load is carried — and then a set of print notes on top of that. You slice the model into layers, and you think about how those layers compose as the machine lays them down. Different materials have different minimum thicknesses, different strengths, different joints that hold and joints that fail. There are a hundred ways to misprint a part that looked fine as a picture.</p>
@@ -83,7 +82,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <h2>Whose fault is it?</h2>
 <p>Here is the shift in posture the whole book turns on. When you use a stapler and the staple jams, that is the stapler's fault, not yours. A stapler is supposed to just work. But an agent is not a stapler — it is a printer, and a printer only ever builds what its instructions describe. So when the agent produces the wrong thing, the first suspect is not the model. It is the instructions.</p>
 <p>In my own experience, every single time an agent has failed to produce what I wanted, it turned out to be my fault. The state-of-the-art models can build essentially anything we can envision in software, as far as I can tell — <em>so long as you can explain it to them</em>. That "so long as" is the entire job, and it is a real engineering discipline, not a knack. This book teaches it.</p>
-<aside class="marker marker-fill"><span class="marker-tag">FILL IN</span> introduce the single running example we will build across the whole book — a
+<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> introduce the single running example we will build across the whole book — a
 real product, or the "CodePrinter" sandbox — so the reader watches one system get
 printed correctly, chapter by chapter, from this sketch through model, control,
-architecture, and migration. Every later chapter should return to it.</aside><div class="pager"><a class="prev disabled" href="#"></a><a class="home" href="index.html">Contents</a><a class="next" href="ch02-loops-and-models.html"><span class="dir">Next ›</span><span class="ttl">Ch 2 · Loops and Models</span></a></div></div></body></html>
+architecture, and migration. Every later chapter should return to it.</div><div class="pager"><span class="prev disabled" aria-hidden="true"></span><a class="home" href="index.html">Contents</a><a class="next" href="ch02-loops-and-models.html"><span class="dir">Next ›</span><span class="ttl">Ch 2 · Loops and Models</span></a></div></main></body></html>

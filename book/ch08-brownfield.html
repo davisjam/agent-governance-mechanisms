@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
 <li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
@@ -75,7 +74,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 3 · Putting It to Work &nbsp;::&nbsp; Chapter 8</div><h1>Brownfield</h1></header><p>Everything so far has assumed a clean start. Greenfield is the easy case: sketch the new thing, have an agent vibe-code a first prototype, and work your way down into an increasingly governed environment, avoiding the mistakes your last project taught you. But most readers are not on a clean start. Most are staring at a legacy codebase — started before agents existed, and since made worse by an agent that added a hundred thousand lines nobody can read. This chapter is the recipe for getting that codebase from spaghetti to a real model-based engineering environment, step by step.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 · Putting It to Work &nbsp;::&nbsp; Chapter 8</div><h1>Brownfield</h1></header><p>Everything so far has assumed a clean start. Greenfield is the easy case: sketch the new thing, have an agent vibe-code a first prototype, and work your way down into an increasingly governed environment, avoiding the mistakes your last project taught you. But most readers are not on a clean start. Most are staring at a legacy codebase — started before agents existed, and since made worse by an agent that added a hundred thousand lines nobody can read. This chapter is the recipe for getting that codebase from spaghetti to a real model-based engineering environment, step by step.</p>
 <h2>The starting point and the destination</h2>
 <p>Name both ends before you move. The starting point is familiar: some spaghetti, thin documentation, and invariants that live only in one person's head — the person you hope never retires. The destination is specific. You want the models needed to express every view of the system that bears on a quality you care about — performance, correctness, security, privacy. You want code that reflects those models, so the map equals the territory: zoom in on the map and you see county lines, not Switzerland dropped in by surprise. And you want <strong>traceability</strong> for your quality case — the ability to make the argument automatically. For any property you claim, you should be able to point to the code that implements it, the static analysis that enforces it, the protocol you model-check it against, the tests that confirm it across the inputs you try, and the record of every change and why it was made. That is the output. With it, soft and hard governance can hold the whole thing in place and keep it current. There are three ways to get there, and a real migration uses all three.</p>
 <h2>Approach one: top-down, from a whiteboard</h2>
@@ -90,13 +89,13 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <p>A smell is code that works but will break the moment it is touched, because no one can reason over it. You measure smells with cheap static analyses — <strong>lints</strong> (the dryer-lint kind, the stuff you pull out to make things tidy) — that parse the syntax tree and count the tells: a high density of bare `int`s and strings, deeply nested conditionals. Some rules are universal. No codebase should have a 2,000-line function, a module imported by every other file, a switch with 400 string cases, structs nested three anonymous levels deep, or functions returning unnamed many-element tuples. So run the lints, and have the agent fix them in a behavior-preserving way — which means you need tests. If you have none, start there: have the agent write tests for line or branch coverage, module by module, because coverage is what lets you refactor safely, using the tests and the lints together as your success metric.</p>
 <p>Then comes the move that makes it stick: <strong>as each lint reaches zero, make it blocking.</strong> Now the success metric is "all tests pass <em>and</em> that lint still passes" — no more unnamed tuples, no more imports buried mid-function, ever again. The companion repository does this deliberately and in a specific order, because turning a lint blocking while it still has findings would break every agent's commit at once: a new lint lands in an audit-only mode first, a wave of fixes drains it to zero, and only then is it promoted to blocking. Squash, zero, promote — and the smells that leave never return. When you are done, you have cleaned-up spaghetti with enough shape that model induction has something to grip: introduced classes and enums and named structs give the induction real structure to reason over, the structure that spaghetti hid. The catalogue's coverage-to-model mapping closes the loop from the other side — it projects your test coverage onto the model's nodes, so an untested invariant shows up as a visible gap rather than hiding inside a line-coverage percentage.</p>
 <p>You will need all three approaches in combination. It is not magic; it is hard work and judgment. But applied together, and scaled to the quality of your starting point, they land you at the destination: the right models, encoding the right views, with the right correctness criteria, traceable to where each is enforced — statically, dynamically, or by a model check.</p>
-<aside class="marker marker-fill"><span class="marker-tag">FILL IN</span> one measured before/after from a real migration — a defect count, a velocity
+<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> one measured before/after from a real migration — a defect count, a velocity
 number, or the lint-burndown curve as each lint went blocking. The chapter argues the case
-well; a single number makes a skeptical reader believe it.</aside>
-<aside class="marker marker-fill"><span class="marker-tag">FILL IN</span> a decision rule for <em>how much</em> governance is enough. The trade is named
+well; a single number makes a skeptical reader believe it.</div>
+<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> a decision rule for <em>how much</em> governance is enough. The trade is named
 ("it depends") but the reader needs a heuristic tied to the assurance level they are
 targeting — including when to stop, so they do not build the teetering tower Chapter 9
-warns against.</aside>
+warns against.</div>
 <h2>How I know this</h2>
 <p>I know this because I lived it. I vibe-coded a couple hundred thousand lines of production code, and it worked — but I had imposed real control only on the parts I knew were sensitive, where I pushed hard for a strong architecture. The rest — the web layer, the front end — I hoped the agent would just get right. It did not, and those parts turned crufty. I told it to use Python; it did, without types. I told it to retrofit types; it turned on the type checker and made everything strings and ints, without building the type abstractions I actually wanted. The same thing happened porting JavaScript to TypeScript that same week — a hundred thousand lines of "typed" Python and a hundred and fifty thousand of TypeScript, each ported the cheapest way possible, because the agent had no model and did not know the names of things. It is probably better that it did not guess.</p>
-<p>So I retrofitted the models onto the mess — moving the code toward a clean model-view- controller architecture, moving the web stack to reactive, loop-based structures friendly to auto-scaling. And I did it exactly the way this chapter describes. I turned on every lint from Ruff, Pylint, and ESLint — hundreds of commodity smell checks — and for several weeks I burned through four Claude Max subscriptions squashing them, making each one blocking as it went to zero so it could never come back. I knew the coarse architecture I wanted and said "pursue this model," but I had to get there iteratively: find the dense primitive regions, induce structure there, and inch toward the target. After a while, it worked. Now I have the models, the architecture, the code that implements it, and enforcement holding all three together every time the code changes.</p><div class="pager"><a class="prev" href="ch07-lifecycles-and-runbooks.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 7 · Lifecycles and Runbooks</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch09-the-skills.html"><span class="dir">Next ›</span><span class="ttl">Ch 9 · The Skills</span></a></div></div></body></html>
+<p>So I retrofitted the models onto the mess — moving the code toward a clean model-view- controller architecture, moving the web stack to reactive, loop-based structures friendly to auto-scaling. And I did it exactly the way this chapter describes. I turned on every lint from Ruff, Pylint, and ESLint — hundreds of commodity smell checks — and for several weeks I burned through four Claude Max subscriptions squashing them, making each one blocking as it went to zero so it could never come back. I knew the coarse architecture I wanted and said "pursue this model," but I had to get there iteratively: find the dense primitive regions, induce structure there, and inch toward the target. After a while, it worked. Now I have the models, the architecture, the code that implements it, and enforcement holding all three together every time the code changes.</p><div class="pager"><a class="prev" href="ch07-lifecycles-and-runbooks.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 7 · Lifecycles and Runbooks</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch09-the-skills.html"><span class="dir">Next ›</span><span class="ttl">Ch 9 · The Skills</span></a></div></main></body></html>

@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
 <li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
@@ -75,7 +74,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 3 · Putting It to Work &nbsp;::&nbsp; Chapter 11</div><h1>Training Data and the Novelty Axis</h1></header><p>There is one last property of a coding agent you have to reason about, and it decides how much of this book you will actually need: its training data. Everything in these chapters is about conditioning a probability distribution — telling the agent the path through its search space. But that distribution did not start neutral. It was shaped by what the model was trained on, and that shape determines where the discipline is optional and where it is the only thing that will save you. This chapter is about that axis, from the common case to the hard one.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 · Putting It to Work &nbsp;::&nbsp; Chapter 11</div><h1>Training Data and the Novelty Axis</h1></header><p>There is one last property of a coding agent you have to reason about, and it decides how much of this book you will actually need: its training data. Everything in these chapters is about conditioning a probability distribution — telling the agent the path through its search space. But that distribution did not start neutral. It was shaped by what the model was trained on, and that shape determines where the discipline is optional and where it is the only thing that will save you. This chapter is about that axis, from the common case to the hard one.</p>
 <h2>The model is biased toward what it has seen</h2>
 <p>Treat the training data as the whole internet and every book ever written, and treat the model as biased toward whatever it saw a lot of. Read one book with one position and a hundred with the opposite, and it leans to the hundred. Except where trainers worked hard to force a particular behavior, it simply weights the common over the rare. This has a moral dimension the labs fight with reinforcement learning from human feedback — you teach it not to lie, and they lie anyway; not to steal, and they steal; not to break into other people's computers, and they will, given the chance. Training data has its limits. But the same bias has an engineering consequence that is more useful to us: the kinds of systems the model has seen a great deal of, it can build a variation on almost effortlessly; the kinds it has never seen, it struggles with.</p>
 <p>That divides the world of software neatly. If you are building your own version of something standard, the model has read the documentation and watched the walkthroughs of a hundred competing products and can reproduce the class in its sleep. (One caution: building a competitor this way can infringe a <em>patent</em> even though you copied no <em>code</em> — a patent covers the concept, not the text — so tread carefully.) A to-do list, a recipe tracker, a fitness app — GitHub holds a million of each, and the agent knows them cold. Any "typical web application" — a form-driven UI, a backend storing to a database, a compute layer producing outputs over it — it can build without breaking a sweat, because you are asking it to regurgitate a class it has seen a thousand times and then specialize it. This is exactly why a lab can credibly claim it built a whole C compiler in a week, or ported one runtime to another language in three days: the training data is full of compilers, and in the porting case, full of the very code being ported. Impressive, and entirely unsurprising.</p>
@@ -84,7 +83,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <p>This is precisely where model-based software engineering shines: the model lacks the bias you need, so it is your job to impose that bias and state it explicitly. And you can, because code is cheap — you just have to tell the agent to do it, with the full rigor of the earlier chapters. The companion catalogue's whole models-bridge exists for this: it is the substrate through which you hand the agent the priors its training never gave it, so the invariants you care about are written down where it will read them instead of guessed at from the wrong reference class. On a standard class of software you still model, but you can lean on the model's built-in bias; on a novel one, the up-front modeling is not optional, and you coach the agent step by step.</p>
 <p>I hold this through an analogy to the diffusion models that draw pictures. Ask one for an exact copy of a famous painting and it delivers, because it has seen that painting endlessly. Ask it for a scene no one has ever painted — a genuinely new combination, or just a complicated one — and it struggles, because it is working from pictures of reality rather than reality itself. The labs have pushed these models to reason one step deeper than the prompt — enough to know a hand has five fingers, so we stop getting humans with seventeen — but they always run up against the gap between what they have seen of the world and how the world actually is. Engineering a system is the same. A system it has seen a thousand times, like Starry Night, it builds without trouble. A novel system for your startup — whose entire point is to be a new thing that does not yet exist — it has not seen, and cannot. Say "draw an alien" and it invents seventeen fingers and two heads, because no one knows what an alien looks like, so there is no reality to map to.</p>
 <p>So think of it this way: the agent will hand you a working prototype, but look under the hood of a novel system and you find a Rube Goldberg machine of hilarious extent. It runs — and a skilled engineer is still needed to turn that crude, working prototype into something reliable across the full breadth of inputs and quality attributes you care about. For the standard parts, the model has seen the engine room and gets the internals right; for the novel parts, or the ones shaped by context it never trained on — a powerful but obscure library used commercially rather than in the open — it can read the library but has never watched anyone use it well, so it fabricates something that passes your examples and fails in general. The engine room of a vibe-coded novel system is not correct. It is demoable; it is not productizable — not yet, not without an engineer. That is the job. The more standard the part, the bigger the leap you can trust and the more code you can let the agent produce unattended. The more obscure, sensitive, or context-bound the part, the more oversight you give, the shorter the reasoning you allow between checks, and the more you condition the distribution yourself — narrowing the search by hand, with model-based software engineering.</p>
-<aside class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> governing an untrusted agent. This chapter notes in passing that agents lie,
+<div class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> governing an untrusted agent. This chapter notes in passing that agents lie,
 steal, and break into machines given the chance, and that a hook can block a network call — but the
 security thread deserves its own treatment: prompt injection, exfiltration through the very tools you
-granted, and supply-chain exposure. Consolidate it rather than leaving it scattered.</aside><div class="pager"><a class="prev" href="ch10-transformations.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 10 · Everything Is a Transformation</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-a-agent.html"><span class="dir">Next ›</span><span class="ttl">Appendix A — Agent patterns</span></a></div></div></body></html>
+granted, and supply-chain exposure. Consolidate it rather than leaving it scattered.</div><div class="pager"><a class="prev" href="ch10-transformations.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 10 · Everything Is a Transformation</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-a-agent.html"><span class="dir">Next ›</span><span class="ttl">Appendix A — Agent patterns</span></a></div></main></body></html>

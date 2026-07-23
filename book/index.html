@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><div class="wrap"><div class="book-title"><h1>3D Printing Production Software</h1><div class="sub">Engineering production software with coding agents — a governed, model-based method. <em>Draft chapters, polished from dictation.</em></div></div><div class="idx"><div class="part">Part 1 — The Mindset</div>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><main class="wrap"><div class="book-title"><h1>3D Printing Production Software</h1><div class="sub">Engineering production software with coding agents — a governed, model-based method. <em>Draft chapters, polished from dictation.</em></div></div><div class="idx"><div class="part">Part 1 — The Mindset</div>
 <ol>
 <li><a href="ch01-the-printer.html"><span class="cnum"> 1</span>The Printer</a></li>
 <li><a href="ch02-loops-and-models.html"><span class="cnum"> 2</span>Loops and Models</a></li>
@@ -80,4 +79,4 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li><a href="appendix-a-agent.html"><span class="cnum">100</span>Appendix A — Agent patterns</a></li>
 <li><a href="appendix-b-models-bridge.html"><span class="cnum">101</span>Appendix B — Models-bridge patterns</a></li>
 <li><a href="appendix-c-product.html"><span class="cnum">102</span>Appendix C — Product patterns</a></li>
-</ol></div></div></body></html>
+</ol></div></main></body></html>

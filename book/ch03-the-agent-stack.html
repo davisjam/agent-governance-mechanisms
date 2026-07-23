@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
 <li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
@@ -75,7 +74,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 2 · The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3</div><h1>The Agent Stack</h1></header><p>If governing an agent means conditioning where it searches, the practical question is: <em>where do you reach in to do it?</em> The answer is that there is not one place — there are four, stacked on top of each other, and each one gives you a different kind of grip. Understand the stack and you will see every control in this book as an instance of "pick a layer, inject a constraint." This chapter walks the stack from the bottom up.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 2 · The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3</div><h1>The Agent Stack</h1></header><p>If governing an agent means conditioning where it searches, the practical question is: <em>where do you reach in to do it?</em> The answer is that there is not one place — there are four, stacked on top of each other, and each one gives you a different kind of grip. Understand the stack and you will see every control in this book as an instance of "pick a layer, inject a constraint." This chapter walks the stack from the bottom up.</p>
 <h2>The four layers</h2>
 <p><strong>At the bottom sits the foundation model.</strong> It comes from a commercial vendor or an open-weight release, and it is a general language reasoner that can <em>induce</em> an understanding of your environment — but that induction is expensive, and it happens fresh every time. So the whole game at this layer is to spare the model that cost: tell it, up front, where to look. Sometimes you tell it deterministically, with an executable program. Sometimes you tell it softly, with written-down pseudocode — the algorithm to follow, the playbook for a root-cause analysis. Often it is a hybrid. Every time you do, you remove a stretch of reasoning the model would otherwise have to reconstruct.</p>
 <p><strong>On top of the model sits the agentic harness</strong> — Claude Code, OpenCode, and their kin. The harness takes your prompts, feeds them to the model, and manages the context window: the fixed budget of tokens the model can hold. Exceed it and the harness must compact, which is a lossy compression of everything that has happened so far. The harness is also where two of the most useful control points live.</p>
@@ -84,4 +83,4 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <p><strong>At the top sits your application</strong> — the product code itself, which can carry governance of its own: models describing how it is supposed to work, and static analyses that check the code against them. A static analysis at this layer is where a whole class of mistakes can be made structurally impossible. The companion catalogue's sharpest examples live here: a <strong>ban-lint that routes all mutation of a document format through a single typed model</strong>, so that no agent can reach the raw library and silently corrupt the file. The rule is enforced once, at the seam, and it holds for every agent that ever touches that code.</p>
 <h2>Every layer is a place to steer</h2>
 <p>Read the stack as a list of opportunities, because that is what it is. The harness noticing it is near its context limit and writing out a reliable summary of state and plan — instead of waiting for a lossy compaction — is an opportunity to help the model reconstruct less after the window resets. The pre-commit hook is an opportunity to catch a defect while everything that produced it is still fresh in the model's window, rather than surfacing it from a failed test three compactions later. The CI pipeline turning a failure into a message the agent can read is an opportunity to point it back toward the fix.</p>
-<p>The single goal underneath all of it never changes. At every layer, you are trying to prevent the agent from making a bad choice, and to narrow its search toward the choices you want. This matters more than it first appears, because the context window is too small to hold any serious system — the US tax code, a real web application — all at once. Give the model no structure, and it has no choice but to induce that structure as it goes, burning most of its window just working out the rules of the road. Every control you place on the stack is a rule of the road you handed it for free.</p><div class="pager"><a class="prev" href="ch02-loops-and-models.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 2 · Loops and Models</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch04-models-and-the-semantic-gap.html"><span class="dir">Next ›</span><span class="ttl">Ch 4 · Models and the Semantic Gap</span></a></div></div></body></html>
+<p>The single goal underneath all of it never changes. At every layer, you are trying to prevent the agent from making a bad choice, and to narrow its search toward the choices you want. This matters more than it first appears, because the context window is too small to hold any serious system — the US tax code, a real web application — all at once. Give the model no structure, and it has no choice but to induce that structure as it goes, burning most of its window just working out the rules of the road. Every control you place on the stack is a rule of the road you handed it for free.</p><div class="pager"><a class="prev" href="ch02-loops-and-models.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 2 · Loops and Models</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch04-models-and-the-semantic-gap.html"><span class="dir">Next ›</span><span class="ttl">Ch 4 · Models and the Semantic Gap</span></a></div></main></body></html>

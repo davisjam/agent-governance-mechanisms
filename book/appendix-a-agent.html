@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
 <li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
@@ -75,7 +74,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
 <li><a class="current" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 4 · Appendix A — The Pattern Catalogue &nbsp;::&nbsp; Appendix</div><h1>Appendix A — Agent patterns</h1></header><p>Appendix A re-projects the <strong>Agent</strong> governance mechanisms from the catalogue into the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the catalogue entry sources at build time, so they cannot drift from the catalogue. Each <strong>Structure</strong> and <strong>Sample Code</strong> section is a placeholder; a real diagram and sample are future work.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 4 · Appendix A — The Pattern Catalogue &nbsp;::&nbsp; Appendix</div><h1>Appendix A — Agent patterns</h1></header><p>Appendix A re-projects the <strong>Agent</strong> governance mechanisms from the catalogue into the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the catalogue entry sources at build time, so they cannot drift from the catalogue. Each <strong>Structure</strong> and <strong>Sample Code</strong> section is a placeholder; a real diagram and sample are future work.</p>
 <h1>context-and-dispatch</h1>
 <h2>Brief-linting</h2>
 <p><strong>Intent</strong> — Statically lint an agent's task brief <em>before the agent is spawned</em>, refusing to launch any brief missing the markers that make the agent's work safe and well-scoped.</p>
@@ -598,4 +597,4 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <h3>Known Uses</h3>
 <ul><li>The test serializer: the N=1 flock wrapper (+ auto-coverage for fuzz filters).</li><li>`TestMediatorEnforcer`, a `[ModuleInitializer]` that refuses raw `dotnet test` from agent CWDs.</li><li>`ADA_TOOL_TEST_BYPASS_MEDIATOR=1`, the audited human escape.</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><strong>Counterpart</strong> — the `[ModuleInitializer]` enforcer (hard) holds the serializer's discipline in place: without the ban, the flock is just an unenforced convention.</li><li><em>See also (sibling)</em> — <a href="../agent/mediators-and-resource-locks/build-serializer.html">build-serializer</a>: the same mediator pattern at <strong>M=8</strong> instead of N=1. The pair illustrates the <em>lock-cardinality</em> choice (below).</li><li><strong>Layer</strong> — with <a href="../agent/mediators-and-resource-locks/aggregate-compute-protection.html">aggregate-compute-protection</a>, the three form the host-compute rationing tier.</li></ul><div class="pager"><a class="prev" href="ch11-training-data.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 11 · Training Data and the Novelty Axis</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-b-models-bridge.html"><span class="dir">Next ›</span><span class="ttl">Appendix B — Models-bridge patterns</span></a></div></div><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>
+<ul><li><strong>Counterpart</strong> — the `[ModuleInitializer]` enforcer (hard) holds the serializer's discipline in place: without the ban, the flock is just an unenforced convention.</li><li><em>See also (sibling)</em> — <a href="../agent/mediators-and-resource-locks/build-serializer.html">build-serializer</a>: the same mediator pattern at <strong>M=8</strong> instead of N=1. The pair illustrates the <em>lock-cardinality</em> choice (below).</li><li><strong>Layer</strong> — with <a href="../agent/mediators-and-resource-locks/aggregate-compute-protection.html">aggregate-compute-protection</a>, the three form the host-compute rationing tier.</li></ul><div class="pager"><a class="prev" href="ch11-training-data.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 11 · Training Data and the Novelty Axis</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-b-models-bridge.html"><span class="dir">Next ›</span><span class="ttl">Appendix B — Models-bridge patterns</span></a></div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

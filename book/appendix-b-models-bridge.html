@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
 <li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
@@ -75,7 +74,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="current" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 4 · Appendix A — The Pattern Catalogue &nbsp;::&nbsp; Appendix</div><h1>Appendix B — Models-bridge patterns</h1></header><p>Appendix B re-projects the <strong>Models-bridge</strong> governance mechanisms from the catalogue into the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the catalogue entry sources at build time, so they cannot drift from the catalogue. Each <strong>Structure</strong> and <strong>Sample Code</strong> section is a placeholder; a real diagram and sample are future work.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 4 · Appendix A — The Pattern Catalogue &nbsp;::&nbsp; Appendix</div><h1>Appendix B — Models-bridge patterns</h1></header><p>Appendix B re-projects the <strong>Models-bridge</strong> governance mechanisms from the catalogue into the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the catalogue entry sources at build time, so they cannot drift from the catalogue. Each <strong>Structure</strong> and <strong>Sample Code</strong> section is a placeholder; a real diagram and sample are future work.</p>
 <h1>system-models</h1>
 <h2>The agent-first MBSE harness</h2>
 <p><strong>Intent</strong> — Build the typed system-models as a <strong>thin, hand-rolled harness over plain frozen records</strong>: adopt the <em>vocabulary and schema</em> of the right modeling genre per view, but skip its runtime and hand-roll the executable layer. The model then captures your project's own invariants, and a set of build-time checks keeps it equal to the code (our instance: frozen Python dataclasses under five recurring disciplines, not a SysML tool).</p>
@@ -444,4 +443,4 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <h3>Known Uses</h3>
 <ul><li>The typed journey entities (actor, goal, ordered steps, each step's endpoint calls, and the call-site anchors) carried as a new kind in the existing service-architecture dialect.</li><li>The call-site drift lint (declared deps ↔ real call sites, both directions) that keeps the map fresh; the two-way endpoint-coverage audits (undertested-journey + dead-endpoint).</li><li>A journey-aware wake/scale capability keyed to the active journey's declared deps, gated on the drift lint being blocking.</li><li>A <strong>migration completeness-critic sweep</strong>: when re-platforming, walk every journey and ask at each touchpoint "does the substrate change reach here?" A component-deep migration plan is blind to everything a user touches that is <em>not</em> the core pipeline; the journey model is the entry point that surfaces the missed threads (billing, invoicing, admin views) before the build wave starts.</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><strong>Bridge</strong> — agents <em>query</em> it to reason about which paths are real and what each needs (agent side) ◀──▶ it <em>governs</em> the codebase, driving coverage and endpoint-retirement, and, once the drift lint is blocking, live journey-aware scaling (product side). One model, both faces.</li><li><strong>Enabler</strong> — <a href="../models-bridge/system-models/service-flow-model.html">service-flow-model</a>: the structural service model whose dialect, loader, query surface, and lint this journey model <em>reuses</em> as a new goal-anchored `kind`, not a parallel model. What separates the two? One traverses a product goal, the other maps service topology; that named axis is the only thing that differs, and the shared substrate is the uniformity win.</li><li><em>See also</em> — <a href="../models-bridge/system-models/drift-parity-gates.html">drift-parity-gates</a>: the call-site drift lint and the two coverage audits are that parity mechanism applied to this model.</li><li><em>See also</em> — <a href="../models-bridge/system-models/executable-source-of-truth.html">executable-source-of-truth</a>: the pattern this instantiates, data-not-code, read every run, held equal to reality.</li></ul><div class="pager"><a class="prev" href="appendix-a-agent.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix A — Agent patterns</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-c-product.html"><span class="dir">Next ›</span><span class="ttl">Appendix C — Product patterns</span></a></div></div><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>
+<ul><li><strong>Bridge</strong> — agents <em>query</em> it to reason about which paths are real and what each needs (agent side) ◀──▶ it <em>governs</em> the codebase, driving coverage and endpoint-retirement, and, once the drift lint is blocking, live journey-aware scaling (product side). One model, both faces.</li><li><strong>Enabler</strong> — <a href="../models-bridge/system-models/service-flow-model.html">service-flow-model</a>: the structural service model whose dialect, loader, query surface, and lint this journey model <em>reuses</em> as a new goal-anchored `kind`, not a parallel model. What separates the two? One traverses a product goal, the other maps service topology; that named axis is the only thing that differs, and the shared substrate is the uniformity win.</li><li><em>See also</em> — <a href="../models-bridge/system-models/drift-parity-gates.html">drift-parity-gates</a>: the call-site drift lint and the two coverage audits are that parity mechanism applied to this model.</li><li><em>See also</em> — <a href="../models-bridge/system-models/executable-source-of-truth.html">executable-source-of-truth</a>: the pattern this instantiates, data-not-code, read every run, held equal to reality.</li></ul><div class="pager"><a class="prev" href="appendix-a-agent.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix A — Agent patterns</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-c-product.html"><span class="dir">Next ›</span><span class="ttl">Appendix C — Product patterns</span></a></div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

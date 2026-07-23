@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
 <li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
@@ -75,7 +74,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 3 · Putting It to Work &nbsp;::&nbsp; Chapter 9</div><h1>The Skills</h1></header><p>This book is not only a methodology — it ships with batteries. There is a repository that goes with it, and it contains three Claude skills you can install and use today: <strong>self-operate</strong>, <strong>self-governance</strong>, and <strong>self-communicate</strong>. Each is the methodology of the preceding chapters, packaged as something an agent triggers and follows. This chapter walks all three.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 · Putting It to Work &nbsp;::&nbsp; Chapter 9</div><h1>The Skills</h1></header><p>This book is not only a methodology — it ships with batteries. There is a repository that goes with it, and it contains three Claude skills you can install and use today: <strong>self-operate</strong>, <strong>self-governance</strong>, and <strong>self-communicate</strong>. Each is the methodology of the preceding chapters, packaged as something an agent triggers and follows. This chapter walks all three.</p>
 <h2>Self-operate: the lifecycles, made runnable</h2>
 <p>Self-operate is the starting point, because it holds the lifecycles of running a repo — everything an engineering team actually does. Pull a ticket and build a feature. Pull a ticket and fix a bug. Optimize the codebase. Handle resource exhaustion. Each of those is written down as a model — I did say models everywhere, and I meant it — because that is how you constrain the agent's search and bias it toward doing the work the way you want.</p>
 <p>On top of the models sit the playbooks, and there is a playbook for everything, each with briefs for its judgment steps. This is what lets an orchestrator agent — itself running as a reactive loop — know how to respond when an event arrives. An agent finished? Reach for the next step: <em>agent landed</em>. Is the feature done? Open the Epic file, which lists the launches needed to complete it, and check. Not done — launch the next item. Done — run the definition-of-done audit over the whole Epic, the one that asks, among other things, whether the model drifted from the code. Passes — mark it done and move it to the closed pile. Still active — record the status and the commit that made progress, and launch the next agent from the Epic's list. The playbook keeps the loop turning on inputs from the environment, which is precisely the <em>dispatch → work → land → tombstone</em> lifecycle from Chapter 2, now written down for the operator to run.</p>
@@ -86,7 +85,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <h2>Self-communicate: how the agent writes and draws</h2>
 <p>The third skill, self-communicate, governs how the agent explains itself — to you and to other people. Docs are a soft control for an agent, but they are a genuine tool for humans, so the skill carries guidance on the kinds of technical documentation, crediting the Diátaxis project for enumerating them and the Apache Foundation for the exemplars it learns style and voice from. It targets prose that avoids imprecise claims and the grating verbal tics, and that is as terse as it can be without losing the reader. When the agent writes, it turns here; when it needs a drawing, the skill says "use me," and teaches drawing in Mermaid — dropping to HTML or SVG only when Mermaid cannot express the shape — which keeps the agent from trying to hand-generate raw PNGs, a thing it will attempt and be bad at.</p>
 <p>Self-communicate also owns a <strong>lexicon</strong>: the house vocabulary for your repo, so one concept gets one word, used consistently. You can bootstrap it — point the skill at existing material and have it walk the repository, surface the terms you use with specific meaning, and write down the working definitions. That walk tends to catch two failures at once: different words for the same concept, and the same word for different concepts. Both confuse any reader, human or agent, and finding them may show you mistakes in your own thinking. "There are actually two concepts here — help me name them." Now they have names, and you can retrofit structure onto the writing — which is, exactly, the code problem from Chapter 8, wearing different clothes. Those are the three skills that ship with the book. I hope they are of use.</p>
-<aside class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> the team dimension. Everything here is written as "you and your agents,"
+<div class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> the team dimension. Everything here is written as "you and your agents,"
 but production software is built by teams. How do shared models become team artifacts rather than
 one person's? How does review work when an agent wrote the change, and who owns the model when it
-drifts? This is the chapter an O'Reilly production-software audience will look for.</aside><div class="pager"><a class="prev" href="ch08-brownfield.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 8 · Brownfield</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch10-transformations.html"><span class="dir">Next ›</span><span class="ttl">Ch 10 · Everything Is a Transformation</span></a></div></div></body></html>
+drifts? This is the chapter an O'Reilly production-software audience will look for.</div><div class="pager"><a class="prev" href="ch08-brownfield.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 8 · Brownfield</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch10-transformations.html"><span class="dir">Next ›</span><span class="ttl">Ch 10 · Everything Is a Transformation</span></a></div></main></body></html>

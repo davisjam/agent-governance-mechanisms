@@ -10,7 +10,6 @@ nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
 nav.toc details { margin: 0; }
 nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
 nav.toc summary::-webkit-details-marker { display: none; }
-nav.toc summary::before { content: "☰  Contents"; }
 nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
 nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }
@@ -31,19 +30,19 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-aside.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
-aside.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
-aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
-.marker-fill .marker-tag { background: #d8a23a; color: #fff; }
-.marker-more .marker-tag { background: #7aa0bd; color: #fff; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
 .pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
           margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
-.pager a { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem; border: 1px solid #e2e0da;
-            border-radius: 6px; background: #fff; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
 .pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
 .pager .ttl { color: var(--accent); font-weight: 600; }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
@@ -57,8 +56,8 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #999; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary></summary><ol><li class="part">Part 1 — The Mindset</li>
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
 <li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
@@ -75,7 +74,7 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><div class="wrap"><header class="chap"><div class="kicker">Part 2 · The Governed Engineering Environment &nbsp;::&nbsp; Chapter 4</div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject control. This one is about the single most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. Models are the sweet spot between prose that is too vague and code that is too verbose. But a model only helps if you check it where checking makes sense.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 2 · The Governed Engineering Environment &nbsp;::&nbsp; Chapter 4</div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject control. This one is about the single most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. Models are the sweet spot between prose that is too vague and code that is too verbose. But a model only helps if you check it where checking makes sense.</p>
 <h2>Words are soft, code is verbose, a model is the sweet spot</h2>
 <p>Your first instrument of control is the prompt, because the agent is a language model and words are how you talk to it. But words are soft. They are ambiguous, and the more ambiguity you leave in, the less happy you will be. You can push ambiguity down by writing documentation — describing the environment, the product, its goals, its policies — and if you were briefing a <em>human</em> team, that would be enough. Humans are not dumb; they remember, they know what matters, they know where to look it up, and they know they will be fired if they misbehave. Agents are different: brilliant reasoners who need to be told exactly what to reason over, and for whom loose documents are simply not precise enough.</p>
 <p>Code is the opposite failure. Code is perfectly precise — it is exactly what will happen — but it is far too verbose to reason over in bulk. What you want sits between the two: something accurate and unambiguous, yet compact. The word for that thing is a <strong>model</strong>.</p>
@@ -87,11 +86,11 @@ aside.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
 <p>Now the trap. Say you want to enforce "if the agent substantially changed the call graph but did not update the overlaid model, reject it." It sounds like a pre-commit hook. It is not — and seeing why is worth more than the rule itself. An agent carrying out a real task makes <em>many</em> commits toward one goal; the model may be legitimately out of sync in the middle and correct again by the end. Enforce at the commit and you are checking a sentence for grammar before the paragraph is written.</p>
 <p>This is the <strong>semantic gap</strong>: the failure you get whenever you enforce a property at the wrong level of abstraction. Operating-system security lives with it constantly — the OS sees individual system calls, but "this program is exfiltrating data" is a <em>pattern across</em> calls, invisible in any single one; you have to stitch ten network calls together before the leak is legible. Model drift is the same shape. The commit is the wrong granularity.</p>
 <p>The fix is to find the level where the property is actually legible, and enforce there. For model drift, that level is the <em>agent returning from its task</em>, because at that moment the entire feature and its plan are visible. You can see whether the work changed the model, and whether the body of commits includes the tests, the documentation, and everything else the task was supposed to carry. This is exactly where the companion repository places its definition-of-done audit: a check that runs when an agent finishes an Epic, over the whole unit of work, rather than at any single commit inside it. "Correct" is a hard word — you cannot fully prove the model is right — but you <em>can</em> check that it was updated and that the surrounding work is complete, and that is the right semantic level to do it.</p>
-<aside class="marker marker-fill"><span class="marker-tag">FILL IN</span> cash the promissory note this chapter opens. A "special language" for
+<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> cash the promissory note this chapter opens. A "special language" for
 invariants over models was promised — deliver a taste of it: a property-based test, an
 invariant written over a model, and a first look at where a model checker (BMC, a
 temporal-logic checker) earns its keep. This is the reader's biggest unanswered
-question after this chapter.</aside>
-<aside class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> a dedicated chapter on how you actually <em>author</em> a model in a
+question after this chapter.</div>
+<div class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> a dedicated chapter on how you actually <em>author</em> a model in a
 repo — is it a typed record, a diagram, a lint, a schema file? The reader now believes
-models matter but cannot yet build one.</aside><div class="pager"><a class="prev" href="ch03-the-agent-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 3 · The Agent Stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch05-the-governed-environment.html"><span class="dir">Next ›</span><span class="ttl">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</span></a></div></div></body></html>
+models matter but cannot yet build one.</div><div class="pager"><a class="prev" href="ch03-the-agent-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 3 · The Agent Stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch05-the-governed-environment.html"><span class="dir">Next ›</span><span class="ttl">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</span></a></div></main></body></html>

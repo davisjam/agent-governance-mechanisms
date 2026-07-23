@@ -33,8 +33,10 @@ class _SiteHandler(SimpleHTTPRequestHandler):
 def check_axe(strict: bool):
     """Run axe-core over EVERY built page (the whole site, minus the plugin bundle). SKIP if
     npx/browser/the locally-installed axe are unavailable. `--load-delay` lets async content (the figure
-    iframes) settle so the scan is deterministic — without it a heavy page can be scanned before it
-    finishes loading and return a silent partial result.
+    iframes AND the book appendix's CDN-loaded Mermaid diagrams) settle so the scan is deterministic —
+    without it a heavy page can be scanned before it finishes painting and return a spurious partial
+    result (Mermaid repaints its placeholder blocks after the runtime loads, which mid-scan reads as
+    contrast failures on unrelated elements).
 
     We invoke axe via `npx --no-install`, so it runs ONLY the version installed into `node_modules` by
     `npm ci`/`setup.sh` (pinned exactly by `package-lock.json`). It never fetches from the npm registry at
@@ -50,7 +52,7 @@ def check_axe(strict: bool):
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
         urls = [f"http://127.0.0.1:{port}/{os.path.relpath(p, ROOT)}" for p in pages]
-        r = run(["npx", "--no-install", "@axe-core/cli", "--exit", "--load-delay", "1000",
+        r = run(["npx", "--no-install", "@axe-core/cli", "--exit", "--load-delay", "2500",
                  "--timeout", "120", *urls], timeout=900)
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as ex:
         return (FAIL if strict else SKIP), [f"axe could not run ({type(ex).__name__}) — treating as skip"]
