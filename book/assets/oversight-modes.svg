@@ -1,0 +1,94 @@
+<!-- Hand-authored (not Mermaid): three side-by-side panels, each with its own
+     bespoke geometry — a role cycle, a bent human round-trip, and an enclosing
+     environment box. Mermaid's auto-layout cannot place a ring, a straddling
+     round-trip, and a containing rounded box side by side and keep them small.
+     Redrawn from the ICSE-27 TikZ figure "Dominant process models for agentic SE"
+     (figures/existing-models.tex, \label{fig:background:existing-theories}),
+     panels (a) Velocity-Centric, (b) Oversight-Centric, (c) Governance-Centric.
+     Palette matches the book accent (#1a4a7a). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" width="900" height="320"
+     role="img" aria-labelledby="omTitle omDesc"
+     font-family="'Helvetica Neue', Arial, sans-serif">
+  <title id="omTitle">Three process models for agentic software engineering</title>
+  <desc id="omDesc">Three panels compared side by side. Velocity-centric: a human sets
+    a goal, then a ring of role-labeled agents — planner, developer, tester, reviewer,
+    security, deploy — passes work around a cycle, with insufficient quality control.
+    Oversight-centric: a human and a single agent exchange a prompt and an output in a
+    round trip, so human attention gates every step of progress. Governance-centric: a
+    human hands policies into a governed engineering environment that contains the agent,
+    so known obligations become controls before the agent works. The book takes the third
+    stance.</desc>
+
+  <defs>
+    <marker id="omArrow" markerWidth="8" markerHeight="8" refX="6.5" refY="3"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#33383d"/>
+    </marker>
+  </defs>
+
+  <!-- panel labels -->
+  <text x="150" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1a1a">(a) Velocity-centric</text>
+  <text x="450" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1a1a">(b) Oversight-centric</text>
+  <text x="750" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1a1a">(c) Governance-centric</text>
+
+  <!-- panel dividers -->
+  <line x1="300" y1="40" x2="300" y2="300" stroke="#e2e0da" stroke-width="1"/>
+  <line x1="600" y1="40" x2="600" y2="300" stroke="#e2e0da" stroke-width="1"/>
+
+  <!-- ============ (a) Velocity-centric: role ring ============ -->
+  <g font-size="13" fill="#33383d" text-anchor="middle">
+    <text x="150" y="70" font-weight="700">Human</text>
+    <text x="150" y="90" font-size="11" font-style="italic" fill="#5f5f5f">goal ↓</text>
+
+    <!-- six roles around a cycle -->
+    <text x="150" y="120">Planner</text>
+    <text x="228" y="160">Developer</text>
+    <text x="228" y="212">Tester</text>
+    <text x="150" y="252">Reviewer</text>
+    <text x="72"  y="212">Security</text>
+    <text x="72"  y="160">Deploy</text>
+
+    <!-- cycle arrows (clockwise) -->
+    <g fill="none" stroke="#33383d" stroke-width="1.3" marker-end="url(#omArrow)">
+      <path d="M172,124 C196,130 210,140 218,150"/>
+      <path d="M232,170 C236,182 236,190 232,200"/>
+      <path d="M218,222 C210,232 196,242 174,247"/>
+      <path d="M126,250 C104,244 90,234 82,223"/>
+      <path d="M68,200 C64,190 64,180 68,170"/>
+      <path d="M82,150 C90,140 104,130 128,124"/>
+    </g>
+  </g>
+  <text x="150" y="288" text-anchor="middle" font-size="12" font-style="italic" fill="#8a2f2f">Insufficient quality control</text>
+
+  <!-- ============ (b) Oversight-centric: round trip ============ -->
+  <g font-size="13" fill="#33383d">
+    <text x="378" y="168" text-anchor="middle" font-weight="700">Human</text>
+    <text x="522" y="168" text-anchor="middle">Agent:</text>
+    <text x="522" y="185" text-anchor="middle" font-size="11" fill="#5f5f5f">bounded work</text>
+
+    <g fill="none" stroke="#33383d" stroke-width="1.3" marker-end="url(#omArrow)">
+      <path d="M406,150 C440,126 460,126 494,150"/>
+      <path d="M494,182 C460,206 440,206 406,182"/>
+    </g>
+    <text x="450" y="120" text-anchor="middle" font-size="11" font-style="italic" fill="#5f5f5f">prompt</text>
+    <text x="450" y="222" text-anchor="middle" font-size="11" font-style="italic" fill="#5f5f5f">output</text>
+  </g>
+  <text x="450" y="288" text-anchor="middle" font-size="12" font-style="italic" fill="#5f5f5f">Human attention gates progress</text>
+
+  <!-- ============ (c) Governance-centric: env box ============ -->
+  <g font-size="13" fill="#33383d">
+    <text x="636" y="152" text-anchor="middle" font-weight="700">Human</text>
+
+    <rect x="700" y="108" width="144" height="88" rx="6" fill="none" stroke="#1a4a7a" stroke-width="1.6"/>
+    <text x="772" y="131" text-anchor="middle" font-size="12" fill="#1a4a7a">Governed</text>
+    <text x="772" y="147" text-anchor="middle" font-size="12" fill="#1a4a7a">engineering environment</text>
+    <rect x="739" y="160" width="66" height="26" rx="3" fill="none" stroke="#33383d" stroke-width="1.2"/>
+    <text x="772" y="177" text-anchor="middle" font-size="12">Agent</text>
+
+    <g fill="none" stroke="#33383d" stroke-width="1.3" marker-end="url(#omArrow)">
+      <path d="M636,158 L636,168 L696,168"/>
+    </g>
+    <text x="668" y="162" text-anchor="middle" font-size="11" font-style="italic" fill="#5f5f5f">policies</text>
+  </g>
+  <text x="750" y="288" text-anchor="middle" font-size="12" font-style="italic" fill="#1a4a7a">Known policies become controls</text>
+</svg>
