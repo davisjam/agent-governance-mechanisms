@@ -33,6 +33,7 @@ import json
 import pathlib
 import re
 import sys
+from typing import NamedTuple
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent  # the catalogue root — the appendix reads the entry .md files from here
@@ -719,6 +720,26 @@ figure.book-figure figcaption {{ font-size: 14px; color: #666; margin-top: 0.6re
 .idx li {{ margin: 0.35rem 0; }}
 .idx a {{ text-decoration: none; }}
 .idx .cnum {{ color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }}
+/* Book-length table (book-index.html) — a compact, auto-generated size breakdown. Section rows band the
+   BODY / APPENDIX groups; subtotal + total rows are bolded; the numeric column is tabular + right-aligned. */
+.book-length {{ margin: 1.4rem 0 2.2rem; }}
+.book-length h2 {{ margin: 0 0 0.4rem; }}
+.book-length .wc-note {{ color: #5f5f5f; font-size: 14px; margin: 0 0 0.8rem; max-width: 40rem; }}
+table.wc-table {{ border-collapse: collapse; width: auto; min-width: 22rem; max-width: 34rem;
+                  margin: 0.4rem 0; font-size: 15px; }}
+table.wc-table caption.sr-cap {{ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+                                 overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }}
+table.wc-table th, table.wc-table td {{ border: 1px solid #e2e0da; padding: 0.4rem 0.7rem;
+                                        text-align: left; vertical-align: top; line-height: 1.4; }}
+table.wc-table thead th {{ background: #f4f3f0; font-weight: 600; }}
+table.wc-table thead th:last-child {{ text-align: right; }}
+table.wc-table td.wc-num {{ text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }}
+table.wc-table tr.wc-section th {{ background: #efece5; font-weight: 700; text-transform: uppercase;
+                                   letter-spacing: 0.04em; font-size: 12px; color: #555; }}
+table.wc-table tr.wc-part th {{ font-weight: 400; padding-left: 1.3rem; }}
+table.wc-table tr.wc-subtotal th, table.wc-table tr.wc-subtotal td {{ font-weight: 600; background: #faf9f6; }}
+table.wc-table tr.wc-total th, table.wc-table tr.wc-total td {{ font-weight: 700; background: #f0efeb;
+                                                                border-top: 2px solid #cfa14a; }}
 /* term index page */
 .idx-terms ul {{ list-style: none; padding: 0; margin: 0 0 1rem; }}
 .idx-terms li {{ margin: 0.3rem 0; }}
@@ -1886,9 +1907,11 @@ def _anchored_locator(pg: dict, anchor: str) -> str:
             f'{html.escape(_index_ref_label(pg))}</a>')
 
 
-def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | None = None) -> str:
+def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | None = None,
+                     word_counts: "WordCounts | None" = None) -> str:
     """Render `book-index.html` from the computed entries — an alphabetized index (curated concept entries +
-    occurrence term entries) grouped by first letter. Returns the full page HTML."""
+    occurrence term entries) grouped by first letter, led by an auto-generated 'Book length' table when
+    `word_counts` is supplied. Returns the full page HTML."""
     entries = build_index_entries(chapters, concept_registry)
     groups: dict[str, list[dict]] = {}
     for e in entries:
@@ -1937,7 +1960,10 @@ def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | N
         "that <em>defines</em> it and the paragraphs that <em>exemplify</em> it; a plain term entry links the "
         "pages where it appears, capped so the index leads with the significant sites.</p>"
     )
-    body = header + intro + '<div class="idx idx-terms">' + "\n".join(rows) + "</div>"
+    # 'Book length' table — auto-generated per build (front index is its natural home). Placed before the
+    # alphabetized term index so a reader meets the book's size first.
+    length_block = _word_counts_table_html(word_counts) if word_counts is not None else ""
+    body = header + intro + length_block + '<div class="idx idx-terms">' + "\n".join(rows) + "</div>"
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
     # The index gets the whole-book TOC and its own jump row (Contents + first/last chapter + itself).
     jump = (
@@ -1951,6 +1977,149 @@ def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | N
     pager_jump = f'<div class="pager-jump">{jump}</div>'
     main = body + pager_jump + foot
     return page("Index · 3-D Printing Production Software", toc, main)
+
+
+# ─────────────────────────── Book length — auto-computed word counts ───────────────────────────
+# Count the words a READER READS, computed fresh every build from each page's RENDERED prose (so the
+# published number can never drift from the text). The prose count strips, in order:
+#   1. fenced code + mermaid blocks (rendered as <pre>…</pre>) — a reader doesn't "read" a diagram/listing;
+#   2. figure <figcaption> and any SVG <title>/<desc> — a11y/caption text describes a figure, it isn't prose;
+#   3. every remaining HTML tag — leaving the visible words, which are then whitespace-tokenized.
+# The breakdown splits BODY (front matter + Parts 1–5 + back matter, per-Part subtotals) from APPENDIX (the
+# A/B/C GoF pattern Parts + Appendix D stacks + Appendix E recipe, per-letter subtotals); TOTAL = body + app.
+
+# <pre>…</pre> holds a rendered code OR mermaid fence; <figure>'s <figcaption> and an inline SVG's
+# <title>/<desc> hold caption / a11y text. Drop all of them before the prose is tokenized. Non-greedy,
+# DOTALL so a multi-line block is removed whole.
+_PRE_BLOCK_RE = re.compile(r"<pre\b.*?</pre>", re.S | re.I)
+_FIGCAPTION_RE = re.compile(r"<figcaption\b.*?</figcaption>", re.S | re.I)
+_SVG_DESC_RE = re.compile(r"<(title|desc)\b.*?</\1>", re.S | re.I)
+_HTML_TAG_RE = re.compile(r"<[^>]+>")
+_HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.S)
+
+
+def _prose_word_count(body_md: str) -> int:
+    """Word count of one page's reader-facing prose. Render the markdown to HTML (same renderer the site
+    ships), strip code/mermaid <pre> blocks, figure captions, and SVG a11y text, then strip the remaining
+    tags and count whitespace-delimited tokens. Counts the words a reader actually reads — not code,
+    diagrams, or caption/alt text."""
+    rendered = md_to_html(body_md)
+    rendered = _HTML_COMMENT_RE.sub(" ", rendered)
+    rendered = _PRE_BLOCK_RE.sub(" ", rendered)
+    rendered = _FIGCAPTION_RE.sub(" ", rendered)
+    rendered = _SVG_DESC_RE.sub(" ", rendered)
+    text = _HTML_TAG_RE.sub(" ", rendered)
+    text = html.unescape(text)
+    return len(text.split())
+
+
+def _appendix_letter(pg: dict) -> str:
+    """The appendix letter (A–E) a rendered appendix page belongs to, read from its `part_title`
+    ('Appendix C — Product patterns' → 'C'). Falls back to '?' — should not happen for an appendix page."""
+    m = re.search(r"Appendix\s+([A-Z])\b", pg.get("part_title", ""))
+    return m.group(1) if m else "?"
+
+
+class WordCounts(NamedTuple):
+    body_parts: list[tuple[str, int]]      # (Part display label, word count) in reading order
+    body_total: int
+    appendix_letters: list[tuple[str, int]]  # (Appendix-letter label, word count) in reading order
+    appendix_total: int
+    total: int
+
+
+def compute_word_counts(chapters: list[dict]) -> WordCounts:
+    """Compute the BODY / APPENDIX / TOTAL word breakdown from the rendered prose of every page. BODY groups
+    by Part (front matter, Parts 1–5, back matter — per-Part subtotals in reading order); APPENDIX groups by
+    appendix letter (A/B/C pattern Parts, D stacks, E recipe — per-letter subtotals). Fresh every build."""
+    body_by_part: dict[int, int] = {}
+    body_part_order: list[int] = []
+    app_by_letter: dict[str, int] = {}
+    app_letter_order: list[str] = []
+    for pg in chapters:
+        wc = _prose_word_count(pg["body_md"])
+        if pg.get("is_appendix"):
+            letter = _appendix_letter(pg)
+            if letter not in app_by_letter:
+                app_by_letter[letter] = 0
+                app_letter_order.append(letter)
+            app_by_letter[letter] += wc
+        else:
+            part = pg["part"]
+            if part not in body_by_part:
+                body_by_part[part] = 0
+                body_part_order.append(part)
+            body_by_part[part] += wc
+
+    body_parts = [(_PART_TITLES.get(p, f"Part {p}") if p in (0, 6)
+                   else f"Part {p} — {_PART_TITLES.get(p, '')}", body_by_part[p])
+                  for p in body_part_order]
+    body_total = sum(body_by_part.values())
+    appendix_letters = [(f"Appendix {ltr}", app_by_letter[ltr]) for ltr in app_letter_order]
+    appendix_total = sum(app_by_letter.values())
+    return WordCounts(
+        body_parts=body_parts,
+        body_total=body_total,
+        appendix_letters=appendix_letters,
+        appendix_total=appendix_total,
+        total=body_total + appendix_total,
+    )
+
+
+def _word_counts_table_html(wc: WordCounts) -> str:
+    """The 'Book length' table for book-index.html — an a11y-clean data table (a <caption> for its
+    accessible name, `scope="col"` on the header row, `scope="row"` on each Part/section name, `scope="row"`
+    + a class on the subtotal/total rows). Numbers are auto-generated fresh each build, never hardcoded."""
+    def _num(n: int) -> str:
+        return f"{n:,}"
+
+    rows: list[str] = []
+    rows.append(
+        '<tr class="wc-section"><th scope="row" colspan="2">Body (narrative)</th></tr>')
+    for label, n in wc.body_parts:
+        rows.append(
+            f'<tr><th scope="row" class="wc-part">{html.escape(label)}</th>'
+            f'<td class="wc-num">{_num(n)}</td></tr>')
+    rows.append(
+        f'<tr class="wc-subtotal"><th scope="row">Body subtotal</th>'
+        f'<td class="wc-num">{_num(wc.body_total)}</td></tr>')
+    rows.append(
+        '<tr class="wc-section"><th scope="row" colspan="2">Appendix</th></tr>')
+    for label, n in wc.appendix_letters:
+        rows.append(
+            f'<tr><th scope="row" class="wc-part">{html.escape(label)}</th>'
+            f'<td class="wc-num">{_num(n)}</td></tr>')
+    rows.append(
+        f'<tr class="wc-subtotal"><th scope="row">Appendix subtotal</th>'
+        f'<td class="wc-num">{_num(wc.appendix_total)}</td></tr>')
+    rows.append(
+        f'<tr class="wc-total"><th scope="row">Total</th>'
+        f'<td class="wc-num">{_num(wc.total)}</td></tr>')
+    return (
+        '<section class="book-length" aria-labelledby="book-length-h">'
+        '<h2 id="book-length-h">Book length</h2>'
+        '<p class="wc-note">Word counts of the prose a reader reads — auto-generated on every build from '
+        'the rendered text (code listings, diagrams, and figure captions excluded), so these numbers stay '
+        'current and cannot drift.</p>'
+        '<table class="wc-table"><caption class="sr-cap">Book length by part, in words</caption>'
+        '<thead><tr><th scope="col">Part</th><th scope="col">Words</th></tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table></section>'
+    )
+
+
+def _print_word_counts(wc: WordCounts) -> None:
+    """Print the word-count breakdown to stdout, so `catalog.py build` / the deploy REPORTS it (the repo's
+    'tools report their results' discipline). A stable, greppable shape (`  BODY  <part> : <n>`)."""
+    print("book word count (rendered prose; code/diagrams/captions excluded):")
+    print("  BODY (narrative):")
+    for label, n in wc.body_parts:
+        print(f"    {label:<48} {n:>7,}")
+    print(f"    {'BODY subtotal':<48} {wc.body_total:>7,}")
+    print("  APPENDIX:")
+    for label, n in wc.appendix_letters:
+        print(f"    {label:<48} {n:>7,}")
+    print(f"    {'APPENDIX subtotal':<48} {wc.appendix_total:>7,}")
+    print(f"  {'TOTAL':<50} {wc.total:>7,}")
 
 
 def build() -> int:
@@ -2069,9 +2238,14 @@ def build() -> int:
         page("3-D Printing Production Software — Contents", "", main), encoding="utf-8"
     )
 
+    # Book length — auto-computed from the rendered prose of every page (fresh each build, never hardcoded).
+    # Printed to stdout (tools report their results) and rendered onto book-index.html as a "Book length" table.
+    word_counts = compute_word_counts(chapters)
+    _print_word_counts(word_counts)
+
     # Autogenerated term index — placed after the appendix, reachable from the INDEX nav button.
     (HERE / f"{BOOK_INDEX_SLUG}.html").write_text(
-        build_index_page(chapters, concept_registry), encoding="utf-8")
+        build_index_page(chapters, concept_registry, word_counts=word_counts), encoding="utf-8")
 
     print(f"built {len(chapters)} chapter pages + index.html + {BOOK_INDEX_SLUG}.html")
     return 0
