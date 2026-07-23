@@ -131,6 +131,19 @@ Read the passage as a whole, top to bottom.
   propagate to the other and they silently diverge.
 - **Buried lede.** **Detect:** the main claim arriving in the third paragraph after setup. **Fix:** lead
   with the frame, then support it.
+- **Self-narrating structure (the artifact as actor).** **Detect:** a sentence whose subject or pronoun
+  is *a part of the document itself* — "it" / "its pages" standing for the chapter, "this chapter carries
+  …", "the insets it gives you", "the section below hands the reader" — so the text narrates its own
+  apparatus (chapter, page, section, inset, figure) as an actor doing something *for the reader* instead of
+  just delivering the content. Canonical tell: a bare "it"/"its" that refers to the artifact-part rather
+  than to a subject in the writing. Example: *"So it carries the concept insets a reader needs to read its
+  model pages: what an automaton is, safety versus liveness, …"* **Fix:** delete the meta-commentary and
+  state the content directly — name the ideas and let the apparatus do its job silently: *"…become
+  predicates over an order of events. That step-up pulls in a cluster of ideas: what an automaton is,
+  safety versus liveness, …"* **Not** a blanket ban on signposting: "the rest of this chapter defends
+  this", "see the appendix", "the figure below" are fine. The anti-pattern is narrowly (a) a pronoun that
+  stands for a structural part *as an actor*, and (b) narrating the apparatus (the insets/pages the
+  document "carries") when you could just present the thing.
 
 ## Pass 5 — Visualization
 
