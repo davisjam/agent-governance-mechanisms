@@ -153,6 +153,16 @@ Read the passage as a whole, top to bottom.
   this", "see the appendix", "the figure below" are fine. The anti-pattern is narrowly (a) a pronoun that
   stands for a structural part *as an actor*, and (b) narrating the apparatus (the insets/pages the
   document "carries") when you could just present the thing.
+- **Trailing remark that trails (one thing well; clean endings).** **Detect:** a chapter or section whose
+  CLOSING wanders off its subject — a final paragraph that opens a *new* topic, tacks on a loosely-related
+  afterthought, or names something the book won't cover, then peters out without landing the section's own
+  point, referencing a related chapter, or segueing to the next. The tell is an ending that *introduces*
+  rather than *concludes* (a last paragraph that starts a whole new subject and closes on "a treatment this
+  book does not attempt"). Its sibling: a chapter trying to do *two* things — its own subject plus a
+  bolted-on aside that belongs elsewhere. **Fix:** a chapter does ONE thing well. Move the aside into a
+  **footnote / sidenote** (the `>`-aside), or cut it, or turn the ending into a real close — land the
+  chapter's point, reference a related chapter by name, or segue to the next. An ending may point onward,
+  but it must *conclude*, not merely trail.
 
 ## Pass 5 — Visualization
 
