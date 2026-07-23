@@ -193,6 +193,15 @@ def _discover_chapters(metrics: dict[str, str]) -> list[dict]:
                     f"chapter {p} names part {file_part} but sits in {subdir} (part {part})")
             found.append(parse_chapter(p, part, chapter, metrics))
     found.sort(key=lambda c: (c["part"], c["chapter"]))
+    # Derive the sequential chapter number — single source of truth is the filesystem order over the
+    # numbered body Parts (1-5). Front/back matter (is_matter) is unnumbered and skipped. This replaces
+    # the old hand-typed "# Chapter N ·" H1 (which the build drops anyway), so a chapter number can never
+    # drift again: renumbering is just moving a file.
+    seq = 0
+    for c in found:
+        if not c.get("is_matter"):
+            seq += 1
+            c["seq"] = seq
     return found
 
 
@@ -820,7 +829,7 @@ nav.toc .jump {{ margin-top: 0; margin-left: auto; }}
 
 def _chap_ref(c: dict) -> str:
     """The 'N.M' reference for a numbered chapter, or '' for front/back matter."""
-    return "" if c.get("is_matter") or c.get("is_appendix") else f'{c["part"]}.{c["chapter"]}'
+    return "" if c.get("is_matter") or c.get("is_appendix") else str(c["seq"])
 
 
 def _toc_prefix(c: dict) -> str:
@@ -1903,7 +1912,7 @@ def _scan_term_refs(term: str, pages: list[dict]) -> list[dict]:
 
 
 def _index_ref_label(pg: dict) -> str:
-    """The short locator shown beside an index term for one page: 'Appendix A', 'Preface', or 'N.M'."""
+    """The short locator shown beside an index term for one page: 'Appendix A', 'Preface', or 'Ch. N'."""
     if pg.get("is_appendix"):
         # Per-pattern titles read 'Appendix A - 1. Brief-linting' → locator 'Appendix A - 1'; a stack page
         # 'Appendix D - 1. The MBSE stack' → 'Appendix D - 1'. An opening front-door page
@@ -1920,7 +1929,7 @@ def _index_ref_label(pg: dict) -> str:
         return title
     if pg.get("is_matter"):
         return pg["chapter_title"]
-    return f'{pg["part"]}.{pg["chapter"]}'
+    return f'Ch. {pg["seq"]}'
 
 
 def _curated_concept_entries(registry: dict[str, dict]) -> list[dict]:
@@ -2231,7 +2240,7 @@ def build() -> int:
         elif c.get("is_matter"):
             num_label = c["chapter_title"]  # "Preface" / "Conclusion"
         else:
-            num_label = f'Chapter {c["part"]}.{c["chapter"]}'
+            num_label = f'Chapter {c["seq"]}'
         kicker = _kicker_html(chapters, i, num_label)
         header = (
             f'<header class="chap"><div class="kicker">{kicker}</div>'
