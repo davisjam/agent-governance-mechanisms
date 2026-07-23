@@ -128,6 +128,135 @@ chapter (filled as chapters settle; the generator still scans all chapters for s
 - Bun (runtime port example)
 - Starry Night (diffusion example)
 
+## Concept registry
+
+The curated concept index (book/AGENTS.md §6). Each `- concept: <slug> | <Display Name>` line registers a
+concept the book can annotate with an inline `<!-- index-def: <slug> -->` at its defining paragraph and
+`<!-- index-example: <slug> -->` at its example paragraphs. The build harvests those tags into a curated
+index entry (`definition of:` / `examples of:`) and suppresses the plain occurrence entry for the same
+display name. A tag whose slug is absent here fails the build. Display names are authored here once.
+
+- concept: printer-metaphor | The printer metaphor
+- concept: picture-vs-model | Picture vs. model
+- concept: whose-fault | Whose fault is a bad build
+- concept: loop-engineering | Loop engineering
+- concept: success-metric | The success metric
+- concept: probabilistic-reasoning-machine | Probabilistic reasoning machine
+- concept: conditioning-the-search | Conditioning the search
+- concept: search-space | The search space
+- concept: agent-stack | The agent stack
+- concept: foundation-model | The foundation model
+- concept: agentic-harness | The agentic harness
+- concept: context-window | The context window
+- concept: skill-soft-control | Skill (soft control)
+- concept: hook-hard-control | Hook (hard control)
+- concept: tool-deterministic-action | Tool (deterministic action)
+- concept: engineering-environment | The engineering environment
+- concept: injection-point | Injection point
+- concept: model-as-map | Model as map
+- concept: map-and-territory | Map and territory
+- concept: model-drift | Model drift
+- concept: the-semantic-gap | The semantic gap
+- concept: right-level-of-enforcement | The right level of enforcement
+- concept: governed-environment | The governed environment
+- concept: ex-ante-governance | Ex-ante governance
+- concept: ex-post-governance | Ex-post governance
+- concept: failure-to-mechanism | Failure to mechanism
+- concept: controls-vs-architecture | Controls vs. architecture
+- concept: control-sensor | Control (sensor)
+- concept: architecture-wall | Architecture (wall)
+- concept: specification-driven-development | Specification-driven development
+- concept: lifecycle | Lifecycle
+- concept: failure-mode-effects-analysis | Failure mode and effects analysis
+- concept: runbook | Runbook
+- concept: deterministic-vs-judgment-split | Deterministic vs. judgment split
+- concept: rubric | Rubric
+- concept: pre-canned-brief | The pre-canned brief
+- concept: model-zoo | The model zoo
+- concept: four-plus-one-views | The 4+1 views
+- concept: logical-view | The Logical view
+- concept: process-view | The Process view
+- concept: development-view | The Development view
+- concept: physical-view | The Physical view
+- concept: scenarios-view | The Scenarios view
+- concept: executable-source-of-truth | Executable source-of-truth
+- concept: drift-gate | The drift gate
+- concept: derivation-direction | Derivation direction
+- concept: model-from-code | Model-from-code
+- concept: model-to-code | Model-to-code
+- concept: traceability | Traceability
+- concept: derive-and-join | Derive and join
+- concept: join-key | The join key
+- concept: per-model-template | The per-model template
+- concept: invariant | Invariant
+- concept: safety-property | Safety property
+- concept: liveness-property | Liveness property
+- concept: temporal-logic | Temporal logic
+- concept: bounded-model-checking | Bounded model checking
+- concept: state-machine | State machine
+- concept: data-flow-diagram | Data-flow diagram
+- concept: formal-invariant-verification | Formal invariant verification
+- concept: synchronization-model | Synchronization model
+- concept: mediator-registry | Mediator registry
+- concept: single-writer-registry | Single-writer registry
+- concept: component-zone-model | Component-zone model
+- concept: bill-of-materials | Bill of materials
+- concept: rule-metadata-registry | Rule-metadata registry
+- concept: deployment-topology-model | Deployment-topology model
+- concept: performance-cost-model | Performance-and-cost model
+- concept: model-only-where-a-failure-lives | Model only where a failure lives
+- concept: invariant-dag-execution-policy | Invariant-DAG execution policy
+- concept: control-substrate-dependency | Control-substrate dependency
+- concept: user-journey-model | User-journey model
+- concept: agent-orchestration-model | Agent-orchestration model
+- concept: journey-criticality-test-placement | Journey-criticality test placement
+- concept: node-coverage | Node coverage
+- concept: coverage-model-mapping | Coverage-to-model mapping
+- concept: protocols-and-tla | Protocols and TLA+
+- concept: models-join-not-repeat | Models join, they do not repeat
+- concept: brownfield-migration | Brownfield migration
+- concept: greenfield | Greenfield
+- concept: quality-case-traceability | Quality-case traceability
+- concept: top-down-refinement | Top-down refinement
+- concept: bottom-up-induction | Bottom-up induction
+- concept: lint-cover-induce | Lint, cover, induce
+- concept: code-smell | Code smell
+- concept: lint | Lint
+- concept: make-lint-blocking | Make a lint blocking
+- concept: fitness-function | The fitness function
+- concept: quality | Quality
+- concept: self-operate | Self-operate
+- concept: self-governance | Self-governance
+- concept: self-communicate | Self-communicate
+- concept: governance-catalogue | The governance catalogue
+- concept: teetering-tower | The teetering tower
+- concept: lexicon | The lexicon
+- concept: observability | Observability
+- concept: transformation | Transformation
+- concept: sizing-the-leap | Sizing the leap
+- concept: compounding-failure-probability | Compounding failure probability
+- concept: training-data-bias | Training-data bias
+- concept: novelty-axis | The novelty axis
+- concept: reference-class | Reference class
+- concept: diffusion-analogy | The diffusion analogy
+- concept: demoable-vs-productizable | Demoable vs. productizable
+- concept: judgment-is-the-scarce-resource | Judgment is the scarce resource
+- concept: three-ways-to-run-an-agent | Three ways to run an agent
+- concept: governance-centric | Governance-centric
+- concept: velocity-exposes-the-danger | Velocity exposes the danger
+- concept: optionality-is-poison | Optionality is poison
+- concept: refactoring-is-free | Refactoring is free
+- concept: done-is-a-claim | "Done" is a claim
+- concept: broken-cost-estimator | The broken cost estimator
+- concept: tests-for-agent-failure-modes | Tests for agent failure modes
+- concept: vibe-coding-vs-engineering | Vibe-coding vs. engineering
+- concept: explicitness-is-essential | Explicitness is essential
+- concept: soft-vs-hard-governance | Soft vs. hard governance
+- concept: audits-into-lints | Audits into lints
+- concept: autonomy-amplifier | The autonomy amplifier
+- concept: judgment-into-infrastructure | Judgment into infrastructure
+- concept: governance-as-design-patterns | Governance as design patterns
+
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
 - context-b (timeline) concepts + any proper nouns from the ADA/timeline chapters get appended once that Fable lands.

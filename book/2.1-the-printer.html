@@ -82,6 +82,14 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx-terms .idx-term { font-weight: 600; }
 .idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
 .idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* curated concept entry: a definition-of / examples-of sub-block under the concept name */
+.idx-terms li.idx-concept { margin: 0.55rem 0; }
+.idx-concept .idx-subs { display: block; margin: 0.15rem 0 0 1rem; }
+.idx-concept .idx-sub { display: block; font-size: 14px; color: #444; line-height: 1.6; }
+.idx-concept .idx-sub-lead { color: #595959; font-style: italic; margin-right: 0.35rem; }
+/* Underline the locators so a link is distinguished from the "definition of:" lead text without relying
+   on color alone (axe link-in-text-block). */
+.idx-concept .idx-sub a { margin-right: 0.4rem; text-decoration: underline; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
                                              border-radius: 6px; background: #fff; }
@@ -196,6 +204,88 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
 <li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="3.1-the-agent-stack.html">Next part ⇒</a><a href="2.2-loops-and-models.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 2.1 · The Printer"><header class="chap"><div class="kicker">Part 2 — The Mindset &nbsp;::&nbsp; Chapter 2.1</div><h1>The Printer</h1><div class="part-epigraph">It is a tale told by an idiot, full of sound and fury, signifying nothing.<span class="attr">— William Shakespeare, Macbeth</span></div></header><h2>What this book is about (and what it is not)</h2>
 <p>Not every coding task needs the machinery this book describes. Some tasks a capable model can simply do. You describe the input and the output, you press go, and a working script comes back on the first pass. There is no fleet, no governance, no long-running loop to steer. Knowing which tasks are like that, and which are not, is the first judgment an agentic engineer has to make. The figure below is the decision.</p>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="csp-title csp-desc">
+  <title id="csp-title">One-shot scripting versus supervised autonomy</title>
+  <desc id="csp-desc">A decision path for a computational coding task. Starting from "What kind of task", you specify the input/output behavior, then split by task size and difficulty. A simple task under a few thousand lines with no reasoning goes to one-shot scripting: describe the process and the agent produces it in a single pass. A hard task, especially one that includes reasoning, goes to supervised autonomy, where you supply four things: correctness conditions and proposed sub-tasks that shape the system, and tools that determinize recurring processes plus monitoring and intervention that shape the development process.</desc>
+
+  <defs>
+    <marker id="csp-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a4a5e"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== TOP ROW ===================== -->
+  <!-- Decision diamond: "What kind of task" -->
+  <polygon points="120,80 235,120 120,160 5,120" fill="#e9eef1" stroke="#1a4a5e" stroke-width="1.5"/>
+  <text x="120" y="115" text-anchor="middle" font-size="16" font-weight="700" fill="#12333f">What kind</text>
+  <text x="120" y="135" text-anchor="middle" font-size="16" font-weight="700" fill="#12333f">of task?</text>
+
+  <!-- arrow: diamond -> specify I/O -->
+  <line x1="235" y1="120" x2="305" y2="120" stroke="#1a4a5e" stroke-width="2.2" marker-end="url(#csp-ah)"/>
+
+  <!-- Specify I/O behavior -->
+  <rect x="310" y="88" width="230" height="64" rx="6" fill="#1a4a5e" stroke="#12333f" stroke-width="1.5"/>
+  <text x="425" y="126" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">Specify I/O behavior</text>
+
+  <!-- "Simple task" annotation above the right arrow -->
+  <text x="655" y="72" text-anchor="middle" font-size="14" font-style="italic" fill="#444">Simple task &#8212; under a few KLOC</text>
+  <!-- arrow: specify -> one-shot -->
+  <line x1="540" y1="120" x2="700" y2="120" stroke="#1a4a5e" stroke-width="2.2" marker-end="url(#csp-ah)"/>
+
+  <!-- One-shot scripting -->
+  <rect x="705" y="70" width="245" height="150" rx="6" fill="#1a4a5e" stroke="#12333f" stroke-width="1.5"/>
+  <text x="827" y="118" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">&#8220;One-shot</text>
+  <text x="827" y="142" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">scripting&#8221;</text>
+  <text x="827" y="172" text-anchor="middle" font-size="14" font-style="italic" fill="#dfe8ec">eg a CSV-to-HTML</text>
+  <text x="827" y="192" text-anchor="middle" font-size="14" font-style="italic" fill="#dfe8ec">report script</text>
+
+  <!-- "Hard task" annotation left of the down arrow -->
+  <text x="270" y="196" text-anchor="middle" font-size="14" font-style="italic" fill="#444">Hard task &#8212; esp. if it includes reasoning</text>
+
+  <!-- arrow: specify -> supervised autonomy (down) -->
+  <line x1="425" y1="152" x2="425" y2="252" stroke="#1a4a5e" stroke-width="2.2" marker-end="url(#csp-ah)"/>
+
+  <!-- ===================== MIDDLE ROW ===================== -->
+  <!-- Supervised autonomy -->
+  <rect x="235" y="256" width="450" height="70" rx="6" fill="#1a4a5e" stroke="#12333f" stroke-width="1.5"/>
+  <text x="460" y="300" text-anchor="middle" font-size="20" font-weight="700" font-style="italic" fill="#ffffff">Supervised autonomy</text>
+
+  <!-- ===================== FAN-OUT to four leaves ===================== -->
+  <!-- leaf centers: 118, 305, 553, 812 ; leaf tops at y=410 ; hub at (460,326) -->
+  <line x1="460" y1="326" x2="118" y2="405" stroke="#1a4a5e" stroke-width="1.5"/>
+  <line x1="460" y1="326" x2="305" y2="405" stroke="#1a4a5e" stroke-width="1.5"/>
+  <line x1="460" y1="326" x2="553" y2="405" stroke="#1a4a5e" stroke-width="1.5"/>
+  <line x1="460" y1="326" x2="812" y2="405" stroke="#1a4a5e" stroke-width="1.5"/>
+
+  <!-- Leaf 1: Correctness conditions -->
+  <rect x="20" y="410" width="196" height="86" rx="6" fill="#1a4a5e" stroke="#12333f" stroke-width="1.5"/>
+  <text x="118" y="448" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Correctness</text>
+  <text x="118" y="470" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">conditions</text>
+
+  <!-- Leaf 2: Propose sub-tasks -->
+  <rect x="228" y="410" width="154" height="86" rx="6" fill="#1a4a5e" stroke="#12333f" stroke-width="1.5"/>
+  <text x="305" y="448" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Propose</text>
+  <text x="305" y="470" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">sub-tasks</text>
+
+  <!-- Leaf 3: Tools to determinize recurring processes -->
+  <rect x="440" y="410" width="226" height="86" rx="6" fill="#1a4a5e" stroke="#12333f" stroke-width="1.5"/>
+  <text x="553" y="440" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Tools to &#8220;determinize&#8221;</text>
+  <text x="553" y="462" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">recurring</text>
+  <text x="553" y="482" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">processes</text>
+
+  <!-- Leaf 4: Monitoring and intervention -->
+  <rect x="714" y="410" width="196" height="86" rx="6" fill="#1a4a5e" stroke="#12333f" stroke-width="1.5"/>
+  <text x="812" y="440" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Monitoring</text>
+  <text x="812" y="462" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">and</text>
+  <text x="812" y="484" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">intervention</text>
+
+  <!-- ===================== GROUP LABELS ===================== -->
+  <!-- divider between the System pair and the Development pair -->
+  <line x1="411" y1="410" x2="411" y2="530" stroke="#9aa8ae" stroke-width="1.5"/>
+
+  <text x="200" y="524" text-anchor="middle" font-size="16" font-weight="700" fill="#12333f">System design</text>
+  <text x="662" y="524" text-anchor="middle" font-size="16" font-weight="700" fill="#12333f">Development process</text>
+</svg><figcaption>The two modes of computational agent work. From "What kind of task", you specify the input/output behavior, then split on size and difficulty. A simple task with no reasoning goes to one-shot scripting: describe the process, get it back in a single pass. A hard task, especially one that includes reasoning, goes to supervised autonomy, where you supply correctness conditions and proposed sub-tasks to shape the system, plus tools that determinize recurring processes and monitoring-and-intervention to shape the development process.</figcaption></figure>
 <h3>The two modes</h3>
 <p>Start at the decision on the left. You have a computational task and you can say what it takes in and what it must produce. From there the path forks on how big and how hard the work is.</p>
 <p><strong>One-shot scripting</strong> is the right branch. The task is small, a few thousand lines at most, and it does not ask the agent to reason its way through anything subtle. A CSV-to-HTML report script is the shape of it. You specify the behavior once, the agent writes it in a single pass, and you read the result. The whole transaction fits in one context window and one sitting. When a task really is this size, reaching for the full apparatus of governed autonomy is wasted effort. Send it one-shot and move on.</p>

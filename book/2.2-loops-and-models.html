@@ -82,6 +82,14 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx-terms .idx-term { font-weight: 600; }
 .idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
 .idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* curated concept entry: a definition-of / examples-of sub-block under the concept name */
+.idx-terms li.idx-concept { margin: 0.55rem 0; }
+.idx-concept .idx-subs { display: block; margin: 0.15rem 0 0 1rem; }
+.idx-concept .idx-sub { display: block; font-size: 14px; color: #444; line-height: 1.6; }
+.idx-concept .idx-sub-lead { color: #595959; font-style: italic; margin-right: 0.35rem; }
+/* Underline the locators so a link is distinguished from the "definition of:" lead text without relying
+   on color alone (axe link-in-text-block). */
+.idx-concept .idx-sub a { margin-right: 0.4rem; text-decoration: underline; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
                                              border-radius: 6px; background: #fff; }
@@ -197,6 +205,42 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="3.1-the-agent-stack.html">Next part ⇒</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 2.2 · Loops and Models"><header class="chap"><div class="kicker">Part 2 — The Mindset &nbsp;::&nbsp; Chapter 2.2</div><h1>Loops and Models</h1></header><p>Two ideas carry the rest of this book, and everything else is a consequence of them. The first is that all agent work is a <em>loop</em>. The second is that an agent steers that loop well only when you hand it a <em>model</em> of the world it is working in. Get these two right and the agent finds your answer fast; get them wrong and it wanders. Let me take them in turn.</p>
 <h2>Everything is a loop</h2>
 <p>An agent does not run in a straight line — it runs in a loop, and the loop has a fixed shape. It takes an input: the current problem, plus some notion of what success looks like. It reasons, and it acts in its operating environment. It produces a result. And that result folds back into the input for the next turn. Input, reasoning, output, fed around again. Shaping that loop is <strong>commonly called loop engineering</strong>, and nearly everything in this book is an instance of it.</p>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="loop-title loop-desc">
+  <title id="loop-title">Loop engineering</title>
+  <desc id="loop-desc">A single cycle. An Input paired with a success metric feeds Agent reasoning, which produces an Output, which feeds back around into the Input. The whole loop is the unit of engineering. The success metric is emphasized in the accent color because defining it is the hard question.</desc>
+
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="ah-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a4a7a"/>
+    </marker>
+  </defs>
+
+  <!-- ===== The three boxes: left edge x=70, width=250, center x=195 ===== -->
+
+  <!-- Input + success metric -->
+  <rect x="70" y="40" width="250" height="86" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
+  <text x="195" y="78" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Input</text>
+  <text x="195" y="104" text-anchor="middle" font-size="16" font-weight="700" fill="#1a4a7a">+ success metric</text>
+
+  <!-- Agent reasoning -->
+  <rect x="70" y="217" width="250" height="86" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
+  <text x="195" y="266" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Agent reasoning</text>
+
+  <!-- Output -->
+  <rect x="70" y="394" width="250" height="86" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
+  <text x="195" y="443" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Output</text>
+
+  <!-- ===== down arrows between boxes (centered x=195) ===== -->
+  <line x1="195" y1="126" x2="195" y2="215" stroke="#333" stroke-width="2" marker-end="url(#ah)"/>
+  <line x1="195" y1="303" x2="195" y2="392" stroke="#333" stroke-width="2" marker-end="url(#ah)"/>
+
+  <!-- ===== feedback arc: Output right edge, bulge right, back up into Input right edge ===== -->
+  <path d="M 320 437 C 450 437, 450 83, 322 83" fill="none" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#ah-accent)"/>
+  <text x="450" y="260" text-anchor="middle" font-size="15" fill="#1a4a7a" font-style="italic" transform="rotate(90 450 260)">feeds around</text>
+</svg><figcaption>The loop that is the unit of agent work. An input paired with a success metric feeds the agent's reasoning, which produces an output, which folds back around into the next input. The success metric is drawn in the accent color because defining it is the hard question.</figcaption></figure>
 <p>Engineering a loop well starts with the metric, because the metric is what the agent steers by. The agent does not magically know your goals or your environment. You have to make its progress <em>measurable</em> — deterministically, through a quantitative check, or through a rubric that scores a qualitative result. Skip this, and you have told the agent nothing about what "done" means, so it searches, and searches, and searches, and never knows when to stop.</p>
 <p>The orchestration layer of this book's companion repository is itself a worked example of a loop engineered this way. The catalogue models the orchestrator — the process that dispatches agents, waits for them to land work, and cleans up after them — as an explicit reactive loop with a typed lifecycle: <em>dispatch → work → land → tombstone</em>, then refill and go again. The loop is not left implicit in the code; it is written down as a model the agent can read, which is exactly the second idea.</p>
 <h2>Give it a model of the world</h2>

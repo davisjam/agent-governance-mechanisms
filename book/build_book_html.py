@@ -45,7 +45,17 @@ MERMAID_CDN = (
     "<script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script>"
 )
 
-META_RE = re.compile(r"<!--\s*([a-z-]+):\s*(.*?)\s*-->")
+# Chapter metadata comments — ONLY the two title keys. Scoped to these keys (not a generic `[a-z-]+`)
+# so the metadata strip never swallows a same-shaped directive comment that belongs in the body: a
+# `<!-- figure: … -->`, an `<!-- index-def: … -->`, or an `<!-- index-example: … -->`. A generic key
+# pattern here would delete those from `body_md` before the renderer ever saw them.
+META_RE = re.compile(r"<!--\s*(part-title|chapter-title):\s*(.*?)\s*-->")
+
+# Curated-index annotation tags (book/AGENTS.md §6). Placed on their own line at (or just before) the
+# concept's defining / exemplifying block. The renderer turns each into a stable anchor on the FOLLOWING
+# block; the index generator harvests them into curated concept entries.
+INDEX_DEF_RE = re.compile(r"^<!--\s*index-def:\s*([a-z0-9-]+)\s*-->$")
+INDEX_EXAMPLE_RE = re.compile(r"^<!--\s*index-example:\s*([a-z0-9-]+)\s*-->$")
 
 # Part number → the source subdirectory that holds its chapters. Front matter is part 0, the
 # five numbered parts are 1–5 (Part 4 is the Model Zoo), back matter is part 6. Appendix parts follow.
@@ -302,14 +312,70 @@ def _split_blocks(md: str) -> list[str]:
     return blocks
 
 
-def md_to_html(md: str) -> str:
-    """Convert the markdown subset the chapters use into HTML."""
+def _inject_anchor_id(block_html: str, anchor_id: str) -> str:
+    """Add `id="<anchor_id>"` to the first HTML tag of a rendered block, so a curated-index tag deep-links
+    the concept's defining / exemplifying block. If the tag already carries an id (a heading with a
+    `{#slug}` anchor), prepend an empty `<span id=…>` marker instead of clobbering the existing id."""
+    m = re.match(r"\s*<([a-zA-Z0-9]+)((?:\s[^>]*)?)>", block_html)
+    if m and " id=" not in m.group(2):
+        idx = m.end(1)
+        return block_html[:idx] + f' id="{html.escape(anchor_id, quote=True)}"' + block_html[idx:]
+    # First tag already has an id (or no leading tag) — front the block with an anchor-only span.
+    return f'<span id="{html.escape(anchor_id, quote=True)}"></span>' + block_html
+
+
+def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = None) -> str:
+    """Convert the markdown subset the chapters use into HTML.
+
+    `anchor_map` (optional) maps `(concept-slug, "def"|"ex", occurrence-on-this-page)` → the anchor id the
+    curated index links to. When a `<!-- index-def: … -->` / `<!-- index-example: … -->` tag is met, its
+    anchor is attached to the FOLLOWING rendered block (per book/AGENTS.md §6). Occurrences are counted
+    per (slug, kind) in reading order to match `_harvest_concept_tags`."""
     out: list[str] = []
     blocks = _split_blocks(md)
+    pending_anchor: str | None = None       # anchor id to inject onto the next content block
+    occ: dict[tuple[str, str], int] = {}    # per-page (slug, kind) → next occurrence index
+
+    def _emit(block_html: str) -> None:
+        nonlocal pending_anchor
+        if pending_anchor is not None:
+            block_html = _inject_anchor_id(block_html, pending_anchor)
+            pending_anchor = None
+        out.append(block_html)
+
+    def _consume_index_tag(line: str) -> bool:
+        """If `line` is a lone index-def / index-example tag, arm the pending anchor for the next block
+        and return True. A tag may sit on its own line at the head of a block that ALSO holds the block it
+        annotates (no blank line between), so this is called both on a standalone comment block and on the
+        first line of a multi-line block."""
+        nonlocal pending_anchor
+        s = line.strip()
+        _md, _me = INDEX_DEF_RE.match(s), INDEX_EXAMPLE_RE.match(s)
+        if not (_md or _me):
+            return False
+        slug = (_md or _me).group(1)
+        kind = "def" if _md else "ex"
+        n = occ.get((slug, kind), 0)
+        occ[(slug, kind)] = n + 1
+        if anchor_map is not None:
+            got = anchor_map.get((slug, kind, n))
+            if got is not None:
+                pending_anchor = got
+        return True
+
     for block in blocks:
         block = block.strip("\n")
         if not block.strip():
             continue
+        # Peel a leading index tag off the block. The tag attaches its anchor to the block it heads (the
+        # renderer arms `pending_anchor` and injects it on the next emitted content). A block may be JUST
+        # the tag (blank line follows) or the tag PLUS its annotated block (no blank line) — handle both.
+        blk_lines = block.splitlines()
+        while blk_lines and _consume_index_tag(blk_lines[0]):
+            blk_lines = blk_lines[1:]
+        if not blk_lines:
+            continue  # the block was nothing but tag comment(s)
+        block = "\n".join(blk_lines)
         stripped = block.strip()
         # Fenced code — a ```mermaid block renders as <pre class="mermaid"> (the mermaid runtime
         # transforms it into a diagram); any other fenced block renders as a plain <pre><code>.
@@ -321,9 +387,9 @@ def md_to_html(md: str) -> str:
                 inner_lines = inner_lines[:-1]
             inner = "\n".join(inner_lines)
             if lang == "mermaid":
-                out.append(f'<pre class="mermaid">{html.escape(inner, quote=False)}</pre>')
+                _emit(f'<pre class="mermaid">{html.escape(inner, quote=False)}</pre>')
             else:
-                out.append(f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
+                _emit(f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
             continue
         # Gap-marker callouts.
         if stripped.startswith("[FILL IN:") or stripped.startswith("[MORE CHAPTERS FOLLOW:"):
@@ -332,7 +398,7 @@ def md_to_html(md: str) -> str:
             inner = stripped[stripped.index(":") + 1:].rstrip("]").strip()
             # A plain <div> (not <aside>): <aside> is a `complementary` landmark, and two markers on one
             # page trip html-validate's unique-landmark rule (each landmark needs a unique accessible name).
-            out.append(
+            _emit(
                 f'<div class="marker marker-{kind}">'
                 f'<span class="marker-tag">{label}</span> {inline(inner)}</div>'
             )
@@ -343,7 +409,7 @@ def md_to_html(md: str) -> str:
         if stripped.startswith("<!--") and stripped.endswith("-->") \
                 and stripped.count("<!--") == 1 \
                 and stripped[4:].lstrip().startswith("figure:"):
-            out.append(_figure_block(stripped))
+            _emit(_figure_block(stripped))
             continue
         # Figure-iframe directive: `<!-- figure-iframe: <path> | <caption> | <a11y-title> -->` → a
         # <figure><iframe> preview of a self-contained figure page (the rewired mechanism map), never
@@ -351,7 +417,7 @@ def md_to_html(md: str) -> str:
         if stripped.startswith("<!--") and stripped.endswith("-->") \
                 and stripped.count("<!--") == 1 \
                 and stripped[4:].lstrip().startswith("figure-iframe:"):
-            out.append(_figure_iframe_block(stripped))
+            _emit(_figure_iframe_block(stripped))
             continue
         # A standalone HTML comment (e.g. the TODO markers) — emit it raw so it stays an invisible
         # comment in the source rather than escaped visible text.
@@ -362,15 +428,15 @@ def md_to_html(md: str) -> str:
         # rewired mechanism-map figure can deep-link each pattern); it is stripped from the visible text.
         if stripped.startswith("### "):
             txt, anc = _heading_anchor(stripped[4:])
-            out.append(f"<h3{anc}>{inline(txt)}</h3>")
+            _emit(f"<h3{anc}>{inline(txt)}</h3>")
             continue
         if stripped.startswith("## "):
             txt, anc = _heading_anchor(stripped[3:])
-            out.append(f"<h2{anc}>{inline(txt)}</h2>")
+            _emit(f"<h2{anc}>{inline(txt)}</h2>")
             continue
         if stripped.startswith("# "):
             txt, anc = _heading_anchor(stripped[2:])
-            out.append(f"<h1{anc}>{inline(txt)}</h1>")
+            _emit(f"<h1{anc}>{inline(txt)}</h1>")
             continue
         # Blockquote (all lines start with >). Its inner content is itself markdown — a `> ###`
         # heading, `> ` prose paragraphs, a `> ```mermaid ``` fence — so strip the `>` prefix and
@@ -383,20 +449,20 @@ def md_to_html(md: str) -> str:
             # <hN> makes axe flag a heading-order skip when an inset sits right after the chapter <h1>.
             # Demote any heading inside a blockquote to a styled paragraph, preserving its {#id} anchor.
             inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
-            out.append(f"<blockquote>{inner_html}</blockquote>")
+            _emit(f"<blockquote>{inner_html}</blockquote>")
             continue
         # Pipe table (a header row, a `|---|---|` separator, then body rows). GitHub-flavored
         # markdown tables — the invariant/checker tables in the model pages depend on this.
         if _is_pipe_table(block):
-            out.append(_render_pipe_table(block))
+            _emit(_render_pipe_table(block))
             continue
         # Unordered list (all lines start with - ).
         if all(ln.strip().startswith("- ") for ln in block.splitlines()):
             items = "".join(f"<li>{inline(ln.strip()[2:])}</li>" for ln in block.splitlines())
-            out.append(f"<ul>{items}</ul>")
+            _emit(f"<ul>{items}</ul>")
             continue
         # Paragraph (join wrapped lines).
-        out.append(f"<p>{inline(' '.join(ln.strip() for ln in block.splitlines()))}</p>")
+        _emit(f"<p>{inline(' '.join(ln.strip() for ln in block.splitlines()))}</p>")
     return "\n".join(out)
 
 
@@ -531,6 +597,14 @@ figure.book-figure figcaption {{ font-size: 14px; color: #666; margin-top: 0.6re
 .idx-terms .idx-term {{ font-weight: 600; }}
 .idx-terms .idx-refs {{ color: #5f5f5f; font-size: 14px; }}
 .idx-terms .idx-refs a {{ margin-left: 0.15rem; }}
+/* curated concept entry: a definition-of / examples-of sub-block under the concept name */
+.idx-terms li.idx-concept {{ margin: 0.55rem 0; }}
+.idx-concept .idx-subs {{ display: block; margin: 0.15rem 0 0 1rem; }}
+.idx-concept .idx-sub {{ display: block; font-size: 14px; color: #444; line-height: 1.6; }}
+.idx-concept .idx-sub-lead {{ color: #595959; font-style: italic; margin-right: 0.35rem; }}
+/* Underline the locators so a link is distinguished from the "definition of:" lead text without relying
+   on color alone (axe link-in-text-block). */
+.idx-concept .idx-sub a {{ margin-right: 0.4rem; text-decoration: underline; }}
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe {{ width: 100%; height: 600px; border: 1px solid #e2e0da;
                                              border-radius: 6px; background: #fff; }}
@@ -1134,6 +1208,98 @@ def _appendix_anchor_map(entries: list[dict]) -> dict[str, str]:
     return {e["slug"]: f"{e['page_slug']}.html" for e in entries}
 
 
+# ─────────────────────────── Curated concept index — index-def / index-example tags ───────────────────────────
+# Two HTML-comment tags (book/AGENTS.md §6) let an author point the index at a concept's DEFINING
+# paragraph and its EXAMPLE paragraphs, instead of a heading-heuristic occurrence scan. The harvest below
+# walks every page in reading order, assigns each example a global anchor number, and validates the tags
+# (a concept has one canonical definition; a slug must be registered; an example needs a definition).
+
+_CONCEPT_RE = re.compile(r"-\s*concept:\s*([a-z0-9-]+)\s*\|\s*(.+?)\s*$")
+
+
+def _load_concept_registry() -> dict[str, str]:
+    """Read the `- concept: <slug> | <Display Name>` lines from `index-terms.md` → {slug: display}. A tag
+    whose slug is absent from this registry is a build-loud error (catches a typo before it silently drops
+    the concept). The display name is authored here once, not scraped from prose."""
+    reg: dict[str, str] = {}
+    it = HERE / _INDEX_TERMS_FILE
+    if not it.is_file():
+        return reg
+    for line in it.read_text(encoding="utf-8").splitlines():
+        m = _CONCEPT_RE.match(line.strip())
+        if m:
+            slug, display = m.group(1), m.group(2).strip()
+            if slug in reg:
+                raise SystemExit(f"index-terms.md: duplicate concept registration for '{slug}'")
+            reg[slug] = display
+    return reg
+
+
+def _harvest_concept_tags(chapters: list[dict]) -> tuple[dict, dict]:
+    """Walk every page's `body_md` in reading order for `index-def` / `index-example` tags. Returns
+    `(registry, page_anchor_maps)`:
+
+    - `registry` — {slug: {"display", "def": (page, anchor_id) | None, "examples": [(page, anchor_id), …]}}
+      keyed by concept slug, examples in global reading order (anchor `idx-ex-<slug>-<n>`, n starting at 1).
+    - `page_anchor_maps` — {page_slug: {(concept, kind, occ_on_page): anchor_id}} so the renderer can attach
+      the exact anchor the index links to, matching per-page tag occurrence order.
+
+    Fails loud on: a slug not registered in `index-terms.md`; a second `index-def` for one concept; an
+    `index-example` for a concept that has no `index-def` anywhere in the book."""
+    registry_names = _load_concept_registry()
+    reg: dict[str, dict] = {}
+    page_maps: dict[str, dict[tuple[str, str, int], str]] = {}
+    ex_counter: dict[str, int] = {}
+
+    def _slot(slug: str) -> dict:
+        if slug not in registry_names:
+            raise SystemExit(
+                f"index tag references unregistered concept '{slug}' — add "
+                f"`- concept: {slug} | <Display Name>` to {_INDEX_TERMS_FILE}")
+        return reg.setdefault(
+            slug, {"display": registry_names[slug], "def": None, "examples": []})
+
+    for pg in chapters:
+        pslug = pg["slug"]
+        pmap = page_maps.setdefault(pslug, {})
+        per_page_occ: dict[tuple[str, str], int] = {}
+        for line in pg["body_md"].splitlines():
+            s = line.strip()
+            md = INDEX_DEF_RE.match(s)
+            if md:
+                slug = md.group(1)
+                slot = _slot(slug)
+                if slot["def"] is not None:
+                    raise SystemExit(
+                        f"duplicate index-def for concept '{slug}' — a concept has one canonical "
+                        f"definition (already at {slot['def'][0]}, again on {pslug})")
+                anchor = f"idx-def-{slug}"
+                slot["def"] = (pg, anchor)
+                occ = per_page_occ.get((slug, "def"), 0)
+                pmap[(slug, "def", occ)] = anchor
+                per_page_occ[(slug, "def")] = occ + 1
+                continue
+            me = INDEX_EXAMPLE_RE.match(s)
+            if me:
+                slug = me.group(1)
+                _slot(slug)  # register / validate the slug
+                n = ex_counter.get(slug, 0) + 1
+                ex_counter[slug] = n
+                anchor = f"idx-ex-{slug}-{n}"
+                reg[slug]["examples"].append((pg, anchor))
+                occ = per_page_occ.get((slug, "ex"), 0)
+                pmap[(slug, "ex", occ)] = anchor
+                per_page_occ[(slug, "ex")] = occ + 1
+
+    # An example with no definition is a build-loud error.
+    for slug, slot in reg.items():
+        if slot["def"] is None and slot["examples"]:
+            raise SystemExit(
+                f"concept '{slug}' has index-example tag(s) but no index-def — mark its defining "
+                f"paragraph with `<!-- index-def: {slug} -->`")
+    return reg, page_maps
+
+
 # ─────────────────────────── Book index — autogenerated term index ───────────────────────────
 # Merge two term sources (the self-communicate LEXICON's house vocabulary + the book's own curated
 # concepts/proper-nouns in `index-terms.md`), occurrence-scan every chapter + appendix page, keep the
@@ -1202,6 +1368,10 @@ def _load_index_terms() -> list[str]:
             # Skip parenthetical-only meta bullets ("(timeline … — fill from context-b once drafted)").
             if raw.startswith("("):
                 continue
+            # Skip `concept: <slug> | <Display>` registry lines — those drive the curated concept index,
+            # not the occurrence scan (their display names enter via the curated-entry path).
+            if raw.startswith("concept:"):
+                continue
             _add(raw)
     return terms
 
@@ -1249,30 +1419,70 @@ def _index_ref_label(pg: dict) -> str:
     return f'{pg["part"]}.{pg["chapter"]}'
 
 
-def build_index_entries(chapters: list[dict]) -> list[dict]:
-    """Compute the index: for each candidate term that actually occurs in the prose, its display form and
-    its capped, ranked list of page references. Terms are grouped by uppercase first letter downstream.
-    Dropped: a term that never occurs (the index lists only findable terms)."""
-    terms = _load_index_terms()
+def _curated_concept_entries(registry: dict[str, dict]) -> list[dict]:
+    """Turn the harvested concept registry into curated index entries: one per concept that carries a
+    definition, with its `definition of:` locator and ordered `examples of:` locators. Each locator links
+    the specific anchor (`#idx-def-<slug>` / `#idx-ex-<slug>-<n>`)."""
+    entries: list[dict] = []
+    for slug, slot in registry.items():
+        if slot["def"] is None:
+            continue  # a concept with no definition contributes no curated entry
+        def_pg, def_anchor = slot["def"]
+        entries.append({
+            "kind": "curated",
+            "term": slot["display"],
+            "def": (def_pg, def_anchor),
+            "examples": list(slot["examples"]),
+        })
+    return entries
+
+
+def build_index_entries(chapters: list[dict], concept_registry: dict[str, dict] | None = None) -> list[dict]:
+    """Compute the index. Two entry kinds interleave alphabetically:
+
+    - **Curated** — a concept carrying `index-def` / `index-example` tags, rendered as a `definition of:` /
+      `examples of:` shape leading with the author-named sites.
+    - **Occurrence** — a term with no curated tags, rendered as the capped, ranked page list from the scan.
+
+    A curated concept whose display name also matches a scanned term SUPPRESSES that occurrence entry (a
+    concept is not listed twice). A term that never occurs is dropped (the index lists only findable terms)."""
+    concept_registry = concept_registry or {}
     entries: list[dict] = []
     seen_display: set[str] = set()
-    for term in terms:
-        refs = _scan_term_refs(term, chapters)
-        if not refs:
-            continue
-        key = term.lower()
+
+    # Curated entries first — they win over a same-named occurrence entry.
+    for e in _curated_concept_entries(concept_registry):
+        key = e["term"].lower()
         if key in seen_display:
             continue
         seen_display.add(key)
-        entries.append({"term": term, "refs": refs})
+        entries.append(e)
+
+    # Occurrence entries for every remaining findable term.
+    for term in _load_index_terms():
+        key = term.lower()
+        if key in seen_display:
+            continue
+        refs = _scan_term_refs(term, chapters)
+        if not refs:
+            continue
+        seen_display.add(key)
+        entries.append({"kind": "occurrence", "term": term, "refs": refs})
+
     entries.sort(key=lambda e: e["term"].lower())
     return entries
 
 
-def build_index_page(chapters: list[dict]) -> str:
-    """Render `book-index.html` from the computed entries — an alphabetized term index with per-term page
-    links, grouped by first letter. Returns the full page HTML."""
-    entries = build_index_entries(chapters)
+def _anchored_locator(pg: dict, anchor: str) -> str:
+    """One curated locator: a link to `<slug>.html#<anchor>` labelled by the short page locator."""
+    return (f'<a href="{pg["slug"]}.html#{html.escape(anchor, quote=True)}">'
+            f'{html.escape(_index_ref_label(pg))}</a>')
+
+
+def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | None = None) -> str:
+    """Render `book-index.html` from the computed entries — an alphabetized index (curated concept entries +
+    occurrence term entries) grouped by first letter. Returns the full page HTML."""
+    entries = build_index_entries(chapters, concept_registry)
     groups: dict[str, list[dict]] = {}
     for e in entries:
         first = e["term"][0].upper()
@@ -1284,14 +1494,31 @@ def build_index_page(chapters: list[dict]) -> str:
         rows.append(f'<div class="part">{html.escape(letter)}</div>')
         rows.append("<ul>")
         for e in groups[letter]:
-            links = ", ".join(
-                f'<a href="{pg["slug"]}.html">{html.escape(_index_ref_label(pg))}</a>'
-                for pg in e["refs"]
-            )
-            rows.append(
-                f'<li><span class="idx-term">{inline(e["term"])}</span> '
-                f'<span class="idx-refs">{links}</span></li>'
-            )
+            if e.get("kind") == "curated":
+                def_pg, def_anchor = e["def"]
+                sub: list[str] = [
+                    f'<span class="idx-sub"><span class="idx-sub-lead">definition of:</span> '
+                    f'{_anchored_locator(def_pg, def_anchor)}</span>'
+                ]
+                if e["examples"]:
+                    ex_links = " ".join(_anchored_locator(pg, anc) for pg, anc in e["examples"])
+                    sub.append(
+                        f'<span class="idx-sub"><span class="idx-sub-lead">examples of:</span> '
+                        f'{ex_links}</span>'
+                    )
+                rows.append(
+                    f'<li class="idx-concept"><span class="idx-term">{inline(e["term"])}</span>'
+                    f'<span class="idx-subs">{"".join(sub)}</span></li>'
+                )
+            else:
+                links = ", ".join(
+                    f'<a href="{pg["slug"]}.html">{html.escape(_index_ref_label(pg))}</a>'
+                    for pg in e["refs"]
+                )
+                rows.append(
+                    f'<li><span class="idx-term">{inline(e["term"])}</span> '
+                    f'<span class="idx-refs">{links}</span></li>'
+                )
         rows.append("</ul>")
 
     header = (
@@ -1299,9 +1526,9 @@ def build_index_page(chapters: list[dict]) -> str:
         "<h1>Index</h1></header>"
     )
     intro = (
-        "<p>A term index over the chapters and the appendix. Each entry links to the pages where the term "
-        "is defined or used; references are capped per term so the index leads with the significant sites, "
-        "not every mention.</p>"
+        "<p>A term index over the chapters and the appendix. A curated concept entry leads with the paragraph "
+        "that <em>defines</em> it and the paragraphs that <em>exemplify</em> it; a plain term entry links the "
+        "pages where it appears, capped so the index leads with the significant sites.</p>"
     )
     body = header + intro + '<div class="idx idx-terms">' + "\n".join(rows) + "</div>"
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
@@ -1338,6 +1565,11 @@ def build() -> int:
         c["show_epigraph"] = c["part"] not in seen_parts and not c.get("is_appendix")
         seen_parts.add(c["part"])
 
+    # Curated concept index — harvest the index-def / index-example tags across all pages in reading
+    # order (fails loud on a duplicate def, an unregistered slug, or an example with no def). The per-page
+    # anchor maps feed the renderer so each tagged block carries the anchor the index links to.
+    concept_registry, page_anchor_maps = _harvest_concept_tags(chapters)
+
     # Per-chapter pages.
     for i, c in enumerate(chapters):
         prev_c = chapters[i - 1] if i > 0 else None
@@ -1357,7 +1589,7 @@ def build() -> int:
             + (_epigraph_html(c["part"]) if c.get("show_epigraph") else "")
             + '</header>'
         )
-        body = md_to_html(c["body_md"])
+        body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
         if prev_c:
             prev_html = (
                 f'<a class="prev" href="{prev_c["slug"]}.html"><span class="dir">‹ Previous</span>'
@@ -1431,7 +1663,8 @@ def build() -> int:
     )
 
     # Autogenerated term index — placed after the appendix, reachable from the INDEX nav button.
-    (HERE / f"{BOOK_INDEX_SLUG}.html").write_text(build_index_page(chapters), encoding="utf-8")
+    (HERE / f"{BOOK_INDEX_SLUG}.html").write_text(
+        build_index_page(chapters, concept_registry), encoding="utf-8")
 
     print(f"built {len(chapters)} chapter pages + index.html + {BOOK_INDEX_SLUG}.html")
     return 0
