@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Hand-authored SVG (not Mermaid): a two-way fork with a distinct icon per arm
-     (a sensor that detects a mistake that already happened vs. a wall that makes the
+     (a sensor that detects a mistake that already happened vs. a constraint that makes the
      class impossible). Mermaid's flowchart would draw the fork but not the
      detect-after / forbid-before contrast that is the whole point; the side-by-side
      "smoke detector vs. firewall" framing wants bespoke placement. Accent #1a4a7a. -->
@@ -9,9 +9,9 @@
      font-family="'Helvetica Neue', Arial, sans-serif">
   <title id="caTitle">Two forms a failure-to-mechanism conversion can take: a control or an architecture</title>
   <desc id="caDesc">A recurring failure, seen twice, is converted into a mechanism, which takes
-    one of two forms. On the left, a control — a sensor: it lets the mistake happen but detects
+    one of two forms. On the left, a sensor: it lets the mistake happen but detects
     it and surfaces it in time to stop the damage, like a test suite in CI or a smoke detector.
-    On the right, an architecture — a wall: it makes the whole class of mistake impossible by
+    On the right, a constraint: it makes the whole class of mistake impossible by scoping the action space,
     construction, like choosing a typed enumeration over free-form strings so an unlisted value
     cannot be represented, like a firewall. The control watches for the bug; the wall forbids it.
     The wall is cheaper to live behind than the sensor is to keep reading.</desc>
@@ -36,7 +36,7 @@
 
   <!-- ================= LEFT — control / sensor ================= -->
   <rect x="70" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Control — a sensor</text>
+  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Sensor — detects</text>
 
   <!-- sensor icon: a dish detecting a spark -->
   <circle cx="250" cy="252" r="26" fill="none" stroke="#1a4a7a" stroke-width="2.5"/>
@@ -49,7 +49,7 @@
 
   <!-- ================= RIGHT — architecture / wall ================= -->
   <rect x="530" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Architecture — a wall</text>
+  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Constraint — prevents</text>
 
   <!-- wall icon: brick courses -->
   <g stroke="#1a4a7a" stroke-width="2" fill="none">

@@ -35,7 +35,7 @@ capturing them.
 **A living lexicon.** This file is meant to grow. When you coin a term, notice two words used for one idea,
 or find a stale row, add or fix it — and re-walk the codebase periodically to catch drift.
 
-**Shared with the sibling skills.** The **Governance & controls** and **Operations** clusters are the
+**Shared with the sibling skills.** The **Governance & mechanisms** and **Operations** clusters are the
 vocabulary the sibling skills reason in too — *self-governance* and *self-operations* reference this lexicon
 so the whole trio names concepts the same way. (Cross-links from those skills come later; the intent is
 noted here.)
@@ -180,27 +180,35 @@ it, rather than describing it freshly. The two umbrella references anchor the to
 | **Explicit state machine (FSM)** | Model a lifecycle as enumerated states with validated transitions, not scattered flags. Use for any async job lifecycle. | [Finite-state machine](https://en.wikipedia.org/wiki/Finite-state_machine) |
 | **Quiesce** | Bring a running system to a safe, idle, drained state — finish in-flight work, accept no new work, then stop. | [Database quiescence](https://en.wikipedia.org/wiki/Quiesce) |
 
-## Governance & controls
+## Governance & mechanisms
 
 Shared with the sibling *self-governance* skill — name these the same way across the trio.
 
-### Control kinds
+### Mechanism kinds
+
+A **governance mechanism** governs the fleet's work in one of two ways — it is a *constraint* or a
+*sensor* (and a real one often bundles both: see *governance package*). This retires the older umbrella
+word **control**, which did two jobs and blurred both — it named the whole category *and*, loosely, the
+detecting kind. Say **mechanism** for the umbrella, **constraint** or **sensor** for the kind.
 
 | Term | When to use it / what it means | Reference |
 |---|---|---|
-| **Control** | A discrete named artifact that fires on a violation. Prefer over "check" when the enforcement is the point. | [Safety engineering](https://en.wikipedia.org/wiki/Safety_engineering) |
-| **Lint** | A static-analysis rule that flags a code pattern at author/commit time. Use for a cheap, deterministic, at-PR check. | [Lint](https://en.wikipedia.org/wiki/Lint_(software)) |
-| **Gate** | A blocking check on a lifecycle transition (commit, merge, deploy). Use for the pass/fail barrier itself. | [Continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) |
-| **Validator** | A runtime check asserting an invariant on data or output (e.g. output ⊆ input). Use for a content or schema assertion. | [Data validation](https://en.wikipedia.org/wiki/Data_validation) |
-| **Audit** | A periodic, often manual survey for a class of problem. Use when the signal isn't yet mechanically detectable (see audit→lint below). | [Software audit](https://en.wikipedia.org/wiki/Software_audit_review) |
+| **Governance mechanism** | The umbrella: a discrete named artifact that keeps the fleet's work aligned by *preventing* or *detecting* drift. Say "mechanism," not the ambiguous "control." | [Safety engineering](https://en.wikipedia.org/wiki/Safety_engineering) |
+| **Constraint** | The *preventing* kind — scopes the agent's action space *within* a loop iteration so the wrong move is unavailable (a typed enum instead of a string; one sole seam). The prevented mistake costs no failed iteration. Usually hard; sometimes a soft aim (a typed model the agent reasons through). | [Software architecture](https://en.wikipedia.org/wiki/Software_architecture) |
+| **Sensor** | The *detecting* kind — catches drift *after* the move, usually failing the loop iteration so the agent must re-iterate to fix it (a lint, a test, a parity gate). Costs iterations. | [Runtime verification](https://en.wikipedia.org/wiki/Runtime_verification) |
+| **Governance package** | A mechanism that bundles several — a soft constraint (a typed model that aims the agent), hard constraints (enums), and sensors (a lint, a drift-parity gate). Name the package and tag its *primary* move; don't force it into one bin. | — |
+| **Lint** | A *sensor* that flags a code pattern by static analysis at author/commit time. Cheap, deterministic, at-PR. | [Lint](https://en.wikipedia.org/wiki/Lint_(software)) |
+| **Gate** | A blocking *sensor* on a lifecycle transition (commit, merge, deploy) — the pass/fail barrier itself. | [Continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) |
+| **Validator** | A runtime *sensor* asserting an invariant on data or output (e.g. output ⊆ input). | [Data validation](https://en.wikipedia.org/wiki/Data_validation) |
+| **Audit** | A periodic, often manual *sensor* for a class of problem — use when the signal isn't yet mechanically detectable (see audit→lint below). | [Software audit](https://en.wikipedia.org/wiki/Software_audit_review) |
 
 ### Enforcement posture
 
 | Term | When to use it / what it means | Reference |
 |---|---|---|
-| **Soft vs. hard enforcement** | Soft = probabilistic, aims an agent, can't block; hard = deterministic, holds the line. "Guidance aims, machinery holds." | [Defense in depth](https://en.wikipedia.org/wiki/Defense_in_depth_(computing)) |
-| **Architecture vs. control** | Architecture makes a failure impossible by construction; a control catches what architecture can't prevent. Name which lever you mean. | [Software architecture](https://en.wikipedia.org/wiki/Software_architecture) |
-| **Architecture-first / defense-in-depth** | Make the error impossible before catching it; a costly failure earns both a structural fix and a control. | [Defense in depth](https://en.wikipedia.org/wiki/Defense_in_depth_(computing)) |
+| **Soft vs. hard enforcement** | Soft = probabilistic, aims an agent, can't block; hard = deterministic, holds the line. "Guidance aims, machinery holds." Orthogonal to the constraint/sensor kind — a sensor can be soft (a reminder) or hard (a lint that blocks); a constraint is usually hard. | [Defense in depth](https://en.wikipedia.org/wiki/Defense_in_depth_(computing)) |
+| **Constraint vs. sensor** | A constraint *prevents* drift by scoping what the agent can do (an enum, so it can't pick a wrong synonym this iteration); a sensor *detects* drift after the fact and fails the iteration (the test suite, the lints). Prefer a constraint — the prevented mistake costs no iteration; reach for a sensor where you can't scope the action space. | [Software architecture](https://en.wikipedia.org/wiki/Software_architecture) |
+| **Constraint-first / defense-in-depth** | Make the wrong action impossible (a constraint) before catching it (a sensor); a costly failure earns both. "Architecture" is the design activity that builds constraints, not a third kind. | [Defense in depth](https://en.wikipedia.org/wiki/Defense_in_depth_(computing)) |
 | **Audit→lint migration** | Convert a recurring audit finding into a deterministic lint; a bug in N>1 files means "fix N sites and add a lint." | [Static program analysis](https://en.wikipedia.org/wiki/Static_program_analysis) |
 
 ### Design stances

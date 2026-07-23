@@ -38,10 +38,10 @@ chapter (filled as chapters settle; the generator still scans all chapters for s
 - ex-ante governance @ch05
 - ex-post governance @ch05
 - specification-driven development @ch05
-- controls vs. architecture @ch05
-- sensor vs. wall @ch05
-- control (sensor) @ch05
-- architecture (wall) @ch05
+- constraints and sensors @ch05
+- constraint (prevents drift) @ch05
+- sensor (detects drift) @ch05
+- governance package @ch05
 - typed enum over stringly-typed state @ch05
 - the model zoo @ch06
 - data-flow diagram @ch06
@@ -163,9 +163,10 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: ex-ante-governance | Ex-ante governance
 - concept: ex-post-governance | Ex-post governance
 - concept: failure-to-mechanism | Failure to mechanism
-- concept: controls-vs-architecture | Controls vs. architecture
-- concept: control-sensor | Control (sensor)
-- concept: architecture-wall | Architecture (wall)
+- concept: constraints-and-sensors | Constraints and sensors
+- concept: sensor | Sensor (detects drift)
+- concept: constraint | Constraint (prevents drift)
+- concept: governance-package | Governance package
 - concept: specification-driven-development | Specification-driven development
 - concept: lifecycle | Lifecycle
 - concept: failure-mode-effects-analysis | Failure mode and effects analysis
@@ -261,5 +262,5 @@ display name. A tag whose slug is absent here fails the build. Display names are
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
 - context-b (timeline) concepts + any proper nouns from the ADA/timeline chapters get appended once that Fable lands.
-- Aliases (e.g. "sensor vs. wall" ↔ "controls vs. architecture") should map to ONE index entry with a cross-ref;
+- Aliases (e.g. "constraint" ↔ "the wall", "sensor" ↔ "the smoke detector") should map to ONE index entry with a cross-ref;
   the generator can read alias groups from this file if we add a small `alias:` syntax later.

@@ -70,6 +70,13 @@ grading it as prose is a category error.
   demoted. Each flag carries a one-sentence fix, so the output is a work-list, not a grade.
 - **Cross-cutting notes** — thesis-woven-or-asserted, structural defects (numbering, ordering), and the
   "strongest claim is buried / over-claimed" observations that no single chapter score captures.
+- **Example variety (a hard expectation, not a nicety)** — this book should almost NEVER lean on a
+  recurring example. The subject is multifaceted, so each idea earns a *different* concrete case, and the
+  variety is itself part of the argument: the method applies across many angles, not one pet example. So
+  flag EVERY place the book reaches for the same illustration twice — the alt-text case, the deploy-driver
+  incident, the enum-vs-string contrast, the two-week bounding-box confession, the four-Claude-subscription
+  detail — as a *smell*, not a spine. The fix is always a fresh case drawn from the real system's range.
+  Report the examples that recur and the ideas that lack their own distinct illustration.
 
 The bar: a harsh critic who err toward flagging, cites specifics, and never pads. A verdict that praises
 everything has failed — the point is to find the weak spots before a reader does.
