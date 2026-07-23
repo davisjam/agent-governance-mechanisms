@@ -20,6 +20,10 @@ nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px sol
 header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
 header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }
+/* The kicker halves are links but must stay understated — inherit the small-caps accent colour, no default
+   underline; reveal the underline only on hover/focus so the affordance is discoverable without shouting. */
+header.chap .kicker a { color: inherit; text-decoration: none; }
+header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
@@ -27,6 +31,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
                         color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
@@ -54,6 +59,75 @@ table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
 blockquote table.book-table { background: #fff; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
+/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
+   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
+   theme knob is missed. */
+pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 20px; }
+pre.mermaid text.messageText { font-size: 18px; }
+/* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
+   quote: it is a deliberately designed aside that teaches a background concept beside the main argument
+   (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its
+   own visual language: a tinted panel, a strong left accent rule, a labelled header band, and a ROMAN
+   (non-italic) body a reader can actually read at length.
+
+   ── SWAP POINT ─────────────────────────────────────────────────────────────────────────────────────
+   Every knob is a CSS custom property on `.concept-inset`, so this "screen representation of the book" can
+   be re-skinned in ONE place — change these vars to retarget a print stylesheet, a dark theme, or an
+   alternate house style without touching any rule below. Add e.g. a `@media print` or `:root[data-theme=…]`
+   block that only re-declares these variables and the whole sidebar follows. */
+blockquote.concept-inset {
+  --inset-bg: #f6f4ef;           /* panel fill — warm off-white, distinct from the page's #faf9f6 */
+  --inset-accent: #b07a2b;       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
+  --inset-header: #4a3a1e;       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-header-bg: #ece4d5;    /* header band fill — a shade deeper than the panel so the label reads */
+  --inset-body: #33302a;         /* body ink — near-black warm grey, comfortable roman reading colour */
+  --inset-accent-width: 5px;     /* thickness of the left accent rule */
+  --inset-radius: 6px;
+  --inset-pad-x: 1.35rem;
+  --inset-pad-y: 1rem;
+  --inset-max: 34rem;            /* keep the primer to a readable measure, not the full column width */
+
+  background: var(--inset-bg);
+  border: 1px solid #e3dccb;
+  border-left: var(--inset-accent-width) solid var(--inset-accent);
+  border-radius: var(--inset-radius);
+  color: var(--inset-body);
+  font-style: normal;            /* KEY: kill the base blockquote italic — a primer reads as roman prose */
+  padding: 0 var(--inset-pad-x) var(--inset-pad-y);
+  margin: 1.7rem 0;
+  max-width: var(--inset-max);
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+/* Header treatment — the "Inset N — Title" label sits in its own tinted band, flush to the panel edges,
+   set in small-caps-ish tracked type so it reads as a sidebar HEADER, not a run-in paragraph. It stays a
+   demoted callout label (`p.inset-title`, not an <hN>) so no heading-order break and its id anchor is
+   preserved. */
+blockquote.concept-inset .inset-title {
+  font-style: normal; font-weight: 700; color: var(--inset-header);
+  background: var(--inset-header-bg);
+  margin: 0 calc(-1 * var(--inset-pad-x)) var(--inset-pad-y);
+  padding: 0.6rem var(--inset-pad-x);
+  border-radius: var(--inset-radius) var(--inset-radius) 0 0;
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+blockquote.concept-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
+blockquote.concept-inset p:last-child { margin-bottom: 0; }
+blockquote.concept-inset strong { color: var(--inset-header); }
+blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
+   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Taxonomy + spec: book/_design/callout-typography.md. */
+blockquote.thesis-box { background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
+                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                         border-radius: 5px; }
+blockquote.thesis-box p { margin: 0 0 0.6rem; }
+blockquote.thesis-box p:last-child { margin-bottom: 0; }
+blockquote.thesis-box strong { color: #241f33; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
 figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
@@ -88,6 +162,26 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
 .idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* Book-length table (book-index.html) — a compact, auto-generated size breakdown. Section rows band the
+   BODY / APPENDIX groups; subtotal + total rows are bolded; the numeric column is tabular + right-aligned. */
+.book-length { margin: 1.4rem 0 2.2rem; }
+.book-length h2 { margin: 0 0 0.4rem; }
+.book-length .wc-note { color: #5f5f5f; font-size: 14px; margin: 0 0 0.8rem; max-width: 40rem; }
+table.wc-table { border-collapse: collapse; width: auto; min-width: 22rem; max-width: 34rem;
+                  margin: 0.4rem 0; font-size: 15px; }
+table.wc-table caption.sr-cap { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+                                 overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+table.wc-table th, table.wc-table td { border: 1px solid #e2e0da; padding: 0.4rem 0.7rem;
+                                        text-align: left; vertical-align: top; line-height: 1.4; }
+table.wc-table thead th { background: #f4f3f0; font-weight: 600; }
+table.wc-table thead th:last-child { text-align: right; }
+table.wc-table td.wc-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.wc-table tr.wc-section th { background: #efece5; font-weight: 700; text-transform: uppercase;
+                                   letter-spacing: 0.04em; font-size: 12px; color: #555; }
+table.wc-table tr.wc-part th { font-weight: 400; padding-left: 1.3rem; }
+table.wc-table tr.wc-subtotal th, table.wc-table tr.wc-subtotal td { font-weight: 600; background: #faf9f6; }
+table.wc-table tr.wc-total th, table.wc-table tr.wc-total td { font-weight: 700; background: #f0efeb;
+                                                                border-top: 2px solid #cfa14a; }
 /* term index page */
 .idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
 .idx-terms li { margin: 0.3rem 0; }
@@ -105,21 +199,32 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
                                              border-radius: 6px; background: #fff; }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
-.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
+   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
+   so they read calm beside the primary pager cards rather than cramped. */
+.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
 .jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
-           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
+           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }
 .jump a:hover { border-color: var(--accent); background: #f4f3f0; }
-nav.toc .jump { margin-top: 0.7rem; }
-.pager-jump { margin-top: 1.2rem; }
-.pager-jump .jump { justify-content: center; margin-top: 0; }
+/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
+   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                      gap: 0.7rem 1.4rem; }
+nav.toc details { flex: 0 0 auto; }
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
+   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+nav.toc details[open] { flex: 1 1 100%; }
+nav.toc .jump { margin-top: 0; margin-left: auto; }
+.pager-jump { margin-top: 1.4rem; }
+.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Context</li>
 <li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
 <li><a class="current" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li><a class="" href="1.3-the-built-system.html">1.3&nbsp; The Built System</a></li>
 <li class="part">Part 2 — The Mindset</li>
 <li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
 <li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
@@ -146,76 +251,88 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
-<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
-<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
-<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
-<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
-<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
-<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
-<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
-<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
-<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
-<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
-<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
-<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
-<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
-<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
-<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
-<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
-<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
-<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
-<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
-<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
-<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
-<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
-<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
-<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
-<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
-<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
-<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A - 1. Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A - 2. Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A - 3. Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A - 4. Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A - 5. Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A - 6. Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A - 7. Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A - 8. Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A - 9. Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A - 10. Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A - 11. Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A - 12. Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A - 13. Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A - 14. Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A - 15. Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A - 16. Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A - 17. Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A - 25. Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A - 26. Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A - 28. Enforce at the right semantic level</a></li>
 <li class="part">Appendix B — Models-bridge patterns</li>
-<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
-<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
-<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
-<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
-<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
-<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
-<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
-<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
-<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
-<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
-<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
-<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
-<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
-<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
-<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
-<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
-<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
-<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
-<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1. The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B - 2. Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B - 3. Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B - 6. Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B - 7. Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B - 8. Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B - 9. Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B - 10. Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B - 11. Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B - 12. Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 13. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 14. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 15. Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 16. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 17. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 18. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 19. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 20. User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
-<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
-<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
-<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
-<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
-<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
-<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
-<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
-<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
-<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
-<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
-<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
-<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
-<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
-<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
-<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
-<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
-<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
-<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
-<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
-<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="2.1-the-printer.html">Next part ⇒</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 1.2 · The Timeline and the Work"><header class="chap"><div class="kicker">Part 1 — The Context &nbsp;::&nbsp; Chapter 1.2</div><h1>The Timeline and the Work</h1></header><p>The last chapter established the problem. This one tells what happened when one person tried to solve it — the concrete arc from a five-minute experiment in the back of a committee meeting to a production system that, by the end, was writing almost all of its own code. The story matters because every governance idea in this book was learned at a specific point on this arc, in response to a specific failure. The methods are not a theory that came first. They are the sediment left by the work.</p>
-<p>The scale is easy to state and hard to believe. Over about 19 weeks of focused effort, a single architect and a fleet of AI coding agents produced a repository of 490,231 lines of production code, 1,420,335 lines of support apparatus, 8,446 lines of infrastructure-as-code, and 7,380 lines of system models bridging the two. On a routine day, six to eight agents ran in parallel and landed on the order of 200 commits — about 1,000 a week, sustained, against the hundred a week a fast unaided human might manage. The architect inspected almost none of the code. That last sentence is the whole engineering problem of this book, and the timeline below is how it became survivable.</p>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C - 4. Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C - 5. ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C - 6. Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C - 7. ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C - 8. Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C - 9. Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C - 10. DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C - 11. Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C - 12. FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C - 13. Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C - 14. `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C - 15. `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C - 16. F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C - 17. Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C - 18. Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C - 19. Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C - 20. Typed `ViolationCategory` / `FailureCategory` enums</a></li>
+<li class="part">Appendix D — Mechanism Stacks</li>
+<li><a class="" href="appendix-stacks.html">Appendix D — Mechanism Stacks</a></li>
+<li><a class="" href="appendix-d-mbse-stack.html">Appendix D - 1. The MBSE stack</a></li>
+<li><a class="" href="appendix-d-self-operations-stack.html">Appendix D - 2. The self-operations stack</a></li>
+<li><a class="" href="appendix-d-semantic-lint-stack.html">Appendix D - 3. The semantic-lint stack</a></li>
+<li><a class="" href="appendix-d-worktree-lifecycle-stack.html">Appendix D - 4. The worktree-lifecycle stack</a></li>
+<li><a class="" href="appendix-d-canonical-seam-stack.html">Appendix D - 5. The canonical-seam stack</a></li>
+<li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
+<li class="part">Appendix E — How to Write a Skill</li>
+<li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="1.1-the-ada-context.html">⇐ Beginning of this part</a><a href="2.1-the-printer.html">Next part ⇒</a><a href="1.3-the-built-system.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 1.2 · The Timeline and the Work"><header class="chap"><div class="kicker"><a href="1.1-the-ada-context.html" aria-label="Beginning of Part 1 — The Context">Part 1 — The Context</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 1.2</a></div><h1>The Timeline and the Work</h1></header><p>The last chapter established the problem. This one tells what happened when one person tried to solve it — the concrete arc from a five-minute experiment in the back of a committee meeting to a production system that, by the end, was writing almost all of its own code. The story matters because every governance idea in this book was learned at a specific point on this arc, in response to a specific failure. The methods are not a theory that came first. They are the sediment left by the work.</p>
+<p>The scale is easy to state and hard to believe. Over about 19 weeks of focused effort, a single architect and a fleet of AI coding agents produced a repository of 490,231 lines of production code, 1,420,335 lines of support apparatus, 8,446 lines of infrastructure-as-code, and 7,380 lines of system models bridging the two. On a routine day, six to eight agents ran in parallel and landed on the order of 200 commits — about 1,000 a week, sustained, against the hundred a week a fast unaided human might manage. The architect inspected almost none of the code. That one fact is the engineering problem this book exists to answer: how a fleet producing more code than any human can read stays trustworthy.</p>
 <h2>It started in a meeting</h2>
 <p>The project began, fittingly, in a committee meeting about the very deadline described in the last chapter. In early 2026 an accreditation committee was discussing the ADA compliance date. Most of the faculty in the room did not know a mandate existed; those who did had made little progress against it. While the meeting droned on, the architect did what an engineering professor does when bored by a conundrum: he ran a small experiment. He opened a chat model, fed it screenshots from one of his own slide decks, and asked it to transcribe what it saw. It worked. The model looked at a rendered slide and recovered real semantic content from the image — the core technical problem of document accessibility, solved well enough to build on.</p>
 <p>That single positive result was the decision point. It converted a research question into an engineering project. What it did <em>not</em> do is worth noting, because it defines the gap the rest of the timeline had to close: the model did not export a corrected file, did not add reading order, did not validate against any standard, and understood nothing about the institution the file lived in. A flash of capability is not a system.</p>
@@ -226,9 +343,115 @@ nav.toc .jump { margin-top: 0.7rem; }
 <p>The two-line summary of the whole sequence is that the product grew, and the <em>apparatus that governs the product grew faster</em>. Measured in source size, the support machinery — tests, lints, load-bearing documentation, agent infrastructure, and tooling — ran about 2.9 times the size of the production code, and the test suite alone was roughly the size of the product. That ratio is not gold-plating. At 200 commits a day, no human reads the diffs, so the apparatus is the substitute for code review. It is the price of the velocity.</p>
 <h2>The velocity curve</h2>
 <p>The repository's own activity records the shape of the effort. Commits and lines-changed per week rose steeply through the MVP stages — feasibility, PowerPoint, formats, service — as the system acquired capability. Then, during hardening, the raw velocity fell. That dip is not a slowdown in a bad sense. It is the signature of the work changing character: from producing features to producing the controls that let features be produced safely. The curve is a picture of a professor turning from a coder into an architect.</p>
-<p>The human cost is part of the record too, and the field notes keep it honest. It was so fun to build that sleep dropped to four or five hours a night; exercise and most everything else fell away. To stay ahead of the subscription rate limits, the architect ran up to four top-tier plans in round-robin and scheduled his own body across them. There are entries about doing development on the kitchen counter while the family slept, about a graduate student walking across a corporate-retreat dining room to complete a two-factor prompt, about sprinting between two buildings during a campus network outage so the agents would not notice it and stop. The addiction is a real thread in the source, and it is not the lesson. The lesson is what the machinery had to become to make that pace produce something trustworthy instead of a mess.</p>
+<p>The human cost is part of the record too. It was so fun to build that sleep dropped to four or five hours a night; exercise and most everything else fell away. To stay ahead of the subscription rate limits, the architect ran up to four top-tier plans in round-robin and scheduled his own body across them. The addiction was real, and it is not the lesson. The lesson is what the machinery had to become to make that pace produce something trustworthy instead of a mess.</p>
+<blockquote class="concept-inset"><p class="inset-title" id="fieldnote-body-schedule">Field note — scheduling a body around the agents</p>
+<p>The pace left marks on the days. He did development on the kitchen counter while the family slept. A graduate student once walked across a corporate-retreat dining room to complete a two-factor prompt for him. During a campus network outage he sprinted between two buildings so the agents would not stall waiting on him. The point of keeping these is not the drama; it is that a fleet running this hot needs machinery that holds the line when its operator plainly cannot.</p></blockquote>
+<p>The six stages read like a plan. They were not one. Each stage is a line drawn <em>afterward</em> through a run of dated, ordinary moments — a breakfast, a keynote walked out of, a hospital waiting room, a purchased fourth subscription at midnight on a holiday weekend. Set the clean account against the lived one and the stages stop reading as strategy. They are what they were: the shape you can only see once the mess is behind you.</p>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1520" role="group" aria-labelledby="ptl-title ptl-desc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="ptl-title">The messy timeline behind the clean stages</title>
+  <desc id="ptl-desc">A vertical dated timeline of nine real moments from the seven-week build, each a cream card threaded on a gold vertical line with a dot at its date. The moments are: April 6, cooking breakfast while the family sleeps as the code flies; a Spring Break kickoff when no undergraduate replies and the architect supervises agents instead; April 15, leaving a conference keynote because the room's wifi cannot reach the model; April 30, a clean full-context handoff celebrated in the lab chat; May 5, a graduate student crossing a retreat dining room to complete a two-factor prompt for a saturated account; May 13, waking to funding emails because the overnight green-build run cost real money; May 19, the orchestration running two hours unattended while the architect skips a vacation; May 21, working from a hospital waiting room where the network permits the tool; and May 28, sprinting between two buildings during a campus outage so the agents never notice it stopped. The clean six-stage development narrative maps onto these lived moments.</desc>
+
+  <rect x="0" y="0" width="640" height="1520" fill="#ffffff"/>
+
+  <!-- gold vertical rule -->
+  <line x1="40" y1="88" x2="40" y2="1470" stroke="#BFA45A" stroke-width="1.4"/>
+
+  <!-- heading -->
+  <text x="40" y="42" font-size="24" font-weight="bold" fill="#2B2416" font-variant="small-caps">The messy timeline</text>
+  <text x="40" y="68" font-size="18" fill="#6b6250" font-style="italic">what the clean stages were made of</text>
+
+  <!-- CARD 1 -->
+  <circle cx="40" cy="150" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="112" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="140" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Monday, April 6</text>
+    <text x="82" y="167" font-size="18" fill="#2B2416">I am cooking breakfast while the family sleeps.</text>
+    <text x="82" y="190" font-size="18" fill="#2B2416">The model joins me on the countertop.</text>
+    <text x="82" y="213" font-size="18" fill="#2B2416" font-style="italic">The vegetables fry and the code flies.</text>
+  </g>
+
+  <!-- CARD 2 -->
+  <circle cx="40" cy="300" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="262" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="290" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Spring Break · the kickoff</text>
+    <text x="82" y="317" font-size="18" fill="#2B2416">I offer a one-week project to twenty of our best students.</text>
+    <text x="82" y="340" font-size="18" fill="#2B2416">Not one replies. They planned to have fun.</text>
+    <text x="82" y="363" font-size="18" fill="#2B2416" font-style="italic">So I supervise agents instead.</text>
+  </g>
+
+  <!-- CARD 3 -->
+  <circle cx="40" cy="450" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="412" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="440" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Wednesday, April 15</text>
+    <text x="82" y="467" font-size="18" fill="#2B2416">A keynote on the future of software in the age of AI.</text>
+    <text x="82" y="490" font-size="18" fill="#2B2416">The room's routers are overwhelmed. The model cannot hear me.</text>
+    <text x="82" y="513" font-size="18" fill="#2B2416" font-style="italic">We should do this, not discuss it. We leave.</text>
+  </g>
+
+  <!-- CARD 4 -->
+  <circle cx="40" cy="600" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="562" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="590" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, April 30</text>
+    <text x="82" y="617" font-size="18" fill="#2B2416">I hit full context with a clean quiesce and a handoff document.</text>
+    <text x="82" y="640" font-size="18" fill="#2B2416">I post a screenshot in the lab chat.</text>
+    <text x="82" y="663" font-size="18" fill="#2B2416" font-style="italic">My students cheer the performance.</text>
+  </g>
+
+  <!-- CARD 5 -->
+  <circle cx="40" cy="750" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="712" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="740" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Tuesday, May 5</text>
+    <text x="82" y="767" font-size="18" fill="#2B2416">Two accounts are saturated. The third needs a two-factor code.</text>
+    <text x="82" y="790" font-size="18" fill="#2B2416">Its owner is at a retreat, not watching the chat. My graduate</text>
+    <text x="82" y="813" font-size="18" fill="#2B2416" font-style="italic">is at the next table. She walks over and taps him in.</text>
+  </g>
+
+  <!-- CARD 6 -->
+  <circle cx="40" cy="900" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="862" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="890" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Wednesday, May 13</text>
+    <text x="82" y="917" font-size="18" fill="#2B2416">I wake to ten emails. Each auto-funds the account five dollars.</text>
+    <text x="82" y="940" font-size="18" fill="#2B2416">Ah yes: I asked for a green build overnight.</text>
+    <text x="82" y="963" font-size="18" fill="#2B2416" font-style="italic">The build costs real money.</text>
+  </g>
+
+  <!-- CARD 7 -->
+  <circle cx="40" cy="1050" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="1012" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="1040" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Tuesday, May 19</text>
+    <text x="82" y="1067" font-size="18" fill="#2B2416">The orchestration now makes progress for two hours in my absence.</text>
+    <text x="82" y="1090" font-size="18" fill="#2B2416">I set the alarm for 4 AM. I was to be on vacation in Costa Rica.</text>
+    <text x="82" y="1113" font-size="18" fill="#2B2416" font-style="italic">This is better.</text>
+  </g>
+
+  <!-- CARD 8 -->
+  <circle cx="40" cy="1200" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="1162" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="1190" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, May 21</text>
+    <text x="82" y="1217" font-size="18" fill="#2B2416">A family member's seventh ER trip in two weeks.</text>
+    <text x="82" y="1240" font-size="18" fill="#2B2416">The hospital network blocks one assistant, but not the other.</text>
+    <text x="82" y="1263" font-size="18" fill="#2B2416" font-style="italic">So the work continues from the waiting room.</text>
+  </g>
+
+  <!-- CARD 9 -->
+  <circle cx="40" cy="1350" r="4.6" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="1312" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="1340" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, May 28</text>
+    <text x="82" y="1367" font-size="18" fill="#2B2416">A campus outage. I dash between two buildings, laptop in one hand,</text>
+    <text x="82" y="1390" font-size="18" fill="#2B2416">and steal a look at the screen: no errors.</text>
+    <text x="82" y="1413" font-size="18" fill="#2B2416" font-style="italic">The crew never noticed. The work continues.</text>
+  </g>
+</svg><figcaption>The messy timeline behind the clean stages. Nine dated moments from the seven-week build — a plan drawn afterward through the days it was actually made in.</figcaption></figure>
 <h2>The kinds of work it required</h2>
 <p>The most useful way to read this timeline is not as a feature list but as a catalog of the <em>kinds of work</em> agentic development turned out to need. The code was cheap. Everything around the code was where the judgment went, and the same handful of activities recurred at every stage:</p>
 <ul><li><strong>Framing the problem.</strong> Deciding what "accessible" even meant for a math-dense graduate deck, where the file alone underdetermines the answer, and which parts of the mandate the system should chase.</li><li><strong>Discovering abstractions.</strong> Recognizing that PDF was not "Office with a different extension" but a distinct problem needing a document model of its own — and building typed models so that structure was compiler-checked instead of passed as anonymous primitives.</li><li><strong>Deciding local versus structural.</strong> For each failure, judging whether it was a one-off bug to patch or the visible symptom of a missing control — the single most repeated act in the whole record.</li><li><strong>Building the checks.</strong> Standards-grounded validation, content-preservation checks that assert the input survives into the output, hundreds of project-specific lints atop a maxed-out commodity floor, and a tiered regression suite from smoke tests to fuzz campaigns.</li><li><strong>Governing the fleet.</strong> A dispatch-and-track workflow for parallel agents, isolated worktrees, a pre-commit gate whose passage is proven by a hash-keyed marker file, an agent registry that authoritatively answers "who is in flight," and lifecycle records for every agent that lands or dies.</li><li><strong>Operating and deploying.</strong> Cloud deployment with staged gates, quota and cost controls, observability channels, audit trails that let a finished document's history be reconstructed, and runbooks for the failures that recur.</li></ul>
 <p>Read as a list, those are the chapters of this book. Every one of them answers a failure this timeline produced, and the recurring move that produced them all is the same: <em>velocity surfaces a failure; judgment classifies it as local or structural; the structural ones get converted into a durable control that narrows the next agent's room to fail.</em> The rest of the book is that move, applied over and over, told slowly enough that you can do it too.</p>
-<p>By the end of the study period the system could process Office and PDF files to pass or substantially improve their accessibility scores — a graduate slide deck in about a minute, for about a dollar — and it was patent-pending and being readied for institutional deployment as <a href="https://scholaccess.com">DocAble</a>. The direct development cost was about sixty thousand dollars, most of it the architect's salary, with a few thousand each in model inference, cloud hosting, and subscriptions. That is the arc. What remains is to explain how it was governed, and that is where the rest of the book begins.</p><div class="pager"><a class="prev" href="1.1-the-ada-context.html"><span class="dir">‹ Previous</span><span class="ttl">1.1 · The ADA Context</span></a><a class="home" href="index.html">Contents</a><a class="next" href="2.1-the-printer.html"><span class="dir">Next ›</span><span class="ttl">2.1 · The Printer</span></a></div><div class="pager-jump"><div class="jump"><a href="2.1-the-printer.html">Next part ⇒</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>By the end of the study period the system could process Office and PDF files to pass or substantially improve their accessibility scores — a graduate slide deck in about a minute, for about a dollar — and it was patent-pending and being readied for institutional deployment as <a href="https://scholaccess.com">DocAble</a>. The direct development cost was about sixty thousand dollars, most of it the architect's salary, with a few thousand each in model inference, cloud hosting, and subscriptions. That is the arc. What remains is to explain how it was governed, and that is where the rest of the book begins.</p><div class="pager"><a class="prev" href="1.1-the-ada-context.html"><span class="dir">‹ Previous</span><span class="ttl">1.1 · The ADA Context</span></a><a class="home" href="index.html">Contents</a><a class="next" href="1.3-the-built-system.html"><span class="dir">Next ›</span><span class="ttl">1.3 · The Built System</span></a></div><div class="pager-jump"><div class="jump"><a href="1.1-the-ada-context.html">⇐ Beginning of this part</a><a href="2.1-the-printer.html">Next part ⇒</a><a href="1.3-the-built-system.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

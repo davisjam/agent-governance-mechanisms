@@ -20,6 +20,10 @@ nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px sol
 header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
 header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }
+/* The kicker halves are links but must stay understated — inherit the small-caps accent colour, no default
+   underline; reveal the underline only on hover/focus so the affordance is discoverable without shouting. */
+header.chap .kicker a { color: inherit; text-decoration: none; }
+header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
@@ -27,6 +31,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
                         color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
@@ -54,6 +59,75 @@ table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
 blockquote table.book-table { background: #fff; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
+/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
+   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
+   theme knob is missed. */
+pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 20px; }
+pre.mermaid text.messageText { font-size: 18px; }
+/* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
+   quote: it is a deliberately designed aside that teaches a background concept beside the main argument
+   (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its
+   own visual language: a tinted panel, a strong left accent rule, a labelled header band, and a ROMAN
+   (non-italic) body a reader can actually read at length.
+
+   ── SWAP POINT ─────────────────────────────────────────────────────────────────────────────────────
+   Every knob is a CSS custom property on `.concept-inset`, so this "screen representation of the book" can
+   be re-skinned in ONE place — change these vars to retarget a print stylesheet, a dark theme, or an
+   alternate house style without touching any rule below. Add e.g. a `@media print` or `:root[data-theme=…]`
+   block that only re-declares these variables and the whole sidebar follows. */
+blockquote.concept-inset {
+  --inset-bg: #f6f4ef;           /* panel fill — warm off-white, distinct from the page's #faf9f6 */
+  --inset-accent: #b07a2b;       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
+  --inset-header: #4a3a1e;       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-header-bg: #ece4d5;    /* header band fill — a shade deeper than the panel so the label reads */
+  --inset-body: #33302a;         /* body ink — near-black warm grey, comfortable roman reading colour */
+  --inset-accent-width: 5px;     /* thickness of the left accent rule */
+  --inset-radius: 6px;
+  --inset-pad-x: 1.35rem;
+  --inset-pad-y: 1rem;
+  --inset-max: 34rem;            /* keep the primer to a readable measure, not the full column width */
+
+  background: var(--inset-bg);
+  border: 1px solid #e3dccb;
+  border-left: var(--inset-accent-width) solid var(--inset-accent);
+  border-radius: var(--inset-radius);
+  color: var(--inset-body);
+  font-style: normal;            /* KEY: kill the base blockquote italic — a primer reads as roman prose */
+  padding: 0 var(--inset-pad-x) var(--inset-pad-y);
+  margin: 1.7rem 0;
+  max-width: var(--inset-max);
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+/* Header treatment — the "Inset N — Title" label sits in its own tinted band, flush to the panel edges,
+   set in small-caps-ish tracked type so it reads as a sidebar HEADER, not a run-in paragraph. It stays a
+   demoted callout label (`p.inset-title`, not an <hN>) so no heading-order break and its id anchor is
+   preserved. */
+blockquote.concept-inset .inset-title {
+  font-style: normal; font-weight: 700; color: var(--inset-header);
+  background: var(--inset-header-bg);
+  margin: 0 calc(-1 * var(--inset-pad-x)) var(--inset-pad-y);
+  padding: 0.6rem var(--inset-pad-x);
+  border-radius: var(--inset-radius) var(--inset-radius) 0 0;
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+blockquote.concept-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
+blockquote.concept-inset p:last-child { margin-bottom: 0; }
+blockquote.concept-inset strong { color: var(--inset-header); }
+blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
+   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Taxonomy + spec: book/_design/callout-typography.md. */
+blockquote.thesis-box { background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
+                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                         border-radius: 5px; }
+blockquote.thesis-box p { margin: 0 0 0.6rem; }
+blockquote.thesis-box p:last-child { margin-bottom: 0; }
+blockquote.thesis-box strong { color: #241f33; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
 figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
@@ -88,6 +162,26 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
 .idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* Book-length table (book-index.html) — a compact, auto-generated size breakdown. Section rows band the
+   BODY / APPENDIX groups; subtotal + total rows are bolded; the numeric column is tabular + right-aligned. */
+.book-length { margin: 1.4rem 0 2.2rem; }
+.book-length h2 { margin: 0 0 0.4rem; }
+.book-length .wc-note { color: #5f5f5f; font-size: 14px; margin: 0 0 0.8rem; max-width: 40rem; }
+table.wc-table { border-collapse: collapse; width: auto; min-width: 22rem; max-width: 34rem;
+                  margin: 0.4rem 0; font-size: 15px; }
+table.wc-table caption.sr-cap { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+                                 overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+table.wc-table th, table.wc-table td { border: 1px solid #e2e0da; padding: 0.4rem 0.7rem;
+                                        text-align: left; vertical-align: top; line-height: 1.4; }
+table.wc-table thead th { background: #f4f3f0; font-weight: 600; }
+table.wc-table thead th:last-child { text-align: right; }
+table.wc-table td.wc-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.wc-table tr.wc-section th { background: #efece5; font-weight: 700; text-transform: uppercase;
+                                   letter-spacing: 0.04em; font-size: 12px; color: #555; }
+table.wc-table tr.wc-part th { font-weight: 400; padding-left: 1.3rem; }
+table.wc-table tr.wc-subtotal th, table.wc-table tr.wc-subtotal td { font-weight: 600; background: #faf9f6; }
+table.wc-table tr.wc-total th, table.wc-table tr.wc-total td { font-weight: 700; background: #f0efeb;
+                                                                border-top: 2px solid #cfa14a; }
 /* term index page */
 .idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
 .idx-terms li { margin: 0.3rem 0; }
@@ -105,21 +199,32 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
                                              border-radius: 6px; background: #fff; }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
-.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
+   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
+   so they read calm beside the primary pager cards rather than cramped. */
+.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
 .jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
-           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
+           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }
 .jump a:hover { border-color: var(--accent); background: #f4f3f0; }
-nav.toc .jump { margin-top: 0.7rem; }
-.pager-jump { margin-top: 1.2rem; }
-.pager-jump .jump { justify-content: center; margin-top: 0; }
+/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
+   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                      gap: 0.7rem 1.4rem; }
+nav.toc details { flex: 0 0 auto; }
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
+   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+nav.toc details[open] { flex: 1 1 100%; }
+nav.toc .jump { margin-top: 0; margin-left: auto; }
+.pager-jump { margin-top: 1.4rem; }
+.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Context</li>
 <li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
 <li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li><a class="" href="1.3-the-built-system.html">1.3&nbsp; The Built System</a></li>
 <li class="part">Part 2 — The Mindset</li>
 <li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
 <li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
@@ -146,75 +251,88 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
-<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
-<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
-<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
-<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
-<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
-<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
-<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
-<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
-<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
-<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
-<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
-<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
-<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
-<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
-<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
-<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
-<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
-<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
-<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
-<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
-<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
-<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
-<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
-<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
-<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
-<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
-<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A - 1. Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A - 2. Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A - 3. Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A - 4. Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A - 5. Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A - 6. Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A - 7. Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A - 8. Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A - 9. Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A - 10. Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A - 11. Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A - 12. Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A - 13. Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A - 14. Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A - 15. Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A - 16. Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A - 17. Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A - 25. Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A - 26. Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A - 28. Enforce at the right semantic level</a></li>
 <li class="part">Appendix B — Models-bridge patterns</li>
-<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
-<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
-<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
-<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
-<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
-<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
-<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
-<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
-<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
-<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
-<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
-<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
-<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
-<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
-<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
-<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
-<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
-<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
-<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1. The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B - 2. Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B - 3. Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B - 6. Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B - 7. Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B - 8. Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B - 9. Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B - 10. Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B - 11. Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B - 12. Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 13. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 14. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 15. Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 16. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 17. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 18. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 19. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 20. User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
-<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
-<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
-<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
-<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
-<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
-<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
-<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
-<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
-<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
-<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
-<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
-<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
-<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
-<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
-<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
-<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
-<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
-<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
-<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
-<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.6 · The Scenarios View"><header class="chap"><div class="kicker">Part 4 — The Model Zoo &nbsp;::&nbsp; Chapter 4.6</div><h1>The Scenarios View</h1></header><p id="idx-def-scenarios-view">The four views so far are static portraits. The Logical view says what the system is, the Process view what it does at once, the Development view how it is packaged, the Physical view where it runs. The +1 view sets them in motion. A <strong>scenario</strong> — a use case, a journey — walks a real goal end to end, and in walking it exercises the other four and validates that they hold up. Kruchten made scenarios the +1 for exactly this reason: they are how you check that the four architectural views describe a system that actually works.</p>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C - 4. Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C - 5. ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C - 6. Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C - 7. ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C - 8. Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C - 9. Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C - 10. DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C - 11. Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C - 12. FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C - 13. Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C - 14. `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C - 15. `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C - 16. F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C - 17. Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C - 18. Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C - 19. Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C - 20. Typed `ViolationCategory` / `FailureCategory` enums</a></li>
+<li class="part">Appendix D — Mechanism Stacks</li>
+<li><a class="" href="appendix-stacks.html">Appendix D — Mechanism Stacks</a></li>
+<li><a class="" href="appendix-d-mbse-stack.html">Appendix D - 1. The MBSE stack</a></li>
+<li><a class="" href="appendix-d-self-operations-stack.html">Appendix D - 2. The self-operations stack</a></li>
+<li><a class="" href="appendix-d-semantic-lint-stack.html">Appendix D - 3. The semantic-lint stack</a></li>
+<li><a class="" href="appendix-d-worktree-lifecycle-stack.html">Appendix D - 4. The worktree-lifecycle stack</a></li>
+<li><a class="" href="appendix-d-canonical-seam-stack.html">Appendix D - 5. The canonical-seam stack</a></li>
+<li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
+<li class="part">Appendix E — How to Write a Skill</li>
+<li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.6 · The Scenarios View"><header class="chap"><div class="kicker"><a href="4.1-the-executable-zoo.html" aria-label="Beginning of Part 4 — The Model Zoo">Part 4 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 4.6</a></div><h1>The Scenarios View</h1></header><!-- noqa: book-section-cap | The Scenarios View — the intro carries the two boxed primers (node-coverage vs line coverage, protocols and TLA+) the reader needs before this view's model pages; the insets are self-contained primers, not prose to break up -->
+<p id="idx-def-scenarios-view">The four views so far are static portraits. The Logical view says what the system is, the Process view what it does at once, the Development view how it is packaged, the Physical view where it runs. The +1 view sets them in motion. A <strong>scenario</strong> — a use case, a journey — walks a real goal end to end, and in walking it exercises the other four and validates that they hold up. Kruchten made scenarios the +1 for exactly this reason: they are how you check that the four architectural views describe a system that actually works.</p>
 <p>One general type anchors the view. A <strong>user journey</strong> names the interfaces a user moves through and the actions they take to accomplish something of value. Four real models embody the view: the user-journey model (the product-goal-to-code bridge), the agent-orchestration model (the <em>developer</em>-journey counterpart, the scenarios view pointed at the fleet rather than the user), journey-criticality-to-test-placement, and coverage-to-model-node mapping. The chapter closes with the zoo's flagship demonstration — four models joined so a product goal reaches all the way to how the deploy rations its tests.</p>
 <p>Two insets a reader needs for this view's model pages:</p>
 <blockquote id="idx-def-node-coverage" class="concept-inset"><p class="inset-title" id="inset-node-coverage">Inset I10 — Coverage over model nodes vs line coverage</p>
@@ -222,6 +340,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <blockquote id="idx-def-protocols-and-tla" class="concept-inset"><p class="inset-title" id="inset-tla">Inset I7 — Protocols and TLA+</p>
 <p>When a property is not about one component but a <em>protocol</em> — many actors interleaving over time, each taking steps in an order you do not control — a single state assertion is not enough and even a bounded walk of one component misses the cross-actor races. You specify the protocol in a <strong>temporal-logic language</strong> (TLA+ is the best-known), stating the actors, their steps, and the safety and liveness properties the interleaving must satisfy. A model checker then explores <em>every</em> interleaving the actors can produce and either proves the properties or hands you a trace. This is the heaviest tool in the zoo, reserved for the invariant whose failure lives in a schedule no example test will ever pick — a distributed reservation, a lease-and-preempt loop, a two-phase hand-off between services.</p></blockquote>
 <h2 id="user-journey-model">The user-journey model</h2>
+<!-- noqa: book-section-cap | The user-journey model — a model page rendered from the fixed five-field (a)-(e) template; the fields are one indivisible reference unit a reader scans by reflex across every model, so splitting one page breaks the uniform shape -->
 <p id="idx-def-user-journey-model"><em>Model the product's user journeys as first-class typed entities — each an actor pursuing a goal through ordered steps, every boundary-crossing step joined to the endpoint it calls — so the path from what the product is for to what the code must provide is a queryable model.</em></p>
 <p><strong>(a) Quality property it helps assess.</strong> Two, both about the goal-to-code path.</p>
 <p>- <strong>Dependency correctness</strong>: <em>does every step a journey declares have a real call site, and is every real call declared?</em> A call-site drift lint checks both directions, so a journey cannot claim a dependency it does not exercise, nor exercise one it does not declare. - <strong>Goal reachability</strong>: <em>is every product goal backed by a journey whose steps reach real endpoints?</em> A goal with no journey, or a journey step that names no endpoint, is a gap between intent and implementation.</p>
@@ -236,10 +355,11 @@ nav.toc .jump { margin-top: 0.7rem; }
   E1 -.-&gt;|declared ↔ real| Drift{{Call-site drift lint}}</pre>
 <p><em>Accessible description: an actor moves through a journey's ordered steps, each boundary-crossing step calling an endpoint. A call-site drift lint checks the declared endpoints against the real call sites in both directions, so a journey's dependencies stay equal to the code it exercises.</em></p>
 <p><strong>(d) Invariants, and how they are checked.</strong> A call-site drift lint:</p>
-<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>Every declared journey dependency has a real call site</td><td><code>[]P</code> (safety)</td><td>Call-site drift lint, model ⊆ reality.</td></tr><tr><td>Every real call from a journey step is declared</td><td><code>[]P</code> (safety)</td><td>Call-site drift lint, reality ⊆ model.</td></tr><tr><td>Every boundary-crossing step names a real endpoint</td><td><code>[]P</code> (safety)</td><td>Endpoint join against the service-flow model; an unresolvable endpoint is a finding.</td></tr></tbody></table>
+<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>Every declared journey dependency has a real call site</td><td><em>□P</em> (safety)</td><td>Call-site drift lint, model ⊆ reality.</td></tr><tr><td>Every real call from a journey step is declared</td><td><em>□P</em> (safety)</td><td>Call-site drift lint, reality ⊆ model.</td></tr><tr><td>Every boundary-crossing step names a real endpoint</td><td><em>□P</em> (safety)</td><td>Endpoint join against the service-flow model; an unresolvable endpoint is a finding.</td></tr></tbody></table>
 <p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The dependency list is derived from the real call sites and reconciled. The join key is the endpoint (ties a step to the service-flow model) and the call-site anchor (ties a step to the code). This model is the entry point of the flagship join below.</p>
 <p><em>Also seen in:</em> Logical (a journey references the service-flow structure). Rendered in full here.</p>
 <h2 id="agent-orchestration-model">The agent-orchestration model</h2>
+<!-- noqa: book-section-cap | The agent-orchestration model — a model page rendered from the fixed five-field (a)-(e) template; the fields are one indivisible reference unit a reader scans by reflex across every model, so splitting one page breaks the uniform shape -->
 <p id="idx-def-agent-orchestration-model"><em>Model the agent fleet and the orchestrator's own loop with the same MBSE method you point at the product — typed lifecycle states, typed seams, derived verification tiers, held true by a drift gate — so the substrate that produces the software is as checkable as the software.</em></p>
 <p><strong>(a) Quality property it helps assess.</strong> Two, about the fleet's own correctness.</p>
 <p>- <strong>Lifecycle soundness</strong>: <em>can an agent reach an illegal lifecycle state, or skip a required transition?</em> The dispatch-to-work-to-land-to-tombstone lifecycle is a typed state machine, so a landed-but-never-tombstoned agent, or a tombstone before a commit, is an illegal transition the checker catches. - <strong>Method parity</strong>: <em>is the orchestration substrate governed as strictly as the product?</em> The model reuses the product's own tier-derivation and drift machinery, so the answer is a checked property, not an aspiration.</p>
@@ -256,10 +376,11 @@ nav.toc .jump { margin-top: 0.7rem; }
   Tombstoned --&gt; [*]</pre>
 <p><em>Accessible description: an agent moves from dispatched to working on prepare, to landed on commit and verify, and to tombstoned on clean. A working agent silenced mid-flight goes to abandoned, from which a recover returns it to working. The lifecycle is a typed state machine, so an illegal transition — a tombstone before a commit — is a checker finding.</em></p>
 <p><strong>(d) Invariants, and how they are checked.</strong> A lifecycle state-machine check and a derived tier:</p>
-<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>No agent reaches an illegal lifecycle state</td><td><code>[]P</code> (safety)</td><td>State-space search over the lifecycle machine; an unreachable-should-be state is a finding.</td></tr><tr><td>A tombstone follows a landed commit</td><td><code>P ~&gt; Q</code> (liveness)</td><td>A landed agent eventually reaches tombstoned; a temporal check over the lifecycle.</td></tr><tr><td>Each invariant's verification tier is derived, not hand-typed</td><td><code>[]P</code> (safety)</td><td>Derive-and-assert: a hand-stored tier is a finding.</td></tr></tbody></table>
+<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>No agent reaches an illegal lifecycle state</td><td><em>□P</em> (safety)</td><td>State-space search over the lifecycle machine; an unreachable-should-be state is a finding.</td></tr><tr><td>A tombstone follows a landed commit</td><td><em>P ⤳ Q</em> (liveness)</td><td>A landed agent eventually reaches tombstoned; a temporal check over the lifecycle.</td></tr><tr><td>Each invariant's verification tier is derived, not hand-typed</td><td><em>□P</em> (safety)</td><td>Derive-and-assert: a hand-stored tier is a finding.</td></tr></tbody></table>
 <p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The lifecycle states are reconciled against the real agent-registry records. The join key is the agent identifier, which indexes both a lifecycle node and the registry record for that agent.</p>
 <p><em>Also seen in:</em> Process (the lifecycle is a concurrency machine). Rendered in full here as the developer-journey counterpart to the user-journey model.</p>
 <h2 id="journey-criticality-test-placement">Journey-criticality → test-placement</h2>
+<!-- noqa: book-section-cap | Journey-criticality → test-placement — a model page rendered from the fixed five-field (a)-(e) template; the fields are one indivisible reference unit a reader scans by reflex across every model, so splitting one page breaks the uniform shape -->
 <p id="idx-def-journey-criticality-test-placement"><em>Derive which environment tier a journey's tests run in from the journey's criticality — a major journey-part runs in the fast local tier and the full staging matrix, a minor one runs staging only — with a coverage-floor lint holding "every major part has a fast-tier test."</em></p>
 <p><strong>(a) Quality property it helps assess.</strong> Two, about test placement.</p>
 <p>- <strong>Placement soundness</strong>: <em>is any major journey mis-filed as staging-only?</em> Because the tier is derived from criticality and stored nowhere by hand, you cannot quietly push a major path off the local gate to speed it up; you must demote it to minor, a visible edit. - <strong>Local-gate adequacy</strong>: <em>does a green local run mean every major journey ran?</em> The coverage floor makes "local-green implies every major part was exercised locally" a checked property.</p>
@@ -274,10 +395,11 @@ nav.toc .jump { margin-top: 0.7rem; }
   Floor --&gt;|major part, no local test| Fail([finding])</pre>
 <p><em>Accessible description: a journey-part's criticality routes on major-or-not — a major part derives to the local-plus-staging tier, a minor one to staging only. A coverage-floor lint then fails the build if a major part has no test in the fast local tier. The tier is derived from criticality, never hand-stored.</em></p>
 <p><strong>(d) Invariants, and how they are checked.</strong> A derive-and-assert and a coverage floor:</p>
-<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>The host tier is a pure function of criticality</td><td><code>[]P</code> (safety)</td><td>Derive-and-assert: a stored tier literal is banned; the lint recomputes the derivation.</td></tr><tr><td>Every major journey-part has a test in the fast local tier</td><td><code>[]P</code> (safety)</td><td>Coverage-floor lint walks the model; a major part with no local test is a finding.</td></tr><tr><td>Staging's test set contains local's</td><td><code>[]P</code> (safety)</td><td>Containment check by recomputing the derivation, not auditing a matrix.</td></tr></tbody></table>
+<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>The host tier is a pure function of criticality</td><td><em>□P</em> (safety)</td><td>Derive-and-assert: a stored tier literal is banned; the lint recomputes the derivation.</td></tr><tr><td>Every major journey-part has a test in the fast local tier</td><td><em>□P</em> (safety)</td><td>Coverage-floor lint walks the model; a major part with no local test is a finding.</td></tr><tr><td>Staging's test set contains local's</td><td><em>□P</em> (safety)</td><td>Containment check by recomputing the derivation, not auditing a matrix.</td></tr></tbody></table>
 <p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The tier is a pure function of the criticality field; nothing is hand-stored. The join key is the journey-part name, which indexes the criticality field and the derived test roster.</p>
 <p><em>Also seen in:</em> Physical (the derived tier joins to the deploy Scheduler). Rendered in full here; its join to the Scheduler is the flagship example below.</p>
 <h2 id="coverage-model-mapping">Coverage → model-node mapping</h2>
+<!-- noqa: book-section-cap | Coverage → model-node mapping — a model page rendered from the fixed five-field (a)-(e) template (under the word cap; over the paragraph cap only because the template's bold-lead bullets each count as a paragraph); one indivisible reference unit -->
 <p id="idx-def-coverage-model-mapping"><em>Project the test suite's coverage onto the model's nodes — states, seams, invariants, journey endpoints — so an untested node is a visible gap rather than hidden inside a line-coverage percentage.</em></p>
 <p><strong>(a) Quality property it helps assess.</strong> One property line coverage cannot express.</p>
 <p>- <strong>Node-coverage adequacy</strong>: <em>is every meaning I care about — every invariant, every journey endpoint — exercised by some test?</em> An uncovered node is a backlog item; an uncovered <em>critical</em> node is a build-blocking gate.</p>
@@ -291,19 +413,22 @@ nav.toc .jump { margin-top: 0.7rem; }
   Join --&gt; Gate{{Critical-node gate}}</pre>
 <p><em>Accessible description: coverage data and model nodes feed a node join, which sorts each node into covered or uncovered. Uncovered nodes become a backlog; an uncovered node in the critical subset trips a gate that blocks the build. Coverage is measured over meanings, not lines.</em></p>
 <p><strong>(d) Invariants, and how they are checked.</strong> A node join and a critical-node gate:</p>
-<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>Every critical model node is exercised by some test</td><td><code>[]P</code> (safety)</td><td>Critical-node gate: an uncovered critical node blocks the build.</td></tr><tr><td>Every journey endpoint is covered or on the backlog</td><td><code>[]P</code> (safety)</td><td>Undertested-journey audit joins coverage to the endpoint nodes.</td></tr></tbody></table>
+<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>Every critical model node is exercised by some test</td><td><em>□P</em> (safety)</td><td>Critical-node gate: an uncovered critical node blocks the build.</td></tr><tr><td>Every journey endpoint is covered or on the backlog</td><td><em>□P</em> (safety)</td><td>Undertested-journey audit joins coverage to the endpoint nodes.</td></tr></tbody></table>
 <p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code.</em> The join is computed from the real coverage run against the model nodes. The join key is the node identity — an invariant id, an endpoint path — which ties a coverage row to the model element it exercises.</p>
 <p><em>Also seen in:</em> Process (an invariant node is a concurrency contract). Rendered in full here.</p>
 <p>---</p>
 <h2 id="worked-join">Worked join — the journey↔coverage↔deploy-policy composition</h2>
 <p><em>Four models composed on a shared key so a product goal reaches all the way to how the deploy runs its tests: a journey's criticality derives which tests run on which host tier, and that placement joins to the deploy execution policy, which rations each host by fanning tests out or serializing them.</em></p>
 <p id="idx-def-models-join-not-repeat">This is the zoo's central thesis made concrete — <strong>models join, they do not repeat.</strong> The other model pages each show a single model. This one traces one fact — a journey is <em>major</em> — through four models with no fact stated twice. The user-journey model (M13) names the journey and its endpoints. The coverage-to-node map (M5) asks whether those endpoints are tested at all. The journey-criticality-to-test-placement model (M6, the <strong>Selector</strong>) derives which host tier each test runs on from the journey's criticality. And the invariant-DAG execution policy (M7, the <strong>Scheduler</strong>) decides <em>how</em> each host runs the tests it was handed — fan out, or serialize. No model owns another's facts; each joins on the journey and its endpoints.</p>
-<p><strong>(a) Quality property it helps assess.</strong> Three questions the raw deploy scripts and test config cannot answer.</p>
+<h3>The three questions the join answers</h3>
+<p>Three questions the raw deploy scripts and test config cannot answer on their own.</p>
 <p>- <strong>Goal-to-gate coverage</strong>: <em>does a green local run mean every major journey actually ran?</em> The criticality floor makes "local-green implies every major path was exercised locally" a checked property, not a hope. - <strong>Placement soundness</strong>: <em>is any major journey mis-filed as staging-only?</em> Because the host tier is derived from criticality and stored nowhere by hand, you cannot quietly shove a major path off the local gate; you must demote it to minor, a visible edit. - <strong>Rationing correctness under cost and resource pressure</strong>: <em>does the deploy fan tests out when it safely can, and serialize them only when it must?</em> The Scheduler honors a cost gate everywhere but rations concurrency only where a scarce box demands it, so a single-worker host serializes while an elastic host fans out, from one profile table.</p>
-<p><strong>(b) Constructs and relations.</strong> The four models compose through shared keys.</p>
+<h3>The four models and their join keys</h3>
+<p>The four models compose through shared keys.</p>
 <p>- <strong>The <code>Journey</code> (M13)</strong>: an actor, a goal, ordered steps; each boundary-crossing step names its <strong>endpoint</strong> and records a <strong>call-site anchor</strong>. These are the join keys the other three reach through. - <strong>The criticality axis (M6)</strong>: each journey-part carries <code>MAJOR</code> or <code>MINOR</code>. A total derivation maps <code>MAJOR</code> to local-depth and <code>MINOR</code> to staging-only. The tier is derived, never stored. - <strong>The coverage join (M5)</strong>: the suite's coverage projected onto the journey's endpoint nodes: covered, uncovered, by-which-tests. An uncovered major endpoint is a floor violation. - <strong>The edge-intent axis and Scheduler (M7)</strong>: the deploy graph's edges carry <code>CORRECTNESS</code>, <code>COST_GATE</code>, or <code>LOAD</code>; <code>LOAD</code> is banned from the graph and migrated to the Scheduler, which reads a per-host <code>HostLoadProfile</code> and emits a <code>ConcurrencyPlan</code>.</p>
 <p>The through-line: a journey's endpoint is the coverage join key (M13→M5); its criticality is the Selector's input (M13/M6); the Selector's per-host test set is what the deploy phase runs; and the Scheduler's profile decides whether that host fans those tests out or serializes them (M6→M7). One fact, four models, no repetition.</p>
-<p><strong>(c) Visual depiction.</strong> The join has no single appendix diagram, so this composite is composed from the four real panels, adding only the join edges between them. The data-flow reads left to right — criticality derives placement, placement joins to coverage, and the deploy Scheduler rations the resulting test set per host:</p>
+<h3>The composite picture</h3>
+<p>The join has no single appendix diagram, so this composite is composed from the four real panels, adding only the join edges between them. The data-flow reads left to right — criticality derives placement, placement joins to coverage, and the deploy Scheduler rations the resulting test set per host:</p>
 <pre class="mermaid">flowchart LR
   subgraph M13 ["Journey (M13)"]
     J[Journey: goal&lt;br/&gt;criticality: MAJOR] --&gt;|calls| E[/endpoint/]
@@ -326,8 +451,11 @@ nav.toc .jump { margin-top: 0.7rem; }
     Plan --&gt;|$ gate AND scarce box| Serialize([fan/join — serialize])
   end</pre>
 <p><em>Accessible description: a major journey names an endpoint. The Selector derives that endpoint's tests to the local-plus-staging tier (a minor one to staging only), and a coverage-floor lint fails if a major endpoint has no local test. The coverage model joins to the same endpoint to check it is tested at all. The resulting test set flows to the deploy Scheduler, which reads a per-host profile: when only a cost gate applies it fans the tests out in parallel, but when both a cost gate and a scarce-resource gate apply it serializes them.</em></p>
-<p><strong>(d) Invariants, and how they are checked.</strong> The join's invariants span all four models; two are the trunk derive-the-checker discipline:</p>
-<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>Every major journey-part has a test in the fast local tier</td><td><code>[]P</code> (safety)</td><td>Coverage-floor lint (M6) walks the model; a major part with no local test is a finding.</td></tr><tr><td>A journey's declared deps match its real call sites, both ways</td><td><code>[]P</code> (safety)</td><td>Call-site drift lint (M13): every declared dep has a real call site, every call site is declared.</td></tr><tr><td>Every declared journey endpoint is exercised by some test</td><td><code>[]P</code> (safety)</td><td>Undertested-journey audit (M5): join coverage to the endpoint nodes; an uncovered endpoint is a gap.</td></tr><tr><td>The host tier is a pure function of criticality</td><td><code>[]P</code> (safety)</td><td>Derive-and-assert (M6): a stored tier literal is banned; the lint recomputes the derivation.</td></tr><tr><td>No deploy edge carries the <code>LOAD</code> intent</td><td><code>[]P</code> (safety)</td><td>Load-edge lint (M7) reads the graph and the Scheduler's graph-resident intents; a <code>LOAD</code> edge is a finding.</td></tr><tr><td>Staging's test set is a superset of local's and of prod's</td><td><code>[]P</code> (safety)</td><td>Containment property test plus a live-model lint (M6): recompute containment by calling the selector, not auditing a matrix.</td></tr></tbody></table>
+<h3>The invariants the join spans</h3>
+<p>The join's invariants span all four models; two are the trunk derive-the-checker discipline.</p>
+<table class="book-table"><thead><tr><th>Invariant</th><th>Temporal shape</th><th>How it is checked</th></tr></thead><tbody><tr><td>Every major journey-part has a test in the fast local tier</td><td><em>□P</em> (safety)</td><td>Coverage-floor lint (M6) walks the model; a major part with no local test is a finding.</td></tr><tr><td>A journey's declared deps match its real call sites, both ways</td><td><em>□P</em> (safety)</td><td>Call-site drift lint (M13): every declared dep has a real call site, every call site is declared.</td></tr><tr><td>Every declared journey endpoint is exercised by some test</td><td><em>□P</em> (safety)</td><td>Undertested-journey audit (M5): join coverage to the endpoint nodes; an uncovered endpoint is a gap.</td></tr><tr><td>The host tier is a pure function of criticality</td><td><em>□P</em> (safety)</td><td>Derive-and-assert (M6): a stored tier literal is banned; the lint recomputes the derivation.</td></tr><tr><td>No deploy edge carries the <code>LOAD</code> intent</td><td><em>□P</em> (safety)</td><td>Load-edge lint (M7) reads the graph and the Scheduler's graph-resident intents; a <code>LOAD</code> edge is a finding.</td></tr><tr><td>Staging's test set is a superset of local's and of prod's</td><td><em>□P</em> (safety)</td><td>Containment property test plus a live-model lint (M6): recompute containment by calling the selector, not auditing a matrix.</td></tr></tbody></table>
+<h3>The Selector and Scheduler in code</h3>
+<!-- noqa: book-section-cap | The Selector and Scheduler in code — the length is the two policy-code samples (the Selector's tier derivation and the Scheduler's rationing) that make the join land on code, not prose; the code block is one indivisible worked example, and the surrounding prose is already two short paragraphs -->
 <p>Two pieces of real policy code show the join landing on code, not prose. The <strong>Selector</strong> derives a host's test roster from the journey model; the <strong>Scheduler</strong> decides how that host runs it:</p>
 <pre><code>from dataclasses import dataclass
 from enum import Enum
@@ -375,8 +503,9 @@ PROFILES = {
     "staging": HostLoadProfile(concurrency_ceiling=999,  budget=float("inf")),  # elastic: fan out
     "prod":    HostLoadProfile(concurrency_ceiling=4,    budget=50.0),    # low finite smoke ceiling
 }</code></pre>
-<p>The behavior the code makes concrete: on <strong>staging</strong> (ceiling 999, unbounded budget) the plan permits the whole ready wave at once and relaxes cost gates — pure fan-out, because no box is scarce. On <strong>local</strong> (ceiling 1, budget 100) the plan collapses to one permit <em>and</em> honors cost gates — the fan/join serialize case, where both a cost gate and a scarce-box load gate apply, so the tests the Selector placed locally run one at a time behind their cheap gates. Raising the local ceiling is a one-cell profile edit, never a graph edit — which is why <code>LOAD</code> stays out of the DAG.</p>
-<p><strong>(e) Traceability and derivation direction.</strong> <em>Model-from-code, joined.</em> Every leg derives from the code: the journey's deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7). Nothing is hand-stored — a stored tier or a <code>LOAD</code> edge is banned outright. The join keys chain: the <strong>endpoint</strong> ties M13 to M5, the <strong>criticality</strong> ties M13 to M6, the <strong>derived tier</strong> ties M6 to M7's roster, and the <strong>host profile</strong> ties the roster to the plan. A reader round-trips from "this journey is major" to "these tests serialize on the local box" by following those four keys, and the drift lints mechanize each hop.</p>
+<p>The behavior the code makes concrete: <strong>staging</strong> (ceiling 999, unbounded budget) permits the whole ready wave and relaxes cost gates — pure fan-out, no box scarce. <strong>Local</strong> (ceiling 1, budget 100) collapses to one permit and honors cost gates — the serialize case, where a cost gate and a scarce-box load gate both apply, so the locally-placed tests run one at a time behind their cheap gates. Raising the local ceiling is a one-cell profile edit, never a graph edit — which is why <code>LOAD</code> stays out of the DAG.</p>
+<h3>Tracing one fact through four models</h3>
+<p><em>Model-from-code, joined.</em> Every leg derives from the code: the journey's deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7). Nothing is hand-stored — a stored tier or a <code>LOAD</code> edge is banned outright. The join keys chain: the <strong>endpoint</strong> ties M13 to M5, the <strong>criticality</strong> ties M13 to M6, the <strong>derived tier</strong> ties M6 to M7's roster, and the <strong>host profile</strong> ties the roster to the plan. A reader round-trips from "this journey is major" to "these tests serialize on the local box" by following those four keys, and the drift lints mechanize each hop.</p>
 <p><em>Also seen in:</em> Physical (the Scheduler half). This join is why the Physical and Scenarios chapters cross-reference each other most; it is rendered in full here.</p>
 <p>---</p>
-<p>Five views, walked on real code, each with its invariants and the checker that holds them true. The zoo has twenty-nine named models, and the point of the number is the one Kruchten made: no single view is ever the whole picture. What the safety-critical world did because lives were at stake — keep the models honest, trace every requirement to the code that realizes it — the rest of us now do because an agent will pay the upkeep, and because it is the cheapest way to trust what the fleet ships.</p><div class="pager"><a class="prev" href="4.5-the-physical-view.html"><span class="dir">‹ Previous</span><span class="ttl">4.5 · The Physical View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.1-brownfield.html"><span class="dir">Next ›</span><span class="ttl">5.1 · Brownfield</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>
+<p>Five views, walked on real code, each with its invariants and the checker that holds them true. The zoo has twenty-nine named models, and the point of the number is the one Kruchten made: no single view is ever the whole picture. What the safety-critical world did because lives were at stake — keep the models honest, trace every requirement to the code that realizes it — the rest of us now do because an agent will pay the upkeep, and because it is the cheapest way to trust what the fleet ships.</p><div class="pager"><a class="prev" href="4.5-the-physical-view.html"><span class="dir">‹ Previous</span><span class="ttl">4.5 · The Physical View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.1-brownfield.html"><span class="dir">Next ›</span><span class="ttl">5.1 · Brownfield</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', themeVariables: { fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '20px' }, flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 }, sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 }, state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {} });</script></body></html>

@@ -20,6 +20,10 @@ nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px sol
 header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
 header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }
+/* The kicker halves are links but must stay understated — inherit the small-caps accent colour, no default
+   underline; reveal the underline only on hover/focus so the affordance is discoverable without shouting. */
+header.chap .kicker a { color: inherit; text-decoration: none; }
+header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
@@ -27,6 +31,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
                         color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
@@ -54,6 +59,75 @@ table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
 blockquote table.book-table { background: #fff; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
+/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
+   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
+   theme knob is missed. */
+pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 20px; }
+pre.mermaid text.messageText { font-size: 18px; }
+/* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
+   quote: it is a deliberately designed aside that teaches a background concept beside the main argument
+   (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its
+   own visual language: a tinted panel, a strong left accent rule, a labelled header band, and a ROMAN
+   (non-italic) body a reader can actually read at length.
+
+   ── SWAP POINT ─────────────────────────────────────────────────────────────────────────────────────
+   Every knob is a CSS custom property on `.concept-inset`, so this "screen representation of the book" can
+   be re-skinned in ONE place — change these vars to retarget a print stylesheet, a dark theme, or an
+   alternate house style without touching any rule below. Add e.g. a `@media print` or `:root[data-theme=…]`
+   block that only re-declares these variables and the whole sidebar follows. */
+blockquote.concept-inset {
+  --inset-bg: #f6f4ef;           /* panel fill — warm off-white, distinct from the page's #faf9f6 */
+  --inset-accent: #b07a2b;       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
+  --inset-header: #4a3a1e;       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-header-bg: #ece4d5;    /* header band fill — a shade deeper than the panel so the label reads */
+  --inset-body: #33302a;         /* body ink — near-black warm grey, comfortable roman reading colour */
+  --inset-accent-width: 5px;     /* thickness of the left accent rule */
+  --inset-radius: 6px;
+  --inset-pad-x: 1.35rem;
+  --inset-pad-y: 1rem;
+  --inset-max: 34rem;            /* keep the primer to a readable measure, not the full column width */
+
+  background: var(--inset-bg);
+  border: 1px solid #e3dccb;
+  border-left: var(--inset-accent-width) solid var(--inset-accent);
+  border-radius: var(--inset-radius);
+  color: var(--inset-body);
+  font-style: normal;            /* KEY: kill the base blockquote italic — a primer reads as roman prose */
+  padding: 0 var(--inset-pad-x) var(--inset-pad-y);
+  margin: 1.7rem 0;
+  max-width: var(--inset-max);
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+/* Header treatment — the "Inset N — Title" label sits in its own tinted band, flush to the panel edges,
+   set in small-caps-ish tracked type so it reads as a sidebar HEADER, not a run-in paragraph. It stays a
+   demoted callout label (`p.inset-title`, not an <hN>) so no heading-order break and its id anchor is
+   preserved. */
+blockquote.concept-inset .inset-title {
+  font-style: normal; font-weight: 700; color: var(--inset-header);
+  background: var(--inset-header-bg);
+  margin: 0 calc(-1 * var(--inset-pad-x)) var(--inset-pad-y);
+  padding: 0.6rem var(--inset-pad-x);
+  border-radius: var(--inset-radius) var(--inset-radius) 0 0;
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+blockquote.concept-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
+blockquote.concept-inset p:last-child { margin-bottom: 0; }
+blockquote.concept-inset strong { color: var(--inset-header); }
+blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
+   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Taxonomy + spec: book/_design/callout-typography.md. */
+blockquote.thesis-box { background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
+                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                         border-radius: 5px; }
+blockquote.thesis-box p { margin: 0 0 0.6rem; }
+blockquote.thesis-box p:last-child { margin-bottom: 0; }
+blockquote.thesis-box strong { color: #241f33; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
 figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
@@ -88,6 +162,26 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
 .idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* Book-length table (book-index.html) — a compact, auto-generated size breakdown. Section rows band the
+   BODY / APPENDIX groups; subtotal + total rows are bolded; the numeric column is tabular + right-aligned. */
+.book-length { margin: 1.4rem 0 2.2rem; }
+.book-length h2 { margin: 0 0 0.4rem; }
+.book-length .wc-note { color: #5f5f5f; font-size: 14px; margin: 0 0 0.8rem; max-width: 40rem; }
+table.wc-table { border-collapse: collapse; width: auto; min-width: 22rem; max-width: 34rem;
+                  margin: 0.4rem 0; font-size: 15px; }
+table.wc-table caption.sr-cap { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+                                 overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+table.wc-table th, table.wc-table td { border: 1px solid #e2e0da; padding: 0.4rem 0.7rem;
+                                        text-align: left; vertical-align: top; line-height: 1.4; }
+table.wc-table thead th { background: #f4f3f0; font-weight: 600; }
+table.wc-table thead th:last-child { text-align: right; }
+table.wc-table td.wc-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.wc-table tr.wc-section th { background: #efece5; font-weight: 700; text-transform: uppercase;
+                                   letter-spacing: 0.04em; font-size: 12px; color: #555; }
+table.wc-table tr.wc-part th { font-weight: 400; padding-left: 1.3rem; }
+table.wc-table tr.wc-subtotal th, table.wc-table tr.wc-subtotal td { font-weight: 600; background: #faf9f6; }
+table.wc-table tr.wc-total th, table.wc-table tr.wc-total td { font-weight: 700; background: #f0efeb;
+                                                                border-top: 2px solid #cfa14a; }
 /* term index page */
 .idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
 .idx-terms li { margin: 0.3rem 0; }
@@ -105,21 +199,32 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
                                              border-radius: 6px; background: #fff; }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
-.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
+   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
+   so they read calm beside the primary pager cards rather than cramped. */
+.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
 .jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
-           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
+           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }
 .jump a:hover { border-color: var(--accent); background: #f4f3f0; }
-nav.toc .jump { margin-top: 0.7rem; }
-.pager-jump { margin-top: 1.2rem; }
-.pager-jump .jump { justify-content: center; margin-top: 0; }
+/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
+   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                      gap: 0.7rem 1.4rem; }
+nav.toc details { flex: 0 0 auto; }
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
+   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+nav.toc details[open] { flex: 1 1 100%; }
+nav.toc .jump { margin-top: 0; margin-left: auto; }
+.pager-jump { margin-top: 1.4rem; }
+.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Context</li>
 <li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
 <li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li><a class="" href="1.3-the-built-system.html">1.3&nbsp; The Built System</a></li>
 <li class="part">Part 2 — The Mindset</li>
 <li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
 <li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
@@ -146,75 +251,87 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
-<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
-<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
-<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
-<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
-<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
-<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
-<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
-<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
-<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
-<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
-<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
-<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
-<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
-<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
-<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
-<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
-<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
-<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
-<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
-<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
-<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
-<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
-<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
-<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
-<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
-<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
-<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A - 1. Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A - 2. Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A - 3. Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A - 4. Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A - 5. Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A - 6. Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A - 7. Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A - 8. Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A - 9. Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A - 10. Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A - 11. Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A - 12. Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A - 13. Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A - 14. Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A - 15. Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A - 16. Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A - 17. Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A - 25. Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A - 26. Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A - 28. Enforce at the right semantic level</a></li>
 <li class="part">Appendix B — Models-bridge patterns</li>
-<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
-<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
-<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
-<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
-<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
-<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
-<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
-<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
-<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
-<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
-<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
-<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
-<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
-<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
-<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
-<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
-<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
-<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
-<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1. The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B - 2. Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B - 3. Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B - 6. Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B - 7. Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B - 8. Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B - 9. Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B - 10. Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B - 11. Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B - 12. Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 13. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 14. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 15. Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 16. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 17. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 18. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 19. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 20. User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
-<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
-<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
-<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
-<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
-<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
-<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
-<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
-<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
-<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
-<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
-<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
-<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
-<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
-<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
-<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
-<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
-<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
-<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
-<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
-<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.2-the-skills.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 5.1 · Brownfield"><header class="chap"><div class="kicker">Part 5 — Putting It to Work &nbsp;::&nbsp; Chapter 5.1</div><h1>Brownfield</h1><div class="part-epigraph">I applied mine heart to know, and to search, and to seek out wisdom, and the reason of things.<span class="attr">— King Solomon (Ecclesiastes 7:25)</span></div></header><span id="idx-def-greenfield"></span><span id="idx-def-brownfield-migration"></span><p>Everything so far has assumed a clean start. Greenfield is the easy case: sketch the new thing, have an agent vibe-code a first prototype, and work your way down into an increasingly governed environment, avoiding the mistakes your last project taught you. But most readers are not on a clean start. Most are staring at a legacy codebase — started before agents existed, and since made worse by an agent that added a hundred thousand lines nobody can read. This chapter is the recipe for getting that codebase from spaghetti to a real model-based engineering environment, step by step.</p>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C - 4. Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C - 5. ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C - 6. Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C - 7. ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C - 8. Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C - 9. Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C - 10. DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C - 11. Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C - 12. FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C - 13. Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C - 14. `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C - 15. `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C - 16. F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C - 17. Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C - 18. Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C - 19. Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C - 20. Typed `ViolationCategory` / `FailureCategory` enums</a></li>
+<li class="part">Appendix D — Mechanism Stacks</li>
+<li><a class="" href="appendix-stacks.html">Appendix D — Mechanism Stacks</a></li>
+<li><a class="" href="appendix-d-mbse-stack.html">Appendix D - 1. The MBSE stack</a></li>
+<li><a class="" href="appendix-d-self-operations-stack.html">Appendix D - 2. The self-operations stack</a></li>
+<li><a class="" href="appendix-d-semantic-lint-stack.html">Appendix D - 3. The semantic-lint stack</a></li>
+<li><a class="" href="appendix-d-worktree-lifecycle-stack.html">Appendix D - 4. The worktree-lifecycle stack</a></li>
+<li><a class="" href="appendix-d-canonical-seam-stack.html">Appendix D - 5. The canonical-seam stack</a></li>
+<li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
+<li class="part">Appendix E — How to Write a Skill</li>
+<li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Previous part</a><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.2-the-skills.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 5.1 · Brownfield"><header class="chap"><div class="kicker"><a href="5.1-brownfield.html" aria-label="Beginning of Part 5 — Putting It to Work">Part 5 — Putting It to Work</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 5.1</a></div><h1>Brownfield</h1><div class="part-epigraph">You do not govern a codebase into existence all at once. You find the worst tangle, give it a name, and move to the next.<span class="attr">— the working method of this part</span></div></header><span id="idx-def-greenfield"></span><span id="idx-def-brownfield-migration"></span><p>Everything so far has assumed a clean start. Greenfield is the easy case: sketch the new thing, have an agent vibe-code a first prototype, and work your way down into an increasingly governed environment, avoiding the mistakes your last project taught you. But most readers are not on a clean start. Most are staring at a legacy codebase — started before agents existed, and since made worse by an agent that added a hundred thousand lines nobody can read. This chapter is the recipe for getting that codebase from spaghetti to a real model-based engineering environment, step by step.</p>
 <p>High deployment velocity is not new, and neither is the risk that rides with it. The industry learned years ago that shipping to production hundreds of times a day is possible and that it is unforgiving when the discipline behind it slips — high velocity, high risk, just ask Amazon, which was <a href="https://www.informationweek.com/it-infrastructure/amazon-s-vogels-challenges-it-rethink-app-dev">deploying to production every 11.6 seconds</a> a decade before an agent could write the code for you.</p>
 <h2>The starting point and the destination</h2>
 <span id="idx-def-quality"></span><span id="idx-def-quality-case-traceability"></span><p>Name both ends before you move. The starting point is familiar: some spaghetti, thin documentation, and invariants that live only in one person's head — the person you hope never retires. The destination is specific. You want the models needed to express every view of the system that bears on a quality you care about — performance, correctness, security, privacy. You want code that reflects those models, so the map equals the territory: zoom in on the map and you see county lines, not Switzerland dropped in by surprise. And you want <strong>traceability</strong> for your quality case — the ability to make the argument automatically. For any property you claim, you should be able to point to the code that implements it, the static analysis that enforces it, the protocol you model-check it against, the tests that confirm it across the inputs you try, and the record of every change and why it was made. That is the output. With it, soft and hard governance can hold the whole thing in place and keep it current. There are three ways to get there, and a real migration uses all three.</p>
@@ -222,21 +339,86 @@ nav.toc .jump { margin-top: 0.7rem; }
 <p id="idx-def-top-down-refinement">Start coarse and refine. Your first model can be as crude as "on this input, the test suite passes and we get the right output" — and you should be able to write that today. From there you ask what happens <em>between</em> input and output: insert a file, and out comes a score, a spreadsheet, whatever your program produces; insert a picture, and out come the cats and antelopes it found. Refine until the model captures the abstractions you need, and stop when you hit diminishing returns — the territory is the territory, and the map only has to be detailed enough to carry the assurance you are after.</p>
 <p>You can seed this from a literal whiteboard: photograph the diagram, hand it to the agent, and have it produce a data-flow diagram in whatever representation you like. Then iterate against the code — "what nodes am I missing, what flows am I missing?" — and tighten the policies as the model sharpens: static assertions ("we never call <code>exec</code>"), then the invariants of each module (its preconditions, its post-conditions), then the properties preserved across module interactions. As you do this, every mismatch between model and code means one of exactly three things: the model is wrong and needs refining; the model is at the wrong level of abstraction for what you are checking, so you need a different model; or there is a genuine bug in the code — and the modeling just found it. Expect to find many. Shifting a legacy codebase from "the tests pass" to "these properties hold across all behaviors" surfaces defects by design. Some you will fix; some you will decide are working-as-intended and fix the <em>model</em>; some you will scope out by narrowing the model's assumed inputs. All three are legitimate moves.</p>
 <h2>Approach two: bottom-up, inducing the model from code</h2>
+<!-- noqa: book-section-cap | Approach two: bottom-up, inducing the model from code — one tight argument (define what 'correct' means, pick the abstraction that enforces it cheaply, then a worked audit-trail example); 14 words over across 3 short paragraphs, and breaking the drone-climb-to-worked-example arc would cost the reader more than the length does. -->
 <p id="idx-def-bottom-up-induction">The second approach starts from the code and flies upward. Ask the agent to induce the model: "look at the codebase and help me develop the model inductively." Where the first approach starts from your coarse whiteboard understanding and refines <em>down</em> toward the code, this one starts on the ground and rises. Picture standing on a street and flying a drone up: the individual buildings blur, the street grid appears, then the highways, then the cities. As you climb, the levels of abstraction reveal themselves — and whether you came top-down or bottom-up, you are trying to meet in the middle, at the level that lets you enforce the properties you care about.</p>
 <p id="idx-def-fitness-function">Which level that is depends entirely on the assurance you need, and it is worth being concrete about the trade. For low assurance, just run the tests — the coarsest model is "this input, that output, checked dynamically." For strong guarantees you need a refined model and stronger assertions; for the strongest, elaborate analyses over the control-flow graph and every function's inputs and outputs — which is expensive both to write and to run, because the checker must search every acre of the whole county. So begin by writing down what <em>correct</em> even means, because correctness is not one thing: it means one thing for security, another for semantics, another for privacy, and the definition tells you the abstraction level you need. Memory safety demands a fine-grained model that sees every access — and you will pay for it. A semantic property is often far cheaper.</p>
 <p>Take an audit trail on a spreadsheet: "every modification is stamped." You do not model every function to enforce that. You just require that every code path which modifies the ledger calls the stamp routine on the way out — a property about the <em>order</em> of two calls in the control-flow graph, not about what either call does. That is a high level of abstraction and therefore cheap to enforce. The companion catalogue ships this exact pattern as a product control: a lint that checks every format-mutating routine is wired to its provenance stamp, so an unstamped mutation cannot ship. Proving the stamp routine <em>itself</em> is correct would need a much finer model — but if a human review or a test covers that, the coarse model is enough. Choosing the fitness function, then the abstraction that enforces it cheaply, is the new job, and it varies by codebase. It is yours to think through.</p>
 <h2>Approach three: lint, cover, then induce</h2>
 <p id="idx-def-lint-cover-induce">Both approaches assume you can make sense of the code — and often you cannot, because it is a mess. Models read code the way humans do: they like comments that give rationale, names that reflect purpose, and shallow nesting, because deep nesting has to be held in working memory, and an agent pays for that context just as a human pays in confusion. So before you extract models from spaghetti, improve the code — and there is a loop for that, the same loop from <a href="2.2-loops-and-models.html">Chapter 2</a>. Define the inputs, the judgment, the output, and the metric. The metric here is a <strong>smell detector</strong>.</p>
 <span id="idx-def-code-smell"></span><span id="idx-def-lint"></span><p>A smell is code that works but will break the moment it is touched, because no one can reason over it. You measure smells with cheap static analyses — <strong>lints</strong> (the dryer-lint kind, the stuff you pull out to make things tidy) — that parse the syntax tree and count the tells: a high density of bare <code>int</code>s and strings, deeply nested conditionals. Some rules are universal. No codebase should have a 2,000-line function, a module imported by every other file, a switch with 400 string cases, structs nested three anonymous levels deep, or functions returning unnamed many-element tuples. So run the lints, and have the agent fix them in a behavior-preserving way — which means you need tests. If you have none, start there: have the agent write tests for line or branch coverage, module by module, because coverage is what lets you refactor safely, using the tests and the lints together as your success metric.</p>
-<p id="idx-def-make-lint-blocking">Then comes the move that makes it stick: <strong>as each lint reaches zero, make it blocking.</strong> Now the success metric is "all tests pass <em>and</em> that lint still passes" — no more unnamed tuples, no more imports buried mid-function, ever again. The companion repository does this deliberately and in a specific order, because turning a lint blocking while it still has findings would break every agent's commit at once: a new lint lands in an audit-only mode first, a wave of fixes drains it to zero, and only then is it promoted to blocking. Squash, zero, promote — and the smells that leave never return. When you are done, you have cleaned-up spaghetti with enough shape that model induction has something to grip: introduced classes and enums and named structs give the induction real structure to reason over, the structure that spaghetti hid. The catalogue's coverage-to-model mapping closes the loop from the other side — it projects your test coverage onto the model's nodes, so an untested invariant shows up as a visible gap rather than hiding inside a line-coverage percentage.</p>
+<h3>Squash, zero, promote</h3>
+<!-- noqa: book-section-cap | Squash, zero, promote — the reported count is inflated by the figure's descriptive a11y caption; the prose body pairs the make-it-blocking move with the audit-only-first ordering the figure draws, and reads as one arc that ends the three-approaches thread. -->
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420"
+     role="group" aria-labelledby="szpTitle szpDesc"
+     font-family="'Helvetica Neue', Arial, sans-serif">
+  <title id="szpTitle">Squash, zero, promote: how a lint is worn into a legacy tree one step at a time</title>
+  <desc id="szpDesc">A new smell-detecting lint moves through three states, left to right. First it
+    lands audit-only: it reports every finding but blocks no commit, so it never breaks an in-flight
+    agent. Then a fix wave — an agent making behavior-preserving edits under test coverage — drains
+    the finding count to zero; this is a loop that runs under the audit-only state until nothing is
+    left. Only when the count reaches zero is the lint promoted to blocking: it now fails any commit
+    that reintroduces the smell. A one-way barrier sits after the blocking state, marking that the
+    class of smell can never return. Squash the findings, drive them to zero, then promote — and the
+    smells that leave stay gone.</desc>
+
+  <defs>
+    <marker id="szpArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
+    </marker>
+    <marker id="szpArrowRed" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#8a2f2f"/>
+    </marker>
+  </defs>
+
+  <!-- start -->
+  <circle cx="70" cy="150" r="12" fill="#33383d"/>
+  <text x="70" y="192" text-anchor="middle" font-size="17" fill="#5f5f5f">new lint</text>
+
+  <!-- state 1: audit-only -->
+  <rect x="130" y="110" width="230" height="80" rx="10" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2.5"/>
+  <text x="245" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Audit-only</text>
+  <text x="245" y="172" text-anchor="middle" font-size="18" fill="#5f5f5f">reports, blocks nothing</text>
+
+  <!-- state 2: draining (the middle work) -->
+  <rect x="410" y="110" width="230" height="80" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="525" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Findings → 0</text>
+  <text x="525" y="172" text-anchor="middle" font-size="18" fill="#33383d">a fix wave drains it</text>
+
+  <!-- state 3: blocking -->
+  <rect x="690" y="110" width="230" height="80" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="805" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Blocking</text>
+  <text x="805" y="172" text-anchor="middle" font-size="16" fill="#33383d">fails any commit that regresses</text>
+
+  <!-- edges along the spine -->
+  <g fill="none" stroke="#33383d" stroke-width="2.5" marker-end="url(#szpArrow)">
+    <path d="M82,150 L128,150"/>
+    <path d="M360,150 L408,150"/>
+    <path d="M640,150 L688,150"/>
+  </g>
+  <text x="386" y="140" text-anchor="middle" font-size="16" fill="#5f5f5f">land</text>
+  <text x="666" y="140" text-anchor="middle" font-size="16" fill="#5f5f5f">at zero</text>
+
+  <!-- fix-wave loop under the middle state -->
+  <g fill="none" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#szpArrow)">
+    <path d="M470,190 C440,250 610,250 580,192"/>
+  </g>
+  <text x="525" y="268" text-anchor="middle" font-size="18" font-style="italic" fill="#1a4a7a">behavior-preserving fixes, under test coverage</text>
+
+  <!-- one-way barrier after blocking: the class can't return -->
+  <line x1="932" y1="96" x2="932" y2="204" stroke="#8a2f2f" stroke-width="4"/>
+  <g fill="none" stroke="#8a2f2f" stroke-width="2.5" marker-end="url(#szpArrowRed)">
+    <path d="M805,206 C805,240 900,240 926,206"/>
+  </g>
+  <text x="812" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#8a2f2f">the smell can never return</text>
+</svg><figcaption>How one lint is worn into a legacy tree. A new smell-detecting lint lands audit-only — it reports every finding but blocks no commit, so it never breaks an in-flight agent. A fix wave drains its findings to zero with behavior-preserving edits under test coverage. Only then is it promoted to blocking, where it fails any commit that reintroduces the smell. The barrier after the final state marks the payoff: the class of smell can never return.</figcaption></figure>
+<p id="idx-def-make-lint-blocking">Then comes the move that makes it stick: <strong>as each lint reaches zero, make it blocking.</strong> Now the success metric is "all tests pass <em>and</em> that lint still passes" — no more unnamed tuples, no more imports buried mid-function, ever again. This is the Alignment Thesis worn into a legacy tree one lint at a time: each promotion is a governance mechanism that bounds what any later agent can reintroduce. Order matters, and the companion repository holds to it deliberately — flipping a lint to blocking while findings remain would break every agent's commit at once, so the figure's sequence is the safe one: audit-only, drain to zero, then promote. The smells that leave never return. When you are done, you have cleaned-up spaghetti with enough shape that model induction has something to grip: classes and enums and named structs give the induction real structure to reason over, the structure that spaghetti hid. The catalogue's coverage-to-model mapping closes the loop from the other side — it projects your test coverage onto the model's nodes, so an untested invariant shows up as a visible gap rather than hiding inside a line-coverage percentage.</p>
 <p>You will need all three approaches in combination. It is not magic; it is hard work and judgment. But applied together, and scaled to the quality of your starting point, they land you at the destination: the right models, encoding the right views, with the right correctness criteria, traceable to where each is enforced — statically, dynamically, or by a model check.</p>
-<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> one measured before/after from a real migration — a defect count, a velocity
-number, or the lint-burndown curve as each lint went blocking. The chapter argues the case
-well; a single number makes a skeptical reader believe it.</div>
-<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> a decision rule for <em>how much</em> governance is enough. The trade is named
-("it depends") but the reader needs a heuristic tied to the assurance level they are
-targeting — including when to stop, so they do not build the teetering tower Chapter 9
-warns against.</div>
+<p>I owe you honesty about the evidence here. This is a solo field report, not a controlled study. I did not run the migration twice, once with governance and once without, and measure the delta — I had one codebase and one pass through it, so I cannot hand you a clean before-and-after number. Take what follows as lived experience, weighed as such.</p>
+<h3>How much governance is enough</h3>
+<p>Which raises the real question: how much governance is enough? There is no formula. There is a judgment, and it turns on two factors multiplied together — how much a failure <em>costs</em> you, times how <em>often</em> it happens. Cost is not only product risk. An agent that trips over a failure burns tokens working around it, and tokens are real dollars, so a cheap-looking failure that every agent stumbles into ten times a day is expensive in a way the incident log never shows. Multiply the two. High cost times high frequency earns a hard control — a blocking lint, a gate, a typed seam that makes the mistake impossible. Low times low you leave to judgment; a control there costs more attention to maintain than the failure ever costs you. The middle band is where taste lives, and where you will spend it. This is also when to <em>stop</em>: a control guarding a failure that is both rare and cheap is the first brick in the teetering tower <a href="5.2-the-skills.html">Chapter 9</a> warns against.</p>
 <h2>How I know this</h2>
 <p>I know this because I lived it. I vibe-coded a couple hundred thousand lines of production code, and it worked — but I had imposed real control only on the parts I knew were sensitive, where I pushed hard for a strong architecture. The rest — the web layer, the front end — I hoped the agent would just get right. It did not, and those parts turned crufty. I told it to use Python; it did, without types. I told it to retrofit types; it turned on the type checker and made everything strings and ints, without building the type abstractions I actually wanted. The same thing happened porting JavaScript to TypeScript that same week — a hundred thousand lines of "typed" Python and a hundred and fifty thousand of TypeScript, each ported the cheapest way possible, because the agent had no model and did not know the names of things. It is probably better that it did not guess.</p>
-<p>So I retrofitted the models onto the mess — moving the code toward a clean model-view- controller architecture, moving the web stack to reactive, loop-based structures friendly to auto-scaling. And I did it exactly the way this chapter describes. I turned on every lint from Ruff, Pylint, and ESLint — hundreds of commodity smell checks — and for several weeks I burned through four Claude Max subscriptions squashing them, making each one blocking as it went to zero so it could never come back. I knew the coarse architecture I wanted and said "pursue this model," but I had to get there iteratively: find the dense primitive regions, induce structure there, and inch toward the target. After a while, it worked. Now I have the models, the architecture, the code that implements it, and enforcement holding all three together every time the code changes.</p><div class="pager"><a class="prev" href="4.6-the-scenarios-view.html"><span class="dir">‹ Previous</span><span class="ttl">4.6 · The Scenarios View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.2-the-skills.html"><span class="dir">Next ›</span><span class="ttl">5.2 · The Skills</span></a></div><div class="pager-jump"><div class="jump"><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.2-the-skills.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>So I retrofitted the models onto the mess — moving the code toward a clean model-view-controller architecture, moving the web stack to reactive, loop-based structures friendly to auto-scaling. And I did it exactly the way this chapter describes. I turned on every lint from Ruff, Pylint, and ESLint — hundreds of commodity smell checks — and for several weeks I burned through four Claude Max subscriptions squashing them, making each one blocking as it went to zero so it could never come back. I knew the coarse architecture I wanted and said "pursue this model," but I had to get there iteratively: find the dense primitive regions, induce structure there, and inch toward the target.</p>
+<p>A dense primitive region is a stretch of code doing many low-level operations by hand — raw library calls, strings and ints passed around untyped, tree-walking spelled out inline — with no abstraction that owns them. I found these the crude way, by reading for the clots: where the primitive calls piled up thickest, the missing model was loudest. Inducing structure means extracting a typed model that owns those primitives — one class the raw calls now route through — and rewriting the region to go through it. You do this region by region, not all at once, because each induced model gives the next region something to lean on, and the target architecture assembles out of the pieces. That is what the squash-to-zero does at the fine grain, too: each lint I drove to zero was one primitive smell given a name and a home, and the model-view-controller decomposition is just the same move at the coarse grain. After a while, it worked. Now I have the models, the architecture, the code that implements it, and enforcement holding all three together every time the code changes.</p><div class="pager"><a class="prev" href="4.6-the-scenarios-view.html"><span class="dir">‹ Previous</span><span class="ttl">4.6 · The Scenarios View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.2-the-skills.html"><span class="dir">Next ›</span><span class="ttl">5.2 · The Skills</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Previous part</a><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.2-the-skills.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

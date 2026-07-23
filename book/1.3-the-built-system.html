@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 1.3 · The Built System</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+/* The kicker halves are links but must stay understated — inherit the small-caps accent colour, no default
+   underline; reveal the underline only on hover/focus so the affordance is discoverable without shouting. */
+header.chap .kicker a { color: inherit; text-decoration: none; }
+header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
+blockquote pre.mermaid { font-style: normal; }
+/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
+   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
+   theme knob is missed. */
+pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 20px; }
+pre.mermaid text.messageText { font-size: 18px; }
+/* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
+   quote: it is a deliberately designed aside that teaches a background concept beside the main argument
+   (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its
+   own visual language: a tinted panel, a strong left accent rule, a labelled header band, and a ROMAN
+   (non-italic) body a reader can actually read at length.
+
+   ── SWAP POINT ─────────────────────────────────────────────────────────────────────────────────────
+   Every knob is a CSS custom property on `.concept-inset`, so this "screen representation of the book" can
+   be re-skinned in ONE place — change these vars to retarget a print stylesheet, a dark theme, or an
+   alternate house style without touching any rule below. Add e.g. a `@media print` or `:root[data-theme=…]`
+   block that only re-declares these variables and the whole sidebar follows. */
+blockquote.concept-inset {
+  --inset-bg: #f6f4ef;           /* panel fill — warm off-white, distinct from the page's #faf9f6 */
+  --inset-accent: #b07a2b;       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
+  --inset-header: #4a3a1e;       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-header-bg: #ece4d5;    /* header band fill — a shade deeper than the panel so the label reads */
+  --inset-body: #33302a;         /* body ink — near-black warm grey, comfortable roman reading colour */
+  --inset-accent-width: 5px;     /* thickness of the left accent rule */
+  --inset-radius: 6px;
+  --inset-pad-x: 1.35rem;
+  --inset-pad-y: 1rem;
+  --inset-max: 34rem;            /* keep the primer to a readable measure, not the full column width */
+
+  background: var(--inset-bg);
+  border: 1px solid #e3dccb;
+  border-left: var(--inset-accent-width) solid var(--inset-accent);
+  border-radius: var(--inset-radius);
+  color: var(--inset-body);
+  font-style: normal;            /* KEY: kill the base blockquote italic — a primer reads as roman prose */
+  padding: 0 var(--inset-pad-x) var(--inset-pad-y);
+  margin: 1.7rem 0;
+  max-width: var(--inset-max);
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+/* Header treatment — the "Inset N — Title" label sits in its own tinted band, flush to the panel edges,
+   set in small-caps-ish tracked type so it reads as a sidebar HEADER, not a run-in paragraph. It stays a
+   demoted callout label (`p.inset-title`, not an <hN>) so no heading-order break and its id anchor is
+   preserved. */
+blockquote.concept-inset .inset-title {
+  font-style: normal; font-weight: 700; color: var(--inset-header);
+  background: var(--inset-header-bg);
+  margin: 0 calc(-1 * var(--inset-pad-x)) var(--inset-pad-y);
+  padding: 0.6rem var(--inset-pad-x);
+  border-radius: var(--inset-radius) var(--inset-radius) 0 0;
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+blockquote.concept-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
+blockquote.concept-inset p:last-child { margin-bottom: 0; }
+blockquote.concept-inset strong { color: var(--inset-header); }
+blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
+   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Taxonomy + spec: book/_design/callout-typography.md. */
+blockquote.thesis-box { background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
+                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                         border-radius: 5px; }
+blockquote.thesis-box p { margin: 0 0 0.6rem; }
+blockquote.thesis-box p:last-child { margin-bottom: 0; }
+blockquote.thesis-box strong { color: #241f33; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* Book-length table (book-index.html) — a compact, auto-generated size breakdown. Section rows band the
+   BODY / APPENDIX groups; subtotal + total rows are bolded; the numeric column is tabular + right-aligned. */
+.book-length { margin: 1.4rem 0 2.2rem; }
+.book-length h2 { margin: 0 0 0.4rem; }
+.book-length .wc-note { color: #5f5f5f; font-size: 14px; margin: 0 0 0.8rem; max-width: 40rem; }
+table.wc-table { border-collapse: collapse; width: auto; min-width: 22rem; max-width: 34rem;
+                  margin: 0.4rem 0; font-size: 15px; }
+table.wc-table caption.sr-cap { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+                                 overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+table.wc-table th, table.wc-table td { border: 1px solid #e2e0da; padding: 0.4rem 0.7rem;
+                                        text-align: left; vertical-align: top; line-height: 1.4; }
+table.wc-table thead th { background: #f4f3f0; font-weight: 600; }
+table.wc-table thead th:last-child { text-align: right; }
+table.wc-table td.wc-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.wc-table tr.wc-section th { background: #efece5; font-weight: 700; text-transform: uppercase;
+                                   letter-spacing: 0.04em; font-size: 12px; color: #555; }
+table.wc-table tr.wc-part th { font-weight: 400; padding-left: 1.3rem; }
+table.wc-table tr.wc-subtotal th, table.wc-table tr.wc-subtotal td { font-weight: 600; background: #faf9f6; }
+table.wc-table tr.wc-total th, table.wc-table tr.wc-total td { font-weight: 700; background: #f0efeb;
+                                                                border-top: 2px solid #cfa14a; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* curated concept entry: a definition-of / examples-of sub-block under the concept name */
+.idx-terms li.idx-concept { margin: 0.55rem 0; }
+.idx-concept .idx-subs { display: block; margin: 0.15rem 0 0 1rem; }
+.idx-concept .idx-sub { display: block; font-size: 14px; color: #444; line-height: 1.6; }
+.idx-concept .idx-sub-lead { color: #595959; font-style: italic; margin-right: 0.35rem; }
+/* Underline the locators so a link is distinguished from the "definition of:" lead text without relying
+   on color alone (axe link-in-text-block). */
+.idx-concept .idx-sub a { margin-right: 0.4rem; text-decoration: underline; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
+   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
+   so they read calm beside the primary pager cards rather than cramped. */
+.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
+           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
+   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                      gap: 0.7rem 1.4rem; }
+nav.toc details { flex: 0 0 auto; }
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
+   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+nav.toc details[open] { flex: 1 1 100%; }
+nav.toc .jump { margin-top: 0; margin-left: auto; }
+.pager-jump { margin-top: 1.4rem; }
+.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li><a class="current" href="1.3-the-built-system.html">1.3&nbsp; The Built System</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A - 1. Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A - 2. Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A - 3. Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A - 4. Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A - 5. Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A - 6. Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A - 7. Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A - 8. Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A - 9. Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A - 10. Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A - 11. Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A - 12. Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A - 13. Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A - 14. Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A - 15. Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A - 16. Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A - 17. Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A - 25. Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A - 26. Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A - 28. Enforce at the right semantic level</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1. The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B - 2. Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B - 3. Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B - 6. Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B - 7. Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B - 8. Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B - 9. Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B - 10. Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B - 11. Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B - 12. Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 13. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 14. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 15. Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 16. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 17. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 18. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 19. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 20. User-journey model (product-goal → implementation bridge)</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C - 4. Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C - 5. ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C - 6. Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C - 7. ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C - 8. Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C - 9. Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C - 10. DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C - 11. Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C - 12. FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C - 13. Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C - 14. `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C - 15. `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C - 16. F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C - 17. Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C - 18. Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C - 19. Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C - 20. Typed `ViolationCategory` / `FailureCategory` enums</a></li>
+<li class="part">Appendix D — Mechanism Stacks</li>
+<li><a class="" href="appendix-stacks.html">Appendix D — Mechanism Stacks</a></li>
+<li><a class="" href="appendix-d-mbse-stack.html">Appendix D - 1. The MBSE stack</a></li>
+<li><a class="" href="appendix-d-self-operations-stack.html">Appendix D - 2. The self-operations stack</a></li>
+<li><a class="" href="appendix-d-semantic-lint-stack.html">Appendix D - 3. The semantic-lint stack</a></li>
+<li><a class="" href="appendix-d-worktree-lifecycle-stack.html">Appendix D - 4. The worktree-lifecycle stack</a></li>
+<li><a class="" href="appendix-d-canonical-seam-stack.html">Appendix D - 5. The canonical-seam stack</a></li>
+<li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
+<li class="part">Appendix E — How to Write a Skill</li>
+<li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="1.1-the-ada-context.html">⇐ Beginning of this part</a><a href="2.1-the-printer.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 1.3 · The Built System"><header class="chap"><div class="kicker"><a href="1.1-the-ada-context.html" aria-label="Beginning of Part 1 — The Context">Part 1 — The Context</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 1.3</a></div><h1>The Built System</h1></header><p>The timeline told what happened. This chapter tells what got built. Before any of the governance in the rest of the book makes sense, you need the shape of the thing it governs. DocAble is a real system, live in beta, that takes a document a university actually distributes and hands back a version a screen reader can read. It runs on frontier models for the parts that need to understand a slide, and on ordinary deterministic code for everything else. The interesting engineering lives in how those two halves are joined.</p>
+<h2>What the system does, end to end</h2>
+<p>A user uploads a file. The system figures out what kind of document it is, breaks it into work, remediates each piece, checks the result against a real accessibility standard, stamps what it changed, and returns the corrected file with evidence that the job was done. Six moving parts carry that load.</p>
+<ul><li><strong>A front door.</strong> A website and an API take the upload, authenticate the user, meter the usage against a quota, and put the job on a queue. A professor drops in a slide deck; the system takes it from there.</li><li><strong>A dispatcher.</strong> The document is split into chunks — slides, pages, sheets — and each chunk becomes a unit of work handed to a worker. Splitting is what lets a hundred-slide deck finish in about a minute instead of an hour.</li><li><strong>A remediation core.</strong> A command-line engine, written in a typed language, does the actual repair. It walks the document through a typed model of its format, and for each thing that needs fixing it either applies a deterministic rule or asks a model. This is where alt text gets written, reading order gets set, titles get added, contrast gets fixed.</li><li><strong>A check engine.</strong> After every pass, a standards-grounded checker maps each remaining finding to a specific clause of the accessibility standard. The system does not trust an outside tool to tell it whether the job is done; it owns the definition of done.</li><li><strong>A validator.</strong> A content-fidelity gate asserts that the meaning of the input survived into the output. Passing a checker is not the same as keeping the author's words. The validator catches the case where the file got more accessible and less true.</li><li><strong>A provenance layer.</strong> Every artifact the system inserts is stamped, so a finished document's history can be reconstructed and any single change explained or reversed. Trust that can be audited is the only kind a university will accept.</li></ul>
+<p>Two design commitments run underneath all six. Every format is touched through <strong>one typed model</strong>, never the raw library, so a fix applied once holds everywhere. And the system <strong>fails loud</strong>: when the model is unreachable, the pipeline stops rather than quietly shipping a degraded file. A silent wrong answer is the worst outcome for a system whose whole promise is that the meaning survived.</p>
+<h2>The document is the hard part</h2>
+<p>None of this would be worth building if a document were just text in a box. It is not. A slide is a visual and semantic artifact — figures, tables, equations, an order the eye follows, emphasis carried by layout and color. To make it accessible, the system has to recover enough of that meaning to present it through another channel. For years that was out of reach. The turn came with vision-language models that can look at a rendered slide and say what it means: read the equation, describe the figure, name what the slide is trying to teach.</p>
+<p>That capability is real, and it is not a system. You can paste a small deck into a chat model and get useful output. You cannot get a corrected file back, a guarantee it satisfies the standard, or any evidence the meaning survived the trip. The model understands the slide and understands nothing about the file format, the standard, the university, or the cost of being wrong. Turning that flash of capability into something a university can trust is the engineering. The next section is the pattern that does the turning.</p>
+<h2 id="llm-as-function-call">Designing with a probabilistic component: the LLM as a function call</h2>
+<p>Here is the central problem of building on a model. A model is a <strong>probabilistic component</strong>. Ask it the same question twice and you may get two answers. Ask it a question slightly outside what it saw in training and it will answer anyway, confidently, wrong. A deterministic function you can reason about; a probabilistic one you cannot. And yet the model is the only thing that can look at a figure and describe it. You have to build a reliable system out of an unreliable part.</p>
+<p>The pattern that makes this work is to treat the model as a <strong>typed function call</strong>. The idea is not ours. A recent verification system, facing the same tension in a different domain, names it directly: deterministic algorithms control the workflow and define the objective of each step, and when a step needs semantic understanding, the system delegates a <em>bounded</em> task to a tool-equipped model — then a deterministic module validates the returned artifact before it is allowed in. The workflow is deterministic. The model is a subroutine inside it. The subroutine is never trusted on its word.</p>
+<p>Read the pattern in three moves.</p>
+<ul><li><strong>The caller is deterministic, and it owns the workflow.</strong> Ordinary code decides what happens and in what order. It decides <em>when</em> a step needs the model at all — most steps do not. When a step is a matter of judgment rather than a matter of rule, and only then, the caller reaches for the model.</li><li><strong>The call has a typed contract on both sides.</strong> The task handed to the model is packed into a typed input — this figure, this context, this question — and the answer is required to come back in a typed output shape the caller can act on. A free-form paragraph is not a return value. A structured, checkable artifact is.</li><li><strong>A deterministic validator sits at the trust boundary.</strong> The model's answer is a <em>candidate</em>, not a result. Before it is incorporated, deterministic code checks it: does it satisfy the standard, does it preserve the input's meaning, does it fit the contract. On a pass, the caller incorporates it and moves on. On a fail, the caller retries or falls back. The trust boundary is the validator, not the model.</li></ul>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 430" role="group" aria-labelledby="lfc-title lfc-desc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="lfc-title">The LLM as a typed function call</title>
+  <desc id="lfc-desc">A left-to-right pipeline in four stages. A deterministic caller owns the workflow and decides when a step needs judgment. It packs the task into a typed input contract and hands it to the probabilistic component, the model, drawn as a dashed box to mark that its output is not trusted. The model returns a candidate answer that must conform to a typed output contract. A deterministic validator then checks that candidate: on a pass, the result is incorporated and control returns to the caller; on a fail, the caller retries or falls back. The trust boundary sits at the validator, not at the model. The dashed model box and the solid caller and validator boxes together say the same thing the prose does: guidance aims, machinery holds.</desc>
+
+  <rect x="0" y="0" width="1040" height="430" fill="#ffffff"/>
+
+  <defs>
+    <marker id="lfc-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#2B2416"/>
+    </marker>
+  </defs>
+
+  <!-- CALLER -->
+  <rect x="24" y="150" width="200" height="112" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
+  <text x="124" y="182" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Deterministic</text>
+  <text x="124" y="206" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">caller</text>
+  <text x="124" y="230" text-anchor="middle" font-size="19" fill="#3d5a70">owns the workflow;</text>
+  <text x="124" y="252" text-anchor="middle" font-size="19" fill="#3d5a70">decides each step</text>
+
+  <!-- input contract -->
+  <line x1="224" y1="206" x2="300" y2="206" stroke="#2B2416" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
+  <text x="262" y="184" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">typed input</text>
+  <text x="262" y="200" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">contract</text>
+
+  <!-- MODEL (probabilistic — dashed) -->
+  <rect x="304" y="150" width="200" height="112" rx="3" fill="#FFFBEA" stroke="#BFA45A" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="404" y="184" text-anchor="middle" font-size="24" font-weight="bold" fill="#2B2416">Model</text>
+  <text x="404" y="210" text-anchor="middle" font-size="19" fill="#6b6250">the probabilistic</text>
+  <text x="404" y="232" text-anchor="middle" font-size="19" fill="#6b6250">"function" — one</text>
+  <text x="404" y="254" text-anchor="middle" font-size="19" fill="#6b6250">bounded task</text>
+
+  <!-- output contract -->
+  <line x1="504" y1="206" x2="580" y2="206" stroke="#2B2416" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
+  <text x="542" y="184" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">typed output</text>
+  <text x="542" y="200" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">contract</text>
+
+  <!-- VALIDATOR -->
+  <rect x="584" y="150" width="200" height="112" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
+  <text x="684" y="188" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Deterministic</text>
+  <text x="684" y="212" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">validator</text>
+  <text x="684" y="240" text-anchor="middle" font-size="19" fill="#3d5a70">checks the candidate</text>
+
+  <!-- trust boundary marker under validator -->
+  <line x1="554" y1="116" x2="554" y2="300" stroke="#a33" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="554" y="108" text-anchor="middle" font-size="18" font-weight="bold" fill="#a33">trust boundary</text>
+
+  <!-- PASS out -->
+  <line x1="784" y1="188" x2="856" y2="188" stroke="#2B2416" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
+  <text x="820" y="176" text-anchor="middle" font-size="19" font-weight="bold" fill="#2a6b2a">pass</text>
+  <text x="866" y="182" text-anchor="start" font-size="18" fill="#2a6b2a">result</text>
+  <text x="866" y="202" text-anchor="start" font-size="18" fill="#2a6b2a">incorporated</text>
+
+  <!-- FAIL loop back to caller -->
+  <path d="M684,262 L684,330 L124,330 L124,262" fill="none" stroke="#a33" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#lfc-arrow)"/>
+  <text x="404" y="350" text-anchor="middle" font-size="19" font-weight="bold" fill="#a33">fail → caller retries or falls back</text>
+
+  <!-- caption strip -->
+  <text x="24" y="392" font-size="18" font-style="italic" fill="#555">The model is called like a function: a typed task in, a typed answer out, and never trusted until a deterministic check has passed it.</text>
+</svg><figcaption>The LLM as a typed function call. A deterministic caller packs a bounded task into a typed input, the model returns a candidate under a typed output contract, and a deterministic validator passes it before it is incorporated — or sends it back.</figcaption></figure>
+<p>This is why DocAble can make a defensible claim on top of an infinite midwit. The model supplies the one thing deterministic code cannot: it looks at the figure and understands something. Everything around that understanding — when to ask, what to ask, whether to believe the answer — stays in code you can reason about and test. The probabilistic part is sealed inside a bounded call with a check on the way out. Guidance aims; machinery holds.</p>
+<p>This discipline was earned the hard way: put a model somewhere without it and it will find the exception you did not guard. Agents are the fastest road to a working demo and the fastest road to a subtle, confident, wrong result. The function-call shape is what keeps the first from becoming the second.</p>
+<h2>Three views of the same system</h2>
+<p>A model shows a view. The sections below draw three architectural views of DocAble from its real system models. Each answers a different question. The first asks how the services are shaped, and why that shape let the whole system change its deployment target without a rewrite. The second asks how the front end is decomposed, and how the editor changes a document through a small edit language. The third connects that edit language to the automated pipeline, and shows the join as a concrete instance of the function-call pattern above. Read together, they are the standing structure the rest of the book governs.</p>
+<h2>View 1 — a reactive service seam, and how it made serverless natural</h2>
+<p>The back end is a set of small services wired to react to events. A user's upload lands at a web front door, which splits the document into chunks and enqueues each chunk as a unit of work. A queue hands each chunk to a stateless worker. The worker remediates its chunk and publishes a completion. A fan-in step collects the completions and assembles the finished file. Every hop is an event handed forward, not a component polling for work. Two commitments hold the seam together: services stay reactive and stateless, and the split of duties is declared — Redis carries communication, the database carries truth.</p>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" role="group" aria-labelledby="srv-title srv-desc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="srv-title">The reactive service topology, and why it made serverless natural</title>
+  <desc id="srv-desc">Two stacked panels compare the same event-driven flow under two deployment targets. The top panel, the reactive seam, reads left to right: the web front door accepts an upload and enqueues chunks onto a work queue; a queue hands each chunk to a stateless worker that remediates it and publishes a completion; a fan-in step collects the completions and assembles the finished document. Every arrow is an event, not a poll. A note reads: services are reactive and stateless; Redis carries communication, the database carries truth. The bottom panel shows the same flow realized two ways. On the left, the retired Kubernetes poll plane: workers reach into size-stratified Redis queues to claim work, and a custom autoscaler watches queue depth to add or remove worker pods. On the right, the serverless push plane: a managed task queue pushes each chunk to a worker that scales from zero, and a managed topic fans in completions, with no custom autoscaler at all. The takeaway, stated across the bottom: because the services were already reactive and stateless, moving from poll to push was a change of deployment target, not a rewrite. The reactive seam was the enabler.</desc>
+
+  <rect x="0" y="0" width="760" height="560" fill="#ffffff"/>
+
+  <defs>
+    <marker id="srv-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2B2416"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== TOP PANEL: the reactive seam ===================== -->
+  <text x="30" y="40" font-size="30" font-weight="bold" fill="#12324f">The reactive seam</text>
+
+  <!-- web front door -->
+  <rect x="24" y="70" width="150" height="90" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="99" y="105" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Web</text>
+  <text x="99" y="132" text-anchor="middle" font-size="19" fill="#3d5a70">front door;</text>
+  <text x="99" y="151" text-anchor="middle" font-size="19" fill="#3d5a70">splits into chunks</text>
+
+  <!-- enqueue arrow -->
+  <line x1="174" y1="115" x2="238" y2="115" stroke="#2B2416" stroke-width="1.6" marker-end="url(#srv-arrow)"/>
+  <text x="206" y="103" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">enqueue</text>
+
+  <!-- queue -->
+  <rect x="242" y="70" width="130" height="90" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="1.8"/>
+  <text x="307" y="112" text-anchor="middle" font-size="25" font-weight="bold" fill="#3a2350">Queue</text>
+  <text x="307" y="139" text-anchor="middle" font-size="19" fill="#5a4570">one chunk = one task</text>
+
+  <!-- push arrow -->
+  <line x1="372" y1="115" x2="436" y2="115" stroke="#2B2416" stroke-width="1.6" marker-end="url(#srv-arrow)"/>
+  <text x="404" y="103" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">hands off</text>
+
+  <!-- worker -->
+  <rect x="440" y="70" width="150" height="90" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="515" y="105" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Worker</text>
+  <text x="515" y="132" text-anchor="middle" font-size="19" fill="#3d5a70">stateless;</text>
+  <text x="515" y="151" text-anchor="middle" font-size="19" fill="#3d5a70">remediates a chunk</text>
+
+  <!-- publish arrow to fan-in -->
+  <line x1="590" y1="115" x2="654" y2="115" stroke="#2B2416" stroke-width="1.6" marker-end="url(#srv-arrow)"/>
+  <text x="622" y="103" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">publishes</text>
+
+  <!-- fan-in -->
+  <rect x="658" y="70" width="94" height="90" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="1.8"/>
+  <text x="705" y="106" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">Fan-in</text>
+  <text x="705" y="133" text-anchor="middle" font-size="19" fill="#5a4570">assembles</text>
+  <text x="705" y="151" text-anchor="middle" font-size="19" fill="#5a4570">the file</text>
+
+  <!-- reactive note -->
+  <text x="30" y="196" font-size="19" font-style="italic" fill="#555">Every arrow is an event, never a poll. Services stay reactive and stateless — Redis carries communication, the database carries truth.</text>
+
+  <!-- divider -->
+  <line x1="24" y1="222" x2="736" y2="222" stroke="#c8d6e5" stroke-width="1.4"/>
+
+  <!-- ===================== BOTTOM PANEL: two realizations ===================== -->
+  <text x="30" y="262" font-size="30" font-weight="bold" fill="#12324f">Same flow, two deployment targets</text>
+
+  <!-- LEFT: poll plane (retired) -->
+  <rect x="24" y="284" width="336" height="196" rx="4" fill="#faf6f2" stroke="#a37a4a" stroke-width="1.6"/>
+  <text x="192" y="314" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Kubernetes poll plane (retired)</text>
+
+  <rect x="48" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#a37a4a" stroke-width="1.4"/>
+  <text x="113" y="362" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Worker pool</text>
+  <text x="113" y="386" text-anchor="middle" font-size="19" fill="#7a5a3a">claims from Redis</text>
+
+  <rect x="206" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#a37a4a" stroke-width="1.4"/>
+  <text x="271" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Custom</text>
+  <text x="271" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">autoscaler</text>
+
+  <text x="48" y="430" font-size="24" fill="#7a5a3a">Workers PULL work from size-stratified</text>
+  <text x="48" y="451" font-size="24" fill="#7a5a3a">queues; a bespoke loop watches depth</text>
+  <text x="48" y="472" font-size="24" fill="#7a5a3a">and adds or removes pods.</text>
+
+  <!-- RIGHT: push plane (serverless) -->
+  <rect x="400" y="284" width="336" height="196" rx="4" fill="#f0f7f2" stroke="#2d6a4f" stroke-width="1.6"/>
+  <text x="568" y="314" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Serverless push plane</text>
+
+  <rect x="424" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#2d6a4f" stroke-width="1.4"/>
+  <text x="489" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Managed</text>
+  <text x="489" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">task queue</text>
+
+  <rect x="582" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#2d6a4f" stroke-width="1.4"/>
+  <text x="647" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Worker,</text>
+  <text x="647" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">scale-from-0</text>
+
+  <text x="424" y="430" font-size="24" fill="#1e4a36">The platform PUSHES each chunk to a</text>
+  <text x="424" y="451" font-size="24" fill="#1e4a36">worker that scales from zero; native</text>
+  <text x="424" y="472" font-size="24" fill="#1e4a36">autoscale — no custom scaler at all.</text>
+
+  <!-- takeaway strip -->
+  <text x="30" y="516" font-size="19" font-weight="bold" fill="#12324f">The move was a change of deployment target, not a rewrite.</text>
+  <text x="30" y="540" font-size="19" font-style="italic" fill="#555">Because the services were already reactive and stateless, poll-to-push was natural. The reactive seam was the enabler.</text>
+</svg><figcaption>The reactive service seam, and why it made serverless natural. Top: an event-driven flow — web enqueues chunks, a queue hands each to a stateless worker, a fan-in assembles the result. Bottom: the same flow realized two ways — the retired Kubernetes poll plane (workers pull from Redis, a custom autoscaler watches queue depth) and the serverless push plane (a managed queue pushes to a scale-from-zero worker, native autoscale, no custom scaler). The reactive seam was the enabler.</figcaption></figure>
+<p>That shape is what made a hard migration easy. For most of the system's life the workers ran on a Kubernetes cluster, and the dispatch worked by <strong>poll</strong>: workers reached into size-stratified Redis queues and claimed the next chunk, while a custom autoscaler watched queue depth and added or removed worker pods. The cluster billed around the clock, which for a bursty, low-traffic product was the wrong cost shape. The fix was to move to a serverless <strong>push</strong> plane: a managed task queue hands each chunk to a worker that scales from zero, a managed topic fans in the completions, and the platform's native autoscaler replaces the custom one.</p>
+<p>In the industry a re-platforming like that is a quarters-long migration with a rewritten coordinator and a nervous cutover. Here it was close to a change of deployment target. The reason is the seam. A reactive, input-triggered handler <em>is</em> the serverless execution model (an event in, work out), so the workers did not need new logic to be pushed to instead of polling. A stateless worker can be spun up on demand and thrown away, because it carries nothing between invocations. And the split that kept coordination in Redis and truth in the database meant the durable state did not live in any worker that serverless would recycle. The poll-to-push inversion then <em>deleted</em> complexity rather than adding it: the custom autoscaler, the one-cluster-per-prefix rule, and the idle-scaling controller all fell away, replaced by the platform's native scale-to-zero.</p>
+<p>None of the three hardening pushes that produced this shape — the reactive conversion, the move to statelessness, the modeling of the cross-service invariants — was aimed at serverless. Each was motivated on its own terms. Their convergence is the lesson: a system built reactive, stateless, and modeled is, almost by accident, a system that is safe to run serverless. The reactive seam was not a feature of the migration. It was its precondition.</p>
+<h2>View 2 — the front end as model-view-controller over a shared edit language</h2>
+<p>The front end is a small single-page application plus a set of supporting surfaces — an account view, a job history, an operator dashboard, and the editor. The piece worth drawing is the editor, because it shows the cleanest decomposition. The editor is a <strong>model-view-controller</strong> loop over one document.</p>
+<ul><li><strong>The view</strong> is what the user sees: two panes. The left renders the page with overlay boxes marking each structural element; the right is a list of cards, one per element, with editable fields for alt text, role, decorative-or-not, and reading order.</li><li><strong>The controller</strong> takes a user gesture — edit this alt text, change this role, drag these children into a new order — and does one disciplined thing. It does not reach into the document and mutate it. It translates the gesture into a single typed <strong>edit operation</strong>.</li><li><strong>The model</strong> is the document's intermediate representation. Its only input is an edit operation. It applies the operation, returns the updated state, and the view re-renders from that state.</li></ul>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 540" role="group" aria-labelledby="mvc-title mvc-desc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="mvc-title">The editor's model-view-controller loop and the shared edit language</title>
+  <desc id="mvc-desc">A model-view-controller triangle sits over a document. The View is the two-pane editor the user sees: a rendered page on the left with overlay boxes marking structure, and a card list on the right with editable fields for alt text, role, and reading order. A user gesture flows from the View to the Controller. The Controller does not mutate the document directly. Instead it emits a typed edit operation drawn from a small, closed vocabulary: set alt text, set role, set decorative, reorder reading, set title, set language, set actual text. That operation is the Model's only input. The Model applies the operation to the document intermediate representation and returns the updated state, which re-renders the View. The closed operation set is labeled the shared edit language. A note beneath it says: this same language is the target the automated remediation produces. The takeaway: the editor UI and the automated pipeline both speak one edit language, so one document model has exactly one way to be changed.</desc>
+
+  <rect x="0" y="0" width="760" height="540" fill="#ffffff"/>
+
+  <defs>
+    <marker id="mvc-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2B2416"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="42" font-size="30" font-weight="bold" fill="#12324f">The editor: one MVC loop over the document</text>
+
+  <!-- VIEW box (two-pane) -->
+  <rect x="24" y="66" width="300" height="150" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="174" y="96" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">View — two-pane editor</text>
+  <!-- left mini-pane -->
+  <rect x="44" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#8aa6bf" stroke-width="1.2"/>
+  <rect x="56" y="126" width="60" height="18" rx="2" fill="#d8e6f2" stroke="#8aa6bf" stroke-width="1"/>
+  <rect x="56" y="152" width="90" height="14" rx="2" fill="#f0e6d8" stroke="#c0a878" stroke-width="1"/>
+  <text x="104" y="192" text-anchor="middle" font-size="19" fill="#3d5a70">page + overlays</text>
+  <!-- right mini-pane -->
+  <rect x="184" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#8aa6bf" stroke-width="1.2"/>
+  <rect x="196" y="124" width="96" height="20" rx="2" fill="#eef3f7" stroke="#8aa6bf" stroke-width="1"/>
+  <rect x="196" y="150" width="96" height="20" rx="2" fill="#eef3f7" stroke="#8aa6bf" stroke-width="1"/>
+  <text x="244" y="192" text-anchor="middle" font-size="19" fill="#3d5a70">editable cards</text>
+
+  <!-- gesture arrow View -> Controller -->
+  <line x1="174" y1="216" x2="174" y2="272" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
+  <text x="186" y="248" text-anchor="start" font-size="19" font-style="italic" fill="#5a5240">user gesture</text>
+
+  <!-- CONTROLLER box -->
+  <rect x="24" y="276" width="300" height="96" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="174" y="308" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Controller</text>
+  <text x="174" y="336" text-anchor="middle" font-size="19" fill="#3d5a70">translates the gesture into one</text>
+  <text x="174" y="357" text-anchor="middle" font-size="19" fill="#3d5a70">typed edit operation — never a raw mutation</text>
+
+  <!-- emit arrow Controller -> DSL -->
+  <line x1="324" y1="324" x2="424" y2="324" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
+  <text x="374" y="312" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">emits</text>
+
+  <!-- SHARED DSL box -->
+  <rect x="428" y="240" width="308" height="168" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="2"/>
+  <text x="582" y="270" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">The shared edit language</text>
+  <text x="582" y="292" text-anchor="middle" font-size="19" font-style="italic" fill="#5a4570">one closed set of edit operations</text>
+  <text x="448" y="320" font-size="19" fill="#3a2350">set-alt-text · set-role · set-decorative</text>
+  <text x="448" y="343" font-size="19" fill="#3a2350">reorder-reading · set-title · set-lang</text>
+  <text x="448" y="366" font-size="19" fill="#3a2350">set-actual-text</text>
+  <text x="448" y="394" font-size="19" font-style="italic" fill="#7a5a2a">also the target the automated pipeline produces</text>
+
+  <!-- apply arrow DSL -> Model -->
+  <line x1="512" y1="408" x2="512" y2="456" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
+  <text x="524" y="436" text-anchor="start" font-size="19" font-style="italic" fill="#5a5240">applies to</text>
+
+  <!-- MODEL box -->
+  <rect x="428" y="460" width="308" height="66" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="582" y="490" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Model — the document IR</text>
+  <text x="582" y="514" text-anchor="middle" font-size="19" fill="#3d5a70">applies the op, returns updated state</text>
+
+  <!-- re-render arrow Model -> View (long path up the left) -->
+  <path d="M428,493 L28,493 L28,141" fill="none" stroke="#1a4a7a" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#mvc-arrow)"/>
+  <text x="40" y="470" text-anchor="start" font-size="19" font-style="italic" fill="#3d5a70">re-render</text>
+
+  <!-- takeaway -->
+  <text x="30" y="410" font-size="19" font-weight="bold" fill="#12324f">One model,</text>
+  <text x="30" y="432" font-size="19" font-weight="bold" fill="#12324f">one way to change it.</text>
+</svg><figcaption>The editor as one MVC loop over the document. A user gesture flows View → Controller; the controller emits one typed edit operation from a closed vocabulary (set-alt-text, set-role, set-decorative, reorder-reading, set-title, set-lang, set-actual-text); the model applies the op to the document IR and returns state that re-renders the View. The same edit language is the target the automated pipeline produces — one model, one way to change it.</figcaption></figure>
+<p>The operation the controller emits is drawn from a small, closed vocabulary: set the alt text, set the role, mark an element decorative, reorder the reading order, set the document title, set the language, override the displayed text. That vocabulary is a little language for changing a document — an edit language. The point of routing every gesture through it is the same point that runs under the whole system: a document has exactly one way to be changed. The editor never edits the document. It speaks the edit language, and the model is the only thing that touches the document.</p>
+<p>The read-only diff views for slides and word processor files share this shape, differing only in the adapter that fetches their structure. One surface, one edit vocabulary, many formats. The uniformity is the payoff: a fix or a constraint applied to the edit language holds for every format and every producer that speaks it. This is the Modeling Thesis in miniature — a typed model binding what a change <em>means</em> to how the document is <em>touched</em>, so intent and implementation cannot drift apart.</p>
+<h2>View 3 — the edit language as the target of automated remediation</h2>
+<p>Here the two halves of the system join, and the join is the function-call pattern from earlier in the chapter, seen once more.</p>
+<p>The edit language the editor speaks is not only the editor's. It is the <strong>same target the automated pipeline produces</strong>. When the pipeline decides a figure needs alt text, the result it emits is an edit operation — the very <code>set-alt-text</code> the editor would emit if a human did it by hand. The human path and the automated path are two producers of one language, and they flow into one document model that applies each operation and stamps it.</p>
+<p id="idx-ex-transformation-1">The mapping from a remediation <em>task</em> to an edit <em>operation</em> is a function: task in, operation out. And that function is a concrete instance of the <a href="#llm-as-function-call">LLM as a function call</a>. Inside it, a bounded task — this figure, this context, this question — is packed into a typed input and handed to the model as a call; the model returns a candidate; and a deterministic validator checks the candidate before it is allowed to become an edit. The edit language is the typed output contract. An honest caveat: this task-to-edit function is mostly hardcoded today and will be fleshed out. What matters now is the shape and the trajectory, not a finished implementation — the concept is that automated remediation and hand editing are the same operation reached two ways.</p>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" role="group" aria-labelledby="dsl-title dsl-desc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="dsl-title">Two producers of one edit language, and the task-to-edit function</title>
+  <desc id="dsl-desc">Two producers converge on one shared edit language, which drives one document model. The top producer is the human path: a person working in the editor emits edit operations by hand. The bottom producer is the automated path: a remediation task, such as a figure that needs alt text, becomes an edit operation through a task-to-edit function. Inside that function, the bounded task is packed into a typed input and handed to a model as a typed function call; the model returns a candidate; a deterministic validator checks it before it is allowed through. This is the same LLM-as-function-call shape described earlier in the chapter, applied here. Both producers emit the same closed set of edit operations, and both flow into one document model that applies them and stamps each change. A note marks the task-to-edit mapping as mostly hardcoded today, to be fleshed out, so this is the concept and the trajectory rather than a finished implementation. Two takeaways sit at the bottom. First, routing both producers through one language and one validated boundary buys traceability, every edit is a typed, validated, stamped result you can explain and reverse, and confidence, the deterministic validator holds the line. Second, scoping each call to one bounded task also scopes the reasoning, which lowers token cost. That scoping is the same move as building the whole remediation as a series of small, bounded transformations, seen from the cost angle instead of the pipeline angle.</desc>
+
+  <rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+
+  <defs>
+    <marker id="dsl-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2B2416"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="48" font-size="30" font-weight="bold" fill="#12324f">Two producers, one edit language</text>
+
+  <!-- HUMAN PATH (top) -->
+  <rect x="24" y="76" width="270" height="86" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="159" y="112" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Editor (human)</text>
+  <text x="159" y="142" text-anchor="middle" font-size="24" fill="#3d5a70">emits ops by hand</text>
+
+  <!-- AUTOMATED PATH (bottom): task -> function -->
+  <rect x="24" y="288" width="240" height="86" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="144" y="324" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Remediation</text>
+  <text x="144" y="352" text-anchor="middle" font-size="24" fill="#3d5a70">task (e.g. alt text)</text>
+
+  <!-- task->edit function box (dashed model inside) -->
+  <line x1="264" y1="331" x2="316" y2="331" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <rect x="320" y="238" width="386" height="196" rx="3" fill="#fbfaf4" stroke="#7a6a2a" stroke-width="1.8"/>
+  <text x="513" y="276" text-anchor="middle" font-size="24" font-weight="bold" fill="#5a4a10">task-to-edit function</text>
+  <text x="513" y="302" text-anchor="middle" font-size="19" font-style="italic" fill="#7a6a2a">an instance of LLM-as-function-call</text>
+  <!-- model (dashed) inside -->
+  <rect x="344" y="320" width="160" height="92" rx="3" fill="#FFFBEA" stroke="#BFA45A" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="424" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#2B2416">Model</text>
+  <text x="424" y="386" text-anchor="middle" font-size="19" fill="#6b6250">bounded call</text>
+  <!-- validator inside -->
+  <rect x="522" y="320" width="160" height="92" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
+  <text x="602" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Validator</text>
+  <text x="602" y="386" text-anchor="middle" font-size="19" fill="#3d5a70">checks candidate</text>
+  <line x1="504" y1="366" x2="520" y2="366" stroke="#2B2416" stroke-width="1.4" marker-end="url(#dsl-arrow)"/>
+
+  <!-- both converge to DSL -->
+  <line x1="294" y1="119" x2="736" y2="119" stroke="#2B2416" stroke-width="1.6"/>
+  <line x1="736" y1="119" x2="736" y2="164" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <line x1="706" y1="331" x2="768" y2="331" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+
+  <!-- SHARED DSL -->
+  <rect x="632" y="166" width="256" height="80" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="2"/>
+  <text x="760" y="198" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">Shared edit</text>
+  <text x="760" y="226" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">language</text>
+
+  <!-- DSL -> document model -->
+  <rect x="770" y="292" width="256" height="82" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="898" y="326" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Document model</text>
+  <text x="898" y="354" text-anchor="middle" font-size="19" fill="#3d5a70">applies + stamps each edit</text>
+
+  <!-- hardcoded note -->
+  <text x="320" y="466" font-size="19" font-style="italic" fill="#7a5a2a">The task-to-edit mapping is mostly hardcoded today — to be fleshed out.</text>
+  <text x="320" y="488" font-size="19" font-style="italic" fill="#7a5a2a">Concept and trajectory, not a finished build.</text>
+
+  <!-- takeaway strip -->
+  <line x1="24" y1="506" x2="1096" y2="506" stroke="#c8d6e5" stroke-width="1.4"/>
+  <text x="30" y="536" font-size="24" font-weight="bold" fill="#12324f">Traceability and confidence — plus cheaper reasoning</text>
+  <text x="30" y="564" font-size="19" fill="#333">One language and one validated boundary make every edit a typed, validated, stamped result you can explain and reverse</text>
+  <text x="30" y="588" font-size="19" fill="#333">(traceability), and the deterministic validator holds the line (confidence).</text>
+  <text x="30" y="612" font-size="19" fill="#333">Scoping each call to one bounded task also scopes the reasoning — the same move as a series of small transformations, priced.</text>
+</svg><figcaption>Two producers of one edit language. The human path (editor) emits ops by hand; the automated path turns a remediation task into an op through a task-to-edit function that is an instance of LLM-as-function-call (a bounded model call, then a deterministic validator at the trust boundary). Both emit the same closed edit vocabulary into one document model that applies and stamps each edit. The mapping is mostly hardcoded today — concept and trajectory, not a finished build.</figcaption></figure>
+<h3>Why route through the language at all</h3>
+<p>The frontier models can already skip all of this. Opus and the project's own agent can take a slide deck and remediate it directly — at least for slides — with no pipeline, no edit language, no validator. So why build the machinery? Because direct remediation buys neither of the two things a university needs. You cannot <strong>audit</strong> what a direct edit changed: the model hands back a file, not a list of typed changes you can inspect, explain, and reverse. And you cannot <strong>trust</strong> it: there is no deterministic check that the standard was met and the meaning survived. Routing every change through one edit language and one validated boundary buys both. Traceability comes free, because every edit is a typed, validated, stamped result with a history you can reconstruct. Confidence comes from the validator that sits at the trust boundary and refuses a candidate that fails.</p>
+<p>There is a third dividend, and it connects this view to a habit the book returns to later. Scoping each model call to one bounded task also <strong>scopes the reasoning</strong>. A model asked to describe <em>this</em> figure under <em>this</em> context does less work, and costs fewer tokens, than a model asked to remediate a whole document in one shot. That token-scoping is the same move as building the remediation as a <strong>series of small, bounded transformations</strong> rather than one giant leap. It is that idea seen from the cost angle instead of the pipeline angle: a chain of scoped passes is cheaper to run <em>and</em> cheaper to reason about, because each link asks the model for exactly one small thing. (See: <em>transformation</em> — everything a model does well is a sized transformation, and sizing the leap is the skill.)</p>
+<h2>Keeping the models honest — the traceability substrate</h2>
+<p>The three views above were not drawn by hand. They were rendered from DocAble's real system models — typed records the fleet reasons through to operate a codebase no single agent can hold in its window. A model is only as good as its agreement with the code. Say the model still describes the Kubernetes poll plane after the serverless push plane replaced it, and every agent that trusts the model plans against a system that no longer exists. The map has to equal the territory, or the map lies.</p>
+<p>The tempting way to keep them equal is a checklist: when you retire a subsystem, remember to update the model too. DocAble tried that and it failed the same way it always fails. A cutover retired the poll plane, the retirement doc dutifully reconciled the architecture docs and the agent boot context, and it forgot the models. The forgotten edge stayed green because nothing re-checked it. This is the pattern under every silent drift: a hand-maintained list rots the moment the code moves without it, and no one notices until the stale fact bites.</p>
+<p>That failure is not one anecdote. The right control was not guessed at a whiteboard — the models were left deliberately ungoverned for weeks and the fleet allowed to drift them, so the fix could be read off real drift instead of imagined. An audit of the closed work, every job green at its own done-check, turned up two dozen silent divergences at a signal-to-noise near one: a checker tightened past the producer it now rejected, a typed function shipped and wired to nothing, a reconciliation lint gone red the instant its work closed. Sort those cases by what caught them and one line separates the clean from the drifted. The clean ones had a control that re-read the code at check time. The drifted ones had a second copy of the fact, maintained by hand, that quietly fell behind.</p>
+<p>So DocAble does not keep a checklist. It keeps a <strong>traceability graph</strong>, and every edge in it is <em>derived</em> — re-checked against the code at scan time rather than trusted from the last time someone looked. The nodes are the things the system already has: a model element, the lint that enforces it, the code entry point that realizes it, the test that verifies it, a registry row, a doc surface. The edges are the joins between them — <em>this invariant governs that code root</em>, <em>that test verifies this invariant</em>. Each edge carries the mechanism that re-proves it: run the resolver against the target and see whether the symbol still exists.</p>
+<p>Two decisions make the graph resist the rot a checklist suffers.</p>
+<ul><li><strong>Anchor to symbols, never to line numbers.</strong> An edge points at a function or class <em>definition</em>, resolved statically — not at a file-and-line. Line numbers churn under every edit above them; a symbol survives every edit that does not delete it. When five journey anchors drifted stale under a refactor, the cause was line-anchoring. A symbol anchor moves with the code it names.</li><li><strong>A missing symbol is a finding, not a crash.</strong> When an edge points at a symbol that no longer resolves — deleted, renamed, moved out — the edge goes red, and that red is exactly the drift becoming visible. The sharper case: when the model wants to point at a piece of logic for which <em>no clean symbol exists</em>, buried in a god-function, the absence is a signal that the code is missing an abstraction the model needs. The anchor doubles as a probe for where the code is under-factored.</li></ul>
+<p>The control that walks the graph runs at a slower cadence than the per-commit gates, and on purpose. Resolving a symbol against the code — a jedi or Roslyn round-trip per anchor — is expensive, far more than the cheap membership lookups a commit hook can afford. So the derived edge check fires at review and done-checking time, not on every commit: the cadence follows the cost. A second, cheaper guard sits on the anchors themselves, watching for the case a symbol walk cannot catch — a pointer left naming a dead implementation while a replacement was built beside it. That pointer-drift guard was earned by the most expensive drift of the build, a retired deploy driver whose stale pointers fired a prod-blocking deploy.</p>
+<p>This is the same commitment as the one typed model under every format, one level up. There, a fix applied through the model holds for every format because there is exactly one seam. Here, a model stays true to the code because the join between them is re-derived, not remembered. The principle is worth stating flat: <strong>derived controls defend; snapshotted ones drift.</strong> A control that reads the source of truth at check time cannot fall behind it. A hand-maintained copy of the same fact always can.</p>
+<blockquote class="concept-inset"><p class="inset-title" id="fieldnote-invited-drift">Field note — the drift you invite on purpose</p>
+<p>Keeping models honest sounds like a rule you enforce from day one. DocAble did the opposite, and on purpose. The models were left deliberately ungoverned for weeks — built, watched, but not enforced — so the fix could be read off real drift instead of guessed at a whiteboard. Then came the audit.</p>
+<p>The drift showed up exactly as the theory predicted. A checker was tightened past the very producer it now rejected. A typed function shipped and got wired to nothing. A model still named a service seam the code had moved off of. A test kept pinning a value the source had since changed. Two dozen of these turned up across the closed, green work — signal-to-noise near one, not a single false alarm.</p>
+<p>The reason to invite the drift was to learn its shape. A control built from two dozen real divergences answers a question the whiteboard cannot: would this actually have caught the drift we saw? That is why the substrate above earns its keep — every edge in it defends against a divergence someone already watched happen.</p></blockquote>
+<h2>Same song, second verse</h2>
+<p>Notice the shape of the argument, because the book is about to make it again at a larger scale. A model can do the one thing deterministic code cannot — look at a figure and understand it — and it is unreliable. You do not make it reliable by trusting it more. You make a reliable system by wrapping it: bound what you ask, type what comes back, validate before you believe. Inside DocAble, the wrapped component is a vision-language model writing alt text.</p>
+<p>The rest of this book zooms out one level. The coding <em>agents</em> that built DocAble are the same kind of component: powerful, probabilistic, capable of a confident wrong turn. The methods in the chapters ahead are the same pattern applied to <em>them</em> — bound the task, type the interface, validate before you trust. You have now seen the pattern once, in the small, where it is easy to hold in your head. Watch for it again in the large. Same song, second verse.</p><div class="pager"><a class="prev" href="1.2-the-timeline-and-the-work.html"><span class="dir">‹ Previous</span><span class="ttl">1.2 · The Timeline and the Work</span></a><a class="home" href="index.html">Contents</a><a class="next" href="2.1-the-printer.html"><span class="dir">Next ›</span><span class="ttl">2.1 · The Printer</span></a></div><div class="pager-jump"><div class="jump"><a href="1.1-the-ada-context.html">⇐ Beginning of this part</a><a href="2.1-the-printer.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

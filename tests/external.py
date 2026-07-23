@@ -32,18 +32,23 @@ class _SiteHandler(SimpleHTTPRequestHandler):
 
 def check_axe(strict: bool):
     """Run axe-core over EVERY built page (the whole site, minus the plugin bundle). SKIP if
-    npx/browser/the locally-installed axe are unavailable. `--load-delay` lets async content (the figure
-    iframes AND the book appendix's CDN-loaded Mermaid diagrams) settle so the scan is deterministic —
-    without it a heavy page can be scanned before it finishes painting and return a spurious partial
-    result (Mermaid repaints its placeholder blocks after the runtime loads, which mid-scan reads as
-    contrast failures on unrelated elements).
+    node/browser/the locally-installed axe are unavailable. A per-page load delay lets async content (the
+    figure iframes AND the book appendix's CDN-loaded Mermaid diagrams) settle so the scan is
+    deterministic — without it a heavy page can be scanned before it finishes painting and return a
+    spurious partial result (Mermaid repaints its placeholder blocks after the runtime loads, which
+    mid-scan reads as contrast failures on unrelated elements).
 
-    We invoke axe via `npx --no-install`, so it runs ONLY the version installed into `node_modules` by
-    `npm ci`/`setup.sh` (pinned exactly by `package-lock.json`). It never fetches from the npm registry at
-    run time — a `--yes` runtime fetch would pull an unpinned tree into a process that, in CI, shares the
-    job. Absent a local install, `--no-install` errors and we treat it as a skip (same as no browser)."""
-    if not shutil.which("npx"):
-        return (FAIL if strict else SKIP), ["npx not found — run ./setup.sh (installs the pinned @axe-core/cli)"]
+    We scan with `tests/axe_scan.cjs`, which launches ONE headless Chrome and reuses it across every URL.
+    The old `@axe-core/cli` path spawned a fresh Chrome per URL — a full-site scan paid the browser
+    cold-start cost dozens of times (~20 min). One reused browser drops that to a navigation-plus-analyze
+    per page. Same engine and pinned versions (`@axe-core/webdriverjs` + `axe-core` + `chromedriver` from
+    `npm ci`/`setup.sh`); absent a local install `node` errors and we treat it as a skip (same as no
+    browser)."""
+    if not shutil.which("node"):
+        return (FAIL if strict else SKIP), ["node not found — run ./setup.sh (installs the pinned axe scanner)"]
+    scanner = os.path.join(ROOT, "tests", "axe_scan.cjs")
+    if not os.path.exists(scanner):
+        return (FAIL if strict else SKIP), ["tests/axe_scan.cjs missing"]
     pages = sorted(html_files())  # the served site only (excludes plugin/ + node_modules/)
     if not pages:
         return (FAIL if strict else SKIP), ["no built pages to scan (run `catalog.py build` first)"]
@@ -52,8 +57,7 @@ def check_axe(strict: bool):
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
         urls = [f"http://127.0.0.1:{port}/{os.path.relpath(p, ROOT)}" for p in pages]
-        r = run(["npx", "--no-install", "@axe-core/cli", "--exit", "--load-delay", "2500",
-                 "--timeout", "120", *urls], timeout=900)
+        r = run(["node", scanner, "2500", *urls], timeout=900)
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as ex:
         return (FAIL if strict else SKIP), [f"axe could not run ({type(ex).__name__}) — treating as skip"]
     finally:

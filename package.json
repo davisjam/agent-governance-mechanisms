@@ -9,7 +9,10 @@
     "test": "python3 catalog.py test"
   },
   "devDependencies": {
-    "@axe-core/cli": "4.12.1",
-    "html-validate": "11.5.5"
+    "@axe-core/webdriverjs": "4.12.1",
+    "axe-core": "4.12.1",
+    "chromedriver": "150.0.1",
+    "html-validate": "11.5.5",
+    "selenium-webdriver": "4.44.0"
   }
 }

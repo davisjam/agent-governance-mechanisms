@@ -20,6 +20,10 @@ nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px sol
 header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
 header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }
+/* The kicker halves are links but must stay understated — inherit the small-caps accent colour, no default
+   underline; reveal the underline only on hover/focus so the affordance is discoverable without shouting. */
+header.chap .kicker a { color: inherit; text-decoration: none; }
+header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
@@ -27,6 +31,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
                         color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
@@ -54,6 +59,75 @@ table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
 blockquote table.book-table { background: #fff; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
+/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
+   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
+   theme knob is missed. */
+pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 20px; }
+pre.mermaid text.messageText { font-size: 18px; }
+/* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
+   quote: it is a deliberately designed aside that teaches a background concept beside the main argument
+   (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its
+   own visual language: a tinted panel, a strong left accent rule, a labelled header band, and a ROMAN
+   (non-italic) body a reader can actually read at length.
+
+   ── SWAP POINT ─────────────────────────────────────────────────────────────────────────────────────
+   Every knob is a CSS custom property on `.concept-inset`, so this "screen representation of the book" can
+   be re-skinned in ONE place — change these vars to retarget a print stylesheet, a dark theme, or an
+   alternate house style without touching any rule below. Add e.g. a `@media print` or `:root[data-theme=…]`
+   block that only re-declares these variables and the whole sidebar follows. */
+blockquote.concept-inset {
+  --inset-bg: #f6f4ef;           /* panel fill — warm off-white, distinct from the page's #faf9f6 */
+  --inset-accent: #b07a2b;       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
+  --inset-header: #4a3a1e;       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-header-bg: #ece4d5;    /* header band fill — a shade deeper than the panel so the label reads */
+  --inset-body: #33302a;         /* body ink — near-black warm grey, comfortable roman reading colour */
+  --inset-accent-width: 5px;     /* thickness of the left accent rule */
+  --inset-radius: 6px;
+  --inset-pad-x: 1.35rem;
+  --inset-pad-y: 1rem;
+  --inset-max: 34rem;            /* keep the primer to a readable measure, not the full column width */
+
+  background: var(--inset-bg);
+  border: 1px solid #e3dccb;
+  border-left: var(--inset-accent-width) solid var(--inset-accent);
+  border-radius: var(--inset-radius);
+  color: var(--inset-body);
+  font-style: normal;            /* KEY: kill the base blockquote italic — a primer reads as roman prose */
+  padding: 0 var(--inset-pad-x) var(--inset-pad-y);
+  margin: 1.7rem 0;
+  max-width: var(--inset-max);
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+/* Header treatment — the "Inset N — Title" label sits in its own tinted band, flush to the panel edges,
+   set in small-caps-ish tracked type so it reads as a sidebar HEADER, not a run-in paragraph. It stays a
+   demoted callout label (`p.inset-title`, not an <hN>) so no heading-order break and its id anchor is
+   preserved. */
+blockquote.concept-inset .inset-title {
+  font-style: normal; font-weight: 700; color: var(--inset-header);
+  background: var(--inset-header-bg);
+  margin: 0 calc(-1 * var(--inset-pad-x)) var(--inset-pad-y);
+  padding: 0.6rem var(--inset-pad-x);
+  border-radius: var(--inset-radius) var(--inset-radius) 0 0;
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+blockquote.concept-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
+blockquote.concept-inset p:last-child { margin-bottom: 0; }
+blockquote.concept-inset strong { color: var(--inset-header); }
+blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
+   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Taxonomy + spec: book/_design/callout-typography.md. */
+blockquote.thesis-box { background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
+                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                         border-radius: 5px; }
+blockquote.thesis-box p { margin: 0 0 0.6rem; }
+blockquote.thesis-box p:last-child { margin-bottom: 0; }
+blockquote.thesis-box strong { color: #241f33; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
 figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
@@ -88,6 +162,26 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
 .idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* Book-length table (book-index.html) — a compact, auto-generated size breakdown. Section rows band the
+   BODY / APPENDIX groups; subtotal + total rows are bolded; the numeric column is tabular + right-aligned. */
+.book-length { margin: 1.4rem 0 2.2rem; }
+.book-length h2 { margin: 0 0 0.4rem; }
+.book-length .wc-note { color: #5f5f5f; font-size: 14px; margin: 0 0 0.8rem; max-width: 40rem; }
+table.wc-table { border-collapse: collapse; width: auto; min-width: 22rem; max-width: 34rem;
+                  margin: 0.4rem 0; font-size: 15px; }
+table.wc-table caption.sr-cap { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+                                 overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+table.wc-table th, table.wc-table td { border: 1px solid #e2e0da; padding: 0.4rem 0.7rem;
+                                        text-align: left; vertical-align: top; line-height: 1.4; }
+table.wc-table thead th { background: #f4f3f0; font-weight: 600; }
+table.wc-table thead th:last-child { text-align: right; }
+table.wc-table td.wc-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.wc-table tr.wc-section th { background: #efece5; font-weight: 700; text-transform: uppercase;
+                                   letter-spacing: 0.04em; font-size: 12px; color: #555; }
+table.wc-table tr.wc-part th { font-weight: 400; padding-left: 1.3rem; }
+table.wc-table tr.wc-subtotal th, table.wc-table tr.wc-subtotal td { font-weight: 600; background: #faf9f6; }
+table.wc-table tr.wc-total th, table.wc-table tr.wc-total td { font-weight: 700; background: #f0efeb;
+                                                                border-top: 2px solid #cfa14a; }
 /* term index page */
 .idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
 .idx-terms li { margin: 0.3rem 0; }
@@ -105,21 +199,32 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
                                              border-radius: 6px; background: #fff; }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
-.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
+   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
+   so they read calm beside the primary pager cards rather than cramped. */
+.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
 .jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
-           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
+           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }
 .jump a:hover { border-color: var(--accent); background: #f4f3f0; }
-nav.toc .jump { margin-top: 0.7rem; }
-.pager-jump { margin-top: 1.2rem; }
-.pager-jump .jump { justify-content: center; margin-top: 0; }
+/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
+   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                      gap: 0.7rem 1.4rem; }
+nav.toc details { flex: 0 0 auto; }
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
+   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+nav.toc details[open] { flex: 1 1 100%; }
+nav.toc .jump { margin-top: 0; margin-left: auto; }
+.pager-jump { margin-top: 1.4rem; }
+.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Context</li>
 <li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
 <li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li><a class="" href="1.3-the-built-system.html">1.3&nbsp; The Built System</a></li>
 <li class="part">Part 2 — The Mindset</li>
 <li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
 <li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
@@ -146,85 +251,180 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
-<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
-<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
-<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
-<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
-<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
-<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
-<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
-<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
-<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
-<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
-<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
-<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
-<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
-<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
-<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
-<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
-<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
-<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
-<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
-<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
-<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
-<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
-<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
-<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
-<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
-<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
-<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
-<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A - 1. Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A - 2. Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A - 3. Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A - 4. Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A - 5. Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A - 6. Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A - 7. Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A - 8. Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A - 9. Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A - 10. Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A - 11. Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A - 12. Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A - 13. Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A - 14. Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A - 15. Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A - 16. Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A - 17. Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A - 25. Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A - 26. Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A - 28. Enforce at the right semantic level</a></li>
 <li class="part">Appendix B — Models-bridge patterns</li>
-<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
-<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
-<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
-<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
-<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
-<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
-<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
-<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
-<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
-<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
-<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
-<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
-<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
-<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
-<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
-<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
-<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
-<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
-<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1. The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B - 2. Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B - 3. Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B - 6. Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B - 7. Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B - 8. Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B - 9. Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B - 10. Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B - 11. Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B - 12. Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 13. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 14. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 15. Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 16. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 17. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 18. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 19. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 20. User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
-<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
-<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
-<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
-<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
-<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
-<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
-<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
-<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
-<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
-<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
-<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
-<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
-<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
-<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
-<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
-<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
-<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
-<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
-<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
-<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.2-the-logical-view.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.1 · The Executable Zoo"><header class="chap"><div class="kicker">Part 4 — The Model Zoo &nbsp;::&nbsp; Chapter 4.1</div><h1>The Executable Zoo</h1><div class="part-epigraph">All models are wrong, but some are useful.<span class="attr">— George E. P. Box</span></div></header><p id="idx-ex-model-as-map-2">The previous chapter argued that a model is the sweet spot between prose too vague to enforce and code too verbose to reason over, and that agents dissolve the one cost that kept models out of fashion — a human keeping the map in sync with the territory. It ended on a promise: this book would walk each kind of model on real code, with real invariants, and show how to keep the code from drifting away from them. This Part cashes that promise.</p>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C - 4. Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C - 5. ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C - 6. Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C - 7. ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C - 8. Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C - 9. Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C - 10. DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C - 11. Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C - 12. FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C - 13. Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C - 14. `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C - 15. `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C - 16. F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C - 17. Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C - 18. Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C - 19. Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C - 20. Typed `ViolationCategory` / `FailureCategory` enums</a></li>
+<li class="part">Appendix D — Mechanism Stacks</li>
+<li><a class="" href="appendix-stacks.html">Appendix D — Mechanism Stacks</a></li>
+<li><a class="" href="appendix-d-mbse-stack.html">Appendix D - 1. The MBSE stack</a></li>
+<li><a class="" href="appendix-d-self-operations-stack.html">Appendix D - 2. The self-operations stack</a></li>
+<li><a class="" href="appendix-d-semantic-lint-stack.html">Appendix D - 3. The semantic-lint stack</a></li>
+<li><a class="" href="appendix-d-worktree-lifecycle-stack.html">Appendix D - 4. The worktree-lifecycle stack</a></li>
+<li><a class="" href="appendix-d-canonical-seam-stack.html">Appendix D - 5. The canonical-seam stack</a></li>
+<li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
+<li class="part">Appendix E — How to Write a Skill</li>
+<li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="3.1-the-agent-stack.html">⇐ Previous part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.2-the-logical-view.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.1 · The Executable Zoo"><header class="chap"><div class="kicker"><a href="4.1-the-executable-zoo.html" aria-label="Beginning of Part 4 — The Model Zoo">Part 4 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 4.1</a></div><h1>The Executable Zoo</h1><div class="part-epigraph">All models are wrong, but some are useful.<span class="attr">— George E. P. Box</span></div></header><p id="idx-ex-model-as-map-2">The previous chapter argued that a model is the sweet spot between prose too vague to enforce and code too verbose to reason over, and that agents dissolve the one cost that kept models out of fashion — a human keeping the map in sync with the territory. It ended on a promise: this book would walk each kind of model on real code, with real invariants, and show how to keep the code from drifting away from them. This Part cashes that promise.</p>
 <p id="idx-def-model-zoo">The move is to stop listing kinds of model and start walking them. The companion catalogue holds nineteen real, typed, drift-checked system-models — the actual embodiments of every kind the last chapter named. Reconciled with the general model types a systems-engineering course teaches, the zoo runs to twenty-nine named models. That number is not a target to hit. It is evidence for a single claim: the zoo is large enough that one model is never the whole picture, which is exactly Philippe Kruchten's thesis about architecture.</p>
+<p>Walking the zoo is also where a larger claim starts to earn itself, so I will plant it here and pay it off in the back matter. Working at the model level, with an agent doing the lifting, buys three things a team usually has to trade against each other: fewer tokens spent, more velocity, and higher quality — together, and without a corresponding cost. The fewer-tokens leg is the Modeling Thesis paying rent: a model binds intent to implementation <em>and</em> shrinks what the agent must hold in-window to act on it, which is the book's answer to churn, the failure that limits an agent fleet. That combination is the shape of what Fred Brooks called a silver bullet, and Brooks argued no such thing exists. The careful version of the claim, defended in the implications, is that the model level is the closest thing to one, because it changes the representation the agent reasons over rather than promising to make the hard part easy. Each model page below is a small piece of the evidence.</p>
 <h2>Kruchten's 4+1, promoted from a closing sentence to the spine</h2>
+<!-- noqa: book-section-cap | Kruchten's 4+1, promoted from a closing sentence to the spine — the length is the five-view definition list (one bullet defining each Kruchten view) plus the trunk-and-views figure; the five definitions are one indivisible reference enumeration the whole Part is organized by, and the drift-gate contribution already split off under its own subheading -->
 <p id="idx-def-four-plus-one-views">The last chapter invoked Kruchten's <strong>4+1 views</strong> in a final sentence — "the reason one model is never enough." This Part promotes that sentence to its organizing structure. Kruchten observed that no single diagram captures a software architecture, and that four complementary views plus a fifth that ties them together cover what a working engineer needs to see:</p>
 <p>- <strong>The Logical view</strong> — the functional structure: the objects, the types, and how they relate. What the system <em>is</em>, as a designer sees it. - <strong>The Process view</strong> — concurrency and synchronization: what runs at once, the locks, the runtime dynamics. What stays consistent under interleaving. - <strong>The Development view</strong> — the module and organization structure: how the source is packaged, layered, and owned. How the code is arranged for the people and agents who build it. - <strong>The Physical view</strong> — the mapping of software to hardware: where processes run, across which hosts and network boundaries. Where the parts live. - <strong>The Scenarios view (the +1)</strong>: the use cases and journeys that animate the other four and validate them. What the system does for someone, walked end to end.</p>
 <p>One chapter of this Part takes each view. A reader leaves with four views seen built on real code, plus the scenarios that validate them — each view with its invariants and the checker that holds them true.</p>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470"
+     role="group" aria-labelledby="tvTitle tvDesc"
+     font-family="'Helvetica Neue', Arial, sans-serif">
+  <title id="tvTitle">One trunk of drift-proof machinery, five Kruchten views branching from it</title>
+  <desc id="tvDesc">A shared trunk sits at the base: the executable source-of-truth, the drift
+    and parity gates, the agent-first harness, and the read-and-generate surfaces — the machinery
+    that makes every view executable and holds each one true against the code. Five branches fan
+    up from that trunk, each a Kruchten view: the Logical view (what the system is), the Process
+    view (what runs at once), the Development view (how the source is organized), the Physical view
+    (where the parts live), and the Scenarios view (what the system does for someone, the +1 that
+    validates the other four). The reading: no single view is the whole picture, and the one trunk
+    keeps all five from drifting away from the code.</desc>
+
+  <defs>
+    <marker id="tvUp" markerWidth="9" markerHeight="9" refX="4.5" refY="7.5"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M4.5,0 L9,8 L0,8 Z" fill="#1a4a7a"/>
+    </marker>
+  </defs>
+
+  <!-- ================= THE FIVE VIEW BRANCHES (top) ================= -->
+  <text x="480" y="40" text-anchor="middle" font-size="30" font-weight="700" fill="#1a1a1a">Five views — no one of them the whole picture</text>
+
+  <!-- branch boxes; the +1 (Scenarios) is accent-filled to mark it as the validator -->
+  <g>
+    <rect x="40"  y="70" width="164" height="74" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+    <text x="122" y="102" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Logical</text>
+    <text x="122" y="128" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">what it is</text>
+
+    <rect x="222" y="70" width="164" height="74" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+    <text x="304" y="102" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Process</text>
+    <text x="304" y="128" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">runs at once</text>
+
+    <rect x="404" y="70" width="164" height="74" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+    <text x="486" y="102" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Development</text>
+    <text x="486" y="128" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">how it is packaged</text>
+
+    <rect x="586" y="70" width="164" height="74" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+    <text x="668" y="102" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Physical</text>
+    <text x="668" y="128" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">where it runs</text>
+
+    <rect x="768" y="70" width="164" height="74" rx="8" fill="#1a4a7a" stroke="#12324f" stroke-width="2.5"/>
+    <text x="850" y="98"  text-anchor="middle" font-size="24" font-weight="700" fill="#ffffff">Scenarios</text>
+    <text x="850" y="122" text-anchor="middle" font-size="18" fill="#dbe6f2">the +1 —</text>
+    <text x="850" y="140" text-anchor="middle" font-size="18" fill="#dbe6f2">validates the four</text>
+  </g>
+
+  <!-- branch stems fanning up from the trunk bar (y=300) to each box base (y=144) -->
+  <g stroke="#1a4a7a" stroke-width="2.5" fill="none">
+    <path d="M122,300 L122,146" marker-end="url(#tvUp)"/>
+    <path d="M304,300 L304,146" marker-end="url(#tvUp)"/>
+    <path d="M486,300 L486,146" marker-end="url(#tvUp)"/>
+    <path d="M668,300 L668,146" marker-end="url(#tvUp)"/>
+    <path d="M850,300 L850,146" marker-end="url(#tvUp)"/>
+  </g>
+
+  <!-- ================= THE SHARED TRUNK (bottom) ================= -->
+  <!-- the trunk bar every branch grows from -->
+  <rect x="40" y="300" width="892" height="8" rx="4" fill="#1a4a7a"/>
+  <text x="480" y="342" text-anchor="middle" font-size="26" font-weight="700" fill="#12324f">The trunk — machinery that holds any view true</text>
+
+  <!-- the four trunk components -->
+  <g>
+    <rect x="40"  y="356" width="214" height="82" rx="8" fill="#f4ede0" stroke="#8a6d2f" stroke-width="2"/>
+    <text x="147" y="388" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">Executable</text>
+    <text x="147" y="412" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">source-of-truth</text>
+
+    <rect x="266" y="356" width="214" height="82" rx="8" fill="#f4ede0" stroke="#8a6d2f" stroke-width="2"/>
+    <text x="373" y="388" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">Drift + parity</text>
+    <text x="373" y="412" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">gates</text>
+
+    <rect x="492" y="356" width="214" height="82" rx="8" fill="#f4ede0" stroke="#8a6d2f" stroke-width="2"/>
+    <text x="599" y="388" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">Agent-first</text>
+    <text x="599" y="412" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">harness</text>
+
+    <rect x="718" y="356" width="214" height="82" rx="8" fill="#f4ede0" stroke="#8a6d2f" stroke-width="2"/>
+    <text x="825" y="388" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">Read + generate</text>
+    <text x="825" y="412" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a1a">surfaces</text>
+  </g>
+</svg><figcaption>One trunk of drift-proof machinery, five views branching from it. The trunk at the base holds the shared machinery — the executable source-of-truth, the drift and parity gates, the agent-first harness, and the read-and-generate surfaces — that makes every view executable and keeps each one equal to the code. Five branches fan up from it: the Logical view (what the system is), the Process view (what runs at once), the Development view (how the source is organized), the Physical view (where the parts live), and the Scenarios view, the +1 that validates the other four. No single view is the whole picture; the one trunk keeps all five from drifting away from the code.</figcaption></figure>
+<h3>What this book adds to 4+1: the drift gate</h3>
 <p>Kruchten described the views. He did not have a drift gate. That is this book's contribution on top of 4+1: every view here is not a diagram a human maintains but a typed model a tool reads on every build, and a gate that fails the build the moment the model and the code disagree. 4+1 tells you <em>which views you need</em>. The drift gate is what keeps each view from becoming a diagram that rots.</p>
 <h2>The trunk: machinery that holds any view true</h2>
 <p>Before the views, one chapter of framing. Most of the catalogue's method models do not belong to a single view. They are the machinery that makes <em>every</em> view executable and drift-proof, and rather than re-explain the drift gate in each view chapter, this chapter introduces it once and each later chapter revisits it.</p>
 <p id="idx-def-executable-source-of-truth">- <strong>The executable source-of-truth.</strong> Model the system as typed data that tools read every run and generate artifacts from, so it cannot drift. This is the pattern behind every view. - <strong>The drift and parity gates.</strong> The lints and tests that enforce model-and-reality parity in both directions, so no model drifts unilaterally. - <strong>The agent-first harness.</strong> Build the models as a thin hand-rolled layer over frozen records under a few disciplines: adopt the genre's schema, skip its heavyweight runtime. - <strong>The read and generate surfaces.</strong> One canonical query API over every model (read-don't-hardcode consumption), and generators that emit real artifacts <em>from</em> the models, each provenance-headed so a hand-edit is caught.</p>
-<p>These are the framing chapter's home. The view chapters name them again where each view's model reconnects to them. The insets a reader needs before the views begin — what an invariant is, how you write one, what model checking buys you, what drift is — live here too, placed at the point they are first needed.</p>
+<p>These are the framing chapter's home. The view chapters name them again where each view's model reconnects to them. A few concepts have to land before the views begin: what an invariant is and how you write one, what model checking buys you, and what drift is. Each is introduced at the point it is first needed, and later chapters link back rather than repeat it.</p>
 <p>Three beats frame the whole Part.</p>
 <h3>Beat 1 — a model is derived and joined, never repeated</h3>
 <p id="idx-def-derive-and-join">The last chapter warned against repetition: two models that say the same thing must now be kept in sync. This Part sharpens that warning into the zoo's organizing rule. A model here does not sit beside the code as a parallel document. It is <strong>derived</strong> from the code, or the code is derived from it. And it <strong>joins</strong> to its neighbours on a shared key rather than restating them.</p>
@@ -236,7 +436,12 @@ nav.toc .jump { margin-top: 0.7rem; }
 <h3>Beat 3 — every model traces to the code</h3>
 <p id="idx-def-traceability">A model earns trust only if you can get from a model element back to the lines that realize it, and forward from a line to the model element that governs it. That round-trip is <strong>traceability</strong>. It is exactly what the safety-critical standards demanded and exactly what the drift gate mechanizes: the reconciler <em>is</em> a traceability check that runs on every build.</p>
 <p>Traceability is why the per-model template folds a one-line note into each page — the direction the model derives, and the join key from a model row back to the code. A reader always knows how to round-trip from the picture to the lines.</p>
+<p>The round-trip is also what the whole zoo rests on. A set of views earns a reader's trust only while every view still tracks the code it depicts. The moment one view describes a subsystem the code has retired, that view misleads every agent that reasons through it. A zoo of drifted views is worse than no views, because it lends false confidence. Kruchten gave the reader four views and a fifth to validate them. He did not say how a view stays equal to the code once both have hundreds of authors and a fleet rewriting the territory daily.</p>
+<p>The answer this book defends is that the traceability round-trip must itself be <strong>derived</strong>, not snapshotted. Picture the graph the round-trip walks — model element to lint to code entry point to test to registry row, each hop an edge. If those edges are written down once and trusted thereafter, the graph is a frozen snapshot, and it drifts the first time a symbol it names is deleted and nobody edits the snapshot to match. If instead each edge carries the mechanism that re-proves it — resolve the target symbol against the code and see whether it still exists — then a deletion turns the edge red and the drift becomes visible. A derived edge cannot fall behind the code, because it is re-read from the code every time it is checked. A snapshotted one always can. <strong>Derived controls defend; snapshotted ones drift</strong> — the principle the drift gate rests on, carried up from a single model to the whole set of views.</p>
+<p>State the distinction at its root and it stops being a rule of thumb. A stored trace matrix keeps a snapshot of the code and needs a sync job to re-align it; a sync job can lag, can fail, is one more thing to govern. A derived edge stores no snapshot — reading it <em>is</em> reading the code as it stands right now. So liveness stops being a process you run beside the model and becomes a property of the model itself, and a property cannot drift the way a process can. This is the whole content of "the map must equal the territory": not a discipline you keep, but a representation in which the map and the territory are the same read. The graph earns a second dividend from the same property. Because a resolving edge means the map is current, an agent can <em>walk</em> the graph to pull the relevant slice of a codebase it cannot hold in one window — up from a line to the invariant that governs it, down from an invariant to the code that realizes it. The externalized systems model that a senior engineer carries in their head becomes a navigable index the fleet reasons through. Drift-detection and that navigation are one property wearing two faces: an edge that resolves is both a true claim and a current map.</p>
+<p>Two details make the derived graph hold where a snapshot would rot, and both generalize past any one project. Anchor an edge to a symbol <em>definition</em>, never a line number: lines churn under every edit above them, a symbol survives every edit that does not delete it. And read a symbol the model wants but cannot cleanly find as a finding, not an error — the absence of a clean anchor means the code is missing an abstraction the model needs, so the traceability check doubles as a probe for where the code is under-factored. The catalogue carries the concrete mechanism as its own entry: the model↔code traceability graph, its symbol anchors and its pointer-drift guard. This chapter needs only the principle it embodies. A model zoo is trustworthy exactly as long as its edges to the code are re-derived rather than remembered.</p>
 <h2>How to read a model page</h2>
+<!-- noqa: book-section-cap | How to read a model page — one indivisible five-field reference template; every model page reuses it verbatim, so splitting it here would fracture the uniform shape a reader learns once and reads on reflex -->
 <p id="idx-def-per-model-template">Every model in this Part is rendered by filling the same five-field template. The uniformity is deliberate: a reader who has read one page can read any of them on reflex.</p>
 <p>- <strong>(a) Quality property it helps assess.</strong> The property this model lets you <em>check</em> — stated as the question the model answers that the raw code cannot. Not "it models X" but "it lets you ask, and answer, <em>is Q true?</em>" A model with no quality property to assess is a diagram, not a model. - <strong>(b) Constructs and relations.</strong> The typed elements the model is built from and how they relate — the record kinds, the fields that carry meaning, the edges between them. This is the reference content: what a reader consults to understand the model's shape. - <strong>(c) Visual depiction.</strong> The diagram of the real model, matched to its natural type — a state machine gets a state diagram, a topology gets a deployment diagram, a registry of related records gets an ER diagram. Each carries an accessible description that states the content <em>and</em> the takeaway. - <strong>(d) Invariants, and how they are checked.</strong> The predicates that must hold, each with the mechanism that holds it true — a drift lint, a coverage floor, a model check, a parity gate. Rendered as a table of invariant, its temporal shape, and how it is checked. A model whose invariants are prose with no checker is flagged UNTESTED. - <strong>(e) Traceability and derivation direction.</strong> One line: which direction the model derives, and the join key from a model element back to the code.</p>
 <p>The first four fields map onto the four questions a reader brings to a model: what is it for, what is it made of, what does it look like, how do I trust it. Field (e) answers the fifth this chapter raised: how does the model stay tied to the code. Each view chapter opens with the Kruchten view it embodies, then walks its models through this template.</p>
@@ -252,4 +457,4 @@ assert all(invariant(s) for s in reachable_states())   # check every reachable s
 <p>Two directions, from Beat 2. <strong>Model-from-code</strong>: the code is authoritative, the model is a projection reconciled from it, and the gate re-induces the model and fails on divergence. <strong>Model-to-code</strong>: the model is authoritative, the code or config is generated from it, and the gate is a freshness-plus-provenance check that catches a hand-edit or a stale regeneration. Reach for model-from-code when a large codebase pre-exists the model; reach for model-to-code when the model is the design intent you want the artifact to obey. A model can be both at once, on different fields.</p></blockquote>
 <span id="idx-def-model-drift"></span><span id="idx-def-drift-gate"></span><blockquote class="concept-inset"><p class="inset-title" id="inset-drift">Inset I9 — What is drift, and what is a drift gate?</p>
 <p><strong>Drift</strong> is the condition where a model and the code it describes disagree — the map no longer matches the territory. A human-maintained diagram drifts silently the first time a developer changes the code and forgets the diagram. A <strong>drift gate</strong> is the build-time check that set-diffs the model against reality in both directions and fails the build on any divergence. Model ⊆ reality catches a model element with no code behind it; reality ⊆ model catches code the model never declared. Because the gate runs on every build, drift cannot accumulate: the first divergent commit fails, not the fiftieth. This is what makes an executable model different from a diagram — the diagram <em>can</em> drift, the gated model cannot.</p></blockquote>
-<p>The remaining insets appear in the view chapters where they are first needed: assertions over sequences and the temporal-logic step-up, bounded model checking, automata, data-flow diagrams, safety versus liveness, protocols and TLA+, and coverage over model nodes.</p><div class="pager"><a class="prev" href="3.4-lifecycles-and-runbooks.html"><span class="dir">‹ Previous</span><span class="ttl">3.4 · Lifecycles and Runbooks</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.2-the-logical-view.html"><span class="dir">Next ›</span><span class="ttl">4.2 · The Logical View</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.2-the-logical-view.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>The remaining insets appear in the view chapters where they are first needed: assertions over sequences and the temporal-logic step-up, bounded model checking, automata, data-flow diagrams, safety versus liveness, protocols and TLA+, and coverage over model nodes.</p><div class="pager"><a class="prev" href="3.4-lifecycles-and-runbooks.html"><span class="dir">‹ Previous</span><span class="ttl">3.4 · Lifecycles and Runbooks</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.2-the-logical-view.html"><span class="dir">Next ›</span><span class="ttl">4.2 · The Logical View</span></a></div><div class="pager-jump"><div class="jump"><a href="3.1-the-agent-stack.html">⇐ Previous part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.2-the-logical-view.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
