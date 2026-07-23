@@ -1,11 +1,11 @@
-### Concept
+## Concept
 
 Route every mutation of a format through one typed model, and stamp every mutation so it can be
 explained and reversed. The stack is what makes a remediation *auditable*: one place where change
 happens, and a durable record of each change made there. A typed model with no attribution can still
 corrupt trust silently; attribution with no single seam has too many un-covered doors to stamp.
 
-### Mandatory members
+## Mandatory members
 
 - **role:pdf-model** — the sole sanctioned mutation surface for a format, held in place by a ban-lint
   on the raw library (the instance here is a PDF model; the pattern applies per format). One door
@@ -18,7 +18,7 @@ corrupt trust silently; attribution with no single seam has too many un-covered 
   stamp wiring. It is the guarantee that the stamping is *complete*, not merely present on the verbs
   someone remembered. Drop it and coverage rots one new verb at a time.
 
-### Complementary members
+## Complementary members
 
 - **role:content-validator** — a fidelity gate asserting the input content survives into the output
   (input ⊆ output). It catches a mutation that dropped authored content; strong insurance layered on

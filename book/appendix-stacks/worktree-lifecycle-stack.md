@@ -1,4 +1,4 @@
-### Concept
+## Concept
 
 Every agent works in its own isolated checkout, and every checkout has a birth, a life, and a clean
 death. The stack is the set of records and gates that keep dozens of concurrent worktrees from
@@ -6,7 +6,7 @@ trampling each other and from leaking half-finished state into the trunk. Skip t
 the isolation still *starts* correctly — but it never ends cleanly, and stale worktrees accumulate
 until a reclaim guesses wrong and destroys live work.
 
-### Mandatory members
+## Mandatory members
 
 - **role:agent-registry** — an append-only log of who is in flight, with a marker-file cache. It is
   the authoritative answer to "is this worktree still alive?" A reclaim that trusts anything else
@@ -18,7 +18,7 @@ until a reclaim guesses wrong and destroys live work.
   keeps an isolated agent from landing a broken tree; the isolation is only safe because the exit is
   guarded.
 
-### Complementary members
+## Complementary members
 
 - **role:sentinel-first-commit** — an early-abort first commit that fails fast when a worktree is
   mis-configured, before real work accumulates on top of the mistake. Saves wasted effort; the
