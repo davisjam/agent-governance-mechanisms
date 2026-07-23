@@ -186,3 +186,31 @@ apply that type's specialized rules on top of the type-independent passes:
 A finding that a book chapter lacks a visual, or that its thesis never recurs, is a **type-level** finding —
 it does not show up reading one chapter in isolation, which is exactly why the type has to be named before
 the audit begins.
+
+### Suppressing a book-lint finding — the inline `noqa` convention
+
+The structural book-lints are audit-only, so a false positive or a judged-intentional exception never
+blocks. But an unexplained finding that recurs every run is noise. To silence one deliberately, place an
+inline HTML comment in the chapter **source** `.md` (authors edit source, not generated HTML), mirroring
+the repo's `# noqa: <name> — <reason>` convention:
+
+```
+<!-- noqa: <lint-name> — <reason> -->
+```
+
+- **A reason token after the em-dash (or a whitespace-flanked hyphen) is required.** A bare
+  `<!-- noqa: book-visual -->` does not suppress — it is reported as a malformed suppression, so a typo
+  can't silently disable a check. This mirrors the repo rule that every `noqa` carries a justification.
+- **The comment silences one lint in the file it sits in.** The lint names are the bracketed tags in the
+  book-lint set: `book-links`, `book-visual`, `book-section-cap`, `book-thesis`, `book-figure`,
+  `book-placeholder`, `book-delimiters`, `book-headings`.
+- **A per-section lint can be scoped to one section** with `| <heading-text>` before the reason:
+  `<!-- noqa: book-section-cap | The velocity curve — a single unbroken arc reads better here -->`. Without
+  the scope, the suppression covers every finding of that lint in the file.
+- **Suppressed findings stay visible.** The audit report lists them in a separate "Suppressed findings"
+  section with their reasons — silencing hides a finding from the active count, never from the reader.
+
+Reach for a suppression only when the exception is genuine — a chapter that is a pure prose bridge with no
+shape to draw (`book-visual`), a section whose one-arc structure earns its length (`book-section-cap`), a
+deliberately unbalanced delimiter in a worked example (`book-delimiters`). A finding you would actually fix
+is not a suppression candidate.

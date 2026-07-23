@@ -7,23 +7,36 @@ markers), so a hard gate here would wrongly red the whole suite. The driver in `
 these via a separate `--book-audit` path that prints findings and always exits neutral. Promote an
 individual rule to blocking only once the book clears it — then move it behind a real `Check(...)`.
 
-What each rule enforces (the engineering-book specializations `document-types.md` names):
-  1. intra-book link integrity — nav-pager / figure-source / index See-link targets resolve.
-  2. >=1 visual per chapter — every chapter page carries a <figure>/<svg>/mermaid.
-  3. section-length cap — no heading-to-heading section exceeds the word/paragraph caps.
-  4. thesis woven — the named theses appear across >=K chapters.
-  5. figure hygiene — every `<!-- figure -->` source resolves AND has a non-empty caption.
-  6. placeholder tracking — count `[FILL IN]` / `[MORE CHAPTERS FOLLOW]` (report, never fail).
-  7. delimiter balance — parens / curly braces balance per section, after masking the constructs that
-     legitimately carry unbalanced delimiters (code, mermaid, `{#anchor}`, `{{token}}`, build comments).
-  8. heading-level skips — no heading jumps more than one level deeper than the last (h1->h3); the first
-     heading is the chapter h1; exactly one h1 per page. Runs ~0 across the book — a promote-now candidate.
+What each rule enforces (the engineering-book specializations `document-types.md` names). The name in
+brackets is the LINT NAME an inline suppression cites (see "Suppression" below):
+
+  1. [book-links]        intra-book link integrity — nav-pager / figure-source / index See-link targets resolve.
+  2. [book-visual]       >=1 visual per chapter — every chapter page carries a <figure>/<svg>/mermaid.
+  3. [book-section-cap]  section-length cap — no heading-to-heading section exceeds the word/paragraph caps.
+  4. [book-thesis]       thesis woven — the named theses appear across >=K chapters.
+  5. [book-figure]       figure hygiene — every `<!-- figure -->` source resolves AND has a non-empty caption.
+  6. [book-placeholder]  placeholder tracking — count `[FILL IN]` / `[MORE CHAPTERS FOLLOW]` (report, never fail).
+  7. [book-delimiters]   delimiter balance — parens / curly braces balance per section, after masking the
+                         constructs that legitimately carry unbalanced delimiters (code, mermaid, build comments).
+  8. [book-headings]     heading-level skips — no heading jumps more than one level deeper than the last
+                         (h1->h3); the first heading is the chapter h1; exactly one h1 per page.
+
+**Suppression.** Every rule honors an inline suppression comment, mirroring the repo's
+`# noqa: <name> — <reason>` convention but expressed as an HTML comment (the book is markdown):
+
+    <!-- noqa: <lint-name> — <reason> -->
+
+placed in the chapter SOURCE `.md` (authors edit source, not the generated HTML). A reason token after the
+em-dash or hyphen is REQUIRED — a bare `<!-- noqa: book-visual -->` does not suppress (it is reported as a
+malformed suppression). A suppression silences findings of THAT lint for the file it sits in; for the
+per-section rules (section-cap, delimiters) it may ALSO name the section to scope it to one section — see
+`_SuppressionIndex.covers`. Suppressed findings are still surfaced, in a separate report section, so
+nothing silenced disappears.
 
 Intra-book links (rule 1) largely overlap the whole-site `check_html_links` in `tests/html.py`, which
 already resolves every local href/src across the built site (book pages included). This module adds only
 what that check does NOT cover: the `<!-- figure: path -->` SOURCE in the markdown (a comment, invisible to
-the HTML link scanner) and the figure CAPTION. The nav-pager and index See-links are hrefs, so the site
-scanner covers them; rule 1 re-reports them scoped to book/ for a single book-focused verdict.
+the HTML link scanner) and the figure CAPTION.
 
 Thresholds are module consts so they are tunable without touching logic.
 """
@@ -31,6 +44,7 @@ from __future__ import annotations
 
 import os
 import re
+from typing import NamedTuple
 
 from tests.common import ROOT, rel
 
@@ -45,6 +59,82 @@ DELIMITER_PAIRS = (("(", ")"), ("{", "}"))  # pairs checked for balance in prose
 BOOK = os.path.join(ROOT, "book")
 # Source chapters live under these dirs (part1..5, plus front/back matter); appendix + meta files excluded.
 _CHAPTER_SRC_DIRS = ("part1", "part2", "part3", "part4", "part5", "frontmatter", "backmatter")
+
+# ---- the finding + suppression model -------------------------------------------------------------
+
+
+class Finding(NamedTuple):
+    """One audit finding. `src` is the chapter SOURCE `.md` a suppression for this finding would live in
+    (None for a whole-book rule like thesis, which no single file can suppress). `label` scopes a
+    per-section suppression (the section heading text) — empty for a whole-file finding. `msg` is the
+    human-readable line printed in the report."""
+    src: str | None
+    label: str
+    msg: str
+
+
+class Suppression(NamedTuple):
+    lint: str          # the lint name the comment cites, e.g. "book-visual"
+    reason: str        # the required reason token(s) after the em-dash / hyphen
+    scope: str         # optional section-scope text (a substring of the section heading), or ""
+    raw: str           # the raw comment, for the report
+
+
+# `<!-- noqa: <lint-name> [| <section-scope>] — <reason> -->`. The separator before the reason is an
+# em-dash or a WHITESPACE-FLANKED hyphen (mirrors the repo's `# noqa: <name> — <reason>`); the flanking
+# space matters — a bare hyphen inside a lint name like `book-visual` must NOT be read as the separator, so
+# the lint name is captured non-greedily and the separator requires ` — ` / ` - ` (space before the dash).
+# A reason token is REQUIRED. An optional `| <scope>` before the separator narrows a per-section rule.
+_NOQA_RE = re.compile(
+    r"<!--\s*noqa:\s*(?P<lint>[\w-]+?)\s*"
+    r"(?:\|\s*(?P<scope>[^—|][^—]*?)\s*)?"        # optional "| <scope>"
+    r"(?:\s—|\s-{1,2})\s+(?P<reason>\S.*?)\s*-->",  # separator: em-dash or hyphen, space BEFORE it
+    re.S,
+)
+# A malformed suppression: cites a lint but gives no reason (bare `<!-- noqa: book-visual -->`). Reported
+# so a typo doesn't silently fail to suppress.
+_NOQA_BARE_RE = re.compile(r"<!--\s*noqa:\s*(?P<lint>[\w-]+)\s*-->")
+
+
+class _SuppressionIndex:
+    """Reads every chapter source's `<!-- noqa: ... -->` comments once, and answers `covers(finding)`."""
+
+    def __init__(self) -> None:
+        self.by_file: dict[str, list[Suppression]] = {}
+        self.malformed: list[Finding] = []
+        for f in _chapter_src_files():
+            txt = open(f, encoding="utf-8").read()
+            sups: list[Suppression] = []
+            for m in _NOQA_RE.finditer(txt):
+                sups.append(Suppression(
+                    lint=m.group("lint"),
+                    reason=m.group("reason").strip(),
+                    scope=(m.group("scope") or "").strip(),
+                    raw=m.group(0).strip(),
+                ))
+            self.by_file[f] = sups
+            # flag bare noqa comments that matched no well-formed pattern (no reason token)
+            wellformed_spans = {m.group(0) for m in _NOQA_RE.finditer(txt)}
+            for bm in _NOQA_BARE_RE.finditer(txt):
+                if bm.group(0) not in wellformed_spans:
+                    self.malformed.append(Finding(
+                        src=f, label="",
+                        msg=f"{rel(f)} — malformed suppression {bm.group(0)!r}: "
+                            f"missing required reason after '—' (won't suppress)"))
+
+    def covers(self, lint: str, fnd: Finding) -> Suppression | None:
+        """A suppression covers a finding when it is in the same source file, names the same lint, and —
+        if it carries a `| <scope>` — that scope text appears in the finding's section label."""
+        if fnd.src is None:
+            return None
+        for s in self.by_file.get(fnd.src, ()):
+            if s.lint != lint:
+                continue
+            if s.scope and s.scope.lower() not in fnd.label.lower():
+                continue
+            return s
+        return None
+
 
 # ---- source + built-page discovery ---------------------------------------------------------------
 
@@ -86,6 +176,18 @@ def _chapter_html_pages() -> list[str]:
     return out
 
 
+# The built page and its source share a basename (`2.2-loops-and-models.html` <- `.../2.2-loops-and-models.md`),
+# so a suppression placed in the source .md governs findings raised over the built HTML.
+def _src_for_html(html_path: str) -> str | None:
+    """The chapter SOURCE `.md` for a built chapter page, matched by basename. None if not found (so a
+    finding stays unsuppressible rather than crashing)."""
+    stem = os.path.splitext(os.path.basename(html_path))[0]
+    for f in _chapter_src_files():
+        if os.path.splitext(os.path.basename(f))[0] == stem:
+            return f
+    return None
+
+
 def _main_body(html: str) -> str:
     """The <main>...</main> content of a chapter page (the chapter's own prose, minus the nav sidebar)."""
     m = re.search(r"<main\b.*?</main>", html, re.S)
@@ -103,11 +205,11 @@ def _words(s: str) -> int:
 # ---- rule 1: intra-book link integrity (figure-source + caption + hrefs, scoped to book/) --------
 
 
-def check_intra_book_links() -> tuple[list[str], dict]:
+def check_intra_book_links() -> tuple[list[Finding], dict]:
     """Book-scoped link integrity. The whole-site `check_html_links` already resolves nav-pager and index
     See-link hrefs; here we add the coverage IT misses — the `<!-- figure: path -->` SOURCE in the
     markdown — and re-report any book href that fails to resolve, for a single book verdict."""
-    findings: list[str] = []
+    findings: list[Finding] = []
     checked = 0
     # figure sources (markdown comments — invisible to the HTML link scanner). The build emits flat pages
     # at the book root, so a figure's `assets/...` path is relative to book/, NOT to the chapter's part-dir.
@@ -117,10 +219,11 @@ def check_intra_book_links() -> tuple[list[str], dict]:
             checked += 1
             tgt = os.path.normpath(os.path.join(BOOK, src.strip()))
             if not os.path.exists(tgt):
-                findings.append(f"{rel(f)} -> figure source {src.strip()} (missing asset)")
+                findings.append(Finding(f, "", f"{rel(f)} -> figure source {src.strip()} (missing asset)"))
     # built-page hrefs/srcs, scoped to book/ (dedup of the site scanner, book-focused)
     for p in _chapter_html_pages():
         base = os.path.dirname(p)
+        src_md = _src_for_html(p)
         body = open(p, encoding="utf-8").read()
         for ref in re.findall(r'(?:href|src)="([^"]+)"', body):
             if ref.startswith(("http://", "https://", "mailto:", "data:", "//", "#")):
@@ -131,16 +234,18 @@ def check_intra_book_links() -> tuple[list[str], dict]:
                 continue
             tgt = os.path.normpath(os.path.join(base, tgt_rel))
             if not os.path.exists(tgt):
-                findings.append(f"{rel(p)} -> {ref} (missing target)")
+                findings.append(Finding(src_md, "", f"{rel(p)} -> {ref} (missing target)"))
     return findings, {"links_checked": checked, "broken": len(findings)}
 
 
 # ---- rule 2: >=1 visual per chapter --------------------------------------------------------------
 
 
-def check_visual_per_chapter() -> tuple[list[str], dict]:
-    """Every built chapter page carries at least one visual: a <figure>, a bare <svg>, or a mermaid block."""
-    findings: list[str] = []
+def check_visual_per_chapter() -> tuple[list[Finding], dict]:
+    """Every built chapter page carries at least one visual: a <figure>, a bare <svg>, or a mermaid block.
+    A chapter that genuinely needs none suppresses with `<!-- noqa: book-visual — <reason> -->` in its
+    source .md."""
+    findings: list[Finding] = []
     pages = _chapter_html_pages()
     without = 0
     for p in pages:
@@ -148,20 +253,23 @@ def check_visual_per_chapter() -> tuple[list[str], dict]:
         has_visual = bool(re.search(r"<figure\b|<svg\b|class=\"mermaid\"|pre class=\"mermaid\"", body))
         if not has_visual:
             without += 1
-            findings.append(f"{rel(p)} — no <figure>/<svg>/mermaid in chapter body")
+            findings.append(Finding(_src_for_html(p), "",
+                                    f"{rel(p)} — no <figure>/<svg>/mermaid in chapter body"))
     return findings, {"chapters": len(pages), "without_visual": without}
 
 
 # ---- rule 3: section-length cap ------------------------------------------------------------------
 
 
-def check_section_length() -> tuple[list[str], dict]:
+def check_section_length() -> tuple[list[Finding], dict]:
     """No heading-to-heading section (split on h1/h2/h3) exceeds MAX_SECTION_WORDS or MAX_SECTION_PARAS.
-    A section past the cap with no subheading/list/figure is a wall of text."""
-    findings: list[str] = []
+    A deliberately long section suppresses with `<!-- noqa: book-section-cap | <heading-text> — <reason> -->`
+    in the source .md (scope it to the section by naming the heading)."""
+    findings: list[Finding] = []
     over = 0
     total_sections = 0
     for p in _chapter_html_pages():
+        src_md = _src_for_html(p)
         body = _main_body(open(p, encoding="utf-8").read())
         # split into segments at each heading; keep the heading text as the segment label
         parts = re.split(r"(<h[123]\b[^>]*>.*?</h[123]>)", body, flags=re.S)
@@ -175,10 +283,10 @@ def check_section_length() -> tuple[list[str], dict]:
             paras = len(re.findall(r"<p\b", content))
             if words > MAX_SECTION_WORDS or paras > MAX_SECTION_PARAS:
                 over += 1
-                findings.append(
+                findings.append(Finding(
+                    src_md, heading,
                     f"{rel(p)} § {heading!r}: {words} words / {paras} paras "
-                    f"(cap {MAX_SECTION_WORDS} words / {MAX_SECTION_PARAS} paras)"
-                )
+                    f"(cap {MAX_SECTION_WORDS} words / {MAX_SECTION_PARAS} paras)"))
             i += 2
     return findings, {"sections": total_sections, "over_cap": over}
 
@@ -186,28 +294,32 @@ def check_section_length() -> tuple[list[str], dict]:
 # ---- rule 4: thesis woven across chapters --------------------------------------------------------
 
 
-def check_thesis_woven() -> tuple[list[str], dict]:
-    """Each named thesis appears across at least THESIS_MIN_CHAPTERS chapter SOURCE files."""
-    findings: list[str] = []
+def check_thesis_woven() -> tuple[list[Finding], dict]:
+    """Each named thesis appears across at least THESIS_MIN_CHAPTERS chapter SOURCE files. This is a
+    whole-book finding (no single file owns it); suppress it in ANY chapter source with
+    `<!-- noqa: book-thesis | <thesis-name> — <reason> -->` (the scope names the thesis)."""
+    findings: list[Finding] = []
     files = _chapter_src_files()
     per_thesis: dict[str, int] = {}
     for term in THESIS_TERMS:
         hits = [f for f in files if term in open(f, encoding="utf-8").read()]
         per_thesis[term] = len(hits)
         if len(hits) < THESIS_MIN_CHAPTERS:
-            findings.append(
+            # attribute to whichever source carries a matching book-thesis suppression, else whole-book.
+            findings.append(Finding(
+                None, term,
                 f"thesis {term!r} appears in {len(hits)} chapter(s) "
-                f"(want >= {THESIS_MIN_CHAPTERS}): {', '.join(rel(h) for h in hits) or '(none)'}"
-            )
+                f"(want >= {THESIS_MIN_CHAPTERS}): {', '.join(rel(h) for h in hits) or '(none)'}"))
     return findings, {"chapters_scanned": len(files), **{f"'{k}'_chapters": v for k, v in per_thesis.items()}}
 
 
 # ---- rule 5: figure hygiene (source resolves AND caption non-empty) ------------------------------
 
 
-def check_figure_hygiene() -> tuple[list[str], dict]:
-    """Every `<!-- figure: path | caption -->` resolves to an asset AND carries a non-empty caption."""
-    findings: list[str] = []
+def check_figure_hygiene() -> tuple[list[Finding], dict]:
+    """Every `<!-- figure: path | caption -->` resolves to an asset AND carries a non-empty caption.
+    Suppress a deliberate exception with `<!-- noqa: book-figure — <reason> -->` in the source .md."""
+    findings: list[Finding] = []
     figures = 0
     for f in _chapter_src_files():
         txt = open(f, encoding="utf-8").read()
@@ -220,19 +332,19 @@ def check_figure_hygiene() -> tuple[list[str], dict]:
             # figure paths are book-root-relative (flat page emission), not chapter-dir-relative.
             tgt = os.path.normpath(os.path.join(BOOK, src)) if src else ""
             if not src or not os.path.exists(tgt):
-                findings.append(f"{rel(f)} — figure source {src or '(empty)'} does not resolve")
+                findings.append(Finding(f, src, f"{rel(f)} — figure source {src or '(empty)'} does not resolve"))
             if not sep or not caption:
-                findings.append(f"{rel(f)} — figure {src or '(?)'} has an empty caption")
+                findings.append(Finding(f, src, f"{rel(f)} — figure {src or '(?)'} has an empty caption"))
     return findings, {"figures": figures, "issues": len(findings)}
 
 
 # ---- rule 6: placeholder tracking (report only, never a finding to fix) --------------------------
 
 
-def check_placeholders() -> tuple[list[str], dict]:
-    """Count placeholder markers across chapter sources. Reported for visibility; never a fail signal —
-    a draft book carries these on purpose."""
-    findings: list[str] = []
+def check_placeholders() -> tuple[list[Finding], dict]:
+    """Count placeholder markers across chapter sources. Reported for visibility; suppress a deliberately
+    retained marker with `<!-- noqa: book-placeholder — <reason> -->` in the source .md."""
+    findings: list[Finding] = []
     counts: dict[str, int] = {mk: 0 for mk in PLACEHOLDER_MARKERS}
     for f in _chapter_src_files():
         txt = open(f, encoding="utf-8").read()
@@ -240,7 +352,7 @@ def check_placeholders() -> tuple[list[str], dict]:
             n = txt.count(mk)
             if n:
                 counts[mk] += n
-                findings.append(f"{rel(f)} — {n}x {mk}")
+                findings.append(Finding(f, mk, f"{rel(f)} — {n}x {mk}"))
     return findings, {"total": sum(counts.values()), **counts}
 
 
@@ -264,12 +376,12 @@ def _mask_markdown_noise(txt: str) -> str:
     return txt
 
 
-def check_delimiter_balance() -> tuple[list[str], dict]:
+def check_delimiter_balance() -> tuple[list[Finding], dict]:
     """Per chapter source, per heading-to-heading section, count each delimiter pair after masking the
     legitimate carriers; report any section with an unequal open/close count. Audit-only by nature — prose
-    smileys and lone parens produce false positives, so this surfaces candidates for a human to eyeball, it
-    does not fail the gate."""
-    findings: list[str] = []
+    smileys and lone parens produce false positives, so this surfaces candidates for a human to eyeball.
+    Suppress a deliberate imbalance with `<!-- noqa: book-delimiters | <heading-text> — <reason> -->`."""
+    findings: list[Finding] = []
     imbalanced = 0
     sections_scanned = 0
     for f in _chapter_src_files():
@@ -298,21 +410,22 @@ def check_delimiter_balance() -> tuple[list[str], dict]:
                         if op in ln or cl in ln:
                             loc = f"~body-line {ln_no}"
                             break
-                    findings.append(
-                        f"{rel(f)} § {label!r}: {op}{cl} imbalance ({no} open / {nc} close), {loc}"
-                    )
+                    findings.append(Finding(
+                        f, label,
+                        f"{rel(f)} § {label!r}: {op}{cl} imbalance ({no} open / {nc} close), {loc}"))
     return findings, {"sections": sections_scanned, "imbalanced": imbalanced}
 
 
 # ---- rule 8: heading-level skips (deterministic sibling of the axe heading-order check) -----------
 
 
-def check_heading_levels() -> tuple[list[str], dict]:
+def check_heading_levels() -> tuple[list[Finding], dict]:
     """Per chapter source, over the markdown ATX headings: flag a jump of more than one level deeper than
     the previous heading (h1->h3), a first heading that is not the chapter h1, or more than one h1. This is
     the deterministic sibling of axe's heading-order check. It runs ~0 across the book — a candidate to
-    PROMOTE TO BLOCKING immediately, unlike the draft-gap rules above."""
-    findings: list[str] = []
+    PROMOTE TO BLOCKING immediately. Suppress a deliberate structure with
+    `<!-- noqa: book-headings — <reason> -->` in the source .md."""
+    findings: list[Finding] = []
     files = _chapter_src_files()
     for f in files:
         masked = _mask_markdown_noise(open(f, encoding="utf-8").read())  # ignore `#` inside code fences
@@ -322,47 +435,90 @@ def check_heading_levels() -> tuple[list[str], dict]:
             continue
         h1_count = sum(1 for lvl, _ in levels if lvl == 1)
         if levels[0][0] != 1:
-            findings.append(f"{rel(f)}: first heading is h{levels[0][0]} ({levels[0][1]!r}), not the chapter h1")
+            findings.append(Finding(
+                f, levels[0][1],
+                f"{rel(f)}: first heading is h{levels[0][0]} ({levels[0][1]!r}), not the chapter h1"))
         if h1_count != 1:
-            findings.append(f"{rel(f)}: {h1_count} h1 headings (want exactly 1)")
+            findings.append(Finding(f, "", f"{rel(f)}: {h1_count} h1 headings (want exactly 1)"))
         prev = levels[0][0]
         for lvl, text in levels[1:]:
             if lvl > prev + 1:
-                findings.append(f"{rel(f)}: heading jumps h{prev}->h{lvl} at {text!r} (skips a level)")
+                findings.append(Finding(
+                    f, text, f"{rel(f)}: heading jumps h{prev}->h{lvl} at {text!r} (skips a level)"))
             prev = lvl
     return findings, {"chapters_scanned": len(files), "issues": len(findings)}
 
 
-# ---- driver: run every rule and print a report; ALWAYS exit-neutral ------------------------------
+# ---- driver: run every rule, partition suppressed vs active, print a report; ALWAYS exit-neutral --
 
+# (label, lint-name, fn). The lint-name is what an inline `<!-- noqa: <name> — <reason> -->` cites.
 _RULES = [
-    ("1. intra-book link integrity", check_intra_book_links),
-    ("2. >=1 visual per chapter", check_visual_per_chapter),
-    ("3. section-length cap", check_section_length),
-    ("4. thesis woven across chapters", check_thesis_woven),
-    ("5. figure hygiene (source + caption)", check_figure_hygiene),
-    ("6. placeholder tracking", check_placeholders),
-    ("7. delimiter balance (parens / braces)", check_delimiter_balance),
-    ("8. heading-level skips (PROMOTE-candidate)", check_heading_levels),
+    ("1. intra-book link integrity", "book-links", check_intra_book_links),
+    ("2. >=1 visual per chapter", "book-visual", check_visual_per_chapter),
+    ("3. section-length cap", "book-section-cap", check_section_length),
+    ("4. thesis woven across chapters", "book-thesis", check_thesis_woven),
+    ("5. figure hygiene (source + caption)", "book-figure", check_figure_hygiene),
+    ("6. placeholder tracking", "book-placeholder", check_placeholders),
+    ("7. delimiter balance (parens / braces)", "book-delimiters", check_delimiter_balance),
+    ("8. heading-level skips (PROMOTE-candidate)", "book-headings", check_heading_levels),
 ]
+
+# the lint names, exported so a suppression comment can be validated against the known set.
+LINT_NAMES = frozenset(name for _, name, _ in _RULES)
 
 
 def run_book_audit() -> int:
-    """Run every book rule and print a per-rule report. AUDIT-ONLY: returns 0 regardless of findings, so
-    the book's known draft gaps never red the suite. The report IS the deliverable."""
+    """Run every book rule, split findings into ACTIVE and SUPPRESSED (via inline `<!-- noqa: ... -->`
+    comments), and print a per-rule report with the two kept apart. AUDIT-ONLY: returns 0 regardless of
+    findings, so the book's known draft gaps never red the suite. The report IS the deliverable."""
+    idx = _SuppressionIndex()
     pages = _chapter_html_pages()
     srcs = _chapter_src_files()
     print(f"== Book audit (AUDIT-ONLY — never fails the gate): "
           f"{len(pages)} built chapter page(s), {len(srcs)} source chapter(s) ==")
     if not pages:
         print("  (no built chapter pages found — run `catalog.py build` first; report is empty)")
-    grand = 0
-    for label, fn in _RULES:
+
+    # flag any suppression that cites an unknown lint name (typo defense).
+    unknown_sups: list[str] = []
+    for f, sups in idx.by_file.items():
+        for s in sups:
+            if s.lint not in LINT_NAMES:
+                unknown_sups.append(f"{rel(f)} — suppression cites unknown lint {s.lint!r}: {s.raw}")
+
+    active_total = suppressed_total = 0
+    suppressed_report: list[str] = []
+    for label, lint, fn in _RULES:
         findings, stats = fn()
-        grand += len(findings)
+        active, suppressed = [], []
+        for fnd in findings:
+            s = idx.covers(lint, fnd)
+            (suppressed if s else active).append((fnd, s))
+        active_total += len(active)
+        suppressed_total += len(suppressed)
         statline = " · ".join(f"{k}={v}" for k, v in stats.items())
-        print(f"  [audit] {label}: {len(findings)} finding(s) — {statline}")
-        for it in findings:
-            print(f"          {it}")
-    print(f"== Book audit: {grand} finding(s) across {len(_RULES)} rules (exit-neutral) ==")
+        print(f"  [audit] {label} [{lint}]: {len(active)} active"
+              f"{f' ({len(suppressed)} suppressed)' if suppressed else ''} — {statline}")
+        for fnd, _ in active:
+            print(f"          {fnd.msg}")
+        for fnd, s in suppressed:
+            suppressed_report.append(f"[{lint}] {fnd.msg}\n            └─ suppressed: {s.reason}")
+
+    # the SUPPRESSED section — everything silenced stays visible.
+    print(f"\n== Suppressed findings ({suppressed_total}) — silenced by inline <!-- noqa --> comments ==")
+    if suppressed_report:
+        for line in suppressed_report:
+            print(f"  {line}")
+    else:
+        print("  (none)")
+
+    # malformed / unknown suppressions — a typo must not silently fail to suppress.
+    problems = [m.msg for m in idx.malformed] + unknown_sups
+    if problems:
+        print(f"\n== Suppression problems ({len(problems)}) — these do NOT suppress anything ==")
+        for pr in problems:
+            print(f"  {pr}")
+
+    print(f"\n== Book audit: {active_total} active finding(s), {suppressed_total} suppressed, "
+          f"across {len(_RULES)} rules (exit-neutral) ==")
     return 0
