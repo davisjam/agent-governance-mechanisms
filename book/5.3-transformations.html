@@ -125,15 +125,80 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
 <li class="part">Appendix A — Agent patterns</li>
-<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
 <li class="part">Appendix B — Models-bridge patterns</li>
-<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.4-training-data.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 5.3 · Everything Is a Transformation"><header class="chap"><div class="kicker">Part 5 — Putting It to Work &nbsp;::&nbsp; Chapter 5.3</div><h1>Everything Is a Transformation</h1></header><p>There is one more habit of mind that makes all of this click, and it comes from the shape of the machine underneath. A large language model is a transformer, and it is extraordinarily good at one thing: turning an input into an output. So the most useful way to frame any task you hand it is as a series of transformations — and the skill in using an agent is sizing each transformation to the model and to the guarantee you need. This chapter is about that sizing, and about how the three skills are all built from it.</p>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.4-training-data.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 5.3 · Everything Is a Transformation"><header class="chap"><div class="kicker">Part 5 — Putting It to Work &nbsp;::&nbsp; Chapter 5.3</div><h1>Everything Is a Transformation</h1></header><p>There is one more habit of mind that makes all of this click, and it comes from the shape of the machine underneath. A large language model is a transformer, and it is extraordinarily good at one thing: turning an input into an output. So the most useful way to frame any task you hand it is as a series of transformations — and the skill in using an agent is sizing each transformation to the model and to the guarantee you need. This chapter is about that sizing, and about how the three skills are all built from it.</p>
 <h2>Size the leap to the model and the guarantee</h2>
 <p>Give a model an input and either examples of a transformation or a precise description of it, and it will apply that transformation to something new — as long as the new thing is close enough to the examples, or the rule is precise enough. The stronger the model, the bigger the <em>leap</em> it can make reliably. A strong model turns abstract instructions into working code; a weak one turns the same instructions into a dumpster fire, or nothing that compiles. So you tune two things together: the level of abstraction you speak at, and the size of the leap you ask for — against the model's strength and against how much guarantee you want.</p>
 <p>The trade has a sweet spot, and you can feel for it by counting reasoning steps. Want high guarantees? Ask for smaller leaps, and check the result of each one as it lands. Want speed? There is a middle: demand tiny changes and you pay in many steps and many tokens; demand a huge leap and you pay in the long reasoning it takes to make it. The right size is big enough to use the model's full power, but not so big it needs an exhausting chain of thought. And there is a hard reason not to let the chain run long: probabilities compound. A one-percent chance of going wrong per step is nothing over two steps and almost a certainty over a hundred. Size the transformation to the task's complexity and the model's scale, and you keep the failure probability where you can live with it.</p>
 <h2>The skills are transformations all the way down</h2>
 <p>Once you see everything as a sized transformation, the three skills reveal a common skeleton. Each holds a set of models the agent reasons over, and each names the steps — the transformations — that carry an input to an output. What you supply, in your own context, is the breakdown: the playbooks and runbooks for the steps your work actually takes.</p>
 <p>- <strong>Self-communicate</strong> stacks its transformations on the model's language weights, then layers the rhetorical figures (the "not X, but Y" among many others), then the writing genre from Diátaxis, then the lexicon for this context — and leaves the top layer to you: who is the audience, and what do they know? The skill cannot know that; you tell it. - <strong>Self-operate</strong> puts the lifecycle models at the base, maps an incoming event to the kind of activity it is (development, bug fix, resource management, deploy), and then transforms forward: event to defect characterization or design document, design to steps, steps to distinct agent launches with their briefs. Each arrow is one transformation of input to output toward a goal. - <strong>Self-governance</strong> holds a model of governance itself — architecture versus controls, the properties that should hold of any codebase (don't-repeat-yourself among them), the kinds of control (static analysis, dynamic tests), the invariants you write over models, the languages you write them in, the checkers that validate them. Each catalogue entry is itself a transformation: from the <em>symptom</em> — the recurring failure you are living with — to the <em>mechanism</em> that ends it.</p>
-<p>That last point is the through-line of the whole book, so it is worth stating plainly: each skill takes a general reasoning task and breaks it into a series of transformations over inputs into outputs, with steps the model can follow. This is not a coincidence of design — it is the shape of working with a transformer at all. It is why the companion catalogue can be <em>read</em> like a lookup table: you arrive with a symptom and leave with the mechanism, because the entry is the transformation between them. Work with agents through this lens — every task a sized sequence of input-to-output steps — and you will find yourself a much happier engineer.</p><div class="pager"><a class="prev" href="5.2-the-skills.html"><span class="dir">‹ Previous</span><span class="ttl">5.2 · The Skills</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.4-training-data.html"><span class="dir">Next ›</span><span class="ttl">5.4 · Training Data and the Novelty Axis</span></a></div><div class="pager-jump"><div class="jump"><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.4-training-data.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>That last point is the through-line of the whole book, so it is worth stating plainly: each skill takes a general reasoning task and breaks it into a series of transformations over inputs into outputs, with steps the model can follow. This is not a coincidence of design — it is the shape of working with a transformer at all. It is why the companion catalogue can be <em>read</em> like a lookup table: you arrive with a symptom and leave with the mechanism, because the entry is the transformation between them. Work with agents through this lens — every task a sized sequence of input-to-output steps — and you will find yourself a much happier engineer.</p><div class="pager"><a class="prev" href="5.2-the-skills.html"><span class="dir">‹ Previous</span><span class="ttl">5.2 · The Skills</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.4-training-data.html"><span class="dir">Next ›</span><span class="ttl">5.4 · Training Data and the Novelty Axis</span></a></div><div class="pager-jump"><div class="jump"><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.4-training-data.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

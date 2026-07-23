@@ -809,121 +809,275 @@ def _appendix_entries() -> list[dict]:
     return out
 
 
-def _appendix_pattern_md(rec: dict) -> str:
-    """One pattern rendered in GoF layout as markdown the book's md_to_html understands. The Structure
-    (Mermaid) and Sample Code slots are injected from the per-entry fill; an entry with no fill gets a
-    visible TODO note. The `## ` heading carries a `{#slug}` id anchor so the rewired mechanism-map figure
-    can deep-link the pattern."""
-    # The heading id is the catalogue slug; the visible text is the human pattern title (no filename leaks).
-    parts: list[str] = [f"## {rec['name']} {{#{rec['slug']}}}", ""]
-    if rec["intent"]:
-        parts += ["**Intent** — " + rec["intent"], ""]
-    src_note = (f'*Projected from the catalogue entry [{rec["family"]} / {rec["name"]}]'
-                f'({rec["catalogue_html"]}). Regenerated at build time.*')
-    parts += [src_note, ""]
+# The eight GoF pattern elements, in canonical reading order. Structure's diagram leads the page (visual
+# first); its `## Structure` heading still appears in canonical position, linking up to the diagram. The
+# element TOC lists only the elements actually present on a given page.
+_GOF_ELEMENTS = [
+    "Intent",
+    "Motivation",
+    "Applicability",
+    "Structure",
+    "Sample Code",
+    "Consequences",
+    "Known Uses",
+    "Related Patterns",
+]
 
-    if rec["sections"].get("Motivation"):
-        parts += ["### Motivation", "", rec["sections"]["Motivation"], ""]
-    if rec["sections"].get("Applicability"):
-        parts += ["### Applicability", "", rec["sections"]["Applicability"], ""]
 
+def _element_anchor(name: str) -> str:
+    """The `{#el-<name>}` anchor slug for a GoF element heading, for the in-page element TOC to link to."""
+    return "el-" + name.lower().replace(" ", "-")
+
+
+def _pattern_elements_present(rec: dict) -> list[str]:
+    """Which of the eight GoF elements this pattern page renders. Intent, Structure, and Sample Code are
+    always present (Structure/Sample Code fall back to a visible TODO); the five catalogue-sourced slots
+    appear only when the entry carries that section."""
+    present: list[str] = []
+    for el in _GOF_ELEMENTS:
+        if el == "Intent":
+            if rec["intent"]:
+                present.append(el)
+        elif el in ("Structure", "Sample Code"):
+            present.append(el)  # always shown (diagram/code fill or a TODO fallback)
+        elif rec["sections"].get(el):
+            present.append(el)
+    return present
+
+
+def _appendix_pattern_page_md(rec: dict) -> str:
+    """One pattern rendered as a WHOLE PAGE of GoF-layout markdown. The pattern NAME is the page `<h1>`
+    (from the chapter dict's `chapter_title`), so this body emits no leading `#`/`##` name heading — it
+    leads with the Structure diagram (visual first), then an in-page table of contents of the elements
+    present, then the eight elements as `## ` (h2) headings in canonical order. External `#<slug>` links
+    still resolve: the slug anchor rides on the projection note. The Structure diagram is rendered at the
+    top; its `## Structure` heading sits in canonical position and links back up to the diagram."""
     fill = rec.get("fill") or {}
     safe = rec["name"].replace('"', "'")
+    present = _pattern_elements_present(rec)
+    parts: list[str] = []
 
-    # STRUCTURE — injected Mermaid diagram + accessible description from the fill, else a TODO note.
-    parts += ["### Structure", ""]
+    # 1. VISUAL FIRST — the Structure diagram (or its TODO fallback) leads the page, under the header. The
+    #    canonical `## Structure` heading (below, in element order) carries the `#el-structure` anchor both
+    #    the element TOC and the reader use to return here.
+    parts += [f"*The Structure of {safe} — its shape at a glance:*", ""]
     if fill.get("structure"):
         parts += [fill["structure"], ""]
     else:
-        parts += [
-            f"[FILL IN: a Structure diagram for *{safe}* is not yet authored.]",
-            "",
-        ]
+        parts += [f"[FILL IN: a Structure diagram for *{safe}* is not yet authored.]", ""]
 
-    # SAMPLE CODE — injected framing prose + code block from the fill, else a TODO note.
-    parts += ["### Sample Code", ""]
-    if fill.get("sample"):
-        parts += [fill["sample"], ""]
-    else:
-        parts += [
-            f"[FILL IN: a Sample Code snippet for *{safe}* is not yet authored.]",
-            "",
-        ]
+    # 2. PROJECTION NOTE — provenance link back to the live catalogue entry.
+    src_note = (f'*Projected from the catalogue entry [{rec["family"]} / {rec["name"]}]'
+                f'({rec["catalogue_html"]}).*')
+    parts += [src_note, ""]
 
-    if rec["sections"].get("Consequences"):
-        parts += ["### Consequences", "", rec["sections"]["Consequences"], ""]
-    if rec["sections"].get("Known Uses"):
-        parts += ["### Known Uses", "", rec["sections"]["Known Uses"], ""]
-    if rec["sections"].get("Related Patterns"):
-        parts += ["### Related Patterns", "", rec["sections"]["Related Patterns"], ""]
+    # The FIRST present element's heading carries the pattern's page-level `{#slug}` anchor (so external
+    # `#<slug>` deep-links and any old figure fragments still land on this page); every other element gets
+    # its `#el-<name>` anchor. The element TOC links to whichever id each element's heading actually bears.
+    anchor_for = {}
+    for i, el in enumerate(present):
+        anchor_for[el] = rec["slug"] if i == 0 else _element_anchor(el)
+
+    # 3. ELEMENT TOC — a short in-page list linking each element heading present on the page.
+    toc_items = " · ".join(f"[{el}](#{anchor_for[el]})" for el in present)
+    parts += [f"**On this page:** {toc_items}", ""]
+
+    # 4. THE ELEMENTS — canonical order, each an `## ` (h2) heading carrying its TOC/legacy anchor.
+    for el in _GOF_ELEMENTS:
+        if el not in present:
+            continue
+        head = f"## {el} {{#{anchor_for[el]}}}"
+        if el == "Intent":
+            parts += [head, "", "**Intent** — " + rec["intent"], ""]
+        elif el == "Structure":
+            parts += [head, "", "The Structure diagram appears at the top of this page.", ""]
+        elif el == "Sample Code":
+            parts += [head, ""]
+            if fill.get("sample"):
+                parts += [fill["sample"], ""]
+            else:
+                parts += [f"[FILL IN: a Sample Code snippet for *{safe}* is not yet authored.]", ""]
+        else:
+            parts += [head, "", rec["sections"][el], ""]
     return "\n".join(parts).strip()
 
-
-# One-sentence framing per appendix Part, keyed by role group. The opener names what the reader is looking
-# at; the shared mechanism-map figure follows.
-_APPENDIX_PART_BLURB = {
-    "Agent": "The **Agent** mechanisms govern the fleet and the substrate that produces work — dispatch, "
-             "gates, mediators, lifecycle, and the governance documents that steer every agent.",
-    "Models-bridge": "The **Models-bridge** mechanisms are the typed models the fleet reasons through and "
-                     "the codebase is generated and governed from — the map that a context-bounded agent "
-                     "operates a context-exceeding system through.",
-    "Product": "The **Product** mechanisms govern the shipped artifact — canonical seams, fidelity "
-               "validation, the conformance rule engine, provenance, and the bounded repair vocabulary.",
-}
 
 # The rewired mechanism-map figure lives beside the book pages so its chip links resolve at book depth.
 _BOOK_FIGURE_NAME = "catalogue-figure.html"
 
+# The opening page's fixed slug — the "front door" of the GoF appendix (see the opening-page layout).
+_APPENDIX_OPENING_SLUG = "appendix-patterns"
+
+# One-line human display name per family DIRECTORY, for the opening-page contents headings. Falls back to a
+# title-cased dir name for a family not listed here (so a new family folder still renders, un-prettified).
+_FAMILY_DISPLAY = {
+    "context-and-dispatch": "Context & dispatch substrate",
+    "gates-and-merge-train": "Gates & merge-train",
+    "mediators-and-resource-locks": "Mediators & resource locks",
+    "lifecycle-and-observability": "Lifecycle & observability",
+    "governance-doc-controls": "Governance-doc controls",
+    "system-models": "System models",
+    "canonical-models-and-seams": "Canonical models & seams",
+    "validation-and-conformance": "Validation & conformance",
+    "regression-tests": "Regression tests",
+    "provenance-and-attribution": "Provenance & attribution",
+    "repair-vocabulary": "Repair vocabulary",
+}
+
+# The GoF4 opening prose for the front-door page — book voice, NO build-process confession. This frames the
+# appendix as the catalogue rendered as a pattern language and names the eight pattern elements. The
+# census-map figure and the contents list are appended after it by the opening-page builder.
+_APPENDIX_OPENING_PROSE = """\
+**The catalogue as a pattern language**
+
+This appendix is the governance catalogue rendered as a pattern language, in the style Gamma, Helm, \
+Johnson, and Vlissides made standard in *Design Patterns* — the [\"Gang of Four\"]\
+(https://en.wikipedia.org/wiki/Design_Patterns). Each governance mechanism becomes one pattern, written \
+to the same fixed elements a reader of that book already knows.
+
+Every pattern page carries the classic slots:
+
+- **Intent** — one line: the failure class this mechanism kills, and the shape that kills it.
+- **Motivation** — the recurring failure told as a scenario, and why the naive fix does not hold.
+- **Applicability** — the conditions under which reaching for this pattern pays off.
+- **Structure** — a diagram of the moving parts and how they connect.
+- **Sample Code** — a concrete instance: the wiring, the lint, or the typed seam that realizes it.
+- **Consequences** — what adopting it costs and buys, and the second-order effects to watch.
+- **Known Uses** — where the mechanism runs in a live system.
+- **Related Patterns** — the neighbours it composes with, and the ones it is often confused for.
+
+Read a single page to adopt one mechanism. Read a family in order to see how a cluster of them reinforce \
+each other. The map below is the fast index: click any mechanism to open its pattern."""
+
+
+def _family_order_from_index() -> dict[str, int]:
+    """Read the family ordering from the census (`INDEX.md`) at build time, so the appendix order can't
+    drift from it. Parses each `## <N>. <name>` census heading, then the `[family folder](<role>/<dir>/)`
+    link in the section that follows, yielding `{family-dir: N}`. Falls back to an empty map (families then
+    sort alphabetically) if `INDEX.md` is absent or unparseable — a soft degrade, not a build failure."""
+    index_md = ROOT / "INDEX.md"
+    if not index_md.is_file():
+        return {}
+    text = index_md.read_text(encoding="utf-8")
+    order: dict[str, int] = {}
+    current_n: int | None = None
+    heading_re = re.compile(r"^##\s+(\d+)\.\s")
+    folder_re = re.compile(r"\[family folder\]\((?:agent|models-bridge|product)/([^/)]+)/\)")
+    for line in text.splitlines():
+        hm = heading_re.match(line)
+        if hm:
+            current_n = int(hm.group(1))
+            continue
+        if current_n is not None:
+            fm = folder_re.search(line)
+            if fm:
+                order.setdefault(fm.group(1), current_n)
+                current_n = None
+    return order
+
+
+def _family_display(family_dir: str) -> str:
+    """The human display name for a family directory — from the curated map, else a title-cased dir name."""
+    return _FAMILY_DISPLAY.get(family_dir) or family_dir.replace("-", " ").title()
+
+
+def _appendix_contents_md(ordered: list[dict]) -> str:
+    """The opening page's text table of contents, in census-map hierarchy: an `## ` (h2) heading per target
+    (Agent / Models-bridge / Product), an `### ` (h3) sub-heading per family, and a linked bullet list of
+    the family's patterns under it. `ordered` is the already role/family-ordered pattern-record list; each
+    record carries the page slug the pattern renders at."""
+    parts: list[str] = ["## Contents", ""]
+    last_group: str | None = None
+    last_family: str | None = None
+    for rec in ordered:
+        if rec["group"] != last_group:
+            parts += [f"### {rec['group']}", ""]
+            last_group, last_family = rec["group"], None
+        if rec["family"] != last_family:
+            parts += [f"**{_family_display(rec['family'])}**", ""]
+            last_family = rec["family"]
+        parts += [f"- [{rec['name']}]({rec['page_slug']}.html)"]
+    return "\n".join(parts).strip()
+
 
 def build_appendix_chapters(next_part: int) -> list[dict]:
-    """Build appendix 'chapter' records — one per role group — mirroring the chapter dict shape so the
-    existing pager/TOC/index machinery renders them. Each role becomes its OWN Part (Appendix A / B / C),
-    opened by the catalogue's clickable mechanism-map figure (rewired to link into these book pages).
-    Returns [] if no entries are found."""
+    """Build appendix 'chapter' records — ONE PER PATTERN plus one opening front-door page — each mirroring
+    the chapter dict shape so the existing pager/TOC/index machinery renders it. Ordering follows the
+    census-map hierarchy: Environment → target (Agent A / Models-bridge B / Product C) → family (census
+    order) → mechanism. The opening page frames the appendix GoF-style, embeds the rewired mechanism-map
+    figure, and lists the whole catalogue. Returns [] if no entries are found."""
     entries = _appendix_entries()
     if not entries:
         return []
-    # Precompute the slug→appendix-page anchor map, then emit the rewired figure once.
-    anchor_map = _appendix_anchor_map(entries)
+
+    family_order = _family_order_from_index()
+    role_index = {group: i for i, (_r, group) in enumerate(_APPENDIX_ROLES)}
+    role_letter = {group: chr(ord("A") + i) for i, (_r, group) in enumerate(_APPENDIX_ROLES)}
+
+    # Order the records by (role, family census number, within-family slug) — the census-map hierarchy.
+    def _sort_key(rec: dict) -> tuple:
+        return (
+            role_index.get(rec["group"], 99),
+            family_order.get(rec["family"], 999),
+            rec["family"],
+            rec["slug"],
+        )
+    ordered = sorted(entries, key=_sort_key)
+    for rec in ordered:
+        rec["page_slug"] = f"appendix-{role_letter[rec['group']].lower()}-{rec['slug']}"
+
+    # Precompute the slug→pattern-page anchor map, then emit the rewired figure once (embedded on the
+    # opening page only).
+    anchor_map = _appendix_anchor_map(ordered)
     _emit_rewired_figure(anchor_map)
 
     chapters: list[dict] = []
-    for i, (role_dir, group) in enumerate(_APPENDIX_ROLES):
-        recs = [e for e in entries if e["group"] == group]
-        if not recs:
-            continue
-        letter = chr(ord("A") + i)  # A, B, C …
-        page_slug = f"appendix-{letter.lower()}-{_role_dir_slug(group)}"
-        blurb = _APPENDIX_PART_BLURB.get(group, "")
-        body_parts = [
-            f"Appendix {letter} re-projects the **{group}** governance mechanisms from the catalogue into "
-            "the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, "
-            "Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the "
-            "catalogue sources at build time, so they cannot drift from the catalogue.",
-            "",
-            blurb,
-            "",
-            # The opener: the catalogue's clickable mechanism-map, rewired so each node links to the
-            # mechanism as rendered in this appendix. Routed through the figure-iframe directive.
-            f"<!-- figure-iframe: {_BOOK_FIGURE_NAME} | The governance mechanism map — every mechanism in "
-            "the catalogue, in four views. Click a mechanism to jump to its pattern in this appendix. | "
-            "The governance mechanism map: click any mechanism to open its Gang-of-Four pattern here in "
-            f"the appendix. This Part covers the {group} mechanisms. -->",
-            "",
-        ]
-        last_family = None
-        for rec in recs:
-            if rec["family"] != last_family:
-                body_parts += [f"# {rec['family']}", ""]
-                last_family = rec["family"]
-            body_parts += [_appendix_pattern_md(rec), ""]
+
+    # OPENING PAGE — heads Appendix A's Part (first appendix Part), sorts before every pattern (chapter 0).
+    opening_body = [
+        _APPENDIX_OPENING_PROSE,
+        "",
+        # The census map — the clickable visual index into the pattern pages, embedded here only.
+        f"<!-- figure-iframe: {_BOOK_FIGURE_NAME} | The governance mechanism map — every mechanism in the "
+        "catalogue, organized by target zone and family. Click a mechanism to open its Gang-of-Four "
+        "pattern. | The governance mechanism map: click any mechanism to open its Gang-of-Four pattern "
+        "in this appendix. -->",
+        "",
+        _appendix_contents_md(ordered),
+    ]
+    chapters.append({
+        "slug": _APPENDIX_OPENING_SLUG,
+        "part": next_part,                     # heads the first appendix Part (Appendix A)
+        "part_title": "Appendix A — Agent patterns",
+        "chapter": 0,                          # sorts before every pattern in the Part
+        "chapter_title": "Appendix — the pattern language",
+        "body_md": "\n".join(opening_body).strip(),
+        "is_appendix": True,
+        "mermaid": False,                      # the map is an <iframe>, not an inline mermaid block
+    })
+
+    # ONE PAGE PER PATTERN — in census-map order; part = role's appendix Part, chapter sorts within it by
+    # (family census number, within-family index) so the pager walks A→B→C family-by-family.
+    within_family_index = 0
+    prev_family: str | None = None
+    for rec in ordered:
+        group = rec["group"]
+        letter = role_letter[group]
+        fam_n = family_order.get(rec["family"], 999)
+        if rec["family"] != prev_family:
+            within_family_index = 0
+            prev_family = rec["family"]
+        else:
+            within_family_index += 1
         chapters.append({
-            "slug": page_slug,
-            "part": next_part + i,  # each role is its OWN Part (Appendix A / B / C)
+            "slug": rec["page_slug"],
+            "part": next_part + role_index[group],       # each role is its OWN Part (Appendix A / B / C)
             "part_title": f"Appendix {letter} — {group} patterns",
-            "chapter": 100,  # single chapter per appendix Part; sorts after real chapters
-            "chapter_title": f"Appendix {letter} — {group} patterns",
-            "body_md": "\n".join(body_parts).strip(),
+            # chapter sort key within the Part: family census number, then within-family index. +1 keeps
+            # every pattern above the opening page's chapter 0 in Appendix A.
+            "chapter": fam_n * 100 + within_family_index + 1,
+            "chapter_title": f"Appendix {letter} · {rec['name']}",
+            "body_md": _appendix_pattern_page_md(rec),
             "is_appendix": True,
             "mermaid": True,
         })
@@ -973,16 +1127,11 @@ def _emit_rewired_figure(anchor_map: dict[str, str]) -> None:
 
 
 def _appendix_anchor_map(entries: list[dict]) -> dict[str, str]:
-    """Map each catalogue entry slug → the book appendix URL that renders it (`appendix-<letter>-<role>.html
-    #<slug>`). The rewired mechanism-map figure uses this to point its chips at the in-book patterns."""
-    # role group → its appendix letter (A/B/C), in _APPENDIX_ROLES order
-    group_letter = {group: chr(ord("A") + i) for i, (_r, group) in enumerate(_APPENDIX_ROLES)}
-    out: dict[str, str] = {}
-    for e in entries:
-        letter = group_letter[e["group"]]
-        page = f"appendix-{letter.lower()}-{_role_dir_slug(e['group'])}.html"
-        out[e["slug"]] = f"{page}#{e['slug']}"
-    return out
+    """Map each catalogue entry slug → the BARE book pattern-page URL that renders it
+    (`appendix-<letter>-<slug>.html`, no fragment — one page per pattern now). The rewired mechanism-map
+    figure uses this to point each chip at the pattern's own page. `entries` must carry `page_slug`
+    (set by build_appendix_chapters)."""
+    return {e["slug"]: f"{e['page_slug']}.html" for e in entries}
 
 
 # ─────────────────────────── Book index — autogenerated term index ───────────────────────────
@@ -1087,9 +1236,14 @@ def _scan_term_refs(term: str, pages: list[dict]) -> list[dict]:
 def _index_ref_label(pg: dict) -> str:
     """The short locator shown beside an index term for one page: 'Appendix A', 'Preface', or 'N.M'."""
     if pg.get("is_appendix"):
-        # 'Appendix A — Agent patterns' → 'Appendix A'
+        # 'Appendix A · Brief-linting' → 'Appendix A'; the opening 'Appendix — the pattern language'
+        # (no '·') → 'Appendix'. Prefer the '·' split (per-pattern titles), then the '—' split (opening).
         title = pg["chapter_title"]
-        return title.split("—")[0].strip() if "—" in title else title
+        if "·" in title:
+            return title.split("·")[0].strip()
+        if "—" in title:
+            return title.split("—")[0].strip()
+        return title
     if pg.get("is_matter"):
         return pg["chapter_title"]
     return f'{pg["part"]}.{pg["chapter"]}'

@@ -177,35 +177,35 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
     <div class="band-h band-a">AGENT TARGET <span class="band-note">· governs the fleet + the work-producing substrate</span></div>
     <div class="fam-grid">
       <div class="fam fam-a"><h4>Context&nbsp;&amp;&nbsp;dispatch</h4>
-        <a class="chip" href="appendix-a-agent.html#brief-linting" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a>
-        <a class="chip sh" href="appendix-a-agent.html#docs-hierarchy" title="One enforced, numbered rule index every agent boots with.">docs-hierarchy</a>
-        <a class="chip soft" href="appendix-a-agent.html#dynamic-context-injection" title="Inject the rules governing these files into the brief.">dyn-ctx-injection</a>
-        <a class="chip" href="appendix-a-agent.html#role-typed-dispatch" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a>
+        <a class="chip" href="appendix-a-brief-linting.html" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a>
+        <a class="chip sh" href="appendix-a-docs-hierarchy.html" title="One enforced, numbered rule index every agent boots with.">docs-hierarchy</a>
+        <a class="chip soft" href="appendix-a-dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dyn-ctx-injection</a>
+        <a class="chip" href="appendix-a-role-typed-dispatch.html" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a>
       </div>
       <div class="fam fam-a"><h4>Gates&nbsp;&amp;&nbsp;merge-train</h4>
-        <a class="chip" href="appendix-a-agent.html#pre-commit-hook" title="Cheap changed-file checks gate every commit, marker-verified.">pre-commit-hook</a>
-        <a class="chip" href="appendix-a-agent.html#sentinel-first-commit" title="Abort a broken agent at its first commit, not its last.">sentinel-first-commit</a>
-        <a class="chip" href="appendix-a-agent.html#merge-train-mis-batching" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-batching</a>
-        <a class="chip" href="appendix-a-agent.html#staged-deploy-gates" title="Canary → smoke → promote; gate before users see it.">staged-deploy</a>
+        <a class="chip" href="appendix-a-pre-commit-hook.html" title="Cheap changed-file checks gate every commit, marker-verified.">pre-commit-hook</a>
+        <a class="chip" href="appendix-a-sentinel-first-commit.html" title="Abort a broken agent at its first commit, not its last.">sentinel-first-commit</a>
+        <a class="chip" href="appendix-a-merge-train-mis-batching.html" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-batching</a>
+        <a class="chip" href="appendix-a-staged-deploy-gates.html" title="Canary → smoke → promote; gate before users see it.">staged-deploy</a>
       </div>
       <div class="fam fam-a"><h4>Mediators&nbsp;&amp;&nbsp;locks</h4>
-        <a class="chip" href="appendix-a-agent.html#test-serializer" title="Serialize dotnet test to a single writer per host.">test-serializer</a>
-        <a class="chip" href="appendix-a-agent.html#build-serializer" title="Cap concurrent heavy builds with an M=8 host semaphore.">build-serializer</a>
-        <a class="chip" href="appendix-a-agent.html#aggregate-compute-protection" title="One lint-all per host; one in flight per orchestrator.">lint-all mutex</a>
+        <a class="chip" href="appendix-a-test-serializer.html" title="Serialize dotnet test to a single writer per host.">test-serializer</a>
+        <a class="chip" href="appendix-a-build-serializer.html" title="Cap concurrent heavy builds with an M=8 host semaphore.">build-serializer</a>
+        <a class="chip" href="appendix-a-aggregate-compute-protection.html" title="One lint-all per host; one in flight per orchestrator.">lint-all mutex</a>
       </div>
       <div class="fam fam-a"><h4>Lifecycle&nbsp;&amp;&nbsp;obs.</h4>
-        <a class="chip" href="appendix-a-agent.html#agent-registry" title="Authoritative record of which agents are live right now.">agent-registry</a>
-        <a class="chip" href="appendix-a-agent.html#typed-event-bus" title="Typed topics plus a playbook surface fleet health live.">typed-event-bus</a>
-        <a class="chip" href="appendix-a-agent.html#deploy-heartbeats" title="Periodic liveness so a hung deploy differs from a slow one.">deploy-heartbeats</a>
-        <a class="chip" href="appendix-a-agent.html#tombstone-commits" title="A close record proving a worktree is safe to reclaim.">tombstone-commits</a>
-        <a class="chip" href="appendix-a-agent.html#cron-alerts-gate" title="Block new dispatch while a HIGH cron alert is unresolved.">cron-alerts-gate</a>
-        <a class="chip" href="appendix-a-agent.html#lifecycle-hooks" title="A hook on a runtime lifecycle event so an operator's omitted step can't be forgotten.">lifecycle-hooks</a>
+        <a class="chip" href="appendix-a-agent-registry.html" title="Authoritative record of which agents are live right now.">agent-registry</a>
+        <a class="chip" href="appendix-a-typed-event-bus.html" title="Typed topics plus a playbook surface fleet health live.">typed-event-bus</a>
+        <a class="chip" href="appendix-a-deploy-heartbeats.html" title="Periodic liveness so a hung deploy differs from a slow one.">deploy-heartbeats</a>
+        <a class="chip" href="appendix-a-tombstone-commits.html" title="A close record proving a worktree is safe to reclaim.">tombstone-commits</a>
+        <a class="chip" href="appendix-a-cron-alerts-gate.html" title="Block new dispatch while a HIGH cron alert is unresolved.">cron-alerts-gate</a>
+        <a class="chip" href="appendix-a-lifecycle-hooks.html" title="A hook on a runtime lifecycle event so an operator's omitted step can't be forgotten.">lifecycle-hooks</a>
       </div>
       <div class="fam fam-a"><h4>Governance-docs</h4>
-        <span class="chip sh"><a href="appendix-a-agent.html#claude-md-rule-index" title="The governance document itself, enforced by its own lints.">CLAUDE.md index</a> <span class="rel cp">═</span> cap-lint</span>
-        <a class="chip" href="appendix-a-agent.html#mandatory-snippet-table" title="Brief-linting asserts every required brief snippet is present.">snippet-table</a>
-        <a class="chip" href="appendix-a-agent.html#epic-definition-of-done" title="Close an Epic only after re-running its checks at HEAD.">epic-DoD</a>
-        <a class="chip" href="appendix-a-agent.html#doc-hygiene-lints" title="Lints keep docs indexed, provenance-headed, and cross-reference-valid.">doc-hygiene-lints</a>
+        <span class="chip sh"><a href="appendix-a-claude-md-rule-index.html" title="The governance document itself, enforced by its own lints.">CLAUDE.md index</a> <span class="rel cp">═</span> cap-lint</span>
+        <a class="chip" href="appendix-a-mandatory-snippet-table.html" title="Brief-linting asserts every required brief snippet is present.">snippet-table</a>
+        <a class="chip" href="appendix-a-epic-definition-of-done.html" title="Close an Epic only after re-running its checks at HEAD.">epic-DoD</a>
+        <a class="chip" href="appendix-a-doc-hygiene-lints.html" title="Lints keep docs indexed, provenance-headed, and cross-reference-valid.">doc-hygiene-lints</a>
       </div>
     </div>
     <div class="v-arrow vel" style="color:var(--b-dark)">▼<span>feeds / is queried</span></div>
@@ -213,20 +213,20 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
     <div class="band-h" style="background:var(--b-dark);color:#fff">MODELS-BRIDGE <span class="band-note">· typed models — agents read them ◀▶ the codebase is generated from them</span></div>
     <div class="fam-grid" style="grid-template-columns:repeat(3,1fr)">
       <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Models (source-of-truth)</h4>
-        <a class="chip" href="appendix-b-models-bridge.html#executable-source-of-truth" title="Typed models read every run and generated from — can't drift.">executable-source-of-truth</a>
-        <a class="chip" href="appendix-b-models-bridge.html#agent-first-mbse-harness" title="Typed frozen-record models + five hand-rolled disciplines; adopt the schema, skip the runtime.">agent-first-mbse-harness</a>
-        <a class="chip" href="appendix-b-models-bridge.html#component-zone-model" title="A typed map of every component's code zone and seams.">component-zone</a>
-        <a class="chip" href="appendix-b-models-bridge.html#synchronization-model" title="A registry of every lock, what it guards, and its ordering.">synchronization (meta-sync)</a>
-        <a class="chip" href="appendix-b-models-bridge.html#concurrency-contracts" title="Declared mediator and single-writer contracts, coverage-checked.">concurrency-contracts</a>
-        <span class="chip"><a href="appendix-b-models-bridge.html#service-flow-model" title="The SOA source-of-truth NetworkPolicy and wiring are generated from.">service-flow</a> · <a href="appendix-b-models-bridge.html#user-journey-model" title="A typed model of user journeys — product goals joined to the endpoints and tests each exercises.">user-journey</a> · <a href="appendix-b-models-bridge.html#deployment-topology-model" title="Typed models of where things run and how they layer.">deployment</a> · <a href="appendix-b-models-bridge.html#domain-registries" title="Frozen typed registries for the system's domain facts.">domain</a></span>
+        <a class="chip" href="appendix-b-executable-source-of-truth.html" title="Typed models read every run and generated from — can't drift.">executable-source-of-truth</a>
+        <a class="chip" href="appendix-b-agent-first-mbse-harness.html" title="Typed frozen-record models + five hand-rolled disciplines; adopt the schema, skip the runtime.">agent-first-mbse-harness</a>
+        <a class="chip" href="appendix-b-component-zone-model.html" title="A typed map of every component's code zone and seams.">component-zone</a>
+        <a class="chip" href="appendix-b-synchronization-model.html" title="A registry of every lock, what it guards, and its ordering.">synchronization (meta-sync)</a>
+        <a class="chip" href="appendix-b-concurrency-contracts.html" title="Declared mediator and single-writer contracts, coverage-checked.">concurrency-contracts</a>
+        <span class="chip"><a href="appendix-b-service-flow-model.html" title="The SOA source-of-truth NetworkPolicy and wiring are generated from.">service-flow</a> · <a href="appendix-b-user-journey-model.html" title="A typed model of user journeys — product goals joined to the endpoints and tests each exercises.">user-journey</a> · <a href="appendix-b-deployment-topology-model.html" title="Typed models of where things run and how they layer.">deployment</a> · <a href="appendix-b-domain-registries.html" title="Frozen typed registries for the system's domain facts.">domain</a></span>
       </div>
       <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Kept true (map = territory)</h4>
-        <span class="chip">meta-sync <span class="rel cp">═</span> <a href="appendix-b-models-bridge.html#drift-parity-gates" title="Bidirectional model↔reality checks so models cannot drift.">drift-parity gates</a></span>
-        <span class="chip"><a href="appendix-b-models-bridge.html#model-driven-codegen" title="Generate real artifacts from the models, provenance-headed.">model-driven codegen</a> <span class="rel en">──▶</span> artifacts</span>
+        <span class="chip">meta-sync <span class="rel cp">═</span> <a href="appendix-b-drift-parity-gates.html" title="Bidirectional model↔reality checks so models cannot drift.">drift-parity gates</a></span>
+        <span class="chip"><a href="appendix-b-model-driven-codegen.html" title="Generate real artifacts from the models, provenance-headed.">model-driven codegen</a> <span class="rel en">──▶</span> artifacts</span>
       </div>
       <div class="fam" style="background:var(--b-bg);border:1.4px solid var(--b-dark)"><h4 style="color:var(--b-ink)">Consumed by agents</h4>
-        <a class="chip soft" href="appendix-b-models-bridge.html#query-surface" title="repo-query — the agent-facing read API over the models.">query-surface (repo-query)</a>
-        <a class="chip" href="appendix-b-models-bridge.html#meta-model-consumption" title="Read the model at runtime; never hardcode a snapshot.">read-don't-hardcode</a>
+        <a class="chip soft" href="appendix-b-query-surface.html" title="repo-query — the agent-facing read API over the models.">query-surface (repo-query)</a>
+        <a class="chip" href="appendix-b-meta-model-consumption.html" title="Read the model at runtime; never hardcode a snapshot.">read-don't-hardcode</a>
       </div>
     </div>
     <div class="v-arrow vel" style="color:var(--s-bg-dark)">▼<span>governs &amp; generates → produces the artifact</span></div>
@@ -234,33 +234,33 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
     <div class="band-h band-s">PRODUCT TARGET <span class="band-note">· governs the shipped artifact</span></div>
     <div class="fam-grid">
       <div class="fam fam-s"><h4>Canonical models&nbsp;&amp;&nbsp;seams</h4>
-        <span class="chip"><a href="appendix-c-product.html#pdf-model" title="All PDF I/O through one typed model; raw canonical-PDF-library access banned.">PdfModel</a> <span class="rel cp">═</span> PDF-lib ban</span>
-        <span class="chip"><a href="appendix-c-product.html#office-models" title="All OOXML through typed models; raw SDK access banned.">Office</a> <span class="rel cp">═</span> openxml-ban</span>
-        <a class="chip" href="appendix-c-product.html#service-client" title="A BinaryIO seam makes file-path-over-wire impossible.">ServiceClient</a>
-        <a class="chip" href="appendix-c-product.html#canonical-walkers" title="One canonical traversal per tree, not ad hoc recursion.">canonical-walkers</a>
-        <a class="chip" href="appendix-c-product.html#raw-redis-seam" title="All raw Redis in one seam; queue atomicity encoded once.">raw-Redis seam</a>
+        <span class="chip"><a href="appendix-c-pdf-model.html" title="All PDF I/O through one typed model; raw canonical-PDF-library access banned.">PdfModel</a> <span class="rel cp">═</span> PDF-lib ban</span>
+        <span class="chip"><a href="appendix-c-office-models.html" title="All OOXML through typed models; raw SDK access banned.">Office</a> <span class="rel cp">═</span> openxml-ban</span>
+        <a class="chip" href="appendix-c-service-client.html" title="A BinaryIO seam makes file-path-over-wire impossible.">ServiceClient</a>
+        <a class="chip" href="appendix-c-canonical-walkers.html" title="One canonical traversal per tree, not ad hoc recursion.">canonical-walkers</a>
+        <a class="chip" href="appendix-c-raw-redis-seam.html" title="All raw Redis in one seam; queue atomicity encoded once.">raw-Redis seam</a>
       </div>
       <div class="fam fam-s"><h4>Validation&nbsp;&amp;&nbsp;conf.</h4>
-        <a class="chip" href="appendix-c-product.html#content-validator" title="Assert input content survives remediation — a fidelity gate.">ContentValidator</a>
-        <a class="chip" href="appendix-c-product.html#semantic-lints" title="The blocking semantic-lint fleet over the tool's own source.">semantic-lints</a>
-        <span class="chip"><a href="appendix-c-product.html#standards-rule-engine" title="Map each finding to the WCAG/508/PDF-UA criterion it closes.">WCAG-engine</a> <span class="rel cp">═</span> scope-doc</span>
-        <a class="chip" href="appendix-c-product.html#coherence-lints" title="Assert independent sources agree — catch cross-source drift.">coherence-lints</a>
+        <a class="chip" href="appendix-c-content-validator.html" title="Assert input content survives remediation — a fidelity gate.">ContentValidator</a>
+        <a class="chip" href="appendix-c-semantic-lints.html" title="The blocking semantic-lint fleet over the tool's own source.">semantic-lints</a>
+        <span class="chip"><a href="appendix-c-standards-rule-engine.html" title="Map each finding to the WCAG/508/PDF-UA criterion it closes.">WCAG-engine</a> <span class="rel cp">═</span> scope-doc</span>
+        <a class="chip" href="appendix-c-coherence-lints.html" title="Assert independent sources agree — catch cross-source drift.">coherence-lints</a>
       </div>
       <div class="fam fam-s"><h4>Regression tests</h4>
-        <a class="chip" href="appendix-c-product.html#test-onion-tiers" title="Cost-stratified test tiers: Smoke, Lite, targeted, full.">test-onion tiers</a>
-        <a class="chip" href="appendix-c-product.html#property-tests" title="FsCheck invariants over generated inputs find hidden bugs.">property tests</a>
-        <a class="chip" href="appendix-c-product.html#fuzz-campaigns" title="Malformed-input campaigns; fix to the spec, not the seed.">fuzz campaigns</a>
-        <a class="chip" href="appendix-c-product.html#ddt-pin-trailers" title="Doc-derived characterization pinned to a cited source.">DDT pin-trailers</a>
+        <a class="chip" href="appendix-c-test-onion-tiers.html" title="Cost-stratified test tiers: Smoke, Lite, targeted, full.">test-onion tiers</a>
+        <a class="chip" href="appendix-c-property-tests.html" title="FsCheck invariants over generated inputs find hidden bugs.">property tests</a>
+        <a class="chip" href="appendix-c-fuzz-campaigns.html" title="Malformed-input campaigns; fix to the spec, not the seed.">fuzz campaigns</a>
+        <a class="chip" href="appendix-c-ddt-pin-trailers.html" title="Doc-derived characterization pinned to a cited source.">DDT pin-trailers</a>
       </div>
       <div class="fam fam-s"><h4>Provenance&nbsp;&amp;&nbsp;attr.</h4>
-        <span class="chip"><a href="appendix-c-product.html#mutator-stamps" title="Every mutation embeds an attribution stamp in the artifact.">mutator-stamps</a> <span class="rel cp">═</span> F10-lint</span>
-        <span class="chip"><a href="appendix-c-product.html#derive-changelog" title="Reconstruct the attributed mutation history from the stamps.">derive-changelog</a> <span class="rel co">◀─</span> stamps</span>
-        <a class="chip" href="appendix-c-product.html#a11y-prefix" title="Prefix invisible inserts so they're distinguishable and tracked.">a11y_ prefix</a>
+        <span class="chip"><a href="appendix-c-mutator-stamps.html" title="Every mutation embeds an attribution stamp in the artifact.">mutator-stamps</a> <span class="rel cp">═</span> F10-lint</span>
+        <span class="chip"><a href="appendix-c-derive-changelog.html" title="Reconstruct the attributed mutation history from the stamps.">derive-changelog</a> <span class="rel co">◀─</span> stamps</span>
+        <a class="chip" href="appendix-c-a11y-prefix.html" title="Prefix invisible inserts so they're distinguishable and tracked.">a11y_ prefix</a>
       </div>
       <div class="fam fam-s"><h4>Repair vocabulary</h4>
-        <a class="chip" href="appendix-c-product.html#typed-categories" title="Typed enums replace free-form failure strings.">typed enums</a>
-        <a class="chip" href="appendix-c-product.html#remediation-verbs" title="A closed, named set of remediation actions — bounded moves.">remediation-verbs</a>
-        <a class="chip soft" href="appendix-c-product.html#codemod-first" title="For 50+ deterministic sites, write one AST transformer.">codemod-first</a>
+        <a class="chip" href="appendix-c-typed-categories.html" title="Typed enums replace free-form failure strings.">typed enums</a>
+        <a class="chip" href="appendix-c-remediation-verbs.html" title="A closed, named set of remediation actions — bounded moves.">remediation-verbs</a>
+        <a class="chip soft" href="appendix-c-codemod-first.html" title="For 50+ deterministic sites, write one AST transformer.">codemod-first</a>
       </div>
     </div>
   </div>
@@ -281,19 +281,19 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
     <div class="step">
       <span class="st-stage">brief-time · dispatch</span>
       <div class="st-h">Context &amp; dispatch substrate</div>
-      <div class="st-ctrls"><b><a href="appendix-a-agent.html#brief-linting" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a></b> (structure) · <b><a href="appendix-a-agent.html#dynamic-context-injection" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a></b> <span class="badge b-s">soft</span> (content) · <b><a href="appendix-a-agent.html#role-typed-dispatch" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a></b> · snippet-table <span class="en" style="font-weight:800">──▶</span> brief-lint</div>
+      <div class="st-ctrls"><b><a href="appendix-a-brief-linting.html" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a></b> (structure) · <b><a href="appendix-a-dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a></b> <span class="badge b-s">soft</span> (content) · <b><a href="appendix-a-role-typed-dispatch.html" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a></b> · snippet-table <span class="en" style="font-weight:800">──▶</span> brief-lint</div>
     </div>
     <div class="drop">▼</div>
     <div class="step" style="margin-left:26px">
       <span class="st-stage">commit-time</span>
       <div class="st-h">Gates — pre-commit &amp; sentinel</div>
-      <div class="st-ctrls"><b><a href="appendix-a-agent.html#pre-commit-hook" title="Cheap changed-file checks gate every commit, marker-verified.">pre-commit-hook</a></b> (changed-file lints + unit-tier, tree-sha markers) · <b><a href="appendix-a-agent.html#sentinel-first-commit" title="Abort a broken agent at its first commit, not its last.">sentinel-first-commit</a></b> (substrate health, t≈0 abort)</div>
+      <div class="st-ctrls"><b><a href="appendix-a-pre-commit-hook.html" title="Cheap changed-file checks gate every commit, marker-verified.">pre-commit-hook</a></b> (changed-file lints + unit-tier, tree-sha markers) · <b><a href="appendix-a-sentinel-first-commit.html" title="Abort a broken agent at its first commit, not its last.">sentinel-first-commit</a></b> (substrate health, t≈0 abort)</div>
     </div>
     <div class="drop">▼</div>
     <div class="step" style="margin-left:52px">
       <span class="st-stage">cron · merge</span>
       <div class="st-h">Merge-train (independent-set batching)</div>
-      <div class="st-ctrls"><b><a href="appendix-a-agent.html#merge-train-mis-batching" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-batching</a></b> lands non-conflicting worktrees <span class="co" style="font-weight:800">◀──</span> reads <b><a href="appendix-a-agent.html#agent-registry" title="Authoritative record of which agents are live right now.">agent-registry</a></b></div>
+      <div class="st-ctrls"><b><a href="appendix-a-merge-train-mis-batching.html" title="Land non-conflicting worktrees together via a maximum independent set.">merge-train-batching</a></b> lands non-conflicting worktrees <span class="co" style="font-weight:800">◀──</span> reads <b><a href="appendix-a-agent-registry.html" title="Authoritative record of which agents are live right now.">agent-registry</a></b></div>
     </div>
     <div class="drop">▼</div>
     <div class="step" style="margin-left:78px">
@@ -305,12 +305,12 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
     <div class="step" style="margin-left:104px;border-color:var(--a-bg-dark)">
       <span class="st-stage">runtime · prod</span>
       <div class="st-h">Lifecycle &amp; observability</div>
-      <div class="st-ctrls">typed-event-bus · <b><a href="appendix-a-agent.html#cron-alerts-gate" title="Block new dispatch while a HIGH cron alert is unresolved.">cron-alerts-gate</a></b> (blocks new dispatch on HIGH alert) · tombstone-commits</div>
+      <div class="st-ctrls">typed-event-bus · <b><a href="appendix-a-cron-alerts-gate.html" title="Block new dispatch while a HIGH cron alert is unresolved.">cron-alerts-gate</a></b> (blocks new dispatch on HIGH alert) · tombstone-commits</div>
     </div>
   </div>
 
   <div style="margin-top:10px;font-size:10px;color:var(--muted)">
-    <span class="badge b-h">host tier</span> Mediators (<b><a href="appendix-a-agent.html#test-serializer" title="Serialize dotnet test to a single writer per host.">test-serializer</a></b> N=1 · <b><a href="appendix-a-agent.html#build-serializer" title="Cap concurrent heavy builds with an M=8 host semaphore.">build-serializer</a></b> M=8 · <b><a href="appendix-a-agent.html#aggregate-compute-protection" title="One lint-all per host; one in flight per orchestrator.">lint-all mutex</a></b>) ration compute <i>across</i> all stairs, not on one.
+    <span class="badge b-h">host tier</span> Mediators (<b><a href="appendix-a-test-serializer.html" title="Serialize dotnet test to a single writer per host.">test-serializer</a></b> N=1 · <b><a href="appendix-a-build-serializer.html" title="Cap concurrent heavy builds with an M=8 host semaphore.">build-serializer</a></b> M=8 · <b><a href="appendix-a-aggregate-compute-protection.html" title="One lint-all per host; one in flight per orchestrator.">lint-all mutex</a></b>) ration compute <i>across</i> all stairs, not on one.
   </div>
 
   <div class="art-rail">
@@ -333,34 +333,34 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
     <div class="lat-col lat-soft">
       <h4>Soft <span style="font-weight:500;font-size:10px">(5)</span></h4>
       <p class="cap">influence, not a gate — cannot block</p>
-      <div class="lat-node t-a"><a href="appendix-a-agent.html#dynamic-context-injection" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a> <span class="cpair">reads the component model (bridge) · file-addr. rules</span></div>
-      <div class="lat-node t-a"><a href="appendix-a-agent.html#operational-playbooks" title="Situation-keyed devops procedures agents follow instead of improvising.">operational-playbooks</a> <span class="cpair">the orchestrator consults, not improvises</span></div>
-      <div class="lat-node t-a"><a href="appendix-a-agent.html#semantic-level-enforcement" title="Place a control at the scope where its property is legible, not the cheapest hook.">semantic-level-enforcement</a> <span class="cpair">a design-time placement judgment</span></div>
-      <div class="lat-node t-s"><a href="appendix-c-product.html#codemod-first" title="For 50+ deterministic sites, write one AST transformer.">codemod-first threshold</a> <span class="cpair">a discipline; the transform is deterministic</span></div>
-      <div class="lat-node" style="border-left:4px solid var(--b-dark)"><a href="appendix-b-models-bridge.html#query-surface" title="repo-query — the agent-facing read API over the models.">query-surface (repo-query)</a> <span class="cpair">agent-facing read API over the models (bridge)</span></div>
+      <div class="lat-node t-a"><a href="appendix-a-dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a> <span class="cpair">reads the component model (bridge) · file-addr. rules</span></div>
+      <div class="lat-node t-a"><a href="appendix-a-operational-playbooks.html" title="Situation-keyed devops procedures agents follow instead of improvising.">operational-playbooks</a> <span class="cpair">the orchestrator consults, not improvises</span></div>
+      <div class="lat-node t-a"><a href="appendix-a-semantic-level-enforcement.html" title="Place a control at the scope where its property is legible, not the cheapest hook.">semantic-level-enforcement</a> <span class="cpair">a design-time placement judgment</span></div>
+      <div class="lat-node t-s"><a href="appendix-c-codemod-first.html" title="For 50+ deterministic sites, write one AST transformer.">codemod-first threshold</a> <span class="cpair">a discipline; the transform is deterministic</span></div>
+      <div class="lat-node" style="border-left:4px solid var(--b-dark)"><a href="appendix-b-query-surface.html" title="repo-query — the agent-facing read API over the models.">query-surface (repo-query)</a> <span class="cpair">agent-facing read API over the models (bridge)</span></div>
     </div>
     <div class="lat-col lat-sh">
       <h4>Soft · Hard <span style="font-weight:500;font-size:10px">(3)</span></h4>
       <p class="cap">soft guidance kept honest by a hard counterpart</p>
-      <div class="lat-node t-a"><a href="appendix-a-agent.html#claude-md-rule-index" title="The governance document itself, enforced by its own lints.">CLAUDE.md rule index</a> <span class="cpair">═══ cap-lint + conformance-lint</span></div>
-      <div class="lat-node t-a"><a href="appendix-a-agent.html#docs-hierarchy" title="One enforced, numbered rule index every agent boots with.">docs-hierarchy</a> <span class="cpair">═══ its cap / conformance lints</span></div>
-      <div class="lat-node t-a"><a href="appendix-a-agent.html#epic-and-design-templates" title="Fixed section-templates for Epics and design docs so plans are complete.">Epic &amp; design-doc templates</a> <span class="cpair">═══ stub scaffold + DoD / section lints</span></div>
+      <div class="lat-node t-a"><a href="appendix-a-claude-md-rule-index.html" title="The governance document itself, enforced by its own lints.">CLAUDE.md rule index</a> <span class="cpair">═══ cap-lint + conformance-lint</span></div>
+      <div class="lat-node t-a"><a href="appendix-a-docs-hierarchy.html" title="One enforced, numbered rule index every agent boots with.">docs-hierarchy</a> <span class="cpair">═══ its cap / conformance lints</span></div>
+      <div class="lat-node t-a"><a href="appendix-a-epic-and-design-templates.html" title="Fixed section-templates for Epics and design docs so plans are complete.">Epic &amp; design-doc templates</a> <span class="cpair">═══ stub scaffold + DoD / section lints</span></div>
     </div>
     <div class="lat-col lat-hard">
       <h4>Hard <span style="font-weight:500;font-size:10px">(46 — the bulk of the fleet)</span></h4>
       <p class="cap">deterministic: blocking gates · lints · mediators · signals · audit records</p>
       <div class="grid2" style="font-size:11px;color:#334155;line-height:1.7">
-        <a href="appendix-a-agent.html#brief-linting">brief-linting</a> · <a href="appendix-a-agent.html#role-typed-dispatch">role-typed-dispatch</a> ·
-        <a href="appendix-a-agent.html#pre-commit-hook">pre-commit-hook</a> · <a href="appendix-a-agent.html#sentinel-first-commit">sentinel</a> · <a href="appendix-a-agent.html#merge-train-mis-batching">merge-train-batching</a> · <a href="appendix-a-agent.html#staged-deploy-gates">staged-deploy</a> ·
-        <a href="appendix-a-agent.html#test-serializer">test-serializer</a> · <a href="appendix-a-agent.html#build-serializer">build-serializer</a> · <a href="appendix-a-agent.html#aggregate-compute-protection">lint-all-mutex</a> · <a href="appendix-a-agent.html#resource-pressure-gating">pressure-gating</a> ·
-        <a href="appendix-a-agent.html#agent-registry">agent-registry</a> · <a href="appendix-a-agent.html#typed-event-bus">event-bus</a> · <a href="appendix-a-agent.html#deploy-heartbeats">heartbeats</a> · <a href="appendix-a-agent.html#tombstone-commits">tombstones</a> · <a href="appendix-a-agent.html#cron-alerts-gate">cron-alerts-gate</a> · <a href="appendix-a-agent.html#lifecycle-hooks">lifecycle-hooks</a> · <a href="appendix-a-agent.html#reflection-facet-substrate">reflection-facets</a> · <a href="appendix-a-agent.html#caused-by-provenance">caused-by-provenance</a> ·
-        <a href="appendix-a-agent.html#mandatory-snippet-table">snippet-table</a> · <a href="appendix-a-agent.html#epic-definition-of-done">epic-DoD</a> · <a href="appendix-a-agent.html#doc-hygiene-lints">doc-hygiene-lints</a> · <a href="appendix-a-agent.html#operator-runbook-skill">operator-runbook-skill</a> ·
-        <b style="color:var(--b-dark)">bridge:</b> <a href="appendix-b-models-bridge.html#executable-source-of-truth">executable-src-of-truth</a> · <a href="appendix-b-models-bridge.html#agent-first-mbse-harness">agent-first-mbse-harness</a> · <a href="appendix-b-models-bridge.html#component-zone-model">component-zone</a> · <a href="appendix-b-models-bridge.html#synchronization-model">synchronization(meta-sync)</a> · <a href="appendix-b-models-bridge.html#agent-orchestration-model">agent-orch(dev-journeys)</a> · <a href="appendix-b-models-bridge.html#concurrency-contracts">concurrency</a> · <a href="appendix-b-models-bridge.html#service-flow-model">service-flow</a> · <a href="appendix-b-models-bridge.html#user-journey-model">user-journey</a> · <a href="appendix-b-models-bridge.html#deployment-topology-model">deployment-topology</a> · <a href="appendix-b-models-bridge.html#domain-registries">domain-registries</a> · <a href="appendix-b-models-bridge.html#drift-parity-gates">drift-parity</a> · <a href="appendix-b-models-bridge.html#formal-invariant-verification">formal-invariant-verify</a> · <a href="appendix-b-models-bridge.html#coverage-model-mapping">coverage→node</a> · <a href="appendix-b-models-bridge.html#journey-criticality-test-placement">journey-criticality→tier</a> · <a href="appendix-b-models-bridge.html#invariant-dag-execution-policy">invariant-DAG-exec-policy</a> · <a href="appendix-b-models-bridge.html#model-driven-codegen">codegen</a> · <a href="appendix-b-models-bridge.html#meta-model-consumption">read-no-hardcode</a> · <a href="appendix-b-models-bridge.html#control-substrate-dependency">control↔substrate</a> ·
-        <a href="appendix-c-product.html#pdf-model">PdfModel</a> · <a href="appendix-c-product.html#office-models">Office</a> · <a href="appendix-c-product.html#service-client">ServiceClient</a> · <a href="appendix-c-product.html#canonical-walkers">walkers</a> · <a href="appendix-c-product.html#raw-redis-seam">raw-Redis</a> ·
-        <a href="appendix-c-product.html#content-validator">ContentValidator</a> · <a href="appendix-c-product.html#semantic-lints">semantic-lints</a> · <a href="appendix-c-product.html#standards-rule-engine">WCAG-engine</a> · <a href="appendix-c-product.html#coherence-lints">coherence-lints</a> ·
-        <a href="appendix-c-product.html#test-onion-tiers">test-onion</a> · <a href="appendix-c-product.html#property-tests">property</a> · <a href="appendix-c-product.html#fuzz-campaigns">fuzz</a> · <a href="appendix-c-product.html#ddt-pin-trailers">DDT</a> ·
-        <a href="appendix-c-product.html#mutator-stamps">mutator-stamps</a> · <a href="appendix-c-product.html#f10-wiring-lint">F10-lint</a> · <a href="appendix-c-product.html#derive-changelog">derive-changelog</a> · <a href="appendix-c-product.html#a11y-prefix">a11y_prefix</a> ·
-        <a href="appendix-c-product.html#typed-categories">typed-enums</a> · <a href="appendix-c-product.html#remediation-verbs">remediation-verbs</a>
+        <a href="appendix-a-brief-linting.html">brief-linting</a> · <a href="appendix-a-role-typed-dispatch.html">role-typed-dispatch</a> ·
+        <a href="appendix-a-pre-commit-hook.html">pre-commit-hook</a> · <a href="appendix-a-sentinel-first-commit.html">sentinel</a> · <a href="appendix-a-merge-train-mis-batching.html">merge-train-batching</a> · <a href="appendix-a-staged-deploy-gates.html">staged-deploy</a> ·
+        <a href="appendix-a-test-serializer.html">test-serializer</a> · <a href="appendix-a-build-serializer.html">build-serializer</a> · <a href="appendix-a-aggregate-compute-protection.html">lint-all-mutex</a> · <a href="appendix-a-resource-pressure-gating.html">pressure-gating</a> ·
+        <a href="appendix-a-agent-registry.html">agent-registry</a> · <a href="appendix-a-typed-event-bus.html">event-bus</a> · <a href="appendix-a-deploy-heartbeats.html">heartbeats</a> · <a href="appendix-a-tombstone-commits.html">tombstones</a> · <a href="appendix-a-cron-alerts-gate.html">cron-alerts-gate</a> · <a href="appendix-a-lifecycle-hooks.html">lifecycle-hooks</a> · <a href="appendix-a-reflection-facet-substrate.html">reflection-facets</a> · <a href="appendix-a-caused-by-provenance.html">caused-by-provenance</a> ·
+        <a href="appendix-a-mandatory-snippet-table.html">snippet-table</a> · <a href="appendix-a-epic-definition-of-done.html">epic-DoD</a> · <a href="appendix-a-doc-hygiene-lints.html">doc-hygiene-lints</a> · <a href="appendix-a-operator-runbook-skill.html">operator-runbook-skill</a> ·
+        <b style="color:var(--b-dark)">bridge:</b> <a href="appendix-b-executable-source-of-truth.html">executable-src-of-truth</a> · <a href="appendix-b-agent-first-mbse-harness.html">agent-first-mbse-harness</a> · <a href="appendix-b-component-zone-model.html">component-zone</a> · <a href="appendix-b-synchronization-model.html">synchronization(meta-sync)</a> · <a href="appendix-b-agent-orchestration-model.html">agent-orch(dev-journeys)</a> · <a href="appendix-b-concurrency-contracts.html">concurrency</a> · <a href="appendix-b-service-flow-model.html">service-flow</a> · <a href="appendix-b-user-journey-model.html">user-journey</a> · <a href="appendix-b-deployment-topology-model.html">deployment-topology</a> · <a href="appendix-b-domain-registries.html">domain-registries</a> · <a href="appendix-b-drift-parity-gates.html">drift-parity</a> · <a href="appendix-b-formal-invariant-verification.html">formal-invariant-verify</a> · <a href="appendix-b-coverage-model-mapping.html">coverage→node</a> · <a href="appendix-b-journey-criticality-test-placement.html">journey-criticality→tier</a> · <a href="appendix-b-invariant-dag-execution-policy.html">invariant-DAG-exec-policy</a> · <a href="appendix-b-model-driven-codegen.html">codegen</a> · <a href="appendix-b-meta-model-consumption.html">read-no-hardcode</a> · <a href="appendix-b-control-substrate-dependency.html">control↔substrate</a> ·
+        <a href="appendix-c-pdf-model.html">PdfModel</a> · <a href="appendix-c-office-models.html">Office</a> · <a href="appendix-c-service-client.html">ServiceClient</a> · <a href="appendix-c-canonical-walkers.html">walkers</a> · <a href="appendix-c-raw-redis-seam.html">raw-Redis</a> ·
+        <a href="appendix-c-content-validator.html">ContentValidator</a> · <a href="appendix-c-semantic-lints.html">semantic-lints</a> · <a href="appendix-c-standards-rule-engine.html">WCAG-engine</a> · <a href="appendix-c-coherence-lints.html">coherence-lints</a> ·
+        <a href="appendix-c-test-onion-tiers.html">test-onion</a> · <a href="appendix-c-property-tests.html">property</a> · <a href="appendix-c-fuzz-campaigns.html">fuzz</a> · <a href="appendix-c-ddt-pin-trailers.html">DDT</a> ·
+        <a href="appendix-c-mutator-stamps.html">mutator-stamps</a> · <a href="appendix-c-f10-wiring-lint.html">F10-lint</a> · <a href="appendix-c-derive-changelog.html">derive-changelog</a> · <a href="appendix-c-a11y-prefix.html">a11y_prefix</a> ·
+        <a href="appendix-c-typed-categories.html">typed-enums</a> · <a href="appendix-c-remediation-verbs.html">remediation-verbs</a>
       </div>
     </div>
   </div>
@@ -371,47 +371,47 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
       <div class="wire-group">
         <div class="wire-h"><span class="cp">═══ counterpart</span> <span class="wire-sub">soft ↔ hard, or construction ↔ its detection</span></div>
         <ul class="wire-items">
-          <li><a href="appendix-a-agent.html#claude-md-rule-index">rule-index</a> ═ cap-lint</li>
-          <li><a href="appendix-a-agent.html#docs-hierarchy">docs-hierarchy</a> ═ lints</li>
-          <li><a href="appendix-c-product.html#mutator-stamps">mutator-stamps</a> ═ <a href="appendix-c-product.html#f10-wiring-lint">F10-lint</a></li>
-          <li><a href="appendix-c-product.html#pdf-model">PdfModel</a> ═ PDF-lib ban</li>
-          <li><a href="appendix-c-product.html#office-models">Office</a> ═ openxml-ban</li>
-          <li><a href="appendix-c-product.html#standards-rule-engine">WCAG-engine</a> ═ scope-doc</li>
-          <li><a href="appendix-a-agent.html#epic-definition-of-done">epic-DoD</a> ═ <a href="appendix-a-agent.html#claude-md-rule-index">rule-index</a> (audit)</li>
+          <li><a href="appendix-a-claude-md-rule-index.html">rule-index</a> ═ cap-lint</li>
+          <li><a href="appendix-a-docs-hierarchy.html">docs-hierarchy</a> ═ lints</li>
+          <li><a href="appendix-c-mutator-stamps.html">mutator-stamps</a> ═ <a href="appendix-c-f10-wiring-lint.html">F10-lint</a></li>
+          <li><a href="appendix-c-pdf-model.html">PdfModel</a> ═ PDF-lib ban</li>
+          <li><a href="appendix-c-office-models.html">Office</a> ═ openxml-ban</li>
+          <li><a href="appendix-c-standards-rule-engine.html">WCAG-engine</a> ═ scope-doc</li>
+          <li><a href="appendix-a-epic-definition-of-done.html">epic-DoD</a> ═ <a href="appendix-a-claude-md-rule-index.html">rule-index</a> (audit)</li>
         </ul>
       </div>
       <div class="wire-group">
         <div class="wire-h"><span class="en">──▶ enabler</span> <span class="wire-sub">A must exist before B</span></div>
         <ul class="wire-items">
-          <li><a href="appendix-a-agent.html#mandatory-snippet-table">snippet-table</a> ▶ <a href="appendix-a-agent.html#brief-linting">brief-linting</a></li>
-          <li>file-addr. rules ▶ <a href="appendix-a-agent.html#dynamic-context-injection">dyn-ctx-injection</a></li>
-          <li><a href="appendix-a-agent.html#agent-registry">agent-registry</a> ▶ <a href="appendix-a-agent.html#sentinel-first-commit">sentinel</a></li>
-          <li><a href="appendix-c-product.html#remediation-verbs">bounded-verbs</a> ▶ <a href="appendix-c-product.html#mutator-stamps">mutator-stamps</a> + <a href="appendix-c-product.html#content-validator">ContentValidator</a></li>
+          <li><a href="appendix-a-mandatory-snippet-table.html">snippet-table</a> ▶ <a href="appendix-a-brief-linting.html">brief-linting</a></li>
+          <li>file-addr. rules ▶ <a href="appendix-a-dynamic-context-injection.html">dyn-ctx-injection</a></li>
+          <li><a href="appendix-a-agent-registry.html">agent-registry</a> ▶ <a href="appendix-a-sentinel-first-commit.html">sentinel</a></li>
+          <li><a href="appendix-c-remediation-verbs.html">bounded-verbs</a> ▶ <a href="appendix-c-mutator-stamps.html">mutator-stamps</a> + <a href="appendix-c-content-validator.html">ContentValidator</a></li>
         </ul>
       </div>
       <div class="wire-group">
         <div class="wire-h"><span class="co">◀── consumer</span> <span class="wire-sub">B reads A at runtime</span></div>
         <ul class="wire-items">
-          <li><a href="appendix-a-agent.html#dynamic-context-injection">dyn-ctx-injection</a> ◀ <a href="appendix-b-models-bridge.html#component-zone-model">component-registry</a></li>
-          <li><a href="appendix-a-agent.html#merge-train-mis-batching">merge-train</a> ◀ <a href="appendix-a-agent.html#agent-registry">agent-registry</a></li>
-          <li><a href="appendix-c-product.html#derive-changelog">derive-changelog</a> ◀ <a href="appendix-c-product.html#mutator-stamps">stamps</a></li>
-          <li><a href="appendix-a-agent.html#tombstone-commits">tombstone</a> ◀ <a href="appendix-a-agent.html#agent-registry">agent-registry</a></li>
-          <li><a href="appendix-a-agent.html#cron-alerts-gate">cron-alerts-gate</a> ◀ <a href="appendix-a-agent.html#typed-event-bus">event-bus</a></li>
-          <li><a href="appendix-c-product.html#standards-rule-engine">WCAG-engine</a> ◀ <a href="appendix-c-product.html#canonical-walkers">walkers</a></li>
+          <li><a href="appendix-a-dynamic-context-injection.html">dyn-ctx-injection</a> ◀ <a href="appendix-b-component-zone-model.html">component-registry</a></li>
+          <li><a href="appendix-a-merge-train-mis-batching.html">merge-train</a> ◀ <a href="appendix-a-agent-registry.html">agent-registry</a></li>
+          <li><a href="appendix-c-derive-changelog.html">derive-changelog</a> ◀ <a href="appendix-c-mutator-stamps.html">stamps</a></li>
+          <li><a href="appendix-a-tombstone-commits.html">tombstone</a> ◀ <a href="appendix-a-agent-registry.html">agent-registry</a></li>
+          <li><a href="appendix-a-cron-alerts-gate.html">cron-alerts-gate</a> ◀ <a href="appendix-a-typed-event-bus.html">event-bus</a></li>
+          <li><a href="appendix-c-standards-rule-engine.html">WCAG-engine</a> ◀ <a href="appendix-c-canonical-walkers.html">walkers</a></li>
         </ul>
       </div>
       <div class="wire-group">
         <div class="wire-h"><span class="ly">▼ layer</span> <span class="wire-sub">defense in depth — each a backstop for the last</span></div>
         <ul class="wire-items">
-          <li><a href="appendix-a-agent.html#pre-commit-hook">pre-commit</a> ▸ <a href="appendix-a-agent.html#sentinel-first-commit">sentinel</a> ▸ <a href="appendix-a-agent.html#merge-train-mis-batching">merge-train</a> ▸ <a href="appendix-a-agent.html#staged-deploy-gates">staged-deploy</a> (the staircase)</li>
-          <li>the <a href="appendix-a-agent.html#test-serializer">test</a> · <a href="appendix-a-agent.html#build-serializer">build</a> · <a href="appendix-a-agent.html#aggregate-compute-protection">lint-all</a> mediators as one host tier</li>
+          <li><a href="appendix-a-pre-commit-hook.html">pre-commit</a> ▸ <a href="appendix-a-sentinel-first-commit.html">sentinel</a> ▸ <a href="appendix-a-merge-train-mis-batching.html">merge-train</a> ▸ <a href="appendix-a-staged-deploy-gates.html">staged-deploy</a> (the staircase)</li>
+          <li>the <a href="appendix-a-test-serializer.html">test</a> · <a href="appendix-a-build-serializer.html">build</a> · <a href="appendix-a-aggregate-compute-protection.html">lint-all</a> mediators as one host tier</li>
         </ul>
       </div>
       <div class="wire-group">
         <div class="wire-h"><span style="color:var(--b-dark)">◀▶ bridge</span> <span class="wire-sub">the one cross-role edge — agent ↔ product via a model</span></div>
         <ul class="wire-items">
-          <li><a href="appendix-b-models-bridge.html#component-zone-model">component-model</a>: <a href="appendix-a-agent.html#dynamic-context-injection">dyn-ctx-injection</a> (agent) ◀▶ <a href="appendix-b-models-bridge.html#drift-parity-gates">boundary-lints</a> (product)</li>
-          <li><a href="appendix-b-models-bridge.html#service-flow-model">service-flow</a>: <a href="appendix-b-models-bridge.html#query-surface">repo-query</a> (agent) ◀▶ <a href="appendix-b-models-bridge.html#model-driven-codegen">NetworkPolicy-gen</a> (product)</li>
+          <li><a href="appendix-b-component-zone-model.html">component-model</a>: <a href="appendix-a-dynamic-context-injection.html">dyn-ctx-injection</a> (agent) ◀▶ <a href="appendix-b-drift-parity-gates.html">boundary-lints</a> (product)</li>
+          <li><a href="appendix-b-service-flow-model.html">service-flow</a>: <a href="appendix-b-query-surface.html">repo-query</a> (agent) ◀▶ <a href="appendix-b-model-driven-codegen.html">NetworkPolicy-gen</a> (product)</li>
         </ul>
       </div>
     </div>
@@ -437,9 +437,9 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
     <div class="actor-a" style="background:var(--a-bg);border:1.5px solid var(--a-bg-dark);border-radius:8px 0 0 8px;padding:10px 11px">
       <h4 style="margin:0 0 5px;color:var(--a-ink);font-size:12px">AGENTS (the fleet)</h4>
       <p style="margin:0 0 7px;font-size:10px;color:var(--a-ink)">context-bounded — cannot hold the whole codebase</p>
-      <div class="chip"><a href="appendix-a-agent.html#dynamic-context-injection" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a></div>
-      <div class="chip"><a href="appendix-b-models-bridge.html#query-surface" title="repo-query — the agent-facing read API over the models.">repo-query (the query API)</a></div>
-      <div class="chip"><a href="appendix-a-agent.html#role-typed-dispatch" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a> · <a href="appendix-a-agent.html#brief-linting" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a></div>
+      <div class="chip"><a href="appendix-a-dynamic-context-injection.html" title="Inject the rules governing these files into the brief.">dynamic-context-injection</a></div>
+      <div class="chip"><a href="appendix-b-query-surface.html" title="repo-query — the agent-facing read API over the models.">repo-query (the query API)</a></div>
+      <div class="chip"><a href="appendix-a-role-typed-dispatch.html" title="A typed role fixes model, isolation, and gates per dispatch.">role-typed-dispatch</a> · <a href="appendix-a-brief-linting.html" title="Reject a malformed dispatch brief before it can launch.">brief-linting</a></div>
       <p style="margin:7px 0 0;font-size:9.5px;font-style:italic;color:var(--a-ink)">reason <b>about</b> the codebase <b>through</b> the model</p>
     </div>
     <!-- BRIDGE -->
@@ -462,9 +462,9 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
     <div class="actor-s" style="background:var(--s-bg);border:1.5px solid var(--s-bg-dark);border-radius:0 8px 8px 0;padding:10px 11px">
       <h4 style="margin:0 0 5px;color:var(--s-ink);font-size:12px">CODEBASE / PRODUCT</h4>
       <p style="margin:0 0 7px;font-size:10px;color:var(--s-ink)">context-exceeding — <span data-census="loc_kloc">430</span> KLOC, unbounded</p>
-      <div class="chip"><a href="appendix-b-models-bridge.html#model-driven-codegen" title="Generate real artifacts from the models, provenance-headed.">NetworkPolicy · service wiring (gen)</a></div>
-      <div class="chip"><a href="appendix-b-models-bridge.html#deployment-topology-model" title="Typed models of where things run and how they layer.">deployment topology · tiers</a></div>
-      <div class="chip"><a href="appendix-b-models-bridge.html#drift-parity-gates" title="Bidirectional model↔reality checks so models cannot drift.">boundary / seam lints</a></div>
+      <div class="chip"><a href="appendix-b-model-driven-codegen.html" title="Generate real artifacts from the models, provenance-headed.">NetworkPolicy · service wiring (gen)</a></div>
+      <div class="chip"><a href="appendix-b-deployment-topology-model.html" title="Typed models of where things run and how they layer.">deployment topology · tiers</a></div>
+      <div class="chip"><a href="appendix-b-drift-parity-gates.html" title="Bidirectional model↔reality checks so models cannot drift.">boundary / seam lints</a></div>
       <p style="margin:7px 0 0;font-size:9.5px;font-style:italic;color:var(--s-ink)">generated &amp; governed <b>from</b> the model</p>
     </div>
   </div>
@@ -498,36 +498,36 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
 
       <!-- trunk nodes: 8 clickable rects, 2 rows of 4 -->
       <!-- row 1 -->
-      <a href="appendix-b-models-bridge.html#executable-source-of-truth">
+      <a href="appendix-b-executable-source-of-truth.html">
         <rect x="246" y="66" width="122" height="30" rx="7" fill="#fff" stroke="var(--b-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="307" y="85" text-anchor="middle" font-size="12" fill="var(--b-ink)">executable-source-of-truth</text>
       </a>
-      <a href="appendix-b-models-bridge.html#drift-parity-gates">
+      <a href="appendix-b-drift-parity-gates.html">
         <rect x="374" y="66" width="112" height="30" rx="7" fill="#fff" stroke="var(--b-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="430" y="85" text-anchor="middle" font-size="12" fill="var(--b-ink)">drift-parity-gates</text>
       </a>
-      <a href="appendix-b-models-bridge.html#formal-invariant-verification">
+      <a href="appendix-b-formal-invariant-verification.html">
         <rect x="492" y="66" width="146" height="30" rx="7" fill="#fff" stroke="var(--b-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="565" y="85" text-anchor="middle" font-size="12" fill="var(--b-ink)">formal-invariant-verification</text>
       </a>
-      <a href="appendix-b-models-bridge.html#coverage-model-mapping">
+      <a href="appendix-b-coverage-model-mapping.html">
         <rect x="644" y="66" width="130" height="30" rx="7" fill="#fff" stroke="var(--b-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="709" y="85" text-anchor="middle" font-size="12" fill="var(--b-ink)">coverage-model-mapping</text>
       </a>
       <!-- row 2 -->
-      <a href="appendix-b-models-bridge.html#model-driven-codegen">
+      <a href="appendix-b-model-driven-codegen.html">
         <rect x="246" y="102" width="122" height="30" rx="7" fill="#fff" stroke="var(--b-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="307" y="121" text-anchor="middle" font-size="12" fill="var(--b-ink)">model-driven-codegen</text>
       </a>
-      <a href="appendix-b-models-bridge.html#query-surface">
+      <a href="appendix-b-query-surface.html">
         <rect x="374" y="102" width="112" height="30" rx="7" fill="#fff" stroke="var(--b-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="430" y="121" text-anchor="middle" font-size="12" fill="var(--b-ink)">query-surface</text>
       </a>
-      <a href="appendix-b-models-bridge.html#meta-model-consumption">
+      <a href="appendix-b-meta-model-consumption.html">
         <rect x="492" y="102" width="146" height="30" rx="7" fill="#fff" stroke="var(--b-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="565" y="121" text-anchor="middle" font-size="12" fill="var(--b-ink)">meta-model-consumption</text>
       </a>
-      <a href="appendix-b-models-bridge.html#control-substrate-dependency">
+      <a href="appendix-b-control-substrate-dependency.html">
         <rect x="644" y="102" width="130" height="30" rx="7" fill="#fff" stroke="var(--b-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="709" y="121" text-anchor="middle" font-size="12" fill="var(--b-ink)">control-substrate-dependency</text>
       </a>
@@ -554,15 +554,15 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
         <rect x="55" y="292" width="390" height="118" rx="12" fill="var(--s-bg)" stroke="var(--s-bg-dark)" stroke-width="2.5"></rect>
       </g>
       <text x="250" y="314" text-anchor="middle" font-size="13" font-weight="800" fill="var(--s-ink)" letter-spacing=".4">PRODUCT-facing</text>
-      <a href="appendix-b-models-bridge.html#service-flow-model">
+      <a href="appendix-b-service-flow-model.html">
         <rect x="73" y="326" width="118" height="30" rx="7" fill="#fff" stroke="var(--s-bg-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="132" y="345" text-anchor="middle" font-size="12" fill="var(--s-ink)">service-flow-model</text>
       </a>
-      <a href="appendix-b-models-bridge.html#user-journey-model">
+      <a href="appendix-b-user-journey-model.html">
         <rect x="197" y="326" width="118" height="30" rx="7" fill="#fff" stroke="var(--s-bg-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="256" y="345" text-anchor="middle" font-size="12" fill="var(--s-ink)">user-journey-model</text>
       </a>
-      <a href="appendix-b-models-bridge.html#domain-registries">
+      <a href="appendix-b-domain-registries.html">
         <rect x="321" y="326" width="106" height="30" rx="7" fill="#fff" stroke="var(--s-bg-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="374" y="345" text-anchor="middle" font-size="12" fill="var(--s-ink)">domain-registries</text>
       </a>
@@ -573,11 +573,11 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
         <rect x="555" y="292" width="390" height="118" rx="12" fill="var(--a-bg)" stroke="var(--a-bg-dark)" stroke-width="2.5"></rect>
       </g>
       <text x="750" y="314" text-anchor="middle" font-size="13" font-weight="800" fill="var(--a-ink)" letter-spacing=".4">ORCHESTRATION-facing</text>
-      <a href="appendix-b-models-bridge.html#synchronization-model">
+      <a href="appendix-b-synchronization-model.html">
         <rect x="600" y="326" width="140" height="30" rx="7" fill="#fff" stroke="var(--a-bg-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="670" y="345" text-anchor="middle" font-size="12" fill="var(--a-ink)">synchronization-model</text>
       </a>
-      <a href="appendix-b-models-bridge.html#agent-orchestration-model">
+      <a href="appendix-b-agent-orchestration-model.html">
         <rect x="750" y="326" width="150" height="30" rx="7" fill="#fff" stroke="var(--a-bg-dark)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="825" y="345" text-anchor="middle" font-size="12" fill="var(--a-ink)">agent-orchestration-model</text>
       </a>
@@ -595,15 +595,15 @@ the <a href="../catalogue-views.html">codegen'd views</a> (same mechanisms, grou
         <rect x="150" y="472" width="700" height="120" rx="12" fill="var(--env-bg)" stroke="var(--env-border)" stroke-width="2.5"></rect>
       </g>
       <text x="500" y="496" text-anchor="middle" font-size="13" font-weight="800" fill="var(--env-ink)" letter-spacing=".4">SHARED SPINE · one model · both faces</text>
-      <a href="appendix-b-models-bridge.html#component-zone-model">
+      <a href="appendix-b-component-zone-model.html">
         <rect x="180" y="510" width="160" height="32" rx="7" fill="#fff" stroke="var(--env-border)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="260" y="530" text-anchor="middle" font-size="12" fill="var(--env-ink)">component-zone-model</text>
       </a>
-      <a href="appendix-b-models-bridge.html#concurrency-contracts">
+      <a href="appendix-b-concurrency-contracts.html">
         <rect x="360" y="510" width="170" height="32" rx="7" fill="#fff" stroke="var(--env-border)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="445" y="530" text-anchor="middle" font-size="12" fill="var(--env-ink)">concurrency-contracts</text>
       </a>
-      <a href="appendix-b-models-bridge.html#deployment-topology-model">
+      <a href="appendix-b-deployment-topology-model.html">
         <rect x="550" y="510" width="200" height="32" rx="7" fill="#fff" stroke="var(--env-border)" stroke-width="1.3" aria-hidden="true"></rect>
         <text x="650" y="530" text-anchor="middle" font-size="12" fill="var(--env-ink)">deployment-topology-model</text>
       </a>

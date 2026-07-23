@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Appendix · Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
+blockquote pre.mermaid { font-style: normal; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="current" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="appendix-c-canonical-walkers.html">Next part ⇒</a><a href="appendix-b-journey-criticality-test-placement.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)"><header class="chap"><div class="kicker">Appendix B — Models-bridge patterns</div><h1>Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</h1></header><p><em>The Structure of Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost) — its shape at a glance:</em></p>
+<p>Every edge declares one of three intents. Only correctness and cost-gate edges live in the graph, which is host-identical; load edges migrate to a typed Scheduler that reads a per-host profile and emits the execution plan.</p>
+<pre class="mermaid">flowchart LR
+  Edge[Edge intent] --&gt; Corr[CORRECTNESS&lt;br/&gt;in graph]
+  Edge --&gt; Cost[COST_GATE&lt;br/&gt;in graph]
+  Edge --&gt; Load[LOAD&lt;br/&gt;banned in graph]
+  Load --&gt; Sched[Scheduler]
+  Prof[(Per-host profile)] --&gt; Sched
+  Sched --&gt; Plan([Execution plan])</pre>
+<p><em>Accessible description: an edge declares one of three intents. Correctness and cost-gate edges stay in the host-identical graph; load edges are banned from it and move to a Scheduler, which reads a per-host profile and produces the execution plan.</em></p>
+<p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/invariant-dag-execution-policy.html">system-models / Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a>.</em></p>
+<p><strong>On this page:</strong> <a href="#invariant-dag-execution-policy">Intent</a> · <a href="#el-motivation">Motivation</a> · <a href="#el-applicability">Applicability</a> · <a href="#el-structure">Structure</a> · <a href="#el-sample-code">Sample Code</a> · <a href="#el-consequences">Consequences</a> · <a href="#el-known-uses">Known Uses</a> · <a href="#el-related-patterns">Related Patterns</a></p>
+<h2 id="invariant-dag-execution-policy">Intent</h2>
+<p><strong>Intent</strong> — Keep a build/deploy dependency graph a statement of <strong>correctness only</strong>, host-identical everywhere, and push every environment-specific execution concern — how much may run at once, and whether a costly step is worth running — into a typed <strong>Scheduler</strong> that reads a per-host profile and produces the execution plan. Separate three edge intents so a reader can tell a real dependency from a resource or budget accommodation (our instance: a deploy DAG whose edges carry a <code>CORRECTNESS</code>/<code>COST_GATE</code>/<code>LOAD</code> intent, with <code>LOAD</code> edges migrated out to a typed <code>Scheduler</code> that reads a per-host <code>(concurrency-ceiling, budget)</code> profile).</p>
+<h2 id="el-motivation">Motivation</h2>
+<p>A build or deploy pipeline is a dependency graph: <code>B needs A</code> means B runs after A. The graph is supposed to state <strong>correctness</strong> — B produces a wrong or failed result without A. In practice two other concerns leak into the same <code>needs=</code> syntax, and once they do the graph stops meaning one thing:</p>
+<ul><li><strong>Resource rationing dressed as a dependency.</strong> A step waits for another not because it consumes its output, but because they contend for one scarce box — a single local worker, the build machine's CPU. The wait is spelled <code>B needs A</code>, identical to a correctness edge. It is not an ordering fact; it is an accommodation that vanishes the moment the host is elastic.</li><li><strong>A cost gate dressed as a dependency.</strong> A cheap check gates an expensive one — run the free structural check before the paid GenAI check, so a red free check doesn't burn money. Again spelled <code>B needs A</code>, and again not a correctness fact: B is not <em>wrong</em> without A, only <em>wasteful</em>.</li></ul>
+<p>The graph now <strong>lies to its reader</strong>: three unrelated intents wear one syntax, and telling them apart takes per-edge archaeology. The usual patch makes it worse — a per-environment conditional in graph construction (<code>if host == "prod": drop this edge</code>) that strips the rationing edges back out where the box is elastic. The graph mutates per host, the strip rule lives in control flow rather than the types, and two failure modes go uncaught: a rationing edge added without the guard silently ships to an elastic host, and a correctness edge caught by an over-broad strip silently disables a gate. One incident is the shape in miniature — a single-worker queue-drain wait modeled as a <code>needs</code> edge took a multi-paragraph root-cause analysis to prove it was "stale convenience, not a true dependency" before it could be removed. <strong>The graph did not encode why the edge existed</strong>, so every host difference became a prose-guarded special case.</p>
+<h2 id="el-applicability">Applicability</h2>
+<ul><li><strong>A typed dependency-graph model with addressable edges.</strong> The intent axis attaches to edges; without a typed edge record there is nowhere to declare correctness-vs-cost-vs-load.</li><li><strong>A host taxonomy with a real cost or concurrency gradient.</strong> The Scheduler earns its keep only when hosts differ — one elastic, one single-boxed, one budget-bounded. A uniform execution environment needs no per-host policy.</li><li><strong>A closed set of rationed resource classes.</strong> The load lint decides "is this edge a contention accommodation?" by matching a small, enumerated set of resource classes (the worker queue, the build CPU), read at check time rather than snapshotted.</li><li><strong>A step selector, or at least a stable roster.</strong> The graph is a function of the selected roster; the host-invariance claim is stated over the roster two hosts share, so the roster must be addressable separately from the edges.</li></ul>
+<h2 id="el-structure">Structure</h2>
+<p>The Structure diagram appears at the top of this page.</p>
+<h2 id="el-sample-code">Sample Code</h2>
+<p>Each edge carries a typed intent. A lint bans load edges from the graph, and a Scheduler maps a per-host <code>(ceiling, budget)</code> profile to a plan — so raising a host's concurrency is a one-row profile edit, never a graph edit.</p>
+<pre><code>from dataclasses import dataclass
+import sys
+
+DAG_RESIDENT = {"CORRECTNESS", "COST_GATE"}   # the single source the load lint reads
+
+@dataclass(frozen=True)
+class Edge:
+    frm: str
+    to: str
+    intent: str        # CORRECTNESS | COST_GATE | LOAD
+
+def load_lint(edges: list[Edge]) -&gt; list[str]:
+    """A LOAD edge in the graph is a finding — load rationing belongs to the Scheduler."""
+    return [f"{e.frm}-&gt;{e.to}: intent {e.intent} not allowed in graph"
+            for e in edges if e.intent not in DAG_RESIDENT]
+
+def plan_for(concurrency_ceiling: int, budget: float) -&gt; dict:
+    """Pure map from a host profile to an execution plan (permits + cost-gate honoring)."""
+    return {"permits": concurrency_ceiling, "run_cost_gated": budget &gt; 0.0}
+
+if __name__ == "__main__":
+    edges = load_graph()                  # reads the built dependency graph's typed edges
+    findings = load_lint(edges)
+    for f in findings:
+        print(f"LOAD-IN-GRAPH: {f}")
+    # A new host is a new profile row, e.g. plan_for(concurrency_ceiling=1, budget=0.0)
+    sys.exit(1 if findings else 0)</code></pre>
+<h2 id="el-consequences">Consequences</h2>
+<ul><li><strong>The graph gains a second axis to author.</strong> Every edge now declares an intent, not just a target. That is the cost of legibility — the intent is what makes the graph honest, but it is an annotation on each edge.</li><li><strong>Behavior identity across the migration must be pinned.</strong> Turning a single-worker queue-drain <em>edge</em> into a permits-1 <em>semaphore</em> is behaviorally equal at N=1 but diverges at N&gt;1 (the semaphore permits concurrency the edge forbade). That divergence is a feature — raising the ceiling becomes a one-field profile change — but the migration must carry a check that the low-concurrency host still serializes, or a silent concurrency regression ships.</li><li><strong>Two rationing layers may coexist.</strong> A host may already have out-of-graph resource mediators (a test serializer, a build semaphore) that guard a different scope than the deploy Scheduler. Unifying them under one rationing authority is attractive but is its own effort; until then, two layers ration at two scopes.</li><li><strong>The cross-host graph diff has a cost.</strong> The invariance lint builds each host's roster and diffs the selection sets; if the builder is slow to import, the lint is expensive and belongs in a deploy-scope gate rather than every commit.</li></ul>
+<h2 id="el-known-uses">Known Uses</h2>
+<ul><li>A <code>CORRECTNESS</code>/<code>COST_GATE</code>/<code>LOAD</code> <code>EdgeIntent</code> enum on the deploy driver, orthogonal to the existing artifact-producer <code>EdgeKind</code>. Only the first two are DAG-resident; <code>LOAD</code> is forbidden in the graph and migrates to the Scheduler. A frozen <code>DAG_RESIDENT_INTENTS</code> set is the single source the load lint reads.</li><li>A typed <code>Scheduler</code> — a pure <code>plan_for</code> that maps a frozen <code>HostLoadProfile(concurrency_ceiling, budget)</code> to a frozen <code>ConcurrencyPlan</code>, over three named host profiles: the local host rations to one permit (protect the shared VM), the staging host is the unbounded stress burst, the production host is a low finite smoke ceiling. Moving the stress test from one host to another is a one-cell edit to the profile table. A <code>RationingRecord</code> carries per-wave ready/launched/queued counts so the plan acts on load.</li><li>The load-edge lint: it reads the deploy phase registry and the Scheduler's <code>DAG_RESIDENT_INTENTS</code>, and reports any <code>needs</code> edge whose intent is <code>LOAD</code> as a finding. Its companion superset lint calls the host-test selector and asserts the top host dominates each lower host while the two lower hosts stay incomparable — the edge-set-is-host-consistent invariant. Both landed audit-only first (they find zero by construction), pending promotion to blocking.</li></ul>
+<h2 id="el-related-patterns">Related Patterns</h2>
+<ul><li><strong>Sibling</strong> — <a href="../models-bridge/system-models/journey-criticality-test-placement.html">journey-criticality-test-placement</a>: a typed policy layer over the same deploy substrate, from the same effort, but a different subject and failure. That derives <em>which tests</em> run <em>on which host</em> from a journey's criticality; this derives <em>the execution plan</em> over a deploy graph by separating edge intents and rationing resource + cost from a per-host profile. One places tests by criticality; the other rations execution by resource and budget. Both consume the same host taxonomy; neither subsumes the other.</li><li><strong>Ground truth</strong> — <a href="../models-bridge/system-models/deployment-topology-model.html">deployment-topology-model</a>: supplies the host taxonomy the per-host profile keys on. The Scheduler's profile is one row per host in that model's terms.</li><li><strong>Enabler</strong> — <a href="../models-bridge/system-models/executable-source-of-truth.html">executable-source-of-truth</a>: the edge intents and the per-host profiles are fields on the typed deploy model, one more consumer of that substrate; <a href="../models-bridge/system-models/drift-parity-gates.html">drift-parity-gates</a> keep the model's graph matching the real deploy phases the lint reads.</li><li><strong>Kin</strong> — <a href="../models-bridge/system-models/control-substrate-dependency.html">control-substrate-dependency</a>: both attach <em>typed metadata to edges</em> and compute a decision from it — there a control's blast radius over the substrate it guards, here an edge's intent driving whether the Scheduler honors, rations, or ignores it. Same reflex of making an edge's meaning a typed field a tool reads, applied to a different graph.</li></ul><div class="pager"><a class="prev" href="appendix-b-formal-invariant-verification.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix B · Formal invariant verification (temporal form → model checking)</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-b-journey-criticality-test-placement.html"><span class="dir">Next ›</span><span class="ttl">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-c-canonical-walkers.html">Next part ⇒</a><a href="appendix-b-journey-criticality-test-placement.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Appendix · Appendix A · CLAUDE.md rule index (the governance document as a control)</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
+blockquote pre.mermaid { font-style: normal; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="current" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">Next part ⇒</a><a href="appendix-a-doc-hygiene-lints.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix A · CLAUDE.md rule index (the governance document as a control)"><header class="chap"><div class="kicker">Appendix A — Agent patterns</div><h1>Appendix A · CLAUDE.md rule index (the governance document as a control)</h1></header><p><em>The Structure of CLAUDE.md rule index (the governance document as a control) — its shape at a glance:</em></p>
+<p>The document is booted by every agent and carries three enforced properties — a size budget, an admission predicate, and a per-rule cross-reference — each held by a blocking lint.</p>
+<pre class="mermaid">flowchart LR
+  Doc["Governance document&lt;br/&gt;(booted by every agent)"] --&gt; Agents([Every agent])
+  Cap{{Cap / bloat lint}} -.-&gt;|fail if over budget| Doc
+  Conf{{Conformance lint}} -.-&gt;|fail if a rule cites no canonical doc| Doc
+  Admit{{Admission test}} -.-&gt;|route non-qualifying rules out| Doc</pre>
+<p><em>Accessible description: the governance document is booted by every agent; a cap lint fails the build if it exceeds its size budget, a conformance lint fails if any rule stops citing a canonical doc, and an admission test routes rules that don't earn a spot into sub-docs.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/claude-md-rule-index.html">governance-doc-controls / CLAUDE.md rule index (the governance document as a control)</a>.</em></p>
+<p><strong>On this page:</strong> <a href="#claude-md-rule-index">Intent</a> · <a href="#el-motivation">Motivation</a> · <a href="#el-applicability">Applicability</a> · <a href="#el-structure">Structure</a> · <a href="#el-sample-code">Sample Code</a> · <a href="#el-consequences">Consequences</a> · <a href="#el-known-uses">Known Uses</a> · <a href="#el-related-patterns">Related Patterns</a></p>
+<h2 id="claude-md-rule-index">Intent</h2>
+<p><strong>Intent</strong> — Treat the top-level governance document as <em>enforced infrastructure</em>: a numbered, stable-numbered rule index, loaded into every agent's boot context, held honest by its own enforcement counterpart (a bloat/cap lint plus a rule-conformance lint), so the document that carries every other control cannot silently rot.</p>
+<h2 id="el-motivation">Motivation</h2>
+<p>The failure class is <strong>governance that doesn't bind and doesn't last.</strong> Two ways it manifests. First, <em>non-binding</em>: a convention lives in someone's head or a stale wiki page, so a fresh agent never applies it and the failure it was meant to prevent recurs. Second, <em>rot</em>: a living rules document either bloats until nothing in it is read (every agent pays the context cost, none of it lands), or its rules drift out of sync with the canonical docs they were supposed to summarize. Both compound brutally under a fleet: the document is booted by <em>every</em> agent, so a bloated or drifted index taxes or misleads every dispatch, continuously.</p>
+<h2 id="el-applicability">Applicability</h2>
+<ul><li>A <strong>boot-context loader</strong> that injects the document into every agent; without this it is just another doc.</li><li>A <strong>budget + cap lint</strong>, or the index bloats until it is unread. The cap is the forcing function that keeps every bullet paying its way.</li><li>An <strong>admission predicate</strong> (the earns-its-spot test) and a <strong>router</strong> to somewhere-else, so keeping the index small doesn't mean losing rules; they relocate to sub-docs / code comments.</li><li>A <strong>cross-reference convention</strong> (every rule → one canonical doc) plus a conformance lint, so the index stays a <em>map</em>, not a second copy that drifts.</li></ul>
+<h2 id="el-structure">Structure</h2>
+<p>The Structure diagram appears at the top of this page.</p>
+<h2 id="el-sample-code">Sample Code</h2>
+<p>The document is governed like an artifact: a size budget bounds the per-invocation context cost, and an admission predicate — three conditions a rule must all satisfy — keeps the budget satisfiable without deleting real rules. Anything failing the predicate is routed to a sub-doc instead of the index.</p>
+<pre><code>def earns_a_spot(rule) -&gt; bool:
+    """Admit a rule to the booted index only if all three hold — else route it out."""
+    return (
+        rule.regression_preventing        # an agent touching unrelated code could violate it
+        and rule.not_derivable_from_local # reading the local file wouldn't surface it
+        and rule.crosses_files            # it spans files / subsystems, not one class
+    )
+
+def lint_index(rules, line_count, budget: int) -&gt; list[str]:
+    findings = []
+    if line_count &gt; budget:
+        findings.append(f"index over budget ({line_count} &gt; {budget}) — evict a rule to a sub-doc")
+    for r in rules:
+        if not earns_a_spot(r):
+            findings.append(f"rule '{r.name}' fails the admission test — route to a sub-doc")
+        if not r.canonical_doc:
+            findings.append(f"rule '{r.name}' cites no canonical deep doc")
+    return findings</code></pre>
+<h2 id="el-consequences">Consequences</h2>
+<ul><li><strong>A hard budget means perpetual triage.</strong> The cap is a fixed context budget, so admitting a new rule eventually means <em>evicting</em> one to a sub-doc. The index is never "done"; it is a continuously re-triaged working set, and the eviction call is judgment-heavy.</li><li><strong>Presence ≠ obedience.</strong> A rule being in the index does not make agents follow it; the index can claim a discipline that has quietly rotted. This is exactly why the <a href="../agent/governance-doc-controls/epic-definition-of-done.html">Epic DoD</a> re-runs owned lints/tests at HEAD rather than trusting the index: the meta-control needs its own audit.</li><li><strong>Stable numbering accretes history.</strong> Never renumbering means retired rules leave gaps or tombstones; the citable namespace is durable but carries dead entries forever.</li><li><strong>It taxes every dispatch.</strong> The same load that makes it binding makes it a per-invocation cost across the whole fleet. The control's benefit and its price are the same mechanism.</li></ul>
+<h2 id="el-known-uses">Known Uses</h2>
+<ul><li><code>CLAUDE.md</code> — the numbered, stable-numbered rule index; boot context for every agent.</li><li>The governance-doc bloat lint — the cap/bloat gate.</li><li>The rule-conformance lint — enforces the per-rule canonical-doc cross-reference.</li><li>The <em>"What belongs in this file"</em> meta-section — the self-governing admission rule and router.</li><li>The <a href="../agent/governance-doc-controls/epic-definition-of-done.html">Epic Definition-of-Done</a>'s "trust nothing" re-run, which re-reads owned rules/lints at HEAD rather than trusting the index's claims: the audit that keeps the enforced document honest.</li></ul>
+<p><strong>Adopt it — the starter governance doc</strong>, distilled from a real, mature CLAUDE.md: <a href="../downloads/CLAUDE-starter.md"><code>CLAUDE-starter.md</code></a>. Part A is the portable <em>method</em> (the principles the rules instantiate); Part B is a "write your own" scaffold for the numbered project-reference rules, with the three-part "what earns a spot" admission test built in.</p>
+<h2 id="el-related-patterns">Related Patterns</h2>
+<ul><li><em>See also (two lenses)</em> — <a href="../agent/context-and-dispatch/docs-hierarchy.html">docs-hierarchy</a>: the <em>same artifact</em> seen as <strong>dispatch-time shared context</strong>. This entry is the <strong>enforced-infrastructure</strong> lens, the hard counterpart and the admission predicate that keep it from rotting.</li><li><strong>Counterpart (audit)</strong> — <a href="../agent/governance-doc-controls/epic-definition-of-done.html">epic-definition-of-done</a>: a hard re-run that verifies the soft index's <em>claims</em> haven't rotted (presence ≠ obedience), complementing the cap/ conformance lints that keep its <em>form</em> honest.</li><li><strong>Consumer</strong> — <a href="../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a> reads this index as the corpus it slices, promoting the <em>relevant subset</em> into a specific brief.</li><li><em>See also (sibling)</em> — <a href="../agent/governance-doc-controls/mandatory-snippet-table.html">mandatory-snippet-table</a>: another governance document enforced the same way (via <a href="../agent/context-and-dispatch/brief-linting.html">brief-linting</a> rather than a bloat lint).</li><li><em>See also (family)</em> — <a href="../agent/governance-doc-controls/doc-hygiene-lints.html">doc-hygiene-lints</a>: the general family of "documentation with a hard-counterpart lint" this control is the flagship of.</li></ul><div class="pager"><a class="prev" href="appendix-a-typed-event-bus.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix A · Orchestrator-as-reactor over an event bus</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-a-doc-hygiene-lints.html"><span class="dir">Next ›</span><span class="ttl">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">Next part ⇒</a><a href="appendix-a-doc-hygiene-lints.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Appendix · Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
+blockquote pre.mermaid { font-style: normal; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="current" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">Next part ⇒</a><a href="appendix-a-reflection-facet-substrate.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)"><header class="chap"><div class="kicker">Appendix A — Agent patterns</div><h1>Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</h1></header><p><em>The Structure of Lifecycle hooks (interpose on the agent runtime's events) — its shape at a glance:</em></p>
+<p>The runtime fires the hook on a named event; the hook's payload is either a hard block that denies the action or soft guidance re-injected into the agent's context — the firing is hard, the payload's force varies.</p>
+<pre class="mermaid">flowchart LR
+  Event([Runtime lifecycle event]) --&gt; Hook{{Bound hook}}
+  Hook --&gt;|block payload| Deny([Action denied])
+  Hook --&gt;|guidance payload| Inject([Guidance re-injected])
+  Inject --&gt; Decide[Agent decides]</pre>
+<p><em>Accessible description: a runtime lifecycle event fires a bound hook whose payload is either a hard block that denies the action or soft guidance re-injected into the agent's context for it to weigh; the firing is guaranteed by the runtime, the payload's force is the design choice.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-and-observability / Lifecycle hooks (interpose on the agent runtime's events)</a>.</em></p>
+<p><strong>On this page:</strong> <a href="#lifecycle-hooks">Intent</a> · <a href="#el-motivation">Motivation</a> · <a href="#el-applicability">Applicability</a> · <a href="#el-structure">Structure</a> · <a href="#el-sample-code">Sample Code</a> · <a href="#el-consequences">Consequences</a> · <a href="#el-known-uses">Known Uses</a> · <a href="#el-related-patterns">Related Patterns</a></p>
+<h2 id="lifecycle-hooks">Intent</h2>
+<p><strong>Intent</strong> — Bind a script to the agent runtime's lifecycle events (turn-stop, pre-compaction, session-start, before-a-tool-call) so a step the operator keeps <em>omitting at runtime</em> fires deterministically, whether or not anyone remembered it.</p>
+<h2 id="el-motivation">Motivation</h2>
+<p>Some recurring failures live not in the code an agent writes but in the <strong>loop that drives it</strong>: the operator (a human, or an orchestrator agent) skipping a step at a predictable moment. Ending a turn with ratified work still queued. Compacting context without first writing a hand-off. Opening a session without reading the alert backlog. Editing outside the sanctioned worktree. A lint can't reach these: there is no source artifact to analyze, and the omission happens at runtime, in the loop itself. A house-rule (<em>"remember to…"</em>) only aims a probabilistic operator, and it rots, because the step gets skipped exactly when attention is thin. The failure recurs every session.</p>
+<h2 id="el-applicability">Applicability</h2>
+<ul><li><strong>A runtime that exposes lifecycle events</strong>, plus a registration surface. Without the seam there is nothing to hook.</li><li><strong>A cheap check.</strong> The hook fires on every occurrence of its event; an expensive one stalls the loop and creates pressure to disable it.</li><li><strong>Fail-open for guidance hooks.</strong> A bug in the hook must not brick the session; only the deliberate block is fail-closed.</li><li><strong>A named, recurring omission.</strong> Reach for a hook once a soft reflex has demonstrably failed to hold, not on first sight; a hook manufactured for a one-off is pure overhead.</li></ul>
+<h2 id="el-structure">Structure</h2>
+<p>The Structure diagram appears at the top of this page.</p>
+<h2 id="el-sample-code">Sample Code</h2>
+<p>The hook splits the two halves a lint fuses: the runtime <em>guarantees the firing</em>, and the payload is either a hard veto or soft guidance. The reflex case — <em>hard delivery of soft guidance</em> — makes the aiming deterministic without swapping judgment for machinery. Validate the hook's output against the runtime's <em>actual</em> schema, or a wired-but-dead hook is silently dropped on every fire.</p>
+<pre><code>from dataclasses import dataclass
+
+@dataclass
+class HookResult:
+    decision: str          # "block" | "guide" | "allow" — the runtime's real contract shape
+    message: str = ""
+
+def on_turn_stop(work_queued: bool, pool_has_room: bool) -&gt; HookResult:
+    if work_queued and pool_has_room:                 # a "guide" payload: aim, don't compel
+        return HookResult("guide", "ratified work remains and the pool is under cap — keep going")
+    return HookResult("allow")                         # default silent: a false nudge is worse than a miss
+
+def on_pre_edit(path: str, worktree_root: str) -&gt; HookResult:
+    if not path.startswith(worktree_root):            # a "block" payload: deny the unsafe action
+        return HookResult("block", f"edit outside the sanctioned worktree: {path}")
+    return HookResult("allow")
+
+VALID_DECISIONS = {"block", "guide", "allow"}          # build-time check: reject any other shape</code></pre>
+<h2 id="el-consequences">Consequences</h2>
+<ul><li><strong>It fires on every event, not only when needed.</strong> A turn-stop hook runs at <em>every</em> stop, including the ones where nothing was owed; the check must stay cheap or the tax is constant and resented.</li><li><strong>A guidance hook can be ignored.</strong> Its payload is soft: the agent may read the re-injected text and proceed anyway. It aims deterministically; it does not compel. Only the blocking variant compels.</li><li><strong>A buggy hook is a loop-level outage.</strong> A blocking hook that misfires, or a guidance hook that crashes without fail-open, stalls the whole session; the blast radius is the loop, not one commit.</li><li><strong>It can nag.</strong> A hook that fires on a state it misreads ("work still queued" when the operator is legitimately blocked on a decision) produces repeated false prompts, and a signal that cries wolf gets tuned out.</li></ul>
+<h2 id="el-known-uses">Known Uses</h2>
+<ul><li>A <strong>turn-stop hook</strong> that refuses to let the loop rest while ratified work remains and the worker pool is under its cap (<em>hard delivery of soft guidance</em>): it re-prompts, the agent decides.</li><li>A <strong>turn-stop self-check hook</strong> that, at most once per long window, re-arms the operator's reflex to convert a <em>recurring</em> failure into a durable control, the operate→harden handoff fired as a runtime event. It ships a firing-telemetry log and a yield query correlating its nudges against real conversions, and biases its payload hard toward silence. Its first organic firing closed the whole loop on itself: the telemetry had shown the convert-a-recurrence-into-a-control discipline was reached for ~never (its knowledge applied ambiently instead); the hook turned that dormant reflex into a deterministic nudge; the nudge produced the discipline's first real invocation; and that invocation routed a failure recurring all session into a control: the yield query's first positive correlation, and the keep-signal that says <em>don't pull the hook.</em></li><li>A <strong>pre-compaction hook</strong> that writes a hand-off before context is compacted, so in-flight state survives the summarization.</li><li>A <strong>session-start hook</strong> that runs the session-start ritual (reading the unconsumed alert backlog) before the first action of a resumed or compacted session.</li><li>A <strong>before-a-tool-call guard</strong>: the hard-block variant denies an edit outside the sanctioned worktree; a guidance variant surfaces unresolved alerts before a dispatch.</li><li>A <strong>build-time output-conformance check</strong> validating every wired hook's output against the runtime's actual schema, so a hook emitting a shape the runtime silently drops (wired-but-dead) is a build error, not an invisible no-op.</li></ul>
+<h2 id="el-related-patterns">Related Patterns</h2>
+<ul><li><strong>Counterpart</strong> — <a href="../agent/gates-and-merge-train/pre-commit-hook.html">pre-commit-hook</a>: both are hooks, but that one fires on a <em>commit</em> and guards what gets <strong>written</strong>; this one fires on a <em>runtime lifecycle event</em> and guards what the loop <strong>does</strong>. The named axis is <em>commit-content</em> vs <em>runtime-loop</em>.</li><li><strong>See also</strong> — <a href="../agent/lifecycle-and-observability/cron-alerts-gate.html">cron-alerts-gate</a>: a before-a-tool-call hook is one delivery surface for its "an unresolved high-severity alert blocks new work" rule. The gate supplies the state; the hook fires the check at the moment of action.</li><li><strong>Specialized by</strong> — <a href="../agent/lifecycle-and-observability/reflection-facet-substrate.html">reflection-facet-substrate</a>: what you build once a <em>second</em> reflection hook appears. A single hook re-arms one omitted reflex; the substrate consolidates many policy-reflection facets over one shared tempo budget (≤1 emission/window), so N soft nudges don't compound into the alarm fatigue the measured leash above warns about.</li><li><em>See also (temporal complement)</em> — <a href="../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a>: the feed-forward twin. Injection pushes the governing constraints <em>into</em> an agent at dispatch, before it acts; a tempo-gated <strong>reflection</strong> hook pulls the <em>operator</em> back to the same kind of policy at turn-tempo, while or after acting. Forward-priming versus backward-reflection: the same "right policy at the right lifecycle moment" move, mirrored in time.</li><li><em>See also (placement)</em> — <a href="../agent/governance-doc-controls/semantic-level-enforcement.html">semantic-level-enforcement</a>: a runtime lifecycle event is the rung that judgment picks for an operator-loop omission; this entry is a control <em>placed</em> by it.</li><li><strong>Layer</strong> — it sits at the agent runtime, upstream of the commit → cron → merge-train → deploy staircase; it governs the operator <em>driving</em> that staircase, not the work flowing through it.</li></ul><div class="pager"><a class="prev" href="appendix-a-deploy-heartbeats.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix A · Deploy heartbeats + stale-worker detection</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-a-reflection-facet-substrate.html"><span class="dir">Next ›</span><span class="ttl">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">Next part ⇒</a><a href="appendix-a-reflection-facet-substrate.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

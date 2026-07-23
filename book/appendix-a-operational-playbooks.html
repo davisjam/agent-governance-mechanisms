@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Appendix · Appendix A · Operational playbooks</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
+blockquote pre.mermaid { font-style: normal; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
+<li><a class="current" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">Next part ⇒</a><a href="appendix-a-operator-runbook-skill.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix A · Operational playbooks"><header class="chap"><div class="kicker">Appendix A — Agent patterns</div><h1>Appendix A · Operational playbooks</h1></header><p><em>The Structure of Operational playbooks — its shape at a glance:</em></p>
+<p>Each playbook keys off a triggering situation and gives the ordered response plus the reflexes to avoid; it is reached two ways — from the terse rule index and from the substrate signal that fires the trigger.</p>
+<pre class="mermaid">flowchart LR
+  Signal[/Triggering signal/] --&gt; Book[Situation-keyed playbook]
+  Index[Rule index] --&gt;|links to| Book
+  Book --&gt; Steps[Ordered response steps]
+  Book --&gt; Avoid[Reflexes to avoid]</pre>
+<p><em>Accessible description: a triggering signal and the rule index both route to a situation-keyed playbook, which supplies the ordered response steps and the anti-pattern reflexes to avoid, reasoned once when no incident was burning.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/operational-playbooks.html">governance-doc-controls / Operational playbooks</a>.</em></p>
+<p><strong>On this page:</strong> <a href="#operational-playbooks">Intent</a> · <a href="#el-motivation">Motivation</a> · <a href="#el-applicability">Applicability</a> · <a href="#el-structure">Structure</a> · <a href="#el-sample-code">Sample Code</a> · <a href="#el-consequences">Consequences</a> · <a href="#el-known-uses">Known Uses</a> · <a href="#el-related-patterns">Related Patterns</a></p>
+<h2 id="operational-playbooks">Intent</h2>
+<p><strong>Intent</strong> — A library of documented, devops-themed decision procedures (<em>when situation X arises, take these steps in this order</em>) that agents and orchestrators consult instead of reasoning from scratch, so recurring operational situations (a broken deploy, a wedged cron, a stuck worktree, a chicken-and-egg recovery) get a consistent, pre-reasoned, incident-tested response.</p>
+<h2 id="el-motivation">Motivation</h2>
+<p>Operational situations recur: a deploy fails a known way, a cron loop can't self-recover, a worktree is destroyed mid-flight, an alert gate deadlocks. Each time, an agent under incident pressure re-derives a response from first principles and gets the sharp edges wrong: a flailing <code>git reset</code> destroys landed work, a naive cron restart re-enters the same loop, a "cleanup" removes a live worktree. The failure is <em>inconsistent, error-prone operational response that recurs on every incident</em>, and the cost is highest exactly when time is shortest.</p>
+<h2 id="el-applicability">Applicability</h2>
+<ul><li><strong>A recurring, nameable operational situation.</strong> A one-off doesn't earn a playbook.</li><li><strong>A human who has reasoned out the correct response once</strong> (including the reflexes to avoid), so the playbook encodes hard-won judgment rather than a guess.</li><li><strong>Discoverability at the moment of need.</strong> A home plus cross-references from the rule index and from the signal that triggers it; an unlinked playbook is never opened.</li></ul>
+<h2 id="el-structure">Structure</h2>
+<p>The Structure diagram appears at the top of this page.</p>
+<h2 id="el-sample-code">Sample Code</h2>
+<p>A playbook is human-authored operational judgment, so there is no executable artifact to show. What a good playbook standardizes is the <em>shape</em> of a recurring procedure, and the sharpest way to teach that shape is to walk one. Here is a config-parameter-space optimization runbook: the situation is "I want to optimize this system over its config knobs, and I have the performance metrics to say whether a setting is better." An agent runs the loop; each pass turns some knobs, measures, and decides what to try next.</p>
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="cor-title cor-desc">
+  <title id="cor-title">A config-optimization runbook with a determinize / judgment / determinize split</title>
+  <desc id="cor-desc">A lifecycle loop labelled run then measure then assess wraps a three-step spine. Step one, determinize the data space: a mechanical, automatable step that fixes where the metrics live, their schema, and models of normal versus anomalous values. Step two, judgment in reasoning space: the agent reasons over that data to decide which configuration knobs to turn. Step three, determinize again in experiment space: applying the chosen configuration is made mechanical, which lets the step capture and log the reasoning trace, the rationale for why this configuration was chosen. That logged trace feeds two consumers: it becomes an input to the next iteration of the loop, so the optimizer learns from its own recorded reasoning, and it becomes a decision trace a secondary checker reads, which evaluates the choice far better than it could from the raw output alone.</desc>
+
+  <defs>
+    <marker id="cor-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a4a7a"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== LIFECYCLE LOOP (run -> measure -> assess), wrapping the spine ===================== -->
+  <!-- top arc: run (left) -> measure (center) -> assess (right) -->
+  <text x="150" y="46" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">run</text>
+  <text x="480" y="46" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">measure</text>
+  <text x="810" y="46" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">assess</text>
+
+  <!-- run -> measure -->
+  <path d="M180,52 C300,74 380,74 442,58" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <!-- measure -> assess -->
+  <path d="M520,58 C600,74 690,74 792,52" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- assess -> down the right side -> across the bottom -> up the left side -> back into "run" (the loop closes) -->
+  <path d="M832,58 C905,150 905,470 812,540 C640,610 300,610 150,540 C56,470 56,150 128,60"
+        fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- ===================== SPINE: Determinize -> Judgment -> Determinize ===================== -->
+  <text x="480" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#12324a">A determinize &#8594; judgment &#8594; determinize split</text>
+
+  <!-- Step 1: Determinize (data-space) -->
+  <rect x="70" y="196" width="230" height="118" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
+  <text x="185" y="234" text-anchor="middle" font-size="19" font-weight="700" fill="#12324a">Determinize</text>
+  <text x="185" y="264" text-anchor="middle" font-size="13" fill="#3a4a58">mechanical &#183; automatable</text>
+  <text x="185" y="284" text-anchor="middle" font-size="13" font-style="italic" fill="#3a4a58">data-space</text>
+
+  <!-- arrow: determinize -> judgment -->
+  <line x1="300" y1="255" x2="372" y2="255" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- Step 2: Judgment (reasoning decides) -->
+  <polygon points="480,192 606,255 480,318 354,255" fill="#1a4a7a" stroke="#12324a" stroke-width="1.5"/>
+  <text x="480" y="250" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">Judgment</text>
+  <text x="480" y="274" text-anchor="middle" font-size="13" fill="#dbe6f0">reasoning decides</text>
+
+  <!-- arrow: judgment -> determinize (right) -->
+  <line x1="606" y1="255" x2="678" y2="255" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- Step 3: Determinize again (experiment-space) — accented border to mark it as the punchline step -->
+  <rect x="680" y="196" width="230" height="118" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="795" y="234" text-anchor="middle" font-size="19" font-weight="700" fill="#12324a">Determinize</text>
+  <text x="795" y="264" text-anchor="middle" font-size="13" fill="#3a4a58">mechanical &#183; automatable</text>
+  <text x="795" y="284" text-anchor="middle" font-size="13" font-style="italic" fill="#3a4a58">experiment-space</text>
+
+  <!-- ===================== THE PUNCHLINE: logged reasoning trace, two consumers ===================== -->
+  <!-- from the determinized step 3, drop down to the logged trace -->
+  <line x1="795" y1="314" x2="795" y2="356" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+
+  <!-- logged reasoning trace box -->
+  <rect x="640" y="358" width="310" height="80" rx="6" fill="#ffffff" stroke="#1a4a7a" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="795" y="386" text-anchor="middle" font-size="15" font-weight="700" fill="#1a4a7a">Logged reasoning trace</text>
+  <text x="795" y="410" text-anchor="middle" font-size="13" fill="#3a4a58">why this configuration was chosen</text>
+  <text x="795" y="428" text-anchor="middle" font-size="13" font-style="italic" fill="#3a4a58">captured because step 3 is deterministic</text>
+
+  <!-- consumer (a): input to next iteration — arrow curving back toward the loop's left "run" edge -->
+  <path d="M640,398 C440,420 200,400 138,360" fill="none" stroke="#1a4a7a" stroke-width="2" marker-end="url(#cor-ah)"/>
+  <rect x="150" y="360" width="300" height="66" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
+  <text x="300" y="388" text-anchor="middle" font-size="14" font-weight="700" fill="#12324a">(a) Input to the next iteration</text>
+  <text x="300" y="410" text-anchor="middle" font-size="12.5" fill="#3a4a58">the loop learns from its own logged reasoning</text>
+
+  <!-- consumer (b): decision trace for a secondary checker — straight down -->
+  <line x1="795" y1="438" x2="795" y2="484" stroke="#1a4a7a" stroke-width="2" marker-end="url(#cor-ah)"/>
+  <rect x="628" y="486" width="334" height="66" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
+  <text x="795" y="514" text-anchor="middle" font-size="14" font-weight="700" fill="#12324a">(b) Decision trace for a secondary checker</text>
+  <text x="795" y="536" text-anchor="middle" font-size="12.5" fill="#3a4a58">the trace evaluates better than the raw output alone</text>
+
+  <!-- ===================== BOTTOM LABEL ===================== -->
+  <text x="345" y="572" text-anchor="middle" font-size="15" font-weight="700" fill="#12324a">A lifecycle the runbook is anchored to</text>
+</svg><figcaption>A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice.</figcaption></figure>
+<p>The runbook is anchored to a lifecycle the reader already knows: <strong>run, measure, assess</strong>, then around again. Every pass of the loop moves through three steps, and the discipline is in how the steps are typed.</p>
+<p>- <strong>Step 1 — determinize the data space.</strong> Fix where the metrics live, their schema, and a model of what a normal value looks like against an anomalous one. This step is mechanical. It takes no reasoning, so an agent should never improvise it; write it down as an ordered procedure the playbook names, and the agent follows it the same way every pass. - <strong>Step 2 — apply judgment.</strong> From that data, decide which knobs to turn and by how much. This is the step that genuinely needs reasoning: reading the measurements, weighing a heuristic against a hunch, choosing the next configuration to try. It is where the agent earns its keep, and the one step the playbook cannot reduce to a fixed procedure. - <strong>Step 3 — determinize again.</strong> Render the judgment back into the world. Take the knob choices the reasoning produced and apply them to the next experiment. Applying a configuration is mechanical, so this step, like the first, should be deterministic rather than improvised.</p>
+<p>The two mechanical steps bracket the judgment. That is the pattern the slide names a <em>determinize → judgment → determinize</em> split, and it is worth stating plainly why the split pays off. The mechanical steps are cheap, repeatable, and auditable. The judgment step is expensive and variable, so you want as little of the procedure sitting inside it as the problem allows. Determinize everything that does not need to reason, and the reasoning that remains is smaller, sharper, and easier to check.</p>
+<p><strong>The determinized third step is where the leverage is.</strong> The natural instinct is to treat step 3 as plumbing: the reasoning already happened, so just apply the choice and move on. That undersells it. Because the third step is deterministic, it can capture and log the reasoning trace — the record of <em>why</em> this configuration was chosen — as a first-class output of the pass, not a side effect thrown away when the experiment starts. That logged trace then does two jobs. It becomes <strong>an input to the next iteration</strong>, so the loop reads back the rationale it recorded last time and reasons from its own history instead of from the raw numbers alone. And it becomes <strong>a decision trace for a secondary checker</strong>: hand a reviewer only the raw output and it can tell you whether the result looks good; hand it the trace of what was chosen and why and it can tell you whether the <em>reasoning</em> was sound, catch a choice that got a lucky result for a bad reason, and flag a rationale that will not generalize. Determinize the third step because a deterministic step affords a logged reasoning trace, and that trace is what lets the loop learn from itself and lets a second checker judge the decision rather than just the output.</p>
+<h2 id="el-consequences">Consequences</h2>
+<ul><li><strong>Soft: an agent can ignore it.</strong> A playbook informs; nothing forces the agent to open or follow it. Its leverage is entirely discoverability + habit.</li><li><strong>Playbooks rot.</strong> When the substrate changes, a playbook whose steps aren't updated actively mis-directs the response, worse than no playbook.</li><li><strong>Dead weight if the situation stops recurring.</strong> A playbook for a retired failure mode is noise.</li><li><strong>Not a substitute for prevention.</strong> A situation that recurs often enough should be <em>designed out</em> (architecture) or <em>gated</em> (a hard control), not merely playbooked.</li></ul>
+<h2 id="el-known-uses">Known Uses</h2>
+<ul><li>The event-bus observability playbook (per topic: baseline-healthy → what-looks-wrong → response).</li><li>The cron-recovery playbook (the chicken-and-egg "cron is broken and can't restart itself" procedure).</li><li>The cron-alerts-gate recovery playbook (how to clear a wedged HIGH-severity gate).</li><li>Deploy-failure pattern tables (symptom → cause → section) consulted before investigating.</li></ul>
+<h2 id="el-related-patterns">Related Patterns</h2>
+<ul><li><strong>Counterpart</strong> — the <a href="../agent/lifecycle-and-observability/typed-event-bus.html">typed event bus</a> <em>emits</em> the signals; a playbook says what to <em>do</em> about them. A signal with no playbook is unactioned noise; a playbook with no signal is never triggered. They are distinct notions: observability surfaces state, the playbook prescribes the response.</li><li><strong>Enabler</strong> — a playbook is only useful once <a href="../agent/lifecycle-and-observability/typed-event-bus.html">observability</a> (or an alert) surfaces the triggering situation; the signal is the playbook's entry point.</li><li><em>See also (family)</em> — the <a href="../agent/governance-doc-controls/claude-md-rule-index.html">rule index</a> is the terse index that links out to these long-form procedures; playbooks are where a one-line rule expands into steps.</li></ul><div class="pager"><a class="prev" href="appendix-a-mandatory-snippet-table.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix A · Mandatory snippet-table enforcement</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-a-operator-runbook-skill.html"><span class="dir">Next ›</span><span class="ttl">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">Next part ⇒</a><a href="appendix-a-operator-runbook-skill.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

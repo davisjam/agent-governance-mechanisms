@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Appendix · Appendix A · Enforce at the right semantic level</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
+blockquote pre.mermaid { font-style: normal; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-lifecycles-and-runbooks.html">3.4&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — The Model Zoo</li>
+<li><a class="" href="4.1-the-executable-zoo.html">4.1&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">4.2&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">4.3&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">4.4&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">4.5&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">4.6&nbsp; The Scenarios View</a></li>
+<li class="part">Part 5 — Putting It to Work</li>
+<li><a class="" href="5.1-brownfield.html">5.1&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">5.2&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">5.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">5.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">5.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A · Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A · Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A · Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A · Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A · Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A · Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A · Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A · Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A · Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A · Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A · Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A · Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A · Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A · Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A · Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A · Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A · Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A · Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A · Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A · Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A · CLAUDE.md rule index (the governance document as a control)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A · Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A · Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A · Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A · Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A · Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="current" href="appendix-a-semantic-level-enforcement.html">Appendix A · Enforce at the right semantic level</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B · The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B · Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B · Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B · Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B · Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B · Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B · Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B · Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B · Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B · Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B · Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B · Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B · Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B · Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B · Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B · Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B · Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B · Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B · User-journey model (product-goal → implementation bridge)</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C · Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C · Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C · PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C · Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C · ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C · Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C · ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C · Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C · Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C · DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C · Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C · FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C · Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C · `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C · `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C · F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C · Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C · Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C · Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">Next part ⇒</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix A · Enforce at the right semantic level"><header class="chap"><div class="kicker">Appendix A — Agent patterns</div><h1>Appendix A · Enforce at the right semantic level</h1></header><p><em>The Structure of Enforce at the right semantic level — its shape at a glance:</em></p>
+<p>Rank the candidate placements as a ladder of widening scope; find the rung where the property is legible; place the control there. Below that rung the check is blind or false-fires; at or above it, the property is decidable.</p>
+<pre class="mermaid">flowchart TB
+  Prop[Property to enforce] --&gt; Q{At what scope is&lt;br/&gt;the property legible?}
+  Q --&gt; L1[Rung 1 · one changed file&lt;br/&gt;syntactic check]
+  Q --&gt; L2[Rung 2 · reasoning over the diff]
+  Q --&gt; L3[Rung 3 · whole worktree / final commit]
+  Q --&gt; L4[Rung 4 · whole task on agent return]
+  L1 -. below legible scope .-&gt; Miss([Misses, or false-fires])
+  L4 ==&gt;|legible here| Fire([Control decides correctly])</pre>
+<p><em>Accessible description: a property to enforce is matched against a ladder of placements ordered by widening scope — one changed file, reasoning over the diff, the whole worktree, the whole task on agent return. A control placed below the scope at which the property is legible either misses it or false-fires on a partial state; a control placed at the rung where the property is legible decides correctly.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/semantic-level-enforcement.html">governance-doc-controls / Enforce at the right semantic level</a>.</em></p>
+<p><strong>On this page:</strong> <a href="#semantic-level-enforcement">Intent</a> · <a href="#el-motivation">Motivation</a> · <a href="#el-applicability">Applicability</a> · <a href="#el-structure">Structure</a> · <a href="#el-sample-code">Sample Code</a> · <a href="#el-consequences">Consequences</a> · <a href="#el-known-uses">Known Uses</a> · <a href="#el-related-patterns">Related Patterns</a></p>
+<h2 id="semantic-level-enforcement">Intent</h2>
+<p><strong>Intent</strong> — Place a control at the granularity where the property it checks first becomes <strong>legible</strong>, not at the cheapest or earliest point; a check fired below that scope either can't see the property or rejects a legitimate partial state (our instance: model↔code drift is checked when an agent <em>returns</em> from a multi-commit task, never at a per-commit hook where the model is legitimately mid-flight).</p>
+<h2 id="el-motivation">Motivation</h2>
+<p>A property has a <strong>scope at which it becomes legible</strong> — the smallest window in which enough of the world is visible to decide it true or false. Place a control below that scope and it fails one of two ways:</p>
+<ul><li><strong>It misses the property.</strong> The property is not yet expressible at that granularity, so the check looks at a slice that cannot contain the evidence. A monitor judging one system call at a time never sees a data leak, because a leak is a <em>sequence</em> — the call that reads the secret and the call that ships it are legible together, never apart.</li><li><strong>It false-fires on a legitimate partial state.</strong> The property is a claim about a <em>finished</em> unit, and a check fired mid-unit sees an intermediate that is correctly inconsistent. A per-commit gate on model↔code parity rejects every intermediate commit of a multi-commit feature, because the model is <em>allowed</em> to lag the code until the work is done.</li></ul>
+<p>The reflex is to place a control where it is cheapest and earliest — the pre-commit hook, the single syscall, the one changed file — because that is where enforcement is convenient. Convenience and legibility are different axes, and when they diverge the convenient placement is wrong. The failure recurs at every new control's design, and it is silent: a mis-placed control looks wired, runs green (or red) on every fire, and never enforces the thing it was built for.</p>
+<h2 id="el-applicability">Applicability</h2>
+<ul><li><strong>A ladder of enforcement points at distinct scopes.</strong> Without a runtime that exposes a commit event, a task-return event, and a unit-close gate, there is nowhere to place a control but the one hook you have. The ladder is what makes placement a <em>choice</em>.</li><li><strong>The property stated as a predicate</strong>, sharp enough that "where is this legible?" has an answer. A vague property ("the code is good") has no legibility scope and cannot be placed.</li><li><strong>A reviewer who asks the placement question at design time.</strong> This is a soft judgment; it holds only if someone reaching for a new control asks <em>at what scope is this legible?</em> before defaulting to the cheapest hook. A failure-interpretation handoff that routes a recurrence to <em>design a control</em> is the natural place to force the question.</li></ul>
+<h2 id="el-structure">Structure</h2>
+<p>The Structure diagram appears at the top of this page.</p>
+<h2 id="el-sample-code">Sample Code</h2>
+<p>Placement is a design-time judgment, so the "code" is the decision procedure, not a runtime call: for a given property, pick the coarsest window it needs, and refuse to wire the control any lower. Here the property <code>model_and_code_agree</code> is a claim about a <em>finished</em> unit, so it is legible only at agent-return scope; wiring it at the commit rung is the mis-placement the procedure rejects.</p>
+<pre><code>from enum import IntEnum
+
+class Scope(IntEnum):                 # the ladder, ordered by widening semantic scope
+    CHANGED_FILE   = 1                # a syntactic check over one file
+    DIFF_REASONING = 2                # a pass that reasons over the whole diff
+    WORKTREE       = 3                # the whole worktree / final commit
+    TASK_RETURN    = 4                # the whole unit of work, when the agent returns
+
+def legible_scope(prop: str) -&gt; Scope:
+    # the smallest window in which the property's evidence is fully visible
+    if prop == "banned_api_absent":      return Scope.CHANGED_FILE     # evidence is in one file
+    if prop == "no_data_exfiltration":   return Scope.DIFF_REASONING   # a SEQUENCE, not one call
+    if prop == "model_and_code_agree":   return Scope.TASK_RETURN      # a FINISHED-unit claim
+    raise ValueError(f"unranked property: {prop}")
+
+def place_control(prop: str, chosen: Scope) -&gt; None:
+    need = legible_scope(prop)
+    if chosen &lt; need:                                                  # below legible scope = blind / false-fires
+        raise SystemExit(
+            f"'{prop}' is legible at {need.name}, not {chosen.name}: "
+            "the control would miss it or reject a legitimate partial state"
+        )
+    wire_control(prop, chosen)                                         # at or above: the property is decidable</code></pre>
+<h2 id="el-consequences">Consequences</h2>
+<ul><li><strong>The higher rung costs latency.</strong> A property legible only at agent-return is caught later than a per-commit author would like; the intermediate work proceeds un-checked on that dimension until the unit closes. That is the price of soundness, not a defect — a lower placement would be <em>wrong</em>, not merely faster.</li><li><strong>It is a judgment, not a gate.</strong> Nothing forces a designer to place a control correctly; a mis-placed control still ships and still looks wired. The defense is the design-time question, and a soft question can be skipped. The tell of a skipped one is a control that fires forever and never catches its class.</li><li><strong>Over-placing is its own waste.</strong> Lifting a property that <em>is</em> legible in one file up to an Epic-close review buys nothing and delays the catch. The rule is the <em>lowest sound</em> rung, not the highest.</li></ul>
+<h2 id="el-known-uses">Known Uses</h2>
+<ul><li><strong>Model-drift → agent-return, not the commit hook.</strong> A model↔code parity claim about a <em>finished</em> unit is legible only when the agent returns from the whole task; a per-commit gate would false-fire on every legitimate mid-task commit. The trust-nothing re-run at the unit's close (the Epic Definition-of-Done) is this placement at the intent-level rung.</li><li><strong>Data-exfiltration → a call sequence, not one syscall.</strong> A leak is legible only across a stitched sequence of calls; a monitor judging calls one at a time sits below the policy's semantics and passes the leak. This is the classic OS "semantic gap" — VM introspection and firewalls fail for the same reason when they sit below the semantics they must apply.</li><li><strong>Operator-loop omissions → a runtime lifecycle event, not a source lint.</strong> "Did the operator write a hand-off before compaction?" has no source artifact to analyze; it is legible only in the running loop, at the pre-compaction event. Placed as a lint, it has nothing to read.</li><li><strong>A banned API → one changed file.</strong> The counter-example that keeps the principle honest: a property fully legible in a single tree belongs on the cheapest rung, the pre-commit hook. Not everything climbs the ladder; most controls belong at the bottom.</li></ul>
+<h2 id="el-related-patterns">Related Patterns</h2>
+<ul><li><strong>Specialized by</strong> — <a href="../agent/governance-doc-controls/epic-definition-of-done.html">epic-definition-of-done</a>: the intent-level rung of the ladder, where a finished feature and its plan are both legible. It is the top-of-ladder instance this principle cites; its trust-nothing re-run is placement-at-agent-return made concrete.</li><li><strong>See also (a placement each)</strong> — <a href="../agent/gates-and-merge-train/pre-commit-hook.html">pre-commit-hook</a> sits at the syntactic-diff rung; <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-hooks</a> at the runtime-event rung. Each is a control <em>placed</em> by this judgment; this entry is the judgment that places them. The named axis is <em>placement-principle</em> vs <em>placed-control</em>.</li><li><strong>Consumer</strong> — the operate→harden handoff (<a href="../agent/governance-doc-controls/operator-runbook-skill.html">operator-runbook-skill</a>) routes a recurring failure to <em>design a control</em>, and part of that design is asking this placement question before defaulting to the nearest hook.</li><li><strong>See also (complement)</strong> — <a href="../models-bridge/system-models/control-substrate-dependency.html">control-substrate-dependency</a>: that computes <em>which</em> substrate a control depends on; this chooses <em>at what scope</em> a control fires. Both are questions about a control's fit — one to the substrate it reads, one to the property it checks.</li></ul><div class="pager"><a class="prev" href="appendix-a-operator-runbook-skill.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix A · Operator runbook skill (positive map first, symptom index fallback)</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-b-agent-first-mbse-harness.html"><span class="dir">Next ›</span><span class="ttl">Appendix B · The agent-first MBSE harness</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-b-agent-first-mbse-harness.html">Next part ⇒</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>
