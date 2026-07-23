@@ -74,6 +74,22 @@ number of ideas across a long argument, chapter by chapter, without losing the t
 - **A conclusion that ties back to the thesis.** The last chapter returns to the named thesis and shows the
   book delivered on it — the arc closing where it opened, one level richer. A book that stops instead of
   concluding leaves the reader holding chapters they must synthesize themselves.
+- **Field notes are sources, not artifacts.** The author's raw field notes are where a fact comes from, not
+  a thing the book discloses. Never gesture at the private artifact — "the field notes are blunt about
+  this," "a caution the notes earned the hard way" — because the reader then has to take your word for a
+  document they can't see. Two ways to use a note instead, by whether it carries a concrete incident. The
+  **hands-on move, preferred when there is a real story:** lift the incident into a `> ### Field note —
+  <short title>` inset (it renders as a sidebar) that *shows* the specific moment — "he did development on
+  the kitchen counter while the family slept" — keeping the vividness while the main text carries the
+  lesson. **De-reference to a plain statement** only when the mention is vague meta with no concrete
+  example to show; then state the fact or lesson directly and cut the reference. When in doubt, reach for
+  the inset.
+- **Self-referential restraint.** Name the thesis and name the real system (DocAble); do not turn the
+  thesis cutely back on itself. "That is the book's own thesis, so it is fair to turn it on the system that
+  produced it" is meta-commentary that distracts from the content it is introducing — cut it and just
+  present the views. This is the artifact-scale twin of the Pass-4 self-narrating-structure and
+  trailing-remark findings in [`audit.md`](audit.md): the book should deliver its argument, not narrate the
+  fact that it is delivering one.
 
 ### Tutorial
 
