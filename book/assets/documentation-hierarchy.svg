@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): a two-panel contrast figure. The left panel draws
+     three unconnected "islands" (docs, code, tests) with a gap-and-broken-tether motif
+     that Mermaid's auto-layout has no primitive for — the whole point is the ABSENCE of a
+     binding edge. The right panel draws a typed model at the apex binding the same three
+     with checked edges. The apex-over-three-bound-below geometry (a fan from one node to
+     three, plus a "checked" gate marker on each edge) is an infographic, not a graph
+     Mermaid lays out. Palette matches the book accent (#1a4a7a); green #2e7d32, red #8a2f2f. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="960" height="560"
+     role="group" aria-labelledby="dhTitle dhDesc"
+     font-family="'Helvetica Neue', Arial, sans-serif">
+  <title id="dhTitle">The apex of the documentation hierarchy is a typed model that binds docs, code, and tests</title>
+  <desc id="dhDesc">A two-panel contrast. Left panel, typical agentic methods: three
+    boxes — docs, code, and tests — stand as separate islands with no glue between them.
+    Nothing binds them, so they drift apart and there are no guardrails; a red marker notes
+    the missing binding. Right panel, the book's move: a single typed model sits at the apex
+    and binds the same three — docs, code, and tests — with checked edges. The model is the one
+    description the machine can check the others against, so a drift check fails the build when
+    any of the three disagrees with it. The lesson: lift documentation to its apex, a typed
+    model, and the three that used to drift become one checkable whole.</desc>
+
+  <defs>
+    <marker id="dhArrow" markerWidth="10" markerHeight="10" refX="8" refY="5"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#1a4a7a"/>
+    </marker>
+  </defs>
+
+  <!-- panel divider -->
+  <line x1="480" y1="70" x2="480" y2="530" stroke="#cdd6df" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <!-- ================= LEFT PANEL — typical agentic methods ================= -->
+  <text x="240" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">Typical agentic methods</text>
+  <text x="240" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#8a2f2f">three islands, no glue</text>
+
+  <!-- three unconnected islands -->
+  <g stroke="#33383d" stroke-width="2" fill="#f4f2ee">
+    <rect x="70"  y="150" width="150" height="66" rx="8"/>
+    <rect x="260" y="150" width="150" height="66" rx="8"/>
+    <rect x="165" y="290" width="150" height="66" rx="8"/>
+  </g>
+  <g font-size="22" fill="#33383d" text-anchor="middle">
+    <text x="145" y="190">docs</text>
+    <text x="335" y="190">code</text>
+    <text x="240" y="330">tests</text>
+  </g>
+
+  <!-- broken tethers between the islands: dashed stubs that do not connect -->
+  <g stroke="#8a2f2f" stroke-width="2.5" stroke-dasharray="5 7" stroke-linecap="round">
+    <line x1="222" y1="183" x2="258" y2="183"/>
+    <line x1="205" y1="220" x2="250" y2="286"/>
+    <line x1="332" y1="220" x2="285" y2="286"/>
+  </g>
+
+  <!-- drift indicator -->
+  <text x="240" y="418" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">nothing binds them → they drift</text>
+  <text x="240" y="446" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">no guardrails</text>
+
+  <!-- ================= RIGHT PANEL — the book's move ================= -->
+  <text x="720" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">The book's move</text>
+  <text x="720" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">a typed model at the apex</text>
+
+  <!-- the apex: the typed model (box widened so the italic caption fits inside its rect) -->
+  <rect x="560" y="100" width="320" height="72" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="3"/>
+  <text x="720" y="132" text-anchor="middle" font-size="23" font-weight="700" fill="#1a4a7a">typed model</text>
+  <text x="720" y="158" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">binds intent to implementation</text>
+
+  <!-- the three bound below -->
+  <g stroke="#1a4a7a" stroke-width="2" fill="#ffffff">
+    <rect x="565" y="330" width="130" height="60" rx="8"/>
+    <rect x="745" y="330" width="130" height="60" rx="8"/>
+    <rect x="655" y="440" width="130" height="60" rx="8"/>
+  </g>
+  <g font-size="21" fill="#33383d" text-anchor="middle">
+    <text x="630" y="367">docs</text>
+    <text x="810" y="367">code</text>
+    <text x="720" y="477">tests</text>
+  </g>
+
+  <!-- binding edges from the apex to each of the three (checked) -->
+  <g stroke="#1a4a7a" stroke-width="2.5" fill="none">
+    <line x1="660" y1="172" x2="630" y2="326" marker-end="url(#dhArrow)"/>
+    <line x1="780" y1="172" x2="810" y2="326" marker-end="url(#dhArrow)"/>
+    <line x1="720" y1="172" x2="720" y2="436" marker-end="url(#dhArrow)"/>
+  </g>
+
+  <!-- green check on each binding: the drift check that keeps them in sync -->
+  <g>
+    <circle cx="642" cy="250" r="15" fill="#2e7d32"/>
+    <path d="M635,250 L640,256 L650,244" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="798" cy="250" r="15" fill="#2e7d32"/>
+    <path d="M791,250 L796,256 L806,244" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="737" cy="305" r="15" fill="#2e7d32"/>
+    <path d="M730,305 L735,311 L745,299" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="720" y="533" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">checked: the map must match the territory</text>
+</svg>
