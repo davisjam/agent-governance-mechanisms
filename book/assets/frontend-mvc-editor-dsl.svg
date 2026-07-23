@@ -33,8 +33,8 @@
   <!-- CONTROLLER box -->
   <rect x="24" y="276" width="300" height="96" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
   <text x="174" y="308" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Controller</text>
-  <text x="174" y="336" text-anchor="middle" font-size="19" fill="#3d5a70">translates the gesture into one</text>
-  <text x="174" y="357" text-anchor="middle" font-size="19" fill="#3d5a70">typed edit operation — never a raw mutation</text>
+  <text x="174" y="336" text-anchor="middle" font-size="19" fill="#3d5a70">emits one typed edit operation</text>
+  <text x="174" y="357" text-anchor="middle" font-size="19" fill="#3d5a70">— never a raw mutation</text>
 
   <!-- emit arrow Controller -> DSL -->
   <line x1="324" y1="324" x2="424" y2="324" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
@@ -47,7 +47,7 @@
   <text x="448" y="320" font-size="19" fill="#3a2350">set-alt-text · set-role · set-decorative</text>
   <text x="448" y="343" font-size="19" fill="#3a2350">reorder-reading · set-title · set-lang</text>
   <text x="448" y="366" font-size="19" fill="#3a2350">set-actual-text</text>
-  <text x="448" y="394" font-size="19" font-style="italic" fill="#7a5a2a">also the target the automated pipeline produces</text>
+  <text x="582" y="394" text-anchor="middle" font-size="19" font-style="italic" fill="#7a5a2a">also what the pipeline produces</text>
 
   <!-- apply arrow DSL -> Model -->
   <line x1="512" y1="408" x2="512" y2="456" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>

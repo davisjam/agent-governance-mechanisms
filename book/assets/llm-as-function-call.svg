@@ -55,5 +55,6 @@
   <text x="404" y="350" text-anchor="middle" font-size="19" font-weight="bold" fill="#a33">fail → caller retries or falls back</text>
 
   <!-- caption strip -->
-  <text x="24" y="392" font-size="18" font-style="italic" fill="#555">The model is called like a function: a typed task in, a typed answer out, and never trusted until a deterministic check has passed it.</text>
+  <text x="520" y="388" text-anchor="middle" font-size="18" font-style="italic" fill="#555">The model is called like a function: a typed task in, a typed answer out —</text>
+  <text x="520" y="410" text-anchor="middle" font-size="18" font-style="italic" fill="#555">never trusted until a deterministic check has passed it.</text>
 </svg>

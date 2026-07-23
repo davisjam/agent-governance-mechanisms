@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560" role="group" aria-labelledby="srv-title srv-desc" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 576" width="760" height="576" role="group" aria-labelledby="srv-title srv-desc" font-family="Georgia, 'Times New Roman', serif">
   <title id="srv-title">The reactive service topology, and why it made serverless natural</title>
   <desc id="srv-desc">Two stacked panels compare the same event-driven flow under two deployment targets. The top panel, the reactive seam, reads left to right: the web front door accepts an upload and enqueues chunks onto a work queue; a queue hands each chunk to a stateless worker that remediates it and publishes a completion; a fan-in step collects the completions and assembles the finished document. Every arrow is an event, not a poll. A note reads: services are reactive and stateless; Redis carries communication, the database carries truth. The bottom panel shows the same flow realized two ways. On the left, the retired Kubernetes poll plane: workers reach into size-stratified Redis queues to claim work, and a custom autoscaler watches queue depth to add or remove worker pods. On the right, the serverless push plane: a managed task queue pushes each chunk to a worker that scales from zero, and a managed topic fans in completions, with no custom autoscaler at all. The takeaway, stated across the bottom: because the services were already reactive and stateless, moving from poll to push was a change of deployment target, not a rewrite. The reactive seam was the enabler.</desc>
 
-  <rect x="0" y="0" width="760" height="560" fill="#ffffff"/>
+  <rect x="0" y="0" width="760" height="576" fill="#ffffff"/>
 
   <defs>
     <marker id="srv-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
@@ -49,7 +49,8 @@
   <text x="705" y="151" text-anchor="middle" font-size="19" fill="#5a4570">the file</text>
 
   <!-- reactive note -->
-  <text x="30" y="196" font-size="19" font-style="italic" fill="#555">Every arrow is an event, never a poll. Services stay reactive and stateless — Redis carries communication, the database carries truth.</text>
+  <text x="30" y="188" font-size="19" font-style="italic" fill="#555">Every arrow is an event, never a poll. Services stay reactive and stateless —</text>
+  <text x="30" y="210" font-size="19" font-style="italic" fill="#555">Redis carries communication, the database carries truth.</text>
 
   <!-- divider -->
   <line x1="24" y1="222" x2="736" y2="222" stroke="#c8d6e5" stroke-width="1.4"/>
@@ -69,9 +70,9 @@
   <text x="271" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Custom</text>
   <text x="271" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">autoscaler</text>
 
-  <text x="48" y="430" font-size="24" fill="#7a5a3a">Workers PULL work from size-stratified</text>
-  <text x="48" y="451" font-size="24" fill="#7a5a3a">queues; a bespoke loop watches depth</text>
-  <text x="48" y="472" font-size="24" fill="#7a5a3a">and adds or removes pods.</text>
+  <text x="48" y="432" font-size="17" fill="#7a5a3a">Workers PULL from size-stratified Redis</text>
+  <text x="48" y="453" font-size="17" fill="#7a5a3a">queues; a bespoke loop watches depth</text>
+  <text x="48" y="474" font-size="17" fill="#7a5a3a">and adds or removes pods.</text>
 
   <!-- RIGHT: push plane (serverless) -->
   <rect x="400" y="284" width="336" height="196" rx="4" fill="#f0f7f2" stroke="#2d6a4f" stroke-width="1.6"/>
@@ -85,11 +86,12 @@
   <text x="647" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Worker,</text>
   <text x="647" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">scale-from-0</text>
 
-  <text x="424" y="430" font-size="24" fill="#1e4a36">The platform PUSHES each chunk to a</text>
-  <text x="424" y="451" font-size="24" fill="#1e4a36">worker that scales from zero; native</text>
-  <text x="424" y="472" font-size="24" fill="#1e4a36">autoscale — no custom scaler at all.</text>
+  <text x="424" y="432" font-size="17" fill="#1e4a36">The platform PUSHES each chunk to a</text>
+  <text x="424" y="453" font-size="17" fill="#1e4a36">worker that scales from zero; native</text>
+  <text x="424" y="474" font-size="17" fill="#1e4a36">autoscale — no custom scaler at all.</text>
 
   <!-- takeaway strip -->
-  <text x="30" y="516" font-size="19" font-weight="bold" fill="#12324f">The move was a change of deployment target, not a rewrite.</text>
-  <text x="30" y="540" font-size="19" font-style="italic" fill="#555">Because the services were already reactive and stateless, poll-to-push was natural. The reactive seam was the enabler.</text>
+  <text x="30" y="514" font-size="19" font-weight="bold" fill="#12324f">The move was a change of deployment target, not a rewrite.</text>
+  <text x="30" y="540" font-size="19" font-style="italic" fill="#555">Because the services were already reactive and stateless, poll-to-push</text>
+  <text x="30" y="562" font-size="19" font-style="italic" fill="#555">was natural. The reactive seam was the enabler.</text>
 </svg>

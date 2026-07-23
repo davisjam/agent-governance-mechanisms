@@ -402,7 +402,8 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="404" y="350" text-anchor="middle" font-size="19" font-weight="bold" fill="#a33">fail → caller retries or falls back</text>
 
   <!-- caption strip -->
-  <text x="24" y="392" font-size="18" font-style="italic" fill="#555">The model is called like a function: a typed task in, a typed answer out, and never trusted until a deterministic check has passed it.</text>
+  <text x="520" y="388" text-anchor="middle" font-size="18" font-style="italic" fill="#555">The model is called like a function: a typed task in, a typed answer out —</text>
+  <text x="520" y="410" text-anchor="middle" font-size="18" font-style="italic" fill="#555">never trusted until a deterministic check has passed it.</text>
 </svg><figcaption>The LLM as a typed function call. A deterministic caller packs a bounded task into a typed input, the model returns a candidate under a typed output contract, and a deterministic validator passes it before it is incorporated — or sends it back.</figcaption></figure>
 <p>This is why DocAble can make a defensible claim on top of an infinite midwit. The model supplies the one thing deterministic code cannot: it looks at the figure and understands something. Everything around that understanding — when to ask, what to ask, whether to believe the answer — stays in code you can reason about and test. The probabilistic part is sealed inside a bounded call with a check on the way out. Guidance aims; machinery holds.</p>
 <p>This discipline was earned the hard way: put a model somewhere without it and it will find the exception you did not guard. Agents are the fastest road to a working demo and the fastest road to a subtle, confident, wrong result. The function-call shape is what keeps the first from becoming the second.</p>
@@ -410,11 +411,11 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>A model shows a view. The sections below draw three architectural views of DocAble from its real system models. Each answers a different question. The first asks how the services are shaped, and why that shape let the whole system change its deployment target without a rewrite. The second asks how the front end is decomposed, and how the editor changes a document through a small edit language. The third connects that edit language to the automated pipeline, and shows the join as a concrete instance of the function-call pattern above. Read together, they are the standing structure the rest of the book governs.</p>
 <h2>View 1 — a reactive service seam, and how it made serverless natural</h2>
 <p>The back end is a set of small services wired to react to events. A user's upload lands at a web front door, which splits the document into chunks and enqueues each chunk as a unit of work. A queue hands each chunk to a stateless worker. The worker remediates its chunk and publishes a completion. A fan-in step collects the completions and assembles the finished file. Every hop is an event handed forward, not a component polling for work. Two commitments hold the seam together: services stay reactive and stateless, and the split of duties is declared — Redis carries communication, the database carries truth.</p>
-<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" role="group" aria-labelledby="srv-title srv-desc" font-family="Georgia, 'Times New Roman', serif">
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 576" role="group" aria-labelledby="srv-title srv-desc" font-family="Georgia, 'Times New Roman', serif">
   <title id="srv-title">The reactive service topology, and why it made serverless natural</title>
   <desc id="srv-desc">Two stacked panels compare the same event-driven flow under two deployment targets. The top panel, the reactive seam, reads left to right: the web front door accepts an upload and enqueues chunks onto a work queue; a queue hands each chunk to a stateless worker that remediates it and publishes a completion; a fan-in step collects the completions and assembles the finished document. Every arrow is an event, not a poll. A note reads: services are reactive and stateless; Redis carries communication, the database carries truth. The bottom panel shows the same flow realized two ways. On the left, the retired Kubernetes poll plane: workers reach into size-stratified Redis queues to claim work, and a custom autoscaler watches queue depth to add or remove worker pods. On the right, the serverless push plane: a managed task queue pushes each chunk to a worker that scales from zero, and a managed topic fans in completions, with no custom autoscaler at all. The takeaway, stated across the bottom: because the services were already reactive and stateless, moving from poll to push was a change of deployment target, not a rewrite. The reactive seam was the enabler.</desc>
 
-  <rect x="0" y="0" width="760" height="560" fill="#ffffff"/>
+  <rect x="0" y="0" width="760" height="576" fill="#ffffff"/>
 
   <defs>
     <marker id="srv-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
@@ -461,7 +462,8 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="705" y="151" text-anchor="middle" font-size="19" fill="#5a4570">the file</text>
 
   <!-- reactive note -->
-  <text x="30" y="196" font-size="19" font-style="italic" fill="#555">Every arrow is an event, never a poll. Services stay reactive and stateless — Redis carries communication, the database carries truth.</text>
+  <text x="30" y="188" font-size="19" font-style="italic" fill="#555">Every arrow is an event, never a poll. Services stay reactive and stateless —</text>
+  <text x="30" y="210" font-size="19" font-style="italic" fill="#555">Redis carries communication, the database carries truth.</text>
 
   <!-- divider -->
   <line x1="24" y1="222" x2="736" y2="222" stroke="#c8d6e5" stroke-width="1.4"/>
@@ -481,9 +483,9 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="271" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Custom</text>
   <text x="271" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">autoscaler</text>
 
-  <text x="48" y="430" font-size="24" fill="#7a5a3a">Workers PULL work from size-stratified</text>
-  <text x="48" y="451" font-size="24" fill="#7a5a3a">queues; a bespoke loop watches depth</text>
-  <text x="48" y="472" font-size="24" fill="#7a5a3a">and adds or removes pods.</text>
+  <text x="48" y="432" font-size="17" fill="#7a5a3a">Workers PULL from size-stratified Redis</text>
+  <text x="48" y="453" font-size="17" fill="#7a5a3a">queues; a bespoke loop watches depth</text>
+  <text x="48" y="474" font-size="17" fill="#7a5a3a">and adds or removes pods.</text>
 
   <!-- RIGHT: push plane (serverless) -->
   <rect x="400" y="284" width="336" height="196" rx="4" fill="#f0f7f2" stroke="#2d6a4f" stroke-width="1.6"/>
@@ -497,13 +499,14 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="647" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Worker,</text>
   <text x="647" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">scale-from-0</text>
 
-  <text x="424" y="430" font-size="24" fill="#1e4a36">The platform PUSHES each chunk to a</text>
-  <text x="424" y="451" font-size="24" fill="#1e4a36">worker that scales from zero; native</text>
-  <text x="424" y="472" font-size="24" fill="#1e4a36">autoscale — no custom scaler at all.</text>
+  <text x="424" y="432" font-size="17" fill="#1e4a36">The platform PUSHES each chunk to a</text>
+  <text x="424" y="453" font-size="17" fill="#1e4a36">worker that scales from zero; native</text>
+  <text x="424" y="474" font-size="17" fill="#1e4a36">autoscale — no custom scaler at all.</text>
 
   <!-- takeaway strip -->
-  <text x="30" y="516" font-size="19" font-weight="bold" fill="#12324f">The move was a change of deployment target, not a rewrite.</text>
-  <text x="30" y="540" font-size="19" font-style="italic" fill="#555">Because the services were already reactive and stateless, poll-to-push was natural. The reactive seam was the enabler.</text>
+  <text x="30" y="514" font-size="19" font-weight="bold" fill="#12324f">The move was a change of deployment target, not a rewrite.</text>
+  <text x="30" y="540" font-size="19" font-style="italic" fill="#555">Because the services were already reactive and stateless, poll-to-push</text>
+  <text x="30" y="562" font-size="19" font-style="italic" fill="#555">was natural. The reactive seam was the enabler.</text>
 </svg><figcaption>The reactive service seam, and why it made serverless natural. Top: an event-driven flow — web enqueues chunks, a queue hands each to a stateless worker, a fan-in assembles the result. Bottom: the same flow realized two ways — the retired Kubernetes poll plane (workers pull from Redis, a custom autoscaler watches queue depth) and the serverless push plane (a managed queue pushes to a scale-from-zero worker, native autoscale, no custom scaler). The reactive seam was the enabler.</figcaption></figure>
 <p>That shape is what made a hard migration easy. For most of the system's life the workers ran on a Kubernetes cluster, and the dispatch worked by <strong>poll</strong>: workers reached into size-stratified Redis queues and claimed the next chunk, while a custom autoscaler watched queue depth and added or removed worker pods. The cluster billed around the clock, which for a bursty, low-traffic product was the wrong cost shape. The fix was to move to a serverless <strong>push</strong> plane: a managed task queue hands each chunk to a worker that scales from zero, a managed topic fans in the completions, and the platform's native autoscaler replaces the custom one.</p>
 <p>In the industry a re-platforming like that is a quarters-long migration with a rewritten coordinator and a nervous cutover. Here it was close to a change of deployment target. The reason is the seam. A reactive, input-triggered handler <em>is</em> the serverless execution model (an event in, work out), so the workers did not need new logic to be pushed to instead of polling. A stateless worker can be spun up on demand and thrown away, because it carries nothing between invocations. And the split that kept coordination in Redis and truth in the database meant the durable state did not live in any worker that serverless would recycle. The poll-to-push inversion then <em>deleted</em> complexity rather than adding it: the custom autoscaler, the one-cluster-per-prefix rule, and the idle-scaling controller all fell away, replaced by the platform's native scale-to-zero.</p>
@@ -546,8 +549,8 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <!-- CONTROLLER box -->
   <rect x="24" y="276" width="300" height="96" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
   <text x="174" y="308" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Controller</text>
-  <text x="174" y="336" text-anchor="middle" font-size="19" fill="#3d5a70">translates the gesture into one</text>
-  <text x="174" y="357" text-anchor="middle" font-size="19" fill="#3d5a70">typed edit operation — never a raw mutation</text>
+  <text x="174" y="336" text-anchor="middle" font-size="19" fill="#3d5a70">emits one typed edit operation</text>
+  <text x="174" y="357" text-anchor="middle" font-size="19" fill="#3d5a70">— never a raw mutation</text>
 
   <!-- emit arrow Controller -> DSL -->
   <line x1="324" y1="324" x2="424" y2="324" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
@@ -560,7 +563,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="448" y="320" font-size="19" fill="#3a2350">set-alt-text · set-role · set-decorative</text>
   <text x="448" y="343" font-size="19" fill="#3a2350">reorder-reading · set-title · set-lang</text>
   <text x="448" y="366" font-size="19" fill="#3a2350">set-actual-text</text>
-  <text x="448" y="394" font-size="19" font-style="italic" fill="#7a5a2a">also the target the automated pipeline produces</text>
+  <text x="582" y="394" text-anchor="middle" font-size="19" font-style="italic" fill="#7a5a2a">also what the pipeline produces</text>
 
   <!-- apply arrow DSL -> Model -->
   <line x1="512" y1="408" x2="512" y2="456" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
