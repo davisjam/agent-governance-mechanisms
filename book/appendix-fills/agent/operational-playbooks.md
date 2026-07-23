@@ -44,12 +44,51 @@ incident was burning.*
 
 ### Sample Code
 
-No sample code — this is a process/policy control. A playbook is human-authored operational judgment, not
-an executable artifact. The shape it standardizes is a per-situation entry: the triggering question, the
-inspect command, the quantified healthy baseline, and *what-looks-wrong → what-it-means → what-to-do*,
-with an explicit escape for the case where a substrate wedges. The value is that the correct steps — and
-the reflexes to avoid — are written down once and discoverable at the moment they're needed, not
-re-derived under pressure.
+A playbook is human-authored operational judgment, so there is no executable artifact to show. What
+a good playbook standardizes is the *shape* of a recurring procedure, and the sharpest way to teach
+that shape is to walk one. Here is a config-parameter-space optimization runbook: the situation is
+"I want to optimize this system over its config knobs, and I have the performance metrics to say
+whether a setting is better." An agent runs the loop; each pass turns some knobs, measures, and
+decides what to try next.
+
+<!-- figure: config-optimization-runbook.svg | A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice. -->
+
+The runbook is anchored to a lifecycle the reader already knows: **run, measure, assess**, then
+around again. Every pass of the loop moves through three steps, and the discipline is in how the
+steps are typed.
+
+- **Step 1 — determinize the data space.** Fix where the metrics live, their schema, and a model of
+  what a normal value looks like against an anomalous one. This step is mechanical. It takes no
+  reasoning, so an agent should never improvise it; write it down as an ordered procedure the
+  playbook names, and the agent follows it the same way every pass.
+- **Step 2 — apply judgment.** From that data, decide which knobs to turn and by how much. This is
+  the step that genuinely needs reasoning: reading the measurements, weighing a heuristic against a
+  hunch, choosing the next configuration to try. It is where the agent earns its keep, and the one
+  step the playbook cannot reduce to a fixed procedure.
+- **Step 3 — determinize again.** Render the judgment back into the world. Take the knob choices the
+  reasoning produced and apply them to the next experiment. Applying a configuration is mechanical,
+  so this step, like the first, should be deterministic rather than improvised.
+
+The two mechanical steps bracket the judgment. That is the pattern the slide names a
+*determinize → judgment → determinize* split, and it is worth stating plainly why the split pays
+off. The mechanical steps are cheap, repeatable, and auditable. The judgment step is expensive and
+variable, so you want as little of the procedure sitting inside it as the problem allows. Determinize
+everything that does not need to reason, and the reasoning that remains is smaller, sharper, and
+easier to check.
+
+**The determinized third step is where the leverage is.** The natural instinct is to treat step 3 as
+plumbing: the reasoning already happened, so just apply the choice and move on. That undersells it.
+Because the third step is deterministic, it can capture and log the reasoning trace — the record of
+*why* this configuration was chosen — as a first-class output of the pass, not a side effect thrown
+away when the experiment starts. That logged trace then does two jobs. It becomes **an input to the
+next iteration**, so the loop reads back the rationale it recorded last time and reasons from its own
+history instead of from the raw numbers alone. And it becomes **a decision trace for a secondary
+checker**: hand a reviewer only the raw output and it can tell you whether the result looks good;
+hand it the trace of what was chosen and why and it can tell you whether the *reasoning* was sound,
+catch a choice that got a lucky result for a bad reason, and flag a rationale that will not
+generalize. Determinize the third step because a deterministic step affords a logged reasoning trace,
+and that trace is what lets the loop learn from itself and lets a second checker judge the decision
+rather than just the output.
 
 ### Consequences
 
