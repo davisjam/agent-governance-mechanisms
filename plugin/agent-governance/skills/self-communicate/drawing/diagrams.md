@@ -347,6 +347,12 @@ legibility-and-labeling bar.
 - **Legible labels.** Text large enough to read at the size it renders; no essential distinction carried
   by color alone (a colorblind reader must still parse it); enough contrast against the background. A
   cramped ten-node diagram with three-word labels is often two clearer diagrams.
+- **Text must fit its box — and the canvas.** A label may not spill its `<rect>` box (running over a
+  neighboring shape or an arrow) or run past the figure's `viewBox` edge. A spilled label reads as a
+  collision, not a name. When text doesn't fit, enlarge the box, add space into the diagram, shorten or
+  wrap the label, or — last, and never below the legibility floor — shrink the font for that figure. An
+  audit-only build check estimates each label's width and flags likely overflows; the fix procedure, in
+  that order, is the figure text-fit runbook (`book/_design/figure-text-fit-runbook.md`).
 - **Alt text / a description.** A diagram needs a text equivalent a screen reader can announce — a
   concise statement of what it shows and its takeaway. Mermaid supports an accessible title and
   description (`accTitle` / `accDescr`); a hand-authored SVG uses `<title>` and `<desc>` wired with

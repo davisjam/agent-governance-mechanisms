@@ -39,6 +39,7 @@ from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import check_html_links
 from tests.markdown import check_markdown_anchors, check_markdown_schema, check_render_safety
 from tests.skill import check_bundle_links, check_skill_drift, check_skill_structure
+from tests.svg_fit import check_svg_text_fit
 
 
 class Check(NamedTuple):
@@ -46,6 +47,9 @@ class Check(NamedTuple):
     tier: int  # 1 = stdlib always; 2 = external, fail-fast-gated
     run: Callable[[bool], tuple]  # (strict) -> (status, issues)
     needs_run: Callable[[frozenset[str]], bool] | None = None  # None => always run
+    audit_only: bool = False  # True => reports candidates but never contributes to the fail count (a
+    #                            heuristic still being tuned; promote to a real gate once its FP rate is
+    #                            low enough). Kept out of the "N real checks" total in the plan/summary.
 
 
 def _html_changed(changed: frozenset[str]) -> bool:
@@ -70,7 +74,13 @@ CHECKS = [
     Check("html: validity (html-validate)", 2, check_html_valid, needs_run=_html_changed),
     Check("html: axe-core accessibility", 2, check_axe, needs_run=_html_changed),
     Check("skill: claude plugin validate", 2, check_claude_validate, needs_run=_plugin_changed),
+    # AUDIT-ONLY (heuristic; not yet a gate): estimates whether a hand-authored figure's text overflows
+    # its box or the canvas. Reports candidates, never fails. See tests/svg_fit.py for why it starts here.
+    Check("svg: text-fit (box/canvas overflow) [AUDIT-ONLY]", 1,
+          lambda strict: check_svg_text_fit(), audit_only=True),
 ]
+
+REAL_CHECKS = [c for c in CHECKS if not c.audit_only]  # the gate — the count the summary reports
 
 
 def main() -> int:
@@ -92,8 +102,9 @@ def main() -> int:
     base = ("full scan (--full)" if args.full else
             "no origin/main baseline — running all" if changed is None else
             f"{len(changed)} path(s) changed vs origin/main")
-    print(f"== Test plan: {len(CHECKS)} checks (Tier 1 stdlib first; Tier 2 external — axe/claude — run "
-          f"only if Tier 1 is clean; {'strict' if args.strict else 'skip-if-absent'}); {base} ==")
+    print(f"== Test plan: {len(REAL_CHECKS)} gate checks + {len(CHECKS) - len(REAL_CHECKS)} audit-only "
+          f"(Tier 1 stdlib first; Tier 2 external — axe/claude — run only if Tier 1 is clean; "
+          f"{'strict' if args.strict else 'skip-if-absent'}); {base} ==")
     failed = skipped = 0
 
     def _emit(c: Check):
@@ -102,13 +113,15 @@ def main() -> int:
             status, issues = SKIP, ["inputs unchanged since origin/main"]
         else:
             status, issues = c.run(args.strict)
-        mark = {PASS: "ok  ", FAIL: "FAIL", SKIP: "skip"}[status]
+        # An audit-only check reports candidates but never counts — render it [audit], not [ok]/[FAIL].
+        mark = "audt" if c.audit_only else {PASS: "ok  ", FAIL: "FAIL", SKIP: "skip"}[status]
         print(f"  [{mark}] (T{c.tier}) {c.label}")
         for it in issues:
             for line in str(it).splitlines():
                 print(f"          {line}")
-        failed += status == FAIL
-        skipped += status == SKIP
+        if not c.audit_only:
+            failed += status == FAIL
+            skipped += status == SKIP
 
     for c in CHECKS:  # Tier 1: cheap, stdlib
         if c.tier == 1:
@@ -121,7 +134,9 @@ def main() -> int:
     else:
         for c in tier2:
             _emit(c)
-    print(f"== {len(CHECKS)} checks: {len(CHECKS) - failed - skipped} passed, {failed} failed, {skipped} skipped ==")
+    n = len(REAL_CHECKS)  # audit-only checks are reported but excluded from the pass/fail tally
+    print(f"== {n} gate checks: {n - failed - skipped} passed, {failed} failed, {skipped} skipped "
+          f"(+ {len(CHECKS) - n} audit-only, non-gating) ==")
     return 1 if failed else 0
 
 
