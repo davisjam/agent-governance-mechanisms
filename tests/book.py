@@ -490,9 +490,11 @@ def check_heading_levels() -> tuple[list[Finding], dict]:
 _RENDER_SMELLS: tuple[tuple[str, "re.Pattern[str]"], ...] = (
     ("literal **bold**",            re.compile(r"\*\*")),
     ("bullet swallowed into <p>",   re.compile(r"^\s*-\s")),
-    # user's heuristic: two ` - ` breaks in one paragraph usually means a `- ` list collapsed mid-<p>.
+    ("numbered item at <p> start",  re.compile(r"^\s*\d+\.\s")),
+    # user's heuristic: two ` - ` breaks (or two `N. ` markers) in one paragraph usually means a
+    # `- `/`N. ` list collapsed mid-<p>. The dash and the number smell are a matched pair.
     ("multi-dash run (list?)",      re.compile(r"\s-\s\S.*\s-\s")),
-    ("numbered list swallowed",     re.compile(r"(?:^|\s)\d+\.\s.+\s\d+\.\s")),
+    ("multi-number run (list?)",    re.compile(r"(?:^|\s)\d+\.\s.+\s\d+\.\s")),
     ("literal `code` span",         re.compile(r"`[^`]+`")),
     ("literal [text](link)",        re.compile(r"\[[^\]]+\]\([^)]+\)")),
 )
