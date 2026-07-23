@@ -604,13 +604,6 @@ NAV_GRID = (
     '<span class="ng-t">Book</span><span class="ng-s">the WIP book draft</span></a>'
     '</nav>')
 
-# Top-of-site work-in-progress book banner (prominent, explicitly a DRAFT).
-BOOK_BANNER = (
-    '<a class="wip-book-banner" href="book/index.html">'
-    '<span class="wbb-tag">NEW · DRAFT</span>'
-    '<span class="wbb-txt">Read the work-in-progress book — <em>draft, with placeholders</em>: '
-    '<b>3D Printing Production Software</b>, the method behind this catalogue.</span>'
-    '<span class="wbb-go">Open the book →</span></a>')
 
 FONT_CSS = ('  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }\n'
             '  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }\n'
@@ -918,17 +911,7 @@ LANDING_CSS = """
   .nav-grid .ng-book { border-color:var(--accent); background:#fff8f0; }
   .nav-grid .ng-book .ng-t { color:var(--accent); }
   @media (max-width:820px){ .nav-grid { position:static; width:100%; margin:0 0 14px; } }
-  .wip-book-banner { display:flex; flex-wrap:wrap; align-items:center; gap:12px; text-decoration:none;
-              margin:6px 0 22px; padding:12px 16px; border:1.6px solid var(--accent); border-radius:11px;
-              background:linear-gradient(90deg,#fff8f0,#fffdfb); color:var(--ink);
-              transition:box-shadow .12s, background .12s; }
-  .wip-book-banner:hover { box-shadow:0 3px 14px rgba(180,83,9,.16); background:#fff5e9; }
-  .wip-book-banner .wbb-tag { flex:0 0 auto; font-size:11px; font-weight:800; letter-spacing:.06em;
-              color:#fff; background:var(--accent); padding:3px 9px; border-radius:20px; }
-  .wip-book-banner .wbb-txt { flex:1 1 320px; font-size:14px; color:#333; line-height:1.45; }
-  .wip-book-banner .wbb-txt b { color:var(--ink); }
-  .wip-book-banner .wbb-go { flex:0 0 auto; font-size:13.5px; font-weight:700; color:var(--accent); white-space:nowrap; }
-  .site-foot .book-foot { white-space:nowrap; font-weight:600; }
+.site-foot .book-foot { white-space:nowrap; font-weight:600; }
   .loop { border:1px solid var(--line); border-radius:11px; padding:16px 17px 15px; margin:4px 0 20px; background:#fbfcfd; }
   .loop .hd { margin:0 0 12px; font-size:14px; color:#222; }
   .flow { display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; }
@@ -1745,7 +1728,7 @@ def cmd_build(_args) -> int:
         open(out_path, "w", encoding="utf-8").write(html)
         written += 1
     # landing index.html = intro + census (overwrites the hand-authored placeholder)
-    landing_body = NAV_GRID + "\n" + BOOK_BANNER + "\n" + LANDING_INTRO.format(
+    landing_body = NAV_GRID + "\n" + LANDING_INTRO.format(
         n=len(entries), flow=_landing_flow(), cards=_landing_cards(),
         schools=_landing_schools(), ways=_landing_ways()) + "\n" + build_census(entries)
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
