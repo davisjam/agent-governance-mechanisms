@@ -419,12 +419,53 @@ nothing; one that is too small costs the reader the figure.
 
 ---
 
+## One style source for a figure-set — restyle the whole set in one place
+
+When a *set* of figures should share styling — the same label font, the same panel color, the same callout
+treatment — define that style in **one place**, and let every figure read from it. Change the one place, and
+the whole set restyles. Hand-tune each figure and you own a scatter of copies that drift the moment one gets
+edited and the others don't.
+
+The move has three parts:
+
+- **Define the shared style once.** For a set of Mermaid diagrams, a single theme configuration — a Mermaid
+  `initialize` block with `themeVariables` — sets font and color for every diagram at once. For hand-authored
+  SVG or HTML figures, a shared CSS block, an SVG `<style>`, or a set of CSS custom properties on a common
+  ancestor plays the same role: one declaration, many figures.
+- **Make the defaults compliant.** The shared style should make figures right *by default* — labels already
+  large enough (the font floors above), contrast already sufficient. If the default is compliant, no figure
+  needs a per-figure font hack to be legible, and a figure that skips styling entirely still clears the bar.
+  A default that forces every figure to override it is not a source of truth; it is a trap.
+- **Override locally only where a figure genuinely differs.** A per-figure override is for a real exception —
+  a diagram whose shape needs a knob the shared default can't set. A sequence diagram, for instance, sizes its
+  text through its own font settings, separate from the flowchart label size, so a set that mixes the two
+  carries a sequence-specific override alongside the shared default. Reach for an override when the figure
+  needs one, not to re-tune something the default already handles.
+
+Two instances ground the pattern:
+
+- **A central Mermaid theme config** that sets font sizing for every diagram in one edit. Bump the shared
+  label size there and every flowchart, state diagram, and ER schema grows together — no per-diagram font
+  tags. The one wrinkle: sequence diagrams read their sizing from their own font knobs, so the central config
+  sets those explicitly too, rather than assuming the flowchart size carries over.
+- **A concept-callout styled entirely through CSS custom properties** behind a single swap point. The
+  callout's color, border, and type all read from named variables set in one place; swap that one point — a
+  different variable set, a different representation — and every callout re-skins at once, with no per-callout
+  markup touched.
+
+This is the visual twin of the term-discipline rule in [`../writing/lexicon.md`](../writing/lexicon.md): there,
+one name for one concept everywhere; here, one style source for one figure-set. Both kill drift by refusing a
+second copy of a fact.
+
+---
+
 ## The short version
 
 Draw the shape when the content has one. Author it in Mermaid — it is text, it renders in Markdown, it
 diffs like code — and drop to hand-authored SVG only for a geometry Mermaid can't lay out, as the
 catalogue's "Y" figure does. Pick the type that fits the shape: structure for what the system *is*,
 behavior for what it *does*, data for what it *stores* — and matched to the Diátaxis mode of the prose
-around it. Generate the diagram from a model where one exists. And label it so a reader who can't see it
+around it. Generate the diagram from a model where one exists, and style a figure-set from one source so the
+whole set restyles in one edit. And label it so a reader who can't see it
 still gets the point — headings largest, labels medium, annotations smallest, and every tier sized to read
 without zooming at book width, for older eyes on an ordinary screen.
