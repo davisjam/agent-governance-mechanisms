@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 20 · Lessons Learned</title><style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 21 · Lessons Learned</title><style>
 :root { --accent: #1a4a7a; }
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -234,19 +234,20 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="3.2-models-and-the-semantic-gap.html">7&nbsp; Models and the Semantic Gap</a></li>
 <li><a class="" href="3.3-the-governed-environment.html">8&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
 <li><a class="" href="3.4-lifecycles-and-runbooks.html">9&nbsp; Lifecycles and Runbooks</a></li>
+<li><a class="" href="3.5-metrics.html">10&nbsp; Metrics</a></li>
 <li class="part">Part 4 — The Model Zoo</li>
-<li><a class="" href="4.1-the-executable-zoo.html">10&nbsp; The Executable Zoo</a></li>
-<li><a class="" href="4.2-the-logical-view.html">11&nbsp; The Logical View</a></li>
-<li><a class="" href="4.3-the-process-view.html">12&nbsp; The Process View</a></li>
-<li><a class="" href="4.4-the-development-view.html">13&nbsp; The Development View</a></li>
-<li><a class="" href="4.5-the-physical-view.html">14&nbsp; The Physical View</a></li>
-<li><a class="" href="4.6-the-scenarios-view.html">15&nbsp; The Scenarios View</a></li>
+<li><a class="" href="4.1-the-executable-zoo.html">11&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">12&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">13&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">14&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">15&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">16&nbsp; The Scenarios View</a></li>
 <li class="part">Part 5 — Putting It to Work</li>
-<li><a class="" href="5.1-brownfield.html">16&nbsp; Brownfield</a></li>
-<li><a class="" href="5.2-the-skills.html">17&nbsp; The Skills</a></li>
-<li><a class="" href="5.3-transformations.html">18&nbsp; Everything Is a Transformation</a></li>
-<li><a class="" href="5.4-training-data.html">19&nbsp; Training Data and the Novelty Axis</a></li>
-<li><a class="current" href="5.5-lessons-learned.html">20&nbsp; Lessons Learned</a></li>
+<li><a class="" href="5.1-brownfield.html">17&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">18&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">19&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">20&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="current" href="5.5-lessons-learned.html">21&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
@@ -296,11 +297,12 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 13. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
 <li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 14. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
 <li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 15. Model-driven codegen</a></li>
-<li><a class="" href="appendix-b-query-surface.html">Appendix B - 16. Model query surface (`repo-query`)</a></li>
-<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 17. Service-flow / API model</a></li>
-<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 18. Symbol-anchored traceability graph (derived edges)</a></li>
-<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 19. Synchronization model (meta-sync)</a></li>
-<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 20. User-journey model (product-goal → implementation bridge)</a></li>
+<li><a class="" href="appendix-b-model-graded-finding-severity.html">Appendix B - 16. Model-graded finding severity (distance-graded gate)</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 17. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 18. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 19. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 20. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 21. User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
 <li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
 <li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
@@ -332,7 +334,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">⇐ Beginning of this part</a><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 20 · Lessons Learned"><header class="chap"><div class="kicker"><a href="5.1-brownfield.html" aria-label="Beginning of Part 5 — Putting It to Work">Part 5 — Putting It to Work</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 20</a></div><h1>Lessons Learned</h1></header><!-- noqa: book-visual — a reflective lessons chapter whose content is a sequence of aphoristic prose lessons, not a shape. The one drawable shape — the three ways to run an agent, positioned on a risk map — is the oversight-mode framing already figured in the earlier one-shot-vs-supervised-autonomy chapter; a fourth oversight diagram here would restate it. The soft-vs-hard and audits-into-lints lessons are drawn in the governed-environment chapter. No new shape a figure would carry better than the prose. -->
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">⇐ Beginning of this part</a><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 21 · Lessons Learned"><header class="chap"><div class="kicker"><a href="5.1-brownfield.html" aria-label="Beginning of Part 5 — Putting It to Work">Part 5 — Putting It to Work</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 21</a></div><h1>Lessons Learned</h1></header><!-- noqa: book-visual — a reflective lessons chapter whose content is a sequence of aphoristic prose lessons, not a shape. The one drawable shape — the three ways to run an agent, positioned on a risk map — is the oversight-mode framing already figured in the earlier one-shot-vs-supervised-autonomy chapter; a fourth oversight diagram here would restate it. The soft-vs-hard and audits-into-lints lessons are drawn in the governed-environment chapter. No new shape a figure would carry better than the prose. -->
 <h1>Lessons Learned</h1>
 <p>I spent three months building a real piece of software with a coding agent, and the thing I came away with was not a model release or a benchmark. It was a methodology. I thought the project would take a weekend; it spiralled into a hundred thousand lines, then four hundred thousand, written at a thousand commits a week across four Claude accounts running in round-robin. Somewhere in that spiral the important questions stopped being <em>what can the model do</em> and became <em>how do I keep it doing the right thing at speed</em>. This chapter is what I learned. Read it as the reflection at the end of the method — the lessons that hold no matter which model you drive.</p>
 <h2>Three ways to run an agent, and why I chose one</h2>
@@ -375,4 +377,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h3>Who holds the authority to convert a lesson</h3>
 <p>This is where I think companies may have trouble. I had authority to change everything — the architecture, the CI, the documentation, the task format, the release process, the validation hierarchy. In a real organization, the person who sees the recurring failure may only be allowed to patch their local problem. That is a recipe for churn: the same class of problem appears again and again, and no one has the authority to convert it into shared engineering practice. So my advice to software organizations is not "use agents" or "don't use agents." It is to look at what your failures are teaching you, and ask who in your engineering organization is empowered to turn those lessons into architecture, process, and controls. Put those people in charge of your agentic adoption.</p>
 <p>The first engineers were locomotive engineers. They stood, literally, astride the harnessed steam engine — monitored it, tuned it, designed it. Software engineering has its DevOps and its SREs in the same lineage, and I suspect much of what I observed connects to their wisdom. The future of software engineering is not just faster implementation. It is the ability to convert judgment into infrastructure.</p>
-<p>I will not pretend this is settled. My evidence is a single-person project without real customers, run against one vendor's models — Claude, Opus and Sonnet, over the March–July 2026 window — and the specifics will not all generalize. A legacy codebase full of ancient spaghetti, or a system with many stakeholders, may behave differently; if you are starting from spaghetti, the honest first move is to fix the spaghetti, because agents are excellent at refactoring once you have the test controls to keep them from regressing. But the shape of it feels durable: convert judgment into infrastructure, let the machinery hold what your attention cannot, and spend your scarce judgment on the decisions the machinery cannot make. If we want to learn anything new, we have to try crazy things and ponder them. That is the method, and it is the most fun I have had building software in years.</p><div class="pager"><a class="prev" href="5.4-training-data.html"><span class="dir">‹ Previous</span><span class="ttl">19 · Training Data and the Novelty Axis</span></a><a class="home" href="index.html">Contents</a><a class="next" href="6.0-implications-for-se.html"><span class="dir">Next ›</span><span class="ttl">Implications for Software Engineering</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">⇐ Beginning of this part</a><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>I will not pretend this is settled. My evidence is a single-person project without real customers, run against one vendor's models — Claude, Opus and Sonnet, over the March–July 2026 window — and the specifics will not all generalize. A legacy codebase full of ancient spaghetti, or a system with many stakeholders, may behave differently; if you are starting from spaghetti, the honest first move is to fix the spaghetti, because agents are excellent at refactoring once you have the test controls to keep them from regressing. But the shape of it feels durable: convert judgment into infrastructure, let the machinery hold what your attention cannot, and spend your scarce judgment on the decisions the machinery cannot make. If we want to learn anything new, we have to try crazy things and ponder them. That is the method, and it is the most fun I have had building software in years.</p><div class="pager"><a class="prev" href="5.4-training-data.html"><span class="dir">‹ Previous</span><span class="ttl">20 · Training Data and the Novelty Axis</span></a><a class="home" href="index.html">Contents</a><a class="next" href="6.0-implications-for-se.html"><span class="dir">Next ›</span><span class="ttl">Implications for Software Engineering</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-brownfield.html">⇐ Beginning of this part</a><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

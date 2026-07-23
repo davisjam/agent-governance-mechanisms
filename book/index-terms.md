@@ -158,6 +158,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: model-drift | Model drift
 - concept: the-semantic-gap | The semantic gap
 - concept: right-level-of-enforcement | The right level of enforcement
+- concept: measure-one-level-deeper | Measure one level deeper
 - concept: governed-environment | The governed environment
 - concept: ex-ante-governance | Ex-ante governance
 - concept: ex-post-governance | Ex-post governance

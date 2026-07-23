@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 15 · The Scenarios View</title><style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 16 · The Scenarios View</title><style>
 :root { --accent: #1a4a7a; }
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -234,19 +234,20 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="3.2-models-and-the-semantic-gap.html">7&nbsp; Models and the Semantic Gap</a></li>
 <li><a class="" href="3.3-the-governed-environment.html">8&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
 <li><a class="" href="3.4-lifecycles-and-runbooks.html">9&nbsp; Lifecycles and Runbooks</a></li>
+<li><a class="" href="3.5-metrics.html">10&nbsp; Metrics</a></li>
 <li class="part">Part 4 — The Model Zoo</li>
-<li><a class="" href="4.1-the-executable-zoo.html">10&nbsp; The Executable Zoo</a></li>
-<li><a class="" href="4.2-the-logical-view.html">11&nbsp; The Logical View</a></li>
-<li><a class="" href="4.3-the-process-view.html">12&nbsp; The Process View</a></li>
-<li><a class="" href="4.4-the-development-view.html">13&nbsp; The Development View</a></li>
-<li><a class="" href="4.5-the-physical-view.html">14&nbsp; The Physical View</a></li>
-<li><a class="current" href="4.6-the-scenarios-view.html">15&nbsp; The Scenarios View</a></li>
+<li><a class="" href="4.1-the-executable-zoo.html">11&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">12&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">13&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">14&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">15&nbsp; The Physical View</a></li>
+<li><a class="current" href="4.6-the-scenarios-view.html">16&nbsp; The Scenarios View</a></li>
 <li class="part">Part 5 — Putting It to Work</li>
-<li><a class="" href="5.1-brownfield.html">16&nbsp; Brownfield</a></li>
-<li><a class="" href="5.2-the-skills.html">17&nbsp; The Skills</a></li>
-<li><a class="" href="5.3-transformations.html">18&nbsp; Everything Is a Transformation</a></li>
-<li><a class="" href="5.4-training-data.html">19&nbsp; Training Data and the Novelty Axis</a></li>
-<li><a class="" href="5.5-lessons-learned.html">20&nbsp; Lessons Learned</a></li>
+<li><a class="" href="5.1-brownfield.html">17&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">18&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">19&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">20&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">21&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
@@ -296,11 +297,12 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 13. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
 <li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 14. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
 <li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 15. Model-driven codegen</a></li>
-<li><a class="" href="appendix-b-query-surface.html">Appendix B - 16. Model query surface (`repo-query`)</a></li>
-<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 17. Service-flow / API model</a></li>
-<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 18. Symbol-anchored traceability graph (derived edges)</a></li>
-<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 19. Synchronization model (meta-sync)</a></li>
-<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 20. User-journey model (product-goal → implementation bridge)</a></li>
+<li><a class="" href="appendix-b-model-graded-finding-severity.html">Appendix B - 16. Model-graded finding severity (distance-graded gate)</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 17. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 18. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 19. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 20. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 21. User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
 <li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
 <li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
@@ -332,7 +334,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 15 · The Scenarios View"><header class="chap"><div class="kicker"><a href="4.1-the-executable-zoo.html" aria-label="Beginning of Part 4 — The Model Zoo">Part 4 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 15</a></div><h1>The Scenarios View</h1></header><!-- noqa: book-section-cap | The Scenarios View — the intro carries the two boxed primers (node-coverage vs line coverage, protocols and TLA+) the reader needs before this view's model pages; the insets are self-contained primers, not prose to break up -->
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 16 · The Scenarios View"><header class="chap"><div class="kicker"><a href="4.1-the-executable-zoo.html" aria-label="Beginning of Part 4 — The Model Zoo">Part 4 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 16</a></div><h1>The Scenarios View</h1></header><!-- noqa: book-section-cap | The Scenarios View — the intro carries the two boxed primers (node-coverage vs line coverage, protocols and TLA+) the reader needs before this view's model pages; the insets are self-contained primers, not prose to break up -->
 <p id="idx-def-scenarios-view">The four views so far are static portraits. The Logical view says what the system is, the Process view what it does at once, the Development view how it is packaged, the Physical view where it runs. The +1 view sets them in motion. A <strong>scenario</strong> — a use case, a journey — walks a real goal end to end, and in walking it exercises the other four and validates that they hold up. Kruchten made scenarios the +1 for exactly this reason: they are how you check that the four architectural views describe a system that actually works.</p>
 <p>One general type anchors the view. A <strong>user journey</strong> names the interfaces a user moves through and the actions they take to accomplish something of value. Four real models embody the view: the user-journey model (the product-goal-to-code bridge), the agent-orchestration model (the <em>developer</em>-journey counterpart, the scenarios view pointed at the fleet rather than the user), journey-criticality-to-test-placement, and coverage-to-model-node mapping. The chapter closes with the zoo's flagship demonstration — four models joined so a product goal reaches all the way to how the deploy rations its tests.</p>
 <p>Two insets a reader needs for this view's model pages:</p>
@@ -441,4 +443,4 @@ PROFILES = {
 <p><em>Model-from-code, joined.</em> Every leg derives from the code: the journey's deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7). Nothing is hand-stored — a stored tier or a <code>LOAD</code> edge is banned outright. The join keys chain: the <strong>endpoint</strong> ties M13 to M5, the <strong>criticality</strong> ties M13 to M6, the <strong>derived tier</strong> ties M6 to M7's roster, and the <strong>host profile</strong> ties the roster to the plan. A reader round-trips from "this journey is major" to "these tests serialize on the local box" by following those four keys, and the drift lints mechanize each hop.</p>
 <p><em>Also seen in:</em> Physical (the Scheduler half). This join is why the Physical and Scenarios chapters cross-reference each other most; it is rendered in full here.</p>
 <p>---</p>
-<p>Five views, walked on real code, each with its invariants and the checker that holds them true. The zoo has twenty-nine named models, and the point of the number is the one Kruchten made: no single view is ever the whole picture. What the safety-critical world did because lives were at stake — keep the models honest, trace every requirement to the code that realizes it — the rest of us now do because an agent will pay the upkeep, and because it is the cheapest way to trust what the fleet ships.</p><div class="pager"><a class="prev" href="4.5-the-physical-view.html"><span class="dir">‹ Previous</span><span class="ttl">14 · The Physical View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.1-brownfield.html"><span class="dir">Next ›</span><span class="ttl">16 · Brownfield</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', themeVariables: { fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '20px' }, flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 }, sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 }, state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {} });</script></body></html>
+<p>Five views, walked on real code, each with its invariants and the checker that holds them true. The zoo has twenty-nine named models, and the point of the number is the one Kruchten made: no single view is ever the whole picture. What the safety-critical world did because lives were at stake — keep the models honest, trace every requirement to the code that realizes it — the rest of us now do because an agent will pay the upkeep, and because it is the cheapest way to trust what the fleet ships.</p><div class="pager"><a class="prev" href="4.5-the-physical-view.html"><span class="dir">‹ Previous</span><span class="ttl">15 · The Physical View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.1-brownfield.html"><span class="dir">Next ›</span><span class="ttl">17 · Brownfield</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', themeVariables: { fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '20px' }, flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 }, sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 }, state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {} });</script></body></html>

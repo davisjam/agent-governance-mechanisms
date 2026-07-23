@@ -6,7 +6,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->68<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->69<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Governance has two mechanisms*): **`Hard`** = deterministic
@@ -82,7 +82,7 @@ soft guidance with a hard counterpart.
 
 ## 6. System models
 
-*One MBSE **method** (the trunk — <!--census:bridge_method:word-->twelve<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Eight<!--/census--> models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization, agent-orch) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->twelve<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — <!--census:bridge_method:word-->thirteen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Eight<!--/census--> models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization, agent-orch) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->thirteen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Enf. | Entry |
 |---|---|---|---|---|
@@ -98,6 +98,7 @@ soft guidance with a hard counterpart.
 | ✅ | Meta-model consumption (read, don't hardcode) — *trunk / method* | `typed-ir` | Hard | [meta-model-consumption.md](models-bridge/system-models/meta-model-consumption.md) |
 | ✅ | Control↔substrate dependency (computed blast-radius) — *trunk / method* | `typed-ir` | Hard | [control-substrate-dependency.md](models-bridge/system-models/control-substrate-dependency.md) |
 | ✅ | Symbol-anchored traceability graph (derived edges) — *trunk / method* | `typed-ir` | Hard | [symbol-anchored-traceability-graph.md](models-bridge/system-models/symbol-anchored-traceability-graph.md) |
+| ✅ | Model-graded finding severity (distance-graded gate) — *trunk / method* | `quality-gate` | Hard | [model-graded-finding-severity.md](models-bridge/system-models/model-graded-finding-severity.md) |
 | ✅ | Service-flow / API model — *product-facing* | `typed-ir` | Hard | [service-flow-model.md](models-bridge/system-models/service-flow-model.md) |
 | ✅ | User-journey model (product-goal → implementation) — *product-facing* | `typed-ir` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
 | ✅ | Domain registries — *product-facing* | `typed-ir` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |

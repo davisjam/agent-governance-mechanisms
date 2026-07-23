@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 12 · The Process View</title><style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 13 · The Process View</title><style>
 :root { --accent: #1a4a7a; }
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -234,19 +234,20 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="3.2-models-and-the-semantic-gap.html">7&nbsp; Models and the Semantic Gap</a></li>
 <li><a class="" href="3.3-the-governed-environment.html">8&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
 <li><a class="" href="3.4-lifecycles-and-runbooks.html">9&nbsp; Lifecycles and Runbooks</a></li>
+<li><a class="" href="3.5-metrics.html">10&nbsp; Metrics</a></li>
 <li class="part">Part 4 — The Model Zoo</li>
-<li><a class="" href="4.1-the-executable-zoo.html">10&nbsp; The Executable Zoo</a></li>
-<li><a class="" href="4.2-the-logical-view.html">11&nbsp; The Logical View</a></li>
-<li><a class="current" href="4.3-the-process-view.html">12&nbsp; The Process View</a></li>
-<li><a class="" href="4.4-the-development-view.html">13&nbsp; The Development View</a></li>
-<li><a class="" href="4.5-the-physical-view.html">14&nbsp; The Physical View</a></li>
-<li><a class="" href="4.6-the-scenarios-view.html">15&nbsp; The Scenarios View</a></li>
+<li><a class="" href="4.1-the-executable-zoo.html">11&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">12&nbsp; The Logical View</a></li>
+<li><a class="current" href="4.3-the-process-view.html">13&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">14&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">15&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">16&nbsp; The Scenarios View</a></li>
 <li class="part">Part 5 — Putting It to Work</li>
-<li><a class="" href="5.1-brownfield.html">16&nbsp; Brownfield</a></li>
-<li><a class="" href="5.2-the-skills.html">17&nbsp; The Skills</a></li>
-<li><a class="" href="5.3-transformations.html">18&nbsp; Everything Is a Transformation</a></li>
-<li><a class="" href="5.4-training-data.html">19&nbsp; Training Data and the Novelty Axis</a></li>
-<li><a class="" href="5.5-lessons-learned.html">20&nbsp; Lessons Learned</a></li>
+<li><a class="" href="5.1-brownfield.html">17&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">18&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">19&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">20&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">21&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
@@ -296,11 +297,12 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 13. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
 <li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 14. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
 <li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 15. Model-driven codegen</a></li>
-<li><a class="" href="appendix-b-query-surface.html">Appendix B - 16. Model query surface (`repo-query`)</a></li>
-<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 17. Service-flow / API model</a></li>
-<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 18. Symbol-anchored traceability graph (derived edges)</a></li>
-<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 19. Synchronization model (meta-sync)</a></li>
-<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 20. User-journey model (product-goal → implementation bridge)</a></li>
+<li><a class="" href="appendix-b-model-graded-finding-severity.html">Appendix B - 16. Model-graded finding severity (distance-graded gate)</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 17. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 18. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 19. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 20. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 21. User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
 <li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
 <li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
@@ -332,7 +334,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.4-the-development-view.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 12 · The Process View"><header class="chap"><div class="kicker"><a href="4.1-the-executable-zoo.html" aria-label="Beginning of Part 4 — The Model Zoo">Part 4 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 12</a></div><h1>The Process View</h1></header><!-- noqa: book-section-cap | The Process View — the chapter front-loads five concept-primer insets (automaton, state-vs-sequence assertions, safety-vs-liveness, bounded model checking) that the reader needs before any Process-view model; the insets are self-contained boxed primers, not a wall of prose to break -->
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.4-the-development-view.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 13 · The Process View"><header class="chap"><div class="kicker"><a href="4.1-the-executable-zoo.html" aria-label="Beginning of Part 4 — The Model Zoo">Part 4 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 13</a></div><h1>The Process View</h1></header><!-- noqa: book-section-cap | The Process View — the chapter front-loads five concept-primer insets (automaton, state-vs-sequence assertions, safety-vs-liveness, bounded model checking) that the reader needs before any Process-view model; the insets are self-contained boxed primers, not a wall of prose to break -->
 <p id="idx-def-process-view">The Logical view named the parts. The Process view asks the question the logical view cannot: what happens when many parts run at the same time? Concurrency turns a correct-in-isolation design into a source of races, deadlocks, and torn writes. The Process view is the lens for that — the states a system moves through, the locks it takes, and the invariants that must survive every interleaving.</p>
 <p>This is the chapter where invariants stop being predicates over one state and become predicates over an <em>order of events</em>. That step-up pulls in a cluster of ideas: what an automaton is, safety versus liveness, bounded model checking, and the temporal-logic step from a state assertion to a sequence assertion. Two general types live here — the <strong>state machine</strong> and the <strong>automaton / formal invariant</strong> — and four real models embody the view: formal invariant verification as the verification backbone, the synchronization model, and the mediator and single-writer registries.</p>
 <blockquote id="idx-def-state-machine" class="concept-inset"><p class="inset-title" id="inset-automaton">Inset I4 — What is an automaton / state machine?</p>
@@ -405,4 +407,4 @@ if __name__ == "__main__":
 <h3 id="single-writer-registry">The single-writer registry</h3>
 <p id="idx-def-single-writer-registry">The single-writer registry is the <em>exactly-one</em> half, and its failure mode is what makes it a separate model. A mediator caps how many may run; a single-writer contract says one function, and only one, may write a given piece of shared state. The failure that guards against is a <em>torn or interleaved write</em> — two writers corrupting the same state — which a concurrency cap of two would happily permit, because two mediated processes racing on the same record is still within cap. Its quality property is <strong>single-writer coverage</strong>: every mutator of shared state has a declared monopoly, and a second discovered writer of that state is a finding. That is the distinction to hold onto — the mediator bounds contention, the single-writer registry bounds <em>ownership</em>, and only naming both keeps a corruption bug from hiding inside a load limit. Its full construct-and-invariant treatment is in the appendix.</p>
 <p>---</p>
-<p>The Process view holds the system consistent under interleaving. The next chapter steps back from the runtime to the source: not what runs at once, but how the code is packaged, layered, and owned — the Development view.</p><div class="pager"><a class="prev" href="4.2-the-logical-view.html"><span class="dir">‹ Previous</span><span class="ttl">11 · The Logical View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.4-the-development-view.html"><span class="dir">Next ›</span><span class="ttl">13 · The Development View</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.4-the-development-view.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', themeVariables: { fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '20px' }, flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 }, sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 }, state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {} });</script></body></html>
+<p>The Process view holds the system consistent under interleaving. The next chapter steps back from the runtime to the source: not what runs at once, but how the code is packaged, layered, and owned — the Development view.</p><div class="pager"><a class="prev" href="4.2-the-logical-view.html"><span class="dir">‹ Previous</span><span class="ttl">12 · The Logical View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.4-the-development-view.html"><span class="dir">Next ›</span><span class="ttl">14 · The Development View</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="5.1-brownfield.html">Next part ⇒</a><a href="4.4-the-development-view.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', themeVariables: { fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '20px' }, flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 }, sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 }, state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {} });</script></body></html>

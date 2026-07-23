@@ -181,7 +181,7 @@
 
   <p class="lead">This site describes both halves. The first is the guidance on what to fix in advance; the
   second is the machinery for responding when something slips through. It packages both as three Claude
-  skills with a <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>68 governance
+  skills with a <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>69 governance
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
 
@@ -321,7 +321,7 @@
   <hr class="sep" />
 
   <h2 class="section-h">Explore the catalogue</h2>
-  <p class="section-sub">68 governance mechanisms — the repertoire this loop produced in one real
+  <p class="section-sub">69 governance mechanisms — the repertoire this loop produced in one real
   production system.</p>
   <div class="cards-grid">
   <a class="lcard" href="catalogue-figure.html"><b>Views of the governance catalogue</b><span>the whole catalogue at a glance — four views, mechanisms clickable</span></a>
@@ -404,6 +404,7 @@
 <tr><td class="c-name"><a href="models-bridge/system-models/meta-model-consumption.html">Meta-model consumption (read, don't hardcode) — <em>trunk / method</em></a></td><td class="c-sum">Read the model at runtime; never hardcode a snapshot.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/control-substrate-dependency.html">Control↔substrate dependency (computed blast-radius) — <em>trunk / method</em></a></td><td class="c-sum">Each control declares its substrate assumption as metadata; a query computes the blast radius.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/symbol-anchored-traceability-graph.html">Symbol-anchored traceability graph (derived edges) — <em>trunk / method</em></a></td><td class="c-sum">A typed model↔lint↔code↔proof↔registry graph whose edges are derived, symbol-anchored, re-checked.</td><td class="c-enf">Hard</td></tr>
+<tr><td class="c-name"><a href="models-bridge/system-models/model-graded-finding-severity.html">Model-graded finding severity (distance-graded gate) — <em>trunk / method</em></a></td><td class="c-sum">A gate grades each finding block/warn/silence by its model-distance from the changed files.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/service-flow-model.html">Service-flow / API model — <em>product-facing</em></a></td><td class="c-sum">The SOA source-of-truth NetworkPolicy and wiring are generated from.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/user-journey-model.html">User-journey model (product-goal → implementation) — <em>product-facing</em></a></td><td class="c-sum">User journeys as typed entities: actor, goal, ordered steps joined to the endpoints they cross.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/domain-registries.html">Domain registries — <em>product-facing</em></a></td><td class="c-sum">Frozen typed registries for the system's domain facts.</td><td class="c-enf">Hard</td></tr>
