@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="current" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Front Matter</div><h1>Preface</h1></header><p>This is a book about engineering — specifically, about what engineering work becomes when writing the code stops being the hard part. For most of the history of software, the scarce resource was implementation: someone had to sit down and type the thing into existence, and that typing was the bottleneck everything else queued behind. Coding agents have moved that bottleneck. Code is now cheap to produce and fast to change. What is not cheap is judging, constraining, validating, and maintaining it — deciding what to build, catching where fast code went wrong, and keeping a growing system trustworthy while it changes under you every day. That shift is the subject of this book.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="1.1-the-ada-context.html">Next part ⇒</a><a href="0.2-acknowledgments.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Preface · Preface"><header class="chap"><div class="kicker">Front Matter</div><h1>Preface</h1></header><p>This is a book about engineering — specifically, about what engineering work becomes when writing the code stops being the hard part. For most of the history of software, the scarce resource was implementation: someone had to sit down and type the thing into existence, and that typing was the bottleneck everything else queued behind. Coding agents have moved that bottleneck. Code is now cheap to produce and fast to change. What is not cheap is judging, constraining, validating, and maintaining it — deciding what to build, catching where fast code went wrong, and keeping a growing system trustworthy while it changes under you every day. That shift is the subject of this book.</p>
 <p>My name is James Davis. I am a professor of software engineering in the Elmore Family School of Electrical and Computer Engineering at Purdue University. My job is to find out things other people do not know and write them down so they do. This book is one of those findings. Over a stretch of a few months I built a real production system — a document-accessibility service, <a href="https://scholaccess.com">DocAble</a>, described in the two Context chapters that open the book — almost entirely by dispatching AI coding agents rather than writing code myself. I watched what that mode of work demanded, and this book is what I learned about doing it well.</p>
 <p>I want to be plain about what this book is and is not. It is not a memoir of the experience, though the experience was strange enough to warrant one. It is not a survey of every AI coding tool, which would be stale before it printed. It is a field report and a method: the concrete engineering practices that turn a fast code fabricator into a production line you can trust. Where a claim rests on a number, I give the number. Where a practice was learned by getting it wrong first, I say so.</p>
 <h2>Where this book sits on the shelf</h2>
@@ -105,4 +125,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <h2>The through-line, and who it is for</h2>
 <p>The through-line is a single idea, and it is worth stating up front so you can hold every chapter against it. <strong>When you build with an agent, you are not managing a coder; you are running a printer.</strong> A 3D printer builds almost anything you can describe, but only what you describe — hand it a bad model and you get a bad part, every time, and the fault is in the instructions, not the machine. An agent is the same. It can build essentially anything you can explain to it, and the entire discipline of this book lives in that "so long as you can explain it." Explaining a system to a probabilistic machine well enough that it builds the right thing, at speed, without a human reading every line — that is a real engineering craft, not a knack, and it can be taught.</p>
 <p>This book is for the software engineers who suspect the ground has moved and want to know where to stand. On the surface it is about a tool I built to help people with disabilities access documents. Underneath, it is about a working method for building anything with agents: how to frame the problem, model the world for the machine, put every change on rails from dispatch to production, and convert each failure you hit into a guardrail that stops the next one. You will not need my domain to use any of it. You will need a codebase, an agent, and the willingness to treat the instructions as the job.</p>
-<p>Let me show you what I found.</p><div class="pager"><span class="prev disabled" aria-hidden="true"></span><a class="home" href="index.html">Contents</a><a class="next" href="0.2-acknowledgments.html"><span class="dir">Next ›</span><span class="ttl">Acknowledgments</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>Let me show you what I found.</p><div class="pager"><span class="prev disabled" aria-hidden="true"></span><a class="home" href="index.html">Contents</a><a class="next" href="0.2-acknowledgments.html"><span class="dir">Next ›</span><span class="ttl">Acknowledgments</span></a></div><div class="pager-jump"><div class="jump"><a href="1.1-the-ada-context.html">Next part ⇒</a><a href="0.2-acknowledgments.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

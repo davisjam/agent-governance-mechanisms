@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,81 +109,197 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="current" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Appendix A — The Pattern Catalogue</div><h1>Appendix A — Agent patterns</h1></header><p>Appendix A re-projects the <strong>Agent</strong> governance mechanisms from the catalogue into the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the catalogue entry sources at build time, so they cannot drift from the catalogue. Each <strong>Structure</strong> and <strong>Sample Code</strong> section is a placeholder; a real diagram and sample are future work.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="appendix-b-models-bridge.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix A — Agent patterns"><header class="chap"><div class="kicker">Appendix A — Agent patterns</div><h1>Appendix A — Agent patterns</h1></header><p>Appendix A re-projects the <strong>Agent</strong> governance mechanisms from the catalogue into the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the catalogue sources at build time, so they cannot drift from the catalogue.</p>
+<p>The <strong>Agent</strong> mechanisms govern the fleet and the substrate that produces work — dispatch, gates, mediators, lifecycle, and the governance documents that steer every agent.</p>
+<figure class="book-figure catalogue-embed"><iframe src="catalogue-figure.html" title="The governance mechanism map: click any mechanism to open its Gang-of-Four pattern here in the appendix. This Part covers the Agent mechanisms." loading="lazy"></iframe><figcaption>The governance mechanism map — every mechanism in the catalogue, in four views. Click a mechanism to jump to its pattern in this appendix. <a href="catalogue-figure.html">Open the full interactive map ›</a></figcaption></figure>
 <h1>context-and-dispatch</h1>
-<h2>Brief-linting</h2>
+<h2 id="brief-linting">Brief-linting</h2>
 <p><strong>Intent</strong> — Statically lint an agent's task brief <em>before the agent is spawned</em>, refusing to launch any brief missing the markers that make the agent's work safe and well-scoped.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/context-and-dispatch/brief-linting.html">context-and-dispatch / Brief-linting</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/context-and-dispatch/brief-linting.html">context-and-dispatch / Brief-linting</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>A brief is the agent's entire world: it is the only instruction set the agent reads before it starts mutating a repository. A brief with a missing marker does not fail loudly. It fails <em>silently and downstream</em>. Omit the worktree-isolation marker and the agent edits `main` directly, with no fence firing. Omit the dispatch-id and the lifecycle substrate can't track or clean the agent. Omit a mandatory safety snippet (PATH export, commit-cadence, submodule check) and the agent trips a sharp edge 20 minutes in. Because brief authoring is a manual act repeated for <em>every</em> dispatch, the failure is not a one-off; it is a class that recurs on each launch and compounds across a concurrent fleet.</p>
 <h3>Applicability</h3>
 <ul><li>Briefs are <strong>structured text with grep-able marker strings</strong>, not free prose; the lint's checks are string presence assertions.</li><li>A <strong>mandatory-snippet registry</strong> the lint can enumerate (see <a href="../agent/governance-doc-controls/mandatory-snippet-table.html">mandatory-snippet-table</a>).</li><li>A <strong>dispatch wrapper</strong> that calls the lint on the canonical path and refuses to proceed on failure. Otherwise the lint is optional and therefore skipped under time pressure.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Brief-linting"]</pre>
+<p>The linter runs a battery of presence checks over the brief and returns a verdict at the point of no return: pass launches the agent, any failure refuses the dispatch.</p>
+<pre class="mermaid">flowchart LR
+  Brief[/Task brief/] --&gt; Lint{{Brief lint}}
+  Reg[(Marker registry)] --&gt; Lint
+  Lint --&gt;|all markers present| Launch([Dispatch agent])
+  Lint --&gt;|any marker absent| Refuse([Refuse launch, exit 1])</pre>
+<p><em>Accessible description: the brief and a registry of required markers both feed a brief-lint gate; when every required marker is present the agent is dispatched, and when any is missing the launch is refused before the agent starts.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Brief-linting</code></pre>
+<p>The lint reads a registry of required marker strings and asserts each appears in the brief text. It is grep, not parsing — the value is that a malformed brief <em>cannot</em> be dispatched, not that it is unlikely to be. A content check gates on the brief's declared genre, so a citation check fires only on briefs that require the citation.</p>
+<pre><code>import sys
+
+REQUIRED_MARKERS = {"isolation: worktree", "dispatch-id:", "subagent-type:"}
+GENRE_CHECKS = {
+    # brief genre -&gt; markers that genre must additionally carry
+    "code": {"cite:file-line", "scope-allowlist:"},
+    "doc": set(),
+}
+
+def lint_brief(text: str) -&gt; list[str]:
+    findings = [f"missing required marker: {m}" for m in REQUIRED_MARKERS if m not in text]
+    genre = next((g for g in GENRE_CHECKS if f"brief-genre: {g}" in text), None)
+    for m in GENRE_CHECKS.get(genre, set()):        # no genre -&gt; every genre's checks fire (safe default)
+        if genre is not None and m not in text:
+            findings.append(f"genre '{genre}' brief missing: {m}")
+    return findings
+
+if __name__ == "__main__":
+    findings = lint_brief(open(sys.argv[1]).read())
+    for f in findings:
+        print(f"REJECT: {f}")
+    sys.exit(1 if findings else 0)   # non-zero = do not launch</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Structure is not correctness.</strong> The lint checks that a brief is <em>well-formed</em>, not that it is <em>well-scoped</em>: a brief with every marker present can still task the agent with the wrong thing. A green lint buys safety-marker coverage, not a good brief; the human still owns scoping judgment.</li><li><strong>Authoring tax.</strong> Every brief must now carry boilerplate markers, making hand-authoring heavier. A brief-template generator mitigates this by pre-placing them by construction. Without the generator the markers become friction the author routes around.</li><li><strong>Each new marker is a maintenance edge.</strong> A new mandatory snippet means both a new lint check <em>and</em> threading the marker into the template; drift between the two produces false rejections.</li><li><strong>Bypassable by design.</strong> `ADA_TOOL_BYPASS_AGENT_FENCE=1` exists for humans; the control's floor is the discipline of not misusing the escape hatch (audit-logged, but still a hole).</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The agent CWD-drift-defense rule: the `isolation: "worktree"` marker is BLOCKING and lint-verified.</li><li>The dispatch wrapper's prepare step emits its go-ahead only after the brief passes.</li><li>A dedicated check verifies the dispatch-id token <em>and</em> the on-disk marker together, closing the "token present but no live agent" gap.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Enabler</strong> — <a href="../agent/governance-doc-controls/mandatory-snippet-table.html">mandatory-snippet-table</a> supplies the snippet markers this lint asserts; the registry must exist before the lint can check for them.</li><li><em>See also (complement)</em> — <a href="../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a>: the <em>content</em> side of dispatch (injects the rules relevant to the target files) where brief-linting is the <em>structure</em> side (checks the brief is well-formed). Same stage, orthogonal jobs.</li><li><em>See also (complement)</em> — <a href="../agent/context-and-dispatch/role-typed-dispatch.html">role-typed-dispatch</a>: the other half of a well-formed dispatch, the role that fixes LLM, isolation, and gate set.</li></ul>
-<h2>Docs hierarchy + governance index</h2>
+<h2 id="docs-hierarchy">Docs hierarchy + governance index</h2>
 <p><strong>Intent</strong> — Give every agent a single, numbered, cross-referenced <strong>rule index</strong> (loaded into its boot context) that points at the canonical deep doc for each rule, so the fleet shares one authoritative map instead of re-deriving invariants from scattered files.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/context-and-dispatch/docs-hierarchy.html">context-and-dispatch / Docs hierarchy + governance index</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/context-and-dispatch/docs-hierarchy.html">context-and-dispatch / Docs hierarchy + governance index</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>In a large codebase, the knowledge an agent needs to not-break-things is spread across hundreds of docs. Left to discover that knowledge on its own, an agent re-derives an invariant (badly), or violates a cross-file rule it never found. The failure recurs every time the doc corpus grows: more documentation makes any <em>single</em> fact <em>less</em> findable, not more. Without a canonical index, "the docs say so" is unfalsifiable and unenforceable; there is no agreed place the rule lives.</p>
 <h3>Applicability</h3>
 <ul><li>A <strong>discipline that every rule cross-references a canonical deep doc</strong>: the index carries the minimum, the doc carries the detail. Without this the index either bloats or is uselessly terse.</li><li>A <strong>cap/bloat lint</strong> and an <strong>index-coverage lint</strong> (see <a href="../agent/governance-doc-controls/doc-hygiene-lints.html">doc-hygiene-lints</a>); otherwise the index rots.</li><li>A <strong>stable-numbering convention</strong> so rules can be cited by number without churn.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Docs hierarchy + governance index"]</pre>
+<p>The index is the one shared map: every agent boots with it, each rule points at exactly one canonical deep doc, and two lints keep it from rotting back into a pile.</p>
+<pre class="mermaid">flowchart LR
+  Index["Rule index&lt;br/&gt;(boot context)"] --&gt; Agent([Every agent boots with it])
+  Index --&gt;|each rule cites one| Doc[(Canonical deep docs)]
+  Cap{{Cap + coverage lint}} -.-&gt;|fail if bloated or unlinked| Index</pre>
+<p><em>Accessible description: a single rule index is booted by every agent and points each rule at one canonical deep doc; a cap-and-coverage lint fails the build if the index bloats past its budget or a rule stops cross-referencing its doc.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Docs hierarchy + governance index</code></pre>
+<p>Two lints hold the index honest: a <strong>cap lint</strong> bounds its size so it stays scannable, and a <strong>conformance lint</strong> verifies each rule cross-references exactly one canonical doc that exists. The index carries the one-line summary; the doc carries the detail.</p>
+<pre><code>import sys
+
+LINE_CAP = 1300   # the index must stay scannable, or agents stop reading it
+
+def lint_index(lines: list[str], doc_exists) -&gt; list[str]:
+    findings = []
+    if len(lines) &gt; LINE_CAP:
+        findings.append(f"index is {len(lines)} lines; cap is {LINE_CAP} — evict a rule to a sub-doc")
+    for i, line in enumerate(lines, 1):
+        if line.lstrip().startswith("#rule"):          # a numbered rule row
+            ref = line.split("-&gt;")[-1].strip() if "-&gt;" in line else ""
+            if not ref:
+                findings.append(f"line {i}: rule cites no canonical doc")
+            elif not doc_exists(ref):
+                findings.append(f"line {i}: rule cites '{ref}', which does not resolve")
+    return findings
+
+if __name__ == "__main__":
+    import os
+    text = open(sys.argv[1]).read().splitlines()
+    findings = lint_index(text, doc_exists=os.path.exists)   # doc_exists: does the cited path resolve?
+    print("\n".join(findings))
+    sys.exit(1 if findings else 0)</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Per-invocation context tax.</strong> The index is booted by <em>every</em> agent on <em>every</em> dispatch, so every bullet is paid for continuously across the fleet. This cost is real enough that it needs its own control: the cap lint (see <a href="../agent/governance-doc-controls/claude-md-rule-index.html">claude-md-rule-index</a>) exists precisely to bound it.</li><li><strong>Small index ⇒ detail lives elsewhere ⇒ back to pull.</strong> Keeping the index scannable means a rule's <em>detail</em> sits in a sub-doc the agent must still fetch, re-introducing the availability-vs-binding gap for everything past the one-line summary. <a href="../agent/context-and-dispatch/dynamic-context-injection.html">Dynamic context injection</a> is the answer to that regress, not this control.</li><li><strong>Cross-refs rot.</strong> A rule can point at a moved or renamed doc; the conformance lint catches broken <em>links</em> but not a doc body that has drifted out from under its summary.</li><li><strong>Admission is judgment-heavy.</strong> The earns-its-spot test ("non-local", "non-derivable") is a human call; a lint can bound size but cannot decide what <em>deserves</em> the space.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>`CLAUDE.md`: the numbered rule index, boot context for every agent; enforced by a governance-doc bloat lint and a rule-conformance lint.</li><li>The repository documentation index: the complete doc index with one-line summaries.</li><li>The "what belongs in CLAUDE.md" three-part test (regression-preventing / non-derivable / non-local) that keeps the index minimal.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (two lenses)</em> — <a href="../agent/governance-doc-controls/claude-md-rule-index.html">claude-md-rule-index</a>: the <em>same artifact</em> viewed as <strong>enforced infrastructure</strong> (its hard-counterpart cap/conformance lints). This entry is the "shared dispatch-time context" lens; that one is the "enforced governance document" lens.</li><li><strong>Consumer</strong> — <a href="../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a> reads this index and delivers its <em>relevant subset</em> into a brief at dispatch time.</li><li><em>See also (complement)</em> — <a href="../models-bridge/system-models/meta-model-consumption.html">meta-model-consumption</a>: the machine-queryable analogue for facts that shouldn't live in prose at all.</li></ul>
-<h2>Dynamic context injection</h2>
+<h2 id="dynamic-context-injection">Dynamic context injection</h2>
 <p><strong>Intent</strong> — Map the files an agent is about to touch to the <em>exact constraints that govern those files</em> (lints, conventions, component boundaries, tests) and inject that subset into the agent's brief <strong>before it writes code</strong>, moving detection left of the cheapest CI gate.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/context-and-dispatch/dynamic-context-injection.html">context-and-dispatch / Dynamic context injection</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/context-and-dispatch/dynamic-context-injection.html">context-and-dispatch / Dynamic context injection</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>The recurring failure class is <strong>constraint under-specification at dispatch time.</strong> A coding agent lacks the tacit knowledge an experienced engineer has of <em>which</em> rules apply to a given change, so it makes plausible edits that violate them, then spends rounds (and tokens) discovering and repairing the violations. Call it "pinball." A layered validation hierarchy (pre-commit → merge check → deploy gate) makes it worse: context is lost between where the agent authored the change and where the failure surfaces. Across many concurrent agents, this wasted work multiplies.</p>
 <h3>Applicability</h3>
 <p>1. <strong>File-addressable constraints.</strong> Every constraint declares its <strong>scope</strong> (file patterns / component tags) and lives in a <strong>registry you can query by file</strong>. Anything not addressable by file scope cannot be sliced. 2. <strong>Self-documenting constraints.</strong> Each rule carries a name, docstring, and an actionable "How to fix" line. This is the decisive prerequisite: <em>the value of an injected constraint is bounded by the agent's ability to act on it</em>, and its inverse, <em>if you can't clearly explain a rule to an agent, the rule's own defense value is questionable.</em> 3. <strong>A slicing operator</strong> at two granularities, file-scope (forward) and line-range (reverse), built as <strong>multiple adapters</strong>, one per registry (lint fleet, component registry, banned-API list, test corpus, doc index). 4. <strong>An injection point</strong> in the dispatch pipeline (the brief-authoring step) plus the on-demand CLI.</p>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Dynamic context injection"]</pre>
+<p>One slicing operator runs in two directions. Forward maps target files to the constraints that will govern them and pushes them into the brief; reverse maps a diff's line ranges to the findings it introduced and feeds a self-heal gate.</p>
+<pre class="mermaid">flowchart LR
+  Files[/Target files/] --&gt;|forward: files → constraints| Slicer{{Slicing operator}}
+  Reg[(Constraint registries)] --&gt; Slicer
+  Slicer --&gt;|forward| Brief[Injected into brief]
+  Diff[/git diff ranges/] --&gt;|reverse: diff → findings| Slicer
+  Slicer --&gt;|reverse| Heal[Self-heal gate]</pre>
+<p><em>Accessible description: a slicing operator reads the constraint registries and runs in two directions — forward, mapping target files to the constraints injected into the brief before the agent writes, and reverse, mapping a diff's line ranges to the findings it introduced, which feed a self-heal gate.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Dynamic context injection</code></pre>
+<p>The forward slicer intersects each registered constraint's file-scope against the agent's target files and renders the matches (name, docstring, fix-hint) into the brief. The value of an injected constraint is bounded by the agent's ability to act on it, so the fix-hint is not optional.</p>
+<pre><code>import fnmatch
+
+# each constraint declares the file globs it governs + how to fix it — a self-documenting registry
+CONSTRAINTS = [
+    {"name": "no-raw-lib", "scope": ["model/**"], "fix": "route mutation through the typed seam"},
+    {"name": "typed-new-files", "scope": ["**/*.py"], "fix": "add the file to the strict type set"},
+]
+
+def constraints_for(files: list[str]) -&gt; list[dict]:
+    """Forward slice: which declared constraints govern *these* files?"""
+    hits = []
+    for c in CONSTRAINTS:
+        if any(fnmatch.fnmatch(f, pat) for f in files for pat in c["scope"]):
+            hits.append(c)
+    return hits
+
+def render_block(files: list[str]) -&gt; str:
+    lines = ["## Constraints governing your target files"]
+    for c in constraints_for(files):
+        lines.append(f"- **{c['name']}** — fix: {c['fix']}")
+    return "\n".join(lines)
+
+if __name__ == "__main__":
+    import sys
+    print(render_block(sys.argv[1:]))   # paste the block into the brief before dispatch</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Garbage-in.</strong> The control is only as good as the constraint declarations it slices: a rule with no scope tag can't be selected, and one with no actionable fix-hint can't be acted on. It <em>depends on</em> prerequisite 2 being true fleet-wide; it does not create that discipline.</li><li><strong>Advisory, not binding.</strong> Because forward injection is augmentation (see Enforcement), an agent can still ignore an injected constraint. It shifts the <em>odds</em>, raising salience at point-of-need, but a gate downstream is still what guarantees the rule; DCI reduces pinball, it does not eliminate violation.</li><li><strong>The relevance operator is itself fallible.</strong> Over-injection floods a brief with noise (lowering the salience the control trades on); under-injection silently omits a governing rule. Precision/recall of `files → constraints` is a real, tunable failure surface, not a solved mapping.</li><li><strong>Adapter maintenance.</strong> One adapter per registry (lint fleet, component registry, banned-API list, test corpus, doc index) must be kept in sync with its registry, or the sliced set drifts from truth.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>A constraint-extraction tool (forward slicing / discovery-time pull).</li><li>The diff-line-range attribution machinery (reverse) that powers CI self-heal.</li><li>Consumes the <a href="../models-bridge/system-models/component-zone-model.html">component-zone model</a> and the lint fleet's scope tags as its addressable registries (via the <a href="../models-bridge/system-models/meta-model-consumption.html">read-don't-hardcode</a> discipline).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Bridge</strong> — the <a href="../models-bridge/system-models/component-zone-model.html">component-zone model</a> (a models-bridge control) supplies the file → component → checks mapping the forward slicer reads. DCI is the <em>agent-facing</em> consumer of that bridge model; the same model <em>governs the product</em> via the boundary lints, so DCI is one end of the bridge.</li><li><em>See also (complement)</em> — <a href="../agent/context-and-dispatch/brief-linting.html">brief-linting</a>: the structural check on the brief; this is the content injected <em>into</em> it.</li><li><strong>Temporal complement (the feed-back twin)</strong> — <a href="../agent/lifecycle-and-observability/reflection-facet-substrate.html">reflection-facet-substrate</a> (built on <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-hooks</a>): injection is <strong>feed-forward</strong>, the constraints governing a task pushed into an agent <em>before</em> it acts, at dispatch. A tempo-gated <strong>reflection</strong> facet is the mirror image: it pulls the <em>operator</em> back to the same kind of repo policy <em>while or after</em> acting, at turn-tempo, so it is <strong>feed-back</strong> instead of feed-forward. Same move (meet the loop with the right policy at the right lifecycle moment), opposite direction in time. And just as injection <em>slices</em> one registry per file-set, a reflection substrate generalizes across policy facets (convert-a-recurrence, spot-a-second-copy, a stale runbook), consolidated into one paced emission so the facets don't compound into the alarm fatigue each was biased to avoid. The deeper unity: both are delivery <em>modalities over the same policy source of truth</em>. Push it in comprehensively at entry, or surface a slice of it selectively at tempo, so one policy-materials registry could feed both.</li><li><strong>Generalization:</strong> <em>every meta-substrate authored for human discipline (the lint fleet, the component registry, the doc index, the banned-API registry, the test corpus) becomes a just-in-time constraint registry the moment you add a slicing operator over it.</em> Lint pre-briefing is only the first adapter.</li></ul>
-<h2>Role-typed dispatch</h2>
+<h2 id="role-typed-dispatch">Role-typed dispatch</h2>
 <p><strong>Intent</strong> — Dispatch every agent under a <strong>typed role</strong> (`sonnet-active` / `opus` / `lint-runner` / `commit-slave`) that determines its LLM, isolation mode, permissions, and which gates apply, so those choices are policy-by-type, not a per-dispatch judgment call.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/context-and-dispatch/role-typed-dispatch.html">context-and-dispatch / Role-typed dispatch</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/context-and-dispatch/role-typed-dispatch.html">context-and-dispatch / Role-typed dispatch</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Every dispatch bundles several correlated decisions: which LLM (Opus for architecture, Sonnet for mechanical work), whether the agent runs in an isolated worktree or on `main`, and which compute gates it must respect. Made ad hoc, these decisions drift apart from the work: a Sonnet gets pointed at an architecture change whose incorrect output would cause an incident; a commit agent runs in a worktree when it needs to be on `main` for the hook to fire; a resource-hungry agent runs the aggregate lint it should never trigger. The failure recurs on <em>every</em> dispatch and is invisible until the wrong-tier output ships or the gate is bypassed.</p>
 <h3>Applicability</h3>
 <ul><li>A <strong>role registry</strong>: the closed enum plus its policy tuple. Free-form role strings reintroduce the drift the control removes.</li><li><strong>Enforcers that read the role</strong> at each gated operation (via an env var like `ADA_TOOL_AGENT_ROLE`), so a mis-roled agent is refused rather than merely mislabeled.</li><li>A <strong>dispatch wrapper</strong> that is the sole way to set the role, so it cannot be set inconsistently.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Role-typed dispatch"]</pre>
+<p>The role is a small closed enum. Each value maps to one policy tuple (model, isolation, gates), and downstream enforcers refuse a call whose declared role doesn't match.</p>
+<pre class="mermaid">flowchart LR
+  Dispatch[/--role r/] --&gt; Enum{{Role enum}}
+  Enum --&gt;|maps to| Tuple["Policy tuple&lt;br/&gt;model · isolation · gates"]
+  Tuple --&gt; Enforcer{Enforcer at gated op}
+  Enforcer --&gt;|role matches| Run([Operation proceeds])
+  Enforcer --&gt;|role mismatch| Deny([Refused])</pre>
+<p><em>Accessible description: a dispatch declares a role drawn from a closed enum; the enum maps to one policy tuple of model, isolation, and gates; an enforcer at each gated operation lets the call proceed when the role matches and refuses it when it does not.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Role-typed dispatch</code></pre>
+<p>A role is a typed enum bound to one policy tuple. Declaring the role once binds the whole bundle; an enforcer at each gated operation reads the declared role and refuses a mismatch, so the correlated choices cannot silently diverge.</p>
+<pre><code>from dataclasses import dataclass
+from enum import Enum
+
+class Role(Enum):
+    WORKER = "worker"       # mechanical, isolated
+    ARCHITECT = "architect" # design/RCA, isolated
+    LINT_RUNNER = "lint"    # may run the aggregate sweep
+    COMMITTER = "committer" # runs on the main line so the commit hook fires
+
+@dataclass(frozen=True)
+class Policy:
+    model: str
+    isolated: bool
+    may_run_aggregate_lint: bool
+
+POLICY = {
+    Role.WORKER:      Policy("small", isolated=True,  may_run_aggregate_lint=False),
+    Role.ARCHITECT:   Policy("large", isolated=True,  may_run_aggregate_lint=False),
+    Role.LINT_RUNNER: Policy("small", isolated=True,  may_run_aggregate_lint=True),
+    Role.COMMITTER:   Policy("small", isolated=False, may_run_aggregate_lint=False),
+}
+
+def enforce_aggregate_lint(role: Role) -&gt; None:
+    if not POLICY[role].may_run_aggregate_lint:      # the gate refuses the wrong role outright
+        raise SystemExit(f"role {role.value} may not run the aggregate lint")</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>A closed enum is rigid.</strong> A task that fits no role forces a mis-fit or a new role. The enum's virtue (no per-dispatch drift) is also its cost (no per-dispatch flexibility).</li><li><strong>The role leaks.</strong> `ADA_TOOL_AGENT_ROLE` propagates into subprocesses; the build-pool agent must <em>not</em> export it or it trips the role guard in a downstream deploy. The type that fixes dispatch policy also becomes ambient state that has to be special-cased.</li><li><strong>Declaring ≠ matching.</strong> A role fixes LLM/isolation/gates but does not verify the <em>work</em> suits the role: a Sonnet mis-dispatched onto an architecture change still ships. Routing judgment (Opus vs Sonnet) stays with the human; the role only makes the choice legible and enforceable, not correct.</li><li><strong>Bypassable</strong> via the orchestrator-check escape (audit-logged).</li></ul>
 <h3>Known Uses</h3>
@@ -173,76 +307,158 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <h3>Related Patterns</h3>
 <ul><li><strong>Consumer</strong> — <a href="../agent/gates-and-merge-train/pre-commit-hook.html">pre-commit-hook</a>: the commit path consumes the role fixed at dispatch; the `commit-slave` role is shaped precisely so the hook fires.</li><li><em>See also (complement)</em> — <a href="../agent/context-and-dispatch/brief-linting.html">brief-linting</a>: checks the brief carries the isolation marker the role implies.</li><li><em>See also (complement)</em> — <a href="../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a>: the other dispatch-time input (content), where role is the dispatch-time policy.</li></ul>
 <h1>gates-and-merge-train</h1>
-<h2>Merge-train MIS batching</h2>
+<h2 id="merge-train-mis-batching">Merge-train MIS batching</h2>
 <p><strong>Intent</strong> — A merge-train that lands the largest set of <em>non-conflicting</em> agent worktrees per tick by computing a <strong>Maximum Independent Set</strong> over their file footprints, so many agents' work merges in one conflict-free pass instead of thrashing sequentially.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/gates-and-merge-train/merge-train-mis-batching.html">gates-and-merge-train / Merge-train MIS batching</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/gates-and-merge-train/merge-train-mis-batching.html">gates-and-merge-train / Merge-train MIS batching</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>With 6–8 agents committing concurrently, a naïve <em>sequential</em> merge serializes all of them and conflicts thrash: each merge risks colliding with the last, and the throughput of the whole fleet collapses toward one-at-a-time. Hot-spot files that many agents touch (the merge tool itself, `CLAUDE.md`, shared config) become bottlenecks that stall everything behind them. The failure recurs every merge tick and worsens as the fleet grows: more agents, more collisions.</p>
 <h3>Applicability</h3>
 <ul><li><strong>Known per-worktree file footprints</strong>: you must be able to say which files each worktree changed.</li><li><strong>A conflict predicate</strong> (shared file ⇒ edge) and a <strong>(greedy) MIS routine</strong>.</li><li><strong>Reachability / patch-id checks</strong> so a "landed" claim is verifiable.</li><li><strong>Footprint discipline at dispatch</strong>: the orchestrator has to <em>plan</em> disjoint waves for the MIS to pay off; the control pushes work upstream into scheduling.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Merge-train MIS batching"]</pre>
+<p>Build a conflict graph — worktrees are nodes, a shared file is an edge — then compute an independent set: the largest group with pairwise-disjoint footprints. That group is non-conflicting by construction and lands together; the rest defer.</p>
+<pre class="mermaid">flowchart LR
+  WTs[/Ready worktrees/] --&gt; Graph[Build conflict graph]
+  Graph --&gt;|shared file = edge| MIS{{Independent set}}
+  MIS --&gt;|disjoint footprints| Land([Land batch this tick])
+  MIS --&gt;|remainder| Defer([Defer to next tick])</pre>
+<p><em>Accessible description: ready worktrees form a conflict graph where a shared file is an edge; an independent-set routine picks the largest group with disjoint footprints, lands that group together this tick, and defers the remainder to the next.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Merge-train MIS batching</code></pre>
+<p>Model the tick as a graph problem: worktrees are nodes, a shared file makes an edge, and a greedy independent set picks a batch whose members share no file. Because no two members touch the same file, the batch cannot conflict — independence <em>proves</em> it, rather than hoping each merge misses the last.</p>
+<pre><code>def conflicts(a: set[str], b: set[str]) -&gt; bool:
+    return bool(a &amp; b)   # two worktrees conflict iff they share a changed file
+
+def independent_batch(footprints: dict[str, set[str]]) -&gt; list[str]:
+    """Greedy maximum independent set over the conflict graph.
+    Prefer small footprints first — they exclude the fewest others."""
+    batch, claimed = [], set()
+    for wt in sorted(footprints, key=lambda w: len(footprints[w])):
+        if not conflicts(footprints[wt], claimed):
+            batch.append(wt)
+            claimed |= footprints[wt]
+    return batch
+
+if __name__ == "__main__":
+    ready = {"wtA": {"x.py"}, "wtB": {"x.py", "y.py"}, "wtC": {"z.py"}}
+    print("land together:", independent_batch(ready))   # -&gt; wtA (or wtC) + wtC (or wtA); wtB defers</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>MIS is approximate.</strong> The batch is a greedy independent set, not provably maximum every tick: good enough, but not optimal.</li><li><strong>Hot-spot files hard-cap throughput.</strong> If eight agents all touch one file, the MIS is 1 regardless of the algorithm; the win depends entirely on dispatch-side footprint disjointness.</li><li><strong>It moves complexity upstream.</strong> The orchestrator must now think about footprints when composing waves; a mis-declared footprint can let a real conflict slip into a batch.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The merge-train batcher: the conflict-graph MIS batcher.</li><li>The disjoint-footprint dispatch recipe (compose waves with non-overlapping file sets).</li><li>Patch-id / ancestry reachability verification of landed commits.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Layer</strong> — the cron → merge-train stair, downstream of <a href="../agent/gates-and-merge-train/pre-commit-hook.html">pre-commit-hook</a> / <a href="../agent/gates-and-merge-train/sentinel-first-commit.html">sentinel-first-commit</a> and upstream of <a href="../agent/gates-and-merge-train/staged-deploy-gates.html">staged-deploy-gates</a>.</li><li><strong>Consumer</strong> — reads the <a href="../agent/lifecycle-and-observability/agent-registry.html">agent-registry</a> (Lifecycle &amp; observability family) to know which worktrees are ready to land.</li><li><strong>Enabler</strong> — disjoint-footprint dispatch discipline makes the batch large. The algorithm alone cannot beat a hot-spot file.</li></ul>
-<h2>Pre-commit hook (3-stanza, tree-sha markers)</h2>
+<h2 id="pre-commit-hook">Pre-commit hook (3-stanza, tree-sha markers)</h2>
 <p><strong>Intent</strong> — A three-stanza pre-commit hook that runs changed-file lints and unit-tier tests and writes tree-sha-keyed marker files, so an agent's commit cannot advance to merge unless the cheap checks actually passed on <em>exactly this tree</em>.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/gates-and-merge-train/pre-commit-hook.html">gates-and-merge-train / Pre-commit hook (3-stanza, tree-sha markers)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/gates-and-merge-train/pre-commit-hook.html">gates-and-merge-train / Pre-commit hook (3-stanza, tree-sha markers)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Agents commit fast and often. Without a cheap gate <em>at commit time</em>, a broken change flows downstream to the expensive gates (merge-train, deploy) where the context of <em>what the agent was doing</em> is gone and the cost of diagnosis is highest. Worse, because the merge-train batches many agents' work, one un-checked broken commit can poison an entire batch. The failure recurs on every commit and compounds with fleet size: the later the break is found, the more work is entangled with it.</p>
 <h3>Applicability</h3>
 <ul><li><strong>Changed-file-scoped lints</strong> fast enough to run on every commit; a whole-tree sweep here would make commit unbearable (that is what the aggregate-lint mediator is for, later in the staircase).</li><li><strong>A unit-tier test set</strong> that runs in seconds (the "1-second rule" discipline).</li><li><strong>A marker store keyed to tree identity</strong>, so a pass cannot be replayed onto a different tree.</li><li><strong>A downstream verifier</strong> (`merge-check`) that refuses unmarked commits; without it the markers are advisory and the gate is skippable.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Pre-commit hook (3-stanza, tree-sha markers)"]</pre>
+<p>Three stanzas fire in order at commit time, then a downstream merge-check reads the tree-keyed marker: a pass on <em>this</em> tree becomes an auditable fact, not a trust assumption.</p>
+<pre class="mermaid">flowchart LR
+  Commit[/Commit attempt/] --&gt; Lint[Changed-file lints]
+  Lint --&gt; Test[Unit-tier tests]
+  Test --&gt; Marker[(Write tree-sha marker)]
+  Marker --&gt; Check{merge-check: valid marker?}
+  Check --&gt;|yes| Advance([Advance to merge])
+  Check --&gt;|no| Reject([Reject commit])</pre>
+<p><em>Accessible description: a commit attempt runs changed-file lints, then unit-tier tests, then writes a marker keyed to the tree's sha; a downstream merge-check advances the commit only if a valid marker exists for its tree and rejects it otherwise.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Pre-commit hook (3-stanza, tree-sha markers)</code></pre>
+<p>The gate keys its pass-marker to the <strong>tree sha</strong>, so a marker from one tree can never vouch for another. The downstream verifier re-derives the tree sha and refuses any commit lacking a matching marker — the early check becomes an independently auditable fact.</p>
+<pre><code>import hashlib, os, sys
+
+MARKER_DIR = ".gate-markers"
+
+def tree_sha(files: list[str]) -&gt; str:
+    h = hashlib.sha256()
+    for f in sorted(files):
+        h.update(f.encode()); h.update(open(f, "rb").read())
+    return h.hexdigest()
+
+def pre_commit(files: list[str], run_lints, run_unit_tests) -&gt; int:
+    if run_lints(files) or run_unit_tests():          # each returns findings; non-empty = fail
+        return 1                                       # block the commit; no marker written
+    os.makedirs(MARKER_DIR, exist_ok=True)
+    open(os.path.join(MARKER_DIR, tree_sha(files)), "w").close()   # marker keyed to THIS tree
+    return 0
+
+def merge_check(files: list[str]) -&gt; int:
+    ok = os.path.exists(os.path.join(MARKER_DIR, tree_sha(files)))
+    return 0 if ok else 1   # refuse to advance a commit whose tree was never gated</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Per-commit latency tax.</strong> Every commit pays the lint + unit-tier cost; mitigated by changed-file scoping and unit-tier-only, but a slow unit-tier erodes commit cadence and <em>creates pressure to bypass</em>. The gate's cost is a direct incentive against it.</li><li><strong>Bypass prefixes are a real hole.</strong> `sentinel:`/`tombstone:`/`chore(worktree):` commits skip entirely; correctness there rests on those prefixes being used honestly (auditable, not prevented).</li><li><strong>Marker logic is subtle and easy to break.</strong> If the tree-sha keying drifts, markers silently stop matching and either block good commits or vouch for the wrong tree.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The 3-stanza hook + the worktree merge-check verification.</li><li>The `pre-commit-skip` marker for codemod-class waves (skips the lint stanza; unit-tier still runs).</li><li>The Commit-of `i/N` trailer the hook requires on agent commits.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Layer</strong> — the <em>first</em> stair of the commit → cron → merge-train → deploy staircase; escalates into <a href="../agent/gates-and-merge-train/merge-train-mis-batching.html">merge-train-mis-batching</a> and <a href="../agent/gates-and-merge-train/staged-deploy-gates.html">staged-deploy-gates</a>.</li><li><strong>Layer</strong> — <a href="../agent/gates-and-merge-train/sentinel-first-commit.html">sentinel-first-commit</a> runs at the same commit-time stage, catching <em>substrate</em> failure where this catches <em>content</em> failure.</li><li><em>See also (complement)</em> — <a href="../agent/context-and-dispatch/role-typed-dispatch.html">role-typed-dispatch</a>: the commit path this hook guards <em>consumes</em> the role fixed at dispatch (the `commit-slave` role is shaped so the hook fires).</li><li><strong>Counterpart</strong> — <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-hooks</a>: the other kind of hook. This one fires on a <em>commit</em> and guards what gets <strong>written</strong>; that one fires on a <em>runtime lifecycle event</em> (turn-stop, compaction, session-start) and guards what the operator's loop <strong>does</strong>.</li></ul>
-<h2>Sentinel first-commit early-abort</h2>
+<h2 id="sentinel-first-commit">Sentinel first-commit early-abort</h2>
 <p><strong>Intent</strong> — A health check on an agent's <em>first</em> commit that surfaces orphaned-worktree and broken-substrate failures at minute zero, before the agent burns its whole budget producing work that can never land.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/gates-and-merge-train/sentinel-first-commit.html">gates-and-merge-train / Sentinel first-commit early-abort</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/gates-and-merge-train/sentinel-first-commit.html">gates-and-merge-train / Sentinel first-commit early-abort</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>An agent dispatched into a subtly broken worktree (a missing marker file, stale substrate, an empty submodule, a wrong branch) will work happily for 30–60 minutes and then fail at commit, or produce work that cannot be rebased or cherry-picked. The failure is <strong>invisible until the end</strong>, so its cost is the <em>entire dispatch</em>: the whole agent budget spent on unlandable work. It recurs whenever the substrate drifts between dispatch and consumption, and compounds because each occurrence wastes a full run, not a small step.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A detectable "first commit" moment</strong> to hang the check on.</li><li><strong>Substrate-health predicates</strong> that are cheap and total (marker present, branch correct, CWD under worktree); the lifecycle substrate must expose checkable facts.</li><li><strong>An abort path</strong> that stops the run cleanly rather than letting it limp on.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Sentinel first-commit early-abort"]</pre>
+<p>The first commit is the trip-wire: assert the substrate is healthy, and abort the whole run early if any assertion fails, converting an hour of waste into a one-minute abort.</p>
+<pre class="mermaid">flowchart LR
+  First[/First commit/] --&gt; Assert{Substrate healthy?}
+  Assert --&gt;|all predicates pass| Continue([Run proceeds])
+  Assert --&gt;|any fails| Abort([Abort at t≈0])</pre>
+<p><em>Accessible description: on the agent's first commit a sentinel asserts a set of substrate-health predicates; if all pass the run proceeds, and if any fails the run aborts at minute zero rather than at minute sixty.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Sentinel first-commit early-abort</code></pre>
+<p>The check hangs on the first-commit event and asserts a set of cheap, total substrate-health predicates — correct worktree root, live marker present, expected branch, CWD inside the worktree. Any failure aborts the run before the budget is spent.</p>
+<pre><code>import os, sys
+
+def substrate_healthy(agent_id: str, cwd: str, branch: str, marker_exists) -&gt; list[str]:
+    """Cheap, total predicates. Each failure is a reason to abort at t≈0."""
+    problems = []
+    root = os.environ.get("AGENT_WORKTREE_ROOT", "")
+    if not root or not cwd.startswith(root):
+        problems.append("CWD is not under the agent's worktree root")
+    if not marker_exists(agent_id):
+        problems.append("live marker file is missing")
+    if branch != f"worktree-agent-{agent_id}":
+        problems.append(f"on branch '{branch}', expected worktree-agent-{agent_id}")
+    return problems
+
+def on_first_commit(agent_id, cwd, branch, marker_exists) -&gt; int:
+    problems = substrate_healthy(agent_id, cwd, branch, marker_exists)
+    for p in problems:
+        print(f"SENTINEL ABORT: {p}")
+    return 1 if problems else 0   # non-zero aborts the run at its first commit</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>It only catches what it asserts.</strong> The health predicates are a hand-maintained set; a new failure mode not in the predicate list still slips to t=60. The check is as good as its assertions.</li><li><strong>A false abort kills a healthy agent.</strong> An over-strict or drifted predicate blocks good work; the AUDIT-ONLY → BLOCKING migration exists precisely to buy confidence before it can do that.</li><li><strong>First-commit latency.</strong> Small, but it is on the critical path of every agent's first commit.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The sentinel check: the first-commit substrate assertion + early abort.</li><li>The <a href="../ABSTRACTIONS.html#dispatch-self-check">dispatch-self-check</a>: the boot-time sibling.</li><li>The sentinel-check discipline: land a substrate check at the first commit that runs end-to-end against the real brief (AUDIT-ONLY → BLOCKING).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Layer</strong> — runs at the same commit-time stair as <a href="../agent/gates-and-merge-train/pre-commit-hook.html">pre-commit-hook</a>: this guards <em>substrate</em> health, the hook guards <em>content</em> correctness.</li><li><strong>Counterpart</strong> — the boot-time <a href="../ABSTRACTIONS.html#dispatch-self-check">dispatch-self-check</a>: boot-check at t=0-start, sentinel at first-commit; together they bracket the window a substrate can break in.</li><li><strong>Enabler</strong> — the <a href="../agent/lifecycle-and-observability/agent-registry.html">agent-registry</a> markers (Lifecycle &amp; observability family) are the facts this check reads. Without that substrate there is nothing to assert against.</li></ul>
-<h2>Staged deploy gates (canary → smoke → promote)</h2>
+<h2 id="staged-deploy-gates">Staged deploy gates (canary → smoke → promote)</h2>
 <p><strong>Intent</strong> — A deploy pipeline that escalates <strong>canary → smoke → promote</strong>, blocking promotion to production until each cheaper stage passes on a traffic-free revision, so a bad build is caught before users see it, not after.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/gates-and-merge-train/staged-deploy-gates.html">gates-and-merge-train / Staged deploy gates (canary → smoke → promote)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/gates-and-merge-train/staged-deploy-gates.html">gates-and-merge-train / Staged deploy gates (canary → smoke → promote)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Shipping a build straight to production means a regression lands on users; the failure <em>is</em> the incident. This is standard practice everywhere, but it matters far more at agentic velocity, precisely because deploys are frequent and agent-initiated: the more often you ship, the more often an un-gated bad build reaches users.</p>
 <h3>Applicability</h3>
 <ul><li><strong>Canary capability</strong>: the ability to deploy a revision that takes no production traffic.</li><li><strong>A smoke suite</strong> that meaningfully exercises the canary URL (real dependencies, not stubs).</li><li><strong>Promotion + rollback primitives</strong> and revision GC.</li><li><strong>A pre-launch green signal</strong> (lints / changed-since-main / flaky-class check) as the pre-launch predicate.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Staged deploy gates (canary → smoke → promote)"]</pre>
+<p>The pipeline is a staircase: a cheap pre-launch predicate gates the whole thing, then a canary takes no traffic, smoke tests it against its own URL, and promotion happens only on green.</p>
+<pre class="mermaid">flowchart LR
+  Pre{Pre-launch green?} --&gt;|no| Skip([Never start])
+  Pre --&gt;|yes| Canary[Deploy canary, no traffic]
+  Canary --&gt; Smoke{Smoke passes?}
+  Smoke --&gt;|no| Block([Promotion blocked])
+  Smoke --&gt;|yes| Promote([Promote to production])</pre>
+<p><em>Accessible description: a pre-launch predicate gates the deploy; if green a canary revision is deployed taking no traffic and smoke-tested against its own URL, and promotion to production happens only when the smoke stage passes, otherwise promotion is blocked.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Staged deploy gates (canary → smoke → promote)</code></pre>
+<p>The deploy is a staircase of gates, each cheaper than the next stage it guards. The pre-launch predicate avoids paying build minutes for a doomed deploy; the canary and smoke gates catch a break on a revision no user can reach.</p>
+<pre><code>def staged_deploy(pre_launch_green, build, deploy_canary, smoke, promote) -&gt; int:
+    if not pre_launch_green():           # cheapest gate: lints green, no known flaky class, changed-set clean
+        print("pre-launch predicate red — not starting"); return 0
+    artifact = build()
+    canary = deploy_canary(artifact)     # a revision taking NO production traffic
+    if not smoke(canary.url):            # exercise the canary's own URL with real dependencies
+        print("smoke failed on canary — promotion blocked"); return 1
+    promote(canary)                      # only a green canary reaches users
+    return 0</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Staging costs real build minutes.</strong> The gate is not free; the pre-launch predicate exists to avoid spending them on a deploy that was never going to pass.</li><li><strong>Smoke ≠ full coverage.</strong> A thin smoke suite lets real breaks through the gate; the canary is only as good as what the smoke actually checks.</li><li><strong>The gate infrastructure itself can drift.</strong> Validating via the deploy pipeline assumes the pipeline is sound; a drifted canary/smoke path gives false confidence (don't validate via untested infra).</li><li><strong>Deploy latency.</strong> Each stage adds wall-clock before users get the change.</li></ul>
 <h3>Known Uses</h3>
@@ -250,19 +466,41 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <h3>Related Patterns</h3>
 <ul><li><strong>Layer</strong> — the <em>last</em> stair of the staircase, downstream of <a href="../agent/gates-and-merge-train/merge-train-mis-batching.html">merge-train-mis-batching</a>; the most expensive gate, reached only after the cheap ones passed.</li><li><em>See also (complement)</em> — the product-target per-pass validators and conformance checks run <em>inside</em> the shipped artifact; these staged gates wrap the deploy <em>of</em> that artifact.</li></ul>
 <h1>governance-doc-controls</h1>
-<h2>CLAUDE.md rule index (the governance document as a control)</h2>
+<h2 id="claude-md-rule-index">CLAUDE.md rule index (the governance document as a control)</h2>
 <p><strong>Intent</strong> — Treat the top-level governance document as <em>enforced infrastructure</em>: a numbered, stable-numbered rule index, loaded into every agent's boot context, held honest by its own enforcement counterpart (a bloat/cap lint plus a rule-conformance lint), so the document that carries every other control cannot silently rot.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/claude-md-rule-index.html">governance-doc-controls / CLAUDE.md rule index (the governance document as a control)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/claude-md-rule-index.html">governance-doc-controls / CLAUDE.md rule index (the governance document as a control)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>The failure class is <strong>governance that doesn't bind and doesn't last.</strong> Two ways it manifests. First, <em>non-binding</em>: a convention lives in someone's head or a stale wiki page, so a fresh agent never applies it and the failure it was meant to prevent recurs. Second, <em>rot</em>: a living rules document either bloats until nothing in it is read (every agent pays the context cost, none of it lands), or its rules drift out of sync with the canonical docs they were supposed to summarize. Both compound brutally under a fleet: the document is booted by <em>every</em> agent, so a bloated or drifted index taxes or misleads every dispatch, continuously.</p>
 <h3>Applicability</h3>
 <ul><li>A <strong>boot-context loader</strong> that injects the document into every agent; without this it is just another doc.</li><li>A <strong>budget + cap lint</strong>, or the index bloats until it is unread. The cap is the forcing function that keeps every bullet paying its way.</li><li>An <strong>admission predicate</strong> (the earns-its-spot test) and a <strong>router</strong> to somewhere-else, so keeping the index small doesn't mean losing rules; they relocate to sub-docs / code comments.</li><li>A <strong>cross-reference convention</strong> (every rule → one canonical doc) plus a conformance lint, so the index stays a <em>map</em>, not a second copy that drifts.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — CLAUDE.md rule index (the governance document as a control)"]</pre>
+<p>The document is booted by every agent and carries three enforced properties — a size budget, an admission predicate, and a per-rule cross-reference — each held by a blocking lint.</p>
+<pre class="mermaid">flowchart LR
+  Doc["Governance document&lt;br/&gt;(booted by every agent)"] --&gt; Agents([Every agent])
+  Cap{{Cap / bloat lint}} -.-&gt;|fail if over budget| Doc
+  Conf{{Conformance lint}} -.-&gt;|fail if a rule cites no canonical doc| Doc
+  Admit{{Admission test}} -.-&gt;|route non-qualifying rules out| Doc</pre>
+<p><em>Accessible description: the governance document is booted by every agent; a cap lint fails the build if it exceeds its size budget, a conformance lint fails if any rule stops citing a canonical doc, and an admission test routes rules that don't earn a spot into sub-docs.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — CLAUDE.md rule index (the governance document as a control)</code></pre>
+<p>The document is governed like an artifact: a size budget bounds the per-invocation context cost, and an admission predicate — three conditions a rule must all satisfy — keeps the budget satisfiable without deleting real rules. Anything failing the predicate is routed to a sub-doc instead of the index.</p>
+<pre><code>def earns_a_spot(rule) -&gt; bool:
+    """Admit a rule to the booted index only if all three hold — else route it out."""
+    return (
+        rule.regression_preventing        # an agent touching unrelated code could violate it
+        and rule.not_derivable_from_local # reading the local file wouldn't surface it
+        and rule.crosses_files            # it spans files / subsystems, not one class
+    )
+
+def lint_index(rules, line_count, budget: int) -&gt; list[str]:
+    findings = []
+    if line_count &gt; budget:
+        findings.append(f"index over budget ({line_count} &gt; {budget}) — evict a rule to a sub-doc")
+    for r in rules:
+        if not earns_a_spot(r):
+            findings.append(f"rule '{r.name}' fails the admission test — route to a sub-doc")
+        if not r.canonical_doc:
+            findings.append(f"rule '{r.name}' cites no canonical deep doc")
+    return findings</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>A hard budget means perpetual triage.</strong> The cap is a fixed context budget, so admitting a new rule eventually means <em>evicting</em> one to a sub-doc. The index is never "done"; it is a continuously re-triaged working set, and the eviction call is judgment-heavy.</li><li><strong>Presence ≠ obedience.</strong> A rule being in the index does not make agents follow it; the index can claim a discipline that has quietly rotted. This is exactly why the <a href="../agent/governance-doc-controls/epic-definition-of-done.html">Epic DoD</a> re-runs owned lints/tests at HEAD rather than trusting the index: the meta-control needs its own audit.</li><li><strong>Stable numbering accretes history.</strong> Never renumbering means retired rules leave gaps or tombstones; the citable namespace is durable but carries dead entries forever.</li><li><strong>It taxes every dispatch.</strong> The same load that makes it binding makes it a per-invocation cost across the whole fleet. The control's benefit and its price are the same mechanism.</li></ul>
 <h3>Known Uses</h3>
@@ -270,124 +508,244 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <p><strong>Adopt it — the starter governance doc</strong>, distilled from a real, mature CLAUDE.md: <a href="../downloads/CLAUDE-starter.md">`CLAUDE-starter.md`</a>. Part A is the portable <em>method</em> (the principles the rules instantiate); Part B is a "write your own" scaffold for the numbered project-reference rules, with the three-part "what earns a spot" admission test built in.</p>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (two lenses)</em> — <a href="../agent/context-and-dispatch/docs-hierarchy.html">docs-hierarchy</a>: the <em>same artifact</em> seen as <strong>dispatch-time shared context</strong>. This entry is the <strong>enforced-infrastructure</strong> lens, the hard counterpart and the admission predicate that keep it from rotting.</li><li><strong>Counterpart (audit)</strong> — <a href="../agent/governance-doc-controls/epic-definition-of-done.html">epic-definition-of-done</a>: a hard re-run that verifies the soft index's <em>claims</em> haven't rotted (presence ≠ obedience), complementing the cap/ conformance lints that keep its <em>form</em> honest.</li><li><strong>Consumer</strong> — <a href="../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a> reads this index as the corpus it slices, promoting the <em>relevant subset</em> into a specific brief.</li><li><em>See also (sibling)</em> — <a href="../agent/governance-doc-controls/mandatory-snippet-table.html">mandatory-snippet-table</a>: another governance document enforced the same way (via <a href="../agent/context-and-dispatch/brief-linting.html">brief-linting</a> rather than a bloat lint).</li><li><em>See also (family)</em> — <a href="../agent/governance-doc-controls/doc-hygiene-lints.html">doc-hygiene-lints</a>: the general family of "documentation with a hard-counterpart lint" this control is the flagship of.</li></ul>
-<h2>Doc-hygiene lints (index coverage, autogen provenance)</h2>
+<h2 id="doc-hygiene-lints">Doc-hygiene lints (index coverage, autogen provenance)</h2>
 <p><strong>Intent</strong> — A family of lints that hold <em>documentation</em> to mechanical checks (index coverage, auto-generated-file provenance headers, cross-reference validity), so docs cannot silently drift, go stale, or be hand-edited where they will be overwritten.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/doc-hygiene-lints.html">governance-doc-controls / Doc-hygiene lints (index coverage, autogen provenance)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/doc-hygiene-lints.html">governance-doc-controls / Doc-hygiene lints (index coverage, autogen provenance)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Docs drift silently in ways a diff doesn't reveal: an auto-generated file gets hand-edited and is then overwritten (the edit lost), a new doc never gets added to the index (unfindable), a cross-reference points at a moved or renamed file (dead). The failure is <em>stale or misleading docs that agents then trust as ground truth</em>, and it recurs continuously as the doc corpus grows.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A doc index</strong> to check coverage against.</li><li><strong>An autogen-target registry</strong> (`_AUTOGEN_TARGETS`) and a provenance-header convention emitters honor.</li><li><strong>Resolvable-reference checking</strong> for the cross-ref lint.</li><li><strong>An exemption escape</strong> (`noqa` / an EXEMPT field) for the legitimate special cases, or the lint false-positives on them.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Doc-hygiene lints (index coverage, autogen provenance)"]</pre>
+<p>A family of lints reads the doc corpus and its emitter registry, checking three mechanical invariants: every doc indexed, every emitted file provenance-headed, every cross-reference resolving.</p>
+<pre class="mermaid">flowchart LR
+  Docs[(Doc corpus)] --&gt; Lints{{Doc-hygiene lints}}
+  Reg[(Autogen-target registry)] --&gt; Lints
+  Lints --&gt;|indexed · headed · links resolve| Pass([Build proceeds])
+  Lints --&gt;|missing entry / header / dead link| Fail([Build blocked])</pre>
+<p><em>Accessible description: doc-hygiene lints read the doc corpus and the autogen-target registry, checking that every doc is indexed, every emitted file carries its provenance header, and every cross-reference resolves; the build proceeds when all hold and is blocked on any missing entry, header, or dead link.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Doc-hygiene lints (index coverage, autogen provenance)</code></pre>
+<p>Each lint is a mechanical presence check the reviewer's eye slides past. The provenance check verifies an emitted file declares its emitter in the first lines — so a hand-edit, which will be overwritten, is caught — and the coverage check verifies every doc appears in the index.</p>
+<pre><code>import re, sys
+
+def lint_provenance(path: str, head_lines: list[str], is_autogen) -&gt; list[str]:
+    if not is_autogen(path):
+        return []
+    for line in head_lines[:5]:                       # provenance must appear in the first non-blank lines
+        if re.search(r"GENERATED by .+ — regen via ", line):
+            return []
+    return [f"{path}: auto-generated file lacks a provenance header — hand-edits will be overwritten"]
+
+def lint_index_coverage(all_docs: set[str], indexed: set[str]) -&gt; list[str]:
+    return [f"{d}: not listed in the doc index (unfindable)" for d in sorted(all_docs - indexed)]
+
+if __name__ == "__main__":
+    findings = []  # accumulate across all docs; wire is_autogen to your emitter registry
+    print("\n".join(findings))
+    sys.exit(1 if findings else 0)</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Mechanical only.</strong> These lints verify a doc is <em>indexed and fresh</em>, never that its prose is <em>correct</em>: a well-formed, well-indexed, wrong document passes.</li><li><strong>Registry maintenance.</strong> The autogen-target registry and the provenance convention are surfaces that need upkeep as emitters are added.</li><li><strong>False positives on legitimate exceptions</strong> require an escape hatch, which is itself a small hole.</li><li><strong>AUDIT → BLOCKING migration risk.</strong> Flipping to blocking before the corpus is clean wedges the pipeline on pre-existing drift.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The index-coverage lint (every doc indexed).</li><li>The autogen-provenance lint + its autogen-targets registry.</li><li>Cross-reference / link-resolution lints.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (family)</em> — <a href="../agent/governance-doc-controls/claude-md-rule-index.html">claude-md-rule-index</a>: the flagship "documentation with a hard-counterpart lint" this control generalizes to the whole corpus.</li><li><em>See also (sibling)</em> — <a href="../models-bridge/system-models/meta-model-consumption.html">meta-model-consumption</a>: the same "read the substrate at lint-time" move, applied to queryable models rather than prose docs.</li><li><em>See also (sibling)</em> — <a href="../agent/governance-doc-controls/mandatory-snippet-table.html">mandatory-snippet-table</a>: documentation (snippets) enforced by a lint, on the dispatch side.</li></ul>
-<h2>Epic &amp; design-doc templates</h2>
+<h2 id="epic-and-design-templates">Epic &amp; design-doc templates</h2>
 <p><strong>Intent</strong> — Fixed section-templates for the two core planning artifacts, <strong>Epics</strong> (multi-dispatch efforts) and <strong>design docs</strong>, so every effort is framed with the same required sections (scope, phase decomposition, second-order dynamics, definition-of-done, observability), and the planning artifact <em>drives</em> the work instead of being written after the fact.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/epic-and-design-templates.html">governance-doc-controls / Epic &amp; design-doc templates</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/epic-and-design-templates.html">governance-doc-controls / Epic &amp; design-doc templates</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>A planning artifact written free-form omits exactly the sections that matter. The design doc that skips <em>second-order dynamics</em> ships a substrate that deadlocks at tick T+100; the Epic with no explicit <em>Definition-of-Done</em> is "done" by assertion; the design that introduces an event-bus topic with no <em>observability</em> section leaves the substrate unmonitorable. Without a template, each author frames differently and the sections that prevent production incidents are the first to be dropped under time pressure. The failure is <em>incomplete plans whose gaps resurface as incidents</em>.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A repeatable artifact genre worth standardizing.</strong> Epics and design docs recur; a one-off memo does not need a template.</li><li><strong>The set of required sections, identified from failure.</strong> Each required section earns its place because omitting it caused an incident (a deadlock, a false "done," an unmonitorable substrate).</li><li><strong>A scaffold + lints</strong> so the template is materialized and checked; a template that is only <em>described</em> in docs decays to advisory prose.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Epic &amp; design-doc templates"]</pre>
+<p>A stub scaffold materializes the required sections, a lint asserts their presence, and the checked artifact then drives the work — the shape is declared, not remembered.</p>
+<pre class="mermaid">flowchart LR
+  Stub[Stub scaffold] --&gt;|materializes sections| Doc[/Planning artifact/]
+  Doc --&gt; Lint{{Section-presence lint}}
+  Lint --&gt;|required sections present| Drive([Drives the work])
+  Lint --&gt;|a required section missing| Fail([Rejected])</pre>
+<p><em>Accessible description: a stub scaffold materializes the required sections into a planning artifact; a section-presence lint checks them; when all are present the artifact drives the work, and when one is missing the artifact is rejected.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Epic &amp; design-doc templates</code></pre>
+<p>The template makes required sections structural: a scaffold pre-places them, and a lint checks the artifact carries each. The section list is itself identified from failure — each earns its place because omitting it once caused an incident.</p>
+<pre><code>import sys
+
+REQUIRED_SECTIONS = [
+    "## Scope",
+    "## Phase decomposition",
+    "## Second-order dynamics",   # omitting this once shipped a substrate that deadlocked under load
+    "## Definition of Done",
+    "## Observability",           # required for any design that introduces a new event topic
+]
+
+def lint_sections(doc_text: str, introduces_topic: bool) -&gt; list[str]:
+    findings = []
+    for heading in REQUIRED_SECTIONS:
+        if heading == "## Observability" and not introduces_topic:
+            continue                                   # conditional: only topic-introducing designs need it
+        if heading not in doc_text:
+            findings.append(f"missing required section: {heading}")
+    return findings
+
+if __name__ == "__main__":
+    findings = lint_sections(open(sys.argv[1]).read(), introduces_topic=True)
+    print("\n".join(findings))
+    sys.exit(1 if findings else 0)</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Soft·Hard has a hollow-section hole.</strong> A presence check passes an empty "second-order dynamics" heading; the template forces the <em>section</em>, not genuine thought in it.</li><li><strong>Maintenance surface.</strong> A new required section means updating the template + the scaffold + the lint together; drift among them yields false rejections or silent gaps.</li><li><strong>Over-templating adds ceremony.</strong> Forcing the full Epic shape onto a trivial change is friction the author routes around; the template must be scoped to efforts that warrant it.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The Epic template (mandatory section shape + the multi-criterion Definition-of-Done).</li><li>The epic-stub scaffold that materializes an Epic dir + ledger registration, with registration gates.</li><li>The design-doc rule that a new event-bus topic requires an observability/event-bus block.</li><li>The rule that any substrate with repetition/concurrency carries a second-order-dynamics section.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Counterpart</strong> — the <a href="../agent/governance-doc-controls/epic-definition-of-done.html">Epic Definition-of-Done</a> is the <em>hard</em> gate that verifies, at close, that an Epic's template was actually satisfied (criteria met, pins re-run); the template is the soft shape up front, the DoD is the enforced check at the end.</li><li><strong>Enabler</strong> — the template makes <em>second-order-dynamics</em> and <em>observability</em> required sections, so it feeds the reason-about-dynamics and own-your-observability disciplines at design time rather than after an incident.</li><li><em>See also (family)</em> — <a href="../agent/governance-doc-controls/claude-md-rule-index.html">rule index</a> and <a href="../agent/governance-doc-controls/mandatory-snippet-table.html">mandatory-snippet-table</a>: sibling governance documents whose completeness is enforced by a hard counterpart.</li></ul>
-<h2>Epic Definition-of-Done (Final-Opus trust-nothing re-run)</h2>
+<h2 id="epic-definition-of-done">Epic Definition-of-Done (Final-Opus trust-nothing re-run)</h2>
 <p><strong>Intent</strong> — An Epic-close gate mandating a "trust nothing" Final-Opus review that re-runs every owned pin test and lint <em>at HEAD</em>, rather than trusting phase markers or prior claims, so an Epic cannot close on stale or rotted assertions.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/epic-definition-of-done.html">governance-doc-controls / Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/epic-definition-of-done.html">governance-doc-controls / Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>An Epic spanning many dispatches accumulates <em>claims</em> (phase markers, "lints pass," pin-test counts), and those claims <strong>rot</strong> as sibling Epic sweeps churn the substrate underneath them. Close on the stale claims and you ship an Epic whose defenses no longer actually hold (empirically: 7/7 back-catalogue Epics self-marked DONE had quality-of-defense gaps). The failure is <em>a premature/false close</em>, and it recurs at every Epic boundary.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A machine-checkable close</strong> (reachability / patch-id over the cited commits).</li><li><strong>A well-defined "owned" set</strong> of pin tests and lints per Epic to re-run.</li><li><strong>A Final-Opus reviewer</strong> with the judgment to re-verify rather than rubber-stamp.</li><li><strong>A follow-up routing mechanism</strong> so what the re-run surfaces becomes filed work, not a footnote.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Epic Definition-of-Done (Final-Opus trust-nothing re-run)"]</pre>
+<p>The gate trusts nothing recorded: it re-runs the owned pins and lints against the substrate as it stands now and checks each cited commit is reachable, closing only when the re-derived verdict is green.</p>
+<pre class="mermaid">flowchart LR
+  Claims[/Phase markers, prior claims/] -.-&gt;|distrusted| Gate{DoD re-run at HEAD}
+  Pins[(Owned pins + lints)] --&gt;|re-run now| Gate
+  Commits[(Cited commits)] --&gt;|reachability / patch-id| Gate
+  Gate --&gt;|all green| Close([Epic closes])
+  Gate --&gt;|any red| Hold([Close refused])</pre>
+<p><em>Accessible description: the definition-of-done gate distrusts recorded phase markers, re-runs the Epic's owned pins and lints at HEAD, and checks each cited commit is reachable; the Epic closes only when the re-derived verdict is green and is held otherwise.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Epic Definition-of-Done (Final-Opus trust-nothing re-run)</code></pre>
+<p>The gate re-derives the verdict from the substrate rather than reading it off markers. It re-runs every owned pin and lint at HEAD and verifies each cited commit is reachable; a missing commit forces a logged override, not a silent pass.</p>
+<pre><code>def close_epic(owned_pins, owned_lints, cited_commits, is_reachable, override_reason=None) -&gt; int:
+    findings = []
+    for pin in owned_pins:            # re-run at HEAD — do NOT trust the recorded "passed" marker
+        if pin.run() != "pass":
+            findings.append(f"owned pin {pin.name} is red at HEAD")
+    for lint in owned_lints:
+        if lint.run():
+            findings.append(f"owned lint {lint.name} finds violations at HEAD")
+    for sha in cited_commits:
+        if not is_reachable(sha) and not override_reason:
+            findings.append(f"cited commit {sha} is unreachable and no override was given")
+    if findings:
+        for f in findings:
+            print(f"DOD BLOCK: {f}")
+        return 1                       # close refused
+    return 0                           # atomically rewrite status, move to closed, regenerate the index</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>The re-run is expensive.</strong> Opus time plus a full pass of owned pins/lints at close, deliberately heavyweight, because a false close is worse.</li><li><strong>`--override` is a hole.</strong> It exists for legitimately-unreachable commits, logged, but it is a way past the reachability check.</li><li><strong>"Owned" must be accurate.</strong> An Epic that under-declares what it owns re-runs too little and can still close on a rotted-but-unlisted defense.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>`epic_close.py close --commits …` / `--override` (reachability-gated close).</li><li>The Epic template's multi-criterion Definition-of-Done; the Final-Opus "trust nothing" re-run.</li><li>The tag routing-audit + design-doc follow-up filing at close.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Counterpart (audit)</strong> — <a href="../agent/governance-doc-controls/claude-md-rule-index.html">claude-md-rule-index</a>: the index's cap/conformance lints keep its <em>form</em> honest; this re-run keeps <em>claims</em> honest (presence ≠ obedience). Together they are the "keep the enforced documents honest" pair.</li><li><strong>Consumer</strong> — reads each Epic's owned pin tests and lints (and the repo meta-models behind them) to re-verify at HEAD.</li></ul>
-<h2>Mandatory snippet-table enforcement</h2>
+<h2 id="mandatory-snippet-table">Mandatory snippet-table enforcement</h2>
 <p><strong>Intent</strong> — A registry of mandatory agent-brief snippets (PATH export, commit-cadence, worktree discovery, submodule check, …) whose presence is asserted at dispatch by brief-linting, so every dispatched brief carries the safety and context boilerplate it needs.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/mandatory-snippet-table.html">governance-doc-controls / Mandatory snippet-table enforcement</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/mandatory-snippet-table.html">governance-doc-controls / Mandatory snippet-table enforcement</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Every dispatch needs certain boilerplate to be safe: the PATH export (or 65+ PDF tests fail for lack of a binary), the commit-cadence discipline, worktree discovery via `$(pwd)`, the submodule check. An author who forgets one ships an agent that trips exactly that sharp edge 20 minutes in. Without a <em>registry</em> of what's mandatory, "which snippets does this brief need" is tribal knowledge that drifts as snippets are added, and the failure recurs on every hand-authored brief.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A snippet registry with grep-able marker strings.</strong> The lint asserts marker <em>presence</em>, so each snippet needs a stable marker.</li><li><strong>The snippet bodies</strong> themselves, kept verbatim so briefs include the current text.</li><li><strong>An include-when spec</strong> so conditional snippets are required only where they apply.</li><li><strong>Brief-linting</strong> to do the asserting; this table is inert without its consumer.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Mandatory snippet-table enforcement"]</pre>
+<p>The table is a registry keyed by snippet, each row carrying an include-when condition and a marker string; the brief lint reads the table and asserts every applicable marker is present.</p>
+<pre class="mermaid">flowchart LR
+  Table[(Snippet registry)] --&gt; Lint{{Brief lint}}
+  Brief[/Task brief/] --&gt; Lint
+  Lint --&gt;|every required marker present| Pass([Dispatch])
+  Lint --&gt;|a required snippet absent| Fail([Refuse launch])</pre>
+<p><em>Accessible description: a snippet registry and the task brief both feed the brief lint, which asserts every applicable snippet's marker is present; the dispatch proceeds when all are and is refused when a required snippet is absent.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Mandatory snippet-table enforcement</code></pre>
+<p>The table pairs each snippet with a grep-able marker and an include-when condition; the lint enumerates the required snippets for a given brief and asserts each marker is present. Always-include snippets have no condition; conditional ones fire on the brief's declared shape.</p>
+<pre><code>SNIPPET_TABLE = [
+    {"name": "path-export",    "marker": "&lt;!-- snip:path --&gt;",      "when": lambda b: True},
+    {"name": "commit-cadence", "marker": "&lt;!-- snip:commit --&gt;",    "when": lambda b: True},
+    {"name": "submodule-check","marker": "&lt;!-- snip:submodule --&gt;", "when": lambda b: "test/samples" in b},
+]
+
+def required_snippets(brief: str) -&gt; list[dict]:
+    return [s for s in SNIPPET_TABLE if s["when"](brief)]
+
+def lint_snippets(brief: str) -&gt; list[str]:
+    return [f"missing mandatory snippet '{s['name']}' (marker {s['marker']})"
+            for s in required_snippets(brief) if s["marker"] not in brief]
+
+if __name__ == "__main__":
+    import sys
+    findings = lint_snippets(open(sys.argv[1]).read())
+    print("\n".join(findings))
+    sys.exit(1 if findings else 0)</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Verbatim-include means propagation drift.</strong> A snippet updated in the registry must be re-pasted into briefs; the marker catches <em>absence</em>, not <em>staleness</em> of the pasted body.</li><li><strong>The table is a maintenance surface.</strong> Every new mandatory snippet is a registry row + a lint marker + a template thread; drift among them produces false rejections (shared with brief-linting).</li><li><strong>Over-inclusion bloats briefs.</strong> Requiring a snippet where it doesn't apply adds noise the author routes around.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The agent-snippet include-table (snippet → include-when → marker).</li><li>The <a href="../ABSTRACTIONS.html#brief-lint">brief-lint</a>'s marker-presence assertions.</li><li>Always-include snippets (worktree-path, rebase-first) vs conditional ones.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Consumer</strong> — <a href="../agent/context-and-dispatch/brief-linting.html">brief-linting</a> reads this table and asserts each snippet's marker; this registry is <a href="../agent/context-and-dispatch/brief-linting.html">brief-linting</a>'s <strong>enabler</strong> (it must exist before the lint can check for its markers).</li><li><em>See also (sibling)</em> — <a href="../agent/governance-doc-controls/claude-md-rule-index.html">claude-md-rule-index</a>: another governance document held honest by a hard counterpart, this one via <a href="../agent/context-and-dispatch/brief-linting.html">brief-linting</a> rather than a bloat lint.</li><li><em>See also (family)</em> — <a href="../agent/governance-doc-controls/doc-hygiene-lints.html">doc-hygiene-lints</a>: the broader "documentation enforced by a lint" family.</li></ul>
-<h2>Operational playbooks</h2>
+<h2 id="operational-playbooks">Operational playbooks</h2>
 <p><strong>Intent</strong> — A library of documented, devops-themed decision procedures (<em>when situation X arises, take these steps in this order</em>) that agents and orchestrators consult instead of reasoning from scratch, so recurring operational situations (a broken deploy, a wedged cron, a stuck worktree, a chicken-and-egg recovery) get a consistent, pre-reasoned, incident-tested response.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/operational-playbooks.html">governance-doc-controls / Operational playbooks</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/operational-playbooks.html">governance-doc-controls / Operational playbooks</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Operational situations recur: a deploy fails a known way, a cron loop can't self-recover, a worktree is destroyed mid-flight, an alert gate deadlocks. Each time, an agent under incident pressure re-derives a response from first principles and gets the sharp edges wrong: a flailing `git reset` destroys landed work, a naive cron restart re-enters the same loop, a "cleanup" removes a live worktree. The failure is <em>inconsistent, error-prone operational response that recurs on every incident</em>, and the cost is highest exactly when time is shortest.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A recurring, nameable operational situation.</strong> A one-off doesn't earn a playbook.</li><li><strong>A human who has reasoned out the correct response once</strong> (including the reflexes to avoid), so the playbook encodes hard-won judgment rather than a guess.</li><li><strong>Discoverability at the moment of need.</strong> A home plus cross-references from the rule index and from the signal that triggers it; an unlinked playbook is never opened.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Operational playbooks"]</pre>
+<p>Each playbook keys off a triggering situation and gives the ordered response plus the reflexes to avoid; it is reached two ways — from the terse rule index and from the substrate signal that fires the trigger.</p>
+<pre class="mermaid">flowchart LR
+  Signal[/Triggering signal/] --&gt; Book[Situation-keyed playbook]
+  Index[Rule index] --&gt;|links to| Book
+  Book --&gt; Steps[Ordered response steps]
+  Book --&gt; Avoid[Reflexes to avoid]</pre>
+<p><em>Accessible description: a triggering signal and the rule index both route to a situation-keyed playbook, which supplies the ordered response steps and the anti-pattern reflexes to avoid, reasoned once when no incident was burning.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Operational playbooks</code></pre>
+<p>No sample code — this is a process/policy control. A playbook is human-authored operational judgment, not an executable artifact. The shape it standardizes is a per-situation entry: the triggering question, the inspect command, the quantified healthy baseline, and <em>what-looks-wrong → what-it-means → what-to-do</em>, with an explicit escape for the case where a substrate wedges. The value is that the correct steps — and the reflexes to avoid — are written down once and discoverable at the moment they're needed, not re-derived under pressure.</p>
 <h3>Consequences</h3>
 <ul><li><strong>Soft: an agent can ignore it.</strong> A playbook informs; nothing forces the agent to open or follow it. Its leverage is entirely discoverability + habit.</li><li><strong>Playbooks rot.</strong> When the substrate changes, a playbook whose steps aren't updated actively mis-directs the response, worse than no playbook.</li><li><strong>Dead weight if the situation stops recurring.</strong> A playbook for a retired failure mode is noise.</li><li><strong>Not a substitute for prevention.</strong> A situation that recurs often enough should be <em>designed out</em> (architecture) or <em>gated</em> (a hard control), not merely playbooked.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The event-bus observability playbook (per topic: baseline-healthy → what-looks-wrong → response).</li><li>The cron-recovery playbook (the chicken-and-egg "cron is broken and can't restart itself" procedure).</li><li>The cron-alerts-gate recovery playbook (how to clear a wedged HIGH-severity gate).</li><li>Deploy-failure pattern tables (symptom → cause → section) consulted before investigating.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Counterpart</strong> — the <a href="../agent/lifecycle-and-observability/typed-event-bus.html">typed event bus</a> <em>emits</em> the signals; a playbook says what to <em>do</em> about them. A signal with no playbook is unactioned noise; a playbook with no signal is never triggered. They are distinct notions: observability surfaces state, the playbook prescribes the response.</li><li><strong>Enabler</strong> — a playbook is only useful once <a href="../agent/lifecycle-and-observability/typed-event-bus.html">observability</a> (or an alert) surfaces the triggering situation; the signal is the playbook's entry point.</li><li><em>See also (family)</em> — the <a href="../agent/governance-doc-controls/claude-md-rule-index.html">rule index</a> is the terse index that links out to these long-form procedures; playbooks are where a one-line rule expands into steps.</li></ul>
-<h2>Operator runbook skill (positive map first, symptom index fallback)</h2>
+<h2 id="operator-runbook-skill">Operator runbook skill (positive map first, symptom index fallback)</h2>
 <p><strong>Intent</strong> — A loadable skill that gives an operating agent the <em>positive</em> map of how the operational substrate works (its lifecycles and healthy baselines) <strong>first</strong>, and a <em>symptom → resolving-doc</em> catalog as the fallback when something breaks. Generate its content from a typed source-of-truth so a reference-validity lint (not tests; it executes nothing) keeps every pointer honest, and type each recovery step by how automatable it is (our instance: an `operate-ada-tool-repo` skill over the agent-fleet substrate, rendered from two typed YAML sources: a pointer catalog and a runbook catalog).</p>
-<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/operator-runbook-skill.html">governance-doc-controls / Operator runbook skill (positive map first, symptom index fallback)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/operator-runbook-skill.html">governance-doc-controls / Operator runbook skill (positive map first, symptom index fallback)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>An operator (a human or an orchestrator agent) running a complex substrate must know two things: how it <em>works</em> when healthy, and what to do when it <em>breaks</em>. Both live scattered across a house-rules doc, a docs index, and incident memories that a fresh or post-compaction operator does not reliably hold. So the operator <strong>re-derives the substrate's shape from scratch</strong> under load, and during an incident re-derives, badly and under time pressure, a recovery a doc already spells out. And the routing itself <strong>rots</strong>: a doc moves, the pointer dangles, the next operator is sent on a chase. The failure is <em>re-derivation of known operations</em> plus <em>silent pointer rot</em>, and it recurs every session and every incident.</p>
 <p>Underneath is a stance: <strong>the fleet is cattle, not pets.</strong> You operate an agent fleet with <em>repeatable runbooks</em>, not by re-reasoning each incident from scratch or <em>chatting</em> the orchestrator toward a goal. That is the pet stance ("sysadmin-ing a pet server"), and it is a category error at fleet scale. This mechanism is the cattle stance made concrete for repo operations: a routed, lint-kept index of typed operations, so an operator runs the herd instead of nursing it.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A typed source-of-truth</strong> the skill renders from; hand-authored markdown drifts from the docs it points at, while the YAML is single-sourced and lint-checkable.</li><li>**A reference-validity lint that resolves file <em>and</em> anchor.** File-exists alone lets a renamed section dangle.</li><li><strong>Typed step-kinds</strong> on runbook steps, so "which of these is runnable vs needs judgment" is declared, not guessed by the operator mid-incident.</li><li><strong>A partner failure-interpretation path</strong>, so a recurring failure becomes a <em>designed</em> control rather than an inline patch.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Operator runbook skill (positive map first, symptom index fallback)"]</pre>
+<p>The skill leads with the positive lifecycle map, falls back to a symptom-keyed index, and is rendered from typed YAML; a reference-validity lint resolves every pointer's file and anchor on each build.</p>
+<pre class="mermaid">flowchart LR
+  YAML[(Typed YAML source)] --&gt;|render| Skill[Operator skill]
+  Skill --&gt; Map[Positive lifecycle map]
+  Skill --&gt; Index[Symptom → resolving-doc]
+  Ref{{Ref-validity lint}} -.-&gt;|resolve file + anchor| Skill</pre>
+<p><em>Accessible description: a typed YAML source renders into the operator skill, which leads with a positive lifecycle map and falls back to a symptom-to-doc index; a reference-validity lint resolves every pointer's file and heading anchor on each build, so a moved doc is a build error.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Operator runbook skill (positive map first, symptom index fallback)</code></pre>
+<p>The skill is generated, so its correctness comes from a <strong>reference-validity lint</strong> rather than tests: it resolves every pointer's file <em>and</em> heading anchor against disk, catching a moved doc or renamed section a file-exists check would miss.</p>
+<pre><code>import re, sys
+
+def anchor_exists(path: str, anchor: str, read) -&gt; bool:
+    """A pointer resolves only if the file exists AND the heading anchor is present."""
+    headings = {re.sub(r"[^a-z0-9]+", "-", h.lower()).strip("-")
+                for h in re.findall(r"^#+\s+(.+)$", read(path), re.M)}
+    return anchor in headings
+
+def lint_pointers(pointers, file_exists, read) -&gt; list[str]:
+    findings = []
+    for path, anchor in pointers:                     # each pointer is (file, heading-anchor)
+        if not file_exists(path):
+            findings.append(f"pointer target missing: {path}")
+        elif anchor and not anchor_exists(path, anchor, read):
+            findings.append(f"anchor '#{anchor}' not found in {path} (renamed section?)")
+    return findings
+
+if __name__ == "__main__":
+    findings = []  # feed pointers parsed from the typed YAML source
+    print("\n".join(findings))
+    sys.exit(1 if findings else 0)</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>The skill is soft.</strong> It routes an operator to the right doc; it cannot execute or block. Its value is being loaded and heeded.</li><li><strong>Coverage is soft; validity is the hard half.</strong> The lint guarantees every <em>listed</em> pointer resolves; it cannot guarantee every <em>real</em> symptom is listed. Completeness rots unless new incidents are appended (the second-time-not-the-third discipline).</li><li><strong>Anchor-resolution is a maintenance tax.</strong> Resolving heading anchors (not only files) catches more rot but fires on every heading rename; that is the price of the higher fidelity.</li><li><strong>Generation adds a build step.</strong> The YAML→markdown render must run, or the served skill drifts from its source.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>A skill leading with the substrate's lifecycles + healthy baselines, then a symptom→resolving-doc catalog for breaks.</li><li>Runbooks with typed step-kinds (runnable / carried-brief / surface-to-user), making the judgment-automatable middle a lintable resource.</li><li>The reference-validity lint resolving every pointer's file and heading anchor from a typed YAML source-of-truth.</li><li>The handoff to a failure-interpretation skill: recurring failure → classify → Epic → designed control.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Counterpart</strong> — <a href="../agent/governance-doc-controls/operational-playbooks.html">operational-playbooks</a>: those are the situation-keyed runbooks themselves (the failure half); this skill is the operator-keyed <em>map over</em> them: positive-lifecycle-first, symptom-indexed, lint-kept. The named axis is <em>the runbooks</em> versus <em>the indexed, generated map into them</em>.</li><li><strong>See also</strong> — <a href="../agent/governance-doc-controls/claude-md-rule-index.html">claude-md-rule-index</a>: both treat a governance <em>document</em> as enforced infrastructure held honest by a lint; this one adds the operator-index shape and generation from a typed source.</li><li><strong>Enabler</strong> — the reference-validity lint is the same "every pointer ↔ a real target" discipline as the models' <a href="../models-bridge/system-models/drift-parity-gates.html">drift-parity gates</a>, applied to a doc-skill instead of a typed model.</li></ul>
-<h2>Enforce at the right semantic level</h2>
+<h2 id="semantic-level-enforcement">Enforce at the right semantic level</h2>
 <p><strong>Intent</strong> — Place a control at the granularity where the property it checks first becomes <strong>legible</strong>, not at the cheapest or earliest point; a check fired below that scope either can't see the property or rejects a legitimate partial state (our instance: model↔code drift is checked when an agent <em>returns</em> from a multi-commit task, never at a per-commit hook where the model is legitimately mid-flight).</p>
-<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/semantic-level-enforcement.html">governance-doc-controls / Enforce at the right semantic level</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/semantic-level-enforcement.html">governance-doc-controls / Enforce at the right semantic level</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>A property has a <strong>scope at which it becomes legible</strong> — the smallest window in which enough of the world is visible to decide it true or false. Place a control below that scope and it fails one of two ways:</p>
 <ul><li><strong>It misses the property.</strong> The property is not yet expressible at that granularity, so the check looks at a slice that cannot contain the evidence. A monitor judging one system call at a time never sees a data leak, because a leak is a <em>sequence</em> — the call that reads the secret and the call that ships it are legible together, never apart.</li><li><strong>It false-fires on a legitimate partial state.</strong> The property is a claim about a <em>finished</em> unit, and a check fired mid-unit sees an intermediate that is correctly inconsistent. A per-commit gate on model↔code parity rejects every intermediate commit of a multi-commit feature, because the model is <em>allowed</em> to lag the code until the work is done.</li></ul>
@@ -395,11 +753,9 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <h3>Applicability</h3>
 <ul><li><strong>A ladder of enforcement points at distinct scopes.</strong> Without a runtime that exposes a commit event, a task-return event, and a unit-close gate, there is nowhere to place a control but the one hook you have. The ladder is what makes placement a <em>choice</em>.</li><li><strong>The property stated as a predicate</strong>, sharp enough that "where is this legible?" has an answer. A vague property ("the code is good") has no legibility scope and cannot be placed.</li><li><strong>A reviewer who asks the placement question at design time.</strong> This is a soft judgment; it holds only if someone reaching for a new control asks <em>at what scope is this legible?</em> before defaulting to the cheapest hook. A failure-interpretation handoff that routes a recurrence to <em>design a control</em> is the natural place to force the question.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Enforce at the right semantic level"]</pre>
+<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> a Structure diagram for <em>Enforce at the right semantic level</em> is not yet authored.</div>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Enforce at the right semantic level</code></pre>
+<div class="marker marker-fill"><span class="marker-tag">FILL IN</span> a Sample Code snippet for <em>Enforce at the right semantic level</em> is not yet authored.</div>
 <h3>Consequences</h3>
 <ul><li><strong>The higher rung costs latency.</strong> A property legible only at agent-return is caught later than a per-commit author would like; the intermediate work proceeds un-checked on that dimension until the unit closes. That is the price of soundness, not a defect — a lower placement would be <em>wrong</em>, not merely faster.</li><li><strong>It is a judgment, not a gate.</strong> Nothing forces a designer to place a control correctly; a mis-placed control still ships and still looks wired. The defense is the design-time question, and a soft question can be skipped. The tell of a skipped one is a control that fires forever and never catches its class.</li><li><strong>Over-placing is its own waste.</strong> Lifting a property that <em>is</em> legible in one file up to an Epic-close review buys nothing and delays the catch. The rule is the <em>lowest sound</em> rung, not the highest.</li></ul>
 <h3>Known Uses</h3>
@@ -407,105 +763,210 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <h3>Related Patterns</h3>
 <ul><li><strong>Specialized by</strong> — <a href="../agent/governance-doc-controls/epic-definition-of-done.html">epic-definition-of-done</a>: the intent-level rung of the ladder, where a finished feature and its plan are both legible. It is the top-of-ladder instance this principle cites; its trust-nothing re-run is placement-at-agent-return made concrete.</li><li><strong>See also (a placement each)</strong> — <a href="../agent/gates-and-merge-train/pre-commit-hook.html">pre-commit-hook</a> sits at the syntactic-diff rung; <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-hooks</a> at the runtime-event rung. Each is a control <em>placed</em> by this judgment; this entry is the judgment that places them. The named axis is <em>placement-principle</em> vs <em>placed-control</em>.</li><li><strong>Consumer</strong> — the operate→harden handoff (<a href="../agent/governance-doc-controls/operator-runbook-skill.html">operator-runbook-skill</a>) routes a recurring failure to <em>design a control</em>, and part of that design is asking this placement question before defaulting to the nearest hook.</li><li><strong>See also (complement)</strong> — <a href="../models-bridge/system-models/control-substrate-dependency.html">control-substrate-dependency</a>: that computes <em>which</em> substrate a control depends on; this chooses <em>at what scope</em> a control fires. Both are questions about a control's fit — one to the substrate it reads, one to the property it checks.</li></ul>
 <h1>lifecycle-and-observability</h1>
-<h2>Agent registry (append-only log + marker cache)</h2>
+<h2 id="agent-registry">Agent registry (append-only log + marker cache)</h2>
 <p><strong>Intent</strong> — An append-only registry, dual-written by every lifecycle tool, that is the <em>authoritative</em> record of which agents are in flight, so cleanup, tombstone, and merge decisions read a fact instead of guessing from filesystem timestamps.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/agent-registry.html">lifecycle-and-observability / Agent registry (append-only log + marker cache)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/agent-registry.html">lifecycle-and-observability / Agent registry (append-only log + marker cache)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>With a fleet of concurrent agents living in worktrees, <em>"which agents are live right now?"</em> is the central question for every reclaim decision: cleanup, tombstoning, merge readiness. Answer it by scanning worktree directories and comparing mtimes and you get a <strong>heuristic that races with live agents</strong>: an agent mid-work can look identical to a stale one and have its worktree destroyed under it (the worktree-destruction-mid-flight incident). The failure is <em>unsafe reclaim of live work</em>, and it recurs on every cleanup pass.</p>
 <h3>Applicability</h3>
 <ul><li><strong>Universal dual-write.</strong> Every lifecycle tool writes the registry; a side-door mutation that skips it reintroduces the exact race the registry removes.</li><li><strong>An append-only log plus a fast cache</strong>, and a rule for which wins on divergence (registry).</li><li><strong>Destructive-op gates that query it</strong> before acting; the record is only protective if consulted.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Agent registry (append-only log + marker cache)"]</pre>
+<p>Every lifecycle tool dual-writes the append-only log and a fast marker cache; the log is authoritative, and a cleanup gate queries a chain of it before reclaiming anything.</p>
+<pre class="mermaid">flowchart LR
+  Tools[Lifecycle tools] --&gt;|dual-write| Log[(Append-only registry)]
+  Tools --&gt;|dual-write| Cache[(Marker cache)]
+  Log --&gt;|authoritative| Gate{cleanup / tombstone gate}
+  Cache --&gt;|fast index| Gate
+  Gate --&gt;|marker present = live| Refuse([Refuse to reclaim])</pre>
+<p><em>Accessible description: every lifecycle tool dual-writes an append-only registry and a fast marker cache; the registry is authoritative and the cache a fast index; a cleanup or tombstone gate reads them and refuses to reclaim any agent whose live marker is present.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Agent registry (append-only log + marker cache)</code></pre>
+<p>Liveness becomes a <em>lookup against a recorded fact</em>, not an inference from a timestamp. Every lifecycle tool appends to the log; a reclaim gate reads it and refuses to touch an agent still marked live — the recorded fact cannot race the way an mtime can.</p>
+<pre><code>import json, os
+
+REGISTRY = "agent-registry.jsonl"
+
+def record(agent_id: str, event: str) -&gt; None:
+    with open(REGISTRY, "a") as f:                    # append-only: every tool dual-writes here + a marker
+        f.write(json.dumps({"agent": agent_id, "event": event}) + "\n")
+    open(f".markers/{agent_id}", "w").close() if event == "dispatched" else None
+
+def is_live(agent_id: str) -&gt; bool:
+    state = None
+    for line in open(REGISTRY):                        # registry wins over the cache on any divergence
+        row = json.loads(line)
+        if row["agent"] == agent_id:
+            state = row["event"]
+    return state == "dispatched"
+
+def may_reclaim(agent_id: str) -&gt; bool:
+    return not is_live(agent_id)                       # gate consults the fact before any destructive op</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>The whole registry rests on dual-write discipline, and it's fragile.</strong> One tool that mutates lifecycle without writing the registry silently brings the mtime-race back; the guarantee is only as strong as the weakest writer.</li><li><strong>Append-only growth.</strong> The JSONL grows unboundedly and needs rotation.</li><li><strong>Registry/marker divergence</strong> is possible if one write fails; resolved by "registry authoritative," but the cache can briefly mislead a tool that trusts it alone.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>An append-only registry log + per-agent marker cache, dual-written by the dispatch wrapper's prepare step.</li><li>The 3-gate `cleanup-stale` chain (registry → marker → git-lock).</li><li>The live-worktree guard (never operate on an agent whose marker exists); the dedup-via-registry pattern.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Enabler</strong> — <a href="../agent/gates-and-merge-train/merge-train-mis-batching.html">merge-train-mis-batching</a> reads it for worktree readiness; <a href="../agent/gates-and-merge-train/sentinel-first-commit.html">sentinel-first-commit</a> reads its markers for substrate health.</li><li><strong>Consumer</strong> — <a href="../agent/lifecycle-and-observability/tombstone-commits.html">tombstone-commits</a> checks live markers before writing a close record; cleanup-stale consults it before removing a dir.</li><li><strong>Counterpart</strong> — it <em>replaced</em> the mtime heuristic (now retired): the authoritative record is the hard fact that the racy signal could never be.</li></ul>
-<h2>Caused-by provenance (agent-side change traceability)</h2>
+<h2 id="caused-by-provenance">Caused-by provenance (agent-side change traceability)</h2>
 <p><strong>Intent</strong> — When an agent-driven change alters system state, you must be able to trace it back to the reason that caused it, drawn from a closed taxonomy of causes, enforced by asserting a typed `caused-by` field at the commit gate. Upgrade correlation to causation wherever the cause is known at the moment of action (carry it with the dispatch); accept a labeled `_proxy` only where no artifact can hold the cause. Never reward a particular rate; the trace exists to explain, not to be optimized (our instance: a `caused-by: epic:&lt;id&gt; | reflection:&lt;fire_id&gt; | ad-hoc` field asserted by the code-agent pre-commit hook).</p>
-<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/caused-by-provenance.html">lifecycle-and-observability / Caused-by provenance (agent-side change traceability)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/caused-by-provenance.html">lifecycle-and-observability / Caused-by provenance (agent-side change traceability)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>The failure is <strong>the un-warranted change</strong>: a landed diff whose reason survives only as tribal knowledge. When the fleet does something surprising, RCA of "why did we do this?" becomes guesswork: the diff shows <em>what</em> changed, never <em>what caused</em> the fleet to change it. Two costs follow:</p>
 <ul><li><strong>Behavioral RCA has no ground truth.</strong> You cannot debug the fleet's decisions if each decision's trigger is lost the moment the commit lands.</li><li><strong>No causal claim is defensible.</strong> Ask whether a nudge, a gate, or a policy actually changes behavior, and all you can offer is co-occurrence, which Goodharts the instant anyone optimizes it.</li></ul>
 <h3>Applicability</h3>
 <ul><li><strong>A commit gate to assert at</strong>, here the code-agent pre-commit hook.</li><li><strong>A closed taxonomy of causes</strong> small enough to be exhaustive and typed.</li><li><strong>A dispatch that carries the cause</strong> so the known-cause path is deterministic, not reconstructed.</li><li><strong>An honesty discipline</strong>, the `_proxy` labeling and the no-reward-for-a-rate stance, without which the trace drifts toward a flattering number.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Caused-by provenance (agent-side change traceability)"]</pre>
+<p>The cause is minted where the change is decided (the dispatch), travels with it, and is asserted at the commit gate; an inferred cause carries an honest proxy label.</p>
+<pre class="mermaid">flowchart LR
+  Dispatch[/Dispatch mints cause-id/] --&gt;|carries cause| Agent[Agent works]
+  Agent --&gt; Gate{Commit gate}
+  Taxonomy[(Closed cause taxonomy)] --&gt; Gate
+  Gate --&gt;|field present + valid value| Land([Commit lands])
+  Gate --&gt;|absent or off-taxonomy| Reject([Rejected])</pre>
+<p><em>Accessible description: a dispatch mints a cause-id and carries it to the agent; at the commit gate the typed caused-by field is checked against a closed taxonomy; the commit lands when the field is present and names a known value and is rejected otherwise, with inferred causes labelled as proxies.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Caused-by provenance (agent-side change traceability)</code></pre>
+<p>The cause travels with the dispatch, so the field "comes out for free" at commit — correlation upgraded to causation because the cause was known when the change was made. A commit gate asserts the field names a value in the closed taxonomy; an inferred cause is labelled `_proxy`, never hidden.</p>
+<pre><code>CAUSES = {"epic", "reflection", "ad-hoc"}   # closed taxonomy — a cause outside it fails loud
+
+def assert_caused_by(commit_msg: str) -&gt; int:
+    line = next((l for l in commit_msg.splitlines() if l.startswith("caused-by:")), None)
+    if line is None:
+        print("REJECT: commit has no caused-by field"); return 1
+    value = line.split(":", 1)[1].strip()
+    base = value[:-6] if value.endswith("_proxy") else value   # _proxy = the cause had to be inferred
+    if base not in CAUSES:
+        print(f"REJECT: caused-by '{value}' is not in the taxonomy {sorted(CAUSES)}"); return 1
+    return 0
+
+# A telemetry read — NEVER a target. Optimizing the deterministic-vs-proxy ratio would only teach lying.
+def caused_by_mix(commits) -&gt; dict[str, int]:
+    mix = {}
+    for c in commits:
+        v = c.caused_by
+        mix[v] = mix.get(v, 0) + 1
+    return mix</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Some causes are proxy-only.</strong> A change provoked by the agent's own self-check facet has no external artifact holding its cause, so it is essentially inferred; label it `_proxy` and be honest. A heavier mechanism does not remove that uncertainty; it relocates it.</li><li><strong>The taxonomy is a coordination point.</strong> A genuinely new cause needs a <em>declared</em> taxonomy value, not a local string; deliberate, but it makes the cause set a shared surface.</li><li><strong>The signal must not become a target.</strong> The moment anyone rewards the deterministic-vs-proxy ratio, the field starts lying; the discipline is to read it, not to steer by it.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The code-agent pre-commit hook asserting a `caused-by` field from the closed taxonomy before a commit lands.</li><li>A telemetry query reporting the caused-by mix per class (how much of the fleet's change is traced deterministically versus `_proxy`-labeled), read by a self-operations runbook that queries the caused-by mix.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Specializes</strong> — <a href="../agent/lifecycle-and-observability/reflection-facet-substrate.html">reflection-facet-substrate</a> (and its <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-hooks</a> <em>measured leash</em>): the leash joins firings to actions by session key; this threads an explicit cause-id from cause to effect, a deterministic join where an artifact exists.</li><li><strong>Counterpart</strong> — <a href="../product/provenance-and-attribution/mutator-stamps.html">mutator-stamps</a>: product-side provenance (a mutation inside the artifact) versus agent-side provenance (the fleet's change to the repo).</li><li><strong>Realizes</strong> — the catalogue's claim that a <em>traceability matrix</em> can be a queried model behind a drift gate rather than a filed spreadsheet: caused-by is that matrix emitted one row per commit.</li><li><em>See also</em> — <a href="../product/regression-tests/ddt-pin-trailers.html">ddt-pin-trailers</a>: a sibling typed-trailer discipline asserted at the commit gate.</li></ul>
-<h2>Cron-alerts gate</h2>
+<h2 id="cron-alerts-gate">Cron-alerts gate</h2>
 <p><strong>Intent</strong> — A gate that <strong>blocks new orchestrator work-dispatch</strong> while an unresolved HIGH-severity cron alert exists, forcing the orchestrator to ack or resolve it before piling more work onto a possibly-broken substrate.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/cron-alerts-gate.html">lifecycle-and-observability / Cron-alerts gate</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/cron-alerts-gate.html">lifecycle-and-observability / Cron-alerts gate</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>The cron substrate (merge-train, tombstoning, retries) can break silently. If the orchestrator keeps dispatching new work <em>on top of</em> a broken substrate, it piles work into a system that cannot land it, compounding the mess. The failure is <em>dispatching into a known-broken substrate</em>, and it recurs whenever cron breaks and the orchestrator doesn't stop.</p>
 <h3>Applicability</h3>
 <ul><li><strong>An alert channel</strong> (append-only) fed by the <a href="../agent/lifecycle-and-observability/typed-event-bus.html">typed event bus</a>, with a severity scale.</li><li><strong>An ack log</strong> with terminal states (`ACK`/`RESOLVE`/`BYPASS_AUDIT`).</li><li><strong>The dispatch tools wired to consult it</strong>; a gate nothing checks is not a gate.</li><li><strong>A resolution path that is itself EXEMPT</strong>, or the gate deadlocks the fix.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Cron-alerts gate"]</pre>
+<p>The gate reads the alert channel and the ack log; an unresolved HIGH alert refuses the dispatch tools outright, and only a terminal ack or a resolving dispatch clears it.</p>
+<pre class="mermaid">flowchart LR
+  Alerts[(Alert channel)] --&gt; Gate{Unresolved HIGH?}
+  Acks[(Ack log)] --&gt; Gate
+  Gate --&gt;|yes| Refuse([Refuse dispatch tools])
+  Gate --&gt;|no| Allow([Dispatch permitted])
+  Refuse --&gt;|resolving dispatch acks| Allow</pre>
+<p><em>Accessible description: the gate reads the alert channel and the ack log; an unresolved HIGH alert refuses the dispatch tools, and dispatch is permitted only when no HIGH alert is unresolved — an alert-resolving dispatch auto-acks and clears the gate.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Cron-alerts gate</code></pre>
+<p>The gate promotes an observability signal into a blocking barrier: an unresolved HIGH alert refuses the dispatch tools until a terminal ack clears it. Deadlock-freedom is designed in — the resolving path is exempt, so the gate can always be cleared.</p>
+<pre><code>def unresolved_high(alerts, acks) -&gt; list[str]:
+    """A HIGH alert with no terminal ack still blocks."""
+    terminal = {a.alert_id for a in acks if a.state in {"ACK", "RESOLVE", "BYPASS_AUDIT"}}
+    return [a.id for a in alerts if a.severity == "HIGH" and a.id not in terminal]
+
+def gate_dispatch(tool: str, alerts, acks) -&gt; int:
+    EXEMPT = {"resolve-alert", "ack-alert"}            # the resolution path must never be blocked
+    blocking = unresolved_high(alerts, acks)
+    if blocking and tool not in EXEMPT:
+        print(f"REFUSED: '{tool}' blocked by unresolved HIGH alerts {blocking} — ack or resolve first")
+        return 1
+    return 0</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>A stuck/unackable alert deadlocks dispatch.</strong> Mitigated by EXEMPT tools + the resolves-alert path + a recovery playbook, but a mis-wired gate can wedge the orchestrator.</li><li><strong>It depends on correct severity tagging.</strong> A mis-tagged HIGH over-blocks; a mis-tagged LOW under- blocks. The gate inherits the alert producer's accuracy.</li><li><strong>The bypass ack is a hole.</strong> `BYPASS_AUDIT` clears the gate for a human (logged), which can paper over a real break.</li><li><strong>Session-start poll is discipline.</strong> The block is mechanical once seen, but <em>seeing</em> it depends on the orchestrator honoring the poll.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The cron-alerts channel (an append-only alerts log) + acks log.</li><li>The session-start poll discipline; the dispatch block on unresolved HIGH alerts.</li><li>The alert-resolving dispatch (`--resolves-alert`, auto-ack + dispatch fix).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Consumer</strong> — reads <a href="../agent/lifecycle-and-observability/typed-event-bus.html">typed-event-bus</a>: alerts are derived events promoted to a gate.</li><li><strong>Layer</strong> — a <em>dispatch-time</em> health gate, upstream of all new work — the health-driven analogue of <a href="../agent/context-and-dispatch/brief-linting.html">brief-linting</a>'s structural dispatch gate.</li><li><strong>Counterpart</strong> — the acks log is the resolution record that the gate reads to decide whether a HIGH alert still blocks.</li></ul>
-<h2>Deploy heartbeats + stale-worker detection</h2>
+<h2 id="deploy-heartbeats">Deploy heartbeats + stale-worker detection</h2>
 <p><strong>Intent</strong> — Periodic `[heartbeat] phase=X elapsed=Ns` emissions from long-running deploys, plus a stale-worker sweep, so a <em>hung</em> deploy or worker is distinguishable from a merely <em>slow</em> one.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/deploy-heartbeats.html">lifecycle-and-observability / Deploy heartbeats + stale-worker detection</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/deploy-heartbeats.html">lifecycle-and-observability / Deploy heartbeats + stale-worker detection</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>A long deploy (25–40 min) or a worker that stalls is <strong>indistinguishable from progress</strong> without a liveness signal: you cannot tell "slow build" from "hung process." The failure is <em>blind waiting and undetected hangs</em>: the orchestrator either kills a healthy-but-slow deploy or waits forever on a dead one. It recurs on every long-running operation.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A phase loop with a periodic emit.</strong> The operation must be structured into observable phases.</li><li><strong>A parseable heartbeat format</strong> (`phase=` / `elapsed=`) a consumer can grep.</li><li><strong>A consumer that knows the expected cadence</strong>, so "no heartbeat for N×30 s" reads as stale.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Deploy heartbeats + stale-worker detection"]</pre>
+<p>The phase loop emits phase-plus-elapsed on a fixed cadence; a consumer that knows the cadence reads a missing beat as a hang rather than mistaking a slow phase for a dead one.</p>
+<pre class="mermaid">flowchart LR
+  Loop[Deploy phase loop] --&gt;|every 30s| Beat[/phase=X elapsed=Ns/]
+  Beat --&gt; Consumer{Beat within cadence?}
+  Consumer --&gt;|phase advancing| Live([Live and progressing])
+  Consumer --&gt;|no beat for N cycles| Stale([Flag as hung])</pre>
+<p><em>Accessible description: a deploy phase loop emits a phase-and-elapsed heartbeat every thirty seconds; a consumer that knows the cadence reads an advancing phase as live-and-progressing and a missing beat over several cycles as a hang to flag.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Deploy heartbeats + stale-worker detection</code></pre>
+<p>The heartbeat carries <em>phase</em> and <em>elapsed</em>, so both liveness and progress are observable; a consumer that knows the cadence flags a worker that has stopped beating. Process-alive is not enough — a deadlocked process is alive; only an advancing phase tells slow from hung.</p>
+<pre><code>import time
+
+def deploy_with_heartbeat(phases, emit, interval=30.0):
+    start = time.monotonic()
+    for name, run_phase in phases:
+        last = time.monotonic()
+        for _ in run_phase():                          # phase yields progress ticks
+            now = time.monotonic()
+            if now - last &gt;= interval:
+                emit(f"[heartbeat] phase={name} elapsed={now - start:.0f}s")
+                last = now
+
+def is_stale(last_beat_ts: float, now: float, cadence=30.0, misses=3) -&gt; bool:
+    return (now - last_beat_ts) &gt; cadence * misses     # no beat for N cadences ⇒ hung, not slow</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Liveness ≠ correctness.</strong> A deploy can heartbeat steadily while still failing — the signal proves it is <em>moving</em>, not that it is <em>right</em>.</li><li><strong>Cadence knowledge is required.</strong> Judging staleness needs the consumer to know the 30 s cadence; without that the signal is just noise.</li><li><strong>Granularity + noise.</strong> 30 s resolution can miss short hangs, and the heartbeat lines add log volume.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The `[heartbeat] phase=X elapsed=Ns` emissions from the deploy phase loop.</li><li>The startup concurrency guard (refuses overlapping deploys).</li><li>The stale-worker detection sweep.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../agent/lifecycle-and-observability/agent-registry.html">agent-registry</a>, <a href="../agent/lifecycle-and-observability/typed-event-bus.html">typed-event-bus</a>: the fleet's other signal surfaces; heartbeats are the deploy-specific one.</li><li><strong>Layer</strong> — supports <a href="../agent/gates-and-merge-train/staged-deploy-gates.html">staged-deploy-gates</a>: it is the liveness signal <em>over</em> the deploy those gates run.</li></ul>
-<h2>Lifecycle hooks (interpose on the agent runtime's events)</h2>
+<h2 id="lifecycle-hooks">Lifecycle hooks (interpose on the agent runtime's events)</h2>
 <p><strong>Intent</strong> — Bind a script to the agent runtime's lifecycle events (turn-stop, pre-compaction, session-start, before-a-tool-call) so a step the operator keeps <em>omitting at runtime</em> fires deterministically, whether or not anyone remembered it.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-and-observability / Lifecycle hooks (interpose on the agent runtime's events)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-and-observability / Lifecycle hooks (interpose on the agent runtime's events)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Some recurring failures live not in the code an agent writes but in the <strong>loop that drives it</strong>: the operator (a human, or an orchestrator agent) skipping a step at a predictable moment. Ending a turn with ratified work still queued. Compacting context without first writing a hand-off. Opening a session without reading the alert backlog. Editing outside the sanctioned worktree. A lint can't reach these: there is no source artifact to analyze, and the omission happens at runtime, in the loop itself. A house-rule (<em>"remember to…"</em>) only aims a probabilistic operator, and it rots, because the step gets skipped exactly when attention is thin. The failure recurs every session.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A runtime that exposes lifecycle events</strong>, plus a registration surface. Without the seam there is nothing to hook.</li><li><strong>A cheap check.</strong> The hook fires on every occurrence of its event; an expensive one stalls the loop and creates pressure to disable it.</li><li><strong>Fail-open for guidance hooks.</strong> A bug in the hook must not brick the session; only the deliberate block is fail-closed.</li><li><strong>A named, recurring omission.</strong> Reach for a hook once a soft reflex has demonstrably failed to hold, not on first sight; a hook manufactured for a one-off is pure overhead.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Lifecycle hooks (interpose on the agent runtime's events)"]</pre>
+<p>The runtime fires the hook on a named event; the hook's payload is either a hard block that denies the action or soft guidance re-injected into the agent's context — the firing is hard, the payload's force varies.</p>
+<pre class="mermaid">flowchart LR
+  Event([Runtime lifecycle event]) --&gt; Hook{{Bound hook}}
+  Hook --&gt;|block payload| Deny([Action denied])
+  Hook --&gt;|guidance payload| Inject([Guidance re-injected])
+  Inject --&gt; Decide[Agent decides]</pre>
+<p><em>Accessible description: a runtime lifecycle event fires a bound hook whose payload is either a hard block that denies the action or soft guidance re-injected into the agent's context for it to weigh; the firing is guaranteed by the runtime, the payload's force is the design choice.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Lifecycle hooks (interpose on the agent runtime's events)</code></pre>
+<p>The hook splits the two halves a lint fuses: the runtime <em>guarantees the firing</em>, and the payload is either a hard veto or soft guidance. The reflex case — <em>hard delivery of soft guidance</em> — makes the aiming deterministic without swapping judgment for machinery. Validate the hook's output against the runtime's <em>actual</em> schema, or a wired-but-dead hook is silently dropped on every fire.</p>
+<pre><code>from dataclasses import dataclass
+
+@dataclass
+class HookResult:
+    decision: str          # "block" | "guide" | "allow" — the runtime's real contract shape
+    message: str = ""
+
+def on_turn_stop(work_queued: bool, pool_has_room: bool) -&gt; HookResult:
+    if work_queued and pool_has_room:                 # a "guide" payload: aim, don't compel
+        return HookResult("guide", "ratified work remains and the pool is under cap — keep going")
+    return HookResult("allow")                         # default silent: a false nudge is worse than a miss
+
+def on_pre_edit(path: str, worktree_root: str) -&gt; HookResult:
+    if not path.startswith(worktree_root):            # a "block" payload: deny the unsafe action
+        return HookResult("block", f"edit outside the sanctioned worktree: {path}")
+    return HookResult("allow")
+
+VALID_DECISIONS = {"block", "guide", "allow"}          # build-time check: reject any other shape</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>It fires on every event, not only when needed.</strong> A turn-stop hook runs at <em>every</em> stop, including the ones where nothing was owed; the check must stay cheap or the tax is constant and resented.</li><li><strong>A guidance hook can be ignored.</strong> Its payload is soft: the agent may read the re-injected text and proceed anyway. It aims deterministically; it does not compel. Only the blocking variant compels.</li><li><strong>A buggy hook is a loop-level outage.</strong> A blocking hook that misfires, or a guidance hook that crashes without fail-open, stalls the whole session; the blast radius is the loop, not one commit.</li><li><strong>It can nag.</strong> A hook that fires on a state it misreads ("work still queued" when the operator is legitimately blocked on a decision) produces repeated false prompts, and a signal that cries wolf gets tuned out.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>A <strong>turn-stop hook</strong> that refuses to let the loop rest while ratified work remains and the worker pool is under its cap (<em>hard delivery of soft guidance</em>): it re-prompts, the agent decides.</li><li>A <strong>turn-stop self-check hook</strong> that, at most once per long window, re-arms the operator's reflex to convert a <em>recurring</em> failure into a durable control, the operate→harden handoff fired as a runtime event. It ships a firing-telemetry log and a yield query correlating its nudges against real conversions, and biases its payload hard toward silence. Its first organic firing closed the whole loop on itself: the telemetry had shown the convert-a-recurrence-into-a-control discipline was reached for ~never (its knowledge applied ambiently instead); the hook turned that dormant reflex into a deterministic nudge; the nudge produced the discipline's first real invocation; and that invocation routed a failure recurring all session into a control: the yield query's first positive correlation, and the keep-signal that says <em>don't pull the hook.</em></li><li>A <strong>pre-compaction hook</strong> that writes a hand-off before context is compacted, so in-flight state survives the summarization.</li><li>A <strong>session-start hook</strong> that runs the session-start ritual (reading the unconsumed alert backlog) before the first action of a resumed or compacted session.</li><li>A <strong>before-a-tool-call guard</strong>: the hard-block variant denies an edit outside the sanctioned worktree; a guidance variant surfaces unresolved alerts before a dispatch.</li><li>A <strong>build-time output-conformance check</strong> validating every wired hook's output against the runtime's actual schema, so a hook emitting a shape the runtime silently drops (wired-but-dead) is a build error, not an invisible no-op.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Counterpart</strong> — <a href="../agent/gates-and-merge-train/pre-commit-hook.html">pre-commit-hook</a>: both are hooks, but that one fires on a <em>commit</em> and guards what gets <strong>written</strong>; this one fires on a <em>runtime lifecycle event</em> and guards what the loop <strong>does</strong>. The named axis is <em>commit-content</em> vs <em>runtime-loop</em>.</li><li><strong>See also</strong> — <a href="../agent/lifecycle-and-observability/cron-alerts-gate.html">cron-alerts-gate</a>: a before-a-tool-call hook is one delivery surface for its "an unresolved high-severity alert blocks new work" rule. The gate supplies the state; the hook fires the check at the moment of action.</li><li><strong>Specialized by</strong> — <a href="../agent/lifecycle-and-observability/reflection-facet-substrate.html">reflection-facet-substrate</a>: what you build once a <em>second</em> reflection hook appears. A single hook re-arms one omitted reflex; the substrate consolidates many policy-reflection facets over one shared tempo budget (≤1 emission/window), so N soft nudges don't compound into the alarm fatigue the measured leash above warns about.</li><li><em>See also (temporal complement)</em> — <a href="../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a>: the feed-forward twin. Injection pushes the governing constraints <em>into</em> an agent at dispatch, before it acts; a tempo-gated <strong>reflection</strong> hook pulls the <em>operator</em> back to the same kind of policy at turn-tempo, while or after acting. Forward-priming versus backward-reflection: the same "right policy at the right lifecycle moment" move, mirrored in time.</li><li><em>See also (placement)</em> — <a href="../agent/governance-doc-controls/semantic-level-enforcement.html">semantic-level-enforcement</a>: a runtime lifecycle event is the rung that judgment picks for an operator-loop omission; this entry is a control <em>placed</em> by it.</li><li><strong>Layer</strong> — it sits at the agent runtime, upstream of the commit → cron → merge-train → deploy staircase; it governs the operator <em>driving</em> that staircase, not the work flowing through it.</li></ul>
-<h2>Reflection-facet substrate (tempo-gated policy nudges)</h2>
+<h2 id="reflection-facet-substrate">Reflection-facet substrate (tempo-gated policy nudges)</h2>
 <p><strong>Intent</strong> — Consolidate the operator's policy-reflection nudges into ONE tempo-gated substrate: a registry of Template-Method <strong>facets</strong>, each reflecting the running context against a single repo-policy dimension it <em>references</em> (never copies), the whole family emitting <strong>at most one reflection per window</strong>, so several soft reflections can't compound into the alarm fatigue that would kill them all (our instance: a `ReflectionFacet` base + facet registry with four facets over a shared turn-end window: failure→control, knowledge-routing, structural-drift, operations).</p>
-<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/reflection-facet-substrate.html">lifecycle-and-observability / Reflection-facet substrate (tempo-gated policy nudges)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/reflection-facet-substrate.html">lifecycle-and-observability / Reflection-facet substrate (tempo-gated policy nudges)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>A single <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle hook</a> that re-arms one omitted reflex is cheap and clear. The trouble starts at the <strong>second</strong> one. Once you want the operator to reflect on more than one recurring policy (<em>convert this recurrence into a control</em>, <em>route this lesson to the right store</em>, <em>this looks like a second copy</em>, <em>this runbook is stale</em>), the naive path is N independent hooks, each firing on its own event.</p>
 <p>Three failures follow, and they compound:</p>
@@ -513,49 +974,119 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <h3>Applicability</h3>
 <ul><li><strong>The single-hook primitive.</strong> A runtime with lifecycle-event hooks for the emitter to bind to (<a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-hooks</a>).</li><li><strong>A canonical, referenceable policy corpus.</strong> The docs or registries each facet points at, with a resolvable ref grammar, so a facet can <em>reference</em> its rule rather than restate it.</li><li><strong>More than one reflection policy worth nudging.</strong> A single facet does not need a registry or a shared budget; the substrate earns its keep at the <em>second</em> facet (extract-on-the-second-site). Built for one nudge, it is pure overhead.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Reflection-facet substrate (tempo-gated policy nudges)"]</pre>
+<p>Facets self-register into a typed registry; a shared emitter, bound to a lifecycle event, round-robins them and emits at most one reflection per window — the aggregate ceiling no independent hook can share.</p>
+<pre class="mermaid">flowchart LR
+  F1[Facet: failure→control] --&gt; Reg[(Facet registry)]
+  F2[Facet: knowledge-routing] --&gt; Reg
+  F3[Facet: structural-drift] --&gt; Reg
+  Reg --&gt; Emitter{{Shared emitter}}
+  Emitter --&gt;|≤1 per window, round-robin| Nudge([One paced reflection])</pre>
+<p><em>Accessible description: several policy facets self-register into a typed registry; a shared emitter bound to a lifecycle event round-robins them and emits at most one reflection per window, so the family shares one anti-overwhelm ceiling instead of each hook firing on its own.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Reflection-facet substrate (tempo-gated policy nudges)</code></pre>
+<p>A Template-Method base fixes the reflect sequence; a facet fills only the sanctioned steps and declares a <em>pointer</em> to its policy (never a copy). A shared emitter round-robins the registered facets and emits at most one nudge per window — the ceiling the whole family shares.</p>
+<pre><code>from abc import ABC, abstractmethod
+
+class ReflectionFacet(ABC):
+    key: str
+    policy_ref: str          # a resolvable pointer into the canonical policy — referenced, not copied
+
+    @abstractmethod
+    def warrants(self, ctx) -&gt; bool: ...      # is this facet's moment? bias hard toward False (silence)
+    @abstractmethod
+    def payload(self, ctx) -&gt; str: ...        # the conservative nudge, worded from policy_ref
+
+class Emitter:
+    def __init__(self, facets): self._facets, self._cursor = list(facets), 0
+
+    def tick(self, ctx) -&gt; str | None:
+        n = len(self._facets)
+        for i in range(n):                     # round-robin so no single facet monopolizes the window
+            f = self._facets[(self._cursor + i) % n]
+            if f.warrants(ctx):
+                self._cursor = (self._cursor + i + 1) % n
+                return f.payload(ctx)          # AT MOST ONE reflection per window across the whole family
+        return None</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Facets compete for the window.</strong> The shared budget means no facet is guaranteed to fire on every eligible event: a busy tempo class round-robins. That is the anti-overwhelm working, but it trades per-facet promptness for aggregate calm.</li><li><strong>The closed surface is a real constraint.</strong> A facet that genuinely needs a new capability can't hack it locally: it needs a new <em>declared</em> virtual on the base. Deliberate (it keeps every facet uniform), but it makes the base a coordination point.</li><li><strong>It is over-engineering at N=1.</strong> The registry, the Template Method, and the shared budget are all overhead until there are at least two facets to consolidate; do not stand it up speculatively.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>A `ReflectionFacet` Template-Method base + a typed facet registry, with four facets on it: <em>failure→control</em> (convert a recurring failure into a control), <em>knowledge-routing</em> (a lesson belongs in memory vs a durable runbook), <em>structural-drift</em> (a second copy, i.e. DRY), <em>operations</em> (a runbook/playbook gap). Two are built, two interface-ready.</li><li>A shared turn-end emitter that round-robins the facets of a tempo class and emits ≤1 reflection per window; a separate memory-write emitter for the routing facet.</li><li>A closed-surface lint (each facet implements exactly the sanctioned steps), a pointer-resolve lint (every facet's policy-material pointer resolves), and a per-firing telemetry log + yield query (the measured leash). The facet registry is itself modeled as a typed node behind a drift gate (model = territory).</li><li>A runnable, portable form of the whole substrate ships as a stdlib-only, copy-and-adapt library with this catalogue's operating skill: the Template-Method base, the once-per-window emitter, two generic example facets, and the measured-leash query. It is the runnable complement to the pattern described here.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Specializes</strong> — <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-hooks</a>: the single-hook primitive this is built on. That entry's <em>measured leash</em> is where the family's evidence discipline lives; this entry is the registry-of- facets you reach for once a <em>second</em> reflection hook appears and N independent nudges would fatigue.</li><li><strong>Temporal complement</strong> — <a href="../agent/context-and-dispatch/dynamic-context-injection.html">dynamic-context-injection</a>: injection pushes policy <em>into</em> an agent at entry (feed-forward); a reflection facet pulls the operator back to policy at tempo (feed-back). The per-facet policy-material pointer is the concrete form of "both are modalities over one policy source of truth."</li><li><em>See also</em> — <a href="../models-bridge/system-models/meta-model-consumption.html">meta-model-consumption</a>: a facet <em>references</em> its canonical policy material through a resolved pointer rather than copying it: read-don't- hardcode applied to the reflection substrate.</li></ul>
-<h2>Tombstone commits (lifecycle close records)</h2>
+<h2 id="tombstone-commits">Tombstone commits (lifecycle close records)</h2>
 <p><strong>Intent</strong> — A tombstone commit written at a worktree's branch tip that durably records its lifecycle close and <em>disposition</em> (cherry-picked / declared-skipped), so cleanup can <em>prove</em> a worktree is safely reclaimable instead of guessing.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/tombstone-commits.html">lifecycle-and-observability / Tombstone commits (lifecycle close records)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/tombstone-commits.html">lifecycle-and-observability / Tombstone commits (lifecycle close records)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Reclaiming a worktree <em>safely</em> requires knowing its work is fully accounted for — every commit either cherry-picked to main or deliberately skipped. Without a durable close record, cleanup faces a dilemma: delete eagerly and risk <strong>destroying unlanded work</strong>, or never delete and <strong>leak worktrees</strong> forever. The failure is one of those two, and it recurs at every agent completion.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A place to write the close record</strong> — here, a commit at the branch tip.</li><li><strong>A disposition vocabulary</strong> (cherry-picked / skipped) so the record is machine-checkable.</li><li><strong>A dedup mechanism</strong> (the registry `tombstoning_started` event) to serialize concurrent closers.</li><li><strong>The live-worktree guard</strong> so a still-working agent can never be tombstoned.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Tombstone commits (lifecycle close records)"]</pre>
+<p>The tombstone at the branch tip records the disposition; a dedup event serializes concurrent closers, a live-marker guard refuses a working agent, and cleanup reads the record as its safe-to-reclaim proof.</p>
+<pre class="mermaid">flowchart LR
+  Close[/Worktree close/] --&gt; Guard{Live marker present?}
+  Guard --&gt;|yes| Refuse([Refuse to tombstone])
+  Guard --&gt;|no| Write[Write tombstone + disposition]
+  Write --&gt; Cleanup{Tombstone + all commits landed?}
+  Cleanup --&gt;|yes| Reclaim([Safe to reclaim])</pre>
+<p><em>Accessible description: a worktree close first checks the live marker and refuses to tombstone a working agent; otherwise it writes a tombstone carrying the disposition, and cleanup reclaims the directory only when a tombstone tips the branch and every non-tombstone commit is cherry-picked or declared skipped.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Tombstone commits (lifecycle close records)</code></pre>
+<p>The tombstone records the <em>disposition</em>, so cleanup can verify a precise predicate rather than guess off a "looks finished" heuristic. A dedup event serializes concurrent closers, and the reclaim predicate demands both the tip tombstone and full accounting of every other commit.</p>
+<pre><code>def safe_to_reclaim(branch_commits, is_landed) -&gt; bool:
+    """Reclaim only if a tombstone tips the branch AND every other commit is landed or skipped."""
+    if not branch_commits or not branch_commits[-1].is_tombstone:
+        return False
+    return all(is_landed(c) or c.declared_skipped
+               for c in branch_commits if not c.is_tombstone)
+
+def write_tombstone(agent_id, disposition, marker_exists, dedup_claim) -&gt; int:
+    if marker_exists(agent_id):                        # live-worktree guard: never close a working agent
+        print(f"REFUSE: agent {agent_id} is still live"); return 1
+    if not dedup_claim(agent_id):                      # registry event serializes concurrent closers
+        print(f"REFUSE: another closer already started for {agent_id}"); return 78
+    # ... append a tombstone commit carrying `disposition` at the branch tip ...
+    return 0</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Bypass-prefix hole.</strong> `tombstone:` commits skip the pre-commit hook by design — needed for the mechanism, but a gap that rests on honest use.</li><li><strong>Dedup depends on the registry.</strong> If the `tombstoning_started` event is missed, two closers can race.</li><li><strong>A wrong disposition is dangerous.</strong> A tombstone that mis-records "skipped" for un-landed work would greenlight an unsafe reclaim — the reclaim trusts the record's <em>correctness</em>.</li><li><strong>Mass-tombstone id-lists are manual.</strong> The `--id-file` discipline is a human step (deliberately, to prevent runtime enumeration).</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The tombstone tool — writes the disposition-bearing close record.</li><li>The dedup event (`tombstoning_started`, exit 78); the explicit-id-list + live-worktree guard.</li><li>The `cleanup-stale` predicate (tombstone-at-tip AND all commits cherry-picked/skipped).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Consumer</strong> — reads <a href="../agent/lifecycle-and-observability/agent-registry.html">agent-registry</a> live markers before writing a close record (the live-worktree guard).</li><li><strong>Enabler</strong> — `worktree.py cleanup-stale` verifies the record it writes before reclaiming a directory.</li><li><strong>Counterpart</strong> — the live-worktree guard (hard) prevents this audit record from ever being written for an agent that is still working.</li></ul>
-<h2>Orchestrator-as-reactor over an event bus</h2>
+<h2 id="typed-event-bus">Orchestrator-as-reactor over an event bus</h2>
 <p><strong>Intent</strong> — A typed event bus with a closed, const-string topic registry and a companion <strong>playbook</strong>, over which substrate emits lifecycle/health events. The bus turns the orchestrator into a <strong>reactor</strong> over the fleet: it reads health from a <em>queryable, self-documenting</em> signal surface and <em>reacts</em> to each event with a playbook-prescribed response, which keeps a fleet of agents productive over long-running sessions instead of drifting into silent breakage.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/typed-event-bus.html">lifecycle-and-observability / Orchestrator-as-reactor over an event bus</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/typed-event-bus.html">lifecycle-and-observability / Orchestrator-as-reactor over an event bus</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>A fleet's health — is cron running, is the merge-train yielding, are tombstones stuck — is <strong>invisible without a signal surface</strong>, so degradation accretes silently (cron broken for hours before anyone notices). Worse, without a reaction loop the orchestrator is a passive observer: it can only steer the fleet if it <em>reacts</em> to what the substrate reports. The failure is <em>silent substrate degradation and an un-reacting orchestrator</em>, and it recurs continuously across a long session. The fleet slowly stops being productive while each dispatch still looks locally fine.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A typed topic registry</strong> (const strings + a lint) so topics are enumerable and typo-proof.</li><li><strong>Emit points wired into the substrate</strong> at the events that matter.</li><li><strong>A playbook keyed by topic</strong> — the signal is only actionable if each topic says what healthy and broken look like.</li><li><strong>An orchestrator that actually polls it</strong> on a defined cadence.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Orchestrator-as-reactor over an event bus"]</pre>
+<p>Emitters publish topics drawn from a closed registry; the orchestrator polls the queryable surface, matches each event to its playbook entry, and takes the prescribed action — the playbook is the active half that turns a signal into a reaction.</p>
+<pre class="mermaid">flowchart LR
+  Sub[Substrate emitters] --&gt;|typed topic| Bus[(Event bus)]
+  Reg[(Const-string topic registry)] -.-&gt;|topics must be declared| Bus
+  Bus --&gt; Orch{Orchestrator polls}
+  Orch --&gt;|match topic → playbook| React([Prescribed action])</pre>
+<p><em>Accessible description: substrate emitters publish typed topics, drawn from a closed const-string registry, onto the event bus; the orchestrator polls the queryable surface, matches each event to its playbook entry, and takes the prescribed action.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Orchestrator-as-reactor over an event bus</code></pre>
+<p>Topics are a closed const-string namespace, so a typo can't silently create a dead topic that disables a signal; every topic must carry a playbook entry, so a raw signal becomes an actionable reaction. The reactor loop is: poll, match topic to playbook, act.</p>
+<pre><code>TOPICS = {"cron.tick", "merge_train.yield", "tombstone.stuck"}   # closed registry — emit off-list = fail loud
+
+PLAYBOOK = {
+    "merge_train.yield": {"healthy": "0-1 per session", "wrong": "repeated yields",
+                          "do": "open the merge-train recovery playbook"},
+    "tombstone.stuck":   {"healthy": "none queued", "wrong": "queued with no progress",
+                          "do": "inspect the dedup event, clear the stuck closer"},
+}
+
+def emit(topic: str, bus: list) -&gt; None:
+    assert topic in TOPICS, f"undeclared topic '{topic}'"        # typo-proof by construction
+    bus.append(topic)
+
+def react(bus: list) -&gt; list[str]:
+    actions = []
+    for topic in bus:
+        entry = PLAYBOOK.get(topic)                              # a topic with no entry is un-actionable noise
+        if entry:
+            actions.append(f"{topic}: {entry['do']}")
+    return actions</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Only as useful as playbook coverage.</strong> A topic without a playbook entry is emitted but not interpretable; the substrate-observability rule exists because that gap is the common failure.</li><li><strong>Consumption is discipline.</strong> The bus is Hard emission, but <em>acting</em> on it depends on the orchestrator honoring the poll cadence. The signal can be perfect and still ignored.</li><li><strong>Registry + emit-point maintenance.</strong> New topics need registry rows, emit wiring, and playbook entries kept in sync.</li></ul>
 <h3>Known Uses</h3>
@@ -563,79 +1094,155 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <h3>Related Patterns</h3>
 <ul><li><strong>Consumer</strong> — the <em>reaction</em> half is an <a href="../agent/governance-doc-controls/operational-playbooks.html">operational playbook</a>: each topic's playbook entry is the situation-keyed procedure the orchestrator runs when the event fires.</li><li><strong>Enabler</strong> — <a href="../agent/lifecycle-and-observability/cron-alerts-gate.html">cron-alerts-gate</a>: alerts are <em>derived events</em> on this bus, promoted into a blocking gate.</li><li><strong>Counterpart</strong> — the Observability-block lint keeps every emitting substrate's topics documented (the playbook honest).</li><li><em>See also (sibling)</em> — <a href="../agent/lifecycle-and-observability/agent-registry.html">agent-registry</a>, <a href="../agent/lifecycle-and-observability/deploy-heartbeats.html">deploy-heartbeats</a>: the fleet's other signal surfaces.</li><li><em>See also (a small flavor)</em> — <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-hooks</a> §"the measured leash": a soft guidance hook that ships its own per-firing telemetry log + a yield query is this telemetry idea in miniature, a probabilistic control instrumented so you can tell <em>working quietly</em> from <em>silently dead</em>.</li></ul>
 <h1>mediators-and-resource-locks</h1>
-<h2>Aggregate-compute protection (`lint-all` host mutex)</h2>
+<h2 id="aggregate-compute-protection">Aggregate-compute protection (`lint-all` host mutex)</h2>
 <p><strong>Intent</strong> — A one-per-host mutex on `lint-all` (the aggregate lint sweep) plus a one-in-flight declaration per orchestrator, so the single heaviest compute job cannot run twice on a machine or be triggered by many agents at once.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/mediators-and-resource-locks/aggregate-compute-protection.html">mediators-and-resource-locks / Aggregate-compute protection (`lint-all` host mutex)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/mediators-and-resource-locks/aggregate-compute-protection.html">mediators-and-resource-locks / Aggregate-compute protection (`lint-all` host mutex)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>`lint-all` is the single heaviest compute in the system; it fans out over the whole tree. Two concurrent runs, or many agents each triggering one, melt the host. The failure is <em>host exhaustion / OOM</em> from aggregate work that individually looks fine, and it recurs whenever more than one lint-all-class job is set in motion at once.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A host mutex</strong> with a hard timeout and fail-loud behavior.</li><li><strong>A `compute-class` declaration</strong> on briefs so the orchestrator can <em>count</em> in-flight aggregate work.</li><li><strong>Orchestrator-side in-flight accounting</strong>: the one-at-a-time rule is partly discipline, not purely mechanical.</li><li><strong>The role gate</strong> to stop the wrong role from triggering the sweep.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Aggregate-compute protection (`lint-all` host mutex)"]</pre>
+<p>A whole-sweep singleton mutex caps the host to one running sweep, and an orchestrator-side in-flight count caps dispatched sweeps to one — a coarser instrument than the per-call semaphore over the pieces.</p>
+<pre class="mermaid">flowchart LR
+  Briefs[Sweep-class briefs] --&gt; Count{One in flight?}
+  Count --&gt;|already one| Wait([Hold dispatch])
+  Count --&gt;|none| Run[Aggregate sweep]
+  Run --&gt; Mutex{{Host mutex, cap 1}}
+  Mutex --&gt;|second run| Block([Refuse / wait])</pre>
+<p><em>Accessible description: sweep-class briefs are capped to one in flight by an orchestrator-side count, and the aggregate sweep acquires a one-per-host mutex; a second run on the same host is refused, so the heaviest job never overlaps itself.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Aggregate-compute protection (`lint-all` host mutex)</code></pre>
+<p>A per-call semaphore over the pieces still lets two whole sweeps overlap; bounding an aggregate needs a coarser instrument — a <strong>singleton mutex</strong> over the sweep as an indivisible unit, plus an orchestrator-side in-flight count.</p>
+<pre><code>import fcntl, sys
+
+def run_aggregate_sweep(lock_path: str, do_sweep, timeout_s=1800):
+    with open(lock_path, "w") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)   # one sweep per host, cap 1
+        except BlockingIOError:
+            sys.exit("another aggregate sweep holds the host lock — refusing to melt the machine")
+        return do_sweep()                                       # indivisible: the whole tree, one at a time
+
+def may_dispatch_sweep(in_flight_sweeps: int) -&gt; bool:
+    return in_flight_sweeps == 0        # orchestrator-side: only one sweep-class brief in flight at a time</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Serializes the heaviest gate.</strong> Only one sweep at a time is the point, but it means lint-all is a throughput chokepoint under a busy fleet.</li><li><strong>The in-flight rule leans on orchestrator discipline.</strong> The host mutex is mechanical; the "one-in-flight-per-orchestrator" half depends on honest `compute-class` declaration.</li><li><strong>Bypass and mis-declaration are holes.</strong> `ADA_TOOL_LINT_ALL_NO_MUTEX=1`, or a brief that under- declares its compute-class, slips past.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The aggregate-lint host instance-lock (hard cap 1800s).</li><li>The `compute-class` brief declaration + one-in-flight discipline.</li><li>The role-enforcement gate refusing `sonnet-active`.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Consumer</strong> — reads the role from <a href="../agent/context-and-dispatch/role-typed-dispatch.html">role-typed-dispatch</a>: the role-enforcement gate is how it refuses the wrong caller.</li><li><strong>Counterpart</strong> — the brief-side `compute-class` declaration is the soft-ish orchestrator half that the hard host mutex backstops.</li><li><em>See also (sibling)</em> — <a href="../agent/mediators-and-resource-locks/test-serializer.html">test-serializer</a>, <a href="../agent/mediators-and-resource-locks/build-serializer.html">build-serializer</a>: the finer-grained mediators. This one rations the aggregate they cannot.</li></ul>
-<h2>Build-serializer (M=8 semaphore)</h2>
+<h2 id="build-serializer">Build-serializer (M=8 semaphore)</h2>
 <p><strong>Intent</strong> — A host-level <strong>counting semaphore (M=8)</strong> over the adjacent heavy-compute tools (`dotnet build`, `tsc`, `csharp-query`, jedi lints, `pyright`), so concurrent worktrees get parallelism up to the machine's capacity without oversubscribing it.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/mediators-and-resource-locks/build-serializer.html">mediators-and-resource-locks / Build-serializer (M=8 semaphore)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/mediators-and-resource-locks/build-serializer.html">mediators-and-resource-locks / Build-serializer (M=8 semaphore)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>The heavy build tools are the same shared-host hazard as `dotnet test`: N worktrees compiling, type-checking, and running Roslyn queries at once saturate CPU and memory and slow <em>everyone</em>. But unlike `dotnet test`, these tools are numerous and mostly parallel-safe, so the failure to avoid is both <em>oversubscription</em> (too many at once melts the host) <strong>and</strong> <em>over-serialization</em> (N=1 would waste cores and stall the fleet).</p>
 <h3>Applicability</h3>
 <ul><li><strong>A counting-semaphore primitive</strong> (here byte-range flock over M offsets).</li><li><strong>An identified set of adjacent heavy tools</strong> to route; anything left out leaks past the cap.</li><li><strong>A per-tool enforcer</strong> for each, so the mediated path is the only path.</li><li><strong>A tuned M</strong> appropriate to the host's core/memory budget.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Build-serializer (M=8 semaphore)"]</pre>
+<p>Each of the routed tools acquires one of M slots before running and releases after; the semaphore lets concurrency rise to the host's capacity and caps it there.</p>
+<pre class="mermaid">flowchart LR
+  T1[Compiler] --&gt; Sem{{Semaphore, M=8}}
+  T2[Type-checker] --&gt; Sem
+  T3[Query tool] --&gt; Sem
+  Sem --&gt;|slot free| Run([Tool runs])
+  Sem --&gt;|8 in flight| Wait([Queue for a slot])</pre>
+<p><em>Accessible description: several heavy build tools each acquire one of eight semaphore slots before running; a tool runs when a slot is free and queues when all eight are in flight, so concurrency rises to the host's capacity and is capped there.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Build-serializer (M=8 semaphore)</code></pre>
+<p>The lock's cardinality follows the resource's contention profile: a bounded semaphore for parallel-safe but heavy work. Each routed tool acquires a slot before running; an enforcer refuses the un-mediated call so the cap can't be skipped.</p>
+<pre><code>import fcntl
+
+M = 8   # tuned to the host's core / memory budget — parallel-safe but heavy work
+
+def with_build_slot(lock_path: str, run_tool):
+    with open(lock_path, "w") as lock:
+        for slot in range(M):                          # byte-range semaphore: M independent 1-byte locks
+            try:
+                fcntl.lockf(lock, fcntl.LOCK_EX | fcntl.LOCK_NB, 1, slot)
+                return run_tool()                      # hold the slot for the tool's duration
+            except BlockingIOError:
+                continue
+        raise SystemExit("all build slots busy — queue and retry")
+
+def enforce_mediated(argv0: str, cwd: str) -&gt; None:
+    if is_agent_worktree(cwd):                         # the raw call is banned from an agent worktree
+        raise SystemExit(f"run {argv0} through the build mediator, not directly")</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>M is a fixed guess.</strong> Eight is a static ceiling, not adaptive to host size or current load: too high oversubscribes a small host, too low wastes a big one.</li><li><strong>Coverage is only as complete as the routed set.</strong> A new heavy tool not wired through the semaphore silently escapes the cap.</li><li><strong>Five enforcers to maintain.</strong> Each tool's enforcer is a surface that can drift.</li><li><strong>Log proliferation.</strong> Per-run timestamped logs accumulate (by design, but they add up).</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The build serializer: the M=8 byte-range semaphore over the five tools.</li><li>The five active per-tool enforcers (`dotnet build` / `tsc` / `csharp-query` / jedi / `pyright`).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../agent/mediators-and-resource-locks/test-serializer.html">test-serializer</a>: the same pattern at <strong>N=1</strong>. Together they are the worked example of choosing lock cardinality by contention profile (destructive ⇒ N=1; parallel-safe-but-heavy ⇒ M=8).</li><li><strong>Layer</strong> — with <a href="../agent/mediators-and-resource-locks/test-serializer.html">test-serializer</a> and <a href="../agent/mediators-and-resource-locks/aggregate-compute-protection.html">aggregate-compute-protection</a>, the host-compute rationing tier.</li></ul>
-<h2>Resource-pressure gating (admit before, shed during)</h2>
+<h2 id="resource-pressure-gating">Resource-pressure gating (admit before, shed during)</h2>
 <p><strong>Intent</strong> — Govern a saturable host resource with a <strong>live pressure signal</strong> read at <em>two</em> layers: an <strong>admission gate</strong> that refuses or defers heavy work <em>before it is dispatched</em>, and an <strong>execution shed</strong> that stops heavy work <em>already running</em> when pressure spikes, both driven by one signal that is <em>also callable</em> for the operator's own judgment. Heavy work is then neither <em>started</em> into an overloaded host nor <em>left running</em> on one (our instance: a GREEN/YELLOW/RED host-load monitor that gates agent dispatch and sheds heavy compute at the mediators).</p>
-<p><em>Projected from the catalogue entry <a href="../agent/mediators-and-resource-locks/resource-pressure-gating.html">mediators-and-resource-locks / Resource-pressure gating (admit before, shed during)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/mediators-and-resource-locks/resource-pressure-gating.html">mediators-and-resource-locks / Resource-pressure gating (admit before, shed during)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>A cardinality cap (N-at-a-time) bounds <em>how many</em> heavy jobs run, not <em>whether the host can bear them right now</em>. Two failures follow. <strong>Dispatch into overload:</strong> the orchestrator admits a heavy agent onto an already-saturated machine because the only pre-dispatch check guards a <em>different</em> resource (free disk, say); the agent starts, reaches the compute mediators, and is refused, so it <strong>polls and sheds</strong>, burning wall-clock (a heavy agent has burned ~10 minutes polling) on work that never had headroom. <strong>Run into overload:</strong> pressure rises <em>after</em> a job was admitted, and nothing stops the now-too-heavy job mid-flight. Cardinality caps and single-resource admission checks miss both. The missing ingredient is a <em>live pressure reading</em> consulted at the two moments work is <strong>admitted</strong> and <strong>executed</strong>.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A live pressure signal</strong> over the saturable resource, cheap enough to read at every dispatch and every compute entry.</li><li><strong>A pre-dispatch gate seam</strong> the signal can hang on, sibling to whatever admission checks already exist (disk floor, quota).</li><li><strong>An execution-time shed</strong> the signal drives at the compute step.</li><li><strong>One signal, shared</strong>: admission and execution must read the <em>same</em> reading, or they disagree (admit-then-shed churn is that disagreement, when only the execution layer reads pressure).</li><li><strong>A heavy-vs-light work class</strong>, so light work is not gated by a signal only heavy work saturates.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Resource-pressure gating (admit before, shed during)"]</pre>
+<p>One pressure signal has three readers: an admission gate left of dispatch that refuses doomed work before a worktree exists, an execution shed at compute that stops a job pressure has overtaken, and an advisory callable for operator judgment.</p>
+<pre class="mermaid">flowchart LR
+  Monitor[(Pressure signal&lt;br/&gt;GREEN/YELLOW/RED)] --&gt; Admit{Admission gate}
+  Monitor --&gt; Shed{Execution shed}
+  Monitor --&gt; Advise([Advisory read])
+  Admit --&gt;|RED| Defer([Refuse / defer dispatch])
+  Shed --&gt;|RED| Stop([Shed running job])</pre>
+<p><em>Accessible description: one host-pressure signal feeds three readers — an admission gate that refuses or defers a heavy dispatch under RED before a worktree exists, an execution shed that stops a running heavy job under RED, and an advisory callable the operator consults — so heavy work is neither started into nor left running on an overloaded host.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Resource-pressure gating (admit before, shed during)</code></pre>
+<p>The two layers are not redundant: admission prevents the <em>startup</em> cost of doomed work; execution shedding catches pressure that rose <em>after</em> admission. One shared signal drives both, or they disagree and reintroduce the admit-then-shed churn.</p>
+<pre><code>def read_pressure() -&gt; str:
+    """One coarse level over the saturable resource — cheap enough for every dispatch and compute entry."""
+    ...  # returns "GREEN" | "YELLOW" | "RED"
+
+def admit_dispatch(is_heavy: bool) -&gt; str:
+    if is_heavy and read_pressure() == "RED":          # gate LEFT of dispatch — never start doomed work
+        return "defer"                                  # defer with a wake condition, never silently drop
+    return "admit"
+
+def compute_shed(is_heavy: bool) -&gt; str:
+    if is_heavy and read_pressure() == "RED":          # catches pressure that rose AFTER admission
+        return "shed"
+    return "run"</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Coarse by design.</strong> GREEN/YELLOW/RED is a blunt instrument: a too-eager RED starves throughput, a too-lax one still admits overload. The thresholds are a tuning surface, not set-and-forget.</li><li>**Admission must <em>defer</em>, not drop.** A heavy brief refused under sustained RED needs a retry/defer policy, or it starves; the gate degrades to a deferral with a wake condition, never a silent drop.</li><li><strong>Two readers, one signal; keep them consistent.</strong> If the admission gate and the shed read different signals or thresholds, you reintroduce the churn the mechanism exists to kill. One shared signal is what makes the two layers agree.</li><li><strong>The advisory read is soft.</strong> Its value is the operator <em>choosing</em> to consult it; unlike the gates, it cannot enforce.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>A host load/pressure monitor (GREEN/YELLOW/RED) read by the compute mediators to <em>refuse-and-shed</em> heavy-class work under RED.</li><li>A pre-dispatch admission gate, sibling to a free-disk floor, that refuses/defers heavy dispatch (⚠️ the disk floor is wired; the load-pressure gate is the identified extension that closes the dispatch-into-overload waste).</li><li>The monitor as a plain callable the operator consults for YELLOW-aware dispatch judgment.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Counterpart</strong> — <a href="../agent/mediators-and-resource-locks/aggregate-compute-protection.html">aggregate-compute-protection</a>, and the finer <a href="../agent/mediators-and-resource-locks/test-serializer.html">test-serializer</a> / <a href="../agent/mediators-and-resource-locks/build-serializer.html">build-serializer</a>: they ration heavy compute by <strong>cardinality</strong> (how many run at once); this rations by <strong>live pressure</strong> (whether the host can bear more <em>now</em>), across admission <em>and</em> execution. The named axis is <em>cap-the-count</em> versus <em>gate-on-the-condition</em>; a saturable host usually wants both.</li><li><strong>Layer</strong> — the two readers sit at two points of the path-to-work: the <strong>admission gate</strong> left of dispatch, the <strong>execution shed</strong> at compute. The shared signal is what keeps the two layers agreeing. Moving the check left (admission) is the same <em>shift-left</em> logic that puts a cheap gate before an expensive one.</li></ul>
-<h2>Test-serializer (N=1 flock on `dotnet test`)</h2>
+<h2 id="test-serializer">Test-serializer (N=1 flock on `dotnet test`)</h2>
 <p><strong>Intent</strong> — A host-level wrapper that serializes `dotnet test` to a <strong>single writer</strong> via an exclusive flock, so concurrent agent worktrees on one machine don't saturate I/O and interfere with each other's test runs.</p>
-<p><em>Projected from the catalogue entry <a href="../agent/mediators-and-resource-locks/test-serializer.html">mediators-and-resource-locks / Test-serializer (N=1 flock on `dotnet test`)</a>. Regenerated from its `.md` at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../agent/mediators-and-resource-locks/test-serializer.html">mediators-and-resource-locks / Test-serializer (N=1 flock on `dotnet test`)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Several worktrees each running `dotnet test` on one host saturate CPU and disk and interfere (port contention, shared build artifacts, I/O thrash), so tests <strong>flake or hang</strong> for reasons that have nothing to do with the code under test. The failure is <em>false-flaky tests plus wall-clock blowup</em>, and it recurs whenever two or more agents test at once, which under a fleet is most of the time. Worse, a false flake sends an agent chasing a non-bug.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A host-global lock file</strong> every worktree contends on (the single point of serialization).</li><li><strong>An enforcer that can intercept the raw tool</strong> (here a `[ModuleInitializer]` that runs before any test), so the mediated path is the <em>only</em> path.</li><li><strong>A wait cap that fails loud</strong>, so a stuck lock surfaces instead of hanging forever.</li></ul>
 <h3>Structure</h3>
-<!-- TODO: real structure diagram -->
-<pre class="mermaid">graph TD; TODO["TODO: structure diagram — Test-serializer (N=1 flock on `dotnet test`)"]</pre>
+<p>The serializer holds one exclusive host lock around the run, and an enforcer inside the test process makes the un-mediated path impossible — the ban is what makes the single-writer real.</p>
+<pre class="mermaid">flowchart LR
+  W1[Worktree A] --&gt; Lock{{Host lock, N=1}}
+  W2[Worktree B] --&gt; Lock
+  Lock --&gt;|acquired| Run([Test runner runs])
+  Lock --&gt;|held| Queue([Wait, fail loud at cap])
+  Raw[/Raw un-mediated call/] -.-&gt;|enforcer refuses| Blocked([Refused])</pre>
+<p><em>Accessible description: worktrees contend for one exclusive host lock around the test runner; the holder runs while others queue and fail loud at a wait cap, and an in-process enforcer refuses any raw un-mediated invocation so serialization is structural, not a convention.</em></p>
 <h3>Sample Code</h3>
-<!-- TODO: sample code -->
-<pre><code># TODO: sample code — Test-serializer (N=1 flock on `dotnet test`)</code></pre>
+<p>An exclusive flock gives N=1, and — decisively — an enforcer that runs <em>before any test</em> refuses a raw invocation from an agent worktree, so the mediated path is the only path. The ban makes the serialization real rather than a convention agents forget under time pressure.</p>
+<pre><code>import fcntl, sys
+
+def serialized_test(lock_path: str, run_tests, wait_cap_s=1800):
+    with open(lock_path, "w") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX)           # N=1: exclusive, one writer per host
+        except OSError:
+            sys.exit("test lock stuck past the wait cap — failing loud instead of hanging")
+        return run_tests()
+
+def enforce_no_raw_test(cwd: str, mediated: bool) -&gt; None:
+    # runs before any test executes; a raw runner from an agent worktree is refused
+    if is_agent_worktree(cwd) and not mediated:
+        raise SystemExit("raw test runner is banned from an agent worktree — route through the serializer")</code></pre>
 <h3>Consequences</h3>
 <ul><li><strong>Serialization is wall-clock cost.</strong> N=1 means tests queue; a long run blocks every other worktree behind it. This is the deliberate trade — correctness of results over raw parallelism.</li><li><strong>A stuck lock stalls everyone.</strong> The 30-minute fail-loud cap bounds the damage but does not eliminate it.</li><li><strong>The bypass is a hole.</strong> `ADA_TOOL_TEST_BYPASS_MEDIATOR=1` exists for humans; misused, it reintroduces the contention.</li><li><strong>Single-host assumption.</strong> The lock coordinates one machine; it does nothing across hosts.</li></ul>
 <h3>Known Uses</h3>
 <ul><li>The test serializer: the N=1 flock wrapper (+ auto-coverage for fuzz filters).</li><li>`TestMediatorEnforcer`, a `[ModuleInitializer]` that refuses raw `dotnet test` from agent CWDs.</li><li>`ADA_TOOL_TEST_BYPASS_MEDIATOR=1`, the audited human escape.</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><strong>Counterpart</strong> — the `[ModuleInitializer]` enforcer (hard) holds the serializer's discipline in place: without the ban, the flock is just an unenforced convention.</li><li><em>See also (sibling)</em> — <a href="../agent/mediators-and-resource-locks/build-serializer.html">build-serializer</a>: the same mediator pattern at <strong>M=8</strong> instead of N=1. The pair illustrates the <em>lock-cardinality</em> choice (below).</li><li><strong>Layer</strong> — with <a href="../agent/mediators-and-resource-locks/aggregate-compute-protection.html">aggregate-compute-protection</a>, the three form the host-compute rationing tier.</li></ul><div class="pager"><a class="prev" href="5.1-conclusion.html"><span class="dir">‹ Previous</span><span class="ttl">Conclusion</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-b-models-bridge.html"><span class="dir">Next ›</span><span class="ttl">Appendix B — Models-bridge patterns</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>
+<ul><li><strong>Counterpart</strong> — the `[ModuleInitializer]` enforcer (hard) holds the serializer's discipline in place: without the ban, the flock is just an unenforced convention.</li><li><em>See also (sibling)</em> — <a href="../agent/mediators-and-resource-locks/build-serializer.html">build-serializer</a>: the same mediator pattern at <strong>M=8</strong> instead of N=1. The pair illustrates the <em>lock-cardinality</em> choice (below).</li><li><strong>Layer</strong> — with <a href="../agent/mediators-and-resource-locks/aggregate-compute-protection.html">aggregate-compute-protection</a>, the three form the host-compute rationing tier.</li></ul><div class="pager"><a class="prev" href="5.1-conclusion.html"><span class="dir">‹ Previous</span><span class="ttl">Conclusion</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-b-models-bridge.html"><span class="dir">Next ›</span><span class="ttl">Appendix B — Models-bridge patterns</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-b-models-bridge.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

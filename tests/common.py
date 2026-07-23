@@ -6,7 +6,6 @@ of scope (the suite does no network).
 """
 from __future__ import annotations
 
-import glob
 import os
 import re
 import socket
@@ -69,15 +68,22 @@ def changed_vs_origin() -> frozenset[str] | None:
 
 
 # Path segments that hold .html but are NOT part of the served site: the plugin bundle (markdown, not a
-# site) and node_modules (dev-only axe tree — its packages ship demo .html that would otherwise get
-# scanned/served). Kept as a tuple so a11y + link + orphan scanners share one definition of "the site".
-_NON_SITE_DIRS = ("plugin", "node_modules", "site", "_site")
+# site), node_modules (dev-only axe tree), the serve dirs, and any gitignored scratch tree (`_drafts/`).
+# `catalog.site_prune_dirs()` is the single source of truth — one definition of "the site" shared by the
+# a11y (axe), validity (html-validate), and orphan scanners, so a local run matches CI (which never checks
+# out the gitignored dirs). Kept here as a name for callers that reference it by segment.
+_NON_SITE_DIRS = catalog.NON_SITE_DIRS
 
 
 def html_files() -> list[str]:
-    """Every built page, minus non-site dirs (the plugin bundle + node_modules)."""
-    return [f for f in glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True)
-            if not any(os.sep + d + os.sep in f for d in _NON_SITE_DIRS)]
+    """Every built page that is part of the served site: prune the non-site + gitignored dirs (the plugin
+    bundle, node_modules, serve dirs, `_drafts/`) so axe + html-validate scan exactly what CI deploys."""
+    prune = catalog.site_prune_dirs()
+    out: list[str] = []
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if d not in prune]
+        out.extend(os.path.join(dirpath, fn) for fn in filenames if fn.endswith(".html"))
+    return out
 
 
 def free_port() -> int:

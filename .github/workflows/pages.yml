@@ -43,7 +43,10 @@ jobs:
           python-version: "3.x"
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: "20"
+          # html-validate 11.x calls fs.globSync (added in Node 22). On Node 20 it throws at startup, the
+          # T2 validity check catches it and SKIPs — so the HTML-validity gate silently doesn't run. Pin
+          # the runner to 22 so html-validate actually executes.
+          node-version: "22"
       - name: Install pinned test tooling (axe-core + html-validate, exact tree from lockfile)
         run: npm ci
       - name: Validate schema

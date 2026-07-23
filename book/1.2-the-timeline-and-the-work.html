@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 1 — The Context &nbsp;::&nbsp; Chapter 1.2</div><h1>The Timeline and the Work</h1></header><p>The last chapter established the problem. This one tells what happened when one person tried to solve it — the concrete arc from a five-minute experiment in the back of a committee meeting to a production system that, by the end, was writing almost all of its own code. The story matters because every governance idea in this book was learned at a specific point on this arc, in response to a specific failure. The methods are not a theory that came first. They are the sediment left by the work.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="2.1-the-printer.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 1.2 · The Timeline and the Work"><header class="chap"><div class="kicker">Part 1 — The Context &nbsp;::&nbsp; Chapter 1.2</div><h1>The Timeline and the Work</h1></header><p>The last chapter established the problem. This one tells what happened when one person tried to solve it — the concrete arc from a five-minute experiment in the back of a committee meeting to a production system that, by the end, was writing almost all of its own code. The story matters because every governance idea in this book was learned at a specific point on this arc, in response to a specific failure. The methods are not a theory that came first. They are the sediment left by the work.</p>
 <p>The scale is easy to state and hard to believe. Over about 16 weeks of focused effort, a single architect and a fleet of AI coding agents produced a repository of 431,901 lines of production code, 1,212,628 lines of support apparatus, 8,105 lines of infrastructure-as-code, and 7,058 lines of system models bridging the two. On a routine day, six to eight agents ran in parallel and landed on the order of 500 commits — about 1,000 a week, sustained, against the hundred a week a fast unaided human might manage. The architect inspected almost none of the code. That last sentence is the whole engineering problem of this book, and the timeline below is how it became survivable.</p>
 <h2>It started in a meeting</h2>
 <p>The project began, fittingly, in a committee meeting about the very deadline described in the last chapter. In early 2026 an accreditation committee was discussing the ADA compliance date. Most of the faculty in the room did not know a mandate existed; those who did had made little progress against it. While the meeting droned on, the architect did what an engineering professor does when bored by a conundrum: he ran a small experiment. He opened a chat model, fed it screenshots from one of his own slide decks, and asked it to transcribe what it saw. It worked. The model looked at a rendered slide and recovered real semantic content from the image — the core technical problem of document accessibility, solved well enough to build on.</p>
@@ -111,4 +131,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <p>The most useful way to read this timeline is not as a feature list but as a catalog of the <em>kinds of work</em> agentic development turned out to need. The code was cheap. Everything around the code was where the judgment went, and the same handful of activities recurred at every stage:</p>
 <ul><li><strong>Framing the problem.</strong> Deciding what "accessible" even meant for a math-dense graduate deck, where the file alone underdetermines the answer, and which parts of the mandate the system should chase.</li><li><strong>Discovering abstractions.</strong> Recognizing that PDF was not "Office with a different extension" but a distinct problem needing a document model of its own — and building typed models so that structure was compiler-checked instead of passed as anonymous primitives.</li><li><strong>Deciding local versus structural.</strong> For each failure, judging whether it was a one-off bug to patch or the visible symptom of a missing control — the single most repeated act in the whole record.</li><li><strong>Building the checks.</strong> Standards-grounded validation, content-preservation checks that assert the input survives into the output, hundreds of project-specific lints atop a maxed-out commodity floor, and a tiered regression suite from smoke tests to fuzz campaigns.</li><li><strong>Governing the fleet.</strong> A dispatch-and-track workflow for parallel agents, isolated worktrees, a pre-commit gate whose passage is proven by a hash-keyed marker file, an agent registry that authoritatively answers "who is in flight," and lifecycle records for every agent that lands or dies.</li><li><strong>Operating and deploying.</strong> Cloud deployment with staged gates, quota and cost controls, observability channels, audit trails that let a finished document's history be reconstructed, and runbooks for the failures that recur.</li></ul>
 <p>Read as a list, those are the chapters of this book. Every one of them answers a failure this timeline produced, and the recurring move that produced them all is the same: <em>velocity surfaces a failure; judgment classifies it as local or structural; the structural ones get converted into a durable control that narrows the next agent's room to fail.</em> The rest of the book is that move, applied over and over, told slowly enough that you can do it too.</p>
-<p>By the end of the study period the system could process Office and PDF files to pass or substantially improve their accessibility scores — a graduate slide deck in about a minute, for about a dollar — and it was patent-pending and being readied for institutional deployment as <a href="https://scholaccess.com">DocAble</a>. The direct development cost was about sixty thousand dollars, most of it the architect's salary, with a few thousand each in model inference, cloud hosting, and subscriptions. That is the arc. What remains is to explain how it was governed, and that is where the rest of the book begins.</p><div class="pager"><a class="prev" href="1.1-the-ada-context.html"><span class="dir">‹ Previous</span><span class="ttl">1.1 · The ADA Context</span></a><a class="home" href="index.html">Contents</a><a class="next" href="2.1-the-printer.html"><span class="dir">Next ›</span><span class="ttl">2.1 · The Printer</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>By the end of the study period the system could process Office and PDF files to pass or substantially improve their accessibility scores — a graduate slide deck in about a minute, for about a dollar — and it was patent-pending and being readied for institutional deployment as <a href="https://scholaccess.com">DocAble</a>. The direct development cost was about sixty thousand dollars, most of it the architect's salary, with a few thousand each in model inference, cloud hosting, and subscriptions. That is the arc. What remains is to explain how it was governed, and that is where the rest of the book begins.</p><div class="pager"><a class="prev" href="1.1-the-ada-context.html"><span class="dir">‹ Previous</span><span class="ttl">1.1 · The ADA Context</span></a><a class="home" href="index.html">Contents</a><a class="next" href="2.1-the-printer.html"><span class="dir">Next ›</span><span class="ttl">2.1 · The Printer</span></a></div><div class="pager-jump"><div class="jump"><a href="2.1-the-printer.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

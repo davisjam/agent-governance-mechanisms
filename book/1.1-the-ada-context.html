@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 1 — The Context &nbsp;::&nbsp; Chapter 1.1</div><h1>The ADA Context</h1><div class="part-epigraph">Just as stairs can exclude people who use wheelchairs, inaccessible web content and mobile apps can exclude people with disabilities.<span class="attr">— U.S. Department of Justice, Title II Final Rule, 2024</span></div></header><p>Every method in this book was learned building one real system, under a real deadline, for a real problem. The problem is document accessibility, and it is worth understanding before any of the engineering makes sense — the engineering only earned its keep by clearing a bar the problem set. So this chapter steps away from agents and loops to answer a plainer question. Why is making a document accessible a hard, mission-driven problem, and why was it worth a professor's Spring Break to attack it?</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="2.1-the-printer.html">Next part ⇒</a><a href="1.2-the-timeline-and-the-work.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 1.1 · The ADA Context"><header class="chap"><div class="kicker">Part 1 — The Context &nbsp;::&nbsp; Chapter 1.1</div><h1>The ADA Context</h1><div class="part-epigraph">Just as stairs can exclude people who use wheelchairs, inaccessible web content and mobile apps can exclude people with disabilities.<span class="attr">— U.S. Department of Justice, Title II Final Rule, 2024</span></div></header><p>Every method in this book was learned building one real system, under a real deadline, for a real problem. The problem is document accessibility, and it is worth understanding before any of the engineering makes sense — the engineering only earned its keep by clearing a bar the problem set. So this chapter steps away from agents and loops to answer a plainer question. Why is making a document accessible a hard, mission-driven problem, and why was it worth a professor's Spring Break to attack it?</p>
 <p>The system is called <a href="https://scholaccess.com">DocAble</a>, and it is live in beta at <a href="https://scholaccess.com">scholaccess.com</a>. It takes a PowerPoint deck, a Word document, a spreadsheet, or a PDF and remediates it toward the accessibility standards a university now has to meet. The rest of this chapter explains why that is worth doing at all.</p>
 <h2>A noble idea with a crushing implementation</h2>
 <p>The Americans with Disabilities Act starts from a simple promise. People with disabilities should have equal access to public life — able to work, travel, study, vote, and use services without barriers society could reasonably remove. Passed in 1990 and signed by George H. W. Bush, the ADA descends from a long American line: the Constitution, the Reconstruction Amendments, the Civil Rights Act of 1964, each one widening the circle of who counts as fully included. The wheelchair ramp and the elevator are its famous results, and they are welcome. They are not the part that generates a software problem.</p>
@@ -114,4 +134,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <p>Underneath the institutional bind sits a technical problem deeper than it looks, and it is why this became a software project worth building rather than a policy memo worth writing. A document is not merely a file. It is a <em>visual and semantic</em> artifact. It carries text, figures, tables, diagrams, reading order, hierarchy, emphasis, and all the small tricks by which humans convey meaning to other humans. To make it accessible, a machine has to recover enough of that meaning to present it through another channel — to a screen reader, to a keyboard, to a student who cannot see the figure the lecturer drew.</p>
 <p>For years that was out of reach. Earlier language models could not take an arbitrary slide and make enough sense of it to be trusted. The turn came with frontier vision-language models. Feed one a rendered slide and it looks at the image and recovers useful semantic content — describes the figure, reads the equation, names what the slide is trying to say. That is one of the core technical problems of document accessibility, and it is now solvable well enough to build on.</p>
 <p>Raw model capability is not a compliance strategy, though, and this is the seam the rest of the book lives in. You can paste a small deck into a chat model and get useful output. You cannot get a corrected file back, or a guarantee that the result satisfies WCAG, or any evidence that the meaning survived the trip. The model looks at a slide and understands something real. It understands nothing about university procurement, disability-resource workflows, faculty incentives, or the institutional alchemy that turns a federal mandate into a weekly email nobody reads. It is, as I like to put it, an infinite midwit: it knows everything and understands nothing. Turning that flash of capability into a system a university can trust — one that parses, repairs, validates, stamps its own work, and produces defensible evidence that it did the job — is not a model invocation. It is engineering. The kind of engineering this book is about.</p>
-<p>That is the context. A real law, a real deadline, a real cost, and a real technical gap that had just barely become bridgeable. The next chapter tells what happened when one professor decided to bridge it — and how a one-week undergraduate project became a production system built almost entirely by machines.</p><div class="pager"><a class="prev" href="0.2-acknowledgments.html"><span class="dir">‹ Previous</span><span class="ttl">Acknowledgments</span></a><a class="home" href="index.html">Contents</a><a class="next" href="1.2-the-timeline-and-the-work.html"><span class="dir">Next ›</span><span class="ttl">1.2 · The Timeline and the Work</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>That is the context. A real law, a real deadline, a real cost, and a real technical gap that had just barely become bridgeable. The next chapter tells what happened when one professor decided to bridge it — and how a one-week undergraduate project became a production system built almost entirely by machines.</p><div class="pager"><a class="prev" href="0.2-acknowledgments.html"><span class="dir">‹ Previous</span><span class="ttl">Acknowledgments</span></a><a class="home" href="index.html">Contents</a><a class="next" href="1.2-the-timeline-and-the-work.html"><span class="dir">Next ›</span><span class="ttl">1.2 · The Timeline and the Work</span></a></div><div class="pager-jump"><div class="jump"><a href="2.1-the-printer.html">Next part ⇒</a><a href="1.2-the-timeline-and-the-work.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

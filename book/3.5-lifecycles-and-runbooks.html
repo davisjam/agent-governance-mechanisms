@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.5</div><h1>Lifecycles and Runbooks</h1></header><p>You know what to do when the disk fills up, when two branches conflict, when an incident pages you at 2 a.m. You know it so well you barely notice you know it. The agent knows none of it. It has no operating context and no sense of "how we do things around here," and so a governed environment for real work has to write that knowledge down — as lifecycles and as the runbooks that ride on top of them. This chapter is about capturing the operational judgment you carry in your head so an agent can act on it.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 3.5 · Lifecycles and Runbooks"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.5</div><h1>Lifecycles and Runbooks</h1></header><p>You know what to do when the disk fills up, when two branches conflict, when an incident pages you at 2 a.m. You know it so well you barely notice you know it. The agent knows none of it. It has no operating context and no sense of "how we do things around here," and so a governed environment for real work has to write that knowledge down — as lifecycles and as the runbooks that ride on top of them. This chapter is about capturing the operational judgment you carry in your head so an agent can act on it.</p>
 <h2>Lifecycles first, then the failure map</h2>
 <p>Start with the lifecycles, because everything else hangs off them. A lifecycle is the correct operation of one recurring activity: how a bug report moves from filed to fixed, how a feature moves from design to shipped. Write the healthy path first. Then, from each node on that path, map the failure states — the ways this step can go wrong — and for each failure, the action to take. Think of it as a grid: every node crossed with every symptom, and in each cell, what to do.</p>
 <p>The formal name for building that grid is <strong>failure mode and effects analysis</strong>. You enumerate what can go wrong, then the consequence of each, and then — the part people skip — how to get <em>out</em> of it again. You know how to get out. If two branches conflict, you read both sides, work out what each was trying to accomplish, and reconcile them. If the disk fills, you find the fat part of the system — the cache, usually — and wipe it. The agent knows none of this. It does not know where to find each commit's intent during a merge conflict, and it does not know where your system's fat points are — and it may, just maybe, decide the fix for a full disk is `rm -rf /`. You think I am joking. Read Twitter; agents do it all the time. So you coach it: where the hot points are, and, in every failure path, what is <em>not allowed</em>. Encode the prohibition as a control at the right level where you can — a Git hook, an agent hook — and where you cannot, at least tell the agent plainly.</p>
@@ -104,4 +124,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <p><strong>The deterministic parts get tools.</strong> Anything that has a single correct outcome should be an executable script the agent runs, not a procedure it improvises. Leave it to improvisation and it will get it right most of the time — and you will wish you had automated it the one time it does not.</p>
 <p><strong>The judgment parts get the roughest algorithm that still fits.</strong> For a well-constrained decision, write the algorithm down and let the agent do the glue. For an open-ended one — a cyber threat hunt, where the whole point is that the attacker did something you never anticipated — do not over-constrain: give heuristics and strategies to explore, and stop there. Remember you are conditioning a probability distribution; steer it down the wrong path and it will never reach the place you wanted. So if you do not know how to do it, do not write confidently — give hints. If you truly do not know, say "solve this open-endedly," and accept that the looser the guidance, the more tokens it spends and the less likely it is to land.</p>
 <p>When a judgment step is really a <em>measurement</em>, give it a <strong>rubric</strong>. You cannot write a checker for "is this painting good" or "is this student essay good," but you can operationalize it: how are the topic sentences, how is the technique, are there grammatical errors, are there blotches from bad storage? The agent will not deliver a final verdict on taste, but with a rubric it gives feedback good enough to act on.</p>
-<p>The strongest form of this is the <strong>pre-canned brief</strong>. When an orchestrator agent has to hand work to a sub-agent, you do not want it inventing, each time, how to explain the task. You want a template it adapts — the work already articulated in writing. The companion repository leans on exactly this: every dispatch is composed from a template that pre-places the required instructions, and a brief-linter checks the template is intact before the agent launches. Templates constrain how work is described to agents, which is the whole business of this book, applied to the act of delegation itself.</p><div class="pager"><a class="prev" href="3.4-the-model-zoo.html"><span class="dir">‹ Previous</span><span class="ttl">3.4 · The Model Zoo</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.1-brownfield.html"><span class="dir">Next ›</span><span class="ttl">4.1 · Brownfield</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>The strongest form of this is the <strong>pre-canned brief</strong>. When an orchestrator agent has to hand work to a sub-agent, you do not want it inventing, each time, how to explain the task. You want a template it adapts — the work already articulated in writing. The companion repository leans on exactly this: every dispatch is composed from a template that pre-places the required instructions, and a brief-linter checks the template is intact before the agent launches. Templates constrain how work is described to agents, which is the whole business of this book, applied to the act of delegation itself.</p><div class="pager"><a class="prev" href="3.4-the-model-zoo.html"><span class="dir">‹ Previous</span><span class="ttl">3.4 · The Model Zoo</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.1-brownfield.html"><span class="dir">Next ›</span><span class="ttl">4.1 · Brownfield</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

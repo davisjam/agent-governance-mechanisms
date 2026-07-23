@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 4 — Putting It to Work &nbsp;::&nbsp; Chapter 4.2</div><h1>The Skills</h1></header><p>This book is not only a methodology — it ships with batteries. There is a repository that goes with it, and it contains three Claude skills you can install and use today: <strong>self-operate</strong>, <strong>self-governance</strong>, and <strong>self-communicate</strong>. Each is the methodology of the preceding chapters, packaged as something an agent triggers and follows. This chapter walks all three.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-conclusion.html">Next part ⇒</a><a href="4.3-transformations.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.2 · The Skills"><header class="chap"><div class="kicker">Part 4 — Putting It to Work &nbsp;::&nbsp; Chapter 4.2</div><h1>The Skills</h1></header><p>This book is not only a methodology — it ships with batteries. There is a repository that goes with it, and it contains three Claude skills you can install and use today: <strong>self-operate</strong>, <strong>self-governance</strong>, and <strong>self-communicate</strong>. Each is the methodology of the preceding chapters, packaged as something an agent triggers and follows. This chapter walks all three.</p>
 <h2>Self-operate: the lifecycles, made runnable</h2>
 <p>Self-operate is the starting point, because it holds the lifecycles of running a repo — everything an engineering team actually does. Pull a ticket and build a feature. Pull a ticket and fix a bug. Optimize the codebase. Handle resource exhaustion. Each of those is written down as a model — I did say models everywhere, and I meant it — because that is how you constrain the agent's search and bias it toward doing the work the way you want.</p>
 <p>On top of the models sit the playbooks, and there is a playbook for everything, each with briefs for its judgment steps. This is what lets an orchestrator agent — itself running as a reactive loop — know how to respond when an event arrives. An agent finished? Reach for the next step: <em>agent landed</em>. Is the feature done? Open the Epic file, which lists the launches needed to complete it, and check. Not done — launch the next item. Done — run the definition-of-done audit over the whole Epic, the one that asks, among other things, whether the model drifted from the code. Passes — mark it done and move it to the closed pile. Still active — record the status and the commit that made progress, and launch the next agent from the Epic's list. The playbook keeps the loop turning on inputs from the environment, which is precisely the <em>dispatch → work → land → tombstone</em> lifecycle from Chapter 2, now written down for the operator to run.</p>
@@ -108,4 +128,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <div class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> the team dimension. Everything here is written as "you and your agents,"
 but production software is built by teams. How do shared models become team artifacts rather than
 one person's? How does review work when an agent wrote the change, and who owns the model when it
-drifts? This is the chapter an O'Reilly production-software audience will look for.</div><div class="pager"><a class="prev" href="4.1-brownfield.html"><span class="dir">‹ Previous</span><span class="ttl">4.1 · Brownfield</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.3-transformations.html"><span class="dir">Next ›</span><span class="ttl">4.3 · Everything Is a Transformation</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+drifts? This is the chapter an O'Reilly production-software audience will look for.</div><div class="pager"><a class="prev" href="4.1-brownfield.html"><span class="dir">‹ Previous</span><span class="ttl">4.1 · Brownfield</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.3-transformations.html"><span class="dir">Next ›</span><span class="ttl">4.3 · Everything Is a Transformation</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-conclusion.html">Next part ⇒</a><a href="4.3-transformations.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

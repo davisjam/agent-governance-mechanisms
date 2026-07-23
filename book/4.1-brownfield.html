@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 4 — Putting It to Work &nbsp;::&nbsp; Chapter 4.1</div><h1>Brownfield</h1><div class="part-epigraph">I applied mine heart to know, and to search, and to seek out wisdom, and the reason of things.<span class="attr">— King Solomon (Ecclesiastes 7:25)</span></div></header><p>Everything so far has assumed a clean start. Greenfield is the easy case: sketch the new thing, have an agent vibe-code a first prototype, and work your way down into an increasingly governed environment, avoiding the mistakes your last project taught you. But most readers are not on a clean start. Most are staring at a legacy codebase — started before agents existed, and since made worse by an agent that added a hundred thousand lines nobody can read. This chapter is the recipe for getting that codebase from spaghetti to a real model-based engineering environment, step by step.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-conclusion.html">Next part ⇒</a><a href="4.2-the-skills.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.1 · Brownfield"><header class="chap"><div class="kicker">Part 4 — Putting It to Work &nbsp;::&nbsp; Chapter 4.1</div><h1>Brownfield</h1><div class="part-epigraph">I applied mine heart to know, and to search, and to seek out wisdom, and the reason of things.<span class="attr">— King Solomon (Ecclesiastes 7:25)</span></div></header><p>Everything so far has assumed a clean start. Greenfield is the easy case: sketch the new thing, have an agent vibe-code a first prototype, and work your way down into an increasingly governed environment, avoiding the mistakes your last project taught you. But most readers are not on a clean start. Most are staring at a legacy codebase — started before agents existed, and since made worse by an agent that added a hundred thousand lines nobody can read. This chapter is the recipe for getting that codebase from spaghetti to a real model-based engineering environment, step by step.</p>
 <h2>The starting point and the destination</h2>
 <p>Name both ends before you move. The starting point is familiar: some spaghetti, thin documentation, and invariants that live only in one person's head — the person you hope never retires. The destination is specific. You want the models needed to express every view of the system that bears on a quality you care about — performance, correctness, security, privacy. You want code that reflects those models, so the map equals the territory: zoom in on the map and you see county lines, not Switzerland dropped in by surprise. And you want <strong>traceability</strong> for your quality case — the ability to make the argument automatically. For any property you claim, you should be able to point to the code that implements it, the static analysis that enforces it, the protocol you model-check it against, the tests that confirm it across the inputs you try, and the record of every change and why it was made. That is the output. With it, soft and hard governance can hold the whole thing in place and keep it current. There are three ways to get there, and a real migration uses all three.</p>
 <h2>Approach one: top-down, from a whiteboard</h2>
@@ -118,4 +138,4 @@ targeting — including when to stop, so they do not build the teetering tower C
 warns against.</div>
 <h2>How I know this</h2>
 <p>I know this because I lived it. I vibe-coded a couple hundred thousand lines of production code, and it worked — but I had imposed real control only on the parts I knew were sensitive, where I pushed hard for a strong architecture. The rest — the web layer, the front end — I hoped the agent would just get right. It did not, and those parts turned crufty. I told it to use Python; it did, without types. I told it to retrofit types; it turned on the type checker and made everything strings and ints, without building the type abstractions I actually wanted. The same thing happened porting JavaScript to TypeScript that same week — a hundred thousand lines of "typed" Python and a hundred and fifty thousand of TypeScript, each ported the cheapest way possible, because the agent had no model and did not know the names of things. It is probably better that it did not guess.</p>
-<p>So I retrofitted the models onto the mess — moving the code toward a clean model-view- controller architecture, moving the web stack to reactive, loop-based structures friendly to auto-scaling. And I did it exactly the way this chapter describes. I turned on every lint from Ruff, Pylint, and ESLint — hundreds of commodity smell checks — and for several weeks I burned through four Claude Max subscriptions squashing them, making each one blocking as it went to zero so it could never come back. I knew the coarse architecture I wanted and said "pursue this model," but I had to get there iteratively: find the dense primitive regions, induce structure there, and inch toward the target. After a while, it worked. Now I have the models, the architecture, the code that implements it, and enforcement holding all three together every time the code changes.</p><div class="pager"><a class="prev" href="3.5-lifecycles-and-runbooks.html"><span class="dir">‹ Previous</span><span class="ttl">3.5 · Lifecycles and Runbooks</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.2-the-skills.html"><span class="dir">Next ›</span><span class="ttl">4.2 · The Skills</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>So I retrofitted the models onto the mess — moving the code toward a clean model-view- controller architecture, moving the web stack to reactive, loop-based structures friendly to auto-scaling. And I did it exactly the way this chapter describes. I turned on every lint from Ruff, Pylint, and ESLint — hundreds of commodity smell checks — and for several weeks I burned through four Claude Max subscriptions squashing them, making each one blocking as it went to zero so it could never come back. I knew the coarse architecture I wanted and said "pursue this model," but I had to get there iteratively: find the dense primitive regions, induce structure there, and inch toward the target. After a while, it worked. Now I have the models, the architecture, the code that implements it, and enforcement holding all three together every time the code changes.</p><div class="pager"><a class="prev" href="3.5-lifecycles-and-runbooks.html"><span class="dir">‹ Previous</span><span class="ttl">3.5 · Lifecycles and Runbooks</span></a><a class="home" href="index.html">Contents</a><a class="next" href="4.2-the-skills.html"><span class="dir">Next ›</span><span class="ttl">4.2 · The Skills</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-conclusion.html">Next part ⇒</a><a href="4.2-the-skills.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

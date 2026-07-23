@@ -22,6 +22,40 @@ import sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# Directories that hold .html but are never part of the served/deployed site — the gitignored scratch
+# tree (`_drafts/`), the skill bundle (markdown, not a site), the dev-only axe tree, and the serve dirs.
+# CI never checks these out, so they must be excluded from every local walk (orphan gate, axe,
+# html-validate) or the local build/test diverges from CI. `_drafts/` is the canonical case: gitignored
+# design-stage HTML that the orphan gate would otherwise flag as unreachable, breaking `catalog.py build`
+# locally while CI (which lacks the dir) stays green.
+NON_SITE_DIRS = ("plugin", "node_modules", "site", "_site", ".git", "__pycache__", "hooks", "_drafts")
+
+
+def gitignored_top_dirs() -> frozenset[str]:
+    """Top-level directory names under ROOT that git ignores. Used to prune the site walks so a
+    gitignored scratch tree (absent from a fresh CI checkout) can't perturb a local build/test. Empty
+    when not a git tree (fail-safe: prune nothing extra — the static NON_SITE_DIRS list still applies)."""
+    try:
+        dirs = [e.name for e in os.scandir(ROOT) if e.is_dir() and e.name != ".git"]
+    except OSError:
+        return frozenset()
+    if not dirs:
+        return frozenset()
+    try:
+        r = subprocess.run(["git", "-C", ROOT, "check-ignore", *dirs],
+                           capture_output=True, text=True, timeout=15)
+    except (OSError, subprocess.SubprocessError):
+        return frozenset()
+    # check-ignore exits 0 (some ignored), 1 (none ignored), 128 (not a git repo) — read stdout regardless.
+    return frozenset(ln.strip("/").strip() for ln in r.stdout.splitlines() if ln.strip())
+
+
+def site_prune_dirs() -> frozenset[str]:
+    """The full set of directory names to prune from a site walk: the static non-site dirs plus every
+    gitignored top-level dir (catches `_drafts/` and any future gitignored scratch dir)."""
+    return frozenset(NON_SITE_DIRS) | gitignored_top_dirs()
+
+
 FORMS = {
     "typed-ir", "validation", "repair-vocab", "agent-output", "bounded-service",
     "regression", "quality-gate", "observability", "audit-trail",
@@ -1650,9 +1684,9 @@ def check_orphan_pages() -> list[str]:
     from `index.html`'s census (`<a href>`), so JS-built links (`catalogue-views`) need not be followed.
     The gitignored skill bundle (`plugin/`) and the serve dir (`site/`) are out of scope."""
     pages: list[str] = []
+    prune = site_prune_dirs()
     for dirpath, dirnames, filenames in os.walk(ROOT):
-        dirnames[:] = [d for d in dirnames
-                       if d not in ("plugin", "node_modules", "site", "_site", ".git", "__pycache__", "hooks")]
+        dirnames[:] = [d for d in dirnames if d not in prune]
         for fn in filenames:
             if fn.endswith(".html"):
                 pages.append(os.path.join(dirpath, fn))

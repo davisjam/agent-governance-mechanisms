@@ -53,9 +53,35 @@ manifests (`plugin.json`, `.claude-plugin/marketplace.json`).
 - *skill: bundle freshness* — regenerates the bundle and asserts it matches what's committed (no drift).
 
 **Tier 2 — external tools; SKIP if absent, or FAIL under `--strict`.**
-- *html: axe-core accessibility* — serves the site and runs `@axe-core/cli` over representative pages.
-  Needs Node (`./setup.sh`) + a Chrome/Chromium browser.
+- *html: axe-core accessibility* — serves the site and runs `@axe-core/cli` over **every** built page (not a
+  sample), aggregating violations by rule. Needs Node (`./setup.sh`) + a Chrome/Chromium browser.
+- *html: validity (html-validate)* — runs the pinned `html-validate` over every built page against
+  `.htmlvalidate.json`. Needs Node **22+** — `html-validate` 11.x calls `fs.globSync`, which older Node
+  lacks; on Node 20 it throws at startup and this check SKIPs (silently un-run). The Pages runner is pinned
+  to Node 22 for this reason.
 - *skill: `claude plugin validate`* — validates the plugin + marketplace manifests. Needs the `claude` CLI.
+
+### Reproduce the CI gate locally before pushing
+
+The Pages deploy runs `catalog.py validate` → `catalog.py build` → `catalog_tests.py --full`. Run the same
+gate locally — one command reproduces exactly what CI enforces:
+
+```
+./setup.sh                       # once: installs the pinned axe + html-validate (needs Node 22+)
+python3 catalog.py build         # regenerate HTML (axe/html-validate scan the built pages)
+python3 catalog_tests.py --full  # the authoritative run — every check, no incremental skips
+```
+
+- **`--full` is mandatory for a trustworthy local gate.** Without it the suite gates incrementally (skips a
+  Tier-2 check when its inputs are unchanged vs `origin/main`); `--full` forces every check to run, matching
+  CI (post-push, `HEAD == origin/main`, so incremental would skip everything).
+- **A green `--full` run guarantees a green CI deploy.** The Tier-2 axe + html-validate tiers here are the
+  same tools, same versions (pinned by `package-lock.json`), same page set (the whole built site) CI runs.
+- **Runtime ≈ 5 min**, dominated by the axe browser pass over every page (a `--load-delay` lets async
+  content settle). This is deliberate — the scan covers the full site, not a sample, so a color-contrast or
+  validity regression on any page is caught before the push, not in the failed deploy. Don't sample it down.
+- **If a Tier-2 check reports `skip`, the gate did NOT run** — install the tool (`./setup.sh` for
+  axe/html-validate; Node 22+ for html-validate) and re-run. A local `skip` is not a local pass.
 
 **"Resolve"** = the relative target file exists; a `#anchor` matches a heading-slug (markdown) or an
 `id`/`name` (html) in the target. `http(s)`/`mailto`/`data:` links are out of scope (no network in tests).

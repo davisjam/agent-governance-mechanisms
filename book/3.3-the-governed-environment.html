@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.3</div><h1>The Governed Environment: Ex-Ante and Ex-Post</h1></header><p>Everything so far assumes you know, in advance, what should be true about your software. If you do, the path is easy: write it all into a specification up front and hold the agent to it. But real software engineering rarely works that way — you discover what you are building by building part of it. So a governed environment has two halves: what you can decide <em>before</em> you start, and what you can only learn <em>along the way</em>. This chapter is about both halves, and about the two forms every governance mechanism finally takes.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.4-the-model-zoo.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 3.3 · The Governed Environment: Ex-Ante and Ex-Post"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.3</div><h1>The Governed Environment: Ex-Ante and Ex-Post</h1></header><p>Everything so far assumes you know, in advance, what should be true about your software. If you do, the path is easy: write it all into a specification up front and hold the agent to it. But real software engineering rarely works that way — you discover what you are building by building part of it. So a governed environment has two halves: what you can decide <em>before</em> you start, and what you can only learn <em>along the way</em>. This chapter is about both halves, and about the two forms every governance mechanism finally takes.</p>
 <h2>Ex-ante: everything you can decide up front</h2>
 <p>Some things you genuinely know from the beginning, and you should write every one of them down. This is specification-driven development, and where you can do it, you should. A coding style guide is the everyday example — Google has one, Airbnb has one — full of rules like "every function carries a comment" or "we never call `exec` outside this one approved place." Give the agent those rules, and then write <em>deterministic checks</em> for them. If a program's output has a required format, write the checker that confirms it — or, better, have the agent write the checker. Determinizing what you know up front gives you a much stronger starting point, and it costs you almost nothing, because the checks are cheap and the agent writes them.</p>
 <h2>Ex-post: everything you learn by building</h2>
@@ -103,4 +123,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <h2>Controls and architecture</h2>
 <p><strong>A control is a sensor.</strong> It detects that a mistake has happened and surfaces it in time to stop the damage. Your test suite in CI is a control: it would be better if the model never wrote the bug, but if it does, the control catches it before the code ships. Controls observe and prevent; they are the sensors wired through the stack.</p>
 <p><strong>Architecture is a wall.</strong> Instead of detecting the mistake, architecture makes the whole <em>class</em> of mistake impossible. The cleanest example is types. Models are, by default, careless with types — and a compiler exists precisely to confirm that functions are called with the right arguments. Suppose the agent has represented a state with bare strings. Because it is a language model, it will cheerfully reach for a synonym next time, and the synonym silently fails to match. Tell it to use an enumeration instead, and the whole failure mode evaporates: it can no longer invent an unlisted value, and if it tries, the compiler rejects it immediately, rather than the test suite crashing much later. Choosing the enum over the string is not a control that watches for the bug — it is an architecture that forbids it. This is why the catalogue leans so hard on typed models and closed enumerations over free-form strings: the wall is cheaper to live behind than the sensor is to keep reading.</p>
-<p>You will place some of each up front, from what you know about the domain, and add more of both as you go. That combination — determinize what you can, then convert every recurring surprise into a control or a wall — <em>is</em> the governed engineering environment.</p><div class="pager"><a class="prev" href="3.2-models-and-the-semantic-gap.html"><span class="dir">‹ Previous</span><span class="ttl">3.2 · Models and the Semantic Gap</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.4-the-model-zoo.html"><span class="dir">Next ›</span><span class="ttl">3.4 · The Model Zoo</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>You will place some of each up front, from what you know about the domain, and add more of both as you go. That combination — determinize what you can, then convert every recurring surprise into a control or a wall — <em>is</em> the governed engineering environment.</p><div class="pager"><a class="prev" href="3.2-models-and-the-semantic-gap.html"><span class="dir">‹ Previous</span><span class="ttl">3.2 · Models and the Semantic Gap</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.4-the-model-zoo.html"><span class="dir">Next ›</span><span class="ttl">3.4 · The Model Zoo</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.4-the-model-zoo.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

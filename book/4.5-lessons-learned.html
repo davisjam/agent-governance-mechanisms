@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="current" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 4 — Putting It to Work &nbsp;::&nbsp; Chapter 4.5</div><h1>Lessons Learned</h1></header><p>I spent three months building a real piece of software with a coding agent, and the thing I came away with was not a model release or a benchmark. It was a methodology. I thought the project would take a weekend; it spiralled into a hundred thousand lines, then four hundred thousand, written at a thousand commits a week across four Claude accounts running in round-robin. Somewhere in that spiral the important questions stopped being <em>what can the model do</em> and became <em>how do I keep it doing the right thing at speed</em>. This chapter is what I learned. Read it as the reflection at the end of the method — the lessons that hold no matter which model you drive.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="5.1-conclusion.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.5 · Lessons Learned"><header class="chap"><div class="kicker">Part 4 — Putting It to Work &nbsp;::&nbsp; Chapter 4.5</div><h1>Lessons Learned</h1></header><p>I spent three months building a real piece of software with a coding agent, and the thing I came away with was not a model release or a benchmark. It was a methodology. I thought the project would take a weekend; it spiralled into a hundred thousand lines, then four hundred thousand, written at a thousand commits a week across four Claude accounts running in round-robin. Somewhere in that spiral the important questions stopped being <em>what can the model do</em> and became <em>how do I keep it doing the right thing at speed</em>. This chapter is what I learned. Read it as the reflection at the end of the method — the lessons that hold no matter which model you drive.</p>
 <h2>Three ways to run an agent, and why I chose one</h2>
 <p>There are three ways to run a coding agent, and the choice is not a matter of taste. It is a matter of where you sit on the risk map.</p>
 <ul><li><strong>Velocity-centric.</strong> Maximum speed, minimal oversight. On a greenfield project with a handful of users — say, just the engineer building it — this is right. Claude whips up a prototype at the speed of the engineer's thought, and that engineer is the only stakeholder whose thought matters. High velocity, low risk. Let it run.</li><li><strong>Oversight-centric.</strong> A human reads every step. On a brownfield system serving thousands or millions, the risk is extraordinary, and a careful reviewer at each turn is the reflex — but it throws away the very speed you brought the agent in for.</li><li><strong>Governance-centric.</strong> You define the constraints up front, then let the agent move fast <em>inside</em> them. This is the quieter voice, the one that comes from engineering traditions like safety engineering: place bounds on the agent's operations, then let it rip.</li></ul>
@@ -134,4 +154,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <p>Watching my own experience of software engineering get compressed, I expected to feel the role shrinking. The opposite happened. The <em>experience</em> is being compressed — the hours at the keyboard, the mechanical translation of a design into syntax. The <em>role</em> is expanding. When one person can stand up hundreds of thousands of lines of governed production code, the constraint is no longer how fast you can write; it is how well you can decide, model, constrain, and verify.</p>
 <p>This is where I think companies may have trouble. I had authority to change everything — the architecture, the CI, the documentation, the task format, the release process, the validation hierarchy. In a real organization, the person who sees the recurring failure may only be allowed to patch their local problem. That is a recipe for churn: the same class of problem appears again and again, and no one has the authority to convert it into shared engineering practice. So my advice to software organizations is not "use agents" or "don't use agents." It is to look at what your failures are teaching you, and ask who in your engineering organization is empowered to turn those lessons into architecture, process, and controls. Put those people in charge of your agentic adoption.</p>
 <p>The first engineers were locomotive engineers. They stood, literally, astride the harnessed steam engine — monitored it, tuned it, designed it. Software engineering has its DevOps and its SREs in the same lineage, and I suspect much of what I observed connects to their wisdom. The future of software engineering is not just faster implementation. It is the ability to convert judgment into infrastructure.</p>
-<p>I will not pretend this is settled. My evidence is a single-person project without real customers, run against one vendor's models — Claude, Opus and Sonnet, over the March–July 2026 window — and the specifics will not all generalize. A legacy codebase full of ancient spaghetti, or a system with many stakeholders, may behave differently; if you are starting from spaghetti, the honest first move is to fix the spaghetti, because agents are excellent at refactoring once you have the test controls to keep them from regressing. But the shape of it feels durable: convert judgment into infrastructure, let the machinery hold what your attention cannot, and spend your scarce judgment on the decisions the machinery cannot make. If we want to learn anything new, we have to try crazy things and ponder them. That is the method, and it is the most fun I have had building software in years.</p><div class="pager"><a class="prev" href="4.4-training-data.html"><span class="dir">‹ Previous</span><span class="ttl">4.4 · Training Data and the Novelty Axis</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.1-conclusion.html"><span class="dir">Next ›</span><span class="ttl">Conclusion</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>I will not pretend this is settled. My evidence is a single-person project without real customers, run against one vendor's models — Claude, Opus and Sonnet, over the March–July 2026 window — and the specifics will not all generalize. A legacy codebase full of ancient spaghetti, or a system with many stakeholders, may behave differently; if you are starting from spaghetti, the honest first move is to fix the spaghetti, because agents are excellent at refactoring once you have the test controls to keep them from regressing. But the shape of it feels durable: convert judgment into infrastructure, let the machinery hold what your attention cannot, and spend your scarce judgment on the decisions the machinery cannot make. If we want to learn anything new, we have to try crazy things and ponder them. That is the method, and it is the most fun I have had building software in years.</p><div class="pager"><a class="prev" href="4.4-training-data.html"><span class="dir">‹ Previous</span><span class="ttl">4.4 · Training Data and the Novelty Axis</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.1-conclusion.html"><span class="dir">Next ›</span><span class="ttl">Conclusion</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-conclusion.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

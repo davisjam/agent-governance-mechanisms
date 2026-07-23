@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.1</div><h1>The Agent Stack</h1><div class="part-epigraph">Govern the conditions under which fast code can be trusted.<span class="attr">— the thesis of this book</span></div></header><p>If governing an agent means conditioning where it searches, the practical question is: <em>where do you reach in to do it?</em> The answer is that there is not one place — there are four, stacked on top of each other, and each one gives you a different kind of grip. Understand the stack and you will see every control in this book as an instance of "pick a layer, inject a constraint." This chapter walks the stack from the bottom up.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.2-models-and-the-semantic-gap.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 3.1 · The Agent Stack"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.1</div><h1>The Agent Stack</h1><div class="part-epigraph">Govern the conditions under which fast code can be trusted.<span class="attr">— the thesis of this book</span></div></header><p>If governing an agent means conditioning where it searches, the practical question is: <em>where do you reach in to do it?</em> The answer is that there is not one place — there are four, stacked on top of each other, and each one gives you a different kind of grip. Understand the stack and you will see every control in this book as an instance of "pick a layer, inject a constraint." This chapter walks the stack from the bottom up.</p>
 <h2>The four layers</h2>
 <p><strong>At the bottom sits the foundation model.</strong> It comes from a commercial vendor or an open-weight release, and it is a general language reasoner that can <em>induce</em> an understanding of your environment — but that induction is expensive, and it happens fresh every time. So the whole game at this layer is to spare the model that cost: tell it, up front, where to look. Sometimes you tell it deterministically, with an executable program. Sometimes you tell it softly, with written-down pseudocode — the algorithm to follow, the playbook for a root-cause analysis. Often it is a hybrid. Every time you do, you remove a stretch of reasoning the model would otherwise have to reconstruct.</p>
 <p><strong>On top of the model sits the agentic harness</strong> — Claude Code, OpenCode, and their kin. The harness takes your prompts, feeds them to the model, and manages the context window: the fixed budget of tokens the model can hold. Exceed it and the harness must compact, which is a lossy compression of everything that has happened so far. The harness is also where two of the most useful control points live.</p>
@@ -103,4 +123,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <p><strong>At the top sits your application</strong> — the product code itself, which can carry governance of its own: models describing how it is supposed to work, and static analyses that check the code against them. A static analysis at this layer is where a whole class of mistakes can be made structurally impossible. The companion catalogue's sharpest examples live here: a <strong>ban-lint that routes all mutation of a document format through a single typed model</strong>, so that no agent can reach the raw library and silently corrupt the file. The rule is enforced once, at the seam, and it holds for every agent that ever touches that code.</p>
 <h2>Every layer is a place to steer</h2>
 <p>Read the stack as a list of opportunities, because that is what it is. The harness noticing it is near its context limit and writing out a reliable summary of state and plan — instead of waiting for a lossy compaction — is an opportunity to help the model reconstruct less after the window resets. The pre-commit hook is an opportunity to catch a defect while everything that produced it is still fresh in the model's window, rather than surfacing it from a failed test three compactions later. The CI pipeline turning a failure into a message the agent can read is an opportunity to point it back toward the fix.</p>
-<p>The single goal underneath all of it never changes. At every layer, you are trying to prevent the agent from making a bad choice, and to narrow its search toward the choices you want. This matters more than it first appears, because the context window is too small to hold any serious system — the US tax code, a real web application — all at once. Give the model no structure, and it has no choice but to induce that structure as it goes, burning most of its window just working out the rules of the road. Every control you place on the stack is a rule of the road you handed it for free.</p><div class="pager"><a class="prev" href="2.2-loops-and-models.html"><span class="dir">‹ Previous</span><span class="ttl">2.2 · Loops and Models</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.2-models-and-the-semantic-gap.html"><span class="dir">Next ›</span><span class="ttl">3.2 · Models and the Semantic Gap</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>The single goal underneath all of it never changes. At every layer, you are trying to prevent the agent from making a bad choice, and to narrow its search toward the choices you want. This matters more than it first appears, because the context window is too small to hold any serious system — the US tax code, a real web application — all at once. Give the model no structure, and it has no choice but to induce that structure as it goes, burning most of its window just working out the rules of the road. Every control you place on the stack is a rule of the road you handed it for free.</p><div class="pager"><a class="prev" href="2.2-loops-and-models.html"><span class="dir">‹ Previous</span><span class="ttl">2.2 · Loops and Models</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.2-models-and-the-semantic-gap.html"><span class="dir">Next ›</span><span class="ttl">3.2 · Models and the Semantic Gap</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.2-models-and-the-semantic-gap.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

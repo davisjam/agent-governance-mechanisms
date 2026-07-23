@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.2</div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject control. This one is about the single most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. Models are the sweet spot between prose that is too vague and code that is too verbose. But a model only helps if you check it where checking makes sense.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.3-the-governed-environment.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 3.2 · Models and the Semantic Gap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.2</div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject control. This one is about the single most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. Models are the sweet spot between prose that is too vague and code that is too verbose. But a model only helps if you check it where checking makes sense.</p>
 <h2>Words are soft, code is verbose, a model is the sweet spot</h2>
 <p>Your first instrument of control is the prompt, because the agent is a language model and words are how you talk to it. But words are soft. They are ambiguous, and the more ambiguity you leave in, the less happy you will be. You can push ambiguity down by writing documentation — describing the environment, the product, its goals, its policies — and if you were briefing a <em>human</em> team, that would be enough. Humans are not dumb; they remember, they know what matters, they know where to look it up, and they know they will be fired if they misbehave. Agents are different: brilliant reasoners who need to be told exactly what to reason over, and for whom loose documents are simply not precise enough.</p>
 <p>Code is the opposite failure. Code is perfectly precise — it is exactly what will happen — but it is far too verbose to reason over in bulk. What you want sits between the two: something accurate and unambiguous, yet compact. The word for that thing is a <strong>model</strong>.</p>
@@ -113,4 +133,4 @@ temporal-logic checker) earns its keep. This is the reader's biggest unanswered
 question after this chapter.</div>
 <div class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> a dedicated chapter on how you actually <em>author</em> a model in a
 repo — is it a typed record, a diagram, a lint, a schema file? The reader now believes
-models matter but cannot yet build one.</div><div class="pager"><a class="prev" href="3.1-the-agent-stack.html"><span class="dir">‹ Previous</span><span class="ttl">3.1 · The Agent Stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.3-the-governed-environment.html"><span class="dir">Next ›</span><span class="ttl">3.3 · The Governed Environment: Ex-Ante and Ex-Post</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+models matter but cannot yet build one.</div><div class="pager"><a class="prev" href="3.1-the-agent-stack.html"><span class="dir">‹ Previous</span><span class="ttl">3.1 · The Agent Stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.3-the-governed-environment.html"><span class="dir">Next ›</span><span class="ttl">3.3 · The Governed Environment: Ex-Ante and Ex-Post</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.3-the-governed-environment.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

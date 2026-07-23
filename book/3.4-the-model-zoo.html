@@ -24,7 +24,7 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
                   color: #555; font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #767676; }
+                        color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -56,7 +56,7 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
-.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
               font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
@@ -67,7 +67,25 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 .idx ol { list-style: none; padding: 0; margin: 0; }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
-.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
+.jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
+           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+nav.toc .jump { margin-top: 0.7rem; }
+.pager-jump { margin-top: 1.2rem; }
+.pager-jump .jump { justify-content: center; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
@@ -91,10 +109,12 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
-<li class="part">Appendix A — The Pattern Catalogue</li>
+<li class="part">Appendix A — Agent patterns</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.4</div><h1>The Model Zoo</h1></header><p>You may have a computing degree and still have never really used a model. That is not a gap in you — it is a gap in what the field chose to teach, and it is about to matter a great deal. Models fell out of fashion for reasons that made sense at the time and no longer do. This chapter says why the time for models has come back, then walks the main kinds you will reach for and shows what it means to write a policy over one.</p>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.5-lifecycles-and-runbooks.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 3.4 · The Model Zoo"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.4</div><h1>The Model Zoo</h1></header><p>You may have a computing degree and still have never really used a model. That is not a gap in you — it is a gap in what the field chose to teach, and it is about to matter a great deal. Models fell out of fashion for reasons that made sense at the time and no longer do. This chapter says why the time for models has come back, then walks the main kinds you will reach for and shows what it means to write a policy over one.</p>
 <h2>Why models fell out of fashion — and came back</h2>
 <p>Models were big in the 1970s and 80s, when computing built expensive things — big government systems, the Space Shuttle — and cared deeply about high assurance, partly because compute itself was too costly to waste. Then the personal computer arrived, Moore's Law made cycles cheap, and a global supply of developers made it cheap to write code and cheap to change it. The industry shifted from careful up-front modeling to ad-hoc agile methods that assume everything will change anyway. Curricula followed: models stayed in the textbooks but got de-emphasized as "not industry-relevant," and any student back from an internship would tell you, correctly, that nobody used them.</p>
 <p>Nobody used them — because the expensive part was a human keeping them in sync, and humans resent that chore. That is exactly the constraint agents dissolve. An agent will do the disciplined, repetitive upkeep without complaint, which is why the companion catalogue treats its models as an <strong>executable source of truth</strong>: not diagrams that rot, but typed data that tools, lints, and deploy scripts read on every run and generate real artifacts from. Because the models are continuously <em>used</em>, they cannot quietly drift — the build fails the moment they do. The time for models has come back, and it is worth knowing the zoo.</p>
@@ -109,4 +129,4 @@ figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem
 <p>If performance is your concern, you model the computation itself: what does this cost to run, what does it cost to move the data across the network, should I compute locally or remotely, cache this, memoize that. Different question, different model. The point is that there is a right model for each view, and they are meant to be <strong>orthogonal</strong> — complementary, non-overlapping, often interlocking. Repetition across models is the thing to avoid, because two models that say the same thing must now be kept in sync; far better a body of models over which you can write one policy per model, or a policy that joins across several.</p>
 <h2>Writing a policy over a model</h2>
 <p>A model earns its keep when you write a policy over it — a statement of what must be true. The policy can be plain business English, or it can be formal and unambiguous. Take the microwave state machine. The unsafe state is easy to name: the magnetron is powered and cooking while the door is open. Write the policy "never cooking with the door open," apply it over the state machine, and you can ask whether <em>any path</em> reaches that state. Ideally a circuit breaker cuts the magnetron when the door opens — but if that breaker can trip and a path still leads back to powered-on, you have a way to cook yourself, and the model will show it to you.</p>
-<p>Finding that path is not eyeballing the diagram. This is where the strongest form of verification lives, and the companion catalogue makes it a first-class idea: an invariant carries a temporal-logic shape — a safety property ("this bad state never happens") or a liveness property ("this good thing eventually does") — and that shape <em>derives</em> the checker that proves it, exhaustively, across every interleaving rather than on sampled inputs. The microwave rule is a safety property, and a state-space search settles it for good. Kruchten's classic <strong>4+1 views</strong> is the reason one model is never enough here: a system wants several complementary views at once, and it is true not just of software but of any complicated system — the whole field of systems engineering runs on it. This book will take you through each model type, on real code, with real invariants, and show you how to keep the code from drifting away from them.</p><div class="pager"><a class="prev" href="3.3-the-governed-environment.html"><span class="dir">‹ Previous</span><span class="ttl">3.3 · The Governed Environment: Ex-Ante and Ex-Post</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.5-lifecycles-and-runbooks.html"><span class="dir">Next ›</span><span class="ttl">3.5 · Lifecycles and Runbooks</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>Finding that path is not eyeballing the diagram. This is where the strongest form of verification lives, and the companion catalogue makes it a first-class idea: an invariant carries a temporal-logic shape — a safety property ("this bad state never happens") or a liveness property ("this good thing eventually does") — and that shape <em>derives</em> the checker that proves it, exhaustively, across every interleaving rather than on sampled inputs. The microwave rule is a safety property, and a state-space search settles it for good. Kruchten's classic <strong>4+1 views</strong> is the reason one model is never enough here: a system wants several complementary views at once, and it is true not just of software but of any complicated system — the whole field of systems engineering runs on it. This book will take you through each model type, on real code, with real invariants, and show you how to keep the code from drifting away from them.</p><div class="pager"><a class="prev" href="3.3-the-governed-environment.html"><span class="dir">‹ Previous</span><span class="ttl">3.3 · The Governed Environment: Ex-Ante and Ex-Post</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.5-lifecycles-and-runbooks.html"><span class="dir">Next ›</span><span class="ttl">3.5 · Lifecycles and Runbooks</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.5-lifecycles-and-runbooks.html">Next chapter ›</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
