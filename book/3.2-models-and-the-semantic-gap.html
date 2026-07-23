@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 4 · Models and the Semantic Gap</title><style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 3.2 · Models and the Semantic Gap</title><style>
 :root { --accent: #1a4a7a; }
 * { box-sizing: border-box; }
 body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -21,6 +21,10 @@ header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bo
 header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #767676; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -30,6 +34,11 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -47,6 +56,8 @@ a { color: var(--accent); }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+              font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
 .book-title h1 { font-size: 2.4rem; margin: 0; }
@@ -57,24 +68,33 @@ a { color: var(--accent); }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
 .idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
-<li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
-<li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
-<li class="part">Part 2 — The Governed Engineering Environment</li>
-<li><a class="" href="ch03-the-agent-stack.html">Ch 3 · The Agent Stack</a></li>
-<li><a class="current" href="ch04-models-and-the-semantic-gap.html">Ch 4 · Models and the Semantic Gap</a></li>
-<li><a class="" href="ch05-the-governed-environment.html">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</a></li>
-<li><a class="" href="ch06-the-model-zoo.html">Ch 6 · The Model Zoo</a></li>
-<li><a class="" href="ch07-lifecycles-and-runbooks.html">Ch 7 · Lifecycles and Runbooks</a></li>
-<li class="part">Part 3 — Putting It to Work</li>
-<li><a class="" href="ch08-brownfield.html">Ch 8 · Brownfield</a></li>
-<li><a class="" href="ch09-the-skills.html">Ch 9 · The Skills</a></li>
-<li><a class="" href="ch10-transformations.html">Ch 10 · Everything Is a Transformation</a></li>
-<li><a class="" href="ch11-training-data.html">Ch 11 · Training Data and the Novelty Axis</a></li>
-<li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="current" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-the-model-zoo.html">3.4&nbsp; The Model Zoo</a></li>
+<li><a class="" href="3.5-lifecycles-and-runbooks.html">3.5&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — Putting It to Work</li>
+<li><a class="" href="4.1-brownfield.html">4.1&nbsp; Brownfield</a></li>
+<li><a class="" href="4.2-the-skills.html">4.2&nbsp; The Skills</a></li>
+<li><a class="" href="4.3-transformations.html">4.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="4.4-training-data.html">4.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 2 · The Governed Engineering Environment &nbsp;::&nbsp; Chapter 4</div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject control. This one is about the single most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. Models are the sweet spot between prose that is too vague and code that is too verbose. But a model only helps if you check it where checking makes sense.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 3 — The Governed Engineering Environment &nbsp;::&nbsp; Chapter 3.2</div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject control. This one is about the single most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. Models are the sweet spot between prose that is too vague and code that is too verbose. But a model only helps if you check it where checking makes sense.</p>
 <h2>Words are soft, code is verbose, a model is the sweet spot</h2>
 <p>Your first instrument of control is the prompt, because the agent is a language model and words are how you talk to it. But words are soft. They are ambiguous, and the more ambiguity you leave in, the less happy you will be. You can push ambiguity down by writing documentation — describing the environment, the product, its goals, its policies — and if you were briefing a <em>human</em> team, that would be enough. Humans are not dumb; they remember, they know what matters, they know where to look it up, and they know they will be fired if they misbehave. Agents are different: brilliant reasoners who need to be told exactly what to reason over, and for whom loose documents are simply not precise enough.</p>
 <p>Code is the opposite failure. Code is perfectly precise — it is exactly what will happen — but it is far too verbose to reason over in bulk. What you want sits between the two: something accurate and unambiguous, yet compact. The word for that thing is a <strong>model</strong>.</p>
@@ -93,4 +113,4 @@ temporal-logic checker) earns its keep. This is the reader's biggest unanswered
 question after this chapter.</div>
 <div class="marker marker-more"><span class="marker-tag">MORE CHAPTERS FOLLOW</span> a dedicated chapter on how you actually <em>author</em> a model in a
 repo — is it a typed record, a diagram, a lint, a schema file? The reader now believes
-models matter but cannot yet build one.</div><div class="pager"><a class="prev" href="ch03-the-agent-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Ch 3 · The Agent Stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="ch05-the-governed-environment.html"><span class="dir">Next ›</span><span class="ttl">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</span></a></div></main></body></html>
+models matter but cannot yet build one.</div><div class="pager"><a class="prev" href="3.1-the-agent-stack.html"><span class="dir">‹ Previous</span><span class="ttl">3.1 · The Agent Stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.3-the-governed-environment.html"><span class="dir">Next ›</span><span class="ttl">3.3 · The Governed Environment: Ex-Ante and Ex-Post</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

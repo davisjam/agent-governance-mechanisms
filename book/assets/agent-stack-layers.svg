@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): Mermaid's node set has no port/tab geometry,
+     and edges to tiny nodes sprawl. The "sticky-outy parts" are literal tabs on
+     each block's right edge; the governance bar notches into them. The stack is
+     given a gentle downward bow (arc) and a bigger->smaller taper (top = widest
+     outer shell, bottom = narrowest core) to hint an onion of nested layers. The
+     model's only port points UP into the harness (internal to the stack), never
+     out to the governance bar. See the .md for the rationale. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" width="900" height="540"
+     font-family="'Helvetica Neue', Arial, sans-serif" role="group"
+     aria-labelledby="diagTitle diagDesc">
+  <title id="diagTitle">The four-layer stack, its governance hooks, and the methodology that plugs into them</title>
+  <desc id="diagDesc">A vertical stack of four conventional layer blocks, application on top and GenAI model at the foundation. The stack bows gently downward and tapers from widest at the top to narrowest at the bottom, hinting an onion: the Application is the big outer shell and the GenAI model the small core. From top: the Application (your codebase), with a tab labelled tests / CI; the Engineering environment (git), with a tab labelled git-hooks and the note push / pull; the Harness (Claude Code), with two tabs labelled claude-hooks and claude-skills and the note prompts; the GenAI model, whose only tab points upward into the harness. Each right-edge tab is a small protrusion — the concrete hook the method grabs. On the right, a vertical Methodology and governance bar has fingers that notch into every right-edge tab, showing that governance plugs into these specific hooks. The GenAI model has no governance tab of its own: it is reached through the harness, so its single tab points up into the harness block, not out to the governance bar. The story reads model, up into harness, then out to governance.</desc>
+
+  <style>
+    .block  { fill:#f4f4f4; stroke:#333; stroke-width:1.5; }
+    .btitle { font-size:19px; font-weight:700; fill:#111; }
+    .bsub   { font-size:13px; font-style:italic; fill:#555; }
+    .tab    { fill:#ffffff; stroke:#333; stroke-width:1.5; }
+    .tablbl { font-size:12.5px; font-weight:600; fill:#111; }
+    .govlbl { font-size:16px; font-weight:700; fill:#ffffff; }
+    .intlbl { font-size:11.5px; font-weight:600; fill:#333; }
+  </style>
+
+  <!-- ===== The four conventional layer blocks (top = Application, bottom = model) ===== -->
+  <!-- Right edge held at x=560 for every block so tabs/fingers stay aligned; the
+       LEFT edge steps inward top->bottom (taper) and the y-top steps down with an
+       accelerating offset (subtle downward arc). -->
+
+  <!-- L4 Application  (widest = outer shell) -->
+  <rect class="block" x="60"  y="40"  width="500" height="90" rx="4"/>
+  <text class="btitle" x="82"  y="78">Application</text>
+  <text class="bsub"   x="82"  y="100">your codebase</text>
+
+  <!-- L3 Engineering environment (git) -->
+  <rect class="block" x="85"  y="150" width="475" height="90" rx="4"/>
+  <text class="btitle" x="107" y="188">Engineering environment — git</text>
+  <text class="bsub"   x="107" y="210">push · pull</text>
+
+  <!-- L2 Harness (Claude Code) -->
+  <rect class="block" x="110" y="264" width="450" height="90" rx="4"/>
+  <text class="btitle" x="132" y="302">Harness — Claude Code</text>
+  <text class="bsub"   x="132" y="324">prompts</text>
+
+  <!-- L1 GenAI model  (narrowest = core; its only tab points UP into the harness) -->
+  <rect class="block" x="135" y="382" width="425" height="90" rx="4"/>
+  <text class="btitle" x="157" y="420">GenAI model</text>
+  <text class="bsub"   x="157" y="442">the core — reached through the harness</text>
+
+  <!-- ===== Internal upward port: model -> harness (inside the stack) ===== -->
+  <!-- A tab on the model's TOP edge bridging the 28px gap up into the harness
+       bottom. Not a governance hook; it says the model is reached THROUGH the
+       harness. -->
+  <rect class="tab" x="205" y="354" width="96" height="28" rx="3"/>
+  <text class="intlbl" x="253" y="372" text-anchor="middle">via harness</text>
+  <!-- small upward arrowhead nudged into the harness underside -->
+  <path d="M253 348 l6 8 h-12 z" fill="#333"/>
+
+  <!-- ===== The "sticky-outy" tabs — small protrusions on the right edge ===== -->
+  <!-- Each tab sticks out from x=560 (block right edge) to x=626, centered on the
+       (arced) vertical midline of its block. -->
+
+  <!-- L4 tab: tests / CI   (block center y=85) -->
+  <rect class="tab" x="560" y="70"  width="66" height="30" rx="3"/>
+  <text class="tablbl" x="593" y="89"  text-anchor="middle">tests / CI</text>
+
+  <!-- L3 tab: git-hooks    (block center y=195) -->
+  <rect class="tab" x="560" y="180" width="66" height="30" rx="3"/>
+  <text class="tablbl" x="593" y="199" text-anchor="middle">git-hooks</text>
+
+  <!-- L2 tabs: claude-hooks + claude-skills  (block center y=309) -->
+  <rect class="tab" x="560" y="280" width="86" height="28" rx="3"/>
+  <text class="tablbl" x="603" y="298" text-anchor="middle">claude-hooks</text>
+  <rect class="tab" x="560" y="314" width="86" height="28" rx="3"/>
+  <text class="tablbl" x="603" y="332" text-anchor="middle">claude-skills</text>
+
+  <!-- ===== Governance bar with fingers that notch into the tabs ===== -->
+  <!-- Bar body x=680..800; fingers reach left from x=680 to the tab right edge x=626. -->
+
+  <!-- fingers (drawn first, behind the bar) -->
+  <g fill="#1a4a7a">
+    <rect x="626" y="78"  width="60" height="14" rx="2"/>  <!-- to tests/CI -->
+    <rect x="626" y="188" width="60" height="14" rx="2"/>  <!-- to git-hooks -->
+    <rect x="646" y="287" width="40" height="14" rx="2"/>  <!-- to claude-hooks -->
+    <rect x="646" y="321" width="40" height="14" rx="2"/>  <!-- to claude-skills -->
+  </g>
+
+  <!-- governance bar -->
+  <rect x="680" y="40" width="120" height="432" rx="6" fill="#1a4a7a" stroke="#0f3050" stroke-width="1.5"/>
+  <text class="govlbl" x="740" y="256" text-anchor="middle" transform="rotate(90 740 256)">Methodology + governance</text>
+
+</svg>

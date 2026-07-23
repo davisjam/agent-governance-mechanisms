@@ -546,7 +546,7 @@ GITHUB_SVG = ('<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true
               '1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>')
 
 SITE_FOOTER = (f'<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, '
-               f'Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; '
+               f'2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; '
                f'<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
                f'{GITHUB_SVG} agent-governance-mechanisms</a>'
                f'&nbsp;·&nbsp; <a class="book-foot" href="{{book_prefix}}book/index.html">'

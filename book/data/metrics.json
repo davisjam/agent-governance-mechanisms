@@ -1,0 +1,38 @@
+{
+  "_provenance": "AUTHORED source of truth for the book's headline numbers. Referenced from chapter prose via {{token}} substitution in build_book_html.py. A later pass refreshes the repo-derived figures from history-mining; the cost-model and policy figures are the book's canonical estimates. Edit here, never in the prose.",
+
+  "study_weeks": "16",
+  "study_window": "March–July 2026",
+  "model_vendor": "Anthropic Claude (Opus and Sonnet, March–July 2026)",
+  "peak_accounts": "four",
+
+  "prod_loc": "431,901",
+  "support_loc": "1,212,628",
+  "iac_loc": "8,105",
+  "system_model_loc": "7,058",
+  "support_ratio": "2.7",
+  "commits_per_week": "1,000",
+  "commits_per_day": "500",
+  "agents_parallel": "six to eight",
+
+  "corpus_decks": "~100 slide decks",
+  "corpus_pdfs": "~300 PDFs",
+
+  "deck_issue_count": "42",
+  "hours_per_document": "3",
+  "documents_per_course": "~100",
+  "hours_per_course": "300",
+  "workweeks_per_course": "7.5",
+  "diy_cost_per_course": "$20,000",
+
+  "vendor_cost_per_page": "$3",
+  "vendor_cost_per_course_low": "$10,000",
+  "vendor_cost_per_course_high": "$15,000",
+
+  "per_deck_process_time": "about a minute",
+  "per_deck_process_cost": "about a dollar",
+  "dev_cost_total": "about sixty thousand dollars",
+
+  "product_name": "DocAble",
+  "product_url": "https://scholaccess.com"
+}

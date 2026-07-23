@@ -21,6 +21,10 @@ header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bo
 header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #767676; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -30,6 +34,11 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -47,6 +56,8 @@ a { color: var(--accent); }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+              font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
 .book-title h1 { font-size: 2.4rem; margin: 0; }
@@ -57,24 +68,33 @@ a { color: var(--accent); }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
 .idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Part 1 — The Mindset</li>
-<li><a class="" href="ch01-the-printer.html">Ch 1 · The Printer</a></li>
-<li><a class="" href="ch02-loops-and-models.html">Ch 2 · Loops and Models</a></li>
-<li class="part">Part 2 — The Governed Engineering Environment</li>
-<li><a class="" href="ch03-the-agent-stack.html">Ch 3 · The Agent Stack</a></li>
-<li><a class="" href="ch04-models-and-the-semantic-gap.html">Ch 4 · Models and the Semantic Gap</a></li>
-<li><a class="" href="ch05-the-governed-environment.html">Ch 5 · The Governed Environment: Ex-Ante and Ex-Post</a></li>
-<li><a class="" href="ch06-the-model-zoo.html">Ch 6 · The Model Zoo</a></li>
-<li><a class="" href="ch07-lifecycles-and-runbooks.html">Ch 7 · Lifecycles and Runbooks</a></li>
-<li class="part">Part 3 — Putting It to Work</li>
-<li><a class="" href="ch08-brownfield.html">Ch 8 · Brownfield</a></li>
-<li><a class="" href="ch09-the-skills.html">Ch 9 · The Skills</a></li>
-<li><a class="" href="ch10-transformations.html">Ch 10 · Everything Is a Transformation</a></li>
-<li><a class="" href="ch11-training-data.html">Ch 11 · Training Data and the Novelty Axis</a></li>
-<li class="part">Part 4 — Appendix A — The Pattern Catalogue</li>
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-the-model-zoo.html">3.4&nbsp; The Model Zoo</a></li>
+<li><a class="" href="3.5-lifecycles-and-runbooks.html">3.5&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — Putting It to Work</li>
+<li><a class="" href="4.1-brownfield.html">4.1&nbsp; Brownfield</a></li>
+<li><a class="" href="4.2-the-skills.html">4.2&nbsp; The Skills</a></li>
+<li><a class="" href="4.3-transformations.html">4.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="4.4-training-data.html">4.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — The Pattern Catalogue</li>
 <li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
 <li><a class="current" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
-<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 4 · Appendix A — The Pattern Catalogue &nbsp;::&nbsp; Appendix</div><h1>Appendix B — Models-bridge patterns</h1></header><p>Appendix B re-projects the <strong>Models-bridge</strong> governance mechanisms from the catalogue into the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the catalogue entry sources at build time, so they cannot drift from the catalogue. Each <strong>Structure</strong> and <strong>Sample Code</strong> section is a placeholder; a real diagram and sample are future work.</p>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Appendix A — The Pattern Catalogue</div><h1>Appendix B — Models-bridge patterns</h1></header><p>Appendix B re-projects the <strong>Models-bridge</strong> governance mechanisms from the catalogue into the classic Gang-of-Four design-pattern layout — Intent, Motivation, Applicability, Structure, Sample Code, Consequences, Known Uses, Related Patterns. These pages are generated from the catalogue entry sources at build time, so they cannot drift from the catalogue. Each <strong>Structure</strong> and <strong>Sample Code</strong> section is a placeholder; a real diagram and sample are future work.</p>
 <h1>system-models</h1>
 <h2>The agent-first MBSE harness</h2>
 <p><strong>Intent</strong> — Build the typed system-models as a <strong>thin, hand-rolled harness over plain frozen records</strong>: adopt the <em>vocabulary and schema</em> of the right modeling genre per view, but skip its runtime and hand-roll the executable layer. The model then captures your project's own invariants, and a set of build-time checks keeps it equal to the code (our instance: frozen Python dataclasses under five recurring disciplines, not a SysML tool).</p>
@@ -443,4 +463,4 @@ a { color: var(--accent); }
 <h3>Known Uses</h3>
 <ul><li>The typed journey entities (actor, goal, ordered steps, each step's endpoint calls, and the call-site anchors) carried as a new kind in the existing service-architecture dialect.</li><li>The call-site drift lint (declared deps ↔ real call sites, both directions) that keeps the map fresh; the two-way endpoint-coverage audits (undertested-journey + dead-endpoint).</li><li>A journey-aware wake/scale capability keyed to the active journey's declared deps, gated on the drift lint being blocking.</li><li>A <strong>migration completeness-critic sweep</strong>: when re-platforming, walk every journey and ask at each touchpoint "does the substrate change reach here?" A component-deep migration plan is blind to everything a user touches that is <em>not</em> the core pipeline; the journey model is the entry point that surfaces the missed threads (billing, invoicing, admin views) before the build wave starts.</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><strong>Bridge</strong> — agents <em>query</em> it to reason about which paths are real and what each needs (agent side) ◀──▶ it <em>governs</em> the codebase, driving coverage and endpoint-retirement, and, once the drift lint is blocking, live journey-aware scaling (product side). One model, both faces.</li><li><strong>Enabler</strong> — <a href="../models-bridge/system-models/service-flow-model.html">service-flow-model</a>: the structural service model whose dialect, loader, query surface, and lint this journey model <em>reuses</em> as a new goal-anchored `kind`, not a parallel model. What separates the two? One traverses a product goal, the other maps service topology; that named axis is the only thing that differs, and the shared substrate is the uniformity win.</li><li><em>See also</em> — <a href="../models-bridge/system-models/drift-parity-gates.html">drift-parity-gates</a>: the call-site drift lint and the two coverage audits are that parity mechanism applied to this model.</li><li><em>See also</em> — <a href="../models-bridge/system-models/executable-source-of-truth.html">executable-source-of-truth</a>: the pattern this instantiates, data-not-code, read every run, held equal to reality.</li></ul><div class="pager"><a class="prev" href="appendix-a-agent.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix A — Agent patterns</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-c-product.html"><span class="dir">Next ›</span><span class="ttl">Appendix C — Product patterns</span></a></div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>
+<ul><li><strong>Bridge</strong> — agents <em>query</em> it to reason about which paths are real and what each needs (agent side) ◀──▶ it <em>governs</em> the codebase, driving coverage and endpoint-retirement, and, once the drift lint is blocking, live journey-aware scaling (product side). One model, both faces.</li><li><strong>Enabler</strong> — <a href="../models-bridge/system-models/service-flow-model.html">service-flow-model</a>: the structural service model whose dialect, loader, query surface, and lint this journey model <em>reuses</em> as a new goal-anchored `kind`, not a parallel model. What separates the two? One traverses a product goal, the other maps service topology; that named axis is the only thing that differs, and the shared substrate is the uniformity win.</li><li><em>See also</em> — <a href="../models-bridge/system-models/drift-parity-gates.html">drift-parity-gates</a>: the call-site drift lint and the two coverage audits are that parity mechanism applied to this model.</li><li><em>See also</em> — <a href="../models-bridge/system-models/executable-source-of-truth.html">executable-source-of-truth</a>: the pattern this instantiates, data-not-code, read every run, held equal to reality.</li></ul><div class="pager"><a class="prev" href="appendix-a-agent.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix A — Agent patterns</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-c-product.html"><span class="dir">Next ›</span><span class="ttl">Appendix C — Product patterns</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

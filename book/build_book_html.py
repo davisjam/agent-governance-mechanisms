@@ -1,18 +1,35 @@
 #!/usr/bin/env python3
-"""Render the polished book chapters (ch*.md) to a small static HTML site.
+"""Render the polished book chapters to a small static HTML site.
 
 AUTO-GENERATED OUTPUT: this script emits *.html in this folder; do not hand-edit
 the .html (re-run `python3 build_book_html.py` to regenerate). Stdlib-only.
 
-Each chapter .md carries metadata comments:
-    <!-- part: N --> <!-- part-title: ... --> <!-- chapter: N --> <!-- chapter-title: ... -->
-The build derives part grouping + reading order from those, emits one .html per
-chapter (Part::Chapter table-of-contents nav on top, prev/next at bottom), and an
-index.html landing page.
+The book source is a Part/Chapter filesystem hierarchy — the directory tree encodes
+the ordering so PART.CHAPTER is explicit in the path:
+
+    book/frontmatter/0.1-preface.md            -> Front matter, order 0.1
+    book/part1/1.1-the-ada-context.md          -> Part 1, Chapter 1
+    book/part1/1.2-the-timeline-and-the-work.md-> Part 1, Chapter 2
+    book/part2/2.1-the-printer.md              -> Part 2, Chapter 1
+    …
+    book/backmatter/5.1-conclusion.md          -> Back matter, order 5.1
+
+The build WALKS this hierarchy, derives the part number and chapter number from each
+file's `part<N>/` dir and `<N>.<M>-slug.md` name, and reads the human-readable
+`<!-- part-title: … --> <!-- chapter-title: … -->` metadata from the file. It emits one
+flat `<slug>.html` per chapter (Part/Chapter TOC nav on top, prev/next at the bottom),
+an `index.html` landing page, and — appended after the back matter — a Gang-of-Four
+appendix projected from the sibling catalogue entries.
+
+Front matter (part 0) and back matter (part 5) render without a "Chapter N" kicker; the
+first chapter of each numbered Part opens with a verbatim epigraph. Chapter prose may
+reference the shared metrics file (`data/metrics.json`) through `{{token}}` placeholders,
+substituted at build time so the headline numbers live in one place.
 """
 from __future__ import annotations
 
 import html
+import json
 import pathlib
 import re
 import sys
@@ -20,6 +37,7 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent  # the catalogue root — the appendix reads the entry .md files from here
 ACCENT = "#1a4a7a"
+COPYRIGHT = "© James C. Davis, 2026–present"
 
 # Mermaid runtime (CDN) — pulled in so the appendix's ```mermaid placeholder blocks render as diagrams.
 MERMAID_CDN = (
@@ -29,12 +47,82 @@ MERMAID_CDN = (
 
 META_RE = re.compile(r"<!--\s*([a-z-]+):\s*(.*?)\s*-->")
 
+# Part number → the source subdirectory that holds its chapters. Front matter is part 0, the
+# four numbered parts are 1–4, back matter is part 5. Appendix parts are assigned after these.
+_PART_DIRS = {
+    0: "frontmatter",
+    1: "part1",
+    2: "part2",
+    3: "part3",
+    4: "part4",
+    5: "backmatter",
+}
 
-def parse_chapter(path: pathlib.Path) -> dict:
-    text = path.read_text(encoding="utf-8")
+# Part number → its display title (mirrors the `part-title` metadata; kept here so a part with no
+# chapters still names correctly, and so the TOC/index label is authoritative from one place).
+_PART_TITLES = {
+    0: "Front Matter",
+    1: "The Context",
+    2: "The Mindset",
+    3: "The Governed Engineering Environment",
+    4: "Putting It to Work",
+    5: "Back Matter",
+}
+
+# Per-Part epigraph rendered at the opener of the first chapter in each numbered Part. Each is a
+# (quote, attribution) pair. The two literary quotations (Macbeth, Ecclesiastes) are verbatim from
+# the source memoir; the Context and Governed-Environment openers use a regulatory line and the
+# book's own thesis, respectively (candidates a human editor may swap).
+_PART_EPIGRAPHS: dict[int, tuple[str, str]] = {
+    1: (
+        "Just as stairs can exclude people who use wheelchairs, inaccessible web content "
+        "and mobile apps can exclude people with disabilities.",
+        "U.S. Department of Justice, Title II Final Rule, 2024",
+    ),
+    2: (
+        "It is a tale told by an idiot, full of sound and fury, signifying nothing.",
+        "William Shakespeare, Macbeth",
+    ),
+    3: (
+        "Govern the conditions under which fast code can be trusted.",
+        "the thesis of this book",
+    ),
+    4: (
+        "I applied mine heart to know, and to search, and to seek out wisdom, and the "
+        "reason of things.",
+        "King Solomon (Ecclesiastes 7:25)",
+    ),
+}
+
+_PART_CHAP_RE = re.compile(r"^(\d+)\.(\d+)-")
+
+
+def _load_metrics() -> dict[str, str]:
+    """Read `data/metrics.json` (the single source for the book's headline numbers). Keys prefixed
+    with `_` are notes, not tokens; everything else is a `{{key}}` substitution."""
+    path = HERE / "data" / "metrics.json"
+    if not path.is_file():
+        return {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return {k: str(v) for k, v in raw.items() if not k.startswith("_")}
+
+
+def _apply_metrics(md: str, metrics: dict[str, str]) -> str:
+    """Substitute every `{{token}}` in the chapter prose with its metrics value. An unknown token
+    fails loud — a mistyped placeholder should stop the build, not ship `{{typo}}` to the reader."""
+    def repl(m: "re.Match[str]") -> str:
+        key = m.group(1).strip()
+        if key not in metrics:
+            raise SystemExit(f"metrics token {{{{{key}}}}} has no value in data/metrics.json")
+        return metrics[key]
+    return re.sub(r"\{\{\s*([a-z0-9_]+)\s*\}\}", repl, md)
+
+
+def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str, str]) -> dict:
+    text = _apply_metrics(path.read_text(encoding="utf-8"), metrics)
     meta = {k: v for k, v in META_RE.findall(text)}
     body = META_RE.sub("", text).strip()
-    # Drop the leading H1 (# Chapter ...) — we render it from metadata in the header.
+    # Drop the leading H1 (# Chapter …) — we render it from metadata in the header.
     lines = body.splitlines()
     while lines and not lines[0].strip():
         lines.pop(0)
@@ -42,12 +130,36 @@ def parse_chapter(path: pathlib.Path) -> dict:
         lines.pop(0)
     return {
         "slug": path.stem,
-        "part": int(meta.get("part", "0")),
-        "part_title": meta.get("part-title", ""),
-        "chapter": int(meta.get("chapter", "0")),
+        "part": part,
+        "part_title": meta.get("part-title", _PART_TITLES.get(part, "")),
+        "chapter": chapter,
         "chapter_title": meta.get("chapter-title", path.stem),
         "body_md": "\n".join(lines).strip(),
+        "is_matter": part in (0, 5),  # front / back matter — no "Chapter N" kicker
     }
+
+
+def _discover_chapters(metrics: dict[str, str]) -> list[dict]:
+    """Walk the Part/Chapter filesystem hierarchy → an ordered list of chapter records. Part number
+    and chapter number come from the PATH (the `part<N>/` dir and the `<N>.<M>-slug.md` name); the
+    titles come from each file's metadata. Ordered by (part, chapter)."""
+    found: list[dict] = []
+    for part, subdir in _PART_DIRS.items():
+        d = HERE / subdir
+        if not d.is_dir():
+            continue
+        for p in sorted(d.glob("*.md")):
+            m = _PART_CHAP_RE.match(p.name)
+            if not m:
+                continue  # not a chapter file (e.g. a stray README)
+            file_part, chapter = int(m.group(1)), int(m.group(2))
+            # The filename's leading part digit must match its directory's part (catch a misfiled chapter).
+            if file_part != part:
+                raise SystemExit(
+                    f"chapter {p} names part {file_part} but sits in {subdir} (part {part})")
+            found.append(parse_chapter(p, part, chapter, metrics))
+    found.sort(key=lambda c: (c["part"], c["chapter"]))
+    return found
 
 
 def _abbr_cite(m: "re.Match[str]") -> str:
@@ -67,6 +179,39 @@ def inline(s: str) -> str:
     s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<![\w*])\*(?!\s)([^*]+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
     return s
+
+
+def _figure_block(comment: str) -> str:
+    """Render a `<!-- figure: <path> | <caption> -->` directive into a <figure>.
+
+    <path> is relative to book/ (this dir). A `.svg` asset is INLINED (its own <title>/<desc>/
+    aria-* survive, and there is no external request that can 404); any other extension is
+    wrapped in <img alt="<caption>">. Fails loud if the asset is missing — a broken figure
+    directive should stop the build, not ship a silent gap.
+    """
+    inner = comment[len("<!--"):-len("-->")].strip()
+    spec = inner[len("figure:"):].strip()
+    if "|" in spec:
+        rel, caption = (s.strip() for s in spec.split("|", 1))
+    else:
+        rel, caption = spec, ""
+    asset = HERE / rel
+    if not asset.is_file():
+        raise SystemExit(f"figure directive: asset not found: {asset}")
+    cap_html = f"<figcaption>{inline(caption)}</figcaption>" if caption else ""
+    if asset.suffix.lower() == ".svg":
+        svg = asset.read_text(encoding="utf-8")
+        # Strip an XML prolog / leading comment so only the <svg>…</svg> is spliced inline.
+        svg = re.sub(r"^\s*<\?xml[^>]*\?>\s*", "", svg)
+        m = re.search(r"<svg\b.*</svg>", svg, re.S)
+        svg = m.group(0) if m else svg
+        # Neutralize the intrinsic width/height so the viewBox drives responsive scaling; CSS caps it.
+        svg = re.sub(r'(<svg\b[^>]*?)\swidth="[^"]*"', r"\1", svg, count=1)
+        svg = re.sub(r'(<svg\b[^>]*?)\sheight="[^"]*"', r"\1", svg, count=1)
+        return f'<figure class="book-figure">{svg}{cap_html}</figure>'
+    alt = html.escape(caption or asset.stem, quote=True)
+    src = html.escape(rel, quote=True)
+    return f'<figure class="book-figure"><img src="{src}" alt="{alt}">{cap_html}</figure>'
 
 
 def md_to_html(md: str) -> str:
@@ -103,6 +248,14 @@ def md_to_html(md: str) -> str:
                 f'<div class="marker marker-{kind}">'
                 f'<span class="marker-tag">{label}</span> {inline(inner)}</div>'
             )
+            continue
+        # Figure directive: `<!-- figure: <path> | <caption> -->` → a <figure> with inline SVG
+        # (or <img> for a raster) + <figcaption>. Checked BEFORE the generic-comment passthrough
+        # so a figure comment is rendered, not emitted raw.
+        if stripped.startswith("<!--") and stripped.endswith("-->") \
+                and stripped.count("<!--") == 1 \
+                and stripped[4:].lstrip().startswith("figure:"):
+            out.append(_figure_block(stripped))
             continue
         # A standalone HTML comment (e.g. the TODO markers) — emit it raw so it stays an invisible
         # comment in the source rather than escaped visible text.
@@ -156,6 +309,10 @@ header.chap {{ padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-b
 header.chap .kicker {{ color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }}
 header.chap h1 {{ font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }}
+.part-epigraph {{ margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }}
+.part-epigraph .attr {{ display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #767676; }}
 h2 {{ font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }}
 h3 {{ font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }}
 p {{ margin: 0 0 1rem; }}
@@ -165,6 +322,11 @@ blockquote {{ margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #
               color: #555; font-style: italic; background: #faf9f6; }}
 code {{ background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }}
 a {{ color: var(--accent); }}
+figure.book-figure {{ margin: 1.8rem 0; text-align: center; }}
+figure.book-figure svg,
+figure.book-figure img {{ max-width: 100%; height: auto; }}
+figure.book-figure figcaption {{ font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }}
 .marker {{ margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }}
 .marker-fill {{ background: #fff6e5; border: 1px dashed #d8a23a; }}
 .marker-more {{ background: #eef3f7; border: 1px dashed #7aa0bd; }}
@@ -182,6 +344,8 @@ a {{ color: var(--accent); }}
 .pager .next {{ text-align: right; }}
 .pager .disabled {{ visibility: hidden; }}
 .pager .home {{ flex: 0 0 auto; align-self: center; }}
+.book-foot {{ margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+              font-size: 13px; text-align: center; }}
 /* index page */
 .book-title {{ padding: 3rem 0 0.5rem; }}
 .book-title h1 {{ font-size: 2.4rem; margin: 0; }}
@@ -195,12 +359,19 @@ a {{ color: var(--accent); }}
 """
 
 
+def _chap_ref(c: dict) -> str:
+    """The 'N.M' reference for a numbered chapter, or '' for front/back matter."""
+    return "" if c.get("is_matter") or c.get("is_appendix") else f'{c["part"]}.{c["chapter"]}'
+
+
 def _toc_prefix(c: dict) -> str:
-    return "" if c.get("is_appendix") else f'Ch {c["chapter"]} · '
+    ref = _chap_ref(c)
+    return f"{ref}&nbsp; " if ref else ""
 
 
 def _pager_label(c: dict) -> str:
-    prefix = "" if c.get("is_appendix") else f'Ch {c["chapter"]} · '
+    ref = _chap_ref(c)
+    prefix = f"{ref} · " if ref else ""
     return f'{prefix}{c["chapter_title"]}'
 
 
@@ -209,7 +380,7 @@ def toc_html(chapters: list[dict], current_slug: str | None) -> str:
     last_part = None
     for c in chapters:
         if c["part"] != last_part:
-            rows.append(f'<li class="part">Part {c["part"]} — {html.escape(c["part_title"])}</li>')
+            rows.append(f'<li class="part">{html.escape(_part_label(c))}</li>')
             last_part = c["part"]
         cls = "current" if c["slug"] == current_slug else ""
         rows.append(
@@ -224,6 +395,16 @@ def toc_html(chapters: list[dict], current_slug: str | None) -> str:
     )
 
 
+def _part_label(c: dict) -> str:
+    """The heading a Part gets in the TOC / index. Front and back matter and the appendix name
+    themselves; numbered Parts get 'Part N — Title'."""
+    if c.get("is_appendix"):
+        return c["part_title"]
+    if c["part"] in (0, 5):
+        return c["part_title"]
+    return f'Part {c["part"]} — {c["part_title"]}'
+
+
 def page(title: str, toc: str, main: str, mermaid: bool = False) -> str:
     runtime = MERMAID_CDN if mermaid else ""
     # <main> landmark so the content is a single main region (axe landmark-one-main / region).
@@ -235,7 +416,19 @@ def page(title: str, toc: str, main: str, mermaid: bool = False) -> str:
     )
 
 
-# ─────────────────────────── Appendix A — the pattern catalogue (GoF format) ───────────────────────────
+def _epigraph_html(part: int) -> str:
+    """The Part-opener epigraph block for the first chapter of a numbered Part, or '' if none."""
+    epi = _PART_EPIGRAPHS.get(part)
+    if not epi:
+        return ""
+    quote, attr = epi
+    return (
+        f'<div class="part-epigraph">{inline(quote)}'
+        f'<span class="attr">— {inline(attr)}</span></div>'
+    )
+
+
+# ─────────────────────────── Appendix — the pattern catalogue (GoF format) ───────────────────────────
 # Generated at build time from the catalogue entry .md files, so the appendix stays in sync with the
 # catalogue rather than duplicating its text. Each entry is re-projected into the classic Gang-of-Four
 # Design-Patterns layout: Intent · Motivation · Applicability · Structure · Consequences · Known Uses ·
@@ -454,28 +647,42 @@ def _role_dir_slug(group: str) -> str:
 
 
 def build() -> int:
-    chapters = sorted(
-        (parse_chapter(p) for p in HERE.glob("ch*.md")),
-        key=lambda c: c["chapter"],
-    )
+    metrics = _load_metrics()
+    chapters = _discover_chapters(metrics)
     if not chapters:
-        print("no chapter files (ch*.md) found", file=sys.stderr)
+        print("no chapter files found under the Part/Chapter hierarchy", file=sys.stderr)
         return 1
 
-    # Appendix A — the pattern catalogue, projected from the catalogue entries into GoF format.
+    # Appendix — the pattern catalogue, projected from the catalogue entries into GoF format. Sorts
+    # after the back matter.
     max_part = max(c["part"] for c in chapters)
     appendix = build_appendix_chapters(next_part=max_part + 1)
     chapters = chapters + appendix
+
+    # The first chapter of each Part opens with an epigraph (numbered Parts only).
+    seen_parts: set[int] = set()
+    for c in chapters:
+        c["show_epigraph"] = c["part"] not in seen_parts and not c.get("is_appendix")
+        seen_parts.add(c["part"])
 
     # Per-chapter pages.
     for i, c in enumerate(chapters):
         prev_c = chapters[i - 1] if i > 0 else None
         next_c = chapters[i + 1] if i < len(chapters) - 1 else None
-        num_label = "Appendix" if c.get("is_appendix") else f"Chapter {c['chapter']}"
+        if c.get("is_appendix"):
+            num_label = "Appendix"
+        elif c.get("is_matter"):
+            num_label = c["chapter_title"]  # "Preface" / "Conclusion"
+        else:
+            num_label = f'Chapter {c["part"]}.{c["chapter"]}'
+        kicker = html.escape(_part_label(c))
+        if not (c.get("is_appendix") or c.get("is_matter")):
+            kicker = f'{kicker} &nbsp;::&nbsp; {html.escape(num_label)}'
         header = (
-            f'<header class="chap"><div class="kicker">Part {c["part"]} · {html.escape(c["part_title"])} '
-            f'&nbsp;::&nbsp; {num_label}</div>'
-            f'<h1>{html.escape(c["chapter_title"])}</h1></header>'
+            f'<header class="chap"><div class="kicker">{kicker}</div>'
+            f'<h1>{html.escape(c["chapter_title"])}</h1>'
+            + (_epigraph_html(c["part"]) if c.get("show_epigraph") else "")
+            + '</header>'
         )
         body = md_to_html(c["body_md"])
         if prev_c:
@@ -496,7 +703,8 @@ def build() -> int:
         else:
             next_html = '<span class="next disabled" aria-hidden="true"></span>'
         pager = f'<div class="pager">{prev_html}{home_html}{next_html}</div>'
-        main = header + body + pager
+        foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
+        main = header + body + pager + foot
         toc = toc_html(chapters, c["slug"])
         out = HERE / f'{c["slug"]}.html'
         out.write_text(
@@ -509,14 +717,16 @@ def build() -> int:
     last_part = None
     for c in chapters:
         if c["part"] != last_part:
-            idx_rows.append(f'<div class="part">Part {c["part"]} — {html.escape(c["part_title"])}</div>')
+            idx_rows.append(f'<div class="part">{html.escape(_part_label(c))}</div>')
             idx_rows.append("<ol>")
             if last_part is not None:
                 idx_rows[-2] = "</ol>" + idx_rows[-2]
             last_part = c["part"]
+        ref = _chap_ref(c)
+        cnum = ref if ref else ("A" if c.get("is_appendix") else "•")
         idx_rows.append(
             f'<li><a href="{c["slug"]}.html">'
-            f'<span class="cnum">{c["chapter"]:>2}</span>{html.escape(c["chapter_title"])}</a></li>'
+            f'<span class="cnum">{html.escape(cnum):>2}</span>{html.escape(c["chapter_title"])}</a></li>'
         )
     idx_rows.append("</ol>")
     title_block = (
@@ -524,7 +734,8 @@ def build() -> int:
         '<div class="sub">Engineering production software with coding agents — a governed, model-based method. '
         "<em>Draft chapters, polished from dictation.</em></div></div>"
     )
-    main = title_block + '<div class="idx">' + "\n".join(idx_rows) + "</div>"
+    foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
+    main = title_block + '<div class="idx">' + "\n".join(idx_rows) + "</div>" + foot
     (HERE / "index.html").write_text(
         page("3D Printing Production Software — Contents", "", main), encoding="utf-8"
     )

@@ -21,6 +21,10 @@ header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bo
 header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #767676; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 p { margin: 0 0 1rem; }
@@ -30,6 +34,11 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -47,6 +56,8 @@ a { color: var(--accent); }
 .pager .next { text-align: right; }
 .pager .disabled { visibility: hidden; }
 .pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+              font-size: 13px; text-align: center; }
 /* index page */
 .book-title { padding: 3rem 0 0.5rem; }
 .book-title h1 { font-size: 2.4rem; margin: 0; }
@@ -57,26 +68,38 @@ a { color: var(--accent); }
 .idx li { margin: 0.35rem 0; }
 .idx a { text-decoration: none; }
 .idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-</style></head><body><main class="wrap"><div class="book-title"><h1>3D Printing Production Software</h1><div class="sub">Engineering production software with coding agents — a governed, model-based method. <em>Draft chapters, polished from dictation.</em></div></div><div class="idx"><div class="part">Part 1 — The Mindset</div>
+</style></head><body><main class="wrap"><div class="book-title"><h1>3D Printing Production Software</h1><div class="sub">Engineering production software with coding agents — a governed, model-based method. <em>Draft chapters, polished from dictation.</em></div></div><div class="idx"><div class="part">Front Matter</div>
 <ol>
-<li><a href="ch01-the-printer.html"><span class="cnum"> 1</span>The Printer</a></li>
-<li><a href="ch02-loops-and-models.html"><span class="cnum"> 2</span>Loops and Models</a></li>
-</ol><div class="part">Part 2 — The Governed Engineering Environment</div>
+<li><a href="0.1-preface.html"><span class="cnum"> •</span>Preface</a></li>
+<li><a href="0.2-acknowledgments.html"><span class="cnum"> •</span>Acknowledgments</a></li>
+</ol><div class="part">Part 1 — The Context</div>
 <ol>
-<li><a href="ch03-the-agent-stack.html"><span class="cnum"> 3</span>The Agent Stack</a></li>
-<li><a href="ch04-models-and-the-semantic-gap.html"><span class="cnum"> 4</span>Models and the Semantic Gap</a></li>
-<li><a href="ch05-the-governed-environment.html"><span class="cnum"> 5</span>The Governed Environment: Ex-Ante and Ex-Post</a></li>
-<li><a href="ch06-the-model-zoo.html"><span class="cnum"> 6</span>The Model Zoo</a></li>
-<li><a href="ch07-lifecycles-and-runbooks.html"><span class="cnum"> 7</span>Lifecycles and Runbooks</a></li>
-</ol><div class="part">Part 3 — Putting It to Work</div>
+<li><a href="1.1-the-ada-context.html"><span class="cnum">1.1</span>The ADA Context</a></li>
+<li><a href="1.2-the-timeline-and-the-work.html"><span class="cnum">1.2</span>The Timeline and the Work</a></li>
+</ol><div class="part">Part 2 — The Mindset</div>
 <ol>
-<li><a href="ch08-brownfield.html"><span class="cnum"> 8</span>Brownfield</a></li>
-<li><a href="ch09-the-skills.html"><span class="cnum"> 9</span>The Skills</a></li>
-<li><a href="ch10-transformations.html"><span class="cnum">10</span>Everything Is a Transformation</a></li>
-<li><a href="ch11-training-data.html"><span class="cnum">11</span>Training Data and the Novelty Axis</a></li>
-</ol><div class="part">Part 4 — Appendix A — The Pattern Catalogue</div>
+<li><a href="2.1-the-printer.html"><span class="cnum">2.1</span>The Printer</a></li>
+<li><a href="2.2-loops-and-models.html"><span class="cnum">2.2</span>Loops and Models</a></li>
+</ol><div class="part">Part 3 — The Governed Engineering Environment</div>
 <ol>
-<li><a href="appendix-a-agent.html"><span class="cnum">100</span>Appendix A — Agent patterns</a></li>
-<li><a href="appendix-b-models-bridge.html"><span class="cnum">101</span>Appendix B — Models-bridge patterns</a></li>
-<li><a href="appendix-c-product.html"><span class="cnum">102</span>Appendix C — Product patterns</a></li>
-</ol></div></main></body></html>
+<li><a href="3.1-the-agent-stack.html"><span class="cnum">3.1</span>The Agent Stack</a></li>
+<li><a href="3.2-models-and-the-semantic-gap.html"><span class="cnum">3.2</span>Models and the Semantic Gap</a></li>
+<li><a href="3.3-the-governed-environment.html"><span class="cnum">3.3</span>The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a href="3.4-the-model-zoo.html"><span class="cnum">3.4</span>The Model Zoo</a></li>
+<li><a href="3.5-lifecycles-and-runbooks.html"><span class="cnum">3.5</span>Lifecycles and Runbooks</a></li>
+</ol><div class="part">Part 4 — Putting It to Work</div>
+<ol>
+<li><a href="4.1-brownfield.html"><span class="cnum">4.1</span>Brownfield</a></li>
+<li><a href="4.2-the-skills.html"><span class="cnum">4.2</span>The Skills</a></li>
+<li><a href="4.3-transformations.html"><span class="cnum">4.3</span>Everything Is a Transformation</a></li>
+<li><a href="4.4-training-data.html"><span class="cnum">4.4</span>Training Data and the Novelty Axis</a></li>
+<li><a href="4.5-lessons-learned.html"><span class="cnum">4.5</span>Lessons Learned</a></li>
+</ol><div class="part">Back Matter</div>
+<ol>
+<li><a href="5.1-conclusion.html"><span class="cnum"> •</span>Conclusion</a></li>
+</ol><div class="part">Appendix A — The Pattern Catalogue</div>
+<ol>
+<li><a href="appendix-a-agent.html"><span class="cnum"> A</span>Appendix A — Agent patterns</a></li>
+<li><a href="appendix-b-models-bridge.html"><span class="cnum"> A</span>Appendix B — Models-bridge patterns</a></li>
+<li><a href="appendix-c-product.html"><span class="cnum"> A</span>Appendix C — Product patterns</a></li>
+</ol></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

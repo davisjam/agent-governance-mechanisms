@@ -1,40 +1,70 @@
-# Polished chapters — *3D Printing Production Software*
+# *3D Printing Production Software* — the book
 
-Polished from the dictated manuscript ([`../DICTATION-manuscript-cleaned.md`](../DICTATION-manuscript-cleaned.md))
-using the **self-communicate** skill. Each chapter is one file. The transformation applied to every unit:
+Draft chapters, polished from the dictated manuscript and the author's field notes using the
+**self-communicate** skill. The book renders to a small static HTML site by
+`build_book_html.py` (wired into `catalog.py build`).
 
-- **Structure** — up to two heading levels (`##`, `###`) inside each chapter; one idea per paragraph, led by a topic sentence.
-- **Opening remarks** — every chapter opens with an orientation hook (a concrete anchor before the abstract claim), in the author's discursive register.
-- **Register** — the persuasive, first-person, analogy-driven book voice is kept and sharpened (not flattened to reference prose). Economy applied: ASR residue, repetition, and filler cut.
-- **Catalogue examples** — where a claim wants a concrete instance, a real mechanism from the governance catalogue is woven in as the worked example.
-- **Gap markers** — `[FILL IN: …]` and `[MORE CHAPTERS FOLLOW: …]` mark the promissory notes and missing pieces the gap analysis surfaced (running example, model-authoring mechanics, verification languages, evidence, when-to-stop, team dimension, untrusted-agent security).
+## Part/Chapter filesystem hierarchy
 
-Chapter map, grouped into three parts (source clip in parentheses). The HTML build
-(`build_book_html.py` → per-chapter pages + `index.html`) renders the "Part N :: Chapter N"
-nav across the top and prev/next links at the bottom of each page.
+The source tree **encodes the hierarchy**: a chapter lives at `part<N>/<N>.<M>-<slug>.md`, so the
+part number and chapter number are explicit in the path. `build_book_html.py` walks the tree,
+derives PART.CHAPTER from the path, and reads the `<!-- part-title --> <!-- chapter-title -->`
+metadata from each file. It emits one flat `<slug>.html` per chapter plus `index.html`, and appends
+a Gang-of-Four appendix projected from the sibling catalogue entries.
 
-**Part 1 — The Mindset** (why agents need governing at all)
+```
+book/
+  frontmatter/0.1-preface.md
+  part1/  (Part 1 — The Context)
+    1.1-the-ada-context.md
+    1.2-the-timeline-and-the-work.md
+  part2/  (Part 2 — The Mindset)
+    2.1-the-printer.md
+    2.2-loops-and-models.md
+  part3/  (Part 3 — The Governed Engineering Environment)
+    3.1-the-agent-stack.md
+    3.2-models-and-the-semantic-gap.md
+    3.3-the-governed-environment.md
+    3.4-the-model-zoo.md
+    3.5-lifecycles-and-runbooks.md
+  part4/  (Part 4 — Putting It to Work)
+    4.1-brownfield.md
+    4.2-the-skills.md
+    4.3-transformations.md
+    4.4-training-data.md
+    4.5-lessons-learned.md
+  backmatter/5.1-conclusion.md
+  data/metrics.json      # headline numbers, referenced from prose via {{token}}
+  assets/                # figure assets (inline SVGs)
+```
 
-| Ch | File | Source |
-|----|------|--------|
-| 1 | `ch01-the-printer.md` | clip 01 |
-| 2 | `ch02-loops-and-models.md` | clip 02 |
+Front matter (Preface) renders before Part 1; the Conclusion renders after Part 4. The appendix
+pages (`appendix-a/b/c-*.html`) are generated from the catalogue entries and render last.
 
-**Part 2 — The Governed Engineering Environment** (where control attaches, and how)
+## Authoring notes
 
-| Ch | File | Source |
-|----|------|--------|
-| 3 | `ch03-the-agent-stack.md` | clips 03 + 04 (combined) |
-| 4 | `ch04-models-and-the-semantic-gap.md` | clip 05 |
-| 5 | `ch05-the-governed-environment.md` | clip 06 |
-| 6 | `ch06-the-model-zoo.md` | clip 07 |
-| 7 | `ch07-lifecycles-and-runbooks.md` | clip 08 |
+- **Metadata.** Each chapter carries two comments: `<!-- part-title: … -->` and
+  `<!-- chapter-title: … -->`. The leading `# …` H1 is dropped on render (the header comes from
+  metadata), so keep or change it freely.
+- **Metrics tokens.** Numbers that recur (weeks, LoC, costs) live in `data/metrics.json`. Reference
+  them from prose with `{{token}}`; the build substitutes them and **fails loud** on an unknown token.
+  Edit the number in the JSON, never in the prose. A later pass refreshes the repo-derived figures
+  from history-mining; the cost-model and policy figures are the book's canonical estimates.
+- **Epigraphs.** The first chapter of each numbered Part opens with an epigraph, defined in
+  `_PART_EPIGRAPHS` in `build_book_html.py`. The Macbeth (Part 2) and Ecclesiastes (Part 4) quotations
+  are verbatim from the source memoir; the Context and Governed-Environment openers are candidates a
+  human editor may swap.
+- **Figures.** Insert a figure with a directive comment: `<!-- figure: assets/<file> | <caption> -->`.
+  An `.svg` is inlined (its own `<title>`/`<desc>`/`aria-*` survive); any other extension is wrapped in
+  `<img>`. A missing asset fails the build.
+- **Copyright.** Every page footer carries `© James C. Davis, 2026–present`.
 
-**Part 3 — Putting It to Work** (brownfield, the shipped skills, and when it matters most)
+## Build
 
-| Ch | File | Source |
-|----|------|--------|
-| 8 | `ch08-brownfield.md` | clip 09 |
-| 9 | `ch09-the-skills.md` | clip 10 |
-| 10 | `ch10-transformations.md` | clip 11 |
-| 11 | `ch11-training-data.md` | clip 12 |
+Run `python3 build_book_html.py` (stdlib-only) or, from the catalogue root,
+`python3 catalog.py build` (builds the book as part of the site and runs the orphan-reachability gate
+over the book pages too). Never hand-edit the `.html`.
+
+The book's appendix references catalogue-root figures. Run `catalog.py build` (regenerates
+`catalogue-views.html`) before or alongside `build_book_html.py`, and commit both, so any deployed
+cross-references resolve.

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 1.1 · The ADA Context</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 44rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #767676; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #767676;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #767676; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Context</li>
+<li><a class="current" href="1.1-the-ada-context.html">1.1&nbsp; The ADA Context</a></li>
+<li><a class="" href="1.2-the-timeline-and-the-work.html">1.2&nbsp; The Timeline and the Work</a></li>
+<li class="part">Part 2 — The Mindset</li>
+<li><a class="" href="2.1-the-printer.html">2.1&nbsp; The Printer</a></li>
+<li><a class="" href="2.2-loops-and-models.html">2.2&nbsp; Loops and Models</a></li>
+<li class="part">Part 3 — The Governed Engineering Environment</li>
+<li><a class="" href="3.1-the-agent-stack.html">3.1&nbsp; The Agent Stack</a></li>
+<li><a class="" href="3.2-models-and-the-semantic-gap.html">3.2&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="3.3-the-governed-environment.html">3.3&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="3.4-the-model-zoo.html">3.4&nbsp; The Model Zoo</a></li>
+<li><a class="" href="3.5-lifecycles-and-runbooks.html">3.5&nbsp; Lifecycles and Runbooks</a></li>
+<li class="part">Part 4 — Putting It to Work</li>
+<li><a class="" href="4.1-brownfield.html">4.1&nbsp; Brownfield</a></li>
+<li><a class="" href="4.2-the-skills.html">4.2&nbsp; The Skills</a></li>
+<li><a class="" href="4.3-transformations.html">4.3&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="4.4-training-data.html">4.4&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="4.5-lessons-learned.html">4.5&nbsp; Lessons Learned</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="5.1-conclusion.html">Conclusion</a></li>
+<li class="part">Appendix A — The Pattern Catalogue</li>
+<li><a class="" href="appendix-a-agent.html">Appendix A — Agent patterns</a></li>
+<li><a class="" href="appendix-b-models-bridge.html">Appendix B — Models-bridge patterns</a></li>
+<li><a class="" href="appendix-c-product.html">Appendix C — Product patterns</a></li></ol></details></div></nav><main class="wrap"><header class="chap"><div class="kicker">Part 1 — The Context &nbsp;::&nbsp; Chapter 1.1</div><h1>The ADA Context</h1><div class="part-epigraph">Just as stairs can exclude people who use wheelchairs, inaccessible web content and mobile apps can exclude people with disabilities.<span class="attr">— U.S. Department of Justice, Title II Final Rule, 2024</span></div></header><p>Every method in this book was learned building one real system, under a real deadline, for a real problem. The problem is document accessibility, and it is worth understanding before any of the engineering makes sense — the engineering only earned its keep by clearing a bar the problem set. So this chapter steps away from agents and loops to answer a plainer question. Why is making a document accessible a hard, mission-driven problem, and why was it worth a professor's Spring Break to attack it?</p>
+<p>The system is called <a href="https://scholaccess.com">DocAble</a>, and it is live in beta at <a href="https://scholaccess.com">scholaccess.com</a>. It takes a PowerPoint deck, a Word document, a spreadsheet, or a PDF and remediates it toward the accessibility standards a university now has to meet. The rest of this chapter explains why that is worth doing at all.</p>
+<h2>A noble idea with a crushing implementation</h2>
+<p>The Americans with Disabilities Act starts from a simple promise. People with disabilities should have equal access to public life — able to work, travel, study, vote, and use services without barriers society could reasonably remove. Passed in 1990 and signed by George H. W. Bush, the ADA descends from a long American line: the Constitution, the Reconstruction Amendments, the Civil Rights Act of 1964, each one widening the circle of who counts as fully included. The wheelchair ramp and the elevator are its famous results, and they are welcome. They are not the part that generates a software problem.</p>
+<p>The part that matters here is Title II, which covers state and local governments — including K–12 schools and public universities. Title II says a public entity must communicate with people who have disabilities <em>as effectively</em> as it communicates with everyone else. In 1990 that sentence was mostly about buildings and lectures and office hours. In 2026 it means something else, because a public university no longer communicates only in person. It communicates through websites, PDFs, slide decks, Word documents, spreadsheets, learning-management systems, videos, forms, exams, syllabi, and the thousand little files that pile up wherever people are allowed to upload things.</p>
+<p>If those materials cannot be read by a screen reader, cannot be navigated by keyboard, lack captions, lack alternative text, or carry their meaning only through color or layout, then some students get a worse version of the university than others. That is not a hypothetical. It is a live legal hazard: accessibility lawsuits are filed every year by students who were not reasonably accommodated, and institutions have settled them for amounts ranging from the thousands into the millions.</p>
+<h2>The rule that changed the burden</h2>
+<p>Universities have been obligated to comply with Title II since 1990. For most of that time, they complied reactively. A student would hit an inaccessible document, request an accommodation, and the institution would scramble to respond. That process carries a morally awkward shape: the inaccessible artifact exists first, and the burden of discovering it and asking for a fix falls on the person who has already been excluded.</p>
+<p>In 2024 the Department of Justice changed the shape. A final rule updated the Title II regulations for web content and mobile apps, and its premise was blunt. Public entities should not wait for people with disabilities to discover and report every barrier. The DOJ put it in the language of physical access: just as stairs can exclude a wheelchair user from a government building, inaccessible web content and documents can exclude people from government services. If a public entity provides a service through a website, an app, or the documents distributed through them, the accessibility of that content is <em>part of the service</em>. Just as Americans do not call ahead to check whether a building has a ramp, a student should not have to negotiate with a professor over whether the slides will be readable.</p>
+<p>The rule set a technical standard — WCAG 2.1 Level AA — and, for large institutions, a deadline. Universities are not sitting on three PDFs and a cheerful little homepage. They are sitting on decades of accumulated digital sediment: course sites, admissions forms, scanned readings, lecture videos, and more. A deadline is a deadline, and this one landed on a mountain of files no one had ever been asked to climb.</p>
+<h2>What it costs to make one document accessible</h2>
+<p>Compliance is not free, and the cost is easiest to feel on a single deck. Open a PowerPoint slide deck — say, the "Syllabus Day" deck for a graduate course — and click the <em>Accessibility</em> tab in Microsoft PowerPoint. On a typical real deck it reports dozens of distinct problems: images missing alt text, slides missing titles, low-contrast text, tables without headers, a reading order the tool cannot verify. One real deck examined this way flagged 42 separate issues across its slides.</p>
+<p>Addressing each issue takes a couple of minutes at best and, for a complex figure, much longer. Scale that to a course. A professor maintains on the order of ~100 assignable documents for the courses they teach — slide decks plus readings in Word and PDF. At a conservative 3 hours per document, remediating a course's materials by hand runs to roughly 300 hours — about 7.5 full work weeks. At a professor's salary that is over $20,000 for the materials of a single teaching load, and a research professor teaches more than one course. Multiply by the thousands of courses at one institution and the number stops being a budget line and starts being a reason the whole thing gets quietly deferred. This per-course estimate is the cost model the book returns to; other figures reconcile to it.</p>
+<p>There are escape hatches, and each one closes on inspection:</p>
+<ul><li><strong>Pull the plug.</strong> A university could satisfy the letter of the rule by de-digitizing — removing the online materials so there is nothing inaccessible to fix. It would satisfy the letter and betray the spirit. Digital materials help everyone: captions serve the student in a noisy room and the student still learning English, not only the student who is deaf. No sane institution wants to become the one that took the slides away.</li><li><strong>Hire it out.</strong> External remediation vendors exist, and they quote on the order of $3 per page or slide — roughly $10,000 to $15,000 for one course's materials at the vendor's own rate. No vendor is staffed with people who can annotate graduate-level astrophysics or quantum mechanics, and no university is eager to pay that per course across every course it offers.</li><li><strong>Do it yourself.</strong> The professor has the specialized knowledge, and the professor is the one person whose time the institution values least for this task. At a research university, faculty are promoted on research; a large, uncompensated, recurring teaching-service chore is exactly the kind of work the incentive structure teaches them to avoid. The ongoing burden does not just fail to get done — it actively discourages updating course materials at all, freezing students into whatever version existed when the deadline hit.</li></ul>
+<p>Put these together and you have a genuine problem, not a manufactured one. A federal mandate with real consequences, a mountain of heterogeneous files, expertise that only the busiest people possess, and no affordable path from here to there.</p>
+<h2>Why a document is not just a file</h2>
+<p>Underneath the institutional bind sits a technical problem deeper than it looks, and it is why this became a software project worth building rather than a policy memo worth writing. A document is not merely a file. It is a <em>visual and semantic</em> artifact. It carries text, figures, tables, diagrams, reading order, hierarchy, emphasis, and all the small tricks by which humans convey meaning to other humans. To make it accessible, a machine has to recover enough of that meaning to present it through another channel — to a screen reader, to a keyboard, to a student who cannot see the figure the lecturer drew.</p>
+<p>For years that was out of reach. Earlier language models could not take an arbitrary slide and make enough sense of it to be trusted. The turn came with frontier vision-language models. Feed one a rendered slide and it looks at the image and recovers useful semantic content — describes the figure, reads the equation, names what the slide is trying to say. That is one of the core technical problems of document accessibility, and it is now solvable well enough to build on.</p>
+<p>Raw model capability is not a compliance strategy, though, and this is the seam the rest of the book lives in. You can paste a small deck into a chat model and get useful output. You cannot get a corrected file back, or a guarantee that the result satisfies WCAG, or any evidence that the meaning survived the trip. The model looks at a slide and understands something real. It understands nothing about university procurement, disability-resource workflows, faculty incentives, or the institutional alchemy that turns a federal mandate into a weekly email nobody reads. It is, as I like to put it, an infinite midwit: it knows everything and understands nothing. Turning that flash of capability into a system a university can trust — one that parses, repairs, validates, stamps its own work, and produces defensible evidence that it did the job — is not a model invocation. It is engineering. The kind of engineering this book is about.</p>
+<p>That is the context. A real law, a real deadline, a real cost, and a real technical gap that had just barely become bridgeable. The next chapter tells what happened when one professor decided to bridge it — and how a one-week undergraduate project became a production system built almost entirely by machines.</p><div class="pager"><a class="prev" href="0.2-acknowledgments.html"><span class="dir">‹ Previous</span><span class="ttl">Acknowledgments</span></a><a class="home" href="index.html">Contents</a><a class="next" href="1.2-the-timeline-and-the-work.html"><span class="dir">Next ›</span><span class="ttl">1.2 · The Timeline and the Work</span></a></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
