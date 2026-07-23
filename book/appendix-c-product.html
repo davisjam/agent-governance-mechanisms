@@ -34,6 +34,14 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote h3 { font-style: normal; margin-top: 0; }
+blockquote pre.mermaid { font-style: normal; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
 figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
@@ -125,7 +133,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <figure class="book-figure catalogue-embed"><iframe src="catalogue-figure.html" title="The governance mechanism map: click any mechanism to open its Gang-of-Four pattern here in the appendix. This Part covers the Product mechanisms." loading="lazy"></iframe><figcaption>The governance mechanism map — every mechanism in the catalogue, in four views. Click a mechanism to jump to its pattern in this appendix. <a href="catalogue-figure.html">Open the full interactive map ›</a></figcaption></figure>
 <h1>canonical-models-and-seams</h1>
 <h2 id="canonical-walkers">Canonical walkers (one traversal per tree)</h2>
-<p><strong>Intent</strong> — Give each tree exactly one canonical walker that owns its traversal invariants, and route all traversal through it instead of ad hoc recursion, so those invariants live in one place (our instances: one walker for the PDF structure tree, one for the checking pass, one per Office part: `PdfStructTreeWalker`, the `RuleWalkers`, `DocxTopLevelPartWalker`).</p>
+<p><strong>Intent</strong> — Give each tree exactly one canonical walker that owns its traversal invariants, and route all traversal through it instead of ad hoc recursion, so those invariants live in one place (our instances: one walker for the PDF structure tree, one for the checking pass, one per Office part: <code>PdfStructTreeWalker</code>, the <code>RuleWalkers</code>, <code>DocxTopLevelPartWalker</code>).</p>
 <p><em>Projected from the catalogue entry <a href="../product/canonical-models-and-seams/canonical-walkers.html">canonical-models-and-seams / Canonical walkers (one traversal per tree)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Ad hoc tree recursion re-implements traversal at every site, and each copy is subtly wrong in its own way. One misses a node type, another visits in the wrong order, a third forgets link annotations. The same traversal bug recurs per site, and because each is hand-rolled, a fix to one never reaches the others.</p>
@@ -168,11 +176,11 @@ def collect_alt_text(root, walker: TreeWalker) -&gt; list[str]:
 <h3>Consequences</h3>
 <ul><li><strong>The walker must expose what callers need.</strong> A missing traversal shape pushes a caller back to raw recursion; coverage matters here, same as the models.</li><li><strong>Low novelty.</strong> This is a well-understood pattern; its value is DRY + invariant-centralization, not invention.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`PdfStructTreeWalker`, the `RuleWalkers`, `DocxTopLevelPartWalker`, and the other per-tree walkers.</li><li>The canonical-walker discipline (traversal routed through the walker, raw recursion banned).</li></ul>
+<ul><li><code>PdfStructTreeWalker</code>, the <code>RuleWalkers</code>, <code>DocxTopLevelPartWalker</code>, and the other per-tree walkers.</li><li>The canonical-walker discipline (traversal routed through the walker, raw recursion banned).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also</em> — <a href="../product/canonical-models-and-seams/pdf-model.html">pdf-model</a>, <a href="../product/canonical-models-and-seams/office-models.html">office-models</a>: walkers are <em>how you traverse</em> those typed models; they are part of the same typed-seam discipline.</li><li><strong>Enabler</strong> — a canonical walker makes routing traversal through the typed models practical; without it, callers reach for raw recursion and re-open the ban-lint's door.</li></ul>
 <h2 id="office-models">Office Models ({Slides,Docs,Sheets}Model)</h2>
-<p><strong>Intent</strong> — Route all remediation of a format family through one typed model, with raw library access (and raw string-matching into the serialized form) banned by lint. The same construction+ban-lint pattern as <a href="../product/canonical-models-and-seams/pdf-model.html">pdf-model</a>, on a second object model (our instance: `{Slides,Docs,Sheets}Model` over `DocumentFormat.OpenXml`).</p>
+<p><strong>Intent</strong> — Route all remediation of a format family through one typed model, with raw library access (and raw string-matching into the serialized form) banned by lint. The same construction+ban-lint pattern as <a href="../product/canonical-models-and-seams/pdf-model.html">pdf-model</a>, on a second object model (our instance: <code>{Slides,Docs,Sheets}Model</code> over <code>DocumentFormat.OpenXml</code>).</p>
 <p><em>Projected from the catalogue entry <a href="../product/canonical-models-and-seams/office-models.html">canonical-models-and-seams / Office Models ({Slides,Docs,Sheets}Model)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Raw OpenXML SDK access, and the sneakier path of <em>regexing into the XML</em>, are the Office equivalent of the raw-PDF-library minefield: brittle, corruption-prone, and with no single point to enforce structural invariants. Left ad hoc, the same raw-library corruption class recurs across three separate document formats.</p>
@@ -214,16 +222,16 @@ if __name__ == "__main__":
     hits = [f for p in sys.argv[1:] for f in lint(p, p.rsplit("/", 1)[-1][:-3], open(p).read())]
     print("\n".join(hits)); sys.exit(1 if hits else 0)</code></pre>
 <h3>Consequences</h3>
-<ul><li><strong>Three models plus a shared layer to maintain</strong> — more surface than the single PdfModel.</li><li><strong>Coverage gaps per format</strong> force a `noqa` or a model extension, same as PdfModel.</li><li><strong>The string-match ban can false-positive</strong> on a legitimate string operation over document text, needing an escape.</li></ul>
+<ul><li><strong>Three models plus a shared layer to maintain</strong> — more surface than the single PdfModel.</li><li><strong>Coverage gaps per format</strong> force a <code>noqa</code> or a model extension, same as PdfModel.</li><li><strong>The string-match ban can false-positive</strong> on a legitimate string operation over document text, needing an escape.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`SlidesModel` / `DocsModel` / `SheetsModel` + `OpenXmlCommon`; `RuleWalkers/` for the checking path.</li><li>`openxml-direct-access` + `no-raw-xml-string-match` ban-lints.</li></ul>
+<ul><li><code>SlidesModel</code> / <code>DocsModel</code> / <code>SheetsModel</code> + <code>OpenXmlCommon</code>; <code>RuleWalkers/</code> for the checking path.</li><li><code>openxml-direct-access</code> + <code>no-raw-xml-string-match</code> ban-lints.</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><em>See also (sibling)</em> — <a href="../product/canonical-models-and-seams/pdf-model.html">pdf-model</a>: the PDF half of the unified "typed model + ban-lint" pattern; together they consolidate the raw-library corruption defect class across all four formats.</li><li><strong>Counterpart</strong> — the `openxml-direct-access` + `no-raw-xml-string-match` lints (hard) hold these construction-mode seams in place.</li><li><em>See also</em> — <a href="../product/canonical-models-and-seams/canonical-walkers.html">canonical-walkers</a>: traversal over the Office models' trees.</li></ul>
+<ul><li><em>See also (sibling)</em> — <a href="../product/canonical-models-and-seams/pdf-model.html">pdf-model</a>: the PDF half of the unified "typed model + ban-lint" pattern; together they consolidate the raw-library corruption defect class across all four formats.</li><li><strong>Counterpart</strong> — the <code>openxml-direct-access</code> + <code>no-raw-xml-string-match</code> lints (hard) hold these construction-mode seams in place.</li><li><em>See also</em> — <a href="../product/canonical-models-and-seams/canonical-walkers.html">canonical-walkers</a>: traversal over the Office models' trees.</li></ul>
 <h2 id="pdf-model">PdfModel (sole PDF mutation surface)</h2>
-<p><strong>Intent</strong> — Route <em>all</em> reads and writes of a complex file format through one typed model, with raw access to the underlying library banned by a lint, so the structure is compiler-checked and every mutation passes through a surface that encodes the format's invariants (our instance: `PdfModel` over the canonical PDF library).</p>
+<p><strong>Intent</strong> — Route <em>all</em> reads and writes of a complex file format through one typed model, with raw access to the underlying library banned by a lint, so the structure is compiler-checked and every mutation passes through a surface that encodes the format's invariants (our instance: <code>PdfModel</code> over the canonical PDF library).</p>
 <p><em>Projected from the catalogue entry <a href="../product/canonical-models-and-seams/pdf-model.html">canonical-models-and-seams / PdfModel (sole PDF mutation surface)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
-<p>The raw canonical PDF library is a minefield of silent, invisible-at-the-call-site failures. Forget `SetModified()` on an indirect object and the write is <strong>silently dropped</strong> on save. Call `tagPointer.AddTag` or `dict.Put` directly and you can corrupt the `/StructTreeRoot`, the exact class that produced the v172 corruption. There is no single place to enforce these invariants, so scattered raw calls make the <em>same</em> PDF bug class recur at every call site.</p>
+<p>The raw canonical PDF library is a minefield of silent, invisible-at-the-call-site failures. Forget <code>SetModified()</code> on an indirect object and the write is <strong>silently dropped</strong> on save. Call <code>tagPointer.AddTag</code> or <code>dict.Put</code> directly and you can corrupt the <code>/StructTreeRoot</code>, the exact class that produced the v172 corruption. There is no single place to enforce these invariants, so scattered raw calls make the <em>same</em> PDF bug class recur at every call site.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A typed model covering the domain surface.</strong> Every operation callers need must exist as a typed mutator, or they're forced back to the raw API.</li><li><strong>A ban-lint on the raw API</strong> (the counted control) plus a migration of <em>all</em> existing call sites.</li><li><strong>A pinned library version.</strong> Minor bumps of the canonical PDF library can silently change auto-tagging, so the seam pins it and gates upgrades behind a regression suite.</li></ul>
 <h3>Structure</h3>
@@ -271,18 +279,18 @@ if __name__ == "__main__":
     print("\n".join(hits))
     sys.exit(1 if hits else 0)</code></pre>
 <h3>Consequences</h3>
-<ul><li><strong>The model must cover everything.</strong> A missing operation forces either a `noqa` escape (a hole) or a model extension (the right fix, but friction). An incomplete seam weakens the ban.</li><li><strong>Version lock-in.</strong> Pinning the PDF library for tag-tree stability means upgrades are deliberate, gated work.</li><li><strong>Maintenance surface.</strong> The typed mutators + the ban-lint are code to keep current as the format needs grow.</li></ul>
+<ul><li><strong>The model must cover everything.</strong> A missing operation forces either a <code>noqa</code> escape (a hole) or a model extension (the right fix, but friction). An incomplete seam weakens the ban.</li><li><strong>Version lock-in.</strong> Pinning the PDF library for tag-tree stability means upgrades are deliberate, gated work.</li><li><strong>Maintenance surface.</strong> The typed mutators + the ban-lint are code to keep current as the format needs grow.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`PdfModel.Read` + the typed `Primitives/` mutators (each wiring `SetModified()` + stamp emission).</li><li>The raw-PDF-library ban-lints (one on the raw constructors/calls, one on helper leakage).</li><li>The v172 `/StructTreeRoot` corruption: the defect class this seam eliminates.</li></ul>
+<ul><li><code>PdfModel.Read</code> + the typed <code>Primitives/</code> mutators (each wiring <code>SetModified()</code> + stamp emission).</li><li>The raw-PDF-library ban-lints (one on the raw constructors/calls, one on helper leakage).</li><li>The v172 <code>/StructTreeRoot</code> corruption: the defect class this seam eliminates.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Counterpart</strong> — the raw-PDF-library ban-lint (hard) holds this construction-mode seam in place; without it, "route through PdfModel" is an unenforced convention.</li><li><em>See also (sibling)</em> — <a href="../product/canonical-models-and-seams/office-models.html">office-models</a>: the same typed-model + ban-lint pattern for the OpenXML formats; the pair is the <em>defect-class consolidation</em> of raw-library corruption across all four document formats.</li><li><em>See also</em> — <a href="../product/canonical-models-and-seams/canonical-walkers.html">canonical-walkers</a>: how traversal over this typed model is done.</li></ul>
 <h2 id="raw-redis-seam">Sole raw-Redis seam (the dispatch module)</h2>
 <p><strong>Intent</strong> — Confine <em>all</em> raw-Redis access to one module, with every queue key declared there, so the queue's atomicity and schema invariants live in exactly one lint-enforced place.</p>
 <p><em>Projected from the catalogue entry <a href="../product/canonical-models-and-seams/raw-redis-seam.html">canonical-models-and-seams / Sole raw-Redis seam (the dispatch module)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
-<p>Raw Redis calls scattered across the codebase break two invariants at once. <strong>Atomicity</strong>: a pop-and-move done as `ZPOPMIN` + `LPUSH` (two commands) <strong>silently loses a job</strong> if the worker crashes between them. <strong>Schema</strong>: key names drift from the declared set, so a metric that reads queue depth misses a structure. Both recur wherever someone reaches for the raw client.</p>
+<p>Raw Redis calls scattered across the codebase break two invariants at once. <strong>Atomicity</strong>: a pop-and-move done as <code>ZPOPMIN</code> + <code>LPUSH</code> (two commands) <strong>silently loses a job</strong> if the worker crashes between them. <strong>Schema</strong>: key names drift from the declared set, so a metric that reads queue depth misses a structure. Both recur wherever someone reaches for the raw client.</p>
 <h3>Applicability</h3>
-<ul><li><strong>A single module owning Redis</strong> and a <strong>declared key schema</strong> it is the source of truth for.</li><li><strong>Atomic operation primitives</strong> (Lua / `RPOPLPUSH`) so pop-and-move can't be two commands.</li><li><strong>A sole-seam lint</strong> banning the raw client elsewhere.</li></ul>
+<ul><li><strong>A single module owning Redis</strong> and a <strong>declared key schema</strong> it is the source of truth for.</li><li><strong>Atomic operation primitives</strong> (Lua / <code>RPOPLPUSH</code>) so pop-and-move can't be two commands.</li><li><strong>A sole-seam lint</strong> banning the raw client elsewhere.</li></ul>
 <h3>Structure</h3>
 <p>Every caller reaches the store through the one dispatch module. That module declares the key schema and encodes atomic pop-and-move. A sole-seam lint bans the raw client anywhere else.</p>
 <pre class="mermaid">flowchart LR
@@ -318,16 +326,16 @@ class DispatchSeam:
 <h3>Consequences</h3>
 <ul><li><strong>All Redis funnels through one seam</strong> — a coupling point that must cover every queue operation.</li><li><strong>Transitional debt.</strong> The flat re-export shim for the key schema is a name to eventually retire.</li><li><strong>The seam must keep pace</strong> with new queue structures, or callers are tempted back to raw access.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The dispatch module (sole raw-Redis seam) + the queue-key schema.</li><li>Atomic pop-and-move (Lua `EVAL` for ZSETs, `RPOPLPUSH` for lists).</li><li>The sole-raw-Redis-seam lint.</li></ul>
+<ul><li>The dispatch module (sole raw-Redis seam) + the queue-key schema.</li><li>Atomic pop-and-move (Lua <code>EVAL</code> for ZSETs, <code>RPOPLPUSH</code> for lists).</li><li>The sole-raw-Redis-seam lint.</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><em>See also (sibling)</em> — <a href="../product/canonical-models-and-seams/service-client.html">service-client</a>: the same `bounded-service` pattern for the cross-service-HTTP boundary: one lint-enforced seam owning a dangerous class of raw calls.</li><li><strong>Counterpart</strong> — the sole-seam lint (hard) that bans raw Redis outside the dispatch module.</li></ul>
+<ul><li><em>See also (sibling)</em> — <a href="../product/canonical-models-and-seams/service-client.html">service-client</a>: the same <code>bounded-service</code> pattern for the cross-service-HTTP boundary: one lint-enforced seam owning a dangerous class of raw calls.</li><li><strong>Counterpart</strong> — the sole-seam lint (hard) that bans raw Redis outside the dispatch module.</li></ul>
 <h2 id="service-client">ServiceClient (typed cross-service seam)</h2>
-<p><strong>Intent</strong> — Route all cross-service HTTP through one typed client whose `BinaryIO` signature makes the file-path-over-wire bug class <em>impossible at the type level</em>; direct `requests.post` against another service is banned.</p>
+<p><strong>Intent</strong> — Route all cross-service HTTP through one typed client whose <code>BinaryIO</code> signature makes the file-path-over-wire bug class <em>impossible at the type level</em>; direct <code>requests.post</code> against another service is banned.</p>
 <p><em>Projected from the catalogue entry <a href="../product/canonical-models-and-seams/service-client.html">canonical-models-and-seams / ServiceClient (typed cross-service seam)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
-<p>Cross-service calls that pass a <strong>file path over the wire</strong> (instead of the file's <em>bytes</em>) are a recurring bug: the receiving service, in a different container, cannot open a path from the sender's filesystem. Ad hoc `requests.post` at each call site lets this exact type-confusion recur wherever someone reaches for the raw HTTP library.</p>
+<p>Cross-service calls that pass a <strong>file path over the wire</strong> (instead of the file's <em>bytes</em>) are a recurring bug: the receiving service, in a different container, cannot open a path from the sender's filesystem. Ad hoc <code>requests.post</code> at each call site lets this exact type-confusion recur wherever someone reaches for the raw HTTP library.</p>
 <h3>Applicability</h3>
-<ul><li><strong>A typed client whose signature encodes the invariant</strong> (`BinaryIO`, not `str`): the type <em>is</em> the control.</li><li><strong>A sole-seam lint</strong> banning the raw HTTP call to other services.</li><li><strong>Migration</strong> of existing cross-service calls onto the client.</li></ul>
+<ul><li><strong>A typed client whose signature encodes the invariant</strong> (<code>BinaryIO</code>, not <code>str</code>): the type <em>is</em> the control.</li><li><strong>A sole-seam lint</strong> banning the raw HTTP call to other services.</li><li><strong>Migration</strong> of existing cross-service calls onto the client.</li></ul>
 <h3>Structure</h3>
 <p>Every cross-service call goes through the one typed client, whose file argument is a byte stream, not a path. The client posts bytes to the peer service. A lint bans the raw HTTP call; the type refuses the path at compile time.</p>
 <pre class="mermaid">flowchart LR
@@ -338,7 +346,7 @@ class DispatchSeam:
   L{{Sole-seam lint}} -. fails build .-&gt; C1</pre>
 <p><em>Accessible description: two callers reach a peer service only through one typed client, which posts bytes over the wire. A dashed edge marks a caller making a raw HTTP call directly; the sole-seam lint fails the build on it, and the client's byte-stream signature makes passing a path a type error.</em></p>
 <h3>Sample Code</h3>
-<p>The pattern makes the bug unrepresentable by <em>typing it away</em>. The client's `post_file` takes a byte stream — an open file handle — not a string path. A caller who passes a path gets a type error at the call site, before any request is made. The lint is secondary: it only stops callers from bypassing the client and hand-rolling the raw request.</p>
+<p>The pattern makes the bug unrepresentable by <em>typing it away</em>. The client's <code>post_file</code> takes a byte stream — an open file handle — not a string path. A caller who passes a path gets a type error at the call site, before any request is made. The lint is secondary: it only stops callers from bypassing the client and hand-rolling the raw request.</p>
 <pre><code>from typing import BinaryIO
 
 class ServiceClient:
@@ -362,13 +370,13 @@ with open("/tmp/chunk.pdf", "rb") as fh:
 <h3>Consequences</h3>
 <ul><li><strong>All cross-service calls funnel through one client</strong> — a coupling point that must cover every HTTP shape callers need.</li><li><strong>Slightly more ceremony.</strong> Callers must open a file handle rather than pass a path string (the point, but it is friction).</li><li><strong>The seam is a bottleneck for evolution.</strong> New call patterns require extending the one client.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`ServiceClient.post_file(BinaryIO)`: the typed cross-service seam.</li><li>The IPC sole-seam lint (the one cross-service-HTTP surface for the web tier).</li><li>The file-path-over-wire bug class the `BinaryIO` signature eliminates.</li></ul>
+<ul><li><code>ServiceClient.post_file(BinaryIO)</code>: the typed cross-service seam.</li><li>The IPC sole-seam lint (the one cross-service-HTTP surface for the web tier).</li><li>The file-path-over-wire bug class the <code>BinaryIO</code> signature eliminates.</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><em>See also (sibling)</em> — <a href="../product/canonical-models-and-seams/raw-redis-seam.html">raw-redis-seam</a>: the same `bounded-service` pattern for the Redis boundary: one lint-enforced seam owning a whole class of dangerous raw calls.</li><li><strong>Counterpart</strong> — the sole-seam lint (hard) that bans the raw `requests.post` alternative.</li></ul>
+<ul><li><em>See also (sibling)</em> — <a href="../product/canonical-models-and-seams/raw-redis-seam.html">raw-redis-seam</a>: the same <code>bounded-service</code> pattern for the Redis boundary: one lint-enforced seam owning a whole class of dangerous raw calls.</li><li><strong>Counterpart</strong> — the sole-seam lint (hard) that bans the raw <code>requests.post</code> alternative.</li></ul>
 <h1>provenance-and-attribution</h1>
-<h2 id="a11y-prefix">`a11y_` prefix convention</h2>
-<p><strong>Intent</strong> — A reserved naming prefix that marks tool-inserted, invisible-to-author artifacts (user-visible insertions keep ordinary names), so inserted content is distinguishable from authored content and a validator can cover it by prefix (our instance: the `a11y_` prefix + `InsertedContentValidator`).</p>
-<p><em>Projected from the catalogue entry <a href="../product/provenance-and-attribution/a11y-prefix.html">provenance-and-attribution / `a11y_` prefix convention</a>. Regenerated at build time.</em></p>
+<h2 id="a11y-prefix"><code>a11y_</code> prefix convention</h2>
+<p><strong>Intent</strong> — A reserved naming prefix that marks tool-inserted, invisible-to-author artifacts (user-visible insertions keep ordinary names), so inserted content is distinguishable from authored content and a validator can cover it by prefix (our instance: the <code>a11y_</code> prefix + <code>InsertedContentValidator</code>).</p>
+<p><em>Projected from the catalogue entry <a href="../product/provenance-and-attribution/a11y-prefix.html">provenance-and-attribution / <code>a11y_</code> prefix convention</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>The tool <em>inserts</em> content: alt text, tags, off-canvas scaffolding. Mixing tool-inserted content with author-written content risks two failures: presenting invisible scaffolding <em>as if</em> the user wrote it, or an insert that isn't tracked and so isn't validated. The failure is <em>untracked or mislabelled inserted content</em>, and it recurs per inserter and per insertion site.</p>
 <h3>Applicability</h3>
@@ -402,14 +410,14 @@ def validate_inserts(reg: InsertRegistry) -&gt; list[str]:
     return [f"insert '{r['name']}' is invisible but unprefixed"
             for r in reg.all() if r["kind"] == "invisible" and not r["name"].startswith(PREFIX)]</code></pre>
 <h3>Consequences</h3>
-<ul><li><strong>Adherence is partly discipline.</strong> A mis-named or unregistered insert escapes coverage until caught.</li><li><strong>Spec-mandated names are exceptions</strong> to the prefix rule (by necessity), a small carve-out to track.</li><li><strong>Every inserter must call `registry.Record`</strong> — the auto-coverage only works if the registration habit holds.</li></ul>
+<ul><li><strong>Adherence is partly discipline.</strong> A mis-named or unregistered insert escapes coverage until caught.</li><li><strong>Spec-mandated names are exceptions</strong> to the prefix rule (by necessity), a small carve-out to track.</li><li><strong>Every inserter must call <code>registry.Record</code></strong> — the auto-coverage only works if the registration habit holds.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The `a11y_` prefix convention and its per-site corollaries.</li><li>`registry.Record(...)` + the `InsertedContentValidator` (automatic coverage of registered inserts).</li></ul>
+<ul><li>The <code>a11y_</code> prefix convention and its per-site corollaries.</li><li><code>registry.Record(...)</code> + the <code>InsertedContentValidator</code> (automatic coverage of registered inserts).</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><strong>Consumer</strong> — the `InsertedContentValidator` reads the registered inserts (naming + registration are what it depends on).</li><li><em>See also (sibling)</em> — <a href="../product/repair-vocabulary/remediation-verbs.html">remediation-verbs</a>: both bound the remediator's move-space; this one bounds how <em>inserted content</em> is named and tracked.</li></ul>
-<h2 id="derive-changelog">`derive-changelog` (reconstruct mutations)</h2>
+<ul><li><strong>Consumer</strong> — the <code>InsertedContentValidator</code> reads the registered inserts (naming + registration are what it depends on).</li><li><em>See also (sibling)</em> — <a href="../product/repair-vocabulary/remediation-verbs.html">remediation-verbs</a>: both bound the remediator's move-space; this one bounds how <em>inserted content</em> is named and tracked.</li></ul>
+<h2 id="derive-changelog"><code>derive-changelog</code> (reconstruct mutations)</h2>
 <p><strong>Intent</strong> — A command that reconstructs the document's mutation history from the embedded stamp registry, turning the <a href="../product/provenance-and-attribution/mutator-stamps.html">attribution stamps</a> into a readable, attributed ChangeLog after the fact.</p>
-<p><em>Projected from the catalogue entry <a href="../product/provenance-and-attribution/derive-changelog.html">provenance-and-attribution / `derive-changelog` (reconstruct mutations)</a>. Regenerated at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../product/provenance-and-attribution/derive-changelog.html">provenance-and-attribution / <code>derive-changelog</code> (reconstruct mutations)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>The stamps are embedded in the artifact, but embedded data isn't <em>useful</em> until it can be read back into a coherent history. Without a reader, attribution is present but inert — you have the evidence and no way to assemble it into "pass X made change Y." The failure is <em>attribution that exists but can't be consumed</em>, which shows up exactly when someone needs the history for RCA or user transparency.</p>
 <h3>Applicability</h3>
@@ -443,16 +451,16 @@ def derive_changelog(read_stamps) -&gt; str:
 <h3>Consequences</h3>
 <ul><li><strong>Only as complete as the stamps.</strong> An attribution gap (which the <a href="../product/provenance-and-attribution/f10-wiring-lint.html">F10 lint</a> exists to prevent) becomes a hole in the reconstructed history.</li><li><strong>Schema-coupled.</strong> It depends on the stamp registry's shape staying stable across versions.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The `derive-changelog` command (stamp registry → ChangeLog JSON, per pass, with visibility).</li></ul>
+<ul><li>The <code>derive-changelog</code> command (stamp registry → ChangeLog JSON, per pass, with visibility).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Consumer</strong> — reads <a href="../product/provenance-and-attribution/mutator-stamps.html">mutator-stamps</a>: it is the read side of the attribution substrate.</li><li><strong>Enabler</strong> — of RCA and user-facing change transparency (a human reads the ChangeLog).</li><li><em>See also (counterpart)</em> — <a href="../product/provenance-and-attribution/f10-wiring-lint.html">f10-wiring-lint</a> guarantees the stamps this reader depends on are complete.</li></ul>
 <h2 id="f10-wiring-lint">F10 mutator-stamp-wiring lint</h2>
-<p><strong>Intent</strong> — A lint that fails the build if <em>any</em> mutator verb in the Model `Primitives` lacks stamp wiring, so a new mutator cannot land producing unattributable mutations.</p>
+<p><strong>Intent</strong> — A lint that fails the build if <em>any</em> mutator verb in the Model <code>Primitives</code> lacks stamp wiring, so a new mutator cannot land producing unattributable mutations.</p>
 <p><em>Projected from the catalogue entry <a href="../product/provenance-and-attribution/f10-wiring-lint.html">provenance-and-attribution / F10 mutator-stamp-wiring lint</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p><a href="../product/provenance-and-attribution/mutator-stamps.html">Attribution stamps</a> only work if <strong>every</strong> mutator stamps. Add one new verb without wiring and it silently produces unattributable mutations, a hole in the audit trail that no one sees until an RCA hits it and finds no stamp. The failure is <em>an unstamped mutator (an attribution gap)</em>, and it recurs when a new verb is added — usually under time pressure, when "remember to stamp" is most likely to be forgotten.</p>
 <h3>Applicability</h3>
-<ul><li><strong>A detectable "mutator verb" pattern</strong> in the `Primitives` layer.</li><li><strong>A detectable stamp-wiring call</strong> so the lint can tell wired from unwired.</li><li><strong>A lint over the Primitives directories</strong> run in the gates.</li></ul>
+<ul><li><strong>A detectable "mutator verb" pattern</strong> in the <code>Primitives</code> layer.</li><li><strong>A detectable stamp-wiring call</strong> so the lint can tell wired from unwired.</li><li><strong>A lint over the Primitives directories</strong> run in the gates.</li></ul>
 <h3>Structure</h3>
 <p>The lint enumerates every mutator verb in the primitive layer and checks each for the stamp-wiring call. A wired verb passes; an unwired one fails the build.</p>
 <pre class="mermaid">flowchart TD
@@ -528,9 +536,9 @@ def strip_for_delivery(artifact) -&gt; None:
     # remove scaffolding before the document reaches the user
     artifact.drop_metadata(where=lambda m: m.get("visibility") == "debug")</code></pre>
 <h3>Consequences</h3>
-<ul><li><strong>Document overhead.</strong> Stamps add content; `Debug` stamps are stripped before delivery to avoid shipping scaffolding.</li><li><strong>Helper-only discipline.</strong> Bypassing the helper produces an un-uniform stamp; it is lint-guarded.</li><li><strong>Every new verb must wire it</strong> — the cost that the F10 lint turns from "remember to" into "must."</li></ul>
+<ul><li><strong>Document overhead.</strong> Stamps add content; <code>Debug</code> stamps are stripped before delivery to avoid shipping scaffolding.</li><li><strong>Helper-only discipline.</strong> Bypassing the helper produces an un-uniform stamp; it is lint-guarded.</li><li><strong>Every new verb must wire it</strong> — the cost that the F10 lint turns from "remember to" into "must."</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`MutatorStampHelper.WriteStamp` (PDF); `OoxmlAttributionRegistry.AppendEntry` (OOXML).</li><li>The `Debug` / `Preserved` visibility model; `strip-attribution` before delivery.</li></ul>
+<ul><li><code>MutatorStampHelper.WriteStamp</code> (PDF); <code>OoxmlAttributionRegistry.AppendEntry</code> (OOXML).</li><li>The <code>Debug</code> / <code>Preserved</code> visibility model; <code>strip-attribution</code> before delivery.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Counterpart</strong> — <a href="../product/provenance-and-attribution/f10-wiring-lint.html">f10-wiring-lint</a> (hard) guarantees <em>every</em> mutator verb stamps; it is the counted control that makes this audit-trail complete.</li><li><strong>Consumer</strong> — <a href="../product/provenance-and-attribution/derive-changelog.html">derive-changelog</a> reads these stamps to reconstruct the history.</li><li><strong>Enabler</strong> — the closed <a href="../product/repair-vocabulary/remediation-verbs.html">remediation-verb set</a> makes "stamp every verb" a finite, achievable requirement.</li></ul>
 <h1>regression-tests</h1>
@@ -571,7 +579,7 @@ def check(test_path: str, test_source: str, read_source) -&gt; list[str]:
 <h3>Consequences</h3>
 <ul><li><strong>Trailer maintenance.</strong> Editing a cited source obliges a regen, a real if small per-edit cost.</li><li><strong>Low defect yield by design.</strong> These are characterization pins; a near-zero find rate is the success condition, not a sign they aren't working.</li><li><strong>Freshness is informational only</strong> — the fresh lint never blocks, so a stale trailer can linger.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The doc-derived test files + the `DDT-audited` / `DDT-source` / `DDT-pins` trailer.</li><li>The trailer regenerator; the trailer-present lint (BLOCKING) + the trailer-freshness lint (WARNING).</li></ul>
+<ul><li>The doc-derived test files + the <code>DDT-audited</code> / <code>DDT-source</code> / <code>DDT-pins</code> trailer.</li><li>The trailer regenerator; the trailer-present lint (BLOCKING) + the trailer-freshness lint (WARNING).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../product/regression-tests/test-onion-tiers.html">test-onion-tiers</a>, <a href="../product/regression-tests/property-tests.html">property-tests</a>: the other behaviour-pinning bodies.</li><li><strong>Counterpart</strong> — the freshness lint detects drift of the test from its cited source (keeps the provenance honest).</li></ul>
 <h2 id="fuzz-campaigns">Fuzz campaigns (+ auto-coverage)</h2>
@@ -611,7 +619,7 @@ def campaign(run_tool, seed_corpus: list[bytes], iterations: int = 10_000) -&gt;
 <h3>Consequences</h3>
 <ul><li><strong>Compute-heavy.</strong> Campaigns cost real time; coverage is tracked to know when they've saturated.</li><li><strong>Baseline maintenance.</strong> The coverage baseline must be re-based only on intentional coverage-shape changes.</li><li><strong>Seed-fixing is the anti-pattern</strong> the RCA discipline exists to prevent — fixing only the failing input leaves the spec-class open.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The `<em>Fuzz</em>` / `<em>Campaign</em>` harnesses + auto-coverage collection and aggregation.</li><li>The fix-to-the-stable-spec-point RCA discipline.</li></ul>
+<ul><li>The <code>*Fuzz*</code> / <code>*Campaign*</code> harnesses + auto-coverage collection and aggregation.</li><li>The fix-to-the-stable-spec-point RCA discipline.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../product/regression-tests/property-tests.html">property-tests</a> (structured generation), <a href="../product/regression-tests/test-onion-tiers.html">test-onion-tiers</a> (example tiers).</li><li><strong>Counterpart</strong> — the coverage baseline tracks what the campaign reached, keeping "we fuzzed it" honest.</li></ul>
 <h2 id="property-tests">FsCheck property tests</h2>
@@ -684,7 +692,7 @@ def run(tests: list[dict], tier: str) -&gt; list[dict]:
 <h3>Consequences</h3>
 <ul><li><strong>Tier assignment is judgment.</strong> A mis-tiered slow test in Lite erodes the whole tier's speed promise.</li><li><strong>Escalation depends on discipline.</strong> The rules only help if agents actually run the full tier when they touch a named surface.</li><li><strong>The full tier is still ~4min</strong> — the deliberate price of the deploy gate.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The `Suite=Smoke` / `Suite=Lite` / targeted / `Format=` full tiers.</li><li>The 1-second rule for new pre-deploy tests; the Tier-3 escalation surfaces.</li></ul>
+<ul><li>The <code>Suite=Smoke</code> / <code>Suite=Lite</code> / targeted / <code>Format=</code> full tiers.</li><li>The 1-second rule for new pre-deploy tests; the Tier-3 escalation surfaces.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../product/regression-tests/property-tests.html">property-tests</a>, <a href="../product/regression-tests/fuzz-campaigns.html">fuzz-campaigns</a>, <a href="../product/regression-tests/ddt-pin-trailers.html">ddt-pin-trailers</a>: the other behaviour-pinning bodies in this family.</li><li><strong>Layer</strong> — the full tier gates <a href="../agent/gates-and-merge-train/staged-deploy-gates.html">staged-deploy-gates</a> (agent side): the deploy stair runs this suite.</li></ul>
 <h1>repair-vocabulary</h1>
@@ -731,16 +739,16 @@ def apply(source: str) -&gt; str:
 <h3>Consequences</h3>
 <ul><li><strong>Writing the transformer is upfront cost.</strong> It pays off only at scale, which the threshold encodes.</li><li><strong>Only for deterministic shapes.</strong> A backlog needing per-site judgment still goes to a per-site agent, not a codemod.</li><li><strong>Skipping the lint stanza is a scoped hole</strong> — justified by the transform's mechanical nature, marker-audited.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The N≳50 codemod threshold; AST transformers such as an inline-import hoisting codemod.</li><li>The `pre-commit-skip` for codemod-class waves; codemods retained as deprecated exemplars.</li></ul>
+<ul><li>The N≳50 codemod threshold; AST transformers such as an inline-import hoisting codemod.</li><li>The <code>pre-commit-skip</code> for codemod-class waves; codemods retained as deprecated exemplars.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../product/repair-vocabulary/typed-categories.html">typed-categories</a>, <a href="../product/repair-vocabulary/remediation-verbs.html">remediation-verbs</a>: the other bounded-move controls; this one bounds <em>how a mechanical change is executed</em>.</li><li><em>See also (cross-target)</em> — this is the product-side face of the same codemod-first discipline the agent fleet uses for its own mechanical lint backlogs.</li></ul>
 <h2 id="remediation-verbs">Closed remediation-verb sets</h2>
-<p><strong>Intent</strong> — Route the remediator's mutations through a <em>bounded, named set</em> of typed verbs (a closed typed-mutator layer) rather than free-form edits, so the move-space is enumerable and every move can be stamped, validated, and policy-checked (our instance: the document models' `Primitives`).</p>
+<p><strong>Intent</strong> — Route the remediator's mutations through a <em>bounded, named set</em> of typed verbs (a closed typed-mutator layer) rather than free-form edits, so the move-space is enumerable and every move can be stamped, validated, and policy-checked (our instance: the document models' <code>Primitives</code>).</p>
 <p><em>Projected from the catalogue entry <a href="../product/repair-vocabulary/remediation-verbs.html">repair-vocabulary / Closed remediation-verb sets</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Free-form document editing is <em>unbounded</em>: any pass could do anything, and an unbounded edit cannot be stamped, validated, or checked against policy as a set. The failure is <em>an unbounded mutation that is un-attributed, un-validated, or off-policy</em>, and it recurs per pass unless the move-space itself is constrained.</p>
 <h3>Applicability</h3>
-<ul><li><strong>A typed mutator layer</strong> (the document models' `Primitives`) that all mutation routes through.</li><li><strong>A discipline (and lints) that no change happens outside the verb set.</strong></li><li><strong>The stamp/validate wiring</strong> each verb carries.</li></ul>
+<ul><li><strong>A typed mutator layer</strong> (the document models' <code>Primitives</code>) that all mutation routes through.</li><li><strong>A discipline (and lints) that no change happens outside the verb set.</strong></li><li><strong>The stamp/validate wiring</strong> each verb carries.</li></ul>
 <h3>Structure</h3>
 <p>Every pass mutates only through the closed verb set; nothing edits the document outside it. Each verb wires its stamp and, if it inserts, registers the insert — so the outcome is attributed and validated.</p>
 <pre class="mermaid">flowchart LR
@@ -778,14 +786,14 @@ class Remediator:
 <h3>Consequences</h3>
 <ul><li><strong>A needed action absent from the set forces adding a verb</strong> — friction, but the intended kind: it keeps the space closed and every move governed.</li><li><strong>The verb set is a maintenance surface</strong> that grows with remediation capability.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The `Primitives` mutator verb sets across the document models; the masked-pass architecture.</li><li>Each verb's F10 stamp wiring and inserted-content registration.</li></ul>
+<ul><li>The <code>Primitives</code> mutator verb sets across the document models; the masked-pass architecture.</li><li>Each verb's F10 stamp wiring and inserted-content registration.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Enabler</strong> — of <a href="../product/provenance-and-attribution/mutator-stamps.html">mutator-stamps</a> and <a href="../product/validation-and-conformance/content-validator.html">content-validator</a>: a <em>bounded</em> move-space makes "stamp every move / validate every outcome" finite and achievable.</li><li><em>See also (sibling)</em> — <a href="../product/repair-vocabulary/typed-categories.html">typed-categories</a>, <a href="../product/repair-vocabulary/codemod-first.html">codemod-first</a>.</li></ul>
-<h2 id="typed-categories">Typed `ViolationCategory` / `FailureCategory` enums</h2>
+<h2 id="typed-categories">Typed <code>ViolationCategory</code> / <code>FailureCategory</code> enums</h2>
 <p><strong>Intent</strong> — Replace free-form failure strings with typed enums, so the categorical move-space is a closed, enumerable set that the compiler and lints can check for exhaustive handling.</p>
-<p><em>Projected from the catalogue entry <a href="../product/repair-vocabulary/typed-categories.html">repair-vocabulary / Typed `ViolationCategory` / `FailureCategory` enums</a>. Regenerated at build time.</em></p>
+<p><em>Projected from the catalogue entry <a href="../product/repair-vocabulary/typed-categories.html">repair-vocabulary / Typed <code>ViolationCategory</code> / <code>FailureCategory</code> enums</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
-<p>Bare failure strings (`"timeout"`, `"corrupt"`, `"rate_limit"`) are typo-prone, un-enumerable, and let a `switch` silently miss a case. A typo compiles and mis-routes; a new category isn't forced into every handler; and you can't even ask "are all categories handled?" The failure is <em>an unhandled or mistyped category → silent misbehaviour</em>, recurring at every place a category is produced or consumed.</p>
+<p>Bare failure strings (<code>"timeout"</code>, <code>"corrupt"</code>, <code>"rate_limit"</code>) are typo-prone, un-enumerable, and let a <code>switch</code> silently miss a case. A typo compiles and mis-routes; a new category isn't forced into every handler; and you can't even ask "are all categories handled?" The failure is <em>an unhandled or mistyped category → silent misbehaviour</em>, recurring at every place a category is produced or consumed.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A closed, identifiable category set.</strong> The space must actually be enumerable.</li><li><strong>The enums</strong>, and callers switched from strings to enum values.</li><li><strong>Boundary mapping</strong> from external/serialized strings into the enum.</li></ul>
 <h3>Structure</h3>
@@ -826,7 +834,7 @@ def handle(cat: FailureCategory) -&gt; str:
 <h3>Consequences</h3>
 <ul><li><strong>Adding a category touches every handler</strong> — which is the point (it forces handling), but it is real work.</li><li><strong>Boundary translation.</strong> External strings (LLM output, wire formats) still arrive as strings and must be mapped in at a controlled seam, but a seam nonetheless.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`ViolationCategory` / `FailureCategory` enums in place of bare failure strings.</li><li>Enum-value comparison instead of regex-on-strings (the regex-usage discipline).</li></ul>
+<ul><li><code>ViolationCategory</code> / <code>FailureCategory</code> enums in place of bare failure strings.</li><li>Enum-value comparison instead of regex-on-strings (the regex-usage discipline).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../product/repair-vocabulary/remediation-verbs.html">remediation-verbs</a>, <a href="../product/repair-vocabulary/codemod-first.html">codemod-first</a>: the other bounded-move-space controls.</li><li><em>See also (cross-target)</em> — the agent side's const-string topic registry (<a href="../agent/lifecycle-and-observability/typed-event-bus.html">typed-event-bus</a>) is the same "typed namespace over free-form strings" move for event topics.</li><li><em>Enables</em> — typing a failure/violation space is the <strong>precondition</strong> for <em>error-path enumeration</em> (the testing strategy in the method's stance): you can only walk "every error edge" and ask "did we cover them all?" when the edges are a finite, named set, not ad-hoc strings.</li></ul>
 <h1>validation-and-conformance</h1>
@@ -834,7 +842,7 @@ def handle(cat: FailureCategory) -&gt; str:
 <p><strong>Intent</strong> — Lints that assert two or more independent sources <em>agree</em> (config record ↔ sample JSON, registry ↔ its consumers, enum ↔ its uses), catching drift <em>between</em> sources that each look valid on their own.</p>
 <p><em>Projected from the catalogue entry <a href="../product/validation-and-conformance/coherence-lints.html">validation-and-conformance / Cross-source coherence lints</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
-<p>Some invariants live <em>between</em> files: a config record and its sample JSON must list the same fields; a registry and its consumers must share the same keys; an enum and its handlers must stay in step. Each file is individually valid, so the bug is invisible per-file, but together they disagree. The canonical case: a new field on a config record that is <em>missing from the sample</em> defaults to `false` at deserialization and <strong>silently collapses batching to single-call in prod.</strong> The failure is <em>cross-source drift</em>, recurring whenever paired sources evolve independently.</p>
+<p>Some invariants live <em>between</em> files: a config record and its sample JSON must list the same fields; a registry and its consumers must share the same keys; an enum and its handlers must stay in step. Each file is individually valid, so the bug is invisible per-file, but together they disagree. The canonical case: a new field on a config record that is <em>missing from the sample</em> defaults to <code>false</code> at deserialization and <strong>silently collapses batching to single-call in prod.</strong> The failure is <em>cross-source drift</em>, recurring whenever paired sources evolve independently.</p>
 <h3>Applicability</h3>
 <ul><li><strong>The paired sources are both machine-readable</strong> at lint-time.</li><li><strong>A declared consistency relation</strong> (subset, equality, one-to-one) between them.</li><li><strong>A lint that reads both</strong> and knows how to diff them.</li></ul>
 <h3>Structure</h3>
@@ -865,11 +873,11 @@ if __name__ == "__main__":
 <h3>Consequences</h3>
 <ul><li><strong>The relation must be specified correctly</strong> — a wrong relation produces false failures or false confidence.</li><li><strong>Lint-time coupling.</strong> Reading several sources at once couples the lint to all of their shapes.</li><li><strong>Pairs must be registered</strong> — an unpaired source that <em>should</em> agree with another isn't checked until someone declares the relation.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>The config-field ⊆ sample lints and the `ConfigDeserialization_*` companion tests.</li><li>Registry-agreement lints (a registry and its consumers must list the same keys).</li><li>The meta-file consistency discipline (read the meta-file; never embed a snapshot).</li></ul>
+<ul><li>The config-field ⊆ sample lints and the <code>ConfigDeserialization_*</code> companion tests.</li><li>Registry-agreement lints (a registry and its consumers must list the same keys).</li><li>The meta-file consistency discipline (read the meta-file; never embed a snapshot).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../product/validation-and-conformance/semantic-lints.html">semantic-lints</a>: per-source structural lints; this family is the <em>relational</em> complement.</li><li><em>See also (cross-target)</em> — <a href="../models-bridge/system-models/meta-model-consumption.html">meta-model-consumption</a>: the agent side's "read the substrate, don't hardcode." Coherence lints enforce that two substrates <em>stay</em> consistent.</li><li><strong>Layer</strong> — with the other <a href="../product/validation-and-conformance/content-validator.html">validation-and-conformance</a> checks over the artifact.</li></ul>
 <h2 id="content-validator">ContentValidator (input ⊆ output fidelity)</h2>
-<p><strong>Intent</strong> — A deterministic gate asserting that every piece of the user's original content survives remediation (<em>input content ⊆ output content</em>), run in production, with a per-pass variant in staging that pinpoints which pass dropped content (our instance: the `ContentValidator` fidelity gate).</p>
+<p><strong>Intent</strong> — A deterministic gate asserting that every piece of the user's original content survives remediation (<em>input content ⊆ output content</em>), run in production, with a per-pass variant in staging that pinpoints which pass dropped content (our instance: the <code>ContentValidator</code> fidelity gate).</p>
 <p><em>Projected from the catalogue entry <a href="../product/validation-and-conformance/content-validator.html">validation-and-conformance / ContentValidator (input ⊆ output fidelity)</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
 <p>Remediation <em>mutates</em> the document across many passes and four formats. A bug in any pass could <strong>silently drop or alter user content</strong>: a deleted paragraph, a mangled table, a lost caption the author never sees go. For a fidelity-critical tool that is the worst possible outcome: the output looks fine and quietly isn't what the author wrote. The failure recurs on every remediation pass.</p>
@@ -905,14 +913,14 @@ def run_job(extract, produce_output, source):
 <h3>Consequences</h3>
 <ul><li><strong>Everything rests on the extractor.</strong> A lossy or over-eager content extractor produces false positives (blocks good output) or false negatives (misses a real drop).</li><li><strong>Subset semantics are subtle.</strong> Reordering, whitespace, and reformatting must be normalized or the gate cries wolf.</li><li><strong>It runs on every job</strong> — a real but accepted cost for a fidelity guarantee.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`ContentValidator` — the production input-⊆-output fidelity gate.</li><li>The staging per-pass variant (a dedicated fidelity marker on stdout localizes the offending pass).</li><li>The accessibility-remediation policy it enforces (never drop content the user wrote).</li></ul>
+<ul><li><code>ContentValidator</code> — the production input-⊆-output fidelity gate.</li><li>The staging per-pass variant (a dedicated fidelity marker on stdout localizes the offending pass).</li><li>The accessibility-remediation policy it enforces (never drop content the user wrote).</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><strong>Layer</strong> — with <a href="../product/validation-and-conformance/standards-rule-engine.html">standards-rule-engine</a>: both are product gates over the artifact, fidelity (nothing lost) and conformance (standards met).</li><li><strong>Counterpart</strong> — the per-pass staging variant localizes what the prod gate only detects.</li><li><em>See also (sibling)</em> — <a href="../product/validation-and-conformance/coherence-lints.html">coherence-lints</a>: the other deterministic checks in this family.</li></ul>
 <h2 id="semantic-lints">Blocking semantic lints</h2>
-<p><strong>Intent</strong> — A fleet of blocking semantic lints over the tool's <em>own source</em> (banned APIs, silent-catch bans, `Console.WriteLine`-in-prod, typed-seam violations) that fail the build on domain-invariant violations the compiler and review can't catch.</p>
+<p><strong>Intent</strong> — A fleet of blocking semantic lints over the tool's <em>own source</em> (banned APIs, silent-catch bans, <code>Console.WriteLine</code>-in-prod, typed-seam violations) that fail the build on domain-invariant violations the compiler and review can't catch.</p>
 <p><em>Projected from the catalogue entry <a href="../product/validation-and-conformance/semantic-lints.html">validation-and-conformance / Blocking semantic lints</a>. Regenerated at build time.</em></p>
 <h3>Motivation</h3>
-<p>The codebase carries hundreds of structural invariants: no silent `catch`, no banned API in prod, every cross-boundary call through its seam. Code review cannot hold hundreds of invariants in a reviewer's head, and the compiler enforces none of them (a silent catch, a banned API, a raw `Console.WriteLine` all compile fine). The failure is <em>structural drift that quietly reintroduces a defect class</em>, and it recurs continuously as code is written.</p>
+<p>The codebase carries hundreds of structural invariants: no silent <code>catch</code>, no banned API in prod, every cross-boundary call through its seam. Code review cannot hold hundreds of invariants in a reviewer's head, and the compiler enforces none of them (a silent catch, a banned API, a raw <code>Console.WriteLine</code> all compile fine). The failure is <em>structural drift that quietly reintroduces a defect class</em>, and it recurs continuously as code is written.</p>
 <h3>Applicability</h3>
 <ul><li><strong>A lint framework</strong> with per-lint scope + severity declaration.</li><li><strong>The invariants made mechanically detectable</strong> — a rule you can't express as a check can't join.</li><li><strong>A runner wired into the gates</strong>, and a scoped escape hatch for legitimate exceptions.</li></ul>
 <h3>Structure</h3>
@@ -924,7 +932,7 @@ def run_job(extract, produce_output, source):
   Noqa[/Scoped suppression/] -.-&gt;|reason-bearing escape| Lint</pre>
 <p><em>Accessible description: a semantic lint scans the source tree for its invariant. A violation blocks the build; a clean scan lets it proceed. A scoped, reason-bearing suppression comment escapes a legitimate exception on a single line.</em></p>
 <h3>Sample Code</h3>
-<p>A semantic lint encodes a domain rule the compiler can't and scans for it. This one bans a silent `except` — a `catch` that neither logs, re-raises, nor carries a justifying comment — because a silently swallowed error turns a fail-loud bug into a fail-quiet one. A reason-bearing suppression comment escapes a deliberate swallow.</p>
+<p>A semantic lint encodes a domain rule the compiler can't and scans for it. This one bans a silent <code>except</code> — a <code>catch</code> that neither logs, re-raises, nor carries a justifying comment — because a silently swallowed error turns a fail-loud bug into a fail-quiet one. A reason-bearing suppression comment escapes a deliberate swallow.</p>
 <pre><code>import ast, sys
 
 def lint(path: str, source: str, lines: list[str]) -&gt; list[str]:
@@ -946,9 +954,9 @@ if __name__ == "__main__":
         hits += lint(p, text, text.splitlines())
     print("\n".join(hits)); sys.exit(1 if hits else 0)</code></pre>
 <h3>Consequences</h3>
-<ul><li><strong>A large maintenance surface.</strong> Hundreds of lints are hundreds of things to keep current: the "500+ lints" magnitude the support-apparatus ratio counts.</li><li><strong>False positives need escapes.</strong> A too-strict lint blocks legitimate code until a `noqa` is added, a small, audited hole.</li><li><strong>Floor vs fleet.</strong> The custom fleet only earns its keep atop the commodity analysis floor; without that floor the grade rests on the wrong thing.</li></ul>
+<ul><li><strong>A large maintenance surface.</strong> Hundreds of lints are hundreds of things to keep current: the "500+ lints" magnitude the support-apparatus ratio counts.</li><li><strong>False positives need escapes.</strong> A too-strict lint blocks legitimate code until a <code>noqa</code> is added, a small, audited hole.</li><li><strong>Floor vs fleet.</strong> The custom fleet only earns its keep atop the commodity analysis floor; without that floor the grade rests on the wrong thing.</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`lint-banned-apis`, `no-silent-catch`, `console-singleton-mutation`, the typed-seam ban-lints.</li><li>The lint-declaration discipline (each lint declares its scope, severity, and a verb-of-checking docstring); the scoped `noqa` escape convention.</li></ul>
+<ul><li><code>lint-banned-apis</code>, <code>no-silent-catch</code>, <code>console-singleton-mutation</code>, the typed-seam ban-lints.</li><li>The lint-declaration discipline (each lint declares its scope, severity, and a verb-of-checking docstring); the scoped <code>noqa</code> escape convention.</li></ul>
 <h3>Related Patterns</h3>
 <ul><li><em>See also (sibling)</em> — <a href="../product/validation-and-conformance/coherence-lints.html">coherence-lints</a>: relational lints across sources; <a href="../product/validation-and-conformance/content-validator.html">content-validator</a> / <a href="../product/validation-and-conformance/standards-rule-engine.html">standards-rule-engine</a>: the other artifact validators.</li><li><strong>Counterpart</strong> — the ban-lints in <a href="../product/canonical-models-and-seams/pdf-model.html">canonical-models-and-seams</a> are members of this fleet doing the "hold a construction seam in place" job.</li></ul>
 <h2 id="standards-rule-engine">Standards / WCAG rule engine</h2>
@@ -988,6 +996,6 @@ def conformance(findings: list[Finding], in_scope: set[str]) -&gt; dict[str, str
 <h3>Consequences</h3>
 <ul><li><strong>Coverage is only as complete as the mapped checks.</strong> Unmapped SCs are coverage-gaps or aspirational; honesty about this is the scope doc's whole job.</li><li><strong>The mapping must track the standard.</strong> WCAG revisions and new SCs require engine + doc updates.</li><li><strong>Per-pass rule-fail is staging-only</strong> (the prod gate is coarser).</li></ul>
 <h3>Known Uses</h3>
-<ul><li>`CheckRunner.ComputeStandards` — the finding → SC mapping.</li><li>The staging per-pass rule-engine check (new findings surfaced on a dedicated JSON marker).</li><li>The WCAG-scope-mapping doc (Covered / Coverage-gap / Aspirational status).</li></ul>
+<ul><li><code>CheckRunner.ComputeStandards</code> — the finding → SC mapping.</li><li>The staging per-pass rule-engine check (new findings surfaced on a dedicated JSON marker).</li><li>The WCAG-scope-mapping doc (Covered / Coverage-gap / Aspirational status).</li></ul>
 <h3>Related Patterns</h3>
-<ul><li><strong>Layer</strong> — with <a href="../product/validation-and-conformance/content-validator.html">content-validator</a>: fidelity (nothing lost) + conformance (standards met) are the two product gates over the artifact.</li><li><strong>Counterpart</strong> — the WCAG-scope doc keeps the coverage <em>claims</em> honest (like the DoD ↔ rule index pairing on the agent side).</li><li><strong>Consumer</strong> — reads the <a href="../product/canonical-models-and-seams/canonical-walkers.html">canonical-walkers</a> (`RuleWalkers`) that traverse the typed models to produce findings.</li></ul><div class="pager"><a class="prev" href="appendix-b-models-bridge.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix B — Models-bridge patterns</span></a><a class="home" href="index.html">Contents</a><span class="next disabled" aria-hidden="true"></span></div><div class="pager-jump"><div class="jump"><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>
+<ul><li><strong>Layer</strong> — with <a href="../product/validation-and-conformance/content-validator.html">content-validator</a>: fidelity (nothing lost) + conformance (standards met) are the two product gates over the artifact.</li><li><strong>Counterpart</strong> — the WCAG-scope doc keeps the coverage <em>claims</em> honest (like the DoD ↔ rule index pairing on the agent side).</li><li><strong>Consumer</strong> — reads the <a href="../product/canonical-models-and-seams/canonical-walkers.html">canonical-walkers</a> (<code>RuleWalkers</code>) that traverse the typed models to produce findings.</li></ul><div class="pager"><a class="prev" href="appendix-b-models-bridge.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix B — Models-bridge patterns</span></a><a class="home" href="index.html">Contents</a><span class="next disabled" aria-hidden="true"></span></div><div class="pager-jump"><div class="jump"><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script></body></html>

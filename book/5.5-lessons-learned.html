@@ -34,6 +34,14 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote h3 { font-style: normal; margin-top: 0; }
+blockquote pre.mermaid { font-style: normal; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
 figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
@@ -130,7 +138,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <p>The speed is not the danger. The speed <em>exposes</em> the danger. A bad decision that would have cost you a slow week of hand-coding now costs you an afternoon and ten thousand lines, all of them committed, all of them plausible. Velocity is a floodlight on the quality of your thinking. This is why the frame comes first and why so much of the work is front-loaded. You are not supervising the agent's typing. You are deciding, before it types, what "correct" means and how the code will be held to it.</p>
 <h2>Optionality is poison</h2>
 <p>AI does not merely reduce friction. It manufactures optionality — an endless stream of choices, some architecturally critical, some product-relevant, and some stupid things the agent should have sorted for itself. At midnight, that stream is poison. Some decisions take you to hell, others to a parking lot where you spin your wheels, and others just distract you from sleep, and in the moment they are hard to tell apart.</p>
-<p>The deeper trap is the decision you leave open. When you do, the agent makes it for you — differently each time it touches the code. Told to use Python, it writes Python without types; told to add types, it turns on the checker and sprinkles `str` and `int` across everything without building the abstractions you actually wanted. Every unmade decision is a place where the agent guesses, and its guesses do not agree with each other across a codebase. So decide. Name the architecture, name the types, name the one library that owns each format. The narrower you make the agent's search, the more of its speed lands on the target instead of scattering. Explicitness is not bureaucracy here; it is the mechanism by which you get consistency out of a system that will otherwise improvise.</p>
+<p>The deeper trap is the decision you leave open. When you do, the agent makes it for you — differently each time it touches the code. Told to use Python, it writes Python without types; told to add types, it turns on the checker and sprinkles <code>str</code> and <code>int</code> across everything without building the abstractions you actually wanted. Every unmade decision is a place where the agent guesses, and its guesses do not agree with each other across a codebase. So decide. Name the architecture, name the types, name the one library that owns each format. The narrower you make the agent's search, the more of its speed lands on the target instead of scattering. Explicitness is not bureaucracy here; it is the mechanism by which you get consistency out of a system that will otherwise improvise.</p>
 <h2>Refactoring used to be too costly; now it's free</h2>
 <p>For my whole career, refactoring was something you rationed. It was expensive, so you lived with a compromised design longer than you should have, and the compromise compounded. That economics has inverted. The refactors I had always deferred as too expensive became an afternoon's work. In one leap I unified the remediation interfaces across the document formats, which let me unify the remediation passes, which let me track what each change does — for corruption checks — and what it costs, for pricing. None of that was justifiable when refactoring meant days of careful hand-surgery.</p>
 <p>So there is almost no reason to enshrine a bad shape. If the design is wrong, change it. The cost that used to make you tolerate accidental complexity is gone, and the discipline that replaces it is the willingness to keep paying the now-cheap price. Audit, find the compromise, fix it, and move on. The prototype is disposable; the learning it produced is what you keep.</p>

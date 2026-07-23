@@ -34,6 +34,14 @@ blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d
               color: #555; font-style: italic; background: #faf9f6; }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote h3 { font-style: normal; margin-top: 0; }
+blockquote pre.mermaid { font-style: normal; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
 figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
@@ -131,5 +139,6 @@ nav.toc .jump { margin-top: 0.7rem; }
 <h2>The part that stays yours</h2>
 <p>So do not fear the machine, and do not overtrust it either. It is the most capable tool most of us will ever hold: it gives a skilled engineer the throughput of a team, and it does that precisely because it will do anything you ask without the friction that used to keep bad ideas cheap. That friction was doing quiet work. The governed engineering environment is how you put the friction back where it belongs — on the failures, not on the human — so the throughput lands as a production system instead of a fast pile of slop.</p>
 <p>If there is a single instruction to carry out of this book, it is this. Govern the conditions under which fast code can be trusted, and know when to stop governing — put a guardrail on the smells that predict a real failure, and nowhere else, because every guardrail taxes every future change. The machine can search faster than any of us. It cannot tell you what is worth searching for. That part is still yours, and it is the part worth getting good at.</p>
-<blockquote>I applied mine heart to know, and to search, and to seek out wisdom, and the reason of things.  — King Solomon (Ecclesiastes 7:25)</blockquote>
+<blockquote><p>I applied mine heart to know, and to search, and to seek out wisdom, and the reason of things.</p>
+<p>— King Solomon (Ecclesiastes 7:25)</p></blockquote>
 <p>Machines can help us search. They cannot give us wisdom.</p><div class="pager"><a class="prev" href="5.5-lessons-learned.html"><span class="dir">‹ Previous</span><span class="ttl">5.5 · Lessons Learned</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-a-agent.html"><span class="dir">Next ›</span><span class="ttl">Appendix A — Agent patterns</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-a-agent.html">Next part ⇒</a><a href="appendix-c-product.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

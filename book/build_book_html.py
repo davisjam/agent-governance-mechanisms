@@ -181,12 +181,24 @@ def _abbr_cite(m: "re.Match[str]") -> str:
 
 def inline(s: str) -> str:
     s = html.escape(s, quote=False)
+    # Inline code spans (`text`) first — their content is code, so no bold/italic/link pass should
+    # run inside them. Stash each span behind a placeholder, run the markdown passes, then restore.
+    # This is what lets `MAJOR`, `[]P`, and `Service` render as <code> instead of literal backticks.
+    code_spans: list[str] = []
+
+    def _stash(m: "re.Match[str]") -> str:
+        code_spans.append(m.group(1))
+        return f"\x00CODE{len(code_spans) - 1}\x00"
+
+    s = re.sub(r"`([^`]+)`", _stash, s)
     # Abstraction citations (`[[slug|text]]`) → links into the catalogue glossary. After escaping (the
     # brackets survive escaping); before the markdown-link pass so the emitted <a> is left intact.
     s = re.sub(r"\[\[([^\]|]+?)(?:\|([^\]]*))?\]\]", _abbr_cite, s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
     s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<![\w*])\*(?!\s)([^*]+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
+    # Restore the stashed code spans as <code> (their content is already HTML-escaped).
+    s = re.sub(r"\x00CODE(\d+)\x00", lambda m: f"<code>{code_spans[int(m.group(1))]}</code>", s)
     return s
 
 
@@ -360,10 +372,18 @@ def md_to_html(md: str) -> str:
             txt, anc = _heading_anchor(stripped[2:])
             out.append(f"<h1{anc}>{inline(txt)}</h1>")
             continue
-        # Blockquote (all lines start with >).
+        # Blockquote (all lines start with >). Its inner content is itself markdown — a `> ###`
+        # heading, `> ` prose paragraphs, a `> ```mermaid ``` fence — so strip the `>` prefix and
+        # render the inner content recursively. This is what makes a boxed concept-primer inset
+        # (a heading + prose + a diagram) render as structured content, not one flattened line.
         if all(ln.strip().startswith(">") for ln in block.splitlines()):
-            inner = " ".join(ln.strip().lstrip(">").strip() for ln in block.splitlines())
-            out.append(f"<blockquote>{inline(inner)}</blockquote>")
+            inner_md = "\n".join(_strip_blockquote_prefix(ln) for ln in block.splitlines())
+            out.append(f"<blockquote>{md_to_html(inner_md)}</blockquote>")
+            continue
+        # Pipe table (a header row, a `|---|---|` separator, then body rows). GitHub-flavored
+        # markdown tables — the invariant/checker tables in the model pages depend on this.
+        if _is_pipe_table(block):
+            out.append(_render_pipe_table(block))
             continue
         # Unordered list (all lines start with - ).
         if all(ln.strip().startswith("- ") for ln in block.splitlines()):
@@ -373,6 +393,54 @@ def md_to_html(md: str) -> str:
         # Paragraph (join wrapped lines).
         out.append(f"<p>{inline(' '.join(ln.strip() for ln in block.splitlines()))}</p>")
     return "\n".join(out)
+
+
+def _strip_blockquote_prefix(line: str) -> str:
+    """Drop a leading `> ` (or bare `>`) from one blockquote line, so the inner content can be
+    re-rendered as markdown. A `>` with nothing after it becomes a blank line (a paragraph break
+    inside the quote)."""
+    s = line.strip()
+    if s.startswith("> "):
+        return s[2:]
+    if s == ">":
+        return ""
+    return s.lstrip(">")
+
+
+_TABLE_SEP_RE = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$")
+
+
+def _is_pipe_table(block: str) -> bool:
+    """A block is a pipe table when it has at least two lines, every line contains a `|`, and the
+    second line is a `|---|---|` separator row."""
+    lines = block.splitlines()
+    if len(lines) < 2 or "|" not in lines[0]:
+        return False
+    return bool(_TABLE_SEP_RE.match(lines[1]))
+
+
+def _split_table_row(row: str) -> list[str]:
+    """Split one `| a | b | c |` row into its cells, dropping the outer empties from the leading and
+    trailing pipe."""
+    cells = [c.strip() for c in row.strip().strip("|").split("|")]
+    return cells
+
+
+def _render_pipe_table(block: str) -> str:
+    """Render a GitHub-flavored pipe table into an HTML <table> with a <thead> and <tbody>. The
+    separator row (line 2) is consumed for structure, not rendered."""
+    lines = block.splitlines()
+    header = _split_table_row(lines[0])
+    body_rows = [_split_table_row(ln) for ln in lines[2:] if ln.strip()]
+    thead = "".join(f"<th>{inline(c)}</th>" for c in header)
+    trs = []
+    for row in body_rows:
+        tds = "".join(f"<td>{inline(c)}</td>" for c in row)
+        trs.append(f"<tr>{tds}</tr>")
+    return (
+        '<table class="book-table"><thead><tr>'
+        f"{thead}</tr></thead><tbody>{''.join(trs)}</tbody></table>"
+    )
 
 
 CSS = f"""
@@ -410,6 +478,14 @@ blockquote {{ margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #
               color: #555; font-style: italic; background: #faf9f6; }}
 code {{ background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }}
 a {{ color: var(--accent); }}
+table.book-table {{ border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }}
+table.book-table th, table.book-table td {{ border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }}
+table.book-table thead th {{ background: #f4f3f0; font-weight: 600; }}
+table.book-table tbody tr:nth-child(even) {{ background: #faf9f6; }}
+blockquote table.book-table {{ background: #fff; }}
+blockquote h3 {{ font-style: normal; margin-top: 0; }}
+blockquote pre.mermaid {{ font-style: normal; }}
 figure.book-figure {{ margin: 1.8rem 0; text-align: center; }}
 figure.book-figure svg,
 figure.book-figure img {{ max-width: 100%; height: auto; }}
