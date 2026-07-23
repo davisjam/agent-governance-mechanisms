@@ -1324,6 +1324,80 @@ def build_stack_chapters(part: int, page_by_slug: dict[str, dict]) -> list[dict]
     return chapters
 
 
+# APPENDIX E — How to Write a Skill. Hand-authored, like the stacks Part (Appendix D): a front-door page
+# whose prose lives here, then one authored markdown page under `appendix-skill-recipe/`. No catalogue
+# projection — the recipe is a reference the author wrote, not a mechanism map.
+_SKILL_RECIPE_DIR = HERE / "appendix-skill-recipe"
+
+# The slug that heads Appendix E — the recipe front-door page.
+_APPENDIX_SKILL_RECIPE_OPENING_SLUG = "appendix-skill-recipe"
+
+# The single authored content page under the front-door → (page-slug stem, display title). Absent-on-disk
+# files are skipped, so the front-door alone still renders if the content file is missing.
+_SKILL_RECIPE_PAGES: list[tuple[str, str]] = [
+    ("the-recipe", "The recipe — three steps"),
+]
+
+_APPENDIX_SKILL_RECIPE_OPENING_PROSE = """\
+**A skill is a model of a domain an agent triggers into**
+
+A skill is not a prompt, and it is not a checklist. It is a *model of a domain* — the frame an agent \
+loads when a task in that domain arrives, so it reasons through the domain's own abstractions instead of \
+from scratch. You met three of them earlier in this book: the skills that let the fleet write its prose, \
+harden its own substrate, and operate itself. Here is how they were made.
+
+The useful fact is that all three were built the same way. A skill is not a bag of instructions that grew \
+by accretion. Each of the book's skills started from one abstraction, layered independent facets on it, \
+and tied them together with a governing principle — and that construction is itself a reusable pattern. \
+Name the pattern and you can write the next skill deliberately instead of by feel.
+
+This appendix names that pattern as a three-step recipe and grounds each step in the three self-* skills \
+you already met. Read the [Skills chapter](5.2-the-skills.html) for what those skills *do*; read on here \
+for how they were *built*."""
+
+
+def build_skill_recipe_chapters(part: int) -> list[dict]:
+    """Build the Appendix E chapter records: one front-door page (chapter 0) whose prose is authored inline,
+    then one page per authored content file under `appendix-skill-recipe/` (E.1, …). Mirrors the stacks Part
+    (Appendix D): a hand-authored appendix Part, rendered by the existing pager/TOC/index machinery with no
+    catalogue projection. Every record carries `is_appendix: True`, so it renders with no special-casing.
+    Returns [] if no content files are present (the front-door alone is not emitted without its content)."""
+    pages = [(stem, title) for stem, title in _SKILL_RECIPE_PAGES
+             if (_SKILL_RECIPE_DIR / f"{stem}.md").is_file()]
+    if not pages:
+        return []
+
+    chapters: list[dict] = []
+    part_title = "Appendix E — How to Write a Skill"
+
+    # FRONT-DOOR PAGE — heads Appendix E (chapter 0, sorts before the recipe).
+    chapters.append({
+        "slug": _APPENDIX_SKILL_RECIPE_OPENING_SLUG,
+        "part": part,
+        "part_title": part_title,
+        "chapter": 0,
+        "chapter_title": "Appendix E — How to Write a Skill",
+        "body_md": _APPENDIX_SKILL_RECIPE_OPENING_PROSE.strip(),
+        "is_appendix": True,
+        "mermaid": False,
+    })
+
+    # ONE PAGE PER AUTHORED FILE — E.1, E.2, … in listed order.
+    for i, (stem, title) in enumerate(pages, start=1):
+        raw = (_SKILL_RECIPE_DIR / f"{stem}.md").read_text(encoding="utf-8")
+        chapters.append({
+            "slug": f"appendix-e-{stem}",
+            "part": part,
+            "part_title": part_title,
+            "chapter": i,                       # sorts after the front-door's chapter 0
+            "chapter_title": f"Appendix E - {i}. {title}",
+            "body_md": _fold_wrapped_bullets(raw.strip()),
+            "is_appendix": True,
+            "mermaid": False,
+        })
+    return chapters
+
+
 def _family_order_from_index() -> dict[str, int]:
     """Read the family ordering from the census (`INDEX.md`) at build time, so the appendix order can't
     drift from it. Parses each `## <N>. <name>` census heading, then the `[family folder](<role>/<dir>/)`
@@ -1479,6 +1553,10 @@ def build_appendix_chapters(next_part: int) -> list[dict]:
     page_by_slug = {rec["slug"]: rec for rec in ordered}
     stacks_part = next_part + len(_APPENDIX_ROLES)
     chapters += build_stack_chapters(part=stacks_part, page_by_slug=page_by_slug)
+
+    # APPENDIX E — How to Write a Skill. A hand-authored Part after the stacks (its own front-door page +
+    # the recipe page), rendered the same way — no catalogue projection, no role/family machinery.
+    chapters += build_skill_recipe_chapters(part=stacks_part + 1)
     return chapters
 
 
