@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 1180" width="560" height="1180" role="group" aria-labelledby="ptl-title ptl-desc" font-family="Georgia, 'Times New Roman', serif">
+  <title id="ptl-title">The messy timeline behind the clean stages</title>
+  <desc id="ptl-desc">A vertical dated timeline of nine real moments from the seven-week build, each a cream card threaded on a gold vertical line with a dot at its date. The moments are: April 6, cooking breakfast while the family sleeps as the code flies; a Spring Break kickoff when no undergraduate replies and the architect supervises agents instead; April 15, leaving a conference keynote because the room's wifi cannot reach the model; April 30, a clean full-context handoff celebrated in the lab chat; May 5, a graduate student crossing a retreat dining room to complete a two-factor prompt for a saturated account; May 13, waking to funding emails because the overnight green-build run cost real money; May 19, the orchestration running two hours unattended while the architect skips a vacation; May 21, working from a hospital waiting room where the network permits the tool; and May 28, sprinting between two buildings during a campus outage so the agents never notice it stopped. The clean six-stage development narrative maps onto these lived moments.</desc>
+
+  <rect x="0" y="0" width="560" height="1180" fill="#ffffff"/>
+
+  <!-- gold vertical rule -->
+  <line x1="40" y1="70" x2="40" y2="1120" stroke="#BFA45A" stroke-width="1.4"/>
+
+  <!-- heading -->
+  <text x="40" y="38" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">The messy timeline</text>
+  <text x="40" y="58" font-size="12.5" fill="#6b6250" font-style="italic">what the clean stages were made of</text>
+
+  <!-- CARD 1 -->
+  <circle cx="40" cy="110" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="86" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="108" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Monday, April 6</text>
+    <text x="82" y="130" font-size="12.5" fill="#2B2416">I am cooking breakfast while the family sleeps.</text>
+    <text x="82" y="147" font-size="12.5" fill="#2B2416">The model joins me on the countertop.</text>
+    <text x="82" y="164" font-size="12.5" fill="#2B2416" font-style="italic">The vegetables fry and the code flies.</text>
+  </g>
+
+  <!-- CARD 2 -->
+  <circle cx="40" cy="230" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="206" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="228" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Spring Break · the kickoff</text>
+    <text x="82" y="250" font-size="12.5" fill="#2B2416">I offer a one-week project to twenty of our best students.</text>
+    <text x="82" y="267" font-size="12.5" fill="#2B2416">Not one replies. They planned to have fun.</text>
+    <text x="82" y="284" font-size="12.5" fill="#2B2416" font-style="italic">So I supervise agents instead.</text>
+  </g>
+
+  <!-- CARD 3 -->
+  <circle cx="40" cy="350" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="326" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="348" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Wednesday, April 15</text>
+    <text x="82" y="370" font-size="12.5" fill="#2B2416">A keynote on the future of software in the age of AI.</text>
+    <text x="82" y="387" font-size="12.5" fill="#2B2416">The room's routers are overwhelmed. The model cannot hear me.</text>
+    <text x="82" y="404" font-size="12.5" fill="#2B2416" font-style="italic">We should do this, not discuss it. We leave.</text>
+  </g>
+
+  <!-- CARD 4 -->
+  <circle cx="40" cy="470" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="446" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="468" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, April 30</text>
+    <text x="82" y="490" font-size="12.5" fill="#2B2416">I hit full context with a clean quiesce and a handoff document.</text>
+    <text x="82" y="507" font-size="12.5" fill="#2B2416">I post a screenshot in the lab chat.</text>
+    <text x="82" y="524" font-size="12.5" fill="#2B2416" font-style="italic">My students cheer the performance.</text>
+  </g>
+
+  <!-- CARD 5 -->
+  <circle cx="40" cy="590" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="566" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="588" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Tuesday, May 5</text>
+    <text x="82" y="610" font-size="12.5" fill="#2B2416">Two accounts are saturated. The third needs a two-factor code.</text>
+    <text x="82" y="627" font-size="12.5" fill="#2B2416">Its owner is at a retreat, not watching the chat. My graduate</text>
+    <text x="82" y="644" font-size="12.5" fill="#2B2416" font-style="italic">is at the next table. She walks over and taps him in.</text>
+  </g>
+
+  <!-- CARD 6 -->
+  <circle cx="40" cy="710" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="686" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="708" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Wednesday, May 13</text>
+    <text x="82" y="730" font-size="12.5" fill="#2B2416">I wake to ten emails. Each auto-funds the account five dollars.</text>
+    <text x="82" y="747" font-size="12.5" fill="#2B2416">Ah yes: I asked for a green build overnight.</text>
+    <text x="82" y="764" font-size="12.5" fill="#2B2416" font-style="italic">The build costs real money.</text>
+  </g>
+
+  <!-- CARD 7 -->
+  <circle cx="40" cy="830" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="806" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="828" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Tuesday, May 19</text>
+    <text x="82" y="850" font-size="12.5" fill="#2B2416">The orchestration now makes progress for two hours in my absence.</text>
+    <text x="82" y="867" font-size="12.5" fill="#2B2416">I set the alarm for 4 AM. I was to be on vacation in Costa Rica.</text>
+    <text x="82" y="884" font-size="12.5" fill="#2B2416" font-style="italic">This is better.</text>
+  </g>
+
+  <!-- CARD 8 -->
+  <circle cx="40" cy="950" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="926" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="948" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, May 21</text>
+    <text x="82" y="970" font-size="12.5" fill="#2B2416">A family member's seventh ER trip in two weeks.</text>
+    <text x="82" y="987" font-size="12.5" fill="#2B2416">The hospital network blocks one assistant, but not the other.</text>
+    <text x="82" y="1004" font-size="12.5" fill="#2B2416" font-style="italic">So the work continues from the waiting room.</text>
+  </g>
+
+  <!-- CARD 9 -->
+  <circle cx="40" cy="1070" r="4.2" fill="#BFA45A"/>
+  <g>
+    <rect x="66" y="1046" width="470" height="86" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <text x="82" y="1068" font-size="12.5" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, May 28</text>
+    <text x="82" y="1090" font-size="12.5" fill="#2B2416">A campus outage. I dash between two buildings, laptop in one hand,</text>
+    <text x="82" y="1107" font-size="12.5" fill="#2B2416">and steal a look at the screen: no errors.</text>
+    <text x="82" y="1124" font-size="12.5" fill="#2B2416" font-style="italic">The crew never noticed. The work continues.</text>
+  </g>
+</svg>
