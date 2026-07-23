@@ -47,5 +47,7 @@
   "model_count": "twenty-nine",
   "real_model_count": "nineteen",
   "general_type_count": "seven",
-  "model_zoo_chapter_count": "six"
+  "model_zoo_chapter_count": "six",
+  "_mechanism_count_note": "Tracks the companion catalogue census (the <!--census:controls--> macro / INDEX total). Word-form, kept approximate ('around ...') so small drift as new mechanisms land does not falsify the prose. Update when the census crosses a round number. Census at last sync: 69.",
+  "mechanism_count": "seventy"
 }
