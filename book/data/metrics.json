@@ -34,5 +34,11 @@
   "dev_cost_total": "about sixty thousand dollars",
 
   "product_name": "DocAble",
-  "product_url": "https://scholaccess.com"
+  "product_url": "https://scholaccess.com",
+
+  "_model_count_note": "The Model Zoo census: 7 general model types (G1-G7) + 19 real typed system-models (M1-M19) + 3 split-out sub-models (M18a, M18b, M14a) = 29 named models. Presented as EVIDENCE for the 4+1 thesis (a zoo large enough that one view is never enough), not as a target to hit.",
+  "model_count": "twenty-nine",
+  "real_model_count": "nineteen",
+  "general_type_count": "seven",
+  "model_zoo_chapter_count": "six"
 }

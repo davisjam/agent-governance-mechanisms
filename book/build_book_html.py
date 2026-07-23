@@ -55,7 +55,8 @@ _PART_DIRS = {
     2: "part2",
     3: "part3",
     4: "part4",
-    5: "backmatter",
+    5: "part5",
+    6: "backmatter",
 }
 
 # Part number → its display title (mirrors the `part-title` metadata; kept here so a part with no
@@ -65,8 +66,9 @@ _PART_TITLES = {
     1: "The Context",
     2: "The Mindset",
     3: "The Governed Engineering Environment",
-    4: "Putting It to Work",
-    5: "Back Matter",
+    4: "The Model Zoo",
+    5: "Putting It to Work",
+    6: "Back Matter",
 }
 
 # Per-Part epigraph rendered at the opener of the first chapter in each numbered Part. Each is a
@@ -88,6 +90,10 @@ _PART_EPIGRAPHS: dict[int, tuple[str, str]] = {
         "the thesis of this book",
     ),
     4: (
+        "All models are wrong, but some are useful.",
+        "George E. P. Box",
+    ),
+    5: (
         "I applied mine heart to know, and to search, and to seek out wisdom, and the "
         "reason of things.",
         "King Solomon (Ecclesiastes 7:25)",
@@ -135,7 +141,7 @@ def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str
         "chapter": chapter,
         "chapter_title": meta.get("chapter-title", path.stem),
         "body_md": "\n".join(lines).strip(),
-        "is_matter": part in (0, 5),  # front / back matter — no "Chapter N" kicker
+        "is_matter": part in (0, 6),  # front / back matter — no "Chapter N" kicker
     }
 
 
@@ -532,7 +538,7 @@ def _part_label(c: dict) -> str:
     themselves; numbered Parts get 'Part N — Title'."""
     if c.get("is_appendix"):
         return c["part_title"]
-    if c["part"] in (0, 5):
+    if c["part"] in (0, 6):
         return c["part_title"]
     return f'Part {c["part"]} — {c["part_title"]}'
 
