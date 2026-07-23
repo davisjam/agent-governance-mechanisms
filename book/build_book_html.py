@@ -378,7 +378,12 @@ def md_to_html(md: str) -> str:
         # (a heading + prose + a diagram) render as structured content, not one flattened line.
         if all(ln.strip().startswith(">") for ln in block.splitlines()):
             inner_md = "\n".join(_strip_blockquote_prefix(ln) for ln in block.splitlines())
-            out.append(f"<blockquote>{md_to_html(inner_md)}</blockquote>")
+            inner_html = md_to_html(inner_md)
+            # An inset's `### Title` is a callout LABEL, not a document-outline heading. Rendering it as
+            # <hN> makes axe flag a heading-order skip when an inset sits right after the chapter <h1>.
+            # Demote any heading inside a blockquote to a styled paragraph, preserving its {#id} anchor.
+            inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
+            out.append(f"<blockquote>{inner_html}</blockquote>")
             continue
         # Pipe table (a header row, a `|---|---|` separator, then body rows). GitHub-flavored
         # markdown tables — the invariant/checker tables in the model pages depend on this.
@@ -484,7 +489,7 @@ table.book-table th, table.book-table td {{ border: 1px solid #e2e0da; padding: 
 table.book-table thead th {{ background: #f4f3f0; font-weight: 600; }}
 table.book-table tbody tr:nth-child(even) {{ background: #faf9f6; }}
 blockquote table.book-table {{ background: #fff; }}
-blockquote h3 {{ font-style: normal; margin-top: 0; }}
+blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
 blockquote pre.mermaid {{ font-style: normal; }}
 figure.book-figure {{ margin: 1.8rem 0; text-align: center; }}
 figure.book-figure svg,
