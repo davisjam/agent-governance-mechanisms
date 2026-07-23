@@ -324,6 +324,13 @@ def _inject_anchor_id(block_html: str, anchor_id: str) -> str:
     return f'<span id="{html.escape(anchor_id, quote=True)}"></span>' + block_html
 
 
+# A THESIS blockquote leads with a bold `The <Name> Thesis.` label — authored as
+# `> **The <Name> Thesis.** <statement>`, rendered into `<p><strong>The … Thesis.</strong> …`. Matched on
+# the rendered inner HTML (a leading `<p>` whose first `<strong>` ends in the literal word `Thesis.`), so it
+# is told apart from an ordinary `> **Term.**` definition callout (which stays a light sidenote).
+_IS_THESIS_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>\s*The\b.*?\bThesis\.\s*</strong>", re.S)
+
+
 def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = None) -> str:
     """Convert the markdown subset the chapters use into HTML.
 
@@ -459,11 +466,19 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             # <hN> makes axe flag a heading-order skip when an inset sits right after the chapter <h1>.
             # Demote any heading inside a blockquote to a styled paragraph, preserving its {#id} anchor.
             inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
-            # Two kinds of blockquote. A CONCEPT INSET carries a demoted `inset-title` label (boxed primer);
-            # a PLAIN ASIDE has none — a short editorial remark. Give the plain aside a `sidenote` class so
-            # the stylesheet can float it into the margin as a Tufte-style sidenote on wide screens (it
-            # collapses inline on narrow). The concept insets keep the boxed `inset-title` treatment.
-            klass = "aside-sidenote" if 'class="inset-title"' not in inner_html else "concept-inset"
+            # Four kinds of blockquote (taxonomy: book/_design/callout-typography.md). Classified by shape:
+            #   1. CONCEPT INSET — carries a demoted `inset-title` label (a `> ### Title` primer): a BOX.
+            #   2. THESIS — a `> **The <Name> Thesis.**` bold lead: a prominent LAVENDER box (`thesis-box`).
+            #   3. DEFINITION (`> **Term.**`) / 4. PLAIN ASIDE (plain `>`): a light Tufte-style sidenote —
+            #      no box, floats into the right gutter on wide screens, collapses inline on narrow.
+            # THESIS is checked before the aside default: its bold lead ends in the literal word `Thesis.`,
+            # which distinguishes it from an ordinary `> **Term.**` definition (which stays a sidenote).
+            if 'class="inset-title"' in inner_html:
+                klass = "concept-inset"
+            elif _IS_THESIS_LEAD_RE.search(inner_html):
+                klass = "thesis-box"
+            else:
+                klass = "aside-sidenote"
             _emit(f'<blockquote class="{klass}">{inner_html}</blockquote>')
             continue
         # Pipe table (a header row, a `|---|---|` separator, then body rows). GitHub-flavored
@@ -584,6 +599,15 @@ table.book-table tbody tr:nth-child(even) {{ background: #faf9f6; }}
 blockquote table.book-table {{ background: #fff; }}
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
 blockquote pre.mermaid {{ font-style: normal; }}
+/* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
+   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Taxonomy + spec: book/_design/callout-typography.md. */
+blockquote.thesis-box {{ background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
+                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                         border-radius: 5px; }}
+blockquote.thesis-box p {{ margin: 0 0 0.6rem; }}
+blockquote.thesis-box p:last-child {{ margin-bottom: 0; }}
+blockquote.thesis-box strong {{ color: #241f33; }}
 figure.book-figure {{ margin: 1.8rem 0; text-align: center; }}
 figure.book-figure svg,
 figure.book-figure img {{ max-width: 100%; height: auto; }}
@@ -635,15 +659,25 @@ figure.book-figure figcaption {{ font-size: 14px; color: #666; margin-top: 0.6re
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe {{ width: 100%; height: 600px; border: 1px solid #e2e0da;
                                              border-radius: 6px; background: #fff; }}
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX */
-.jump {{ display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }}
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / END / INDEX. The secondary pills are
+   given roomy padding + larger hit targets + generous gap so they read calm beside the primary pager cards
+   rather than cramped. */
+.jump {{ display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }}
 .jump a {{ display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 9px;
-           border: 1px solid #d8d5cc; border-radius: 4px; background: #fff; }}
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
+           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }}
 .jump a:hover {{ border-color: var(--accent); background: #f4f3f0; }}
-nav.toc .jump {{ margin-top: 0.7rem; }}
-.pager-jump {{ margin-top: 1.2rem; }}
-.pager-jump .jump {{ justify-content: center; margin-top: 0; }}
+/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
+   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+nav.toc .toc-inner {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                      gap: 0.7rem 1.4rem; }}
+nav.toc details {{ flex: 0 0 auto; }}
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
+   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+nav.toc details[open] {{ flex: 1 1 100%; }}
+nav.toc .jump {{ margin-top: 0; margin-left: auto; }}
+.pager-jump {{ margin-top: 1.4rem; }}
+.pager-jump .jump {{ justify-content: center; gap: 0.7rem; margin-top: 0; }}
 """
 
 
@@ -1031,12 +1065,12 @@ _FAMILY_DISPLAY = {
 _APPENDIX_OPENING_PROSE = """\
 **The catalogue as a pattern language**
 
-This appendix is the governance catalogue rendered as a pattern language, in the style Gamma, Helm, \
-Johnson, and Vlissides made standard in *Design Patterns* — the [\"Gang of Four\"]\
-(https://en.wikipedia.org/wiki/Design_Patterns). Each governance mechanism becomes one pattern, written \
-to the same fixed elements a reader of that book already knows.
+This appendix is the governance catalogue rendered as a pattern language. It borrows the style of \
+[*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by Gamma, Helm, Johnson, and Vlissides \
+(the \"Gang of Four\"), which named and described a canonical set of reusable software-design patterns and \
+wrote each one to a fixed template. Here each governance mechanism becomes one pattern, written the same way.
 
-Every pattern page carries the classic slots:
+Every pattern follows the same template:
 
 - **Intent** — the failure class this mechanism kills, and the shape that kills it.
 - **Motivation** — the recurring failure told as a scenario, and why the naive fix does not hold.
