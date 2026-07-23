@@ -34,6 +34,7 @@ h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+ol { margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
@@ -347,7 +348,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>An operator (a human or an orchestrator agent) running a complex substrate must know two things: how it <em>works</em> when healthy, and what to do when it <em>breaks</em>. Both live scattered across a house-rules doc, a docs index, and incident memories that a fresh or post-compaction operator does not reliably hold. So the operator <strong>re-derives the substrate's shape from scratch</strong> under load, and during an incident re-derives, badly and under time pressure, a recovery a doc already spells out. And the routing itself <strong>rots</strong>: a doc moves, the pointer dangles, the next operator is sent on a chase. The failure is <em>re-derivation of known operations</em> plus <em>silent pointer rot</em>, and it recurs every session and every incident.</p>
 <p>Underneath is a stance: <strong>the fleet is cattle, not pets.</strong> You operate an agent fleet with <em>repeatable runbooks</em>, not by re-reasoning each incident from scratch or <em>chatting</em> the orchestrator toward a goal. That is the pet stance ("sysadmin-ing a pet server"), and it is a category error at fleet scale. This mechanism is the cattle stance made concrete for repo operations: a routed, lint-kept index of typed operations, so an operator runs the herd instead of nursing it.</p>
 <h2 id="el-applicability">Applicability</h2>
-<ul><li><strong>A typed source-of-truth</strong> the skill renders from; hand-authored markdown drifts from the docs it points at, while the YAML is single-sourced and lint-checkable.</li><li>**A reference-validity lint that resolves file <em>and</em> anchor.** File-exists alone lets a renamed section dangle.</li><li><strong>Typed step-kinds</strong> on runbook steps, so "which of these is runnable vs needs judgment" is declared, not guessed by the operator mid-incident.</li><li><strong>A partner failure-interpretation path</strong>, so a recurring failure becomes a <em>designed</em> control rather than an inline patch.</li></ul>
+<ul><li><strong>A typed source-of-truth</strong> the skill renders from; hand-authored markdown drifts from the docs it points at, while the YAML is single-sourced and lint-checkable.</li><li><strong>A reference-validity lint that resolves file <em>and</em> anchor.</strong> File-exists alone lets a renamed section dangle.</li><li><strong>Typed step-kinds</strong> on runbook steps, so "which of these is runnable vs needs judgment" is declared, not guessed by the operator mid-incident.</li><li><strong>A partner failure-interpretation path</strong>, so a recurring failure becomes a <em>designed</em> control rather than an inline patch.</li></ul>
 <h2 id="el-structure">Structure</h2>
 <p>The Structure diagram appears at the top of this page.</p>
 <h2 id="el-sample-code">Sample Code</h2>

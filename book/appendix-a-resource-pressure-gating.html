@@ -34,6 +34,7 @@ h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+ol { margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
@@ -366,7 +367,7 @@ def compute_shed(is_heavy: bool) -&gt; str:
         return "shed"
     return "run"</code></pre>
 <h2 id="el-consequences">Consequences</h2>
-<ul><li><strong>Coarse by design.</strong> GREEN/YELLOW/RED is a blunt instrument: a too-eager RED starves throughput, a too-lax one still admits overload. The thresholds are a tuning surface, not set-and-forget.</li><li>**Admission must <em>defer</em>, not drop.** A heavy brief refused under sustained RED needs a retry/defer policy, or it starves; the gate degrades to a deferral with a wake condition, never a silent drop.</li><li><strong>Two readers, one signal; keep them consistent.</strong> If the admission gate and the shed read different signals or thresholds, you reintroduce the churn the mechanism exists to kill. One shared signal is what makes the two layers agree.</li><li><strong>The advisory read is soft.</strong> Its value is the operator <em>choosing</em> to consult it; unlike the gates, it cannot enforce.</li></ul>
+<ul><li><strong>Coarse by design.</strong> GREEN/YELLOW/RED is a blunt instrument: a too-eager RED starves throughput, a too-lax one still admits overload. The thresholds are a tuning surface, not set-and-forget.</li><li><strong>Admission must <em>defer</em>, not drop.</strong> A heavy brief refused under sustained RED needs a retry/defer policy, or it starves; the gate degrades to a deferral with a wake condition, never a silent drop.</li><li><strong>Two readers, one signal; keep them consistent.</strong> If the admission gate and the shed read different signals or thresholds, you reintroduce the churn the mechanism exists to kill. One shared signal is what makes the two layers agree.</li><li><strong>The advisory read is soft.</strong> Its value is the operator <em>choosing</em> to consult it; unlike the gates, it cannot enforce.</li></ul>
 <h2 id="el-known-uses">Example use within DocAble</h2>
 <ul><li>A host load/pressure monitor (GREEN/YELLOW/RED) read by the compute mediators to <em>refuse-and-shed</em> heavy-class work under RED.</li><li>A pre-dispatch admission gate, sibling to a free-disk floor, that refuses/defers heavy dispatch (⚠️ the disk floor is wired; the load-pressure gate is the identified extension that closes the dispatch-into-overload waste).</li><li>The monitor as a plain callable the operator consults for YELLOW-aware dispatch judgment.</li></ul>
 <h2 id="el-related-patterns">Related Patterns</h2>

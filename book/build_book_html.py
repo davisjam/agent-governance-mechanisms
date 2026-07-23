@@ -220,7 +220,10 @@ def inline(s: str) -> str:
     # brackets survive escaping); before the markdown-link pass so the emitted <a> is left intact.
     s = re.sub(r"\[\[([^\]|]+?)(?:\|([^\]]*))?\]\]", _abbr_cite, s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
-    s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
+    # Bold: non-greedy so an inner *italic* span survives (e.g. `**a typed *derived* edge**`); the
+    # italic pass below then converts the inner single-asterisk pair. (`[^*]+` used to fail whenever a
+    # bold span wrapped an italic one, leaking a literal `**` into the page.)
+    s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<![\w*])\*(?!\s)([^*]+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
     # Restore the stashed code spans as <code> (their content is already HTML-escaped).
     s = re.sub(r"\x00CODE(\d+)\x00", lambda m: f"<code>{code_spans[int(m.group(1))]}</code>", s)
@@ -523,6 +526,22 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             items = "".join(f"<li>{inline(t)}</li>" for t in li_texts)
             _emit(f"<ul>{items}</ul>")
             continue
+        # Ordered list — same wrapped-continuation handling as the unordered case, but items open with
+        # `N. ` (any digits + dot + space). Catalogue entries carried into the appendix use these; without
+        # this they collapsed into a <p> full of literal `1.  2.  3.` run-ons.
+        if _lines and re.match(r"^\d+\.\s", _lines[0].strip()):
+            oli: list[str] = []
+            for ln in _lines:
+                s = ln.strip()
+                if re.match(r"^\d+\.\s", s):
+                    oli.append(re.sub(r"^\d+\.\s+", "", s))
+                elif oli:
+                    oli[-1] += " " + s
+                else:
+                    oli.append(s)
+            items = "".join(f"<li>{inline(t)}</li>" for t in oli)
+            _emit(f"<ol>{items}</ol>")
+            continue
         # Paragraph (join wrapped lines).
         _emit(f"<p>{inline(' '.join(ln.strip() for ln in block.splitlines()))}</p>")
     return "\n".join(out)
@@ -611,6 +630,7 @@ h3 {{ font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }}
 h4 {{ font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }}
 p {{ margin: 0 0 1rem; }}
 ul {{ margin: 0 0 1rem; padding-left: 1.3rem; }}
+ol {{ margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }}
 li {{ margin: 0.3rem 0; }}
 blockquote {{ margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }}

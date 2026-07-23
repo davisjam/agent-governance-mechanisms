@@ -481,6 +481,45 @@ def check_heading_levels() -> tuple[list[Finding], dict]:
     return findings, {"chapters_scanned": len(files), "issues": len(findings)}
 
 
+# ---- rule 9: render fidelity (un-converted markdown left literal in the BUILT html) ---------------
+
+# Each pattern is a true-bug signal: markdown the book renderer failed to convert, left sitting as
+# literal text inside a <p>. Every one has a known cause (a bullet/number list that wrapped across lines
+# and fell through to a paragraph; a bold span the emphasis pass couldn't match; a code/link the inline
+# pass missed). The book should render 0 of these — a hit means the renderer dropped a construct.
+_RENDER_SMELLS: tuple[tuple[str, "re.Pattern[str]"], ...] = (
+    ("literal **bold**",            re.compile(r"\*\*")),
+    ("bullet swallowed into <p>",   re.compile(r"^\s*-\s")),
+    # user's heuristic: two ` - ` breaks in one paragraph usually means a `- ` list collapsed mid-<p>.
+    ("multi-dash run (list?)",      re.compile(r"\s-\s\S.*\s-\s")),
+    ("numbered list swallowed",     re.compile(r"(?:^|\s)\d+\.\s.+\s\d+\.\s")),
+    ("literal `code` span",         re.compile(r"`[^`]+`")),
+    ("literal [text](link)",        re.compile(r"\[[^\]]+\]\([^)]+\)")),
+)
+_P_RE = re.compile(r"<p>(.*?)</p>", re.S)
+_TAG_RE = re.compile(r"<[^>]+>")
+
+
+def check_render_fidelity() -> tuple[list[Finding], dict]:
+    """Scan every BUILT `book/*.html` page's <p> bodies for markdown the renderer left un-converted
+    (literal `**`, a `- `/`N. ` list swallowed into a paragraph, a stray `` `code` `` or `[text](link)`).
+    Reads the built HTML, so it catches a renderer regression the source-only rules can't see. Runs 0 on a
+    clean build — a PROMOTE-to-BLOCKING candidate. src=None (the fix is in the renderer or the source md,
+    not a suppressible authoring choice), so findings surface but carry no noqa."""
+    import glob
+    findings: list[Finding] = []
+    pages = 0
+    for f in sorted(glob.glob(os.path.join(BOOK, "*.html"))):
+        pages += 1
+        html = open(f, encoding="utf-8").read()
+        for m in _P_RE.finditer(html):
+            text = _TAG_RE.sub("", m.group(1)).replace("&amp;", "&")
+            for name, pat in _RENDER_SMELLS:
+                if pat.search(text):
+                    findings.append(Finding(None, "", f"{rel(f)} — {name}: {text[:90].strip()!r}"))
+    return findings, {"pages_scanned": pages, "issues": len(findings)}
+
+
 # ---- driver: run every rule, partition suppressed vs active, print a report; ALWAYS exit-neutral --
 
 # (label, lint-name, fn). The lint-name is what an inline `<!-- noqa: <name> — <reason> -->` cites.
@@ -493,6 +532,7 @@ _RULES = [
     ("6. placeholder tracking", "book-placeholder", check_placeholders),
     ("7. delimiter balance (parens / braces)", "book-delimiters", check_delimiter_balance),
     ("8. heading-level skips (PROMOTE-candidate)", "book-headings", check_heading_levels),
+    ("9. render fidelity (un-converted markdown)", "book-render-fidelity", check_render_fidelity),
 ]
 
 # the lint names, exported so a suppression comment can be validated against the known set.

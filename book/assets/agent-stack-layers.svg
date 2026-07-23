@@ -34,8 +34,8 @@
 
   <!-- L3 Engineering environment (git) -->
   <rect class="block" x="72"  y="150" width="488" height="90" rx="4"/>
-  <text class="btitle" x="92" y="188">Engineering environment — git</text>
-  <text class="bsub"   x="107" y="210">push · pull</text>
+  <text class="btitle" x="92" y="188">Engineering environment</text>
+  <text class="bsub"   x="92" y="210">git · push · pull</text>
 
   <!-- L2 Harness (Claude Code) -->
   <rect class="block" x="110" y="264" width="450" height="90" rx="4"/>
@@ -45,7 +45,7 @@
   <!-- L1 GenAI model  (narrowest = core; its only tab points UP into the harness) -->
   <rect class="block" x="135" y="382" width="425" height="90" rx="4"/>
   <text class="btitle" x="157" y="420">GenAI model</text>
-  <text class="bsub"   x="157" y="442">the core — reached through the harness</text>
+  <text class="bsub"   x="157" y="442">reached via the harness</text>
 
   <!-- ===== Internal upward port: model -> harness (inside the stack) ===== -->
   <!-- A tab on the model's TOP edge bridging the 28px gap up into the harness

@@ -34,6 +34,7 @@ h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+ol { margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
@@ -347,7 +348,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2 id="el-motivation">Motivation</h2>
 <p>The recurring failure class is <strong>constraint under-specification at dispatch time.</strong> A coding agent lacks the tacit knowledge an experienced engineer has of <em>which</em> rules apply to a given change, so it makes plausible edits that violate them, then spends rounds (and tokens) discovering and repairing the violations. Call it "pinball." A layered validation hierarchy (pre-commit → merge check → deploy gate) makes it worse: context is lost between where the agent authored the change and where the failure surfaces. Across many concurrent agents, this wasted work multiplies.</p>
 <h2 id="el-applicability">Applicability</h2>
-<p>1. <strong>File-addressable constraints.</strong> Every constraint declares its <strong>scope</strong> (file patterns / component tags) and lives in a <strong>registry you can query by file</strong>. Anything not addressable by file scope cannot be sliced. 2. <strong>Self-documenting constraints.</strong> Each rule carries a name, docstring, and an actionable "How to fix" line. This is the decisive prerequisite: <em>the value of an injected constraint is bounded by the agent's ability to act on it</em>, and its inverse, <em>if you can't clearly explain a rule to an agent, the rule's own defense value is questionable.</em> 3. <strong>A slicing operator</strong> at two granularities, file-scope (forward) and line-range (reverse), built as <strong>multiple adapters</strong>, one per registry (lint fleet, component registry, banned-API list, test corpus, doc index). 4. <strong>An injection point</strong> in the dispatch pipeline (the brief-authoring step) plus the on-demand CLI.</p>
+<ol><li><strong>File-addressable constraints.</strong> Every constraint declares its <strong>scope</strong> (file patterns / component tags) and lives in a <strong>registry you can query by file</strong>. Anything not addressable by file scope cannot be sliced.</li><li><strong>Self-documenting constraints.</strong> Each rule carries a name, docstring, and an actionable "How to fix" line. This is the decisive prerequisite: <em>the value of an injected constraint is bounded by the agent's ability to act on it</em>, and its inverse, <em>if you can't clearly explain a rule to an agent, the rule's own defense value is questionable.</em></li><li><strong>A slicing operator</strong> at two granularities, file-scope (forward) and line-range (reverse), built as <strong>multiple adapters</strong>, one per registry (lint fleet, component registry, banned-API list, test corpus, doc index).</li><li><strong>An injection point</strong> in the dispatch pipeline (the brief-authoring step) plus the on-demand CLI.</li></ol>
 <h2 id="el-structure">Structure</h2>
 <p>The Structure diagram appears at the top of this page.</p>
 <h2 id="el-sample-code">Sample Code</h2>
