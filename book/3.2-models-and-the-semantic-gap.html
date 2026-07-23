@@ -32,6 +32,18 @@ ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
 table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
@@ -225,7 +237,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <h3>Why both conditions, and not one</h3>
 <p>The dual check is not belt-and-suspenders. It is what keeps the hook from becoming a nuisance, and the nuisance here has a specific and nasty shape.</p>
 <p>Suppose I fired the reminder on fullness alone. Then every time the window filled, I would be told to bank, even if I had just banked. Worse, suppose I fired it on staleness alone. Then every few minutes, whether or not compaction was anywhere near, I would be nudged to stop and write. Either way the hook fires too often, and a hook that fires too often trains the operator to stop and re-summarize the session constantly. That failure has a name.</p>
-<blockquote><p><strong>Sidebar — ouroboros.</strong> The ouroboros is the ancient image of a snake eating its own tail. In this loop it names the degenerate state where the model spends its turns summarizing its own recent work instead of doing new work — banking, then banking the banking, forever consuming its own output. A reminder that fires on a single loose condition drives straight into it. The dual check is the guard: fullness <em>and</em> staleness together are rare enough that the reminder lands only when it is genuinely worth acting on.</p></blockquote>
+<blockquote class="aside-sidenote"><p><strong>Sidebar — ouroboros.</strong> The ouroboros is the ancient image of a snake eating its own tail. In this loop it names the degenerate state where the model spends its turns summarizing its own recent work instead of doing new work — banking, then banking the banking, forever consuming its own output. A reminder that fires on a single loose condition drives straight into it. The dual check is the guard: fullness <em>and</em> staleness together are rare enough that the reminder lands only when it is genuinely worth acting on.</p></blockquote>
 <p>Requiring both conditions is what makes the firing <em>meaningful</em>. A full window is common. A stale record is common. Both at once — the window filling <em>and</em> the durable state having drifted out of date — is the exact situation where a compaction would actually lose something, and that is the only situation where the reminder earns its interruption.</p>
 <h3>The honest part: the pre-compact hook is the wrong hook</h3>
 <p>I want to be straight about a compromise buried in this, because it is the kind of thing the semantic-gap idea should make you notice rather than paper over.</p>

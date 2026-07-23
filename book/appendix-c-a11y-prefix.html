@@ -32,6 +32,18 @@ ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
 table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }

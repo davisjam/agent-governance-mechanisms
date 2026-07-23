@@ -32,6 +32,18 @@ ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
 table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
@@ -304,7 +316,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <p id="idx-def-whose-fault">Here is the shift in posture the whole book turns on. When you use a stapler and the staple jams, that is the stapler's fault, not yours. A stapler is supposed to just work. But an agent is not a stapler — it is a printer, and a printer only ever builds what its instructions describe. So when the agent produces the wrong thing, the first suspect is not the model. It is the instructions.</p>
 <p id="idx-ex-whose-fault-1">In my own experience, every single time an agent has failed to produce what I wanted, it turned out to be my fault. The state-of-the-art models can build essentially anything we can envision in software, as far as I can tell — <em>so long as you can explain it to them</em>. That "so long as" is the entire job, and it is a real engineering discipline, not a knack. This book teaches it.</p>
 <p>The printer builds anything you can describe. That is the promise, and it is real. It is also the whole of the danger, because a printer with no judgment behind it builds a wrong thing as fast and as willingly as a right one — and it will carry you, at full speed, exactly where your instructions point.</p>
-<blockquote><p>Claude is the fastest road to hell.</p></blockquote>
+<blockquote class="aside-sidenote"><p>Claude is the fastest road to hell.</p></blockquote>
 <p>The speed is not the danger. The speed <em>exposes</em> the danger. Hand the machine a doomed idea and it does not slow down to warn you; it makes the doomed idea better and better, an afternoon's ten thousand plausible lines deep into a circle you chose yourself. The printer that builds anything will build your mistake with the same tireless fidelity it builds your success. Which one comes out is the instructions, and the instructions are yours.</p>
 <div class="marker marker-fill"><span class="marker-tag">FILL IN</span> introduce the single running example we will build across the whole book — a
 real product, or the "CodePrinter" sandbox — so the reader watches one system get

@@ -32,6 +32,18 @@ ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
 table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
@@ -305,5 +317,5 @@ nav.toc .jump { margin-top: 0.7rem; }
 <h2>The through-line, and who it is for</h2>
 <p>The through-line is a single idea, and it is worth stating up front so you can hold every chapter against it. <strong>When you build with an agent, you are not managing a coder; you are running a printer.</strong> A 3D printer builds almost anything you can describe, but only what you describe — hand it a bad model and you get a bad part, every time, and the fault is in the instructions, not the machine. An agent is the same. It can build essentially anything you can explain to it, and the entire discipline of this book lives in that "so long as you can explain it." Explaining a system to a probabilistic machine well enough that it builds the right thing, at speed, without a human reading every line — that is a real engineering craft, not a knack, and it can be taught.</p>
 <p>This book is for the software engineers who suspect the ground has moved and want to know where to stand. On the surface it is about a tool I built to help people with disabilities access documents. Underneath, it is about a working method for building anything with agents: how to frame the problem, model the world for the machine, put every change on rails from dispatch to production, and convert each failure you hit into a guardrail that stops the next one. You will not need my domain to use any of it. You will need a codebase, an agent, and the willingness to treat the instructions as the job.</p>
-<blockquote><p>Everything that follows is one move, repeated: convert judgment into infrastructure.</p></blockquote>
+<blockquote class="aside-sidenote"><p>Everything that follows is one move, repeated: convert judgment into infrastructure.</p></blockquote>
 <p>Let me show you what I found.</p><div class="pager"><span class="prev disabled" aria-hidden="true"></span><a class="home" href="index.html">Contents</a><a class="next" href="0.2-acknowledgments.html"><span class="dir">Next ›</span><span class="ttl">Acknowledgments</span></a></div><div class="pager-jump"><div class="jump"><a href="1.1-the-ada-context.html">Next part ⇒</a><a href="0.2-acknowledgments.html">Next chapter ›</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

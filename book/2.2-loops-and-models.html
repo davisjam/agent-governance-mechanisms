@@ -32,6 +32,18 @@ ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
 table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
@@ -244,7 +256,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <p id="idx-def-success-metric">Engineering a loop well starts with the metric, because the metric is what the agent steers by. The agent does not magically know your goals or your environment. You have to make its progress <em>measurable</em> — deterministically, through a quantitative check, or through a rubric that scores a qualitative result. Skip this, and you have told the agent nothing about what "done" means, so it searches, and searches, and searches, and never knows when to stop.</p>
 <p id="idx-ex-loop-engineering-1">The orchestration layer of this book's companion repository is itself a worked example of a loop engineered this way. The catalogue models the orchestrator — the process that dispatches agents, waits for them to land work, and cleans up after them — as an explicit reactive loop with a typed lifecycle: <em>dispatch → work → land → tombstone</em>, then refill and go again. The loop is not left implicit in the code; it is written down as a model the agent can read, which is exactly the second idea.</p>
 <h2>Give it a model of the world</h2>
-<blockquote><p>Vibe coding treats the program as an I/O device; engineering treats it as a system.</p></blockquote>
+<blockquote class="aside-sidenote"><p>Vibe coding treats the program as an I/O device; engineering treats it as a system.</p></blockquote>
 <p>The difference is not aesthetic. It is what counts as proof that a change is good. Treat the program as an I/O device and the only question is whether the right thing came out this time. Treat it as a system and you ask what must stay true across every input, and you build the structure that holds the answer. Agents make both modes cheap, which is why you have to choose deliberately. The fast, seductive default is the I/O device, and the I/O device is what turns a hundred thousand lines into a mess nobody can reason over.</p>
 <p>The second piece is the input the agent reasons <em>over</em>. You have to give it a sense of the environment: when it pulls this lever, what happens, and what is it even allowed to do? That sense of the world is itself an input, and when you supply it, the agent knows what kind of reasoning the situation calls for.</p>
 <p id="idx-def-probabilistic-reasoning-machine">It is worth being blunt about why this works, because it is easy to feel like you are writing documentation into a void. A foundation model is, very loosely, a probabilistic reasoning machine. <em>Probabilistic</em> means it does not always do exactly what you want. <em>Reasoning machine</em> means it genuinely reasons — the interpretability work probing world-models inside these networks settled that question — so writing the model down is not wasted breath. It reads it, and it reasons over it.</p>

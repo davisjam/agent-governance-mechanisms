@@ -32,6 +32,18 @@ ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
 table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
@@ -205,9 +217,9 @@ nav.toc .jump { margin-top: 0.7rem; }
 <li><a class="" href="appendix-c-typed-categories.html">Appendix C · Typed `ViolationCategory` / `FailureCategory` enums</a></li></ol></details><div class="jump"><a href="5.1-brownfield.html">Next part ⇒</a><a href="appendix-c-typed-categories.html">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4.6 · The Scenarios View"><header class="chap"><div class="kicker">Part 4 — The Model Zoo &nbsp;::&nbsp; Chapter 4.6</div><h1>The Scenarios View</h1></header><p id="idx-def-scenarios-view">The four views so far are static portraits. The Logical view says what the system is, the Process view what it does at once, the Development view how it is packaged, the Physical view where it runs. The +1 view sets them in motion. A <strong>scenario</strong> — a use case, a journey — walks a real goal end to end, and in walking it exercises the other four and validates that they hold up. Kruchten made scenarios the +1 for exactly this reason: they are how you check that the four architectural views describe a system that actually works.</p>
 <p>One general type anchors the view. A <strong>user journey</strong> names the interfaces a user moves through and the actions they take to accomplish something of value. Four real models embody the view: the user-journey model (the product-goal-to-code bridge), the agent-orchestration model (the <em>developer</em>-journey counterpart, the scenarios view pointed at the fleet rather than the user), journey-criticality-to-test-placement, and coverage-to-model-node mapping. The chapter closes with the zoo's flagship demonstration — four models joined so a product goal reaches all the way to how the deploy rations its tests.</p>
 <p>Two insets a reader needs for this view's model pages:</p>
-<blockquote id="idx-def-node-coverage"><p class="inset-title" id="inset-node-coverage">Inset I10 — Coverage over model nodes vs line coverage</p>
+<blockquote id="idx-def-node-coverage" class="concept-inset"><p class="inset-title" id="inset-node-coverage">Inset I10 — Coverage over model nodes vs line coverage</p>
 <p><strong>Line coverage</strong> counts <em>lines</em> — which source lines a test suite executed. It is easy to game and easy to misread: a high percentage can hide the one untested branch that matters. Node coverage counts <em>meanings</em> instead. Project the coverage onto a model's nodes — its states, its seams, its invariants, its journey endpoints — and ask which <em>nodes</em> a test exercised. Now an untested invariant cannot hide inside a 95% line number, because the invariant is a node, and the node is either covered or it is a visible gap. The shift is from "how much code ran" to "which meanings are checked," and only the second answers "is the thing I care about tested?"</p></blockquote>
-<blockquote id="idx-def-protocols-and-tla"><p class="inset-title" id="inset-tla">Inset I7 — Protocols and TLA+</p>
+<blockquote id="idx-def-protocols-and-tla" class="concept-inset"><p class="inset-title" id="inset-tla">Inset I7 — Protocols and TLA+</p>
 <p>When a property is not about one component but a <em>protocol</em> — many actors interleaving over time, each taking steps in an order you do not control — a single state assertion is not enough and even a bounded walk of one component misses the cross-actor races. You specify the protocol in a <strong>temporal-logic language</strong> (TLA+ is the best-known), stating the actors, their steps, and the safety and liveness properties the interleaving must satisfy. A model checker then explores <em>every</em> interleaving the actors can produce and either proves the properties or hands you a trace. This is the heaviest tool in the zoo, reserved for the invariant whose failure lives in a schedule no example test will ever pick — a distributed reservation, a lease-and-preempt loop, a two-phase hand-off between services.</p></blockquote>
 <h2 id="user-journey-model">The user-journey model</h2>
 <p id="idx-def-user-journey-model"><em>Model the product's user journeys as first-class typed entities — each an actor pursuing a goal through ordered steps, every boundary-crossing step joined to the endpoint it calls — so the path from what the product is for to what the code must provide is a queryable model.</em></p>

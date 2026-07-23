@@ -32,6 +32,18 @@ ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
 table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
@@ -206,7 +218,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <h2>Lifecycles first, then the failure map</h2>
 <p id="idx-def-lifecycle">Start with the lifecycles, because everything else hangs off them. A lifecycle is the correct operation of one recurring activity: how a bug report moves from filed to fixed, how a feature moves from design to shipped. Write the healthy path first. Then, from each node on that path, map the failure states — the ways this step can go wrong — and for each failure, the action to take. Think of it as a grid: every node crossed with every symptom, and in each cell, what to do.</p>
 <p id="idx-def-failure-mode-effects-analysis">The formal name for building that grid is <strong>failure mode and effects analysis</strong>. You enumerate what can go wrong, then the consequence of each, and then — the part people skip — how to get <em>out</em> of it again. You know how to get out. If two branches conflict, you read both sides, work out what each was trying to accomplish, and reconcile them. If the disk fills, you find the fat part of the system — the cache, usually — and wipe it. The agent knows none of this. It does not know where to find each commit's intent during a merge conflict, and it does not know where your system's fat points are — and it may, just maybe, decide the fix for a full disk is <code>rm -rf /</code>. You think I am joking. Read Twitter; agents do it all the time. So you coach it: where the hot points are, and, in every failure path, what is <em>not allowed</em>. Encode the prohibition as a control at the right level where you can — a Git hook, an agent hook — and where you cannot, at least tell the agent plainly.</p>
-<blockquote><p><em>A footnote on the pink elephant.</em> Telling an agent not to do something raises an honest question: does naming the forbidden act make it more likely? A human cannot help picturing a pink elephant once told not to — though without the telling, the thought would never have come. The apostle Paul said the law taught him what sin was, and that without the law he would not have known. It is genuinely useful to name the sin. It is also true you may never have considered an act until someone forbade it. Worth holding in mind; then back to the SOPs.</p></blockquote>
+<blockquote class="aside-sidenote"><p><em>A footnote on the pink elephant.</em> Telling an agent not to do something raises an honest question: does naming the forbidden act make it more likely? A human cannot help picturing a pink elephant once told not to — though without the telling, the thought would never have come. The apostle Paul said the law taught him what sin was, and that without the law he would not have known. It is genuinely useful to name the sin. It is also true you may never have considered an act until someone forbade it. Worth holding in mind; then back to the SOPs.</p></blockquote>
 <h2>Runbooks: split the deterministic from the judgment</h2>
 <p id="idx-def-runbook">Once the healthy path and the failure map are written, the thing you hand the agent is a <strong>runbook</strong> (or playbook): the steps to take, whether recovering from a failure or working a fresh ticket. The one discipline that makes a runbook work is to split it into two kinds of step, because they are governed completely differently.</p>
 <figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="cor-title cor-desc">

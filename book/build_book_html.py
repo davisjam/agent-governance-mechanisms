@@ -459,7 +459,12 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             # <hN> makes axe flag a heading-order skip when an inset sits right after the chapter <h1>.
             # Demote any heading inside a blockquote to a styled paragraph, preserving its {#id} anchor.
             inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
-            _emit(f"<blockquote>{inner_html}</blockquote>")
+            # Two kinds of blockquote. A CONCEPT INSET carries a demoted `inset-title` label (boxed primer);
+            # a PLAIN ASIDE has none — a short editorial remark. Give the plain aside a `sidenote` class so
+            # the stylesheet can float it into the margin as a Tufte-style sidenote on wide screens (it
+            # collapses inline on narrow). The concept insets keep the boxed `inset-title` treatment.
+            klass = "aside-sidenote" if 'class="inset-title"' not in inner_html else "concept-inset"
+            _emit(f'<blockquote class="{klass}">{inner_html}</blockquote>')
             continue
         # Pipe table (a header row, a `|---|---|` separator, then body rows). GitHub-flavored
         # markdown tables — the invariant/checker tables in the model pages depend on this.
@@ -557,6 +562,18 @@ ul {{ margin: 0 0 1rem; padding-left: 1.3rem; }}
 li {{ margin: 0.3rem 0; }}
 blockquote {{ margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }}
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote {{ background: transparent; }}
+@media (min-width: 60rem) {{
+  blockquote.aside-sidenote {{
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }}
+}}
 code {{ background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }}
 a {{ color: var(--accent); }}
 table.book-table {{ border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }}

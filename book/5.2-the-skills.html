@@ -32,6 +32,18 @@ ul { margin: 0 0 1rem; padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
 blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
               color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
 table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
@@ -207,7 +219,7 @@ nav.toc .jump { margin-top: 0.7rem; }
 <p id="idx-def-self-operate">Self-operate is the starting point, because it holds the lifecycles of running a repo — everything an engineering team actually does. Pull a ticket and build a feature. Pull a ticket and fix a bug. Optimize the codebase. Handle resource exhaustion. Each of those is written down as a model — I did say models everywhere, and I meant it — because that is how you constrain the agent's search and bias it toward doing the work the way you want.</p>
 <p>On top of the models sit the playbooks, and there is a playbook for everything, each with briefs for its judgment steps. This is what lets an orchestrator agent — itself running as a reactive loop — know how to respond when an event arrives. An agent finished? Reach for the next step: <em>agent landed</em>. Is the feature done? Open the Epic file, which lists the launches needed to complete it, and check. Not done — launch the next item. Done — run the definition-of-done audit over the whole Epic, the one that asks, among other things, whether the model drifted from the code. Passes — mark it done and move it to the closed pile. Still active — record the status and the commit that made progress, and launch the next agent from the Epic's list. The playbook keeps the loop turning on inputs from the environment, which is precisely the <em>dispatch → work → land → tombstone</em> lifecycle from <a href="2.2-loops-and-models.html">Chapter 2</a>, now written down for the operator to run.</p>
 <p>That definition-of-done audit exists because of one hard-won rule.</p>
-<blockquote><p>"Done" is a claim, not a fact.</p></blockquote>
+<blockquote class="aside-sidenote"><p>"Done" is a claim, not a fact.</p></blockquote>
 <p>An agent reporting a task complete is describing its <em>intent</em>, not the state of your repository, and the two drift apart constantly — a sibling change broke a test, a marker rotted, the thing it "verified" quietly routed through a fallback. So you do not trust the claim. You re-run the gates yourself, at HEAD, and let a fact answer where a claim was offered.</p>
 <h2>Self-governance: the catalogue and the posture</h2>
 <p id="idx-def-self-governance">The second skill, self-governance, triggers on a simple signal: a bad thing happened more than once — sometimes just once, if it was bad enough. Recurrence is the clue that you are either failing to <em>detect</em> the problem (you need a control, a sensor) or failing to <em>prevent</em> it (you need architecture, a wall). You have not put the wall in the right spot, or you have not put a badge reader on the door.</p>
