@@ -7,6 +7,18 @@ It is published as a static GitHub Pages site and embedded in a parent repo as a
 `catalog.py` is the one tool — **stdlib-only, no dependencies** (so `python3 catalog.py …` runs on a
 fresh checkout with nothing installed). Do not add pip dependencies; keep it clone-and-run.
 
+## Site is a preview; the book claims and expands
+
+The published **site** — the landing, the catalogue views, the entry pages — is a *preview*: concise
+framings and entry points. The **book** (under `book/`) is where each idea is *claimed and expanded*.
+Two jobs, one for each surface.
+
+The standing implication: **book coverage ⊇ site framings.** Any conceptual framing that appears on the
+site should have a fuller treatment in the book. When you add a framing to the site's landing prose (the
+`LANDING_INTRO`, the schools, the ways, the spectrum axis) or an entry page, either the book already
+expands it or you owe it a home there. Site-only material is limited to *adoption and navigation* —
+DIY-vs-install, the nav cards, the quick-start; those need no book counterpart. Everything conceptual does.
+
 ## What is a mechanism?
 
 A **mechanism** is a recurring, failure-killing pattern of governance — written like a Gang-of-Four design
