@@ -70,6 +70,29 @@ META_RE = re.compile(r"<!--\s*(part-title|chapter-title):\s*(.*?)\s*-->")
 INDEX_DEF_RE = re.compile(r"^<!--\s*index-def:\s*([a-z0-9-]+)\s*-->$")
 INDEX_EXAMPLE_RE = re.compile(r"^<!--\s*index-example:\s*([a-z0-9-]+)\s*-->$")
 
+# Glossary annotation — like LaTeX `\caption[SHORT]{LONG}`: a term's SHORT definition is pinned at its
+# DEFINITION SITE, and the build derives BOTH the first-reference sidenote AND the generated back-Glossary
+# (a `<!-- glossary-auto -->` directive) from it, so the two can never drift. `gloss:` emits a sidenote at
+# the marker AND feeds the glossary; `gloss-only:` feeds the glossary WITHOUT a sidenote (for a term the
+# running prose already defines in full). Single source of truth: the marker.
+_GLOSS_RE = re.compile(r"^<!--\s*gloss:\s*(?P<term>.+?)\s*\|\s*(?P<def>.+?)\s*-->$")
+_GLOSS_ONLY_RE = re.compile(r"^<!--\s*gloss-only:\s*(?P<term>.+?)\s*\|\s*(?P<def>.+?)\s*-->$")
+_GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_glossary before the render loop
+
+
+def _collect_glossary(chapters: list[dict]) -> None:
+    """Harvest every `gloss:` / `gloss-only:` marker across all chapter bodies into `_GLOSSARY`. Fails
+    loud on a duplicate term (one definition site per term — that IS the single-source-of-truth rule)."""
+    _GLOSSARY.clear()
+    for c in chapters:
+        for line in c["body_md"].splitlines():
+            m = _GLOSS_RE.match(line.strip()) or _GLOSS_ONLY_RE.match(line.strip())
+            if m:
+                term = m.group("term").strip()
+                if term in _GLOSSARY:
+                    raise SystemExit(f"duplicate glossary definition for '{term}' — one gloss marker per term")
+                _GLOSSARY[term] = m.group("def").strip()
+
 # Part number → the source subdirectory that holds its chapters. Front matter is part 0, the
 # five numbered parts are 1–5 (Part 4 is the Model Zoo), back matter is part 6. Appendix parts follow.
 _PART_DIRS = {
@@ -442,6 +465,23 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 and stripped.count("<!--") == 1 \
                 and stripped[4:].lstrip().startswith("figure-iframe:"):
             _emit(_figure_iframe_block(stripped))
+            continue
+        # Glossary annotation: `<!-- gloss: Term | short def -->` -> a first-reference sidenote (the
+        # gloss) rendered here, plus the term feeds the generated back-Glossary. `gloss-only:` feeds the
+        # glossary WITHOUT a sidenote (the prose already defines the term in full at this point).
+        _gm = _GLOSS_RE.match(stripped)
+        if _gm:
+            _emit(f'<blockquote class="aside-sidenote"><p><strong>{inline(_gm.group("term"))}.</strong> '
+                  f'{inline(_gm.group("def"))}</p></blockquote>')
+            continue
+        if _GLOSS_ONLY_RE.match(stripped):
+            continue  # glossary-only: harvested by _collect_glossary; renders nothing inline
+        # Generated glossary: `<!-- glossary-auto -->` -> the alphabetical list harvested from every gloss
+        # marker in the book (single source of truth; the hand-written list is gone so it can't drift).
+        if stripped == "<!-- glossary-auto -->":
+            items = "".join(f"<li><strong>{inline(t)}</strong> — {inline(d)}</li>"
+                            for t, d in sorted(_GLOSSARY.items(), key=lambda kv: kv[0].lower()))
+            _emit(f'<ul class="glossary">{items}</ul>')
             continue
         # A standalone HTML comment (e.g. the TODO markers) — emit it raw so it stays an invisible
         # comment in the source rather than escaped visible text.
@@ -2210,6 +2250,8 @@ def build() -> int:
     # order (fails loud on a duplicate def, an unregistered slug, or an example with no def). The per-page
     # anchor maps feed the renderer so each tagged block carries the anchor the index links to.
     concept_registry, page_anchor_maps = _harvest_concept_tags(chapters)
+    # Harvest the glossary annotations (single source of truth for the inline glosses + the back-Glossary).
+    _collect_glossary(chapters)
 
     # Per-chapter pages.
     for i, c in enumerate(chapters):
