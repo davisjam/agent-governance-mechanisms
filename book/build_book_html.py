@@ -95,9 +95,11 @@ _PART_TITLES = {
 }
 
 # Per-Part epigraph rendered at the opener of the first chapter in each numbered Part. Each is a
-# (quote, attribution) pair. The two literary quotations (Macbeth, Ecclesiastes) are verbatim from
-# the source memoir; the Context and Governed-Environment openers use a regulatory line and the
-# book's own thesis, respectively (candidates a human editor may swap).
+# (quote, attribution) pair. The Macbeth line is verbatim from the source memoir; the Context and
+# Governed-Environment openers use a regulatory line and the book's own thesis, and the Putting-It-
+# to-Work opener the working method of that part (candidates a human editor may swap). The
+# Ecclesiastes line that once opened Part 5 now lands only in the conclusion, where it sets up the
+# closing "machines search, not wisdom" — kept to one appearance to avoid the reader meeting it twice.
 _PART_EPIGRAPHS: dict[int, tuple[str, str]] = {
     1: (
         "Just as stairs can exclude people who use wheelchairs, inaccessible web content "
@@ -117,9 +119,9 @@ _PART_EPIGRAPHS: dict[int, tuple[str, str]] = {
         "George E. P. Box",
     ),
     5: (
-        "I applied mine heart to know, and to search, and to seek out wisdom, and the "
-        "reason of things.",
-        "King Solomon (Ecclesiastes 7:25)",
+        "You do not govern a codebase into existence all at once. You find the worst tangle, "
+        "give it a name, and move to the next.",
+        "the working method of this part",
     ),
 }
 
