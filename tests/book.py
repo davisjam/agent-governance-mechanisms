@@ -522,6 +522,27 @@ def check_render_fidelity() -> tuple[list[Finding], dict]:
     return findings, {"pages_scanned": pages, "issues": len(findings)}
 
 
+# ---- rule 10: no hardcoded "Chapter N" in prose (chapter numbers are DERIVED at build) --------------
+
+_HARDCODED_CHAPTER_RE = re.compile(r"\bChapter\s+\d+\b")
+
+
+def check_hardcoded_chapter_num() -> tuple[list[Finding], dict]:
+    """Chapter numbers are derived from filesystem order at build time, so a literal 'Chapter N' written
+    into prose (usually a cross-reference link text, e.g. `[Chapter 8](5.1-brownfield.html)`) is a stale
+    number waiting to drift the moment a chapter moves. Cross-references should use the chapter TITLE.
+    Scans chapter SOURCE .md after masking code fences / inline code. Suppress a deliberate literal with
+    `<!-- noqa: book-chapter-num — <reason> -->` in the source .md."""
+    findings: list[Finding] = []
+    files = _chapter_src_files()
+    for f in files:
+        masked = _mask_markdown_noise(open(f, encoding="utf-8").read())
+        for m in _HARDCODED_CHAPTER_RE.finditer(masked):
+            line = masked.count("\n", 0, m.start()) + 1
+            findings.append(Finding(f, "", f"{rel(f)}:{line} — hardcoded {m.group(0)!r} in prose (link by title; numbers are derived)"))
+    return findings, {"chapters_scanned": len(files), "issues": len(findings)}
+
+
 # ---- driver: run every rule, partition suppressed vs active, print a report; ALWAYS exit-neutral --
 
 # (label, lint-name, fn). The lint-name is what an inline `<!-- noqa: <name> — <reason> -->` cites.
@@ -535,6 +556,7 @@ _RULES = [
     ("7. delimiter balance (parens / braces)", "book-delimiters", check_delimiter_balance),
     ("8. heading-level skips (PROMOTE-candidate)", "book-headings", check_heading_levels),
     ("9. render fidelity (un-converted markdown)", "book-render-fidelity", check_render_fidelity),
+    ("10. no hardcoded 'Chapter N' in prose", "book-chapter-num", check_hardcoded_chapter_num),
 ]
 
 # the lint names, exported so a suppression comment can be validated against the known set.
