@@ -1021,7 +1021,7 @@ to the same fixed elements a reader of that book already knows.
 
 Every pattern page carries the classic slots:
 
-- **Intent** — one line: the failure class this mechanism kills, and the shape that kills it.
+- **Intent** — the failure class this mechanism kills, and the shape that kills it.
 - **Motivation** — the recurring failure told as a scenario, and why the naive fix does not hold.
 - **Applicability** — the conditions under which reaching for this pattern pays off.
 - **Structure** — a diagram of the moving parts and how they connect.
