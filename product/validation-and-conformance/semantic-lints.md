@@ -22,6 +22,17 @@ head, and the compiler enforces none of them (a silent catch, a banned API, a ra
 all compile fine). The failure is *structural drift that quietly reintroduces a defect class*, and it
 recurs continuously as code is written.
 
+One of these lints once turned on its author. A regex meant to scan source for a
+banned pattern backtracked catastrophically on a real input and hung the deploy
+gate — the checker that guards the fleet became the thing that stalled it. The
+sting was personal: the author's doctoral research was on this precise failure,
+regular-expression denial of service, the class where a crafted string drives an
+innocent-looking pattern into exponential work. Knowing the failure cold did not
+stop shipping it. That is the lesson the entry carries. The cure was not a better
+regex or a lint that flags the bad one; it was to delete the surface — reach for
+the parser, and let the whole class go. The mechanism is the fix; this instance is
+why the fix reads the way it does.
+
 ## Why it's not just "code review" (or "rely on the compiler")
 
 The compiler checks *types*, not *domain invariants*: a `catch {}` that swallows an error, a
