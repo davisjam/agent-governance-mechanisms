@@ -29,6 +29,16 @@ routine, a checker that was made stricter without a matching edge to the produce
 reads as truth, and the blow-up lands days later in a downstream gate instead of at the change that
 caused it.
 
+The design was not guessed. The models were left deliberately **ungoverned** after creation and the
+fleet allowed to drift them, so the controls could be designed from real observed drift instead of a
+hypothesis. An exhaustive audit of recently-closed work — each with a green definition-of-done at
+close — harvested roughly two dozen drift instances at a signal-to-noise ratio near one and zero false
+positives: a checker made stricter than the producer it now rejects, a subsystem retired from the code
+but still present-tense in the model, a fully typed function wired to zero production consumers, a
+reconciliation lint gone red the moment its Epic closed. That corpus is what "derived defends,
+snapshotted drifts" was read *off of*, not asserted into — the clean cases all had a control that read
+the source of truth at check time; the drifted ones all had a parallel hand-maintained list that rotted.
+
 ## Why it's not just a drift gate, a manifest, or codegen
 
 - **Not just a [drift & parity gate](drift-parity-gates.md).** A parity gate answers one question about
@@ -51,6 +61,16 @@ caused it.
   the models are written from the code they describe — so generation inverts reality. The graph keeps
   bidirectional *traversal* (query either direction) without bidirectional *generation*: it is a typed
   *view over* the code's own symbols, not a generator that owns them.
+- **Not just a systems-engineering trace model with a sync job bolted on.** The established
+  systems-engineering notation for cross-level traceability answers "what *is* the system?": it is a
+  stored model whose links connect model elements to *other model elements*, so its targets trivially
+  exist and "drift from code" is not even a question it can ask. To make such a model live against code,
+  you keep the stored snapshot and bolt on a **sync process** that re-aligns it — and a process can lag,
+  can fail, is itself another governed thing. This inverts that: the code is the truth, and an edge is a
+  **resolver over live code**, so reading it *is* reading the current territory. Liveness is a property
+  of the representation, not a process kept running beside it — and a property cannot drift while a
+  process can. The notation is borrowed (satisfy / verify / allocate / derive); the embodiment is
+  changed, from a snapshot-plus-sync to resolution-is-the-read.
 
 ## Mechanism
 
@@ -81,6 +101,17 @@ caused it.
   pointer surfaces (code routing, runbook, agent-context doc, operator skill, canonical-command example)
   that must name it; a derived lint asserts every surface agrees, and a cutover checklist criterion aims
   the change up front. This is a `points-at` edge whose derivation is registry agreement.
+
+- **Walk the graph both ways — the context-prosthetic.** The same anchors that catch drift also make
+  the graph a navigable cross-layer index. A systems engineer holds "the relevant parts and how they
+  relate"; a context-bounded agent cannot hold a whole large codebase, and must not grep it (context
+  blow-up) or guess (hallucination). The graph is that mental model, externalized: the agent traverses
+  edges to pull just the relevant slice and its relations into context. The link is realized both as a
+  model-side anchor and as a *derived* code-side back-reference trailer, so an agent at a symbol jumps up
+  to the invariant it realizes and an agent at a model jumps down to the code — a query surface reads
+  either direction on demand. Drift-detection and this traversal are two faces of one property: an
+  anchor that resolves means both that the model's claim is currently true *and* that the agent's
+  traversal is a current slice of the system. You do not get one without the other.
 
 A sharp by-product: a model that wants to reference a symbol for which **no clean anchor exists** — the
 logic is buried inline in a god-function — surfaces that absence as a finding. The missing anchor is an
@@ -120,14 +151,27 @@ unresolved anchor routes to a refactoring target, not an error.
 - A traceability graph over the system models whose typed edges join each model element to its
   enforcing lint, its governed code root, its verifying test or formal proof, its related models, and its
   registry entry — every edge symbol-anchored and re-derived by a meta-lint that reddens on a broken
-  anchor. Built from real drift: a fan-out over a dozen models classified hundreds of anchors and caught
-  roughly a dozen genuine model↔code drifts, most of which no existing lint detected — the graph was
-  their first mechanical detection.
+  anchor. Built from real drift: a fan-out over twelve models classified roughly six-hundred anchors and
+  caught about fourteen genuine model↔code drifts — stale symbol cites, deleted-file registry keys, a
+  prose cite the code had moved away from. The load-bearing result: for most of them **no existing lint
+  fired**, so the graph was their first mechanical detection. That reprised the audit's near-one
+  signal-to-noise and zero false positives on an independent, freshly-observed drift set — evidence that
+  a control designed from real drift catches real drift.
+- The clean-versus-drifted split, on that same fan-out, re-confirming the governing principle: the
+  models carrying a standing anchor-resolution lint drifted zero times; the drift concentrated in the
+  registries with no such lint. Derived defended; snapshotted drifted.
 - The two exemplars it generalizes: a per-model state-machine reconciliation lint whose symbol-presence
   references seeded the anchor type, and a coverage walk asserting every model element has a
   verified-by artifact.
 - The active-implementation registry plus its pointer-agreement lint, seeded by a prod-blocking deploy
   incident where a built-but-unwired replacement left every pointer surface aimed at a deleted driver.
+- **Proof-as-anchor** — the trajectory that folds formal methods into the graph. Where an invariant
+  carries a model-check (a bounded-model-check or exhaustive state-space search, for the concurrency
+  slice), the proof is *just another anchor kind*: a `verified-by` edge whose target is a checker run
+  rather than a test. Two payoffs follow. The agent's traversal reaches the whole verification story —
+  invariant, the code it governs, the proof that clinches it. And when anchored code changes, the graph
+  can *trigger re-running the checker*: for that slice, re-verification is mechanized, where every other
+  edge's semantic-currency check stays sample-judged by hand.
 
 ## Related mechanisms
 
