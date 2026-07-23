@@ -10,9 +10,18 @@ the three style sources into a checklist:
 
 - [`rhetoric.md`](rhetoric.md) — the rhetoric toolkit and the sameness/density tells.
 - [`voice.md`](voice.md) — the target voice (Prof. Davis) with verbatim exemplars.
+- [`document-types.md`](document-types.md) — the document-type taxonomy (book / tutorial / reference /
+  design doc / blog), each with type-specialized checks the passes below do not carry.
 - The house-rules writing-style discipline — active voice, say-it-once, cut-qualifiers, describe-don't-sell,
   and the interpretability principle (a passage must stand alone; describe artifacts by role, not by
   unshipped filename).
+
+**Name the document type first.** Before Pass 1, consult [`document-types.md`](document-types.md) and name
+the type (engineering book, tutorial, reference/API doc, design doc, blog/keynote). The type carries
+**artifact-scale checks** the per-passage passes below miss — a thesis that must recur across a book's
+chapters, a visual per chapter, a section-length cap, a tutorial that must not smuggle a thesis. Add the
+type's specialized rules (see that file's §"How the audit uses this file") to the findings, then run the
+passes.
 
 Run the passes **in order**. Each pass says what to DETECT (a heuristic mechanical enough to actually
 apply) and the FIX. Collect findings as you go; rank and format them at the end.

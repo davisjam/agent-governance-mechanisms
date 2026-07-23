@@ -19,6 +19,13 @@ the set of paths changed since `origin/main`. When it returns False the check SK
 because its verdict is a pure function of those inputs. Only the expensive Tier-2 checks bother (axe's ~88s
 browser pass, `claude plugin validate`); Tier-1 is sub-second, so it leaves `needs_run=None` (always run).
 No baseline (missing `origin/main`) → everything runs — fail-safe.
+
+**Book audit (`--book-audit`).** A separate AUDIT-ONLY report path over the embedded book (`tests/book.py`):
+intra-book link integrity, a visual per chapter, section-length cap, thesis-woven, figure hygiene,
+placeholder count. It prints findings and ALWAYS exits 0 — the book has deliberate draft gaps, so it must
+never contribute to the suite's fail count. It runs disjoint from the pass/fail CHECKS above: `--book-audit`
+runs only the report and returns; a normal run leaves the book untouched. Promote a book rule to blocking
+only once the book clears it.
 """
 from __future__ import annotations
 
@@ -26,6 +33,7 @@ import argparse
 import sys
 from typing import Callable, NamedTuple
 
+from tests.book import run_book_audit
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import check_html_links
@@ -71,7 +79,13 @@ def main() -> int:
     ap.add_argument("--full", action="store_true", help="run every check regardless of needs_run — the "
                     "authoritative pass. CI MUST use this: post-push, HEAD == origin/main, so incremental "
                     "gating would skip everything. Local predeploy stays incremental and trusts CI's green.")
+    ap.add_argument("--book-audit", action="store_true", help="run the AUDIT-ONLY book structural report "
+                    "(visual-per-chapter, section-length, thesis-woven, figure hygiene, placeholders) and "
+                    "exit 0 — never contributes to the fail count. Disjoint from the pass/fail CHECKS.")
     args = ap.parse_args()
+
+    if args.book_audit:
+        return run_book_audit()
 
     # --full forces the run-everything path (reusing the no-baseline fail-safe). Incremental otherwise.
     changed = None if args.full else changed_vs_origin()
