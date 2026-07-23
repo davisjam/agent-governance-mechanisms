@@ -333,22 +333,25 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
     per (slug, kind) in reading order to match `_harvest_concept_tags`."""
     out: list[str] = []
     blocks = _split_blocks(md)
-    pending_anchor: str | None = None       # anchor id to inject onto the next content block
+    pending_anchors: list[str] = []         # anchor id(s) to attach to the next content block
     occ: dict[tuple[str, str], int] = {}    # per-page (slug, kind) → next occurrence index
 
     def _emit(block_html: str) -> None:
-        nonlocal pending_anchor
-        if pending_anchor is not None:
-            block_html = _inject_anchor_id(block_html, pending_anchor)
-            pending_anchor = None
+        # Attach every pending anchor. The first goes onto the block's own opening tag; extras (two tags
+        # heading one block — a concept defined and another exemplified at the same paragraph) front the
+        # block as empty anchor spans so each deep-link resolves.
+        if pending_anchors:
+            for extra in pending_anchors[1:]:
+                block_html = f'<span id="{html.escape(extra, quote=True)}"></span>' + block_html
+            block_html = _inject_anchor_id(block_html, pending_anchors[0])
+            pending_anchors.clear()
         out.append(block_html)
 
     def _consume_index_tag(line: str) -> bool:
-        """If `line` is a lone index-def / index-example tag, arm the pending anchor for the next block
-        and return True. A tag may sit on its own line at the head of a block that ALSO holds the block it
-        annotates (no blank line between), so this is called both on a standalone comment block and on the
-        first line of a multi-line block."""
-        nonlocal pending_anchor
+        """If `line` is a lone index-def / index-example tag, arm its anchor for the next block and return
+        True. A tag may sit on its own line at the head of a block that ALSO holds the block it annotates
+        (no blank line between), so this runs both on a standalone comment block and on a block's first
+        line(s). Several tags may stack on one block."""
         s = line.strip()
         _md, _me = INDEX_DEF_RE.match(s), INDEX_EXAMPLE_RE.match(s)
         if not (_md or _me):
@@ -360,7 +363,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
         if anchor_map is not None:
             got = anchor_map.get((slug, kind, n))
             if got is not None:
-                pending_anchor = got
+                pending_anchors.append(got)
         return True
 
     for block in blocks:
@@ -375,6 +378,13 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             blk_lines = blk_lines[1:]
         if not blk_lines:
             continue  # the block was nothing but tag comment(s)
+        # A tag anchors the block it HEADS — a mid-block tag (no blank line before it, prose above it in the
+        # same block) would silently leak into the rendered <p>. Fail loud so the author moves it to the
+        # block boundary rather than shipping a raw comment.
+        for _ln in blk_lines[1:]:
+            if INDEX_DEF_RE.match(_ln.strip()) or INDEX_EXAMPLE_RE.match(_ln.strip()):
+                raise SystemExit(
+                    f"index tag must head its block (blank line before it): mid-block tag {_ln.strip()!r}")
         block = "\n".join(blk_lines)
         stripped = block.strip()
         # Fenced code — a ```mermaid block renders as <pre class="mermaid"> (the mermaid runtime
