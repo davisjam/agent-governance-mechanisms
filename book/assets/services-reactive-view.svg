@@ -15,41 +15,41 @@
 
   <!-- web front door -->
   <rect x="24" y="70" width="150" height="90" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="99" y="105" text-anchor="middle" font-size="23" font-weight="bold" fill="#12324f">Web</text>
-  <text x="99" y="132" text-anchor="middle" font-size="17" fill="#3d5a70">front door;</text>
-  <text x="99" y="151" text-anchor="middle" font-size="17" fill="#3d5a70">splits into chunks</text>
+  <text x="99" y="105" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Web</text>
+  <text x="99" y="132" text-anchor="middle" font-size="19" fill="#3d5a70">front door;</text>
+  <text x="99" y="151" text-anchor="middle" font-size="19" fill="#3d5a70">splits into chunks</text>
 
   <!-- enqueue arrow -->
   <line x1="174" y1="115" x2="238" y2="115" stroke="#2B2416" stroke-width="1.6" marker-end="url(#srv-arrow)"/>
-  <text x="206" y="103" text-anchor="middle" font-size="17" font-style="italic" fill="#5a5240">enqueue</text>
+  <text x="206" y="103" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">enqueue</text>
 
   <!-- queue -->
   <rect x="242" y="70" width="130" height="90" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="1.8"/>
-  <text x="307" y="112" text-anchor="middle" font-size="23" font-weight="bold" fill="#3a2350">Queue</text>
-  <text x="307" y="139" text-anchor="middle" font-size="17" fill="#5a4570">one chunk = one task</text>
+  <text x="307" y="112" text-anchor="middle" font-size="25" font-weight="bold" fill="#3a2350">Queue</text>
+  <text x="307" y="139" text-anchor="middle" font-size="19" fill="#5a4570">one chunk = one task</text>
 
   <!-- push arrow -->
   <line x1="372" y1="115" x2="436" y2="115" stroke="#2B2416" stroke-width="1.6" marker-end="url(#srv-arrow)"/>
-  <text x="404" y="103" text-anchor="middle" font-size="17" font-style="italic" fill="#5a5240">hands off</text>
+  <text x="404" y="103" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">hands off</text>
 
   <!-- worker -->
   <rect x="440" y="70" width="150" height="90" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="515" y="105" text-anchor="middle" font-size="23" font-weight="bold" fill="#12324f">Worker</text>
-  <text x="515" y="132" text-anchor="middle" font-size="17" fill="#3d5a70">stateless;</text>
-  <text x="515" y="151" text-anchor="middle" font-size="17" fill="#3d5a70">remediates a chunk</text>
+  <text x="515" y="105" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Worker</text>
+  <text x="515" y="132" text-anchor="middle" font-size="19" fill="#3d5a70">stateless;</text>
+  <text x="515" y="151" text-anchor="middle" font-size="19" fill="#3d5a70">remediates a chunk</text>
 
   <!-- publish arrow to fan-in -->
   <line x1="590" y1="115" x2="654" y2="115" stroke="#2B2416" stroke-width="1.6" marker-end="url(#srv-arrow)"/>
-  <text x="622" y="103" text-anchor="middle" font-size="17" font-style="italic" fill="#5a5240">publishes</text>
+  <text x="622" y="103" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">publishes</text>
 
   <!-- fan-in -->
   <rect x="658" y="70" width="94" height="90" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="1.8"/>
-  <text x="705" y="106" text-anchor="middle" font-size="21" font-weight="bold" fill="#3a2350">Fan-in</text>
-  <text x="705" y="133" text-anchor="middle" font-size="16" fill="#5a4570">assembles</text>
-  <text x="705" y="151" text-anchor="middle" font-size="16" fill="#5a4570">the file</text>
+  <text x="705" y="106" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">Fan-in</text>
+  <text x="705" y="133" text-anchor="middle" font-size="19" fill="#5a4570">assembles</text>
+  <text x="705" y="151" text-anchor="middle" font-size="19" fill="#5a4570">the file</text>
 
   <!-- reactive note -->
-  <text x="30" y="196" font-size="17" font-style="italic" fill="#555">Every arrow is an event, never a poll. Services stay reactive and stateless — Redis carries communication, the database carries truth.</text>
+  <text x="30" y="196" font-size="19" font-style="italic" fill="#555">Every arrow is an event, never a poll. Services stay reactive and stateless — Redis carries communication, the database carries truth.</text>
 
   <!-- divider -->
   <line x1="24" y1="222" x2="736" y2="222" stroke="#c8d6e5" stroke-width="1.4"/>
@@ -59,37 +59,37 @@
 
   <!-- LEFT: poll plane (retired) -->
   <rect x="24" y="284" width="336" height="196" rx="4" fill="#faf6f2" stroke="#a37a4a" stroke-width="1.6"/>
-  <text x="192" y="314" text-anchor="middle" font-size="22" font-weight="bold" fill="#7a4a1a">Kubernetes poll plane (retired)</text>
+  <text x="192" y="314" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Kubernetes poll plane (retired)</text>
 
   <rect x="48" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#a37a4a" stroke-width="1.4"/>
-  <text x="113" y="362" text-anchor="middle" font-size="19" font-weight="bold" fill="#7a4a1a">Worker pool</text>
-  <text x="113" y="386" text-anchor="middle" font-size="16" fill="#7a5a3a">claims from Redis</text>
+  <text x="113" y="362" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Worker pool</text>
+  <text x="113" y="386" text-anchor="middle" font-size="19" fill="#7a5a3a">claims from Redis</text>
 
   <rect x="206" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#a37a4a" stroke-width="1.4"/>
-  <text x="271" y="356" text-anchor="middle" font-size="19" font-weight="bold" fill="#7a4a1a">Custom</text>
-  <text x="271" y="378" text-anchor="middle" font-size="19" font-weight="bold" fill="#7a4a1a">autoscaler</text>
+  <text x="271" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Custom</text>
+  <text x="271" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">autoscaler</text>
 
-  <text x="48" y="430" font-size="16.5" fill="#7a5a3a">Workers PULL work from size-stratified</text>
-  <text x="48" y="451" font-size="16.5" fill="#7a5a3a">queues; a bespoke loop watches depth</text>
-  <text x="48" y="472" font-size="16.5" fill="#7a5a3a">and adds or removes pods.</text>
+  <text x="48" y="430" font-size="24" fill="#7a5a3a">Workers PULL work from size-stratified</text>
+  <text x="48" y="451" font-size="24" fill="#7a5a3a">queues; a bespoke loop watches depth</text>
+  <text x="48" y="472" font-size="24" fill="#7a5a3a">and adds or removes pods.</text>
 
   <!-- RIGHT: push plane (serverless) -->
   <rect x="400" y="284" width="336" height="196" rx="4" fill="#f0f7f2" stroke="#2d6a4f" stroke-width="1.6"/>
-  <text x="568" y="314" text-anchor="middle" font-size="22" font-weight="bold" fill="#1e4a36">Serverless push plane</text>
+  <text x="568" y="314" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Serverless push plane</text>
 
   <rect x="424" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#2d6a4f" stroke-width="1.4"/>
-  <text x="489" y="356" text-anchor="middle" font-size="19" font-weight="bold" fill="#1e4a36">Managed</text>
-  <text x="489" y="378" text-anchor="middle" font-size="19" font-weight="bold" fill="#1e4a36">task queue</text>
+  <text x="489" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Managed</text>
+  <text x="489" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">task queue</text>
 
   <rect x="582" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#2d6a4f" stroke-width="1.4"/>
-  <text x="647" y="356" text-anchor="middle" font-size="19" font-weight="bold" fill="#1e4a36">Worker,</text>
-  <text x="647" y="378" text-anchor="middle" font-size="19" font-weight="bold" fill="#1e4a36">scale-from-0</text>
+  <text x="647" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Worker,</text>
+  <text x="647" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">scale-from-0</text>
 
-  <text x="424" y="430" font-size="16.5" fill="#1e4a36">The platform PUSHES each chunk to a</text>
-  <text x="424" y="451" font-size="16.5" fill="#1e4a36">worker that scales from zero; native</text>
-  <text x="424" y="472" font-size="16.5" fill="#1e4a36">autoscale — no custom scaler at all.</text>
+  <text x="424" y="430" font-size="24" fill="#1e4a36">The platform PUSHES each chunk to a</text>
+  <text x="424" y="451" font-size="24" fill="#1e4a36">worker that scales from zero; native</text>
+  <text x="424" y="472" font-size="24" fill="#1e4a36">autoscale — no custom scaler at all.</text>
 
   <!-- takeaway strip -->
-  <text x="30" y="516" font-size="18" font-weight="bold" fill="#12324f">The move was a change of deployment target, not a rewrite.</text>
-  <text x="30" y="540" font-size="17" font-style="italic" fill="#555">Because the services were already reactive and stateless, poll-to-push was natural. The reactive seam was the enabler.</text>
+  <text x="30" y="516" font-size="19" font-weight="bold" fill="#12324f">The move was a change of deployment target, not a rewrite.</text>
+  <text x="30" y="540" font-size="19" font-style="italic" fill="#555">Because the services were already reactive and stateless, poll-to-push was natural. The reactive seam was the enabler.</text>
 </svg>

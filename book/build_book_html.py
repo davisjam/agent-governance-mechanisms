@@ -42,7 +42,19 @@ COPYRIGHT = "© James C. Davis, 2026–present"
 # Mermaid runtime (CDN) — pulled in so the appendix's ```mermaid placeholder blocks render as diagrams.
 MERMAID_CDN = (
     '<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>'
-    "<script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });</script>"
+    # SINGLE SOURCE OF TRUTH for mermaid styling — every diagram in the book renders through this one
+    # config, so all diagrams change together. The defaults make every diagram legibility-compliant
+    # (labels >= 19px); no per-diagram font hacks. A local `%%{init}%%` override belongs in a chapter
+    # only where a specific diagram genuinely needs one. GOTCHA: sequence diagrams IGNORE
+    # themeVariables.fontSize, so the actor/message/note sizes are set explicitly under `sequence`.
+    "<script>mermaid.initialize({"
+    " startOnLoad: true,"
+    " securityLevel: 'loose',"
+    " themeVariables: { fontFamily: 'Georgia, \"Times New Roman\", serif', fontSize: '20px' },"
+    " flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 },"
+    " sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 },"
+    " state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {}"
+    " });</script>"
 )
 
 # Chapter metadata comments — ONLY the two title keys. Scoped to these keys (not a generic `[a-z-]+`)
@@ -604,6 +616,11 @@ table.book-table tbody tr:nth-child(even) {{ background: #faf9f6; }}
 blockquote table.book-table {{ background: #fff; }}
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
 blockquote pre.mermaid {{ font-style: normal; }}
+/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
+   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
+   theme knob is missed. */
+pre.mermaid .nodeLabel, pre.mermaid .label text {{ font-size: 20px; }}
+pre.mermaid text.messageText {{ font-size: 18px; }}
 /* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
    quote: it is a deliberately designed aside that teaches a background concept beside the main argument
    (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its

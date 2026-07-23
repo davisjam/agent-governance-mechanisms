@@ -6,8 +6,8 @@
      (figures/existing-models.tex, \label{fig:background:existing-theories}),
      panels (a) Velocity-Centric, (b) Oversight-Centric, (c) Governance-Centric.
      Palette matches the book accent (#1a4a7a). -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" width="900" height="320"
-     role="img" aria-labelledby="omTitle omDesc"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 560" width="1500" height="560"
+     role="group" aria-labelledby="omTitle omDesc"
      font-family="'Helvetica Neue', Arial, sans-serif">
   <title id="omTitle">Three process models for agentic software engineering</title>
   <desc id="omDesc">Three panels compared side by side. Velocity-centric: a human sets
@@ -27,68 +27,68 @@
   </defs>
 
   <!-- panel labels -->
-  <text x="150" y="26" text-anchor="middle" font-size="21" font-weight="700" fill="#1a1a1a">(a) Velocity-centric</text>
-  <text x="450" y="26" text-anchor="middle" font-size="21" font-weight="700" fill="#1a1a1a">(b) Oversight-centric</text>
-  <text x="750" y="26" text-anchor="middle" font-size="21" font-weight="700" fill="#1a1a1a">(c) Governance-centric</text>
+  <text x="250" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1a1a1a">(a) Velocity-centric</text>
+  <text x="750" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1a1a1a">(b) Oversight-centric</text>
+  <text x="1250" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1a1a1a">(c) Governance-centric</text>
 
   <!-- panel dividers -->
-  <line x1="300" y1="40" x2="300" y2="300" stroke="#e2e0da" stroke-width="1"/>
-  <line x1="600" y1="40" x2="600" y2="300" stroke="#e2e0da" stroke-width="1"/>
+  <line x1="500" y1="70" x2="500" y2="520" stroke="#e2e0da" stroke-width="1"/>
+  <line x1="1000" y1="70" x2="1000" y2="520" stroke="#e2e0da" stroke-width="1"/>
 
   <!-- ============ (a) Velocity-centric: role ring ============ -->
-  <g font-size="18" fill="#33383d" text-anchor="middle">
-    <text x="150" y="70" font-weight="700">Human</text>
-    <text x="150" y="92" font-size="15" font-style="italic" fill="#5f5f5f">goal ↓</text>
+  <g font-size="28" fill="#33383d" text-anchor="middle">
+    <text x="250" y="112" font-weight="700">Human</text>
+    <text x="250" y="144" font-size="22" font-style="italic" fill="#5f5f5f">goal ↓</text>
 
     <!-- six roles around a cycle -->
-    <text x="150" y="120">Planner</text>
-    <text x="228" y="160">Developer</text>
-    <text x="228" y="212">Tester</text>
-    <text x="150" y="252">Reviewer</text>
-    <text x="72"  y="212">Security</text>
-    <text x="72"  y="160">Deploy</text>
+    <text x="250" y="196">Planner</text>
+    <text x="366" y="256">Developer</text>
+    <text x="366" y="336">Tester</text>
+    <text x="250" y="396">Reviewer</text>
+    <text x="134" y="336">Security</text>
+    <text x="134" y="256">Deploy</text>
 
     <!-- cycle arrows (clockwise) -->
-    <g fill="none" stroke="#33383d" stroke-width="1.3" marker-end="url(#omArrow)">
-      <path d="M172,124 C196,130 210,140 218,150"/>
-      <path d="M232,170 C236,182 236,190 232,200"/>
-      <path d="M218,222 C210,232 196,242 174,247"/>
-      <path d="M126,250 C104,244 90,234 82,223"/>
-      <path d="M68,200 C64,190 64,180 68,170"/>
-      <path d="M82,150 C90,140 104,130 128,124"/>
+    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#omArrow)">
+      <path d="M300,202 C338,214 358,232 368,246"/>
+      <path d="M386,276 C392,296 392,306 386,322"/>
+      <path d="M368,350 C358,366 338,384 302,394"/>
+      <path d="M198,398 C162,388 142,370 132,353"/>
+      <path d="M116,322 C110,306 110,290 116,276"/>
+      <path d="M132,246 C142,232 162,214 200,202"/>
     </g>
   </g>
-  <text x="150" y="290" text-anchor="middle" font-size="16" font-style="italic" fill="#8a2f2f">Insufficient quality control</text>
+  <text x="250" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#8a2f2f">Insufficient quality control</text>
 
   <!-- ============ (b) Oversight-centric: round trip ============ -->
-  <g font-size="18" fill="#33383d">
-    <text x="374" y="168" text-anchor="middle" font-weight="700">Human</text>
-    <text x="524" y="164" text-anchor="middle">Agent:</text>
-    <text x="524" y="185" text-anchor="middle" font-size="15" fill="#5f5f5f">bounded work</text>
+  <g font-size="28" fill="#33383d">
+    <text x="618" y="266" text-anchor="middle" font-weight="700">Human</text>
+    <text x="882" y="258" text-anchor="middle">Agent:</text>
+    <text x="882" y="290" text-anchor="middle" font-size="22" fill="#5f5f5f">bounded work</text>
 
-    <g fill="none" stroke="#33383d" stroke-width="1.3" marker-end="url(#omArrow)">
-      <path d="M406,150 C440,126 460,126 494,150"/>
-      <path d="M494,182 C460,206 440,206 406,182"/>
+    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#omArrow)">
+      <path d="M676,240 C736,206 764,206 824,240"/>
+      <path d="M824,282 C764,316 736,316 676,282"/>
     </g>
-    <text x="450" y="118" text-anchor="middle" font-size="15" font-style="italic" fill="#5f5f5f">prompt</text>
-    <text x="450" y="224" text-anchor="middle" font-size="15" font-style="italic" fill="#5f5f5f">output</text>
+    <text x="750" y="196" text-anchor="middle" font-size="22" font-style="italic" fill="#5f5f5f">prompt</text>
+    <text x="750" y="348" text-anchor="middle" font-size="22" font-style="italic" fill="#5f5f5f">output</text>
   </g>
-  <text x="450" y="290" text-anchor="middle" font-size="16" font-style="italic" fill="#5f5f5f">Human attention gates progress</text>
+  <text x="750" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#5f5f5f">Human attention gates progress</text>
 
   <!-- ============ (c) Governance-centric: env box ============ -->
-  <g font-size="18" fill="#33383d">
-    <text x="624" y="130" text-anchor="middle" font-weight="700">Human</text>
+  <g font-size="28" fill="#33383d">
+    <text x="1112" y="204" text-anchor="middle" font-weight="700">Human</text>
 
-    <rect x="686" y="104" width="172" height="94" rx="6" fill="none" stroke="#1a4a7a" stroke-width="1.6"/>
-    <text x="772" y="128" text-anchor="middle" font-size="15" fill="#1a4a7a">Governed</text>
-    <text x="772" y="147" text-anchor="middle" font-size="15" fill="#1a4a7a">engineering environment</text>
-    <rect x="732" y="160" width="80" height="30" rx="3" fill="none" stroke="#33383d" stroke-width="1.2"/>
-    <text x="772" y="181" text-anchor="middle" font-size="15">Agent</text>
+    <rect x="1178" y="168" width="272" height="150" rx="8" fill="none" stroke="#1a4a7a" stroke-width="2"/>
+    <text x="1314" y="206" text-anchor="middle" font-size="24" fill="#1a4a7a">Governed</text>
+    <text x="1314" y="236" text-anchor="middle" font-size="24" fill="#1a4a7a">engineering environment</text>
+    <rect x="1244" y="256" width="140" height="46" rx="4" fill="none" stroke="#33383d" stroke-width="1.4"/>
+    <text x="1314" y="286" text-anchor="middle" font-size="24">Agent</text>
 
-    <g fill="none" stroke="#33383d" stroke-width="1.3" marker-end="url(#omArrow)">
-      <path d="M624,138 L624,168 L682,168"/>
+    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#omArrow)">
+      <path d="M1112,216 L1112,268 L1172,268"/>
     </g>
-    <text x="650" y="184" text-anchor="middle" font-size="15" font-style="italic" fill="#5f5f5f">policies</text>
+    <text x="1140" y="300" text-anchor="middle" font-size="22" font-style="italic" fill="#5f5f5f">policies</text>
   </g>
-  <text x="750" y="290" text-anchor="middle" font-size="16" font-style="italic" fill="#1a4a7a">Known policies become controls</text>
+  <text x="1250" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#1a4a7a">Known policies become controls</text>
 </svg>
