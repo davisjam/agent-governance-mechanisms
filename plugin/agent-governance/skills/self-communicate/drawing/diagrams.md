@@ -72,7 +72,7 @@ right in the one layout the author eyeballed and drifts the moment the line move
 A dependency-free starter that audits a directory of SVGs for all of the above — the marker-not-`+x`
 arrowhead, a stitched arrowhead outside a `<marker>`, a stroke through a glyph, and text that overflows
 its box or the canvas — ships beside this doc as [`svg-audit.py`](svg-audit.py): `python3 svg-audit.py
-<dir>`. It is a heuristic (audit-only), but it catches the arrowhead and stroke-through-glyph mistakes a
+<dir>`. It is a heuristic, but it catches the arrowhead and stroke-through-glyph mistakes a
 width check is blind to.
 
 ---
@@ -386,9 +386,9 @@ legibility-and-labeling bar.
 - **Text must fit its box — and the canvas.** A label may not spill its `<rect>` box (running over a
   neighboring shape or an arrow) or run past the figure's `viewBox` edge. A spilled label reads as a
   collision, not a name. When text doesn't fit, enlarge the box, add space into the diagram, shorten or
-  wrap the label, or — last, and never below the legibility floor — shrink the font for that figure. An
-  audit-only build check estimates each label's width and flags likely overflows; the fix procedure, in
-  that order, is the figure text-fit runbook (`book/_design/figure-text-fit-runbook.md`).
+  wrap the label, or — last, and never below the legibility floor — shrink the font for that figure. The
+  `svg-audit.py` shipped beside this doc estimates each label's width and flags likely overflows; the fix
+  order — enlarge, wrap, then shrink — is the SVG-hygiene rule below.
 - **Alt text / a description.** A diagram needs a text equivalent a screen reader can announce — a
   concise statement of what it shows and its takeaway. Mermaid supports an accessible title and
   description (`accTitle` / `accDescr`); a hand-authored SVG uses `<title>` and `<desc>` wired with
@@ -461,27 +461,26 @@ nothing; one that is too small costs the reader the figure.
 
 ---
 
-## SVG hygiene — text fits its box, lines don't cross glyphs (both are gated)
+## SVG hygiene — text fits its box, lines don't cross glyphs
 
-Two defects recur in hand-authored SVG, and both now **fail the build** (the text-fit and
-drawing-hygiene checks were promoted from audit-only to blocking once the figure backlog hit zero).
-Author to satisfy them, and verify before you ship a figure — the checker takes a single file or a dir:
+Two defects recur in hand-authored SVG. **Don't ship either.** Check every figure with the
+`svg-audit.py` that ships alongside this doc (it takes a single file or a whole directory of them):
 
 ```
-python3 <…>/self-communicate/drawing/svg-audit.py  path/to/figure.svg
+python3 svg-audit.py  path/to/figure.svg
 ```
 
 ### Text must fit its box and the canvas
 
 A `<text>` whose estimated width exceeds its `<rect>`'s inner width (**box overflow**) or runs past
-the `viewBox` width (**canvas overflow**) is a finding — the label spills. Estimate the fit *as you
-author*, don't wait for the gate:
+the `viewBox` width (**canvas overflow**) is a defect — the label spills. Estimate the fit *as you
+author*, don't wait to run the checker:
 
 - **width ≈ `len(text) × font-size × 0.55`** ( `× 0.6` for bold ). A box's usable inner width is
   **≈ `rect-width × 0.88`** (labels sit ~6% off each edge). Centered text at `cx` spans `cx ± width/2`;
   keep that inside both the box and the `viewBox`.
 
-Fix in order of preference (geometry + text only — never redraw a working figure to pass a gate):
+Fix in order of preference (geometry + text only — never redraw a working figure just to satisfy the check):
 
 1. **Widen** the `viewBox` (and its `width`/`height` and the background rect to match) and the offending
    box; recenter middle-anchored labels and any arrows so the layout stays balanced.
