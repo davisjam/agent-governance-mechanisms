@@ -501,6 +501,14 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             continue
         if _GLOSS_ONLY_RE.match(stripped):
             continue  # glossary-only: harvested by _collect_glossary; renders nothing inline
+        # Display equation: `<!-- eq: <formula> -->` → a centered, typeset formula line. The book has no
+        # MathJax; this is a light styled display of a unicode formula (e.g. `P = 1 − (1 − p)ⁿ`), reusable.
+        if stripped.startswith("<!--") and stripped.endswith("-->") \
+                and stripped.count("<!--") == 1 \
+                and stripped[4:].lstrip().startswith("eq:"):
+            formula = stripped[len("<!--"):-len("-->")].strip()[len("eq:"):].strip()
+            _emit(f'<p class="book-eq">{inline(formula)}</p>')
+            continue
         # Generated glossary: `<!-- glossary-auto -->` -> the alphabetical list harvested from every gloss
         # marker in the book (single source of truth; the hand-written list is gone so it can't drift).
         if stripped == "<!-- glossary-auto -->":
@@ -779,6 +787,8 @@ blockquote.thesis-box {{ background: #f2effb; border: 1px solid #d9d2ef; border-
 blockquote.thesis-box p {{ margin: 0 0 0.6rem; }}
 blockquote.thesis-box p:last-child {{ margin-bottom: 0; }}
 blockquote.thesis-box strong {{ color: #241f33; }}
+.book-eq {{ text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
+           font-size: 1.2em; color: #2a2a2a; margin: 1.3rem 0; letter-spacing: 0.02em; }}
 figure.book-figure {{ margin: 1.8rem 0; text-align: center; }}
 figure.book-figure svg,
 figure.book-figure img {{ max-width: 100%; height: auto; }}
