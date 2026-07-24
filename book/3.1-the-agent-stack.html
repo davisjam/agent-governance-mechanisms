@@ -215,19 +215,20 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="3.3-the-governed-environment.html">8&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
 <li><a class="" href="3.4-lifecycles-and-runbooks.html">9&nbsp; Lifecycles and Runbooks</a></li>
 <li><a class="" href="3.5-metrics.html">10&nbsp; Metrics</a></li>
+<li><a class="" href="3.6-when-guardrails-collide.html">11&nbsp; When Guardrails Collide</a></li>
 <li class="part">Part 4 — The Model Zoo</li>
-<li><a class="" href="4.1-the-executable-zoo.html">11&nbsp; The Executable Zoo</a></li>
-<li><a class="" href="4.2-the-logical-view.html">12&nbsp; The Logical View</a></li>
-<li><a class="" href="4.3-the-process-view.html">13&nbsp; The Process View</a></li>
-<li><a class="" href="4.4-the-development-view.html">14&nbsp; The Development View</a></li>
-<li><a class="" href="4.5-the-physical-view.html">15&nbsp; The Physical View</a></li>
-<li><a class="" href="4.6-the-scenarios-view.html">16&nbsp; The Scenarios View</a></li>
+<li><a class="" href="4.1-the-executable-zoo.html">12&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="4.2-the-logical-view.html">13&nbsp; The Logical View</a></li>
+<li><a class="" href="4.3-the-process-view.html">14&nbsp; The Process View</a></li>
+<li><a class="" href="4.4-the-development-view.html">15&nbsp; The Development View</a></li>
+<li><a class="" href="4.5-the-physical-view.html">16&nbsp; The Physical View</a></li>
+<li><a class="" href="4.6-the-scenarios-view.html">17&nbsp; The Scenarios View</a></li>
 <li class="part">Part 5 — Putting It to Work</li>
-<li><a class="" href="5.1-brownfield.html">17&nbsp; Brownfield</a></li>
-<li><a class="" href="5.2-the-skills.html">18&nbsp; The Skills</a></li>
-<li><a class="" href="5.3-transformations.html">19&nbsp; Everything Is a Transformation</a></li>
-<li><a class="" href="5.4-training-data.html">20&nbsp; Training Data and the Novelty Axis</a></li>
-<li><a class="" href="5.5-lessons-learned.html">21&nbsp; Lessons Learned</a></li>
+<li><a class="" href="5.1-brownfield.html">18&nbsp; Brownfield</a></li>
+<li><a class="" href="5.2-the-skills.html">19&nbsp; The Skills</a></li>
+<li><a class="" href="5.3-transformations.html">20&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="5.4-training-data.html">21&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="5.5-lessons-learned.html">22&nbsp; Lessons Learned</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
@@ -412,4 +413,5 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2>Every layer is a place to steer</h2>
 <p id="idx-def-injection-point">Read the stack as a list of opportunities, because that is what it is. The harness noticing it is near its context limit and writing out a reliable summary of state and plan, instead of waiting for a lossy compaction, is an opportunity to help the model reconstruct less after the window resets. The pre-commit hook is an opportunity to catch a defect while everything that produced it is still fresh in the model's window, rather than surfacing it from a failed test three compactions later. The CI pipeline turning a failure into a message the agent can read is an opportunity to point it back toward the fix.</p>
 <p>The single goal underneath all of it never changes. At every layer, you are trying to prevent the agent from making a bad choice, and to narrow its search toward the choices you want. This matters more than it first appears, because the context window is too small to hold any serious system — the US tax code, a real web application — all at once. Give the model no structure, and it has no choice but to induce that structure as it goes, burning most of its window just working out the rules of the road. Every mechanism you place on the stack is a rule of the road you handed it for free.</p>
+<p>One thing the stack does not show: the mechanisms you install at these layers do not act in isolation. They run together, and the interactions <em>between</em> them have to be governed too — two that touch the same thing at the same moment pull against each other and confuse the very agent they were meant to steer. Governing each layer is not enough; the interplay is its own problem, and <a href="3.6-when-guardrails-collide.html">a later chapter</a> takes it up.</p>
 <p>The stack is where the two theses get their footing. A model handed to a layer enacts the Modeling Thesis, tying intent to implementation and shrinking what the agent must hold in-window; a hook or lint installed at a layer enacts the Alignment Thesis. The two chapters that follow take one thesis each.</p><div class="pager"><a class="prev" href="2.2-loops-and-models.html"><span class="dir">‹ Previous</span><span class="ttl">5 · Loops and Models</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.2-models-and-the-semantic-gap.html"><span class="dir">Next ›</span><span class="ttl">7 · Models and the Semantic Gap</span></a></div><div class="pager-jump"><div class="jump"><a href="2.1-the-printer.html">⇐ Previous part</a><a href="4.1-the-executable-zoo.html">Next part ⇒</a><a href="3.2-models-and-the-semantic-gap.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
