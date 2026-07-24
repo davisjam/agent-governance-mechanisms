@@ -2234,10 +2234,10 @@ PRINT_CSS = f"""
 /* ── page geometry: 6×9in book trim ─────────────────────────────────────────────────────────── */
 @page {{
   size: 6in 9in;
-  margin: 0.72in 0.7in 0.78in 0.7in;
+  margin: 0.66in 0.64in 0.7in 0.64in;
 }}
 /* Named page for the front-matter / divider pages: no running head, no folio, full bleed feel. */
-@page plain {{ margin: 0.72in 0.7in 0.78in 0.7in; @top-center {{ content: none; }}
+@page plain {{ margin: 0.66in 0.64in 0.7in 0.64in; @top-center {{ content: none; }}
                @top-left {{ content: none; }} @top-right {{ content: none; }}
                @bottom-center {{ content: none; }} @bottom-left {{ content: none; }}
                @bottom-right {{ content: none; }} }}
@@ -2251,10 +2251,10 @@ PRINT_CSS = f"""
 @page :right {{ @top-right   {{ content: string(chap-title); font: italic 8pt "Source Serif 4", Georgia, serif; color: #6a6a6a; letter-spacing: 0.02em; }}
                 @bottom-right {{ content: counter(page); font: 9pt "Source Serif 4", Georgia, serif; color: #444; }} }}
 
-html {{ font-size: 11.5pt; }}
+html {{ font-size: 10.25pt; }}
 body {{
   font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
-  color: #1a1a1a; margin: 0; line-height: 1.5; text-align: justify; hyphens: auto;
+  color: #1a1a1a; margin: 0; line-height: 1.38; text-align: justify; hyphens: auto;
   /* Never justify the LAST line of a paragraph — otherwise a short final line stretches its few words
      edge-to-edge with cavernous gaps (the classic justified-text tell). Last lines stay ragged-left. */
   text-align-last: left;
@@ -2283,9 +2283,9 @@ body {{
                  margin: 0 0 1.4rem; text-align: left; }}
 .print-toc {{ text-align: left; }}
 .print-toc .toc-part {{ font-family: "Source Sans 3", sans-serif; text-transform: uppercase;
-                        letter-spacing: 0.06em; font-size: 9.5pt; font-weight: 700; color: var(--accent);
-                        margin: 1.1rem 0 0.35rem; text-align: left; }}
-.print-toc .toc-row {{ display: flex; align-items: baseline; font-size: 10.5pt; margin: 0.18rem 0;
+                        letter-spacing: 0.06em; font-size: 9pt; font-weight: 700; color: var(--accent);
+                        margin: 0.8rem 0 0.25rem; text-align: left; }}
+.print-toc .toc-row {{ display: flex; align-items: baseline; font-size: 9.5pt; margin: 0.09rem 0;
                        text-align: left; }}
 .print-toc .toc-row .toc-title {{ white-space: nowrap; overflow: hidden; }}
 .print-toc .toc-row .toc-cnum {{ color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem;
@@ -2309,19 +2309,19 @@ body {{
 
 /* ── chapter bodies ─────────────────────────────────────────────────────────────────────────── */
 .print-chapter {{ break-before: page; }}
-.print-chapter > header.chap {{ border-bottom: 1px solid #ddd; padding: 0 0 0.9rem; margin: 0 0 1.4rem; }}
+.print-chapter > header.chap {{ border-bottom: 1px solid #ddd; padding: 0 0 0.7rem; margin: 0 0 1.1rem; }}
 .print-chapter header.chap .kicker {{ font-family: "Source Sans 3", sans-serif; color: var(--accent);
-                                      font-weight: 700; font-size: 9pt; letter-spacing: 0.08em;
+                                      font-weight: 700; font-size: 8.5pt; letter-spacing: 0.08em;
                                       text-transform: uppercase; }}
-.print-chapter header.chap h1 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 21pt;
-                                 line-height: 1.12; margin: 0.3rem 0 0; font-weight: 700;
+.print-chapter header.chap h1 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 18pt;
+                                 line-height: 1.12; margin: 0.25rem 0 0; font-weight: 700;
                                  string-set: chap-title content(); }}
-h2 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 14pt; font-weight: 700;
-      margin: 1.5rem 0 0.5rem; break-after: avoid; text-align: left; }}
-h3 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 12pt; font-weight: 600;
-      margin: 1.1rem 0 0.35rem; break-after: avoid; text-align: left; }}
-h4 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 11pt; font-weight: 600; color: #333;
-      margin: 0.9rem 0 0.25rem; break-after: avoid; text-align: left; }}
+h2 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 12.5pt; font-weight: 700;
+      margin: 1.3rem 0 0.45rem; break-after: avoid; text-align: left; }}
+h3 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 11pt; font-weight: 600;
+      margin: 1rem 0 0.3rem; break-after: avoid; text-align: left; }}
+h4 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 10pt; font-weight: 600; color: #333;
+      margin: 0.8rem 0 0.22rem; break-after: avoid; text-align: left; }}
 h1, h2, h3, h4 {{ hyphens: none; }}
 p {{ margin: 0 0 0.7rem; orphans: 2; widows: 2; }}
 ul {{ margin: 0 0 0.7rem; padding-left: 1.2rem; }}
@@ -2577,7 +2577,12 @@ def _extract_pdf_text(pdf_path: pathlib.Path) -> str:
     r = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True)
     if r.returncode != 0:
         raise SystemExit(f"pdftotext failed (rc={r.returncode}): {r.stderr}")
-    return re.sub(r"\s+", " ", r.stdout)
+    # Rejoin words broken by CSS `hyphens: auto` line-breaks: poppler emits the fragment, a hyphen
+    # (ASCII `-`, U+2010 `‐`, or soft-hyphen U+00AD), then a newline. Stripping the break-hyphen makes a
+    # tail run like "to start using" match even when reflow hyphenated "using" at the column edge — so a
+    # margin/font change cannot make the content-integrity gate false-fail on intact text.
+    dehyphenated = re.sub(r"[-‐­]\n", "", r.stdout)
+    return re.sub(r"\s+", " ", dehyphenated)
 
 
 def verify_pdf(pdf_path: pathlib.Path) -> int:
