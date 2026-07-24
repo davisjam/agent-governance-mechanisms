@@ -1,0 +1,5978 @@
+===== CHUNK 0 - starts ~0 min into the talk =====
+1
+00:00:00,000 --> 00:00:06,000
+Okay. I wonder if she knows the elevator lady.
+
+2
+00:00:06,000 --> 00:00:08,000
+They're probably friends.
+
+3
+00:00:08,000 --> 00:00:11,000
+Okay. All right. Hello everyone and welcome.
+
+4
+00:00:11,000 --> 00:00:17,000
+Also welcome to our virtual people. I'm Nick and this is James Davis.
+
+5
+00:00:17,000 --> 00:00:22,000
+He's my PhD advisor, but he's also an assistant professor at Purdue.
+
+6
+00:00:22,000 --> 00:00:28,000
+And his lab studies essentially how to operate operationalize.
+
+7
+00:00:29,000 --> 00:00:36,000
+Time to writing software for various engineering computing disciplines.
+
+8
+00:00:36,000 --> 00:00:39,000
+So, essentially, how do you create software in a principal way?
+
+9
+00:00:39,000 --> 00:00:42,000
+How do we avoid failures in production systems?
+
+10
+00:00:42,000 --> 00:00:48,000
+And I think that's all I have to say. I think Jamie's ready to tell us something interesting.
+
+11
+00:00:48,000 --> 00:00:49,000
+I hope it's interesting.
+
+12
+00:00:49,000 --> 00:00:52,000
+I have about 45 minutes in the Q&A or discourse.
+
+13
+00:00:52,000 --> 00:00:54,000
+You can do it however you like.
+
+14
+00:00:54,000 --> 00:00:59,000
+I just interrupt and throw things, but I'll be like, you know, we had a dialogue.
+
+15
+00:00:59,000 --> 00:01:02,000
+And the online people too, so free to turn it.
+
+16
+00:01:02,000 --> 00:01:06,000
+You can look at the online people and then time interjections for me, okay?
+
+17
+00:01:06,000 --> 00:01:07,000
+Okay, got it.
+
+18
+00:01:07,000 --> 00:01:10,000
+All right. So, hi, I'm Jamie Davis. Thank you, Nick, for the introduction.
+
+19
+00:01:10,000 --> 00:01:15,000
+I'm here to tell you about my perspective on 3D printing production grade software
+
+20
+00:01:15,000 --> 00:01:20,000
+using coding agents, which is the question of the age.
+
+21
+00:01:20,000 --> 00:01:25,000
+I have only one social media platform left that I use.
+
+22
+00:01:25,000 --> 00:01:26,000
+It's LinkedIn.
+
+23
+00:01:26,000 --> 00:01:33,000
+And in between the GPT slop that constitutes about half of my feed,
+
+24
+00:01:33,000 --> 00:01:37,000
+people with like a emoji saying they're delighted to announce whatever.
+
+25
+00:01:37,000 --> 00:01:42,000
+The other half are engineers of the junior senior staff principal,
+
+26
+00:01:42,000 --> 00:01:47,000
+director level, who say, either.
+
+27
+00:01:47,000 --> 00:01:51,000
+I just have Claude write everything and it's great and miracle has happened.
+
+28
+00:01:51,000 --> 00:01:53,000
+And that's why you should the junior engineers.
+
+29
+00:01:53,000 --> 00:01:58,000
+And then the principal engineers and the directors are saying, you cannot do these things.
+
+30
+00:01:58,000 --> 00:02:01,000
+It doesn't work. You have to check everything it's doing.
+
+31
+00:02:01,000 --> 00:02:06,000
+And I agree with the principals that you can't just like tell Claude to write stuff
+
+32
+00:02:06,000 --> 00:02:07,000
+and hope for the best.
+
+33
+00:02:07,000 --> 00:02:12,000
+But I am also dissatisfied with the notion that what we need to do is check
+
+34
+00:02:12,000 --> 00:02:14,000
+every step that our agents take.
+
+35
+00:02:14,000 --> 00:02:16,000
+I think there's got to be a better way.
+
+36
+00:02:16,000 --> 00:02:19,000
+So this talk is about what I think about a step better way.
+
+37
+00:02:19,000 --> 00:02:24,000
+It might be wrong, but I'm happy to share my perspective and I hope it helps
+
+38
+00:02:24,000 --> 00:02:26,000
+some of you think about it.
+
+39
+00:02:26,000 --> 00:02:29,000
+This talk was hard for me to figure out how to organize and so as a result
+
+40
+00:02:29,000 --> 00:02:30,000
+that is slightly disorganized.
+
+41
+00:02:30,000 --> 00:02:34,000
+It's hard to think about how to organize it because I am tempted to tell you
+
+42
+00:02:34,000 --> 00:02:39,000
+about a methodology and a perspective on doing software engineering with agents.
+
+43
+00:02:39,000 --> 00:02:42,000
+And this is not a formula and it's not an algorithm to follow.
+
+44
+00:02:42,000 --> 00:02:46,000
+So there's a rough structure and I hope it's helpful, but also there's just
+
+45
+00:02:46,000 --> 00:02:50,000
+kind of nuggets everywhere and interrupt and ask questions as well.
+
+46
+00:02:50,000 --> 00:02:55,000
+Okay. All right. Let's do it.
+
+47
+00:02:55,000 --> 00:03:01,000
+So the general thesis of this talk is that implementation is now free.
+
+48
+00:03:01,000 --> 00:03:06,000
+You can ask your coding agent to build pretty much anything and get back
+
+49
+00:03:06,000 --> 00:03:08,000
+a facsimile of the thing you want.
+
+50
+00:03:08,000 --> 00:03:11,000
+Too sweet. How lovely.
+
+51
+00:03:11,000 --> 00:03:14,000
+But having implementation be free by itself does not mean that you can
+
+52
+00:03:14,000 --> 00:03:16,000
+produce production-grade software.
+
+53
+00:03:16,000 --> 00:03:21,000
+And by this, I mean software that has quality metrics that you can measure
+
+54
+00:03:21,000 --> 00:03:26,000
+and describe and audit for self-production-grade means.
+
+55
+00:03:26,000 --> 00:03:30,000
+In addition to saying, wow, on this input it does in fact make a picture of a cat.
+
+56
+00:03:30,000 --> 00:03:33,000
+You can also talk about why it's doing that and whether it's working
+
+57
+00:03:33,000 --> 00:03:36,000
+correctly and what changes you'd make to it to make it better and estimate how
+
+58
+00:03:36,000 --> 00:03:38,000
+much it would cost to make changes like that.
+
+59
+00:03:38,000 --> 00:03:41,000
+That's production-grade, right? That's engineering.
+
+60
+00:03:41,000 --> 00:03:46,000
+So we have to figure out how to move from writing code which used to be the expensive
+
+61
+00:03:46,000 --> 00:03:50,000
+part of software development. You make a whiteboard design in five minutes
+
+62
+00:03:50,000 --> 00:03:53,000
+and then spend a year implementing that stupid design.
+
+63
+00:03:53,000 --> 00:03:56,000
+And the design, you know, this is hard to write code. Okay, we get it.
+
+64
+00:03:56,000 --> 00:04:00,000
+It's no longer hard to write code. So now we need to figure out how to govern
+
+65
+00:04:00,000 --> 00:04:04,000
+the very, very fast software production that we can achieve.
+
+66
+00:04:04,000 --> 00:04:09,000
+So the theme here is we've got a fast-code fabricator and we need to figure
+
+67
+00:04:09,000 --> 00:04:12,000
+how to turn that into a production line.
+
+68
+00:04:12,000 --> 00:04:15,000
+This talk is grounded in my own experience.
+
+69
+00:04:15,000 --> 00:04:22,000
+I spent the last 16 weeks building a tool called Docable, which exists to make
+
+70
+00:04:22,000 --> 00:04:27,000
+Word, PowerPoint, Excel, and PDF documents accessible according to the Americans
+
+71
+00:04:27,000 --> 00:04:32,000
+of Disabilities Act. That is a very weird context to be doing this in
+
+72
+00:04:32,000 --> 00:04:35,000
+and it's probably not something that's of interest to HPC.
+
+73
+00:04:35,000 --> 00:04:38,000
+So that's fine. I'll tell you a little bit about what it's doing.
+
+74
+00:04:38,000 --> 00:04:42,000
+Well, I've been using that as a testbed for the ideas that we're going to talk about.
+
+75
+00:04:42,000 --> 00:04:47,000
+And I hope that the ideas and the method are of great interest to anybody building software.
+
+76
+00:04:47,000 --> 00:04:49,000
+The website's live if you want to try it out.
+
+77
+00:04:49,000 --> 00:04:52,000
+If you happen to need to make a document friendly to blind people.
+
+78
+00:04:52,000 --> 00:04:58,000
+It costs me money, so, you know, I can get coffee or something.
+
+79
+00:04:58,000 --> 00:05:03,000
+So, generative AI is a tool.
+
+80
+00:05:03,000 --> 00:05:06,000
+I think that we've all tried hope enough.
+
+81
+00:05:06,000 --> 00:05:07,000
+Hey, Claude, do this for me.
+
+82
+00:05:07,000 --> 00:05:10,000
+Hey, Opus, do that for me to figure out that it's not like a miracle.
+
+83
+00:05:10,000 --> 00:05:12,000
+It doesn't get things right.
+
+84
+00:05:12,000 --> 00:05:15,000
+So it's a tool that we need to learn how to wield wealth.
+
+85
+00:05:15,000 --> 00:05:18,000
+And it's not a tool like a stapler where it's just like, you know, you insert the paper,
+
+86
+00:05:18,000 --> 00:05:21,000
+cut chunk, my three-year-old knows how to work a stapler.
+
+87
+00:05:21,000 --> 00:05:22,000
+No problem.
+
+88
+00:05:22,000 --> 00:05:27,000
+I think it is much better understood as a fabrication device, like a 3D printer.
+
+89
+00:05:27,000 --> 00:05:32,000
+3D printers have this wonderful property that they can do anything you can dream up,
+
+90
+00:05:32,000 --> 00:05:38,000
+as long as you can figure out how to make it happen within the constraints of the fabrication system.
+
+91
+00:05:38,000 --> 00:05:40,000
+So you have arbitrary instructions.
+
+92
+00:05:40,000 --> 00:05:41,000
+You give a CAD.
+
+93
+00:05:41,000 --> 00:05:42,000
+It can make stuff.
+
+94
+00:05:42,000 --> 00:05:44,000
+If you give it bad instructions, you'll get bad results.
+
+95
+00:05:44,000 --> 00:05:47,000
+And if you give it really good instructions, you'll get really good results.
+
+96
+00:05:47,000 --> 00:05:53,000
+And a skilled operator of a 3D printer knows how to give it really good instructions.
+
+97
+00:05:53,000 --> 00:05:55,000
+And an unskilled one does not.
+
+98
+00:05:55,000 --> 00:05:59,000
+Now, by instructions, I do not mean prompting.
+
+99
+00:05:59,000 --> 00:06:01,000
+This is not a talk about prompting.
+
+100
+00:06:01,000 --> 00:06:04,000
+Prompting is the very first thing that you need to do.
+
+101
+00:06:04,000 --> 00:06:09,000
+But if that is all you do, then you will never be able to fabricate production-grade software.
+
+102
+00:06:09,000 --> 00:06:11,000
+Please don't stop at prompting.
+
+103
+00:06:11,000 --> 00:06:12,000
+It's very important.
+
+104
+00:06:12,000 --> 00:06:17,000
+So with CAD modeling, you have to have your CAD file, but then you have all these other things you need to do
+
+105
+00:06:17,000 --> 00:06:19,000
+and I don't know much about 3D printing.
+
+106
+00:06:19,000 --> 00:06:21,000
+I'm going to be honest, the metaphor is about to break down.
+
+107
+00:06:21,000 --> 00:06:24,000
+But you can't just say, here's the CAD drawing printed.
+
+108
+00:06:24,000 --> 00:06:28,000
+And you have to say, here are the layers in which to print it.
+
+109
+00:06:28,000 --> 00:06:33,000
+And here's how long you need to wait in between prints so that the material, whatever subtract you're using
+
+110
+00:06:33,000 --> 00:06:34,000
+will harden.
+
+111
+00:06:34,000 --> 00:06:37,000
+Here's how, which material we need to use at this point.
+
+112
+00:06:37,000 --> 00:06:40,000
+Here's how much it costs to do this part, which one should we do?
+
+113
+00:06:40,000 --> 00:06:46,000
+All these things are instructions that a skilled operator will provide and an unskilled operator will stop with.
+
+114
+00:06:46,000 --> 00:06:48,000
+Here's the CAD model, I guess we're good.
+
+115
+00:06:48,000 --> 00:06:54,000
+With this in mind, you should understand any work you do with coding agents in generative AI as it's a 3D printer
+
+116
+00:06:54,000 --> 00:06:56,000
+and I need to figure out how to use it well.
+
+117
+00:06:56,000 --> 00:06:57,000
+It is not a stakeholder.
+
+118
+00:06:57,000 --> 00:07:00,000
+So if you just try to do the obvious thing, it's not going to work.
+
+119
+00:07:00,000 --> 00:07:01,000
+Not a stakeholder.
+
+120
+00:07:03,000 --> 00:07:08,000
+I have a basic decision tree that I follow when I work with generative AI.
+
+121
+00:07:08,000 --> 00:07:10,000
+So I said it's not a stakeholder.
+
+122
+00:07:10,000 --> 00:07:12,000
+Well, sometimes it is a stakeholder.
+
+123
+00:07:13,000 --> 00:07:16,000
+So it's kind of a basic decision tree that I follow in my head.
+
+124
+00:07:16,000 --> 00:07:25,000
+If there is something that might affect my reputation who involves essential judgment, I use an interactive mode.
+
+125
+00:07:25,000 --> 00:07:26,000
+This is careful prompting.
+
+126
+00:07:26,000 --> 00:07:28,000
+I use it as a source of information.
+
+127
+00:07:28,000 --> 00:07:34,000
+I use it to do a little research to guide my decision making, but I do not let plot papers for me.
+
+128
+00:07:34,000 --> 00:07:40,000
+It assists me in writing papers, but when your reputation is on the line, you should aim for the best work you can do.
+
+129
+00:07:41,000 --> 00:07:45,000
+On the computational side, you have to describe the IO behavior that you're looking for.
+
+130
+00:07:45,000 --> 00:07:53,000
+And that IO behavior allows you to think about how to use generative AI to either build or be the process you're trying to achieve.
+
+131
+00:07:53,000 --> 00:08:03,000
+So when I say to be the process you're trying to achieve, you've probably pasted into generative AI at CSV and said make me a bar chart out of this.
+
+132
+00:08:03,000 --> 00:08:05,000
+And it probably didn't, right?
+
+133
+00:08:05,000 --> 00:08:10,000
+So that's a computational test small enough that it can fit inside the model, and it'll just do it correctly.
+
+134
+00:08:10,000 --> 00:08:11,000
+Great.
+
+135
+00:08:11,000 --> 00:08:14,000
+It can be the whole process you want on this input, make this output.
+
+136
+00:08:14,000 --> 00:08:20,000
+But lots of times, what you're trying to know is too complicated, the process you're trying to achieve is too complex.
+
+137
+00:08:20,000 --> 00:08:26,000
+You need to ask it to help you construct that process rather than to just replace the process.
+
+138
+00:08:26,000 --> 00:08:32,000
+So having specified the IO behavior, if it's simple enough, hey, Claude, just do this for me.
+
+139
+00:08:32,000 --> 00:08:36,000
+If it's more complicated, you might have a relatively simple computational task.
+
+140
+00:08:36,000 --> 00:08:41,000
+Hey, one shot making me a Python program to matplotlib this chart.
+
+141
+00:08:41,000 --> 00:08:44,000
+If you prompt it with that sort of task, it'll just work.
+
+142
+00:08:44,000 --> 00:08:49,000
+It takes, I don't know, a hundred lines of Python, a thousand lines of R or whatever.
+
+143
+00:08:49,000 --> 00:08:50,000
+It can just do it.
+
+144
+00:08:50,000 --> 00:08:51,000
+Good.
+
+145
+00:08:51,000 --> 00:09:01,000
+If you have something that's actually complicated, either it's mathematically dense or a very large expected code base, then I would not recommend you try to one shot it because it's not going to work.
+
+146
+00:09:01,000 --> 00:09:06,000
+You'll need to instead break it into parts and undertake what I think of as a supervised autonomy.
+
+147
+00:09:06,000 --> 00:09:09,000
+So you're going to need to govern that thing as it operates.
+
+148
+00:09:09,000 --> 00:09:12,000
+And some of the things you'll need to govern are the design of the system.
+
+149
+00:09:12,000 --> 00:09:16,000
+So what are the conditions under which we'll call this thing correct?
+
+150
+00:09:16,000 --> 00:09:19,000
+What might the subtasks or components of the system be?
+
+151
+00:09:19,000 --> 00:09:20,000
+We have these modules.
+
+152
+00:09:20,000 --> 00:09:23,000
+We might need to break up the architecture of a coding code base.
+
+153
+00:09:23,000 --> 00:09:27,000
+And the other kind of thing you might need to govern is the development process.
+
+154
+00:09:27,000 --> 00:09:32,000
+You might say, hey, instead of me talking to you, why don't I talk to a fleet of agents to do this work for me?
+
+155
+00:09:32,000 --> 00:09:36,000
+Or why don't I tell you to manage 50 agents on my behalf?
+
+156
+00:09:36,000 --> 00:09:37,000
+Great.
+
+157
+00:09:37,000 --> 00:09:45,000
+So you'll need to think about how to govern that process so that it will proceed in the way that you think is acceptable, and then you'll need to watch it burn and then try to fix it.
+
+158
+00:09:45,000 --> 00:09:56,000
+I assume that the good people of Argonne National Labs are occasionally one shot scripting stuff, but mostly trying to figure out how to build reasonably complicated stuff.
+
+159
+00:09:56,000 --> 00:09:58,000
+So most of the talks about this thing.
+
+160
+00:09:58,000 --> 00:10:00,000
+Is there something in the chat now?
+
+161
+00:10:00,000 --> 00:10:04,000
+No, not yet.
+
+162
+00:10:04,000 --> 00:10:09,000
+So there are three ways that people talk about supervising these agents.
+
+163
+00:10:09,000 --> 00:10:15,000
+Two of them are in my LinkedIn feed, and the third one is in a couple archives papers, a couple keynotes, and stuff I've been doing.
+
+164
+00:10:15,000 --> 00:10:19,000
+So in the upper left, we've got what I call the velocity-centric approach.
+
+165
+00:10:19,000 --> 00:10:24,000
+This one says, hey, Claude, what the whole system for me thinks I'm going for coffee.
+
+166
+00:10:24,000 --> 00:10:28,000
+And people will try to get a little smarter about this.
+
+167
+00:10:28,000 --> 00:10:31,000
+There's a famous work by Steve Dege called the Gas Town.
+
+168
+00:10:31,000 --> 00:10:33,000
+Have any of you read about Gas Town?
+
+169
+00:10:33,000 --> 00:10:34,000
+Nice.
+
+170
+00:10:34,000 --> 00:10:36,000
+The rest of you should give it a Google.
+
+171
+00:10:36,000 --> 00:10:38,000
+There is a medium post.
+
+172
+00:10:38,000 --> 00:10:42,000
+It's a blog post that's sort of like the guy was on acid, which I think he was very Steve Deprived.
+
+173
+00:10:42,000 --> 00:10:47,000
+Because I read a post kind of like it while Steve Deprived, and it was like, oh, wow, I sound exactly like Steve Dege.
+
+174
+00:10:47,000 --> 00:10:51,000
+Anyway, Gas Town says, hey, we can build arbitrarily complex software.
+
+175
+00:10:51,000 --> 00:10:56,000
+What we need is a description of what it's supposed to be, that process model.
+
+176
+00:10:56,000 --> 00:11:03,000
+And then we need to tell the agents, you're the developer, you're the planner, you're the tester, you're the security analyst,
+
+177
+00:11:03,000 --> 00:11:08,000
+you're the project manager, and we'll give them a town hall to talk in.
+
+178
+00:11:08,000 --> 00:11:09,000
+Gas Town, right?
+
+179
+00:11:09,000 --> 00:11:11,000
+It runs on gas somehow, and it's a town.
+
+180
+00:11:11,000 --> 00:11:13,000
+There's a bunch of different agents with personas.
+
+181
+00:11:13,000 --> 00:11:18,000
+And the biggest thesis was, hey, if we just give the agents the right personas and the right prompts,
+
+182
+00:11:18,000 --> 00:11:22,000
+they will be able to realize the whole vision without any supervision.
+
+183
+00:11:22,000 --> 00:11:24,000
+That's a content, right?
+
+184
+00:11:24,000 --> 00:11:27,000
+So if you do it this way, you get extraordinary velocity.
+
+185
+00:11:27,000 --> 00:11:28,000
+That's the idea.
+
+186
+00:11:28,000 --> 00:11:30,000
+You'll be able to produce the thing quickly.
+
+187
+00:11:30,000 --> 00:11:34,000
+But what you're going to get has very little in terms of control on the process.
+
+188
+00:11:34,000 --> 00:11:37,000
+You're just hoping the agents take their personas and apply them up.
+
+189
+00:11:38,000 --> 00:11:43,000
+Okay, so on the right, we've got one of the nicola, is the nicola nicola nicolas?
+
+190
+00:11:43,000 --> 00:11:46,000
+Not you, you.
+
+191
+00:11:46,000 --> 00:11:49,000
+It's the oversight centric model.
+
+192
+00:11:49,000 --> 00:11:52,000
+You don't trust the agent as far as you can throw it.
+
+193
+00:11:52,000 --> 00:11:54,000
+And so you say, hey, do this for me.
+
+194
+00:11:54,000 --> 00:12:00,000
+And it gives you back a code snippet or a suggestion and you study it very carefully.
+
+195
+00:12:00,000 --> 00:12:02,000
+And if you trust it, you say it's good.
+
+196
+00:12:02,000 --> 00:12:04,000
+You paste it into your code.
+
+197
+00:12:04,000 --> 00:12:05,000
+And you do it again.
+
+198
+00:12:05,000 --> 00:12:10,000
+And so you're basically bound by the speed at which you can type and audit stuff.
+
+199
+00:12:10,000 --> 00:12:13,000
+So in the upper left, we've got a very fast process with no controls.
+
+200
+00:12:13,000 --> 00:12:17,000
+And in the upper right, you've got a very slow process with a great deal of controls.
+
+201
+00:12:17,000 --> 00:12:19,000
+Neither of these sounds good to me.
+
+202
+00:12:19,000 --> 00:12:20,000
+No offense.
+
+203
+00:12:20,000 --> 00:12:23,000
+You end up with either a hunk of junk, right?
+
+204
+00:12:23,000 --> 00:12:26,000
+Or you're not done yet and you're going to chip sober.
+
+205
+00:12:26,000 --> 00:12:27,000
+You'll believe.
+
+206
+00:12:27,000 --> 00:12:32,000
+And the bottom left is where I think we should go.
+
+207
+00:12:32,000 --> 00:12:34,000
+It's what I call governance centric.
+
+208
+00:12:34,000 --> 00:12:37,000
+And here we've got our nice human that's me.
+
+209
+00:12:37,000 --> 00:12:43,000
+And the human describes policies about how the engineering work should proceed.
+
+210
+00:12:43,000 --> 00:12:47,000
+I'll show you a fancier figure of this that's expanded a bit.
+
+211
+00:12:47,000 --> 00:12:52,000
+And those policies produced a governed engineering environment.
+
+212
+00:12:52,000 --> 00:12:55,000
+Those are the rules of the road that these software agents can operate with.
+
+213
+00:12:55,000 --> 00:12:57,000
+And they're much fancier than it sounds like.
+
+214
+00:12:58,000 --> 00:13:01,000
+So this is not just personas where there's a prompt that says you're the tester.
+
+215
+00:13:01,000 --> 00:13:03,000
+There's way more you could do.
+
+216
+00:13:03,000 --> 00:13:04,000
+Okay.
+
+217
+00:13:04,000 --> 00:13:05,000
+So that's the third one.
+
+218
+00:13:05,000 --> 00:13:08,000
+If you have this, you've got your policies, they become controls and they, in principle,
+
+219
+00:13:08,000 --> 00:13:11,000
+should give you higher velocity because the agents are operating independently.
+
+220
+00:13:11,000 --> 00:13:15,000
+But better confidence in the quality of the result because you've embedded those controls
+
+221
+00:13:15,000 --> 00:13:18,000
+as executable, deterministic constraints.
+
+222
+00:13:18,000 --> 00:13:19,000
+Okay.
+
+223
+00:13:19,000 --> 00:13:20,000
+So that's our goal.
+
+224
+00:13:20,000 --> 00:13:21,000
+We want to get down here.
+
+225
+00:13:21,000 --> 00:13:23,000
+My LinkedIn is full of the people in the upper left and the upper right.
+
+226
+00:13:23,000 --> 00:13:24,000
+And that of them is where we want.
+
+227
+00:13:24,000 --> 00:13:26,000
+So I want to be down here in the bottom.
+
+228
+00:13:26,000 --> 00:13:27,000
+Okay.
+
+229
+00:13:27,000 --> 00:13:29,000
+Do you also want to be in the bottom left?
+
+230
+00:13:29,000 --> 00:13:31,000
+I would like that.
+
+231
+00:13:31,000 --> 00:13:32,000
+Okay.
+
+232
+00:13:32,000 --> 00:13:38,000
+So this is my expanded version of that governance-centric approach.
+
+233
+00:13:38,000 --> 00:13:42,000
+So the papers that exist about stuff, about agenda governance generally say, well, you've
+
+234
+00:13:42,000 --> 00:13:47,000
+got your policies that your organization needs to comply with, like security controls.
+
+235
+00:13:47,000 --> 00:13:51,000
+Just tell the agents not to go outside the network.
+
+236
+00:13:51,000 --> 00:13:55,000
+And you'll be fine and tell them not to be mean to each other and have access to policies
+
+237
+00:13:55,000 --> 00:13:56,000
+in place.
+
+238
+00:13:56,000 --> 00:13:59,000
+And they're sort of hoping that that's going to be good enough.
+
+239
+00:13:59,000 --> 00:14:00,000
+I don't think it's enough.
+
+240
+00:14:00,000 --> 00:14:05,000
+So the government engineering environment that I think you need in the governance approach
+
+241
+00:14:05,000 --> 00:14:07,000
+includes agenda governance.
+
+242
+00:14:07,000 --> 00:14:09,000
+So that's up here in the left.
+
+243
+00:14:09,000 --> 00:14:11,000
+And there's a bunch of examples.
+
+244
+00:14:11,000 --> 00:14:15,000
+When you're launching agents, you need to make sure that the instructions are giving them
+
+245
+00:14:15,000 --> 00:14:16,000
+are good.
+
+246
+00:14:16,000 --> 00:14:17,000
+That's the brief.
+
+247
+00:14:18,000 --> 00:14:23,000
+You can have a checklist of all the things that are supposed to be in a brief.
+
+248
+00:14:23,000 --> 00:14:25,000
+Make sure you check your work.
+
+249
+00:14:25,000 --> 00:14:26,000
+Right?
+
+
+===== CHUNK 1 - starts ~14 min into the talk =====
+1
+00:00:00,000 --> 00:00:09,600
+And if you just let the system run, those instructions are probabilistically excluded
+
+2
+00:00:09,600 --> 00:00:11,600
+because Claude is not reliable.
+
+3
+00:00:11,600 --> 00:00:15,160
+So you'll be like, make sure the briefs always follow this template and it'll be like, sure
+
+4
+00:00:15,160 --> 00:00:20,920
+boss, but it won't reliably do it, not all the time because it's a probability flip.
+
+5
+00:00:20,920 --> 00:00:24,600
+But you can determineize that and say, no, no, before we launch the agent, check that
+
+6
+00:00:24,600 --> 00:00:26,600
+all the things that are supposed to be there are present.
+
+7
+00:00:26,600 --> 00:00:27,600
+Okay.
+
+8
+00:00:27,600 --> 00:00:28,600
+That's a brief one.
+
+9
+00:00:28,600 --> 00:00:34,400
+That's a way to govern the agentic process that happens as they write code.
+
+10
+00:00:34,400 --> 00:00:37,680
+Another thing that you might want to take is called a docs hierarchy.
+
+11
+00:00:37,680 --> 00:00:41,920
+So we all know that coding agents have a context window.
+
+12
+00:00:41,920 --> 00:00:46,240
+That's the amount of information they can hold in their brains at once, more or less.
+
+13
+00:00:46,240 --> 00:00:52,600
+If they don't know where to find information, they might read the docs, right?
+
+14
+00:00:52,600 --> 00:00:58,720
+If the docs are an 800-page PDF with no index, I mean, you've all opened a textbook
+
+15
+00:00:58,720 --> 00:01:01,880
+before incoming index to be lacking and thought, when do I find the information?
+
+16
+00:01:01,880 --> 00:01:02,880
+Okay.
+
+17
+00:01:02,880 --> 00:01:03,880
+You flip through it.
+
+18
+00:01:03,880 --> 00:01:04,880
+Now, index, this is terrible.
+
+19
+00:01:04,880 --> 00:01:06,840
+I guess I'll have to read it in 100 pages.
+
+20
+00:01:06,840 --> 00:01:10,440
+If your docs are like that, the agent itself will have to go read it in 100 pages.
+
+21
+00:01:10,440 --> 00:01:13,240
+It'll blow up its context window and it won't be able to make a progress.
+
+22
+00:01:13,240 --> 00:01:17,680
+If you structure your docs hierarchically with indices and references and so on like a wiki
+
+23
+00:01:17,680 --> 00:01:22,000
+page, it'll have no trouble finding exactly the information it wants efficiently.
+
+24
+00:01:22,000 --> 00:01:24,680
+So that's another form of governance you can put in your system.
+
+25
+00:01:24,680 --> 00:01:26,800
+The docs should be hierarchical.
+
+26
+00:01:26,800 --> 00:01:29,760
+Each doc that we have should be no longer than whatever.
+
+27
+00:01:29,760 --> 00:01:31,240
+The docs they could be linked together.
+
+28
+00:01:31,240 --> 00:01:32,240
+Very nice.
+
+29
+00:01:32,240 --> 00:01:33,240
+Right.
+
+30
+00:01:33,240 --> 00:01:37,720
+So this is the thing that you can do to the agent environment that your agent's operating.
+
+31
+00:01:37,720 --> 00:01:40,080
+In the middle here, we've got the orchestrator.
+
+32
+00:01:40,080 --> 00:01:45,960
+So this is the thing in the middle that says, hey, I checked the orchestrator and said launch
+
+33
+00:01:45,960 --> 00:01:49,840
+an agent for this and launch an agent for that and it supervises the agents that are
+
+34
+00:01:49,840 --> 00:01:50,840
+happening.
+
+35
+00:01:50,920 --> 00:01:55,480
+So you can tell that orchestrator for this kind of work, use a cheat model for that kind
+
+36
+00:01:55,480 --> 00:01:59,520
+of work, use an expensive model for this other kind of work, use a super expensive model and
+
+37
+00:01:59,520 --> 00:02:01,520
+give it some opportunity to make judgments about that.
+
+38
+00:02:01,520 --> 00:02:06,640
+So that's the way to work with Orca to put governance into the orchestrator's environment.
+
+39
+00:02:06,640 --> 00:02:16,040
+Over here in the product governance, whatever thing you're building, you can just have code
+
+40
+00:02:16,040 --> 00:02:18,200
+or you can have coded tests.
+
+41
+00:02:18,200 --> 00:02:19,840
+That's good, right?
+
+42
+00:02:19,840 --> 00:02:23,480
+But we can push the level of rigor a little further.
+
+43
+00:02:23,480 --> 00:02:26,720
+You can also have code and dynamic tests and static analyses.
+
+44
+00:02:26,720 --> 00:02:30,560
+Turns out, if you ask Claude, hey, we're going to lend for this, we're going to lend for
+
+45
+00:02:30,560 --> 00:02:31,560
+it.
+
+46
+00:02:31,560 --> 00:02:32,560
+That's great.
+
+47
+00:02:32,560 --> 00:02:37,560
+And how many of you know what UML is, Unified Modeling Language?
+
+48
+00:02:37,560 --> 00:02:38,560
+Okay.
+
+49
+00:02:38,560 --> 00:02:40,720
+How many of you use UML every day?
+
+50
+00:02:40,720 --> 00:02:41,720
+Okay.
+
+51
+00:02:41,720 --> 00:02:43,720
+Why don't you use UML?
+
+52
+00:02:43,720 --> 00:02:49,280
+Do you have a time sync?
+
+53
+00:02:49,280 --> 00:02:50,280
+Okay.
+
+54
+00:02:50,280 --> 00:02:51,280
+Great.
+
+55
+00:02:51,280 --> 00:02:56,280
+Why don't you say it's a time sync?
+
+56
+00:02:56,280 --> 00:03:07,440
+Well, there's the initial time invested in actually building the diagram.
+
+57
+00:03:07,440 --> 00:03:10,320
+But after that, it's great.
+
+58
+00:03:10,320 --> 00:03:15,800
+You can reference it, but it's often hard when you're pressured for velocity to sit
+
+59
+00:03:15,800 --> 00:03:18,560
+down and create those documents.
+
+60
+00:03:18,560 --> 00:03:22,440
+And once you've already created a process, then you just have like some cost fallacy
+
+61
+00:03:22,440 --> 00:03:28,320
+of, oh, if I go back and do this now, I'm wasting time on this, I can't make myself do
+
+62
+00:03:28,320 --> 00:03:29,320
+this.
+
+63
+00:03:29,320 --> 00:03:30,320
+Okay.
+
+64
+00:03:30,320 --> 00:03:36,920
+So with software modeling, you've said there's enough for cost to building the model.
+
+65
+00:03:36,920 --> 00:03:37,920
+Totally true, right?
+
+66
+00:03:37,920 --> 00:03:39,840
+UML requires that I write down my boxes.
+
+67
+00:03:39,840 --> 00:03:44,000
+I never use some language to do it in, and I've got a nice picture which can help me
+
+68
+00:03:44,000 --> 00:03:45,000
+do the implementation.
+
+69
+00:03:46,000 --> 00:03:49,920
+And when people use UML in industry, they generally find that after a couple releases,
+
+70
+00:03:49,920 --> 00:03:53,200
+the UML diagram no longer matches the territory, right?
+
+71
+00:03:53,200 --> 00:03:56,120
+It's a map, but it's an out of date map.
+
+72
+00:03:56,120 --> 00:03:58,080
+And so I have a different problem.
+
+73
+00:03:58,080 --> 00:04:01,680
+New person joins the team, looks at the map, looks at the territory, it doesn't know what's
+
+74
+00:04:01,680 --> 00:04:02,680
+true.
+
+75
+00:04:02,680 --> 00:04:07,600
+They don't know if the difference is because the document is out of date, or the difference
+
+76
+00:04:07,600 --> 00:04:10,760
+is because there is a defect in the system that's been built.
+
+77
+00:04:10,760 --> 00:04:12,400
+Usually you should assume the docs out of date.
+
+78
+00:04:12,400 --> 00:04:16,160
+But you don't actually know it, so they have to go ask the senior, hey, senior, hey,
+
+79
+00:04:16,160 --> 00:04:18,200
+Solomon, is it supposed to work like this or not?
+
+80
+00:04:18,200 --> 00:04:19,200
+I don't know.
+
+81
+00:04:19,200 --> 00:04:23,080
+And Solomon has to go look at the UML and be like, oh, I made this in 2015, I had the
+
+82
+00:04:23,080 --> 00:04:24,080
+intern do it.
+
+83
+00:04:24,080 --> 00:04:28,040
+And it's been a couple of years, I guess, and it's 2026 already, wow.
+
+84
+00:04:28,040 --> 00:04:31,880
+And then maybe they'll update the UML model, maybe they won't, right?
+
+85
+00:04:31,880 --> 00:04:35,560
+But it becomes maybe useful, but not great.
+
+86
+00:04:36,000 --> 00:04:42,600
+Well, it turns out that Claude knows how to write UML models.
+
+87
+00:04:42,600 --> 00:04:49,040
+And if you would like to operate product development or large companies development
+
+88
+00:04:49,040 --> 00:04:56,480
+scale, you yourself should probably learn the language of models and talk to Claude
+
+89
+00:04:56,480 --> 00:04:57,480
+in that language.
+
+90
+00:04:57,480 --> 00:05:01,160
+Or, oh, sorry, I've just been using Claude for months like a drunkard.
+
+91
+00:05:01,160 --> 00:05:03,040
+So I'm going to say Claude a lot.
+
+92
+00:05:03,040 --> 00:05:05,680
+But insert whatever model you prefer, right?
+
+93
+00:05:05,680 --> 00:05:08,280
+It knows how to work with these things.
+
+94
+00:05:08,280 --> 00:05:10,360
+You can say, hey, here's a rough sketch.
+
+95
+00:05:10,360 --> 00:05:12,680
+Can you make a model for me in visual lives that use mermaid?
+
+96
+00:05:12,680 --> 00:05:13,680
+That's a drawing library.
+
+97
+00:05:13,680 --> 00:05:16,560
+About a bit about a boom, you have a visual to talk about.
+
+98
+00:05:16,560 --> 00:05:19,800
+And then you can say, hey, why don't you represent that in code for me?
+
+99
+00:05:19,800 --> 00:05:21,320
+And hey, it'll do that.
+
+100
+00:05:21,320 --> 00:05:24,760
+And then you can say, cool, well, let's implement it now.
+
+101
+00:05:24,760 --> 00:05:29,640
+And in the model file we've made, why don't we have a pointer that this component is implemented
+
+102
+00:05:29,640 --> 00:05:31,560
+in this tree of the file system.
+
+103
+00:05:31,560 --> 00:05:34,560
+And this component's implemented in that tree.
+
+104
+00:05:34,560 --> 00:05:36,320
+And well, we have tests too, right?
+
+105
+00:05:36,320 --> 00:05:38,480
+Well, why don't we have a pointer over to the tests?
+
+106
+00:05:38,480 --> 00:05:40,400
+So the tests for this component are here.
+
+107
+00:05:40,400 --> 00:05:42,480
+And the tests for that component are there.
+
+108
+00:05:42,480 --> 00:05:44,240
+And we have these static analyses too.
+
+109
+00:05:44,240 --> 00:05:46,640
+Let's link them all together, right?
+
+110
+00:05:46,640 --> 00:05:49,040
+This is the thing that's super annoying for humans to do.
+
+111
+00:05:49,040 --> 00:05:54,720
+And so generally, only shops like Rolls Royce and Boeing are doing this sort of thing.
+
+112
+00:05:54,720 --> 00:05:56,200
+This is called Model-based software engineering.
+
+113
+00:05:56,200 --> 00:05:59,760
+It's where you make elaborate models and then you keep them in sync through an elaborate
+
+114
+00:05:59,760 --> 00:06:00,760
+process.
+
+115
+00:06:00,760 --> 00:06:01,760
+And it's very expensive.
+
+116
+00:06:01,760 --> 00:06:05,160
+So planes and gas turbines are really expensive.
+
+117
+00:06:05,160 --> 00:06:08,800
+It's really valuable for actually making sure the system is working right.
+
+118
+00:06:08,800 --> 00:06:12,240
+And everybody can do it now, right?
+
+119
+00:06:12,240 --> 00:06:14,240
+You just have to say to Claude, let's do that.
+
+120
+00:06:14,240 --> 00:06:15,240
+And then it'll do it.
+
+121
+00:06:15,240 --> 00:06:19,360
+And you have to give it the right words, and it'll have to do some infrastructure development.
+
+122
+00:06:19,360 --> 00:06:20,760
+But it will work.
+
+123
+00:06:20,760 --> 00:06:24,320
+And when you're done, you get incredible velocity out of it.
+
+124
+00:06:24,320 --> 00:06:27,120
+I think I have a slight explaining why.
+
+125
+00:06:27,120 --> 00:06:28,120
+Yeah.
+
+126
+00:06:28,200 --> 00:06:34,240
+If you do the things I'm talking about, you can land a thousand plus commits a week for
+
+127
+00:06:34,240 --> 00:06:36,520
+months.
+
+128
+00:06:36,520 --> 00:06:42,560
+And you can change half a million lines of code a week for months.
+
+129
+00:06:42,560 --> 00:06:45,320
+So I do sleep.
+
+130
+00:06:45,320 --> 00:06:46,520
+I also sleep.
+
+131
+00:06:46,520 --> 00:06:50,080
+But this is the data from my repo.
+
+132
+00:06:50,080 --> 00:06:53,320
+The repo does not have a hundred billion lines of code in it, although the chart makes
+
+133
+00:06:53,320 --> 00:06:54,320
+it look like it does.
+
+134
+00:06:54,320 --> 00:06:56,960
+It has about four million lines of code in it.
+
+135
+00:06:56,960 --> 00:06:59,640
+That's about half a million lines of product code.
+
+136
+00:06:59,640 --> 00:07:03,360
+So that's the thing that actually modifies the document.
+
+137
+00:07:03,360 --> 00:07:07,320
+And it's got two and a half million lines, three, I don't know, a bunch of million, I
+
+138
+00:07:07,320 --> 00:07:12,800
+think two million lines of what I call the governed engineering environment.
+
+139
+00:07:12,800 --> 00:07:20,840
+So that's all the tests, all the static analyses, all the associated models, and all the documentation.
+
+140
+00:07:20,840 --> 00:07:22,880
+All these things go into the governed engineering environment.
+
+141
+00:07:22,880 --> 00:07:24,800
+So that's a hilarious ratio, right?
+
+142
+00:07:24,800 --> 00:07:30,920
+We're happy with a one-to-one ratio of code to tests, and I've got a one-to-four ratio.
+
+143
+00:07:30,920 --> 00:07:32,640
+So a lot of that is changing these things.
+
+144
+00:07:32,640 --> 00:07:37,000
+And then some of this vlogs, it is also me saying, ah, having tried this out, I now see
+
+145
+00:07:37,000 --> 00:07:40,760
+the design needs to be different, based on experience, based on this feedback from some
+
+146
+00:07:40,760 --> 00:07:41,760
+users.
+
+147
+00:07:41,760 --> 00:07:45,520
+Let's change it as soon as we go back and optimize things to modify the behavior.
+
+148
+00:07:45,520 --> 00:07:50,000
+But I have written none of this code, and yet it's producing hilarious volumes of progress.
+
+149
+00:07:50,000 --> 00:07:54,760
+And because I have models upon models upon models, I am very confident that the data
+
+150
+00:07:54,760 --> 00:07:56,960
+that the system has high quality.
+
+151
+00:07:56,960 --> 00:08:04,880
+I'm confident of this because I can run queries that say, hey, how is our test coverage?
+
+152
+00:08:04,880 --> 00:08:07,440
+And instead of, I mean, I have unit tests, right?
+
+153
+00:08:07,440 --> 00:08:10,440
+So the unit test will tell me this line is covered, and this line is covered, and that
+
+154
+00:08:10,440 --> 00:08:11,600
+tells you something.
+
+155
+00:08:11,600 --> 00:08:16,280
+But you also want to know, when a user interacts with this system, do we have tests that exercise
+
+156
+00:08:16,280 --> 00:08:20,360
+this reasonable sequence that the administrator might need to take, or that the auditor might
+
+157
+00:08:20,360 --> 00:08:25,120
+need to take, or that a user who is trying to remediate a batch of documents might need
+
+158
+00:08:25,120 --> 00:08:26,120
+to take?
+
+159
+00:08:26,120 --> 00:08:27,600
+I have a model for this.
+
+160
+00:08:27,600 --> 00:08:30,960
+That model is linked to the relevant parts of the code that do it, and it's linked to
+
+161
+00:08:30,960 --> 00:08:32,160
+the associated tests.
+
+162
+00:08:32,160 --> 00:08:36,800
+And so I can say, not just line coverage, but also for these different flows through the
+
+163
+00:08:36,800 --> 00:08:38,560
+system, how well is the flow covered?
+
+164
+00:08:38,560 --> 00:08:43,400
+And if the flow is not covered well, that's going to be a problem, because you've probably
+
+165
+00:08:43,400 --> 00:08:48,360
+had modules that work, but they're not being validated in the right sequence, and so there's
+
+166
+00:08:48,400 --> 00:08:51,240
+defects that are exposed when you have these interactions.
+
+167
+00:08:51,240 --> 00:08:57,440
+If you have a model, you can query it, and then have cloud continue to improve test coverage
+
+168
+00:08:57,440 --> 00:09:01,720
+against the flow that it's supposed to be doing, just the lines of code.
+
+169
+00:09:01,720 --> 00:09:05,680
+That is one example of what models can do for you, but because I've got all these different
+
+170
+00:09:05,680 --> 00:09:09,880
+things, I can now say with much greater confidence, the resulting system is of high quality because
+
+171
+00:09:09,880 --> 00:09:15,440
+I've got the models that encode the different aspects of the system quality I care about,
+
+172
+00:09:15,440 --> 00:09:20,440
+and their links to the code, and so I can audit whether or not these things are being
+
+173
+00:09:20,440 --> 00:09:21,440
+done.
+
+174
+00:09:21,440 --> 00:09:22,440
+Does this make sense?
+
+175
+00:09:22,440 --> 00:09:23,440
+Okay.
+
+176
+00:09:23,440 --> 00:09:34,520
+To get this to work, you need to figure out how to make this loop work.
+
+177
+00:09:34,520 --> 00:09:37,880
+Everything when you work with coding agents is the same loop, and you might have heard
+
+178
+00:09:37,880 --> 00:09:42,080
+about prompt engineering and loop engineering and kind of gets all the same loop, right?
+
+179
+00:09:42,080 --> 00:09:45,680
+They're just making up new terms to try to sell more tokens.
+
+180
+00:09:45,680 --> 00:09:50,960
+The loop is we've got some input and an ocean of a success metric.
+
+181
+00:09:50,960 --> 00:09:55,960
+We've got the agent does some reasoning, and then the agent produces some output, which
+
+182
+00:09:55,960 --> 00:10:00,640
+feeds back into the loop, and we score that output, it becomes maybe with some transformation
+
+183
+00:10:00,640 --> 00:10:06,320
+in the input, the agent reasons again, and we do some problems.
+
+184
+00:10:06,320 --> 00:10:11,400
+So the hard problem of working with agents is defining the success criterion, and my general
+
+185
+00:10:11,400 --> 00:10:13,280
+answer to this is two things.
+
+186
+00:10:13,280 --> 00:10:18,160
+First, we learned from John asked us to help, who wrote a famous CACM article called Measure
+
+187
+00:10:18,160 --> 00:10:23,240
+1 Level Deeper, that the metrics we get need to be at least one level deeper than what
+
+188
+00:10:23,240 --> 00:10:27,000
+the human facing metric usually is, otherwise it can't make informed decisions about why
+
+189
+00:10:27,000 --> 00:10:32,320
+the metric is the way it is, to know why the total compute, CPU cycles used on this job
+
+190
+00:10:32,320 --> 00:10:35,480
+were X, we probably need to know the things that feed into that metric.
+
+191
+00:10:35,480 --> 00:10:39,120
+So you need at least that level of measurement, if you were to optimize it, and the agents
+
+192
+00:10:39,200 --> 00:10:44,600
+not magic, it also needs that level of insight, so that's why, metrics metrics metrics.
+
+193
+00:10:44,600 --> 00:10:47,800
+The second thing is models, models, models.
+
+194
+00:10:47,800 --> 00:10:54,880
+If you don't give the agent some sense of what happens when it produces this output,
+
+195
+00:10:54,880 --> 00:10:59,040
+like what is happening over here, it will not be able to make progress.
+
+196
+00:10:59,040 --> 00:11:06,760
+I mean, it will, given enough time and taxpayer-fueled tokens, it will make progress, but it will
+
+197
+00:11:06,760 --> 00:11:11,520
+be searching over a very large space, and it will be trying to figure out what happens
+
+198
+00:11:11,520 --> 00:11:15,840
+when I turn this knob, but the thing is, you usually know what happens when you turn that
+
+199
+00:11:15,840 --> 00:11:20,800
+knob, so just tell it, and if you tell it what happens when you turn this knob, what
+
+200
+00:11:20,800 --> 00:11:25,440
+you're doing is building a model, so if you tell it, the models that let it guess at what
+
+201
+00:11:25,440 --> 00:11:29,400
+will happen when the knobs get turned, and perhaps the models on how to interpret this
+
+202
+00:11:29,400 --> 00:11:32,720
+input that's coming into the system, what does cycles mean, and how does it relate to
+
+203
+00:11:32,720 --> 00:11:36,720
+this other thing in the context of this system, well you can hope that it guesses, but why
+
+204
+00:11:36,720 --> 00:11:42,960
+just tell it, tell it programmatically, you can tell it with a prompt, but don't tell
+
+205
+00:11:42,960 --> 00:11:48,960
+it with code also, so this is another way to interpret this notion is, it's loop engineering,
+
+206
+00:11:48,960 --> 00:11:55,520
+but you need to figure out the metrics and the models that will help it reason over those.
+
+207
+00:11:55,520 --> 00:12:00,440
+Alright, so why have I been doing this, this is a very brief history of what I've been
+
+208
+00:12:00,440 --> 00:12:04,320
+up to, so the Americans with Disabilities Act is the reason that we have wheelchair ramps
+
+209
+00:12:04,320 --> 00:12:08,000
+in all of our buildings in America, the general thesis of America is everybody should have
+
+210
+00:12:08,000 --> 00:12:14,200
+the opportunity to succeed on their merit, the ADA part is about the opportunity, it
+
+211
+00:12:14,200 --> 00:12:18,320
+says, even if you have some disability, you should be able to access the same resources
+
+212
+00:12:18,320 --> 00:12:22,560
+that everybody else can, such that if you're meritorious, you'll be able to use those
+
+213
+00:12:22,560 --> 00:12:26,560
+resources better than the other people and have, I think, all the money in America, so
+
+214
+00:12:26,560 --> 00:12:32,840
+go get all the money, excellent, and we measure success here, in 2024 the US Department of
+
+215
+00:12:32,840 --> 00:12:38,200
+Justice said, well, in addition to wheelchair ramps in the modern era, it seems like being
+
+216
+00:12:38,200 --> 00:12:44,080
+able to interact with digital content in an accessible way also seems important, so if
+
+217
+00:12:44,080 --> 00:12:48,400
+you're blind, it will be hard for you to make sense of PowerPoint decks unless someone
+
+218
+00:12:48,400 --> 00:12:52,320
+has gone to the trouble of making them accessible, that means all the pictures have screen reader
+
+219
+00:12:52,320 --> 00:12:58,880
+content attached to them, the rendering order of the slide should be encoded properly, so
+
+220
+00:12:58,880 --> 00:13:02,760
+that when they click through it and the screen reader reads it, it's not in a random order,
+
+221
+00:13:02,760 --> 00:13:10,760
+all the stuff is now an obligation that any public entity has, including Purdue University,
+
+222
+00:13:10,760 --> 00:13:16,240
+and in particular, any learning materials that we give to students need to be accessible,
+
+223
+00:13:16,240 --> 00:13:19,800
+whether or not there is currently a blind student in our class, here at Argonne, I'm
+
+224
+00:13:19,800 --> 00:13:23,960
+sure it's a giant government entity that you also have to deal with this in some way,
+
+225
+00:13:23,960 --> 00:13:27,400
+maybe you're ill shielded from it, I don't know, but if you happen to need to remediate
+
+226
+00:13:27,440 --> 00:13:32,160
+a document, let me know, so remediation is super expensive, I time myself doing it, we're
+
+227
+00:13:32,160 --> 00:13:36,640
+talking about hours per document, I have hundreds of documents from my classes, I don't have
+
+228
+00:13:36,640 --> 00:13:41,640
+hundreds of hours to remediate documents, I do have hundreds of hours to play with
+
+229
+00:13:41,640 --> 00:13:44,480
+cloth and figure out how to do this well, so that's what I'm doing instead, I'm trying
+
+230
+00:13:44,480 --> 00:13:50,840
+to build an automated system for it, and you can try to pay TAs, but we tried that and
+
+231
+00:13:50,840 --> 00:13:55,320
+they don't do a good job, so I'm not going to do that, okay, so that's the problem, and
+
+232
+00:13:55,360 --> 00:13:58,600
+what I've been doing is building an automated system for this purpose, again, it's half
+
+233
+00:13:58,600 --> 00:14:03,880
+a million lines of production code, plus several million lines of government engineering
+
+234
+00:14:03,880 --> 00:14:09,080
+environment, I started with a feasibility probe like any good engineer, you know, iteratively
+
+235
+00:14:09,080 --> 00:14:13,120
+developed stuff, I mean, it worked for PowerPoint, my colleagues, they've made it PDF support
+
+236
+00:14:13,120 --> 00:14:18,080
+as well, I think of amounts of cookie, he wants PDF support as well, like expanded formats,
+
+237
+00:14:18,080 --> 00:14:21,800
+I started hosting it on the web software, the service, and then I went and actually
+
+238
+00:14:21,800 --> 00:14:25,880
+read the standards, because I was basing it first on what PowerPoint says,
+
+
+===== CHUNK 2 - starts ~28 min into the talk =====
+1
+00:00:00,000 --> 00:00:02,640
+and the accessibility tool, but then I read the law,
+
+2
+00:00:02,640 --> 00:00:07,040
+and the Microsoft is not attempting to comply with the law,
+
+3
+00:00:07,040 --> 00:00:08,560
+and so you have to do actually a lot more
+
+4
+00:00:08,560 --> 00:00:09,400
+than to comply with the law,
+
+5
+00:00:09,400 --> 00:00:11,760
+so I don't actually conform with the law,
+
+6
+00:00:11,760 --> 00:00:15,000
+but I know what I don't do, which is better than Microsoft.
+
+7
+00:00:15,000 --> 00:00:17,640
+They just tell you that it's fine.
+
+8
+00:00:17,640 --> 00:00:19,160
+And then I spent a while hardening it,
+
+9
+00:00:19,160 --> 00:00:20,200
+so that I would not suck.
+
+10
+00:00:20,200 --> 00:00:22,480
+And now I've recently switched over
+
+11
+00:00:22,480 --> 00:00:24,960
+to function as a service instead of software as a service.
+
+12
+00:00:24,960 --> 00:00:27,360
+So I moved from deploying a Kubernetes cluster
+
+13
+00:00:27,360 --> 00:00:29,280
+over to deploying a server listening.
+
+14
+00:00:30,480 --> 00:00:31,400
+While I've been doing this,
+
+15
+00:00:31,400 --> 00:00:36,040
+I peaked at maxing out four-clawed max plans every week,
+
+16
+00:00:36,040 --> 00:00:38,320
+so those are the $200 a month plans.
+
+17
+00:00:38,320 --> 00:00:39,840
+Thank you for paying your taxes,
+
+18
+00:00:39,840 --> 00:00:42,680
+but I can build the NSF for this experiment.
+
+19
+00:00:42,680 --> 00:00:46,840
+I'm down to 2.2 at this point.
+
+20
+00:00:46,840 --> 00:00:48,440
+So one other thing that's interesting
+
+21
+00:00:48,440 --> 00:00:50,040
+about the techniques I'm trying to tell you about
+
+22
+00:00:50,040 --> 00:00:54,400
+is if you used them, your token consumption
+
+23
+00:00:54,400 --> 00:00:55,920
+will drop dramatically.
+
+24
+00:00:56,920 --> 00:01:01,080
+And the reason for this is that when you tell the agent
+
+25
+00:01:01,080 --> 00:01:02,960
+the context in which it's working,
+
+26
+00:01:02,960 --> 00:01:04,640
+and then use that word generically,
+
+27
+00:01:04,640 --> 00:01:06,280
+but there's a bunch of really specific things
+
+28
+00:01:06,280 --> 00:01:08,600
+you could do like make models for your code
+
+29
+00:01:08,600 --> 00:01:10,440
+of all the different views that might be available.
+
+30
+00:01:10,440 --> 00:01:11,600
+So performance consideration.
+
+31
+00:01:11,600 --> 00:01:12,880
+What's the security consideration?
+
+32
+00:01:12,880 --> 00:01:14,000
+What's the data flow?
+
+33
+00:01:14,000 --> 00:01:15,040
+What's the component?
+
+34
+00:01:15,040 --> 00:01:16,360
+How do the services talk to each other?
+
+35
+00:01:16,360 --> 00:01:19,000
+All these different models you could make.
+
+36
+00:01:19,000 --> 00:01:21,480
+Instead of having to look at half a million lines
+
+37
+00:01:21,480 --> 00:01:23,400
+of production code every time the agent tries
+
+38
+00:01:23,400 --> 00:01:24,240
+to build a feature,
+
+39
+00:01:24,240 --> 00:01:27,800
+you can instead look at 500 lines of a model
+
+40
+00:01:27,800 --> 00:01:30,040
+and know the territory.
+
+41
+00:01:30,040 --> 00:01:32,120
+And as long as that map that it's looking at
+
+42
+00:01:32,120 --> 00:01:35,520
+is modeled, as long as it's consistent with the territory,
+
+43
+00:01:35,520 --> 00:01:38,360
+it will be able to make really fast progress.
+
+44
+00:01:38,360 --> 00:01:40,120
+Just do that again for us.
+
+45
+00:01:40,120 --> 00:01:41,800
+A whole module.
+
+46
+00:01:41,800 --> 00:01:43,440
+It will know exactly where to go.
+
+47
+00:01:43,440 --> 00:01:46,040
+This will link from the model right to where it is to go.
+
+48
+00:01:46,040 --> 00:01:47,880
+So we'll stop burning tokens.
+
+49
+00:01:48,800 --> 00:01:50,640
+And we'll use tokens because you'll get
+
+50
+00:01:50,640 --> 00:01:51,960
+more and more velocity here.
+
+51
+00:01:51,960 --> 00:01:53,960
+So you're ambition and grow,
+
+52
+00:01:54,000 --> 00:01:56,840
+but it will stop wasting time looking around
+
+53
+00:01:56,840 --> 00:01:58,200
+for things exploding in its context.
+
+54
+00:01:58,200 --> 00:01:59,480
+I don't have any compact like that.
+
+55
+00:01:59,480 --> 00:02:00,560
+That part just stops happening.
+
+56
+00:02:00,560 --> 00:02:01,880
+It's happening.
+
+57
+00:02:01,880 --> 00:02:03,680
+So I picked it four.
+
+58
+00:02:03,680 --> 00:02:05,440
+That was before this hardening step.
+
+59
+00:02:05,440 --> 00:02:07,160
+And a lot of this hardening consisted of me
+
+60
+00:02:07,160 --> 00:02:09,760
+putting models and models and models into place.
+
+61
+00:02:09,760 --> 00:02:10,600
+And as I did this,
+
+62
+00:02:10,600 --> 00:02:13,240
+I saw that it's token consumption went down and down and down.
+
+63
+00:02:13,240 --> 00:02:15,560
+So now I max out two a week instead of four a week.
+
+64
+00:02:15,560 --> 00:02:16,680
+This is progress.
+
+65
+00:02:18,120 --> 00:02:20,400
+Okay, so that's what I've been up to.
+
+66
+00:02:20,400 --> 00:02:21,720
+So firstly, go ahead to any questions.
+
+67
+00:02:21,760 --> 00:02:24,120
+Anything on the chat, anything from the room.
+
+68
+00:02:28,520 --> 00:02:29,720
+Good.
+
+69
+00:02:29,720 --> 00:02:31,920
+So if you're gonna work with an agent,
+
+70
+00:02:31,920 --> 00:02:36,920
+you need to understand what levers are available to you.
+
+71
+00:02:37,080 --> 00:02:39,800
+And so this is the starting point for everything.
+
+72
+00:02:39,800 --> 00:02:42,400
+You are working on some application.
+
+73
+00:02:42,400 --> 00:02:44,840
+Robert wants to know if I'll give an example, right?
+
+74
+00:02:44,840 --> 00:02:46,920
+Okay, Robert, I'll get to an example.
+
+75
+00:02:46,920 --> 00:02:48,280
+You're working on some application.
+
+76
+00:02:48,280 --> 00:02:51,000
+It might be some benchmark system you're developing.
+
+77
+00:02:51,000 --> 00:02:52,200
+It might be a simulation.
+
+78
+00:02:52,200 --> 00:02:54,560
+It might be in my case, a document, a mediation system.
+
+79
+00:02:54,560 --> 00:02:56,160
+It might be a cool app to show the public
+
+80
+00:02:56,160 --> 00:02:57,400
+all the good stuff that are gone.
+
+81
+00:02:57,400 --> 00:02:59,120
+I don't know, whatever you're building.
+
+82
+00:02:59,120 --> 00:03:02,160
+On top of that, you're working in some canonical
+
+83
+00:03:02,160 --> 00:03:04,840
+engineering environment, we're working on Git
+
+84
+00:03:04,840 --> 00:03:07,560
+and we push to this Git every bow or this Git every bow.
+
+85
+00:03:07,560 --> 00:03:11,040
+And these are the rules for pushing to the Git every bow.
+
+86
+00:03:11,040 --> 00:03:13,360
+Underneath that, you are probably,
+
+87
+00:03:13,360 --> 00:03:14,800
+instead of typing yourself,
+
+88
+00:03:14,800 --> 00:03:17,840
+you're probably talking to some agentic harness.
+
+89
+00:03:17,840 --> 00:03:20,720
+So you're typically not loading model weights
+
+90
+00:03:20,720 --> 00:03:22,040
+and invoking them directly.
+
+91
+00:03:22,040 --> 00:03:24,400
+That's down here, the gen AI model part.
+
+92
+00:03:24,400 --> 00:03:26,280
+You're usually talking to some harness,
+
+93
+00:03:26,280 --> 00:03:29,480
+most commonly open claw or plug co or something like this.
+
+94
+00:03:30,720 --> 00:03:33,320
+This harness talks to the gen AI model.
+
+95
+00:03:33,320 --> 00:03:34,960
+You give prompts to that harness.
+
+96
+00:03:36,000 --> 00:03:37,280
+So this is what we have to work with.
+
+97
+00:03:37,280 --> 00:03:39,000
+All right, so we're trying to engineer stuff.
+
+98
+00:03:39,000 --> 00:03:41,960
+So now we know what's available.
+
+99
+00:03:41,960 --> 00:03:42,840
+We know the territory.
+
+100
+00:03:42,840 --> 00:03:44,560
+So what can we do with it?
+
+101
+00:03:44,560 --> 00:03:49,720
+Well, each of these levels has distinct places
+
+102
+00:03:49,760 --> 00:03:52,120
+where we can do control.
+
+103
+00:03:52,120 --> 00:03:53,960
+So at the very top, we have an application
+
+104
+00:03:53,960 --> 00:03:56,600
+and we can define what correctness means.
+
+105
+00:03:56,600 --> 00:03:58,360
+What are the policies by which we can merge code
+
+106
+00:03:58,360 --> 00:04:00,200
+in the code base that is typically measured
+
+107
+00:04:00,200 --> 00:04:03,480
+by some combination of static and dynamic analysis.
+
+108
+00:04:03,480 --> 00:04:06,920
+We run the tests, we run the CI training.
+
+109
+00:04:06,920 --> 00:04:09,120
+Okay, so that's a thing that you can control.
+
+110
+00:04:09,120 --> 00:04:11,360
+You can say to Claude, hey, write tests for it.
+
+111
+00:04:11,360 --> 00:04:13,600
+Hey, revisit the CI, fine.
+
+112
+00:04:13,600 --> 00:04:15,520
+Below that, we have the engineering environment
+
+113
+00:04:15,520 --> 00:04:17,440
+and this is, is everybody using Git?
+
+114
+00:04:17,800 --> 00:04:20,600
+It's 2026, well, you can get, great.
+
+115
+00:04:20,600 --> 00:04:22,120
+Okay, if you're using Git,
+
+116
+00:04:22,120 --> 00:04:24,880
+then you probably know about Git commit
+
+117
+00:04:24,880 --> 00:04:27,040
+and Git pull and Git push, right?
+
+118
+00:04:27,040 --> 00:04:29,640
+How many of you know what a Git hook is?
+
+119
+00:04:31,400 --> 00:04:33,880
+Okay, how many of you don't know what a Git hook is?
+
+120
+00:04:33,880 --> 00:04:35,560
+Okay, all right.
+
+121
+00:04:35,560 --> 00:04:38,520
+A Git hook is a thing that you can register.
+
+122
+00:04:38,520 --> 00:04:43,520
+It's a script and a Git command line interface.
+
+123
+00:04:44,360 --> 00:04:48,040
+When invoked, if you say Git commit,
+
+124
+00:04:48,040 --> 00:04:52,400
+you can configure Git so that it invokes a script
+
+125
+00:04:52,400 --> 00:04:57,040
+or a program before the commit and after the commit.
+
+126
+00:04:57,040 --> 00:04:59,560
+So often it's called a pre-commit hook
+
+127
+00:04:59,560 --> 00:05:01,600
+or a post-commit hook.
+
+128
+00:05:01,600 --> 00:05:03,400
+For every single Git command, there is,
+
+129
+00:05:03,400 --> 00:05:05,560
+you can register a pre-hook and a post-hook.
+
+130
+00:05:06,520 --> 00:05:10,160
+Most commonly, people will use the pre-hook
+
+131
+00:05:10,160 --> 00:05:14,320
+to do some access control check or some quality check.
+
+132
+00:05:14,320 --> 00:05:16,720
+So before the commit comes in,
+
+133
+00:05:16,720 --> 00:05:18,800
+let's run the compiler on it.
+
+134
+00:05:18,800 --> 00:05:21,920
+Just, you can't even commit stuff if it doesn't compile, right?
+
+135
+00:05:21,920 --> 00:05:23,640
+The reason you might do this is,
+
+136
+00:05:23,640 --> 00:05:26,400
+instead of waiting until I push,
+
+137
+00:05:26,400 --> 00:05:28,960
+or I open the pull request and it triggers the CI train
+
+138
+00:05:28,960 --> 00:05:31,000
+and then I learn that my code doesn't compile,
+
+139
+00:05:31,000 --> 00:05:33,240
+well, that's silly, I should check that before.
+
+140
+00:05:33,240 --> 00:05:35,680
+And instead of me typing GCC blah, blah, blah,
+
+141
+00:05:35,680 --> 00:05:39,240
+I'm so lazy, just as a Git pre-commit hook run make
+
+142
+00:05:39,240 --> 00:05:42,960
+and if make fails, Git will refuse the commit
+
+143
+00:05:42,960 --> 00:05:44,600
+and it'll say, it's a program,
+
+144
+00:05:44,600 --> 00:05:46,720
+it'll print out whatever, so you could say,
+
+145
+00:05:46,720 --> 00:05:48,680
+exit code one, it's refuse,
+
+146
+00:05:48,680 --> 00:05:51,600
+and print out make fails, try that again.
+
+147
+00:05:51,600 --> 00:05:53,640
+If you register hooks like this,
+
+148
+00:05:53,640 --> 00:05:57,600
+then you will, whatever other operator
+
+149
+00:05:57,600 --> 00:05:59,520
+of the repository there is,
+
+150
+00:05:59,520 --> 00:06:01,400
+will be constrained in their behavior.
+
+151
+00:06:01,400 --> 00:06:04,040
+So you can register a Git pre-commit hook
+
+152
+00:06:04,040 --> 00:06:06,800
+that would hit Claude, every time Claude
+
+153
+00:06:06,840 --> 00:06:09,240
+has to make a commit and run automated checks
+
+154
+00:06:09,240 --> 00:06:11,520
+on the things that Claude is trying to commit.
+
+155
+00:06:11,520 --> 00:06:12,640
+And if they fail at that point,
+
+156
+00:06:12,640 --> 00:06:13,960
+Claude will say, oh, they're figgling
+
+157
+00:06:13,960 --> 00:06:16,840
+and then it will try to fix it.
+
+158
+00:06:16,840 --> 00:06:18,560
+We hope, otherwise it'll try to hack around it
+
+159
+00:06:18,560 --> 00:06:20,720
+or maybe break into hugging face and force, you know,
+
+160
+00:06:20,720 --> 00:06:25,360
+whatever, but it will at least be given a signal
+
+161
+00:06:25,360 --> 00:06:27,000
+that what it's done is not correct
+
+162
+00:06:27,000 --> 00:06:30,520
+and then it will have to choose what to do next.
+
+163
+00:06:30,520 --> 00:06:31,560
+Okay, so that's Git hooks.
+
+164
+00:06:31,560 --> 00:06:33,800
+Now below that, you're working with some coding harness
+
+165
+00:06:33,800 --> 00:06:35,680
+and these coding harnesses also have places
+
+166
+00:06:35,680 --> 00:06:37,840
+that you can plug in and control.
+
+167
+00:06:37,840 --> 00:06:39,280
+So there's two places.
+
+168
+00:06:39,280 --> 00:06:44,280
+One is a place that affects the reasoning process
+
+169
+00:06:45,840 --> 00:06:48,080
+that the model takes.
+
+170
+00:06:48,080 --> 00:06:51,000
+And the other is a deterministic control
+
+171
+00:06:51,000 --> 00:06:53,000
+over what it's allowed to do.
+
+172
+00:06:53,000 --> 00:06:54,760
+So let's talk about the deterministic control.
+
+173
+00:06:54,760 --> 00:06:55,840
+First, these are the hooks.
+
+174
+00:06:55,840 --> 00:06:58,200
+They work the same as Git hooks.
+
+175
+00:06:58,200 --> 00:07:00,640
+There are stages in the life cycle
+
+176
+00:07:00,640 --> 00:07:02,760
+or the loop that the agent is taking
+
+177
+00:07:02,760 --> 00:07:04,280
+that the harness defines.
+
+178
+00:07:04,320 --> 00:07:06,880
+These stages are things like before launching
+
+179
+00:07:06,880 --> 00:07:11,160
+a sub-agent or after a sub-agent finishes
+
+180
+00:07:11,160 --> 00:07:16,000
+or before when I'm planning to come to a stop,
+
+181
+00:07:16,000 --> 00:07:17,600
+should I do something?
+
+182
+00:07:17,600 --> 00:07:20,960
+Or right before we compact the context window,
+
+183
+00:07:20,960 --> 00:07:21,800
+should I do something?
+
+184
+00:07:21,800 --> 00:07:24,000
+Or right after we compact the context window,
+
+185
+00:07:24,000 --> 00:07:24,840
+should I do something?
+
+186
+00:07:24,840 --> 00:07:25,960
+So there are all these moving parts
+
+187
+00:07:25,960 --> 00:07:27,800
+that you experience when you're working
+
+188
+00:07:27,800 --> 00:07:29,400
+with a model into the hood.
+
+189
+00:07:29,400 --> 00:07:31,440
+That model has a limited capacity
+
+190
+00:07:31,440 --> 00:07:33,160
+and then the harness itself can talk to agents
+
+191
+00:07:33,160 --> 00:07:34,000
+and all these other things.
+
+192
+00:07:34,000 --> 00:07:35,760
+And so you can register exactly the same thing.
+
+193
+00:07:35,760 --> 00:07:38,600
+It's a program that is forcibly executed
+
+194
+00:07:38,600 --> 00:07:40,320
+at these different stages of the loop
+
+195
+00:07:40,320 --> 00:07:41,520
+that the harness is giving you.
+
+196
+00:07:41,520 --> 00:07:44,680
+So you can, for example, before compact,
+
+197
+00:07:44,680 --> 00:07:46,520
+say, oh, I'm about to compact.
+
+198
+00:07:46,520 --> 00:07:50,120
+Maybe I should write out the current things I'm working on
+
+199
+00:07:50,120 --> 00:07:53,400
+so that after compact, I remember what I was doing.
+
+200
+00:07:53,400 --> 00:07:56,040
+And then after compact, maybe I should go look
+
+201
+00:07:56,040 --> 00:07:58,400
+at the document, I just wrote out the handoff document
+
+202
+00:07:58,400 --> 00:08:01,120
+and say, oh, I'm back from compact.
+
+203
+00:08:01,120 --> 00:08:02,240
+Where was I again?
+
+204
+00:08:02,240 --> 00:08:05,400
+And so this way you get automatically a sense of
+
+205
+00:08:05,400 --> 00:08:06,800
+where you were.
+
+206
+00:08:06,800 --> 00:08:09,720
+I mean, if it just hits the compact automatically,
+
+207
+00:08:09,720 --> 00:08:12,200
+it will sort of remember what I was doing.
+
+208
+00:08:12,200 --> 00:08:14,960
+But it doesn't know what's important to keep around.
+
+209
+00:08:14,960 --> 00:08:16,560
+And so it's just like a best effort,
+
+210
+00:08:16,560 --> 00:08:19,960
+compaction, like some language compression algorithm
+
+211
+00:08:19,960 --> 00:08:22,040
+like strip out half the words from the context, right?
+
+212
+00:08:22,040 --> 00:08:24,720
+Okay, well, that's maybe it's better than nothing,
+
+213
+00:08:24,720 --> 00:08:26,640
+but we could do a lot better if we said,
+
+214
+00:08:26,640 --> 00:08:29,040
+here's our to-do list.
+
+215
+00:08:29,040 --> 00:08:30,160
+Okay, well, when I come back,
+
+216
+00:08:30,160 --> 00:08:32,120
+I don't want to happen to-do list.
+
+217
+00:08:32,120 --> 00:08:32,960
+I want the whole thing,
+
+218
+00:08:32,960 --> 00:08:35,040
+and I don't care about what I was doing four hours ago.
+
+219
+00:08:35,040 --> 00:08:38,280
+So you're basically giving it a policy about what to keep.
+
+220
+00:08:38,280 --> 00:08:40,160
+And any policy you give it is a whole lot better
+
+221
+00:08:40,160 --> 00:08:41,120
+than the default one.
+
+222
+00:08:41,120 --> 00:08:43,040
+That's a precompact hook, a postcompact hook,
+
+223
+00:08:43,040 --> 00:08:44,520
+you can say, hey, I'm back.
+
+224
+00:08:44,520 --> 00:08:47,600
+This is where we put that externalized record
+
+225
+00:08:47,600 --> 00:08:48,440
+of our memory.
+
+226
+00:08:48,440 --> 00:08:49,840
+Please go look at it, oh, on that,
+
+227
+00:08:49,840 --> 00:08:51,280
+and then it functions properly.
+
+228
+00:08:51,280 --> 00:08:53,600
+These are hooks you can put in the lifecycle.
+
+229
+00:08:53,600 --> 00:08:54,920
+So these are heart controls.
+
+230
+00:08:54,920 --> 00:08:57,840
+The claw can't cheat, it has to run it.
+
+231
+00:08:57,840 --> 00:09:01,800
+When it runs it, you can modify the external system,
+
+232
+00:09:01,800 --> 00:09:03,880
+and you can also print stuff to claw it
+
+233
+00:09:03,880 --> 00:09:05,800
+as though you were prompting it.
+
+234
+00:09:05,800 --> 00:09:10,400
+So an example of the kind of thing you can print to claw it
+
+235
+00:09:10,400 --> 00:09:12,800
+as though you were prompting it is,
+
+236
+00:09:12,800 --> 00:09:14,520
+hey, write out the record of what we're doing,
+
+237
+00:09:14,520 --> 00:09:17,480
+or if it's about to come to a stop,
+
+238
+00:09:17,480 --> 00:09:20,160
+I, for the first month, would come back to my laptop
+
+239
+00:09:20,160 --> 00:09:21,520
+and claw it would have said,
+
+240
+00:09:21,520 --> 00:09:25,000
+well, I think I'm going to rest for a bit.
+
+241
+00:09:25,000 --> 00:09:26,120
+And then it would stop working,
+
+242
+00:09:26,120 --> 00:09:27,520
+and I'm like, this is a to-do list.
+
+243
+00:09:27,520 --> 00:09:28,680
+Why have you stopped working?
+
+244
+00:09:28,680 --> 00:09:30,720
+So I would just, right, keep going,
+
+245
+00:09:30,720 --> 00:09:32,320
+and then it would keep going.
+
+246
+00:09:32,320 --> 00:09:33,320
+It's like, why don't we stop?
+
+247
+00:09:33,320 --> 00:09:36,200
+It just has some random decision to make a stop.
+
+248
+00:09:36,200 --> 00:09:37,560
+But I had to write, keep going.
+
+249
+00:09:37,560 --> 00:09:38,880
+Well, you don't have to write, keep going.
+
+250
+00:09:38,880 --> 00:09:42,680
+You can register a pre-stop hook,
+
+251
+00:09:42,680 --> 00:09:45,560
+and the pre-stop hook can literally just print,
+
+252
+00:09:45,560 --> 00:09:48,640
+keep going, and it will be as though you typed that
+
+253
+00:09:48,640 --> 00:09:49,640
+into the console.
+
+254
+00:09:49,640 --> 00:09:51,120
+Okay, well, now the lot has received the message,
+
+255
+00:09:51,120 --> 00:09:52,800
+keep going, and it will print out,
+
+256
+00:09:52,800 --> 00:09:56,000
+oh, I guess I'll keep going, and it will just pick up.
+
+257
+00:09:56,000 --> 00:09:58,160
+And why does it come to a stop?
+
+258
+00:09:58,160 --> 00:09:59,000
+Nobody knows.
+
+259
+00:09:59,000 --> 00:10:00,680
+It's a probabilistic machine.
+
+260
+00:10:00,680 --> 00:10:01,960
+It has random decisions.
+
+261
+00:10:01,960 --> 00:10:03,720
+It read enough forums for people
+
+262
+00:10:03,720 --> 00:10:04,880
+said, I'm tired, I'm going to bed.
+
+263
+00:10:04,880 --> 00:10:07,040
+That sometimes it says, I'm tired, I'm going to bed.
+
+264
+00:10:07,040 --> 00:10:08,040
+And you're like, you're a machine,
+
+265
+00:10:08,040 --> 00:10:09,480
+you don't know about bed.
+
+266
+00:10:09,480 --> 00:10:10,680
+That's just a phrase you made up,
+
+267
+00:10:10,680 --> 00:10:11,520
+but it stops anyway.
+
+268
+00:10:11,520 --> 00:10:12,400
+So that's stupid.
+
+269
+00:10:13,720 --> 00:10:16,320
+You can just tell it, keep going,
+
+270
+00:10:16,320 --> 00:10:17,200
+and it'll just keep going.
+
+271
+00:10:17,200 --> 00:10:18,240
+Now you should probably tell it
+
+272
+00:10:18,240 --> 00:10:20,000
+if something were sophisticated, then keep going.
+
+273
+00:10:20,000 --> 00:10:23,200
+Like, please consult your to-do list,
+
+274
+00:10:23,200 --> 00:10:25,680
+and choose from the next high priority task
+
+275
+00:10:25,680 --> 00:10:27,080
+and dispatch an agent for that,
+
+276
+00:10:27,080 --> 00:10:28,560
+so that it knows what it should do
+
+277
+00:10:28,560 --> 00:10:29,480
+when it keeps going.
+
+278
+00:10:29,480 --> 00:10:30,600
+But even just saying, keep going,
+
+279
+00:10:30,600 --> 00:10:31,640
+it's much better than nothing.
+
+280
+00:10:31,640 --> 00:10:32,480
+Progress, right?
+
+281
+00:10:32,480 --> 00:10:34,080
+You want the thing to make progress.
+
+282
+00:10:34,080 --> 00:10:35,720
+Okay, so then you have cloud skills.
+
+283
+00:10:35,720 --> 00:10:37,440
+So cloud hooks are a thing it has to do.
+
+284
+00:10:37,440 --> 00:10:39,360
+Cloud skills are a thing it can choose to do.
+
+285
+00:10:39,360 --> 00:10:42,040
+So cloud skill is the markdown, right?
+
+286
+00:10:42,040 --> 00:10:45,120
+It's a bunch of text files that you can register as a skill.
+
+287
+00:10:45,120 --> 00:10:46,840
+Each skill that you register comes
+
+288
+00:10:46,840 --> 00:10:49,000
+with a description of when to invoke it.
+
+289
+00:10:50,080 --> 00:10:51,840
+And when it gets invoked,
+
+290
+00:10:51,840 --> 00:10:54,560
+what that means is that the cloud,
+
+291
+00:10:54,560 --> 00:10:57,320
+or whatever harness you're using,
+
+292
+00:10:57,360 --> 00:10:59,360
+will go look in that directory,
+
+293
+00:10:59,360 --> 00:11:01,200
+give it its current context,
+
+294
+00:11:01,200 --> 00:11:03,400
+and it will see what's inside the skill
+
+295
+00:11:03,400 --> 00:11:05,760
+and make use of it, and this is all rather fuzzy.
+
+296
+00:11:05,760 --> 00:11:07,560
+But what people will do is they'll say,
+
+297
+00:11:07,560 --> 00:11:10,040
+if you're going to interact with a PowerPoint deck,
+
+298
+00:11:10,040 --> 00:11:14,880
+or a PDF, or this kind of file produced by this benchmark,
+
+299
+00:11:14,880 --> 00:11:17,120
+here is the structure of that file.
+
+300
+00:11:17,120 --> 00:11:19,800
+Here's the library that you should use to open
+
+301
+00:11:19,800 --> 00:11:21,520
+this PowerPoint deck.
+
+302
+00:11:21,520 --> 00:11:24,920
+Here is how to talk to this web server that we're running.
+
+303
+00:11:24,920 --> 00:11:26,320
+You define the interface,
+
+304
+00:11:26,360 --> 00:11:28,040
+there might be a tool that's allowed to call,
+
+305
+00:11:28,040 --> 00:11:29,080
+so you can use this document.
+
+306
+00:11:29,080 --> 00:11:31,560
+We have this tool that works here's the man page,
+
+307
+00:11:31,560 --> 00:11:33,400
+call it, and then a cloud will,
+
+308
+00:11:33,400 --> 00:11:36,560
+instead of making up how to open a PowerPoint deck,
+
+309
+00:11:36,560 --> 00:11:39,200
+or making up how to talk to your GRS server,
+
+310
+00:11:39,200 --> 00:11:41,440
+it will know exactly how to do it,
+
+311
+00:11:41,440 --> 00:11:43,880
+and will mostly do what it's adding.
+
+312
+00:11:43,880 --> 00:11:44,960
+So that's a skill.
+
+313
+00:11:44,960 --> 00:11:47,400
+You can't force it to use the skill,
+
+314
+00:11:47,400 --> 00:11:49,640
+but if it happens to trigger the skill,
+
+315
+00:11:49,640 --> 00:11:50,920
+it is very good for you,
+
+316
+00:11:50,920 --> 00:11:53,360
+because instead of honoring aimlessly
+
+317
+00:11:53,360 --> 00:11:55,640
+through the large space of how to talk to a GRS server,
+
+318
+00:11:55,640 --> 00:11:57,040
+it will know very specifically how to get
+
+319
+00:11:57,040 --> 00:11:59,040
+the right authentication to open and talk to it.
+
+320
+00:11:59,040 --> 00:12:01,000
+You might have heard about MCP.
+
+321
+00:12:01,000 --> 00:12:03,080
+Hooks often integrate with MCPs.
+
+322
+00:12:03,080 --> 00:12:04,280
+They say, here's the hook,
+
+323
+00:12:04,280 --> 00:12:06,760
+this is how to talk to that server.
+
+324
+00:12:06,760 --> 00:12:08,440
+But they can be more general than that.
+
+325
+00:12:08,440 --> 00:12:12,520
+So I have a hook called self-communicate,
+
+326
+00:12:12,520 --> 00:12:14,840
+and this hooks triggering is,
+
+327
+00:12:14,840 --> 00:12:16,600
+you were trying to write a document,
+
+328
+00:12:16,600 --> 00:12:19,120
+or draw a technical drawing.
+
+329
+00:12:19,120 --> 00:12:23,000
+And inside I have the rules about the kinds of documents
+
+330
+00:12:23,000 --> 00:12:25,760
+you might be writing, the writing style to use,
+
+331
+00:12:25,760 --> 00:12:27,800
+examples of my own writing.
+
+332
+00:12:27,800 --> 00:12:29,640
+If it's trying to do a drawing,
+
+333
+00:12:29,640 --> 00:12:32,000
+it will, I'll say the thing we used to draw
+
+334
+00:12:32,000 --> 00:12:32,840
+is called mermaid,
+
+335
+00:12:32,840 --> 00:12:35,120
+which is a text-based visualization library.
+
+336
+00:12:35,120 --> 00:12:36,720
+If you really can't use mermaid,
+
+337
+00:12:36,720 --> 00:12:38,320
+please use SVG or HTML.
+
+338
+00:12:38,320 --> 00:12:40,320
+But don't try to draw,
+
+339
+00:12:40,320 --> 00:12:42,240
+don't try to make a PNG by hand.
+
+340
+00:12:42,240 --> 00:12:43,800
+It will do that if you don't tell it.
+
+341
+00:12:43,800 --> 00:12:44,640
+If you say draw a picture,
+
+342
+00:12:44,640 --> 00:12:46,480
+it will attempt to make you a PNG.
+
+343
+00:12:46,480 --> 00:12:48,680
+It doesn't work at all, but it'll try.
+
+344
+00:12:48,680 --> 00:12:50,000
+But the skill that says,
+
+345
+00:12:50,000 --> 00:12:52,680
+hey, we're about to draw a picture.
+
+346
+00:12:52,680 --> 00:12:55,800
+If I say make a model of this thing that I can visualize,
+
+347
+00:12:55,800 --> 00:12:57,320
+you will say, oh, I need to draw a picture,
+
+348
+00:12:57,320 --> 00:12:59,560
+and then it'll hit my hook, self-communicate,
+
+349
+00:12:59,560 --> 00:13:00,920
+and then it will say, oh, the drawing,
+
+350
+00:13:00,920 --> 00:13:02,800
+here's how we draw around here.
+
+351
+00:13:02,800 --> 00:13:05,600
+Or you've all read writing from these models
+
+352
+00:13:05,600 --> 00:13:07,360
+and they're full of M-dashes.
+
+353
+00:13:07,360 --> 00:13:09,440
+And it's not X, it's Y, right?
+
+354
+00:13:09,440 --> 00:13:11,520
+There are all these things that LMs do well.
+
+355
+00:13:11,520 --> 00:13:14,200
+The skill that I would, you can install it if you want.
+
+356
+00:13:14,200 --> 00:13:16,200
+It says, here are the rules of writing.
+
+357
+00:13:17,360 --> 00:13:19,160
+And here are the 15 different ways
+
+358
+00:13:19,160 --> 00:13:21,200
+that you can say it's not X, it's Y,
+
+359
+00:13:21,200 --> 00:13:22,560
+and you can use M-dashes,
+
+360
+00:13:22,560 --> 00:13:24,520
+but you can all use colons or parentheses
+
+361
+00:13:24,520 --> 00:13:25,880
+or all kinds of things.
+
+362
+00:13:25,880 --> 00:13:27,400
+And it's just a bunch of different ways
+
+363
+00:13:27,400 --> 00:13:29,240
+that it can write better.
+
+364
+00:13:29,240 --> 00:13:31,120
+And there's also a lot of fun to go read your writing
+
+365
+00:13:31,120 --> 00:13:32,560
+and see if it can go right.
+
+366
+00:13:32,560 --> 00:13:34,080
+This is all stuff you can insert in a skill.
+
+367
+00:13:34,080 --> 00:13:35,320
+You can't force it to use it,
+
+368
+00:13:35,320 --> 00:13:37,960
+but if you write the triggering condition pretty well,
+
+369
+00:13:37,960 --> 00:13:39,560
+it will, most of the time, trigger it,
+
+370
+00:13:39,560 --> 00:13:41,000
+so that's the soft kind of control.
+
+371
+00:13:41,000 --> 00:13:42,720
+Okay, let me talk a lot.
+
+372
+00:13:43,720 --> 00:13:48,720
+I have three skills that I would recommend that you try out.
+
+373
+00:13:48,840 --> 00:13:50,800
+Here is a QR code, and here's a link,
+
+374
+00:13:50,800 --> 00:13:53,200
+and this talk is recorded, so I've done my duty.
+
+375
+00:13:53,200 --> 00:13:55,040
+There's one called self-governance,
+
+376
+00:13:55,040 --> 00:13:56,600
+there's one called self-operate,
+
+377
+00:13:56,600 --> 00:13:58,760
+and there's one called self-communicate.
+
+378
+00:13:58,760 --> 00:14:00,240
+Self-communicate, I already explained,
+
+379
+00:14:00,240 --> 00:14:02,120
+it's about writing and drawing.
+
+380
+00:14:02,120 --> 00:14:05,960
+Self-operate is about how one should operate
+
+381
+00:14:05,960 --> 00:14:08,000
+within an engineering environment.
+
+382
+00:14:08,000 --> 00:14:11,760
+So it knows out of the box how to get commit.
+
+383
+00:14:11,760 --> 00:14:14,840
+Rick, it doesn't know out of the box.
+
+384
+00:14:15,880 --> 00:14:17,760
+Hey, I wanted to design a new feature
+
+385
+00:14:17,760 --> 00:14:20,240
+for this code by some working on.
+
+386
+00:14:20,280 --> 00:14:21,920
+How should I do that?
+
+387
+00:14:21,920 --> 00:14:25,480
+Well, you can tell it, in the skill I have told it,
+
+388
+00:14:25,480 --> 00:14:26,320
+here's the text.
+
+
+===== CHUNK 3 - starts ~43 min into the talk =====
+1
+00:00:00,000 --> 00:00:03,600
+that we used to fill out a document with all the designs
+
+2
+00:00:03,600 --> 00:00:05,600
+that are going to be needed to implement the feature.
+
+3
+00:00:05,600 --> 00:00:07,680
+Here's a template to fill out for the planning
+
+4
+00:00:07,680 --> 00:00:09,560
+and the roadmap for implementing that feature.
+
+5
+00:00:09,560 --> 00:00:11,000
+The first phase should look like this.
+
+6
+00:00:11,000 --> 00:00:12,360
+The second phase should look like that.
+
+7
+00:00:12,360 --> 00:00:14,000
+The third phase should look like this.
+
+8
+00:00:14,000 --> 00:00:18,600
+And that planning document also says the first phase
+
+9
+00:00:18,600 --> 00:00:20,520
+maybe have a fable grade model do that.
+
+10
+00:00:20,520 --> 00:00:21,360
+I really expensive one.
+
+11
+00:00:21,360 --> 00:00:24,000
+The second phase, it's all just make work, have a sonna do this one.
+
+12
+00:00:24,000 --> 00:00:25,160
+The third phase is a little tricky.
+
+13
+00:00:25,160 --> 00:00:26,840
+Maybe an hopeless will have to do it.
+
+14
+00:00:26,840 --> 00:00:30,160
+And so that's all things that you can tell it to do.
+
+15
+00:00:30,160 --> 00:00:34,400
+They won't do it naturally because it's called code by nature.
+
+16
+00:00:34,400 --> 00:00:36,760
+It's just a happy thing that knows generally how people can
+
+17
+00:00:36,760 --> 00:00:40,760
+stuff like GitHub-ish, but it's not enough.
+
+18
+00:00:40,760 --> 00:00:43,920
+And so the self-operate scale explains
+
+19
+00:00:43,920 --> 00:00:46,760
+the different life cycles that are in an engineered environment
+
+20
+00:00:46,760 --> 00:00:48,160
+and how to annotate them.
+
+21
+00:00:48,160 --> 00:00:50,360
+Hey, we run out of disk space.
+
+22
+00:00:50,360 --> 00:00:52,840
+Here is what to do when we run out of disk space.
+
+23
+00:00:52,840 --> 00:00:55,320
+OK, it's not going to know that in your context unless you
+
+24
+00:00:55,320 --> 00:00:55,800
+tell it.
+
+25
+00:00:55,800 --> 00:00:58,560
+That's going to include instructions for my context.
+
+26
+00:00:58,560 --> 00:01:00,080
+But of course, you have your own.
+
+27
+00:01:00,080 --> 00:01:01,920
+Then there's a third one called self-governance.
+
+28
+00:01:01,920 --> 00:01:03,840
+This skill is about what to do when
+
+29
+00:01:03,840 --> 00:01:07,120
+you encounter the same failure more than once
+
+30
+00:01:07,120 --> 00:01:09,600
+or the same repeated thing more than once.
+
+31
+00:01:09,600 --> 00:01:12,000
+And so it's a very large catalog of, I don't know,
+
+32
+00:01:12,000 --> 00:01:14,040
+it keeps growing, I keep putting stuff in.
+
+33
+00:01:14,040 --> 00:01:17,160
+60 plus different moves that I've made
+
+34
+00:01:17,160 --> 00:01:18,720
+to deal with a returning failure.
+
+35
+00:01:18,720 --> 00:01:22,000
+And those moves are generally not patched and move on.
+
+36
+00:01:22,000 --> 00:01:24,440
+Those moves are generally either change
+
+37
+00:01:24,440 --> 00:01:26,880
+the architecture of the system so that this kind of failure
+
+38
+00:01:26,880 --> 00:01:28,640
+can never happen again.
+
+39
+00:01:28,640 --> 00:01:32,120
+Like, oh, we keep picking the wrong string value.
+
+40
+00:01:32,120 --> 00:01:35,080
+OK, well, maybe we should use an anoom instead.
+
+41
+00:01:35,080 --> 00:01:37,400
+And if you just tell Cloud to fix it,
+
+42
+00:01:37,400 --> 00:01:40,120
+it will usually just change the string value
+
+43
+00:01:40,120 --> 00:01:40,960
+to the right value.
+
+44
+00:01:40,960 --> 00:01:44,480
+But the right move is to make it an anoom, something
+
+45
+00:01:44,480 --> 00:01:47,080
+that's tight so that it can't make that mistake.
+
+46
+00:01:47,080 --> 00:01:48,920
+And so the self-governance skill says, oh, I've
+
+47
+00:01:48,920 --> 00:01:50,120
+seen this sort of thing before.
+
+48
+00:01:50,120 --> 00:01:51,680
+The right move is probably going to do it.
+
+49
+00:01:51,680 --> 00:01:52,200
+Great.
+
+50
+00:01:52,200 --> 00:01:54,240
+That's just a bunch of these moves that it can reference.
+
+51
+00:01:55,080 --> 00:01:57,400
+Recurring failure, that's a triggering condition.
+
+52
+00:01:57,400 --> 00:01:59,680
+Here are big catalog of things to do.
+
+53
+00:01:59,680 --> 00:02:02,520
+Usually, the catalog is enough, but in your context,
+
+54
+00:02:02,520 --> 00:02:03,360
+it might not be enough.
+
+55
+00:02:03,360 --> 00:02:05,400
+Even the act of thinking and recurring failure,
+
+56
+00:02:05,400 --> 00:02:08,400
+what should I do generally causes it to step back
+
+57
+00:02:08,400 --> 00:02:09,720
+and think about what to do?
+
+58
+00:02:09,720 --> 00:02:12,960
+So we'll either introduce an architectural change for controls.
+
+59
+00:02:12,960 --> 00:02:14,520
+These are things that are like sensors.
+
+60
+00:02:14,520 --> 00:02:16,280
+They'll have the text that a failure is happening,
+
+61
+00:02:16,280 --> 00:02:19,080
+at least so that you'll know that it's happening.
+
+62
+00:02:19,080 --> 00:02:21,040
+We'll just determine, recurring failures
+
+63
+00:02:21,040 --> 00:02:23,600
+into things that will automatically be prevented,
+
+64
+00:02:23,600 --> 00:02:25,920
+or at least detect it, so that you
+
+65
+00:02:25,920 --> 00:02:28,880
+can go back to drinking coffee while cloud works.
+
+66
+00:02:28,880 --> 00:02:30,720
+All right, I'm probably at time.
+
+67
+00:02:30,720 --> 00:02:31,680
+The website has this.
+
+68
+00:02:31,680 --> 00:02:33,920
+I have a nice view of who's a screech up from my website.
+
+69
+00:02:33,920 --> 00:02:35,960
+So this website has a pretty birdie clause.
+
+70
+00:02:39,360 --> 00:02:42,040
+Talk about this.
+
+71
+00:02:42,040 --> 00:02:49,160
+OK, so here's one worked example for agent briefing.
+
+72
+00:02:49,160 --> 00:02:51,520
+So when you say to cloud, hey, do this task.
+
+73
+00:02:51,520 --> 00:02:55,680
+If usually is going to dispatch an agent for that purpose,
+
+74
+00:02:55,680 --> 00:02:58,440
+you keep chatting with it, and it will in the background
+
+75
+00:02:58,440 --> 00:03:00,080
+be running something to do it.
+
+76
+00:03:00,080 --> 00:03:03,280
+So the agent in dispatches needs to know what to do.
+
+77
+00:03:03,280 --> 00:03:05,560
+That task is called its briefing.
+
+78
+00:03:05,560 --> 00:03:08,200
+It's briefing, so it's set of instructions.
+
+79
+00:03:08,200 --> 00:03:12,400
+So when I launch an agent, I say to the orchestrator,
+
+80
+00:03:12,400 --> 00:03:13,680
+hey, do a thing like this.
+
+81
+00:03:13,680 --> 00:03:16,560
+And the orchestra converts that into a briefing,
+
+82
+00:03:16,560 --> 00:03:21,160
+and that briefing follows a structured style
+
+83
+00:03:21,160 --> 00:03:22,880
+and when it's done, well, there's
+
+84
+00:03:22,880 --> 00:03:25,480
+a tool it calls to produce the structured style,
+
+85
+00:03:25,480 --> 00:03:27,600
+and then it fills it in, and then it calls dispatch.
+
+86
+00:03:27,600 --> 00:03:29,640
+And when it calls dispatch, dispatch
+
+87
+00:03:29,640 --> 00:03:31,720
+looks at the file and checks that all the things that
+
+88
+00:03:31,720 --> 00:03:33,760
+are supposed to be there are present.
+
+89
+00:03:33,760 --> 00:03:35,760
+One of the things that is supposed to be there
+
+90
+00:03:35,760 --> 00:03:39,600
+is what documents should I read so that the agent as it starts
+
+91
+00:03:39,600 --> 00:03:42,200
+up knows where to start in the Docs hierarchy.
+
+92
+00:03:42,200 --> 00:03:44,400
+And it might know, oh, where does this come from?
+
+93
+00:03:44,400 --> 00:03:45,720
+Well, here's a point of that.
+
+94
+00:03:45,720 --> 00:03:48,440
+If that reference is section is missing,
+
+95
+00:03:48,520 --> 00:03:51,320
+the orchestrator can't dispatch the agent until it fixes.
+
+96
+00:03:51,320 --> 00:03:53,000
+It's just an automatic gate that says,
+
+97
+00:03:53,000 --> 00:03:56,920
+don't run the agent until you've told the context.
+
+98
+00:03:56,920 --> 00:04:01,160
+When the agent boots up, I then have another technique
+
+99
+00:04:01,160 --> 00:04:03,560
+that I call dynamic context injection.
+
+100
+00:04:03,560 --> 00:04:07,520
+So if the agent is going to touch a set of files,
+
+101
+00:04:07,520 --> 00:04:09,880
+I have all these models, and these models
+
+102
+00:04:09,880 --> 00:04:13,240
+connects the components of the system we're
+
+103
+00:04:13,240 --> 00:04:15,600
+interacting with to the associated validation
+
+104
+00:04:15,600 --> 00:04:17,160
+and the associated static analyses
+
+105
+00:04:17,160 --> 00:04:19,400
+and the associated invariance that are present
+
+106
+00:04:19,400 --> 00:04:22,080
+and maybe the associated PLA specification that proves
+
+107
+00:04:22,080 --> 00:04:23,520
+that everything's correct, like you name it,
+
+108
+00:04:23,520 --> 00:04:24,520
+I've got it in there.
+
+109
+00:04:24,520 --> 00:04:26,120
+All these connections are there.
+
+110
+00:04:26,120 --> 00:04:29,600
+These connections can be articulated to the agent
+
+111
+00:04:29,600 --> 00:04:31,720
+if you know how to query your models.
+
+112
+00:04:31,720 --> 00:04:34,200
+And so the static context injection
+
+113
+00:04:34,200 --> 00:04:36,640
+is your job is to implement this feature
+
+114
+00:04:36,640 --> 00:04:37,760
+and hear the references.
+
+115
+00:04:37,760 --> 00:04:39,520
+And the dynamic context injection says,
+
+116
+00:04:39,520 --> 00:04:41,040
+you're about to touch these three files
+
+117
+00:04:41,040 --> 00:04:42,040
+and these two components.
+
+118
+00:04:42,040 --> 00:04:45,560
+Great, let's go look up from within the code.
+
+119
+00:04:45,600 --> 00:04:49,200
+The models that govern these files
+
+120
+00:04:49,200 --> 00:04:52,440
+and then use those to dynamically populate the life,
+
+121
+00:04:52,440 --> 00:04:54,920
+oh, when you edit a Python code,
+
+122
+00:04:54,920 --> 00:04:58,000
+you're not allowed to do inline imports of packages.
+
+123
+00:04:58,000 --> 00:05:00,160
+You can't, you have to put them at the top.
+
+124
+00:05:00,160 --> 00:05:03,600
+So it up front knows the rules of its operating environment.
+
+125
+00:05:04,520 --> 00:05:07,960
+When it tries to commit later on, on the other end of this,
+
+126
+00:05:09,240 --> 00:05:10,720
+I've got, of course, a pre-commit hook
+
+127
+00:05:10,720 --> 00:05:13,360
+and the pre-commit hook does cheap checks
+
+128
+00:05:13,360 --> 00:05:14,560
+on whether the file's okay
+
+129
+00:05:14,560 --> 00:05:18,280
+and it also includes running the linter, the type checker.
+
+130
+00:05:18,280 --> 00:05:19,360
+And then all those rules,
+
+131
+00:05:19,360 --> 00:05:22,240
+I tell it about upfront or automatically checked in general.
+
+132
+00:05:22,240 --> 00:05:24,200
+And so if those rules are broken,
+
+133
+00:05:24,200 --> 00:05:25,880
+we discover at this point,
+
+134
+00:05:25,880 --> 00:05:27,840
+but we really like to just not make the mistake
+
+135
+00:05:27,840 --> 00:05:28,680
+in the first place
+
+136
+00:05:28,680 --> 00:05:31,280
+because every time we screw up, it costs us tokens.
+
+137
+00:05:31,280 --> 00:05:33,120
+So that's why we do it upfront as well.
+
+138
+00:05:33,120 --> 00:05:35,600
+We give it some soft guidance upfront about what to do
+
+139
+00:05:35,600 --> 00:05:37,720
+and then at the back end, we check its work
+
+140
+00:05:37,720 --> 00:05:39,480
+and if it fails, it has to do it again.
+
+141
+00:05:39,480 --> 00:05:41,720
+We're going to avoid that looping.
+
+142
+00:05:41,760 --> 00:05:45,600
+All right, and then talk about this, yeah, fine.
+
+143
+00:05:50,600 --> 00:05:53,040
+So here, I'll stop at this one.
+
+144
+00:05:53,040 --> 00:05:58,040
+Here's an example of what a way to help cloud reason
+
+145
+00:05:58,760 --> 00:06:00,200
+through a problem is.
+
+146
+00:06:00,200 --> 00:06:01,920
+And I've taken this from,
+
+147
+00:06:01,920 --> 00:06:04,520
+I'm trying to automatically optimize something,
+
+148
+00:06:04,520 --> 00:06:07,640
+which many people I talk to at Argonne
+
+149
+00:06:07,640 --> 00:06:10,600
+say that what they do is try to automatically optimize stuff.
+
+150
+00:06:10,600 --> 00:06:12,760
+So if you're trying to automatically optimize things by hand,
+
+151
+00:06:12,760 --> 00:06:15,000
+you generally have a set of knobs you can tune.
+
+152
+00:06:15,000 --> 00:06:16,000
+Maybe you can change the code,
+
+153
+00:06:16,000 --> 00:06:18,240
+but often you just have 6,000 config parameters.
+
+154
+00:06:18,240 --> 00:06:19,800
+Great, which one should I pick?
+
+155
+00:06:19,800 --> 00:06:21,560
+I don't know, that's a big search space.
+
+156
+00:06:21,560 --> 00:06:23,720
+So you figure out some kind of a grid search, I guess,
+
+157
+00:06:23,720 --> 00:06:25,440
+if you're super computer to pick it up,
+
+158
+00:06:25,440 --> 00:06:26,480
+but often you're following some
+
+159
+00:06:26,480 --> 00:06:28,040
+heuristic search through the space
+
+160
+00:06:28,040 --> 00:06:31,640
+or some algorithm that gradient descent through it or something.
+
+161
+00:06:32,600 --> 00:06:36,320
+So here we have this loop that you're trying to optimize
+
+162
+00:06:36,320 --> 00:06:38,200
+and you need to figure out how to get an agent
+
+163
+00:06:38,200 --> 00:06:39,680
+to undertake the loop.
+
+164
+00:06:39,680 --> 00:06:43,960
+So in my repo and what I would encourage you to do, right?
+
+165
+00:06:43,960 --> 00:06:48,400
+So this is a standard step that you might need to take.
+
+166
+00:06:48,400 --> 00:06:49,520
+And if there's a standard step,
+
+167
+00:06:49,520 --> 00:06:50,360
+you might need to take,
+
+168
+00:06:50,360 --> 00:06:52,480
+you should write down the process that you're following.
+
+169
+00:06:52,480 --> 00:06:54,600
+And you should think about how to divide that process
+
+170
+00:06:54,600 --> 00:06:56,280
+into deterministic,
+
+171
+00:06:56,280 --> 00:06:57,320
+computable stuff,
+
+172
+00:06:57,320 --> 00:07:00,720
+needing a standard CPU and things that entail judgment.
+
+173
+00:07:01,680 --> 00:07:04,680
+To the extent that the thing can be made deterministic,
+
+174
+00:07:04,680 --> 00:07:06,200
+always do that,
+
+175
+00:07:06,200 --> 00:07:08,520
+do not ask cloud to figure it out.
+
+176
+00:07:08,560 --> 00:07:11,400
+Even if it does, you'll have paid thousands of tokens
+
+177
+00:07:11,400 --> 00:07:12,720
+for to figure it out.
+
+178
+00:07:12,720 --> 00:07:14,200
+If you could just run a Python program,
+
+179
+00:07:14,200 --> 00:07:15,760
+just do that.
+
+180
+00:07:15,760 --> 00:07:17,800
+And cloud can figure out how to write the Python program
+
+181
+00:07:17,800 --> 00:07:18,640
+and test it.
+
+182
+00:07:18,640 --> 00:07:19,480
+And then you're not,
+
+183
+00:07:19,480 --> 00:07:20,560
+it never needs to pay reasoning for that again.
+
+184
+00:07:20,560 --> 00:07:23,640
+So eliminate the need for reasoning if you can.
+
+185
+00:07:23,640 --> 00:07:25,520
+When you need to reason,
+
+186
+00:07:25,520 --> 00:07:29,160
+you should tell it what to reason about it
+
+187
+00:07:29,160 --> 00:07:30,440
+and how to reason about it.
+
+188
+00:07:30,440 --> 00:07:32,400
+So if you have some metrics that are coming off
+
+189
+00:07:32,400 --> 00:07:35,880
+of your loops as it's trying to figure out what knobs to turn,
+
+190
+00:07:35,880 --> 00:07:36,920
+you might have metrics come out,
+
+191
+00:07:36,920 --> 00:07:39,080
+you might have raw performance counters.
+
+192
+00:07:39,080 --> 00:07:40,560
+And you should be able to say,
+
+193
+00:07:40,560 --> 00:07:43,360
+hey, here's a model for what we expect
+
+194
+00:07:43,360 --> 00:07:44,800
+the performance counters to look like.
+
+195
+00:07:44,800 --> 00:07:48,240
+And if there is a substantial anomaly, that's a clue.
+
+196
+00:07:48,240 --> 00:07:50,080
+So the model for what they should look like
+
+197
+00:07:50,080 --> 00:07:51,600
+and the measurement of an anomaly,
+
+198
+00:07:51,600 --> 00:07:53,920
+that's, that is a deterministic computation
+
+199
+00:07:53,920 --> 00:07:57,240
+that you can undertake and you should give it a tool to say,
+
+200
+00:07:57,240 --> 00:07:58,640
+is this an anomalous reading?
+
+201
+00:07:58,640 --> 00:08:00,640
+Or did we get a big win on this one?
+
+202
+00:08:00,640 --> 00:08:02,720
+Otherwise it won't know to give it a tool.
+
+203
+00:08:02,720 --> 00:08:04,720
+But then you also need to compliment that with reasoning.
+
+204
+00:08:04,720 --> 00:08:07,440
+Like, if you see this kind of anomaly,
+
+205
+00:08:07,440 --> 00:08:08,800
+here's what that might mean.
+
+206
+00:08:08,800 --> 00:08:12,520
+And this is an incomplete list of heuristics and suggestions,
+
+207
+00:08:12,520 --> 00:08:14,200
+but at least you're guiding its judgment
+
+208
+00:08:14,200 --> 00:08:16,040
+to not making it all up.
+
+209
+00:08:16,040 --> 00:08:19,080
+The more that you constrain that judgment,
+
+210
+00:08:19,080 --> 00:08:21,320
+the faster the loop will be.
+
+211
+00:08:21,320 --> 00:08:23,960
+And the hazard is, if you over-constraint it,
+
+212
+00:08:23,960 --> 00:08:26,240
+it may not discover the optimal solution
+
+213
+00:08:26,240 --> 00:08:30,880
+because you're not as smart as a exhausted grid search, right?
+
+214
+00:08:30,880 --> 00:08:32,880
+But you're probably a lot smarter than a dumb grid search.
+
+215
+00:08:32,880 --> 00:08:34,760
+If you can figure out how to cook up something
+
+216
+00:08:34,760 --> 00:08:36,760
+in the happy medium, that'll be helpful.
+
+217
+00:08:36,760 --> 00:08:38,680
+Even like heuristic strategy that might follow
+
+218
+00:08:38,680 --> 00:08:39,800
+it might be very helpful.
+
+219
+00:08:39,800 --> 00:08:42,000
+So as you're building this loop, you need to figure out
+
+220
+00:08:42,000 --> 00:08:43,560
+the things you can make deterministic,
+
+221
+00:08:43,560 --> 00:08:46,360
+like what's the data space look like?
+
+222
+00:08:46,360 --> 00:08:49,120
+Good to give it structure for reasoning.
+
+223
+00:08:49,120 --> 00:08:51,040
+And then I would also suggest that you
+
+224
+00:08:51,040 --> 00:08:52,520
+determineize the next step.
+
+225
+00:08:52,520 --> 00:08:55,360
+So you're gonna somehow have to give a change
+
+226
+00:08:55,360 --> 00:08:57,440
+to the system that's gonna be performed.
+
+227
+00:08:57,440 --> 00:08:59,960
+And you can tell Claude to change the system directly,
+
+228
+00:08:59,960 --> 00:09:01,600
+but I would not recommend you do so.
+
+229
+00:09:01,600 --> 00:09:04,160
+I would instead recommend that you have Claude produce
+
+230
+00:09:04,160 --> 00:09:05,920
+a set of changes.
+
+231
+00:09:05,920 --> 00:09:07,680
+And then some deterministic program
+
+232
+00:09:07,680 --> 00:09:09,760
+map those into your environment,
+
+233
+00:09:09,760 --> 00:09:12,680
+hopefully also logging what it's done with the rationale
+
+234
+00:09:12,680 --> 00:09:15,400
+so that you have some traceability on the process.
+
+235
+00:09:15,400 --> 00:09:18,160
+If it logs what it's done in the rationale,
+
+236
+00:09:18,160 --> 00:09:20,040
+and you tell it in the judgment step,
+
+237
+00:09:20,040 --> 00:09:23,280
+hey, the history of all your changes are over here
+
+238
+00:09:23,280 --> 00:09:24,720
+because we deterministically logged them
+
+239
+00:09:24,720 --> 00:09:25,760
+before applying them,
+
+240
+00:09:25,760 --> 00:09:28,240
+that also will help in the judgment process.
+
+241
+00:09:28,240 --> 00:09:29,880
+So you have to determineize the steps
+
+242
+00:09:29,880 --> 00:09:32,200
+that are taken as a result of the output as well.
+
+243
+00:09:33,400 --> 00:09:35,680
+If that needs to do substantial reasoning,
+
+244
+00:09:35,680 --> 00:09:37,480
+like, oh, I'm gonna go look over here
+
+245
+00:09:37,480 --> 00:09:38,320
+and I'll look over there
+
+246
+00:09:38,320 --> 00:09:40,720
+and I'll think about how these two things relate,
+
+247
+00:09:40,720 --> 00:09:42,640
+it may dispatch agents to do that.
+
+248
+00:09:42,640 --> 00:09:45,840
+And you can pre-can briefs for those agents
+
+249
+00:09:45,840 --> 00:09:47,840
+as part of your playbook for this process.
+
+250
+00:09:47,840 --> 00:09:50,640
+You can say, if you need to do this kind of thing,
+
+251
+00:09:50,640 --> 00:09:52,520
+here is a good starting brief
+
+252
+00:09:52,520 --> 00:09:54,920
+that you can just copy and modify.
+
+253
+00:09:54,920 --> 00:09:57,640
+And this will prevent it from having to automatically
+
+254
+00:09:57,640 --> 00:09:59,200
+spend a whole lot of tokens thinking
+
+255
+00:09:59,200 --> 00:10:01,040
+about how to articulate to a sub-agent,
+
+256
+00:10:01,040 --> 00:10:02,200
+how to do this well,
+
+257
+00:10:02,200 --> 00:10:04,080
+which it will get right in 90% of the time
+
+258
+00:10:04,080 --> 00:10:06,760
+when the other 10% just waste your tokens again.
+
+259
+00:10:06,760 --> 00:10:09,520
+So you may not be able to fully determineize
+
+260
+00:10:09,520 --> 00:10:11,040
+the sub-agents work,
+
+261
+00:10:11,040 --> 00:10:13,120
+but you can at least give it structure
+
+262
+00:10:13,120 --> 00:10:14,880
+so that it will make faster progress.
+
+263
+00:10:16,840 --> 00:10:18,400
+Agents don't, they're not magic,
+
+264
+00:10:18,400 --> 00:10:20,040
+they can't just solve the problems,
+
+265
+00:10:20,040 --> 00:10:23,520
+but you can figure out how to model the operating environment,
+
+266
+00:10:23,520 --> 00:10:24,960
+measure the operating environment,
+
+267
+00:10:24,960 --> 00:10:26,520
+and give the agent constraints
+
+268
+00:10:26,520 --> 00:10:28,360
+so that it can make forward progress.
+
+269
+00:10:30,200 --> 00:10:32,640
+If you do too much of this,
+
+270
+00:10:32,640 --> 00:10:34,360
+then you'll end up in trouble.
+
+271
+00:10:34,360 --> 00:10:37,080
+You'll end up with so much code governing
+
+272
+00:10:37,080 --> 00:10:38,600
+and constraining the behavior
+
+273
+00:10:38,600 --> 00:10:41,000
+that you call it a tower of governance, right?
+
+274
+00:10:43,400 --> 00:10:45,240
+Still a five minute.
+
+275
+00:10:45,240 --> 00:10:47,560
+You can go too far on this.
+
+276
+00:10:47,560 --> 00:10:48,880
+So you need to find the sweet spot.
+
+277
+00:10:48,880 --> 00:10:50,160
+The problem with going too far
+
+278
+00:10:50,160 --> 00:10:52,640
+is that the agents then spend so much of its time
+
+279
+00:10:52,640 --> 00:10:54,800
+patching stuff and fixing this.
+
+280
+00:10:54,800 --> 00:10:56,480
+I don't know if there was a mistake there,
+
+281
+00:10:56,480 --> 00:10:57,640
+and it just ends up like,
+
+282
+00:10:57,920 --> 00:11:00,920
+and it's a little loom kind of optimize your guard rails
+
+283
+00:11:00,920 --> 00:11:03,160
+instead of actually doing the work you're trying to do.
+
+284
+00:11:03,160 --> 00:11:04,360
+And so part of your judgment
+
+285
+00:11:04,360 --> 00:11:06,200
+as the operator or such machines
+
+286
+00:11:06,200 --> 00:11:08,960
+is as you construct the government engineering environment
+
+287
+00:11:08,960 --> 00:11:10,000
+is using your judgment
+
+288
+00:11:10,000 --> 00:11:12,240
+and your observational powers to figure out,
+
+289
+00:11:12,240 --> 00:11:15,440
+are we having high velocity in the direction that we want,
+
+290
+00:11:15,440 --> 00:11:17,440
+or do we end up side-questing off here
+
+291
+00:11:17,440 --> 00:11:19,240
+trying to optimize the linters behavior
+
+292
+00:11:19,240 --> 00:11:21,520
+instead of over here actually building what we want?
+
+293
+00:11:21,520 --> 00:11:23,400
+So this is your judgment.
+
+294
+00:11:23,400 --> 00:11:26,080
+The code is free, the judgment is expensive,
+
+295
+00:11:26,120 --> 00:11:27,960
+wisdom takes time.
+
+296
+00:11:27,960 --> 00:11:30,160
+But if you don't try it, that also will work.
+
+297
+00:11:31,160 --> 00:11:33,440
+Okay, so thanks for coming.
+
+298
+00:11:33,440 --> 00:11:37,440
+I again have here these things
+
+299
+00:11:37,440 --> 00:11:40,520
+and this website that explains everything I've talked about.
+
+300
+00:11:40,520 --> 00:11:43,840
+Some of these things apply very directly to HPC code.
+
+301
+00:11:43,840 --> 00:11:45,400
+Other things don't,
+
+302
+00:11:45,400 --> 00:11:47,560
+because I have not been writing HPC code.
+
+303
+00:11:47,560 --> 00:11:51,560
+I hope that the method and the mindset does apply.
+
+304
+00:11:51,560 --> 00:11:53,200
+And then if you discover the kinds of things
+
+305
+00:11:53,200 --> 00:11:55,040
+you need to do here, please open up pull request.
+
+306
+00:11:55,080 --> 00:11:56,280
+I'd be very happy to merge with them
+
+307
+00:11:56,280 --> 00:12:00,040
+so that the skills will extend both to conventional web,
+
+308
+00:12:00,040 --> 00:12:01,400
+CPU-driven software,
+
+309
+00:12:01,400 --> 00:12:03,480
+and also to cluster type software,
+
+310
+00:12:03,480 --> 00:12:06,280
+which I have not been trying to do with this method.
+
+311
+00:12:06,280 --> 00:12:07,120
+Okay, thank you.
+
+312
+00:12:08,640 --> 00:12:09,480
+Thank you.
+
+313
+00:12:09,480 --> 00:12:10,480
+Thank you.
+
+314
+00:12:14,480 --> 00:12:17,840
+If there were some questions online that can you speak them?
+
+315
+00:12:17,840 --> 00:12:20,360
+There's that one earlier from Robert,
+
+316
+00:12:20,360 --> 00:12:21,920
+who just wanted, he said,
+
+317
+00:12:21,920 --> 00:12:24,840
+could we see an example of one of these models?
+
+318
+00:12:24,840 --> 00:12:26,200
+I've just been typing in chat,
+
+319
+00:12:26,200 --> 00:12:28,160
+I gave them the ones I like, but.
+
+320
+00:12:28,160 --> 00:12:32,000
+Robert, do you feel satisfied with the example I gave
+
+321
+00:12:32,000 --> 00:12:35,120
+about producing a structured playbook
+
+322
+00:12:35,120 --> 00:12:36,200
+for how to handle a thing
+
+323
+00:12:36,200 --> 00:12:37,840
+and working through an optimization task,
+
+324
+00:12:37,840 --> 00:12:39,720
+or do you want me to talk more about this, Robert?
+
+325
+00:12:39,720 --> 00:12:41,840
+I know you've got plenty of stuff to work on now.
+
+326
+00:12:41,840 --> 00:12:43,000
+Thanks.
+
+327
+00:12:43,000 --> 00:12:44,320
+Great.
+
+328
+00:12:44,320 --> 00:12:47,040
+Any other questions online or in the room?
+
+329
+00:12:47,040 --> 00:12:50,280
+Yeah, I wanna just quickly look at your metric
+
+330
+00:12:50,280 --> 00:12:52,320
+for velocity was changes.
+
+331
+00:12:52,320 --> 00:12:54,120
+Are you at all looking at the differentiation
+
+332
+00:12:54,120 --> 00:12:56,880
+between code, churn, and new features?
+
+333
+00:12:59,440 --> 00:13:02,360
+Because in my experience working with agents,
+
+334
+00:13:02,360 --> 00:13:07,000
+you end up in situations where you build technical debt.
+
+335
+00:13:08,080 --> 00:13:09,480
+And you get really,
+
+336
+00:13:09,480 --> 00:13:10,960
+one of the worst ones I've ever seen
+
+337
+00:13:10,960 --> 00:13:13,000
+is a Python function called safe text
+
+338
+00:13:13,000 --> 00:13:16,560
+that takes a string in, checks if the string exists,
+
+339
+00:13:16,560 --> 00:13:18,120
+and then returns the string.
+
+340
+00:13:20,360 --> 00:13:21,520
+For whatever reason,
+
+341
+00:13:21,520 --> 00:13:23,920
+the model that term into something like that
+
+342
+00:13:24,000 --> 00:13:25,440
+was required, and then it became like
+
+343
+00:13:25,440 --> 00:13:28,520
+the single biggest dependency across the code base.
+
+344
+00:13:30,120 --> 00:13:31,760
+But that's kind of like,
+
+345
+00:13:31,760 --> 00:13:36,080
+when I think of changes as a metric is pretty
+
+346
+00:13:38,680 --> 00:13:40,400
+low resolution.
+
+347
+00:13:40,400 --> 00:13:43,720
+And so what I've seen is there's a lot of like
+
+348
+00:13:43,720 --> 00:13:46,640
+going back and re-fixing this problem.
+
+349
+00:13:46,640 --> 00:13:48,640
+One of my favorite games on Steam right now
+
+350
+00:13:48,640 --> 00:13:51,680
+is a game called Data Center, who's made with AI agents.
+
+351
+00:13:51,680 --> 00:13:54,240
+And in the change logs,
+
+352
+00:13:54,240 --> 00:13:56,080
+just like how Herobrine used to get removed
+
+353
+00:13:56,080 --> 00:13:58,200
+from Minecraft, every change log,
+
+354
+00:13:58,200 --> 00:14:00,160
+they had this little thing that said,
+
+355
+00:14:00,160 --> 00:14:03,240
+oh, finally fixed motion blur.
+
+356
+00:14:03,240 --> 00:14:05,280
+Fixed motion blur, the final solution
+
+357
+00:14:05,280 --> 00:14:07,160
+really would be the 110 percent.
+
+358
+00:14:14,240 --> 00:14:17,320
+There are a lot of different ways to squash
+
+359
+00:14:17,320 --> 00:14:19,560
+the kind of problem that you're describing.
+
+360
+00:14:19,560 --> 00:14:24,600
+And it's very hard to give you a general, a specific.
+
+
+===== CHUNK 4 - starts ~57 min into the talk =====
+1
+00:00:00,000 --> 00:00:04,000
+because the answer is kind of, it depends on your operating environment.
+
+2
+00:00:04,000 --> 00:00:08,000
+But the general method that I've been following has been to say,
+
+3
+00:00:08,000 --> 00:00:12,000
+all right, here are all the things that I know should remain true about the code base.
+
+4
+00:00:12,000 --> 00:00:15,000
+And here are all the kinds of models I know I'm going to need.
+
+5
+00:00:15,000 --> 00:00:18,000
+Like I said, those all up, they're all automatically enforced.
+
+6
+00:00:18,000 --> 00:00:21,000
+On an agent attempt to commit a change, I have all these checks on it.
+
+7
+00:00:21,000 --> 00:00:27,000
+A lot of those checks includes, did I make a change that should have caused those
+
+8
+00:00:27,000 --> 00:00:29,000
+that might drift from the models?
+
+9
+00:00:29,000 --> 00:00:33,000
+If so, reject the commit until the model is self-updated, right?
+
+10
+00:00:33,000 --> 00:00:36,000
+So you can force it to keep in sync with all the stuff that you're interested in.
+
+11
+00:00:36,000 --> 00:00:41,000
+And then as new, funny things have done in your context, with your history,
+
+12
+00:00:41,000 --> 00:00:44,000
+with whatever model you're using as those things come up,
+
+13
+00:00:44,000 --> 00:00:49,000
+it's part of your job is to figure out what kind of constraints can I put into the system
+
+14
+00:00:49,000 --> 00:00:53,000
+so that it doesn't do that again, and this class of failure doesn't occur again.
+
+15
+00:00:53,000 --> 00:00:56,000
+So the self-governance skill, that's one of the three skills that are up,
+
+16
+00:00:56,000 --> 00:01:00,000
+is up there, basically says, it's in a hook.
+
+17
+00:01:00,000 --> 00:01:02,000
+The hook fires every 30 minutes.
+
+18
+00:01:02,000 --> 00:01:06,000
+It fires much more frequently than that, but it's got a timer on it.
+
+19
+00:01:06,000 --> 00:01:10,000
+So it says, if I haven't operated in the last 30 minutes, I'll write it again.
+
+20
+00:01:10,000 --> 00:01:12,000
+And it spits out one of these types of prompts.
+
+21
+00:01:12,000 --> 00:01:17,000
+And the type of prompts is, have you run into any recurring issue in the last 30 minutes
+
+22
+00:01:17,000 --> 00:01:23,000
+or any architectural anti-pattern like repeating the same code or concept in multiple places?
+
+23
+00:01:23,000 --> 00:01:27,000
+In the last 30 minutes, if you have, please call the self-governance skill.
+
+24
+00:01:27,000 --> 00:01:31,000
+And the self-governance skill triggers and has this giant catalog of all the ways
+
+25
+00:01:31,000 --> 00:01:33,000
+you might try to deal with this kind of thing.
+
+26
+00:01:33,000 --> 00:01:37,000
+And then it looks at it and, well, it fixes it usually.
+
+27
+00:01:37,000 --> 00:01:39,000
+Or it says, hey, I ran into this.
+
+28
+00:01:39,000 --> 00:01:42,000
+I see that we're repeating this failure.
+
+29
+00:01:42,000 --> 00:01:43,000
+Here are two ideas.
+
+30
+00:01:43,000 --> 00:01:44,000
+What should I try?
+
+31
+00:01:44,000 --> 00:01:45,000
+And then it'll try.
+
+32
+00:01:45,000 --> 00:01:46,000
+You have to tell it.
+
+33
+00:01:46,000 --> 00:01:48,000
+It's your job to have judgment.
+
+34
+00:01:48,000 --> 00:01:50,000
+Or you could just say, you know, do your best work.
+
+35
+00:01:50,000 --> 00:01:51,000
+Go for it.
+
+36
+00:01:52,000 --> 00:01:57,000
+So that's a way to automatically try to get the prevention of this sort of thing.
+
+37
+00:01:57,000 --> 00:01:58,000
+Is it perfect?
+
+38
+00:01:58,000 --> 00:01:59,000
+No.
+
+39
+00:01:59,000 --> 00:02:02,000
+But it's a whole lot better than what you have.
+
+40
+00:02:02,000 --> 00:02:06,000
+The way that you can try to automatically prevent that is very concrete control for this situation
+
+41
+00:02:06,000 --> 00:02:09,000
+of there is some utility that is included everywhere.
+
+42
+00:02:09,000 --> 00:02:10,000
+Because you can have a metric.
+
+43
+00:02:10,000 --> 00:02:11,000
+You compute over your code base.
+
+44
+00:02:11,000 --> 00:02:17,000
+That metric is, are there any substantial outlier modules that are being imported everywhere?
+
+45
+00:02:17,000 --> 00:02:21,000
+That's calculatable for a pretty cheap static analysis that we import statements.
+
+46
+00:02:21,000 --> 00:02:27,000
+If there is an outlier, fail the commit until the outliers result.
+
+47
+00:02:27,000 --> 00:02:29,000
+Or fail the CI until the outliers result.
+
+48
+00:02:29,000 --> 00:02:32,000
+So where you compute it, that's kind of a semantic question.
+
+49
+00:02:32,000 --> 00:02:37,000
+At what point in the engineering process ought we to compute and enforce this property?
+
+50
+00:02:37,000 --> 00:02:40,000
+That's up to you to decide you're the engineer who owns the whole stack.
+
+51
+00:02:40,000 --> 00:02:46,000
+But you need to figure out the right level of semantic.
+
+52
+00:02:47,000 --> 00:02:51,000
+Is this a journey to fine tune the model?
+
+53
+00:02:51,000 --> 00:02:52,000
+Please don't.
+
+54
+00:02:52,000 --> 00:02:54,000
+Do I need to put in hooks or skills?
+
+55
+00:02:54,000 --> 00:02:55,000
+Do I need to put in git hooks?
+
+56
+00:02:55,000 --> 00:02:57,000
+Do I need to put this at the level of the CI or the test?
+
+57
+00:02:57,000 --> 00:02:59,000
+You have to decide that for yourself.
+
+58
+00:02:59,000 --> 00:03:02,000
+Then you need to put it in and you can say, maybe it's CI time.
+
+59
+00:03:02,000 --> 00:03:07,000
+Super outlier, heavily imported modules are probably an anti-pattern.
+
+60
+00:03:07,000 --> 00:03:09,000
+We should just not do that around here.
+
+61
+00:03:09,000 --> 00:03:12,000
+And then it will never happen again.
+
+62
+00:03:13,000 --> 00:03:19,000
+So the context for this was a project made by one of my non-software engineer friends.
+
+63
+00:03:19,000 --> 00:03:21,000
+And it wasn't on git.
+
+64
+00:03:21,000 --> 00:03:23,000
+And he didn't know how to code.
+
+65
+00:03:23,000 --> 00:03:27,000
+And even using an agent with a harness.
+
+66
+00:03:27,000 --> 00:03:37,000
+Yeah, I was just pointing it out as an example of potential sources for code churn of the model
+
+67
+00:03:37,000 --> 00:03:38,000
+spending.
+
+68
+00:03:38,000 --> 00:03:41,000
+Something got here because you asked how much of what I'm showing there is churn.
+
+69
+00:03:41,000 --> 00:03:42,000
+Yes.
+
+70
+00:03:42,000 --> 00:03:45,640
+So the answer to your friend's specific issue is you need to figure out the right place
+
+71
+00:03:45,640 --> 00:03:46,640
+to put that control.
+
+72
+00:03:46,640 --> 00:03:50,000
+And what it is grab as they import outlier would prevent that from ever happening.
+
+73
+00:03:50,000 --> 00:03:55,000
+And I would probably put it in CI because maybe the pre-commits too low level for that assessment.
+
+74
+00:03:55,000 --> 00:04:02,000
+In my code base on Monday, I said to Claude, hey, I'm spending too much money on Google
+
+75
+00:04:02,000 --> 00:04:05,000
+Cloud hosting things that no one calls in this community's cluster.
+
+76
+00:04:05,000 --> 00:04:06,000
+I think we should go serverless.
+
+77
+00:04:06,000 --> 00:04:08,000
+One was Monday, two days ago, right?
+
+78
+00:04:08,000 --> 00:04:10,000
+Monday morning, I said that.
+
+79
+00:04:10,000 --> 00:04:15,000
+Last night, my production deployment is serverless.
+
+80
+00:04:15,000 --> 00:04:21,000
+This involved about 400 commits that touched the huge number of files that did a whole
+
+81
+00:04:21,000 --> 00:04:22,000
+bunch of rewiring.
+
+82
+00:04:22,000 --> 00:04:26,000
+But it was not churn in the sense that it was fixing its own technical debt and running
+
+83
+00:04:26,000 --> 00:04:27,000
+in circles.
+
+84
+00:04:27,000 --> 00:04:30,000
+It was an architectural change that I structured.
+
+85
+00:04:30,000 --> 00:04:31,000
+There were about 27.
+
+86
+00:04:31,000 --> 00:04:35,000
+I think it was 27 distinct phases that Claude said, well, bring it into 27 phases.
+
+87
+00:04:35,000 --> 00:04:36,000
+Fine, Claude, it's great.
+
+88
+00:04:36,000 --> 00:04:37,000
+Just do careful design.
+
+89
+00:04:37,000 --> 00:04:42,000
+Each of the designs it did, it surfaced because it was following the design template that
+
+90
+00:04:42,000 --> 00:04:43,000
+I asked it to fill out.
+
+91
+00:04:43,000 --> 00:04:46,000
+One of the things in the template is judgment calls.
+
+92
+00:04:46,000 --> 00:04:50,000
+What are the places you're uncertain about this back or the plan?
+
+93
+00:04:50,000 --> 00:04:55,000
+And are there things that maybe in your broader context of the whole architecture of the system,
+
+94
+00:04:55,000 --> 00:04:56,000
+I should know about.
+
+95
+00:04:56,000 --> 00:05:00,000
+It'll surface between one and about a judgment call questions, depending on its uncertainty.
+
+96
+00:05:00,000 --> 00:05:03,000
+So I looked at each of them and gave it a whole lot of answers.
+
+97
+00:05:03,000 --> 00:05:05,000
+It's 27 different sets of these questions and answers.
+
+98
+00:05:05,000 --> 00:05:07,000
+And then I said, go.
+
+99
+00:05:07,000 --> 00:05:09,000
+And then it's now serverless.
+
+100
+00:05:09,000 --> 00:05:14,000
+So that's sort of the experience that I have.
+
+101
+00:05:14,000 --> 00:05:20,000
+Before I put the models in eight roles, there was a lot more churn in technical debt.
+
+102
+00:05:20,000 --> 00:05:28,000
+And as I started to construct this thing with models everywhere and models for the models
+
+103
+00:05:28,000 --> 00:05:32,000
+and controls over the agents and the definition of the life cycle to follow and the runbooks
+
+104
+00:05:32,000 --> 00:05:33,000
+that you can apply.
+
+105
+00:05:33,000 --> 00:05:36,000
+And on the product side, what do we measure?
+
+106
+00:05:36,000 --> 00:05:37,000
+Where do we measure it?
+
+107
+00:05:37,000 --> 00:05:39,000
+At what point do the semantic levels do it?
+
+108
+00:05:39,000 --> 00:05:43,000
+After I started to do all of that, my token consumption went down and the churn went down
+
+109
+00:05:43,000 --> 00:05:44,000
+as well.
+
+110
+00:05:44,000 --> 00:05:47,000
+And I started to be able to say, do this and it would just happen.
+
+111
+00:05:47,000 --> 00:05:50,000
+And on simple applications, we can all do that.
+
+112
+00:05:50,000 --> 00:05:53,000
+But on complicated applications, mostly you can't do that.
+
+113
+00:05:53,000 --> 00:05:56,000
+But this technique allows me to do that.
+
+114
+00:05:56,000 --> 00:05:58,000
+So then that's your question.
+
+115
+00:05:59,000 --> 00:06:00,000
+Yeah.
+
+116
+00:06:00,000 --> 00:06:05,000
+And I've been a pretty significant hold out on agentic software for a while.
+
+117
+00:06:05,000 --> 00:06:11,000
+I'm going to set the Kool-Aid a little bit when I get back to school this fall and play
+
+118
+00:06:11,000 --> 00:06:12,000
+with this.
+
+119
+00:06:12,000 --> 00:06:13,000
+Your internship over?
+
+120
+00:06:13,000 --> 00:06:14,000
+I'm sorry.
+
+121
+00:06:14,000 --> 00:06:15,000
+When is your internship over?
+
+122
+00:06:15,000 --> 00:06:16,000
+August 7th.
+
+123
+00:06:16,000 --> 00:06:17,000
+Come on, man.
+
+124
+00:06:17,000 --> 00:06:19,000
+She has two weeks here.
+
+125
+00:06:19,000 --> 00:06:22,000
+Well, I'm talking a different project.
+
+126
+00:06:22,000 --> 00:06:23,000
+My project.
+
+127
+00:06:23,000 --> 00:06:25,000
+Yeah, but the tokens here are free.
+
+128
+00:06:26,000 --> 00:06:27,000
+Yeah.
+
+129
+00:06:27,000 --> 00:06:31,000
+I can get free tokens at home.
+
+130
+00:06:31,000 --> 00:06:35,000
+I'm going to make the university pay for it.
+
+131
+00:06:35,000 --> 00:06:40,000
+We just bought a $4 million compute cluster.
+
+132
+00:06:40,000 --> 00:06:46,000
+So I was probably just going to do an open cloth with an agent hosted on.
+
+133
+00:06:46,000 --> 00:06:48,000
+I'm in the pictures of building the cluster.
+
+134
+00:06:48,000 --> 00:06:49,000
+They love me.
+
+135
+00:06:49,000 --> 00:06:50,000
+They love me.
+
+136
+00:06:50,000 --> 00:06:51,000
+I hope.
+
+137
+00:06:51,000 --> 00:06:54,000
+Any other questions?
+
+138
+00:06:55,000 --> 00:07:00,000
+I'm sure somebody's going to come and yell at me in my office later.
+
+139
+00:07:00,000 --> 00:07:10,000
+In the context of a lot of the scientific software developers, people don't always do best practices
+
+140
+00:07:10,000 --> 00:07:15,000
+because they're like, say, best case, they're really limited on time.
+
+141
+00:07:15,000 --> 00:07:21,000
+So there's a lot of bootstrapping that probably has to happen to get to this kind of a loop.
+
+142
+00:07:21,000 --> 00:07:26,000
+Do you have any whatever sticks or insight on?
+
+143
+00:07:26,000 --> 00:07:31,000
+A good way to tackle that beyond just like general education.
+
+144
+00:07:31,000 --> 00:07:32,000
+Well, we are.
+
+145
+00:07:32,000 --> 00:07:38,000
+We have shifted from an era where it took so much time to write the code and get it to work
+
+146
+00:07:38,000 --> 00:07:43,000
+that we didn't have time to do the best practices to an era where the code is now free.
+
+147
+00:07:43,000 --> 00:07:47,000
+And I know that for HPC, the code is very complicated and the code is not quite free
+
+148
+00:07:47,000 --> 00:07:50,000
+because Cloud does not know how to do HPC.
+
+149
+00:07:50,000 --> 00:07:52,000
+I've tried it on the benchmarks.
+
+150
+00:07:52,000 --> 00:07:54,000
+It's not super good.
+
+151
+00:07:54,000 --> 00:08:03,000
+But if you give it hypothetically, if you give it a model of your cluster and your cluster's
+
+152
+00:08:03,000 --> 00:08:12,000
+resources and your cluster's performance characteristics and the IO bandwidth between dies on the same note
+
+153
+00:08:12,000 --> 00:08:17,000
+and cross-node communication and multi-clustered community, if you give it that kind of model,
+
+154
+00:08:17,000 --> 00:08:21,000
+it will be able to make much better decisions about what it's doing.
+
+155
+00:08:21,000 --> 00:08:27,000
+Because all this stuff in OpenMP and OpenAPI involves saying do this communication over there
+
+156
+00:08:27,000 --> 00:08:31,000
+and if Cloud knows the performance implications of doing that, it'll do a lot better.
+
+157
+00:08:31,000 --> 00:08:33,000
+So that's like a general statement.
+
+158
+00:08:33,000 --> 00:08:36,000
+If you have a performance model and then you try to write OpenMP code,
+
+159
+00:08:36,000 --> 00:08:38,000
+it will work better, I promise.
+
+160
+00:08:38,000 --> 00:08:42,000
+I have not tested it, but I have done enough other things with this that I can tell you that will work.
+
+161
+00:08:42,000 --> 00:08:45,000
+What you have is 10 million lines are 100 million, whatever.
+
+162
+00:08:45,000 --> 00:08:52,000
+Some horrible number of lines of things built by very well-meaning people for the last 50 years, right?
+
+163
+00:08:52,000 --> 00:08:56,000
+Self-governance, one of the skills, has an audit mode.
+
+164
+00:08:56,000 --> 00:09:03,000
+And you can say, please audit this module and think through how we could put a little more structure in here.
+
+165
+00:09:03,000 --> 00:09:09,000
+Now, one kind of tool that I have used kind of new tools for retrofit, better stuff,
+
+166
+00:09:09,000 --> 00:09:12,000
+because again, I started with I needed MVP to see if this is possible.
+
+167
+00:09:12,000 --> 00:09:18,000
+And what I got was a really chanky root Goldberg machine that worked, but it was a root Goldberg machine.
+
+168
+00:09:18,000 --> 00:09:24,000
+And I had told it, I wanted to use typed Python, Python 3 with types, and it did.
+
+169
+00:09:24,000 --> 00:09:27,000
+It specifically used to type string.
+
+170
+00:09:27,000 --> 00:09:29,000
+That was the type I used.
+
+171
+00:09:29,000 --> 00:09:33,000
+And so it was typed Python, but it wasn't typed, it was not stringly typed, meaning there were,
+
+172
+00:09:33,000 --> 00:09:38,000
+it's actually no type safety that the compiler was giving you the way that you might like.
+
+173
+00:09:39,000 --> 00:09:43,000
+So I tried saying put types in, and that didn't work.
+
+174
+00:09:43,000 --> 00:09:48,000
+And so what I tried doing instead was I had to write two things.
+
+175
+00:09:48,000 --> 00:09:54,000
+First, I modified the design template that is followed every time I order work.
+
+176
+00:09:54,000 --> 00:09:58,000
+And the design template now has a section title, types, type system.
+
+177
+00:09:58,000 --> 00:10:03,000
+And in the design part, the open string table model that's doing the planning says,
+
+178
+00:10:03,000 --> 00:10:06,000
+there are going to be these three types and here's how they're going to interact,
+
+179
+00:10:06,000 --> 00:10:09,000
+and we'll have some specialization off of this general type.
+
+180
+00:10:09,000 --> 00:10:12,000
+And then when it implements it, it actually has the type system.
+
+181
+00:10:12,000 --> 00:10:13,000
+So that's great for the new thing.
+
+182
+00:10:13,000 --> 00:10:18,000
+Now for the old thing, you can retrofit and you can say, here is a file and the associated document.
+
+183
+00:10:18,000 --> 00:10:20,000
+Things are a bit out of date.
+
+184
+00:10:20,000 --> 00:10:25,000
+Can you induce a design document following the template again?
+
+185
+00:10:25,000 --> 00:10:27,000
+The templates are awesome in these skills.
+
+186
+00:10:27,000 --> 00:10:32,000
+So induce a design doc following the self governance design template.
+
+187
+00:10:32,000 --> 00:10:35,000
+And then let's work through the migration.
+
+188
+00:10:36,000 --> 00:10:41,000
+Another thing you can do, and I have one of these two, it is a lint, the static analysis,
+
+189
+00:10:41,000 --> 00:10:42,000
+a really cheap one.
+
+190
+00:10:42,000 --> 00:10:45,000
+And all it does is it counts the density of primitives.
+
+191
+00:10:45,000 --> 00:10:48,000
+This is, again, part of my typing example, right?
+
+192
+00:10:48,000 --> 00:10:52,000
+So it counts how often the string type is used in a class.
+
+193
+00:10:52,000 --> 00:10:57,000
+And if the answer is too much, it just flags it and says, this is a problem.
+
+194
+00:10:57,000 --> 00:10:59,000
+Someone needs to go in here and put some types in.
+
+195
+00:10:59,000 --> 00:11:04,000
+And so you have kind of a top down, but you have an upfront, let's design the types in advance.
+
+196
+00:11:04,000 --> 00:11:06,000
+If you're building a new thing.
+
+197
+00:11:06,000 --> 00:11:10,000
+If you have an existing thing that's got decent documentation and you want to keep it around,
+
+198
+00:11:10,000 --> 00:11:13,000
+you can try to induce a better type system based on the documentation.
+
+199
+00:11:13,000 --> 00:11:18,000
+And if you really don't know what you've got and nobody wants to touch it, but it exists
+
+200
+00:11:18,000 --> 00:11:24,000
+as a documentation, you can also write automated measurements that give Claude a success criterion
+
+201
+00:11:24,000 --> 00:11:26,000
+to say, this seems to be better now.
+
+202
+00:11:26,000 --> 00:11:29,000
+And you can measure that in terms of the presence of primitives.
+
+203
+00:11:29,000 --> 00:11:34,000
+You can measure that in terms of how much coupling there is.
+
+204
+00:11:34,000 --> 00:11:35,000
+You can measure that.
+
+205
+00:11:35,000 --> 00:11:38,000
+A very simple thing that works pretty well is how many lines of code are in this file?
+
+206
+00:11:38,000 --> 00:11:40,000
+If it's more than 500, that's a problem.
+
+207
+00:11:40,000 --> 00:11:44,000
+We need to plan out a decomposition and the act of that planning.
+
+208
+00:11:44,000 --> 00:11:50,000
+Usually, I mean, it's a retrofit process, but you say make a design doc for what you want
+
+209
+00:11:50,000 --> 00:11:54,000
+based on what we've got and then plan out the mapping and then having done those things,
+
+210
+00:11:54,000 --> 00:11:59,000
+implement it, and now what you've got is an actual design that's present as a result
+
+211
+00:11:59,000 --> 00:12:01,000
+of looking at it a couple of times.
+
+212
+00:12:01,000 --> 00:12:05,000
+But if what you just say to Claude is, hey, make this better, it doesn't know what to do
+
+213
+00:12:05,000 --> 00:12:10,000
+because you haven't given it the deterministic parts that you can.
+
+214
+00:12:10,000 --> 00:12:13,000
+You haven't given it a description of what better would look like in a brief,
+
+215
+00:12:13,000 --> 00:12:16,000
+a description like a judgment-laden thing.
+
+216
+00:12:16,000 --> 00:12:20,000
+And you also haven't given it the loop that it can implement.
+
+217
+00:12:20,000 --> 00:12:22,000
+But you could do those things.
+
+218
+00:12:22,000 --> 00:12:30,000
+It'll cost a lot of tokens, but if you don't, you pay more time and energy servicing that
+
+219
+00:12:30,000 --> 00:12:33,000
+technical debt, then it would cost you a front to fix it once.
+
+220
+00:12:33,000 --> 00:12:35,000
+And so we have the tools.
+
+221
+00:12:35,000 --> 00:12:37,000
+You can fix it at this point.
+
+222
+00:12:37,000 --> 00:12:39,000
+You just need to walk it through the right process.
+
+223
+00:12:39,000 --> 00:12:40,000
+Does that make sense?
+
+224
+00:12:40,000 --> 00:12:41,000
+No, yes, that completely.
+
+225
+00:12:41,000 --> 00:12:45,000
+Again, I'm saying this is possible because I did it because in April,
+
+226
+00:12:45,000 --> 00:12:48,000
+I had 300,000 lines of code that were very crafty.
+
+227
+00:12:49,000 --> 00:12:53,000
+And so I spent a month saying, well, let's try retrofitting all these ideas onto the code base.
+
+228
+00:12:53,000 --> 00:12:56,000
+And when I was done, I had 200,000 lines of code that were not crafty.
+
+229
+00:12:56,000 --> 00:12:58,000
+And I said, oh, this is much better.
+
+230
+00:12:58,000 --> 00:12:59,000
+Excellent.
+
+231
+00:12:59,000 --> 00:13:04,000
+And so going forward, things have been way better, but you can, with an existing system
+
+232
+00:13:04,000 --> 00:13:08,000
+and enough thought, you can retrofit a design onto it.
+
+233
+00:13:08,000 --> 00:13:11,000
+So this is also real.
+
+234
+00:13:11,000 --> 00:13:13,000
+I'm going to try that.
+
+235
+00:13:13,000 --> 00:13:19,000
+I have my main project is very complicated microservice architecture with a lot of moving
+
+236
+00:13:19,000 --> 00:13:21,000
+parts that has no documentation.
+
+237
+00:13:21,000 --> 00:13:23,000
+I'm the documentation.
+
+238
+00:13:23,000 --> 00:13:29,000
+And so I'm going to give it a shot when I get back at creating the models and the procedures,
+
+239
+00:13:29,000 --> 00:13:32,000
+and then see what I can throw at it.
+
+240
+00:13:32,000 --> 00:13:34,000
+I don't think it'll be clogged.
+
+241
+00:13:34,000 --> 00:13:39,000
+But if it's something that can be hosted on a GPU that my university has,
+
+242
+00:13:39,000 --> 00:13:40,000
+they'll probably go for it.
+
+243
+00:13:40,000 --> 00:13:44,000
+So what I've been saying this whole time has been do software engineering, right?
+
+244
+00:13:44,000 --> 00:13:46,000
+So like, of course, do software engineering.
+
+245
+00:13:46,000 --> 00:13:47,000
+That's nice.
+
+246
+00:13:47,000 --> 00:13:51,000
+But I've been trying to discover the specific aspects of software engineering
+
+247
+00:13:51,000 --> 00:13:56,000
+that seem to be very effective in this process and how to map them onto this new technology,
+
+248
+00:13:56,000 --> 00:13:58,000
+this new kind of hardware we've got.
+
+249
+00:13:58,000 --> 00:14:00,000
+And I think it works very well.
+
+250
+00:14:00,000 --> 00:14:03,000
+So I think it works very well.
+
+251
+00:14:03,000 --> 00:14:04,000
+Okay.
+
+252
+00:14:04,000 --> 00:14:05,000
+All right.
+
+253
+00:14:05,000 --> 00:14:06,000
+I think that's all.
+
+254
+00:14:06,000 --> 00:14:07,000
+I think we're over time.
+
+255
+00:14:07,000 --> 00:14:08,000
+Just a little bit.
+
+256
+00:14:08,000 --> 00:14:11,000
+I really appreciate your time.
+
+257
+00:14:11,000 --> 00:14:18,000
+Thank you.
+
+

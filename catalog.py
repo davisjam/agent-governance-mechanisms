@@ -1201,7 +1201,7 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
 
   <div class="mechanisms">
     <div class="mech"><h3>Agent-legible &amp; precise</h3><p>A six-state machine with typed invariants is
-    something an agent reasons over <b>without error</b> the way it never could over 300,000 lines of
+    something an agent reasons over <b>without error</b> the way it cannot over 300,000 lines of
     prose-and-code. Abstraction shrinks the space it can be wrong in, not just the token count. A model is
     more precise than any document.</p></div>
     <div class="mech right"><h3>It can’t lie</h3><p>A document rots the moment the code moves; a model wired
@@ -1799,11 +1799,12 @@ def cmd_build(_args) -> int:
             "velocity.", cls="hero-fig"),
         schools_fig=_inline_svg_figure(
             "assets/oversight-modes.svg",
-            "Three process models for agentic engineering, side by side. Velocity-centric agents hand work "
-            "around a ring of job titles, with the quality mechanism left implicit. Oversight-centric keeps "
-            "a human next to each bounded piece — honest, but the human's attention does not scale with the "
-            "fleet. Governance-centric puts the agents inside a containing environment of enforced "
-            "mechanisms the human sets up in advance. This site takes the third."),
+            "Three process models for agentic engineering. The two poles sit on top: velocity-centric agents "
+            "hand work around a ring of job titles, with the quality mechanism left implicit; and "
+            "oversight-centric keeps a human next to each bounded piece — honest, but the human's attention "
+            "does not scale with the fleet. Governance-centric sits beneath them as the synthesis, putting "
+            "the agents inside a containing environment of enforced mechanisms the human sets up in advance. "
+            "This site takes the third."),
         model_fig=_inline_svg_figure(
             "assets/documentation-hierarchy.svg",
             "Documentation has a hierarchy, and its top is not prose. Loose docs, code, and tests drift "

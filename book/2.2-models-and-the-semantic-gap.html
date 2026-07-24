@@ -342,7 +342,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <desc id="dhDesc">A two-panel contrast. Left panel, typical agentic methods: three
     boxes — docs, code, and tests — stand as separate islands with no glue between them.
     Nothing binds them, so they drift apart and there are no guardrails; a red marker notes
-    the missing binding. Right panel, the book's move: a single typed model sits at the apex
+    the missing binding. Right panel, the MAGE move: a single typed model sits at the apex
     and binds the same three — docs, code, and tests — with checked edges. The model is the one
     description the machine can check the others against, so a drift check fails the build when
     any of the three disagrees with it. The lesson: lift documentation to its apex, a typed
@@ -385,8 +385,8 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="240" y="418" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">nothing binds them → they drift</text>
   <text x="240" y="446" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">no guardrails</text>
 
-  <!-- ================= RIGHT PANEL — the book's move ================= -->
-  <text x="720" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">The book's move</text>
+  <!-- ================= RIGHT PANEL — the MAGE move ================= -->
+  <text x="720" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">The MAGE move</text>
   <text x="720" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">a typed model at the apex</text>
 
   <!-- the apex: the typed model (box widened so the italic caption fits inside its rect) -->
@@ -424,8 +424,8 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   </g>
 
   <text x="720" y="533" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">checked: the map must match the territory</text>
-</svg><figcaption>The apex of the documentation hierarchy. Left: the typical agentic setup leaves docs, code, and tests as three unconnected islands — no glue, so they drift apart and there are no guardrails. Right: the book's move — a typed model at the apex binds docs, code, and tests together, and because the model is the one description the machine can check the others against, a drift check fails the build the moment any of the three disagrees with it.</figcaption></figure>
-<p>The book's move is to take the hierarchy to its limit. Its apex is not more prose, however careful. Its apex is a <strong>typed model</strong> — and the model is what binds the islands into one checkable whole. A model is a description precise enough that a machine can read it, and <em>because</em> the machine can read it, the machine can check the other descriptions against it. That is the property no amount of good prose can give you. The model becomes the single description you hold the docs, the code, and the tests up to: does the code still match the state machine the model declares? Does the schema still match the records? When the model and the territory disagree, a build-time check fails, and the disagreement surfaces the instant it appears instead of the instant it bites. This is the same <strong>drift-and-parity gate</strong> from the last section, seen from the other side: there it kept the map equal to the territory; here it is the glue the three-island picture was missing — the one edge that makes docs, code, and tests a bound system instead of three things that happen to describe the same repo.</p>
+</svg><figcaption>The apex of the documentation hierarchy. Left: the typical agentic setup leaves docs, code, and tests as three unconnected islands — no glue, so they drift apart and there are no guardrails. Right: the MAGE move — a typed model at the apex binds docs, code, and tests together, and because the model is the one description the machine can check the others against, a drift check fails the build the moment any of the three disagrees with it.</figcaption></figure>
+<p>The MAGE move is to take the hierarchy to its limit. Its apex is not more prose, however careful. Its apex is a <strong>typed model</strong> — and the model is what binds the islands into one checkable whole. A model is a description precise enough that a machine can read it, and <em>because</em> the machine can read it, the machine can check the other descriptions against it. That is the property no amount of good prose can give you. The model becomes the single description you hold the docs, the code, and the tests up to: does the code still match the state machine the model declares? Does the schema still match the records? When the model and the territory disagree, a build-time check fails, and the disagreement surfaces the instant it appears instead of the instant it bites. This is the same <strong>drift-and-parity gate</strong> from the last section, seen from the other side: there it kept the map equal to the territory; here it is the glue the three-island picture was missing — the one edge that makes docs, code, and tests a bound system instead of three things that happen to describe the same repo.</p>
 <p>That is the Modeling Thesis at full strength. Documentation matters, and agents have made thorough documentation cheap for the first time, so climb the hierarchy all the way up. The rung at the top is a typed model that binds intent to implementation and that a checker can prove things about. Everything below it — the prose, the comments, the tests — is honest and useful and still drifts; the model is the one description that cannot silently lie, because the gate stays red until it tells the truth again. This is why the companion catalogue gives the <strong>models-bridge</strong> its own role. The whole aim of the up-front half is to build the one description the machine can check the rest against — and building it well is a craft the Model Zoo in Part 3 teaches by example.</p>
 <h2>The semantic gap</h2>
 <figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470"
