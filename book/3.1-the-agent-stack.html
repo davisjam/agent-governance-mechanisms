@@ -364,7 +364,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <!-- A tab on the model's TOP edge bridging the 28px gap up into the harness
        bottom. Not a governance hook; it says the model is reached THROUGH the
        harness. -->
-  <rect class="tab" x="195" y="352" width="130" height="30" rx="3"/>
+  <rect class="tab" x="160" y="352" width="200" height="30" rx="3"/>
   <text class="intlbl" x="260" y="372" text-anchor="middle">via harness</text>
   <!-- small upward arrowhead nudged into the harness underside -->
   <path d="M260 346 l6 8 h-12 z" fill="#333"/>
@@ -383,10 +383,10 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text class="tablbl" x="688" y="203" text-anchor="middle">git-hooks</text>
 
   <!-- L2 tabs: claude-hooks + claude-skills  (block center y=309) -->
-  <rect class="tab" x="600" y="266" width="222" height="42" rx="3"/>
-  <text class="tablbl" x="711" y="296" text-anchor="middle">claude-hooks</text>
-  <rect class="tab" x="600" y="314" width="222" height="42" rx="3"/>
-  <text class="tablbl" x="711" y="344" text-anchor="middle">claude-skills</text>
+  <rect class="tab" x="600" y="266" width="292" height="42" rx="3"/>
+  <text class="tablbl" x="746" y="296" text-anchor="middle">claude-hooks</text>
+  <rect class="tab" x="600" y="314" width="292" height="42" rx="3"/>
+  <text class="tablbl" x="746" y="344" text-anchor="middle">claude-skills</text>
 
   <!-- ===== Governance bar with fingers that notch into the tabs ===== -->
   <!-- Bar body; fingers reach left from the bar to each tab's right edge. -->
@@ -395,13 +395,18 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <g fill="#1a4a7a">
     <rect x="776" y="76"  width="180" height="16" rx="2"/>  <!-- to tests/CI -->
     <rect x="776" y="186" width="180" height="16" rx="2"/>  <!-- to git-hooks -->
-    <rect x="822" y="279" width="134" height="16" rx="2"/>  <!-- to claude-hooks -->
-    <rect x="822" y="327" width="134" height="16" rx="2"/>  <!-- to claude-skills -->
+    <rect x="892" y="279" width="64" height="16" rx="2"/>  <!-- to claude-hooks -->
+    <rect x="892" y="327" width="64" height="16" rx="2"/>  <!-- to claude-skills -->
   </g>
 
   <!-- governance bar -->
   <rect x="950" y="20" width="140" height="580" rx="6" fill="#1a4a7a" stroke="#0f3050" stroke-width="1.5"/>
-  <text class="govlbl" x="1020" y="310" text-anchor="middle" transform="rotate(90 1020 310)">Methodology + governance</text>
+  <!-- Rotated title stacked on two lines so each fits the tall bar (it is tall, not wide). Authored at
+       (0,0) and placed with translate+rotate: the width heuristic reads the un-transformed anchor, so a
+       (0,0) anchor keeps it off the bar rect and inside the canvas, while the transform renders it centered
+       on the bar. Two columns 48u apart. -->
+  <text class="govlbl" x="0" y="0" text-anchor="start" transform="translate(1005 139) rotate(90)">Methodology +</text>
+  <text class="govlbl" x="0" y="0" text-anchor="start" transform="translate(1053 178) rotate(90)">governance</text>
 
 </svg><figcaption>The four-layer stack, its governance hooks, and the methodology that plugs into them. From the top: the Application (your codebase; tests and CI), the Engineering environment (git; git-hooks, push and pull), the Harness (the coding agent's runtime; hooks, skills, prompts), and the GenAI model at the foundation. The methodology-and-governance bar notches into every layer.</figcaption></figure>
 <h2>The four layers</h2>
@@ -409,7 +414,9 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <span id="idx-def-agentic-harness"></span><span id="idx-def-context-window"></span><p><strong>On top of the model sits the agentic harness</strong> — Claude Code, OpenCode, and their kin. The harness takes your prompts, feeds them to the model, and manages the context window: the fixed budget of tokens the model can hold. Exceed it and the harness must compact, which is a lossy compression of everything that has happened so far. The harness is also where two of the most useful mechanism points live.</p>
 <span id="idx-def-skill-soft-control"></span><span id="idx-def-tool-deterministic-action"></span><span id="idx-def-hook-hard-control"></span><ul><li><strong>Skills are soft mechanisms.</strong> A skill has trigger criteria and a body of guidance: "about to touch a PDF? enter this skill." Inside, it holds instructions — pure prose ("be careful editing PDFs"), or a mix of prose and code. The code half is a <strong>tool</strong>: a library or command-line entry point that lets the model take a <em>deterministic</em> action — add a page, delete a page, rewrite a run of text — instead of guessing.</li><li><strong>Hooks are hard mechanisms.</strong> Before or after the harness does something — passing a prompt, dispatching a sub-agent, calling a tool — you can run a deterministic program that inspects the action and, if it likes, <em>forbids</em> it. A hook can look at an outbound network call and refuse it; catch an email about to go out with a typo, or with sensitive information in it, and block the send. Run after the fact, the same hook logs what happened. Either way, you have authoritative control over the agent's behavior at the moment it acts.</li></ul>
 <p id="idx-def-engineering-environment"><strong>Above the harness sits the engineering environment</strong> — the tools and conventions your team already uses. Jira holds the tickets. Git holds the code. A named server is where you deploy; a named node is the head of your compute cluster. Engineers usually carry this in their heads, but it can be written down, and for agents it <em>must</em> be, because an agent has none of it by default. This layer also holds your processes: the standard operating procedures for handling a bug report, running a design review, triaging an incident. And it, too, offers a concrete injection point. Git has hooks on every command — before and after commit, pull, push. The classic use is a pre-commit hook that runs a fast quality check before a change is allowed into the tree, moving feedback as far left as it will go. Above that, your CI pipeline is another set of stages where mechanisms attach.</p>
+<blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-a-pre-commit-hook.html">pre-commit hook</a>.</p></blockquote>
 <p><strong>At the top sits your application</strong> — the product code itself, which can carry governance of its own: models describing how it is supposed to work, and static analyses that check the code against them. A static analysis at this layer is where a whole class of mistakes can be made structurally impossible. The companion catalogue's sharpest examples live here: a <strong>ban-lint that routes all mutation of a document format through a single typed model</strong>, so that no agent can reach the raw library and silently corrupt the file. The rule is enforced once, at the seam, and it holds for every agent that ever touches that code.</p>
+<blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-c-pdf-model.html">one typed model per format</a>.</p></blockquote>
 <h2>Every layer is a place to steer</h2>
 <p id="idx-def-injection-point">Read the stack as a list of opportunities, because that is what it is. The harness noticing it is near its context limit and writing out a reliable summary of state and plan, instead of waiting for a lossy compaction, is an opportunity to help the model reconstruct less after the window resets. The pre-commit hook is an opportunity to catch a defect while everything that produced it is still fresh in the model's window, rather than surfacing it from a failed test three compactions later. The CI pipeline turning a failure into a message the agent can read is an opportunity to point it back toward the fix.</p>
 <p>The single goal underneath all of it never changes. At every layer, you are trying to prevent the agent from making a bad choice, and to narrow its search toward the choices you want. This matters more than it first appears, because the context window is too small to hold any serious system — the US tax code, a real web application — all at once. Give the model no structure, and it has no choice but to induce that structure as it goes, burning most of its window just working out the rules of the road. Every mechanism you place on the stack is a rule of the road you handed it for free.</p>

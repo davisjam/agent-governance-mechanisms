@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1520" width="640" height="1520" role="group" aria-labelledby="ptl-title ptl-desc" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 1520" width="700" height="1520" role="group" aria-labelledby="ptl-title ptl-desc" font-family="Georgia, 'Times New Roman', serif">
   <title id="ptl-title">The messy timeline behind the clean stages</title>
   <desc id="ptl-desc">A vertical dated timeline of nine real moments from the seven-week build, each a cream card threaded on a gold vertical line with a dot at its date. The moments are: April 6, cooking breakfast while the family sleeps as the code flies; a Spring Break kickoff when no undergraduate replies and the architect supervises agents instead; April 15, leaving a conference keynote because the room's wifi cannot reach the model; April 30, a clean full-context handoff celebrated in the lab chat; May 5, a graduate student crossing a retreat dining room to complete a two-factor prompt for a saturated account; May 13, waking to funding emails because the overnight green-build run cost real money; May 19, the orchestration running two hours unattended while the architect skips a vacation; May 21, working from a hospital waiting room where the network permits the tool; and May 28, sprinting between two buildings during a campus outage so the agents never notice it stopped. The clean six-stage development narrative maps onto these lived moments.</desc>
 
-  <rect x="0" y="0" width="640" height="1520" fill="#ffffff"/>
+  <rect x="0" y="0" width="700" height="1520" fill="#ffffff"/>
 
   <!-- gold vertical rule -->
   <line x1="40" y1="88" x2="40" y2="1470" stroke="#BFA45A" stroke-width="1.4"/>
@@ -14,7 +14,7 @@
   <!-- CARD 1 -->
   <circle cx="40" cy="150" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="112" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="112" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="140" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Monday, April 6</text>
     <text x="82" y="167" font-size="18" fill="#2B2416">I am cooking breakfast while the family sleeps.</text>
     <text x="82" y="190" font-size="18" fill="#2B2416">The model joins me on the countertop.</text>
@@ -24,7 +24,7 @@
   <!-- CARD 2 -->
   <circle cx="40" cy="300" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="262" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="262" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="290" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Spring Break · the kickoff</text>
     <text x="82" y="317" font-size="18" fill="#2B2416">I offer a one-week project to twenty of our best students.</text>
     <text x="82" y="340" font-size="18" fill="#2B2416">Not one replies. They planned to have fun.</text>
@@ -34,7 +34,7 @@
   <!-- CARD 3 -->
   <circle cx="40" cy="450" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="412" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="412" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="440" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Wednesday, April 15</text>
     <text x="82" y="467" font-size="18" fill="#2B2416">A keynote on the future of software in the age of AI.</text>
     <text x="82" y="490" font-size="18" fill="#2B2416">The room's routers are overwhelmed. The model cannot hear me.</text>
@@ -44,7 +44,7 @@
   <!-- CARD 4 -->
   <circle cx="40" cy="600" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="562" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="562" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="590" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, April 30</text>
     <text x="82" y="617" font-size="18" fill="#2B2416">I hit full context with a clean quiesce and a handoff document.</text>
     <text x="82" y="640" font-size="18" fill="#2B2416">I post a screenshot in the lab chat.</text>
@@ -54,7 +54,7 @@
   <!-- CARD 5 -->
   <circle cx="40" cy="750" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="712" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="712" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="740" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Tuesday, May 5</text>
     <text x="82" y="767" font-size="18" fill="#2B2416">Two accounts are saturated. The third needs a two-factor code.</text>
     <text x="82" y="790" font-size="18" fill="#2B2416">Its owner is at a retreat, not watching the chat. My graduate</text>
@@ -64,7 +64,7 @@
   <!-- CARD 6 -->
   <circle cx="40" cy="900" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="862" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="862" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="890" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Wednesday, May 13</text>
     <text x="82" y="917" font-size="18" fill="#2B2416">I wake to ten emails. Each auto-funds the account five dollars.</text>
     <text x="82" y="940" font-size="18" fill="#2B2416">Ah yes: I asked for a green build overnight.</text>
@@ -74,7 +74,7 @@
   <!-- CARD 7 -->
   <circle cx="40" cy="1050" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="1012" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="1012" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="1040" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Tuesday, May 19</text>
     <text x="82" y="1067" font-size="18" fill="#2B2416">The orchestration now makes progress for two hours in my absence.</text>
     <text x="82" y="1090" font-size="18" fill="#2B2416">I set the alarm for 4 AM. I was to be on vacation in Costa Rica.</text>
@@ -84,7 +84,7 @@
   <!-- CARD 8 -->
   <circle cx="40" cy="1200" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="1162" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="1162" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="1190" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, May 21</text>
     <text x="82" y="1217" font-size="18" fill="#2B2416">A family member's seventh ER trip in two weeks.</text>
     <text x="82" y="1240" font-size="18" fill="#2B2416">The hospital network blocks one assistant, but not the other.</text>
@@ -94,7 +94,7 @@
   <!-- CARD 9 -->
   <circle cx="40" cy="1350" r="4.6" fill="#BFA45A"/>
   <g>
-    <rect x="66" y="1312" width="558" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
+    <rect x="66" y="1312" width="630" height="112" rx="2.5" fill="#FFFBEA" stroke="#BFA45A" stroke-width="0.7"/>
     <text x="82" y="1340" font-size="18" font-weight="bold" fill="#2B2416" font-variant="small-caps">Thursday, May 28</text>
     <text x="82" y="1367" font-size="18" fill="#2B2416">A campus outage. I dash between two buildings, laptop in one hand,</text>
     <text x="82" y="1390" font-size="18" fill="#2B2416">and steal a look at the screen: no errors.</text>

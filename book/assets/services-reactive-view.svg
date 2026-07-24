@@ -26,7 +26,7 @@
   <!-- queue -->
   <rect x="242" y="70" width="130" height="90" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="1.8"/>
   <text x="307" y="112" text-anchor="middle" font-size="25" font-weight="bold" fill="#3a2350">Queue</text>
-  <text x="307" y="139" text-anchor="middle" font-size="19" fill="#5a4570">one chunk = one task</text>
+  <text x="307" y="139" text-anchor="middle" font-size="19" fill="#5a4570">chunk = task</text>
 
   <!-- push arrow -->
   <line x1="372" y1="115" x2="436" y2="115" stroke="#2B2416" stroke-width="1.6" marker-end="url(#srv-arrow)"/>
@@ -59,12 +59,12 @@
   <text x="30" y="262" font-size="30" font-weight="bold" fill="#12324f">Same flow, two deployment targets</text>
 
   <!-- LEFT: poll plane (retired) -->
-  <rect x="24" y="284" width="336" height="196" rx="4" fill="#faf6f2" stroke="#a37a4a" stroke-width="1.6"/>
-  <text x="192" y="314" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Kubernetes poll plane (retired)</text>
+  <rect x="24" y="284" width="346" height="196" rx="4" fill="#faf6f2" stroke="#a37a4a" stroke-width="1.6"/>
+  <text x="197" y="314" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Kubernetes poll plane (retired)</text>
 
   <rect x="48" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#a37a4a" stroke-width="1.4"/>
-  <text x="113" y="362" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Worker pool</text>
-  <text x="113" y="386" text-anchor="middle" font-size="19" fill="#7a5a3a">claims from Redis</text>
+  <text x="113" y="360" text-anchor="middle" font-size="20" font-weight="bold" fill="#7a4a1a">Worker pool</text>
+  <text x="113" y="384" text-anchor="middle" font-size="19" fill="#7a5a3a">pulls work</text>
 
   <rect x="206" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#a37a4a" stroke-width="1.4"/>
   <text x="271" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a4a1a">Custom</text>
@@ -75,8 +75,8 @@
   <text x="48" y="474" font-size="17" fill="#7a5a3a">and adds or removes pods.</text>
 
   <!-- RIGHT: push plane (serverless) -->
-  <rect x="400" y="284" width="336" height="196" rx="4" fill="#f0f7f2" stroke="#2d6a4f" stroke-width="1.6"/>
-  <text x="568" y="314" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Serverless push plane</text>
+  <rect x="400" y="284" width="346" height="196" rx="4" fill="#f0f7f2" stroke="#2d6a4f" stroke-width="1.6"/>
+  <text x="573" y="314" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Serverless push plane</text>
 
   <rect x="424" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#2d6a4f" stroke-width="1.4"/>
   <text x="489" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Managed</text>
@@ -84,7 +84,7 @@
 
   <rect x="582" y="332" width="130" height="70" rx="3" fill="#ffffff" stroke="#2d6a4f" stroke-width="1.4"/>
   <text x="647" y="356" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">Worker,</text>
-  <text x="647" y="378" text-anchor="middle" font-size="24" font-weight="bold" fill="#1e4a36">scale-from-0</text>
+  <text x="647" y="380" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e4a36">scale-from-0</text>
 
   <text x="424" y="432" font-size="17" fill="#1e4a36">The platform PUSHES each chunk to a</text>
   <text x="424" y="453" font-size="17" fill="#1e4a36">worker that scales from zero; native</text>

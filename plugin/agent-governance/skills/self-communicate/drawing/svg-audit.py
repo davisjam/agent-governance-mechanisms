@@ -18,10 +18,26 @@ import sys
 import xml.etree.ElementTree as ET
 
 PASS = "PASS"
-_SCAN_DIR = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.getcwd()
+# NOTE: this file shares its text-fit / drawing-hygiene check logic with tests/svg_fit.py — a known
+# duplication to consolidate later.
+# argv[1] may be a single .svg FILE, a directory of SVGs, or absent (default cwd). A file arg scans just
+# that file; a dir arg scans every *.svg in it. `_SCAN_DIR` is the dir the report paths are relative to.
+_ARG = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.getcwd()
+_SCAN_FILE = _ARG if os.path.isfile(_ARG) else None
+_SCAN_DIR = os.path.dirname(_ARG) if _SCAN_FILE else _ARG
 ROOT = _SCAN_DIR
 def rel(p):
     return os.path.relpath(p, ROOT)
+
+
+def _scan_svgs():
+    """Filenames to scan: a single file when argv[1] named one, else every *.svg in the scan dir. Returns
+    a possibly-empty list of basenames (resolved against `_SCAN_DIR`) — empty means nothing to scan."""
+    if _SCAN_FILE is not None:
+        return [os.path.basename(_SCAN_FILE)]
+    if not os.path.isdir(_SCAN_DIR):
+        return None  # neither a file nor a dir — signal "nothing to scan"
+    return sorted(fn for fn in os.listdir(_SCAN_DIR) if fn.endswith(".svg"))
 
 # Where an agent goes when a figure is flagged. Repo-relative; the check echoes it on every finding.
 RUNBOOK = "book/_design/figure-text-fit-runbook.md"
@@ -211,16 +227,14 @@ def check_svg_text_fit():
     AUDIT-ONLY: always returns PASS (exit-neutral). Findings print as guidance, each pointing at the
     runbook. Returns (PASS, issues) — `issues` is the human-readable candidate list.
     """
-    assets_dir = _SCAN_DIR
-    if not os.path.isdir(assets_dir):
+    targets = _scan_svgs()
+    if not targets:
         return PASS, ["no book/assets/ dir — nothing to scan"]
 
     issues: list[str] = []
     flagged_files: set[str] = set()
-    for fn in sorted(os.listdir(assets_dir)):
-        if not fn.endswith(".svg"):
-            continue
-        path = os.path.join(assets_dir, fn)
+    for fn in targets:
+        path = os.path.join(_SCAN_DIR, fn)
         try:
             root = ET.parse(path).getroot()
         except ET.ParseError as e:
@@ -344,16 +358,14 @@ def check_svg_drawing_hygiene():
         (hand-composed; use a native marker so it can't drift off the line).
       - **stroke through glyph** — a `<line>` whose stroke passes through a `<text>`'s estimated bbox.
     Heuristic; audit-only. Fix guidance -> the drawing style doc."""
-    assets_dir = _SCAN_DIR
-    if not os.path.isdir(assets_dir):
+    targets = _scan_svgs()
+    if not targets:
         return PASS, ["no book/assets/ dir — nothing to scan"]
 
     issues: list[str] = []
     flagged: set[str] = set()
-    for fn in sorted(os.listdir(assets_dir)):
-        if not fn.endswith(".svg"):
-            continue
-        path = os.path.join(assets_dir, fn)
+    for fn in targets:
+        path = os.path.join(_SCAN_DIR, fn)
         try:
             root = ET.parse(path).getroot()
         except ET.ParseError:

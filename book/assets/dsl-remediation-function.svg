@@ -18,12 +18,12 @@
   <text x="159" y="142" text-anchor="middle" font-size="24" fill="#3d5a70">emits ops by hand</text>
 
   <!-- AUTOMATED PATH (bottom): task -> function -->
-  <rect x="24" y="288" width="240" height="86" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="144" y="324" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Remediation</text>
-  <text x="144" y="352" text-anchor="middle" font-size="24" fill="#3d5a70">task (e.g. alt text)</text>
+  <rect x="24" y="288" width="264" height="86" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="156" y="324" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Remediation</text>
+  <text x="156" y="352" text-anchor="middle" font-size="22" fill="#3d5a70">task (e.g. alt text)</text>
 
   <!-- task->edit function box (dashed model inside) -->
-  <line x1="264" y1="331" x2="316" y2="331" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <line x1="290" y1="331" x2="316" y2="331" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
   <rect x="320" y="238" width="386" height="196" rx="3" fill="#fbfaf4" stroke="#7a6a2a" stroke-width="1.8"/>
   <text x="513" y="276" text-anchor="middle" font-size="24" font-weight="bold" fill="#5a4a10">task-to-edit function</text>
   <text x="513" y="302" text-anchor="middle" font-size="19" font-style="italic" fill="#7a6a2a">an instance of LLM-as-function-call</text>
@@ -48,7 +48,7 @@
   <text x="760" y="226" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">language</text>
 
   <!-- DSL -> document model -->
-  <rect x="770" y="292" width="256" height="82" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <rect x="740" y="292" width="316" height="82" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
   <text x="898" y="326" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Document model</text>
   <text x="898" y="354" text-anchor="middle" font-size="19" fill="#3d5a70">applies + stamps each edit</text>
 
@@ -59,7 +59,7 @@
   <!-- takeaway strip -->
   <line x1="24" y1="506" x2="1096" y2="506" stroke="#c8d6e5" stroke-width="1.4"/>
   <text x="30" y="536" font-size="24" font-weight="bold" fill="#12324f">Traceability and confidence — plus cheaper reasoning</text>
-  <text x="30" y="564" font-size="19" fill="#333">One language and one validated boundary make every edit a typed, validated, stamped result you can explain and reverse</text>
-  <text x="30" y="588" font-size="19" fill="#333">(traceability), and the deterministic validator holds the line (confidence).</text>
-  <text x="30" y="612" font-size="19" fill="#333">Scoping each call to one bounded task also scopes the reasoning — the same move as a series of small transformations, priced.</text>
+  <text x="30" y="564" font-size="19" fill="#333">One language and one validated boundary makes every edit a typed, validated, stamped result</text>
+  <text x="30" y="588" font-size="19" fill="#333">you can explain and reverse (traceability); the deterministic validator holds the line (confidence).</text>
+  <text x="30" y="612" font-size="19" fill="#333">Scoping each call to one task also scopes the reasoning — the same move as small transformations, priced.</text>
 </svg>

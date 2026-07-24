@@ -46,7 +46,7 @@
   <!-- state 3: blocking -->
   <rect x="690" y="110" width="230" height="80" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
   <text x="805" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Blocking</text>
-  <text x="805" y="172" text-anchor="middle" font-size="16" fill="#33383d">fails any commit that regresses</text>
+  <text x="805" y="172" text-anchor="middle" font-size="16" fill="#33383d">fails a regressing commit</text>
 
   <!-- edges along the spine -->
   <g fill="none" stroke="#33383d" stroke-width="2.5" marker-end="url(#szpArrow)">

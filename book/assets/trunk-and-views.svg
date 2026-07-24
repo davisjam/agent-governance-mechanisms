@@ -41,7 +41,7 @@
 
     <rect x="404" y="70" width="164" height="74" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
     <text x="486" y="102" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Development</text>
-    <text x="486" y="128" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">how it is packaged</text>
+    <text x="486" y="128" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">how it's packaged</text>
 
     <rect x="586" y="70" width="164" height="74" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
     <text x="668" y="102" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Physical</text>

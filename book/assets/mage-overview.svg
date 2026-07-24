@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" width="1080" height="560" font-family="'Avenir Next', Inter, system-ui, sans-serif">
+  <title>The MAGE method: the two theses that hold off churn</title>
+  <desc>A cheap agent fleet, left ungoverned, drifts into churn as its work outgrows the context window. Governed through the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent), it converges on trustworthy software at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3d5a70"/>
+    </marker>
+    <marker id="ahred" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#a05a5a"/>
+    </marker>
+    <marker id="ahgreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2f7d4f"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1080" height="560" fill="#ffffff"/>
+
+  <text x="540" y="46" text-anchor="middle" font-size="32" font-weight="bold" fill="#12324f">The MAGE method</text>
+  <text x="540" y="74" text-anchor="middle" font-size="17" font-style="italic" fill="#5a5240">Model-Based Agentic Software Engineering</text>
+
+  <rect x="50" y="250" width="210" height="88" rx="8" fill="#eef2f6" stroke="#3d5a70" stroke-width="2"/>
+  <text x="155" y="290" text-anchor="middle" font-size="19" font-weight="bold" fill="#12324f">The agent fleet</text>
+  <text x="155" y="314" text-anchor="middle" font-size="15" fill="#3d5a70">fast · cheap</text>
+
+  <path d="M200 250 C 260 150, 640 130, 758 132" fill="none" stroke="#a05a5a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ahred)"/>
+  <text x="430" y="118" text-anchor="middle" font-size="14" font-style="italic" fill="#a05a5a">left ungoverned</text>
+
+  <rect x="762" y="95" width="268" height="98" rx="8" fill="#f6eeee" stroke="#a05a5a" stroke-width="2"/>
+  <text x="896" y="130" text-anchor="middle" font-size="22" font-weight="bold" fill="#7a3b3b">Churn</text>
+  <text x="896" y="155" text-anchor="middle" font-size="14" fill="#7a3b3b">work outgrows the window;</text>
+  <text x="896" y="176" text-anchor="middle" font-size="14" fill="#7a3b3b">drift, confidently-wrong</text>
+
+  <rect x="318" y="205" width="446" height="214" rx="12" fill="#f4f6f9" stroke="#3d5a70" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="541" y="230" text-anchor="middle" font-size="16" font-weight="bold" fill="#12324f">The governed environment</text>
+
+  <rect x="342" y="245" width="398" height="78" rx="7" fill="#ffffff" stroke="#3d5a70" stroke-width="1.5"/>
+  <text x="541" y="275" text-anchor="middle" font-size="16" font-weight="bold" fill="#12324f">Modeling Thesis</text>
+  <text x="541" y="300" text-anchor="middle" font-size="13" fill="#3d5a70">a typed model the fleet reasons through</text>
+
+  <rect x="342" y="331" width="398" height="78" rx="7" fill="#ffffff" stroke="#3d5a70" stroke-width="1.5"/>
+  <text x="541" y="361" text-anchor="middle" font-size="16" font-weight="bold" fill="#12324f">Alignment Thesis</text>
+  <text x="541" y="386" text-anchor="middle" font-size="13" fill="#3d5a70">a mechanism keeps output aligned with intent</text>
+
+  <path d="M260 300 L 314 306" fill="none" stroke="#3d5a70" stroke-width="2" marker-end="url(#ah)"/>
+  <path d="M764 320 L 816 320" fill="none" stroke="#2f7d4f" stroke-width="2.5" marker-end="url(#ahgreen)"/>
+
+  <rect x="820" y="276" width="220" height="92" rx="8" fill="#eef5ef" stroke="#2f7d4f" stroke-width="2"/>
+  <text x="930" y="308" text-anchor="middle" font-size="20" font-weight="bold" fill="#22623d">Trustworthy</text>
+  <text x="930" y="332" text-anchor="middle" font-size="20" font-weight="bold" fill="#22623d">software</text>
+  <text x="930" y="355" text-anchor="middle" font-size="14" font-style="italic" fill="#2f7d4f">at velocity</text>
+
+  <text x="541" y="447" text-anchor="middle" font-size="14" font-style="italic" fill="#5a5240">MAGE is the governed path: the two theses hold off churn.</text>
+</svg>

@@ -35,23 +35,23 @@
   <text x="542" y="200" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">contract</text>
 
   <!-- VALIDATOR -->
-  <rect x="584" y="150" width="200" height="112" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
-  <text x="684" y="188" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Deterministic</text>
-  <text x="684" y="212" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">validator</text>
-  <text x="684" y="240" text-anchor="middle" font-size="19" fill="#3d5a70">checks the candidate</text>
+  <rect x="584" y="150" width="240" height="112" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
+  <text x="704" y="188" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Deterministic</text>
+  <text x="704" y="212" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">validator</text>
+  <text x="704" y="240" text-anchor="middle" font-size="19" fill="#3d5a70">checks the candidate</text>
 
   <!-- trust boundary marker under validator -->
   <line x1="554" y1="116" x2="554" y2="300" stroke="#a33" stroke-width="1" stroke-dasharray="3 3"/>
   <text x="554" y="108" text-anchor="middle" font-size="18" font-weight="bold" fill="#a33">trust boundary</text>
 
   <!-- PASS out -->
-  <line x1="784" y1="188" x2="856" y2="188" stroke="#2B2416" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
-  <text x="820" y="176" text-anchor="middle" font-size="19" font-weight="bold" fill="#2a6b2a">pass</text>
-  <text x="866" y="182" text-anchor="start" font-size="18" fill="#2a6b2a">result</text>
-  <text x="866" y="202" text-anchor="start" font-size="18" fill="#2a6b2a">incorporated</text>
+  <line x1="824" y1="188" x2="876" y2="188" stroke="#2B2416" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
+  <text x="850" y="176" text-anchor="middle" font-size="19" font-weight="bold" fill="#2a6b2a">pass</text>
+  <text x="886" y="182" text-anchor="start" font-size="18" fill="#2a6b2a">result</text>
+  <text x="886" y="202" text-anchor="start" font-size="18" fill="#2a6b2a">incorporated</text>
 
   <!-- FAIL loop back to caller -->
-  <path d="M684,262 L684,330 L124,330 L124,262" fill="none" stroke="#a33" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#lfc-arrow)"/>
+  <path d="M704,262 L704,330 L124,330 L124,262" fill="none" stroke="#a33" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#lfc-arrow)"/>
   <text x="404" y="350" text-anchor="middle" font-size="19" font-weight="bold" fill="#a33">fail → caller retries or falls back</text>
 
   <!-- caption strip -->

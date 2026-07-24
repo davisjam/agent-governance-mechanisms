@@ -52,16 +52,16 @@
   <line x1="1062" y1="370" x2="1062" y2="416" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
 
   <!-- logged reasoning trace box -->
-  <rect x="838" y="414" width="424" height="116" rx="6" fill="#ffffff" stroke="#1a4a7a" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <rect x="800" y="414" width="500" height="116" rx="6" fill="#ffffff" stroke="#1a4a7a" stroke-width="1.5" stroke-dasharray="6 4"/>
   <text x="1050" y="450" text-anchor="middle" font-size="30" font-weight="700" fill="#1a4a7a">Logged reasoning trace</text>
   <text x="1050" y="482" text-anchor="middle" font-size="24" fill="#3a4a58">why this configuration was chosen</text>
-  <text x="1050" y="512" text-anchor="middle" font-size="24" font-style="italic" fill="#3a4a58">captured because step 3 is deterministic</text>
+  <text x="1050" y="512" text-anchor="middle" font-size="24" font-style="italic" fill="#3a4a58">captured: step 3 is deterministic</text>
 
   <!-- consumer (a): input to next iteration -->
   <path d="M838,466 C600,494 300,470 208,424" fill="none" stroke="#1a4a7a" stroke-width="2" marker-end="url(#cor-ah)"/>
-  <rect x="120" y="416" width="470" height="102" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
-  <text x="355" y="454" text-anchor="middle" font-size="30" font-weight="700" fill="#12324a">(a) Input to the next iteration</text>
-  <text x="355" y="490" text-anchor="middle" font-size="24" fill="#3a4a58">the loop learns from its own logged reasoning</text>
+  <rect x="120" y="416" width="650" height="102" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
+  <text x="445" y="454" text-anchor="middle" font-size="30" font-weight="700" fill="#12324a">(a) Input to the next iteration</text>
+  <text x="445" y="490" text-anchor="middle" font-size="24" fill="#3a4a58">the loop learns from its own trace</text>
 
   <!-- consumer (b): decision trace for a secondary checker -->
   <line x1="1030" y1="530" x2="1030" y2="576" stroke="#1a4a7a" stroke-width="2" marker-end="url(#cor-ah)"/>

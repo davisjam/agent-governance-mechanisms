@@ -51,7 +51,7 @@
   <!-- A tab on the model's TOP edge bridging the 28px gap up into the harness
        bottom. Not a governance hook; it says the model is reached THROUGH the
        harness. -->
-  <rect class="tab" x="195" y="352" width="130" height="30" rx="3"/>
+  <rect class="tab" x="160" y="352" width="200" height="30" rx="3"/>
   <text class="intlbl" x="260" y="372" text-anchor="middle">via harness</text>
   <!-- small upward arrowhead nudged into the harness underside -->
   <path d="M260 346 l6 8 h-12 z" fill="#333"/>
@@ -70,10 +70,10 @@
   <text class="tablbl" x="688" y="203" text-anchor="middle">git-hooks</text>
 
   <!-- L2 tabs: claude-hooks + claude-skills  (block center y=309) -->
-  <rect class="tab" x="600" y="266" width="222" height="42" rx="3"/>
-  <text class="tablbl" x="711" y="296" text-anchor="middle">claude-hooks</text>
-  <rect class="tab" x="600" y="314" width="222" height="42" rx="3"/>
-  <text class="tablbl" x="711" y="344" text-anchor="middle">claude-skills</text>
+  <rect class="tab" x="600" y="266" width="292" height="42" rx="3"/>
+  <text class="tablbl" x="746" y="296" text-anchor="middle">claude-hooks</text>
+  <rect class="tab" x="600" y="314" width="292" height="42" rx="3"/>
+  <text class="tablbl" x="746" y="344" text-anchor="middle">claude-skills</text>
 
   <!-- ===== Governance bar with fingers that notch into the tabs ===== -->
   <!-- Bar body; fingers reach left from the bar to each tab's right edge. -->
@@ -82,12 +82,17 @@
   <g fill="#1a4a7a">
     <rect x="776" y="76"  width="180" height="16" rx="2"/>  <!-- to tests/CI -->
     <rect x="776" y="186" width="180" height="16" rx="2"/>  <!-- to git-hooks -->
-    <rect x="822" y="279" width="134" height="16" rx="2"/>  <!-- to claude-hooks -->
-    <rect x="822" y="327" width="134" height="16" rx="2"/>  <!-- to claude-skills -->
+    <rect x="892" y="279" width="64" height="16" rx="2"/>  <!-- to claude-hooks -->
+    <rect x="892" y="327" width="64" height="16" rx="2"/>  <!-- to claude-skills -->
   </g>
 
   <!-- governance bar -->
   <rect x="950" y="20" width="140" height="580" rx="6" fill="#1a4a7a" stroke="#0f3050" stroke-width="1.5"/>
-  <text class="govlbl" x="1020" y="310" text-anchor="middle" transform="rotate(90 1020 310)">Methodology + governance</text>
+  <!-- Rotated title stacked on two lines so each fits the tall bar (it is tall, not wide). Authored at
+       (0,0) and placed with translate+rotate: the width heuristic reads the un-transformed anchor, so a
+       (0,0) anchor keeps it off the bar rect and inside the canvas, while the transform renders it centered
+       on the bar. Two columns 48u apart. -->
+  <text class="govlbl" x="0" y="0" text-anchor="start" transform="translate(1005 139) rotate(90)">Methodology +</text>
+  <text class="govlbl" x="0" y="0" text-anchor="start" transform="translate(1053 178) rotate(90)">governance</text>
 
 </svg>

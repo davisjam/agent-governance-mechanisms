@@ -37,7 +37,7 @@
   <text x="70" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">communicate</text>
   <g>
     <rect x="150" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="220" y="103" text-anchor="middle" font-size="17" fill="#33383d">language weights</text>
+    <text x="220" y="103" text-anchor="middle" font-size="16" fill="#33383d">language weights</text>
     <rect x="330" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
     <text x="400" y="103" text-anchor="middle" font-size="17" fill="#33383d">figures + genre</text>
     <rect x="510" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
@@ -51,7 +51,7 @@
   <text x="70" y="210" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">self-operate</text>
   <g>
     <rect x="150" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="220" y="213" text-anchor="middle" font-size="17" fill="#33383d">event → activity</text>
+    <text x="220" y="213" text-anchor="middle" font-size="16" fill="#33383d">event → activity</text>
     <rect x="330" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
     <text x="400" y="213" text-anchor="middle" font-size="17" fill="#33383d">design / defect</text>
     <rect x="510" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
@@ -66,7 +66,7 @@
     <rect x="150" y="292" width="140" height="52" rx="8" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2"/>
     <text x="220" y="323" text-anchor="middle" font-size="17" fill="#1a1a1a">a symptom</text>
     <rect x="330" y="292" width="320" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="490" y="323" text-anchor="middle" font-size="17" fill="#33383d">one catalogue entry = the transformation</text>
+    <text x="490" y="323" text-anchor="middle" font-size="17" fill="#33383d">one entry = the transformation</text>
     <rect x="690" y="292" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
     <text x="760" y="323" text-anchor="middle" font-size="17" fill="#33383d">the mechanism</text>
   </g>
