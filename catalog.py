@@ -619,16 +619,16 @@ PAGE_CSS = """
   :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
   * { box-sizing: border-box; }
   body { margin:0; font-family:"Avenir Next",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-         color:var(--ink); background:#fff; line-height:1.55; }
+         color:var(--ink); background:#fff; line-height:1.62; font-size:17px; }
   main { width: 94vw; max-width: 1320px; margin: 0 auto; padding: 32px 26px 80px; }
-  nav.crumb { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
+  nav.crumb { font-size: 13px; color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
   nav.crumb a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
   nav.crumb a:hover { text-decoration: underline; }
-  h1 { font-size: 29px; margin: 6px 0 4px; letter-spacing:-0.02em; }
-  h2 { font-size: 20.5px; margin: 30px 0 8px; padding-top: 6px; border-top:1px solid var(--line); }
-  h3 { font-size: 17px; margin: 22px 0 6px; }
-  h4 { font-size: 14.5px; margin: 16px 0 4px; color:#333; }
-  p, li { font-size: 15.5px; }
+  h1 { font-size: 33px; margin: 6px 0 4px; letter-spacing:-0.02em; }
+  h2 { font-size: 22.5px; margin: 30px 0 8px; padding-top: 6px; border-top:1px solid var(--line); }
+  h3 { font-size: 18.5px; margin: 22px 0 6px; }
+  h4 { font-size: 15.5px; margin: 16px 0 4px; color:#333; }
+  p, li { font-size: 17px; }
   a { color: var(--link); }
   code { background:#f6f8fa; padding:1px 5px; border-radius:4px; font-size:.9em;
          font-family:"SF Mono",Menlo,Consolas,monospace; }
@@ -899,6 +899,9 @@ def build_census(entries: list[Entry]) -> str:
 
 
 LANDING_CSS = """
+  .book-h1 { margin:6px 0 2px; }
+  .book-sub { color:var(--accent); font-weight:700; font-size:17px; letter-spacing:.01em;
+              margin:0 0 16px; }
   .nav-grid { position:absolute; top:16px; right:20px; display:grid; grid-template-columns:1fr 1fr;
               gap:9px; width:min(340px,52vw); z-index:5; }
   .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:2px;
@@ -939,7 +942,7 @@ LANDING_CSS = """
   .lcard b { display:block; font-size:16px; color:var(--link); letter-spacing:-.01em; margin-bottom:3px; }
   .lcard span { display:block; font-size:12.5px; color:var(--muted); line-height:1.4; }
   .lead, .subtitle, .walk-sub, .section-sub, .census-legend { max-width:840px; }
-  .lead { font-size:15.5px; color:#2a2a2a; line-height:1.62; margin:0 0 13px; }
+  .lead { font-size:17px; color:#2a2a2a; line-height:1.65; margin:0 0 13px; }
   .lead .term { font-weight:700; }
   .wf { position:relative; left:50%; transform:translateX(-50%); width:min(1400px,96vw); margin:14px 0 6px; }
   .wf-frame { width:100%; overflow:hidden; }
@@ -947,17 +950,17 @@ LANDING_CSS = """
   .wf figcaption { font-size:13px; color:var(--muted); margin:10px auto 0; text-align:center;
                    max-width:780px; line-height:1.55; }
   hr.sep { border:none; border-top:1px solid var(--line); margin:26px 0 20px; }
-  .walk-h { font-size:18px; margin:0 0 4px; letter-spacing:-.01em; }
-  .walk-sub { font-size:13.5px; color:var(--muted); margin:0 0 14px; }
-  .section-h { font-size:17px; margin:24px 0 3px; letter-spacing:-.01em; }
-  .section-sub { font-size:13.5px; color:var(--muted); margin:0 0 12px; }
+  .walk-h { font-size:19.5px; margin:0 0 4px; letter-spacing:-.01em; }
+  .walk-sub { font-size:14.5px; color:var(--muted); margin:0 0 14px; }
+  .section-h { font-size:19px; margin:24px 0 3px; letter-spacing:-.01em; }
+  .section-sub { font-size:14.5px; color:var(--muted); margin:0 0 12px; }
   .section-sub a { color:var(--link); }
   .spectrum { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:4px 0 6px; align-items:stretch; }
   .school { border:1.4px solid var(--line); border-radius:10px; padding:12px 13px; background:#fff; display:flex; flex-direction:column; }
   .school.mid { border:2px solid var(--accent); background:#fffaf3; }
-  .school h3 { margin:0 0 5px; font-size:14.5px; }
+  .school h3 { margin:0 0 5px; font-size:15.5px; }
   .school.mid h3 { color:var(--accent); }
-  .school p { margin:0 0 9px; font-size:13.5px; color:#444; line-height:1.5; }
+  .school p { margin:0 0 9px; font-size:14.5px; color:#444; line-height:1.55; }
   .school .srefs { font-size:11px; color:var(--muted); margin:0 0 10px; }
   .school .srefs .lbl { font-weight:700; color:#444; }
   .school .srefs ul { margin:3px 0 0; padding-left:16px; }
@@ -966,21 +969,24 @@ LANDING_CSS = """
   .school .pole { margin-top:auto; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:800; }
   .spectrum-axis { text-align:center; font-size:11px; color:var(--muted); letter-spacing:.03em; margin:0 0 20px; }
   .cols3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:4px 0 8px; }
-  .col h3 { margin:0 0 8px; font-size:14px; padding-bottom:5px; border-bottom:2px solid var(--accent); }
+  .col h3 { margin:0 0 8px; font-size:15px; padding-bottom:5px; border-bottom:2px solid var(--accent); }
   .col ul { margin:0; padding:0; list-style:none; }
-  .col li { font-size:13px; color:#3a3a3a; line-height:1.42; margin:0 0 9px; padding-left:15px; position:relative; }
+  .col li { font-size:14px; color:#3a3a3a; line-height:1.48; margin:0 0 9px; padding-left:15px; position:relative; }
   .col li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
   .ways-note { font-size:11.5px; color:var(--muted); margin:2px 0 22px; }
   .mechanisms { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:4px 0 8px; }
   .mech { border:1.4px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:12px 15px; background:#fff; }
   .mech.right { border-left:1.4px solid var(--line); border-right:4px solid var(--accent); text-align:right; }
-  .mech h3 { margin:0 0 5px; font-size:14px; }
-  .mech p { margin:0; font-size:13.5px; color:#444; line-height:1.5; }
+  .mech h3 { margin:0 0 5px; font-size:15px; }
+  .mech p { margin:0; font-size:14.5px; color:#444; line-height:1.55; }
   @media (max-width:720px){ .spectrum, .cols3, .mechanisms { grid-template-columns:1fr; } }
-  .lfig, .hero-fig { margin:14px auto 18px; max-width:840px; }
-  .hero-fig { max-width:920px; margin:18px auto 22px; }
-  .lfig svg, .hero-fig svg { display:block; width:100%; height:auto; }
-  .lfig figcaption, .hero-fig figcaption { font-size:12.5px; color:var(--muted); line-height:1.5;
+  /* Figures align to the text column's left edge (text is max-width:840, margin:0),
+     so each figure sits directly under its prose rather than auto-centering in the wider
+     content box (which read as a rightward offset). The SVG scales within the figure. */
+  .lfig, .hero-fig { margin:14px 0 18px; max-width:840px; }
+  .hero-fig { max-width:920px; margin:18px 0 22px; }
+  .lfig svg, .hero-fig svg { display:block; width:100%; height:auto; margin:0 auto; }
+  .lfig figcaption, .hero-fig figcaption { font-size:13.5px; color:var(--muted); line-height:1.55;
                    margin:9px auto 0; max-width:820px; text-align:center; }
   .lfig figcaption b, .hero-fig figcaption b { color:#333; }
   .book-cta { text-align:center; margin:6px 0 28px; }
@@ -1129,8 +1135,8 @@ def _landing_ways() -> str:
     return "\n  ".join(out)
 
 
-LANDING_INTRO = """  <div class="tag">Model-Based Agentic Software Engineering</div>
-  <h1>Agent Governance Mechanisms</h1>
+LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
+  <div class="book-sub">3-D Printing Production Software</div>
 
   <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
   implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
@@ -1160,13 +1166,6 @@ LANDING_INTRO = """  <div class="tag">Model-Based Agentic Software Engineering</
   <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
 
   {schools_fig}
-
-  <p class="section-sub" style="margin-top:0.7rem;"><b>Both ends of the spectrum pay the <em>pet tax</em>.</b>
-  Each spends per-change human attention, whether you're <em>coaxing</em> the output at one end or
-  <em>inspecting</em> it at the other, and that attention grows with the size of the fleet until it becomes
-  the bottleneck. The midway is
-  <b><a href="https://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/">cattle, not
-  pets</a></b>: build the fences and chutes once, and the guardrails ride every change instead of a person.</p>
 
   <p class="lead">The midway is a discipline: <span class="term">establishing and maintaining a governed
   engineering environment</span>. It works in two directions at once.</p>

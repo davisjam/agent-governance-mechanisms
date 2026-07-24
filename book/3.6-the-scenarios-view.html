@@ -415,7 +415,7 @@ def plan_for(profile: HostLoadProfile) -&gt; ConcurrencyPlan:
     """The load + cost rationing decision, per host, from the profile alone.
        Fan OUT freely when only a $ (COST_GATE) gate applies (elastic box, permits high);
        fan/join — SERIALIZE — when a $ gate AND a scarce-resource (LOAD) gate both apply
-       (single box: permits collapse to 1, the queue-drain that used to be a graph edge)."""
+       (single box: permits collapse to 1, the serialize case a scarce box forces)."""
     permits = profile.concurrency_ceiling          # LOAD rationing: a semaphore, not an edge
     honor_cost_gate = profile.budget != float("inf")  # COST_GATE: honored unless budget unbounded
     return ConcurrencyPlan(permits=permits, honor_cost_gate=honor_cost_gate)

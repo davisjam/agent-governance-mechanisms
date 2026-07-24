@@ -1,3 +1,4 @@
+# Copyright (c) 2026 James C. Davis, PhD (davisjam@purdue.edu). MIT License — see LICENSE.
 """svg-audit.py — GENERIC STARTER (self-communicate / drawing).
 
 A dependency-free audit for hand-authored SVG figures, shipped with the skill so you can drop it into
