@@ -1027,6 +1027,8 @@ LANDING_CSS = """
   .fp .fp-fig figcaption { display:none; }
   .fp .fp-body > :first-child { margin-top:0; }
   .fp .fp-body > :last-child { margin-bottom:0; }
+  .fp .fp-body ul.theses { margin:8px 0 11px; padding-left:20px; }
+  .fp .fp-body ul.theses li { margin:0 0 7px; line-height:1.55; }
   /* A figure that sits at the top of a box, prose beneath it (used inside thesis boxes). */
   .box .bx-fig { margin:2px 0 12px; }
   .box .bx-fig svg { display:block; width:100%; height:auto; }
@@ -1222,10 +1224,14 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
           the fleet reasons through — and the <span class="term">Alignment Thesis</span> — a mechanism
           that keeps output aligned with intent — it converges on trustworthy software at velocity.</p>
           <p>MAGE is <span class="term">one method with two theses</span>, and this page is built around
-          them. The <b>Modeling Thesis</b>: a typed model shrinks what must fit in a context window, so the
-          work stays coherent instead of churning. The <b>Alignment Thesis</b>: a mechanism the environment
-          enforces keeps output aligned with intent, so confidently-wrong work is prevented or made visible
-          instead of shipped.</p>
+          them:</p>
+          <ul class="theses">
+            <li><b>The Modeling Thesis</b> — a typed model the fleet reasons through shrinks what must fit
+            in a context window, so the work stays coherent instead of churning.</li>
+            <li><b>The Alignment Thesis</b> — a mechanism the environment enforces keeps the output aligned
+            with intent, so confidently-wrong work is prevented or made visible instead of shipped.</li>
+          </ul>
+          <p>The two sections below are those two theses; everything else on the page hangs off them.</p>
           <p><a href="quick-start.html"><em>QUICK START: Install the skills for Claude →</em></a></p>
         </div>
       </div>
