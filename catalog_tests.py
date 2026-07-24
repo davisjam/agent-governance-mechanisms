@@ -74,10 +74,10 @@ CHECKS = [
     Check("html: validity (html-validate)", 2, check_html_valid, needs_run=_html_changed),
     Check("html: axe-core accessibility", 2, check_axe, needs_run=_html_changed),
     Check("skill: claude plugin validate", 2, check_claude_validate, needs_run=_plugin_changed),
-    # AUDIT-ONLY (heuristic; not yet a gate): estimates whether a hand-authored figure's text overflows
-    # its box or the canvas. Reports candidates, never fails. See tests/svg_fit.py for why it starts here.
-    Check("svg: text-fit (box/canvas overflow) [AUDIT-ONLY]", 1,
-          lambda strict: check_svg_text_fit(), audit_only=True),
+    # BLOCKING: estimates whether a hand-authored figure's text overflows its box or the canvas. Promoted
+    # from audit-only after the figure backlog was driven to 0 (audit->lint; fix-then-flip). See tests/svg_fit.py.
+    Check("svg: text-fit (box/canvas overflow)", 1,
+          lambda strict: check_svg_text_fit()),
     # AUDIT-ONLY: native-construct discipline — a <marker orient=auto> arrowhead not drawn in the +x
     # convention (lands off-axis), a hand-stitched arrowhead outside a marker, or a <line> stroke running
     # through a <text> glyph box. Enforces the self-communicate drawing rule the text-fit heuristic can't see.
