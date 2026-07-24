@@ -977,6 +977,15 @@ LANDING_CSS = """
   .mech h3 { margin:0 0 5px; font-size:14px; }
   .mech p { margin:0; font-size:13.5px; color:#444; line-height:1.5; }
   @media (max-width:720px){ .spectrum, .cols3, .mechanisms { grid-template-columns:1fr; } }
+  .lfig, .hero-fig { margin:14px auto 18px; max-width:840px; }
+  .hero-fig { max-width:920px; margin:18px auto 22px; }
+  .lfig svg, .hero-fig svg { display:block; width:100%; height:auto; }
+  .lfig figcaption, .hero-fig figcaption { font-size:12.5px; color:var(--muted); line-height:1.5;
+                   margin:9px auto 0; max-width:820px; text-align:center; }
+  .lfig figcaption b, .hero-fig figcaption b { color:#333; }
+  .book-cta { text-align:center; margin:6px 0 28px; }
+  .book-cta a { color:var(--accent); font-size:16px; text-decoration:none; }
+  .book-cta a:hover { text-decoration:underline; }
 """
 
 # (title, subtitle, href, extra-attrs) for the landing action cards
@@ -1002,6 +1011,29 @@ _FLOW = [
 # The outcome of the loop — a centered fact, not a numbered step.
 _FLOW_OUTCOME = ("Governability compounds",
                  "The environment absorbs more agent work, so velocity stays sustainable.")
+
+
+def _inline_svg_figure(rel_path: str, caption: str, cls: str = "lfig") -> str:
+    """Splice a book SVG asset inline as a <figure>, mirroring the book's figure directive.
+
+    Reads the .svg under book/, strips any XML prolog / leading comment so only <svg>…</svg>
+    remains, and neutralizes the intrinsic width/height so the viewBox drives responsive
+    scaling (CSS caps the max width). Falls back to an empty string if the asset is missing.
+    """
+    path = os.path.join(ROOT, "book", rel_path)
+    try:
+        with open(path, encoding="utf-8") as fh:
+            raw = fh.read()
+    except OSError:
+        return ""
+    m = re.search(r"<svg\b.*</svg>", raw, re.S)
+    if not m:
+        return ""
+    svg = m.group(0)
+    svg = re.sub(r'(<svg\b[^>]*?)\swidth="[^"]*"', r"\1", svg, count=1)
+    svg = re.sub(r'(<svg\b[^>]*?)\sheight="[^"]*"', r"\1", svg, count=1)
+    cap = f"<figcaption>{caption}</figcaption>" if caption else ""
+    return f'<figure class="{cls}">{svg}{cap}</figure>'
 
 
 def _landing_flow() -> str:
@@ -1097,13 +1129,25 @@ def _landing_ways() -> str:
     return "\n  ".join(out)
 
 
-LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engineering</div>
+LANDING_INTRO = """  <div class="tag">Model-Based Agentic Software Engineering</div>
   <h1>Agent Governance Mechanisms</h1>
 
   <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
   implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
   stops being writing code and becomes <span class="term">governing the conditions under which fast code
-  can be trusted</span>. That means keeping it inspectable, correctable, and maintainable at speed.</p>
+  can be trusted</span>. This catalogue serves a method for doing that:
+  <span class="term">Model-Based Agentic Software Engineering</span> (MAGE) — engineering with a fleet of
+  coding agents by binding intent to typed models the fleet reasons through, and governing what it builds
+  with mechanisms that prevent or detect drift.</p>
+
+  {hero}
+
+  <p class="lead">MAGE is <span class="term">one method with two theses</span>, and this page is built
+  around them. The <b>Modeling Thesis</b>: a typed model the fleet reasons through shrinks what must fit in
+  a context window, so the work stays coherent instead of churning. The <b>Alignment Thesis</b>: a
+  mechanism the environment enforces keeps the output aligned with intent, so confidently-wrong work is
+  prevented or made visible instead of shipped. The two sections below are those two theses; everything
+  else on the page hangs off them.</p>
 
   <p class="try-sg" style="margin:-0.4rem 0 1.4rem 1.6rem;"><a href="quick-start.html"><em>QUICK START: Install the skills for Claude →</em></a></p>
 
@@ -1114,6 +1158,8 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   {schools}
   </div>
   <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
+
+  {schools_fig}
 
   <p class="section-sub" style="margin-top:0.7rem;"><b>Both ends of the spectrum pay the <em>pet tax</em>.</b>
   Each spends per-change human attention, whether you're <em>coaxing</em> the output at one end or
@@ -1139,17 +1185,19 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
   and why it is <i>not</i> just the cheaper thing everyone already does.</p>
 
-  <h2 class="section-h">Documentation, taken to its limit</h2>
-  <p class="lead">Start with the up-front half. Anyone who has built with agents has found the first move on
+  <h2 class="section-h">The Modeling Thesis — documentation, taken to its limit</h2>
+  <p class="lead">The first thesis. Anyone who has built with agents has found the first move on
   their own: give them good documentation and tests, then point them at it. Agents write and maintain those artifacts as fast as they
   write code, so the cost that always made thorough docs a fantasy is gone. The step the training data won't
   suggest is the next one. <b>Documentation has a hierarchy, and its top is not prose. It is a typed
   model.</b></p>
 
+  {model_fig}
+
   <p class="section-sub" style="margin-top:0.7rem;">A context-bounded agent working on a
   context-<em>exceeding</em> system needs a <b>typed, queryable, drift-checked model</b> of that system to
-  reason through, the blueprint for a structure too large to hold in one view. That is
-  <span class="term">model-based software engineering</span>, and it is the bridge between the agent and the
+  reason through, the blueprint for a structure too large to hold in one view. That is the
+  <span class="term">Modeling Thesis</span> at work, and it is the bridge between the agent and the
   codebase it cannot fit in its head. Two things make it more than a tidier README:</p>
 
   <div class="mechanisms">
@@ -1167,22 +1215,30 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   rederiving what the model already states, and fewer mistakes.</b> The catalogue's <b>models-bridge</b> role
   is this bridge, made concrete.</p>
 
-  <h2 class="section-h">Governance has two mechanisms</h2>
-  <p class="section-sub">A guardrail is one of two kinds: prevent the error, or catch it.</p>
+  <h2 class="section-h">The Alignment Thesis — constraints and sensors</h2>
+  <p class="section-sub">The second thesis. A mechanism the environment enforces keeps output aligned with
+  intent, and it takes one of two forms: prevent the error, or catch it.</p>
   <div class="mechanisms">
-    <div class="mech"><h3>Architecture</h3><p>Make the error <b>impossible by construction</b>: the typed
-    model above, a state that cannot be represented wrongly, one sanctioned seam. Software
-    <a href="https://en.wikipedia.org/wiki/Poka-yoke">poka-yoke</a>, error-<i>proofing</i>, so the bad
-    move can’t happen in the first place.</p></div>
-    <div class="mech right"><h3>Control</h3><p>Where you can’t prevent it, <b>observe and guard</b> the behavior:
-    a lint, a gate, a validator, an audit that fires on a violation and holds the line. Error-<i>catching</i>,
-    deterministically, before the failure escapes.</p></div>
+    <div class="mech"><h3>Constraint</h3><p>Scope the agent's action space so the wrong move is <b>never
+    available to pick</b>: the typed model above, an enum instead of a free-form string, one sanctioned
+    seam. A constraint <i>prevents</i> drift — the mistake costs no iteration, because the compiler rejects
+    it on the spot. (<a href="https://en.wikipedia.org/wiki/Poka-yoke">Poka-yoke</a> for software; building
+    a constraint is what "architecture" does.)</p></div>
+    <div class="mech right"><h3>Sensor</h3><p>Where you can't prevent it, <b>detect it after the fact</b>: a
+    lint, a gate, a validator, a test suite that fires on a violation and holds the line. A sensor
+    <i>detects</i> drift and fails the loop iteration, so the agent runs again to fix what it caught. It
+    costs iterations — which is why you don't reach for it first.</p></div>
   </div>
-  <p class="section-sub">A control works like a <b>sensor</b>: it detects a mistake and surfaces it after
-  the fact. Architecture works like a <b>wall</b>: it makes the whole class of mistake impossible to make.
-  Reach for the wall first, because a sensor still lets the mistake happen. But a wall built across the only
-  exit blocks the people trying to leave — an over-constrained design stops legitimate work as surely as it
-  stops the error, so the wall belongs around the class you can name, not across the whole floor.</p>
+
+  {mech_fig}
+
+  <p class="section-sub">A <b>sensor</b> lets the mistake happen and catches it in time — a smoke detector.
+  A <b>constraint</b> makes the whole class of mistake impossible to make — a firewall. Prefer a constraint
+  where you can build one, because a sensor still spends an iteration. But a constraint built across the
+  only exit blocks the people trying to leave — an over-scoped design stops legitimate work as surely as it
+  stops the error, so add a sensor for the drift you cannot scope away. Most real mechanisms are a package
+  across both: a soft constraint that aims the agent, wrapped in hard sensors that catch what it only
+  aims at.</p>
 
   <h2 class="section-h">The way of thinking</h2>
   <p class="section-sub">Three stances that make the midway work, distilled from the AI-First Engineering
@@ -1245,9 +1301,11 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
 
   <hr class="sep" />
 
-  <h2 class="walk-h">Walking through the loop</h2>
-  <p class="walk-sub">Governance conversion is a non-terminating loop: higher velocity keeps surfacing
-  failure classes that earlier governance didn't address.</p>
+  <h3 class="walk-h">How the Alignment half grows — reading failure as a missing mechanism</h3>
+  <p class="walk-sub">You place some constraints and sensors up front, from what you know about the domain.
+  The rest you learn along the way: velocity surfaces a failure class earlier governance didn't address,
+  and you convert each recurring one into a mechanism. That conversion is the way of thinking inside MAGE,
+  not a separate headline — it is how the Alignment Thesis grows past what you could specify in advance.</p>
   <div class="loop">
     {flow}
     <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
@@ -1268,6 +1326,8 @@ LANDING_INTRO = """  <div class="tag">Governance-centric agentic software engine
   <div class="cards-grid">
   {cards}
   </div>
+
+  <p class="book-cta"><a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a></p>
 """
 
 
@@ -1730,7 +1790,33 @@ def cmd_build(_args) -> int:
     # landing index.html = intro + census (overwrites the hand-authored placeholder)
     landing_body = NAV_GRID + "\n" + LANDING_INTRO.format(
         n=len(entries), flow=_landing_flow(), cards=_landing_cards(),
-        schools=_landing_schools(), ways=_landing_ways()) + "\n" + build_census(entries)
+        schools=_landing_schools(), ways=_landing_ways(),
+        hero=_inline_svg_figure(
+            "assets/mage-overview.svg",
+            "The MAGE method in one picture. A cheap agent fleet, left ungoverned, drifts into "
+            "<b>churn</b> as its work outgrows the context window. Governed through the <b>Modeling "
+            "Thesis</b> — a typed model the fleet reasons through — and the <b>Alignment Thesis</b> — a "
+            "mechanism that keeps output aligned with intent — it converges on trustworthy software at "
+            "velocity.", cls="hero-fig"),
+        schools_fig=_inline_svg_figure(
+            "assets/oversight-modes.svg",
+            "Three process models for agentic engineering, side by side. Velocity-centric agents hand work "
+            "around a ring of job titles, with the quality mechanism left implicit. Oversight-centric keeps "
+            "a human next to each bounded piece — honest, but the human's attention does not scale with the "
+            "fleet. Governance-centric puts the agents inside a containing environment of enforced "
+            "mechanisms the human sets up in advance. This site takes the third."),
+        model_fig=_inline_svg_figure(
+            "assets/documentation-hierarchy.svg",
+            "Documentation has a hierarchy, and its top is not prose. Loose docs, code, and tests drift "
+            "apart; a typed model the fleet reasons through, wired to a build-time drift check, cannot — "
+            "the gate stays red until the map matches the territory again."),
+        mech_fig=_inline_svg_figure(
+            "assets/control-vs-architecture.svg",
+            "The two forms a failure-to-mechanism conversion takes. A <b>sensor</b> lets the mistake happen "
+            "but detects it in time, failing the loop iteration so the agent runs again to fix it (a test "
+            "suite, a smoke detector). A <b>constraint</b> scopes the action space so the whole class is "
+            "impossible, and no iteration is wasted (a typed enum over free-form strings, a firewall)."),
+    ) + "\n" + build_census(entries)
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
                f"<title>Agent Governance Mechanisms</title>\n{FONTS_LINK}\n"
