@@ -2330,6 +2330,14 @@ li {{ margin: 0.2rem 0; text-align: left; }}
 a {{ color: #1a1a1a; text-decoration: none; }}
 code {{ font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; background: #f0efeb;
         padding: 0.05em 0.3em; border-radius: 3px; }}
+/* Fenced code listings: a narrow 6in column cannot hold a wide source line, so wrap long lines (with a
+   hanging indent for continuations) rather than clip them at the page edge. Small monospace, tinted panel,
+   kept off a page break. The inline-code panel styling is dropped inside a <pre> (the block owns the panel). */
+pre {{ font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8pt; line-height: 1.35;
+       background: #f6f5f2; border: 1px solid #e5e3dd; border-radius: 4px; padding: 0.6rem 0.75rem;
+       margin: 0.9rem 0; white-space: pre-wrap; overflow-wrap: break-word; word-break: break-word;
+       tab-size: 2; break-inside: avoid; text-align: left; hyphens: none; }}
+pre code {{ background: none; padding: 0; font-size: inherit; border-radius: 0; }}
 blockquote {{ margin: 0.9rem 0; padding: 0.5rem 0.9rem; border-left: 3px solid #d8d5cc; color: #444;
               font-style: italic; background: #faf9f6; break-inside: avoid; text-align: left; }}
 blockquote.aside-sidenote {{ background: transparent; float: none; width: auto; margin: 0.9rem 0;
