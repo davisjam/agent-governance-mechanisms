@@ -94,6 +94,43 @@ that don't.
 
 The [`audit.md`](audit.md) procedure flags a fluffy adjective as a Pass-3 house-style finding.
 
+## Drift tells to avoid — the discursive register's failure modes
+
+The discursive register is the one that drifts. When machine prose imitates the author's essays it reaches
+for the *shape* of his moves without the discipline that makes them land. These are the tells that
+distinguish the imitation from the voice — each surfaced by comparing the book against the author speaking
+live, where he never does any of them.
+
+- **The self-commentary curl is the #1 drift.** State a point and *stop*. Do not add a trailing clause
+  that *rates* the point you just made — "and that is the whole point," "worth more than the rule itself,"
+  "the interesting part lives here," "worth noting/naming/stating/carrying." The author lands a point and
+  moves on; the curl is the machine congratulating itself on having made one. **Budget: at most 5–10
+  rating-clauses across an entire book.** A couple, placed on the load-bearing claim, are emphasis;
+  reaching for one every section is the tell. When you catch a curl, delete the rating clause and keep the
+  point — the example or the claim already carries the weight the curl was trying to add.
+- **Ration polished slogans.** A repeated *plain* sentence is emphasis ("Graduate school is not like
+  undergraduate," said twice). A repeated *polished* one — an epigram tuned for symmetry, restated in
+  near-identical elevated prose across chapters — is a machine tell. Give each idea ONE full slogan
+  treatment at its best landing site; everywhere else compress to the blunt spoken version. "A check that
+  re-reads the code can't fall behind it; a stored copy can" is the plain thing you say four times; the
+  polished epigram you earn once.
+- **Concrete image BEFORE the abstraction.** The author obeys this live, religiously — the stapler, the
+  town hall, the drone-climb, the out-of-date map all arrive *first*, and the name for the thing comes
+  after. Never lead a dense point with the abstraction and arrive at the picture late. If a sentence opens
+  with the general claim and reaches the worked example in its second half, flip it: picture first, name
+  second.
+- **No literary-cute.** The author's plain-word habit is *folksy*, not literary — "pickle," "janky,"
+  "Rube Goldberg machine," "dumpster fire," "stringly-typed." It is not "wearing small clothes." A plain
+  word doing plain work is the voice; an ornamental word reaching for a literary effect is the drift. Prefer
+  the folksy image over the clever phrase — while allowing that a single well-placed flourish the author
+  actively wants ("institutional alchemy," kept by author call) can earn its keep. The tell is *density*,
+  not any one word.
+- **Break mechanical tricolons.** Three parallel imperatives on a fixed beat — "Guard the decisions, hand
+  the mechanical work to the substrate, and spend the human where nothing stands in" — read as machine
+  cadence precisely because the clauses match in length and rhythm. Vary the clause lengths, or break the
+  three into separate sentences of different weights, so the parallelism serves the point instead of
+  announcing itself.
+
 ## Exemplars — verbatim, with the rule each teaches
 
 The exemplars split by register. The **engineering/documentation** set (best-in-class third-party docs)
