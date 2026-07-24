@@ -621,6 +621,10 @@ PAGE_CSS = """
   body { margin:0; font-family:"Avenir Next",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
          color:var(--ink); background:#fff; line-height:1.62; font-size:18.5px; }
   main { width: 94vw; max-width: 1320px; margin: 0 auto; padding: 32px 26px 80px; }
+  /* The landing is a figure-prose BOARD — it spreads to a generous ceiling to use wide screens;
+     entry/prose pages keep the 1320 reading width (their prose has no 70ch cap of its own). */
+  body.landing main { max-width: 2100px; }
+  body.landing .site-foot { max-width: 2100px; }
   nav.crumb { font-size: 13px; color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
   nav.crumb a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
   nav.crumb a:hover { text-decoration: underline; }
@@ -1004,7 +1008,7 @@ LANDING_CSS = """
      box pairs a figure or a bolded lead with a few lines of prose so the page
      is scannable at a glance instead of a long scroll. Boxes opt into a wider
      span with .span2 / .spanfull; the hero MAGE figure is a full-span lead. */
-  .board { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; align-items:stretch;
+  .board { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:16px; align-items:stretch;
            margin:6px 0 10px; }
   .box { border:1.4px solid var(--line); border-radius:11px; padding:16px 18px; background:#fff;
          display:flex; flex-direction:column; transition:box-shadow .12s, border-color .12s; }
@@ -1918,7 +1922,7 @@ def cmd_build(_args) -> int:
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
                f"<title>Agent Governance Mechanisms</title>\n{FONTS_LINK}\n"
                f"<style>{PAGE_CSS}{LANDING_CSS}{FONT_CSS}</style>\n</head>\n"
-               f"<body>\n<main>\n{landing_body}\n{_site_footer('')}\n</main>\n</body>\n</html>\n")
+               f'<body class="landing">\n<main>\n{landing_body}\n{_site_footer("")}\n</main>\n</body>\n</html>\n')
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
     print(f"built {written} entry/index pages + landing index.html + catalogue-views.html "
