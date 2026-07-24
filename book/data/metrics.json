@@ -49,5 +49,10 @@
   "general_type_count": "seven",
   "model_zoo_chapter_count": "six",
   "_mechanism_count_note": "Tracks the companion catalogue census (the <!--census:controls--> macro / INDEX total). Word-form, kept approximate ('around ...') so small drift as new mechanisms land does not falsify the prose. Update when the census crosses a round number. Census at last sync: 69.",
-  "mechanism_count": "seventy"
+  "mechanism_count": "seventy",
+
+  "_missing_model_pilot_note": "The Missing Model Metric pilot (missing-model-metric-260724 Phase 1). Ran a code->model tracer over 144 tests in the dispatch/orchestration subsystem — deliberately the most heavily-modelled slice. missing_model_pilot_fraction=0.56: 56% of those tests exercise production code that traces to no invariant, state machine, or service edge. missing_model_pilot_test_count=144. The number is a LOWER bound (import-reach over-counts DETAILS_NODE). Sharpening finding: every orphan reached code anchored at the coarse Component level but with no fine behavioral model — a granularity gap. Surfaced three genuine candidate missing-models, down-weighted two missing-anchor clusters.",
+  "missing_model_pilot_fraction": "0.56",
+  "missing_model_pilot_percent": "56%",
+  "missing_model_pilot_test_count": "144"
 }

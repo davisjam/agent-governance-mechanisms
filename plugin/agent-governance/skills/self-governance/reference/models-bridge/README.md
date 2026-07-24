@@ -50,11 +50,11 @@ bridge is how an engineer hands the agent the priors its training never gave it,
 further the system sits from the well-trodden path, the more the model must reason
 through the map instead of through a guess.
 
-## The <!--census:bridge:word-->21<!--/census--> mechanisms — one method, two subjects (a Y)
+## The <!--census:bridge:word-->22<!--/census--> mechanisms — one method, two subjects (a Y)
 
 The role is a **Y**: one **method** (the trunk) reified toward the two subjects the bridge couples — the
 **product** it ships and the **orchestration** that builds it. The <!--census:bridge_method:word-->thirteen<!--/census--> method-mechanisms are
-subject-agnostic; the <!--census:bridge_models:word-->eight<!--/census--> models split by subject, with three that serve both faces (the *shared spine*).
+subject-agnostic; the <!--census:bridge_models:word-->nine<!--/census--> models split by subject, with three that serve both faces (the *shared spine*).
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:
 
@@ -109,6 +109,10 @@ subject-agnostic; the <!--census:bridge_models:word-->eight<!--/census--> models
   fleet + orchestrator loop (dispatch→work→land→tombstone; refill/bank) modeled with the *product's own*
   MBSE method — typed lifecycle SMs, derived-tier invariants, the reflection-facet registry as a first-class
   node. The developer-journey counterpart to the product's user-journey model.
+- [Governance graph (mechanism-interaction model)](system-models/governance-graph.md) — the fleet's
+  process-governance mechanisms themselves as a typed graph: nodes tagged by firing event + shared-resource
+  footprint, edges the *conflicts* between them (contradiction / contention / ordering / soft-vs-hard) over a
+  shared resource. The dynamic dual of the catalogue's static census — the interaction dimension the list omits.
 
 **Shared-spine models** — one model, both faces:
 

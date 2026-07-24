@@ -22,6 +22,7 @@ node_modules/
 # held mechanism drafts (design-stage, not yet promoted) + local-scratch markdown —
 # kept locally, never shipped; the guard against a broad `git add -A` sweeping them in
 /_drafts/
+/book/_drafts/
 *.local.md
 
 # local-only publisher pitches (not published, not committed)
