@@ -500,11 +500,11 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2>View 2 — the front end as model-view-controller over a shared edit language</h2>
 <p>The front end is a small single-page application plus a set of supporting surfaces — an account view, a job history, an operator dashboard, and the editor. The piece worth drawing is the editor, because it shows the cleanest decomposition. The editor is a <strong>model-view-controller</strong> loop over one document.</p>
 <ul><li><strong>The view</strong> is what the user sees: two panes. The left renders the page with overlay boxes marking each structural element; the right is a list of cards, one per element, with editable fields for alt text, role, decorative-or-not, and reading order.</li><li><strong>The controller</strong> takes a user gesture — edit this alt text, change this role, drag these children into a new order — and does one disciplined thing. It does not reach into the document and mutate it. It translates the gesture into a single typed <strong>edit operation</strong>.</li><li><strong>The model</strong> is the document's intermediate representation. Its only input is an edit operation. It applies the operation, returns the updated state, and the view re-renders from that state.</li></ul>
-<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 540" role="group" aria-labelledby="mvc-title mvc-desc" font-family="Georgia, 'Times New Roman', serif">
+<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="group" aria-labelledby="mvc-title mvc-desc" font-family="Georgia, 'Times New Roman', serif">
   <title id="mvc-title">The editor's model-view-controller loop and the shared edit language</title>
   <desc id="mvc-desc">A model-view-controller triangle sits over a document. The View is the two-pane editor the user sees: a rendered page on the left with overlay boxes marking structure, and a card list on the right with editable fields for alt text, role, and reading order. A user gesture flows from the View to the Controller. The Controller does not mutate the document directly. Instead it emits a typed edit operation drawn from a small, closed vocabulary: set alt text, set role, set decorative, reorder reading, set title, set language, set actual text. That operation is the Model's only input. The Model applies the operation to the document intermediate representation and returns the updated state, which re-renders the View. The closed operation set is labeled the shared edit language. A note beneath it says: this same language is the target the automated remediation produces. The takeaway: the editor UI and the automated pipeline both speak one edit language, so one document model has exactly one way to be changed.</desc>
 
-  <rect x="0" y="0" width="760" height="540" fill="#ffffff"/>
+  <rect x="0" y="0" width="900" height="540" fill="#ffffff"/>
 
   <defs>
     <marker id="mvc-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
@@ -516,7 +516,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 
   <!-- VIEW box (two-pane) -->
   <rect x="24" y="66" width="300" height="150" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="174" y="96" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">View — two-pane editor</text>
+  <text x="174" y="96" text-anchor="middle" font-size="19" font-weight="bold" fill="#12324f">View — two-pane editor</text>
   <!-- left mini-pane -->
   <rect x="44" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#8aa6bf" stroke-width="1.2"/>
   <rect x="56" y="126" width="60" height="18" rx="2" fill="#d8e6f2" stroke="#8aa6bf" stroke-width="1"/>
@@ -535,7 +535,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <!-- CONTROLLER box -->
   <rect x="24" y="276" width="300" height="96" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
   <text x="174" y="308" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Controller</text>
-  <text x="174" y="336" text-anchor="middle" font-size="19" fill="#3d5a70">emits one typed edit operation</text>
+  <text x="174" y="336" text-anchor="middle" font-size="15" fill="#3d5a70">emits one typed edit operation</text>
   <text x="174" y="357" text-anchor="middle" font-size="19" fill="#3d5a70">— never a raw mutation</text>
 
   <!-- emit arrow Controller -> DSL -->
@@ -543,22 +543,22 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="374" y="312" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">emits</text>
 
   <!-- SHARED DSL box -->
-  <rect x="428" y="240" width="308" height="168" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="2"/>
-  <text x="582" y="270" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">The shared edit language</text>
-  <text x="582" y="292" text-anchor="middle" font-size="19" font-style="italic" fill="#5a4570">one closed set of edit operations</text>
+  <rect x="428" y="240" width="430" height="168" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="2"/>
+  <text x="643" y="270" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">The shared edit language</text>
+  <text x="643" y="292" text-anchor="middle" font-size="19" font-style="italic" fill="#5a4570">one closed set of edit operations</text>
   <text x="448" y="320" font-size="19" fill="#3a2350">set-alt-text · set-role · set-decorative</text>
   <text x="448" y="343" font-size="19" fill="#3a2350">reorder-reading · set-title · set-lang</text>
   <text x="448" y="366" font-size="19" fill="#3a2350">set-actual-text</text>
-  <text x="582" y="394" text-anchor="middle" font-size="19" font-style="italic" fill="#7a5a2a">also what the pipeline produces</text>
+  <text x="643" y="394" text-anchor="middle" font-size="19" font-style="italic" fill="#7a5a2a">also what the pipeline produces</text>
 
   <!-- apply arrow DSL -> Model -->
-  <line x1="512" y1="408" x2="512" y2="456" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
-  <text x="524" y="436" text-anchor="start" font-size="19" font-style="italic" fill="#5a5240">applies to</text>
+  <line x1="643" y1="408" x2="643" y2="456" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
+  <text x="655" y="436" text-anchor="start" font-size="19" font-style="italic" fill="#5a5240">applies to</text>
 
   <!-- MODEL box -->
-  <rect x="428" y="460" width="308" height="66" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="582" y="490" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Model — the document IR</text>
-  <text x="582" y="514" text-anchor="middle" font-size="19" fill="#3d5a70">applies the op, returns updated state</text>
+  <rect x="428" y="460" width="430" height="66" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
+  <text x="643" y="490" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Model — the document IR</text>
+  <text x="643" y="514" text-anchor="middle" font-size="19" fill="#3d5a70">applies the op, returns updated state</text>
 
   <!-- re-render arrow Model -> View (long path up the left) -->
   <path d="M428,493 L28,493 L28,141" fill="none" stroke="#1a4a7a" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#mvc-arrow)"/>
