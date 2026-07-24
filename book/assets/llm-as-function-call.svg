@@ -40,8 +40,9 @@
   <text x="704" y="212" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">validator</text>
   <text x="704" y="240" text-anchor="middle" font-size="19" fill="#3d5a70">checks the candidate</text>
 
-  <!-- trust boundary marker under validator -->
-  <line x1="554" y1="116" x2="554" y2="300" stroke="#a33" stroke-width="1" stroke-dasharray="3 3"/>
+  <!-- trust boundary marker under validator; broken around the typed-output-contract label -->
+  <line x1="554" y1="116" x2="554" y2="166" stroke="#a33" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="554" y1="210" x2="554" y2="300" stroke="#a33" stroke-width="1" stroke-dasharray="3 3"/>
   <text x="554" y="108" text-anchor="middle" font-size="18" font-weight="bold" fill="#a33">trust boundary</text>
 
   <!-- PASS out -->
