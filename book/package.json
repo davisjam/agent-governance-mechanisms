@@ -1,0 +1,13 @@
+{
+  "name": "mage-book-pdf-render",
+  "private": true,
+  "type": "module",
+  "description": "Node-only tooling for the MAGE book PDF print edition. NOT part of the stdlib-only catalog.py / site build — used solely by `build_book_html.py --pdf` and the Pages CI to render book/mage-book.pdf via Paged.js + Puppeteer. The web book build stays dependency-free.",
+  "scripts": {
+    "render-pdf": "node render_pdf.mjs _print/print.html mage-book.pdf"
+  },
+  "dependencies": {
+    "pagedjs": "0.4.3",
+    "puppeteer": "^23.0.0"
+  }
+}
