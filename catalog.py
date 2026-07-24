@@ -28,7 +28,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 # html-validate) or the local build/test diverges from CI. `_drafts/` is the canonical case: gitignored
 # design-stage HTML that the orphan gate would otherwise flag as unreachable, breaking `catalog.py build`
 # locally while CI (which lacks the dir) stays green.
-NON_SITE_DIRS = ("plugin", "node_modules", "site", "_site", ".git", "__pycache__", "hooks", "_drafts")
+NON_SITE_DIRS = ("plugin", "node_modules", "site", "_site", ".git", "__pycache__", "hooks", "_drafts", "_print")
 
 
 def gitignored_top_dirs() -> frozenset[str]:
@@ -993,6 +993,10 @@ LANDING_CSS = """
   .book-cta { text-align:center; margin:6px 0 28px; }
   .book-cta a { color:var(--accent); font-size:17.5px; text-decoration:none; }
   .book-cta a:hover { text-decoration:underline; }
+  .book-cta-pdf { display:inline-block; margin-left:14px; }
+  .book-cta-pdf a { font-size:14px; font-weight:600; color:var(--accent); text-decoration:none;
+                    padding:3px 10px; border:1px solid #d8d5cc; border-radius:6px; }
+  .book-cta-pdf a:hover { border-color:var(--accent); background:#f4f3f0; text-decoration:none; }
 
   /* ---- Responsive figure-prose board -------------------------------------
      The one-page summary lays out as a board of bordered boxes on a grid:
@@ -1438,7 +1442,8 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
   {cards}
   </div>
 
-  <p class="book-cta"><a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a></p>
+  <p class="book-cta"><a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a>
+  <span class="book-cta-pdf"><a href="book/mage-book.pdf">Download PDF</a></span></p>
 """
 
 
