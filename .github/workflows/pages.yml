@@ -61,8 +61,8 @@ jobs:
       # `npm ci` in book/ installs Puppeteer AND downloads its bundled Chromium (no PUPPETEER_SKIP_DOWNLOAD),
       # so render_pdf.mjs needs no system Chrome. `--pdf` runs the content-integrity gate internally and
       # exits non-zero (failing the build) if the render is truncated / collapsed / runaway.
-      - name: Install poppler (pdftotext — the PDF content-integrity gate needs it)
-        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - name: Install poppler + qpdf (pdftotext for the content-integrity gate; qpdf for the lossless compression pass)
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils qpdf
       - name: Install PDF render tooling (Puppeteer, from book/ lockfile)
         working-directory: book
         run: npm ci

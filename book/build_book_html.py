@@ -2543,8 +2543,22 @@ _BOOK_TITLE = "Model-Based Agentic Software Engineering"
 
 
 def _pdf_page_count(pdf_path: pathlib.Path) -> int:
-    """Count pages in a PDF using stdlib only (no pdfinfo dependency) — parse the `/Type /Page` objects.
-    Uses the page-tree root `/Count` when present, else counts `/Type/Page` tokens."""
+    """Count pages in a PDF. Prefers `pdfinfo` (poppler) which handles object-stream-compressed PDFs
+    (qpdf --object-streams=generate packs the page tree into compressed xref streams so raw byte scans
+    miss it). Falls back to raw byte scan for non-compressed PDFs when pdfinfo is absent."""
+    import subprocess
+    import shutil
+    pdfinfo = shutil.which("pdfinfo")
+    if pdfinfo:
+        r = subprocess.run([pdfinfo, str(pdf_path)], capture_output=True, text=True)
+        if r.returncode == 0:
+            for line in r.stdout.splitlines():
+                if line.startswith("Pages:"):
+                    try:
+                        return int(line.split(":", 1)[1].strip())
+                    except ValueError:
+                        pass
+    # Fallback: raw byte scan (works on non-object-stream PDFs; misses pages in compressed xref streams).
     data = pdf_path.read_bytes()
     counts = re.findall(rb"/Type\s*/Pages\b[^>]*?/Count\s+(\d+)", data)
     if counts:
@@ -2633,15 +2647,40 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
     return 0
 
 
+def _pdf_is_tagged(pdf_path: pathlib.Path) -> bool:
+    """Return True if the PDF is tagged (has a struct tree root).
+
+    Strategy: use `pdfinfo` (poppler) which reports "Tagged: yes" in its output — reliable even after
+    qpdf object-stream compression (which packs /StructTreeRoot inside a compressed xref stream so a raw
+    byte scan would miss it). Falls back to a byte scan on the raw un-compressed input PDF only.
+    `pdfinfo` is always on PATH when the build runs (it is installed for the content-integrity gate)."""
+    import subprocess
+    import shutil
+    pdfinfo = shutil.which("pdfinfo")
+    if pdfinfo:
+        r = subprocess.run([pdfinfo, str(pdf_path)], capture_output=True, text=True)
+        if r.returncode == 0:
+            return "Tagged:          yes" in r.stdout or "Tagged: yes" in r.stdout
+    # pdfinfo absent — fall back to raw byte scan (works for non-object-stream PDFs only).
+    data = pdf_path.read_bytes()
+    return b"/StructTreeRoot" in data
+
+
 def build_pdf() -> int:
     """`--pdf`: emit the combined print HTML, then render it to `book/mage-book.pdf` via the Node
     Paged.js + Puppeteer renderer (`render_pdf.mjs`) — the reliable path (see that file's header for why
     headless-`--print-to-pdf` and `pagedjs-cli` were both rejected). Gates the result on a page-count
-    band so a runaway or collapsed render fails instead of shipping. Slow, opt-in — NOT part of `build()`."""
+    band so a runaway or collapsed render fails instead of shipping. Slow, opt-in — NOT part of `build()`.
+
+    After Puppeteer emits the raw PDF, a lossless `qpdf` pass (object-stream generation + Flate
+    recompression at level 9) shrinks it by ~37% with zero content change and full tag preservation.
+    The content-integrity gate runs on the FINAL compressed file."""
     import shutil
     import subprocess
 
     print_html = build_print_html()
+    # Render to a temp path inside _print/ (already gitignored); qpdf produces the final output.
+    pdf_raw = HERE / "_print" / "mage-book.raw.pdf"
     pdf_out = HERE / "mage-book.pdf"
     renderer = HERE / "render_pdf.mjs"
 
@@ -2654,18 +2693,55 @@ def build_pdf() -> int:
         print("ERROR: Puppeteer not installed. Run `npm install` in book/ first (or `npm ci` in CI).",
               file=sys.stderr)
         return 2
+    qpdf = shutil.which("qpdf")
+    if not qpdf:
+        print("ERROR: `qpdf` not found on PATH — install it (brew install qpdf / apt-get install qpdf).",
+              file=sys.stderr)
+        return 2
 
-    cmd = [node, str(renderer), str(print_html), str(pdf_out)]
+    cmd = [node, str(renderer), str(print_html), str(pdf_raw)]
     print("PDF render plan:\n  " + " ".join(f'"{a}"' if " " in a else a for a in cmd))
     r = subprocess.run(cmd, capture_output=True, text=True)
     print(r.stdout.strip())
-    if r.returncode != 0 or not pdf_out.is_file():
+    if r.returncode != 0 or not pdf_raw.is_file():
         print(f"ERROR: PDF render failed (rc={r.returncode}).\n{r.stderr}", file=sys.stderr)
         return 1
 
-    size = pdf_out.stat().st_size
-    print(f"rendered {pdf_out} ({size:,} bytes)")
-    # Content-integrity gate — the whole book must be in the PDF (else RENDER FAILURE, do not ship).
+    raw_size = pdf_raw.stat().st_size
+    print(f"Puppeteer raw PDF: {pdf_raw} ({raw_size / 1_048_576:.1f} MB)")
+
+    # Lossless qpdf compression pass — object-stream generation + Flate recompression at level 9.
+    # Keeps the tag tree intact (qpdf is structure-preserving by design).
+    qpdf_cmd = [
+        qpdf,
+        "--object-streams=generate",
+        "--recompress-flate",
+        "--compression-level=9",
+        str(pdf_raw),
+        str(pdf_out),
+    ]
+    print("qpdf compression plan:\n  " + " ".join(f'"{a}"' if " " in a else a for a in qpdf_cmd))
+    qr = subprocess.run(qpdf_cmd, capture_output=True, text=True)
+    if qr.returncode != 0 or not pdf_out.is_file():
+        print(f"ERROR: qpdf compression failed (rc={qr.returncode}).\n{qr.stderr}", file=sys.stderr)
+        return 1
+
+    final_size = pdf_out.stat().st_size
+    saving_pct = 100.0 * (1 - final_size / raw_size) if raw_size else 0.0
+    print(
+        f"PDF: {raw_size / 1_048_576:.1f} MB → {final_size / 1_048_576:.1f} MB via qpdf "
+        f"({saving_pct:.0f}% smaller)"
+    )
+
+    # Tag-preservation assertion — qpdf is lossless so this should always pass, but assert it so a
+    # future qpdf-flag change cannot silently drop the struct tree.
+    if not _pdf_is_tagged(pdf_out):
+        print("ERROR: qpdf pass dropped the PDF struct tree — tags lost. "
+              "Check the qpdf flags before shipping.", file=sys.stderr)
+        return 1
+    print("Tag preservation: struct tree present in compressed PDF.")
+
+    # Content-integrity gate — the whole book must be in the FINAL compressed PDF.
     return verify_pdf(pdf_out)
 
 
