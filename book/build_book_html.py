@@ -217,6 +217,16 @@ def _abbr_cite(m: "re.Match[str]") -> str:
 
 
 def inline(s: str) -> str:
+    # Intra-word emphasis: `[+X+]` → <em>X</em>. Stashed BEFORE escaping so the emitted <em> survives.
+    # The italic `*…*` pass below is word-boundary-only by design and cannot emphasize letters *inside*
+    # a word — e.g. the acronym-deriving M / Ag / E in "Model-Based Agentic Software Engineering" (MAGE).
+    em_spans: list[str] = []
+
+    def _stash_em(m: "re.Match[str]") -> str:
+        em_spans.append(html.escape(m.group(1), quote=False))
+        return f"\x00EM{len(em_spans) - 1}\x00"
+
+    s = re.sub(r"\[\+(.+?)\+\]", _stash_em, s)
     s = html.escape(s, quote=False)
     # Inline code spans (`text`) first — their content is code, so no bold/italic/link pass should
     # run inside them. Stash each span behind a placeholder, run the markdown passes, then restore.
@@ -239,6 +249,8 @@ def inline(s: str) -> str:
     s = re.sub(r"(?<![\w*])\*(?!\s)([^*]+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
     # Restore the stashed code spans as <code> (their content is already HTML-escaped).
     s = re.sub(r"\x00CODE(\d+)\x00", lambda m: f"<code>{code_spans[int(m.group(1))]}</code>", s)
+    # Restore the stashed intra-word emphasis spans (content already HTML-escaped).
+    s = re.sub(r"\x00EM(\d+)\x00", lambda m: f"<em>{em_spans[int(m.group(1))]}</em>", s)
     return s
 
 
@@ -2061,7 +2073,7 @@ def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | N
     toc = toc_html(chapters, None, jump=jump)
     pager_jump = f'<div class="pager-jump">{jump}</div>'
     main = body + pager_jump + foot
-    return page("Index · MAGE", toc, main)
+    return page("Index · Model-Based Agentic Software Engineering", toc, main)
 
 
 # ─────────────────────────── Book length — auto-computed word counts ───────────────────────────
@@ -2273,13 +2285,13 @@ def build() -> int:
     )
     idx_rows.append("</ol>")
     title_block = (
-        '<div class="book-title"><h1>MAGE</h1>'
+        '<div class="book-title"><h1>Model-Based Agentic Software Engineering</h1>'
         '<div class="sub">3-D Printing Production Software</div></div>'
     )
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
     main = title_block + '<div class="idx">' + "\n".join(idx_rows) + "</div>" + foot
     (HERE / "index.html").write_text(
-        page("MAGE — Contents", "", main), encoding="utf-8"
+        page("Model-Based Agentic Software Engineering — Contents", "", main), encoding="utf-8"
     )
 
     # Book length — auto-computed from the rendered prose of every page (fresh each build, never hardcoded).
