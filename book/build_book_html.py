@@ -2061,7 +2061,7 @@ def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | N
     toc = toc_html(chapters, None, jump=jump)
     pager_jump = f'<div class="pager-jump">{jump}</div>'
     main = body + pager_jump + foot
-    return page("Index · 3-D Printing Production Software", toc, main)
+    return page("Index · MAGE", toc, main)
 
 
 # ─────────────────────────── Book length — auto-computed word counts ───────────────────────────
@@ -2273,13 +2273,13 @@ def build() -> int:
     )
     idx_rows.append("</ol>")
     title_block = (
-        '<div class="book-title"><h1>3-D Printing Production Software</h1>'
-        '<div class="sub">Architecture, Validation, and Control for Agentic Software Engineering</div></div>'
+        '<div class="book-title"><h1>MAGE</h1>'
+        '<div class="sub">3-D Printing Production Software</div></div>'
     )
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
     main = title_block + '<div class="idx">' + "\n".join(idx_rows) + "</div>" + foot
     (HERE / "index.html").write_text(
-        page("3-D Printing Production Software — Contents", "", main), encoding="utf-8"
+        page("MAGE — Contents", "", main), encoding="utf-8"
     )
 
     # Book length — auto-computed from the rendered prose of every page (fresh each build, never hardcoded).
