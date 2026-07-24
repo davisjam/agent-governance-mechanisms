@@ -1812,10 +1812,12 @@ def cmd_build(_args) -> int:
             "the gate stays red until the map matches the territory again."),
         mech_fig=_inline_svg_figure(
             "assets/control-vs-architecture.svg",
-            "The two forms a failure-to-mechanism conversion takes. A <b>sensor</b> lets the mistake happen "
-            "but detects it in time, failing the loop iteration so the agent runs again to fix it (a test "
-            "suite, a smoke detector). A <b>constraint</b> scopes the action space so the whole class is "
-            "impossible, and no iteration is wasted (a typed enum over free-form strings, a firewall)."),
+            "A quality goal you want to hold splits into two moves — prevent the mistake, or catch it — "
+            "however you arrived at the goal, up front from the domain or in response to a failure. A "
+            "<b>constraint</b> scopes the action space so the whole class is impossible, and no iteration "
+            "is wasted (a typed enum over free-form strings, a firewall). A <b>sensor</b> lets the mistake "
+            "happen but detects it in time, failing the loop iteration so the agent runs again to fix it "
+            "(a test suite, a smoke detector)."),
     ) + "\n" + build_census(entries)
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
