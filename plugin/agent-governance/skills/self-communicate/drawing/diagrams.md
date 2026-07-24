@@ -461,6 +461,52 @@ nothing; one that is too small costs the reader the figure.
 
 ---
 
+## SVG hygiene — text fits its box, lines don't cross glyphs (both are gated)
+
+Two defects recur in hand-authored SVG, and both now **fail the build** (the text-fit and
+drawing-hygiene checks were promoted from audit-only to blocking once the figure backlog hit zero).
+Author to satisfy them, and verify before you ship a figure — the checker takes a single file or a dir:
+
+```
+python3 <…>/self-communicate/drawing/svg-audit.py  path/to/figure.svg
+```
+
+### Text must fit its box and the canvas
+
+A `<text>` whose estimated width exceeds its `<rect>`'s inner width (**box overflow**) or runs past
+the `viewBox` width (**canvas overflow**) is a finding — the label spills. Estimate the fit *as you
+author*, don't wait for the gate:
+
+- **width ≈ `len(text) × font-size × 0.55`** ( `× 0.6` for bold ). A box's usable inner width is
+  **≈ `rect-width × 0.88`** (labels sit ~6% off each edge). Centered text at `cx` spans `cx ± width/2`;
+  keep that inside both the box and the `viewBox`.
+
+Fix in order of preference (geometry + text only — never redraw a working figure to pass a gate):
+
+1. **Widen** the `viewBox` (and its `width`/`height` and the background rect to match) and the offending
+   box; recenter middle-anchored labels and any arrows so the layout stays balanced.
+2. **Reflow** a long label onto more lines.
+3. **Shrink** only the offending label's font-size — last resort, and stay above the annotation-tier
+   minimums in the fonts rule above.
+
+**Rotated-text blind spot:** the width heuristic is blind to `rotate(...)` — a long *rotated* bar title
+reads as horizontal to the checker and to the rect it sits on. Author rotated text at a safe anchor and
+place it with `translate(...) rotate(...)`, decoupling the anchor from the rect so it is measured where
+it actually lands, not where its pre-rotation coordinates fall.
+
+### A connector line must not run through a glyph
+
+A `<line>`/`<path>` stroke passing through a `<text>` box is a **stroke-through-glyph** finding — the
+connector visually strikes out the label. Resolve it, in order:
+
+1. **Route the line aside** — nudge its `y`/`x` so it runs above or below the label.
+2. **Break the line** — split it into two segments with a small gap over the glyph band, keeping the
+   `marker-end` arrowhead on the segment that points into the target. Least-disruptive: the line still
+   reads as one continuous connector, just interrupted where the label sits.
+3. **Move the text** slightly off the line — only when the label is narrow enough to clear it.
+
+---
+
 ## One style source for a figure-set — restyle the whole set in one place
 
 When a *set* of figures should share styling — the same label font, the same panel color, the same callout
