@@ -109,11 +109,11 @@ _PART_DIRS = {
 # chapters still names correctly, and so the TOC/index label is authoritative from one place).
 _PART_TITLES = {
     0: "Front Matter",
-    1: "The Context",
-    2: "The Mindset",
-    3: "The Governed Engineering Environment",
-    4: "The Model Zoo",
-    5: "Putting It to Work",
+    1: "The Mindset",
+    2: "The Governed Engineering Environment",
+    3: "The Model Zoo",
+    4: "Putting It to Work",
+    5: "A MAGE Case Study",
     6: "Back Matter",
 }
 
@@ -152,8 +152,21 @@ def _apply_metrics(md: str, metrics: dict[str, str]) -> str:
     return re.sub(r"\{\{\s*([a-z0-9_]+)\s*\}\}", repl, md)
 
 
+def _apply_part_refs(md: str) -> str:
+    """Substitute `{{part:N}}` → `Part N (<title>)`, the title read from `_PART_TITLES` at build time. A
+    prose reference to a Part stays in sync with its title: rename the Part once in `_PART_TITLES` and
+    every `{{part:N}}` updates, so a rename can never strand a stale "(The Old Title)". Fails loud on a
+    bad N (a reference to a Part that does not exist)."""
+    def repl(m: "re.Match[str]") -> str:
+        n = int(m.group(1))
+        if n not in _PART_TITLES:
+            raise SystemExit(f"{{{{part:{n}}}}} references a Part not in _PART_TITLES")
+        return f"Part {n} ({_PART_TITLES[n]})"
+    return re.sub(r"\{\{\s*part:(\d+)\s*\}\}", repl, md)
+
+
 def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str, str]) -> dict:
-    text = _apply_metrics(path.read_text(encoding="utf-8"), metrics)
+    text = _apply_part_refs(_apply_metrics(path.read_text(encoding="utf-8"), metrics))
     meta = {k: v for k, v in META_RE.findall(text)}
     body = META_RE.sub("", text).strip()
     # Drop the leading H1 (# Chapter …) — we render it from metadata in the header.

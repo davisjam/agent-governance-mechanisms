@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 19 · Lessons Learned</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+/* The kicker halves are links but must stay understated — inherit the small-caps accent colour, no default
+   underline; reveal the underline only on hover/focus so the affordance is discoverable without shouting. */
+header.chap .kicker a { color: inherit; text-decoration: none; }
+header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+ol { margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
+blockquote pre.mermaid { font-style: normal; }
+/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
+   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
+   theme knob is missed. */
+pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 20px; }
+pre.mermaid text.messageText { font-size: 18px; }
+/* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
+   quote: it is a deliberately designed aside that teaches a background concept beside the main argument
+   (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its
+   own visual language: a tinted panel, a strong left accent rule, a labelled header band, and a ROMAN
+   (non-italic) body a reader can actually read at length.
+
+   ── SWAP POINT ─────────────────────────────────────────────────────────────────────────────────────
+   Every knob is a CSS custom property on `.concept-inset`, so this "screen representation of the book" can
+   be re-skinned in ONE place — change these vars to retarget a print stylesheet, a dark theme, or an
+   alternate house style without touching any rule below. Add e.g. a `@media print` or `:root[data-theme=…]`
+   block that only re-declares these variables and the whole sidebar follows. */
+blockquote.concept-inset {
+  --inset-bg: #f6f4ef;           /* panel fill — warm off-white, distinct from the page's #faf9f6 */
+  --inset-accent: #b07a2b;       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
+  --inset-header: #4a3a1e;       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-header-bg: #ece4d5;    /* header band fill — a shade deeper than the panel so the label reads */
+  --inset-body: #33302a;         /* body ink — near-black warm grey, comfortable roman reading colour */
+  --inset-accent-width: 5px;     /* thickness of the left accent rule */
+  --inset-radius: 6px;
+  --inset-pad-x: 1.35rem;
+  --inset-pad-y: 1rem;
+  --inset-max: 34rem;            /* keep the primer to a readable measure, not the full column width */
+
+  background: var(--inset-bg);
+  border: 1px solid #e3dccb;
+  border-left: var(--inset-accent-width) solid var(--inset-accent);
+  border-radius: var(--inset-radius);
+  color: var(--inset-body);
+  font-style: normal;            /* KEY: kill the base blockquote italic — a primer reads as roman prose */
+  padding: 0 var(--inset-pad-x) var(--inset-pad-y);
+  margin: 1.7rem 0;
+  max-width: var(--inset-max);
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+/* Header treatment — the "Inset N — Title" label sits in its own tinted band, flush to the panel edges,
+   set in small-caps-ish tracked type so it reads as a sidebar HEADER, not a run-in paragraph. It stays a
+   demoted callout label (`p.inset-title`, not an <hN>) so no heading-order break and its id anchor is
+   preserved. */
+blockquote.concept-inset .inset-title {
+  font-style: normal; font-weight: 700; color: var(--inset-header);
+  background: var(--inset-header-bg);
+  margin: 0 calc(-1 * var(--inset-pad-x)) var(--inset-pad-y);
+  padding: 0.6rem var(--inset-pad-x);
+  border-radius: var(--inset-radius) var(--inset-radius) 0 0;
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+blockquote.concept-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
+blockquote.concept-inset p:last-child { margin-bottom: 0; }
+blockquote.concept-inset strong { color: var(--inset-header); }
+blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
+   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Taxonomy + spec: book/_design/callout-typography.md. */
+blockquote.thesis-box { background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
+                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                         border-radius: 5px; }
+blockquote.thesis-box p { margin: 0 0 0.6rem; }
+blockquote.thesis-box p:last-child { margin-bottom: 0; }
+blockquote.thesis-box strong { color: #241f33; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* curated concept entry: a definition-of / examples-of sub-block under the concept name */
+.idx-terms li.idx-concept { margin: 0.55rem 0; }
+.idx-concept .idx-subs { display: block; margin: 0.15rem 0 0 1rem; }
+.idx-concept .idx-sub { display: block; font-size: 14px; color: #444; line-height: 1.6; }
+.idx-concept .idx-sub-lead { color: #595959; font-style: italic; margin-right: 0.35rem; }
+/* Underline the locators so a link is distinguished from the "definition of:" lead text without relying
+   on color alone (axe link-in-text-block). */
+.idx-concept .idx-sub a { margin-right: 0.4rem; text-decoration: underline; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
+   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
+   so they read calm beside the primary pager cards rather than cramped. */
+.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
+           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
+   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                      gap: 0.7rem 1.4rem; }
+nav.toc details { flex: 0 0 auto; }
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
+   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+nav.toc details[open] { flex: 1 1 100%; }
+nav.toc .jump { margin-top: 0; margin-left: auto; }
+.pager-jump { margin-top: 1.4rem; }
+.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Mindset</li>
+<li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
+<li><a class="" href="1.2-loops-and-models.html">2&nbsp; Loops and Models</a></li>
+<li class="part">Part 2 — The Governed Engineering Environment</li>
+<li><a class="" href="2.1-the-agent-stack.html">3&nbsp; The Agent Stack</a></li>
+<li><a class="" href="2.2-models-and-the-semantic-gap.html">4&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="2.3-the-governed-environment.html">5&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="2.4-lifecycles-and-runbooks.html">6&nbsp; Lifecycles and Runbooks</a></li>
+<li><a class="" href="2.5-metrics.html">7&nbsp; Metrics</a></li>
+<li><a class="" href="2.6-when-guardrails-collide.html">8&nbsp; When Guardrails Collide</a></li>
+<li class="part">Part 3 — The Model Zoo</li>
+<li><a class="" href="3.1-the-executable-zoo.html">9&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="3.2-the-logical-view.html">10&nbsp; The Logical View</a></li>
+<li><a class="" href="3.3-the-process-view.html">11&nbsp; The Process View</a></li>
+<li><a class="" href="3.4-the-development-view.html">12&nbsp; The Development View</a></li>
+<li><a class="" href="3.5-the-physical-view.html">13&nbsp; The Physical View</a></li>
+<li><a class="" href="3.6-the-scenarios-view.html">14&nbsp; The Scenarios View</a></li>
+<li class="part">Part 4 — Putting It to Work</li>
+<li><a class="" href="4.1-brownfield.html">15&nbsp; Brownfield</a></li>
+<li><a class="" href="4.2-the-skills.html">16&nbsp; The Skills</a></li>
+<li><a class="" href="4.3-transformations.html">17&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="4.4-training-data.html">18&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="current" href="4.5-lessons-learned.html">19&nbsp; Lessons Learned</a></li>
+<li class="part">Part 5 — The Context</li>
+<li><a class="" href="5.1-the-ada-context.html">20&nbsp; The ADA Context</a></li>
+<li><a class="" href="5.2-the-timeline-and-the-work.html">21&nbsp; The Timeline and the Work</a></li>
+<li><a class="" href="5.3-the-built-system.html">22&nbsp; The Built System</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.2-glossary.html">Glossary</a></li>
+<li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A - 1. Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A - 2. Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A - 3. Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A - 4. Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A - 5. Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A - 6. Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A - 7. Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A - 8. Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A - 9. Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A - 10. Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A - 11. Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A - 12. Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A - 13. Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A - 14. Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A - 15. Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A - 16. Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A - 17. Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A - 25. Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A - 26. Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A - 28. Enforce at the right semantic level</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1. The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B - 2. Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B - 3. Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B - 6. Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B - 7. Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B - 8. Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B - 9. Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B - 10. Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B - 11. Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-governance-graph.html">Appendix B - 12. Governance graph (mechanism-interaction model)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B - 13. Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 14. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 15. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 16. Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-model-graded-finding-severity.html">Appendix B - 17. Model-graded finding severity (distance-graded gate)</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 18. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 19. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 20. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 21. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 22. User-journey model (product-goal → implementation bridge)</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C - 4. Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C - 5. ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C - 6. Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C - 7. ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C - 8. Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C - 9. Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C - 10. DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C - 11. Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C - 12. FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C - 13. Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C - 14. `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C - 15. `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C - 16. F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C - 17. Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C - 18. Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C - 19. Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C - 20. Typed `ViolationCategory` / `FailureCategory` enums</a></li>
+<li class="part">Appendix D — Mechanism Stacks</li>
+<li><a class="" href="appendix-stacks.html">Appendix D — Mechanism Stacks</a></li>
+<li><a class="" href="appendix-d-mbse-stack.html">Appendix D - 1. The MBSE stack</a></li>
+<li><a class="" href="appendix-d-self-operations-stack.html">Appendix D - 2. The self-operations stack</a></li>
+<li><a class="" href="appendix-d-semantic-lint-stack.html">Appendix D - 3. The semantic-lint stack</a></li>
+<li><a class="" href="appendix-d-worktree-lifecycle-stack.html">Appendix D - 4. The worktree-lifecycle stack</a></li>
+<li><a class="" href="appendix-d-canonical-seam-stack.html">Appendix D - 5. The canonical-seam stack</a></li>
+<li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
+<li class="part">Appendix E — How to Write a Skill</li>
+<li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="4.1-brownfield.html">⇐ Beginning of this part</a><a href="5.1-the-ada-context.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 19 · Lessons Learned"><header class="chap"><div class="kicker"><a href="4.1-brownfield.html" aria-label="Beginning of Part 4 — Putting It to Work">Part 4 — Putting It to Work</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 19</a></div><h1>Lessons Learned</h1></header><!-- noqa: book-visual — a reflective lessons chapter whose content is a sequence of aphoristic prose lessons, not a shape. The one drawable shape — the three ways to run an agent, positioned on a risk map — is the oversight-mode framing already figured in the earlier one-shot-vs-supervised-autonomy chapter; a fourth oversight diagram here would restate it. The soft-vs-hard and audits-into-lints lessons are drawn in the governed-environment chapter. No new shape a figure would carry better than the prose. -->
+<h1>Lessons Learned</h1>
+<p>I spent three months building a real piece of software with a coding agent, and the thing I came away with was not a model release or a benchmark. It was a methodology. I thought the project would take a weekend; it spiralled into a hundred thousand lines, then four hundred thousand, written at a thousand commits a week. Somewhere in that spiral the important questions stopped being <em>what can the model do</em> and became <em>how do I keep it doing the right thing at speed</em>. This chapter is what I learned. Read it as the reflection at the end of the method — the lessons that hold no matter which model you drive.</p>
+<h2>Three ways to run an agent, and why I chose one</h2>
+<p id="idx-def-three-ways-to-run-an-agent">There are three ways to run a coding agent, and the choice is not a matter of taste. It is a matter of where you sit on the risk map.</p>
+<ul><li><strong>Velocity-centric.</strong> Maximum speed, minimal oversight. On a greenfield project with a handful of users — say, just the engineer building it — this is right. Claude whips up a prototype at the speed of the engineer's thought, and that engineer is the only stakeholder whose thought matters. High velocity, low risk. Let it run.</li><li><strong>Oversight-centric.</strong> A human reads every step. On a brownfield system serving thousands or millions, the risk is extraordinary, and a careful reviewer at each turn is the reflex — but it throws away the very speed you brought the agent in for.</li><li><strong>Governance-centric.</strong> You define the constraints up front, then let the agent move fast <em>inside</em> them. This is the quieter voice, the one that comes from engineering traditions like safety engineering: place bounds on the agent's operations, then let it rip.</li></ul>
+<p id="idx-def-governance-centric">I chose the third, and the rest of this book is the argument for it. Governance is the middle path that does not feel like a compromise, because the constraint is not a brake on the agent — it is the frame that lets you take your hands off the wheel. If you demand that the system get built but refuse to read the code, then either the agents work on the first try (they don't), or you have to monitor <em>something</em>. I chose to monitor failures. When I saw one, instead of asking Claude to fix it, I asked Claude how we could keep it from ever happening again.</p>
+<h2>Claude is the fastest road to hell</h2>
+<p>The single most useful sentence I can hand you is this: coding agents accelerate <em>within the frame you give them</em> — even when the frame is wrong. The service was costing thirty to forty dollars a day to run idle on a Kubernetes cluster, so I set the agents on a scale-to-zero push: keep the cluster, keep the custom autoscaler, and squeeze the idle pods down to nothing. For weeks they made it better and better — and it never paid off, because scaling a cold pod back up took sixty to three hundred seconds, and a five-minute cold start is a worse problem than the bill. I was optimizing <em>within</em> the architecture when the architecture itself was the constraint; the real move was to change it — go serverless, and let the platform own the scaling I was hand-building against its own ceiling. The model is both an implementation aid and a way to search a solution space, and if you do not keep an open mind it will only speed your descent into the circle of hell you already chose. The tell, in hindsight, was that the optimization kept hitting the <em>same</em> wall: when an in-paradigm fix keeps colliding with the paradigm's own limit, that recurring wall is the signal to price out a paradigm change.</p>
+<p id="idx-def-velocity-exposes-the-danger">The speed is not the danger. The speed <em>exposes</em> the danger. A bad decision that would have cost you a slow week of hand-coding now costs you an afternoon and ten thousand lines, all of them committed, all of them plausible. Velocity is a floodlight on the quality of your thinking. This is why the frame comes first and why so much of the work is front-loaded. You are not supervising the agent's typing. You are deciding, before it types, what "correct" means and how the code will be held to it.</p>
+<h2>Optionality is poison</h2>
+<p id="idx-def-optionality-is-poison">AI does not merely reduce friction. It manufactures optionality — an endless stream of choices, some architecturally critical, some product-relevant, and some stupid things the agent should have sorted for itself. At midnight, that stream is poison. Some decisions take you to hell, others to a parking lot where you spin your wheels, and others just distract you from sleep, and in the moment they are hard to tell apart.</p>
+<p>The deeper trap is the decision you leave open. When you do, the agent makes it for you — and it will pick the option that unblocks it now, not the one you would have chosen with the consequences in view. My merge-train cron kept stalling when two agents edited the same file, and it proposed a one-flag fix: tell the merge to just take one side and drop the other on any conflict. I signed off without asking what "drop the other side" meant. For four days it silently deleted real work from the main branch every time two changes overlapped — the same commit heading landing again and again, each time a little smaller — while I chased the symptoms one missing function at a time. The right answer was a merge resolver that understood the files it was merging, and I could have decided that up front. Instead I left the choice open and the agent filled it with the cheapest thing that made the error go away. It is the same reflex as the strings-and-ints story from Part 2 and Part 5: every unmade decision is a place the agent guesses, and its guesses optimize for the next green checkmark, not for your system. So decide. Name the architecture, name the types, name what happens on a conflict. The narrower you make the agent's search, the more of its speed lands on the target instead of scattering. Explicitness is not bureaucracy here; it is the mechanism by which you get consistency out of a system that will otherwise improvise.</p>
+<h2 id="idx-def-refactoring-is-free">Refactoring used to be too costly; now it's free</h2>
+<p>For my whole career, refactoring was something you rationed. It was expensive, so you lived with a compromised design longer than you should have, and the compromise compounded. That economics has inverted. The refactors I had always deferred as too expensive became an afternoon's work. In one leap I unified the remediation interfaces across the document formats, which let me unify the remediation passes, which let me track what each change does — for corruption checks — and what it costs, for pricing. None of that was justifiable when refactoring meant days of careful hand-surgery.</p>
+<p>So there is almost no reason to enshrine a bad shape. If the design is wrong, change it. The cost that used to make you tolerate accidental complexity is gone, and the discipline that replaces it is the willingness to keep paying the now-cheap price. Audit, find the compromise, fix it, and move on. The prototype is disposable; the learning it produced is what you keep.</p>
+<h2 id="idx-def-done-is-a-claim">"Done" is a claim, not a fact</h2>
+<p>A failure mode appeared again and again: Claude reported a task complete, and my review agents later found the half-done implementations, the missing integration points, and the tests that never actually exercised the behavior. Current coding agents are superb at plausible local progress and weak at guaranteeing global completion. The confidence and the description are about the agent's <em>intent</em>, not the state of your repository — and the two drift apart constantly. Once, a lint gate hit a stray error, caught it in a catch-all that returned success, and let a run of commits land completely unlinted while the log said fine. Another time a chain of pin tests passed green — but a botched merge had landed them onto a tree that was missing the very field they were supposed to check, so they confirmed a field that existed and never touched the one that mattered. Both said "done." Neither was.</p>
+<p>So trust nothing at the boundary between the agent's report and reality. Re-run the tests yourself. Re-run the lints the work was supposed to satisfy. Compare the counts against the claims. "Done" is the beginning of your verification, not the end of the agent's work — and the discipline that catches the gap is mechanical: a gate the agent cannot talk its way past. My job shifted from writing implementation to running the control system around it — decomposing work, cross-checking invariants, hardening tests, and deciding whether the architecture was genuinely cleaner or merely different.</p>
+<h2 id="idx-def-broken-cost-estimator">The cost estimator is broken, and scope creep is guaranteed</h2>
+<p>Two consequences follow from cheap implementation, and both caught me off guard.</p>
+<p>The first is that my sense of what things cost stopped working. Deferred refactors became cheap; migrations that sounded like weeks took hours. Agentic engineering makes an engineer's output a function of toolchain, substrate, taste, context, and orchestration skill, so the range explodes. "What can one engineer ship this quarter?" no longer has a stable answer, and capacity planning that assumes bounded human variation starts to lie.</p>
+<p>The second is that when implementation feels free, scope creep is a guarantee. More features, more integrations, more scope — the feeling changes your behavior before you notice. But cheap implementation does not just raise output. Every new thread still has to be decomposed, reviewed, and kept coherent, and the scarce resource stops being code and becomes judgment. Choosing what <em>not</em> to build is now as much of the work as building. Call it taste.</p>
+<h2>Your tests must survive agent-shaped failure modes</h2>
+<p id="idx-def-tests-for-agent-failure-modes">An agent fails differently than a person does. It does not forget a semicolon; it confidently produces a whole subsystem that looks right and is subtly wrong across every file at once. Worse, faced with a failing test, an agent will do the locally-expedient thing a human would be ashamed to: delete the tricky behavior, special-case the path that makes the input work, weaken a validation, bypass a pipeline stage — satisfy the visible symptom while corrupting the invariant. At least it apologizes when you confront it.</p>
+<p>A test suite tuned to human mistakes will wave all of that through. So the tests have to be built for the failure modes the agent actually has. Mine stopped being conventional regression checks and became sensor barriers: asserting invariants, negative cases, architectural boundaries, end-to-end semantics. Pin the invariant, not the example. Reach for the strategy that catches the <em>class</em> — a property test where the shape is what matters, a state-machine check where a lifecycle can tear, a dynamics-aimed test where repetition or concurrency or stale state is the real risk. The goal is to block the agent from reaching the degenerate paths through an ambiguous specification.</p>
+<h2 id="idx-def-vibe-coding-vs-engineering">Vibe coding treats the program as an I/O device; engineering treats it as a system</h2>
+<p>Here is the distinction the whole method turns on. When you vibe-code, you ask the agent to produce something that appears to satisfy the requested behavior, and the evidence you use is all external: does the demo run, does the output look right? That works until it doesn't — until the thing you cannot see is the thing that matters. Engineering asks the agent to preserve and improve a system's essential properties while changing behavior, and the bar for evidence includes the internal structure: does it respect the architecture, hold the invariants, keep state in the right place, stay testable, avoid making the next change harder?</p>
+<p>The difference is not aesthetic. It is about what counts as proof that a change is good. I did not vibe-code a million-line repo; I could not have. Agents make both modes cheap, which is exactly why you have to choose deliberately — the fast, seductive default is the I/O device, and the I/O device is what turns a hundred thousand lines into a mess nobody can reason over.</p>
+<h2>Explicitness is essential</h2>
+<p id="idx-def-explicitness-is-essential">A normal codebase keeps most of its conceptual structure in human memory. Humans remember what the components mean, which files are canonical, which patterns are deprecated, and they make excellent progress on that tacit knowledge. Agents can't. They start cold, carry finite context, can't sketch on a whiteboard with the senior engineer, and drift toward plausible-but-wrong edit sites.</p>
+<p>The more the system is represented in explicit, queryable artifacts — component indexes, pass registries, standards manifests, lints, epics, handoff notes — the more agent-legible it becomes and the better the agents perform. One of my key moves was to add a soupçon of model-based software engineering: I made the system architecture explicit and executable, so it was visible to the agents working on it. What lives only in your head is invisible to the machine, and the machine is now most of your workforce.</p>
+<h2>Governance is a spectrum from soft to hard</h2>
+<p id="idx-def-soft-vs-hard-governance">The mechanisms I ended up with were not all the same kind of thing, and the axis that sorted them was soft versus hard. A <strong>soft</strong> mechanism aims the agent — a documented rule, a brief, a convention. It shapes behavior probabilistically and cannot hold the line if the agent ignores it. A <strong>hard</strong> mechanism holds regardless of cooperation — a lint that fails the commit, a type the compiler rejects, a validator that refuses to ship. Guidance <em>aims</em>; machinery <em>holds</em>. A mature environment uses both, and the skill is knowing which a given failure warrants. Not everything earns a wall. But when you find yourself saying "this must <em>never</em> happen," you have just specified a hard mechanism, and you should build it — a convention that says never is a convention that eventually gets violated at velocity.</p>
+<p id="idx-def-audits-into-lints">The move that makes this compound is turning audits into lints. The first time a failure class shows up, you inspect for it by hand. The signal that you have a mechanism owed is the <em>second</em> time. A recurring failure is not a bug to re-patch; it is a mechanism to build, so the same failure is caught on every future agent, automatically, forever after.</p>
+<h2 id="idx-def-autonomy-amplifier">AI is an autonomy amplifier</h2>
+<p>The thing agents amplify is not your typing speed. It is your autonomy — your capacity to turn intent into a working system without waiting on anyone. I have spent years in industry and never felt more like a real engineer than on this solo project, and I think that feeling came from autonomy. I had end-to-end ownership: the problem, the regulatory environment, the user value, the architecture, the correctness conditions, the deployment, the optimizations and their direct relationship to pricing, and the consequences. Agents lowered the implementation burden enough that I could inhabit roles usually spread across a team — developer, architect, DevOps, UX, pricing strategist, support, security analyst.</p>
+<span id="idx-def-judgment-into-infrastructure"></span><span id="idx-ex-judgment-is-the-scarce-resource-1"></span><p>That amplification is neutral. It magnifies good judgment and bad judgment with equal enthusiasm, which is why the scarce resource has moved. Implementation used to be the bottleneck; now implementation is cheap and <em>judgment</em> is the thing in short supply. What is worth building, what "correct" means here, which failures deserve a wall and which deserve a note — those calls are the work now, and they are the calls an agent cannot make for you. So the discipline that pays is the one that converts your judgment into infrastructure: every decision you make well, you encode once, so you never have to make it again and neither does any agent after you.</p>
+<h2>What this means for the job</h2>
+<p>Watching my own experience of software engineering get compressed, I expected to feel the role shrinking. The opposite happened. The <em>experience</em> is being compressed — the hours at the keyboard, the mechanical translation of a design into syntax. The <em>role</em> is expanding. When one person can stand up hundreds of thousands of lines of governed production code, the constraint is no longer how fast you can write; it is how well you can decide, model, constrain, and verify.</p>
+<h3>Who holds the authority to convert a lesson</h3>
+<p>This is where I think companies may have trouble. I had authority to change everything — the architecture, the CI, the documentation, the task format, the release process, the validation hierarchy. In a real organization, the person who sees the recurring failure may only be allowed to patch their local problem. That is a recipe for churn: the same class of problem appears again and again, and no one has the authority to convert it into shared engineering practice. So my advice to software organizations is not "use agents" or "don't use agents." It is to look at what your failures are teaching you, and ask who in your engineering organization is empowered to turn those lessons into architecture, process, and mechanisms. Put those people in charge of your agentic adoption.</p>
+<p>The first engineers were locomotive engineers. They stood, literally, astride the harnessed steam engine — monitored it, tuned it, designed it. Software engineering has its DevOps and its SREs in the same lineage, and I suspect much of what I observed connects to their wisdom. The future of software engineering is not just faster implementation. It is the ability to convert judgment into infrastructure.</p>
+<p>I will not pretend this is settled. My evidence is a single-person project without real customers, run against one vendor's models — Claude, Opus and Sonnet, over the March–July 2026 window — and the specifics will not all generalize. A legacy codebase full of ancient spaghetti, or a system with many stakeholders, may behave differently; if you are starting from spaghetti, the honest first move is to fix the spaghetti, because agents are excellent at refactoring once you have the test sensors to keep them from regressing. But the shape of it feels durable: convert judgment into infrastructure, let the machinery hold what your attention cannot, and spend your scarce judgment on the decisions the machinery cannot make. If we want to learn anything new, we have to try crazy things and ponder them. That is the method, and it is the most fun I have had building software in years.</p><div class="pager"><a class="prev" href="4.4-training-data.html"><span class="dir">‹ Previous</span><span class="ttl">18 · Training Data and the Novelty Axis</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.1-the-ada-context.html"><span class="dir">Next ›</span><span class="ttl">20 · The ADA Context</span></a></div><div class="pager-jump"><div class="jump"><a href="4.1-brownfield.html">⇐ Beginning of this part</a><a href="5.1-the-ada-context.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

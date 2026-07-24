@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chapter 7 · Metrics</title><style>
+:root { --accent: #1a4a7a; }
+* { box-sizing: border-box; }
+body { font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       color: #1a1a1a; margin: 0; background: #fdfdfc; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+nav.toc { background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }
+nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
+nav.toc details { margin: 0; }
+nav.toc summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+nav.toc summary::-webkit-details-marker { display: none; }
+nav.toc ol { list-style: none; padding: 0.6rem 0 0; margin: 0; }
+nav.toc .part { font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+                 font-size: 12px; margin: 0.7rem 0 0.25rem; }
+nav.toc a { color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }
+nav.toc a:hover { color: var(--accent); }
+nav.toc a.current { color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
+                     padding-left: calc(1rem - 2px); }
+header.chap { padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }
+header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+                       text-transform: uppercase; }
+/* The kicker halves are links but must stay understated — inherit the small-caps accent colour, no default
+   underline; reveal the underline only on hover/focus so the affordance is discoverable without shouting. */
+header.chap .kicker a { color: inherit; text-decoration: none; }
+header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
+header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+.part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
+                  color: #555; font-style: italic; }
+.part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
+                        color: #6a6a6a; }
+h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.3rem; }
+ol { margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }
+li { margin: 0.3rem 0; }
+blockquote { margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
+              color: #555; font-style: italic; background: #faf9f6; }
+/* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
+   inline blockquote (the default above). On a WIDE screen the media query below floats them into the
+   right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
+   breaking the reading column. Concept insets (`.concept-inset`, boxed primers) keep the default box. */
+blockquote.aside-sidenote { background: transparent; }
+@media (min-width: 60rem) {
+  blockquote.aside-sidenote {
+    float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
+    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
+    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+  }
+}
+code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+a { color: var(--accent); }
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
+table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+                                             text-align: left; vertical-align: top; line-height: 1.45; }
+table.book-table thead th { background: #f4f3f0; font-weight: 600; }
+table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
+blockquote table.book-table { background: #fff; }
+blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
+blockquote pre.mermaid { font-style: normal; }
+/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
+   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
+   theme knob is missed. */
+pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 20px; }
+pre.mermaid text.messageText { font-size: 18px; }
+/* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
+   quote: it is a deliberately designed aside that teaches a background concept beside the main argument
+   (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its
+   own visual language: a tinted panel, a strong left accent rule, a labelled header band, and a ROMAN
+   (non-italic) body a reader can actually read at length.
+
+   ── SWAP POINT ─────────────────────────────────────────────────────────────────────────────────────
+   Every knob is a CSS custom property on `.concept-inset`, so this "screen representation of the book" can
+   be re-skinned in ONE place — change these vars to retarget a print stylesheet, a dark theme, or an
+   alternate house style without touching any rule below. Add e.g. a `@media print` or `:root[data-theme=…]`
+   block that only re-declares these variables and the whole sidebar follows. */
+blockquote.concept-inset {
+  --inset-bg: #f6f4ef;           /* panel fill — warm off-white, distinct from the page's #faf9f6 */
+  --inset-accent: #b07a2b;       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
+  --inset-header: #4a3a1e;       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-header-bg: #ece4d5;    /* header band fill — a shade deeper than the panel so the label reads */
+  --inset-body: #33302a;         /* body ink — near-black warm grey, comfortable roman reading colour */
+  --inset-accent-width: 5px;     /* thickness of the left accent rule */
+  --inset-radius: 6px;
+  --inset-pad-x: 1.35rem;
+  --inset-pad-y: 1rem;
+  --inset-max: 34rem;            /* keep the primer to a readable measure, not the full column width */
+
+  background: var(--inset-bg);
+  border: 1px solid #e3dccb;
+  border-left: var(--inset-accent-width) solid var(--inset-accent);
+  border-radius: var(--inset-radius);
+  color: var(--inset-body);
+  font-style: normal;            /* KEY: kill the base blockquote italic — a primer reads as roman prose */
+  padding: 0 var(--inset-pad-x) var(--inset-pad-y);
+  margin: 1.7rem 0;
+  max-width: var(--inset-max);
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+/* Header treatment — the "Inset N — Title" label sits in its own tinted band, flush to the panel edges,
+   set in small-caps-ish tracked type so it reads as a sidebar HEADER, not a run-in paragraph. It stays a
+   demoted callout label (`p.inset-title`, not an <hN>) so no heading-order break and its id anchor is
+   preserved. */
+blockquote.concept-inset .inset-title {
+  font-style: normal; font-weight: 700; color: var(--inset-header);
+  background: var(--inset-header-bg);
+  margin: 0 calc(-1 * var(--inset-pad-x)) var(--inset-pad-y);
+  padding: 0.6rem var(--inset-pad-x);
+  border-radius: var(--inset-radius) var(--inset-radius) 0 0;
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+blockquote.concept-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
+blockquote.concept-inset p:last-child { margin-bottom: 0; }
+blockquote.concept-inset strong { color: var(--inset-header); }
+blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
+   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Taxonomy + spec: book/_design/callout-typography.md. */
+blockquote.thesis-box { background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
+                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                         border-radius: 5px; }
+blockquote.thesis-box p { margin: 0 0 0.6rem; }
+blockquote.thesis-box p:last-child { margin-bottom: 0; }
+blockquote.thesis-box strong { color: #241f33; }
+figure.book-figure { margin: 1.8rem 0; text-align: center; }
+figure.book-figure svg,
+figure.book-figure img { max-width: 100%; height: auto; }
+figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
+                                text-align: left; line-height: 1.5; }
+.marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
+.marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
+.marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
+.marker-tag { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+               padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
+.marker-fill .marker-tag { background: #a06a12; color: #fff; }
+.marker-more .marker-tag { background: #4a6f8c; color: #fff; }
+.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }
+.pager a, .pager .disabled { text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }
+.pager a:hover { border-color: var(--accent); }
+.pager .dir { display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }
+.pager .ttl { color: var(--accent); font-weight: 600; }
+.pager .next { text-align: right; }
+.pager .disabled { visibility: hidden; }
+.pager .home { flex: 0 0 auto; align-self: center; }
+.book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+              font-size: 13px; text-align: center; }
+/* index page */
+.book-title { padding: 3rem 0 0.5rem; }
+.book-title h1 { font-size: 2.4rem; margin: 0; }
+.book-title .sub { color: #666; margin-top: 0.4rem; }
+.idx .part { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+             font-size: 13px; margin: 2rem 0 0.5rem; }
+.idx ol { list-style: none; padding: 0; margin: 0; }
+.idx li { margin: 0.35rem 0; }
+.idx a { text-decoration: none; }
+.idx .cnum { color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
+/* term index page */
+.idx-terms ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.idx-terms li { margin: 0.3rem 0; }
+.idx-terms .idx-term { font-weight: 600; }
+.idx-terms .idx-refs { color: #5f5f5f; font-size: 14px; }
+.idx-terms .idx-refs a { margin-left: 0.15rem; }
+/* curated concept entry: a definition-of / examples-of sub-block under the concept name */
+.idx-terms li.idx-concept { margin: 0.55rem 0; }
+.idx-concept .idx-subs { display: block; margin: 0.15rem 0 0 1rem; }
+.idx-concept .idx-sub { display: block; font-size: 14px; color: #444; line-height: 1.6; }
+.idx-concept .idx-sub-lead { color: #595959; font-style: italic; margin-right: 0.35rem; }
+/* Underline the locators so a link is distinguished from the "definition of:" lead text without relying
+   on color alone (axe link-in-text-block). */
+.idx-concept .idx-sub a { margin-right: 0.4rem; text-decoration: underline; }
+/* iframe figure embed (the rewired mechanism map) */
+figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid #e2e0da;
+                                             border-radius: 6px; background: #fff; }
+/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
+   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
+   so they read calm beside the primary pager cards rather than cramped. */
+.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
+.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
+           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
+           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }
+.jump a:hover { border-color: var(--accent); background: #f4f3f0; }
+/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
+   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+                      gap: 0.7rem 1.4rem; }
+nav.toc details { flex: 0 0 auto; }
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
+   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+nav.toc details[open] { flex: 1 1 100%; }
+nav.toc .jump { margin-top: 0; margin-left: auto; }
+.pager-jump { margin-top: 1.4rem; }
+.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
+</style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
+<li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
+<li class="part">Part 1 — The Mindset</li>
+<li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
+<li><a class="" href="1.2-loops-and-models.html">2&nbsp; Loops and Models</a></li>
+<li class="part">Part 2 — The Governed Engineering Environment</li>
+<li><a class="" href="2.1-the-agent-stack.html">3&nbsp; The Agent Stack</a></li>
+<li><a class="" href="2.2-models-and-the-semantic-gap.html">4&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="2.3-the-governed-environment.html">5&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="2.4-lifecycles-and-runbooks.html">6&nbsp; Lifecycles and Runbooks</a></li>
+<li><a class="current" href="2.5-metrics.html">7&nbsp; Metrics</a></li>
+<li><a class="" href="2.6-when-guardrails-collide.html">8&nbsp; When Guardrails Collide</a></li>
+<li class="part">Part 3 — The Model Zoo</li>
+<li><a class="" href="3.1-the-executable-zoo.html">9&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="3.2-the-logical-view.html">10&nbsp; The Logical View</a></li>
+<li><a class="" href="3.3-the-process-view.html">11&nbsp; The Process View</a></li>
+<li><a class="" href="3.4-the-development-view.html">12&nbsp; The Development View</a></li>
+<li><a class="" href="3.5-the-physical-view.html">13&nbsp; The Physical View</a></li>
+<li><a class="" href="3.6-the-scenarios-view.html">14&nbsp; The Scenarios View</a></li>
+<li class="part">Part 4 — Putting It to Work</li>
+<li><a class="" href="4.1-brownfield.html">15&nbsp; Brownfield</a></li>
+<li><a class="" href="4.2-the-skills.html">16&nbsp; The Skills</a></li>
+<li><a class="" href="4.3-transformations.html">17&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="4.4-training-data.html">18&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="4.5-lessons-learned.html">19&nbsp; Lessons Learned</a></li>
+<li class="part">Part 5 — The Context</li>
+<li><a class="" href="5.1-the-ada-context.html">20&nbsp; The ADA Context</a></li>
+<li><a class="" href="5.2-the-timeline-and-the-work.html">21&nbsp; The Timeline and the Work</a></li>
+<li><a class="" href="5.3-the-built-system.html">22&nbsp; The Built System</a></li>
+<li class="part">Back Matter</li>
+<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
+<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.2-glossary.html">Glossary</a></li>
+<li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
+<li class="part">Appendix A — Agent patterns</li>
+<li><a class="" href="appendix-patterns.html">Appendix — the pattern language</a></li>
+<li><a class="" href="appendix-a-brief-linting.html">Appendix A - 1. Brief-linting</a></li>
+<li><a class="" href="appendix-a-docs-hierarchy.html">Appendix A - 2. Docs hierarchy + governance index</a></li>
+<li><a class="" href="appendix-a-dynamic-context-injection.html">Appendix A - 3. Dynamic context injection</a></li>
+<li><a class="" href="appendix-a-role-typed-dispatch.html">Appendix A - 4. Role-typed dispatch</a></li>
+<li><a class="" href="appendix-a-merge-train-mis-batching.html">Appendix A - 5. Merge-train MIS batching</a></li>
+<li><a class="" href="appendix-a-pre-commit-hook.html">Appendix A - 6. Pre-commit hook (3-stanza, tree-sha markers)</a></li>
+<li><a class="" href="appendix-a-sentinel-first-commit.html">Appendix A - 7. Sentinel first-commit early-abort</a></li>
+<li><a class="" href="appendix-a-staged-deploy-gates.html">Appendix A - 8. Staged deploy gates (canary → smoke → promote)</a></li>
+<li><a class="" href="appendix-a-aggregate-compute-protection.html">Appendix A - 9. Aggregate-compute protection (`lint-all` host mutex)</a></li>
+<li><a class="" href="appendix-a-build-serializer.html">Appendix A - 10. Build-serializer (M=8 semaphore)</a></li>
+<li><a class="" href="appendix-a-resource-pressure-gating.html">Appendix A - 11. Resource-pressure gating (admit before, shed during)</a></li>
+<li><a class="" href="appendix-a-test-serializer.html">Appendix A - 12. Test-serializer (N=1 flock on `dotnet test`)</a></li>
+<li><a class="" href="appendix-a-agent-registry.html">Appendix A - 13. Agent registry (append-only log + marker cache)</a></li>
+<li><a class="" href="appendix-a-caused-by-provenance.html">Appendix A - 14. Caused-by provenance (agent-side change traceability)</a></li>
+<li><a class="" href="appendix-a-cron-alerts-gate.html">Appendix A - 15. Cron-alerts gate</a></li>
+<li><a class="" href="appendix-a-deploy-heartbeats.html">Appendix A - 16. Deploy heartbeats + stale-worker detection</a></li>
+<li><a class="" href="appendix-a-lifecycle-hooks.html">Appendix A - 17. Lifecycle hooks (interpose on the agent runtime&#x27;s events)</a></li>
+<li><a class="" href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li>
+<li><a class="" href="appendix-a-tombstone-commits.html">Appendix A - 19. Tombstone commits (lifecycle close records)</a></li>
+<li><a class="" href="appendix-a-typed-event-bus.html">Appendix A - 20. Orchestrator-as-reactor over an event bus</a></li>
+<li><a class="" href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li>
+<li><a class="" href="appendix-a-doc-hygiene-lints.html">Appendix A - 22. Doc-hygiene lints (index coverage, autogen provenance)</a></li>
+<li><a class="" href="appendix-a-epic-and-design-templates.html">Appendix A - 23. Epic &amp; design-doc templates</a></li>
+<li><a class="" href="appendix-a-epic-definition-of-done.html">Appendix A - 24. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a></li>
+<li><a class="" href="appendix-a-mandatory-snippet-table.html">Appendix A - 25. Mandatory snippet-table enforcement</a></li>
+<li><a class="" href="appendix-a-operational-playbooks.html">Appendix A - 26. Operational playbooks</a></li>
+<li><a class="" href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li>
+<li><a class="" href="appendix-a-semantic-level-enforcement.html">Appendix A - 28. Enforce at the right semantic level</a></li>
+<li class="part">Appendix B — Models-bridge patterns</li>
+<li><a class="" href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1. The agent-first MBSE harness</a></li>
+<li><a class="" href="appendix-b-agent-orchestration-model.html">Appendix B - 2. Agent-orchestration model (developer journeys)</a></li>
+<li><a class="" href="appendix-b-component-zone-model.html">Appendix B - 3. Component &amp; zone model</a></li>
+<li><a class="" href="appendix-b-concurrency-contracts.html">Appendix B - 4. Mediator &amp; single-writer contracts</a></li>
+<li><a class="" href="appendix-b-control-substrate-dependency.html">Appendix B - 5. Control↔substrate dependency (computed blast-radius)</a></li>
+<li><a class="" href="appendix-b-coverage-model-mapping.html">Appendix B - 6. Coverage → model-node mapping (which invariants are actually tested)</a></li>
+<li><a class="" href="appendix-b-deployment-topology-model.html">Appendix B - 7. Deployment &amp; tier topology</a></li>
+<li><a class="" href="appendix-b-domain-registries.html">Appendix B - 8. Domain registries</a></li>
+<li><a class="" href="appendix-b-drift-parity-gates.html">Appendix B - 9. Drift &amp; parity gates</a></li>
+<li><a class="" href="appendix-b-executable-source-of-truth.html">Appendix B - 10. Executable source-of-truth models</a></li>
+<li><a class="" href="appendix-b-formal-invariant-verification.html">Appendix B - 11. Formal invariant verification (temporal form → model checking)</a></li>
+<li><a class="" href="appendix-b-governance-graph.html">Appendix B - 12. Governance graph (mechanism-interaction model)</a></li>
+<li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B - 13. Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
+<li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 14. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 15. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 16. Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-model-graded-finding-severity.html">Appendix B - 17. Model-graded finding severity (distance-graded gate)</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 18. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 19. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 20. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 21. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 22. User-journey model (product-goal → implementation bridge)</a></li>
+<li class="part">Appendix C — Product patterns</li>
+<li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
+<li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
+<li><a class="" href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li>
+<li><a class="" href="appendix-c-raw-redis-seam.html">Appendix C - 4. Sole raw-Redis seam (the dispatch module)</a></li>
+<li><a class="" href="appendix-c-service-client.html">Appendix C - 5. ServiceClient (typed cross-service seam)</a></li>
+<li><a class="" href="appendix-c-coherence-lints.html">Appendix C - 6. Cross-source coherence lints</a></li>
+<li><a class="" href="appendix-c-content-validator.html">Appendix C - 7. ContentValidator (input ⊆ output fidelity)</a></li>
+<li><a class="" href="appendix-c-semantic-lints.html">Appendix C - 8. Blocking semantic lints</a></li>
+<li><a class="" href="appendix-c-standards-rule-engine.html">Appendix C - 9. Standards / WCAG rule engine</a></li>
+<li><a class="" href="appendix-c-ddt-pin-trailers.html">Appendix C - 10. DDT pin-trailers (doc-derived characterization)</a></li>
+<li><a class="" href="appendix-c-fuzz-campaigns.html">Appendix C - 11. Fuzz campaigns (+ auto-coverage)</a></li>
+<li><a class="" href="appendix-c-property-tests.html">Appendix C - 12. FsCheck property tests</a></li>
+<li><a class="" href="appendix-c-test-onion-tiers.html">Appendix C - 13. Test-onion tiers (Smoke / Lite / targeted / full)</a></li>
+<li><a class="" href="appendix-c-a11y-prefix.html">Appendix C - 14. `a11y_` prefix convention</a></li>
+<li><a class="" href="appendix-c-derive-changelog.html">Appendix C - 15. `derive-changelog` (reconstruct mutations)</a></li>
+<li><a class="" href="appendix-c-f10-wiring-lint.html">Appendix C - 16. F10 mutator-stamp-wiring lint</a></li>
+<li><a class="" href="appendix-c-mutator-stamps.html">Appendix C - 17. Per-mutator attribution stamps</a></li>
+<li><a class="" href="appendix-c-codemod-first.html">Appendix C - 18. Codemod-first threshold (N≳50 → AST transformer)</a></li>
+<li><a class="" href="appendix-c-remediation-verbs.html">Appendix C - 19. Closed remediation-verb sets</a></li>
+<li><a class="" href="appendix-c-typed-categories.html">Appendix C - 20. Typed `ViolationCategory` / `FailureCategory` enums</a></li>
+<li class="part">Appendix D — Mechanism Stacks</li>
+<li><a class="" href="appendix-stacks.html">Appendix D — Mechanism Stacks</a></li>
+<li><a class="" href="appendix-d-mbse-stack.html">Appendix D - 1. The MBSE stack</a></li>
+<li><a class="" href="appendix-d-self-operations-stack.html">Appendix D - 2. The self-operations stack</a></li>
+<li><a class="" href="appendix-d-semantic-lint-stack.html">Appendix D - 3. The semantic-lint stack</a></li>
+<li><a class="" href="appendix-d-worktree-lifecycle-stack.html">Appendix D - 4. The worktree-lifecycle stack</a></li>
+<li><a class="" href="appendix-d-canonical-seam-stack.html">Appendix D - 5. The canonical-seam stack</a></li>
+<li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
+<li class="part">Appendix E — How to Write a Skill</li>
+<li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="2.1-the-agent-stack.html">⇐ Beginning of this part</a><a href="3.1-the-executable-zoo.html">Next part ⇒</a><a href="2.6-when-guardrails-collide.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 7 · Metrics"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 7</a></div><h1>Metrics</h1></header><p>Every agent runs a loop. It takes an input, reasons, acts, and folds the result back around. The chapter on loops said the metric is what the agent steers by — skip it and the agent searches forever, never knowing when to stop. That chapter spent its words on the acting half. This one develops the sensing half, because a loop with no honest sense of its own state cannot steer at all.</p>
+<p>A metric senses. A playbook acts. A mechanism enforces. Those three make up a governed loop, and the metric comes first because the other two are blind without it. A playbook that fires on a number that measures the wrong thing does the wrong work. A mechanism that grades on a number too coarse to name the fault blocks the wrong commit. So the question that governs every metric in this chapter is not "can I measure this?" — almost anything can be counted — but "does this number drive a decision?"</p>
+<h2>Measure one level deeper</h2>
+<p id="idx-def-measure-one-level-deeper">John Ousterhout gives the rule in one line: <strong>measure one level deeper than the number you think you want.</strong> A metric earns its place only when it drives a decision, and the surface number usually cannot. It affords the report; it does not afford the engineering.</p>
+<p>Take cost. A cloud bill tells you what the whole project spent last month. That number is real, and useless: it tells you to pay the invoice, not <em>what to change</em> — which service to slim, which call to batch, which cascade to cut. Split the same bill by service and it starts to act. One service usually dominates and the rest trail off in a thin tail, and the dominant one names your first target. You measured one level deeper, and the deeper number carries a decision the shallow one buried.</p>
+<blockquote class="concept-inset"><p class="inset-title">Worked example — cost, one level deeper</p>
+<p>Say a monthly bill comes to $4,000. As one number it means only <em>pay it</em>. Split by service — $2,100 in GenAI calls, $600 in rendering, the rest a thin tail — and it means <em>batch the GenAI calls first</em>. Same dollars, one level deeper, and now the number drives an engineering decision instead of an accounting one. (Illustrative figures, not a real invoice.)</p></blockquote>
+<p>The same trap hides in test coverage. "The suite covers 87% of lines" is the invoice-level number — a headline that reports and does not act. It cannot tell you <em>which</em> untested code matters, because a line in a throwaway string helper counts the same as a line in the job state machine. The rest of this chapter walks a spectrum of metrics from the hard, deterministic end to the soft, judgment-laden one, and the flagship in the middle is exactly coverage measured one level deeper — coverage that names the gap instead of hiding it in a percentage.</p>
+<p>The spectrum tracks the book's soft-versus-hard governance axis. A <strong>hard</strong> metric is deterministic: a machine reads it, and the same input yields the same number every time. A <strong>soft</strong> metric is judgment-laden: it points a human or an agent at a place to look, but it cannot be reduced to a threshold that decides on its own. Both are worth having. The mistake is to treat one as the other — to block a build on a soft signal, or to leave a hard fact to a reviewer's memory.</p>
+<pre class="mermaid">flowchart LR
+    subgraph HARD["HARD · deterministic · machine-read"]
+        CS["cold-start latency&lt;br/&gt;ms per service · longest-path Σ&lt;br/&gt;→ fed into the perf model"]
+        DIST["component-distance grade&lt;br/&gt;HARD / SOFT / SILENT&lt;br/&gt;→ decides whether a gate fires"]
+    end
+    subgraph FLAG["FLAGSHIP · the deeper cut"]
+        MEC["entry-point-native coverage&lt;br/&gt;is the model CLAIM exercised?&lt;br/&gt;→ names the untested invariant"]
+    end
+    subgraph SOFT["SOFT · judgment-laden · aims a reader"]
+        DDT["doc-derived-test pinning&lt;br/&gt;is this doc-claim pinned by a test?&lt;br/&gt;→ nudges what to test next"]
+    end
+    HARD --&gt; FLAG --&gt; SOFT
+    accTitle: The metric spectrum, hard to soft
+    accDescr: A left-to-right spectrum of governance metrics. On the hard, deterministic, machine-read end sit cold-start latency and the component-distance grade. In the middle sits the flagship, entry-point-native coverage, which asks whether a model claim is exercised by a test. On the soft, judgment-laden end sits doc-derived-test pinning, which asks whether a documented claim is pinned by a test. Each metric is labelled with the decision it drives.</pre>
+<h2>The hard end: cold-start latency, machine-read and model-fed</h2>
+<p>Start at the deterministic end, where a metric is a millisecond number nobody argues about.</p>
+<p>A serverless fleet scales to zero. When a request wakes a cold instance, the user waits while the container boots and the runtime loads. That wait is the cold-start latency, and the obvious way to read it is as the penalty of scaling from zero: measure it, and if it hurts, pay to keep a warm instance running.</p>
+<p>The obvious reading was wrong, and measuring one level deeper is what showed it. The conformance service — a PDF validator wrapping veraPDF, a Java tool — carried a 4,057 ms <em>warm</em> floor, a wait a warm instance did nothing to remove. The deeper number named its own cause: veraPDF ran as a subprocess launched once per request, so every call paid a fresh JVM startup. The tax was not scale-from-zero; it was the process launch, and no warm-instance lever could reach it. The fix was a re-architecture — keep the runtime resident instead of relaunching it — and the warm floor fell from 4,057 ms to 109 ms, a thirty-seven-fold cut that took nearly four seconds off every request. The .NET service told the same story smaller: 494 ms of per-request CLI launch, down to 103 ms once the runtime stayed resident. And the tempting surface explanation, that the container images were simply too big, was also wrong — a 433 MB service cold-started fine. The barrier was runtime initialization, not image size, and only the deeper measurement said so.</p>
+<p>That is a metric read at the level where the decision lives: resident-runtime versus warm-instance is a different fork than the shallow cold-start number implied, and a fleet-average number would have buried it. But I found that tax by hand — spot-checking the one service whose latency looked wrong — and spot-checking does not scale. It catches the service that happens to draw your eye, misses the ones that do not, and says nothing about how the services interact. The better instrument is a model that holds every service's numbers and reasons over the paths between them, so the costly case falls out of the graph instead of out of a hunch. Because the sharpest question is not any single service. It is the <em>chain</em>. A request that lands when every downstream service is cold triggers a cascade of cold-starts along the critical path. The revenue-core journey runs its steps in sequence; within a step, its calls fan out in parallel. So the worst case is a <strong>longest-path sum</strong>: each step contributes the slowest cold-start it waits on, and the path total is the sum of those per-step maxima. That number — not the per-service one, and certainly not the average — is the one that predicts the worst latency a real user can hit. It is the metric measured at the level where the decision lives.</p>
+<p>Here the hard end shows its defining move: <strong>the number feeds the model.</strong> The cold-start measurements do not live in a dashboard a human reads and forgets. They land as typed fields on the deployment-topology model the fleet reasons through — a <code>cold_start_ms</code> and a <code>warm_ms</code> on each service's plane record. A recompute tool reads those fields and derives the longest-path worst case over the journey graph. When a later measurement writes a fresher number onto a service's annotation, the tool reads it live and the worst-case total refines on its own, no edit required.</p>
+<blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-deployment-topology-model.html">deployment-topology model</a>.</p></blockquote>
+<p>The commit is automated, and that is the point. The tempting alternative is a runbook step — <em>after a measurement run, remember to commit the new numbers.</em> A reminder like that rots; someone forgets, and the model drifts from the fleet it describes. So the pipeline commits the refreshed measurements itself, under a bypass-prefixed housekeeping commit with no human in the loop, and the model's cold-start parameters stay current with zero manual action. Build the map's upkeep into the machine that changes the territory rather than asking a person to remember it — architecture over a reminder. The runbook note then documents an automated step instead of a chore.</p>
+<p>I want to be honest about where this stands. The live-annotation path is built but not yet populated — today the tool runs off a snapshot table of measured values, each row citing the commit that measured it, because the fleet is mid-migration and no service carries the live annotation yet. The machinery to read the model live exists; the model is not fully fed. That is the ordinary shape of real work: the seam is in, the data catches up. What matters for this chapter is the pattern — a hard metric, measured deterministically, written into a typed model, and consumed by a tool that turns it into a decision (which path, which service, which lever).</p>
+<h2>The flagship: coverage measured one level deeper</h2>
+<p>Now the middle of the spectrum, and the chapter's teaching example. This is coverage done right — the "measure one level deeper" rule applied to the number that most often gets it wrong.</p>
+<p>Line coverage answers a <strong>syntactic</strong> question: did this line run under some test? That is a fact about source text, and it is genuinely useful. But it cannot answer the question an engineer actually has, which is <strong>semantic</strong>: is the <em>claim this code makes</em> exercised by a test? A file can sit at 95% line coverage while the one function that implements a critical invariant — call it INV-18 — is never called by any test at all. Its lines happen to be covered incidentally, swept up by an unrelated test that imports the module. The 95% is true. It is also a lie about the thing you care about, and the lie is invisible because a percentage has nowhere to put the gap.</p>
+<p>The fix comes from joining two things the system already has. The first is a <strong>traceability graph</strong> that links each model claim — an invariant, a state-machine transition, a service-flow edge — to the code that implements it. The link points at an <strong>anchor</strong>: the entry point, the <code>(path, symbol)</code> of the function that carries the claim. The second is the ordinary coverage oracle, which knows exactly which source lines ran. Compose them:</p>
+<blockquote class="aside-sidenote"><p>anchor → its symbol → that symbol's line range → intersect with the covered-line set → <em>is this model claim's code exercised?</em></p></blockquote>
+<p>That composition changes the unit of measurement. Line coverage counts lines. This counts <strong>model claims</strong>. The anchors supply the numerator's units; coverage supplies the ground truth of what ran. INV-18's anchor resolves to its function, the function's lines are checked against what the tests actually executed, and the metric reports not a percentage but a named verdict: <em>INV-18's implementing code is not exercised by any test.</em> An anonymous 87% becomes an actionable list of the exact model claims your suite walks past.</p>
+<p>This is not a new invention, and it should not be. Run the genre check and the family has a name: <strong>requirements-based coverage</strong> — the discipline DO-178C mandates for avionics, and the shape the open-source Doorstop tool encodes with git-native requirement items linked to their tests. The system's traceability substrate already adopted that schema. So the work here is not to dream up a bespoke "model coverage" number. It is to compute the requirements-based-coverage figure over a graph that was already built for it — and to add the one synthesis the off-the-shelf tools lack. Doorstop checks that a requirement <em>has</em> a linked test. It does not check that the linked test <em>executes</em> the requirement's code. Joining the trace edge to the live coverage oracle closes that last gap.</p>
+<blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-coverage-model-mapping.html">requirements-based coverage</a>.</p></blockquote>
+<p>The single primitive underneath — <code>anchor_exercised</code>, which resolves an anchor to a line range and intersects it with the covered set — supports several aggregations, each answering a different decision:</p>
+<ul><li><strong>Model-Element Coverage.</strong> Of the model claims that anchor real code, what fraction is exercised? This is the headline: it turns 95%-line-covered into a named list of unexercised invariants, each a fix target.</li><li><strong>Entry-Point Coverage.</strong> Of the code roots the models declare as "changes here mean drift," which are untested? This is the number to watch when refactoring — it tells you which anchored roots a regression would slip past.</li><li><strong>Chain Coverage.</strong> Does each model claim close end-to-end: code exists, a test names it as its verifier, <em>and</em> that test actually runs the code? This is the strictest cut, and it will report low at first, because few claims declare a verifying test today. That low number is the metric doing its job, not failing — it names the verification chains still to build.</li></ul>
+<p>The honesty layer matters as much as the aggregation. A single percentage lies when its denominator is fuzzy, so every figure reports a breakdown: exercised, not-exercised, unmeasurable (the anchor could not be resolved to code), and out-of-surface (a database-tier claim that is legitimately not code you can cover). "80%" then reads as what it is — <em>80% of the fifty measurable claims are exercised; twelve more are unmeasurable and owe a burn-down; eight are out of surface by design.</em> That is a number that affords the engineering, because you can see which part of it you can act on.</p>
+<p>The design is deliberately light. Computing all of this requires no change to any model — the anchors already carry their <code>(path, symbol)</code>, and the covered-line set is a plain read of the coverage database the test runner already writes. The metric is a new consumer of two existing substrates. That is the whole point: the expensive parts — the traceability graph, the cross-language coverage oracle — were already paid for. Measuring one level deeper cost a join, not a rebuild.</p>
+<h2>The soft end: doc-derived tests</h2>
+<p>Slide to the far end of the spectrum, where the metric stops being a number a threshold can act on and becomes a judgment a human has to make.</p>
+<p>A <strong>doc-derived test</strong> pins a behavior stated in a cited document or spec. The test carries a trailer naming the source it derived from, and when that source is edited, the test is regenerated so the pin and the prose stay in step. The metric it invites is: <em>is this doc-claim pinned by a test?</em> That question is genuinely soft. It has no clean denominator. "How many claims does this document make?" is a matter of reading — one reader finds six, another finds nine, and neither is wrong. You cannot reduce it to a percentage the way you can reduce line coverage, because the set of claims is not enumerable by machine. The signal points a reader at a document and says <em>these behaviors deserve a pin</em>; it does not decide.</p>
+<blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-c-ddt-pin-trailers.html">doc-derived test</a>.</p></blockquote>
+<p>The softness runs deeper than a fuzzy denominator, and this is the honest part. A doc-derived test is only as good as the seam it tests against. If the code interleaves its decision logic with live I/O — a poll loop welded to a queue, a validator welded to a database read — there is no pure surface to assert a value against, and the test falls back to pinning the <em>shape</em> of the source: that a function exists, that a docstring reads a certain way. That kind of test stays green even when you gut the function's body. It measures nothing about behavior. So the doc-derived-test signal is inseparable from a judgment about readiness: are the types sound, is there a seam to test through, is the contract even documented? Only a human (or an agent reasoning as one) can answer that, which is what plants this metric firmly at the soft end. Treat it as hard — wire it to a gate that blocks on a coverage-of-doc-claims threshold — and you manufacture exactly the hollow tests it was meant to prevent.</p>
+<h2>The model runs the machinery</h2>
+<p>Step back and look at what the hard end and the flagship share, because it is the thread this part of the book is weaving.</p>
+<p>The MBSE models are not documentation that merely stays in sync with the code. They are <strong>consumed at runtime to produce the metrics.</strong> The cold-start numbers are not a spreadsheet; they are typed fields on the deployment-topology model, and a tool reads the model to derive the longest-path worst case. The coverage flagship does not scan source text for functions that look important; it walks the traceability graph, follows each model claim to its anchor, and measures <em>that</em>. In both, the model is not a picture of the machinery. The model <em>is</em> the machinery — the thing the metric tool reads to know what to measure and how to weigh it.</p>
+<p>The sharpest instance ties metrics back to mechanisms, and it is worth ending on because it is where the whole pattern earns its keep. A pre-commit gate has to decide whether a lint finding should block a commit. The naive gate blocks on any finding anywhere, which drowns an agent in pre-existing debt it did not cause. The better gate grades each finding by its <strong>distance from the change</strong> in the typed component graph, and the grade decides the gate's behavior:</p>
+<blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-model-graded-finding-severity.html">model-graded finding severity</a>.</p></blockquote>
+<ul><li><strong>HARD</strong> — the finding sits on a file this commit touched, or is directly caused by a touched input. Block. This is the commit's own debt, and it fails closed.</li><li><strong>SOFT</strong> — the finding sits in the <em>same component</em> as a touched file, but not on a touched file. Report it, name it, ask the agent whether the change plausibly caused it — but do not block. Blocking here would make concurrent agents race to fix the same pre-existing problem and collide.</li><li><strong>SILENT</strong> — the finding sits in a different component entirely. Suppress it at commit time; the whole-tree deploy gate remains the backstop.</li></ul>
+<p>The grade is a metric — a distance, read from the model at check time — and it drives a sensor's decision directly. Same finding, three different gate behaviors, chosen by consulting the component graph about how far the finding is from the change. Here the model is not describing the system for a human to read later. It is being queried, at the moment a commit is made, to grade a gate. Guidance aims; machinery holds — and this is the machinery, run by the model.</p>
+<h2>A compact reference</h2>
+<p>The argument was the meal. The table is the lookup — one row per metric, the decision it drives, where it sits on the hard-soft axis, and who reads it.</p>
+<table class="book-table"><thead><tr><th>Metric</th><th>Decision it drives</th><th>Hard / soft</th><th>Read by</th></tr></thead><tbody><tr><td>Per-service cost</td><td>Which service to slim, which call to batch</td><td>Hard</td><td>Cost tooling, admin panel</td></tr><tr><td>Cold-start latency (per service)</td><td>Which service warrants a warm-up lever</td><td>Hard</td><td>Perf tool, admin panel</td></tr><tr><td>Cold-start longest-path Σ</td><td>Which critical-path chain bounds worst-case latency</td><td>Hard</td><td>Perf tool, deployment-topology model</td></tr><tr><td>Model-Element Coverage</td><td>Which model claim (invariant, transition, edge) is untested</td><td>Flagship (hard number, semantic unit)</td><td>Coverage tool, per-model backlog</td></tr><tr><td>Entry-Point Coverage</td><td>Which anchored code root a refactor regression would slip past</td><td>Flagship</td><td>Coverage tool</td></tr><tr><td>Chain Coverage</td><td>Which requirement lacks an end-to-end verifying test</td><td>Flagship</td><td>Coverage tool, requirements audit</td></tr><tr><td>Doc-claim pinning</td><td>Which documented behavior still needs a test</td><td>Soft</td><td>Author, reviewing agent</td></tr><tr><td>Component-distance grade</td><td>Whether a gate blocks, reports, or suppresses a finding</td><td>Hard (grade), soft (the causation nudge)</td><td>Pre-commit gate, the committing agent</td></tr></tbody></table>
+<p>Read the table top to bottom and the spectrum is visible in one glance: the top rows are stopwatch-hard and machine-consumed, the middle rows turn a hard measurement onto a semantic unit, and the bottom rows aim a reader who still has to judge. Every row names a decision, because a metric that names no decision was measured too shallow — and a loop steering by a shallow number is a loop that cannot steer.</p><div class="pager"><a class="prev" href="2.4-lifecycles-and-runbooks.html"><span class="dir">‹ Previous</span><span class="ttl">6 · Lifecycles and Runbooks</span></a><a class="home" href="index.html">Contents</a><a class="next" href="2.6-when-guardrails-collide.html"><span class="dir">Next ›</span><span class="ttl">8 · When Guardrails Collide</span></a></div><div class="pager-jump"><div class="jump"><a href="2.1-the-agent-stack.html">⇐ Beginning of this part</a><a href="3.1-the-executable-zoo.html">Next part ⇒</a><a href="2.6-when-guardrails-collide.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', themeVariables: { fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '20px' }, flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 }, sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 }, state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {} });</script></body></html>
