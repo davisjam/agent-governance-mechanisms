@@ -788,26 +788,6 @@ figure.book-figure figcaption {{ font-size: 14px; color: #666; margin-top: 0.6re
 .idx li {{ margin: 0.35rem 0; }}
 .idx a {{ text-decoration: none; }}
 .idx .cnum {{ color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }}
-/* Book-length table (book-index.html) — a compact, auto-generated size breakdown. Section rows band the
-   BODY / APPENDIX groups; subtotal + total rows are bolded; the numeric column is tabular + right-aligned. */
-.book-length {{ margin: 1.4rem 0 2.2rem; }}
-.book-length h2 {{ margin: 0 0 0.4rem; }}
-.book-length .wc-note {{ color: #5f5f5f; font-size: 14px; margin: 0 0 0.8rem; max-width: 40rem; }}
-table.wc-table {{ border-collapse: collapse; width: auto; min-width: 22rem; max-width: 34rem;
-                  margin: 0.4rem 0; font-size: 15px; }}
-table.wc-table caption.sr-cap {{ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-                                 overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }}
-table.wc-table th, table.wc-table td {{ border: 1px solid #e2e0da; padding: 0.4rem 0.7rem;
-                                        text-align: left; vertical-align: top; line-height: 1.4; }}
-table.wc-table thead th {{ background: #f4f3f0; font-weight: 600; }}
-table.wc-table thead th:last-child {{ text-align: right; }}
-table.wc-table td.wc-num {{ text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }}
-table.wc-table tr.wc-section th {{ background: #efece5; font-weight: 700; text-transform: uppercase;
-                                   letter-spacing: 0.04em; font-size: 12px; color: #555; }}
-table.wc-table tr.wc-part th {{ font-weight: 400; padding-left: 1.3rem; }}
-table.wc-table tr.wc-subtotal th, table.wc-table tr.wc-subtotal td {{ font-weight: 600; background: #faf9f6; }}
-table.wc-table tr.wc-total th, table.wc-table tr.wc-total td {{ font-weight: 700; background: #f0efeb;
-                                                                border-top: 2px solid #cfa14a; }}
 /* term index page */
 .idx-terms ul {{ list-style: none; padding: 0; margin: 0 0 1rem; }}
 .idx-terms li {{ margin: 0.3rem 0; }}
@@ -2065,10 +2045,10 @@ def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | N
         "that <em>defines</em> it and the paragraphs that <em>exemplify</em> it; a plain term entry links the "
         "pages where it appears, capped so the index leads with the significant sites.</p>"
     )
-    # 'Book length' table — auto-generated per build (front index is its natural home). Placed before the
-    # alphabetized term index so a reader meets the book's size first.
-    length_block = _word_counts_table_html(word_counts) if word_counts is not None else ""
-    body = header + intro + length_block + '<div class="idx idx-terms">' + "\n".join(rows) + "</div>"
+    # Word counts stay a build-time report (printed to stdout), NOT shipped onto the page — a reader of the
+    # published book should meet the ideas, not the manuscript's length. `word_counts` is still computed for
+    # the stdout tool-report; it is deliberately not rendered here.
+    body = header + intro + '<div class="idx idx-terms">' + "\n".join(rows) + "</div>"
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
     # The index gets the whole-book TOC and its own jump row (Contents + first/last chapter + itself).
     jump = (
@@ -2168,47 +2148,6 @@ def compute_word_counts(chapters: list[dict]) -> WordCounts:
         appendix_letters=appendix_letters,
         appendix_total=appendix_total,
         total=body_total + appendix_total,
-    )
-
-
-def _word_counts_table_html(wc: WordCounts) -> str:
-    """The 'Book length' table for book-index.html — an a11y-clean data table (a <caption> for its
-    accessible name, `scope="col"` on the header row, `scope="row"` on each Part/section name, `scope="row"`
-    + a class on the subtotal/total rows). Numbers are auto-generated fresh each build, never hardcoded."""
-    def _num(n: int) -> str:
-        return f"{n:,}"
-
-    rows: list[str] = []
-    rows.append(
-        '<tr class="wc-section"><th scope="row" colspan="2">Body (narrative)</th></tr>')
-    for label, n in wc.body_parts:
-        rows.append(
-            f'<tr><th scope="row" class="wc-part">{html.escape(label)}</th>'
-            f'<td class="wc-num">{_num(n)}</td></tr>')
-    rows.append(
-        f'<tr class="wc-subtotal"><th scope="row">Body subtotal</th>'
-        f'<td class="wc-num">{_num(wc.body_total)}</td></tr>')
-    rows.append(
-        '<tr class="wc-section"><th scope="row" colspan="2">Appendix</th></tr>')
-    for label, n in wc.appendix_letters:
-        rows.append(
-            f'<tr><th scope="row" class="wc-part">{html.escape(label)}</th>'
-            f'<td class="wc-num">{_num(n)}</td></tr>')
-    rows.append(
-        f'<tr class="wc-subtotal"><th scope="row">Appendix subtotal</th>'
-        f'<td class="wc-num">{_num(wc.appendix_total)}</td></tr>')
-    rows.append(
-        f'<tr class="wc-total"><th scope="row">Total</th>'
-        f'<td class="wc-num">{_num(wc.total)}</td></tr>')
-    return (
-        '<section class="book-length" aria-labelledby="book-length-h">'
-        '<h2 id="book-length-h">Book length</h2>'
-        '<p class="wc-note">Word counts of the prose a reader reads — auto-generated on every build from '
-        'the rendered text (code listings, diagrams, and figure captions excluded), so these numbers stay '
-        'current and cannot drift.</p>'
-        '<table class="wc-table"><caption class="sr-cap">Book length by part, in words</caption>'
-        '<thead><tr><th scope="col">Part</th><th scope="col">Words</th></tr></thead>'
-        f'<tbody>{"".join(rows)}</tbody></table></section>'
     )
 
 
