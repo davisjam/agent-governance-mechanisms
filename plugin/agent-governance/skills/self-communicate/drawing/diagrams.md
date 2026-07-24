@@ -504,6 +504,20 @@ connector visually strikes out the label. Resolve it, in order:
    reads as one continuous connector, just interrupted where the label sits.
 3. **Move the text** slightly off the line — only when the label is narrow enough to clear it.
 
+### Loop/cycle arcs curve outward (concave figure)
+
+When connectors wrap a cyclic flow — a run/measure/assess loop, a feedback cycle, a round-trip — bend
+each arc **away from the enclosed content** so the whole loop reads as one clean concave sweep: the top
+arcs arch up, the bottom arcs bow down, like the rim of a circle. An arc that sags toward the interior
+makes the figure look convex and lens-like, and the eye reads the inward bulge as an error. Keep the
+bend direction consistent around the whole loop.
+
+In SVG cubic Bézier terms (`M x0,y0 C cx1,cy1 cx2,cy2 x1,y1`): for a top arc whose endpoints sit near
+`y=70`, the control points belong **above** `y=70` (smaller `y` values, since SVG's `+y` is down). If
+you find the controls sitting *below* the endpoints, the arc sags south — flip the control-point `y` to
+the same distance above the endpoints. The lower-half arcs of the same loop mirror the rule: their
+control points sit below their endpoints, bowing outward at the bottom.
+
 ---
 
 ## One style source for a figure-set — restyle the whole set in one place

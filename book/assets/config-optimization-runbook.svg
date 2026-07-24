@@ -14,9 +14,9 @@
   <text x="1090" y="60" text-anchor="middle" font-size="40" font-weight="700" fill="#1a4a7a">assess</text>
 
   <!-- run -> measure -->
-  <path d="M260,70 C400,98 520,98 588,76" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <path d="M260,70 C400,48 520,48 588,76" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
   <!-- measure -> assess -->
-  <path d="M730,76 C840,98 960,98 1058,70" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <path d="M730,76 C840,48 960,48 1058,70" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
 
   <!-- assess -> down right -> across bottom -> up left -> back into "run" -->
   <path d="M1128,74 C1240,180 1240,600 1110,690 C860,780 400,780 190,690 C60,600 60,180 172,76"
