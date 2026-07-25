@@ -171,6 +171,24 @@ _GLOSS_RE = re.compile(r"^<!--\s*gloss:\s*(?P<term>.+?)\s*\|\s*(?P<def>.+?)\s*--
 _GLOSS_ONLY_RE = re.compile(r"^<!--\s*gloss-only:\s*(?P<term>.+?)\s*\|\s*(?P<def>.+?)\s*-->$")
 _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_glossary before the render loop
 
+# SINGLE SOURCE OF TRUTH for the build-time notation vocabulary — every marker-comment keyword the build
+# consumes and MUST strip from the reader-visible output. The consuming regexes above/below key their
+# keyword off this tuple, AND the notation-leak gate (tests/html.py: check_no_notation_leak) reads it so a
+# new notation auto-extends the gate — the two can never drift (CLAUDE.md rule #33: stable-check-reads-SSOT).
+# `glossary-auto` is the arg-less generated-glossary directive; the rest take a `:`-delimited argument.
+MARKER_KEYWORDS = (
+    "part-title", "chapter-title", "figure", "figure-iframe",
+    "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
+)
+# A comment whose first token is one of the vocabulary keywords — used to peel a marker glued to the head
+# of a prose block (placement-robust stripping: an author need not remember a blank line) and, in the gate,
+# to recognise a leaked marker regardless of whether it shipped escaped or raw. The trailing boundary
+# (`:` or `-->` or end) keeps `glossary-auto` matchable while not matching a prose word that merely starts
+# with a keyword. NOTE the `part-title`/`chapter-title` metadata is stripped earlier by META_RE; it is in
+# the vocabulary so the gate still treats a leaked one as a leak.
+_MARKER_KEYWORD_ALT = "|".join(re.escape(k) for k in MARKER_KEYWORDS)
+_MARKER_COMMENT_RE = re.compile(rf"^<!--\s*(?:{_MARKER_KEYWORD_ALT})(?:\s*:|\s*-->)")
+
 
 def _collect_glossary(chapters: list[dict]) -> None:
     """Harvest every `gloss:` / `gloss-only:` marker across all chapter bodies into `_GLOSSARY`. Fails
@@ -520,25 +538,67 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 pending_anchors.append(got)
         return True
 
+    def _consume_leading_marker(line: str) -> bool:
+        """Placement-robust marker strip. If `line` (the head of a block) is a whole marker comment the
+        build consumes — an index tag, a `gloss:`/`gloss-only:`, or a bare `<!-- glossary-auto -->` — act on
+        it and return True so the caller peels it off the block. This is what lets a marker sit glued to the
+        prose it annotates (NO blank line between), matching META_RE's already-placement-robust behaviour:
+        the author need not remember a blank line, and a glued marker leaks NOWHERE (the twice-shipped
+        gloss-only-glued-to-prose bug). Each keyword acts as it would as a standalone block — `gloss:` emits
+        its first-reference sidenote, `figure`/`figure-iframe`/`eq` render their display element, `gloss-only`
+        / `glossary-auto` harvest/render — then is peeled. This covers the WHOLE argument-taking vocabulary
+        uniformly (part-title/chapter-title are stripped earlier by META_RE, before block splitting)."""
+        s = line.strip()
+        if _consume_index_tag(s):
+            return True
+        _gm = _GLOSS_RE.match(s)
+        if _gm:
+            _emit(f'<blockquote class="aside-sidenote"><p><strong>{inline(_gm.group("term"))}.</strong> '
+                  f'{inline(_gm.group("def"))}</p></blockquote>')
+            return True
+        if _GLOSS_ONLY_RE.match(s):
+            return True  # glossary-only: harvested by _collect_glossary; renders nothing inline
+        if s == "<!-- glossary-auto -->":
+            items = "".join(f"<li><strong>{inline(t)}</strong> — {inline(d)}</li>"
+                            for t, d in sorted(_GLOSSARY.items(), key=lambda kv: kv[0].lower()))
+            _emit(f'<ul class="glossary">{items}</ul>')
+            return True
+        # Single-comment display directives (figure / figure-iframe / eq): render whichever it is, then peel.
+        if s.startswith("<!--") and s.endswith("-->") and s.count("<!--") == 1:
+            inner = s[4:].lstrip()
+            if inner.startswith("figure-iframe:"):
+                _emit(_figure_iframe_block(s))
+                return True
+            if inner.startswith("figure:"):
+                _emit(_figure_block(s))
+                return True
+            if inner.startswith("eq:"):
+                _emit(f'<p class="book-eq">{inline(s[len("<!--"):-len("-->")].strip()[len("eq:"):].strip())}</p>')
+                return True
+        return False
+
     for block in blocks:
         block = block.strip("\n")
         if not block.strip():
             continue
-        # Peel a leading index tag off the block. The tag attaches its anchor to the block it heads (the
-        # renderer arms `pending_anchor` and injects it on the next emitted content). A block may be JUST
-        # the tag (blank line follows) or the tag PLUS its annotated block (no blank line) — handle both.
+        # Peel every leading marker comment off the block (placement-robust — a marker may sit glued to the
+        # prose it heads, NO blank line between). `_consume_leading_marker` acts on each (index tag → arm
+        # anchor; gloss → emit sidenote; gloss-only / glossary-auto → harvest/render) and returns True so it
+        # is stripped from the block. A block may be JUST markers (blank line follows) or markers PLUS the
+        # prose they head (no blank line) — this handles both, so a glued marker leaks NOWHERE.
         blk_lines = block.splitlines()
-        while blk_lines and _consume_index_tag(blk_lines[0]):
+        while blk_lines and _consume_leading_marker(blk_lines[0]):
             blk_lines = blk_lines[1:]
         if not blk_lines:
-            continue  # the block was nothing but tag comment(s)
-        # A tag anchors the block it HEADS — a mid-block tag (no blank line before it, prose above it in the
-        # same block) would silently leak into the rendered <p>. Fail loud so the author moves it to the
-        # block boundary rather than shipping a raw comment.
+            continue  # the block was nothing but marker comment(s)
+        # A marker heads the block it annotates — a MID-block marker (prose above it in the same block) would
+        # silently leak into the rendered <p>. Fail loud so the author moves it to the block boundary rather
+        # than shipping a raw comment. (The head case above already consumed leading markers.)
         for _ln in blk_lines[1:]:
-            if INDEX_DEF_RE.match(_ln.strip()) or INDEX_EXAMPLE_RE.match(_ln.strip()):
+            if _MARKER_COMMENT_RE.match(_ln.strip()):
                 raise SystemExit(
-                    f"index tag must head its block (blank line before it): mid-block tag {_ln.strip()!r}")
+                    f"notation marker must head its block (blank line before it, or move above the prose): "
+                    f"mid-block marker {_ln.strip()!r}")
         block = "\n".join(blk_lines)
         stripped = block.strip()
         # Fenced code — a ```mermaid block is rendered to a STATIC INLINE SVG at build time (so raw
@@ -568,47 +628,12 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 f'<span class="marker-tag">{label}</span> {inline(inner)}</div>'
             )
             continue
-        # Figure directive: `<!-- figure: <path> | <caption> -->` → a <figure> with inline SVG
-        # (or <img> for a raster) + <figcaption>. Checked BEFORE the generic-comment passthrough
-        # so a figure comment is rendered, not emitted raw.
-        if stripped.startswith("<!--") and stripped.endswith("-->") \
-                and stripped.count("<!--") == 1 \
-                and stripped[4:].lstrip().startswith("figure:"):
-            _emit(_figure_block(stripped))
-            continue
-        # Figure-iframe directive: `<!-- figure-iframe: <path> | <caption> | <a11y-title> -->` → a
-        # <figure><iframe> preview of a self-contained figure page (the rewired mechanism map), never
-        # inlined. Checked before the generic-comment passthrough for the same reason.
-        if stripped.startswith("<!--") and stripped.endswith("-->") \
-                and stripped.count("<!--") == 1 \
-                and stripped[4:].lstrip().startswith("figure-iframe:"):
-            _emit(_figure_iframe_block(stripped))
-            continue
-        # Glossary annotation: `<!-- gloss: Term | short def -->` -> a first-reference sidenote (the
-        # gloss) rendered here, plus the term feeds the generated back-Glossary. `gloss-only:` feeds the
-        # glossary WITHOUT a sidenote (the prose already defines the term in full at this point).
-        _gm = _GLOSS_RE.match(stripped)
-        if _gm:
-            _emit(f'<blockquote class="aside-sidenote"><p><strong>{inline(_gm.group("term"))}.</strong> '
-                  f'{inline(_gm.group("def"))}</p></blockquote>')
-            continue
-        if _GLOSS_ONLY_RE.match(stripped):
-            continue  # glossary-only: harvested by _collect_glossary; renders nothing inline
-        # Display equation: `<!-- eq: <formula> -->` → a centered, typeset formula line. The book has no
-        # MathJax; this is a light styled display of a unicode formula (e.g. `P = 1 − (1 − p)ⁿ`), reusable.
-        if stripped.startswith("<!--") and stripped.endswith("-->") \
-                and stripped.count("<!--") == 1 \
-                and stripped[4:].lstrip().startswith("eq:"):
-            formula = stripped[len("<!--"):-len("-->")].strip()[len("eq:"):].strip()
-            _emit(f'<p class="book-eq">{inline(formula)}</p>')
-            continue
-        # Generated glossary: `<!-- glossary-auto -->` -> the alphabetical list harvested from every gloss
-        # marker in the book (single source of truth; the hand-written list is gone so it can't drift).
-        if stripped == "<!-- glossary-auto -->":
-            items = "".join(f"<li><strong>{inline(t)}</strong> — {inline(d)}</li>"
-                            for t, d in sorted(_GLOSSARY.items(), key=lambda kv: kv[0].lower()))
-            _emit(f'<ul class="glossary">{items}</ul>')
-            continue
+        # NOTE: the whole ARGUMENT-taking notation vocabulary — `figure:`, `figure-iframe:`, `eq:`,
+        # `gloss:`, `gloss-only:`, `glossary-auto`, `index-def:`, `index-example:` — is consumed by
+        # `_consume_leading_marker` in the block-head peel above. That is placement-robust: a marker renders
+        # / harvests whether it heads a standalone block OR is glued to the prose it annotates (no blank
+        # line). A marker glued AFTER prose (mid-block) fails loud there. So NO standalone dispatch is needed
+        # for any of them here — only the generic-comment passthrough below, for authoring TODO comments.
         # A standalone HTML comment (e.g. the TODO markers) — emit it raw so it stays an invisible
         # comment in the source rather than escaped visible text.
         if stripped.startswith("<!--") and stripped.endswith("-->") and stripped.count("<!--") == 1:
