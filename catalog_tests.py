@@ -36,7 +36,7 @@ from typing import Callable, NamedTuple
 from tests.book import run_book_audit
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
-from tests.html import check_html_links, check_book_html_tracking
+from tests.html import check_html_links, check_book_html_tracking, check_no_duplicate_ids
 from tests.markdown import check_markdown_anchors, check_markdown_schema, check_render_safety
 from tests.skill import check_bundle_links, check_skill_drift, check_skill_structure
 from tests.svg_fit import check_svg_drawing_hygiene, check_svg_text_fit
@@ -68,6 +68,7 @@ CHECKS = [
     Check("markdown: #anchor resolution", 1, lambda strict: check_markdown_anchors()),
     Check("render: XSS neutralization (escape seam + link scheme)", 1, lambda strict: check_render_safety()),
     Check("html: link + anchor resolution", 1, lambda strict: check_html_links()),
+    Check("html: no duplicate element ids (stdlib twin of T2 no-dup-id)", 1, lambda strict: check_no_duplicate_ids()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("skill: structure + manifests", 1, lambda strict: check_skill_structure()),
     Check("skill: bundle freshness (no drift)", 1, lambda strict: check_skill_drift()),

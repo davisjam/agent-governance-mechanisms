@@ -99,3 +99,36 @@ def check_book_html_tracking():
         elif os.path.getsize(ap) == 0:
             issues.append(f"{p}: tracked but empty")
     return (FAIL if issues else PASS), issues
+
+
+class _IdCollector(HTMLParser):
+    """Collects every element id (WITH repeats) so within-page duplicates can be found."""
+
+    def __init__(self):
+        super().__init__()
+        self.ids: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        for k, v in attrs:
+            if k == "id" and v:
+                self.ids.append(v)
+
+
+def check_no_duplicate_ids():
+    """No built HTML page repeats an element id. Duplicate ids break in-page anchors, getElementById, and
+    accessibility, and fail html-validate's `no-dup-id`. The usual source is inlined SVGs (mermaid or
+    hand-authored) that carry a fixed id, so two figures on one page collide. This is the stdlib (Tier-1)
+    twin of that CI-only Tier-2 check: it catches a collision LOCALLY, keeping every figure's ids a clean
+    unique namespace."""
+    from collections import Counter
+    files = html_files()
+    if not files:
+        return FAIL, ["no built HTML found — run `catalog.py build` first"]
+    issues = []
+    for f in files:
+        c = _IdCollector()
+        c.feed(open(f, encoding="utf-8").read())
+        counts = Counter(c.ids)
+        for dup in sorted(i for i, n in counts.items() if n > 1):
+            issues.append(f"{rel(f)}: duplicate element id {dup!r} ({counts[dup]}x)")
+    return (FAIL if issues else PASS), issues

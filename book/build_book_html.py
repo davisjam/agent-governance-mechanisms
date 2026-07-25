@@ -95,8 +95,13 @@ def render_mermaid_svg(source: str) -> str:
     """
     src = source.strip()
     key = hashlib.sha256(
-        (src + "\x00" + _MERMAID_CONFIG.read_text(encoding="utf-8")).encode("utf-8")
+        (src + "\x00" + _MERMAID_CONFIG.read_text(encoding="utf-8") + "\x00idscheme-v1").encode("utf-8")
     ).hexdigest()
+    # Give each rendered SVG a UNIQUE root id from its content hash. mmdc defaults to a fixed id="my-svg"
+    # (+ chart-title-my-svg / chart-desc-my-svg), so two diagrams on one page collide (duplicate-ID →
+    # html-validate FAILs). A per-diagram svgId namespaces the SVG's ids. (The "idscheme-v1" marker in the
+    # cache key above invalidates SVGs cached under the old fixed-id scheme; bump it if the scheme changes.)
+    svg_id = f"mermaid-{key[:16]}"
     cached = _MERMAID_CACHE / f"{key}.svg"
     if cached.exists():
         svg = cached.read_text(encoding="utf-8")
@@ -113,7 +118,7 @@ def render_mermaid_svg(source: str) -> str:
             r = subprocess.run(
                 [str(_MMDC), "-i", str(inp), "-o", str(outp),
                  "-c", str(_MERMAID_CONFIG), "-p", str(_MMDC_PUPPETEER),
-                 "-b", "transparent", "--quiet"],
+                 "--svgId", svg_id, "-b", "transparent", "--quiet"],
                 capture_output=True, text=True,
                 env={**_mermaid_env()},
             )
