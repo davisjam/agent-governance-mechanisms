@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="loop-title loop-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="loop-title loop-desc">
   <title id="loop-title">Loop engineering</title>
-  <desc id="loop-desc">A single cycle. An Input paired with a success metric feeds Agent reasoning, which produces an Output, which feeds back around into the Input. The whole loop is the unit of engineering. The success metric is emphasized in the accent color because defining it is the hard question.</desc>
+  <desc id="loop-desc">A single cycle running left to right. An Input paired with a success metric feeds Agent reasoning, which produces an Output, which feeds back around over the top into the Input. The whole loop is the unit of engineering. The success metric is emphasized in the accent color because defining it is the hard question.</desc>
 
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -11,26 +11,26 @@
     </marker>
   </defs>
 
-  <!-- ===== The three boxes: left edge x=70, width=250, center x=195 ===== -->
+  <!-- ===== The three boxes, left-to-right. box width=220, height=100, top y=170, vertical center y=220 ===== -->
 
   <!-- Input + success metric -->
-  <rect x="70" y="40" width="250" height="86" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
-  <text x="195" y="78" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Input</text>
-  <text x="195" y="104" text-anchor="middle" font-size="16" font-weight="700" fill="#1a4a7a">+ success metric</text>
+  <rect x="20" y="170" width="220" height="100" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
+  <text x="130" y="212" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Input</text>
+  <text x="130" y="238" text-anchor="middle" font-size="16" font-weight="700" fill="#1a4a7a">+ success metric</text>
 
   <!-- Agent reasoning -->
-  <rect x="70" y="217" width="250" height="86" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
-  <text x="195" y="266" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Agent reasoning</text>
+  <rect x="300" y="170" width="220" height="100" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
+  <text x="410" y="226" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Agent reasoning</text>
 
   <!-- Output -->
-  <rect x="70" y="394" width="250" height="86" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
-  <text x="195" y="443" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Output</text>
+  <rect x="580" y="170" width="220" height="100" rx="4" fill="#f4f4f4" stroke="#333" stroke-width="1.5"/>
+  <text x="690" y="226" text-anchor="middle" font-size="20" font-weight="700" fill="#111">Output</text>
 
-  <!-- ===== down arrows between boxes (centered x=195) ===== -->
-  <line x1="195" y1="126" x2="195" y2="215" stroke="#333" stroke-width="2" marker-end="url(#ah)"/>
-  <line x1="195" y1="303" x2="195" y2="392" stroke="#333" stroke-width="2" marker-end="url(#ah)"/>
+  <!-- ===== rightward arrows between boxes (centered y=220) ===== -->
+  <line x1="240" y1="220" x2="298" y2="220" stroke="#333" stroke-width="2" marker-end="url(#ah)"/>
+  <line x1="520" y1="220" x2="578" y2="220" stroke="#333" stroke-width="2" marker-end="url(#ah)"/>
 
-  <!-- ===== feedback arc: Output right edge, bulge right, back up into Input right edge ===== -->
-  <path d="M 320 437 C 450 437, 450 83, 322 83" fill="none" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#ah-accent)"/>
-  <text x="450" y="260" text-anchor="middle" font-size="15" fill="#1a4a7a" font-style="italic" transform="rotate(90 450 260)">feeds around</text>
+  <!-- ===== feedback arc: Output top edge, loop up and over the top, back down into Input top edge ===== -->
+  <path d="M 690 170 C 690 40, 130 40, 130 168" fill="none" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#ah-accent)"/>
+  <text x="410" y="42" text-anchor="middle" font-size="15" fill="#1a4a7a" font-style="italic">feeds around</text>
 </svg>
