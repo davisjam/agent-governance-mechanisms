@@ -120,6 +120,31 @@ blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
 blockquote.concept-inset p:last-child { margin-bottom: 0; }
 blockquote.concept-inset strong { color: var(--inset-header); }
 blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* CODE INSET — a fenced code listing lifted into a titled box: "here is a real artifact from the system."
+   It shares the concept-inset's amber header-band label typography (the sidebar HEADER, `p.inset-title`,
+   demoted so no heading-order break), but its body is a monospace listing, not roman prose. The header
+   sits flush to the panel edges; the <pre> keeps the page's usual code styling, un-boxed inside the panel
+   so the box's own border is the only frame. */
+figure.code-inset {
+  --inset-bg: #f6f4ef; --inset-accent: #b07a2b; --inset-header: #4a3a1e; --inset-header-bg: #ece4d5;
+  --inset-radius: 6px; --inset-pad-x: 1.35rem;
+  background: var(--inset-bg); border: 1px solid #e3dccb;
+  border-left: 5px solid var(--inset-accent); border-radius: var(--inset-radius);
+  margin: 1.7rem 0; max-width: 40rem; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+figure.code-inset .inset-title {
+  font-family: "Source Sans 3", sans-serif; font-style: normal; font-weight: 700;
+  color: var(--inset-header); background: var(--inset-header-bg);
+  margin: 0; padding: 0.55rem var(--inset-pad-x);
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+figure.code-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+figure.code-inset pre { margin: 0; padding: 0.9rem var(--inset-pad-x); background: transparent; border: 0; }
 /* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
    Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
    Taxonomy + spec: book/_design/callout-typography.md. */

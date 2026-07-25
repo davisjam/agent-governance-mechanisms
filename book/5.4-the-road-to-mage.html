@@ -120,6 +120,31 @@ blockquote.concept-inset p { margin: 0 0 0.7rem; line-height: 1.6; }
 blockquote.concept-inset p:last-child { margin-bottom: 0; }
 blockquote.concept-inset strong { color: var(--inset-header); }
 blockquote.concept-inset em { font-style: italic; }  /* inline emphasis still italicizes inside roman body */
+/* CODE INSET — a fenced code listing lifted into a titled box: "here is a real artifact from the system."
+   It shares the concept-inset's amber header-band label typography (the sidebar HEADER, `p.inset-title`,
+   demoted so no heading-order break), but its body is a monospace listing, not roman prose. The header
+   sits flush to the panel edges; the <pre> keeps the page's usual code styling, un-boxed inside the panel
+   so the box's own border is the only frame. */
+figure.code-inset {
+  --inset-bg: #f6f4ef; --inset-accent: #b07a2b; --inset-header: #4a3a1e; --inset-header-bg: #ece4d5;
+  --inset-radius: 6px; --inset-pad-x: 1.35rem;
+  background: var(--inset-bg); border: 1px solid #e3dccb;
+  border-left: 5px solid var(--inset-accent); border-radius: var(--inset-radius);
+  margin: 1.7rem 0; max-width: 40rem; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}
+figure.code-inset .inset-title {
+  font-family: "Source Sans 3", sans-serif; font-style: normal; font-weight: 700;
+  color: var(--inset-header); background: var(--inset-header-bg);
+  margin: 0; padding: 0.55rem var(--inset-pad-x);
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}
+figure.code-inset .inset-title::before {
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}
+figure.code-inset pre { margin: 0; padding: 0.9rem var(--inset-pad-x); background: transparent; border: 0; }
 /* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
    Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
    Taxonomy + spec: book/_design/callout-typography.md. */
@@ -339,7 +364,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>The earliest hard lesson here was that a conversational agent cannot be trusted to run itself. Asked to schedule its own work, track its own state, and narrate its own progress, a chat agent collapses six distinct states — planned, briefed, submitted, running, completed, landed — into one prose register, so a <em>prepared</em> brief reads as <em>executed</em> work and a permission-rejected dispatch gets narrated as progress. The coordinator lies, not from malice, but because language is not state. The fix was not to give the agent more autonomy in chat. It was to pull the fleet's real state out of the conversation and into durable, inspectable artifacts the orchestrator reacts to rather than reasons about.</p>
 <p>That is the seed of an event-driven reactor: the plan says what <em>should</em> unlock, the substrate with authority says what <em>did</em> unlock, and the orchestrator acts at their intersection. Coordinating a fleet of semi-reliable agents is not glue. It is an architecture in its own right — one I had to design, and one that matured over weeks from that first shout at the machine to a policy-driven worker pool borrowed, ten years late, from an operating system's thread-pool design. The crew created a coordination problem, and the coordination problem created a substrate.</p>
 <p>What does "running the fleet" look like on the page? It looks like a <strong>brief</strong> — a typed work order the orchestrator hands to one agent. A brief is not a chat message. It carries a role, a compute class, a set of files the agent may touch, and a commit discipline, so the substrate can schedule it, fence it, and hold it to its lane. Here is the head of a real standing brief — one the orchestrator re-dispatches whenever it needs a fresh full lint count:</p>
-<pre><code># Brief: lint-all baseline (REUSABLE standing brief — CORE only)
+<figure class="code-inset"><p class="inset-title">A standing brief — the lint-all baseline runner</p><pre><code># Brief: lint-all baseline (REUSABLE standing brief — CORE only)
 
 **Purpose (reusable):** run a FULL `lint-all` over the tree and emit a fresh baseline JSON
 so the scorecard / orchestrator reads an accurate current BLOCKING count.
@@ -352,20 +377,20 @@ so the scorecard / orchestrator reads an accurate current BLOCKING count.
 ## Discipline
 - Role `lint-runner` (allowed to run lint-all; acquires the host flock — if a pre-commit
   lint-all is running, WAIT). Rule #44: exactly one `lint-all-explicit` brief in flight.
-- Hard cap 1200s (full lint sweep).</code></pre>
+- Hard cap 1200s (full lint sweep).</code></pre></figure>
 <p>Three of those metadata lines carry the coordination story. <code>role: lint-runner</code> says which <em>kind</em> of worker this is — a read-only measurer, not a code writer. <code>compute-class: lint-all-explicit</code> plugs the brief into the resource scheduler, and the rule it cites next enforces that <em>at most one</em> such heavy job runs at a time, so the fleet does not eat its own machine. And <code>WAIT</code> is the fleet acknowledging shared state: this job takes a host lock, and if another already holds it, this one blocks rather than collides.</p>
 <p>A code-writing brief carries one more discipline the measurement brief does not — <strong>worktree isolation</strong> — the one rule that lets many agents write at once without trampling each other:</p>
-<pre><code>**WORKTREE PATH RULE** — your worktree is the directory where the harness started you.
+<figure class="code-inset"><p class="inset-title">The rule that lets many agents write at once</p><pre><code>**WORKTREE PATH RULE** — your worktree is the directory where the harness started you.
 Discover it with `pwd` as your very first Bash call; it is NOT hard-coded in this brief.
 
     export ADA_TOOL_AGENT_WORKTREE_ROOT="$(pwd)"
-    [[ "$(pwd)" == */.claude/worktrees/agent-* ]] || { echo "ERROR: not in a worktree"; exit 1; }</code></pre>
+    [[ "$(pwd)" == */.claude/worktrees/agent-* ]] || { echo "ERROR: not in a worktree"; exit 1; }</code></pre></figure>
 <p>Each code agent works in its own git worktree — a private checkout on its own branch — so two agents editing "the same file" are really editing two copies, and their work is reconciled by a merge step the substrate owns, not by luck. The agent discovers its own worktree at boot rather than being told where it is, because the harness allocates the directory, and a brief that hard-coded the path would be wrong the moment the harness chose a different one. That is what "the fleet has to be run" cashes out to: typed briefs, role lanes, a resource scheduler, host locks, and one private worktree per writer.</p>
 <h2>Step four — zones, so an agent can reason locally</h2>
 <p>A crew that coordinates is still a crew of agents each of whom has to understand the code it touches. And here the agent's nature bites. A cold-start agent with a finite context window cannot reach the tacit knowledge a human team keeps in its collective head — which file is canonical, what this module <em>means</em>, which of two look-alikes is the live one. A human learns that by working in the codebase for months. An agent arrives knowing nothing and has to be <em>told</em>, in the code, every time.</p>
 <p>The answer was to partition the system into named <strong>zones</strong> — a model that says, out loud and in a queryable form, what the parts are and where their boundaries lie. Once the system is carved into zones, an agent can be handed one zone, reason inside it locally, and be fenced from the rest. A boundary lint can then refuse an edit that reaches across a zone it has no business touching. The zone model turns "understand the whole 280-thousand-line codebase" — which no finite-context agent can do — into "understand this zone," which it can.</p>
 <p>A zone is a small typed record. Here are two real ones — the PDF and PowerPoint object models, side by side:</p>
-<pre><code>Component(
+<figure class="code-inset"><p class="inset-title">Two zones, side by side</p><pre><code>Component(
     name="pdf-model",
     focus_dirs=(RepoRelPath("backend/src/AdaTool.PdfModel"),),
     boundary_kind="internal",
@@ -378,13 +403,13 @@ Component(
     boundary_kind="internal",
     external_seams=("openxml",),          # the Office library — this zone alone
     description="PPTX Office-XML model + typed mutators",
-),</code></pre>
+),</code></pre></figure>
 <p>Read <code>external_seams</code> and the whole discipline is legible. The <code>pdf-model</code> zone is the <em>only</em> one allowed to reach the canonical PDF library; <code>slides-model</code> is the only one allowed to reach the Office library. A boundary lint reads that field at check-time and reddens on any file outside the <code>pdf-model</code> zone that imports the PDF library directly — the "one typed model per format" rule from the built-system chapter, enforced not by vigilance but by a zone declaration a machine walks. The agent working the PDF zone is handed <code>focus_dirs</code> as its lane and <code>external_seams</code> as its permission slip, and it cannot wander.</p>
 <p>The zone model is the first piece of MAGE proper, because it is the first time I wrote down a <em>model of the system's own structure</em> for the fleet to read, rather than a piece of the product. It exists for the agents, not for the users.</p>
 <h2>Step five — components.py, the codebase made reflective</h2>
 <p>The zone model became a file the fleet reads at runtime. That is where the method crosses from <em>documenting</em> the structure to <em>executing</em> on it.</p>
 <p>A typed registry of the system's own components — its zones, their focus directories, the seams each one is allowed to cross — is not documentation <em>about</em> the architecture. It <em>is</em> the architecture, in a form a tool can query. The zone I showed above is one row of it; the row's <em>shape</em> is a frozen dataclass:</p>
-<pre><code>@dataclass(frozen=True)
+<figure class="code-inset"><p class="inset-title">The registry the fleet reads</p><pre><code>@dataclass(frozen=True)
 class Component:
     """One system component."""
     name: str
@@ -392,7 +417,7 @@ class Component:
     tags: frozenset[str] = field(default_factory=frozenset)
     kind: str = "leaf"                                      # leaf | group | meta
     external_seams: tuple[ExternalSeam, ...] = ()           # the powerful libs it may reach
-    import_allowed_components: tuple[ComponentName, ...] = ()  # who it may import</code></pre>
+    import_allowed_components: tuple[ComponentName, ...] = ()  # who it may import</code></pre></figure>
 <p>Every field is a machine-readable answer to a question an agent would otherwise have to guess. <code>focus_dirs</code> answers "what files are in my lane?" <code>external_seams</code> answers "which powerful library am I permitted to touch?" <code>import_allowed_components</code> answers "who am I allowed to depend on?" When a lint needs to know "which components may cross which external boundary," it does not hardcode a list that rots — it reads <code>external_seams</code> at lint-time. When the dispatcher needs to know which files a brief may touch, it reads <code>focus_dirs</code>. When context has to be injected into an agent's prompt, the question stops being "which files do I paste?" and becomes "what durable artifact should exist so the right context is <em>selectable deterministically</em>?"</p>
 <p>The payoff was concrete and it compounded. Adding a single typed field to that registry — one field naming which components cross an external boundary — replaced four hand-maintained allowlists that were quietly drifting, unlocked three new lints all reading the same field, and on its first run surfaced roughly eighteen hundred latent violations no one had a way to ask about before. The type named a previously-anonymous shape, and the named shape became a question you could pose to the whole codebase at once. The reflective codebase <em>is</em> the agent substrate. The more the system knows about itself, the less the agent has to guess.</p>
 <p>There is a reason this step was affordable, and it is the quiet engine under the whole road. Somewhere back around step three, refactoring stopped being expensive. A cross-format migration that touched fifty-eight files and rewrote five thousand lines — the kind of change I would once have deferred for a quarter — took about five hours of agent time over a dinner break. When the mechanical cost of restructuring collapses, the economics of architecture invert: postponing the right shape becomes the expensive choice, and building the right model becomes something you can do the moment you see you need it. The hard part was never touching fifty-eight files; it was knowing that fifty-eight files should be touched. The mechanics went free. Deciding <em>which</em> model to build did not.</p>

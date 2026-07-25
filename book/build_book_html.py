@@ -179,6 +179,7 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
+    "inset",
 )
 # A comment whose first token is one of the vocabulary keywords — used to peel a marker glued to the head
 # of a prose block (placement-robust stripping: an author need not remember a blank line) and, in the gate,
@@ -188,6 +189,12 @@ MARKER_KEYWORDS = (
 # the vocabulary so the gate still treats a leaked one as a leak.
 _MARKER_KEYWORD_ALT = "|".join(re.escape(k) for k in MARKER_KEYWORDS)
 _MARKER_COMMENT_RE = re.compile(rf"^<!--\s*(?:{_MARKER_KEYWORD_ALT})(?:\s*:|\s*-->)")
+# `<!-- inset: <title> -->` heads a fenced code block and lifts it into a titled inset box (a real
+# artifact from the system, visually set apart). It is NOT a standalone directive like `figure:` — it
+# needs the fence that follows it, so it sits GLUED to the fence (no blank line) inside the same block
+# and is peeled by the fenced-code branch, not by `_consume_leading_marker`. In the vocabulary SSOT so
+# the notation-leak gate still treats any un-consumed / mis-placed one as a leak.
+_INSET_RE = re.compile(r"^<!--\s*inset:\s*(?P<title>.+?)\s*-->$")
 
 
 def _collect_glossary(chapters: list[dict]) -> None:
@@ -601,6 +608,25 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                     f"mid-block marker {_ln.strip()!r}")
         block = "\n".join(blk_lines)
         stripped = block.strip()
+        # A titled INSET — `<!-- inset: <title> -->` glued to the head of a fenced code block. The build
+        # lifts the code into a set-apart box carrying a small label ("a real artifact from the system"),
+        # then renders the fence as usual inside it. The marker sits in the SAME block as the fence (no
+        # blank line between), so it never reaches `_consume_leading_marker` — it is peeled here.
+        _inset_m = _INSET_RE.match(stripped.splitlines()[0].strip())
+        if _inset_m and len(stripped.splitlines()) > 1 and stripped.splitlines()[1].strip().startswith("```"):
+            title = _inset_m.group("title")
+            lines = stripped.splitlines()[1:]  # drop the inset marker; the rest is the fence
+            lang = lines[0].strip()[3:].strip().lower()
+            inner_lines = lines[1:]
+            if inner_lines and inner_lines[-1].strip() == "```":
+                inner_lines = inner_lines[:-1]
+            inner = "\n".join(inner_lines)
+            body = (render_mermaid_svg(inner) if lang == "mermaid"
+                    else f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
+            # <figure> (a landmark-free grouping) with a demoted `inset-title` label — NOT an <hN> (no
+            # heading-order break) — so it reuses the concept-inset label typography.
+            _emit(f'<figure class="code-inset"><p class="inset-title">{inline(title)}</p>{body}</figure>')
+            continue
         # Fenced code — a ```mermaid block is rendered to a STATIC INLINE SVG at build time (so raw
         # mermaid source ships NOWHERE — not in the web HTML, not in the PDF); any other fenced block
         # renders as a plain <pre><code>.
@@ -896,6 +922,31 @@ blockquote.concept-inset p {{ margin: 0 0 0.7rem; line-height: 1.6; }}
 blockquote.concept-inset p:last-child {{ margin-bottom: 0; }}
 blockquote.concept-inset strong {{ color: var(--inset-header); }}
 blockquote.concept-inset em {{ font-style: italic; }}  /* inline emphasis still italicizes inside roman body */
+/* CODE INSET — a fenced code listing lifted into a titled box: "here is a real artifact from the system."
+   It shares the concept-inset's amber header-band label typography (the sidebar HEADER, `p.inset-title`,
+   demoted so no heading-order break), but its body is a monospace listing, not roman prose. The header
+   sits flush to the panel edges; the <pre> keeps the page's usual code styling, un-boxed inside the panel
+   so the box's own border is the only frame. */
+figure.code-inset {{
+  --inset-bg: #f6f4ef; --inset-accent: #b07a2b; --inset-header: #4a3a1e; --inset-header-bg: #ece4d5;
+  --inset-radius: 6px; --inset-pad-x: 1.35rem;
+  background: var(--inset-bg); border: 1px solid #e3dccb;
+  border-left: 5px solid var(--inset-accent); border-radius: var(--inset-radius);
+  margin: 1.7rem 0; max-width: 40rem; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
+}}
+figure.code-inset .inset-title {{
+  font-family: "Source Sans 3", sans-serif; font-style: normal; font-weight: 700;
+  color: var(--inset-header); background: var(--inset-header-bg);
+  margin: 0; padding: 0.55rem var(--inset-pad-x);
+  border-bottom: 1px solid #ddd3bf;
+  font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
+}}
+figure.code-inset .inset-title::before {{
+  content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.5rem;
+  background: var(--inset-accent); border-radius: 2px; vertical-align: middle;
+}}
+figure.code-inset pre {{ margin: 0; padding: 0.9rem var(--inset-pad-x); background: transparent; border: 0; }}
 /* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
    Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
    Taxonomy + spec: book/_design/callout-typography.md. */
@@ -2466,6 +2517,12 @@ blockquote.concept-inset {{ font-style: normal; background: #f6f4ef; border: 1px
 blockquote.concept-inset .inset-title {{ font-family: "Source Sans 3", sans-serif; font-weight: 700;
                                          color: #4a3a1e; background: #ece4d5; margin: 0 -1rem 0.7rem;
                                          padding: 0.5rem 1rem; border-radius: 5px 5px 0 0; font-size: 0.86rem; }}
+figure.code-inset {{ background: #f6f4ef; border: 1px solid #e3dccb; border-left: 5px solid #b07a2b;
+                     border-radius: 5px; margin: 0.9rem 0; overflow: hidden; break-inside: avoid; }}
+figure.code-inset .inset-title {{ font-family: "Source Sans 3", sans-serif; font-weight: 700;
+                                  color: #4a3a1e; background: #ece4d5; margin: 0; padding: 0.42rem 0.7rem;
+                                  border-bottom: 1px solid #ddd3bf; font-size: 0.82rem; }}
+figure.code-inset pre {{ margin: 0; padding: 0.5rem 0.7rem; background: transparent; border: 0; }}
 blockquote.thesis-box {{ font-style: normal; background: #f2effb; border: 1px solid #d9d2ef;
                          border-left: 4px solid #7c6bb0; color: #241f33; border-radius: 5px;
                          padding: 0.8rem 1rem; break-inside: avoid; }}
