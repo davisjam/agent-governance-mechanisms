@@ -1,24 +1,30 @@
 #!/usr/bin/env bash
-# Bootstrap OPTIONAL dev/test dependencies for the catalogue.
+# Bootstrap the catalogue's dev/test Node tooling — BOTH node trees, so every check that runs in CI
+# also runs locally (find failures where they're observable, not only on the runner).
 #
-# The catalogue tool (catalog.py) and its test suite's Tier 1 are stdlib-Python and need NOTHING —
-# `git clone && python3 catalog.py build` just works. This script installs the OPTIONAL Node tooling
-# used by the Tier-2 checks (axe-core a11y + html-validate HTML validity). axe also needs a Chrome/Chromium browser.
+# Tier-1 tests are stdlib-Python. But this is no longer a "needs nothing" build:
+#   - book/  (REQUIRED by the build + deploy gates): mermaid-cli (mmdc) renders every ```mermaid fence to
+#     inline SVG at build time, and Puppeteer drives the browser gates (book PDF, responsive-layout,
+#     console-error). Without it, `python3 catalog.py build` fails loud on the first mermaid diagram.
+#   - root   (Tier-2 checks): html-validate (HTML validity) + axe-core (accessibility).
+# `npm ci` installs the EXACT tree pinned in each package-lock.json — deterministic, same as CI. Needs Node 22+.
 #
 # See DEVELOP.md for the full dependency map and how the test tiers work.
 set -euo pipefail
 cd "$(dirname "$0")"
 
 if ! command -v npm >/dev/null 2>&1; then
-  echo "npm not found. Install Node.js first: https://nodejs.org  (then re-run ./setup.sh)"
+  echo "npm not found. Install Node.js 22+ first: https://nodejs.org  (then re-run ./setup.sh)"
   exit 2
 fi
 
-echo "Installing Tier-2 test tooling (axe-core + html-validate)…"
-# `npm ci` installs the EXACT tree pinned in package-lock.json (with integrity hashes) — deterministic,
-# and it never silently bumps a dependency the way `npm install` can. Same command CI uses.
+echo "Installing book/ build + gate tooling (mermaid-cli for the build, Puppeteer for the PDF/responsive/console gates)…"
+( cd book && npm ci )
+
+echo "Installing root Tier-2 tooling (html-validate + axe-core)…"
 npm ci
 
 echo
-echo "Done. Run the full test suite with:   python3 catalog.py test"
-echo "(axe needs a Chrome/Chromium browser on the machine; without one, the axe tier auto-skips.)"
+echo "Done — both node trees installed. Every CI check now runs locally:"
+echo "  python3 catalog.py test          # build + full suite (T1 + T2 html-validate / axe)"
+echo "(the mermaid render + PDF/responsive/console gates use book/ Puppeteer's bundled Chromium.)"

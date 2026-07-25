@@ -12,7 +12,7 @@ How to extend the catalogue, work with the packaged skill, and run/write the tes
 | `python3 catalog.py test [--strict]` | build, then run the full test suite (see the **Tests** section) |
 | `python3 catalog.py deploy local` | validate → build → test → serve at `http://127.0.0.1:8137/` |
 | `python3 catalog.py deploy github` | validate → build → test → commit + push (CI deploys Pages) |
-| `./setup.sh` | install the OPTIONAL Node dep (`@axe-core/cli`) for the accessibility test tier |
+| `./setup.sh` | install the Node tooling — **book/** (mermaid-cli + Puppeteer; REQUIRED by the build + gates) and **root** (html-validate + axe, Tier-2) — so every CI check runs locally |
 
 ## Adding or extending a mechanism
 
@@ -67,7 +67,7 @@ The Pages deploy runs `catalog.py validate` → `catalog.py build` → `catalog_
 gate locally — one command reproduces exactly what CI enforces:
 
 ```
-./setup.sh                       # once: installs the pinned axe + html-validate (needs Node 22+)
+./setup.sh                       # once: installs BOTH node trees — book/ (mermaid-cli + Puppeteer) + root (html-validate + axe). Needs Node 22+
 python3 catalog.py build         # regenerate HTML (axe/html-validate scan the built pages)
 python3 catalog_tests.py --full  # the authoritative run — every check, no incremental skips
 ```
