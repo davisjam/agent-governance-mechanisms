@@ -579,6 +579,12 @@ GITHUB_SVG = ('<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true
               '.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 '
               '1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>')
 
+PDF_SVG = ('<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" '
+           'style="vertical-align:-2px;fill:currentColor"><path d="M4 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h9a1 1 '
+           '0 0 0 1-1V4.5L9.5 0H4zm5 1.5L12.5 5H9V1.5zM4.9 8.2h1c.5 0 .9.4.9.9s-.4.9-.9.9h-.4v1.1h-.6V8.2zm.6.5'
+           'v.8h.3c.2 0 .3-.1.3-.4s-.1-.4-.3-.4h-.3zm2 .0h.9c.6 0 1 .5 1 1.4s-.4 1.5-1 1.5h-.9V8.7zm.6.5v1.8h.2'
+           'c.3 0 .5-.3.5-.9s-.2-.9-.5-.9h-.2zm2.3-.5h1.7v.5h-1.1v.6h1v.5h-1v1.2h-.6V8.7z"></path></svg>')
+
 SITE_FOOTER = (f'<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, '
                f'2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; '
                f'<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
@@ -590,8 +596,9 @@ TOPNAV = ('<div class="topnav"><a href="https://davisjam.github.io">James C. Dav
           '<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
           f'{GITHUB_SVG} GitHub</a></div>')
 
-# Landing top-right 2×2 nav grid — bigger, higher-contrast tap targets than the old topnav link pair.
-# Layout:  Author | GitHub  /  Quick Start | Book.
+# Landing top-right 3×2 nav grid — bigger, higher-contrast tap targets than the old topnav link pair.
+# Layout:  Author | GitHub | Quick Start   (top row, 3 cells)
+#          Book | Book (PDF)                (bottom row, 2 cells centered under the 3-col track)
 NAV_GRID = (
     '<nav class="nav-grid" aria-label="Primary">'
     '<a class="ng-cell" href="https://davisjam.github.io">'
@@ -600,8 +607,10 @@ NAV_GRID = (
     f'<span class="ng-t">{GITHUB_SVG} GitHub</span><span class="ng-s">the source repository</span></a>'
     '<a class="ng-cell" href="quick-start.html">'
     '<span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a>'
-    '<a class="ng-cell ng-book" href="book/index.html">'
-    '<span class="ng-t">Book</span><span class="ng-s">read the book</span></a>'
+    '<a class="ng-cell ng-book ng-bottom" href="book/index.html">'
+    '<span class="ng-t">Book</span><span class="ng-s">read the web book</span></a>'
+    '<a class="ng-cell ng-book ng-bottom" href="book/mage-book.pdf">'
+    f'<span class="ng-t">{PDF_SVG} Book (PDF)</span><span class="ng-s">download offline</span></a>'
     '</nav>')
 
 
@@ -906,8 +915,14 @@ LANDING_CSS = """
   .book-h1 { margin:6px 0 2px; }
   .book-sub { color:var(--accent); font-weight:700; font-size:17px; letter-spacing:.01em;
               margin:0 0 16px; }
-  .nav-grid { position:absolute; top:16px; right:20px; display:grid; grid-template-columns:1fr 1fr;
-              gap:9px; width:min(340px,52vw); z-index:5; }
+  .nav-grid { position:absolute; top:16px; right:20px; display:grid; grid-template-columns:repeat(6,1fr);
+              gap:9px; width:min(480px,64vw); z-index:5; }
+  /* Top row: three cells, each spanning 2 of the 6 tracks. */
+  .nav-grid .ng-cell { grid-column:span 2; }
+  /* Bottom row: two cells, centered under the three above — each spans 2 tracks, offset by 1 so the
+     pair (4 tracks) is centered in the 6-track grid (1 empty track on each side). */
+  .nav-grid .ng-bottom:nth-of-type(4) { grid-column:2 / span 2; }
+  .nav-grid .ng-bottom:nth-of-type(5) { grid-column:4 / span 2; }
   .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:2px;
               border:1.6px solid #cbd5e1; border-radius:10px; padding:9px 12px; background:#fff;
               text-decoration:none; color:var(--ink); min-height:52px; transition:box-shadow .12s, border-color .12s, background .12s; }
@@ -917,7 +932,8 @@ LANDING_CSS = """
   .nav-grid .ng-s { font-size:11px; color:var(--muted); line-height:1.25; }
   .nav-grid .ng-book { border-color:var(--accent); background:#fff8f0; }
   .nav-grid .ng-book .ng-t { color:var(--accent); }
-  @media (max-width:820px){ .nav-grid { position:static; width:100%; margin:0 0 14px; } }
+  @media (max-width:820px){ .nav-grid { position:static; width:100%; margin:0 0 14px; }
+              .nav-grid .ng-cell, .nav-grid .ng-bottom:nth-of-type(4), .nav-grid .ng-bottom:nth-of-type(5) { grid-column:span 3; } }
 .site-foot .book-foot { white-space:nowrap; font-weight:600; }
   .loop { border:1px solid var(--line); border-radius:11px; padding:16px 17px 15px; margin:4px 0 20px; background:#fbfcfd; }
   .loop .hd { margin:0 0 12px; font-size:14px; color:#222; }
@@ -1285,6 +1301,26 @@ def _landing_ways() -> str:
     return "\n  ".join(out)
 
 
+# Defined in <head> so the workflow-figure iframe's `onload="fitFig(this)"` can never fire before the
+# function exists (a fast/cached iframe load previously raced the later inline <script> → "fitFig is
+# not defined"). Doubled braces so it survives `LANDING_INTRO.format(...)` — but LANDING_INTRO is the
+# only thing .format()'d; this constant is spliced into the head literal, so it needs single braces.
+LANDING_HEAD_SCRIPT = """<script>
+function fitFig(f){
+  try{
+    var d=f.contentWindow.document, w=d.documentElement.scrollWidth||1040, h=d.documentElement.scrollHeight||600;
+    var frame=f.parentElement, wf=frame.parentElement;
+    var avail=wf.clientWidth, s=Math.min(1, avail/w);
+    f.style.width=w+'px'; f.style.height=h+'px';
+    f.style.transformOrigin='top left'; f.style.transform='scale('+s+')';
+    // size the frame to the SCALED figure and center it, so a figure narrower than the
+    // column isn't pinned left by the top-left transform origin
+    frame.style.width=(w*s)+'px'; frame.style.height=(h*s)+'px'; frame.style.margin='0 auto';
+  }catch(e){}
+}
+</script>
+"""
+
 LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
   <div class="book-sub">3-D Printing Production Software</div>
 
@@ -1478,7 +1514,7 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
     <div class="tl-kicker">The goal: a governed engineering environment</div>
     <figure class="wf">
       <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
-        title="The development-process figure" tabindex="0" onload="fitFig(this)"></iframe></div>
+        title="The development-process figure" tabindex="0" onload="window.fitFig&&fitFig(this)"></iframe></div>
       <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
       probably know up front: business requirements, security scanners you always run, etc. Others you
       need to figure out through trial and
@@ -1487,19 +1523,15 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
       future moves as needed.</figcaption>
     </figure>
     <script>
-    function fitFig(f){{
-      try{{
-        var d=f.contentWindow.document, w=d.documentElement.scrollWidth||1040, h=d.documentElement.scrollHeight||600;
-        var frame=f.parentElement, wf=frame.parentElement;
-        var avail=wf.clientWidth, s=Math.min(1, avail/w);
-        f.style.width=w+'px'; f.style.height=h+'px';
-        f.style.transformOrigin='top left'; f.style.transform='scale('+s+')';
-        // size the frame to the SCALED figure and center it, so a figure narrower than the
-        // column isn't pinned left by the top-left transform origin
-        frame.style.width=(w*s)+'px'; frame.style.height=(h*s)+'px'; frame.style.margin='0 auto';
-      }}catch(e){{}}
-    }}
-    window.addEventListener('resize', function(){{ var f=document.getElementById('wf-frame'); if(f) fitFig(f); }});
+    // fitFig is DEFINED in <head> (LANDING_HEAD_SCRIPT) so a fast/cached iframe onload that fires
+    // before this inline script can still call it (the onload also guards with `window.fitFig&&`).
+    // Here we (re)attach a load listener + resize listener; addEventListener('load') fires reliably
+    // even if the iframe already loaded when this runs.
+    (function(){{
+      var f=document.getElementById('wf-frame');
+      if(f){{ f.addEventListener('load', function(){{ window.fitFig&&fitFig(f); }}); if(window.fitFig) fitFig(f); }}
+      window.addEventListener('resize', function(){{ var el=document.getElementById('wf-frame'); if(el&&window.fitFig) fitFig(el); }});
+    }})();
     </script>
   </div>
 
@@ -1986,7 +2018,7 @@ def cmd_build(_args) -> int:
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
                f"<title>Agent Governance Mechanisms</title>\n{FONTS_LINK}\n"
-               f"<style>{PAGE_CSS}{LANDING_CSS}{FONT_CSS}</style>\n</head>\n"
+               f"<style>{PAGE_CSS}{LANDING_CSS}{FONT_CSS}</style>\n{LANDING_HEAD_SCRIPT}</head>\n"
                f'<body class="landing">\n<main>\n{landing_body}\n{_site_footer("")}\n</main>\n</body>\n</html>\n')
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
@@ -2113,6 +2145,42 @@ def cmd_check_responsive(_args) -> int:
     return subprocess.run(["node", script, index_html], cwd=ROOT).returncode
 
 
+def _served_html_pages() -> list[str]:
+    """Every built page that is part of the served site — the SAME walk axe/html-validate use
+    (`tests.common.html_files`): walk from ROOT, pruning the non-site + gitignored dirs (the plugin
+    bundle, node_modules, serve dirs, `_drafts/`). Returned as absolute paths, sorted for stable output."""
+    prune = site_prune_dirs()
+    out: list[str] = []
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if d not in prune]
+        out.extend(os.path.abspath(os.path.join(dirpath, fn))
+                   for fn in filenames if fn.endswith(".html"))
+    return sorted(out)
+
+
+def cmd_check_console(_args) -> int:
+    """Deploy-blocking console-error gate: build the site, then drive headless Chrome to load EVERY
+    served HTML page and assert none produces a `pageerror` (uncaught exception / unhandled rejection)
+    or a `console` message of type `error`. Catches script-ordering races (e.g. an iframe `onload`
+    firing before its handler is defined → "foo is not defined"), failed fetches logged as errors, and
+    missing subresources — none of which the stdlib `validate` gate or axe/html-validate can see.
+
+    Like check-responsive it needs a browser, so the measurement lives in `book/check_console.mjs` and
+    reuses the book/ Puppeteer dep. This command enumerates the served pages (same site-walk as axe) and
+    passes them as argv. Exit 0 = PASS (no page errored); exit non-zero = FAIL (lists every page+error)."""
+    cmd_build(None)
+    script = os.path.join(ROOT, "book", "check_console.mjs")
+    if not os.path.exists(script):
+        print(f"ERROR: console-check script missing: {script}", file=sys.stderr)
+        return 1
+    pages = _served_html_pages()
+    if not pages:
+        print("ERROR: no served HTML pages found after build", file=sys.stderr)
+        return 1
+    print(f"check-console: loading {len(pages)} served page(s) in headless Chrome...")
+    return subprocess.run(["node", script, *pages], cwd=ROOT).returncode
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description="Validate + query the governance-catalogue schema.")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -2129,6 +2197,7 @@ def main() -> int:
     tp = sub.add_parser("test", help="build, then run the catalogue + skill test suite (markdown/html/skill; axe + claude validate)")
     tp.add_argument("--strict", action="store_true", help="treat a Tier-2 SKIP (missing axe/claude) as failure")
     sub.add_parser("check-responsive", help="deploy-blocking gate: assert the landing masonry tiles into >=3 columns at wide width and 1 column at phone width (headless Chrome; needs book/ Puppeteer)")
+    sub.add_parser("check-console", help="deploy-blocking gate: load EVERY served HTML page in headless Chrome and fail on any pageerror / console.error (headless Chrome; needs book/ Puppeteer)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
@@ -2137,6 +2206,7 @@ def main() -> int:
     args = p.parse_args()
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
             "build": cmd_build, "test": cmd_test, "check-responsive": cmd_check_responsive,
+            "check-console": cmd_check_console,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 
 

@@ -82,6 +82,14 @@ jobs:
       # regression that flattens the masonry to a single column fails the deploy here.
       - name: Responsive-layout gate (landing wide != phone)
         run: python3 catalog.py check-responsive
+      # ── Console-error gate (deploy-blocking) ────────────────────────────────────────────────────
+      # Load EVERY served HTML page in headless Chrome and fail the deploy on any pageerror (uncaught
+      # exception / unhandled rejection) or console.error — catches JS-runtime defects (script-ordering
+      # races like an iframe onload firing before its handler is defined, failed fetches, missing
+      # subresources) that the structural gates (validate / axe / html-validate) cannot see. Reuses the
+      # book/ Puppeteer + bundled Chromium already installed above.
+      - name: Console-error gate (no pageerror / console.error on any served page)
+        run: python3 catalog.py check-console
       - name: Assemble site artifact (exclude .git / node_modules / .github; KEEP book/mage-book.pdf)
         run: |
           mkdir -p _site

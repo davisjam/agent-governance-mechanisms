@@ -255,10 +255,17 @@ def check_intra_book_links() -> tuple[list[Finding], dict]:
         for ref in re.findall(r'(?:href|src)="([^"]+)"', body):
             if ref.startswith(("http://", "https://", "mailto:", "data:", "//", "#")):
                 continue
-            checked += 1
             tgt_rel = ref.split("#", 1)[0]
             if not tgt_rel:
                 continue
+            # The book PDF (book/mage-book.pdf) is a CI-generated, Pages-published artifact — it is NOT
+            # committed and is gitignored, so it legitimately 404s on a local checkout but resolves on the
+            # deployed site (same allowance the book landing's Download-PDF link relies on). Don't count
+            # it as a broken link. (The book landing itself dodges this only because it isn't a numbered
+            # chapter page; the preface links it too, and IS a chapter page — hence this explicit skip.)
+            if os.path.basename(tgt_rel) == "mage-book.pdf":
+                continue
+            checked += 1
             tgt = os.path.normpath(os.path.join(base, tgt_rel))
             if not os.path.exists(tgt):
                 findings.append(Finding(src_md, "", f"{rel(p)} -> {ref} (missing target)"))
