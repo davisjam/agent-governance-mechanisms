@@ -2092,6 +2092,27 @@ def cmd_test(args) -> int:
     return subprocess.run(cmd, cwd=ROOT).returncode
 
 
+def cmd_check_responsive(_args) -> int:
+    """Deploy-blocking responsive-layout gate: build the site, then drive headless Chrome to assert
+    the landing `.masonry` region renders a structurally DIFFERENT layout at wide vs phone width
+    (>= 3 columns wide, exactly 1 column on a phone) — the author's success metric made mechanical.
+
+    This is NOT part of `validate` (which is stdlib-only, clone-and-run, no browser dep). Like the PDF
+    density/mermaid gates it is a non-stdlib deploy-time check that needs a browser, so the measurement
+    lives in `book/check_responsive.mjs` and reuses the book/ Puppeteer dep (install via `npm ci` in
+    book/). Exit 0 = PASS (prints wide/phone column counts); exit non-zero = FAIL."""
+    cmd_build(None)
+    index_html = os.path.join(ROOT, "index.html")
+    if not os.path.exists(index_html):
+        print(f"ERROR: {index_html} missing after build", file=sys.stderr)
+        return 1
+    script = os.path.join(ROOT, "book", "check_responsive.mjs")
+    if not os.path.exists(script):
+        print(f"ERROR: responsive-check script missing: {script}", file=sys.stderr)
+        return 1
+    return subprocess.run(["node", script, index_html], cwd=ROOT).returncode
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description="Validate + query the governance-catalogue schema.")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -2107,6 +2128,7 @@ def main() -> int:
     sub.add_parser("build", help="render every .md → .html + regenerate the landing census")
     tp = sub.add_parser("test", help="build, then run the catalogue + skill test suite (markdown/html/skill; axe + claude validate)")
     tp.add_argument("--strict", action="store_true", help="treat a Tier-2 SKIP (missing axe/claude) as failure")
+    sub.add_parser("check-responsive", help="deploy-blocking gate: assert the landing masonry tiles into >=3 columns at wide width and 1 column at phone width (headless Chrome; needs book/ Puppeteer)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
@@ -2114,8 +2136,8 @@ def main() -> int:
     d.add_argument("-m", "--message", default="deploy: rebuild site", help="commit message for github mode")
     args = p.parse_args()
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
-            "build": cmd_build, "test": cmd_test, "install-hooks": cmd_install_hooks,
-            "deploy": cmd_deploy}[args.cmd](args)
+            "build": cmd_build, "test": cmd_test, "check-responsive": cmd_check_responsive,
+            "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 
 
 if __name__ == "__main__":

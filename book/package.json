@@ -2,11 +2,12 @@
   "name": "mage-book-pdf-render",
   "private": true,
   "type": "module",
-  "description": "Node-only tooling for the MAGE book PDF print edition. NOT part of the stdlib-only catalog.py / site build — used solely by `build_book_html.py --pdf` and the Pages CI to render book/mage-book.pdf via Paged.js + Puppeteer. The web book build stays dependency-free.",
+  "description": "Node-only tooling for the MAGE book PDF print edition. NOT part of the stdlib-only catalog.py / site build — used by `build_book_html.py` to render ```mermaid fences to inline SVG at BUILD time (mermaid-cli / mmdc) and by `--pdf` to render book/mage-book.pdf via Paged.js + Puppeteer. The web book build stays dependency-free EXCEPT for the mermaid-cli SVG pre-render (guarded: a page with no mermaid fence needs no Node).",
   "scripts": {
     "render-pdf": "node render_pdf.mjs _print/print.html mage-book.pdf"
   },
   "dependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.0",
     "pagedjs": "0.4.3",
     "puppeteer": "^23.0.0"
   }

@@ -28,11 +28,16 @@ substituted at build time so the headline numbers live in one place.
 """
 from __future__ import annotations
 
+import hashlib
 import html
 import json
+import os
 import pathlib
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from typing import NamedTuple
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -40,23 +45,101 @@ ROOT = HERE.parent  # the catalogue root — the appendix reads the entry .md fi
 ACCENT = "#1a4a7a"
 COPYRIGHT = "© James C. Davis, 2026–present"
 
-# Mermaid runtime (CDN) — pulled in so the appendix's ```mermaid placeholder blocks render as diagrams.
-MERMAID_CDN = (
-    '<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>'
-    # SINGLE SOURCE OF TRUTH for mermaid styling — every diagram in the book renders through this one
-    # config, so all diagrams change together. The defaults make every diagram legibility-compliant
-    # (labels >= 19px); no per-diagram font hacks. A local `%%{init}%%` override belongs in a chapter
-    # only where a specific diagram genuinely needs one. GOTCHA: sequence diagrams IGNORE
-    # themeVariables.fontSize, so the actor/message/note sizes are set explicitly under `sequence`.
-    "<script>mermaid.initialize({"
-    " startOnLoad: true,"
-    " securityLevel: 'loose',"
-    " themeVariables: { fontFamily: 'Georgia, \"Times New Roman\", serif', fontSize: '20px' },"
-    " flowchart: { htmlLabels: true, nodeSpacing: 55, rankSpacing: 60, padding: 12 },"
-    " sequence: { actorFontSize: 20, messageFontSize: 18, noteFontSize: 18, width: 170, height: 55 },"
-    " state: { titleTopMargin: 12 }, er: { fontSize: 18 }, class: {}"
-    " });</script>"
+# Mermaid diagrams are rendered to STATIC INLINE SVG at BUILD time (see `render_mermaid_svg` below),
+# NOT via a client-side runtime. This is why BOTH the web book AND the PDF ship a real vector diagram:
+# the PDF pipeline (Puppeteer + Paged.js) never ran/awaited a client-side `mermaid.run()`, so the raw
+# ```mermaid source used to ship as code text in the PDF. Build-time SVG kills that whole class (no
+# JS-timing fragility) and is consistent with how every other figure in the book is inlined as SVG.
+# `MERMAID_CDN` is retained as an EMPTY string so the `mermaid=` chapter flag / `runtime` plumbing stays
+# wired without pulling any client-side script (diagrams are already baked into the HTML as SVG).
+MERMAID_CDN = ""
+
+# Raw-mermaid-source markers — the control the author asked for. If ANY of these literal substrings
+# appears in the rendered PDF text OR in a generated book/*.html code-box body, an un-rendered ```mermaid
+# fence shipped (build-time SVG conversion silently failed / was bypassed). These are mermaid DIAGRAM-TYPE
+# HEADER keywords + `subgraph`: a mermaid diagram ALWAYS opens with a type header (`flowchart`, `graph`,
+# `erDiagram`, …), and these tokens do NOT survive into a rendered diagram's extracted TEXT (a rendered
+# SVG carries the NODE LABELS, never the source syntax). Kept as one tuple so the PDF assert and the web
+# book-lint share the exact same class.
+#   Deliberately NOT included: the edge operator `-->`. It is ambiguous — it appears in legitimate escaped
+#   prose and (as `<!-- … -->`) in HTML-comment syntax that can leak into extracted text — so it would
+#   false-positive. Every un-rendered diagram still trips a header keyword above, so no detection is lost.
+#   Markers are diagram-specific tokens unlikely to occur in running prose. Bare common English words
+#   that happen to be mermaid headers (`pie`, `journey`, `gantt`) are omitted — the book uses none of
+#   those diagram types, and including them would risk a prose false-positive in the PDF full-text scan.
+MERMAID_SOURCE_MARKERS: tuple[str, ...] = (
+    "flowchart ", "graph TD", "graph LR", "graph TB", "graph RL", "graph BT",
+    "subgraph ", "sequenceDiagram", "stateDiagram", "erDiagram", "classDiagram",
 )
+
+# SINGLE SOURCE OF TRUTH for mermaid styling: `assets/mermaid-config.json`, passed to `mmdc -c`. It
+# mirrors the former `mermaid.initialize` config (Georgia serif, 20px labels, flowchart/sequence spacing)
+# so every diagram renders through one config and all diagrams change together. GOTCHA: sequence diagrams
+# IGNORE themeVariables.fontSize, so actor/message/note sizes are set explicitly under `sequence`.
+_MERMAID_CONFIG = HERE / "assets" / "mermaid-config.json"
+_MERMAID_CACHE = HERE / ".mermaid-svg-cache"   # content-hash → rendered SVG; gitignored build cache
+_MMDC = HERE / "node_modules" / ".bin" / "mmdc"
+
+
+def render_mermaid_svg(source: str) -> str:
+    """Render a ```mermaid fence body to a self-contained inline `<svg>…</svg>` at BUILD time via
+    mermaid-cli (`mmdc`, which drives the Puppeteer toolchain). Result is cached by a content hash of
+    (source + config) so a rebuild that didn't touch a diagram is instant. Fails LOUD if mmdc is missing
+    or a diagram fails to render — a broken diagram must never silently fall back to shipping raw source
+    (the whole point of this change is that raw mermaid syntax ships NOWHERE). The returned SVG is width/
+    height-stripped (like the other inline figures) so the CSS `pre.mermaid svg { max-width:100% }` rule
+    still bounds it, and wrapped in `<pre class="mermaid">` so existing print/screen CSS applies unchanged.
+    """
+    src = source.strip()
+    key = hashlib.sha256(
+        (src + "\x00" + _MERMAID_CONFIG.read_text(encoding="utf-8")).encode("utf-8")
+    ).hexdigest()
+    cached = _MERMAID_CACHE / f"{key}.svg"
+    if cached.exists():
+        svg = cached.read_text(encoding="utf-8")
+    else:
+        if not _MMDC.exists():
+            raise SystemExit(
+                f"mermaid-cli (mmdc) not found at {_MMDC} — run `npm install` in book/ "
+                "(mermaid fences are rendered to inline SVG at build time)")
+        _MERMAID_CACHE.mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory() as td:
+            inp = pathlib.Path(td) / "diagram.mmd"
+            outp = pathlib.Path(td) / "diagram.svg"
+            inp.write_text(src + "\n", encoding="utf-8")
+            r = subprocess.run(
+                [str(_MMDC), "-i", str(inp), "-o", str(outp),
+                 "-c", str(_MERMAID_CONFIG), "-b", "transparent", "--quiet"],
+                capture_output=True, text=True,
+                env={**_mermaid_env()},
+            )
+            if r.returncode != 0 or not outp.exists():
+                raise SystemExit(
+                    f"mmdc failed to render a mermaid diagram (rc={r.returncode}):\n"
+                    f"{r.stderr}\n--- source ---\n{src}")
+            svg = outp.read_text(encoding="utf-8")
+        cached.write_text(svg, encoding="utf-8")
+
+    # Splice only the <svg>…</svg> (drop any XML prolog / doctype), matching the inline-figure pattern.
+    svg = re.sub(r"^\s*<\?xml[^>]*\?>\s*", "", svg)
+    svg = re.sub(r"<!DOCTYPE[^>]*>\s*", "", svg, flags=re.I)
+    m = re.search(r"<svg\b.*</svg>", svg, re.S)
+    if m:
+        svg = m.group(0)
+    # Drop the fixed width/height so the CSS max-width rule governs sizing (same as other inline SVGs).
+    svg = re.sub(r'(<svg\b[^>]*?)\swidth="[^"]*"', r"\1", svg, count=1)
+    svg = re.sub(r'(<svg\b[^>]*?)\sheight="[^"]*"', r"\1", svg, count=1)
+    return f'<pre class="mermaid">{svg}</pre>'
+
+
+def _mermaid_env() -> dict[str, str]:
+    """Environment for the `mmdc` subprocess: inherit the parent env plus a Puppeteer executable-path
+    hint if one is set (mirrors render_pdf.mjs, which honors PUPPETEER_EXECUTABLE_PATH / CHROME_PATH)."""
+    env = dict(os.environ)
+    exe = env.get("PUPPETEER_EXECUTABLE_PATH") or env.get("CHROME_PATH")
+    if exe:
+        env["PUPPETEER_EXECUTABLE_PATH"] = exe
+    return env
 
 # Chapter metadata comments — ONLY the two title keys. Scoped to these keys (not a generic `[a-z-]+`)
 # so the metadata strip never swallows a same-shaped directive comment that belongs in the body: a
@@ -449,8 +532,9 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                     f"index tag must head its block (blank line before it): mid-block tag {_ln.strip()!r}")
         block = "\n".join(blk_lines)
         stripped = block.strip()
-        # Fenced code — a ```mermaid block renders as <pre class="mermaid"> (the mermaid runtime
-        # transforms it into a diagram); any other fenced block renders as a plain <pre><code>.
+        # Fenced code — a ```mermaid block is rendered to a STATIC INLINE SVG at build time (so raw
+        # mermaid source ships NOWHERE — not in the web HTML, not in the PDF); any other fenced block
+        # renders as a plain <pre><code>.
         if stripped.startswith("```"):
             lines = block.splitlines()
             lang = lines[0].strip()[3:].strip().lower()
@@ -459,7 +543,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 inner_lines = inner_lines[:-1]
             inner = "\n".join(inner_lines)
             if lang == "mermaid":
-                _emit(f'<pre class="mermaid">{html.escape(inner, quote=False)}</pre>')
+                _emit(render_mermaid_svg(inner))
             else:
                 _emit(f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
             continue
@@ -2675,6 +2759,18 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
         problems.append(f"page count {pages} > ceiling {_PDF_PAGE_CEILING} (runaway pagination)")
 
     text = _extract_pdf_text(pdf_path)
+
+    # ASSERT (author-requested control): no RAW mermaid source may ship in the PDF. A rendered diagram
+    # carries only its node labels as text; the `flowchart`/`subgraph`/`-->` syntax appears ONLY if a
+    # ```mermaid fence shipped un-rendered as a code box (the exact bug this change fixes). Print an
+    # explicit PASS/FAIL line so the control is visible in the build log.
+    mermaid_hits = [m for m in MERMAID_SOURCE_MARKERS if m in text]
+    if mermaid_hits:
+        print(f"PDF MERMAID ASSERT: FAIL — raw mermaid source in PDF text: {mermaid_hits}", file=sys.stderr)
+        problems.append(f"raw mermaid source shipped in PDF (markers: {mermaid_hits}) — "
+                        "a ```mermaid fence rendered as source text, not a diagram")
+    else:
+        print("PDF MERMAID ASSERT: PASS — no raw mermaid source in PDF text.")
 
     if _BOOK_TITLE not in text:
         problems.append(f"cover title {_BOOK_TITLE!r} not found (cover did not render)")

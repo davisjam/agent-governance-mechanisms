@@ -20,6 +20,11 @@ brackets is the LINT NAME an inline suppression cites (see "Suppression" below):
                          constructs that legitimately carry unbalanced delimiters (code, mermaid, build comments).
   8. [book-headings]     heading-level skips — no heading jumps more than one level deeper than the last
                          (h1->h3); the first heading is the chapter h1; exactly one h1 per page.
+  9. [book-render-fidelity] un-converted markdown left in a built page's <p> body.
+ 10. [book-chapter-num] no hardcoded "Chapter N" in prose (chapter numbers are DERIVED at build).
+ 11. [book-mermaid-source] no RAW mermaid source (```mermaid fence / `flowchart`/`subgraph`/`-->` text)
+                         in any built book/*.html — diagrams render to inline SVG at build time; the web
+                         analogue of the PDF `verify_pdf` mermaid assert.
 
 **Suppression.** Every rule honors an inline suppression comment, mirroring the repo's
 `# noqa: <name> — <reason>` convention but expressed as an HTML comment (the book is markdown):
@@ -543,6 +548,65 @@ def check_hardcoded_chapter_num() -> tuple[list[Finding], dict]:
     return findings, {"chapters_scanned": len(files), "issues": len(findings)}
 
 
+# ---- rule 11: no RAW mermaid source in any built book/*.html (diagrams render to inline SVG) ---------
+
+# Import the ONE marker tuple the build script + PDF assert share, so the web and PDF controls detect the
+# exact same class (single source of truth). If the build module can't be imported (unexpected), fall back
+# to an inline copy so the lint still runs rather than crashing the audit.
+try:
+    import importlib.util as _ilu
+    _bspec = _ilu.spec_from_file_location("_bbh", os.path.join(BOOK, "build_book_html.py"))
+    _bmod = _ilu.module_from_spec(_bspec)  # type: ignore[arg-type]
+    _bspec.loader.exec_module(_bmod)       # type: ignore[union-attr]
+    _MERMAID_SOURCE_MARKERS: tuple[str, ...] = _bmod.MERMAID_SOURCE_MARKERS
+except Exception:  # noqa: BLE001 — fall back to a literal copy; the lint must not crash the audit
+    _MERMAID_SOURCE_MARKERS = (
+        "flowchart ", "graph TD", "graph LR", "graph TB", "graph RL",
+        "subgraph ", "sequenceDiagram", "stateDiagram", " --> ",
+    )
+
+import html as _html_mod  # noqa: E402 — local to this rule
+
+
+_MERMAID_PRE_RE = re.compile(r'<pre class="mermaid">(.*?)</pre>', re.S)
+_CODE_BLOCK_RE = re.compile(r"<pre><code>(.*?)</code></pre>", re.S)
+
+
+def check_no_raw_mermaid() -> tuple[list[Finding], dict]:
+    """No un-rendered ```mermaid source may ship in ANY built `book/*.html`. Mermaid fences render to a
+    static inline `<svg>` at build time (`build_book_html.py: render_mermaid_svg`), so a shipped diagram is
+    always an `<svg>` — never `flowchart`/`subgraph`/`-->` SYNTAX text. Web analogue of the PDF
+    `verify_pdf` mermaid assert (shares the `MERMAID_SOURCE_MARKERS` tuple).
+
+    Precise, zero-false-positive discriminators (NOT a blunt visible-text scan — `-->` and `flowchart`
+    appear in legitimate escaped prose / SVG `class`/`aria` attributes):
+      (a) a `<pre class="mermaid">` whose body has NO `<svg>` — the definitive un-rendered signal; and
+      (b) a plain `<pre><code>` code box whose (unescaped) body carries a mermaid SYNTAX marker — a fence
+          that wasn't even recognized as mermaid and rendered as raw code.
+    src=None: the fix is in the build / the source .md, not a suppressible authoring choice."""
+    import glob
+    findings: list[Finding] = []
+    pages = 0
+    for f in sorted(glob.glob(os.path.join(BOOK, "*.html"))):
+        pages += 1
+        raw = open(f, encoding="utf-8").read()
+        # (a) a mermaid <pre> that never became an <svg>.
+        for body in _MERMAID_PRE_RE.findall(raw):
+            if "<svg" not in body:
+                findings.append(Finding(
+                    None, "", f"{rel(f)} — <pre class=\"mermaid\"> shipped un-rendered (no <svg>): "
+                              f"{_html_mod.unescape(body).strip()[:70]!r}"))
+        # (b) a raw code box that is actually mermaid source (fence not recognized as mermaid).
+        for body in _CODE_BLOCK_RE.findall(raw):
+            text = _html_mod.unescape(body)
+            hits = [m for m in _MERMAID_SOURCE_MARKERS if m in text]
+            if hits:
+                findings.append(Finding(
+                    None, "", f"{rel(f)} — mermaid source in a plain code box (markers: {hits}): "
+                              f"{text.strip()[:70]!r}"))
+    return findings, {"pages_scanned": pages, "issues": len(findings)}
+
+
 # ---- driver: run every rule, partition suppressed vs active, print a report; ALWAYS exit-neutral --
 
 # (label, lint-name, fn). The lint-name is what an inline `<!-- noqa: <name> — <reason> -->` cites.
@@ -557,6 +621,7 @@ _RULES = [
     ("8. heading-level skips (PROMOTE-candidate)", "book-headings", check_heading_levels),
     ("9. render fidelity (un-converted markdown)", "book-render-fidelity", check_render_fidelity),
     ("10. no hardcoded 'Chapter N' in prose", "book-chapter-num", check_hardcoded_chapter_num),
+    ("11. no raw mermaid source in built HTML", "book-mermaid-source", check_no_raw_mermaid),
 ]
 
 # the lint names, exported so a suppression comment can be validated against the known set.

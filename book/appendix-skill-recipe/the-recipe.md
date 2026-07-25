@@ -1,8 +1,14 @@
 ## The recipe
 
-Three steps build a skill. Each names one thing, and the order matters: you cannot layer facets onto a
-model you have not found, and you cannot write the tying principles before the facets exist. Work top to
-bottom.
+This is the recipe for a **mastery-skill** — a skill that installs a knowledge-base and the judgment for
+doing a whole task well, as distinct from a *tool-skill*, which merely teaches the interface to one tool.
+The distinction is drawn in [The Skills](4.2-the-skills.html); this appendix is the how-to behind it. The
+book's three featured skills — self-operate, self-governance, self-communicate — are the worked examples
+throughout, so each step below shows the recipe applied three times.
+
+Three steps build a mastery-skill. Each names one thing, and the order matters: you cannot layer facets
+onto a model you have not found, and you cannot write the tying principles before the facets exist. Work
+top to bottom.
 
 ### Step 1 — Identify the domain's fundamental model
 

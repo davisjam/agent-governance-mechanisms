@@ -49,25 +49,39 @@ jobs:
           node-version: "22"
       - name: Install pinned test tooling (axe-core + html-validate, exact tree from lockfile)
         run: npm ci
+      # book/ node tooling must be installed BEFORE `catalog.py build`: the build now renders every
+      # ```mermaid fence to a static inline SVG at build time via mermaid-cli (mmdc), which lives in
+      # book/node_modules. `npm ci` in book/ also downloads mermaid-cli's + Puppeteer's bundled Chromium
+      # (no PUPPETEER_SKIP_DOWNLOAD), so both the SVG pre-render AND the later `--pdf` render need no
+      # system Chrome. Poppler/qpdf are only needed for the later PDF gate, so they stay below.
+      - name: Install book node tooling (mermaid-cli for build-time SVG + Puppeteer for PDF, from book/ lockfile)
+        working-directory: book
+        run: npm ci
       - name: Validate schema
         run: python3 catalog.py validate
-      - name: Render markdown -> HTML
+      - name: Render markdown -> HTML (renders ```mermaid fences to inline SVG via book/ mmdc)
         run: python3 catalog.py build
       - name: Test suite (blocking — authoritative --full run; post-push HEAD==origin, so incremental would skip Tier 2)
         run: python3 catalog_tests.py --full
       # ── PDF print edition ──────────────────────────────────────────────────────────────────────
       # The book PDF is a CI-generated, Pages-published artifact (not committed). Render it into
       # book/mage-book.pdf, which the rsync below copies into _site/ so it serves at /book/mage-book.pdf.
-      # `npm ci` in book/ installs Puppeteer AND downloads its bundled Chromium (no PUPPETEER_SKIP_DOWNLOAD),
-      # so render_pdf.mjs needs no system Chrome. `--pdf` runs the content-integrity gate internally and
-      # exits non-zero (failing the build) if the render is truncated / collapsed / runaway.
+      # book/ node tooling (Puppeteer + mermaid-cli, with bundled Chromium) was already installed above,
+      # before `catalog.py build`. `--pdf` runs the content-integrity gate internally — including the
+      # no-raw-mermaid assert — and exits non-zero (failing the build) if the render is truncated /
+      # collapsed / runaway / ships raw diagram source.
       - name: Install poppler + qpdf (pdftotext for the content-integrity gate; qpdf for the lossless compression pass)
         run: sudo apt-get update && sudo apt-get install -y poppler-utils qpdf
-      - name: Install PDF render tooling (Puppeteer, from book/ lockfile)
-        working-directory: book
-        run: npm ci
       - name: Render book PDF (Paged.js) + content-integrity gate
         run: python3 book/build_book_html.py --pdf
+      # ── Responsive-layout gate (deploy-blocking) ────────────────────────────────────────────────
+      # Assert the landing `.masonry` region renders a structurally different layout at wide vs phone
+      # width (>= 3 columns at 2560px, exactly 1 column at 390px) — the author's success metric made
+      # mechanical. Needs a browser (headless Chrome), so it can't live in stdlib-only `catalog.py
+      # validate`; it reuses the book/ Puppeteer + bundled Chromium already installed above. A
+      # regression that flattens the masonry to a single column fails the deploy here.
+      - name: Responsive-layout gate (landing wide != phone)
+        run: python3 catalog.py check-responsive
       - name: Assemble site artifact (exclude .git / node_modules / .github; KEEP book/mage-book.pdf)
         run: |
           mkdir -p _site
