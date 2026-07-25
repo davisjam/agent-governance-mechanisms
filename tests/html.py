@@ -64,3 +64,38 @@ def check_html_links():
                 # on pages that don't emit heading ids)
                 issues.append(f"{rel(f)} -> {ref} (no such anchor in target)")
     return (FAIL if issues else PASS), issues
+
+
+def check_book_html_tracking():
+    """Every tracked book/*.html is a page the current build produces (no stale orphans), present and
+    non-empty. Blocks the renumber-orphan class (a chapter renumber leaves the old-numbered HTML tracked
+    with no source): the expected set is the build's OWN discovery — `_discover_chapters` +
+    `build_appendix_chapters` — plus the two index pages and the hand-authored figure copy, so it can't
+    drift from what the build writes."""
+    import subprocess
+    import sys as _sys
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    book_dir = os.path.join(root, "book")
+    if book_dir not in _sys.path:
+        _sys.path.insert(0, book_dir)
+    import build_book_html as bb  # noqa: E402 — path set above; build's discovery is the source of truth
+    chapters = bb._discover_chapters(bb._load_metrics())
+    chapters = chapters + bb.build_appendix_chapters(next_part=max(c["part"] for c in chapters) + 1)
+    real = {c["slug"] + ".html" for c in chapters}
+    real |= {"index.html", "book-index.html", "catalogue-figure.html"}  # index pages + hand-authored figure
+    tracked_paths = subprocess.run(
+        ["git", "ls-files", "book/*.html"], cwd=root, capture_output=True, text=True
+    ).stdout.split()
+    tracked = {os.path.basename(p) for p in tracked_paths}
+    issues = []
+    for o in sorted(tracked - real):
+        issues.append(f"book/{o}: tracked but the build does not produce it (stale orphan — git rm it)")
+    for m in sorted(real - tracked):
+        issues.append(f"book/{m}: a build output but not tracked (run `catalog.py build` and commit it)")
+    for p in tracked_paths:
+        ap = os.path.join(root, p)
+        if not os.path.exists(ap):
+            issues.append(f"{p}: tracked but missing on disk")
+        elif os.path.getsize(ap) == 0:
+            issues.append(f"{p}: tracked but empty")
+    return (FAIL if issues else PASS), issues
