@@ -79,6 +79,9 @@ MERMAID_SOURCE_MARKERS: tuple[str, ...] = (
 _MERMAID_CONFIG = HERE / "assets" / "mermaid-config.json"
 _MERMAID_CACHE = HERE / ".mermaid-svg-cache"   # content-hash → rendered SVG; gitignored build cache
 _MMDC = HERE / "node_modules" / ".bin" / "mmdc"
+# Puppeteer launch options for mmdc: the GitHub Actions Ubuntu runner (23.10+) has no usable Chromium
+# sandbox, so mmdc's headless Chrome must launch with --no-sandbox or the build fails. Harmless locally.
+_MMDC_PUPPETEER = HERE / "assets" / "mmdc-puppeteer.json"
 
 
 def render_mermaid_svg(source: str) -> str:
@@ -109,7 +112,8 @@ def render_mermaid_svg(source: str) -> str:
             inp.write_text(src + "\n", encoding="utf-8")
             r = subprocess.run(
                 [str(_MMDC), "-i", str(inp), "-o", str(outp),
-                 "-c", str(_MERMAID_CONFIG), "-b", "transparent", "--quiet"],
+                 "-c", str(_MERMAID_CONFIG), "-p", str(_MMDC_PUPPETEER),
+                 "-b", "transparent", "--quiet"],
                 capture_output=True, text=True,
                 env={**_mermaid_env()},
             )
