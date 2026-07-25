@@ -2231,13 +2231,13 @@ PRINT_CSS = f"""
 :root {{ --accent: {ACCENT}; }}
 * {{ box-sizing: border-box; }}
 
-/* ── page geometry: 6×9in book trim ─────────────────────────────────────────────────────────── */
+/* ── page geometry: 7×9.25in book trim (O'Reilly-class technical) ───────────────────────────── */
 @page {{
-  size: 6in 9in;
-  margin: 0.66in 0.64in 0.7in 0.64in;
+  size: 7in 9.25in;
+  margin: 0.58in 0.5in 0.6in 0.5in;
 }}
 /* Named page for the front-matter / divider pages: no running head, no folio, full bleed feel. */
-@page plain {{ margin: 0.66in 0.64in 0.7in 0.64in; @top-center {{ content: none; }}
+@page plain {{ margin: 0.58in 0.5in 0.6in 0.5in; @top-center {{ content: none; }}
                @top-left {{ content: none; }} @top-right {{ content: none; }}
                @bottom-center {{ content: none; }} @bottom-left {{ content: none; }}
                @bottom-right {{ content: none; }} }}
@@ -2251,17 +2251,17 @@ PRINT_CSS = f"""
 @page :right {{ @top-right   {{ content: string(chap-title); font: italic 8pt "Source Serif 4", Georgia, serif; color: #6a6a6a; letter-spacing: 0.02em; }}
                 @bottom-right {{ content: counter(page); font: 9pt "Source Serif 4", Georgia, serif; color: #444; }} }}
 
-html {{ font-size: 10.25pt; }}
+html {{ font-size: 9.5pt; }}
 body {{
   font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
-  color: #1a1a1a; margin: 0; line-height: 1.38; text-align: justify; hyphens: auto;
+  color: #1a1a1a; margin: 0; line-height: 1.2; text-align: justify; hyphens: auto;
   /* Never justify the LAST line of a paragraph — otherwise a short final line stretches its few words
      edge-to-edge with cavernous gaps (the classic justified-text tell). Last lines stay ragged-left. */
   text-align-last: left;
 }}
 
 /* ── cover ──────────────────────────────────────────────────────────────────────────────────── */
-.print-cover {{ page: plain; break-after: page; height: 7.44in; display: flex; flex-direction: column;
+.print-cover {{ page: plain; break-after: page; height: 8.05in; display: flex; flex-direction: column;
                 justify-content: center; text-align: center; }}
 .print-cover .cov-kicker {{ font-family: "Source Sans 3", sans-serif; text-transform: uppercase;
                             letter-spacing: 0.22em; font-size: 10pt; color: var(--accent); font-weight: 700;
@@ -2298,7 +2298,7 @@ body {{
                                       font-variant-numeric: tabular-nums; color: #444; }}
 
 /* ── part-divider pages ─────────────────────────────────────────────────────────────────────── */
-.print-part {{ page: plain; break-before: page; height: 7.44in; display: flex; flex-direction: column;
+.print-part {{ page: plain; break-before: page; height: 8.05in; display: flex; flex-direction: column;
                justify-content: center; text-align: center; }}
 .print-part .pt-kicker {{ font-family: "Source Sans 3", sans-serif; text-transform: uppercase;
                           letter-spacing: 0.24em; font-size: 12pt; color: var(--accent); font-weight: 700; }}
@@ -2309,36 +2309,36 @@ body {{
 
 /* ── chapter bodies ─────────────────────────────────────────────────────────────────────────── */
 .print-chapter {{ break-before: page; }}
-.print-chapter > header.chap {{ border-bottom: 1px solid #ddd; padding: 0 0 0.7rem; margin: 0 0 1.1rem; }}
+.print-chapter > header.chap {{ border-bottom: 1px solid #ddd; padding: 0 0 0.5rem; margin: 0 0 0.8rem; }}
 .print-chapter header.chap .kicker {{ font-family: "Source Sans 3", sans-serif; color: var(--accent);
                                       font-weight: 700; font-size: 8.5pt; letter-spacing: 0.08em;
                                       text-transform: uppercase; }}
 .print-chapter header.chap h1 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 18pt;
                                  line-height: 1.12; margin: 0.25rem 0 0; font-weight: 700;
                                  string-set: chap-title content(); }}
-h2 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 12.5pt; font-weight: 700;
-      margin: 1.3rem 0 0.45rem; break-after: avoid; text-align: left; }}
-h3 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 11pt; font-weight: 600;
-      margin: 1rem 0 0.3rem; break-after: avoid; text-align: left; }}
-h4 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 10pt; font-weight: 600; color: #333;
-      margin: 0.8rem 0 0.22rem; break-after: avoid; text-align: left; }}
+h2 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 12pt; font-weight: 700;
+      margin: 0.9rem 0 0.32rem; break-after: avoid; text-align: left; }}
+h3 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 10.75pt; font-weight: 600;
+      margin: 0.7rem 0 0.22rem; break-after: avoid; text-align: left; }}
+h4 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 9.75pt; font-weight: 600; color: #333;
+      margin: 0.55rem 0 0.16rem; break-after: avoid; text-align: left; }}
 h1, h2, h3, h4 {{ hyphens: none; }}
-p {{ margin: 0 0 0.7rem; orphans: 2; widows: 2; }}
-ul {{ margin: 0 0 0.7rem; padding-left: 1.2rem; }}
-ol {{ margin: 0 0 0.7rem; padding-left: 1.4rem; list-style: decimal; }}
-li {{ margin: 0.2rem 0; text-align: left; }}
+p {{ margin: 0 0 0.48rem; orphans: 2; widows: 2; }}
+ul {{ margin: 0 0 0.5rem; padding-left: 1.2rem; }}
+ol {{ margin: 0 0 0.5rem; padding-left: 1.4rem; list-style: decimal; }}
+li {{ margin: 0.14rem 0; text-align: left; }}
 a {{ color: #1a1a1a; text-decoration: none; }}
 code {{ font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; background: #f0efeb;
         padding: 0.05em 0.3em; border-radius: 3px; }}
 /* Fenced code listings: a narrow 6in column cannot hold a wide source line, so wrap long lines (with a
    hanging indent for continuations) rather than clip them at the page edge. Small monospace, tinted panel,
    kept off a page break. The inline-code panel styling is dropped inside a <pre> (the block owns the panel). */
-pre {{ font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8pt; line-height: 1.35;
-       background: #f6f5f2; border: 1px solid #e5e3dd; border-radius: 4px; padding: 0.6rem 0.75rem;
-       margin: 0.9rem 0; white-space: pre-wrap; overflow-wrap: break-word; word-break: break-word;
+pre {{ font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8pt; line-height: 1.32;
+       background: #f6f5f2; border: 1px solid #e5e3dd; border-radius: 4px; padding: 0.5rem 0.7rem;
+       margin: 0.65rem 0; white-space: pre-wrap; overflow-wrap: break-word; word-break: break-word;
        tab-size: 2; break-inside: avoid; text-align: left; hyphens: none; }}
 pre code {{ background: none; padding: 0; font-size: inherit; border-radius: 0; }}
-blockquote {{ margin: 0.9rem 0; padding: 0.5rem 0.9rem; border-left: 3px solid #d8d5cc; color: #444;
+blockquote {{ margin: 0.65rem 0; padding: 0.4rem 0.9rem; border-left: 3px solid #d8d5cc; color: #444;
               font-style: italic; background: #faf9f6; break-inside: avoid; text-align: left; }}
 blockquote.aside-sidenote {{ background: transparent; float: none; width: auto; margin: 0.9rem 0;
                              border-left: 2px solid #cfa14a; font-size: 0.92em; }}
@@ -2354,7 +2354,7 @@ blockquote.thesis-box {{ font-style: normal; background: #f2effb; border: 1px so
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.3rem; }}
 .book-eq {{ text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
             font-size: 1.15em; margin: 1rem 0; }}
-table.book-table {{ border-collapse: collapse; width: 100%; margin: 0.9rem 0; font-size: 9pt;
+table.book-table {{ border-collapse: collapse; width: 100%; margin: 0.65rem 0; font-size: 9pt;
                     break-inside: avoid; }}
 table.book-table th, table.book-table td {{ border: 1px solid #d8d5cc; padding: 0.28rem 0.42rem;
                                             text-align: left; vertical-align: top; line-height: 1.35; }}
@@ -2585,6 +2585,77 @@ def _extract_pdf_text(pdf_path: pathlib.Path) -> str:
     return re.sub(r"\s+", " ", dehyphenated)
 
 
+# ── words-per-page density check ─────────────────────────────────────────────────────────────
+# The enforced typographic-density metric, at O'Reilly-class technical density. `pdftotext` writes a
+# form-feed (\x0c) between pages; we split on it, apply the SAME hyphen-rejoin as `_extract_pdf_text`,
+# and count words per page.
+#
+# The check: over the FIRST N pages (representative body — the sparse appendix tail is excluded),
+# at least _DENSITY_MIN_FRACTION of them must exceed _DENSITY_WORDS_THRESHOLD words. This book is
+# figure/table/code/short-chapter-heavy, so even at O'Reilly-dense type only ~68% of the first-100
+# pages clear 400 words (book-wide, only ~38% of substantive pages can) — 80% is structurally
+# unreachable here without cramping. The 0.50 bar clears the achieved dense build (68%, with margin)
+# while decisively failing the airy trade-paperback regression (~11% at 10.25pt/6×9). Below it is bloat.
+_DENSITY_FIRST_N_PAGES = 100
+_DENSITY_WORDS_THRESHOLD = 400
+_DENSITY_MIN_FRACTION = 0.50
+
+
+def _pdf_per_page_word_counts(pdf_path: pathlib.Path) -> list[int]:
+    """Word count per page. `pdftotext` emits a form-feed (\\x0c) between pages; split on it, apply the
+    same `hyphens: auto` rejoin as `_extract_pdf_text`, then count whitespace-delimited words per page."""
+    import shutil
+    import subprocess
+    if not shutil.which("pdftotext"):
+        raise SystemExit("pdftotext (poppler) not found on PATH — required for the density metric")
+    r = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True)
+    if r.returncode != 0:
+        raise SystemExit(f"pdftotext failed (rc={r.returncode}): {r.stderr}")
+    pages = r.stdout.split("\x0c")
+    counts: list[int] = []
+    for page in pages:
+        dehyphenated = re.sub(r"[-‐­]\n", "", page)
+        counts.append(len(re.sub(r"\s+", " ", dehyphenated).split()))
+    # Trailing split element is the empty tail after the final form-feed — drop empty trailing pages.
+    while counts and counts[-1] == 0:
+        counts.pop()
+    return counts
+
+
+def _density_report(pdf_path: pathlib.Path) -> tuple[int, list[str]]:
+    """Compute + print the words-per-page density metric and gate on: over the FIRST N pages, at least
+    _DENSITY_MIN_FRACTION exceed _DENSITY_WORDS_THRESHOLD words. Returns (rc, problems): rc is 0 if the
+    fraction holds, 1 otherwise; problems appended to the caller's list."""
+    problems: list[str] = []
+    per_page = _pdf_per_page_word_counts(pdf_path)
+    total_pages = len(per_page)
+    total_words = sum(per_page)
+    overall = (total_words / total_pages) if total_pages else 0
+    substantive = sorted(c for c in per_page if c >= 100)
+    median = substantive[len(substantive) // 2] if substantive else 0
+
+    window = per_page[:_DENSITY_FIRST_N_PAGES]
+    n = len(window)
+    dense = sum(1 for c in window if c > _DENSITY_WORDS_THRESHOLD)
+    frac = (dense / n) if n else 0.0
+    need_pct = int(_DENSITY_MIN_FRACTION * 100)
+    passed = frac >= _DENSITY_MIN_FRACTION
+
+    print("PDF words-per-page density:")
+    print(f"  total pages ............. {total_pages}")
+    print(f"  total words ............. {total_words}")
+    print(f"  overall w/pg ............ {overall:.0f}  (total/pages)")
+    print(f"  median w/pg (substantive) {median}  ({len(substantive)} pages ≥ 100 words)")
+    print(f"  density check: {dense}/{n} pages > {_DENSITY_WORDS_THRESHOLD} words "
+          f"({frac * 100:.0f}%) — {'PASS' if passed else 'FAIL'} (need >={need_pct}%)")
+
+    if not passed:
+        problems.append(f"density check: only {dense}/{n} of first pages > {_DENSITY_WORDS_THRESHOLD} "
+                        f"words ({frac * 100:.0f}%), need >={need_pct}% — too airy (below O'Reilly "
+                        f"technical density)")
+    return (1 if problems else 0), problems
+
+
 def verify_pdf(pdf_path: pathlib.Path) -> int:
     """Content-integrity gate over the rendered PDF. Extracts the text and asserts the WHOLE book is
     present against the source of truth. Returns 0 if the PDF contains the entire book, 1 otherwise.
@@ -2593,7 +2664,8 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
       2. cover title present,
       3. every chapter title AND every rendered Part title present (no dropped/truncated chapter),
       4. the TOC lists exactly the source chapter set (none missing, none extra),
-      5. a distinctive tail from the LAST section present (render did not stop partway)."""
+      5. a distinctive tail from the LAST section present (render did not stop partway),
+      6. words-per-page density: ≥80% of the first 100 pages exceed 400 words (O'Reilly-dense body)."""
     problems: list[str] = []
 
     pages = _pdf_page_count(pdf_path)
@@ -2641,6 +2713,10 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
             if short not in text:
                 problems.append(f"tail run from last section {last['slug']!r} not found "
                                 f"({short!r}) — render may be truncated")
+
+    # Words-per-page density metric + O'Reilly-band gate (prints its own report).
+    _, density_problems = _density_report(pdf_path)
+    problems.extend(density_problems)
 
     if problems:
         print(f"PDF CONTENT-INTEGRITY FAILURES ({len(problems)}):", file=sys.stderr)
