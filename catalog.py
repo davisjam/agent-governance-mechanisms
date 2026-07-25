@@ -1055,6 +1055,73 @@ LANDING_CSS = """
     .box.span2, .box.spanfull { grid-column:auto; }
     .duo { grid-template-columns:1fr; }
   }
+
+  /* ---- Cheat-sheet MASONRY (below the prose spine) -----------------------------------------
+     Everything under the two theses tiles into a Pinterest-style pack: CSS multi-column with
+     break-inside:avoid on each self-contained card, so varying-height cards float up and fill
+     the width instead of leaving the right half of a wide screen empty. `column-width` lets the
+     column COUNT grow with the viewport (≈4 tracks at 2100px, 1 track ≤720px) with no media
+     queries for the count. A handful of intrinsically-wide cards (the horizontal flow strip, the
+     dev-workflow figure) opt out with `.wide { column-span:all }` and punctuate the pack full-bleed. */
+  .masonry { columns: 320px; column-gap: 16px; margin: 4px 0 8px; }
+  .tile { break-inside: avoid; -webkit-column-break-inside: avoid; page-break-inside: avoid;
+          display: inline-block; width: 100%; margin: 0 0 16px;
+          border:1.4px solid var(--line); border-radius:11px; padding:15px 17px; background:#fff;
+          transition:box-shadow .12s, border-color .12s; }
+  .tile:hover { box-shadow:0 3px 14px rgba(0,0,0,.07); border-color:#cbd5e1; }
+  .tile > :first-child { margin-top:0; }
+  .tile > :last-child { margin-bottom:0; }
+  .tile.accent { border-top:3px solid var(--accent); }
+  .tile.tint { background:#fffaf3; border-color:#f0dcc0; }
+  .tile.mid { border:2px solid var(--accent); background:#fffaf3; }
+  /* Lightweight card headers/kickers — the demoted band H2s become these, no full-width heading rows. */
+  .tile .tl-kicker { font-size:11px; text-transform:uppercase; letter-spacing:.07em; font-weight:800;
+                     color:var(--accent); margin:0 0 4px; }
+  .tile .tl-h { font-family:"Source Serif 4",Georgia,serif; font-size:18px; margin:0 0 6px;
+                letter-spacing:-.01em; color:var(--ink); }
+  .tile .tl-h.accent-t { color:var(--accent); }
+  .tile p { font-size:16px; color:#3a3a3a; line-height:1.56; margin:0 0 9px; }
+  .tile p:last-child { margin-bottom:0; }
+  .tile .bx-fig { margin:2px 0 11px; }
+  .tile .bx-fig svg { display:block; width:100%; height:auto; }
+  .tile .bx-fig figcaption { display:none; }
+  .tile .term { font-weight:700; color:#222; }
+  .tile .pole { display:block; margin-top:8px; font-size:10px; text-transform:uppercase;
+                letter-spacing:.05em; color:var(--muted); font-weight:800; }
+  .tile .srefs { font-size:12px; color:var(--muted); margin:8px 0 0; }
+  .tile .srefs .lbl { font-weight:700; color:#444; }
+  .tile .srefs ul { margin:3px 0 0; padding-left:16px; }
+  .tile .srefs li { margin:0 0 2px; line-height:1.4; }
+  .tile.axis { text-align:center; font-size:11px; color:var(--muted); letter-spacing:.03em;
+               padding:9px 12px; background:#f8fafc; }
+  /* A stance/skill card whose body is an arrow-bulleted list. */
+  .tile ul.tl-list { margin:0; padding:0; list-style:none; }
+  .tile ul.tl-list li { font-size:15px; color:#3a3a3a; line-height:1.5; margin:0 0 8px;
+                        padding-left:15px; position:relative; }
+  .tile ul.tl-list li:last-child { margin-bottom:0; }
+  .tile ul.tl-list li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  /* An action card that is itself a link (the catalogue-explore cards). */
+  a.tile { text-decoration:none; color:var(--ink); }
+  a.tile b { display:block; font-size:16px; color:var(--link); letter-spacing:-.01em; margin-bottom:3px; }
+  a.tile span { display:block; font-size:14px; color:var(--muted); line-height:1.4; }
+  /* Refs as a compact card. */
+  .tile .r { border-left:3px solid var(--accent); padding:2px 0 2px 11px; margin:0 0 7px;
+             font-size:13px; color:#444; }
+  .tile .r:last-child { margin-bottom:0; }
+  .tile .r b { color:#333; font-weight:700; }
+  /* CTA card. */
+  .tile.cta { text-align:center; }
+  .tile.cta .book-cta { margin:0; }
+  /* Intrinsically-wide cards span every column and punctuate the pack full-bleed. */
+  .tile.wide { column-span: all; -webkit-column-span: all; width:auto; display:block; }
+  .tile.wide .loop { border:none; background:none; padding:0; margin:0; }
+  /* Inside a full-bleed tile the .wf figure no longer needs the 50%-viewport centering trick it
+     used in the old full-width main; reset it to a normal centered block so the iframe fits the tile. */
+  .tile.wide .wf { position:static; left:auto; transform:none; width:100%; max-width:1400px;
+                   margin:8px auto 0; }
+  @media (max-width:720px){
+    .masonry { columns: 1; }
+  }
 """
 
 # (title, subtitle, href, extra-attrs) for the landing action cards
@@ -1136,8 +1203,9 @@ def _landing_flow() -> str:
 
 
 def _landing_cards() -> str:
+    """The catalogue-explore action cards, each a linkable masonry tile."""
     return "\n  ".join(
-        f'<a class="lcard" href="{href}"{extra}><b>{t}</b><span>{sub}</span></a>'
+        f'<a class="tile" href="{href}"{extra}><b>{t}</b><span>{sub}</span></a>'
         for t, sub, href, extra in LANDING_CARDS)
 
 
@@ -1190,23 +1258,30 @@ WAYS = [
 
 
 def _landing_schools() -> str:
+    """The two schools + the midway, each as a self-contained masonry tile (the band H2
+    "Between two schools of thought" is demoted to a per-tile kicker)."""
     out = []
     for title, blurb, pole, mid, refs in SCHOOLS:
-        cls = "school mid" if mid else "school"
+        cls = "tile mid" if mid else "tile"
         rhtml = ""
         if refs:
             lis = "".join(f'<li><a href="{u}">{lbl}</a></li>' for lbl, u in refs)
             rhtml = f'<div class="srefs"><span class="lbl">Examples:</span><ul>{lis}</ul></div>'
-        out.append(f'<div class="{cls}"><h3>{title}</h3><p>{blurb}</p>{rhtml}'
+        kicker = "The midway" if mid else "Between two schools"
+        out.append(f'<div class="{cls}"><div class="tl-kicker">{kicker}</div>'
+                   f'<div class="tl-h">{title}</div><p>{blurb}</p>{rhtml}'
                    f'<span class="pole">{pole}</span></div>')
     return "\n  ".join(out)
 
 
 def _landing_ways() -> str:
+    """The three "way of thinking" stances, each a masonry tile (the band H2 "The way of
+    thinking" is demoted to a per-tile kicker)."""
     out = []
     for title, items in WAYS:
-        lis = "".join(f"<li>{it}</li>" for it in items)
-        out.append(f'<div class="col"><h3>{title}</h3><ul>{lis}</ul></div>')
+        lis = "".join(f'<li>{it}</li>' for it in items)
+        out.append(f'<div class="tile"><div class="tl-kicker">Way of thinking</div>'
+                   f'<div class="tl-h">{title}</div><ul class="tl-list">{lis}</ul></div>')
     return "\n  ".join(out)
 
 
@@ -1246,186 +1321,147 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
     </div>
   </div>
 
-  <h2 class="section-h">Between two schools of thought</h2>
-  <p class="section-sub">Two common ways to build with agents sit at opposite ends of a spectrum. This
-  site is about the midway.</p>
-  <div class="spectrum">
-  {schools}
-  </div>
-  <p class="spectrum-axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</p>
-
-  <div class="board">
-    <div class="box spanfull">
-      <div class="fp">
-        <figure class="fp-fig">{schools_fig}</figure>
-        <div class="fp-body">
-          <div class="bx-eyebrow">The midway is a discipline</div>
-          <p>Three process models for agentic engineering. The two poles sit on top: velocity-centric
-          agents hand work around a ring of job titles, with the quality mechanism left implicit; and
-          oversight-centric keeps a human next to each bounded piece — honest, but the human's attention
-          does not scale with the fleet. <span class="term">Governance-centric</span> sits beneath them as
-          the synthesis, putting the agents inside a containing environment of enforced mechanisms the
-          human sets up in advance. This site takes the third.</p>
-          <p>That midway means <span class="term">establishing and maintaining a governed engineering
-          environment</span>. It works in two directions at once — <b>up front</b>, you specify what you
-          can (the architecture that makes a class of error impossible, the model the fleet reasons through,
-          the templates that put a change on rails); <b>in flight</b>, you let velocity surface the failures
-          you couldn't foresee and convert each recurring one into a durable guardrail.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <p class="lead">This site describes both halves. The first is the guidance on what to fix in advance; the
-  second is the machinery for responding when something slips through. It packages both as three Claude
-  skills with a <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>{n} governance
-  mechanisms across three roles</b>, each written like a design pattern — the recurring failure it kills,
-  and why it is <i>not</i> just the cheaper thing everyone already does.</p>
-
   <h2 class="section-h">The Modeling Thesis — documentation, taken to its limit</h2>
   <p class="section-sub">The first thesis. Give agents good documentation and tests, then point them at
   it — the first move everyone finds on their own. The step the training data won't suggest is the next
-  one: <b>documentation has a hierarchy, and its top is not prose. It is a typed model.</b></p>
-
-  <div class="board">
-    <div class="box span2 accent">
-      <div class="bx-eyebrow">Documentation, at its limit, is a typed model</div>
-      <figure class="bx-fig">{model_fig}</figure>
-      <p>Agents write and maintain docs, tests, and models as fast as they write code, so the cost that
-      always made thorough docs a fantasy is gone. Loose docs, code, and tests drift apart; a typed model
-      the fleet reasons through, wired to a build-time drift check, cannot — the gate stays red until the
-      map matches the territory again.</p>
-      <p>A context-bounded agent working on a context-<em>exceeding</em> system needs a <b>typed, queryable,
-      drift-checked model</b> to reason through — the blueprint for a structure too large to hold in one
-      view. That is the <span class="term">Modeling Thesis</span>, the bridge between the agent and the
-      codebase it cannot fit in its head. The catalogue's <b>models-bridge</b> role is this bridge, made
-      concrete.</p>
-    </div>
-    <div class="box">
-      <div class="bx-h">Agent-legible &amp; precise</div>
-      <p>A six-state machine with typed invariants is something an agent reasons over <b>without error</b>
-      the way it cannot over 300,000 lines of prose-and-code. Abstraction shrinks the space it can be wrong
-      in, not just the token count. A model is more precise than any document.</p>
-    </div>
-    <div class="box">
-      <div class="bx-h">It can’t lie</div>
-      <p>A document rots the moment the code moves; a model wired to a <b>build-time drift check cannot</b>:
-      the gate stays red until the map matches the territory again. That guarantee is what prose can never
-      give.</p>
-    </div>
-    <div class="box span2 tint">
-      <p style="margin:0;">Because agents build and maintain the model the way they maintain docs and tests,
-      pointing them at it costs almost nothing, and it pays back in <b>higher code quality, fewer tokens
-      spent rederiving what the model already states, and fewer mistakes.</b></p>
-    </div>
-  </div>
+  one: <b>documentation has a hierarchy, and its top is not prose. It is a typed model.</b> A
+  context-bounded agent working on a context-<em>exceeding</em> system needs a <b>typed, queryable,
+  drift-checked model</b> to reason through — the bridge between the agent and the codebase it cannot fit
+  in its head. The catalogue's <b>models-bridge</b> role is this bridge, made concrete.</p>
+  <figure class="lfig" style="max-width:920px;">{model_fig}<figcaption>Documentation, at its limit, is a
+  typed model — one an agent reasons over without error and that a build-time drift check keeps honest.</figcaption></figure>
 
   <h2 class="section-h">The Alignment Thesis — constraints and sensors</h2>
   <p class="section-sub">The second thesis. A mechanism the environment enforces keeps output aligned with
-  intent, and it takes one of two forms: prevent the error, or catch it.</p>
+  intent, and it takes one of two forms: <b>prevent</b> the error, or <b>catch</b> it. However you arrived
+  at the goal — up front from the domain or in response to a failure — a <b>constraint</b> scopes the action
+  space so the whole class is impossible, and a <b>sensor</b> lets the mistake happen but detects it in time,
+  failing the loop iteration so the agent runs again to fix it.</p>
+  <figure class="lfig" style="max-width:920px;">{mech_fig}<figcaption>A quality goal splits into two moves:
+  a constraint that prevents the error, and a sensor that catches it.</figcaption></figure>
 
-  <div class="board">
-    <div class="box span2 accent">
-      <div class="bx-eyebrow">A quality goal splits into two moves</div>
-      <figure class="bx-fig">{mech_fig}</figure>
-      <p>However you arrived at the goal — up front from the domain or in response to a failure — a
-      <b>constraint</b> scopes the action space so the whole class is impossible, and no iteration is wasted
-      (a typed enum over free-form strings, a firewall). A <b>sensor</b> lets the mistake happen but detects
-      it in time, failing the loop iteration so the agent runs again to fix it (a test suite, a smoke
-      detector).</p>
-    </div>
-    <div class="box">
-      <div class="bx-h accent-t">Constraint</div>
-      <p>Scope the agent's action space so the wrong move is <b>never available to pick</b>: the typed model
-      above, an enum instead of a free-form string, one sanctioned seam. A constraint <i>prevents</i> drift
-      — the mistake costs no iteration, because the compiler rejects it on the spot.
-      (<a href="https://en.wikipedia.org/wiki/Poka-yoke">Poka-yoke</a> for software; building a constraint
-      is what "architecture" does.)</p>
-    </div>
-    <div class="box">
-      <div class="bx-h accent-t">Sensor</div>
-      <p>Where you can't prevent it, <b>detect it after the fact</b>: a lint, a gate, a validator, a test
-      suite that fires on a violation and holds the line. A sensor <i>detects</i> drift and fails the loop
-      iteration, so the agent runs again to fix what it caught. It costs iterations — which is why you don't
-      reach for it first.</p>
-    </div>
+  <hr class="sep" />
+
+  <!-- ===================== CHEAT-SHEET MASONRY (everything below the theses) =====================
+       The prose spine ends above. From here down, every unit is a self-contained card packed into a
+       CSS multi-column masonry so varying-height cards float up and fill the width. The former band
+       H2s ("Between two schools of thought", "The way of thinking", "The three skills…") are demoted
+       to lightweight per-card kickers — no full-width heading bands in the tiled region. -->
+  <div class="masonry">
+  {schools}
+  <div class="tile axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</div>
+  <div class="tile accent">
+    <div class="tl-kicker">The midway is a discipline</div>
+    <figure class="bx-fig">{schools_fig}</figure>
+    <p>Three process models for agentic engineering. The two poles: velocity-centric agents hand work
+    around a ring of job titles with the quality mechanism left implicit; oversight-centric keeps a human
+    next to each bounded piece — honest, but the human's attention does not scale with the fleet.
+    <span class="term">Governance-centric</span> is the synthesis: the agents sit inside a containing
+    environment of enforced mechanisms the human sets up in advance. This site takes the third.</p>
+    <p>That midway means <span class="term">establishing and maintaining a governed engineering
+    environment</span> — working in two directions at once: <b>up front</b> you specify what you can (the
+    architecture that makes a class of error impossible, the model the fleet reasons through, the templates
+    that put a change on rails); <b>in flight</b> you let velocity surface the failures you couldn't foresee
+    and convert each recurring one into a durable guardrail.</p>
   </div>
-
-  <p class="section-sub">A <b>sensor</b> lets the mistake happen and catches it in time — a smoke detector.
-  A <b>constraint</b> makes the whole class of mistake impossible to make — a firewall. Prefer a constraint
-  where you can build one, because a sensor still spends an iteration. But a constraint built across the
-  only exit blocks the people trying to leave — an over-scoped design stops legitimate work as surely as it
-  stops the error, so add a sensor for the drift you cannot scope away. Most real mechanisms are a package
-  across both: a soft constraint that aims the agent, wrapped in hard sensors that catch what it only
-  aims at.</p>
-
-  <h2 class="section-h">The way of thinking</h2>
-  <p class="section-sub">Three stances that make the midway work, distilled from the AI-First Engineering
-  Method (architecture, controls, and the stance that wields them); the full set ships in the
-  <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
-  <div class="cols3">
+  <div class="tile tint">
+    <p style="margin:0;">This site packages <b>both halves</b> — the guidance on what to fix in advance and
+    the machinery for responding when something slips through — as three Claude skills with a
+    <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>{n} governance mechanisms across
+    three roles</b>, each written like a design pattern: the recurring failure it kills, and why it is
+    <i>not</i> just the cheaper thing everyone already does.</p>
+  </div>
+  <div class="tile">
+    <div class="tl-kicker">Modeling Thesis</div>
+    <div class="tl-h">Agent-legible &amp; precise</div>
+    <p>A six-state machine with typed invariants is something an agent reasons over <b>without error</b>
+    the way it cannot over 300,000 lines of prose-and-code. Abstraction shrinks the space it can be wrong
+    in, not just the token count. A model is more precise than any document.</p>
+  </div>
+  <div class="tile">
+    <div class="tl-kicker">Modeling Thesis</div>
+    <div class="tl-h">It can’t lie</div>
+    <p>A document rots the moment the code moves; a model wired to a <b>build-time drift check cannot</b>:
+    the gate stays red until the map matches the territory again. That guarantee is what prose can never
+    give.</p>
+  </div>
+  <div class="tile tint">
+    <p style="margin:0;">Because agents build and maintain the model the way they maintain docs and tests,
+    pointing them at it costs almost nothing, and it pays back in <b>higher code quality, fewer tokens
+    spent rederiving what the model already states, and fewer mistakes.</b></p>
+  </div>
+  <div class="tile accent">
+    <div class="tl-kicker">Alignment Thesis</div>
+    <div class="tl-h accent-t">Constraint</div>
+    <p>Scope the agent's action space so the wrong move is <b>never available to pick</b>: the typed model,
+    an enum instead of a free-form string, one sanctioned seam. A constraint <i>prevents</i> drift — the
+    mistake costs no iteration, because the compiler rejects it on the spot.
+    (<a href="https://en.wikipedia.org/wiki/Poka-yoke">Poka-yoke</a> for software; building a constraint
+    is what "architecture" does.)</p>
+  </div>
+  <div class="tile accent">
+    <div class="tl-kicker">Alignment Thesis</div>
+    <div class="tl-h accent-t">Sensor</div>
+    <p>Where you can't prevent it, <b>detect it after the fact</b>: a lint, a gate, a validator, a test
+    suite that fires on a violation and holds the line. A sensor <i>detects</i> drift and fails the loop
+    iteration, so the agent runs again to fix what it caught. It costs iterations — which is why you don't
+    reach for it first.</p>
+  </div>
+  <div class="tile">
+    <div class="tl-kicker">Constraint vs. sensor</div>
+    <p>A <b>sensor</b> lets the mistake happen and catches it in time — a smoke detector. A
+    <b>constraint</b> makes the whole class of mistake impossible — a firewall. Prefer a constraint where
+    you can build one, because a sensor still spends an iteration. But a constraint across the only exit
+    blocks the people trying to leave — an over-scoped design stops legitimate work as surely as the error,
+    so add a sensor for the drift you cannot scope away. Most real mechanisms are a package across both: a
+    soft constraint that aims the agent, wrapped in hard sensors that catch what it only aims at.</p>
+  </div>
   {ways}
+  <div class="tile">
+    <div class="tl-kicker">Way of thinking</div>
+    <p style="margin:0;">Three stances that make the midway work, distilled from the AI-First Engineering
+    Method (architecture, controls, and the stance that wields them); the full set ships in the
+    <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
   </div>
-
-  <h2 class="section-h">The three skills — govern, operate, communicate</h2>
-  <p class="section-sub">The catalogue ships as three partner Claude skills (one plugin). Two are one
-  substrate seen from opposite ends (self-governance <i>designs</i> the controls, self-operations
-  <i>runs</i> them), and self-communicate makes what they produce legible: the docs, and the operator's own
-  reports to the human.</p>
-  <div class="cols3">
-    <div class="mech"><h3>self-governance · <i>harden</i></h3><p>The <b>design-time</b> lens: the census of
-    controls plus the engine that mints new ones — what exists, what you're missing, how to add one.</p></div>
-    <div class="mech"><h3>self-operations · <i>operate</i></h3><p>The <b>run-time</b> lens: it runs the
-    substrate those controls govern — the lifecycle you operate, the runbook you follow, the hook you wire.</p></div>
-    <div class="mech"><h3>self-communicate · <i>communicate</i></h3><p>The <b>prose-and-diagram</b> craft: a
-    rhetoric toolkit, the Diátaxis register, a house lexicon, and an audit that emits fixes — for the docs the
-    other two produce <i>and</i> the operator's own reports to the human.</p></div>
+  <div class="tile">
+    <div class="tl-kicker">The three skills</div>
+    <div class="tl-h">self-governance · <i>harden</i></div>
+    <p>The <b>design-time</b> lens: the census of controls plus the engine that mints new ones — what
+    exists, what you're missing, how to add one.</p>
   </div>
-  <p class="section-sub">Govern and operate are one substrate seen two ways; communicate is the craft that
-  keeps their output legible. The loop closes across all three: operate surfaces a recurring break, govern
-  mints the control, communicate writes it up in the shared register.
-  <a href="quick-start.html">Install all three →</a></p>
-
-  <div class="refs">
+  <div class="tile">
+    <div class="tl-kicker">The three skills</div>
+    <div class="tl-h">self-operations · <i>operate</i></div>
+    <p>The <b>run-time</b> lens: it runs the substrate those controls govern — the lifecycle you operate,
+    the runbook you follow, the hook you wire.</p>
+  </div>
+  <div class="tile">
+    <div class="tl-kicker">The three skills</div>
+    <div class="tl-h">self-communicate · <i>communicate</i></div>
+    <p>The <b>prose-and-diagram</b> craft: a rhetoric toolkit, the Diátaxis register, a house lexicon, and
+    an audit that emits fixes — for the docs the other two produce <i>and</i> the operator's own reports to
+    the human.</p>
+  </div>
+  <div class="tile tint">
+    <p style="margin:0;">Govern and operate are one substrate seen two ways; communicate is the craft that
+    keeps their output legible. The loop closes across all three: operate surfaces a recurring break, govern
+    mints the control, communicate writes it up in the shared register.
+    <a href="quick-start.html">Install all three →</a></p>
+  </div>
+  <div class="tile">
+    <div class="tl-kicker">References</div>
     <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
     Judgment: A Case Study on Governable Agentic Software Engineering</i></a></div>
     <div class="r"><b>Live system it governs:</b> <a href="https://scholaccess.com">DocAble (scholaccess.com)</a></div>
   </div>
 
-  <figure class="wf">
-    <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
-      title="The development-process figure" tabindex="0" onload="fitFig(this)"></iframe></div>
-    <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
-    probably know up front: business requirements, security scanners you always run, etc. Others you
-    need to figure out through trial and
-    error, because they depend on the nature of the errors made by the models you're working with. The
-    mindset shift is from reviewing your agents' code, to reviewing their failures and constraining their
-    future moves as needed.</figcaption>
-  </figure>
-  <script>
-  function fitFig(f){{
-    try{{
-      var d=f.contentWindow.document, w=d.documentElement.scrollWidth||1040, h=d.documentElement.scrollHeight||600;
-      var frame=f.parentElement, wf=frame.parentElement;
-      var avail=wf.clientWidth, s=Math.min(1, avail/w);
-      f.style.width=w+'px'; f.style.height=h+'px';
-      f.style.transformOrigin='top left'; f.style.transform='scale('+s+')';
-      // size the frame to the SCALED figure and center it, so a figure narrower than the
-      // column isn't pinned left by the top-left transform origin
-      frame.style.width=(w*s)+'px'; frame.style.height=(h*s)+'px'; frame.style.margin='0 auto';
-    }}catch(e){{}}
-  }}
-  window.addEventListener('resize', function(){{ var f=document.getElementById('wf-frame'); if(f) fitFig(f); }});
-  </script>
-
-  <hr class="sep" />
-
-  <h3 class="walk-h">How the Alignment half grows — reading failure as a missing mechanism</h3>
-  <p class="walk-sub">You place some constraints and sensors up front, from what you know about the domain.
-  The rest you learn along the way: velocity surfaces a failure class earlier governance didn't address,
-  and you convert each recurring one into a mechanism. That conversion is the way of thinking inside MAGE,
-  not a separate headline — it is how the Alignment Thesis grows past what you could specify in advance.</p>
-  <div class="loop">
+  <div class="tile wide accent">
+    <div class="tl-kicker">How the Alignment half grows — reading failure as a missing mechanism</div>
+    <p>You place some constraints and sensors up front, from what you know about the domain. The rest you
+    learn along the way: velocity surfaces a failure class earlier governance didn't address, and you convert
+    each recurring one into a mechanism. That conversion is the way of thinking inside MAGE — how the
+    Alignment Thesis grows past what you could specify in advance.</p>
+    <div class="loop">
     {flow}
     <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
     exist</i> is the costly, human part. Two paired concepts hold it together:</p>
@@ -1435,19 +1471,48 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
       <li><b>Judgment decides which governance to build</b> — recognizing which failures deserve a
       guardrail (and which are one-offs) is the hard, human call.</li>
     </ul>
+    </div>
   </div>
 
-  <hr class="sep" />
+  <div class="tile wide">
+    <div class="tl-kicker">The goal: a governed engineering environment</div>
+    <figure class="wf">
+      <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
+        title="The development-process figure" tabindex="0" onload="fitFig(this)"></iframe></div>
+      <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
+      probably know up front: business requirements, security scanners you always run, etc. Others you
+      need to figure out through trial and
+      error, because they depend on the nature of the errors made by the models you're working with. The
+      mindset shift is from reviewing your agents' code, to reviewing their failures and constraining their
+      future moves as needed.</figcaption>
+    </figure>
+    <script>
+    function fitFig(f){{
+      try{{
+        var d=f.contentWindow.document, w=d.documentElement.scrollWidth||1040, h=d.documentElement.scrollHeight||600;
+        var frame=f.parentElement, wf=frame.parentElement;
+        var avail=wf.clientWidth, s=Math.min(1, avail/w);
+        f.style.width=w+'px'; f.style.height=h+'px';
+        f.style.transformOrigin='top left'; f.style.transform='scale('+s+')';
+        // size the frame to the SCALED figure and center it, so a figure narrower than the
+        // column isn't pinned left by the top-left transform origin
+        frame.style.width=(w*s)+'px'; frame.style.height=(h*s)+'px'; frame.style.margin='0 auto';
+      }}catch(e){{}}
+    }}
+    window.addEventListener('resize', function(){{ var f=document.getElementById('wf-frame'); if(f) fitFig(f); }});
+    </script>
+  </div>
 
-  <h2 class="section-h">Explore the catalogue</h2>
-  <p class="section-sub">{n} governance mechanisms — the repertoire this loop produced in one real
-  production system.</p>
-  <div class="cards-grid">
+  <div class="tile wide" style="border:none;background:none;padding:0;">
+    <div class="tl-kicker" style="margin-bottom:8px;">Explore the catalogue — {n} governance mechanisms, the repertoire this loop produced in one real production system</div>
+  </div>
   {cards}
+  <div class="tile cta">
+    <p class="book-cta" style="margin:0;"><a href="book/index.html"><b>To learn more about the MAGE method,
+    read the book! →</b></a></p>
+    <span class="book-cta-pdf" style="display:block;margin:8px 0 0;"><a href="book/mage-book.pdf">Download PDF</a></span>
   </div>
-
-  <p class="book-cta"><a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a>
-  <span class="book-cta-pdf"><a href="book/mage-book.pdf">Download PDF</a></span></p>
+  </div>
 """
 
 
