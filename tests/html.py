@@ -28,6 +28,11 @@ class _Refs(HTMLParser):
             self.ids.add(d["name"])
 
 
+# Artifacts built by the Pages CI (gitignored locally, present on the deployed site) — a link to one
+# is valid on the live site, but its target does not exist at check-time, so don't flag it as missing.
+_CI_BUILT_ARTIFACTS = ("mage-book.pdf",)
+
+
 def check_html_links():
     """Every local href/src resolves to a file; #anchors resolve where the target page uses ids."""
     files = html_files()
@@ -45,6 +50,8 @@ def check_html_links():
             if ref.startswith(("http://", "https://", "mailto:", "data:", "//")):
                 continue
             tgt_rel, _, anchor = ref.partition("#")
+            if tgt_rel and os.path.basename(tgt_rel) in _CI_BUILT_ARTIFACTS:
+                continue  # CI-built download artifact — present on the deployed site, not on disk here
             if not tgt_rel:  # in-page anchor
                 if anchor and anchor not in parsed[ap].ids:
                     issues.append(f"{rel(f)} -> #{anchor} (no such id in page)")
