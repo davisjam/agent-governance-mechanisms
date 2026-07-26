@@ -97,7 +97,11 @@ def check_html_valid(strict: bool):
 
 
 def check_claude_validate(strict: bool):
-    """`claude plugin validate` on the plugin dir + the marketplace root. SKIP if the CLI is absent."""
+    """`claude plugin validate` on the plugin dir + the marketplace root. LOCAL-ONLY: the `claude` CLI is
+    never invoked in CI (headless runners have no interactive CLI, and CI must not call it) — it SKIPs under
+    a CI runner. On a developer machine it runs; SKIP if the CLI is absent there."""
+    if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+        return SKIP, ["local-only — `claude` is not invoked in CI (run locally with the CLI installed)"]
     if not shutil.which("claude"):
         return (FAIL if strict else SKIP), ["claude CLI not found"]
     issues = []

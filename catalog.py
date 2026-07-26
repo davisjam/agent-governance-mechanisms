@@ -1284,7 +1284,7 @@ LANDING_CSS = """
   /* A card-family block: a light kicker heading over a masonry pack of its cards. */
   .fam { margin:0 0 6px; }
   .fam-h { font-size:13px; text-transform:uppercase; letter-spacing:.06em; font-weight:800;
-           color:#94a3b8; margin:20px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--line); }
+           color:#556072; margin:20px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--line); }
   /* Full-bleed cards inside a family grid (the midway strip, the workflow figure, the alignment-grows
      strip) span every track. */
   .card.wide { grid-column:1 / -1; }
