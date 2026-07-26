@@ -1072,6 +1072,32 @@ LANDING_CSS = """
     .duo { grid-template-columns:1fr; }
   }
 
+  /* ---- The pair of theses (two-up on wide, stacked on narrow) --------------------------------
+     The two theses are a matched pair and must read as a grouped unit, and the top spine must use
+     the full page width. So they sit side-by-side in a two-track grid that spans the whole 2100px
+     spine (was: two lonely 70ch left columns that wasted the right half). Each thesis is a bordered
+     card; its figure fills the card's column, so at 2560px each figure renders ≈1000px wide — far
+     more legible than the old fixed 920px pinned in a narrow column. */
+  .theses-pair { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin:22px 0 8px;
+                 align-items:stretch; }
+  .thesis { border:1.4px solid var(--line); border-radius:12px; padding:20px 24px 22px; background:#fff;
+            display:flex; flex-direction:column; }
+  .thesis.accent { border-top:3px solid var(--accent); }
+  .thesis .th-eyebrow { font-size:12px; text-transform:uppercase; letter-spacing:.07em; font-weight:800;
+                        color:var(--accent); margin:0 0 6px; }
+  .thesis .th-h { font-size:22px; margin:0 0 8px; letter-spacing:-.01em; line-height:1.25;
+                  font-family:"Source Serif 4",Georgia,serif; }
+  .thesis .th-sub { font-size:16.5px; color:#3a3a3a; margin:0 0 6px; line-height:1.62; max-width:none; }
+  .thesis .th-fig { margin:auto 0 0; padding-top:14px; }
+  .thesis .th-fig svg { display:block; width:100%; height:auto; }
+  .thesis .th-fig figcaption { font-size:14px; color:var(--muted); line-height:1.55;
+                               margin:11px 0 0; text-align:center; max-width:none; }
+  .thesis .th-fig figcaption b { color:#333; }
+  /* Below 960px the pair can't hold two legible columns; stack it and keep each figure full-width. */
+  @media (max-width:960px){
+    .theses-pair { grid-template-columns:1fr; gap:16px; }
+  }
+
   /* ---- Cheat-sheet MASONRY (below the prose spine) -----------------------------------------
      Everything under the two theses tiles into a Pinterest-style pack: CSS multi-column with
      break-inside:avoid on each self-contained card, so varying-height cards float up and fill
@@ -1135,6 +1161,17 @@ LANDING_CSS = """
      used in the old full-width main; reset it to a normal centered block so the iframe fits the tile. */
   .tile.wide .wf { position:static; left:auto; transform:none; width:100%; max-width:1400px;
                    margin:8px auto 0; }
+  /* The midway-discipline figure sits beside its prose in a full-bleed tile: the SVG gets a generous
+     column so its three-panel labels are legible, prose reads alongside on wide screens. */
+  .tile.wide .midway-fp { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+                          gap:20px 30px; align-items:center; margin-top:4px; }
+  .tile.wide .midway-fp .bx-fig { margin:0; }
+  .tile.wide .midway-fp .bx-fig svg { display:block; width:100%; height:auto; }
+  .tile.wide .midway-body > :first-child { margin-top:0; }
+  .tile.wide .midway-body > :last-child { margin-bottom:0; }
+  @media (max-width:820px){
+    .tile.wide .midway-fp { grid-template-columns:1fr; gap:14px; }
+  }
   @media (max-width:720px){
     .masonry { columns: 1; }
   }
@@ -1357,24 +1394,36 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
     </div>
   </div>
 
-  <h2 class="section-h">The Modeling Thesis — documentation, taken to its limit</h2>
-  <p class="section-sub">The first thesis. Give agents good documentation and tests, then point them at
-  it — the first move everyone finds on their own. The step the training data won't suggest is the next
-  one: <b>documentation has a hierarchy, and its top is not prose. It is a typed model.</b> A
-  context-bounded agent working on a context-<em>exceeding</em> system needs a <b>typed, queryable,
-  drift-checked model</b> to reason through — the bridge between the agent and the codebase it cannot fit
-  in its head. The catalogue's <b>models-bridge</b> role is this bridge, made concrete.</p>
-  <figure class="lfig" style="max-width:920px;">{model_fig}<figcaption>Documentation, at its limit, is a
-  typed model — one an agent reasons over without error and that a build-time drift check keeps honest.</figcaption></figure>
-
-  <h2 class="section-h">The Alignment Thesis — constraints and sensors</h2>
-  <p class="section-sub">The second thesis. A mechanism the environment enforces keeps output aligned with
-  intent, and it takes one of two forms: <b>prevent</b> the error, or <b>catch</b> it. However you arrived
-  at the goal — up front from the domain or in response to a failure — a <b>constraint</b> scopes the action
-  space so the whole class is impossible, and a <b>sensor</b> lets the mistake happen but detects it in time,
-  failing the loop iteration so the agent runs again to fix it.</p>
-  <figure class="lfig" style="max-width:920px;">{mech_fig}<figcaption>A quality goal splits into two moves:
-  a constraint that prevents the error, and a sensor that catches it.</figcaption></figure>
+  <!-- ===================== THE PAIR OF THESES =====================
+       The two theses are a matched pair — read them together. On a wide viewport they sit two-up,
+       each filling half the full-width spine so neither is a lonely narrow left column, and each
+       figure renders at ~half the page width (far more legible than the old 920px-in-a-narrow-column).
+       Collapses to a single stacked column below 960px. -->
+  <div class="theses-pair">
+    <section class="thesis accent">
+      <div class="th-eyebrow">Thesis I of II</div>
+      <h2 class="th-h">The Modeling Thesis — documentation, taken to its limit</h2>
+      <p class="th-sub">The first thesis. Give agents good documentation and tests, then point them at
+      it — the first move everyone finds on their own. The step the training data won't suggest is the next
+      one: <b>documentation has a hierarchy, and its top is not prose. It is a typed model.</b> A
+      context-bounded agent working on a context-<em>exceeding</em> system needs a <b>typed, queryable,
+      drift-checked model</b> to reason through — the bridge between the agent and the codebase it cannot fit
+      in its head. The catalogue's <b>models-bridge</b> role is this bridge, made concrete.</p>
+      <figure class="th-fig">{model_fig}<figcaption>Documentation, at its limit, is a
+      typed model — one an agent reasons over without error and that a build-time drift check keeps honest.</figcaption></figure>
+    </section>
+    <section class="thesis accent">
+      <div class="th-eyebrow">Thesis II of II</div>
+      <h2 class="th-h">The Alignment Thesis — constraints and sensors</h2>
+      <p class="th-sub">The second thesis. A mechanism the environment enforces keeps output aligned with
+      intent, and it takes one of two forms: <b>prevent</b> the error, or <b>catch</b> it. However you arrived
+      at the goal — up front from the domain or in response to a failure — a <b>constraint</b> scopes the action
+      space so the whole class is impossible, and a <b>sensor</b> lets the mistake happen but detects it in time,
+      failing the loop iteration so the agent runs again to fix it.</p>
+      <figure class="th-fig">{mech_fig}<figcaption>A quality goal splits into two moves:
+      a constraint that prevents the error, and a sensor that catches it.</figcaption></figure>
+    </section>
+  </div>
 
   <hr class="sep" />
 
@@ -1386,19 +1435,26 @@ LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineerin
   <div class="masonry">
   {schools}
   <div class="tile axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</div>
-  <div class="tile accent">
+  <!-- Full-bleed so the three-panel process figure renders large enough that its panel labels
+       ("Velocity-centric", "Oversight-centric", "Governance-centric") are legible — pinned in a 320px
+       masonry column its text was unreadable. Figure beside prose on wide, stacked on narrow. -->
+  <div class="tile wide accent">
     <div class="tl-kicker">The midway is a discipline</div>
-    <figure class="bx-fig">{schools_fig}</figure>
-    <p>Three process models for agentic engineering. The two poles: velocity-centric agents hand work
-    around a ring of job titles with the quality mechanism left implicit; oversight-centric keeps a human
-    next to each bounded piece — honest, but the human's attention does not scale with the fleet.
-    <span class="term">Governance-centric</span> is the synthesis: the agents sit inside a containing
-    environment of enforced mechanisms the human sets up in advance. This site takes the third.</p>
-    <p>That midway means <span class="term">establishing and maintaining a governed engineering
-    environment</span> — working in two directions at once: <b>up front</b> you specify what you can (the
-    architecture that makes a class of error impossible, the model the fleet reasons through, the templates
-    that put a change on rails); <b>in flight</b> you let velocity surface the failures you couldn't foresee
-    and convert each recurring one into a durable guardrail.</p>
+    <div class="midway-fp">
+      <figure class="bx-fig">{schools_fig}</figure>
+      <div class="midway-body">
+      <p>Three process models for agentic engineering. The two poles: velocity-centric agents hand work
+      around a ring of job titles with the quality mechanism left implicit; oversight-centric keeps a human
+      next to each bounded piece — honest, but the human's attention does not scale with the fleet.
+      <span class="term">Governance-centric</span> is the synthesis: the agents sit inside a containing
+      environment of enforced mechanisms the human sets up in advance. This site takes the third.</p>
+      <p>That midway means <span class="term">establishing and maintaining a governed engineering
+      environment</span> — working in two directions at once: <b>up front</b> you specify what you can (the
+      architecture that makes a class of error impossible, the model the fleet reasons through, the templates
+      that put a change on rails); <b>in flight</b> you let velocity surface the failures you couldn't foresee
+      and convert each recurring one into a durable guardrail.</p>
+      </div>
+    </div>
   </div>
   <div class="tile tint">
     <p style="margin:0;">This site packages <b>both halves</b> — the guidance on what to fix in advance and
