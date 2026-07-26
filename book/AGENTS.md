@@ -114,6 +114,22 @@ so they stay invisible if the markdown is read raw.
   Inline: `**bold**`, `*italic*`, `[text](url)`, and `[[slug|text]]` abstraction citations (link into the
   catalogue's glossary).
 
+### Data from the case study — show the evidence, not just the number
+
+This book's differentiator is that the real system produces **actual measurements**, and it shows them. A
+`#### Data from the case study` section (the pattern set in 4.1) grounds an abstract claim in what
+happened on the real system. **Where the data supports one, present it as a chart or table — not prose
+numbers alone.** A paired before/after bar chart, or a small table of measured figures, carries
+conviction a sentence of numbers cannot — and it is precisely what a hand-wavy AI-engineering book cannot
+offer. Prose-only is the fallback, for a single figure or a genuinely un-chartable result.
+
+- **Draw charts from our own data, never mocked.** Every figure must be regenerable from a committed
+  data file (a CSV, `data/metrics.json`, a pilot's result table), so a reader — and a later editor — can
+  trace the picture back to the measurement. Emit `.svg` so the chart drops into the `<!-- figure: -->`
+  mechanism above.
+- **Pin every case-study number to where it was measured**, so editing the measurement cannot silently
+  rot the claim that leans on it (the cross-reference control — manifest + gate — enforces this).
+
 ---
 
 ## 4. The appendix system — GoF patterns from the catalogue
