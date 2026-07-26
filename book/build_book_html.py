@@ -459,6 +459,21 @@ def _heading_anchor(text: str) -> tuple[str, str]:
     return text[: m.start()].rstrip(), f' id="{html.escape(slug, quote=True)}"'
 
 
+_ROLE_KICKER_RE = re.compile(r"^\s*\[role:\s*([^\]]+?)\s*\]\s*")
+
+
+def _role_kicker(text: str) -> tuple[str, str]:
+    """Split a leading `[role: Name]` kicker off a step heading. Returns (kicker_html, rest) where
+    kicker_html is a styled accent `<span class="role-kick">` (or "" if none). The 5.4 staircase uses
+    this so each step heading carries the engineer's climbing title — co-coder, QA, HR, org designer,
+    architect, director — in the same small-caps accent register as the chapter kicker."""
+    m = _ROLE_KICKER_RE.match(text)
+    if not m:
+        return "", text
+    label = html.escape(m.group(1), quote=False)
+    return f'<span class="role-kick">{label}</span> ', text[m.end():]
+
+
 def _split_blocks(md: str) -> list[str]:
     """Split markdown into blank-line-delimited blocks, but keep a fenced code block (```` ``` ````…```` ``` ````)
     intact even when it contains blank lines. A naive blank-line split shatters a code block that has an
@@ -677,7 +692,8 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             continue
         if stripped.startswith("## "):
             txt, anc = _heading_anchor(stripped[3:])
-            _emit(f"<h2{anc}>{inline(txt)}</h2>")
+            kick, txt = _role_kicker(txt)
+            _emit(f"<h2{anc}>{kick}{inline(txt)}</h2>")
             continue
         if stripped.startswith("# "):
             txt, anc = _heading_anchor(stripped[2:])
@@ -832,6 +848,11 @@ header.chap h1 {{ font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }}
 .part-epigraph .attr {{ display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
                         color: #6a6a6a; }}
 h2 {{ font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }}
+/* Role kicker on a step heading (`## [role: Architect] …`) — the engineer's climbing title, rendered in
+   the same small-caps accent register as the chapter kicker (`header.chap .kicker`) but inline before the
+   heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
+h2 .role-kick {{ color: var(--accent); font-weight: 700; font-size: 0.62em; letter-spacing: 0.07em;
+                 text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }}
 h3 {{ font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }}
 h4 {{ font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }}
 p {{ margin: 0 0 1rem; }}

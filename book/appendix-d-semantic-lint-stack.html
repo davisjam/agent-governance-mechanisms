@@ -30,6 +30,11 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
                         color: #6a6a6a; }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+/* Role kicker on a step heading (`## [role: Architect] …`) — the engineer's climbing title, rendered in
+   the same small-caps accent register as the chapter kicker (`header.chap .kicker`) but inline before the
+   heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
+h2 .role-kick { color: var(--accent); font-weight: 700; font-size: 0.62em; letter-spacing: 0.07em;
+                 text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }
 p { margin: 0 0 1rem; }
