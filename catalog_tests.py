@@ -42,6 +42,7 @@ from tests.html import (
     check_html_links,
     check_no_duplicate_ids,
     check_no_notation_leak,
+    check_summary_no_flow_content,
 )
 from tests.markdown import check_markdown_anchors, check_markdown_schema, check_render_safety
 from tests.skill import check_bundle_links, check_skill_drift, check_skill_structure
@@ -75,6 +76,7 @@ CHECKS = [
     Check("render: XSS neutralization (escape seam + link scheme)", 1, lambda strict: check_render_safety()),
     Check("html: link + anchor resolution", 1, lambda strict: check_html_links()),
     Check("html: no duplicate element ids (stdlib twin of T2 no-dup-id)", 1, lambda strict: check_no_duplicate_ids()),
+    Check("html: no flow content under <summary> (stdlib twin of T2 element-permitted-content)", 1, lambda strict: check_summary_no_flow_content()),
     Check("html: no book notation leaks (whole-vocabulary; marker / {{token}} / [+emph+])", 1, lambda strict: check_no_notation_leak()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data

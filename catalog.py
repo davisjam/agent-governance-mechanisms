@@ -1396,18 +1396,18 @@ def _card(slug: str, kicker: str, title: str, frame: str, body: str,
     thumb = ""
     fig_block = ""
     if fig_svg:
-        thumb = f'<div class="cd-thumb" aria-hidden="true">{_ns_svg_ids(fig_svg, f"{slug}-th")}</div>'
+        thumb = f'<span class="cd-thumb" aria-hidden="true">{_ns_svg_ids(fig_svg, f"{slug}-th")}</span>'
         fig_block = f'<figure class="cd-fig">{_ns_svg_ids(fig_svg, f"{slug}-fig")}</figure>'
     tcls = "cd-title accent-t" if title_accent else "cd-title"
-    kick = f'<div class="cd-kicker">{kicker}</div>' if kicker else ""
-    frm = f'<div class="cd-frame">{frame}</div>' if frame else ""
+    kick = f'<span class="cd-kicker">{kicker}</span>' if kicker else ""
+    frm = f'<span class="cd-frame">{frame}</span>' if frame else ""
     dl = " download" if more_download else ""
     more = (f'<a class="cd-more" href="{more_href}"{dl}>{more_label}</a>'
             if more_href else "")
     ccls = ("card " + cls).strip()
     return (
         f'<details class="{ccls}" id="card-{slug}">\n'
-        f'  <summary>{kick}<div class="{tcls}">{title}</div>{frm}'
+        f'  <summary>{kick}<span class="{tcls}">{title}</span>{frm}'
         f'<span class="cd-toggle" aria-hidden="true"></span>{thumb}</summary>\n'
         f'  <div class="cd-body">{fig_block}{body}{more}</div>\n'
         f'</details>')
@@ -1594,11 +1594,11 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
   <div class="theses-cards">
     <details class="card accent" id="card-thesis-modeling" open>
       <summary>
-        <div class="cd-kicker">Thesis I of II</div>
-        <div class="cd-title accent-t">The Modeling Thesis</div>
-        <div class="cd-frame">Documentation, taken to its limit, is a typed model.</div>
+        <span class="cd-kicker">Thesis I of II</span>
+        <span class="cd-title accent-t">The Modeling Thesis</span>
+        <span class="cd-frame">Documentation, taken to its limit, is a typed model.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
-        <div class="cd-thumb" aria-hidden="true">{model_fig_th}</div>
+        <span class="cd-thumb" aria-hidden="true">{model_fig_th}</span>
       </summary>
       <div class="cd-body">
         <figure class="cd-fig">{model_fig}<figcaption>Documentation, at its limit, is a typed model — one an
@@ -1614,11 +1614,11 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card accent" id="card-thesis-alignment" open>
       <summary>
-        <div class="cd-kicker">Thesis II of II</div>
-        <div class="cd-title accent-t">The Alignment Thesis</div>
-        <div class="cd-frame">A quality goal splits into a constraint that prevents and a sensor that catches.</div>
+        <span class="cd-kicker">Thesis II of II</span>
+        <span class="cd-title accent-t">The Alignment Thesis</span>
+        <span class="cd-frame">A quality goal splits into a constraint that prevents and a sensor that catches.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
-        <div class="cd-thumb" aria-hidden="true">{mech_fig_th}</div>
+        <span class="cd-thumb" aria-hidden="true">{mech_fig_th}</span>
       </summary>
       <div class="cd-body">
         <figure class="cd-fig">{mech_fig}<figcaption>A quality goal splits into two moves: a constraint that
@@ -1646,9 +1646,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     {schools}
     <details class="card" id="card-velocity-oversight-axis">
       <summary>
-        <div class="cd-kicker">The spectrum</div>
-        <div class="cd-title">← velocity &nbsp;•&nbsp; oversight →</div>
-        <div class="cd-frame">Where each school sits on the one axis that orders them.</div>
+        <span class="cd-kicker">The spectrum</span>
+        <span class="cd-title">← velocity &nbsp;•&nbsp; oversight →</span>
+        <span class="cd-frame">Where each school sits on the one axis that orders them.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1660,11 +1660,11 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card wide accent" id="card-midway-discipline" open>
       <summary>
-        <div class="cd-kicker">The midway is a discipline</div>
-        <div class="cd-title">Governance-centric — the synthesis</div>
-        <div class="cd-frame">Three process models for agentic engineering; this site takes the third.</div>
+        <span class="cd-kicker">The midway is a discipline</span>
+        <span class="cd-title">Governance-centric — the synthesis</span>
+        <span class="cd-frame">Three process models for agentic engineering; this site takes the third.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
-        <div class="cd-thumb" aria-hidden="true">{schools_fig_th}</div>
+        <span class="cd-thumb" aria-hidden="true">{schools_fig_th}</span>
       </summary>
       <div class="cd-body">
         <div class="midway-fp">
@@ -1693,9 +1693,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     <div class="masonry">
     <details class="card" id="card-agent-legible-precise">
       <summary>
-        <div class="cd-kicker">Modeling Thesis</div>
-        <div class="cd-title">Agent-legible &amp; precise</div>
-        <div class="cd-frame">Abstraction shrinks the space an agent can be wrong in.</div>
+        <span class="cd-kicker">Modeling Thesis</span>
+        <span class="cd-title">Agent-legible &amp; precise</span>
+        <span class="cd-frame">Abstraction shrinks the space an agent can be wrong in.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1707,9 +1707,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card" id="card-it-cant-lie">
       <summary>
-        <div class="cd-kicker">Modeling Thesis</div>
-        <div class="cd-title">It can’t lie</div>
-        <div class="cd-frame">A model wired to a build-time drift check cannot rot.</div>
+        <span class="cd-kicker">Modeling Thesis</span>
+        <span class="cd-title">It can’t lie</span>
+        <span class="cd-frame">A model wired to a build-time drift check cannot rot.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1721,9 +1721,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card tint" id="card-model-pays-back">
       <summary>
-        <div class="cd-kicker">Modeling Thesis</div>
-        <div class="cd-title">Cheap to keep, pays back</div>
-        <div class="cd-frame">Agents maintain the model like docs and tests.</div>
+        <span class="cd-kicker">Modeling Thesis</span>
+        <span class="cd-title">Cheap to keep, pays back</span>
+        <span class="cd-frame">Agents maintain the model like docs and tests.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1741,9 +1741,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     <div class="masonry">
     <details class="card accent" id="card-constraint">
       <summary>
-        <div class="cd-kicker">Alignment Thesis</div>
-        <div class="cd-title accent-t">Constraint</div>
-        <div class="cd-frame">Make the wrong move impossible to pick.</div>
+        <span class="cd-kicker">Alignment Thesis</span>
+        <span class="cd-title accent-t">Constraint</span>
+        <span class="cd-frame">Make the wrong move impossible to pick.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1757,9 +1757,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card accent" id="card-sensor">
       <summary>
-        <div class="cd-kicker">Alignment Thesis</div>
-        <div class="cd-title accent-t">Sensor</div>
-        <div class="cd-frame">Where you can't prevent it, detect it after the fact.</div>
+        <span class="cd-kicker">Alignment Thesis</span>
+        <span class="cd-title accent-t">Sensor</span>
+        <span class="cd-frame">Where you can't prevent it, detect it after the fact.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1772,9 +1772,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card" id="card-constraint-vs-sensor">
       <summary>
-        <div class="cd-kicker">Constraint vs. sensor</div>
-        <div class="cd-title">Firewall vs. smoke detector</div>
-        <div class="cd-frame">Prefer a constraint; wrap in sensors for what you can't scope away.</div>
+        <span class="cd-kicker">Constraint vs. sensor</span>
+        <span class="cd-title">Firewall vs. smoke detector</span>
+        <span class="cd-frame">Prefer a constraint; wrap in sensors for what you can't scope away.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1789,9 +1789,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card wide accent" id="card-alignment-grows">
       <summary>
-        <div class="cd-kicker">How the Alignment half grows</div>
-        <div class="cd-title">Reading failure as a missing mechanism</div>
-        <div class="cd-frame">Velocity surfaces a failure class; you convert each recurring one into a mechanism.</div>
+        <span class="cd-kicker">How the Alignment half grows</span>
+        <span class="cd-title">Reading failure as a missing mechanism</span>
+        <span class="cd-frame">Velocity surfaces a failure class; you convert each recurring one into a mechanism.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1822,9 +1822,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     {ways}
     <details class="card tint" id="card-ways-note">
       <summary>
-        <div class="cd-kicker">Way of thinking</div>
-        <div class="cd-title">Where the stances come from</div>
-        <div class="cd-frame">Distilled from the AI-First Engineering Method.</div>
+        <span class="cd-kicker">Way of thinking</span>
+        <span class="cd-title">Where the stances come from</span>
+        <span class="cd-frame">Distilled from the AI-First Engineering Method.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1842,9 +1842,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     <div class="masonry">
     <details class="card" id="card-skill-self-governance">
       <summary>
-        <div class="cd-kicker">The three skills</div>
-        <div class="cd-title">self-governance · <i>harden</i></div>
-        <div class="cd-frame">The design-time lens — the census plus the engine that mints new controls.</div>
+        <span class="cd-kicker">The three skills</span>
+        <span class="cd-title">self-governance · <i>harden</i></span>
+        <span class="cd-frame">The design-time lens — the census plus the engine that mints new controls.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1855,9 +1855,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card" id="card-skill-self-operations">
       <summary>
-        <div class="cd-kicker">The three skills</div>
-        <div class="cd-title">self-operations · <i>operate</i></div>
-        <div class="cd-frame">The run-time lens — it runs the substrate those controls govern.</div>
+        <span class="cd-kicker">The three skills</span>
+        <span class="cd-title">self-operations · <i>operate</i></span>
+        <span class="cd-frame">The run-time lens — it runs the substrate those controls govern.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1868,9 +1868,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card" id="card-skill-self-communicate">
       <summary>
-        <div class="cd-kicker">The three skills</div>
-        <div class="cd-title">self-communicate · <i>communicate</i></div>
-        <div class="cd-frame">The prose-and-diagram craft for the docs the other two produce.</div>
+        <span class="cd-kicker">The three skills</span>
+        <span class="cd-title">self-communicate · <i>communicate</i></span>
+        <span class="cd-frame">The prose-and-diagram craft for the docs the other two produce.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1882,9 +1882,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card tint" id="card-skills-loop">
       <summary>
-        <div class="cd-kicker">The three skills</div>
-        <div class="cd-title">One substrate, seen three ways</div>
-        <div class="cd-frame">The loop closes across govern, operate, and communicate.</div>
+        <span class="cd-kicker">The three skills</span>
+        <span class="cd-title">One substrate, seen three ways</span>
+        <span class="cd-frame">The loop closes across govern, operate, and communicate.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1902,9 +1902,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     <div class="masonry">
     <details class="card tint" id="card-both-halves">
       <summary>
-        <div class="cd-kicker">What this site packages</div>
-        <div class="cd-title">Both halves, as three Claude skills</div>
-        <div class="cd-frame">{n} governance mechanisms across three roles, each a design pattern.</div>
+        <span class="cd-kicker">What this site packages</span>
+        <span class="cd-title">Both halves, as three Claude skills</span>
+        <span class="cd-frame">{n} governance mechanisms across three roles, each a design pattern.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1918,9 +1918,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card wide" id="card-governed-environment-figure" open>
       <summary>
-        <div class="cd-kicker">The goal: a governed engineering environment</div>
-        <div class="cd-title">The development process, as a figure</div>
-        <div class="cd-frame">From reviewing your agents' code to reviewing their failures.</div>
+        <span class="cd-kicker">The goal: a governed engineering environment</span>
+        <span class="cd-title">The development process, as a figure</span>
+        <span class="cd-frame">From reviewing your agents' code to reviewing their failures.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
@@ -1951,9 +1951,9 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
     </details>
     <details class="card" id="card-references">
       <summary>
-        <div class="cd-kicker">References</div>
-        <div class="cd-title">Case study &amp; the live system</div>
-        <div class="cd-frame">The paper, and the production system it governs.</div>
+        <span class="cd-kicker">References</span>
+        <span class="cd-title">Case study &amp; the live system</span>
+        <span class="cd-frame">The paper, and the production system it governs.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">

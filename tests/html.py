@@ -319,3 +319,35 @@ def check_no_notation_leak():
         for m in emph_re.finditer(text):
             issues.append(f"{rel(f)}: leaked intra-word emphasis {m.group(0)!r}")
     return (FAIL if issues else PASS), issues
+
+
+def check_summary_no_flow_content():
+    """No flow-content element (<div>, <p>, <section>, <ul>, <ol>, <figure>, <table>, ...) inside a
+    <summary>: the <summary> content model is phrasing content (or a single heading), so a <div> under
+    <summary> is invalid HTML — html-validate's `element-permitted-content` (a T2, CI-only rule). This is
+    the stdlib (Tier-1) twin of that rule: it runs locally with no Node, so the class is caught before a
+    push. The clickable-card landing shipped `<summary><span…` only after CI flagged `<summary><div…`;
+    this closes that gap at Tier 1 (peer of `check_no_duplicate_ids`, the T1 twin of no-dup-id)."""
+    files = html_files()
+    if not files:
+        return FAIL, ["no built HTML found — run `catalog.py build` first"]
+    flow = ("div", "p", "section", "article", "aside", "header", "footer", "nav",
+            "ul", "ol", "dl", "figure", "table", "form", "main", "blockquote")
+    summary_re = re.compile(r"<summary\b[^>]*>(.*?)</summary>", re.S | re.I)
+    issues = []
+    for f in files:
+        text = open(f, encoding="utf-8").read()
+        # Scan only real body markup. Strip, first: <style>/<script> blocks (a CSS/JS doc-comment may
+        # MENTION `<summary>`, derailing the non-greedy match), HTML comments (same reason), and inlined
+        # SVG (a <foreignObject> may legitimately hold a <div> — foreign content, valid; html-validate
+        # ignores it too). What's left is real flow content directly under a summary.
+        text = re.sub(r"<(style|script)\b.*?</\1>", "", text, flags=re.S | re.I)
+        text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+        text = re.sub(r"<svg\b.*?</svg>", "", text, flags=re.S | re.I)
+        for m in summary_re.finditer(text):
+            inner = m.group(1)
+            for tag in flow:
+                if re.search(rf"<{tag}\b", inner, re.I):
+                    issues.append(f"{rel(f)}: <{tag}> inside <summary> — summary permits phrasing content only")
+                    break
+    return (FAIL if issues else PASS), issues
