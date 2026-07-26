@@ -38,6 +38,7 @@ from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import (
     check_book_html_tracking,
+    check_data_claims,
     check_html_links,
     check_no_duplicate_ids,
     check_no_notation_leak,
@@ -76,6 +77,11 @@ CHECKS = [
     Check("html: no duplicate element ids (stdlib twin of T2 no-dup-id)", 1, lambda strict: check_no_duplicate_ids()),
     Check("html: no book notation leaks (whole-vocabulary; marker / {{token}} / [+emph+])", 1, lambda strict: check_no_notation_leak()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
+    # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
+    # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
+    # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
+    Check("book: data-claims manifest integrity (marker/anchor/holds/uncited)", 1,
+          lambda strict: check_data_claims(), audit_only=True),
     Check("skill: structure + manifests", 1, lambda strict: check_skill_structure()),
     Check("skill: bundle freshness (no drift)", 1, lambda strict: check_skill_drift()),
     Check("skill: bundle link integrity", 1, lambda strict: check_bundle_links()),

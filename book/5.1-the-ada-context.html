@@ -57,12 +57,18 @@ blockquote.aside-sidenote { background: transparent; }
 }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
-table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+/* Booktabs table style (drawing/tables.md): exactly three horizontal rules — a heavy top rule, a light
+   rule under the header, a heavy bottom rule — and NO vertical rules or cell borders. Whitespace separates
+   columns/rows; rules only group. No zebra striping (row padding does the separating). Numbers
+   right-aligned via `.num`. WHY: vertical rules and boxed cells are chartjunk (Tufte / booktabs). */
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px;
+                    border-top: 2px solid #222; border-bottom: 2px solid #222; }
+table.book-table th, table.book-table td { border: none; padding: 0.6rem 0.7rem;
                                              text-align: left; vertical-align: top; line-height: 1.45; }
-table.book-table thead th { background: #f4f3f0; font-weight: 600; }
-table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
-blockquote table.book-table { background: #fff; }
+table.book-table thead th { background: transparent; font-weight: 600;
+                             border-bottom: 1px solid #999; }
+table.book-table th.num, table.book-table td.num { text-align: right; }
+blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
 /* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
@@ -368,7 +374,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>Universities have been obligated to comply with Title II since 1990. For most of that time, they complied reactively. A student would hit an inaccessible document, request an accommodation, and the institution would scramble to respond. That process carries a morally awkward shape: the inaccessible artifact exists first, and the burden of discovering it and asking for a fix falls on the person who has already been excluded.</p>
 <p>In 2024 the Department of Justice changed the shape. A final rule updated the Title II regulations for web content and mobile apps, and its premise was blunt. Public entities should not wait for people with disabilities to discover and report every barrier. The DOJ put it in the language of physical access: just as stairs can exclude a wheelchair user from a government building, inaccessible web content and documents can exclude people from government services. If a public entity provides a service through a website, an app, or the documents distributed through them, the accessibility of that content is <em>part of the service</em>. Just as Americans do not call ahead to check whether a building has a ramp, a student should not have to negotiate with a professor over whether the slides will be readable.</p>
 <p>The rule set a technical standard — WCAG 2.1 Level AA — and, for large institutions, a deadline. Universities are not sitting on three PDFs and a cheerful little homepage. They are sitting on decades of accumulated digital sediment: course sites, admissions forms, scanned readings, lecture videos, and more. A deadline is a deadline, and this one landed on a mountain of files no one had ever been asked to climb.</p>
-<h2>What it costs to make one document accessible</h2>
+<h2 id="nearly-free">What it costs to make one document accessible</h2>
 <p>Compliance is not free, and the cost is easiest to feel on a single deck. Open a PowerPoint slide deck — say, the "Syllabus Day" deck for a graduate course — and click the <em>Accessibility</em> tab in Microsoft PowerPoint. On a typical real deck it reports dozens of distinct problems: images missing alt text, slides missing titles, low-contrast text, tables without headers, a reading order the tool cannot verify. One real deck examined this way flagged 42 separate issues across its slides.</p>
 <p>Addressing each issue takes a couple of minutes at best and, for a complex figure, much longer. Scale that to a course. A professor maintains on the order of ~100 assignable documents for the courses they teach — slide decks plus readings in Word and PDF. At a conservative 3 hours per document, remediating a course's materials by hand runs to roughly 300 hours — about 7.5 full work weeks. At a professor's salary that is over $20,000 for the materials of a single teaching load, and a research professor teaches more than one course. Multiply by the thousands of courses at one institution and the number stops being a budget line and starts being a reason the whole thing gets quietly deferred. This per-course estimate is the cost model the book returns to; other figures reconcile to it.</p>
 <p>There are escape hatches, and each one closes on inspection:</p>

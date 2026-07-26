@@ -179,7 +179,7 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
-    "inset",
+    "inset", "data",
 )
 # A comment whose first token is one of the vocabulary keywords — used to peel a marker glued to the head
 # of a prose block (placement-robust stripping: an author need not remember a blank line) and, in the gate,
@@ -269,6 +269,39 @@ def _apply_metrics(md: str, metrics: dict[str, str]) -> str:
     return re.sub(r"\{\{\s*([a-z0-9_]+)\s*\}\}", repl, md)
 
 
+def _load_data_claims() -> dict[str, dict]:
+    """Read `data/data-claims.json` — the single source of truth for the book's governed data
+    cross-references. Keys prefixed with `_` are notes, not claims. Each claim maps a slug to
+    {source, anchor, holds, status, gloss}. Modelled on `_load_metrics` / `data/metrics.json`: the
+    `[data: <slug>]` marker resolves against this manifest, and an unknown slug fails the build loud."""
+    path = HERE / "data" / "data-claims.json"
+    if not path.is_file():
+        return {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return {k: v for k, v in raw.items() if not k.startswith("_")}
+
+
+def _apply_data_claims(md: str, claims: dict[str, dict], chapter_titles: dict[str, str]) -> str:
+    """Substitute every `[data: <slug>]` marker with a footnote-style cross-ref into the chapter that
+    reports the datum: "For the data, see [<Chapter Title> →](<source>.html#<anchor>)" — appending
+    " (preliminary)" when the claim's status is preliminary or partial. An unknown slug fails the build
+    LOUD (like an unknown `{{token}}`) — a rotted reference must stop the build, not ship a dead cross-ref.
+    The `chapter_titles` map (slug -> title) is the build's own discovery, so the link text can never
+    drift from the source chapter's real title. Emits a markdown link that `inline()` then renders to <a>."""
+    def repl(m: "re.Match[str]") -> str:
+        slug = m.group(1).strip()
+        if slug not in claims:
+            raise SystemExit(f"data marker [data: {slug}] has no entry in data/data-claims.json")
+        entry = claims[slug]
+        source = entry["source"]
+        anchor = entry.get("anchor", "")
+        title = chapter_titles.get(source, source)
+        href = f"{source}.html" + (f"#{anchor}" if anchor else "")
+        prelim = " (preliminary)" if entry.get("status") in ("preliminary", "partial") else ""
+        return f"For the data, see [{title} →]({href}){prelim}"
+    return re.sub(r"\[data:\s*([a-z0-9-]+)\s*\]", repl, md)
+
+
 def _apply_part_refs(md: str) -> str:
     """Substitute `{{part:N}}` → `Part N (<title>)`, the title read from `_PART_TITLES` at build time. A
     prose reference to a Part stays in sync with its title: rename the Part once in `_PART_TITLES` and
@@ -335,6 +368,14 @@ def _discover_chapters(metrics: dict[str, str]) -> list[dict]:
         if not c.get("is_matter"):
             seq += 1
             c["seq"] = seq
+    # Resolve `[data: <slug>]` cross-ref markers now that every chapter's title is known — the link text
+    # is the SOURCE chapter's real title (the build's own discovery), so a cross-ref can never carry a
+    # stale title. Runs after discovery (not in parse_chapter) because it needs the whole slug->title map.
+    claims = _load_data_claims()
+    if claims:
+        titles = {c["slug"]: c["chapter_title"] for c in found}
+        for c in found:
+            c["body_md"] = _apply_data_claims(c["body_md"], claims, titles)
     return found
 
 
@@ -800,16 +841,35 @@ def _split_table_row(row: str) -> list[str]:
     return cells
 
 
+def _col_alignments(sep_row: str) -> list[str]:
+    """Read GFM per-column alignment off the separator row (line 2): a trailing colon (`---:`) marks a
+    right-aligned column, which the booktabs style renders with the `.num` class (numbers right-align so a
+    reader compares magnitudes down the column). A leading+trailing colon (`:-:`) is center; a bare `---`
+    or leading-colon is the left default. Returns a class string ("" left, " class=\"num\"" right) per column."""
+    out: list[str] = []
+    for spec in _split_table_row(sep_row):
+        s = spec.strip()
+        right = s.endswith(":") and not s.startswith(":")  # `---:` only → numeric right-align
+        out.append(' class="num"' if right else "")
+    return out
+
+
 def _render_pipe_table(block: str) -> str:
     """Render a GitHub-flavored pipe table into an HTML <table> with a <thead> and <tbody>. The
-    separator row (line 2) is consumed for structure, not rendered."""
+    separator row (line 2) is consumed for structure (and per-column alignment), not rendered. A column
+    whose separator ends in a colon (`---:`) right-aligns via `.num` for the booktabs style (drawing/tables.md)."""
     lines = block.splitlines()
     header = _split_table_row(lines[0])
+    aligns = _col_alignments(lines[1]) if len(lines) > 1 else []
+
+    def _cls(i: int) -> str:
+        return aligns[i] if i < len(aligns) else ""
+
     body_rows = [_split_table_row(ln) for ln in lines[2:] if ln.strip()]
-    thead = "".join(f"<th>{inline(c)}</th>" for c in header)
+    thead = "".join(f"<th{_cls(i)}>{inline(c)}</th>" for i, c in enumerate(header))
     trs = []
     for row in body_rows:
-        tds = "".join(f"<td>{inline(c)}</td>" for c in row)
+        tds = "".join(f"<td{_cls(i)}>{inline(c)}</td>" for i, c in enumerate(row))
         trs.append(f"<tr>{tds}</tr>")
     return (
         '<table class="book-table"><thead><tr>'
@@ -875,12 +935,18 @@ blockquote.aside-sidenote {{ background: transparent; }}
 }}
 code {{ background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }}
 a {{ color: var(--accent); }}
-table.book-table {{ border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }}
-table.book-table th, table.book-table td {{ border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+/* Booktabs table style (drawing/tables.md): exactly three horizontal rules — a heavy top rule, a light
+   rule under the header, a heavy bottom rule — and NO vertical rules or cell borders. Whitespace separates
+   columns/rows; rules only group. No zebra striping (row padding does the separating). Numbers
+   right-aligned via `.num`. WHY: vertical rules and boxed cells are chartjunk (Tufte / booktabs). */
+table.book-table {{ border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px;
+                    border-top: 2px solid #222; border-bottom: 2px solid #222; }}
+table.book-table th, table.book-table td {{ border: none; padding: 0.6rem 0.7rem;
                                              text-align: left; vertical-align: top; line-height: 1.45; }}
-table.book-table thead th {{ background: #f4f3f0; font-weight: 600; }}
-table.book-table tbody tr:nth-child(even) {{ background: #faf9f6; }}
-blockquote table.book-table {{ background: #fff; }}
+table.book-table thead th {{ background: transparent; font-weight: 600;
+                             border-bottom: 1px solid #999; }}
+table.book-table th.num, table.book-table td.num {{ text-align: right; }}
+blockquote table.book-table {{ background: transparent; }}
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
 blockquote pre.mermaid {{ font-style: normal; }}
 /* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
@@ -2550,12 +2616,16 @@ blockquote.thesis-box {{ font-style: normal; background: #f2effb; border: 1px so
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.3rem; }}
 .book-eq {{ text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
             font-size: 1.15em; margin: 1rem 0; }}
+/* Booktabs table style (drawing/tables.md) — PDF/print variant: three horizontal rules only (heavy top,
+   light under-header, heavy bottom), no vertical rules or cell borders, no zebra striping. Numbers
+   right-aligned via `.num`. WHY: vertical rules and boxed cells are chartjunk (Tufte / booktabs). */
 table.book-table {{ border-collapse: collapse; width: 100%; margin: 0.65rem 0; font-size: 9pt;
-                    break-inside: avoid; }}
-table.book-table th, table.book-table td {{ border: 1px solid #d8d5cc; padding: 0.28rem 0.42rem;
+                    break-inside: avoid; border-top: 1.2pt solid #222; border-bottom: 1.2pt solid #222; }}
+table.book-table th, table.book-table td {{ border: none; padding: 0.38rem 0.5rem;
                                             text-align: left; vertical-align: top; line-height: 1.35; }}
-table.book-table thead th {{ background: #f4f3f0; font-weight: 700; }}
-table.book-table tbody tr:nth-child(even) {{ background: #faf9f6; }}
+table.book-table thead th {{ background: transparent; font-weight: 700;
+                             border-bottom: 0.5pt solid #999; }}
+table.book-table th.num, table.book-table td.num {{ text-align: right; }}
 figure.book-figure {{ margin: 1.1rem 0; text-align: center; break-inside: avoid; }}
 figure.book-figure svg, figure.book-figure img {{ max-width: 100%; max-height: 5in; height: auto; }}
 figure.book-figure figcaption {{ font-family: "Source Sans 3", sans-serif; font-size: 8.5pt; color: #666;

@@ -1,0 +1,31 @@
+{
+  "_note": "Data-claim manifest — the single source of truth for the book's governed data cross-references. One entry per grounded datum. A `[data: <slug>]` marker in the prose resolves against this file to a footnote-style cross-ref into the chapter that reports the number (fail-loud on an unknown slug, like an unknown {{token}}). Fields: `source` = the chapter slug (a book/<slug>.html page) that reports the datum; `anchor` = the {#heading-id} on that chapter's reporting section; `holds` = the load-bearing numbers/units that MUST still appear in the source (the check_data_claims lint compares digit-sequences+units under a loose match, so a spelling change is fine but a real number change fails); `status` = final | preliminary | partial; `gloss` = a one-line description of the datum. Regenerate the anchors + this file together when a source section moves. Queryable via `catalog.py data-claims`.",
+  "refactor-cost": {
+    "source": "5.4-the-road-to-mage",
+    "anchor": "refactor-cost",
+    "holds": ["58 files", "5,000 lines", "5 hours"],
+    "status": "final",
+    "gloss": "A cross-format migration touched fifty-eight files and rewrote five thousand lines in about five hours of agent time — refactoring became an afternoon's work."
+  },
+  "nearly-free": {
+    "source": "5.1-the-ada-context",
+    "anchor": "nearly-free",
+    "holds": [],
+    "status": "final",
+    "gloss": "The per-document remediation cost cascade — do-it-yourself professor cost vs. external-vendor quote vs. the tool's per-deck processing cost — showing high-quality remediation nearly for free."
+  },
+  "velocity": {
+    "source": "5.2-the-timeline-and-the-work",
+    "anchor": "velocity",
+    "holds": [],
+    "status": "final",
+    "gloss": "The velocity curve: commits per week across the project's history, rising as the fleet acquired capability then dipping during hardening."
+  },
+  "mbse-nav-token": {
+    "source": "3.1-the-executable-zoo",
+    "anchor": "mbse-nav-token",
+    "holds": ["-20%", "-12%", "-82%", "-50%"],
+    "status": "preliminary",
+    "gloss": "A controlled A/B pilot of MBSE navigation guidance (N=4 modeled tasks): tokens-to-answer with guidance ON vs. OFF, saving -20% / -12% / -82% / -50%, median ~-35%, zero accuracy loss."
+  }
+}

@@ -57,12 +57,18 @@ blockquote.aside-sidenote { background: transparent; }
 }
 code { background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
 a { color: var(--accent); }
-table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px; }
-table.book-table th, table.book-table td { border: 1px solid #e2e0da; padding: 0.45rem 0.6rem;
+/* Booktabs table style (drawing/tables.md): exactly three horizontal rules — a heavy top rule, a light
+   rule under the header, a heavy bottom rule — and NO vertical rules or cell borders. Whitespace separates
+   columns/rows; rules only group. No zebra striping (row padding does the separating). Numbers
+   right-aligned via `.num`. WHY: vertical rules and boxed cells are chartjunk (Tufte / booktabs). */
+table.book-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px;
+                    border-top: 2px solid #222; border-bottom: 2px solid #222; }
+table.book-table th, table.book-table td { border: none; padding: 0.6rem 0.7rem;
                                              text-align: left; vertical-align: top; line-height: 1.45; }
-table.book-table thead th { background: #f4f3f0; font-weight: 600; }
-table.book-table tbody tr:nth-child(even) { background: #faf9f6; }
-blockquote table.book-table { background: #fff; }
+table.book-table thead th { background: transparent; font-weight: 600;
+                             border-bottom: 1px solid #999; }
+table.book-table th.num, table.book-table td.num { text-align: right; }
+blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
 /* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
@@ -414,7 +420,7 @@ Component(
 ),</code></pre></figure>
 <p>Read <code>external_seams</code> and the whole discipline is legible. The <code>pdf-model</code> zone is the <em>only</em> one allowed to reach the canonical PDF library; <code>slides-model</code> is the only one allowed to reach the Office library. A boundary lint reads that field at check-time and reddens on any file outside the <code>pdf-model</code> zone that imports the PDF library directly — the "one typed model per format" rule from the built-system chapter, enforced not by vigilance but by a zone declaration a machine walks. The agent working the PDF zone is handed <code>focus_dirs</code> as its lane and <code>external_seams</code> as its permission slip, and it cannot wander.</p>
 <p>The zone model is the first piece of MAGE proper, because it is the first time I wrote down a <em>model of the system's own structure</em> for the fleet to read, rather than a piece of the product. It exists for the agents, not for the users.</p>
-<h2><span class="role-kick">Architect</span> Step five — the codebase modeled, from components.py to MAGE</h2>
+<h2 id="refactor-cost"><span class="role-kick">Architect</span> Step five — the codebase modeled, from components.py to MAGE</h2>
 <p>This is the step where I stopped writing code and started designing the system the fleet reasons <em>through</em>. It has one shape with three movements: a first model the fleet reads at runtime, a set of sibling models that grew up around it, and a substrate that keeps all of them honest. Together they are MAGE.</p>
 <p>The first movement was to make the zone model a file the fleet reads at runtime. That is where the method crosses from <em>documenting</em> the structure to <em>executing</em> on it.</p>
 <p>A typed registry of the system's own components — its zones, their focus directories, the seams each one is allowed to cross — is not documentation <em>about</em> the architecture. It <em>is</em> the architecture, in a form a tool can query. The zone I showed above is one row of it; the row's <em>shape</em> is a frozen dataclass:</p>

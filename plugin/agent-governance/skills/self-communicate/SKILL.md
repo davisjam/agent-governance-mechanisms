@@ -116,6 +116,12 @@ drop to hand-authored SVG only for a geometry Mermaid can't lay out, and justify
 the argument; a diagram carries the *shape* — a structure, a flow, a lifecycle, a schema. When the thing
 you are explaining has a shape, draw it.
 
+Two peers hold the *data*-figure styles, where the content is a measurement rather than a system shape.
+[`drawing/charts.md`](drawing/charts.md) — the house style for data charts (serif, three round ticks, no
+title/axis labels, a restrained two-color palette, Tufte data-ink; drawn from committed data, never mocked).
+[`drawing/tables.md`](drawing/tables.md) — the booktabs table style (three horizontal rules, no vertical
+rules or cell borders; horizontal rules group, whitespace separates). Chart a trend, table a grid of values.
+
 ## How to use this skill
 
 1. **Name the genre and the mode first.** What kind of doc is this — tutorial, how-to, reference,

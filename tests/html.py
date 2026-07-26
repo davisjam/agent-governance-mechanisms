@@ -136,6 +136,132 @@ def check_no_duplicate_ids():
     return (FAIL if issues else PASS), issues
 
 
+def _book_md_files() -> list[str]:
+    """Every book chapter-source markdown file (book/part<N>/<N>.<M>-*.md). The `[data:]` markers and the
+    `{#anchor}` heading ids live in the SOURCE markdown, not the rendered HTML, so the data-claims lint
+    reads the source of truth directly."""
+    import glob
+    return sorted(glob.glob(os.path.join(ROOT, "book", "part*", "*.md")))
+
+
+_NUM_WORDS = {
+    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
+    "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+    "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
+    "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
+}
+_NUM_SCALES = {"hundred": 100, "thousand": 1000, "million": 1_000_000, "billion": 1_000_000_000}
+
+
+def _words_to_int(phrase: str) -> int | None:
+    """Convert a spelled-out English cardinal ("fifty-eight", "five thousand") to an int, so the loose
+    `holds` match treats "58"/"fifty-eight" as the SAME number (a spelling change is fine) while a real
+    number change still fails. Returns None when the phrase is not a number phrase."""
+    tokens = re.split(r"[\s-]+", phrase.strip().lower())
+    if not tokens or not all(t in _NUM_WORDS or t in _NUM_SCALES for t in tokens):
+        return None
+    total = 0
+    current = 0
+    for t in tokens:
+        if t in _NUM_WORDS:
+            current += _NUM_WORDS[t]
+        elif t == "hundred":
+            current = (current or 1) * 100
+        else:  # thousand / million / billion
+            total += (current or 1) * _NUM_SCALES[t]
+            current = 0
+    return total + current
+
+
+_DATA_MARKER_RE = re.compile(r"\[data:\s*([a-z0-9-]+)\s*\]")
+_HEADING_ANCHOR_RE = re.compile(r"^#{1,6}\s+.*\{#([A-Za-z0-9_-]+)\}\s*$", re.M)
+# A run of digits (with optional thousands separators / decimal) followed by an optional unit word — the
+# LOOSE token the holds-still-present check compares on. "58 files" and "fifty-eight files" differ in
+# spelling (fine), but "58 files" -> "40 files" differs in the digit run (a real number change → fail).
+_NUM_UNIT_RE = re.compile(r"[-−+]?\d[\d,\.]*\s*%?\s*[A-Za-z]*")
+
+
+def _norm_num_unit(s: str) -> str:
+    """Normalize a `holds` string to its comparable core: digits + a trailing unit word, lowercased,
+    thousands-separators and whitespace stripped, and the unicode minus folded to ASCII. So "5,000 lines"
+    and "5000 lines" match, "-20%"/"−20%" match, but "58 files"/"40 files" do NOT."""
+    s = s.strip().lower().replace("−", "-").replace(",", "")
+    m = re.match(r"([-+]?\d[\d\.]*\s*%?)\s*([a-z]*)", s)
+    if not m:
+        return re.sub(r"\s+", "", s)
+    num = re.sub(r"\s+", "", m.group(1))
+    unit = m.group(2)
+    return num + unit
+
+
+def check_data_claims():
+    """AUDIT-ONLY governed data-cross-reference lint, keyed off `book/data/data-claims.json` (the SSOT):
+      (a) every `[data: <slug>]` marker in a book chapter resolves to a manifest entry;
+      (b) each entry's `source` chapter file exists AND still contains a heading carrying `{#<anchor>}`;
+      (c) each `holds` string still appears in the source chapter under a LOOSE digit+unit match (a
+          number change fails; a digit->word spelling change does not);
+      (d) a manifest entry that nothing cites is WARNed (wiring may be partial — not a hard fail).
+    Modelled on the book's `{{token}}`->metrics.json fail-loud mechanism; the build already fails loud on an
+    unknown slug, so (a) is a belt-and-suspenders backstop. Non-gating during wiring (rule #55 audit-first)."""
+    import json
+    manifest_path = os.path.join(ROOT, "book", "data", "data-claims.json")
+    if not os.path.isfile(manifest_path):
+        return PASS, ["no book/data/data-claims.json — nothing to check"]
+    raw = json.load(open(manifest_path, encoding="utf-8"))
+    claims = {k: v for k, v in raw.items() if not k.startswith("_")}
+    md_files = _book_md_files()
+    # Map source-slug -> its markdown text + the anchor ids it defines.
+    by_slug: dict[str, tuple[str, set[str]]] = {}
+    cited: set[str] = set()
+    issues: list[str] = []
+    for f in md_files:
+        text = open(f, encoding="utf-8").read()
+        stem = os.path.splitext(os.path.basename(f))[0]
+        by_slug[stem] = (text, set(_HEADING_ANCHOR_RE.findall(text)))
+        for m in _DATA_MARKER_RE.finditer(text):  # (a) every marker resolves
+            slug = m.group(1)
+            cited.add(slug)
+            if slug not in claims:
+                issues.append(f"{rel(f)}: [data: {slug}] has no entry in data-claims.json")
+    for slug, entry in claims.items():
+        src = entry.get("source", "")
+        anchor = entry.get("anchor", "")
+        if src not in by_slug:  # (b) source chapter exists
+            issues.append(f"data-claims: {slug!r} source {src!r} is not a book chapter file")
+            continue
+        text, anchors = by_slug[src]
+        if anchor and anchor not in anchors:  # (b) source still carries the anchor heading
+            issues.append(f"data-claims: {slug!r} anchor {{#{anchor}}} not found as a heading id in {src}")
+        norm_text = _norm_num_unit_haystack(text)
+        for hold in entry.get("holds", []):  # (c) each holds string still present (loose)
+            if _norm_num_unit(hold) not in norm_text:
+                issues.append(f"data-claims: {slug!r} holds {hold!r} no longer appears in {src} "
+                              f"(number may have changed — re-check the source)")
+    for slug in sorted(set(claims) - cited):  # (d) uncited entry → warn (not a hard fail)
+        issues.append(f"data-claims: WARN {slug!r} is in the manifest but nothing cites [data: {slug}] yet")
+    return (FAIL if issues else PASS), issues
+
+
+_WORD_NUM_UNIT_RE = re.compile(
+    r"\b((?:(?:" + "|".join(list(_NUM_WORDS) + list(_NUM_SCALES)) + r")[\s-]*)+)([a-z]*)",
+    re.I,
+)
+
+
+def _norm_num_unit_haystack(text: str) -> set[str]:
+    """The set of normalized number+unit tokens present in a chapter's text — the haystack (c) searches.
+    Captures BOTH digit-form ("5,000 lines" -> "5000lines") AND spelled-out-form ("fifty-eight files" ->
+    "58files"), so a digit-form `holds` string matches spelled-out prose (spelling-agnostic) while a real
+    number change still fails. Built once per source so each `holds` check is a set membership."""
+    hay: set[str] = {_norm_num_unit(m.group(0)) for m in _NUM_UNIT_RE.finditer(text)}
+    for m in _WORD_NUM_UNIT_RE.finditer(text):
+        n = _words_to_int(m.group(1))
+        if n is not None:
+            unit = m.group(2).lower()
+            hay.add(f"{n}{unit}")
+    return hay
+
+
 def _marker_keywords() -> tuple[str, ...]:
     """The build-time notation vocabulary — READ from its single source of truth in the build script
     (`build_book_html.MARKER_KEYWORDS`) so this gate can never drift from what the build defines. A new

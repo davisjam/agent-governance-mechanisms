@@ -2126,6 +2126,37 @@ def _git(*args: str, capture: bool = False) -> subprocess.CompletedProcess:
                           capture_output=capture)
 
 
+def cmd_data_claims(args) -> int:
+    """Print each governed data-claim (book/data/data-claims.json) with its status, flagging the
+    preliminary/partial ones — so "which claims are preliminary?" is a query, not a grep. `--json` dumps
+    the raw manifest entries."""
+    path = os.path.join(ROOT, "book", "data", "data-claims.json")
+    if not os.path.isfile(path):
+        print("no book/data/data-claims.json")
+        return 0
+    raw = json.load(open(path, encoding="utf-8"))
+    claims = {k: v for k, v in raw.items() if not k.startswith("_")}
+    if args.json:
+        print(json.dumps(claims, ensure_ascii=False, indent=2))
+        return 0
+    prelim = 0
+    for slug in sorted(claims):
+        e = claims[slug]
+        status = e.get("status", "?")
+        flag = "  ⚠ PRELIMINARY" if status in ("preliminary", "partial") else ""
+        if flag:
+            prelim += 1
+        src = e.get("source", "?")
+        anchor = e.get("anchor", "")
+        loc = f"{src}.html" + (f"#{anchor}" if anchor else "")
+        print(f"{slug:16} [{status:11}]{flag}")
+        print(f"                 -> {loc}")
+        if e.get("gloss"):
+            print(f"                 {e['gloss']}")
+    print(f"— {len(claims)} claim(s), {prelim} preliminary/partial")
+    return 0
+
+
 def cmd_deploy(args) -> int:
     """Build the site, then serve it locally (--local) or publish it to GitHub (--github)."""
     print(f"== Deploy plan: target={args.target} ==")
@@ -2254,6 +2285,8 @@ def main() -> int:
     tp.add_argument("--strict", action="store_true", help="treat a Tier-2 SKIP (missing axe/claude) as failure")
     sub.add_parser("check-responsive", help="deploy-blocking gate: assert the landing masonry tiles into >=3 columns at wide width and 1 column at phone width (headless Chrome; needs book/ Puppeteer)")
     sub.add_parser("check-console", help="deploy-blocking gate: load EVERY served HTML page in headless Chrome and fail on any pageerror / console.error (headless Chrome; needs book/ Puppeteer)")
+    dc = sub.add_parser("data-claims", help="list governed data-claims + their status; flag preliminary/partial ones")
+    dc.add_argument("--json", action="store_true", help="dump the raw manifest entries")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
@@ -2263,6 +2296,7 @@ def main() -> int:
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
             "build": cmd_build, "test": cmd_test, "check-responsive": cmd_check_responsive,
             "check-console": cmd_check_console,
+            "data-claims": cmd_data_claims,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 
 
