@@ -92,6 +92,16 @@ that don't.
   when it will carry the idea, and the exact technical term only when the plain word won't. An inflated word
   doing a plain word's job is the failure this catches.
 
+- **≤50 words per sentence — prose and captions alike.** No sentence exceeds roughly fifty words. A
+  caption or accessible-description sentence is not exempt: a 100-word caption is as much a wall as a
+  100-word paragraph. Split the run-on into two or more sentences, each carrying one idea. The split
+  is the fix the voice already wants — short declaratives land harder than a long one. A colon-led
+  enumeration or a labeled taxonomy that genuinely reads as a *list* is the one exception; break it
+  anyway if it reads as a comma-run rather than a list.
+- **No more than ~6 paragraphs without a heading of some kind.** A long headless run of prose loses the
+  reader. Break it with a sub-heading (`####`) that names the turn, so the reader always has a nearby
+  signpost telling them where the argument has arrived.
+
 The [`audit.md`](audit.md) procedure flags a fluffy adjective as a Pass-3 house-style finding.
 
 ## Drift tells to avoid — the discursive register's failure modes
