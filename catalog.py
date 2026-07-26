@@ -1105,7 +1105,14 @@ LANDING_CSS = """
      column COUNT grow with the viewport (≈4 tracks at 2100px, 1 track ≤720px) with no media
      queries for the count. A handful of intrinsically-wide cards (the horizontal flow strip, the
      dev-workflow figure) opt out with `.wide { column-span:all }` and punctuate the pack full-bleed. */
-  .masonry { columns: 320px; column-gap: 16px; margin: 4px 0 8px; }
+  /* The card families lay out as a responsive GRID (was CSS multi-column): with only a handful of
+     cards per family, multi-column filled column 1 then column 2 and left the right half of a wide
+     screen empty, whereas grid `auto-fill, minmax(320px,1fr)` spreads the cards ACROSS the full width
+     (≈5-6 tracks at 2560px, 1 at ≤720px). A `.card.wide` spans every track. An open <details> just
+     grows its own grid cell's row — cleaner than a multi-column reflow. */
+  .masonry { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+             gap:16px; align-items:start; margin: 4px 0 8px; }
+  @media (max-width:720px){ .masonry { grid-template-columns:1fr; } }
   .tile { break-inside: avoid; -webkit-column-break-inside: avoid; page-break-inside: avoid;
           display: inline-block; width: 100%; margin: 0 0 16px;
           border:1.4px solid var(--line); border-radius:11px; padding:15px 17px; background:#fff;
@@ -1175,6 +1182,116 @@ LANDING_CSS = """
   @media (max-width:720px){
     .masonry { columns: 1; }
   }
+
+  /* ---- HERO 2-up ---------------------------------------------------------------------------
+     The opening is a real two-column spine: the lead prose on the left, the MAGE-method overview
+     figure pulled up beside it on the right, so the top uses the full page width and "one picture"
+     lands immediately (was: a ~70ch left column with the entire top-right empty, and the method
+     figure marooned in a full-width box below). Collapses to a single stacked column ≤900px. */
+  .hero { display:grid; grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr); gap:26px 40px;
+          align-items:center; margin:8px 0 6px; }
+  .hero-lead { min-width:0; }
+  .hero-lead .lead { max-width:56ch; }
+  .hero-lead .book-h1 { margin-top:0; }
+  .hero-fig-2up { margin:0; min-width:0; }
+  .hero-fig-2up figure { margin:0; }
+  .hero-fig-2up svg { display:block; width:100%; height:auto; }
+  .hero-fig-2up figcaption { font-size:14px; color:var(--muted); line-height:1.55;
+                             margin:11px 2px 0; text-align:center; }
+  .hero-fig-2up figcaption b { color:#333; }
+  @media (max-width:900px){
+    .hero { grid-template-columns:1fr; gap:18px; }
+    .hero-lead .lead { max-width:70ch; }
+    .hero-fig-2up { max-width:640px; margin:0 auto; }
+  }
+
+  /* ---- The uniform clickable CARD (a native <details>) --------------------------------------
+     Every landing unit is the same primitive: a <details class="card"> whose <summary> is the
+     always-visible header (kicker + title + one-line frame, and a figure thumbnail when the card
+     has a figure). Expanding reveals the figure large-and-legible and/or the fuller summary
+     INLINE (the "peek"), then a "read the full treatment →" link-through to the book/entry page.
+     Native <details> keeps it accessible and JS-free — no custom modal/accordion. The whole card
+     carries id="card-<slug>" so it is deep-linkable (index.html#card-tombstone-commits). */
+  .card { border:1.4px solid var(--line); border-radius:11px; background:#fff; overflow:hidden;
+          width:100%; margin:0; align-self:start;
+          transition:box-shadow .12s, border-color .12s; scroll-margin-top:16px; }
+  .card:hover { box-shadow:0 3px 14px rgba(0,0,0,.08); border-color:#cbd5e1; }
+  .card[open] { box-shadow:0 4px 18px rgba(0,0,0,.09); border-color:#cbd5e1; }
+  .card.accent { border-top:3px solid var(--accent); }
+  .card.tint { background:#fffaf3; border-color:#f0dcc0; }
+  .card.mid { border:2px solid var(--accent); background:#fffaf3; }
+  /* The summary IS the card header — no default disclosure triangle; we draw our own affordance. */
+  .card > summary { list-style:none; cursor:pointer; padding:15px 17px; display:grid;
+                    grid-template-columns:1fr auto; gap:4px 12px; align-items:start; position:relative; }
+  .card > summary::-webkit-details-marker { display:none; }
+  .card > summary:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+  .cd-kicker { grid-column:1; font-size:11px; text-transform:uppercase; letter-spacing:.07em;
+               font-weight:800; color:var(--accent); margin:0 0 4px; }
+  .cd-title { grid-column:1; font-family:"Source Serif 4",Georgia,serif; font-size:18px;
+              letter-spacing:-.01em; color:var(--ink); line-height:1.25; margin:0; }
+  .card.mid .cd-title, .card.accent .cd-title.accent-t { color:var(--accent); }
+  .cd-frame { grid-column:1; font-size:14px; color:var(--muted); line-height:1.5; margin:5px 0 0; }
+  /* Figure thumbnail on the summary — a small, cropped preview so a figure-bearing card reads as one. */
+  .cd-thumb { grid-column:2; grid-row:1 / span 3; width:96px; height:64px; border-radius:7px;
+              border:1px solid var(--line); background:#fbfcfd; overflow:hidden; display:flex;
+              align-items:center; justify-content:center; }
+  .cd-thumb svg { width:100%; height:100%; object-fit:contain; }
+  /* The open/closed affordance — a "peek ▸ / close ▾" chip bottom-right of the summary. */
+  .cd-toggle { grid-column:2; align-self:end; font-size:11px; font-weight:700; color:var(--accent);
+               letter-spacing:.02em; white-space:nowrap; margin-top:6px; }
+  .card[open] .cd-toggle::after { content:"Close ▾"; }
+  .card:not([open]) .cd-toggle::after { content:"Peek ▸"; }
+  /* When a card has a thumb, the toggle sits under it (row 4); else it shares column 2 row 1. */
+  .cd-body { padding:0 17px 16px; border-top:1px solid var(--line); margin-top:2px; }
+  .cd-body > :first-child { margin-top:12px; }
+  .cd-body p { font-size:16px; color:#3a3a3a; line-height:1.56; margin:0 0 10px; }
+  .cd-body p:last-of-type { margin-bottom:10px; }
+  .cd-body .term { font-weight:700; color:#222; }
+  .cd-body .cd-fig { margin:12px 0 12px; }
+  .cd-body .cd-fig svg { display:block; width:100%; height:auto; }
+  .cd-body .cd-fig figcaption { font-size:13.5px; color:var(--muted); line-height:1.5;
+                                margin:9px 2px 0; text-align:center; }
+  .cd-body .cd-fig figcaption b { color:#333; }
+  /* The link-through — always the last thing in an expanded card. */
+  .cd-more { display:inline-block; margin-top:4px; font-size:14.5px; font-weight:700;
+             color:var(--accent); text-decoration:none; }
+  .cd-more:hover { text-decoration:underline; }
+  /* Arrow-bulleted lists inside a card body (the "way of thinking" skill cards). */
+  .cd-body ul.cd-list { margin:0 0 12px; padding:0; list-style:none; }
+  .cd-body ul.cd-list li { font-size:15px; color:#3a3a3a; line-height:1.5; margin:0 0 8px;
+                           padding-left:15px; position:relative; }
+  .cd-body ul.cd-list li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  .cd-body .srefs { font-size:12.5px; color:var(--muted); margin:8px 0 0; }
+  .cd-body .srefs .lbl { font-weight:700; color:#444; }
+  .cd-body .srefs ul { margin:3px 0 0; padding-left:16px; }
+  .cd-body .srefs li { margin:0 0 3px; line-height:1.4; }
+  .cd-body .srefs a { color:var(--link); }
+  .cd-body .pole { display:block; margin:10px 0 0; font-size:10px; text-transform:uppercase;
+                   letter-spacing:.05em; color:var(--muted); font-weight:800; }
+
+  /* ---- The two theses as a matched PAIR of cards -------------------------------------------
+     The theses stay a grouped, adjacent pair ("Thesis I of II" / "Thesis II of II") but are now
+     the same <details class="card"> primitive, sitting two-up in their own grid so they read
+     together and each figure renders at ~half the page width. Stacks ≤900px. */
+  .theses-cards { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:20px 0 8px;
+                  align-items:start; }
+  .theses-cards .card { margin:0; }
+  @media (max-width:900px){ .theses-cards { grid-template-columns:1fr; gap:16px; } }
+
+  /* A card-family block: a light kicker heading over a masonry pack of its cards. */
+  .fam { margin:0 0 6px; }
+  .fam-h { font-size:13px; text-transform:uppercase; letter-spacing:.06em; font-weight:800;
+           color:#94a3b8; margin:20px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--line); }
+  /* Full-bleed cards inside a family grid (the midway strip, the workflow figure, the alignment-grows
+     strip) span every track. */
+  .card.wide { grid-column:1 / -1; }
+  .card.wide .loop { border:none; background:none; padding:0; margin:8px 0 0; }
+  .card.wide .wf { position:static; left:auto; transform:none; width:100%; max-width:1400px;
+                   margin:8px auto 0; }
+  .card.wide .midway-fp { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+                          gap:20px 30px; align-items:center; margin-top:4px; }
+  .card.wide .midway-fp .cd-fig { margin:0; }
+  @media (max-width:820px){ .card.wide .midway-fp { grid-template-columns:1fr; gap:14px; } }
 """
 
 # (title, subtitle, href, extra-attrs) for the landing action cards
@@ -1255,11 +1372,80 @@ def _landing_flow() -> str:
     return row + "\n    " + mustache + "\n    " + outcome
 
 
+def _card(slug: str, kicker: str, title: str, frame: str, body: str,
+          more_href: str = "", more_label: str = "read the full treatment →",
+          fig_asset: str = "", cls: str = "", title_accent: bool = False,
+          more_download: bool = False) -> str:
+    """Build one uniform clickable landing card as a native <details>.
+
+    The <summary> is the always-visible header (kicker + title + one-line `frame`, plus a small
+    figure thumbnail when `fig_asset` is given). Expanding reveals `body` (the inline "peek" — a
+    short summary and, when `fig_asset` is set, the same figure rendered large + legible) followed
+    by a "read the full treatment →" link-through to `more_href`. The whole card carries
+    id="card-<slug>" so it is deep-linkable; the slug must be unique across the page.
+
+    A figure appears TWICE — as the summary thumbnail and (large) in the body — so both the summary
+    and the peek are figure-forward. To keep element-ids unique (check_no_duplicate_ids), any ids
+    inside the inlined SVG are namespaced per placement, so the thumb copy and the body copy never
+    collide with each other or with another card's figure.
+    """
+    fig_svg = _inline_svg(fig_asset) if fig_asset else ""
+    thumb = ""
+    fig_block = ""
+    if fig_svg:
+        thumb = f'<div class="cd-thumb" aria-hidden="true">{_ns_svg_ids(fig_svg, f"{slug}-th")}</div>'
+        fig_block = f'<figure class="cd-fig">{_ns_svg_ids(fig_svg, f"{slug}-fig")}</figure>'
+    tcls = "cd-title accent-t" if title_accent else "cd-title"
+    kick = f'<div class="cd-kicker">{kicker}</div>' if kicker else ""
+    frm = f'<div class="cd-frame">{frame}</div>' if frame else ""
+    dl = " download" if more_download else ""
+    more = (f'<a class="cd-more" href="{more_href}"{dl}>{more_label}</a>'
+            if more_href else "")
+    ccls = ("card " + cls).strip()
+    return (
+        f'<details class="{ccls}" id="card-{slug}">\n'
+        f'  <summary>{kick}<div class="{tcls}">{title}</div>{frm}'
+        f'<span class="cd-toggle" aria-hidden="true"></span>{thumb}</summary>\n'
+        f'  <div class="cd-body">{fig_block}{body}{more}</div>\n'
+        f'</details>')
+
+
+def _ns_svg_ids(svg: str, ns: str) -> str:
+    """Namespace every id="…" (and its #id references) inside an inlined SVG with a `ns-` prefix, so
+    the same figure spliced twice (summary thumb + body) — or the same asset reused across cards —
+    never yields a duplicate element id (check_no_duplicate_ids fails on any repeat). Rewrites
+    id="x" → id="ns-x", url(#x) → url(#ns-x), href="#x" → href="#ns-x", and xlink:href likewise."""
+    ids = set(re.findall(r'\bid="([^"]+)"', svg))
+    if not ids:
+        return svg
+    for i in sorted(ids, key=len, reverse=True):
+        esc = re.escape(i)
+        svg = re.sub(rf'\bid="{esc}"', f'id="{ns}-{i}"', svg)
+        svg = re.sub(rf'url\(#{esc}\)', f'url(#{ns}-{i})', svg)
+        svg = re.sub(rf'(xlink:href|href)="#{esc}"', rf'\1="#{ns}-{i}"', svg)
+    return svg
+
+
 def _landing_cards() -> str:
-    """The catalogue-explore action cards, each a linkable masonry tile."""
-    return "\n  ".join(
-        f'<a class="tile" href="{href}"{extra}><b>{t}</b><span>{sub}</span></a>'
-        for t, sub, href, extra in LANDING_CARDS)
+    """The catalogue-explore action cards, each a uniform clickable card (summary = title + frame;
+    the peek repeats the frame and the link-through IS the card's destination)."""
+    out = []
+    for t, sub, href, extra in LANDING_CARDS:
+        slug = _slug(t)
+        dl = "download" in extra
+        label = ("download →" if dl else "open →")
+        body = f'<p>{sub}</p>'
+        out.append(_card(slug, "Explore the catalogue", t, sub, body,
+                         more_href=href, more_label=label, more_download=dl))
+    return "\n  ".join(out)
+
+
+def _slug(text: str) -> str:
+    """A stable, url-safe slug from a card title (lowercased, non-alnum → single hyphens)."""
+    s = re.sub(r"<[^>]+>", "", text)               # drop any inline tags
+    s = re.sub(r"&[a-z]+;", " ", s)                # drop entities (&amp; etc.)
+    s = re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
+    return s or "card"
 
 
 # The two schools + the midway (title, blurb, pole-label, is-midway, [(ref-label, url), ...])
@@ -1311,30 +1497,41 @@ WAYS = [
 
 
 def _landing_schools() -> str:
-    """The two schools + the midway, each as a self-contained masonry tile (the band H2
-    "Between two schools of thought" is demoted to a per-tile kicker)."""
+    """The two schools + the midway, each a uniform clickable card (the summary carries a one-line
+    frame; the peek reveals the fuller blurb, examples, and the pole label)."""
     out = []
     for title, blurb, pole, mid, refs in SCHOOLS:
-        cls = "tile mid" if mid else "tile"
+        cls = "mid" if mid else ""
         rhtml = ""
         if refs:
             lis = "".join(f'<li><a href="{u}">{lbl}</a></li>' for lbl, u in refs)
             rhtml = f'<div class="srefs"><span class="lbl">Examples:</span><ul>{lis}</ul></div>'
         kicker = "The midway" if mid else "Between two schools"
-        out.append(f'<div class="{cls}"><div class="tl-kicker">{kicker}</div>'
-                   f'<div class="tl-h">{title}</div><p>{blurb}</p>{rhtml}'
-                   f'<span class="pole">{pole}</span></div>')
+        frame = pole
+        body = f'<p>{blurb}</p>{rhtml}<span class="pole">{pole}</span>'
+        more = ("book/2.3-the-governed-environment.html" if mid else "book/1.1-the-printer.html")
+        out.append(_card(_slug("school-" + title), kicker, title, frame, body,
+                         more_href=more, cls=cls))
     return "\n  ".join(out)
 
 
+_WAY_FRAME = {
+    "Architect deliberately": "buy the right design; name shapes with types",
+    "Convert failure into machinery": "encode each recurring failure as a lint, type, or gate",
+    "Keep judgment scarce &amp; central": "carry work autonomously; spend human judgment where it counts",
+}
+
+
 def _landing_ways() -> str:
-    """The three "way of thinking" stances, each a masonry tile (the band H2 "The way of
-    thinking" is demoted to a per-tile kicker)."""
+    """The three "way of thinking" stances, each a uniform clickable card (the peek reveals the
+    stance's bullet list; the link-through goes to the lessons chapter)."""
     out = []
     for title, items in WAYS:
         lis = "".join(f'<li>{it}</li>' for it in items)
-        out.append(f'<div class="tile"><div class="tl-kicker">Way of thinking</div>'
-                   f'<div class="tl-h">{title}</div><ul class="tl-list">{lis}</ul></div>')
+        body = f'<ul class="cd-list">{lis}</ul>'
+        frame = _WAY_FRAME.get(title, "")
+        out.append(_card(_slug("way-" + title), "Way of thinking", title, frame, body,
+                         more_href="book/4.5-lessons-learned.html"))
     return "\n  ".join(out)
 
 
@@ -1358,248 +1555,423 @@ function fitFig(f){
 </script>
 """
 
-LANDING_INTRO = """  <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
-  <div class="book-sub">3-D Printing Production Software</div>
-
-  <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
-  implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
-  stops being writing code and becomes <span class="term">governing the conditions under which fast code
-  can be trusted</span>. This catalogue serves a method for doing that:
-  <span class="term">Model-Based Agentic Software Engineering</span> (MAGE) — engineering with a fleet of
-  coding agents by binding intent to typed models the fleet reasons through, and governing what it builds
-  with mechanisms that prevent or detect drift.</p>
-
-  <div class="board">
-    <div class="box spanfull accent">
-      <div class="fp">
-        <figure class="fp-fig">{hero}</figure>
-        <div class="fp-body">
-          <div class="bx-eyebrow">The MAGE method in one picture</div>
-          <p>A cheap agent fleet, left ungoverned, drifts into <b>churn</b> as its work outgrows the
-          context window. Governed through the <span class="term">Modeling Thesis</span> — a typed model
-          the fleet reasons through — and the <span class="term">Alignment Thesis</span> — a mechanism
-          that keeps output aligned with intent — it converges on trustworthy software at velocity.</p>
-          <p>MAGE is <span class="term">one method with two theses</span>, and this page is built around
-          them:</p>
-          <ul class="theses">
-            <li><b>The Modeling Thesis</b> — a typed model the fleet reasons through shrinks what must fit
-            in a context window, so the work stays coherent instead of churning.</li>
-            <li><b>The Alignment Thesis</b> — a mechanism the environment enforces keeps the output aligned
-            with intent, so confidently-wrong work is prevented or made visible instead of shipped.</li>
-          </ul>
-          <p>The two sections below are those two theses; everything else on the page hangs off them.</p>
-          <p><a href="quick-start.html"><em>QUICK START: Install the skills for Claude →</em></a></p>
-        </div>
-      </div>
+LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
+       A real two-column opening: lead prose left, the MAGE-method overview figure pulled up beside it
+       on the right, so the top uses the full width and "one picture" lands immediately. -->
+  <div class="hero">
+    <div class="hero-lead">
+      <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
+      <div class="book-sub">3-D Printing Production Software</div>
+      <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
+      implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
+      stops being writing code and becomes <span class="term">governing the conditions under which fast code
+      can be trusted</span>. This catalogue serves a method for doing that:
+      <span class="term">Model-Based Agentic Software Engineering</span> (MAGE) — engineering with a fleet of
+      coding agents by binding intent to typed models the fleet reasons through, and governing what it builds
+      with mechanisms that prevent or detect drift.</p>
+      <p class="lead" style="font-size:16.5px;">MAGE is <span class="term">one method with two theses</span> —
+      a <b>Modeling Thesis</b> and an <b>Alignment Thesis</b> — and this page is built around them. Every unit
+      below is a clickable card: open it for a quick peek, then follow the link through to the full treatment
+      in the book. <a href="quick-start.html"><em>QUICK START: install the skills for Claude →</em></a></p>
     </div>
-  </div>
-
-  <!-- ===================== THE PAIR OF THESES =====================
-       The two theses are a matched pair — read them together. On a wide viewport they sit two-up,
-       each filling half the full-width spine so neither is a lonely narrow left column, and each
-       figure renders at ~half the page width (far more legible than the old 920px-in-a-narrow-column).
-       Collapses to a single stacked column below 960px. -->
-  <div class="theses-pair">
-    <section class="thesis accent">
-      <div class="th-eyebrow">Thesis I of II</div>
-      <h2 class="th-h">The Modeling Thesis — documentation, taken to its limit</h2>
-      <p class="th-sub">The first thesis. Give agents good documentation and tests, then point them at
-      it — the first move everyone finds on their own. The step the training data won't suggest is the next
-      one: <b>documentation has a hierarchy, and its top is not prose. It is a typed model.</b> A
-      context-bounded agent working on a context-<em>exceeding</em> system needs a <b>typed, queryable,
-      drift-checked model</b> to reason through — the bridge between the agent and the codebase it cannot fit
-      in its head. The catalogue's <b>models-bridge</b> role is this bridge, made concrete.</p>
-      <figure class="th-fig">{model_fig}<figcaption>Documentation, at its limit, is a
-      typed model — one an agent reasons over without error and that a build-time drift check keeps honest.</figcaption></figure>
-    </section>
-    <section class="thesis accent">
-      <div class="th-eyebrow">Thesis II of II</div>
-      <h2 class="th-h">The Alignment Thesis — constraints and sensors</h2>
-      <p class="th-sub">The second thesis. A mechanism the environment enforces keeps output aligned with
-      intent, and it takes one of two forms: <b>prevent</b> the error, or <b>catch</b> it. However you arrived
-      at the goal — up front from the domain or in response to a failure — a <b>constraint</b> scopes the action
-      space so the whole class is impossible, and a <b>sensor</b> lets the mistake happen but detects it in time,
-      failing the loop iteration so the agent runs again to fix it.</p>
-      <figure class="th-fig">{mech_fig}<figcaption>A quality goal splits into two moves:
-      a constraint that prevents the error, and a sensor that catches it.</figcaption></figure>
-    </section>
+    <div class="hero-fig-2up">
+      <figure>{hero}<figcaption>A cheap agent fleet, left ungoverned, drifts into <b>churn</b> as its work
+      outgrows the context window. Governed through the <b>Modeling Thesis</b> (a typed model the fleet reasons
+      through) and the <b>Alignment Thesis</b> (a mechanism that keeps output aligned with intent), it converges
+      on trustworthy software at velocity.</figcaption></figure>
+    </div>
   </div>
 
   <hr class="sep" />
 
-  <!-- ===================== CHEAT-SHEET MASONRY (everything below the theses) =====================
-       The prose spine ends above. From here down, every unit is a self-contained card packed into a
-       CSS multi-column masonry so varying-height cards float up and fill the width. The former band
-       H2s ("Between two schools of thought", "The way of thinking", "The three skills…") are demoted
-       to lightweight per-card kickers — no full-width heading bands in the tiled region. -->
-  <div class="masonry">
-  {schools}
-  <div class="tile axis">← all velocity &nbsp;&nbsp;•&nbsp;&nbsp; all oversight →</div>
-  <!-- Full-bleed so the three-panel process figure renders large enough that its panel labels
-       ("Velocity-centric", "Oversight-centric", "Governance-centric") are legible — pinned in a 320px
-       masonry column its text was unreadable. Figure beside prose on wide, stacked on narrow. -->
-  <div class="tile wide accent">
-    <div class="tl-kicker">The midway is a discipline</div>
-    <div class="midway-fp">
-      <figure class="bx-fig">{schools_fig}</figure>
-      <div class="midway-body">
-      <p>Three process models for agentic engineering. The two poles: velocity-centric agents hand work
-      around a ring of job titles with the quality mechanism left implicit; oversight-centric keeps a human
-      next to each bounded piece — honest, but the human's attention does not scale with the fleet.
-      <span class="term">Governance-centric</span> is the synthesis: the agents sit inside a containing
-      environment of enforced mechanisms the human sets up in advance. This site takes the third.</p>
-      <p>That midway means <span class="term">establishing and maintaining a governed engineering
-      environment</span> — working in two directions at once: <b>up front</b> you specify what you can (the
-      architecture that makes a class of error impossible, the model the fleet reasons through, the templates
-      that put a change on rails); <b>in flight</b> you let velocity surface the failures you couldn't foresee
-      and convert each recurring one into a durable guardrail.</p>
+  <!-- ===================== THE PAIR OF THESES (matched card set) =====================
+       The two theses stay a grouped, adjacent pair ("Thesis I of II" / "Thesis II of II") but are now the
+       same <details class="card"> primitive as every other card. Two-up on wide, stacked ≤900px; each carries
+       a unique id (card-thesis-modeling / card-thesis-alignment) and each peek surfaces its figure large. -->
+  <div class="theses-cards">
+    <details class="card accent" id="card-thesis-modeling">
+      <summary>
+        <div class="cd-kicker">Thesis I of II</div>
+        <div class="cd-title accent-t">The Modeling Thesis</div>
+        <div class="cd-frame">Documentation, taken to its limit, is a typed model.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+        <div class="cd-thumb" aria-hidden="true">{model_fig_th}</div>
+      </summary>
+      <div class="cd-body">
+        <figure class="cd-fig">{model_fig}<figcaption>Documentation, at its limit, is a typed model — one an
+        agent reasons over without error and that a build-time drift check keeps honest.</figcaption></figure>
+        <p>Give agents good documentation and tests, then point them at it — the first move everyone finds on
+        their own. The step the training data won't suggest is the next one: <b>documentation has a hierarchy,
+        and its top is not prose. It is a typed model.</b> A context-bounded agent working on a
+        context-<em>exceeding</em> system needs a <b>typed, queryable, drift-checked model</b> to reason
+        through — the bridge between the agent and the codebase it cannot fit in its head. The catalogue's
+        <b>models-bridge</b> role is this bridge, made concrete.</p>
+        <a class="cd-more" href="book/1.2-loops-and-models.html">read the full treatment →</a>
       </div>
-    </div>
-  </div>
-  <div class="tile tint">
-    <p style="margin:0;">This site packages <b>both halves</b> — the guidance on what to fix in advance and
-    the machinery for responding when something slips through — as three Claude skills with a
-    <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>{n} governance mechanisms across
-    three roles</b>, each written like a design pattern: the recurring failure it kills, and why it is
-    <i>not</i> just the cheaper thing everyone already does.</p>
-  </div>
-  <div class="tile">
-    <div class="tl-kicker">Modeling Thesis</div>
-    <div class="tl-h">Agent-legible &amp; precise</div>
-    <p>A six-state machine with typed invariants is something an agent reasons over <b>without error</b>
-    the way it cannot over 300,000 lines of prose-and-code. Abstraction shrinks the space it can be wrong
-    in, not just the token count. A model is more precise than any document.</p>
-  </div>
-  <div class="tile">
-    <div class="tl-kicker">Modeling Thesis</div>
-    <div class="tl-h">It can’t lie</div>
-    <p>A document rots the moment the code moves; a model wired to a <b>build-time drift check cannot</b>:
-    the gate stays red until the map matches the territory again. That guarantee is what prose can never
-    give.</p>
-  </div>
-  <div class="tile tint">
-    <p style="margin:0;">Because agents build and maintain the model the way they maintain docs and tests,
-    pointing them at it costs almost nothing, and it pays back in <b>higher code quality, fewer tokens
-    spent rederiving what the model already states, and fewer mistakes.</b></p>
-  </div>
-  <div class="tile accent">
-    <div class="tl-kicker">Alignment Thesis</div>
-    <div class="tl-h accent-t">Constraint</div>
-    <p>Scope the agent's action space so the wrong move is <b>never available to pick</b>: the typed model,
-    an enum instead of a free-form string, one sanctioned seam. A constraint <i>prevents</i> drift — the
-    mistake costs no iteration, because the compiler rejects it on the spot.
-    (<a href="https://en.wikipedia.org/wiki/Poka-yoke">Poka-yoke</a> for software; building a constraint
-    is what "architecture" does.)</p>
-  </div>
-  <div class="tile accent">
-    <div class="tl-kicker">Alignment Thesis</div>
-    <div class="tl-h accent-t">Sensor</div>
-    <p>Where you can't prevent it, <b>detect it after the fact</b>: a lint, a gate, a validator, a test
-    suite that fires on a violation and holds the line. A sensor <i>detects</i> drift and fails the loop
-    iteration, so the agent runs again to fix what it caught. It costs iterations — which is why you don't
-    reach for it first.</p>
-  </div>
-  <div class="tile">
-    <div class="tl-kicker">Constraint vs. sensor</div>
-    <p>A <b>sensor</b> lets the mistake happen and catches it in time — a smoke detector. A
-    <b>constraint</b> makes the whole class of mistake impossible — a firewall. Prefer a constraint where
-    you can build one, because a sensor still spends an iteration. But a constraint across the only exit
-    blocks the people trying to leave — an over-scoped design stops legitimate work as surely as the error,
-    so add a sensor for the drift you cannot scope away. Most real mechanisms are a package across both: a
-    soft constraint that aims the agent, wrapped in hard sensors that catch what it only aims at.</p>
-  </div>
-  {ways}
-  <div class="tile">
-    <div class="tl-kicker">Way of thinking</div>
-    <p style="margin:0;">Three stances that make the midway work, distilled from the AI-First Engineering
-    Method (architecture, controls, and the stance that wields them); the full set ships in the
-    <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
-  </div>
-  <div class="tile">
-    <div class="tl-kicker">The three skills</div>
-    <div class="tl-h">self-governance · <i>harden</i></div>
-    <p>The <b>design-time</b> lens: the census of controls plus the engine that mints new ones — what
-    exists, what you're missing, how to add one.</p>
-  </div>
-  <div class="tile">
-    <div class="tl-kicker">The three skills</div>
-    <div class="tl-h">self-operations · <i>operate</i></div>
-    <p>The <b>run-time</b> lens: it runs the substrate those controls govern — the lifecycle you operate,
-    the runbook you follow, the hook you wire.</p>
-  </div>
-  <div class="tile">
-    <div class="tl-kicker">The three skills</div>
-    <div class="tl-h">self-communicate · <i>communicate</i></div>
-    <p>The <b>prose-and-diagram</b> craft: a rhetoric toolkit, the Diátaxis register, a house lexicon, and
-    an audit that emits fixes — for the docs the other two produce <i>and</i> the operator's own reports to
-    the human.</p>
-  </div>
-  <div class="tile tint">
-    <p style="margin:0;">Govern and operate are one substrate seen two ways; communicate is the craft that
-    keeps their output legible. The loop closes across all three: operate surfaces a recurring break, govern
-    mints the control, communicate writes it up in the shared register.
-    <a href="quick-start.html">Install all three →</a></p>
-  </div>
-  <div class="tile">
-    <div class="tl-kicker">References</div>
-    <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
-    Judgment: A Case Study on Governable Agentic Software Engineering</i></a></div>
-    <div class="r"><b>Live system it governs:</b> <a href="https://scholaccess.com">DocAble (scholaccess.com)</a></div>
+    </details>
+    <details class="card accent" id="card-thesis-alignment">
+      <summary>
+        <div class="cd-kicker">Thesis II of II</div>
+        <div class="cd-title accent-t">The Alignment Thesis</div>
+        <div class="cd-frame">A quality goal splits into a constraint that prevents and a sensor that catches.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+        <div class="cd-thumb" aria-hidden="true">{mech_fig_th}</div>
+      </summary>
+      <div class="cd-body">
+        <figure class="cd-fig">{mech_fig}<figcaption>A quality goal splits into two moves: a constraint that
+        prevents the error, and a sensor that catches it.</figcaption></figure>
+        <p>A mechanism the environment enforces keeps output aligned with intent, and it takes one of two
+        forms: <b>prevent</b> the error, or <b>catch</b> it. However you arrived at the goal — up front from
+        the domain or in response to a failure — a <b>constraint</b> scopes the action space so the whole class
+        is impossible, and a <b>sensor</b> lets the mistake happen but detects it in time, failing the loop
+        iteration so the agent runs again to fix it.</p>
+        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
+      </div>
+    </details>
   </div>
 
-  <div class="tile wide accent">
-    <div class="tl-kicker">How the Alignment half grows — reading failure as a missing mechanism</div>
-    <p>You place some constraints and sensors up front, from what you know about the domain. The rest you
-    learn along the way: velocity surfaces a failure class earlier governance didn't address, and you convert
-    each recurring one into a mechanism. That conversion is the way of thinking inside MAGE — how the
-    Alignment Thesis grows past what you could specify in advance.</p>
-    <div class="loop">
-    {flow}
-    <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
-    exist</i> is the costly, human part. Two paired concepts hold it together:</p>
-    <ul class="tail-pair">
-      <li><b>Governance makes velocity sustainable</b> — guardrails are what let the fleet keep shipping
-      fast without drowning in its own failures.</li>
-      <li><b>Judgment decides which governance to build</b> — recognizing which failures deserve a
-      guardrail (and which are one-offs) is the hard, human call.</li>
-    </ul>
+  <hr class="sep" />
+
+  <!-- ===================== FAMILY BLOCKS OF CARDS =====================
+       Everything below groups into named families; within each family the cards pack into a CSS multi-column
+       masonry (>= 3 columns wide, 1 on a phone — the check-responsive gate). Every card is the same clickable
+       <details> primitive with a unique id, a peek, and a link-through. -->
+
+  <div class="fam">
+    <div class="fam-h">Two schools, and the midway between them</div>
+    <div class="masonry">
+    {schools}
+    <details class="card" id="card-velocity-oversight-axis">
+      <summary>
+        <div class="cd-kicker">The spectrum</div>
+        <div class="cd-title">← velocity &nbsp;•&nbsp; oversight →</div>
+        <div class="cd-frame">Where each school sits on the one axis that orders them.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>The two poles trade off the same way: <b>all velocity</b> ships fast but leaves quality implicit;
+        <b>all oversight</b> checks everything but makes checking the bottleneck. The <span class="term">midway</span>
+        keeps velocity <i>and</i> grows guardrails from the failures velocity surfaces.</p>
+        <a class="cd-more" href="book/1.1-the-printer.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card wide accent" id="card-midway-discipline">
+      <summary>
+        <div class="cd-kicker">The midway is a discipline</div>
+        <div class="cd-title">Governance-centric — the synthesis</div>
+        <div class="cd-frame">Three process models for agentic engineering; this site takes the third.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+        <div class="cd-thumb" aria-hidden="true">{schools_fig_th}</div>
+      </summary>
+      <div class="cd-body">
+        <div class="midway-fp">
+          <figure class="cd-fig">{schools_fig}</figure>
+          <div class="midway-body">
+          <p>Three process models for agentic engineering. The two poles: velocity-centric agents hand work
+          around a ring of job titles with the quality mechanism left implicit; oversight-centric keeps a human
+          next to each bounded piece — honest, but the human's attention does not scale with the fleet.
+          <span class="term">Governance-centric</span> is the synthesis: the agents sit inside a containing
+          environment of enforced mechanisms the human sets up in advance. This site takes the third.</p>
+          <p>That midway means <span class="term">establishing and maintaining a governed engineering
+          environment</span> — working in two directions at once: <b>up front</b> you specify what you can (the
+          architecture that makes a class of error impossible, the model the fleet reasons through, the templates
+          that put a change on rails); <b>in flight</b> you let velocity surface the failures you couldn't foresee
+          and convert each recurring one into a durable guardrail.</p>
+          <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
+          </div>
+        </div>
+      </div>
+    </details>
     </div>
   </div>
 
-  <div class="tile wide">
-    <div class="tl-kicker">The goal: a governed engineering environment</div>
-    <figure class="wf">
-      <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
-        title="The development-process figure" tabindex="0" onload="window.fitFig&&fitFig(this)"></iframe></div>
-      <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
-      probably know up front: business requirements, security scanners you always run, etc. Others you
-      need to figure out through trial and
-      error, because they depend on the nature of the errors made by the models you're working with. The
-      mindset shift is from reviewing your agents' code, to reviewing their failures and constraining their
-      future moves as needed.</figcaption>
-    </figure>
-    <script>
-    // fitFig is DEFINED in <head> (LANDING_HEAD_SCRIPT) so a fast/cached iframe onload that fires
-    // before this inline script can still call it (the onload also guards with `window.fitFig&&`).
-    // Here we (re)attach a load listener + resize listener; addEventListener('load') fires reliably
-    // even if the iframe already loaded when this runs.
-    (function(){{
-      var f=document.getElementById('wf-frame');
-      if(f){{ f.addEventListener('load', function(){{ window.fitFig&&fitFig(f); }}); if(window.fitFig) fitFig(f); }}
-      window.addEventListener('resize', function(){{ var el=document.getElementById('wf-frame'); if(el&&window.fitFig) fitFig(el); }});
-    }})();
-    </script>
+  <div class="fam">
+    <div class="fam-h">The Modeling Thesis — why a typed model beats prose</div>
+    <div class="masonry">
+    <details class="card" id="card-agent-legible-precise">
+      <summary>
+        <div class="cd-kicker">Modeling Thesis</div>
+        <div class="cd-title">Agent-legible &amp; precise</div>
+        <div class="cd-frame">Abstraction shrinks the space an agent can be wrong in.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>A six-state machine with typed invariants is something an agent reasons over <b>without error</b>
+        the way it cannot over 300,000 lines of prose-and-code. Abstraction shrinks the space it can be wrong
+        in, not just the token count. A model is more precise than any document.</p>
+        <a class="cd-more" href="book/1.2-loops-and-models.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card" id="card-it-cant-lie">
+      <summary>
+        <div class="cd-kicker">Modeling Thesis</div>
+        <div class="cd-title">It can’t lie</div>
+        <div class="cd-frame">A model wired to a build-time drift check cannot rot.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>A document rots the moment the code moves; a model wired to a <b>build-time drift check cannot</b>:
+        the gate stays red until the map matches the territory again. That guarantee is what prose can never
+        give.</p>
+        <a class="cd-more" href="book/2.2-models-and-the-semantic-gap.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card tint" id="card-model-pays-back">
+      <summary>
+        <div class="cd-kicker">Modeling Thesis</div>
+        <div class="cd-title">Cheap to keep, pays back</div>
+        <div class="cd-frame">Agents maintain the model like docs and tests.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Because agents build and maintain the model the way they maintain docs and tests, pointing them at it
+        costs almost nothing, and it pays back in <b>higher code quality, fewer tokens spent rederiving what the
+        model already states, and fewer mistakes.</b></p>
+        <a class="cd-more" href="book/1.2-loops-and-models.html">read the full treatment →</a>
+      </div>
+    </details>
+    </div>
   </div>
 
-  <div class="tile wide" style="border:none;background:none;padding:0;">
-    <div class="tl-kicker" style="margin-bottom:8px;">Explore the catalogue — {n} governance mechanisms, the repertoire this loop produced in one real production system</div>
+  <div class="fam">
+    <div class="fam-h">The Alignment Thesis — constraints and sensors</div>
+    <div class="masonry">
+    <details class="card accent" id="card-constraint">
+      <summary>
+        <div class="cd-kicker">Alignment Thesis</div>
+        <div class="cd-title accent-t">Constraint</div>
+        <div class="cd-frame">Make the wrong move impossible to pick.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Scope the agent's action space so the wrong move is <b>never available to pick</b>: the typed model,
+        an enum instead of a free-form string, one sanctioned seam. A constraint <i>prevents</i> drift — the
+        mistake costs no iteration, because the compiler rejects it on the spot.
+        (<a href="https://en.wikipedia.org/wiki/Poka-yoke">Poka-yoke</a> for software; building a constraint
+        is what "architecture" does.)</p>
+        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card accent" id="card-sensor">
+      <summary>
+        <div class="cd-kicker">Alignment Thesis</div>
+        <div class="cd-title accent-t">Sensor</div>
+        <div class="cd-frame">Where you can't prevent it, detect it after the fact.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Where you can't prevent it, <b>detect it after the fact</b>: a lint, a gate, a validator, a test
+        suite that fires on a violation and holds the line. A sensor <i>detects</i> drift and fails the loop
+        iteration, so the agent runs again to fix what it caught. It costs iterations — which is why you don't
+        reach for it first.</p>
+        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card" id="card-constraint-vs-sensor">
+      <summary>
+        <div class="cd-kicker">Constraint vs. sensor</div>
+        <div class="cd-title">Firewall vs. smoke detector</div>
+        <div class="cd-frame">Prefer a constraint; wrap in sensors for what you can't scope away.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>A <b>sensor</b> lets the mistake happen and catches it in time — a smoke detector. A
+        <b>constraint</b> makes the whole class of mistake impossible — a firewall. Prefer a constraint where
+        you can build one, because a sensor still spends an iteration. But a constraint across the only exit
+        blocks the people trying to leave — an over-scoped design stops legitimate work as surely as the error,
+        so add a sensor for the drift you cannot scope away. Most real mechanisms are a package across both: a
+        soft constraint that aims the agent, wrapped in hard sensors that catch what it only aims at.</p>
+        <a class="cd-more" href="book/2.6-when-guardrails-collide.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card wide accent" id="card-alignment-grows">
+      <summary>
+        <div class="cd-kicker">How the Alignment half grows</div>
+        <div class="cd-title">Reading failure as a missing mechanism</div>
+        <div class="cd-frame">Velocity surfaces a failure class; you convert each recurring one into a mechanism.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>You place some constraints and sensors up front, from what you know about the domain. The rest you
+        learn along the way: velocity surfaces a failure class earlier governance didn't address, and you convert
+        each recurring one into a mechanism. That conversion is the way of thinking inside MAGE — how the
+        Alignment Thesis grows past what you could specify in advance.</p>
+        <div class="loop">
+        {flow}
+        <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
+        exist</i> is the costly, human part. Two paired concepts hold it together:</p>
+        <ul class="tail-pair">
+          <li><b>Governance makes velocity sustainable</b> — guardrails are what let the fleet keep shipping
+          fast without drowning in its own failures.</li>
+          <li><b>Judgment decides which governance to build</b> — recognizing which failures deserve a
+          guardrail (and which are one-offs) is the hard, human call.</li>
+        </ul>
+        </div>
+        <a class="cd-more" href="book/4.5-lessons-learned.html">read the full treatment →</a>
+      </div>
+    </details>
+    </div>
   </div>
-  {cards}
-  <div class="tile cta">
-    <p class="book-cta" style="margin:0;"><a href="book/index.html"><b>To learn more about the MAGE method,
-    read the book! →</b></a></p>
-    <span class="book-cta-pdf" style="display:block;margin:8px 0 0;"><a href="book/mage-book.pdf">Download PDF</a></span>
+
+  <div class="fam">
+    <div class="fam-h">The way of thinking — three stances</div>
+    <div class="masonry">
+    {ways}
+    <details class="card tint" id="card-ways-note">
+      <summary>
+        <div class="cd-kicker">Way of thinking</div>
+        <div class="cd-title">Where the stances come from</div>
+        <div class="cd-frame">Distilled from the AI-First Engineering Method.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Three stances that make the midway work, distilled from the AI-First Engineering Method
+        (architecture, controls, and the stance that wields them); the full set ships in the
+        <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
+        <a class="cd-more" href="downloads/CLAUDE-starter.md" download>download the starter CLAUDE.md →</a>
+      </div>
+    </details>
+    </div>
   </div>
+
+  <div class="fam">
+    <div class="fam-h">The three skills — harden · operate · communicate</div>
+    <div class="masonry">
+    <details class="card" id="card-skill-self-governance">
+      <summary>
+        <div class="cd-kicker">The three skills</div>
+        <div class="cd-title">self-governance · <i>harden</i></div>
+        <div class="cd-frame">The design-time lens — the census plus the engine that mints new controls.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>The <b>design-time</b> lens: the census of controls plus the engine that mints new ones — what
+        exists, what you're missing, how to add one.</p>
+        <a class="cd-more" href="book/4.2-the-skills.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card" id="card-skill-self-operations">
+      <summary>
+        <div class="cd-kicker">The three skills</div>
+        <div class="cd-title">self-operations · <i>operate</i></div>
+        <div class="cd-frame">The run-time lens — it runs the substrate those controls govern.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>The <b>run-time</b> lens: it runs the substrate those controls govern — the lifecycle you operate,
+        the runbook you follow, the hook you wire.</p>
+        <a class="cd-more" href="book/4.2-the-skills.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card" id="card-skill-self-communicate">
+      <summary>
+        <div class="cd-kicker">The three skills</div>
+        <div class="cd-title">self-communicate · <i>communicate</i></div>
+        <div class="cd-frame">The prose-and-diagram craft for the docs the other two produce.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>The <b>prose-and-diagram</b> craft: a rhetoric toolkit, the Diátaxis register, a house lexicon, and
+        an audit that emits fixes — for the docs the other two produce <i>and</i> the operator's own reports to
+        the human.</p>
+        <a class="cd-more" href="book/4.2-the-skills.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card tint" id="card-skills-loop">
+      <summary>
+        <div class="cd-kicker">The three skills</div>
+        <div class="cd-title">One substrate, seen three ways</div>
+        <div class="cd-frame">The loop closes across govern, operate, and communicate.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Govern and operate are one substrate seen two ways; communicate is the craft that keeps their output
+        legible. The loop closes across all three: operate surfaces a recurring break, govern mints the control,
+        communicate writes it up in the shared register.</p>
+        <a class="cd-more" href="quick-start.html">install all three →</a>
+      </div>
+    </details>
+    </div>
+  </div>
+
+  <div class="fam">
+    <div class="fam-h">The goal, packaged, and the references</div>
+    <div class="masonry">
+    <details class="card tint" id="card-both-halves">
+      <summary>
+        <div class="cd-kicker">What this site packages</div>
+        <div class="cd-title">Both halves, as three Claude skills</div>
+        <div class="cd-frame">{n} governance mechanisms across three roles, each a design pattern.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>This site packages <b>both halves</b> — the guidance on what to fix in advance and the machinery for
+        responding when something slips through — as three Claude skills with a
+        <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>{n} governance mechanisms across
+        three roles</b>, each written like a design pattern: the recurring failure it kills, and why it is
+        <i>not</i> just the cheaper thing everyone already does.</p>
+        <a class="cd-more" href="quick-start.html">start here →</a>
+      </div>
+    </details>
+    <details class="card wide" id="card-governed-environment-figure">
+      <summary>
+        <div class="cd-kicker">The goal: a governed engineering environment</div>
+        <div class="cd-title">The development process, as a figure</div>
+        <div class="cd-frame">From reviewing your agents' code to reviewing their failures.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <figure class="wf">
+          <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
+            title="The development-process figure" tabindex="0" onload="window.fitFig&&fitFig(this)"></iframe></div>
+          <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
+          probably know up front: business requirements, security scanners you always run, etc. Others you
+          need to figure out through trial and
+          error, because they depend on the nature of the errors made by the models you're working with. The
+          mindset shift is from reviewing your agents' code, to reviewing their failures and constraining their
+          future moves as needed.</figcaption>
+        </figure>
+        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
+        <script>
+        // fitFig is DEFINED in <head> (LANDING_HEAD_SCRIPT). The iframe lives inside a <details>, so it may
+        // load lazily on first-open; addEventListener('load') fires reliably even after this script runs, and
+        // a 'toggle' listener refits when the card is expanded (the iframe has zero size while collapsed).
+        (function(){{
+          var f=document.getElementById('wf-frame');
+          if(f){{ f.addEventListener('load', function(){{ window.fitFig&&fitFig(f); }}); if(window.fitFig) fitFig(f); }}
+          var card=document.getElementById('card-governed-environment-figure');
+          if(card) card.addEventListener('toggle', function(){{ if(card.open){{ var el=document.getElementById('wf-frame'); if(el&&window.fitFig) fitFig(el); }} }});
+          window.addEventListener('resize', function(){{ var el=document.getElementById('wf-frame'); if(el&&window.fitFig) fitFig(el); }});
+        }})();
+        </script>
+      </div>
+    </details>
+    <details class="card" id="card-references">
+      <summary>
+        <div class="cd-kicker">References</div>
+        <div class="cd-title">Case study &amp; the live system</div>
+        <div class="cd-frame">The paper, and the production system it governs.</div>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
+        Judgment: A Case Study on Governable Agentic Software Engineering</i></a></div>
+        <div class="r"><b>Live system it governs:</b> <a href="https://scholaccess.com">DocAble (scholaccess.com)</a></div>
+      </div>
+    </details>
+    </div>
+  </div>
+
+  <div class="fam">
+    <div class="fam-h">Explore the catalogue — {n} governance mechanisms, the repertoire this loop produced</div>
+    <div class="masonry">
+    {cards}
+    </div>
+  </div>
+
+  <div class="book-cta" style="margin:14px 0 28px;">
+    <a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a>
+    <span class="book-cta-pdf"><a href="book/mage-book.pdf">Download PDF</a></span>
   </div>
 """
 
@@ -2061,15 +2433,23 @@ def cmd_build(_args) -> int:
         open(out_path, "w", encoding="utf-8").write(html)
         written += 1
     # landing index.html = intro + census (overwrites the hand-authored placeholder)
+    # Figures splice as bare responsive <svg>. A figure that appears twice (a card's summary thumbnail
+    # and its expanded body) gets its internal ids namespaced per placement via _ns_svg_ids, so the two
+    # copies — and any asset reused across cards — never collide (check_no_duplicate_ids).
+    _mage = _inline_svg("assets/mage-overview.svg")
+    _oversight = _inline_svg("assets/oversight-modes.svg")
+    _dochier = _inline_svg("assets/documentation-hierarchy.svg")
+    _ctrlarch = _inline_svg("assets/control-vs-architecture.svg")
     landing_body = NAV_GRID + "\n" + LANDING_INTRO.format(
         n=len(entries), flow=_landing_flow(), cards=_landing_cards(),
         schools=_landing_schools(), ways=_landing_ways(),
-        # Board figures are composed inside boxes (their captions folded into the box prose),
-        # so they splice as bare responsive <svg> — see _inline_svg / the .fp-fig / .bx-fig CSS.
-        hero=_inline_svg("assets/mage-overview.svg"),
-        schools_fig=_inline_svg("assets/oversight-modes.svg"),
-        model_fig=_inline_svg("assets/documentation-hierarchy.svg"),
-        mech_fig=_inline_svg("assets/control-vs-architecture.svg"),
+        hero=_ns_svg_ids(_mage, "hero"),
+        schools_fig=_ns_svg_ids(_oversight, "midway-fig"),
+        schools_fig_th=_ns_svg_ids(_oversight, "midway-th"),
+        model_fig=_ns_svg_ids(_dochier, "modeling-fig"),
+        model_fig_th=_ns_svg_ids(_dochier, "modeling-th"),
+        mech_fig=_ns_svg_ids(_ctrlarch, "alignment-fig"),
+        mech_fig_th=_ns_svg_ids(_ctrlarch, "alignment-th"),
     ) + "\n" + build_census(entries)
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'

@@ -39,30 +39,37 @@ const PHONE_COLUMNS = 1; // a phone viewport must collapse to exactly 1 column
 const executablePath =
   process.env.PUPPETEER_EXECUTABLE_PATH || process.env.CHROME_PATH || undefined;
 
-// Count how many distinct masonry columns the tiles occupy, by bucketing the left-edge
-// x-positions of the direct `.masonry > .tile` children. CSS multi-column lays each column's tiles
-// at a shared left x, so the number of distinct left-edges == the number of columns. `.tile.wide`
-// tiles use `column-span: all` and sit at the container's left edge spanning every column — they do
-// NOT indicate a *tile column*, so they're excluded from the measurement (otherwise they'd inject a
-// spurious x-bucket at the container origin). Buckets tolerate sub-pixel rounding (8px).
+// Count how many distinct masonry columns the cards occupy, by bucketing the left-edge x-positions
+// of the direct non-wide `.masonry > .card` children. CSS multi-column lays each column's cards at a
+// shared left x, so the number of distinct left-edges == the number of columns. `.card.wide` cards
+// use `column-span: all` and sit at the container's left edge spanning every column — they do NOT
+// indicate a card column, so they're excluded (otherwise they'd inject a spurious x-bucket at the
+// container origin). Buckets tolerate sub-pixel rounding (8px).
+//
+// The landing now groups its cards into several `.masonry` family blocks (each a small pack), so the
+// measurement aggregates the column x-positions ACROSS every `.masonry` on the page: the set of
+// distinct left-edges is the number of columns the multi-column layout actually produces at this
+// width, independent of how many cards any single family happens to hold.
 async function measureColumns(page, viewportWidth) {
   await page.setViewport({ width: viewportWidth, height: 1400, deviceScaleFactor: 1 });
   // Give layout a tick to reflow after the viewport change.
   await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   return page.evaluate(() => {
-    const masonry = document.querySelector(".masonry");
-    if (!masonry) return { error: "no .masonry element found on the landing page" };
-    const tiles = Array.from(masonry.children).filter(
-      (el) => el.classList.contains("tile") && !el.classList.contains("wide")
+    const masonries = Array.from(document.querySelectorAll(".masonry"));
+    if (masonries.length === 0) return { error: "no .masonry element found on the landing page" };
+    const cards = masonries.flatMap((m) =>
+      Array.from(m.children).filter(
+        (el) => el.classList.contains("card") && !el.classList.contains("wide")
+      )
     );
-    if (tiles.length === 0) return { error: "no non-wide .masonry > .tile children found" };
-    const lefts = tiles.map((el) => el.getBoundingClientRect().left);
+    if (cards.length === 0) return { error: "no non-wide .masonry > .card children found" };
+    const lefts = cards.map((el) => el.getBoundingClientRect().left);
     // Bucket left-edges with an 8px tolerance to absorb sub-pixel rounding.
     const buckets = [];
     for (const x of lefts.sort((a, b) => a - b)) {
       if (buckets.length === 0 || Math.abs(x - buckets[buckets.length - 1]) > 8) buckets.push(x);
     }
-    return { columns: buckets.length, tileCount: tiles.length };
+    return { columns: buckets.length, tileCount: cards.length };
   });
 }
 
