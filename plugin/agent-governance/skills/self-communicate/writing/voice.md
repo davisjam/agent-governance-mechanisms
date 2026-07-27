@@ -335,3 +335,43 @@ stated flat.
     you have three or more results, enumerate them — the reader scans the list, and each result carries its
     own measured value. (This is the technical twin of the house rule "an enumeration of three is a list,
     not a comma-run.")
+
+
+## House-style calibration — transformations from the author's own edits (260726)
+
+The author hand-edited several chapters; these are the rules those edits encode, each with a real
+before->after. A book-wide style pass applies them — but CONSERVATIVELY: preserve every fact, number,
+citation, figure, and `<!-- marker -->`; never homogenize a distinctive passage; when a change is not a
+clear win, leave the prose alone. The goal is the author's voice, not a uniform one.
+
+1. **Semantic line breaks in source (authoring convention).** Write one sentence per line; a long
+   sentence may break at a clause boundary with a one-space-indented continuation. The renderer
+   soft-wraps single newlines, so this renders as normal flowing prose — it only improves diffs and
+   editing. Do NOT insert a blank line between the sentences of one paragraph (that would split the
+   paragraph); keep the blank line only between paragraphs.
+
+2. **Cut the dramatized reveal.** Replace a suspenseful withhold-then-reveal ("X was not A. It was B.")
+   with the direct statement. State the point; trust it to land.
+   - *Before:* "The first crack was not a bug. It was a queue — work finished faster than I could bless it."
+   - *After:*  "The first crack was thus a queue — work finished faster than I could bless it."
+   - *Before:* "held his team's one-year record for defects *opened* … the badge of someone whose job was to find the bugs, not to ship them."
+   - *After:*  "broke his team record for most defects opened in a year."
+
+3. **Literal, descriptive section titles over cute ones.** The heading should say what the section does.
+   - *Before:* "## This book showed how"   *After:* "## Fitting this book into the software engineering literature"
+   - *Before:* "### Why the title gets to climb"   *After:* "### Why the job title climbs"
+
+4. **Name a work or a person formally on reference.** Cite the book; use the honorific on second mention.
+   - *Before:* "The Gang of Four argued…"   *After:* "In *Design Patterns*, the Gang of Four argued…"
+   - Second reference to the author: "Dr. Davis"; credentials as "James C. Davis, PhD".
+
+5. **Use the catalogue's control vocabulary precisely.** A *model* is a view; a *constraint* prevents; a
+   *sensor* detects; a *control* is either. Reach for these, not loose synonyms.
+   - *Before:* "Every model, every gate, every scheduler…"   *After:* "Every model, every constraint, every sensor…"
+
+6. **Enumerations of three or more parallel items become a list** (already a house rule — apply it): a
+   run of `**Bold lead:** …` clauses in a sentence becomes a numbered or bulleted list with bold lead-ins.
+
+These SHARPEN, they do not replace, the voice already described above (direct reader address is
+characteristic #4; economy and "say it once" are the standing discipline). Apply where a passage clearly
+violates one; leave a passage that already reads in the author's voice.

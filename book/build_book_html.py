@@ -44,6 +44,9 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent  # the catalogue root — the appendix reads the entry .md files from here
 ACCENT = "#1a4a7a"
 COPYRIGHT = "© James C. Davis, 2026–present"
+# Cover "last updated" date. A STABLE constant, bumped intentionally — a per-build/per-commit date would
+# churn the tracked book HTML and break the `check_book_html_tracking` freshness gate.
+LAST_UPDATED = "2026-07-26"
 
 # Mermaid diagrams are rendered to STATIC INLINE SVG at BUILD time (see `render_mermaid_svg` below),
 # NOT via a client-side runtime. This is why BOTH the web book AND the PDF ship a real vector diagram:
@@ -911,7 +914,7 @@ h2 {{ font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }}
 /* Role kicker on a step heading (`## [role: Architect] …`) — the engineer's climbing title, rendered in
    the same small-caps accent register as the chapter kicker (`header.chap .kicker`) but inline before the
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
-h2 .role-kick {{ color: var(--accent); font-weight: 700; font-size: 0.62em; letter-spacing: 0.07em;
+h2 .role-kick {{ color: var(--accent); font-weight: 700; font-style: italic; font-size: 0.62em; letter-spacing: 0.07em;
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }}
 h3 {{ font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }}
 h4 {{ font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }}
@@ -2532,6 +2535,8 @@ body {{
                             color: #2a2a2a; margin-top: 0.4rem; }}
 .print-cover .cov-copy {{ font-family: "Source Sans 3", sans-serif; font-size: 9pt; color: #888;
                           margin-top: 1.4rem; }}
+.print-cover .cov-updated {{ font-family: "Source Sans 3", sans-serif; font-size: 8.5pt; color: #aaa;
+                             margin-top: 0.35rem; }}
 
 /* ── generated table of contents ────────────────────────────────────────────────────────────── */
 .print-toc {{ page: plain; break-after: page; }}
@@ -2675,8 +2680,9 @@ def _cover_html() -> str:
         '<h1>Model-Based Agentic Software Engineering</h1>'
         '<div class="cov-sub">3-D Printing Production Software</div>'
         f'{hero_svg}'
-        '<div class="cov-author">James C. Davis</div>'
+        '<div class="cov-author">James C. Davis, PhD</div>'
         f'<div class="cov-copy">{html.escape(COPYRIGHT)}</div>'
+        f'<div class="cov-updated">Last updated {html.escape(LAST_UPDATED)}</div>'
         '</section>'
     )
 
