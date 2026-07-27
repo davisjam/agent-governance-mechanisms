@@ -1,52 +1,77 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" width="1080" height="560" font-family="'Avenir Next', Inter, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 592" width="1080" height="592" font-family="'Avenir Next', Inter, system-ui, sans-serif">
   <title>The MAGE method: the two theses that hold off churn</title>
-  <desc>A cheap agent fleet, left ungoverned, drifts into churn as its work outgrows the context window. Governed through the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent), it converges on trustworthy software at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+  <desc>A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on trustworthy software at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
   <defs>
-    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#3d5a70"/>
+    <marker id="mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#b23b3b"/>
     </marker>
-    <marker id="ahred" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#a05a5a"/>
+    <marker id="mg-ah-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#1f7a4d"/>
     </marker>
-    <marker id="ahgreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#2f7d4f"/>
+    <marker id="mg-ah-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2f5169"/>
     </marker>
   </defs>
-  <rect x="0" y="0" width="1080" height="560" fill="#ffffff"/>
 
-  <text x="540" y="46" text-anchor="middle" font-size="32" font-weight="bold" fill="#12324f">The MAGE method</text>
-  <text x="540" y="74" text-anchor="middle" font-size="17" font-style="italic" fill="#5a5240">Model-Based Agentic Software Engineering</text>
+  <rect x="0" y="0" width="1080" height="592" fill="#ffffff"/>
 
-  <rect x="50" y="250" width="210" height="88" rx="8" fill="#eef2f6" stroke="#3d5a70" stroke-width="2"/>
-  <text x="155" y="290" text-anchor="middle" font-size="19" font-weight="bold" fill="#12324f">The agent fleet</text>
-  <text x="155" y="314" text-anchor="middle" font-size="15" fill="#3d5a70">fast · cheap</text>
+  <!-- Title block -->
+  <text x="540" y="52" text-anchor="middle" font-size="34" font-weight="700" fill="#12324f" letter-spacing="0.3">The MAGE method</text>
+  <text x="540" y="80" text-anchor="middle" font-size="17" font-style="italic" fill="#5a5240">Model-Based Agentic Software Engineering</text>
 
-  <path d="M200 250 C 260 150, 640 130, 758 132" fill="none" stroke="#a05a5a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ahred)"/>
-  <text x="430" y="118" text-anchor="middle" font-size="14" font-style="italic" fill="#a05a5a">left ungoverned</text>
+  <!-- ============ THE FLEET: single origin ============ -->
+  <rect x="46" y="288" width="196" height="102" rx="12" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="144" y="328" text-anchor="middle" font-size="20" font-weight="700" fill="#12324f">The agent fleet</text>
+  <text x="144" y="354" text-anchor="middle" font-size="14.5" fill="#3d5a70">fast · cheap</text>
+  <text x="144" y="375" text-anchor="middle" font-size="13" fill="#566573">one input, two fates</text>
 
-  <rect x="762" y="95" width="268" height="98" rx="8" fill="#f6eeee" stroke="#a05a5a" stroke-width="2"/>
-  <text x="896" y="130" text-anchor="middle" font-size="22" font-weight="bold" fill="#7a3b3b">Churn</text>
-  <text x="896" y="155" text-anchor="middle" font-size="14" fill="#7a3b3b">work outgrows the window;</text>
-  <text x="896" y="176" text-anchor="middle" font-size="14" fill="#7a3b3b">drift, confidently-wrong</text>
+  <!-- ================= BAD PATH: degrading to Churn ================= -->
+  <!-- leaves the top of the fleet, arcs high over everything, visibly falling apart -->
+  <!-- smooth confident start, then jagged degradation as it drifts -->
+  <path d="M170 286 C 180 226, 240 196, 320 190"
+        fill="none" stroke="#c96b6b" stroke-width="3" stroke-linecap="round" opacity="0.95"/>
+  <!-- jagged middle: work fraying as it outgrows the window; amplitude grows = escalating instability -->
+  <path d="M320 190 L350 182 L364 196 L398 174 L414 192 L452 166 L470 190 L512 158 L530 184 L566 156"
+        fill="none" stroke="#c96b6b" stroke-width="3" stroke-linejoin="round" opacity="0.95"/>
+  <!-- final fade: dashed, thinning, drifting off -->
+  <path d="M566 156 L636 150 L706 158 L762 168"
+        fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"
+        marker-end="url(#mg-ah-red)" opacity="0.85"/>
+  <text x="392" y="150" text-anchor="middle" font-size="14.5" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
 
-  <rect x="318" y="205" width="446" height="214" rx="12" fill="#f4f6f9" stroke="#3d5a70" stroke-width="2" stroke-dasharray="7 5"/>
-  <text x="541" y="230" text-anchor="middle" font-size="16" font-weight="bold" fill="#12324f">The governed environment</text>
+  <!-- Churn box: cautionary, off to the side, warning fill -->
+  <rect x="772" y="132" width="266" height="104" rx="12" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
+  <text x="905" y="170" text-anchor="middle" font-size="23" font-weight="700" fill="#8c2f2f">Churn</text>
+  <text x="905" y="195" text-anchor="middle" font-size="13.5" fill="#8c2f2f">work outgrows the window;</text>
+  <text x="905" y="215" text-anchor="middle" font-size="13.5" fill="#8c2f2f">drift, confidently-wrong</text>
 
-  <rect x="342" y="245" width="398" height="78" rx="7" fill="#ffffff" stroke="#3d5a70" stroke-width="1.5"/>
-  <text x="541" y="275" text-anchor="middle" font-size="16" font-weight="bold" fill="#12324f">Modeling Thesis</text>
-  <text x="541" y="300" text-anchor="middle" font-size="13" fill="#3d5a70">a typed model the fleet reasons through</text>
+  <!-- ================= GOOD PATH: through the governed environment ================= -->
+  <!-- fleet -> governed container -->
+  <path d="M244 344 L302 344" fill="none" stroke="#2f5169" stroke-width="3" marker-end="url(#mg-ah-navy)"/>
 
-  <rect x="342" y="331" width="398" height="78" rx="7" fill="#ffffff" stroke="#3d5a70" stroke-width="1.5"/>
-  <text x="541" y="361" text-anchor="middle" font-size="16" font-weight="bold" fill="#12324f">Alignment Thesis</text>
-  <text x="541" y="386" text-anchor="middle" font-size="13" fill="#3d5a70">a mechanism keeps output aligned with intent</text>
+  <!-- The governed environment: the HERO container -->
+  <rect x="308" y="256" width="452" height="256" rx="16" fill="#eef3ee" stroke="#1f7a4d" stroke-width="2.5"/>
+  <path d="M308 272 a16 16 0 0 1 16 -16 h420 a16 16 0 0 1 16 16 v22 h-452 z" fill="#1f7a4d"/>
+  <text x="534" y="285" text-anchor="middle" font-size="17" font-weight="700" fill="#ffffff" letter-spacing="0.3">The governed environment</text>
 
-  <path d="M260 300 L 314 306" fill="none" stroke="#3d5a70" stroke-width="2" marker-end="url(#ah)"/>
-  <path d="M764 320 L 816 320" fill="none" stroke="#2f7d4f" stroke-width="2.5" marker-end="url(#ahgreen)"/>
+  <!-- the two theses: the heart -->
+  <rect x="334" y="318" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
+  <text x="534" y="351" text-anchor="middle" font-size="17" font-weight="700" fill="#12324f">Modeling Thesis</text>
+  <text x="534" y="375" text-anchor="middle" font-size="13.5" fill="#3d5a70">a typed model the fleet reasons through</text>
 
-  <rect x="820" y="276" width="220" height="92" rx="8" fill="#eef5ef" stroke="#2f7d4f" stroke-width="2"/>
-  <text x="930" y="308" text-anchor="middle" font-size="20" font-weight="bold" fill="#22623d">Trustworthy</text>
-  <text x="930" y="332" text-anchor="middle" font-size="20" font-weight="bold" fill="#22623d">software</text>
-  <text x="930" y="355" text-anchor="middle" font-size="14" font-style="italic" fill="#2f7d4f">at velocity</text>
+  <rect x="334" y="410" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
+  <text x="534" y="443" text-anchor="middle" font-size="17" font-weight="700" fill="#12324f">Alignment Thesis</text>
+  <text x="534" y="467" text-anchor="middle" font-size="13.5" fill="#3d5a70">keeps output aligned with intent</text>
 
-  <text x="541" y="447" text-anchor="middle" font-size="14" font-style="italic" fill="#5a5240">MAGE is the governed path: the two theses hold off churn.</text>
+  <!-- governed -> Trustworthy: confident, ascending, solid green -->
+  <path d="M760 404 C 802 400, 814 374, 840 358" fill="none" stroke="#1f7a4d" stroke-width="3.5" marker-end="url(#mg-ah-green)"/>
+
+  <!-- Trustworthy software: the reward -->
+  <rect x="850" y="302" width="198" height="106" rx="12" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="949" y="340" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">Trustworthy</text>
+  <text x="949" y="364" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">software</text>
+  <text x="949" y="388" text-anchor="middle" font-size="14.5" font-style="italic" fill="#1f7a4d">at velocity</text>
+
+  <!-- takeaway caption -->
+  <text x="540" y="560" text-anchor="middle" font-size="15" font-style="italic" fill="#5a5240">MAGE is the governed path: the two theses hold off churn.</text>
 </svg>
