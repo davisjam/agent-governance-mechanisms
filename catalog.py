@@ -2540,6 +2540,44 @@ def cmd_data_claims(args) -> int:
     return 0
 
 
+# ── Deploy staging manifest ──────────────────────────────────────────────────
+# `deploy github` stages an EXPLICIT set of paths — never `git add -A`, which sweeps any
+# stray untracked file (a screenshot helper, a scratch `.mjs`) into a publish commit. Two
+# gated moves: (1) every tracked modification/deletion via `git add -u`, which by definition
+# never stages an untracked file; (2) NEW publishable content under the content roots, matched
+# by extension so a scratch file of an unexpected type is left alone. Anything still untracked
+# is reported, not committed — explicit, not implicit.
+_PUBLISHABLE_EXTS = ("md", "html", "svg", "css", "js", "json",
+                     "png", "jpg", "jpeg", "gif", "webp", "ico", "woff", "woff2", "ttf")
+_CONTENT_ROOTS = ("agent", "models-bridge", "product", "book", "plugin", "assets")
+
+
+def _is_publishable(path: str) -> bool:
+    """True if a repo-relative path is NEW content the deploy should stage: a publishable
+    file type under one of the content roots. Scratch of an unexpected type (a `.mjs`
+    helper, a `.log`) fails this and is left for the human to add explicitly."""
+    root = path.split("/", 1)[0]
+    ext = path.rsplit(".", 1)[-1].lower() if "." in path else ""
+    return root in _CONTENT_ROOTS and ext in _PUBLISHABLE_EXTS
+
+
+def _stage_deploy_manifest() -> None:
+    """Stage the explicit deploy manifest (see comment above). Never `git add -A`."""
+    _git("add", "-u")  # all tracked modifications + deletions; never stages an untracked file
+    # NEW files: only untracked-and-not-ignored ones (ls-files honors .gitignore), and only
+    # publishable content under the content roots. Everything else is reported, not committed.
+    others = [p for p in _git("ls-files", "--others", "--exclude-standard",
+                              capture=True).stdout.splitlines() if p]
+    to_add = [p for p in others if _is_publishable(p)]
+    if to_add:
+        _git("add", "--", *to_add)
+    skipped = [p for p in others if p not in to_add]
+    if skipped:
+        print("  NOTE: untracked files left UNSTAGED (not published) — `git add` them explicitly if intended:")
+        for p in skipped:
+            print(f"    {p}")
+
+
 def cmd_deploy(args) -> int:
     """Build the site, then serve it locally (--local) or publish it to GitHub (--github)."""
     want_pdf = getattr(args, "pdf", False) and args.target == "local"
@@ -2584,16 +2622,16 @@ def cmd_deploy(args) -> int:
             print("\nstopped.")
         return 0
 
-    # --github: commit whatever changed, then push (the Actions workflow deploys on push)
-    _git("add", "-A")
-    dirty = _git("status", "--porcelain", capture=True).stdout.strip()
-    if dirty:
+    # --github: stage the EXPLICIT manifest (never `git add -A`), commit, push.
+    _stage_deploy_manifest()
+    staged = _git("diff", "--cached", "--name-only", capture=True).stdout.strip()
+    if staged:
         cp = _git("commit", "-m", args.message)
         if cp.returncode:
             print("ABORT: commit failed (see hook output above).")
             return cp.returncode
     else:
-        print("  (nothing to commit — pushing current HEAD)")
+        print("  (nothing staged to commit — pushing current HEAD)")
     if _git("push", "origin", "main").returncode:
         print("ABORT: push failed.")
         return 1
