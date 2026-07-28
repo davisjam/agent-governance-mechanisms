@@ -1358,6 +1358,17 @@ def _entry_intent(text: str) -> str:
     return re.sub(r"\s+", " ", m.group(1)).strip() if m else ""
 
 
+def _entry_move(text: str) -> str | None:
+    """The Move value (`constraint`/`sensor`/`package`) parsed from the entry's metadata card `| Move | … |`
+    row — the `code`-spanned token, the same source the census reads. Returns None if the row is absent or
+    carries no `code`-spanned value (so a mechanism with no Move simply gets no `package` marker)."""
+    m = re.search(r"^\|\s*Move\s*\|(.+)$", text, re.M)
+    if not m:
+        return None
+    token = re.search(r"`([a-z-]+)`", m.group(1))
+    return token.group(1) if token else None
+
+
 def _fold_wrapped_bullets(md: str) -> str:
     """Join a bullet's wrapped continuation lines onto the bullet line, so the book's simple list parser
     (which requires every line of a list block to start with `- `) sees one line per bullet. The catalogue
@@ -1445,6 +1456,7 @@ def _appendix_entries() -> list[dict]:
                 "catalogue_html": "../" + rel[:-3] + ".html",
                 "name": _entry_title(text, p.stem),
                 "intent": _rewrite_entry_links(_entry_intent(text), p.parent),
+                "move": _entry_move(text),      # constraint | sensor | package | None — for the package marker
                 "sections": sections,
                 "fill": _load_fill(role_dir, slug),
             })
@@ -1503,13 +1515,17 @@ def _pattern_elements_present(rec: dict) -> list[str]:
     return present
 
 
-def _appendix_pattern_page_md(rec: dict) -> str:
+def _appendix_pattern_page_md(rec: dict, stack_membership: dict[str, list[tuple[str, str]]] | None = None) -> str:
     """One pattern rendered as a WHOLE PAGE of GoF-layout markdown. The pattern NAME is the page `<h1>`
     (from the chapter dict's `chapter_title`), so this body emits no leading `#`/`##` name heading — it
     leads with the Structure diagram (visual first), then an in-page table of contents of the elements
     present, then the eight elements as `## ` (h2) headings in canonical order. External `#<slug>` links
     still resolve: the slug anchor rides on the projection note. The Structure diagram is rendered at the
-    top; its `## Structure` heading sits in canonical position and links back up to the diagram."""
+    top; its `## Structure` heading sits in canonical position and links back up to the diagram.
+
+    When `stack_membership` maps this mechanism's slug to one or more stacks, a derived 'Part of these
+    stacks: …' line is emitted under the projection note (member→stack back-links, single-sourced from the
+    same `role:<slug>` tokens as the forward links). A mechanism in no stack gets no such line."""
     fill = rec.get("fill") or {}
     safe = rec["name"].replace('"', "'")
     present = _pattern_elements_present(rec)
@@ -1528,6 +1544,14 @@ def _appendix_pattern_page_md(rec: dict) -> str:
     src_note = (f'*Projected from the catalogue entry [{rec["family"]} / {rec["name"]}]'
                 f'({rec["catalogue_html"]}).*')
     parts += [src_note, ""]
+
+    # 2b. STACK BACK-LINKS — if this mechanism is a member of one or more stacks, tell the reader so and
+    #     link into each stack's Appendix-D page. Derived from the same `role:<slug>` tokens as the forward
+    #     links (single-sourced); a mechanism in no stack gets no line (absence reads as 'stands alone').
+    memberships = (stack_membership or {}).get(rec["slug"], [])
+    if memberships:
+        links = ", ".join(f"[{title}]({page_slug}.html)" for title, page_slug in memberships)
+        parts += [f"**Part of these stacks:** {links}", ""]
 
     # The FIRST present element's heading carries the pattern's page-level `{#slug}` anchor (so external
     # `#<slug>` deep-links and any old figure fragments still land on this page); every other element gets
@@ -1604,6 +1628,21 @@ Every pattern follows the same template:
 - **Example use within DocAble** — where the mechanism runs in DocAble.
 - **Related Patterns** — the neighbours it composes with.
 
+## These patterns interlock
+
+**These patterns interlock; the unit of adoption is the package, not the lone pattern.** The Gang of \
+Four wrote patterns that mostly stand alone — reach for a Visitor or an Adapter, drop it in beside code \
+that knows nothing of the rest of the book. The mechanisms here do not work that way, because the method \
+underneath them is model-based. A typed model is the core, and on its own it is inert; it earns its keep \
+only welded to the governance that keeps it honest: the drift gate that holds it equal to the code, the \
+ban-lint that routes every change through it. That welding is what the catalogue calls a **package**: \
+{{package_count}} of the {{mechanism_count}} mechanisms carry one, most of them a model shipped with its \
+own sensors. Above the single mechanism sits the **stack** — {{stack_count}} of them, each a handful of \
+models, gates, and vocabularies that together make one governed capability. So this appendix leads with \
+the compositional units. You meet the stacks and the packaged models first, because that is the grain at \
+which a reader adopts a method rather than a trick; the single-mechanism pages wait underneath, one per \
+pattern, for when you need to look one up.
+
 **How this appendix is organized.** The catalogue is split into four lettered appendices, each a \
 different view of the same mechanisms:
 
@@ -1644,13 +1683,19 @@ _STACKS: list[tuple[str, str]] = [
 ]
 
 _APPENDIX_STACKS_OPENING_PROSE = """\
-**Packages of mechanisms that travel together**
+**Stacks: mechanisms that travel together**
 
 A single pattern in the preceding appendices kills one failure class. In practice, though, mechanisms \
-arrive in *packages* — a concept you want to adopt (model-based engineering, a self-operating \
-orchestrator, an auditable format seam) is not one mechanism but a cluster that reinforce each other. \
+arrive in *clusters* — a concept you want to adopt (model-based engineering, a self-operating \
+orchestrator, an auditable format seam) is not one mechanism but several that reinforce each other. \
 This appendix names those clusters. Each **stack** attaches to a concept, lists the mechanisms that make \
 it up, and says which of them you can leave out.
+
+A stack composes at a different grain than a `package` move. A **package** is composition *inside* one \
+mechanism — a constraint shipped already welded to its own dedicated sensors, still one catalogue entry. \
+A **stack** is composition *across* several distinct mechanisms — many entries that together make one \
+governed capability. Both travel together; the package is the intra-mechanism weld, the stack the \
+inter-mechanism cluster.
 
 Every stack sorts its members into two kinds:
 
@@ -1667,6 +1712,28 @@ Each member links to its own pattern page in the earlier appendices. Read a stac
 mechanisms you must adopt as a set, and which you can add later."""
 
 _STACK_MEMBER_RE = re.compile(r"\brole:([a-z0-9-]+)\b")
+
+
+def _stack_membership_index() -> dict[str, list[tuple[str, str]]]:
+    """Invert the stack membership relation: `{member-slug: [(stack-title, stack-page-slug), …]}`. Derived
+    from the same `role:<slug>` tokens `_resolve_stack_members` resolves — the ONE source of stack
+    membership — so the forward links (stack→member) and these back-links (member→stack) can never disagree.
+    Only stack files present on disk contribute; a member appearing in no stack simply gets no entry (the
+    caller then emits no 'Part of these stacks' line, which reads as 'stands alone')."""
+    index: dict[str, list[tuple[str, str]]] = {}
+    for stem, title in _STACKS:
+        path = _STACKS_DIR / f"{stem}.md"
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8")
+        seen: set[str] = set()
+        for m in _STACK_MEMBER_RE.finditer(text):
+            slug = m.group(1)
+            if slug in seen:               # a member listed twice in one stack counts once for that stack
+                continue
+            seen.add(slug)
+            index.setdefault(slug, []).append((title, f"appendix-d-{stem}"))
+    return index
 
 
 def _resolve_stack_members(md: str, page_by_slug: dict[str, dict]) -> str:
@@ -1834,13 +1901,86 @@ def _family_display(family_dir: str) -> str:
     return _FAMILY_DISPLAY.get(family_dir) or family_dir.replace("-", " ").title()
 
 
+def _appendix_counts(ordered: list[dict]) -> dict[str, int]:
+    """The live compositional counts the front-door framing cites — computed at build time from the same
+    sources the census reads, so they cannot drift. `package_count`: entries whose Move is `package` (the
+    per-card Move value, the census's own source); `mechanism_count`: the census total (the entry count);
+    `stack_count`: the length of `_STACKS`. Only stack files present on disk are counted (mirrors what the
+    stacks Part actually renders)."""
+    present_stacks = sum(1 for stem, _t in _STACKS if (_STACKS_DIR / f"{stem}.md").is_file())
+    return {
+        "package_count": sum(1 for rec in ordered if rec.get("move") == "package"),
+        "mechanism_count": len(ordered),
+        "stack_count": present_stacks,
+    }
+
+
+def _apply_appendix_counts(md: str, counts: dict[str, int]) -> str:
+    """Substitute the front-door count tokens `{{package_count}}` / `{{mechanism_count}}` / `{{stack_count}}`
+    with their live build-time values. The role-appendix front-door prose is assembled here (not routed
+    through the chapter-file `_apply_metrics` pass), so it carries its own token substitution — same
+    fail-loud contract: an unknown `{{token}}` stops the build rather than shipping a literal placeholder."""
+    def repl(m: "re.Match[str]") -> str:
+        key = m.group(1).strip()
+        if key not in counts:
+            raise SystemExit(f"appendix count token {{{{{key}}}}} has no computed value")
+        return str(counts[key])
+    return re.sub(r"\{\{\s*([a-z0-9_]+)\s*\}\}", repl, md)
+
+
+def _stack_concept_first_sentence(stem: str) -> str:
+    """The one-line capability summary for a stack: the first sentence of its `## Concept` section. Read at
+    build time from the stack file, so the front-door bullet stays equal to the stack page's own framing.
+    Returns '' if the file or its Concept section is absent (the caller then omits the sub-clause)."""
+    path = _STACKS_DIR / f"{stem}.md"
+    if not path.is_file():
+        return ""
+    text = path.read_text(encoding="utf-8")
+    m = re.search(r"^##\s+Concept\s*$(.*?)(?=^##\s|\Z)", text, re.M | re.S)
+    if not m:
+        return ""
+    body = re.sub(r"\s+", " ", m.group(1)).strip()
+    # First sentence: up to the first period that ends a sentence (followed by a space or end-of-string).
+    dot = re.search(r"\.(?:\s|$)", body)
+    sentence = body[: dot.start() + 1] if dot else body
+    return sentence.strip()
+
+
+def _appendix_stacks_summary_md() -> str:
+    """The front-door 'Adopt by capability' block: one bullet per stack — its capability one-liner (the
+    first sentence of the stack file's `## Concept`) plus a link to its Appendix-D page. Derived entirely
+    from `_STACKS` (the single source for stack order) and the stack files themselves; no hand-maintained
+    second list. Only stack files present on disk appear, matching what Appendix D renders."""
+    bullets: list[str] = []
+    for stem, title in _STACKS:
+        if not (_STACKS_DIR / f"{stem}.md").is_file():
+            continue
+        concept = _stack_concept_first_sentence(stem)
+        tail = f" — {concept}" if concept else ""
+        bullets.append(f"- **[{title}](appendix-d-{stem}.html)**{tail}")
+    if not bullets:
+        return ""
+    head = [
+        "## Adopt by capability: the stacks",
+        "",
+        "A stack is a capability you adopt whole — a handful of mechanisms that reinforce each other. "
+        "These are the reader's first navigable choice: pick the capability you want, then follow it into "
+        "the mechanisms that make it up.",
+        "",
+    ]
+    return "\n".join(head + bullets).strip()
+
+
 def _appendix_contents_md(ordered: list[dict]) -> str:
     """The opening page's text table of contents, in census-map hierarchy: an `### ` (h3) heading per target
     (Agent / Models-bridge / Product), a `#### ` (h4) sub-heading per family, and a linked bullet list of
     the family's patterns under it. `ordered` is the already role/family-ordered pattern-record list; each
     record carries the page slug the pattern renders at, plus its per-appendix locator (`appendix_letter`,
-    `appendix_num`) set by `build_appendix_chapters`, so the bullet reads `Appendix A - 1. <name>`."""
-    parts: list[str] = ["## Contents", ""]
+    `appendix_num`) set by `build_appendix_chapters`, so the bullet reads `Appendix A - 1. <name>`. A
+    mechanism whose Move is `package` carries a small inline `package` marker, so a reader sees which
+    entries bundle their own sensors without leaving the list; a standalone atom carries no marker (absence
+    reads as 'stands alone', which is correct)."""
+    parts: list[str] = ["## Reference: every mechanism", ""]
     last_group: str | None = None
     last_family: str | None = None
     for rec in ordered:
@@ -1860,7 +2000,8 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
             parts += [f"#### {_family_display(rec['family'])}", ""]
             last_family = rec["family"]
         locator = f"Appendix {rec['appendix_letter']} - {rec['appendix_num']}."
-        parts += [f"- {locator} [{rec['name']}]({rec['page_slug']}.html)"]
+        marker = " `package`" if rec.get("move") == "package" else ""
+        parts += [f"- {locator} [{rec['name']}]({rec['page_slug']}.html){marker}"]
     return "\n".join(parts).strip()
 
 
@@ -1902,17 +2043,27 @@ def build_appendix_chapters(next_part: int) -> list[dict]:
     anchor_map = _appendix_anchor_map(ordered)
     _emit_rewired_figure(anchor_map)
 
+    # Live compositional counts + the member→stack membership index — both derived from the single sources
+    # (per-card Move / `_STACKS` / the `role:<slug>` tokens), computed once and threaded through below.
+    counts = _appendix_counts(ordered)
+    stack_membership = _stack_membership_index()
+
     chapters: list[dict] = []
 
     # OPENING PAGE — heads Appendix A's Part (first appendix Part), sorts before every pattern (chapter 0).
+    # Front-door narrative order (§2.3): frame → interlock → adopt-by-capability (stacks) → the whole map →
+    # the atomic reference. The framing prose (frame + interlock) leads; the stack summary is the reader's
+    # first navigable choice; the census map is 'every mechanism'; the reference list is the atomic lookup.
     opening_body = [
-        _APPENDIX_OPENING_PROSE,
+        _apply_appendix_counts(_APPENDIX_OPENING_PROSE, counts),
+        "",
+        _appendix_stacks_summary_md(),
         "",
         # The census map — the clickable visual index into the pattern pages, embedded here only.
         f"<!-- figure-iframe: {_BOOK_FIGURE_NAME} | The governance mechanism map — every mechanism in the "
-        "catalogue, organized by target zone and family. Click a mechanism to open its Gang-of-Four "
-        "pattern. | The governance mechanism map: click any mechanism to open its Gang-of-Four pattern "
-        "in this appendix. -->",
+        "catalogue, including the ones inside those stacks, organized by target zone and family. Click a "
+        "mechanism to open its Gang-of-Four pattern. | The governance mechanism map: click any mechanism to "
+        "open its Gang-of-Four pattern in this appendix. -->",
         "",
         _appendix_contents_md(ordered),
     ]
@@ -1948,7 +2099,7 @@ def build_appendix_chapters(next_part: int) -> list[dict]:
             # every pattern above the opening page's chapter 0 in Appendix A.
             "chapter": fam_n * 100 + within_family_index + 1,
             "chapter_title": f"Appendix {letter} - {rec['appendix_num']}. {rec['name']}",
-            "body_md": _appendix_pattern_page_md(rec),
+            "body_md": _appendix_pattern_page_md(rec, stack_membership),
             "is_appendix": True,
             "mermaid": True,
         })
