@@ -380,15 +380,14 @@ violates one; leave a passage that already reads in the author's voice.
 
 Two more transformations from the author's own edits, same conservative posture as §260726 above.
 
-7. **A decision figure's caption carries the *action and the fallback*, not just the branches.** A caption
-   that only labels the paths tells the reader what the figure *shows*; the author's caption also tells them
-   what to *do* — the default under uncertainty and the recovery move.
+7. **Figure captions carry implications/interpretation, not just description.** A caption that only says
+   what the figure *shows* stops short; the author's captions also say what it *means* — the conclusion to
+   draw, the decision it drives, the fallback to take.
    - *Before (caption):* "…A hard task goes to supervised autonomy, where you supply correctness conditions…"
-     *(labels the two branches, then stops.)*
+     *(describes the branches, then stops.)*
    - *After (caption):* "…If you're not sure, try to one-shot it. But if the one-shot effort doesn't pan out,
-     don't throw good tokens after bad. Just switch over to the other path."
-   The addition names the fallback and adapts a stock idiom to the domain ("good money after bad" → "good
-   *tokens* after bad"). A decision diagram earns its caption by *guiding the decision*, not narrating it.
+     don't throw good tokens after bad. Just switch over to the other path." *(adds the interpretation:
+     what to do, and the fallback.)*
 
 8. **A plain, direct signpost beats an oblique one; and reach for the verb the governing metaphor implies.**
    Name the artifact and its job outright, and use the physical verb the extended metaphor already sets up.
