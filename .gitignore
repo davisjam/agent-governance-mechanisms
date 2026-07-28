@@ -42,3 +42,6 @@ node_modules/
 # Node build tooling for the PDF render (Puppeteer). package.json + package-lock.json ARE tracked (CI
 # runs `npm ci`); the installed tree is not.
 /book/node_modules/
+
+# scratch axe/screenshot helper — never ship
+/book/_shot.mjs
