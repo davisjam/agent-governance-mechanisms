@@ -2542,10 +2542,15 @@ def cmd_data_claims(args) -> int:
 
 def cmd_deploy(args) -> int:
     """Build the site, then serve it locally (--local) or publish it to GitHub (--github)."""
+    want_pdf = getattr(args, "pdf", False) and args.target == "local"
     print(f"== Deploy plan: target={args.target} ==")
     print("  1. validate   2. build   3. test (BLOCKING — aborts on any failure)   "
+          + ("3b. render PDF   " if want_pdf else "")
           + ("4. serve on localhost" if args.target == "local"
              else "4. commit + push to origin main (CI deploys)"))
+    if getattr(args, "pdf", False) and args.target == "github":
+        # The Pages workflow ALWAYS renders + publishes the PDF on push, so --pdf is redundant here.
+        print("  (note: --pdf is a no-op for github — the Pages workflow always renders the PDF on push)")
     if cmd_validate(None) != 0:
         print("ABORT: schema invalid — fix before deploying.")
         return 1
@@ -2557,6 +2562,17 @@ def cmd_deploy(args) -> int:
     if subprocess.run([sys.executable, "catalog_tests.py"], cwd=ROOT).returncode != 0:
         print("ABORT: test suite failed — fix before deploying (run `catalog.py test` to see).")
         return 1
+
+    # opt-in local PDF render (slow Paged.js + Puppeteer path; the default web build never touches it).
+    # `--pdf` regenerates book/mage-book.pdf so the local preview's "Download PDF" link serves the CURRENT
+    # book, not a stale gitignored copy. Publish (github) needs no flag — CI renders the PDF on every push.
+    if want_pdf:
+        print("\n== Rendering PDF (book/mage-book.pdf) — slow; content-integrity gate runs internally ==")
+        pdf_build = subprocess.run([sys.executable, os.path.join("book", "build_book_html.py"), "--pdf"],
+                                   cwd=ROOT)
+        if pdf_build.returncode != 0:
+            print("ABORT: PDF render failed (see build_book_html.py --pdf output above).")
+            return 1
 
     if args.target == "local":
         url = f"http://127.0.0.1:{args.port}/"
@@ -2674,6 +2690,7 @@ def main() -> int:
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
     d.add_argument("--port", type=int, default=DEFAULT_PORT, help=f"localhost port for --local (default {DEFAULT_PORT})")
+    d.add_argument("--pdf", action="store_true", help="(local only) also render book/mage-book.pdf so the local preview's Download-PDF link is current; slow. Redundant for github — CI always renders the PDF on push")
     d.add_argument("-m", "--message", default="deploy: rebuild site", help="commit message for github mode")
     args = p.parse_args()
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
