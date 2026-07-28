@@ -68,7 +68,7 @@ SECTION_ORDER = [
     "Motivation", "Why it's not just", "Mechanism", "Prerequisites",
     "Consequences & costs", "Known uses", "Related mechanisms",
 ]
-REL_TAGS = ("Counterpart", "Enabler", "Layer", "Consumer", "Bridge", "See also")
+REL_TAGS = ("Counterpart", "Enabler", "Layer", "Consumer", "Bridge", "Sibling", "See also")
 ROLE_DIRS = ["agent", "models-bridge", "product"]
 
 # ── Abstractions glossary (the interpretability de-referencer) ──
@@ -152,8 +152,15 @@ class Entry:
         bullets = re.findall(r"^- (.+)$", rel, re.M)
         if not bullets:
             self.issues.append("no Related-mechanisms bullets")
-        elif not any(any(tag in b for tag in REL_TAGS) for b in bullets):
-            self.issues.append("Related-mechanisms: no relationship tags")
+        else:
+            # Structural check: every top-level Related bullet must LEAD with a bold/italic relationship
+            # tag (a tagged relationship, not stray prose). Membership is deliberately NOT enforced — the
+            # relationship vocabulary is open and expressive (REL_TAGS names the common core; entries also
+            # use precise variants like "Ground truth", "Specializes", "Temporal complement"). This catches
+            # a malformed/untagged bullet without flattening authorial nuance into a closed set.
+            for b in bullets:
+                if not re.match(r"\*\*.+?\*\*|\*.+?\*", b.strip()):
+                    self.issues.append(f"Related-mechanisms: bullet without a relationship-tag lead: {b[:45]!r}")
 
     def title_only(self) -> str:
         m = re.search(r"^# (.+)$", self.text, re.M)

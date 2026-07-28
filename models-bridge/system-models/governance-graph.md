@@ -124,7 +124,7 @@ nearer neighbours miss the same axis:
   [lifecycle hooks](../../agent/lifecycle-and-observability/lifecycle-hooks.md)) are the *nodes* this model
   reasons over ◀──▶ the model *governs* their interactions, and the drift lint keeps its node set equal to
   the wired reality.
-- **Reuses** — [synchronization-model](synchronization-model.md): the lock-ordering deadlock analysis is
+- **Enabler** — [synchronization-model](synchronization-model.md): the lock-ordering deadlock analysis is
   the contention edge's checker, generalized from OS locks to the turn-end slot (one ordering analysis for
   both).
 - **Counterpart** — [drift-parity-gates](drift-parity-gates.md): the anchor-drift lint that holds this

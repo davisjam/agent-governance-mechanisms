@@ -106,9 +106,12 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
   Every entry follows the template documented in [`README.md`](README.md): a title, an `**Intent** —`
   line, a 4-row metadata card (`Summary · Target · Form · Enforcement`), then the sections
   (`Motivation` … `Related mechanisms`).
-- **[`INDEX.md`](INDEX.md)** is the census — one row per entry, grouped by family. The `Form`, `Novelty`,
-  and `Enf.` columns MUST match the entry's metadata card (the validator enforces this).
-- Cross-cuts: 9 **forms**, **soft/hard** enforcement, 5 **relationships** — all defined in `README.md`.
+- **[`INDEX.md`](INDEX.md)** is the census — one row per entry, grouped by family. The `Form` and `Enf.`
+  columns MUST match the entry's metadata card (the validator enforces this).
+- Cross-cuts: 9 **forms** and **soft/hard** enforcement (`README.md`), plus **relationship** tags on the
+  Related-mechanisms bullets — an *open, expressive* vocabulary (a common core in `REL_TAGS` in
+  `catalog.py`; entries also use precise variants like `Ground truth`, `Specializes`). The validator
+  requires every Related bullet to carry a bold/italic tag lead, not that the tag be in a closed set.
 - **One entry, or two, for a construction + its enforcement?** By enforcement scope. A **dedicated**
   (one-to-one) enforcement — a ban-lint guarding *this one* seam — is **bundled into the construction
   entry** (the typed model + its ban-lint is one mechanism). A **cross-cutting** (one-to-many) enforcement
