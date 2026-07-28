@@ -8,6 +8,8 @@ machine-*generated* inputs, catching bugs in the input space that example-based 
 | Summary | FsCheck invariants over generated inputs find hidden bugs. |
 | Target | Product · **Regression tests** |
 | Form | `regression` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — a repeatable regression body; shrinks to a minimal counterexample |
 
 ## Motivation — the failure it kills

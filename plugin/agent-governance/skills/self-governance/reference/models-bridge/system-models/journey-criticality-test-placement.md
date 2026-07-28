@@ -11,6 +11,8 @@ derives each journey-part's `local` vs `staging` tier, guarded by a coverage-flo
 | Summary | A journey's criticality derives its test's host tier; a lint holds the local-coverage floor. |
 | Target | Bridge · **System models** |
 | Form | `validation` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft·Hard** — the typed model *aims* placement (soft: it computes the tier, a human still authors the test); a coverage-floor lint *holds* the invariant (hard: a major part with no local test fails) |
 
 ## Motivation — the failure it kills
@@ -125,7 +127,7 @@ a property test over any spec universe and a lint that recomputes containment ag
 
 ## Related mechanisms
 
-- **Sibling derivation** — [formal-invariant-verification](formal-invariant-verification.md): both derive a
+- **Sibling** — [formal-invariant-verification](formal-invariant-verification.md): both derive a
   *verification tier* from a typed trait — there the invariant's temporal shape routes its checker, here the
   journey's criticality routes its host. Same derive-a-tier-from-a-model-trait mechanism, different trait and
   different tier axis.
@@ -137,7 +139,7 @@ a property test over any spec universe and a lint that recomputes containment ag
   derived tiers are fields on the typed model; this is one more consumer of that substrate, and
   [drift-parity-gates](drift-parity-gates.md) keep the model's journeys matching the real specs the lint
   reads.
-- **Ground truth** — the [user-journey model](user-journey-model.md) supplies the journeys and the
+- **Consumer** — the [user-journey model](user-journey-model.md) supplies the journeys and the
   criticality designation this consumes; the [service-flow model](service-flow-model.md) carries the typed
   journey entities whose steps anchor the parts. This mechanism points that criticality cut at a new output:
   test-host placement.

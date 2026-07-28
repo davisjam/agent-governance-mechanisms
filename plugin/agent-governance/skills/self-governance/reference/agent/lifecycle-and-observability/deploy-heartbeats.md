@@ -8,6 +8,8 @@ stale-worker sweep, so a *hung* deploy or worker is distinguishable from a merel
 | Summary | Periodic liveness so a hung deploy differs from a slow one. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `observability` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *signal* — emitted every 30 s; non-blocking (the concurrency guard beside it is blocking) |
 
 ## Motivation — the failure it kills

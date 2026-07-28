@@ -9,6 +9,8 @@ that can never land.
 | Summary | Abort a broken agent at its first commit, not its last. |
 | Target | Agent · **Gates & merge-train** |
 | Form | `quality-gate` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — aborts the run on a failed substrate assertion |
 
 ## Motivation — the failure it kills

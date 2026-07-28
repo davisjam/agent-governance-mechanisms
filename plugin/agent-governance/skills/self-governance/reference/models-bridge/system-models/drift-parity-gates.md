@@ -9,6 +9,8 @@ reality** (every model row ↔ a real thing on disk, and every real thing ↔ a 
 | Summary | Bidirectional model↔reality checks so models cannot drift. |
 | Target | Bridge · **System models** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) · *blocking* — a model that diverges from reality fails the build |
 
 ## Motivation — the failure it kills

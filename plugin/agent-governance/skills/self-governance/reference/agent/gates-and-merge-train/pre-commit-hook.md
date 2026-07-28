@@ -9,6 +9,8 @@ checks actually passed on *exactly this tree*.
 | Summary | Cheap changed-file checks gate every commit, marker-verified. |
 | Target | Agent · **Gates & merge-train** |
 | Form | `quality-gate` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — the hook fails the commit; `merge-check` rejects agent commits lacking valid markers · bypass prefixes (`sentinel:` / `tombstone:` / `chore(worktree):`) skip; `--no-verify` is **banned** for agents |
 
 ## Motivation — the failure it kills

@@ -9,6 +9,8 @@ possibly-broken substrate.
 | Summary | Block new dispatch while a HIGH cron alert is unresolved. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `observability` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — refuses new dispatch, worktree creation, merge-train run/stage/attest, and new-brief creation · resolved by an alert-resolving dispatch |
 
 ## Motivation — the failure it kills

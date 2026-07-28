@@ -12,7 +12,10 @@ topology to print exactly which lints a migration puts in scope).
 | Summary | Each control declares its substrate assumption as metadata; a query computes the blast radius. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `is-a-model` — a typed model you check a system property against |
 | Enforcement | **Hard** (deterministic) — a declaration lint requires every substrate-reading control to declare its assumption; the blast-radius table is computed from those declarations. Lands audit-only, then promotes to blocking |
+| Derivation | `model-from-code` — induced from the code, reconciled at build |
 
 ## Motivation — the failure it kills
 

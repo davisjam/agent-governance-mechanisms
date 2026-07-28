@@ -9,6 +9,8 @@ the model *drives the system* (not merely describes it) and hand-edits are caugh
 | Summary | Generate real artifacts from the models, provenance-headed. |
 | Target | Bridge · **System models** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — generated artifacts carry a re-emitted provenance marker + a freshness/drift lint |
 
 ## Motivation — the failure it kills

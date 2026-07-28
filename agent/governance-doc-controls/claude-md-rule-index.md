@@ -11,6 +11,8 @@ other mechanism cannot silently rot.
 | Summary | The governance document itself, enforced by its own lints. |
 | Target | Agent · **Governance-doc mechanisms** |
 | Form | `validation` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | — |
 | Enforcement | **Soft·Hard** — the rules are guidance to the agent (soft, booted into every context); a governance-doc bloat/cap lint + the rule-conformance lint are *blocking* (the hard counterpart) |
 
 > **★ The meta-mechanism.** Every other entry in this catalog names a mechanism. *This* is the mechanism

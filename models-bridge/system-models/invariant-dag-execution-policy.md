@@ -13,6 +13,8 @@ budget)` profile).
 | Summary | A DAG holds correctness + cost-gate edges only; a typed Scheduler rations load + budget per host. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft·Hard** — the per-host profile *aims* the execution plan (soft: it computes concurrency and budget policy, an operator still sets the values); two lints *hold* the separation (hard: a load edge in the DAG, or a per-environment edge divergence, is a finding) |
 
 ## Motivation — the failure it kills
@@ -164,13 +166,13 @@ Four parts.
   over a deploy graph by separating edge intents and rationing resource + cost from a per-host profile. One
   places tests by criticality; the other rations execution by resource and budget. Both consume the same
   host taxonomy; neither subsumes the other.
-- **Ground truth** — [deployment-topology-model](deployment-topology-model.md): supplies the host taxonomy
+- **Consumer** — [deployment-topology-model](deployment-topology-model.md): supplies the host taxonomy
   the per-host profile keys on. The Scheduler's profile is one row per host in that model's terms.
 - **Enabler** — [executable-source-of-truth](executable-source-of-truth.md): the edge intents and the
   per-host profiles are fields on the typed deploy model, one more consumer of that substrate;
   [drift-parity-gates](drift-parity-gates.md) keep the model's graph matching the real deploy phases the
   lint reads.
-- **Kin** — [control-substrate-dependency](control-substrate-dependency.md): both attach *typed metadata to
+- **Sibling** — [control-substrate-dependency](control-substrate-dependency.md): both attach *typed metadata to
   edges* and compute a decision from it — there a mechanism's blast radius over the substrate it guards, here
   an edge's intent driving whether the Scheduler honors, rations, or ignores it. Same reflex of making an
   edge's meaning a typed field a tool reads, applied to a different graph.

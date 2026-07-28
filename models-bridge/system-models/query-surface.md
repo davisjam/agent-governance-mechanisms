@@ -9,6 +9,8 @@ rather than parsing raw files, and the tool itself documents how the models load
 | Summary | repo-query — the agent-facing read API over the models. |
 | Target | Bridge · **System models** |
 | Form | `agent-output` |
+| Move | `constraint` — prevents the error by construction |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft** (probabilistic) — the canonical *read convenience* agents/orchestration use; it emits structured `--json` (deterministic) but doesn't block raw reads |
 
 ## Motivation — the failure it kills

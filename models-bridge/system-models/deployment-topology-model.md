@@ -9,7 +9,10 @@ lints reason about a declared topology, not scattered constants.
 | Summary | Typed models of where things run and how they layer. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `is-a-model` — a typed model you check a system property against |
 | Enforcement | **Hard** (deterministic) — typed models *held true* by the deploy-parity + layer-boundary lints |
+| Derivation | `model-from-code` — induced from the code, reconciled at build |
 
 ## Motivation — the failure it kills
 

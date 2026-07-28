@@ -11,7 +11,10 @@ defend; snapshotted ones drift.**
 | Summary | A typed model↔lint↔code↔proof↔registry graph whose edges are derived, symbol-anchored, re-checked. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `is-a-model` — a typed model you check a system property against |
 | Enforcement | **Hard** (deterministic) — a derived meta-lint re-resolves every edge's anchor and reddens on a broken one; runs at DoD/audit cadence because symbol resolution is costly. Lands audit-only, then promotes to blocking |
+| Derivation | `both` — some fields generated to code, others reconciled from it |
 
 ## Motivation — the failure it kills
 

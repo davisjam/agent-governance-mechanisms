@@ -8,6 +8,8 @@ any brief missing the markers that make the agent's work safe and well-scoped.
 | Summary | Reject a malformed dispatch brief before it can launch. |
 | Target | Agent · **Context & dispatch substrate** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — exit 1 refuses the launch · bypass `ADA_TOOL_BYPASS_AGENT_FENCE=1` (human-only, audit-logged) |
 
 ## Motivation — the failure it kills

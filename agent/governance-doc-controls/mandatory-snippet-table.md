@@ -9,6 +9,8 @@ dispatched brief carries the safety and context boilerplate it needs.
 | Summary | Brief-linting asserts every required brief snippet is present. |
 | Target | Agent · **Governance-doc mechanisms** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking via brief-linting* — a brief missing a required snippet marker fails the pre-dispatch lint |
 
 ## Motivation — the failure it kills

@@ -9,7 +9,10 @@ concurrency contracts are declared and checkable, not tribal.
 | Summary | A registry of every lock, what it guards, and its ordering. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `is-a-model` — a typed model you check a system property against |
 | Enforcement | **Hard** (deterministic) — a typed model *held true* by the lock-coverage lint (every `fcntl.flock` site must be declared or annotated) |
+| Derivation | `model-from-code` — induced from the code, reconciled at build |
 
 ## Motivation — the failure it kills
 

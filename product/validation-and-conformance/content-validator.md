@@ -9,6 +9,8 @@ that pinpoints which pass dropped content (our instance: the `ContentValidator` 
 | Summary | Assert input content survives remediation — a fidelity gate. |
 | Target | Product · **Validation & conformance** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — fails the job in prod on a fidelity violation; the per-pass staging variant signals the offending pass on a dedicated marker + a nonzero exit code |
 
 ## Motivation — the failure it kills

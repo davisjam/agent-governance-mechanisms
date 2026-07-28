@@ -9,6 +9,8 @@ call (our instance: the **WCAG 2.1 AA / Section 508 / PDF-UA** accessibility rul
 | Summary | Map each finding to the WCAG/508/PDF-UA criterion it closes. |
 | Target | Product · **Validation & conformance** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — a conformance predicate; the PDF runtime gate flags new findings per pass on a dedicated marker (staging) |
 
 ## Motivation — the failure it kills

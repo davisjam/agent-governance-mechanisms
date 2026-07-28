@@ -13,6 +13,8 @@ pre-commit hook).
 | Summary | A typed `caused-by` field, minted at the cause and gated at commit, threads a change to its reason. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `audit-trail` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — the pre-commit hook asserts the typed field is present and names a taxonomy value. Soft·Hard split: the taxonomy *value* is the agent's choice (soft); its *presence* is gated (hard); the `_proxy` suffix on an inferred cause is the honesty-by-construction half |
 
 ## Motivation — the failure it kills
@@ -96,14 +98,14 @@ Four adjacent things each carry part of this, and each falls short on a differen
 
 ## Related mechanisms
 
-- **Specializes** — [reflection-facet-substrate](reflection-facet-substrate.md) (and its
+- **Generalization** — [reflection-facet-substrate](reflection-facet-substrate.md) (and its
   [lifecycle-hooks](lifecycle-hooks.md) *measured leash*): the leash joins firings to actions by session
   key; this threads an explicit cause-id from cause to effect, a deterministic join where an artifact
   exists.
 - **Counterpart** — [mutator-stamps](../../product/provenance-and-attribution/mutator-stamps.md):
   product-side provenance (a mutation inside the artifact) versus agent-side provenance (the fleet's
   change to the repo).
-- **Realizes** — the catalogue's claim that a *traceability matrix* can be a queried model behind a
+- **Generalization** — the catalogue's claim that a *traceability matrix* can be a queried model behind a
   drift gate rather than a filed spreadsheet: caused-by is that matrix emitted one row per commit.
 - *See also* — [ddt-pin-trailers](../../product/regression-tests/ddt-pin-trailers.md): a sibling
   typed-trailer discipline asserted at the commit gate.

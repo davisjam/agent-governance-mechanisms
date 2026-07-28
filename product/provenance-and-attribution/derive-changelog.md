@@ -9,6 +9,8 @@ after the fact.
 | Summary | Reconstruct the attributed mutation history from the stamps. |
 | Target | Product · **Provenance & attribution** |
 | Form | `audit-trail` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *audit record* — a reproducible reconstruction from the embedded stamps |
 
 ## Motivation — the failure it kills

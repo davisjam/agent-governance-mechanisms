@@ -12,6 +12,8 @@ agent-fleet substrate, rendered from two typed YAML sources: a pointer catalog a
 | Summary | Positive substrate map + symptom→doc routing, generated from typed YAML, ref-lint-checked. |
 | Target | Agent · **Governance-doc mechanisms** |
 | Form | `agent-output` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | — |
 | Enforcement | **Soft·Hard** — the skill *routes*, it cannot execute or block; its correctness is a hard reference-validity lint that resolves every pointer's file *and* heading anchor against disk (a non-executable index earns trust from a ref-check, not tests) |
 
 ## Motivation — the failure it kills

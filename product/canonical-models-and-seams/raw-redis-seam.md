@@ -8,6 +8,8 @@ queue's atomicity and schema invariants live in exactly one lint-enforced place.
 | Summary | All raw Redis in one seam; queue atomicity encoded once. |
 | Target | Product · **Canonical models & seams** |
 | Form | `bounded-service` |
+| Move | `constraint` — prevents the error by construction |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — the sole-seam lint bans raw Redis outside the dispatch module |
 
 ## Motivation — the failure it kills

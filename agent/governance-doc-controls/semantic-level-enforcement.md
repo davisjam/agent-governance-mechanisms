@@ -10,6 +10,8 @@ multi-commit task, never at a per-commit hook where the model is legitimately mi
 | Summary | Match a mechanism's enforcement scope to the semantic scope of the property it checks. |
 | Target | Agent · **Governance-doc mechanisms** |
 | Form | `agent-output` |
+| Move | `constraint` — prevents the error by construction |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft** — a design-time placement judgment made when a mechanism is built or reviewed; it aims where a mechanism lands, it does not itself block |
 
 ## Motivation — the failure it kills
@@ -119,7 +121,7 @@ than the last. A mechanism belongs on the lowest rung at which its property is d
 
 ## Related mechanisms
 
-- **Specialized by** — [epic-definition-of-done](epic-definition-of-done.md): the intent-level rung of the
+- **Generalization** — [epic-definition-of-done](epic-definition-of-done.md): the intent-level rung of the
   ladder, where a finished feature and its plan are both legible. It is the top-of-ladder instance this
   principle cites; its trust-nothing re-run is placement-at-agent-return made concrete.
 - **See also (a placement each)** — [pre-commit-hook](../gates-and-merge-train/pre-commit-hook.md) sits at the

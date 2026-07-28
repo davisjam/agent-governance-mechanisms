@@ -62,13 +62,35 @@ FORMS = {
 }
 ROLES = {"Agent", "Bridge", "Product"}
 ENF_CLASSES = {"Hard", "Soft", "Soft·Hard"}
-META_ORDER = ["Summary", "Target", "Form", "Enforcement"]  # Summary first; novelty/artifact/rule dropped
+# The metadata card carries two book-thesis cross-cuts beside soft/hard enforcement:
+#   Move  (Alignment Thesis, book part 2.3) — how the mechanism holds a quality goal.
+#   Model (Modeling Thesis, book part 2.2)  — its relation to a typed model.
+# Both independent of soft/hard: a `constraint` can be soft or hard; an `is-a-model` can be any Move.
+# `Derivation` is optional and appears ONLY on is-a-model entries (book part 3.1 Beat 2).
+MOVE_CLASSES = {"constraint", "sensor", "package"}      # prevent · detect · both-bundled
+MODEL_CLASSES = {"is-a-model", "governs-a-model", "—"}  # a typed model · gates/generates/queries one · neither
+DERIVATION_CLASSES = {"model-from-code", "model-to-code", "both"}
+META_ORDER = ["Summary", "Target", "Form", "Move", "Model", "Enforcement"]  # + optional trailing "Derivation"
 SUMMARY_MAX = 100  # chars — a tooltip-friendly gloss, deliberately shorter than Intent
 SECTION_ORDER = [
     "Motivation", "Why it's not just", "Mechanism", "Prerequisites",
     "Consequences & costs", "Known uses", "Related mechanisms",
 ]
-REL_TAGS = ("Counterpart", "Enabler", "Layer", "Consumer", "Bridge", "Sibling", "See also")
+# Canonical relationship vocabulary — a tight, UML-informed set (owner-ruled: the off-canonical variants
+# in the corpus were prior-LLM tagging drift, not authorial nuance; consolidate direction-variants into
+# one direction-neutral tag each). Every Related-mechanisms bullet's lead tag (minus any trailing
+# "(qualifier)") MUST be one of these; the validator enforces membership.
+#   Counterpart    — a paired opposite / twin: two mechanisms that mirror each other (incl. a temporal twin).
+#   Generalization — an is-a / kind-of relation, direction-neutral: one is a special case, instance, or
+#                    realization of a more general pattern (folds Specializes / Specialized-by / Instance-of /
+#                    Realizes / Kin — the whole taxonomic family, either direction).
+#   Enabler        — one makes the other possible (the "how" or precondition of the other).
+#   Consumer       — one reads / uses / is fed by the other (the supplier↔consumer relation, incl. "ground truth").
+#   Layer          — one is built atop the other (a stacking / composition relation).
+#   Bridge         — couples across two roles (the models-bridge's defining cross-role relation).
+#   Sibling        — the same pattern or method applied to a different subject (a peer, not a parent/child).
+#   See also       — a looser association; the qualified form "See also (qualifier)" carries a flavour word.
+REL_TAGS = ("Counterpart", "Generalization", "Enabler", "Consumer", "Layer", "Bridge", "Sibling", "See also")
 ROLE_DIRS = ["agent", "models-bridge", "product"]
 
 # ── Abstractions glossary (the interpretability de-referencer) ──
@@ -107,10 +129,13 @@ class Entry:
         if "🚧" in t:
             self.issues.append("carries a 🚧 stub banner")
 
+        # Recognized metadata labels = the six required (META_ORDER) + the optional trailing Derivation.
+        META_LABELS = META_ORDER + ["Derivation"]
         rows = re.findall(r"^\| ([^|]+?) \| (.+?) \|$", t, re.M)
-        self.meta = {k.strip(): v.strip() for k, v in rows if k.strip() in META_ORDER}
-        labels = [k.strip() for k, _ in rows if k.strip() in META_ORDER]
-        if labels != META_ORDER:
+        self.meta = {k.strip(): v.strip() for k, v in rows if k.strip() in META_LABELS}
+        labels = [k.strip() for k, _ in rows if k.strip() in META_LABELS]
+        # The six required rows must appear in order; Derivation, if present, must trail them.
+        if labels[:len(META_ORDER)] != META_ORDER or labels[len(META_ORDER):] not in ([], ["Derivation"]):
             self.issues.append(f"metadata rows/order = {labels or '(none)'}")
 
         self.form = None
@@ -125,6 +150,37 @@ class Entry:
         self.family = re.sub(r"\*", "", m.group(2)).strip() if m else None
         if self.role not in ROLES:
             self.issues.append(f"bad Target role: {tgt!r}")
+
+        # Move (Alignment-Thesis axis): the value is the `code`-spanned token in the row.
+        self.move = None
+        m = re.search(r"`([a-z-]+)`", self.meta.get("Move", ""))
+        self.move = m.group(1) if m else None
+        if self.move not in MOVE_CLASSES:
+            self.issues.append(f"bad Move: {self.meta.get('Move', '(missing)')!r} "
+                               f"(∈ {sorted(MOVE_CLASSES)})")
+
+        # Model (Modeling-Thesis axis): a `code`-spanned value, one of is-a-model / governs-a-model / —.
+        self.model = None
+        m = re.search(r"`(is-a-model|governs-a-model|—)`", self.meta.get("Model", ""))
+        if m is None and self.meta.get("Model", "").strip() == "—":
+            self.model = "—"  # allow a bare em-dash (no code span) for the 'neither' value
+        else:
+            self.model = m.group(1) if m else None
+        if self.model not in MODEL_CLASSES:
+            self.issues.append(f"bad Model: {self.meta.get('Model', '(missing)')!r} "
+                               f"(∈ {sorted(MODEL_CLASSES)})")
+
+        # Derivation (optional): allowed ONLY on is-a-model entries; value ∈ model-from-code/model-to-code/both.
+        self.derivation = None
+        if "Derivation" in self.meta:
+            m = re.search(r"`([a-z-]+)`", self.meta["Derivation"])
+            self.derivation = m.group(1) if m else self.meta["Derivation"].strip()
+            if self.derivation not in DERIVATION_CLASSES:
+                self.issues.append(f"bad Derivation: {self.meta['Derivation']!r} "
+                                   f"(∈ {sorted(DERIVATION_CLASSES)})")
+            if self.model != "is-a-model":
+                self.issues.append("Derivation row present but Model is not `is-a-model` "
+                                   "(Derivation is only for is-a-model entries)")
 
         m = re.search(r"\*\*(Soft·Hard|Hard|Soft)\*\*", self.meta.get("Enforcement", ""))
         self.enf = m.group(1) if m else None
@@ -153,14 +209,23 @@ class Entry:
         if not bullets:
             self.issues.append("no Related-mechanisms bullets")
         else:
-            # Structural check: every top-level Related bullet must LEAD with a bold/italic relationship
-            # tag (a tagged relationship, not stray prose). Membership is deliberately NOT enforced — the
-            # relationship vocabulary is open and expressive (REL_TAGS names the common core; entries also
-            # use precise variants like "Ground truth", "Specializes", "Temporal complement"). This catches
-            # a malformed/untagged bullet without flattening authorial nuance into a closed set.
+            # Membership check: every top-level Related bullet must LEAD with a bold/italic relationship
+            # tag drawn from the canonical REL_TAGS set. The lead tag, minus any trailing "(qualifier)",
+            # must be ∈ REL_TAGS — the vocabulary is a closed, principled set (owner-ruled; the prior
+            # off-canonical variants were tagging drift, not authorial nuance). A malformed/untagged bullet
+            # or an off-canonical tag is a finding.
             for b in bullets:
-                if not re.match(r"\*\*.+?\*\*|\*.+?\*", b.strip()):
+                m = re.match(r"\*\*(.+?)\*\*|\*(.+?)\*", b.strip())
+                if not m:
                     self.issues.append(f"Related-mechanisms: bullet without a relationship-tag lead: {b[:45]!r}")
+                    continue
+                lead = (m.group(1) or m.group(2)).strip()
+                base = re.sub(r"\s*\(.*\)\s*$", "", lead).strip()  # drop a trailing "(qualifier)"
+                base = base.rstrip(":")                            # tolerate a trailing colon lead
+                if base not in REL_TAGS:
+                    self.issues.append(
+                        f"Related-mechanisms: off-canonical relationship tag {lead!r} "
+                        f"(∈ {list(REL_TAGS)})")
 
     def title_only(self) -> str:
         m = re.search(r"^# (.+)$", self.text, re.M)
@@ -169,7 +234,8 @@ class Entry:
     def as_dict(self) -> dict:
         return {
             "path": self.path, "role": self.role, "family": self.family,
-            "form": self.form, "enforcement": self.enf, "summary": self.summary,
+            "form": self.form, "move": self.move, "model": self.model,
+            "derivation": self.derivation, "enforcement": self.enf, "summary": self.summary,
             "title": (re.search(r"^# (.+)$", self.text, re.M) or [None, self.path])[1],
         }
 
@@ -225,12 +291,16 @@ def check_index(entries: list[Entry]) -> list[str]:
         return ["INDEX.md missing"]
     idx = open(idx_path, encoding="utf-8").read()
     by_path = {e.path: e for e in entries}
+    # INDEX row now carries Move + Model columns between Form and Enf:
+    #   | ✓ | Mechanism | `form` | `move` | `model` | Enf. | [entry](path) |
     rows = re.findall(
-        r"^\| (?:✅|☐)[^|]*\| ([^|]+?) \| `([a-z-]+)` \| ([^|]+?) \| \[[^\]]+\]\(([^)]+)\) \|$",
+        r"^\| (?:✅|☐)[^|]*\| ([^|]+?) \| `([a-z-]+)` \| `([a-z-]+)` \| (`[a-z-]+`|—) \| "
+        r"([^|]+?) \| \[[^\]]+\]\(([^)]+)\) \|$",
         idx, re.M,
     )
     problems = []
-    for _ctrl, iform, ienf, path in rows:
+    for _ctrl, iform, imove, imodel_raw, ienf, path in rows:
+        imodel = imodel_raw.strip("`")  # bare em-dash stays "—"; `is-a-model` → is-a-model
         e = by_path.get(os.path.normpath(path))
         if e is None:
             problems.append(f"INDEX row links unknown entry: {path}")
@@ -238,6 +308,10 @@ def check_index(entries: list[Entry]) -> list[str]:
         ienf_base = re.sub(r"\*|\(.*", "", ienf).strip()
         if e.form != iform:
             problems.append(f"FORM mismatch {path}: INDEX=`{iform}` entry=`{e.form}`")
+        if e.move != imove:
+            problems.append(f"MOVE mismatch {path}: INDEX=`{imove}` entry=`{e.move}`")
+        if e.model != imodel:
+            problems.append(f"MODEL mismatch {path}: INDEX=`{imodel}` entry=`{e.model}`")
         if e.enf != ienf_base:
             problems.append(f"ENF mismatch {path}: INDEX={ienf_base} entry={e.enf}")
     if len(rows) != len(entries):
@@ -529,8 +603,8 @@ def cmd_validate(_args) -> int:
 
 def cmd_query(args) -> int:
     rows = [e.as_dict() for e in all_entries()]
-    for key in ("role", "family", "form"):
-        val = getattr(args, key)
+    for key in ("role", "family", "form", "move", "model"):
+        val = getattr(args, key, None)
         if val:
             rows = [r for r in rows if (r[key] or "").lower() == val.lower()]
     if args.enf:
@@ -846,9 +920,11 @@ def parse_census() -> list[dict]:
     fams: list[dict] = []
     role = None
     cur: dict | None = None
+    # Row carries Move + Model columns between Form and Enf (groups 4 + 5); census table below shows
+    # Mechanism / Summary / Enforcement, so Move/Model are parsed but not displayed here.
     row_re = re.compile(
-        r"^\| (?:✅|☐)\s*(★)?\s*\| ([^|]+?) \| `([a-z-]+)` \| ([^|]+?) \| "
-        r"\[[^\]]+\]\(([^)]+)\) \|$")
+        r"^\| (?:✅|☐)\s*(★)?\s*\| ([^|]+?) \| `([a-z-]+)` \| `([a-z-]+)` \| (?:`([a-z-]+)`|—) \| "
+        r"([^|]+?) \| \[[^\]]+\]\(([^)]+)\) \|$")
     for ln in idx.split("\n"):
         rm = re.match(r"^# (.+?)(?: target)?$", ln)
         if rm and not ln.startswith("## "):
@@ -864,8 +940,8 @@ def parse_census() -> list[dict]:
         r = row_re.match(ln)
         if r and cur is not None:
             cur["rows"].append({"star": bool(r.group(1)), "control": r.group(2).strip(),
-                                "form": r.group(3), "enf": r.group(4).strip(),
-                                "path": r.group(5).strip()})
+                                "form": r.group(3), "move": r.group(4), "model": r.group(5) or "—",
+                                "enf": r.group(6).strip(), "path": r.group(7).strip()})
     return fams
 
 
@@ -2720,6 +2796,8 @@ def main() -> int:
     q.add_argument("--role", help="Agent | Bridge | Product")
     q.add_argument("--family")
     q.add_argument("--form", help="one of the nine forms")
+    q.add_argument("--move", help="constraint | sensor | package")
+    q.add_argument("--model", help="is-a-model | governs-a-model | —")
     q.add_argument("--enf", help="Hard | Soft | Soft·Hard")
     q.add_argument("--json", action="store_true")
     s = sub.add_parser("summaries", help="dump role/family/entry summaries (tooltip source)")

@@ -12,6 +12,8 @@ knowledge-routing, structural-drift, operations).
 | Summary | Many policy-reflection nudges as one facet registry over a shared tempo budget — ≤1 emission/window. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `quality-gate` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | — |
 | Enforcement | **Soft·Hard** — the reflections are *soft* (they aim the operator, default-silent, never block); the substrate is held *hard* — a closed-surface lint on every facet, a pointer-resolve lint on each facet's policy material, the ≤1-per-window budget gate, and per-firing telemetry on a measured leash |
 
 ## Motivation — the failure it kills
@@ -110,10 +112,10 @@ moment there is a second soft reflection to hold.
 
 ## Related mechanisms
 
-- **Specializes** — [lifecycle-hooks](lifecycle-hooks.md): the single-hook primitive this is built on. That
+- **Generalization** — [lifecycle-hooks](lifecycle-hooks.md): the single-hook primitive this is built on. That
   entry's *measured leash* is where the family's evidence discipline lives; this entry is the registry-of-
   facets you reach for once a *second* reflection hook appears and N independent nudges would fatigue.
-- **Temporal complement** — [dynamic-context-injection](../context-and-dispatch/dynamic-context-injection.md):
+- **Counterpart** — [dynamic-context-injection](../context-and-dispatch/dynamic-context-injection.md):
   injection pushes policy *into* an agent at entry (feed-forward); a reflection facet pulls the operator back
   to policy at tempo (feed-back). The per-facet policy-material pointer is the concrete form of "both are
   modalities over one policy source of truth."

@@ -9,6 +9,8 @@ edited.
 | Summary | Doc-derived characterization pinned to a cited source. |
 | Target | Product · **Regression tests** |
 | Form | `regression` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — a repeatable characterization body; the presence lint is BLOCKING |
 
 ## Motivation — the failure it kills

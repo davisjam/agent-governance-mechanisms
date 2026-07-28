@@ -104,14 +104,17 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
 
 - **Entries** live at `<role>/<family>/<mechanism>.md` — roles are `agent/`, `models-bridge/`, `product/`.
   Every entry follows the template documented in [`README.md`](README.md): a title, an `**Intent** —`
-  line, a 4-row metadata card (`Summary · Target · Form · Enforcement`), then the sections
-  (`Motivation` … `Related mechanisms`).
-- **[`INDEX.md`](INDEX.md)** is the census — one row per entry, grouped by family. The `Form` and `Enf.`
-  columns MUST match the entry's metadata card (the validator enforces this).
-- Cross-cuts: 9 **forms** and **soft/hard** enforcement (`README.md`), plus **relationship** tags on the
-  Related-mechanisms bullets — an *open, expressive* vocabulary (a common core in `REL_TAGS` in
-  `catalog.py`; entries also use precise variants like `Ground truth`, `Specializes`). The validator
-  requires every Related bullet to carry a bold/italic tag lead, not that the tag be in a closed set.
+  line, a 6-row metadata card (`Summary · Target · Form · Move · Model · Enforcement`) plus an optional
+  7th `Derivation` row on `is-a-model` entries, then the sections (`Motivation` … `Related mechanisms`).
+- **[`INDEX.md`](INDEX.md)** is the census — one row per entry, grouped by family. The `Form`, `Move`,
+  `Model`, and `Enf.` columns MUST match the entry's metadata card (the validator enforces this).
+- Cross-cuts: 9 **forms**, **soft/hard** enforcement, and two book-thesis axes — **Move**
+  (`constraint`/`sensor`/`package`, the Alignment-Thesis axis) and **Model**
+  (`is-a-model`/`governs-a-model`/`—`, the Modeling-Thesis axis), each independent of soft/hard
+  (`README.md`). Plus **relationship** tags on the Related-mechanisms bullets — a tight, **closed**
+  canonical set (`REL_TAGS` in `catalog.py`, UML-informed: `Counterpart`, `Generalization`, `Enabler`,
+  `Consumer`, `Layer`, `Bridge`, `Sibling`, `See also`). The validator **enforces membership**: every
+  Related bullet's lead tag (minus any trailing `(qualifier)`) must be in that set.
 - **One entry, or two, for a construction + its enforcement?** By enforcement scope. A **dedicated**
   (one-to-one) enforcement — a ban-lint guarding *this one* seam — is **bundled into the construction
   entry** (the typed model + its ban-lint is one mechanism). A **cross-cutting** (one-to-many) enforcement

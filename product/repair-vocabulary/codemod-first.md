@@ -9,6 +9,8 @@ made.
 | Summary | For 50+ deterministic sites, write one AST transformer. |
 | Target | Product · **Repair vocabulary** |
 | Form | `repair-vocab` |
+| Move | `constraint` — prevents the error by construction |
+| Model | — |
 | Enforcement | **Soft** (probabilistic) — a discipline/threshold guiding *how* a mechanical backlog is fixed; nothing blocks N per-site edits, though the transform it produces is itself deterministic |
 
 ## Motivation — the failure it kills

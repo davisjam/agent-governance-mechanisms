@@ -9,6 +9,8 @@ the failing seed.
 | Summary | Malformed-input campaigns; fix to the spec, not the seed. |
 | Target | Product · **Regression tests** |
 | Form | `regression` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — a repeatable campaign body; coverage tracked against a baseline |
 
 ## Motivation — the failure it kills

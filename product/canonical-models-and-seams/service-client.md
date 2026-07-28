@@ -9,6 +9,8 @@ service is banned.
 | Summary | A BinaryIO seam makes file-path-over-wire impossible. |
 | Target | Product · **Canonical models & seams** |
 | Form | `bounded-service` |
+| Move | `constraint` — prevents the error by construction |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — the sole-seam lint bans direct cross-service `requests.post`; the `BinaryIO` type makes the bug unrepresentable |
 
 ## Motivation — the failure it kills

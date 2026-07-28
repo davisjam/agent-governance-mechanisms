@@ -9,6 +9,8 @@ the model it was copied from.
 | Summary | Read the model at runtime; never hardcode a snapshot. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `constraint` — prevents the error by construction |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) · *blocking* — a forward-policing lint fails on embedded snapshots (verify the lint is built before relying on it as a live gate) |
 
 ## Motivation — the failure it kills

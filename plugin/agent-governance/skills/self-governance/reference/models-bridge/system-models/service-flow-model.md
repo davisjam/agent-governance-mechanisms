@@ -9,7 +9,10 @@ NetworkPolicy, and API docs are *generated from* and validated against.
 | Summary | The SOA source-of-truth NetworkPolicy and wiring are generated from. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `is-a-model` — a typed model you check a system property against |
 | Enforcement | **Hard** (deterministic) — a typed model *held true* by bidirectional parity gates (tree↔yaml, handler↔spec, call-graph↔model) |
+| Derivation | `both` — some fields generated to code, others reconciled from it |
 
 ## Motivation — the failure it kills
 

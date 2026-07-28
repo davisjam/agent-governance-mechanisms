@@ -9,6 +9,8 @@ deterministically, whether or not anyone remembered it.
 | Summary | A hook on a runtime lifecycle event so an operator's omitted step can't be forgotten. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `quality-gate` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | — |
 | Enforcement | **Soft·Hard** — the *firing* is hard (the runtime guarantees the hook runs at the event); the *payload* is either a hard **block** that denies the action or **soft guidance** injected back into the agent's context |
 
 ## Motivation — the failure it kills
@@ -135,7 +137,7 @@ paced so the whole never overwhelms.
 - **See also** — [cron-alerts-gate](cron-alerts-gate.md): a before-a-tool-call hook is one delivery
   surface for its "an unresolved high-severity alert blocks new work" rule. The gate supplies the
   state; the hook fires the check at the moment of action.
-- **Specialized by** — [reflection-facet-substrate](reflection-facet-substrate.md): what you build once a
+- **Generalization** — [reflection-facet-substrate](reflection-facet-substrate.md): what you build once a
   *second* reflection hook appears. A single hook re-arms one omitted reflex; the substrate consolidates
   many policy-reflection facets over one shared tempo budget (≤1 emission/window), so N soft nudges don't
   compound into the alarm fatigue the measured leash above warns about.

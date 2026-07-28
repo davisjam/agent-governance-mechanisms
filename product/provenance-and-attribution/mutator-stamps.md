@@ -10,6 +10,8 @@ sole surface by a ban-lint, and an append-only OOXML attribution registry).
 | Summary | Every mutation embeds an attribution stamp in the artifact. |
 | Target | Product · **Provenance & attribution** |
 | Form | `audit-trail` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *audit record* — the [F10 wiring lint](f10-wiring-lint.md) makes it BLOCKING that every verb stamps |
 
 ## Motivation — the failure it kills

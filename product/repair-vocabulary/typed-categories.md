@@ -8,6 +8,8 @@ closed, enumerable set that the compiler and lints can check for exhaustive hand
 | Summary | Typed enums replace free-form failure strings. |
 | Target | Product · **Repair vocabulary** |
 | Form | `repair-vocab` |
+| Move | `constraint` — prevents the error by construction |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — a typed closed set; the compiler + exhaustiveness checks enforce it |
 
 ## Motivation — the failure it kills
@@ -59,6 +61,6 @@ handler to cover every case.
 - *See also (cross-target)* — the agent side's const-string topic registry
   ([typed-event-bus](../../agent/lifecycle-and-observability/typed-event-bus.md)) is the same "typed namespace
   over free-form strings" move for event topics.
-- *Enables* — typing a failure/violation space is the **precondition** for *error-path enumeration* (the
+- *Enabler* — typing a failure/violation space is the **precondition** for *error-path enumeration* (the
   testing strategy in the method's stance): you can only walk "every error edge" and ask "did we cover
   them all?" when the edges are a finite, named set, not ad-hoc strings.

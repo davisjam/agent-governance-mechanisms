@@ -9,6 +9,8 @@ their own.
 | Summary | Assert independent sources agree — catch cross-source drift. |
 | Target | Product · **Validation & conformance** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — fails when the asserted relation between sources is violated |
 
 ## Motivation — the failure it kills

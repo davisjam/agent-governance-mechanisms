@@ -9,6 +9,8 @@ reclaimable instead of guessing.
 | Summary | A close record proving a worktree is safe to reclaim. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `audit-trail` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *audit record* — a durable close record that the cleanup gate reads before reclaiming |
 
 ## Motivation — the failure it kills

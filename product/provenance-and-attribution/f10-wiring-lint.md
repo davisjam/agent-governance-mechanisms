@@ -8,6 +8,8 @@ wiring, so a new mutator cannot land producing unattributable mutations.
 | Summary | Fail the build if any mutator verb lacks a stamp. |
 | Target | Product · **Provenance & attribution** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) · *blocking* — scans every mutator verb; fails the build on an unwired one (0 open gaps) |
 
 ## Motivation — the failure it kills
@@ -64,6 +66,6 @@ HIGH-severity finding. The invariant has been held at 0 open gaps.
   construction-held-by-detection pairing on the product side.
 - *See also (sibling)* — [semantic-lints](../validation-and-conformance/semantic-lints.md): the F10 lint
   is a member of that fleet doing a completeness-over-verbs job.
-- **Instance of** — [semantic-level-enforcement](../../agent/governance-doc-controls/semantic-level-enforcement.md):
+- **Generalization** — [semantic-level-enforcement](../../agent/governance-doc-controls/semantic-level-enforcement.md):
   pitching the guarantee at "was the call made" rather than "was the work correct" is one case of the
   general move — place a mechanism at the semantic level where its property is legible *and* cheap to check.

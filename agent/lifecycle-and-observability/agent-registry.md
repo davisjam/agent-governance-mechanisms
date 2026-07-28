@@ -9,6 +9,8 @@ of guessing from filesystem timestamps.
 | Summary | Authoritative record of which agents are live right now. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `observability` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *signal/record* — every lifecycle tool dual-writes; destructive-op gates query it before acting |
 
 ## Motivation — the failure it kills

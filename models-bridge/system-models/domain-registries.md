@@ -9,7 +9,10 @@ competitor set, the CLAUDE.md rule metadata), each the single source of truth fo
 | Summary | Frozen typed registries for the system's domain facts. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `is-a-model` — a typed model you check a system property against |
 | Enforcement | **Hard** (deterministic) — typed registries *held true* by their coverage/parity lints |
+| Derivation | `both` — some fields generated to code, others reconciled from it |
 
 ## Motivation — the failure it kills
 

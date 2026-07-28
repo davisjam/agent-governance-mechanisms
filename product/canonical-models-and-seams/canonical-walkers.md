@@ -10,7 +10,10 @@ instances: one walker for the PDF structure tree, one for the checking pass, one
 | Summary | One canonical traversal per tree, not ad hoc recursion. |
 | Target | Product · **Canonical models & seams** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `is-a-model` — a typed model you check a system property against |
 | Enforcement | **Hard** (deterministic) · *blocking* — routed via the model ban-lints; raw recursion / regex-into-tree is banned alongside raw library access |
+| Derivation | `model-from-code` — induced from the code, reconciled at build |
 
 ## Motivation — the failure it kills
 

@@ -9,6 +9,8 @@ close on stale or rotted assertions.
 | Summary | Close an Epic only after re-running its checks at HEAD. |
 | Target | Agent · **Governance-doc mechanisms** |
 | Form | `quality-gate` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking close* — reachability/patch-id checks must pass, or a logged `--override` is required |
 
 ## Motivation — the failure it kills

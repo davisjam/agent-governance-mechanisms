@@ -9,6 +9,8 @@ conflict-free pass instead of thrashing sequentially.
 | Summary | Land non-conflicting worktrees together via a maximum independent set. |
 | Target | Agent · **Gates & merge-train** |
 | Form | `quality-gate` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — the batch is selected by a graph predicate, not by hope-and-retry |
 
 ## Motivation — the failure it kills

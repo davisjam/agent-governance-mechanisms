@@ -65,9 +65,9 @@ Because agents build and maintain the model the way they maintain docs and tests
 almost nothing, and it pays back in **higher code quality, fewer tokens spent rederiving what the model
 already states, and fewer mistakes.** The catalogue's **models-bridge** role is this bridge, made concrete.
 
-## Governance has two mechanisms
+## The move: a guardrail either prevents or detects
 
-A guardrail is one of two kinds:
+A guardrail's **move** is one of two kinds:
 
 - **Constraint** — make the error **impossible by construction**: a typed model with one sanctioned
   seam, a state that can't be represented wrongly. Software
@@ -80,11 +80,25 @@ A sensor detects a mistake and surfaces it after the fact. A constraint works li
 whole class of mistake impossible to make. Reach for the wall first, because a sensor still lets the
 mistake happen. But a wall built across the only exit blocks the people trying to leave — an
 over-constrained design stops legitimate work as surely as it stops the error, so the wall belongs around
-the class you can name, not across the whole floor.
+the class you can name, not across the whole floor. Most real mechanisms are a **package** across the two:
+a soft constraint (a typed model that aims the agent) shipped with hard sensors (the lints and drift gates
+that catch what it only aims at).
 
-Every mechanism in the catalogue governs one of three **roles** (the **agent** fleet, the **models**
-that bridge agents and code, or the shipped **product**) and enforces either **hard** (deterministic)
-or **soft** (probabilistic) or a mix.
+## Two independent axes: move and form
+
+Constraint-versus-sensor is one axis; it is **not** the same as soft-versus-hard, and the catalogue keeps
+them apart. A mechanism has a **move** — a *constraint* (it prevents) or a *sensor* (it detects) — and,
+independently, a **form** — **soft** (probabilistic: it aims an agent, cannot block) or **hard**
+(deterministic: it holds regardless). The two cross freely: a constraint can be soft (a typed model that
+aims the agent's reasoning) or hard (an enum the compiler enforces), and a sensor can be soft (a
+convention that reminds) or hard (a lint that blocks). The move says *what* the mechanism does; the form
+says *how firmly*. Each entry's metadata card carries both — a `Move` row (`constraint`/`sensor`/`package`)
+beside the soft/hard `Enforcement` row.
+
+Every mechanism in the catalogue also governs one of three **roles** — the **agent** fleet, the **models**
+that bridge agents and code, or the shipped **product** — and carries a **Model** relation
+(`is-a-model` / `governs-a-model` / `—`) that says whether it *is* a typed model, *governs* one, or
+neither.
 
 ## Why you might NOT want to use this
 

@@ -9,6 +9,8 @@ violations the compiler and review can't catch.
 | Summary | The blocking semantic-lint fleet over the tool's own source. |
 | Target | Product · **Validation & conformance** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — each BLOCKING lint fails the build; escape is a scoped `noqa` with a reason |
 
 > **This entry represents the fleet, not each lint.** Per the README scope note, the ~500+ individual

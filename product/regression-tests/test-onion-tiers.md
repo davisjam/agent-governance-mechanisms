@@ -9,6 +9,8 @@ at the right price per decision.
 | Summary | Cost-stratified test tiers: Smoke, Lite, targeted, full. |
 | Target | Product · **Regression tests** |
 | Form | `regression` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — a repeatable regression body; the full tier gates deploy |
 
 ## Motivation — the failure it kills

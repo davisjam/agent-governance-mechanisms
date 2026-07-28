@@ -9,6 +9,8 @@ files* (lints, conventions, component boundaries, tests) and inject that subset 
 | Summary | Inject the rules governing these files into the brief. |
 | Target | Agent · **Context & dispatch substrate** |
 | Form | `agent-output` |
+| Move | `constraint` — prevents the error by construction |
+| Model | — |
 | Enforcement | **Soft** (probabilistic) — forward injection influences behavior; it does not block. (The *reverse* direction feeds a **hard** self-heal gate, but forward injection is advisory by nature.) |
 
 > **★ Flagship entry.** This is the canonical example of the "why it's not just the naive
@@ -99,7 +101,7 @@ pull** (the agent asks a constraints-for-files CLI once it knows what it will to
   boundary lints, so DCI is one end of the bridge.
 - *See also (complement)* — [brief-linting](brief-linting.md): the structural check on the brief; this
   is the content injected *into* it.
-- **Temporal complement (the feed-back twin)** —
+- **Counterpart (the feed-back twin)** —
   [reflection-facet-substrate](../lifecycle-and-observability/reflection-facet-substrate.md) (built on
   [lifecycle-hooks](../lifecycle-and-observability/lifecycle-hooks.md)):
   injection is **feed-forward**, the constraints governing a task pushed into an agent *before* it acts,

@@ -9,6 +9,8 @@ stamped, validated, and policy-checked (our instance: the document models' `Prim
 | Summary | A closed, named set of remediation actions — bounded moves. |
 | Target | Product · **Repair vocabulary** |
 | Form | `repair-vocab` |
+| Move | `constraint` — prevents the error by construction |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — typed verbs; the [F10 lint](../provenance-and-attribution/f10-wiring-lint.md) + validators cover them |
 
 ## Motivation — the failure it kills

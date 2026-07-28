@@ -12,6 +12,8 @@ a model checker plus a bounded-BFS "simworld").
 | Summary | Each invariant's temporal-logic form derives its checker — proven, not sampled. |
 | Target | Bridge · **System models** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — an exhaustive model-check (state-space BFS / a temporal model checker) proves the invariant or emits a counterexample trace; a lint asserts the temporal form matches the routed checker |
 
 ## Motivation — the failure it kills

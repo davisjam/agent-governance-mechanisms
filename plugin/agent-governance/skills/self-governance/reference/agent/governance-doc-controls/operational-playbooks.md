@@ -10,6 +10,8 @@ recovery) get a consistent, pre-reasoned, incident-tested response.
 | Summary | Situation-keyed devops procedures agents follow instead of improvising. |
 | Target | Agent · **Governance-doc mechanisms** |
 | Form | `agent-output` |
+| Move | `constraint` — prevents the error by construction |
+| Model | — |
 | Enforcement | **Soft** (probabilistic) — a playbook *aims* the response; it informs, it does not block. Its value is that the correct steps are written down and discoverable at the moment they're needed. |
 
 ## Motivation — the failure it kills

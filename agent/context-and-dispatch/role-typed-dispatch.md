@@ -9,6 +9,8 @@ those choices are policy-by-type, not a per-dispatch judgment call.
 | Summary | A typed role fixes LLM, isolation, and gates per dispatch. |
 | Target | Agent · **Context & dispatch substrate** |
 | Form | `quality-gate` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking at each gated op* — enforcers refuse calls whose role doesn't match (e.g. `lint-all` refuses `sonnet-active`) · human bypass `ADA_TOOL_BYPASS_ORCHESTRATOR_CHECK=1` (audit-logged) |
 
 ## Motivation — the failure it kills

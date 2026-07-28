@@ -12,6 +12,8 @@ and sheds heavy compute at the mediators).
 | Summary | One pressure signal gates heavy work at admission and execution — admit before, shed during. |
 | Target | Agent · **Mediators & resource locks** |
 | Form | `quality-gate` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — a pre-dispatch gate refuses/defers heavy work and the compute mediators shed it under RED pressure; the same signal is callable for advisory decisions |
 
 ## Motivation — the failure it kills

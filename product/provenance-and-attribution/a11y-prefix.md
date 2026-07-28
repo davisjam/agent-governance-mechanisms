@@ -9,6 +9,8 @@ validator can cover it by prefix (our instance: the `a11y_` prefix + `InsertedCo
 | Summary | Prefix invisible inserts so they're distinguishable and tracked. |
 | Target | Product · **Provenance & attribution** |
 | Form | `repair-vocab` |
+| Move | `constraint` — prevents the error by construction |
+| Model | — |
 | Enforcement | **Hard** (deterministic) — the `InsertedContentValidator` covers every registered insert |
 
 ## Motivation — the failure it kills

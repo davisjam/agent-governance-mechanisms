@@ -9,6 +9,8 @@ operable by a context-bounded agent.
 | Summary | Typed models read every run and generated from; can't drift. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — the models are *construction* (typed IR); the counted sensors are the [drift/parity gates](drift-parity-gates.md) that fail the build when a model diverges from reality |
 
 > **★ The bridge.** This is the flagship of the third role: the model layer is the **interface through

@@ -9,6 +9,8 @@ users see it, not after.
 | Summary | Canary → smoke → promote; gate before users see it. |
 | Target | Agent · **Gates & merge-train** |
 | Form | `quality-gate` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — promotion is refused until the smoke stage passes |
 
 ## Motivation — the failure it kills

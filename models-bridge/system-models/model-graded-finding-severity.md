@@ -11,6 +11,8 @@ governed-doc commit's deploy-scope lints against the component-and-zone model.)
 | Summary | A gate grades each finding block/warn/silence by its model-distance from the changed files. |
 | Target | Bridge · **System models** |
 | Form | `quality-gate` |
+| Move | `sensor` — detects the error after the fact |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) · *blocking* — findings at or adjacent to the change block the commit; the gate runs one central grader over every finding |
 
 ## Motivation — the failure it kills

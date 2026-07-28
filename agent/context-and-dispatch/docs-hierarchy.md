@@ -9,6 +9,8 @@ map instead of re-deriving invariants from scattered files.
 | Summary | One enforced, numbered rule index every agent boots with. |
 | Target | Agent · **Context & dispatch substrate** |
 | Form | `validation` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | — |
 | Enforcement | **Soft·Hard** — the index *content* is advisory to the agent (soft, booted into every context); its cap + conformance lints are *blocking* (the hard counterpart) |
 
 ## Motivation — the failure it kills

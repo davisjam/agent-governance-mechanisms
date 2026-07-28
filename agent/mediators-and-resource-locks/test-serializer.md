@@ -9,6 +9,8 @@ each other's test runs.
 | Summary | Serialize dotnet test to a single writer per host. |
 | Target | Agent · **Mediators & resource locks** |
 | Form | `regression` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — exclusive flock, N=1; the enforcer refuses a raw `dotnet test` from an agent-worktree CWD · bypass `ADA_TOOL_TEST_BYPASS_MEDIATOR=1` |
 
 ## Motivation — the failure it kills

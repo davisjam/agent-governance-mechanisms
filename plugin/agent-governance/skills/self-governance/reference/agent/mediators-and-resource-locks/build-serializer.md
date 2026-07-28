@@ -9,6 +9,8 @@ parallelism up to the machine's capacity without oversubscribing it.
 | Summary | Cap concurrent heavy builds with an M=8 host semaphore. |
 | Target | Agent · **Mediators & resource locks** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — a byte-range semaphore caps concurrency at 8; five tool enforcers refuse the raw call |
 
 ## Motivation — the failure it kills

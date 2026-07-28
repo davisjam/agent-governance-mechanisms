@@ -11,6 +11,8 @@ five recurring disciplines, not a SysML tool).
 | Summary | Typed frozen-record models + five hand-rolled disciplines; adopt the schema, skip the runtime. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
+| Move | `package` — a constraint shipped with its sensors |
+| Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — the harness *is* construction (typed records); the counted sensors are the per-view drift lints that fail the build when a stored value or a model row diverges from the code |
 
 ## Motivation — the failure it kills
@@ -147,7 +149,7 @@ the derive-and-assert rule, and the drift-lint `__main__` this mechanism names.
 
 ## Related mechanisms
 
-- **Enables** — [executable source-of-truth](executable-source-of-truth.md): this is the *how* of
+- **Enabler** — [executable source-of-truth](executable-source-of-truth.md): this is the *how* of
   building those models when you choose hand-rolled records over a modeling tool.
 - **Counterpart** — [drift & parity gates](drift-parity-gates.md): the per-view drift lints this
   mechanism's fourth discipline names are exactly those gates.

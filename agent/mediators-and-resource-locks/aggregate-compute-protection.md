@@ -9,6 +9,8 @@ triggered by many agents at once.
 | Summary | One lint-all per host; one in flight per orchestrator. |
 | Target | Agent · **Mediators & resource locks** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — flock at entry (hard cap 1800s); the role-enforcement gate refuses `sonnet-active` · bypass `ADA_TOOL_LINT_ALL_NO_MUTEX=1` |
 
 ## Motivation — the failure it kills

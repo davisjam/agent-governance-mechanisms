@@ -9,6 +9,8 @@ stale, or be hand-edited where they will be overwritten.
 | Summary | Lints keep docs indexed, provenance-headed, and cross-reference-valid. |
 | Target | Agent · **Governance-doc mechanisms** |
 | Form | `validation` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — a doc missing its index entry or provenance header fails the lint |
 
 ## Motivation — the failure it kills

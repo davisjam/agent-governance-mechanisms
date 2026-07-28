@@ -11,6 +11,8 @@ sessions instead of drifting into silent breakage.
 | Summary | The orchestrator reacts to typed fleet events via a per-topic playbook. |
 | Target | Agent · **Lifecycle & observability** |
 | Form | `observability` |
+| Move | `sensor` — detects the error after the fact |
+| Model | — |
 | Enforcement | **Hard** (deterministic) · *signal* — emission is mechanical; the bus itself does not block (the derived alerts gate does) |
 
 ## Motivation — the failure it kills
