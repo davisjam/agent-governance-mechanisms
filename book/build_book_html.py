@@ -52,10 +52,10 @@ def _cover_sub(cls: str) -> str:
     return f'<div class="{cls}">{html.escape(s)}</div>' if s else ""
 ROOT = HERE.parent  # the catalogue root — the appendix reads the entry .md files from here
 ACCENT = "#1a4a7a"
-COPYRIGHT = "© James C. Davis, 2026–present"
+COPYRIGHT = f"© {_BOOK_MANIFEST['author']}, {_BOOK_MANIFEST['copyright_years']}"
 # Cover "last updated" date. A STABLE constant, bumped intentionally — a per-build/per-commit date would
 # churn the tracked book HTML and break the `check_book_html_tracking` freshness gate.
-LAST_UPDATED = "2026-07-26"
+LAST_UPDATED = _BOOK_MANIFEST["last_updated"]
 
 # Mermaid diagrams are rendered to STATIC INLINE SVG at BUILD time (see `render_mermaid_svg` below),
 # NOT via a client-side runtime. This is why BOTH the web book AND the PDF ship a real vector diagram:
@@ -2840,7 +2840,7 @@ def _cover_html() -> str:
         f'<h1>{html.escape(_BOOK_MANIFEST["title"])}</h1>'
         f'{_cover_sub("cov-sub")}'
         f'{hero_svg}'
-        f'<div class="cov-author">{html.escape(_BOOK_MANIFEST["author"])}</div>'
+        f'<div class="cov-author">{html.escape(_BOOK_MANIFEST["author"])}, {html.escape(_BOOK_MANIFEST["credential"])}</div>'
         f'<div class="cov-copy">{html.escape(COPYRIGHT)}</div>'
         f'<div class="cov-updated">Last updated {html.escape(LAST_UPDATED)}</div>'
         '</section>'

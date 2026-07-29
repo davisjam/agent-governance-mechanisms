@@ -1,7 +1,10 @@
 {
-  "_comment": "Single source of truth for the book's cover identity. Consumed by catalog.py (site landing hero) and book/build_book_html.py (print cover + web front page). Edit here once; all three render sites follow. An empty string renders nothing (e.g. subtitle omitted).",
+  "_comment": "Single source of truth for the book's cover identity. Consumed by catalog.py (site landing hero) and book/build_book_html.py (print cover, web front page, footers). Edit here once; all render sites follow. An empty string renders nothing (e.g. subtitle omitted). The copyright line and the PhD byline are DERIVED from author + credential + copyright_years, so the name is stated once.",
   "kicker": "The MAGE Method",
   "title": "Model-Based Agentic Software Engineering",
   "subtitle": "",
-  "author": "James C. Davis, PhD"
+  "author": "James C. Davis",
+  "credential": "PhD",
+  "copyright_years": "2026–present",
+  "last_updated": "2026-07-26"
 }
