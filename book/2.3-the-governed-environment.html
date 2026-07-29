@@ -173,7 +173,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
-.fig-label { font-weight: 700; color: #333; }
+.fig-label, .tbl-label { font-weight: 700; color: #333; }
+table caption { caption-side: top; text-align: left; font-size: 14px; color: #666;
+                 margin-bottom: 0.45rem; line-height: 1.5; }
+ul.list-of-floats-links { list-style: none; padding-left: 0; }
+ul.list-of-floats-links li { margin: 0.15rem 0; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -246,6 +250,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 .pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
@@ -372,7 +377,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>The honest version of the loop is less tidy than the ex-ante story makes it sound. You set up the governance you can imagine in advance, you launch the work, and then you <strong>watch it burn and then try to fix it.</strong> The failures you did not foresee are the ones that teach you which mechanism to build next. Ex-post governance is not a fallback for a weak plan; it is where most of the real mechanisms come from, because most of the real failures are the ones no specification predicted.</p>
 <span id="idx-def-failure-to-mechanism"></span><span id="idx-def-constraints-and-sensors"></span><p>The engine of the whole discipline is what you do to hold a quality goal: <strong>you set up a mechanism that keeps it.</strong> This is the organizing move of the companion catalogue. You place some mechanisms up front, from what you know about the domain, and you add more in response to a failure seen twice — a mistake caught in yesterday's manual audit becomes today's automatic check, enforced on every agent thereafter instead of re-caught by inspection. Either way you arrive there, a mechanism takes one of two forms, and the difference between them is the difference between a firewall and a smoke detector.</p>
 <h2>Constraints and sensors</h2>
-<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440"
+<figure id="fig-9" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440"
      role="group" aria-labelledby="caTitle caDesc"
      font-family="'Helvetica Neue', Arial, sans-serif">
   <title id="caTitle">Two forms a quality goal splits into: a constraint or a sensor</title>
@@ -431,7 +436,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="710" y="312" text-anchor="middle" font-size="20" fill="#33383d">Lets the mistake happen,</text>
   <text x="710" y="337" text-anchor="middle" font-size="20" fill="#33383d">detects it before it ships.</text>
   <text x="710" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">test suite in CI · smoke detector</text>
-</svg><figcaption><span class="fig-label">Figure 9.</span> The two moves a quality goal you want to hold splits into — prevent the mistake, or catch it — however you arrived at the goal, up front from the domain or in response to a failure. A constraint scopes the agent's action space so the whole class of mistake is impossible, and no iteration is wasted (a typed enumeration over free-form strings, a firewall). A sensor lets the mistake happen but detects it in time to stop the damage, and fails the loop iteration so the agent runs again to fix it (a test suite in CI, a smoke detector). The constraint forbids the bug; the sensor watches for it.</figcaption></figure>
+</svg><figcaption data-short="The two moves a quality goal you want to hold splits into — prevent the…"><span class="fig-label">Figure 9.</span> The two moves a quality goal you want to hold splits into — prevent the mistake, or catch it — however you arrived at the goal, up front from the domain or in response to a failure. A constraint scopes the agent's action space so the whole class of mistake is impossible, and no iteration is wasted (a typed enumeration over free-form strings, a firewall). A sensor lets the mistake happen but detects it in time to stop the damage, and fails the loop iteration so the agent runs again to fix it (a test suite in CI, a smoke detector). The constraint forbids the bug; the sensor watches for it.</figcaption></figure>
 <p>Before the two forms, the argument for reaching for a mechanism at all. Words alone do not hold. Tell the agent "make sure the briefs always follow this template" and it will say, <em>"Sure, boss"</em> — and then it will not reliably do it, not all the time, because it is a probability flip. A prompt raises the odds; it does not settle them. But you can <em>determinize that</em>. Instead of hoping, you check: before the agent launches, confirm every required part of the template is present, and refuse the launch when it is not. The soft instruction becomes a hard gate. That move — from a probability you nudge to a condition you enforce — is the whole reason the rest of this chapter exists, and it splits into the two forms below.</p>
 <span id="idx-def-sensor"></span><span id="idx-ex-observability-1"></span><p><strong>A sensor detects drift.</strong> It lets the mistake happen and catches it after the fact — and because it fires after, it fails the loop iteration: the agent has to run again to fix what the sensor caught. Your test suite in CI is a sensor, and so are your lints. It would be better if the model never wrote the bug, but if it does, the sensor catches it before the code ships. The cost of a sensor is iterations — detect, fail, re-iterate — and that cost is the reason you do not reach for one first.</p>
 <p id="idx-def-observability">A sensor is only as good as the signal it can read. <strong>Observability</strong> is the property that a running system exposes enough signal to explain what it did and to catch what went wrong. It is the wiring under every sensor: the event a gate fires on, the log a checker reads, the trace that turns "the build failed" into "the build failed <em>here, for this reason.</em>" Build the observability first and the sensor has something to watch; skip it and it stares at a blank wall.</p>

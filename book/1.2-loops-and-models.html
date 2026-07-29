@@ -173,7 +173,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
-.fig-label { font-weight: 700; color: #333; }
+.fig-label, .tbl-label { font-weight: 700; color: #333; }
+table caption { caption-side: top; text-align: left; font-size: 14px; color: #666;
+                 margin-bottom: 0.45rem; line-height: 1.5; }
+ul.list-of-floats-links { list-style: none; padding-left: 0; }
+ul.list-of-floats-links li { margin: 0.15rem 0; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -246,6 +250,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 .pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
@@ -367,7 +372,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 2 · Loops and Models"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 2</a></div><h1>Loops and Models</h1></header><p>Two ideas carry the rest of this book, and everything else is a consequence of them. The first is that all agent work is a <em>loop</em>. The second is that an agent steers that loop well only when you hand it a <em>model</em> of the world it is working in. This is what makes the MAGE method work: Model-Based Agentic Software Engineering means engineering that loop and handing the agent that model, deliberately, every time. Get these two right and the agent finds your answer fast; get them wrong and it wanders. Let me take them in turn.</p>
 <h2>Everything is a loop</h2>
 <p id="idx-def-loop-engineering">An agent does not run in a straight line — it runs in a loop, and the loop has a fixed shape. It takes an input: the current problem, plus some notion of what success looks like. It reasons, and it acts in its operating environment. It produces a result. And that result folds back into the input for the next turn. Input, reasoning, output, fed around again. Shaping that loop is <strong>commonly called loop engineering</strong>, and nearly everything in this book is an instance of it.</p>
-<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="loop-title loop-desc">
+<figure id="fig-5" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="loop-title loop-desc">
   <title id="loop-title">Loop engineering</title>
   <desc id="loop-desc">A single cycle running left to right. An Input paired with a success metric feeds Agent reasoning, which produces an Output, which feeds back around over the top into the Input. The whole loop is the unit of engineering. The success metric is emphasized in the accent color because defining it is the hard question.</desc>
 
@@ -402,7 +407,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <!-- ===== feedback arc: Output top edge, loop up and over the top, back down into Input top edge ===== -->
   <path d="M 690 170 C 690 40, 130 40, 130 168" fill="none" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#ah-accent)"/>
   <text x="410" y="42" text-anchor="middle" font-size="15" fill="#1a4a7a" font-style="italic">feeds around</text>
-</svg><figcaption><span class="fig-label">Figure 5.</span> The loop that is the unit of agent work. An input paired with a success metric feeds the agent's reasoning, which produces an output, which folds back around into the next input. The success metric is drawn in the accent color because defining it is the hard question.</figcaption></figure>
+</svg><figcaption data-short="The loop that is the unit of agent work"><span class="fig-label">Figure 5.</span> The loop that is the unit of agent work. An input paired with a success metric feeds the agent's reasoning, which produces an output, which folds back around into the next input. The success metric is drawn in the accent color because defining it is the hard question.</figcaption></figure>
 <p id="idx-def-success-metric">Engineering a loop well starts with the metric, because the metric is what the agent steers by. The agent does not magically know your goals or your environment. You have to make its progress <em>measurable</em> — deterministically, through a quantitative check, or through a rubric that scores a qualitative result. Skip this, and you have told the agent nothing about what "done" means, so it searches, and searches, and searches, and never knows when to stop.</p>
 <p id="idx-ex-loop-engineering-1">The orchestration layer of this book's companion repository is itself a worked example of a loop engineered this way. The catalogue models the orchestrator — the process that dispatches agents, waits for them to land work, and cleans up after them — as an explicit reactive loop with a typed lifecycle: <em>dispatch → work → land → tombstone</em>, then refill and go again. The loop is not left implicit in the code; it is written down as a model the agent can read, which is exactly the second idea.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-agent-orchestration-model.html">orchestrator model</a>.</p></blockquote>

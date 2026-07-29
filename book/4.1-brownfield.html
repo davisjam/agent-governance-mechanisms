@@ -173,7 +173,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
-.fig-label { font-weight: 700; color: #333; }
+.fig-label, .tbl-label { font-weight: 700; color: #333; }
+table caption { caption-side: top; text-align: left; font-size: 14px; color: #666;
+                 margin-bottom: 0.45rem; line-height: 1.5; }
+ul.list-of-floats-links { list-style: none; padding-left: 0; }
+ul.list-of-floats-links li { margin: 0.15rem 0; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -246,6 +250,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 .pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
@@ -382,7 +387,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <span id="idx-def-code-smell"></span><span id="idx-def-lint"></span><p>A smell is code that works but will break the moment it is touched, because no one can reason over it. You measure smells with cheap static analyses — <strong>lints</strong> (the dryer-lint kind, the stuff you pull out to make things tidy) — that parse the syntax tree and count the tells: a high density of bare <code>int</code>s and strings, deeply nested conditionals. Some rules are universal. No codebase should have a 2,000-line function, a module imported by every other file, a switch with 400 string cases, structs nested three anonymous levels deep, or functions returning unnamed many-element tuples. So run the lints, and have the agent fix them in a behavior-preserving way — which means you need tests. If you have none, start there: have the agent write tests for line or branch coverage, module by module, because coverage is what lets you refactor safely, using the tests and the lints together as your success metric.</p>
 <h3>Squash, zero, promote</h3>
 <!-- noqa: book-section-cap | Squash, zero, promote — the reported count is inflated by the figure's descriptive a11y caption; the prose body pairs the make-it-blocking move with the audit-only-first ordering the figure draws, and reads as one arc that ends the three-approaches thread. -->
-<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420"
+<figure id="fig-22" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420"
      role="group" aria-labelledby="szpTitle szpDesc"
      font-family="'Helvetica Neue', Arial, sans-serif">
   <title id="szpTitle">Squash, zero, promote: how a lint is worn into a legacy tree one step at a time</title>
@@ -446,7 +451,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
     <path d="M805,206 C805,240 900,240 926,206"/>
   </g>
   <text x="812" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#8a2f2f">the smell can never return</text>
-</svg><figcaption><span class="fig-label">Figure 22.</span> How one lint is worn into a legacy tree. A new smell-detecting lint lands audit-only — it reports every finding but blocks no commit, so it never breaks an in-flight agent. A fix wave drains its findings to zero with behavior-preserving edits under test coverage. Only then is it promoted to blocking, where it fails any commit that reintroduces the smell. The barrier after the final state marks the payoff: the class of smell can never return.</figcaption></figure>
+</svg><figcaption data-short="How one lint is worn into a legacy tree"><span class="fig-label">Figure 22.</span> How one lint is worn into a legacy tree. A new smell-detecting lint lands audit-only — it reports every finding but blocks no commit, so it never breaks an in-flight agent. A fix wave drains its findings to zero with behavior-preserving edits under test coverage. Only then is it promoted to blocking, where it fails any commit that reintroduces the smell. The barrier after the final state marks the payoff: the class of smell can never return.</figcaption></figure>
 <p id="idx-def-make-lint-blocking">Then comes the move that makes it stick: <strong>as each lint reaches zero, make it blocking.</strong> Now the success metric is "all tests pass <em>and</em> that lint still passes" — no more unnamed tuples, no more imports buried mid-function, ever again. This is the Alignment Thesis worn into a legacy tree one lint at a time: each promotion is a governance mechanism that bounds what any later agent can reintroduce. Order matters, and the companion repository holds to it deliberately — flipping a lint to blocking while findings remain would break every agent's commit at once, so the figure's sequence is the safe one: audit-only, drain to zero, then promote. The smells that leave never return. When you are done, you have cleaned-up spaghetti with enough shape that model induction has something to grip: classes and enums and named structs give the induction real structure to reason over, the structure that spaghetti hid. The catalogue's coverage-to-model mapping closes the loop from the other side — it projects your test coverage onto the model's nodes, so an untested invariant shows up as a visible gap rather than hiding inside a line-coverage percentage.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-coverage-model-mapping.html">coverage-to-model mapping</a>.</p></blockquote>
 <h3>The metric that points at what you missed</h3>

@@ -173,7 +173,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
-.fig-label { font-weight: 700; color: #333; }
+.fig-label, .tbl-label { font-weight: 700; color: #333; }
+table caption { caption-side: top; text-align: left; font-size: 14px; color: #666;
+                 margin-bottom: 0.45rem; line-height: 1.5; }
+ul.list-of-floats-links { list-style: none; padding-left: 0; }
+ul.list-of-floats-links li { margin: 0.15rem 0; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -246,6 +250,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 .pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
@@ -365,7 +370,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="1.1-the-printer.html">⇐ Previous part</a><a href="3.1-the-executable-zoo.html">Next part ⇒</a><a href="2.2-models-and-the-semantic-gap.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 3 · The Agent Stack"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 3</a></div><h1>The Agent Stack</h1></header><p id="idx-def-agent-stack">If governing an agent means conditioning where it searches, the practical question is: <em>where do you reach in to do it?</em> The answer is that there is not one place — there are four, stacked on top of each other, and each one gives you a different kind of grip. Understand the stack and you will see every mechanism in this book as an instance of "pick a layer, inject a constraint." This chapter walks the stack from the bottom up.</p>
-<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620"
+<figure id="fig-6" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620"
      font-family="'Helvetica Neue', Arial, sans-serif" role="group"
      aria-labelledby="diagTitle diagDesc">
   <title id="diagTitle">The four-layer stack, its governance hooks, and the methodology that plugs into them</title>
@@ -454,7 +459,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text class="govlbl" x="0" y="0" text-anchor="start" transform="translate(1005 139) rotate(90)">Methodology +</text>
   <text class="govlbl" x="0" y="0" text-anchor="start" transform="translate(1053 178) rotate(90)">governance</text>
 
-</svg><figcaption><span class="fig-label">Figure 6.</span> The four-layer stack, its governance hooks, and the methodology that plugs into them. From the top: the Application (your codebase; tests and CI), the Engineering environment (git; git-hooks, push and pull), the Harness (the coding agent's runtime; hooks, skills, prompts), and the GenAI model at the foundation. The methodology-and-governance bar notches into every layer. Read the figure as the claim it makes: every layer exposes a hook, so governance is not a single gate bolted on at the end but a posture you apply at all four levels at once.</figcaption></figure>
+</svg><figcaption data-short="The four-layer stack, its governance hooks, and the methodology that plugs…"><span class="fig-label">Figure 6.</span> The four-layer stack, its governance hooks, and the methodology that plugs into them. From the top: the Application (your codebase; tests and CI), the Engineering environment (git; git-hooks, push and pull), the Harness (the coding agent's runtime; hooks, skills, prompts), and the GenAI model at the foundation. The methodology-and-governance bar notches into every layer. Read the figure as the claim it makes: every layer exposes a hook, so governance is not a single gate bolted on at the end but a posture you apply at all four levels at once.</figcaption></figure>
 <h2>The four layers</h2>
 <p id="idx-def-foundation-model"><strong>At the bottom sits the foundation model.</strong> It comes from a commercial vendor or an open-weight release, and it is a general language reasoner that can <em>induce</em> an understanding of your environment — but that induction is expensive, and it happens fresh every time. So the whole game at this layer is to spare the model that cost: tell it, up front, where to look. Sometimes you tell it deterministically, with an executable program. Sometimes you tell it softly, with written-down pseudocode — the algorithm to follow, the playbook for a root-cause analysis. Often it is a hybrid. Every time you do, you remove a stretch of reasoning the model would otherwise have to reconstruct. And every time you do, you reduce the length of the reasoning chain, and thus the likelihood of a compounding error. If each step goes right with probability 1 − <em>p</em>, an <em>n</em>-step chain reaches the end intact only with probability (1 − <em>p</em>)ⁿ, so the chance of a wrong answer climbs with every step you did not spare it:</p>
 <p class="book-eq">P(wrong) = 1 − (1 − p)ⁿ</p>

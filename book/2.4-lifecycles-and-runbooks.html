@@ -173,7 +173,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
-.fig-label { font-weight: 700; color: #333; }
+.fig-label, .tbl-label { font-weight: 700; color: #333; }
+table caption { caption-side: top; text-align: left; font-size: 14px; color: #666;
+                 margin-bottom: 0.45rem; line-height: 1.5; }
+ul.list-of-floats-links { list-style: none; padding-left: 0; }
+ul.list-of-floats-links li { margin: 0.15rem 0; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -246,6 +250,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 .pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
@@ -372,7 +377,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2>Runbooks: split the deterministic from the judgment</h2>
 <p id="idx-def-runbook">Once the healthy path and the failure map are written, the thing you hand the agent is a <strong>runbook</strong> (or playbook): the steps to take, whether recovering from a failure or working a fresh ticket. The one discipline that makes a runbook work is to split it into two kinds of step, because they are governed completely differently.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-a-operational-playbooks.html">runbook</a>.</p></blockquote>
-<figure class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 780" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="cor-title cor-desc">
+<figure id="fig-10" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 780" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="cor-title cor-desc">
   <title id="cor-title">A config-optimization runbook with a determinize / judgment / determinize split</title>
   <desc id="cor-desc">A lifecycle loop labelled run then measure then assess wraps a three-step spine. Step one, determinize the data space: a mechanical, automatable step that fixes where the metrics live, their schema, and models of normal versus anomalous values. Step two, judgment in reasoning space: the agent reasons over that data to decide which configuration knobs to turn. Step three, determinize again in experiment space: applying the chosen configuration is made mechanical, which lets the step capture and log the reasoning trace, the rationale for why this configuration was chosen. That logged trace feeds two consumers: it becomes an input to the next iteration of the loop, so the optimizer learns from its own recorded reasoning, and it becomes a decision trace a secondary checker reads, which evaluates the choice far better than it could from the raw output alone.</desc>
 
@@ -445,7 +450,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 
   <!-- ===================== BOTTOM LABEL ===================== -->
   <text x="355" y="612" text-anchor="middle" font-size="30" font-weight="700" fill="#12324a">A lifecycle the runbook is anchored to</text>
-</svg><figcaption><span class="fig-label">Figure 10.</span> A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice. Fencing the one judgment step between two deterministic ends is the move: the messy part is bounded, and the logged trace turns an otherwise opaque tuning decision into something a checker can grade and the next iteration can improve on.</figcaption></figure>
+</svg><figcaption data-short="A config-optimization runbook"><span class="fig-label">Figure 10.</span> A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice. Fencing the one judgment step between two deterministic ends is the move: the messy part is bounded, and the logged trace turns an otherwise opaque tuning decision into something a checker can grade and the next iteration can improve on.</figcaption></figure>
 <p id="idx-def-deterministic-vs-judgment-split"><strong>The deterministic parts get tools.</strong> Anything that has a single correct outcome should be an executable script the agent runs, not a procedure it improvises. Leave it to improvisation and it will get it right most of the time — and you will wish you had automated it the one time it does not.</p>
 <p>Determinizing a step buys you more than a reliable outcome — it buys you a <strong>trace</strong>. When a step improvises, its reasoning is smoke: gone the moment it finishes, impossible to inspect or compare. Pin the step to an executable procedure and the reasoning becomes a record — the inputs it read, the branch it took, the value it produced — written down in a fixed shape. That record has two consumers, and both are why the trace is worth capturing, not just the outcome. The first is <strong>the next turn of the loop</strong>: last run's trace is this run's input, so the agent starts from what was already reasoned instead of re-deriving it, and the loop converges instead of wandering. The second is <strong>a second checker that reads the trace itself</strong> — a reviewer, human or agent, that never watched the step run but can now audit <em>how</em> it reached its answer and flag a trace that took a path it should not have. A judgment step gives you only its verdict; a determinized step gives you the verdict and the reasoning behind it, and the reasoning is the part a checker can hold to account.</p>
 <h3>The judgment parts: the roughest algorithm that still fits</h3>

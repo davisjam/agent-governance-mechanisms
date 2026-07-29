@@ -173,7 +173,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
-.fig-label { font-weight: 700; color: #333; }
+.fig-label, .tbl-label { font-weight: 700; color: #333; }
+table caption { caption-side: top; text-align: left; font-size: 14px; color: #666;
+                 margin-bottom: 0.45rem; line-height: 1.5; }
+ul.list-of-floats-links { list-style: none; padding-left: 0; }
+ul.list-of-floats-links li { margin: 0.15rem 0; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -246,6 +250,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 .pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
+<li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
 <li><a class="" href="0.2-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
@@ -399,7 +404,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><span class="idx-term">Circuit breaker</span> <span class="idx-refs"><a href="4.2-the-skills.html">Ch. 16</a></span></li>
 <li><span class="idx-term">Claude Code, OpenCode</span> <span class="idx-refs"><a href="2.1-the-agent-stack.html">Ch. 3</a></span></li>
 <li class="idx-concept"><span class="idx-term">Code smell</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.1-brownfield.html#idx-def-code-smell">Ch. 15</a></span></span></li>
-<li><span class="idx-term">Codemod</span> <span class="idx-refs"><a href="appendix-c-codemod-first.html">Appendix C - 18</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-pre-commit-hook.html">Appendix A - 6</a>, <a href="appendix-c-remediation-verbs.html">Appendix C - 19</a></span></li>
+<li><span class="idx-term">Codemod</span> <span class="idx-refs"><a href="appendix-c-codemod-first.html">Appendix C - 18</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-pre-commit-hook.html">Appendix A - 6</a></span></li>
 <li class="idx-concept"><span class="idx-term">Component-zone model</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.4-the-development-view.html#idx-def-component-zone-model">Ch. 12</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Compounding failure probability</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.3-transformations.html#idx-def-compounding-failure-probability">Ch. 17</a></span></span></li>
 <li><span class="idx-term">conditioning the probability distribution</span> <span class="idx-refs"><a href="1.2-loops-and-models.html">Ch. 2</a></span></li>
@@ -416,7 +421,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <div class="part">D</div>
 <ul>
 <li class="idx-concept"><span class="idx-term">Data-flow diagram</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.2-the-logical-view.html#idx-def-data-flow-diagram">Ch. 10</a></span></span></li>
-<li><span class="idx-term">DDT</span> <span class="idx-refs"><a href="appendix-c-ddt-pin-trailers.html">Appendix C - 10</a>, <a href="2.5-metrics.html">Ch. 7</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-caused-by-provenance.html">Appendix A - 14</a></span></li>
+<li><span class="idx-term">DDT</span> <span class="idx-refs"><a href="appendix-c-ddt-pin-trailers.html">Appendix C - 10</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="2.5-metrics.html">Ch. 7</a>, <a href="appendix-patterns.html">Appendix</a></span></li>
 <li><span class="idx-term">Definition of Done (DoD)</span> <span class="idx-refs"><a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a>, <a href="5.3-the-built-system.html">Ch. 22</a>, <a href="6.1-conclusion.html">Conclusion</a>, <a href="appendix-a-epic-and-design-templates.html">Appendix A - 23</a></span></li>
 <li class="idx-concept"><span class="idx-term">Demoable vs. productizable</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.4-training-data.html#idx-def-demoable-vs-productizable">Ch. 18</a></span></span></li>
 <li><span class="idx-term">deployment topology</span> <span class="idx-refs"><a href="appendix-b-agent-first-mbse-harness.html">Appendix B - 1</a>, <a href="appendix-b-deployment-topology-model.html">Appendix B - 7</a></span></li>
@@ -435,7 +440,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <div class="part">E</div>
 <ul>
 <li><span class="idx-term">engineering environment</span> <span class="idx-refs"><a href="2.1-the-agent-stack.html">Ch. 3</a>, <a href="2.3-the-governed-environment.html">Ch. 5</a>, <a href="4.1-brownfield.html">Ch. 15</a>, <a href="6.0-implications-for-se.html">Implications for Software Engineering</a></span></li>
-<li><span class="idx-term">Epic</span> <span class="idx-refs"><a href="appendix-a-epic-and-design-templates.html">Appendix A - 23</a>, <a href="appendix-a-epic-definition-of-done.html">Appendix A - 24</a>, <a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a>, <a href="3.1-the-executable-zoo.html">Ch. 9</a></span></li>
+<li><span class="idx-term">Epic</span> <span class="idx-refs"><a href="appendix-a-epic-and-design-templates.html">Appendix A - 23</a>, <a href="appendix-a-epic-definition-of-done.html">Appendix A - 24</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a></span></li>
 <li><span class="idx-term">Epoch / fencing</span> <span class="idx-refs"><a href="2.4-lifecycles-and-runbooks.html">Ch. 6</a>, <a href="appendix-a-operational-playbooks.html">Appendix A - 26</a></span></li>
 <li class="idx-concept"><span class="idx-term">Ex-ante governance</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.3-the-governed-environment.html#idx-def-ex-ante-governance">Ch. 5</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Ex-post governance</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.3-the-governed-environment.html#idx-def-ex-post-governance">Ch. 5</a></span></span></li>
@@ -459,7 +464,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <div class="part">G</div>
 <ul>
 <li><span class="idx-term">Gate</span> <span class="idx-refs"><a href="3.1-the-executable-zoo.html">Ch. 9</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-staged-deploy-gates.html">Appendix A - 8</a>, <a href="appendix-a-aggregate-compute-protection.html">Appendix A - 9</a></span></li>
-<li><span class="idx-term">Gating</span> <span class="idx-refs"><a href="appendix-a-resource-pressure-gating.html">Appendix A - 11</a>, <a href="3.5-the-physical-view.html">Ch. 13</a>, <a href="5.3-the-built-system.html">Ch. 22</a>, <a href="appendix-patterns.html">Appendix</a></span></li>
+<li><span class="idx-term">Gating</span> <span class="idx-refs"><a href="appendix-a-resource-pressure-gating.html">Appendix A - 11</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="3.5-the-physical-view.html">Ch. 13</a>, <a href="5.3-the-built-system.html">Ch. 22</a></span></li>
 <li class="idx-concept"><span class="idx-term">Governance as design patterns</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="6.1-conclusion.html#idx-def-governance-as-design-patterns">Conclusion</a></span></span></li>
 <li><span class="idx-term">Governance mechanism</span> <span class="idx-refs"><a href="0.1-preface.html">Preface</a>, <a href="1.2-loops-and-models.html">Ch. 2</a>, <a href="2.1-the-agent-stack.html">Ch. 3</a>, <a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a></span></li>
 <li class="idx-concept"><span class="idx-term">Governance package</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.3-the-governed-environment.html#idx-def-governance-package">Ch. 5</a></span></span></li>
@@ -468,7 +473,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 </ul>
 <div class="part">H</div>
 <ul>
-<li><span class="idx-term">Heartbeat</span> <span class="idx-refs"><a href="appendix-a-deploy-heartbeats.html">Appendix A - 16</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-staged-deploy-gates.html">Appendix A - 8</a>, <a href="appendix-a-typed-event-bus.html">Appendix A - 20</a></span></li>
+<li><span class="idx-term">Heartbeat</span> <span class="idx-refs"><a href="appendix-a-deploy-heartbeats.html">Appendix A - 16</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-staged-deploy-gates.html">Appendix A - 8</a></span></li>
 <li class="idx-concept"><span class="idx-term">Hook (hard mechanism)</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.1-the-agent-stack.html#idx-def-hook-hard-control">Ch. 3</a></span></span></li>
 </ul>
 <div class="part">I</div>
@@ -507,7 +512,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li class="idx-concept"><span class="idx-term">Measure one level deeper</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.5-metrics.html#idx-def-measure-one-level-deeper">Ch. 7</a></span></span></li>
 <li><span class="idx-term">Measure one level deeper (Ousterhout)</span> <span class="idx-refs"><a href="2.5-metrics.html">Ch. 7</a></span></li>
 <li class="idx-concept"><span class="idx-term">Mediator registry</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.3-the-process-view.html#idx-def-mediator-registry">Ch. 11</a></span></span></li>
-<li><span class="idx-term">merge-train</span> <span class="idx-refs"><a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-merge-train-mis-batching.html">Appendix A - 5</a>, <a href="4.5-lessons-learned.html">Ch. 19</a>, <a href="appendix-a-role-typed-dispatch.html">Appendix A - 4</a></span></li>
+<li><span class="idx-term">merge-train</span> <span class="idx-refs"><a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-merge-train-mis-batching.html">Appendix A - 5</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="4.5-lessons-learned.html">Ch. 19</a></span></li>
 <li><span class="idx-term">meta-sync</span> <span class="idx-refs"><a href="appendix-patterns.html">Appendix</a>, <a href="appendix-b-synchronization-model.html">Appendix B - 21</a>, <a href="appendix-d-mbse-stack.html">Appendix D - 1</a></span></li>
 <li><span class="idx-term">model</span> <span class="idx-refs"><a href="1.2-loops-and-models.html">Ch. 2</a>, <a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a>, <a href="2.5-metrics.html">Ch. 7</a>, <a href="2.6-when-guardrails-collide.html">Ch. 8</a></span></li>
 <li><span class="idx-term">model (as map / cheaper approximation)</span> <span class="idx-refs"><a href="1.2-loops-and-models.html">Ch. 2</a>, <a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a>, <a href="2.5-metrics.html">Ch. 7</a>, <a href="2.6-when-guardrails-collide.html">Ch. 8</a></span></li>
@@ -554,7 +559,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li class="idx-concept"><span class="idx-term">Refactoring is free</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.5-lessons-learned.html#idx-def-refactoring-is-free">Ch. 19</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Reference class</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.4-training-data.html#idx-def-reference-class">Ch. 18</a></span></span></li>
 <li><span class="idx-term">reference class (imposed by the model)</span> <span class="idx-refs"><a href="4.4-training-data.html">Ch. 18</a></span></li>
-<li><span class="idx-term">reflection-facet</span> <span class="idx-refs"><a href="appendix-a-reflection-facet-substrate.html">Appendix A - 18</a>, <a href="4.2-the-skills.html">Ch. 16</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-dynamic-context-injection.html">Appendix A - 3</a></span></li>
+<li><span class="idx-term">reflection-facet</span> <span class="idx-refs"><a href="appendix-a-reflection-facet-substrate.html">Appendix A - 18</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="4.2-the-skills.html">Ch. 16</a>, <a href="appendix-patterns.html">Appendix</a></span></li>
 <li><span class="idx-term">repair vocabulary</span> <span class="idx-refs"><a href="appendix-patterns.html">Appendix</a></span></li>
 <li><span class="idx-term">Rollback</span> <span class="idx-refs"><a href="appendix-a-staged-deploy-gates.html">Appendix A - 8</a></span></li>
 <li><span class="idx-term">Rolls-Royce, Boeing (high-assurance modeling)</span> <span class="idx-refs"><a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a></span></li>
@@ -562,7 +567,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li class="idx-concept"><span class="idx-term">Rubric</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.4-lifecycles-and-runbooks.html#idx-def-rubric">Ch. 6</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Rule-metadata registry</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.4-the-development-view.html#idx-def-rule-metadata-registry">Ch. 12</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Runbook</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.4-lifecycles-and-runbooks.html#idx-def-runbook">Ch. 6</a></span></span></li>
-<li><span class="idx-term">runbook / playbook</span> <span class="idx-refs"><a href="2.4-lifecycles-and-runbooks.html">Ch. 6</a>, <a href="appendix-a-operational-playbooks.html">Appendix A - 26</a>, <a href="appendix-a-operator-runbook-skill.html">Appendix A - 27</a>, <a href="2.1-the-agent-stack.html">Ch. 3</a></span></li>
+<li><span class="idx-term">runbook / playbook</span> <span class="idx-refs"><a href="2.4-lifecycles-and-runbooks.html">Ch. 6</a>, <a href="appendix-a-operational-playbooks.html">Appendix A - 26</a>, <a href="appendix-a-operator-runbook-skill.html">Appendix A - 27</a>, <a href="list-of-figures.html">List of Figures and Tables</a></span></li>
 </ul>
 <div class="part">S</div>
 <ul>
@@ -575,10 +580,10 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><span class="idx-term">self-governance (skill)</span> <span class="idx-refs"><a href="4.2-the-skills.html">Ch. 16</a>, <a href="4.3-transformations.html">Ch. 17</a>, <a href="appendix-e-the-recipe.html">Appendix E - 1</a></span></li>
 <li class="idx-concept"><span class="idx-term">Self-operate</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.2-the-skills.html#idx-def-self-operate">Ch. 16</a></span></span></li>
 <li><span class="idx-term">self-operate (skill)</span> <span class="idx-refs"><a href="4.2-the-skills.html">Ch. 16</a>, <a href="4.3-transformations.html">Ch. 17</a>, <a href="appendix-e-the-recipe.html">Appendix E - 1</a></span></li>
-<li><span class="idx-term">Semantic gap</span> <span class="idx-refs"><a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a>, <a href="2.6-when-guardrails-collide.html">Ch. 8</a>, <a href="appendix-a-semantic-level-enforcement.html">Appendix A - 28</a></span></li>
+<li><span class="idx-term">Semantic gap</span> <span class="idx-refs"><a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="2.6-when-guardrails-collide.html">Ch. 8</a>, <a href="appendix-a-semantic-level-enforcement.html">Appendix A - 28</a></span></li>
 <li><span class="idx-term">Sensor</span> <span class="idx-refs"><a href="2.3-the-governed-environment.html">Ch. 5</a>, <a href="0.1-preface.html">Preface</a>, <a href="2.5-metrics.html">Ch. 7</a>, <a href="2.6-when-guardrails-collide.html">Ch. 8</a></span></li>
 <li class="idx-concept"><span class="idx-term">Sensor (detects drift)</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.3-the-governed-environment.html#idx-def-sensor">Ch. 5</a></span></span></li>
-<li><span class="idx-term">sentinel</span> <span class="idx-refs"><a href="appendix-a-sentinel-first-commit.html">Appendix A - 7</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-merge-train-mis-batching.html">Appendix A - 5</a>, <a href="appendix-a-pre-commit-hook.html">Appendix A - 6</a></span></li>
+<li><span class="idx-term">sentinel</span> <span class="idx-refs"><a href="appendix-a-sentinel-first-commit.html">Appendix A - 7</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-a-merge-train-mis-batching.html">Appendix A - 5</a></span></li>
 <li><span class="idx-term">Service-oriented architecture (SOA)</span> <span class="idx-refs"><a href="3.2-the-logical-view.html">Ch. 10</a>, <a href="appendix-b-service-flow-model.html">Appendix B - 19</a></span></li>
 <li><span class="idx-term">Shift-left</span> <span class="idx-refs"><a href="appendix-a-resource-pressure-gating.html">Appendix A - 11</a></span></li>
 <li><span class="idx-term">Sidecar</span> <span class="idx-refs"><a href="5.4-the-road-to-mage.html">Ch. 23</a></span></li>
@@ -603,7 +608,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><span class="idx-term">teetering tower of governance</span> <span class="idx-refs"><a href="4.2-the-skills.html">Ch. 16</a></span></li>
 <li class="idx-concept"><span class="idx-term">Temporal logic</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.3-the-process-view.html#idx-def-temporal-logic">Ch. 11</a></span></span></li>
 <li><span class="idx-term">temporal logic (LTL)</span> <span class="idx-refs"><a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a>, <a href="3.3-the-process-view.html">Ch. 11</a></span></li>
-<li><span class="idx-term">test-onion</span> <span class="idx-refs"><a href="appendix-c-test-onion-tiers.html">Appendix C - 13</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-c-ddt-pin-trailers.html">Appendix C - 10</a>, <a href="appendix-c-fuzz-campaigns.html">Appendix C - 11</a></span></li>
+<li><span class="idx-term">test-onion</span> <span class="idx-refs"><a href="appendix-c-test-onion-tiers.html">Appendix C - 13</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="appendix-patterns.html">Appendix</a>, <a href="appendix-c-ddt-pin-trailers.html">Appendix C - 10</a></span></li>
 <li class="idx-concept"><span class="idx-term">Tests for agent failure modes</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.5-lessons-learned.html#idx-def-tests-for-agent-failure-modes">Ch. 19</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">The 4+1 views</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.1-the-executable-zoo.html#idx-def-four-plus-one-views">Ch. 9</a></span></span></li>
 <li><span class="idx-term">the agent</span> <span class="idx-refs"><a href="3.6-the-scenarios-view.html">Ch. 14</a>, <a href="4.2-the-skills.html">Ch. 16</a>, <a href="0.1-preface.html">Preface</a>, <a href="1.1-the-printer.html">Ch. 1</a></span></li>
@@ -637,7 +642,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li class="idx-concept"><span class="idx-term">The teetering tower</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.2-the-skills.html#idx-def-teetering-tower">Ch. 16</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Three ways to run an agent</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.5-lessons-learned.html#idx-def-three-ways-to-run-an-agent">Ch. 19</a></span></span></li>
 <li><span class="idx-term">TLA / model checking</span> <span class="idx-refs"><a href="2.2-models-and-the-semantic-gap.html">Ch. 4</a>, <a href="3.1-the-executable-zoo.html">Ch. 9</a>, <a href="3.3-the-process-view.html">Ch. 11</a>, <a href="3.6-the-scenarios-view.html">Ch. 14</a></span></li>
-<li><span class="idx-term">tombstone</span> <span class="idx-refs"><a href="appendix-a-tombstone-commits.html">Appendix A - 19</a>, <a href="1.2-loops-and-models.html">Ch. 2</a>, <a href="3.6-the-scenarios-view.html">Ch. 14</a>, <a href="4.2-the-skills.html">Ch. 16</a></span></li>
+<li><span class="idx-term">tombstone</span> <span class="idx-refs"><a href="appendix-a-tombstone-commits.html">Appendix A - 19</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="1.2-loops-and-models.html">Ch. 2</a>, <a href="3.6-the-scenarios-view.html">Ch. 14</a></span></li>
 <li class="idx-concept"><span class="idx-term">Tool (deterministic action)</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="2.1-the-agent-stack.html#idx-def-tool-deterministic-action">Ch. 3</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Top-down refinement</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.1-brownfield.html#idx-def-top-down-refinement">Ch. 15</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Traceability</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.1-the-executable-zoo.html#idx-def-traceability">Ch. 9</a></span></span></li>
@@ -645,7 +650,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><span class="idx-term">traceability round-trip</span> <span class="idx-refs"><a href="3.1-the-executable-zoo.html">Ch. 9</a></span></li>
 <li class="idx-concept"><span class="idx-term">Training-data bias</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.4-training-data.html#idx-def-training-data-bias">Ch. 18</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Transformation</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.3-transformations.html#idx-def-transformation">Ch. 17</a></span><span class="idx-sub"><span class="idx-sub-lead">examples of:</span> <a href="5.3-the-built-system.html#idx-ex-transformation-1">Ch. 22</a></span></span></li>
-<li><span class="idx-term">transformation (input→output)</span> <span class="idx-refs"><a href="4.3-transformations.html">Ch. 17</a>, <a href="5.3-the-built-system.html">Ch. 22</a></span></li>
+<li><span class="idx-term">transformation (input→output)</span> <span class="idx-refs"><a href="4.3-transformations.html">Ch. 17</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="5.3-the-built-system.html">Ch. 22</a></span></li>
 <li><span class="idx-term">Typed seam</span> <span class="idx-refs"><a href="4.1-brownfield.html">Ch. 15</a>, <a href="4.2-the-skills.html">Ch. 16</a>, <a href="appendix-a-dynamic-context-injection.html">Appendix A - 3</a>, <a href="appendix-b-agent-orchestration-model.html">Appendix B - 2</a></span></li>
 </ul>
 <div class="part">U</div>
@@ -656,7 +661,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 </ul>
 <div class="part">V</div>
 <ul>
-<li><span class="idx-term">Validator</span> <span class="idx-refs"><a href="appendix-c-content-validator.html">Appendix C - 7</a>, <a href="0.1-preface.html">Preface</a>, <a href="2.5-metrics.html">Ch. 7</a>, <a href="4.2-the-skills.html">Ch. 16</a></span></li>
+<li><span class="idx-term">Validator</span> <span class="idx-refs"><a href="appendix-c-content-validator.html">Appendix C - 7</a>, <a href="0.1-preface.html">Preface</a>, <a href="list-of-figures.html">List of Figures and Tables</a>, <a href="2.5-metrics.html">Ch. 7</a></span></li>
 <li class="idx-concept"><span class="idx-term">Velocity exposes the danger</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.5-lessons-learned.html#idx-def-velocity-exposes-the-danger">Ch. 19</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Vibe-coding vs. engineering</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.5-lessons-learned.html#idx-def-vibe-coding-vs-engineering">Ch. 19</a></span></span></li>
 </ul>
