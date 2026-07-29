@@ -28,6 +28,18 @@ finite set of hand-picked examples cover a document's input space? It cannot, an
 always in the case no one wrote. A property checked over generated inputs surfaces the latent bug that a
 hundred examples would miss.
 
+## Two sides of one coin — the generative-validation family
+
+Property testing and fuzzing are the same move: **generate inputs and try to falsify a specification.**
+They differ only in what the specification *is* and how wild the inputs get. A property test declares a
+rich oracle (the invariant) but asks it of tame, well-typed inputs. A fuzzer has a coarse oracle
+("never crash, never corrupt") but reaches wild, malformed inputs a typed generator never emits. The
+synthesis — **fuzz + model-based engineering** — takes both halves: wild inputs judged against the
+typed model as oracle, so you fuzz against a stable point in the specification and the fix generalizes
+to every legal input. That synthesis is where the model *becomes* the oracle; for its detail, see the
+[fuzz-campaigns](fuzz-campaigns.md) entry. This entry stays on the property side: the author-declared
+invariant over generated inputs.
+
 ## Mechanism
 
 FsCheck.Xunit properties (round-trip and combinatorial invariants) live across the test projects; you
