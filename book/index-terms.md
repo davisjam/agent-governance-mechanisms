@@ -112,6 +112,7 @@ chapter (filled as chapters settle; the generator still scans all chapters for s
 - Kruchten, Philippe (4+1 views)
 - Diátaxis
 - Pólya, George
+- Aristotle (essential vs. accidental properties — Metaphysics / Posterior Analytics)
 - Brooks, Fred (No Silver Bullet — essence vs. accident)   [verify presence in final text]
 - UML (Unified Modeling Language)
 - TLA / model checking
