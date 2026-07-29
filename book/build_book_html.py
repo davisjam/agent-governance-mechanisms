@@ -2829,7 +2829,6 @@ def _cover_html() -> str:
         '<section class="print-cover">'
         '<div class="cov-kicker">The MAGE Method</div>'
         '<h1>Model-Based Agentic Software Engineering</h1>'
-        '<div class="cov-sub">3-D Printing Production Software</div>'
         f'{hero_svg}'
         '<div class="cov-author">James C. Davis, PhD</div>'
         f'<div class="cov-copy">{html.escape(COPYRIGHT)}</div>'
@@ -3369,7 +3368,6 @@ def build() -> int:
     idx_rows.append("</ol>")
     title_block = (
         '<div class="book-title"><h1>Model-Based Agentic Software Engineering</h1>'
-        '<div class="sub">3-D Printing Production Software</div>'
         # PDF edition — a CI-published artifact at book/mage-book.pdf on the deployed site (a purely-local
         # checkout without the CI render will 404 this; that is expected).
         '<div class="book-download"><a href="mage-book.pdf">Download the PDF edition ↓</a></div>'
