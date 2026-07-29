@@ -1176,10 +1176,8 @@ function fitFig(f){
       <div class="cd-body">
         <p>A document rots the moment the code moves; a model wired to a <b>build-time drift check cannot</b>:
         the gate stays red until the map matches the territory again. That guarantee is what prose can never
-        give. But hold the honest other half: a green gate proves the model and the code <b>agree</b>, not that
-        either is <i>right</i>. A model derived from the code is a mirror — it records a missing check as
-        correctly absent, and the gate agrees with the bug. Only a model <b>authored from intent</b> catches a
-        wrong "is."</p>
+        give — though a drift gate proves the model and code <i>agree</i>, not that either is <i>right</i>: the
+        model must be <b>authored</b>, not merely read off the code, or a mirror of the bug passes green (2.2).</p>
         <a class="cd-more" href="book/2.2-models-and-the-semantic-gap.html">read the full treatment →</a>
       </div>
     </details>
@@ -1234,20 +1232,18 @@ function fitFig(f){
         <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
       </div>
     </details>
-    <details class="card" id="card-generative-validation">
+    <details class="card" id="card-generate-to-falsify">
       <summary>
-        <span class="cd-kicker">Generate to falsify</span>
-        <span class="cd-title">The sharpest sensor generates its own inputs</span>
-        <span class="cd-frame">One move, three techniques: hunt a counterexample to a model-supplied spec.</span>
+        <span class="cd-kicker">Alignment Thesis · validation</span>
+        <span class="cd-title">Generate inputs to falsify a model</span>
+        <span class="cd-frame">Property tests, fuzzing, and fuzz+model are one move.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
-        <p>Most tests reproduce a single dot — one input, one expected output — and say nothing about the input
-        next door. There is a sharper sensor: <b>generate inputs and try to falsify a specification the model
-        supplies.</b> Property-based testing, fuzzing, and the synthesis of fuzzing with model-based engineering
-        are the same move three times, differing only in what the spec <i>is</i> and how the inputs get made. The
-        spec is a model; the generator re-hunts a counterexample on every change — the two theses standing in one
-        place, a compact model and a machine that never stops trying to break it.</p>
+        <p>The strongest sensors don't check one example — they <b>generate</b> inputs and try to falsify a
+        specification the model supplies. Property-based testing, fuzzing, and fuzzing driven by the typed model
+        are one move at three richnesses of oracle: the model names the stable point in the spec, and the
+        generator hunts a counterexample to it.</p>
         <a class="cd-more" href="book/4.6-generative-validation.html">read the full treatment →</a>
       </div>
     </details>
@@ -1320,6 +1316,62 @@ function fitFig(f){
         </ul>
         </div>
         <a class="cd-more" href="book/4.5-lessons-learned.html">read the full treatment →</a>
+      </div>
+    </details>
+    </div>
+  </div>
+
+  <div class="fam">
+    <div class="fam-h">What the engineer's job becomes</div>
+    <div class="masonry">
+    <details class="card wide accent" id="card-universal-language" open>
+      <summary>
+        <span class="cd-kicker">The engineer's job</span>
+        <span class="cd-title accent-t">Models are the universal language of engineering</span>
+        <span class="cd-frame">Code was the bottleneck; now the model is the work.</span>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>For most of software's history the scarce resource was <b>implementation</b> — someone had to type
+        the thing into existence, and that typing was the bottleneck everything queued behind. Agents moved
+        that bottleneck: code is cheap to produce and fast to change, and a model wired to a drift check keeps
+        the map in sync for free. What is <b>not</b> cheap is deciding what to build and authoring the model
+        whose properties drive the tradeoffs. So the engineer's job <b>relocates up</b> — from producing code to
+        <b>authoring the models</b> every other engineering discipline has always reasoned in, now finally cheap
+        enough for software to speak too.</p>
+        <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card" id="card-judgment-moved-up">
+      <summary>
+        <span class="cd-kicker">The engineer's job</span>
+        <span class="cd-title">The judgment moved up, not away</span>
+        <span class="cd-frame">You're still accountable for the code an agent typed.</span>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>An engineer was always accountable for choices they did not hand-implement — the compiler they
+        picked, the library, the algorithm. Delegating the keystrokes never delegated the accountability. The
+        model level strips the <i>accidental</i> cost of holding a large system in a small window and leaves the
+        <i>essential</i> difficulty in plain view, where judgment has to meet it. That essential residual does
+        not yield to a tool — it moves <b>one level up</b>, from "write correct code" to "author the model that
+        says what correct means."</p>
+        <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card tint" id="card-modelling-democratizes">
+      <summary>
+        <span class="cd-kicker">The engineer's job</span>
+        <span class="cd-title">Modelling democratizes</span>
+        <span class="cd-frame">The map used to be the architect's; now everyone can hold one.</span>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Modelling used to be senior work — the one person who could hold the whole system in their head drew
+        the map, and everyone else worked below it. Freed from the cost of <b>typing</b> and of <b>keeping the
+        map in sync by hand</b>, every engineer can now reason about the system's properties and how their own
+        change moves the whole. The map got cheap enough that everyone can hold one.</p>
+        <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
       </div>
     </details>
     </div>
@@ -1412,35 +1464,6 @@ function fitFig(f){
         legible. The loop closes across all three: operate surfaces a recurring break, govern mints the control,
         communicate writes it up in the shared register.</p>
         <a class="cd-more" href="quick-start.html">install all three →</a>
-      </div>
-    </details>
-    </div>
-  </div>
-
-  <div class="fam">
-    <div class="fam-h">Where the engineer's job goes</div>
-    <div class="masonry">
-    <details class="card wide accent" id="card-engineers-job" open>
-      <summary>
-        <span class="cd-kicker">The claim the book climbs toward</span>
-        <span class="cd-title accent-t">Models are the universal language of engineering</span>
-        <span class="cd-frame">The engineer's job relocates from the accidental to the essential.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>Every mature engineering discipline reasons about the thing it builds through a <b>model</b>, not the
-        artifact itself — the load diagram, the circuit schematic, the control loop. Software could not, because
-        holding a current model honest by hand was too expensive to afford at pace, so the field spent its best
-        effort on the <i>accidental</i> complexity — syntax, builds, dependency hell — and starved the
-        <i>essential</i>: the system's real properties, its correctness, its design.</p>
-        <p>Agents change the arithmetic. They absorb the accidental work — they type the code, keep the map in
-        sync, hold the line for cents — so for the first time the essential part can get the attention. The
-        engineer's responsibility does not shrink; it <b>relocates upward</b>, from "write correct code" to
-        "author the model that says what correct <i>means</i>, and decide what belongs in it." And because the
-        map is finally cheap to draw and keep, modeling stops being architect-only work — <b>every</b> engineer
-        now works at the level where the properties live. Modeling democratizes. That is the job the engineer's
-        work becomes: fluent authorship in the language every engineering discipline has always spoken.</p>
-        <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
       </div>
     </details>
     </div>
