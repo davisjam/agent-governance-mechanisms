@@ -251,6 +251,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: done-is-a-claim | "Done" is a claim
 - concept: broken-cost-estimator | The broken cost estimator
 - concept: tests-for-agent-failure-modes | Tests for agent failure modes
+- concept: property-test-models-the-output | A property test models the output
 - concept: vibe-coding-vs-engineering | Vibe-coding vs. engineering
 - concept: explicitness-is-essential | Explicitness is essential
 - concept: soft-vs-hard-governance | Soft vs. hard governance
