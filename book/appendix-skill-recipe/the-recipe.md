@@ -70,6 +70,7 @@ Each self-* skill's SKILL.md carries such a principle:
 The table reads the recipe down its rows and the three worked skills across its columns. Each cell is that
 skill's answer to that step.
 
+<!-- table: The construction recipe across the three worked skills — each step (fundamental model, orthogonal facets, tying principle) answered for self-communicate, self-governance, and self-operations. [short: The skill construction recipe, step by step] -->
 | Step | self-communicate | self-governance | self-operations |
 |---|---|---|---|
 | **1 · Fundamental model** | Rhetoric — prose is a craft with named parts | Two kinds of governance — architecture vs sensor | The engineering lifecycles — agents, context, repo, deploy, machine |
