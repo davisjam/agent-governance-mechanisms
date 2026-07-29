@@ -80,8 +80,13 @@ MERMAID_CDN = ""
 #   Markers are diagram-specific tokens unlikely to occur in running prose. Bare common English words
 #   that happen to be mermaid headers (`pie`, `journey`, `gantt`) are omitted — the book uses none of
 #   those diagram types, and including them would risk a prose false-positive in the PDF full-text scan.
+# Markers of RAW mermaid source (an un-rendered ```mermaid fence leaking into the PDF text). Each must be
+# diagram syntax that never occurs in English prose — so `flowchart` carries its direction, because the
+# bare word "flowchart" appears legitimately in captions ("Below is a flowchart to guide…") and the loose
+# "flowchart " marker false-failed the gate on prose.
 MERMAID_SOURCE_MARKERS: tuple[str, ...] = (
-    "flowchart ", "graph TD", "graph LR", "graph TB", "graph RL", "graph BT",
+    "flowchart TD", "flowchart LR", "flowchart TB", "flowchart RL", "flowchart BT",
+    "graph TD", "graph LR", "graph TB", "graph RL", "graph BT",
     "subgraph ", "sequenceDiagram", "stateDiagram", "erDiagram", "classDiagram",
 )
 
@@ -3031,7 +3036,8 @@ def _extract_pdf_text(pdf_path: pathlib.Path) -> str:
 # while decisively failing the airy trade-paperback regression (~11% at 10.25pt/6×9). Below it is bloat.
 _DENSITY_FIRST_N_PAGES = 100
 _DENSITY_WORDS_THRESHOLD = 400
-_DENSITY_MIN_FRACTION = 0.50
+_DENSITY_MIN_FRACTION = 0.40  # relaxed from 0.50 (author call): density is a house-style preference, not
+                              # a correctness gate — figures/tables/short sections legitimately vary it
 
 
 def _pdf_per_page_word_counts(pdf_path: pathlib.Path) -> list[int]:
