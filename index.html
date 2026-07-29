@@ -903,7 +903,9 @@ function fitFig(f){
         forms: <b>prevent</b> the error, or <b>catch</b> it. However you arrived at the goal — up front from
         the domain or in response to a failure — a <b>constraint</b> scopes the action space so the whole class
         is impossible, and a <b>sensor</b> lets the mistake happen but detects it in time, failing the loop
-        iteration so the agent runs again to fix it.</p>
+        iteration so the agent runs again to fix it. A third set of goals splits into <b>neither</b> — no sensor
+        and no constraint reaches them, so they stay a human job; that <b>residual</b> is what the mechanisms
+        leave behind.</p>
         <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
       </div>
     </details>
@@ -1174,7 +1176,10 @@ function fitFig(f){
       <div class="cd-body">
         <p>A document rots the moment the code moves; a model wired to a <b>build-time drift check cannot</b>:
         the gate stays red until the map matches the territory again. That guarantee is what prose can never
-        give.</p>
+        give. But hold the honest other half: a green gate proves the model and the code <b>agree</b>, not that
+        either is <i>right</i>. A model derived from the code is a mirror — it records a missing check as
+        correctly absent, and the gate agrees with the bug. Only a model <b>authored from intent</b> catches a
+        wrong "is."</p>
         <a class="cd-more" href="book/2.2-models-and-the-semantic-gap.html">read the full treatment →</a>
       </div>
     </details>
@@ -1229,6 +1234,23 @@ function fitFig(f){
         <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
       </div>
     </details>
+    <details class="card" id="card-generative-validation">
+      <summary>
+        <span class="cd-kicker">Generate to falsify</span>
+        <span class="cd-title">The sharpest sensor generates its own inputs</span>
+        <span class="cd-frame">One move, three techniques: hunt a counterexample to a model-supplied spec.</span>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Most tests reproduce a single dot — one input, one expected output — and say nothing about the input
+        next door. There is a sharper sensor: <b>generate inputs and try to falsify a specification the model
+        supplies.</b> Property-based testing, fuzzing, and the synthesis of fuzzing with model-based engineering
+        are the same move three times, differing only in what the spec <i>is</i> and how the inputs get made. The
+        spec is a model; the generator re-hunts a counterexample on every change — the two theses standing in one
+        place, a compact model and a machine that never stops trying to break it.</p>
+        <a class="cd-more" href="book/4.6-generative-validation.html">read the full treatment →</a>
+      </div>
+    </details>
     <details class="card" id="card-constraint-vs-sensor">
       <summary>
         <span class="cd-kicker">Constraint vs. sensor</span>
@@ -1244,6 +1266,24 @@ function fitFig(f){
         so add a sensor for the drift you cannot scope away. Most real mechanisms are a package across both: a
         soft constraint that aims the agent, wrapped in hard sensors that catch what it only aims at.</p>
         <a class="cd-more" href="book/2.6-when-guardrails-collide.html">read the full treatment →</a>
+      </div>
+    </details>
+    <details class="card tint" id="card-residual">
+      <summary>
+        <span class="cd-kicker">The residual</span>
+        <span class="cd-title">Neither move reaches it</span>
+        <span class="cd-frame">Some goals have no sensor and no constraint — they stay a human job.</span>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Not every goal splits into a constraint or a sensor. Some have <b>neither</b> — no cheap sensor can
+        see the failure, no constraint can scope it away, because the failure is an absence nobody specified. A
+        missing authorization check has <b>no failing test by definition</b>: a test that caught it would mean it
+        was specified, and a specified check would not be missing. That goal stays a <b>human</b> job, and which
+        of your goals land here sets your real throughput ceiling. This is not the soft end of a spectrum — a
+        soft mechanism is still a mechanism; the residual has none. Naming it is the framework's honest edge:
+        here is what the catalogue does <i>not</i> reach.</p>
+        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
       </div>
     </details>
     <details class="card wide accent" id="card-alignment-grows">
@@ -1372,6 +1412,35 @@ function fitFig(f){
         legible. The loop closes across all three: operate surfaces a recurring break, govern mints the control,
         communicate writes it up in the shared register.</p>
         <a class="cd-more" href="quick-start.html">install all three →</a>
+      </div>
+    </details>
+    </div>
+  </div>
+
+  <div class="fam">
+    <div class="fam-h">Where the engineer's job goes</div>
+    <div class="masonry">
+    <details class="card wide accent" id="card-engineers-job" open>
+      <summary>
+        <span class="cd-kicker">The claim the book climbs toward</span>
+        <span class="cd-title accent-t">Models are the universal language of engineering</span>
+        <span class="cd-frame">The engineer's job relocates from the accidental to the essential.</span>
+        <span class="cd-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="cd-body">
+        <p>Every mature engineering discipline reasons about the thing it builds through a <b>model</b>, not the
+        artifact itself — the load diagram, the circuit schematic, the control loop. Software could not, because
+        holding a current model honest by hand was too expensive to afford at pace, so the field spent its best
+        effort on the <i>accidental</i> complexity — syntax, builds, dependency hell — and starved the
+        <i>essential</i>: the system's real properties, its correctness, its design.</p>
+        <p>Agents change the arithmetic. They absorb the accidental work — they type the code, keep the map in
+        sync, hold the line for cents — so for the first time the essential part can get the attention. The
+        engineer's responsibility does not shrink; it <b>relocates upward</b>, from "write correct code" to
+        "author the model that says what correct <i>means</i>, and decide what belongs in it." And because the
+        map is finally cheap to draw and keep, modeling stops being architect-only work — <b>every</b> engineer
+        now works at the level where the properties live. Modeling democratizes. That is the job the engineer's
+        work becomes: fluent authorship in the language every engineering discipline has always spoken.</p>
+        <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
       </div>
     </details>
     </div>

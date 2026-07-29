@@ -165,6 +165,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: ex-post-governance | Ex-post governance
 - concept: failure-to-mechanism | Failure to mechanism
 - concept: constraints-and-sensors | Constraints and sensors
+- concept: residual | The residual (goals no mechanism reaches; stays-human)
 - concept: sensor | Sensor (detects drift)
 - concept: constraint | Constraint (prevents drift)
 - concept: governance-package | Governance package
