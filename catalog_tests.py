@@ -41,6 +41,7 @@ from tests.html import (
     check_data_claims,
     check_html_links,
     check_no_duplicate_ids,
+    check_no_empty_table_header,
     check_no_notation_leak,
     check_summary_no_flow_content,
 )
@@ -77,6 +78,7 @@ CHECKS = [
     Check("html: link + anchor resolution", 1, lambda strict: check_html_links()),
     Check("html: no duplicate element ids (stdlib twin of T2 no-dup-id)", 1, lambda strict: check_no_duplicate_ids()),
     Check("html: no flow content under <summary> (stdlib twin of T2 element-permitted-content)", 1, lambda strict: check_summary_no_flow_content()),
+    Check("html: no empty <th> (stdlib twin of T2 empty-table-header)", 1, lambda strict: check_no_empty_table_header()),
     Check("html: no book notation leaks (whole-vocabulary; marker / {{token}} / [+emph+])", 1, lambda strict: check_no_notation_leak()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data

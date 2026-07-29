@@ -136,6 +136,50 @@ def check_no_duplicate_ids():
     return (FAIL if issues else PASS), issues
 
 
+class _EmptyThFinder(HTMLParser):
+    """Counts <th> elements whose text content is empty/whitespace-only (nested inline tags' text still
+    counts). A comparison table's empty top-left corner cell is the usual source."""
+
+    def __init__(self):
+        super().__init__()
+        self._depth = 0          # >0 while inside a <th> (th never nests, but inline children may)
+        self._text: list[str] = []
+        self.empty = 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "th":
+            self._depth += 1
+            self._text = []
+
+    def handle_data(self, data):
+        if self._depth > 0:
+            self._text.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == "th" and self._depth > 0:
+            self._depth -= 1
+            if not "".join(self._text).strip():
+                self.empty += 1
+
+
+def check_no_empty_table_header():
+    """No built page has an empty <th> (a header cell with no text). The stdlib (Tier-1) twin of axe's
+    Tier-2 `empty-table-header`: a comparison table's empty top-left corner cell makes the header row
+    unreadable to a screen reader. Deterministic and at EVERY push, where the sampled Tier-2 axe pass would
+    catch it only when it happens to sample that page."""
+    files = html_files()
+    if not files:
+        return FAIL, ["no built HTML found — run `catalog.py build` first"]
+    issues = []
+    for f in files:
+        p = _EmptyThFinder()
+        p.feed(open(f, encoding="utf-8").read())
+        if p.empty:
+            issues.append(f"{rel(f)}: {p.empty} empty <th> — label the header cell "
+                          "(e.g. a comparison table's corner cell)")
+    return (FAIL if issues else PASS), issues
+
+
 def _book_md_files() -> list[str]:
     """Every book chapter-source markdown file (book/part<N>/<N>.<M>-*.md). The `[data:]` markers and the
     `{#anchor}` heading ids live in the SOURCE markdown, not the rendered HTML, so the data-claims lint
