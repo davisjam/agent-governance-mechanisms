@@ -118,7 +118,14 @@ NOSERVE = ("HANDOFF.md", "HANDOFF-catalogue-agent.md", "abstractions-playbook.md
 
 # Declared stats — the facts not derivable from the entries (LOC, case-study length). Everything else in
 # _stats() is computed from the catalogue itself. Edit a number here, once.
-DECLARED_STATS = {"loc_kloc": 430, "case_study_weeks": 12}
+# Scale figures derive from the book's canonical data feed (book/data/metrics.json) — the SAME source
+# the book prose reads — so the catalogue and the book never disagree (was hard-coded 430/12, which had
+# drifted from the manuscript's 490K / 19-week figures).
+_BOOK_METRICS = json.loads(open(os.path.join(ROOT, "book", "data", "metrics.json"), encoding="utf-8").read())
+DECLARED_STATS = {
+    "loc_kloc": round(int(_BOOK_METRICS["prod_loc"].replace(",", "")) / 1000),
+    "case_study_weeks": int(_BOOK_METRICS["study_weeks"]),
+}
 
 
 class Entry:

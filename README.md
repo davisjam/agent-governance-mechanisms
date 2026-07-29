@@ -3,7 +3,7 @@
 <!-- summary: A pattern catalogue of the mechanisms for governable agentic software engineering — 70 across three roles. -->
 
 *A catalogue of the **governance mechanisms** that keep a fleet of AI coding agents productive while
-holding the cost of their failures within bounds, distilled from a 12-week case study of building a
+holding the cost of their failures within bounds, distilled from a 19-week case study of building a
 production system with frontier coding agents. Each mechanism is written like a design pattern: the
 recurring failure it kills, and why it is **not** just the cheaper thing everyone already does.*
 
