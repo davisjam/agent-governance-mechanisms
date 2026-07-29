@@ -275,11 +275,12 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="4.3-transformations.html">17&nbsp; Everything Is a Transformation</a></li>
 <li><a class="" href="4.4-training-data.html">18&nbsp; Training Data and the Novelty Axis</a></li>
 <li><a class="" href="4.5-lessons-learned.html">19&nbsp; Lessons Learned</a></li>
+<li><a class="" href="4.6-generative-validation.html">20&nbsp; Generative Validation</a></li>
 <li class="part">Part 5 — The Context</li>
-<li><a class="" href="5.1-the-ada-context.html">20&nbsp; The ADA Context</a></li>
-<li><a class="" href="5.2-the-timeline-and-the-work.html">21&nbsp; The Timeline and the Work</a></li>
-<li><a class="" href="5.3-the-built-system.html">22&nbsp; The Built System</a></li>
-<li><a class="" href="5.4-the-road-to-mage.html">23&nbsp; The Road to MAGE</a></li>
+<li><a class="" href="5.1-the-ada-context.html">21&nbsp; The ADA Context</a></li>
+<li><a class="" href="5.2-the-timeline-and-the-work.html">22&nbsp; The Timeline and the Work</a></li>
+<li><a class="" href="5.3-the-built-system.html">23&nbsp; The Built System</a></li>
+<li><a class="" href="5.4-the-road-to-mage.html">24&nbsp; The Road to MAGE</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
@@ -330,14 +331,15 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-b-governance-graph.html">Appendix B - 12. Governance graph (mechanism-interaction model)</a></li>
 <li><a class="" href="appendix-b-invariant-dag-execution-policy.html">Appendix B - 13. Invariant-DAG execution policy (a typed Scheduler separates correctness from resource + cost)</a></li>
 <li><a class="" href="appendix-b-journey-criticality-test-placement.html">Appendix B - 14. Journey-criticality → test-tier placement (which host a test runs on, derived)</a></li>
-<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 15. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
-<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 16. Model-driven codegen</a></li>
-<li><a class="" href="appendix-b-model-graded-finding-severity.html">Appendix B - 17. Model-graded finding severity (distance-graded gate)</a></li>
-<li><a class="" href="appendix-b-query-surface.html">Appendix B - 18. Model query surface (`repo-query`)</a></li>
-<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 19. Service-flow / API model</a></li>
-<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 20. Symbol-anchored traceability graph (derived edges)</a></li>
-<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 21. Synchronization model (meta-sync)</a></li>
-<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 22. User-journey model (product-goal → implementation bridge)</a></li>
+<li><a class="" href="appendix-b-journey-task-closure.html">Appendix B - 15. Journey task-closure (type the terminal post-condition, derive its strength)</a></li>
+<li><a class="" href="appendix-b-meta-model-consumption.html">Appendix B - 16. Meta-model consumption discipline (read, don&#x27;t hardcode)</a></li>
+<li><a class="" href="appendix-b-model-driven-codegen.html">Appendix B - 17. Model-driven codegen</a></li>
+<li><a class="" href="appendix-b-model-graded-finding-severity.html">Appendix B - 18. Model-graded finding severity (distance-graded gate)</a></li>
+<li><a class="" href="appendix-b-query-surface.html">Appendix B - 19. Model query surface (`repo-query`)</a></li>
+<li><a class="" href="appendix-b-service-flow-model.html">Appendix B - 20. Service-flow / API model</a></li>
+<li><a class="" href="appendix-b-symbol-anchored-traceability-graph.html">Appendix B - 21. Symbol-anchored traceability graph (derived edges)</a></li>
+<li><a class="" href="appendix-b-synchronization-model.html">Appendix B - 22. Synchronization model (meta-sync)</a></li>
+<li><a class="" href="appendix-b-user-journey-model.html">Appendix B - 23. User-journey model (product-goal → implementation bridge)</a></li>
 <li class="part">Appendix C — Product patterns</li>
 <li><a class="" href="appendix-c-canonical-walkers.html">Appendix C - 1. Canonical walkers (one traversal per tree)</a></li>
 <li><a class="" href="appendix-c-office-models.html">Appendix C - 2. Office Models ({Slides,Docs,Sheets}Model)</a></li>
@@ -386,7 +388,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <ul><li><strong>The prose skill</strong> — <em>less is more</em>: name the genre, draft in the voice, name concepts from the lexicon, draw the shape where there is one, and audit before you ship. The economy stance ties the five resources into one craft.</li><li><strong>The governance skill</strong> — <em>convert recurring failures into durable guardrails; guidance aims, machinery holds</em>. That sentence tells you both what to do with a failure and how to weigh the fix.</li><li><strong>The operations skill</strong> — <em>orient positive first, then route a break to its class</em>. Know the healthy baseline before you hunt, and meet every symptom as a member of a lifecycle.</li></ul>
 <h2>The three steps across the three skills</h2>
 <p>The table reads the recipe down its rows and the three worked skills across its columns. Each cell is that skill's answer to that step.</p>
-<table id="tbl-12" class="book-table"><caption data-short="The skill construction recipe, step by step"><span class="tbl-label">Table 12.</span> The construction recipe across the three worked skills — each step (fundamental model, orthogonal facets, tying principle) answered for self-communicate, self-governance, and self-operations.</caption><thead><tr><th>Step</th><th>self-communicate</th><th>self-governance</th><th>self-operations</th></tr></thead><tbody><tr><td><strong>1 · Fundamental model</strong></td><td>Rhetoric — prose is a craft with named parts</td><td>Two kinds of governance — architecture vs sensor</td><td>The engineering lifecycles — agents, context, repo, deploy, machine</td></tr><tr><td><strong>2 · Orthogonal facets</strong></td><td>Register (Diátaxis), lexicon, voice, audit, diagrams</td><td>The mechanism census, soft/hard enforcement, ambient principles</td><td>Symptom→doc catalog, typed runbooks, the hook library</td></tr><tr><td><strong>3 · Tying principle</strong></td><td>Less is more — name genre, draft in voice, name concepts, draw the shape, audit</td><td>Convert failures to guardrails; guidance aims, machinery holds</td><td>Orient positive first; route a break to its class</td></tr></tbody></table>
+<table id="tbl-13" class="book-table"><caption data-short="The skill construction recipe, step by step"><span class="tbl-label">Table 13.</span> The construction recipe across the three worked skills — each step (fundamental model, orthogonal facets, tying principle) answered for self-communicate, self-governance, and self-operations.</caption><thead><tr><th>Step</th><th>self-communicate</th><th>self-governance</th><th>self-operations</th></tr></thead><tbody><tr><td><strong>1 · Fundamental model</strong></td><td>Rhetoric — prose is a craft with named parts</td><td>Two kinds of governance — architecture vs sensor</td><td>The engineering lifecycles — agents, context, repo, deploy, machine</td></tr><tr><td><strong>2 · Orthogonal facets</strong></td><td>Register (Diátaxis), lexicon, voice, audit, diagrams</td><td>The mechanism census, soft/hard enforcement, ambient principles</td><td>Symptom→doc catalog, typed runbooks, the hook library</td></tr><tr><td><strong>3 · Tying principle</strong></td><td>Less is more — name genre, draft in voice, name concepts, draw the shape, audit</td><td>Convert failures to guardrails; guidance aims, machinery holds</td><td>Orient positive first; route a break to its class</td></tr></tbody></table>
 <h2>What the recipe buys you</h2>
 <p>A skill built this way gains two properties for free, both second-order — they come from the shape, not from any one resource.</p>
 <ul><li><strong>It composes.</strong> Because each skill turns on a clean fundamental model, another skill can cite it by that model instead of duplicating its content. The three self-* skills do exactly this: the prose skill owns the writing that the other two produce, governance mints the mechanism that operations surfaces, and operations runs the substrate governance designs. Three skills, one substrate, cross-cited — no copy drifts because each names the others rather than mirroring them.</li><li><strong>It adopts in layers.</strong> A reader can take the fundamental model alone and get most of the value, then add facets as the need arises. The recipe degrades gracefully: the model without its facets still teaches a way of seeing, and a facet without the tying principle still solves its slice. You do not have to swallow a skill whole to start using it.</li></ul><div class="pager"><a class="prev" href="appendix-skill-recipe.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix E — How to Write a Skill</span></a><a class="home" href="index.html">Contents</a><span class="next disabled" aria-hidden="true"></span></div><div class="pager-jump"><div class="jump"><a href="appendix-skill-recipe.html">⇐ Beginning of this part</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
