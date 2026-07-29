@@ -95,7 +95,8 @@ jobs:
           mkdir -p _site
           rsync -a --exclude='.git' --exclude='node_modules' --exclude='.github' \
                 --exclude='__pycache__' --exclude='_site' --exclude='book/_print' ./ _site/
-          test -f _site/book/mage-book.pdf || { echo "ERROR: book/mage-book.pdf missing from site artifact"; exit 1; }
+          PDF="book/$(python3 -c "import json; print(json.load(open('book/book-manifest.json'))['pdf_filename'])")"
+          test -f "_site/$PDF" || { echo "ERROR: $PDF missing from site artifact"; exit 1; }
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:

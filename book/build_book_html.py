@@ -44,6 +44,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 
 # Single source of truth for the book's cover identity — book-manifest.json (also read by catalog.py).
 _BOOK_MANIFEST = json.loads((HERE / "book-manifest.json").read_text(encoding="utf-8"))
+_PDF_FILENAME = _BOOK_MANIFEST["pdf_filename"]  # single source: the manifest
 
 
 def _cover_sub(cls: str) -> str:
@@ -3206,7 +3207,7 @@ def build_pdf() -> int:
     print_html = build_print_html()
     # Render to a temp path inside _print/ (already gitignored); qpdf produces the final output.
     pdf_raw = HERE / "_print" / "mage-book.raw.pdf"
-    pdf_out = HERE / "mage-book.pdf"
+    pdf_out = HERE / _PDF_FILENAME
     renderer = HERE / "render_pdf.mjs"
 
     node = shutil.which("node")
@@ -3381,7 +3382,7 @@ def build() -> int:
         f'{_cover_sub("sub")}'
         # PDF edition — a CI-published artifact at book/mage-book.pdf on the deployed site (a purely-local
         # checkout without the CI render will 404 this; that is expected).
-        '<div class="book-download"><a href="mage-book.pdf">Download the PDF edition ↓</a></div>'
+        f'<div class="book-download"><a href="{_PDF_FILENAME}">Download the PDF edition ↓</a></div>'
         '</div>'
     )
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
@@ -3410,7 +3411,7 @@ if __name__ == "__main__":
         raise SystemExit(build_pdf())
     # `--verify-pdf` runs ONLY the content-integrity gate over an existing book/mage-book.pdf (CI reuses it).
     if "--verify-pdf" in args:
-        pdf = HERE / "mage-book.pdf"
+        pdf = HERE / _PDF_FILENAME
         if not pdf.is_file():
             print(f"ERROR: {pdf} not found — run `--pdf` first.", file=sys.stderr)
             raise SystemExit(2)

@@ -25,6 +25,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 # Single source of truth for the book's cover identity (title/subtitle/kicker/author). Also read by
 # book/build_book_html.py (print cover + web front page) — edit book/book-manifest.json once, all follow.
 BOOK_MANIFEST = json.loads(open(os.path.join(ROOT, "book", "book-manifest.json"), encoding="utf-8").read())
+_PDF_HREF = "book/" + BOOK_MANIFEST["pdf_filename"]  # root-relative href to the published PDF (single source: the manifest)
 
 
 def _book_title_block() -> str:
@@ -708,7 +709,7 @@ NAV_GRID = (
     '<span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a>'
     '<a class="ng-cell ng-book ng-bottom" href="book/index.html">'
     '<span class="ng-t">Book</span><span class="ng-s">read the web book</span></a>'
-    '<a class="ng-cell ng-book ng-bottom" href="book/mage-book.pdf">'
+    f'<a class="ng-cell ng-book ng-bottom" href="{_PDF_HREF}">'
     f'<span class="ng-t">{PDF_SVG} Book (PDF)</span><span class="ng-s">download offline</span></a>'
     '</nav>')
 
@@ -2074,7 +2075,7 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
 
   <div class="book-cta" style="margin:14px 0 28px;">
     <a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a>
-    <span class="book-cta-pdf"><a href="book/mage-book.pdf">Download PDF</a></span>
+    <span class="book-cta-pdf"><a href="{pdf_href}">Download PDF</a></span>
   </div>
 """
 
@@ -2544,7 +2545,7 @@ def cmd_build(_args) -> int:
     _dochier = _inline_svg("assets/documentation-hierarchy.svg")
     _ctrlarch = _inline_svg("assets/control-vs-architecture.svg")
     landing_body = NAV_GRID + "\n" + LANDING_INTRO.format(
-        n=len(entries), book_title_block=_book_title_block(), flow=_landing_flow(), cards=_landing_cards(),
+        n=len(entries), book_title_block=_book_title_block(), pdf_href=_PDF_HREF, flow=_landing_flow(), cards=_landing_cards(),
         schools=_landing_schools(), ways=_landing_ways(),
         hero=_ns_svg_ids(_mage, "hero"),
         schools_fig=_ns_svg_ids(_oversight, "midway-fig"),
