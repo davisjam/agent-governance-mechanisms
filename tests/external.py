@@ -4,6 +4,7 @@ site, and `claude plugin validate` on the manifests. Each SKIPs when its tool is
 from __future__ import annotations
 
 import os
+import random
 import re
 import shutil
 import subprocess
@@ -30,13 +31,71 @@ class _SiteHandler(SimpleHTTPRequestHandler):
         pass
 
 
+def _axe_bucket(rel: str) -> str:
+    """Template-family key for one served page (path relative to ROOT). Every page ADAtool renders comes
+    from one of a handful of renderer templates; two pages sharing a bucket exercise the SAME template code,
+    so scanning ≥1 per bucket covers every renderer path. Buckets:
+
+      - each named top-level page + the three named book index pages → its own bucket (unique templates);
+      - `book/appendix-*` → one bucket (the appendix-entry template);
+      - other `book/*` (chapters) → one bucket (the chapter template);
+      - catalogue entries by first path segment (`agent`/`models-bridge`/`product`), README indexes split
+        from leaf entries (index template vs entry template)."""
+    top_level_singletons = {
+        "index.html", "catalogue-views.html", "quick-start.html",
+        "catalogue-figure.html", "development-workflow.html",
+        "book/index.html", "book/book-index.html", "book/list-of-figures.html",
+    }
+    if rel in top_level_singletons:
+        return rel  # its own bucket
+    if rel.startswith("book/appendix-"):
+        return "book/appendix-*"
+    if rel.startswith("book/"):
+        return "book/chapters"
+    seg = rel.split("/", 1)[0]  # agent / models-bridge / product (+ any other tree)
+    kind = "readme" if rel.endswith("README.html") else "entry"
+    return f"{seg}/{kind}"
+
+
+def _axe_sample(pages: list[str], target: int, rng: random.Random) -> list[str]:
+    """Pick ≤`target` pages: one random representative from every template-family bucket (deterministic
+    coverage of each renderer path every run), then a uniform-random tail from the remainder up to `target`.
+    `pages` are ROOT-relative. Returns the chosen ROOT-relative paths, sorted."""
+    buckets: dict[str, list[str]] = {}
+    for p in pages:
+        buckets.setdefault(_axe_bucket(p), []).append(p)
+    chosen: set[str] = {rng.choice(members) for members in buckets.values()}
+    remainder = [p for p in pages if p not in chosen]
+    rng.shuffle(remainder)
+    for p in remainder:
+        if len(chosen) >= target:
+            break
+        chosen.add(p)
+    return sorted(chosen)
+
+
 def check_axe(strict: bool):
-    """Run axe-core over EVERY built page (the whole site, minus the plugin bundle). SKIP if
-    node/browser/the locally-installed axe are unavailable. A per-page load delay lets async content (the
-    figure iframes AND the book appendix's CDN-loaded Mermaid diagrams) settle so the scan is
-    deterministic — without it a heavy page can be scanned before it finishes painting and return a
-    spurious partial result (Mermaid repaints its placeholder blocks after the runtime loads, which
-    mid-scan reads as contrast failures on unrelated elements).
+    """Run axe-core over a REPRESENTATIVE + RANDOM SAMPLE (~25 pages) of the built site, not the whole
+    thing. The pages are homogeneous generated output — every one is emitted by the SAME small set of
+    renderer templates — so a sample that touches each template family catches a template-level a11y bug
+    just as reliably as scanning all ~190 pages, at a fraction of the cost (a full scan is ~10 min; the
+    sample runs in ~1-2 min, which is what makes it usable in BOTH local `--full` and CI).
+
+    Sampling has two parts (see `_axe_sample`):
+      - REPRESENTATIVE — bucket the pages by template family (`_axe_bucket`) and always include ≥1 per
+        bucket, so every renderer path is exercised every run (deterministic coverage). The representative
+        within a multi-page bucket is picked at random so it varies run to run.
+      - RANDOM TAIL — fill up to the target with a uniform-random sample of the remaining pages, using an
+        UNSEEDED `random.Random()` so the sample varies per run and coverage accumulates over time. This is
+        a test helper (a template-level bug shows up on the first sampled page from that template) — plain
+        unseeded randomness is deliberately fine here; we do NOT want per-run determinism.
+    Target size defaults to 25, overridable via `ADA_CATALOG_AXE_SAMPLE` for tuning. The chosen count +
+    per-bucket sample is printed so a failure is reproducible and the reader sees it's a sample.
+
+    A per-page load delay lets async content (the figure iframes AND the book appendix's CDN-loaded Mermaid
+    diagrams) settle so the scan is deterministic — without it a heavy page can be scanned before it
+    finishes painting and return a spurious partial result (Mermaid repaints its placeholder blocks after
+    the runtime loads, which mid-scan reads as contrast failures on unrelated elements).
 
     We scan with `tests/axe_scan.cjs`, which launches ONE headless Chrome and reuses it across every URL.
     The old `@axe-core/cli` path spawned a fresh Chrome per URL — a full-site scan paid the browser
@@ -49,14 +108,26 @@ def check_axe(strict: bool):
     scanner = os.path.join(ROOT, "tests", "axe_scan.cjs")
     if not os.path.exists(scanner):
         return (FAIL if strict else SKIP), ["tests/axe_scan.cjs missing"]
-    pages = sorted(html_files())  # the served site only (excludes plugin/ + node_modules/)
-    if not pages:
+    all_pages = sorted(os.path.relpath(p, ROOT) for p in html_files())  # served site only (excl. plugin/)
+    if not all_pages:
         return (FAIL if strict else SKIP), ["no built pages to scan (run `catalog.py build` first)"]
+    try:
+        target = int(os.environ.get("ADA_CATALOG_AXE_SAMPLE", "25"))
+    except ValueError:
+        target = 25
+    rng = random.Random()  # UNSEEDED on purpose — sample varies per run, coverage accumulates over time
+    sample = _axe_sample(all_pages, target, rng)
+    buckets_hit = sorted({_axe_bucket(p) for p in sample})
+    print(f"          axe: sampling {len(sample)}/{len(all_pages)} pages across {len(buckets_hit)} "
+          f"template-family buckets (representative + random tail; unseeded — varies per run):")
+    for p in sample:
+        print(f"            - {p}")
+    pages = sample
     port = free_port()
     httpd = ThreadingHTTPServer(("127.0.0.1", port), partial(_SiteHandler, directory=ROOT))
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     try:
-        urls = [f"http://127.0.0.1:{port}/{os.path.relpath(p, ROOT)}" for p in pages]
+        urls = [f"http://127.0.0.1:{port}/{p}" for p in pages]  # `pages` are already ROOT-relative
         r = run(["node", scanner, "2500", *urls], timeout=900)
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as ex:
         return (FAIL if strict else SKIP), [f"axe could not run ({type(ex).__name__}) — treating as skip"]

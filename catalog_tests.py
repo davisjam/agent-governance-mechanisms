@@ -110,6 +110,8 @@ def main() -> int:
     ap.add_argument("--full", action="store_true", help="run every check regardless of needs_run — the "
                     "authoritative pass. CI MUST use this: post-push, HEAD == origin/main, so incremental "
                     "gating would skip everything. Local predeploy stays incremental and trusts CI's green.")
+    ap.add_argument("--tier1", action="store_true", help="run ALL Tier-1 deterministic checks (force, not "
+                    "incremental) and SKIP the slow Tier-2 external passes — the fast pre-push gate")
     ap.add_argument("--book-audit", action="store_true", help="run the AUDIT-ONLY book structural report "
                     "(visual-per-chapter, section-length, thesis-woven, figure hygiene, placeholders) and "
                     "exit 0 — never contributes to the fail count. Disjoint from the pass/fail CHECKS.")
@@ -118,9 +120,12 @@ def main() -> int:
     if args.book_audit:
         return run_book_audit()
 
-    # --full forces the run-everything path (reusing the no-baseline fail-safe). Incremental otherwise.
-    changed = None if args.full else changed_vs_origin()
-    base = ("full scan (--full)" if args.full else
+    # --full and --tier1 both force run-everything for the checks they DO run (reusing the no-baseline
+    # fail-safe). --tier1 additionally skips every Tier-2 external pass (fast deterministic pre-push gate);
+    # --full runs both tiers; otherwise incremental.
+    changed = None if (args.full or args.tier1) else changed_vs_origin()
+    base = ("Tier-1 only (--tier1; Tier-2 external passes skipped)" if args.tier1 else
+            "full scan (--full)" if args.full else
             "no origin/main baseline — running all" if changed is None else
             f"{len(changed)} path(s) changed vs origin/main")
     print(f"== Test plan: {len(REAL_CHECKS)} gate checks + {len(CHECKS) - len(REAL_CHECKS)} audit-only "
@@ -148,7 +153,11 @@ def main() -> int:
         if c.tier == 1:
             _emit(c)
     tier2 = [c for c in CHECKS if c.tier == 2]
-    if failed:  # fail-fast: skip the expensive external passes if a cheap check already failed
+    if args.tier1:  # fast pre-push gate: run every Tier-1 check, skip the slow external passes entirely
+        for c in tier2:
+            print(f"  [skip] (T{c.tier}) {c.label} — skipped: --tier1 gate (Tier-2 runs in CI's --full)")
+        skipped += len(tier2)
+    elif failed:  # fail-fast: skip the expensive external passes if a cheap check already failed
         for c in tier2:
             print(f"  [skip] (T{c.tier}) {c.label} — skipped: fix the failed Tier-1 check(s) first")
         skipped += len(tier2)

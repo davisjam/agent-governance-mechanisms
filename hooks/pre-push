@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""pre-push: run the authoritative test suite — the EXACT gate CI runs — before any push.
+"""pre-push: run the fast DETERMINISTIC gate — `catalog_tests.py --tier1` — before any push.
 
 The division of labour: `pre-commit` does the fast, PARTIAL sync (validate + build + stage the
-regenerated HTML). This hook runs the FULL `catalog_tests.py --full` — the same command the CI /
-deploy gate runs — so a change that would fail CI cannot leave the machine. That closes the gap
-this hook was born from: a local `validate` + `build` (+ a PDF render) all passed, yet CI's
-tracked-HTML orphan check failed, because the test suite ran only in CI.
+regenerated HTML). This hook runs the full Tier-1 suite (`--tier1`) — schema, anchors, link + orphan
+resolution, and the `html: book/*.html <-> build outputs` tracking check — in ~3 seconds, catching the
+deterministic failure class (orphans, schema, links, tracking) that a `validate` + `build` alone miss.
+That closes the gap this hook was born from: a local `validate` + `build` (+ a PDF render) all passed,
+yet CI's tracked-HTML orphan check failed, because the test suite ran only in CI.
+
+We deliberately SKIP the slow Tier-2 external passes here (axe-core a11y, `claude plugin validate`): even
+with axe now SAMPLED (~25 pages, ~1-2 min) they still cost far more than the deterministic checks, and CI
+runs `catalog_tests.py --full` (Tier-1 + the sampled axe) as the authoritative gate. Pre-push stays fast
+enough to keep on for every push.
 
 Install once with `python3 catalog.py install-hooks` (sets core.hooksPath=hooks). No shell — pure
 Python, per the repo's tooling posture.
@@ -18,10 +24,10 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print("pre-push: running catalog_tests.py --full (the CI gate) …", file=sys.stderr)
-r = subprocess.run([sys.executable, "catalog_tests.py", "--full"], cwd=ROOT)
+print("pre-push: running catalog_tests.py --tier1 (the fast deterministic gate) …", file=sys.stderr)
+r = subprocess.run([sys.executable, "catalog_tests.py", "--tier1"], cwd=ROOT)
 if r.returncode:
     sys.stderr.write(
-        "\npre-push: catalog_tests.py --full FAILED — push refused.\n"
+        "\npre-push: catalog_tests.py --tier1 FAILED — push refused.\n"
         "Fix the failing gate(s) above, or `git push --no-verify` to override (rare).\n")
     sys.exit(r.returncode)
