@@ -1,0 +1,84 @@
+{
+  "_note": "Concept model — the SSOT for the book's core concepts and their site realization. Keyed by the SAME slug as the `- concept:` registry in index-terms.md (the join key). `book_home` is NOT stored here — it is DERIVED at check time from the index-def tags via build_book_html._harvest_concept_tags, so it cannot drift. `name` is likewise DERIVED from the registry, never stored. This file holds ONLY what the registry cannot: the concept's kind, its SITE realization, and its status. A slug here SHOULD be registered in index-terms.md; a slug that is not (or that has no index-def in prose) is a FINDING the four audit-only lints (L1-L4 in tests/html.py) report — the seeding is SUPPOSED to surface gaps, which become the Phase-2 drain worklist. `kind` in {thesis, axis, family, mechanism-class, caveat}; `status` in {both, book-only, site-only, book-expands-site-missing, planned}. Queryable via `catalog.py concepts`.",
+
+  "_site_only_cards": ["card-quick-start", "card-references", "card-download-the-catalogue", "card-abstractions-glossary", "card-starter-claude-md", "card-agent-brief-template", "card-design-doc-template", "card-epic-template", "card-op-playbook-template", "card-governance-lint-example", "card-ways-note"],
+
+  "thesis-modeling": {
+    "kind": "thesis",
+    "site_home": "card-thesis-modeling",
+    "status": "both",
+    "note": "Modeling Thesis (I of II): documentation, at its limit, is a typed model. Site card exists; registered here + in index-terms.md. Book index-def still owed — L1 reports it until the defining paragraph is tagged."
+  },
+  "thesis-alignment": {
+    "kind": "thesis",
+    "site_home": "card-thesis-alignment",
+    "status": "both",
+    "note": "Alignment Thesis (II of II): a quality goal splits into a constraint (prevents) and a sensor (catches). Site card exists; book index-def owed — L1 finding until tagged."
+  },
+  "universal-language": {
+    "kind": "thesis",
+    "site_home": "card-universal-language",
+    "status": "both",
+    "note": "The master thesis: models are the universal language the fleet reasons through. Site card exists (card-universal-language); book index-def owed — L1 finding until tagged."
+  },
+  "constraint": {
+    "kind": "mechanism-class",
+    "site_home": "card-constraint",
+    "status": "both",
+    "note": "Constraint (prevents drift). Book index-def present AND site card present — the clean both-resolve case."
+  },
+  "sensor": {
+    "kind": "mechanism-class",
+    "site_home": "card-sensor",
+    "status": "both",
+    "note": "Sensor (detects drift). Book index-def present AND site card present — clean both-resolve case."
+  },
+  "residual": {
+    "kind": "mechanism-class",
+    "site_home": "card-residual",
+    "status": "both",
+    "note": "The residual: goals no constraint+sensor pair reaches — the gap that stays human. Book index-def present AND site card present."
+  },
+  "generative-validation": {
+    "kind": "family",
+    "site_home": "MISSING",
+    "status": "book-expands-site-missing",
+    "note": "Ch 4.6 expands the generative-validation family; the site's nearest framing is card-generate-to-falsify, which does NOT follow the card-<slug> join convention, so there is no resolvable card-generative-validation. NOT registered in index-terms.md either. This record makes BOTH gaps (no registry entry, no conventionally-named card) FINDINGS, not silent omissions — the drift exemplar. Phase 2 decides: rename the card to card-generative-validation + register the slug, or mark book-only with a note."
+  },
+  "mirror-vs-spec": {
+    "kind": "caveat",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "The 2.2 mirror/spec caveat: a model that mirrors the code catches drift but cannot judge the code wrong; a spec that leads the code can, at the cost of a second artifact to keep true. Book-only by design (a caveat need not have a card — exempt from L3). NOT yet registered in index-terms.md — L1 reports the missing book home until the caveat's paragraph is tagged."
+  },
+  "drift-caveat": {
+    "kind": "caveat",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "The drift caveat: any model of a moving target owes a drift gate, or the map silently diverges from the territory. Book-only by design (caveat, exempt from L3). NOT yet registered in index-terms.md — L1 finding until tagged."
+  },
+  "journey-task-closure": {
+    "kind": "family",
+    "site_home": "MISSING",
+    "status": "book-expands-site-missing",
+    "note": "Journey task-closure: a user journey is complete only when every task reaches a terminal state. Book index-def present, but NO card-journey-task-closure on the landing — a genuine book-expands-site-missing drift. Phase 2 adds the card or re-declares book-only."
+  },
+  "governance-target-agent": {
+    "kind": "axis",
+    "site_home": "MISSING",
+    "status": "book-expands-site-missing",
+    "note": "Governance target (a) — the agent/fleet + the substrate that PRODUCES work. One of the three complementary control targets. NOT registered in index-terms.md and no card-governance-target-agent — seeding surfaces the axis's missing model + site realization."
+  },
+  "governance-target-models-bridge": {
+    "kind": "axis",
+    "site_home": "MISSING",
+    "status": "book-expands-site-missing",
+    "note": "Governance target (b) — the typed MBSE models the fleet reasons THROUGH. Second of the three targets. NOT registered; no conventionally-named card — a finding for Phase 2."
+  },
+  "governance-target-product": {
+    "kind": "axis",
+    "site_home": "MISSING",
+    "status": "book-expands-site-missing",
+    "note": "Governance target (c) — the shipped artifact the fleet PRODUCES. Third of the three targets. NOT registered; no conventionally-named card — a finding for Phase 2."
+  }
+}

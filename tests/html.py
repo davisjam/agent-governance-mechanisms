@@ -395,3 +395,184 @@ def check_summary_no_flow_content():
                     issues.append(f"{rel(f)}: <{tag}> inside <summary> — summary permits phrasing content only")
                     break
     return (FAIL if issues else PASS), issues
+
+
+# ─────────────────────────── Concept model (concepts.json) — book↔site drift lints ──────────────
+# A typed model of the book's core CONCEPTS and their realizations in the book (an `index-def` anchor)
+# and on the site (a `card-<slug>` on the landing). Keyed by the SAME slug as the `- concept:` registry
+# in index-terms.md — one join key, three surfaces. `book_home` and `name` are DERIVED (never stored):
+# book_home from `_harvest_concept_tags`, name from `_load_concept_registry`, so neither can drift. The
+# sidecar holds ONLY kind + site realization + status. Four checks join on slug and assert the surfaces
+# resolve AND agree. Modelled verbatim on `check_data_claims` (the manifest+check precedent above); land
+# AUDIT-ONLY (rule #55) — the seeding is SUPPOSED to surface gaps, which become the Phase-2 worklist.
+
+_CONCEPT_KINDS = frozenset({"thesis", "axis", "family", "mechanism-class", "caveat"})
+_CONCEPT_STATUSES = frozenset({"both", "book-only", "site-only", "book-expands-site-missing", "planned"})
+# `kind`s whose site card is EXPECTED (L3 drift catch applies). A `caveat` legitimately has no card, and a
+# `mechanism-class` may be book-deep/site-thin — both exempt from L3.
+_SITE_ELIGIBLE_KINDS = frozenset({"thesis", "axis", "family"})
+# `status` values that imply a book home (an `index-def` must exist) — L1's gate.
+_BOOK_HOME_STATUSES = frozenset({"both", "book-only", "book-expands-site-missing"})
+_CARD_ID_RE = re.compile(r'id="(card-[a-z0-9-]+)"')
+
+
+def _concepts_path() -> str:
+    return os.path.join(ROOT, "book", "data", "concepts.json")
+
+
+def _load_concepts() -> tuple[dict, list[str], list[str]]:
+    """Read `book/data/concepts.json` → `(records, site_only_cards, schema_issues)`.
+
+    `records` = the {slug: record} entries (underscore-prefixed meta keys like `_note` /
+    `_site_only_cards` stripped). `site_only_cards` = the L4 allowlist from the `_site_only_cards` meta
+    key (navigation / adoption cards that legitimately back no concept). `schema_issues` folds the §6-R4
+    enum PRE-CHECK: every record's `kind` ∈ _CONCEPT_KINDS and `status` ∈ _CONCEPT_STATUSES (the book's
+    "typed enum over stringly-typed state" concept, dogfooded on the model itself). A stringly-typed
+    drift here is a finding surfaced by L1's loader, before the join logic runs on a malformed record."""
+    import json
+    path = _concepts_path()
+    if not os.path.isfile(path):
+        return {}, [], []
+    raw = json.load(open(path, encoding="utf-8"))
+    site_only = list(raw.get("_site_only_cards", []))
+    records = {k: v for k, v in raw.items() if not k.startswith("_")}
+    schema_issues: list[str] = []
+    for slug, rec in records.items():
+        kind = rec.get("kind")
+        status = rec.get("status")
+        if kind not in _CONCEPT_KINDS:
+            schema_issues.append(
+                f"concepts: {slug!r} kind {kind!r} not in {sorted(_CONCEPT_KINDS)} (enum pre-check)")
+        if status not in _CONCEPT_STATUSES:
+            schema_issues.append(
+                f"concepts: {slug!r} status {status!r} not in {sorted(_CONCEPT_STATUSES)} (enum pre-check)")
+    return records, site_only, schema_issues
+
+
+def _harvested_book_homes() -> dict[str, tuple[str, str]]:
+    """{slug: (page_slug, anchor_id)} for every concept the book actually TAGGED with `<!-- index-def:
+    slug -->`, derived from the build's own `_harvest_concept_tags` over its OWN chapter discovery
+    (`_load_metrics` + `_discover_chapters` + `build_appendix_chapters` — the same call sequence build()
+    uses). This is `book_home` — computed, never stored in concepts.json, so it cannot drift from prose."""
+    book_dir = os.path.join(ROOT, "book")
+    if book_dir not in _sys.path:
+        _sys.path.insert(0, book_dir)
+    import build_book_html as bb  # noqa: E402 — path set above; the build owns concept harvesting
+    metrics = bb._load_metrics()
+    chapters = bb._discover_chapters(metrics)
+    if chapters:
+        max_part = max(c["part"] for c in chapters)
+        chapters = chapters + bb.build_appendix_chapters(next_part=max_part + 1)
+    reg, _page_maps = bb._harvest_concept_tags(chapters)
+    homes: dict[str, tuple[str, str]] = {}
+    for slug, slot in reg.items():
+        d = slot.get("def")
+        if d is not None:
+            pg, anchor = d
+            page_slug = pg["slug"] if isinstance(pg, dict) else str(pg)
+            homes[slug] = (page_slug, anchor)
+    return homes
+
+
+def _landing_card_ids() -> set[str]:
+    """Every `id="card-…"` on the built landing page (index.html) — the site realizations the concept
+    model joins against. Reuses the shipped HTML rather than re-deriving; L2/L4 both read this set."""
+    idx = os.path.join(ROOT, "index.html")
+    if not os.path.isfile(idx):
+        return set()
+    return set(_CARD_ID_RE.findall(open(idx, encoding="utf-8").read()))
+
+
+def check_concepts_book_home():
+    """L1 — book-home presence + §6-R4 enum pre-check. Keyed off `book/data/concepts.json`. For every
+    concept whose `status` implies a book home ({both, book-only, book-expands-site-missing}), the derived
+    `book_home` (from `_harvest_concept_tags`) MUST resolve — the concept's defining paragraph is actually
+    tagged `<!-- index-def: slug -->`. FAILS when a concept claims a book home but no index-def exists
+    ("registered + in the model, but never tagged in prose" — the reverse the build's own fail-loud can't
+    catch). Folds the enum pre-check (kind/status membership) so a malformed record surfaces here too.
+    AUDIT-ONLY (rule #55) — seeding surfaces real gaps that become the Phase-2 drain worklist."""
+    records, _site_only, schema_issues = _load_concepts()
+    if not records:
+        return PASS, ["no book/data/concepts.json — nothing to check"]
+    homes = _harvested_book_homes()
+    issues = list(schema_issues)
+    for slug, rec in records.items():
+        if rec.get("status") in _BOOK_HOME_STATUSES and slug not in homes:
+            issues.append(
+                f"concepts: {slug!r} status {rec.get('status')!r} implies a book home but no "
+                f"`<!-- index-def: {slug} -->` is tagged in any chapter (derived book_home unresolved)")
+    return (FAIL if issues else PASS), issues
+
+
+def check_concepts_site_home():
+    """L2 — site-home presence. Every concept whose `site_home` is a `card-<slug>` value resolves to an
+    `id="card-<slug>"` on the built landing (index.html). FAILS when a declared card is absent (a card
+    renamed/removed out from under a concept). `N/A` / `MISSING` site_home values are NOT cards and are
+    skipped here (they are L3's concern). Reuses the landing id-scan. AUDIT-ONLY (rule #55)."""
+    records, _site_only, _schema = _load_concepts()
+    if not records:
+        return PASS, ["no book/data/concepts.json — nothing to check"]
+    cards = _landing_card_ids()
+    issues: list[str] = []
+    for slug, rec in records.items():
+        site = rec.get("site_home", "")
+        if site.startswith("card-") and site not in cards:
+            issues.append(
+                f"concepts: {slug!r} site_home {site!r} does not resolve to an id on the landing "
+                f"(index.html) — card renamed or removed")
+    return (FAIL if issues else PASS), issues
+
+
+def check_concepts_drift():
+    """L3 — the DRIFT catch (the headline lint). For every concept whose `kind` is site-eligible
+    ({thesis, axis, family} — NOT caveat, NOT mechanism-class) and whose `status` is `both`, its
+    `site_home` MUST be a real `card-<slug>` that resolves on the landing. A concept whose book treatment
+    exists but whose `site_home` is `MISSING`/`N/A` while `status: both` claims a site presence FAILS —
+    this is the "book expands it, the site has no card" catch (the generative-validation / 2.2-caveat
+    class turned into a control). `status` ∈ {book-only, book-expands-site-missing} DECLARE the gap and
+    PASS (the model records the asymmetry deliberately). AUDIT-ONLY (rule #55) — the drift exemplars in
+    the seed are meant to report here."""
+    records, _site_only, _schema = _load_concepts()
+    if not records:
+        return PASS, ["no book/data/concepts.json — nothing to check"]
+    cards = _landing_card_ids()
+    issues: list[str] = []
+    for slug, rec in records.items():
+        if rec.get("kind") not in _SITE_ELIGIBLE_KINDS:
+            continue
+        if rec.get("status") != "both":
+            continue  # book-only / book-expands-site-missing DECLARE the gap → pass
+        site = rec.get("site_home", "")
+        if not (site.startswith("card-") and site in cards):
+            issues.append(
+                f"concepts: DRIFT {slug!r} (kind={rec.get('kind')}, status=both) claims a site presence "
+                f"but site_home {site!r} is not a resolvable card — either add the card (close the drift) "
+                f"or re-declare status book-only / book-expands-site-missing (declare it deliberate)")
+    return (FAIL if issues else PASS), issues
+
+
+def check_concepts_reverse_coverage():
+    """L4 — reverse coverage (WARN, stays a warn). Every `id="card-<slug>"` on the landing has a backing
+    concept in `concepts.json` (join by the `card-` suffix). WARNs on a site card with no concept — a
+    site framing that owes a model entry. Kept a warn because navigation / adoption cards (quick-start,
+    references, template-download) legitimately have no concept; the `_site_only_cards` allowlist in the
+    sidecar suppresses those. AUDIT-ONLY — never gates."""
+    records, site_only, _schema = _load_concepts()
+    cards = _landing_card_ids()
+    if not cards:
+        return PASS, ["no landing index.html — nothing to check"]
+    allow = set(site_only)
+    modeled = {rec.get("site_home") for rec in records.values()}
+    # A card is backed if its exact id is a declared site_home, OR its `card-<slug>` suffix matches a
+    # modeled slug (the naming-convention join), OR it is an allowlisted navigation/adoption card.
+    modeled_slugs = set(records)
+    issues: list[str] = []
+    for card in sorted(cards):
+        slug = card[len("card-"):]
+        if card in allow or card in modeled or slug in modeled_slugs:
+            continue
+        issues.append(
+            f"concepts: WARN landing card {card!r} has no backing concept in concepts.json "
+            f"(add a record, or allowlist it in _site_only_cards if it is a navigation/adoption card)")
+    # L4 is a warn: report findings but never FAIL.
+    return PASS, issues

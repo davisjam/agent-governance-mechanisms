@@ -263,6 +263,9 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: autonomy-amplifier | The autonomy amplifier
 - concept: judgment-into-infrastructure | Judgment into infrastructure
 - concept: governance-as-design-patterns | Governance as design patterns
+- concept: thesis-modeling | The Modeling Thesis
+- concept: thesis-alignment | The Alignment Thesis
+- concept: universal-language | Models are the universal language
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.

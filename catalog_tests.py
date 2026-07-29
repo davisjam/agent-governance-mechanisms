@@ -38,6 +38,10 @@ from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import (
     check_book_html_tracking,
+    check_concepts_book_home,
+    check_concepts_drift,
+    check_concepts_reverse_coverage,
+    check_concepts_site_home,
     check_data_claims,
     check_html_links,
     check_no_duplicate_ids,
@@ -86,6 +90,18 @@ CHECKS = [
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
     Check("book: data-claims manifest integrity (marker/anchor/holds/uncited)", 1,
           lambda strict: check_data_claims(), audit_only=True),
+    # AUDIT-ONLY (rule #55): the concept model (book/data/concepts.json) drift lints — a typed model of
+    # the book's core concepts joined book<->site by slug. L1 book-home presence + enum pre-check;
+    # L2 site-home card resolves on the landing; L3 the DRIFT catch (book expands it, site has no card);
+    # L4 (warn) reverse coverage. Seeding surfaces real gaps → the Phase-2 drain worklist; land non-gating.
+    Check("concepts: L1 book-home presence + kind/status enum (concepts.json)", 1,
+          lambda strict: check_concepts_book_home(), audit_only=True),
+    Check("concepts: L2 site-home card resolves on landing (concepts.json)", 1,
+          lambda strict: check_concepts_site_home(), audit_only=True),
+    Check("concepts: L3 DRIFT catch — site-eligible+both must have a real card (concepts.json)", 1,
+          lambda strict: check_concepts_drift(), audit_only=True),
+    Check("concepts: L4 reverse coverage — landing card has a backing concept (warn)", 1,
+          lambda strict: check_concepts_reverse_coverage(), audit_only=True),
     Check("skill: structure + manifests", 1, lambda strict: check_skill_structure()),
     Check("skill: bundle freshness (no drift)", 1, lambda strict: check_skill_drift()),
     Check("skill: bundle link integrity", 1, lambda strict: check_bundle_links()),

@@ -2735,6 +2735,43 @@ def cmd_data_claims(args) -> int:
     return 0
 
 
+def cmd_concepts(args) -> int:
+    """Print each modeled concept (book/data/concepts.json) with its kind, status, and site realization,
+    flagging drift (a site-eligible `both` concept with a MISSING/N-A card) and book-expands-site-missing
+    gaps — so "which concepts drift from the book to the site?" is a query, not a grep. `book_home` and
+    `name` are DERIVED, not stored, so they are not shown here (query the built index / registry for them).
+    `--json` dumps the raw sidecar records."""
+    path = os.path.join(ROOT, "book", "data", "concepts.json")
+    if not os.path.isfile(path):
+        print("no book/data/concepts.json")
+        return 0
+    raw = json.load(open(path, encoding="utf-8"))
+    records = {k: v for k, v in raw.items() if not k.startswith("_")}
+    if args.json:
+        print(json.dumps(records, ensure_ascii=False, indent=2))
+        return 0
+    _site_eligible = {"thesis", "axis", "family"}
+    drift = gaps = 0
+    for slug in sorted(records):
+        e = records[slug]
+        kind = e.get("kind", "?")
+        status = e.get("status", "?")
+        site = e.get("site_home", "?")
+        flag = ""
+        if kind in _site_eligible and status == "both" and not str(site).startswith("card-"):
+            flag = "  ⚠ DRIFT (both but no card)"
+            drift += 1
+        elif status == "book-expands-site-missing":
+            flag = "  ⚠ book-expands-site-missing"
+            gaps += 1
+        print(f"{slug:34} [{kind:15}] [{status:26}]{flag}")
+        print(f"                                   site -> {site}")
+        if e.get("note"):
+            print(f"                                   {e['note']}")
+    print(f"— {len(records)} concept(s), {drift} drift, {gaps} book-expands-site-missing gap(s)")
+    return 0
+
+
 # ── Deploy staging manifest ──────────────────────────────────────────────────
 # `deploy github` stages an EXPLICIT set of paths — never `git add -A`, which sweeps any
 # stray untracked file (a screenshot helper, a scratch `.mjs`) into a publish commit. Two
@@ -2921,6 +2958,8 @@ def main() -> int:
     sub.add_parser("check-console", help="deploy-blocking gate: load EVERY served HTML page in headless Chrome and fail on any pageerror / console.error (headless Chrome; needs book/ Puppeteer)")
     dc = sub.add_parser("data-claims", help="list governed data-claims + their status; flag preliminary/partial ones")
     dc.add_argument("--json", action="store_true", help="dump the raw manifest entries")
+    cp = sub.add_parser("concepts", help="list modeled concepts (book/data/concepts.json) + kind/status/site; flag book<->site drift")
+    cp.add_argument("--json", action="store_true", help="dump the raw sidecar records")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
@@ -2931,7 +2970,7 @@ def main() -> int:
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
             "build": cmd_build, "test": cmd_test, "check-responsive": cmd_check_responsive,
             "check-console": cmd_check_console,
-            "data-claims": cmd_data_claims,
+            "data-claims": cmd_data_claims, "concepts": cmd_concepts,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 
 
