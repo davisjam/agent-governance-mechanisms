@@ -658,7 +658,10 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 return True
         return False
 
-    for block in blocks:
+    skip_blocks: set[int] = set()   # blocks already consumed as a figure caption (folded into the <figure>)
+    for _bi, block in enumerate(blocks):
+        if _bi in skip_blocks:
+            continue
         block = block.strip("\n")
         if not block.strip():
             continue
@@ -712,7 +715,19 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 inner_lines = inner_lines[:-1]
             inner = "\n".join(inner_lines)
             if lang == "mermaid":
-                _emit(render_mermaid_svg(inner))
+                # A standalone diagram is a numbered figure: wrap it in <figure class="book-figure"> so the
+                # figure-numbering pass labels it "Figure N", and fold an immediately-following italic
+                # paragraph (`*…*`, one paragraph) in as its <figcaption>. Mermaid inside a concept-inset
+                # blockquote or a code-inset is rendered elsewhere and stays un-numbered.
+                svg = render_mermaid_svg(inner)
+                cap_html = ""
+                if _bi + 1 < len(blocks):
+                    _nb = blocks[_bi + 1].strip()
+                    if (_nb.startswith("*") and not _nb.startswith("**")
+                            and _nb.endswith("*") and "```" not in _nb and "\n\n" not in _nb):
+                        cap_html = f"<figcaption>{inline(' '.join(_nb.split()))}</figcaption>"
+                        skip_blocks.add(_bi + 1)
+                _emit(f'<figure class="book-figure diagram-figure">{svg}{cap_html}</figure>')
             else:
                 _emit(f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
             continue
@@ -1068,6 +1083,8 @@ figure.book-figure svg,
 figure.book-figure img {{ max-width: 100%; height: auto; }}
 figure.book-figure figcaption {{ font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }}
+figure.book-figure figcaption.fig-label-only {{ text-align: center; }}
+.fig-label {{ font-weight: 700; color: #333; }}
 .marker {{ margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }}
 .marker-fill {{ background: #fff6e5; border: 1px dashed #d8a23a; }}
 .marker-more {{ background: #eef3f7; border: 1px dashed #7aa0bd; }}
@@ -2801,6 +2818,8 @@ figure.book-figure {{ margin: 1.1rem 0; text-align: center; break-inside: avoid;
 figure.book-figure svg, figure.book-figure img {{ max-width: 100%; max-height: 5in; height: auto; }}
 figure.book-figure figcaption {{ font-family: "Source Sans 3", sans-serif; font-size: 8.5pt; color: #666;
                                  margin-top: 0.4rem; text-align: left; line-height: 1.4; }}
+figure.book-figure figcaption.fig-label-only {{ text-align: center; }}
+.fig-label {{ font-weight: 700; color: #333; }}
 figure.book-figure.catalogue-embed {{ display: none; }}  /* iframe embed cannot print — drop it */
 .marker {{ margin: 0.8rem 0; padding: 0.5rem 0.75rem; border-radius: 4px; font-size: 9.5pt;
            break-inside: avoid; }}
@@ -2885,6 +2904,36 @@ def _toc_print_html(chapters: list[dict]) -> str:
     return "\n".join(rows)
 
 
+# Every displayed figure — an SVG `<!-- figure: -->` or a standalone mermaid diagram — renders as
+# `<figure class="book-figure…">`. This is the numbering pass's single target. The `catalogue-embed`
+# iframe is EXCLUDED: it is an interactive nav embed that `display:none`s in print, so numbering it would
+# leave a phantom gap in the printed book's figure sequence (and web/print would disagree on the count).
+_BOOK_FIGURE_RE = re.compile(
+    r'(<figure class="book-figure(?![^"]*catalogue-embed)[^"]*"[^>]*>)(.*?)(</figure>)', re.S)
+
+
+def _number_figures(body: str, start: int) -> tuple[str, int]:
+    """Prepend a monotonic, ctrl-f-able "Figure N." label to every book-figure's caption, in document
+    order, starting at `start`. A figure with no <figcaption> gets a label-only one so the number is still
+    visible and searchable. Numbers are DERIVED from reading-order position — never hand-authored — so an
+    inserted or removed figure renumbers the whole book on the next build. Returns the numbered body and
+    the next unused figure number."""
+    n = start
+
+    def _repl(m: "re.Match[str]") -> str:
+        nonlocal n
+        open_t, inner, close = m.group(1), m.group(2), m.group(3)
+        label = f'<span class="fig-label">Figure {n}.</span> '
+        if "<figcaption" in inner:
+            inner = re.sub(r"(<figcaption[^>]*>)", lambda mm: mm.group(1) + label, inner, count=1)
+        else:
+            inner = inner + f'<figcaption class="fig-label-only">{label.rstrip()}</figcaption>'
+        n += 1
+        return open_t + inner + close
+
+    return _BOOK_FIGURE_RE.sub(_repl, body), n
+
+
 def build_print_html() -> pathlib.Path:
     """Assemble the single combined print HTML into `book/_print/print.html` (gitignored) and return its
     path. Reuses the EXACT web chapter-body render (`md_to_html`) plus the same appendix, concept-index,
@@ -2911,6 +2960,7 @@ def build_print_html() -> pathlib.Path:
 
     parts_body: list[str] = [_cover_html(), _toc_print_html(chapters)]
     printed_parts: set[int] = set()
+    fig_n = 1   # monotonic figure counter, threaded across chapters in reading order
     for i, c in enumerate(chapters):
         # Part-divider page before the first chapter of each numbered Part (1–5) and each appendix Part.
         if c["part"] not in printed_parts:
@@ -2943,6 +2993,7 @@ def build_print_html() -> pathlib.Path:
             + '</header>'
         )
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
+        body, fig_n = _number_figures(body, fig_n)
         parts_body.append(
             f'<section class="print-chapter" id="{html.escape(_print_anchor(c["slug"]), quote=True)}">'
             f'{header}{body}</section>'
@@ -3304,6 +3355,7 @@ def build() -> int:
     _collect_glossary(chapters)
 
     # Per-chapter pages.
+    fig_n = 1   # same reading-order figure counter as the print build, so a figure keeps its number
     for i, c in enumerate(chapters):
         prev_c = chapters[i - 1] if i > 0 else None
         next_c = chapters[i + 1] if i < len(chapters) - 1 else None
@@ -3321,6 +3373,7 @@ def build() -> int:
             + '</header>'
         )
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
+        body, fig_n = _number_figures(body, fig_n)
         if prev_c:
             prev_html = (
                 f'<a class="prev" href="{prev_c["slug"]}.html"><span class="dir">‹ Previous</span>'

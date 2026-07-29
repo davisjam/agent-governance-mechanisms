@@ -172,6 +172,8 @@ figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
+figure.book-figure figcaption.fig-label-only { text-align: center; }
+.fig-label { font-weight: 700; color: #333; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -444,7 +446,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
     <path d="M805,206 C805,240 900,240 926,206"/>
   </g>
   <text x="812" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#8a2f2f">the smell can never return</text>
-</svg><figcaption>How one lint is worn into a legacy tree. A new smell-detecting lint lands audit-only — it reports every finding but blocks no commit, so it never breaks an in-flight agent. A fix wave drains its findings to zero with behavior-preserving edits under test coverage. Only then is it promoted to blocking, where it fails any commit that reintroduces the smell. The barrier after the final state marks the payoff: the class of smell can never return.</figcaption></figure>
+</svg><figcaption><span class="fig-label">Figure 22.</span> How one lint is worn into a legacy tree. A new smell-detecting lint lands audit-only — it reports every finding but blocks no commit, so it never breaks an in-flight agent. A fix wave drains its findings to zero with behavior-preserving edits under test coverage. Only then is it promoted to blocking, where it fails any commit that reintroduces the smell. The barrier after the final state marks the payoff: the class of smell can never return.</figcaption></figure>
 <p id="idx-def-make-lint-blocking">Then comes the move that makes it stick: <strong>as each lint reaches zero, make it blocking.</strong> Now the success metric is "all tests pass <em>and</em> that lint still passes" — no more unnamed tuples, no more imports buried mid-function, ever again. This is the Alignment Thesis worn into a legacy tree one lint at a time: each promotion is a governance mechanism that bounds what any later agent can reintroduce. Order matters, and the companion repository holds to it deliberately — flipping a lint to blocking while findings remain would break every agent's commit at once, so the figure's sequence is the safe one: audit-only, drain to zero, then promote. The smells that leave never return. When you are done, you have cleaned-up spaghetti with enough shape that model induction has something to grip: classes and enums and named structs give the induction real structure to reason over, the structure that spaghetti hid. The catalogue's coverage-to-model mapping closes the loop from the other side — it projects your test coverage onto the model's nodes, so an untested invariant shows up as a visible gap rather than hiding inside a line-coverage percentage.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-coverage-model-mapping.html">coverage-to-model mapping</a>.</p></blockquote>
 <h3>The metric that points at what you missed</h3>

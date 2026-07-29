@@ -172,6 +172,8 @@ figure.book-figure svg,
 figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: #666; margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
+figure.book-figure figcaption.fig-label-only { text-align: center; }
+.fig-label { font-weight: 700; color: #333; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: #fff6e5; border: 1px dashed #d8a23a; }
 .marker-more { background: #eef3f7; border: 1px dashed #7aa0bd; }
@@ -400,7 +402,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <!-- ===== feedback arc: Output top edge, loop up and over the top, back down into Input top edge ===== -->
   <path d="M 690 170 C 690 40, 130 40, 130 168" fill="none" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#ah-accent)"/>
   <text x="410" y="42" text-anchor="middle" font-size="15" fill="#1a4a7a" font-style="italic">feeds around</text>
-</svg><figcaption>The loop that is the unit of agent work. An input paired with a success metric feeds the agent's reasoning, which produces an output, which folds back around into the next input. The success metric is drawn in the accent color because defining it is the hard question.</figcaption></figure>
+</svg><figcaption><span class="fig-label">Figure 5.</span> The loop that is the unit of agent work. An input paired with a success metric feeds the agent's reasoning, which produces an output, which folds back around into the next input. The success metric is drawn in the accent color because defining it is the hard question.</figcaption></figure>
 <p id="idx-def-success-metric">Engineering a loop well starts with the metric, because the metric is what the agent steers by. The agent does not magically know your goals or your environment. You have to make its progress <em>measurable</em> — deterministically, through a quantitative check, or through a rubric that scores a qualitative result. Skip this, and you have told the agent nothing about what "done" means, so it searches, and searches, and searches, and never knows when to stop.</p>
 <p id="idx-ex-loop-engineering-1">The orchestration layer of this book's companion repository is itself a worked example of a loop engineered this way. The catalogue models the orchestrator — the process that dispatches agents, waits for them to land work, and cleans up after them — as an explicit reactive loop with a typed lifecycle: <em>dispatch → work → land → tombstone</em>, then refill and go again. The loop is not left implicit in the code; it is written down as a model the agent can read, which is exactly the second idea.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-agent-orchestration-model.html">orchestrator model</a>.</p></blockquote>
