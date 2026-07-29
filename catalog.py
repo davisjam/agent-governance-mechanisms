@@ -1647,7 +1647,6 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
   <div class="hero">
     <div class="hero-lead">
       <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
-      <div class="book-sub">3-D Printing Production Software</div>
       <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
       implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
       stops being writing code and becomes <span class="term">governing the conditions under which fast code
