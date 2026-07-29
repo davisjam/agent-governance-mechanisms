@@ -71,9 +71,9 @@ def check_html_links():
 def check_book_html_tracking():
     """Every tracked book/*.html is a page the current build produces (no stale orphans), present and
     non-empty. Blocks the renumber-orphan class (a chapter renumber leaves the old-numbered HTML tracked
-    with no source): the expected set is the build's OWN discovery — `_discover_chapters` +
-    `build_appendix_chapters` — plus the two index pages and the hand-authored figure copy, so it can't
-    drift from what the build writes."""
+    with no source) AND the generated-page-orphan class (a page the build writes outside chapter discovery,
+    like the list of floats): the expected set is `build_book_html.expected_page_slugs()` — the build's OWN
+    single source of truth for every page it writes — so it can't drift from what the build produces."""
     import subprocess
     import sys as _sys
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -81,10 +81,10 @@ def check_book_html_tracking():
     if book_dir not in _sys.path:
         _sys.path.insert(0, book_dir)
     import build_book_html as bb  # noqa: E402 — path set above; build's discovery is the source of truth
-    chapters = bb._discover_chapters(bb._load_metrics())
-    chapters = chapters + bb.build_appendix_chapters(next_part=max(c["part"] for c in chapters) + 1)
-    real = {c["slug"] + ".html" for c in chapters}
-    real |= {"index.html", "book-index.html", "catalogue-figure.html"}  # index pages + hand-authored figure
+    # `expected_page_slugs()` is the build's OWN single source of truth for every page it writes — chapter
+    # + appendix discovery, generated front-matter (the list of floats), the index pages, and the figure
+    # copy. Consuming it (not re-deriving here) is what keeps this test from missing a build-generated page.
+    real = {s + ".html" for s in bb.expected_page_slugs()}
     tracked_paths = subprocess.run(
         ["git", "ls-files", "book/*.html"], cwd=root, capture_output=True, text=True
     ).stdout.split()

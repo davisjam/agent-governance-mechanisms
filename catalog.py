@@ -2595,10 +2595,12 @@ def cmd_build(_args) -> int:
 
 
 def cmd_install_hooks(_args) -> int:
-    """Point git at the tracked hooks/ dir so validate+build run on every commit."""
+    """Point git at the tracked hooks/ dir: pre-commit runs validate+build+stage on every commit, and
+    pre-push runs the full test suite (the CI gate) on every push."""
     r = subprocess.run(["git", "config", "core.hooksPath", "hooks"], cwd=ROOT)
     if r.returncode == 0:
-        print("core.hooksPath → hooks (pre-commit will validate + build + stage HTML)")
+        print("core.hooksPath → hooks (pre-commit: validate + build + stage HTML; "
+              "pre-push: catalog_tests.py --full, the CI gate)")
     return r.returncode
 
 

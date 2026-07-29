@@ -3040,10 +3040,36 @@ def _list_of_floats_chapter(entries: list[dict], for_print: bool) -> dict:
         + _lines("fig", "Figure", "fig") + _lines("tbl", "Table", "tbl")
     ).strip()
     return {
-        "slug": "list-of-figures", "part": 0, "part_title": _PART_TITLES.get(0, ""),
+        "slug": _GENERATED_PAGE_SLUGS[0], "part": 0, "part_title": _PART_TITLES.get(0, ""),
         "chapter": 99, "chapter_title": "List of Figures and Tables",
         "body_md": body_md, "is_matter": True, "mermaid": False, "list_of_floats": True,
     }
+
+
+# Pages the build writes BEYOND chapter/appendix discovery. Declared once so the two build paths that
+# insert them and the tracked-HTML test that expects them share ONE source of truth (an ad-hoc insertion
+# that the test's discovery never saw is exactly the orphan this centralization prevents).
+_GENERATED_PAGE_SLUGS = ("list-of-figures",)
+
+
+def _insert_list_of_floats(chapters: list[dict], page_anchor_maps: dict, for_print: bool) -> list[dict]:
+    """Insert the generated List of Figures and Tables just after the preface. Shared by the print and
+    per-chapter builds so the two cannot drift; its float numbers come from the same reading-order pass the
+    inline numbering uses, so they agree."""
+    lof = _list_of_floats_chapter(_collect_floats(chapters, page_anchor_maps), for_print)
+    pi = next((k for k, c in enumerate(chapters) if c["slug"].endswith("preface")), -1)
+    return chapters[: pi + 1] + [lof] + chapters[pi + 1:]
+
+
+def expected_page_slugs() -> set[str]:
+    """Single source of truth for every page slug the build writes: chapter + appendix discovery, the
+    generated front-matter pages (`_GENERATED_PAGE_SLUGS`), the two index pages, and the hand-authored
+    catalogue figure. The tracked-HTML test consumes THIS, so its expectation cannot drift from what the
+    build produces — the guard against a build-writes-it-but-the-test-doesn't-know-it orphan."""
+    chapters = _discover_chapters(_load_metrics())
+    chapters += build_appendix_chapters(next_part=max(c["part"] for c in chapters) + 1)
+    return ({c["slug"] for c in chapters} | set(_GENERATED_PAGE_SLUGS)
+            | {"index", "book-index", "catalogue-figure"})
 
 
 def build_print_html() -> pathlib.Path:
@@ -3068,11 +3094,7 @@ def build_print_html() -> pathlib.Path:
     concept_registry, page_anchor_maps = _harvest_concept_tags(chapters)
     _collect_glossary(chapters)
 
-    # List of Figures and Tables — a generated front-matter page, inserted after the preface. Its float
-    # numbers come from the same reading-order pass the inline numbering uses, so they agree.
-    _lof = _list_of_floats_chapter(_collect_floats(chapters, page_anchor_maps), for_print=True)
-    _pi = next((k for k, c in enumerate(chapters) if c["slug"].endswith("preface")), -1)
-    chapters = chapters[: _pi + 1] + [_lof] + chapters[_pi + 1:]
+    chapters = _insert_list_of_floats(chapters, page_anchor_maps, for_print=True)
 
     any_mermaid = any(c.get("mermaid") for c in chapters)
 
@@ -3472,10 +3494,7 @@ def build() -> int:
     # Harvest the glossary annotations (single source of truth for the inline glosses + the back-Glossary).
     _collect_glossary(chapters)
 
-    # List of Figures and Tables — generated front-matter page (web links cross to the owning chapter).
-    _lof = _list_of_floats_chapter(_collect_floats(chapters, page_anchor_maps), for_print=False)
-    _pi = next((k for k, c in enumerate(chapters) if c["slug"].endswith("preface")), -1)
-    chapters = chapters[: _pi + 1] + [_lof] + chapters[_pi + 1:]
+    chapters = _insert_list_of_floats(chapters, page_anchor_maps, for_print=False)
 
     # Per-chapter pages.
     fig_n = tbl_n = 1   # same reading-order counters as the print build, so a float keeps its number
