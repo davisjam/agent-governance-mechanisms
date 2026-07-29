@@ -214,6 +214,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: journey-criticality-test-placement | Journey-criticality test placement
 - concept: node-coverage | Node coverage
 - concept: coverage-model-mapping | Coverage-to-model mapping
+- concept: journey-task-closure | Journey task-closure
 - concept: protocols-and-tla | Protocols and TLA+
 - concept: models-join-not-repeat | Models join, they do not repeat
 - concept: brownfield-migration | Brownfield migration

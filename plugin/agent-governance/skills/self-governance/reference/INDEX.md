@@ -6,7 +6,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->70<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->71<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Two independent axes: move and form*): **`Hard`** = deterministic
@@ -84,7 +84,7 @@ of soft/hard.
 
 ## 6. System models
 
-*One MBSE **method** (the trunk — <!--census:bridge_method:word-->thirteen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Nine<!--/census--> models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization, agent-orch, governance-graph) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->thirteen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — <!--census:bridge_method:word-->fourteen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Nine<!--/census--> models split product-facing (service-flow, user-journey, domain-registries) · orchestration-facing (synchronization, agent-orch, governance-graph) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->fourteen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Move | Model | Enf. | Entry |
 |---|---|---|---|---|---|---|
@@ -94,6 +94,7 @@ of soft/hard.
 | ✅ | Formal invariant verification (temporal form → model check) — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Hard | [formal-invariant-verification.md](models-bridge/system-models/formal-invariant-verification.md) |
 | ✅ | Coverage → model-node mapping (which invariants are tested) — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Soft·Hard | [coverage-model-mapping.md](models-bridge/system-models/coverage-model-mapping.md) |
 | ✅ | Journey-criticality → test-tier placement (which host a test runs on) — *trunk / method* | `validation` | `package` | `governs-a-model` | Soft·Hard | [journey-criticality-test-placement.md](models-bridge/system-models/journey-criticality-test-placement.md) |
+| ✅ | Journey task-closure (typed terminal post-condition → derived strength) — *trunk / method* | `validation` | `package` | `governs-a-model` | Soft·Hard | [journey-task-closure.md](models-bridge/system-models/journey-task-closure.md) |
 | ✅ | Invariant-DAG execution policy (typed Scheduler: correctness vs resource + cost) — *trunk / method* | `typed-ir` | `package` | `governs-a-model` | Soft·Hard | [invariant-dag-execution-policy.md](models-bridge/system-models/invariant-dag-execution-policy.md) |
 | ✅ | Model-driven codegen — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Hard | [model-driven-codegen.md](models-bridge/system-models/model-driven-codegen.md) |
 | ✅ | Model query surface (`repo-query`) — *trunk / method* | `agent-output` | `constraint` | `governs-a-model` | Soft | [query-surface.md](models-bridge/system-models/query-surface.md) |
