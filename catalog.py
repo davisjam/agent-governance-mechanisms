@@ -22,6 +22,17 @@ import sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# Single source of truth for the book's cover identity (title/subtitle/kicker/author). Also read by
+# book/build_book_html.py (print cover + web front page) — edit book/book-manifest.json once, all follow.
+BOOK_MANIFEST = json.loads(open(os.path.join(ROOT, "book", "book-manifest.json"), encoding="utf-8").read())
+
+
+def _book_title_block() -> str:
+    """The site-landing hero title + optional subtitle, from BOOK_MANIFEST (single source of truth)."""
+    sub = BOOK_MANIFEST.get("subtitle", "")
+    h1 = f'<h1 class="book-h1">{html.escape(BOOK_MANIFEST["title"])}</h1>'
+    return h1 + (f'\n      <div class="book-sub">{html.escape(sub)}</div>' if sub else "")
+
 # Directories that hold .html but are never part of the served/deployed site — the gitignored scratch
 # tree (`_drafts/`), the skill bundle (markdown, not a site), the dev-only axe tree, and the serve dirs.
 # CI never checks these out, so they must be excluded from every local walk (orphan gate, axe,
@@ -1646,7 +1657,7 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
        on the right, so the top uses the full width and "one picture" lands immediately. -->
   <div class="hero">
     <div class="hero-lead">
-      <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
+      {book_title_block}
       <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
       implementation toward one built around <span class="term">abundant, low-cost code</span>. The hard part
       stops being writing code and becomes <span class="term">governing the conditions under which fast code
@@ -2526,7 +2537,7 @@ def cmd_build(_args) -> int:
     _dochier = _inline_svg("assets/documentation-hierarchy.svg")
     _ctrlarch = _inline_svg("assets/control-vs-architecture.svg")
     landing_body = NAV_GRID + "\n" + LANDING_INTRO.format(
-        n=len(entries), flow=_landing_flow(), cards=_landing_cards(),
+        n=len(entries), book_title_block=_book_title_block(), flow=_landing_flow(), cards=_landing_cards(),
         schools=_landing_schools(), ways=_landing_ways(),
         hero=_ns_svg_ids(_mage, "hero"),
         schools_fig=_ns_svg_ids(_oversight, "midway-fig"),

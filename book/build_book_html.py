@@ -41,6 +41,15 @@ import tempfile
 from typing import NamedTuple
 
 HERE = pathlib.Path(__file__).resolve().parent
+
+# Single source of truth for the book's cover identity — book-manifest.json (also read by catalog.py).
+_BOOK_MANIFEST = json.loads((HERE / "book-manifest.json").read_text(encoding="utf-8"))
+
+
+def _cover_sub(cls: str) -> str:
+    """Optional subtitle div for a cover site, from the manifest; empty when the subtitle is blank."""
+    s = _BOOK_MANIFEST.get("subtitle", "")
+    return f'<div class="{cls}">{html.escape(s)}</div>' if s else ""
 ROOT = HERE.parent  # the catalogue root — the appendix reads the entry .md files from here
 ACCENT = "#1a4a7a"
 COPYRIGHT = "© James C. Davis, 2026–present"
@@ -2827,10 +2836,11 @@ def _cover_html() -> str:
             hero_svg = f'<div class="cov-hero">{svg}</div>'
     return (
         '<section class="print-cover">'
-        '<div class="cov-kicker">The MAGE Method</div>'
-        '<h1>Model-Based Agentic Software Engineering</h1>'
+        f'<div class="cov-kicker">{html.escape(_BOOK_MANIFEST["kicker"])}</div>'
+        f'<h1>{html.escape(_BOOK_MANIFEST["title"])}</h1>'
+        f'{_cover_sub("cov-sub")}'
         f'{hero_svg}'
-        '<div class="cov-author">James C. Davis, PhD</div>'
+        f'<div class="cov-author">{html.escape(_BOOK_MANIFEST["author"])}</div>'
         f'<div class="cov-copy">{html.escape(COPYRIGHT)}</div>'
         f'<div class="cov-updated">Last updated {html.escape(LAST_UPDATED)}</div>'
         '</section>'
@@ -3367,7 +3377,8 @@ def build() -> int:
     )
     idx_rows.append("</ol>")
     title_block = (
-        '<div class="book-title"><h1>Model-Based Agentic Software Engineering</h1>'
+        f'<div class="book-title"><h1>{html.escape(_BOOK_MANIFEST["title"])}</h1>'
+        f'{_cover_sub("sub")}'
         # PDF edition — a CI-published artifact at book/mage-book.pdf on the deployed site (a purely-local
         # checkout without the CI render will 404 this; that is expected).
         '<div class="book-download"><a href="mage-book.pdf">Download the PDF edition ↓</a></div>'
