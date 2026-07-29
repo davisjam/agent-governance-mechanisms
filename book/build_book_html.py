@@ -659,7 +659,8 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 # here, consumed when the pipe table renders (which wraps it in a <caption>). All tables are
                 # numbered "Table N" regardless; a directive is only needed to give one a caption + a list
                 # of floats entry.
-                pending_table_caption.append(inner[len("table:"):].strip())
+                pending_table_caption.append(
+                    s[len("<!--"):-len("-->")].strip()[len("table:"):].strip())
                 return True
             if inner.startswith("eq:"):
                 _emit(f'<p class="book-eq">{inline(s[len("<!--"):-len("-->")].strip()[len("eq:"):].strip())}</p>')
