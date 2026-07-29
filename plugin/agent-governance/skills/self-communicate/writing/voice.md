@@ -395,3 +395,16 @@ Two more transformations from the author's own edits, same conservative posture 
      *After:* "Below is a flowchart to guide your judgment."
    - *Before:* "you press go, and a working script comes back"
      *After:* "you push the button, and a working program comes back" *(the printer has a **button**.)*
+
+## House-style calibration — precision governs the copula rule in the formal Part (260729)
+
+9. **In the formal Part (2 and 3), a precise relational copula beats the reflexive verb-swap.** The house
+   "avoid the *X is a Y* copula, reach for the verb" rule (characteristic #2, audit Pass 3) is an
+   *engineering-register* default against equative *stalls*. It YIELDS to precision in the technical/academic
+   register: when "X **is a property of** Y" (or *is a function of*, *is a member of*, *is an instance of*)
+   names the *exact* relation, the copula is the precise word, not a stall — swapping in an evocative verb
+   trades precision for color, which the formal Part does not want. Keep the verb-swap for genuine
+   stalls ("the hook *is a* gate" → "the hook *gates*"); keep the copula for a precise relational claim.
+   - *Before (author revert):* "the collision **lives in** the interaction"
+     *After:* "the collision **is a property of** the interaction" *(a wrong copula-swap: "property of" is
+     the precise relation between a conflict and the interaction it belongs to; "lives in" is looser.)*
