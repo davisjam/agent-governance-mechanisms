@@ -45,3 +45,6 @@ node_modules/
 
 # scratch axe/screenshot helper — never ship
 /book/_shot.mjs
+
+# Terseness-audit worksheets (review artifacts, not shipped)
+terseness-recs/
