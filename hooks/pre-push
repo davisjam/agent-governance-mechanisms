@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-"""pre-push: run the fast DETERMINISTIC gate — `catalog_tests.py --tier1` — before any push.
+"""pre-push: BUILD the site, then run the fast deterministic gate — before any push.
 
-The division of labour: `pre-commit` does the fast, PARTIAL sync (validate + build + stage the
-regenerated HTML). This hook runs the full Tier-1 suite (`--tier1`) — schema, anchors, link + orphan
-resolution, and the `html: book/*.html <-> build outputs` tracking check — in ~3 seconds, catching the
-deterministic failure class (orphans, schema, links, tracking) that a `validate` + `build` alone miss.
-That closes the gap this hook was born from: a local `validate` + `build` (+ a PDF render) all passed,
-yet CI's tracked-HTML orphan check failed, because the test suite ran only in CI.
+Two gates, in order, so a change that would fail CI cannot leave the machine:
 
-We deliberately SKIP the slow Tier-2 external passes here (axe-core a11y, `claude plugin validate`): even
-with axe now SAMPLED (~25 pages, ~1-2 min) they still cost far more than the deterministic checks, and CI
-runs `catalog_tests.py --full` (Tier-1 + the sampled axe) as the authoritative gate. Pre-push stays fast
-enough to keep on for every push.
+  1. `catalog.py build` — the actual markdown->HTML + mermaid render. This catches BUILD failures the
+     test suite structurally cannot: a notation marker that doesn't head its block, a bad mermaid fence,
+     an unregistered `index-def` slug — anything that aborts the render (rc=1). `catalog_tests.py` checks
+     ALREADY-BUILT HTML, so it never sees a build abort. This is the gap this hook was strengthened to
+     close: a `--no-verify` commit (which skips the pre-commit build) shipped a book-build abort straight
+     to CI's "Render markdown -> HTML" step. Now the render runs at pre-push, on `main`, where mmdc is
+     installed. (260729 RCA: a mid-block `index-def` aborted CI's build while `--tier1` stayed green.)
 
-Install once with `python3 catalog.py install-hooks` (sets core.hooksPath=hooks). No shell — pure
-Python, per the repo's tooling posture.
+  2. `catalog_tests.py --tier1` — the fast, stdlib, deterministic checks: schema, link + anchor
+     resolution, the book/*.html tracking (orphans), the concept-model drift lints (L1/L2/L3), the
+     empty-<th> twin, skill bundle integrity. ~seconds.
+
+CI still runs `catalog_tests.py --full` (Tier-2: html-validate + sampled axe + `claude plugin validate`)
+as the authoritative gate. Install once with `python3 catalog.py install-hooks` (sets core.hooksPath=hooks).
+No shell — pure Python, per the repo's tooling posture.
 
 Bypass (humans, rare — e.g. pushing a WIP branch): `git push --no-verify`.
 """
@@ -24,10 +27,21 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print("pre-push: running catalog_tests.py --tier1 (the fast deterministic gate) …", file=sys.stderr)
-r = subprocess.run([sys.executable, "catalog_tests.py", "--tier1"], cwd=ROOT)
-if r.returncode:
+
+def _run(*args: str) -> int:
+    return subprocess.run([sys.executable, *args], cwd=ROOT).returncode
+
+
+print("pre-push: catalog.py build (render gate — catches build aborts CI would hit) …", file=sys.stderr)
+if _run("catalog.py", "build"):
+    sys.stderr.write(
+        "\npre-push: catalog.py build FAILED — push refused.\n"
+        "The site does not render; fix the build error above (or `git push --no-verify` to override).\n")
+    sys.exit(1)
+
+print("pre-push: catalog_tests.py --tier1 (deterministic gate) …", file=sys.stderr)
+if _run("catalog_tests.py", "--tier1"):
     sys.stderr.write(
         "\npre-push: catalog_tests.py --tier1 FAILED — push refused.\n"
         "Fix the failing gate(s) above, or `git push --no-verify` to override (rare).\n")
-    sys.exit(r.returncode)
+    sys.exit(1)

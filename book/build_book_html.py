@@ -1696,12 +1696,12 @@ pattern, for when you need to look one up.
 different view of the same mechanisms:
 
 <!-- index-def: governance-target-agent -->
+<!-- index-def: governance-target-models-bridge -->
+<!-- index-def: governance-target-product -->
 - **Appendix A — Agent patterns** — the mechanisms that govern the *fleet that produces the work*: how \
 agents are dispatched, isolated, gated, and observed.
-<!-- index-def: governance-target-models-bridge -->
 - **Appendix B — Models-bridge patterns** — the mechanisms built around the *typed models the fleet \
 reasons through*: the shared map a bounded agent uses to operate a codebase larger than its context.
-<!-- index-def: governance-target-product -->
 - **Appendix C — Product patterns** — the mechanisms that govern the *shipped artifact itself*: its \
 canonical seams, its validation, and its conformance controls.
 - **Appendix D — Mechanism Stacks** — packages of patterns that travel together, each attached to a \
