@@ -266,6 +266,12 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: thesis-modeling | The Modeling Thesis
 - concept: thesis-alignment | The Alignment Thesis
 - concept: universal-language | Models are the universal language
+- concept: generative-validation | Generative validation
+- concept: mirror-vs-spec | Mirror vs. spec
+- concept: drift-caveat | The drift caveat
+- concept: governance-target-agent | Governance target — agent
+- concept: governance-target-models-bridge | Governance target — models-bridge
+- concept: governance-target-product | Governance target — product
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
