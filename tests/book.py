@@ -55,7 +55,7 @@ import os
 import re
 from typing import NamedTuple
 
-from tests.common import ROOT, rel
+from tests.common import FAIL, PASS, ROOT, rel
 
 # ---- tunable thresholds (module consts; adjust as the book settles) -------------------------------
 MAX_SECTION_WORDS = 400   # a heading-to-heading section over this many words is a wall of text
@@ -660,6 +660,17 @@ def check_float_ref() -> "tuple[list[Finding], dict]":
             findings.append(Finding(src_by_slug.get(r.chapter_slug, r.chapter_slug), r.chapter_slug,
                 f"{r.chapter_slug} — [ref:{r.key}] resolves to no <!-- label: {r.key} --> float"))
     return findings, {"floats": floats, "labelled": len(labels), "issues": len(findings)}
+
+
+def check_float_ref_gate() -> "tuple[str, list[str]]":
+    """BLOCKING gate twin of rule 12 (`book-float-ref`): FAIL if any numbered float lacks its intro
+    `[ref:]` after inline `<!-- noqa: book-float-ref — <reason> -->` suppressions are honored. Promoted from
+    audit-only once the tree cleared (rule-#55 audit-only-first). The `--book-audit` path still reports the
+    rule with full suppression detail; this is the enforcing twin `catalog_tests.py` wires into the gate."""
+    findings, _stats = check_float_ref()
+    idx = _SuppressionIndex()
+    active = [f for f in findings if not idx.covers("book-float-ref", f)]
+    return (FAIL if active else PASS), [f.msg for f in active]
 
 
 # ---- driver: run every rule, partition suppressed vs active, print a report; ALWAYS exit-neutral --
