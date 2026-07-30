@@ -25,6 +25,10 @@ brackets is the LINT NAME an inline suppression cites (see "Suppression" below):
  11. [book-mermaid-source] no RAW mermaid source (```mermaid fence / `flowchart`/`subgraph`/`-->` text)
                          in any built book/*.html — diagrams render to inline SVG at build time; the web
                          analogue of the PDF `verify_pdf` mermaid assert.
+ 12. [book-float-ref]   float introduction — every numbered float (figure / table / standalone mermaid)
+                         carries a `<!-- label: <key> -->` AND a `[ref:<key>]` appears in prose before it,
+                         so no float drops in cold; dangling `[ref:]` is a finding too. Walks the typed
+                         book IR (`book/book_ir.py`) — the first analysis to consume it.
 
 **Suppression.** Every rule honors an inline suppression comment, mirroring the repo's
 `# noqa: <name> — <reason>` convention but expressed as an HTML comment (the book is markdown):
@@ -614,6 +618,50 @@ def check_no_raw_mermaid() -> tuple[list[Finding], dict]:
     return findings, {"pages_scanned": pages, "issues": len(findings)}
 
 
+# ---- rule 12: float introduction (every figure/table/mermaid has a [ref:] before it) -------------
+
+
+def check_float_ref() -> "tuple[list[Finding], dict]":
+    """Every numbered float — figure, table, standalone mermaid — must be INTRODUCED, not dropped in cold:
+    it carries a `<!-- label: <key> -->` and a `[ref:<key>]` cross-reference appears in prose BEFORE it in
+    the same chapter. Also flags a `[ref:]` that resolves to no labelled float. This is the first analysis
+    to walk the typed book IR (`book/book_ir.py`) rather than re-parse the source. Suppress a deliberate
+    exception with `<!-- noqa: book-float-ref — <reason> -->` in the source .md."""
+    import sys as _sys  # noqa: E402 — local path bootstrap so the book/ IR module is importable
+    if BOOK not in _sys.path:
+        _sys.path.insert(0, BOOK)
+    import book_ir as _ir  # noqa: E402 — the typed book IR lives under book/
+
+    doc = _ir.parse_book()
+    labels = doc.labels()
+    src_by_slug = {os.path.splitext(os.path.basename(f))[0]: f for f in _chapter_src_files()}
+    findings: list[Finding] = []
+    floats = 0
+    for ch in doc.chapters:
+        src = src_by_slug.get(ch.slug, ch.slug)
+        first_ref: dict[str, int] = {}
+        for r in ch.refs():
+            first_ref[r.key] = min(r.block_index, first_ref.get(r.key, r.block_index))
+        for b in ch.floats():
+            floats += 1
+            if not b.label:
+                findings.append(Finding(src, ch.slug,
+                    f"{ch.slug} — {b.kind.value} (block {b.index}) is not introduced: no <!-- label: --> "
+                    f"+ [ref:] before it"))
+            elif b.label not in first_ref:
+                findings.append(Finding(src, ch.slug,
+                    f"{ch.slug} — {b.kind.value} '{b.label}' is never introduced by a [ref:{b.label}]"))
+            elif first_ref[b.label] >= b.index:
+                findings.append(Finding(src, ch.slug,
+                    f"{ch.slug} — {b.kind.value} '{b.label}': its first [ref:] is at/after the float, "
+                    f"so it does not introduce it"))
+    for r in doc.refs():
+        if r.key not in labels:
+            findings.append(Finding(src_by_slug.get(r.chapter_slug, r.chapter_slug), r.chapter_slug,
+                f"{r.chapter_slug} — [ref:{r.key}] resolves to no <!-- label: {r.key} --> float"))
+    return findings, {"floats": floats, "labelled": len(labels), "issues": len(findings)}
+
+
 # ---- driver: run every rule, partition suppressed vs active, print a report; ALWAYS exit-neutral --
 
 # (label, lint-name, fn). The lint-name is what an inline `<!-- noqa: <name> — <reason> -->` cites.
@@ -629,6 +677,7 @@ _RULES = [
     ("9. render fidelity (un-converted markdown)", "book-render-fidelity", check_render_fidelity),
     ("10. no hardcoded 'Chapter N' in prose", "book-chapter-num", check_hardcoded_chapter_num),
     ("11. no raw mermaid source in built HTML", "book-mermaid-source", check_no_raw_mermaid),
+    ("12. float introduction (label + [ref:] before it)", "book-float-ref", check_float_ref),
 ]
 
 # the lint names, exported so a suppression comment can be validated against the known set.

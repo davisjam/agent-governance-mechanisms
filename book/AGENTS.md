@@ -100,6 +100,14 @@ so they stay invisible if the markdown is read raw.
   figure page (whose internal links are book-relative) live, without splicing its styles/scripts inline.
   The `<iframe>` carries a required accessibility `title`. A missing target page fails the build. This is
   how the appendix embeds the rewired mechanism map.
+- **Float labels + cross-references — `<!-- label: <key> -->` and `[ref:<key>]`** (LaTeX `\label`/`\ref`).
+  Arm a `<!-- label: <key> -->` on the line **immediately before** a float (figure / table / standalone
+  mermaid) to give it a stable cross-ref key; write `[ref:<key>]` in prose and the build renders it as a
+  linked **"Figure N"** / **"Table N"**, the number **derived** from reading order (never hand-authored).
+  A `[ref:]` to an unknown key **fails the build**. **Rule:** every numbered float must be *introduced* —
+  carry a `<!-- label: -->` and be named by a `[ref:]` in the prose **before** it, so no float drops in
+  cold. Enforced by `tests/book.py` rule `book-float-ref` (walks the typed book IR, `book/book_ir.py`);
+  suppress a deliberate exception with `<!-- noqa: book-float-ref — <reason> -->`.
 - **Metrics tokens — `{{token}}`.** Recurring numbers (weeks, LoC, costs) live in `data/metrics.json`.
   Reference them from prose as `{{token}}`; the build substitutes the value. An **unknown token fails
   loud** — a mistyped placeholder stops the build rather than shipping `{{typo}}`. Keys prefixed with `_`
@@ -327,7 +335,9 @@ concept registry.
 
 - Edit markdown under `part<N>/`, `frontmatter/`, `backmatter/` — never the `.html`.
 - New recurring number → `data/metrics.json`, referenced as `{{token}}`.
-- New figure → drop the asset in `assets/`, reference with `<!-- figure: assets/<file> | caption -->`.
+- New figure → drop the asset in `assets/`, reference with `<!-- figure: assets/<file> | caption -->`,
+  and **introduce it**: put `<!-- label: <key> -->` on the line above it and name it with a `[ref:<key>]`
+  in the prose before it (same for any table or standalone mermaid — see the float-labels convention in §3).
 - New appendix Structure/Sample Code → `appendix-fills/<role>/<slug>.md`, keyed by the entry slug.
 - New index concept → register in `index-terms.md`; annotate per §6 once the tags are implemented.
 - Rebuild with `python3 catalog.py build` (runs the reachability gate); commit both the source and the

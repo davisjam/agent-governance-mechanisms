@@ -197,7 +197,7 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
-    "inset", "data",
+    "inset", "data", "label",
 )
 # A comment whose first token is one of the vocabulary keywords — used to peel a marker glued to the head
 # of a prose block (placement-robust stripping: an author need not remember a blank line) and, in the gate,
@@ -588,7 +588,20 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
     blocks = _split_blocks(md)
     pending_anchors: list[str] = []         # anchor id(s) to attach to the next content block
     pending_table_caption: list[str] = []   # a `<!-- table: … -->` caption armed for the next table
+    pending_label: list[str] = []           # a `<!-- label: … -->` cross-ref key armed for the next float
     occ: dict[tuple[str, str], int] = {}    # per-page (slug, kind) → next occurrence index
+
+    def _with_label(frag: str) -> str:
+        """Attach an armed `<!-- label: key -->` as `data-label` on the float's opening tag, so the
+        numbering pre-pass can build the key→"Figure N" map the `[ref:key]` cross-reference resolves
+        against. Consumes the pending label; a float with no armed label renders unchanged."""
+        if pending_label:
+            key = html.escape(pending_label.pop(0), quote=True)
+            # Inject at the END of the opening tag (before `>`), NOT right after `<figure`: the float
+            # regex and the numbering pass both key on `class="book-figure"` sitting immediately after
+            # `<figure `, so a `data-label` wedged in front of `class` would make the float unmatchable.
+            frag = re.sub(r"(<(?:figure|table)\b[^>]*?)>", rf'\1 data-label="{key}">', frag, count=1)
+        return frag
 
     def _emit(block_html: str) -> None:
         # Attach every pending anchor. The first goes onto the block's own opening tag; extras (two tags
@@ -652,7 +665,12 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 _emit(_figure_iframe_block(s))
                 return True
             if inner.startswith("figure:"):
-                _emit(_figure_block(s))
+                _emit(_with_label(_figure_block(s)))
+                return True
+            if inner.startswith("label:"):
+                # A cross-ref key for the NEXT float: `<!-- label: <key> -->`. Armed here, consumed by
+                # `_with_label` when the figure/mermaid/table emits, which stamps it as `data-label`.
+                pending_label.append(s[len("<!--"):-len("-->")].strip()[len("label:"):].strip())
                 return True
             if inner.startswith("table:"):
                 # A caption for the NEXT table: `<!-- table: <full caption> [short: <short>] -->`. Armed
@@ -736,7 +754,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                             and _nb.endswith("*") and "```" not in _nb and "\n\n" not in _nb):
                         cap_html = _caption_el("figcaption", _nb.strip("*").strip())
                         skip_blocks.add(_bi + 1)
-                _emit(f'<figure class="book-figure diagram-figure">{svg}{cap_html}</figure>')
+                _emit(_with_label(f'<figure class="book-figure diagram-figure">{svg}{cap_html}</figure>'))
             else:
                 _emit(f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
             continue
@@ -815,7 +833,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             if pending_table_caption:
                 cap_el = _caption_el("caption", pending_table_caption.pop(0))
                 tbl = re.sub(r"(<table\b[^>]*>)", lambda mm: mm.group(1) + cap_el, tbl, count=1)
-            _emit(tbl)
+            _emit(_with_label(tbl))
             continue
         # Unordered list — the first line opens an item with `- `; a following line that does NOT
         # start with `- ` is a wrapped continuation of the current item (source bullets often wrap
@@ -2936,6 +2954,7 @@ _FLOAT_RE = re.compile(
     r'(?P<fig><figure class="book-figure(?![^"]*catalogue-embed)[^"]*"[^>]*>.*?</figure>)'
     r'|(?P<tbl><table\b[^>]*>.*?</table>)', re.S)
 _DATA_SHORT_RE = re.compile(r'data-short="([^"]*)"')
+_DATA_LABEL_RE = re.compile(r'data-label="([^"]*)"')
 
 
 def _split_caption_md(md: str) -> tuple[str, str | None]:
@@ -2965,17 +2984,24 @@ def _caption_el(tag: str, caption_md: str, extra_class: str = "") -> str:
 
 
 def _number_floats(body: str, fig_n: int, tbl_n: int,
-                   collect: "list[dict] | None" = None, slug: str | None = None) -> tuple[str, int, int]:
+                   collect: "list[dict] | None" = None, slug: str | None = None,
+                   label_sink: "dict[str, dict] | None" = None) -> tuple[str, int, int]:
     """Prepend a monotonic, ctrl-f-able "Figure N."/"Table N." label to every figure/table caption in
     document order, give each an `id` (`fig-N`/`tbl-N`) the list of floats links to, and — when `collect`
-    is given — record each captioned float's {kind, num, short, slug} for that list. Numbers are DERIVED
-    from reading-order position, never hand-authored. Returns (numbered_body, next_fig_n, next_tbl_n)."""
+    is given — record each captioned float's {kind, num, short, slug} for that list. When `label_sink` is
+    given, record each `data-label`-carrying float's key→{kind, num, slug} so `[ref:key]` cross-references
+    resolve to "Figure N"/"Table N". Numbers are DERIVED from reading-order position, never hand-authored.
+    Returns (numbered_body, next_fig_n, next_tbl_n)."""
 
     def _harvest(frag: str, kind: str, n: int) -> None:
         if collect is not None:
             ds = _DATA_SHORT_RE.search(frag)
             if ds and ds.group(1):
                 collect.append({"kind": kind, "num": n, "short": ds.group(1), "slug": slug})
+        if label_sink is not None:
+            dl = _DATA_LABEL_RE.search(frag)
+            if dl and dl.group(1):
+                label_sink[dl.group(1)] = {"kind": kind, "num": n, "slug": slug}
 
     def _repl(m: "re.Match[str]") -> str:
         nonlocal fig_n, tbl_n
@@ -3010,17 +3036,38 @@ def _number_floats(body: str, fig_n: int, tbl_n: int,
     return _FLOAT_RE.sub(_repl, body), fig_n, tbl_n
 
 
-def _collect_floats(chapters: list[dict], page_anchor_maps: dict) -> list[dict]:
+_XREF_RE = re.compile(r"\[ref:\s*([a-z0-9][a-z0-9-]*)\]")
+
+
+def _resolve_xrefs(body: str, ref_map: "dict[str, dict]", for_print: bool) -> str:
+    """Resolve every `[ref:key]` cross-reference to a linked "Figure N"/"Table N", using the label map the
+    numbering pre-pass built. Fails loud on a `[ref:]` whose key has no `<!-- label: -->` float — a dangling
+    cross-reference must stop the build, not ship as literal `[ref:foo]` text."""
+    def _repl(m: "re.Match[str]") -> str:
+        key = m.group(1)
+        e = ref_map.get(key)
+        if e is None:
+            raise SystemExit(
+                f"[ref:{key}]: no float carries `<!-- label: {key} -->` — check the spelling or add the label")
+        word = "Figure" if e["kind"] == "fig" else "Table"
+        anchor = f'{e["kind"]}-{e["num"]}'
+        href = f'#{anchor}' if for_print else f'{e["slug"]}.html#{anchor}'
+        return f'<a class="xref" href="{html.escape(href, quote=True)}">{word}&nbsp;{e["num"]}</a>'
+    return _XREF_RE.sub(_repl, body)
+
+
+def _collect_floats(chapters: list[dict], page_anchor_maps: dict) -> "tuple[list[dict], dict[str, dict]]":
     """Render every chapter once (mermaid SVG is cached) and number its floats in reading order, returning
-    the ordered list of captioned floats ({kind, num, short, slug}) for the front-matter list of floats.
+    (ordered captioned floats for the list of figures/tables, label→{kind,num,slug} map for [ref:] xrefs).
     The inline numbering in the print / per-chapter builds threads the SAME counters over the SAME reading
-    order, so a float's list number equals its printed 'Figure N.' / 'Table N.'."""
+    order, so a float's list number equals its printed 'Figure N.' / 'Table N.' and its `[ref:]` number."""
     entries: list[dict] = []
+    labels: dict[str, dict] = {}
     fig_n = tbl_n = 1
     for c in chapters:
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
-        _, fig_n, tbl_n = _number_floats(body, fig_n, tbl_n, collect=entries, slug=c["slug"])
-    return entries
+        _, fig_n, tbl_n = _number_floats(body, fig_n, tbl_n, collect=entries, slug=c["slug"], label_sink=labels)
+    return entries, labels
 
 
 def _list_of_floats_chapter(entries: list[dict], for_print: bool) -> dict:
@@ -3055,13 +3102,16 @@ def _list_of_floats_chapter(entries: list[dict], for_print: bool) -> dict:
 _GENERATED_PAGE_SLUGS = ("list-of-figures",)
 
 
-def _insert_list_of_floats(chapters: list[dict], page_anchor_maps: dict, for_print: bool) -> list[dict]:
-    """Insert the generated List of Figures and Tables just after the preface. Shared by the print and
-    per-chapter builds so the two cannot drift; its float numbers come from the same reading-order pass the
-    inline numbering uses, so they agree."""
-    lof = _list_of_floats_chapter(_collect_floats(chapters, page_anchor_maps), for_print)
+def _insert_list_of_floats(chapters: list[dict], page_anchor_maps: dict,
+                           for_print: bool) -> "tuple[list[dict], dict[str, dict]]":
+    """Insert the generated List of Figures and Tables just after the preface, and return the label→float
+    map for `[ref:]` cross-reference resolution. Shared by the print and per-chapter builds so the two
+    cannot drift; its float numbers come from the same reading-order pass the inline numbering uses, so the
+    list number, the printed 'Figure N.', and every `[ref:]` to it all agree."""
+    entries, ref_map = _collect_floats(chapters, page_anchor_maps)
+    lof = _list_of_floats_chapter(entries, for_print)
     pi = next((k for k, c in enumerate(chapters) if c["slug"].endswith("preface")), -1)
-    return chapters[: pi + 1] + [lof] + chapters[pi + 1:]
+    return chapters[: pi + 1] + [lof] + chapters[pi + 1:], ref_map
 
 
 def expected_page_slugs() -> set[str]:
@@ -3097,7 +3147,7 @@ def build_print_html() -> pathlib.Path:
     concept_registry, page_anchor_maps = _harvest_concept_tags(chapters)
     _collect_glossary(chapters)
 
-    chapters = _insert_list_of_floats(chapters, page_anchor_maps, for_print=True)
+    chapters, ref_map = _insert_list_of_floats(chapters, page_anchor_maps, for_print=True)
 
     any_mermaid = any(c.get("mermaid") for c in chapters)
 
@@ -3137,6 +3187,7 @@ def build_print_html() -> pathlib.Path:
         )
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
         body, fig_n, tbl_n = _number_floats(body, fig_n, tbl_n)
+        body = _resolve_xrefs(body, ref_map, for_print=True)
         parts_body.append(
             f'<section class="print-chapter" id="{html.escape(_print_anchor(c["slug"]), quote=True)}">'
             f'{header}{body}</section>'
@@ -3497,7 +3548,7 @@ def build() -> int:
     # Harvest the glossary annotations (single source of truth for the inline glosses + the back-Glossary).
     _collect_glossary(chapters)
 
-    chapters = _insert_list_of_floats(chapters, page_anchor_maps, for_print=False)
+    chapters, ref_map = _insert_list_of_floats(chapters, page_anchor_maps, for_print=False)
 
     # Per-chapter pages.
     fig_n = tbl_n = 1   # same reading-order counters as the print build, so a float keeps its number
@@ -3519,6 +3570,7 @@ def build() -> int:
         )
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
         body, fig_n, tbl_n = _number_floats(body, fig_n, tbl_n)
+        body = _resolve_xrefs(body, ref_map, for_print=False)
         if prev_c:
             prev_html = (
                 f'<a class="prev" href="{prev_c["slug"]}.html"><span class="dir">‹ Previous</span>'
