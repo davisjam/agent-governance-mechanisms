@@ -413,6 +413,16 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: infinite-midwit | local
 - term: fleet-scale | local
 - term: support-ratio | local
+- term: probabilistic-component | section
+- term: llm-as-function-call | section
+- term: trust-boundary | section
+- term: edit-language | section
+- term: reactive-seam | local
+- term: serverless | local
+- term: poll-vs-push | local
+- term: phased-design | local
+- term: mvc | local
+- term: two-producers | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
