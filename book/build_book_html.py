@@ -577,6 +577,20 @@ def _inject_anchor_id(block_html: str, anchor_id: str) -> str:
 _IS_THESIS_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>\s*The\b.*?\bThesis\.\s*</strong>", re.S)
 
 
+_BOOK_IR_MOD = None  # cached `book_ir` module handle (lazy — book_ir imports THIS module as its tokenizer SSOT)
+
+
+def _book_ir():
+    """Return the `book_ir` module, imported lazily to break the SSOT import cycle (book_ir imports this
+    module for the shared tokenizer, so this module must NOT import book_ir at module load). The renderer's
+    block-classification dispatch is single-sourced through it — one classifier feeds both render and analysis."""
+    global _BOOK_IR_MOD
+    if _BOOK_IR_MOD is None:
+        import book_ir
+        _BOOK_IR_MOD = book_ir
+    return _BOOK_IR_MOD
+
+
 def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = None) -> str:
     """Convert the markdown subset the chapters use into HTML.
 
@@ -584,6 +598,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
     curated index links to. When a `<!-- index-def: … -->` / `<!-- index-example: … -->` tag is met, its
     anchor is attached to the FOLLOWING rendered block (per book/AGENTS.md §6). Occurrences are counted
     per (slug, kind) in reading order to match `_harvest_concept_tags`."""
+    _ir = _book_ir()                        # the typed IR — the single classifier for the content dispatch
     out: list[str] = []
     blocks = _split_blocks(md)
     pending_anchors: list[str] = []         # anchor id(s) to attach to the next content block
@@ -712,165 +727,65 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                     f"mid-block marker {_ln.strip()!r}")
         block = "\n".join(blk_lines)
         stripped = block.strip()
-        # A titled INSET — `<!-- inset: <title> -->` glued to the head of a fenced code block. The build
-        # lifts the code into a set-apart box carrying a small label ("a real artifact from the system"),
-        # then renders the fence as usual inside it. The marker sits in the SAME block as the fence (no
-        # blank line between), so it never reaches `_consume_leading_marker` — it is peeled here.
-        _inset_m = _INSET_RE.match(stripped.splitlines()[0].strip())
-        if _inset_m and len(stripped.splitlines()) > 1 and stripped.splitlines()[1].strip().startswith("```"):
-            title = _inset_m.group("title")
-            lines = stripped.splitlines()[1:]  # drop the inset marker; the rest is the fence
-            lang = lines[0].strip()[3:].strip().lower()
-            inner_lines = lines[1:]
-            if inner_lines and inner_lines[-1].strip() == "```":
-                inner_lines = inner_lines[:-1]
-            inner = "\n".join(inner_lines)
-            body = (render_mermaid_svg(inner) if lang == "mermaid"
-                    else f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
-            # <figure> (a landmark-free grouping) with a demoted `inset-title` label — NOT an <hN> (no
-            # heading-order break) — so it reuses the concept-inset label typography.
-            _emit(f'<figure class="code-inset"><p class="inset-title">{inline(title)}</p>{body}</figure>')
+        # ── The A-flip: one classifier, one renderer per node kind. ────────────────────────────────
+        # Classification is single-sourced through the typed IR (`book_ir.classify_render_block`, which
+        # wraps the IR's `_classify_prose`), and each kind renders through the extracted `_render_*`
+        # primitive. The marker-arming state above (pending label / caption / anchors, gloss sidenotes)
+        # stays in this loop — it is the placement-robust arming layer the content dispatch consumes.
+        # This replaces the old inline prefix-testing cascade; the emit is byte-identical.
+        kind = _ir.classify_render_block(block)
+
+        if kind is _ir.BlockKind.CODE_INSET:
+            _emit(_render_inset(block))
             continue
-        # Fenced code — a ```mermaid block is rendered to a STATIC INLINE SVG at build time (so raw
-        # mermaid source ships NOWHERE — not in the web HTML, not in the PDF); any other fenced block
-        # renders as a plain <pre><code>.
-        if stripped.startswith("```"):
-            lines = block.splitlines()
-            lang = lines[0].strip()[3:].strip().lower()
-            inner_lines = lines[1:]
-            if inner_lines and inner_lines[-1].strip() == "```":
-                inner_lines = inner_lines[:-1]
-            inner = "\n".join(inner_lines)
-            if lang == "mermaid":
-                # A standalone diagram is a numbered figure: wrap it in <figure class="book-figure"> so the
-                # figure-numbering pass labels it "Figure N", and fold an immediately-following italic
-                # paragraph (`*…*`, one paragraph) in as its <figcaption>. Mermaid inside a concept-inset
-                # blockquote or a code-inset is rendered elsewhere and stays un-numbered.
-                svg = render_mermaid_svg(inner)
-                cap_html = ""
-                if _bi + 1 < len(blocks):
-                    _nb = blocks[_bi + 1].strip()
-                    if (_nb.startswith("*") and not _nb.startswith("**")
-                            and _nb.endswith("*") and "```" not in _nb and "\n\n" not in _nb):
-                        cap_html = _caption_el("figcaption", _nb.strip("*").strip())
-                        skip_blocks.add(_bi + 1)
-                _emit(_with_label(f'<figure class="book-figure diagram-figure">{svg}{cap_html}</figure>'))
-            else:
-                _emit(f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
+        if kind is _ir.BlockKind.MERMAID:
+            # A standalone diagram is a numbered figure; fold an immediately-following one-line italic
+            # paragraph (`*…*`) in as its <figcaption>, and skip that block. `_with_label` stamps any
+            # armed `<!-- label: -->` so the numbering pass can key the `[ref:]` cross-reference.
+            caption_md = None
+            if _bi + 1 < len(blocks):
+                _nb = blocks[_bi + 1].strip()
+                if (_nb.startswith("*") and not _nb.startswith("**")
+                        and _nb.endswith("*") and "```" not in _nb and "\n\n" not in _nb):
+                    caption_md = _nb.strip("*").strip()
+                    skip_blocks.add(_bi + 1)
+            _emit(_with_label(_render_mermaid_figure(block, caption_md)))
             continue
-        # Gap-marker callouts.
+        if kind is _ir.BlockKind.CODE:
+            _emit(_render_code(block))
+            continue
+        # Gap-marker callouts (`[FILL IN: …]` / `[MORE CHAPTERS FOLLOW: …]`) — the IR classifies these as
+        # PARA (they are prose-shaped), so the renderer keeps the shape test for them just ahead of prose.
         if stripped.startswith("[FILL IN:") or stripped.startswith("[MORE CHAPTERS FOLLOW:"):
-            kind = "fill" if stripped.startswith("[FILL IN:") else "more"
-            label = "FILL IN" if kind == "fill" else "MORE CHAPTERS FOLLOW"
-            inner = stripped[stripped.index(":") + 1:].rstrip("]").strip()
-            # A plain <div> (not <aside>): <aside> is a `complementary` landmark, and two markers on one
-            # page trip html-validate's unique-landmark rule (each landmark needs a unique accessible name).
-            _emit(
-                f'<div class="marker marker-{kind}">'
-                f'<span class="marker-tag">{label}</span> {inline(inner)}</div>'
-            )
+            _emit(_render_gap_marker(block))
             continue
-        # NOTE: the whole ARGUMENT-taking notation vocabulary — `figure:`, `figure-iframe:`, `eq:`,
-        # `gloss:`, `gloss-only:`, `glossary-auto`, `index-def:`, `index-example:` — is consumed by
-        # `_consume_leading_marker` in the block-head peel above. That is placement-robust: a marker renders
-        # / harvests whether it heads a standalone block OR is glued to the prose it annotates (no blank
-        # line). A marker glued AFTER prose (mid-block) fails loud there. So NO standalone dispatch is needed
-        # for any of them here — only the generic-comment passthrough below, for authoring TODO comments.
-        # A standalone HTML comment (e.g. the TODO markers) — emit it raw so it stays an invisible
-        # comment in the source rather than escaped visible text.
+        # A standalone HTML comment (e.g. an authoring TODO) — emit it raw so it stays an invisible
+        # comment in the source rather than escaped visible text. (The whole argument-taking notation
+        # vocabulary is already consumed by `_consume_leading_marker` in the block-head peel above.)
         if stripped.startswith("<!--") and stripped.endswith("-->") and stripped.count("<!--") == 1:
             out.append(stripped)
             continue
-        # Headings. A trailing `{#slug}` sets the heading's id anchor (used by the appendix so the
-        # rewired mechanism-map figure can deep-link each pattern); it is stripped from the visible text.
-        if stripped.startswith("#### "):
-            txt, anc = _heading_anchor(stripped[5:])
-            _emit(f"<h4{anc}>{inline(txt)}</h4>")
+        if kind is _ir.BlockKind.HEADING:
+            _emit(_render_heading(block))
             continue
-        if stripped.startswith("### "):
-            txt, anc = _heading_anchor(stripped[4:])
-            _emit(f"<h3{anc}>{inline(txt)}</h3>")
+        if kind is _ir.BlockKind.BLOCKQUOTE:
+            _emit(_render_blockquote(block))
             continue
-        if stripped.startswith("## "):
-            txt, anc = _heading_anchor(stripped[3:])
-            kick, txt = _role_kicker(txt)
-            _emit(f"<h2{anc}>{kick}{inline(txt)}</h2>")
-            continue
-        if stripped.startswith("# "):
-            txt, anc = _heading_anchor(stripped[2:])
-            _emit(f"<h1{anc}>{inline(txt)}</h1>")
-            continue
-        # Blockquote (all lines start with >). Its inner content is itself markdown — a `> ###`
-        # heading, `> ` prose paragraphs, a `> ```mermaid ``` fence — so strip the `>` prefix and
-        # render the inner content recursively. This is what makes a boxed concept-primer inset
-        # (a heading + prose + a diagram) render as structured content, not one flattened line.
-        if all(ln.strip().startswith(">") for ln in block.splitlines()):
-            inner_md = "\n".join(_strip_blockquote_prefix(ln) for ln in block.splitlines())
-            inner_html = md_to_html(inner_md)
-            # An inset's `### Title` is a callout LABEL, not a document-outline heading. Rendering it as
-            # <hN> makes axe flag a heading-order skip when an inset sits right after the chapter <h1>.
-            # Demote any heading inside a blockquote to a styled paragraph, preserving its {#id} anchor.
-            inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
-            # Four kinds of blockquote (taxonomy: book/_design/callout-typography.md). Classified by shape:
-            #   1. CONCEPT INSET — carries a demoted `inset-title` label (a `> ### Title` primer): a BOX.
-            #   2. THESIS — a `> **The <Name> Thesis.**` bold lead: a prominent LAVENDER box (`thesis-box`).
-            #   3. DEFINITION (`> **Term.**`) / 4. PLAIN ASIDE (plain `>`): a light Tufte-style sidenote —
-            #      no box, floats into the right gutter on wide screens, collapses inline on narrow.
-            # THESIS is checked before the aside default: its bold lead ends in the literal word `Thesis.`,
-            # which distinguishes it from an ordinary `> **Term.**` definition (which stays a sidenote).
-            if 'class="inset-title"' in inner_html:
-                klass = "concept-inset"
-            elif _IS_THESIS_LEAD_RE.search(inner_html):
-                klass = "thesis-box"
-            else:
-                klass = "aside-sidenote"
-            _emit(f'<blockquote class="{klass}">{inner_html}</blockquote>')
-            continue
-        # Pipe table (a header row, a `|---|---|` separator, then body rows). GitHub-flavored
-        # markdown tables — the invariant/checker tables in the model pages depend on this.
-        if _is_pipe_table(block):
+        if kind is _ir.BlockKind.TABLE:
             tbl = _render_pipe_table(block)
             if pending_table_caption:
                 cap_el = _caption_el("caption", pending_table_caption.pop(0))
                 tbl = re.sub(r"(<table\b[^>]*>)", lambda mm: mm.group(1) + cap_el, tbl, count=1)
             _emit(_with_label(tbl))
             continue
-        # Unordered list — the first line opens an item with `- `; a following line that does NOT
-        # start with `- ` is a wrapped continuation of the current item (source bullets often wrap
-        # across lines with a 2-space hanging indent). Join continuations into their item so a wrapped
-        # bullet still renders as one <li>, not a <p> full of literal dashes.
-        _lines = block.splitlines()
-        if _lines and _lines[0].strip().startswith("- "):
-            li_texts: list[str] = []
-            for ln in _lines:
-                s = ln.strip()
-                if s.startswith("- "):
-                    li_texts.append(s[2:])
-                elif li_texts:  # continuation of the current item
-                    li_texts[-1] += " " + s
-                else:  # a stray non-bullet leading line — keep it so nothing is dropped
-                    li_texts.append(s)
-            items = "".join(f"<li>{inline(t)}</li>" for t in li_texts)
-            _emit(f"<ul>{items}</ul>")
+        if kind is _ir.BlockKind.LIST:
+            _emit(_render_unordered_list(block))
             continue
-        # Ordered list — same wrapped-continuation handling as the unordered case, but items open with
-        # `N. ` (any digits + dot + space). Catalogue entries carried into the appendix use these; without
-        # this they collapsed into a <p> full of literal `1.  2.  3.` run-ons.
-        if _lines and re.match(r"^\d+\.\s", _lines[0].strip()):
-            oli: list[str] = []
-            for ln in _lines:
-                s = ln.strip()
-                if re.match(r"^\d+\.\s", s):
-                    oli.append(re.sub(r"^\d+\.\s+", "", s))
-                elif oli:
-                    oli[-1] += " " + s
-                else:
-                    oli.append(s)
-            items = "".join(f"<li>{inline(t)}</li>" for t in oli)
-            _emit(f"<ol>{items}</ol>")
+        if kind is _ir.BlockKind.ORDERED_LIST:
+            _emit(_render_ordered_list(block))
             continue
-        # Paragraph (join wrapped lines).
-        _emit(f"<p>{inline(' '.join(ln.strip() for ln in block.splitlines()))}</p>")
+        # Paragraph (the IR's PARA fall-through).
+        _emit(_render_paragraph(block))
     return "\n".join(out)
 
 
@@ -939,6 +854,136 @@ def _render_pipe_table(block: str) -> str:
         '<table class="book-table"><thead><tr>'
         f"{thead}</tr></thead><tbody>{''.join(trs)}</tbody></table>"
     )
+
+
+# ── Per-block-kind content renderers ──────────────────────────────────────────────────────────────
+# Extracted verbatim from `md_to_html`'s block loop so a single dispatch table maps each IR `BlockKind`
+# to its HTML. These are the "render each node kind to HTML" primitives of the C→A migration: the emit
+# loop below walks the block segmentation and calls the one that matches, rather than re-testing string
+# prefixes inline. Each returns the SAME HTML the old inline branch produced (byte-identical build).
+
+def _render_inset(block: str) -> str:
+    """A titled INSET — `<!-- inset: <title> -->` glued to the head of a fenced code block — lifted into a
+    set-apart box (a `<figure class="code-inset">` with a demoted `inset-title` label, NOT an <hN>, so no
+    heading-order break). A mermaid fence renders to a static inline SVG; any other fence to <pre><code>."""
+    lines = block.strip().splitlines()
+    title = _INSET_RE.match(lines[0].strip()).group("title")
+    lines = lines[1:]  # drop the inset marker; the rest is the fence
+    lang = lines[0].strip()[3:].strip().lower()
+    inner_lines = lines[1:]
+    if inner_lines and inner_lines[-1].strip() == "```":
+        inner_lines = inner_lines[:-1]
+    inner = "\n".join(inner_lines)
+    body = (render_mermaid_svg(inner) if lang == "mermaid"
+            else f"<pre><code>{html.escape(inner, quote=False)}</code></pre>")
+    return f'<figure class="code-inset"><p class="inset-title">{inline(title)}</p>{body}</figure>'
+
+
+def _render_code(block: str) -> str:
+    """A non-mermaid fenced block → a plain <pre><code>."""
+    lines = block.splitlines()
+    inner_lines = lines[1:]
+    if inner_lines and inner_lines[-1].strip() == "```":
+        inner_lines = inner_lines[:-1]
+    inner = "\n".join(inner_lines)
+    return f"<pre><code>{html.escape(inner, quote=False)}</code></pre>"
+
+
+def _render_mermaid_figure(block: str, caption_md: str | None) -> str:
+    """A standalone ```mermaid fence → a numbered `<figure class="book-figure diagram-figure">` holding the
+    static inline SVG, with an optional folded italic-paragraph <figcaption>. `caption_md` is the folded
+    following-paragraph caption text (already stripped of its `*…*`), or None."""
+    lines = block.splitlines()
+    inner_lines = lines[1:]
+    if inner_lines and inner_lines[-1].strip() == "```":
+        inner_lines = inner_lines[:-1]
+    inner = "\n".join(inner_lines)
+    svg = render_mermaid_svg(inner)
+    cap_html = _caption_el("figcaption", caption_md) if caption_md is not None else ""
+    return f'<figure class="book-figure diagram-figure">{svg}{cap_html}</figure>'
+
+
+def _render_gap_marker(block: str) -> str:
+    """A `[FILL IN: …]` / `[MORE CHAPTERS FOLLOW: …]` gap-marker callout → a plain <div> (not <aside>: two
+    markers on one page would trip the unique-landmark accessibility rule)."""
+    stripped = block.strip()
+    kind = "fill" if stripped.startswith("[FILL IN:") else "more"
+    label = "FILL IN" if kind == "fill" else "MORE CHAPTERS FOLLOW"
+    inner = stripped[stripped.index(":") + 1:].rstrip("]").strip()
+    return (f'<div class="marker marker-{kind}">'
+            f'<span class="marker-tag">{label}</span> {inline(inner)}</div>')
+
+
+def _render_heading(block: str) -> str:
+    """A `#`..`####` heading → the matching <hN>. A trailing `{#slug}` sets the id anchor (stripped from the
+    visible text); an `## ` may carry a leading `[role: Name]` kicker."""
+    stripped = block.strip()
+    if stripped.startswith("#### "):
+        txt, anc = _heading_anchor(stripped[5:])
+        return f"<h4{anc}>{inline(txt)}</h4>"
+    if stripped.startswith("### "):
+        txt, anc = _heading_anchor(stripped[4:])
+        return f"<h3{anc}>{inline(txt)}</h3>"
+    if stripped.startswith("## "):
+        txt, anc = _heading_anchor(stripped[3:])
+        kick, txt = _role_kicker(txt)
+        return f"<h2{anc}>{kick}{inline(txt)}</h2>"
+    txt, anc = _heading_anchor(stripped[2:])
+    return f"<h1{anc}>{inline(txt)}</h1>"
+
+
+def _render_blockquote(block: str) -> str:
+    """A blockquote (every line starts with `>`) → a classified `<blockquote>`. Its inner content is itself
+    markdown (heading + prose + a `> ```mermaid ``` fence), rendered recursively; an inner heading is demoted
+    to a styled `inset-title` paragraph (no document-outline break). The class is picked by shape: a demoted
+    label → `concept-inset`; a `**The … Thesis.**` lead → `thesis-box`; else a light `aside-sidenote`."""
+    inner_md = "\n".join(_strip_blockquote_prefix(ln) for ln in block.splitlines())
+    inner_html = md_to_html(inner_md)
+    inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
+    if 'class="inset-title"' in inner_html:
+        klass = "concept-inset"
+    elif _IS_THESIS_LEAD_RE.search(inner_html):
+        klass = "thesis-box"
+    else:
+        klass = "aside-sidenote"
+    return f'<blockquote class="{klass}">{inner_html}</blockquote>'
+
+
+def _render_unordered_list(block: str) -> str:
+    """An unordered list — items open with `- `; a following non-`- ` line is a wrapped continuation folded
+    into the current item so a wrapped bullet stays one <li>."""
+    li_texts: list[str] = []
+    for ln in block.splitlines():
+        s = ln.strip()
+        if s.startswith("- "):
+            li_texts.append(s[2:])
+        elif li_texts:
+            li_texts[-1] += " " + s
+        else:
+            li_texts.append(s)
+    items = "".join(f"<li>{inline(t)}</li>" for t in li_texts)
+    return f"<ul>{items}</ul>"
+
+
+def _render_ordered_list(block: str) -> str:
+    """An ordered list — items open with `N. `; wrapped continuations fold into the current item (same as
+    the unordered case)."""
+    oli: list[str] = []
+    for ln in block.splitlines():
+        s = ln.strip()
+        if re.match(r"^\d+\.\s", s):
+            oli.append(re.sub(r"^\d+\.\s+", "", s))
+        elif oli:
+            oli[-1] += " " + s
+        else:
+            oli.append(s)
+    items = "".join(f"<li>{inline(t)}</li>" for t in oli)
+    return f"<ol>{items}</ol>"
+
+
+def _render_paragraph(block: str) -> str:
+    """A paragraph — wrapped source lines joined into one <p>."""
+    return f"<p>{inline(' '.join(ln.strip() for ln in block.splitlines()))}</p>"
 
 
 CSS = f"""

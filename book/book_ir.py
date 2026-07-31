@@ -33,13 +33,14 @@ import build_book_html as bb  # SSOT: _split_blocks, _discover_chapters, _load_m
 class BlockKind(Enum):
     HEADING = "heading"
     PARA = "para"
-    LIST = "list"
+    LIST = "list"              # unordered `- ` list
     TABLE = "table"            # a numbered float
     FIGURE = "figure"          # <!-- figure: … --> SVG/img — a numbered float
     MERMAID = "mermaid"        # a standalone ```mermaid fence — a numbered float
     CODE = "code"              # any other standalone fenced block
     CODE_INSET = "code-inset"  # <!-- inset: … --> + fence — NOT numbered
     BLOCKQUOTE = "blockquote"  # concept insets live here; their inner mermaid is NOT numbered
+    ORDERED_LIST = "ordered-list"  # `N. ` list — a distinct render kind (<ol> vs <ul>)
     EQ = "eq"
     DIRECTIVE = "directive"    # a lone marker comment (label / index / gloss / noqa …) — renders no structure
     OTHER = "other"            # figure-iframe (catalogue embed) and anything unmatched
@@ -132,6 +133,46 @@ def _classify_prose(text: str) -> BlockKind:
         return BlockKind.BLOCKQUOTE  # concept insets; an inner `> ```mermaid` is NOT a standalone float
     if s.startswith("- "):
         return BlockKind.LIST
+    if re.match(r"^\d+\.\s", s):
+        return BlockKind.ORDERED_LIST  # `N. ` list → <ol> (distinct from the `- ` unordered <ul>)
+    return BlockKind.PARA
+
+
+def classify_render_block(block: str) -> BlockKind:
+    """Classify one whole render block EXACTLY as `build_book_html.md_to_html`'s emit loop dispatches it —
+    the single classifier the renderer's content dispatch now calls, so one parse feeds both render and
+    analysis (the C→A flip). Mirrors the renderer's precise branch order and tests (a space-delimited
+    heading, an all-lines `>` blockquote, a `_is_pipe_table` table), NOT the looser `_classify_prose` shape
+    tests. Returns CODE_INSET / MERMAID / CODE / HEADING / BLOCKQUOTE / TABLE / LIST / ORDERED_LIST / PARA.
+
+    Two shapes render-loop-inline that this reports as PARA (they are prose-shaped and the renderer keeps a
+    literal test for them just ahead of prose): a `[FILL IN: …]` / `[MORE CHAPTERS FOLLOW: …]` gap marker,
+    and a standalone HTML comment. The renderer's own conditionals catch those before falling through to the
+    PARA renderer; the classifier need not distinguish them."""
+    stripped = block.strip()
+    lines = stripped.splitlines()
+    first = lines[0].strip() if lines else ""
+    # Inset: `<!-- inset: <title> -->` glued to the head of a fenced code block.
+    if bb._INSET_RE.match(first) and len(lines) > 1 and lines[1].strip().startswith("```"):
+        return BlockKind.CODE_INSET
+    # Fenced code — a ```mermaid fence is a numbered figure; any other fence is a plain code block.
+    if first.startswith("```"):
+        lang = first[3:].strip().lower()
+        return BlockKind.MERMAID if lang == "mermaid" else BlockKind.CODE
+    # Heading (space-delimited `# ` … `#### `).
+    if any(stripped.startswith(h) for h in ("#### ", "### ", "## ", "# ")):
+        return BlockKind.HEADING
+    # Blockquote — EVERY line starts with `>` (matches the renderer's `all(...)` test).
+    if lines and all(ln.strip().startswith(">") for ln in block.splitlines()):
+        return BlockKind.BLOCKQUOTE
+    # Pipe table.
+    if bb._is_pipe_table(block):
+        return BlockKind.TABLE
+    # Unordered / ordered list (keyed on the first line, as the renderer does).
+    if first.startswith("- "):
+        return BlockKind.LIST
+    if re.match(r"^\d+\.\s", first):
+        return BlockKind.ORDERED_LIST
     return BlockKind.PARA
 
 
