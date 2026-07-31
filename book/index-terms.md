@@ -373,6 +373,14 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: graph-portability | local
 - term: migration-safety | local
 - term: blast-radius | local
+- term: dependency-correctness | local
+- term: method-parity | local
+- term: lifecycle-soundness | local
+- term: placement-soundness | local
+- term: closure-post-condition | local
+- term: flow-vs-task | local
+- term: closure-strength | local
+- term: closure-meaning | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.

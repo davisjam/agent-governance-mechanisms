@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 64,
-    "paragraph_points": 216
+    "sections_drained": 71,
+    "paragraph_points": 228
   },
   "chapters": [
     {
@@ -1920,8 +1920,14 @@
           "heading_text": "The user-journey model",
           "topic_sentence": "The user-journey model makes the product's journeys first-class typed entities — each an actor pursuing a goal through ordered steps, every boundary-crossing step joined to the endpoint it calls.",
           "id_source": "explicit",
-          "block_index": 10,
-          "points": []
+          "block_index": 14,
+          "points": [
+            {
+              "slug": "the-user-journey-model-copies-nothing-and-the-zoo-joins-to-it",
+              "text": "The user-journey model copies nothing; the zoo joins to it.",
+              "block_index": 16
+            }
+          ]
         },
         {
           "section_id": "agent-orchestration-model",
@@ -1929,8 +1935,14 @@
           "heading_text": "The agent-orchestration model",
           "topic_sentence": "The agent-orchestration model is the developer-journey counterpart — the scenarios view pointed at the fleet rather than the user.",
           "id_source": "explicit",
-          "block_index": 14,
-          "points": []
+          "block_index": 20,
+          "points": [
+            {
+              "slug": "method-parity-governs-the-fleet-like-the-product-it-ships",
+              "text": "Method parity governs the fleet like the product it ships.",
+              "block_index": 22
+            }
+          ]
         },
         {
           "section_id": "journey-criticality-test-placement",
@@ -1938,8 +1950,14 @@
           "heading_text": "Journey-criticality → test-placement",
           "topic_sentence": "This model — the **Selector** in the join below — derives which environment tier a journey's tests run in from the journey's criticality: a `MAJOR` part runs the fast local tier and the full staging matrix, a `MINOR` part runs staging only.",
           "id_source": "explicit",
-          "block_index": 18,
-          "points": []
+          "block_index": 26,
+          "points": [
+            {
+              "slug": "a-journeys-criticality-derives-its-test-tier-never-stored",
+              "text": "A journey's criticality derives its test tier, never stored.",
+              "block_index": 28
+            }
+          ]
         },
         {
           "section_id": "coverage-model-mapping",
@@ -1947,8 +1965,14 @@
           "heading_text": "Coverage → model-node mapping",
           "topic_sentence": "Coverage-to-node mapping projects the test suite's coverage onto the model's *nodes* — states, seams, invariants, journey endpoints — instead of its lines.",
           "id_source": "explicit",
-          "block_index": 22,
-          "points": []
+          "block_index": 32,
+          "points": [
+            {
+              "slug": "projecting-coverage-onto-nodes-makes-an-untested-invariant-visible",
+              "text": "Projecting coverage onto nodes makes an untested invariant visible.",
+              "block_index": 34
+            }
+          ]
         },
         {
           "section_id": "journey-task-closure",
@@ -1956,8 +1980,19 @@
           "heading_text": "Journey task-closure — asserting the goal completed",
           "topic_sentence": "The three models above ask whether a journey's test *exists*, *runs*, and runs *in which tier*.",
           "id_source": "explicit",
-          "block_index": 26,
-          "points": []
+          "block_index": 38,
+          "points": [
+            {
+              "slug": "task-closure-types-what-the-terminal-assertion-must-mean",
+              "text": "Task-closure types what the terminal assertion must mean.",
+              "block_index": 40
+            },
+            {
+              "slug": "a-flow-only-closure-on-a-major-journey-is-a-finding",
+              "text": "A flow-only closure on a major journey is a finding.",
+              "block_index": 43
+            }
+          ]
         },
         {
           "section_id": "worked-join",
@@ -1965,8 +2000,14 @@
           "heading_text": "Worked join — the journey↔coverage↔deploy-policy composition",
           "topic_sentence": "*Four models composed on a shared key, so a product goal reaches all the way to how the deploy runs its tests.",
           "id_source": "explicit",
-          "block_index": 32,
-          "points": []
+          "block_index": 47,
+          "points": [
+            {
+              "slug": "four-models-join-on-one-fact-with-nothing-said-twice",
+              "text": "Four models join on one fact, nothing said twice.",
+              "block_index": 50
+            }
+          ]
         },
         {
           "section_id": "the-three-questions-the-join-answers",
@@ -1974,7 +2015,7 @@
           "heading_text": "The three questions the join answers",
           "topic_sentence": "Three questions the raw deploy scripts and test config cannot answer on their own.",
           "id_source": "derived",
-          "block_index": 36,
+          "block_index": 53,
           "points": []
         },
         {
@@ -1983,7 +2024,7 @@
           "heading_text": "The four models and their join keys",
           "topic_sentence": "The four models compose through shared keys.",
           "id_source": "derived",
-          "block_index": 39,
+          "block_index": 56,
           "points": []
         },
         {
@@ -1992,7 +2033,7 @@
           "heading_text": "The composite picture",
           "topic_sentence": "The join has no single appendix diagram, so this composite is composed from the four real panels, adding only the join edges between them.",
           "id_source": "derived",
-          "block_index": 43,
+          "block_index": 60,
           "points": []
         },
         {
@@ -2001,7 +2042,7 @@
           "heading_text": "The invariants the join spans",
           "topic_sentence": "The join's invariants span all four models, collected in [ref:scenarios-invariants]; two are the trunk derive-the-checker discipline.",
           "id_source": "derived",
-          "block_index": 47,
+          "block_index": 64,
           "points": []
         },
         {
@@ -2010,7 +2051,7 @@
           "heading_text": "The Selector and Scheduler in code",
           "topic_sentence": "Two pieces of real policy code show the join landing on code, not prose.",
           "id_source": "derived",
-          "block_index": 50,
+          "block_index": 67,
           "points": []
         },
         {
@@ -2019,11 +2060,38 @@
           "heading_text": "Tracing one fact through four models",
           "topic_sentence": "*Model-from-code, joined.* Every leg derives from the code: the journey's deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7).",
           "id_source": "derived",
-          "block_index": 55,
-          "points": []
+          "block_index": 72,
+          "points": [
+            {
+              "slug": "four-chained-join-keys-round-trip-major-to-serialized",
+              "text": "Four chained join keys round-trip major to serialized.",
+              "block_index": 74
+            }
+          ]
         }
       ],
-      "preamble_points": []
+      "preamble_points": [
+        {
+          "slug": "the-scenarios-view-walks-a-goal-and-validates-the-four",
+          "text": "The Scenarios view walks a goal and validates the four.",
+          "block_index": 1
+        },
+        {
+          "slug": "a-user-journey-anchors-the-view-with-five-real-models",
+          "text": "A user journey anchors the view; five models embody it.",
+          "block_index": 4
+        },
+        {
+          "slug": "node-coverage-counts-meanings-where-line-coverage-counts-lines",
+          "text": "Node coverage counts meanings where line coverage counts lines.",
+          "block_index": 7
+        },
+        {
+          "slug": "a-protocol-property-needs-a-temporal-logic-model-checker",
+          "text": "A protocol property needs a temporal-logic model checker.",
+          "block_index": 10
+        }
+      ]
     },
     {
       "slug": "4.1-brownfield",
