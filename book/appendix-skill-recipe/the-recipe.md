@@ -7,12 +7,12 @@ book's three featured skills — self-operate, self-governance, self-communicate
 throughout, so each step below shows the recipe applied three times.
 
 Three steps build a mastery-skill. Each names one thing, and the order matters: you cannot layer facets
-onto a model you have not found, and you cannot write the tying principles before the facets exist. Work
-top to bottom.
+onto a model you have not found, and you cannot write the tying principles before the facets exist. I
+suggest you work top to bottom.
 
 ### Step 1 — Identify the domain's fundamental model
 
-Find the one abstraction the whole skill reasons through. It is the first thing you would teach a new
+Find the one abstraction the whole skill reasons through. Think of the first thing you would teach a new
 hire — the frame that makes every later rule land, the mental model an expert in the domain already
 carries. Name it before you write a resource. If you cannot name it, you do not yet understand the domain
 well enough to write the skill, and the resources you write will be a pile of tips instead of a way of
@@ -34,7 +34,7 @@ The book's three self-* skills each turn on such a model:
 
 Cover the domain with facets, each an independent model in its own resource. Orthogonality is the test:
 two facets that overlap are one facet split badly, and a facet you cannot name is a gap in the coverage.
-Aim for a set that spans the domain without seams and without doubles.
+Aim for a set that spans the domain with neither gaps nor doubles.
 
 Each self-* skill layers a different set of facets on its fundamental model:
 
@@ -45,7 +45,7 @@ Each self-* skill layers a different set of facets on its fundamental model:
   holds), and a set of ambient principles — the catalogue you draw from, the axis you place a mechanism on,
   and the reflexes that run while the skill is loaded.
 - **The operations skill** layers a symptom-to-doc catalog, a set of typed runbooks, and a runnable hook
-  library — the routing table, the procedures it routes to, and the substrate that fires a skipped reflex
+  library — the routing table, the procedures it routes to, and the machinery that fires a skipped reflex
   at its moment.
 
 ### Step 3 — Write the top-level SKILL.md as the tying principles
@@ -53,7 +53,7 @@ Each self-* skill layers a different set of facets on its fundamental model:
 The front matter is not a table of contents that lists the resources. It is the governing principle that
 makes the facets cohere, plus the order to apply them. State what all the layers are *for*, then say which
 to reach for first. A reader who absorbs the top page should already know how to use the skill; the
-resources fill in the how, not the why.
+resources supply the how.
 
 Each self-* skill's SKILL.md carries such a principle:
 
@@ -85,9 +85,10 @@ from any one resource.
 - **It composes.** Because each skill turns on a clean fundamental model, another skill can cite it by that
   model instead of duplicating its content. The three self-* skills do exactly this: the prose skill owns
   the writing that the other two produce, governance mints the mechanism that operations surfaces, and
-  operations runs the substrate governance designs. Three skills, one substrate, cross-cited — no copy
+  operations runs the machinery governance designs. Three skills, one system, cross-cited — no copy
   drifts because each names the others rather than mirroring them.
 - **It adopts in layers.** A reader can take the fundamental model alone and get most of the value, then
-  add facets as the need arises. The recipe degrades gracefully: the model without its facets still
-  teaches a way of seeing, and a facet without the tying principle still solves its slice. You do not have
-  to swallow a skill whole to start using it.
+  add facets as the need arises. The more of the stack you take on, the more it returns — and yet the
+  recipe degrades gracefully: the model without its facets still teaches a way of seeing, and a facet
+  without the tying principle still solves its slice. You do not have to swallow a skill whole to start
+  using it.
