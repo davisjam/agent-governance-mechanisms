@@ -350,6 +350,14 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: mediation-coverage | local
 - term: resource-contention | local
 - term: torn-write | local
+- term: sbom | local
+- term: dependency-manifest | local
+- term: code-zone | local
+- term: boundary-kind | local
+- term: ownership-correctness | local
+- term: boundary-soundness | local
+- term: reverse-mapping | local
+- term: rule-index-consistency | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.

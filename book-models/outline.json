@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 58,
-    "paragraph_points": 196
+    "sections_drained": 60,
+    "paragraph_points": 203
   },
   "chapters": [
     {
@@ -1744,8 +1744,24 @@
           "heading_text": "The component & zone model",
           "topic_sentence": "*A typed catalog of every component's code zone — its focus directories, its tags, its boundary kind, its external seams, its read surfaces — so \"which component owns this file, and what may touch it\" is a queried fact rather than a per-tool guess.*",
           "id_source": "explicit",
-          "block_index": 8,
-          "points": []
+          "block_index": 11,
+          "points": [
+            {
+              "slug": "the-component-zone-model-makes-ownership-a-queried-fact",
+              "text": "The component-zone model makes ownership a queried fact.",
+              "block_index": 14
+            },
+            {
+              "slug": "it-assesses-ownership-correctness-and-boundary-soundness",
+              "text": "It assesses ownership correctness and boundary soundness.",
+              "block_index": 17
+            },
+            {
+              "slug": "the-component-zone-model-derives-from-the-directory-tree",
+              "text": "The component-zone model derives from the directory tree.",
+              "block_index": 27
+            }
+          ]
         },
         {
           "section_id": "rule-metadata-registry",
@@ -1753,11 +1769,33 @@
           "heading_text": "The rule-metadata registry",
           "topic_sentence": "The rule-metadata registry is the self-referential slice of the domain registries: the governance rules' own metadata, and so the model the governance substrate — and this book — are partly governed by.",
           "id_source": "explicit",
-          "block_index": 24,
-          "points": []
+          "block_index": 31,
+          "points": [
+            {
+              "slug": "rule-metadata-lives-beside-each-rule-and-generates-the-index",
+              "text": "Rule metadata lives beside each rule and generates the index.",
+              "block_index": 33
+            }
+          ]
         }
       ],
-      "preamble_points": []
+      "preamble_points": [
+        {
+          "slug": "the-development-view-maps-how-the-source-is-organized",
+          "text": "The Development view maps how the source is organized.",
+          "block_index": 0
+        },
+        {
+          "slug": "one-general-type-and-two-real-models-carry-the-view",
+          "text": "One general type and two real models carry the view.",
+          "block_index": 3
+        },
+        {
+          "slug": "a-bill-of-materials-demands-a-complete-dependency-manifest",
+          "text": "A bill of materials demands a complete dependency manifest.",
+          "block_index": 7
+        }
+      ]
     },
     {
       "slug": "3.5-the-physical-view",
