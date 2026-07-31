@@ -3,7 +3,7 @@
 
   "_derivation": "Derived (not hand-copied) from book/transcripts/DEFINITIONS-DRAFT.md — the green-box + per-aspect-elaboration drafts. When that draft or its Part-2 landing changes, regenerate this record set and re-check.",
 
-  "_book_home_note": "The four definitions have NO `<!-- index-def: <slug> -->` in any chapter yet — the Part-2 Definitions section is DRAFTED in DEFINITIONS-DRAFT.md and OWED (a tracked follow-up the drain phase fills). Until it lands, `book_home_owed.status: owed` and the drift check does NOT require a resolvable book home (it only requires a resolvable SITE home). This is the projection thesis's 'book coverage ⊇ site framings' as a tracked debt, not a silent gap.",
+  "_book_home_note": "The four definitions are now tagged with an index-def in §2.1 (The Agent Stack), so `book_home_owed.status: landed` and each record carries a resolved `book_home` (the `#idx-def-<slug>` anchor on the 2.1 page). The drift check still only requires a resolvable SITE home; the book home is the honest 'book coverage ⊇ site framings' realization, no longer a tracked debt.",
 
   "_order": ["model", "agent", "engineering", "software-engineering"],
 
@@ -17,7 +17,8 @@
     ],
     "site_home": "def-model",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Model",
-    "book_home_owed": {"section": "Part 2 — Definitions", "status": "owed", "note": "Planned Part-2 Definitions section; drafted in DEFINITIONS-DRAFT.md, not yet tagged with `<!-- index-def: model -->` in any chapter."},
+    "book_home": "book/2.1-the-agent-stack.html#idx-def-model",
+    "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
     "lexicon_link": "book/6.2-glossary.html",
     "concepts_link": "book/data/concepts.json"
   },
@@ -33,7 +34,8 @@
     ],
     "site_home": "def-agent",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Agent",
-    "book_home_owed": {"section": "Part 2 — Definitions", "status": "owed", "note": "Planned Part-2 Definitions section; drafted in DEFINITIONS-DRAFT.md, not yet tagged with `<!-- index-def: agent -->` in any chapter."},
+    "book_home": "book/2.1-the-agent-stack.html#idx-def-agent",
+    "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
     "lexicon_link": "book/6.2-glossary.html",
     "concepts_link": "book/data/concepts.json"
   },
@@ -48,7 +50,8 @@
     ],
     "site_home": "def-engineering",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Engineering",
-    "book_home_owed": {"section": "Part 2 — Definitions", "status": "owed", "note": "Planned Part-2 Definitions section; drafted in DEFINITIONS-DRAFT.md, not yet tagged with `<!-- index-def: engineering -->` in any chapter."},
+    "book_home": "book/2.1-the-agent-stack.html#idx-def-engineering",
+    "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
     "lexicon_link": "book/6.2-glossary.html",
     "concepts_link": "book/data/concepts.json"
   },
@@ -62,7 +65,8 @@
     ],
     "site_home": "def-software-engineering",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Software-engineering",
-    "book_home_owed": {"section": "Part 2 — Definitions", "status": "owed", "note": "Planned Part-2 Definitions section; drafted in DEFINITIONS-DRAFT.md, not yet tagged with `<!-- index-def: software-engineering -->` in any chapter."},
+    "book_home": "book/2.1-the-agent-stack.html#idx-def-software-engineering",
+    "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
     "lexicon_link": "book/6.2-glossary.html",
     "concepts_link": "book/data/concepts.json"
   }
