@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 94,
-    "paragraph_points": 283
+    "sections_drained": 108,
+    "paragraph_points": 311
   },
   "chapters": [
     {
@@ -2641,7 +2641,13 @@
           "topic_sentence": "I spent three months building a real piece of software with a coding agent, and the thing I came away with was a methodology, not a model release or a benchmark.",
           "id_source": "derived",
           "block_index": 1,
-          "points": []
+          "points": [
+            {
+              "slug": "the-takeaway-was-a-methodology",
+              "text": "The takeaway was a methodology, not a model.",
+              "block_index": 2
+            }
+          ]
         },
         {
           "section_id": "three-ways-to-run-an-agent-and-why-i-chose-one",
@@ -2649,8 +2655,19 @@
           "heading_text": "Three ways to run an agent, and why I chose one",
           "topic_sentence": "There are three ways to run a coding agent, and the choice is a matter of where you sit on the risk map, not of taste.",
           "id_source": "derived",
-          "block_index": 3,
-          "points": []
+          "block_index": 4,
+          "points": [
+            {
+              "slug": "three-ways-pick-by-risk-not-taste",
+              "text": "Three ways to run an agent; pick by risk.",
+              "block_index": 6
+            },
+            {
+              "slug": "chose-governance-monitor-failures-not-steps",
+              "text": "I chose governance: monitor failures, not every step.",
+              "block_index": 10
+            }
+          ]
         },
         {
           "section_id": "claude-is-the-fastest-road-to-hell",
@@ -2658,8 +2675,19 @@
           "heading_text": "Claude is the fastest road to hell",
           "topic_sentence": "The single most useful sentence I can hand you is this: coding agents accelerate *within the frame you give them* — even when the frame is wrong.",
           "id_source": "derived",
-          "block_index": 9,
-          "points": []
+          "block_index": 13,
+          "points": [
+            {
+              "slug": "agents-accelerate-within-the-frame-even-wrong",
+              "text": "Agents accelerate within your frame, even a wrong one.",
+              "block_index": 15
+            },
+            {
+              "slug": "speed-exposes-the-danger",
+              "text": "The speed exposes the danger, it doesn't create it.",
+              "block_index": 17
+            }
+          ]
         },
         {
           "section_id": "optionality-is-poison",
@@ -2667,8 +2695,19 @@
           "heading_text": "Optionality is poison",
           "topic_sentence": "AI does not merely reduce friction.",
           "id_source": "derived",
-          "block_index": 13,
-          "points": []
+          "block_index": 20,
+          "points": [
+            {
+              "slug": "manufactured-optionality-is-poison-at-midnight",
+              "text": "AI manufactures optionality, and at midnight it is poison.",
+              "block_index": 22
+            },
+            {
+              "slug": "an-unmade-decision-is-where-the-agent-guesses",
+              "text": "Every unmade decision is where the agent guesses.",
+              "block_index": 25
+            }
+          ]
         },
         {
           "section_id": "refactoring-used-to-be-too-costly-now-it-s-free",
@@ -2676,8 +2715,19 @@
           "heading_text": "Refactoring used to be too costly; now it's free",
           "topic_sentence": "For my whole career, refactoring was something you rationed.",
           "id_source": "derived",
-          "block_index": 18,
-          "points": []
+          "block_index": 28,
+          "points": [
+            {
+              "slug": "refactoring-was-rationed-now-its-cheap",
+              "text": "Refactoring was rationed; now it's an afternoon's work.",
+              "block_index": 30
+            },
+            {
+              "slug": "no-reason-to-enshrine-a-bad-shape",
+              "text": "There is almost no reason to enshrine a bad shape.",
+              "block_index": 32
+            }
+          ]
         },
         {
           "section_id": "done-is-a-claim-not-a-fact",
@@ -2685,8 +2735,19 @@
           "heading_text": "\"Done\" is a claim, not a fact",
           "topic_sentence": "<!-- TODO(data): false-done RATE — % of self-marked-DONE units that failed re-review; minable from DoD-audit / tombstone history.",
           "id_source": "derived",
-          "block_index": 22,
-          "points": []
+          "block_index": 35,
+          "points": [
+            {
+              "slug": "done-reported-but-work-is-half-done",
+              "text": "Agents report done while the work stays half-done.",
+              "block_index": 38
+            },
+            {
+              "slug": "trust-nothing-rerun-tests-and-lints",
+              "text": "Trust nothing; re-run the tests and lints yourself.",
+              "block_index": 40
+            }
+          ]
         },
         {
           "section_id": "the-cost-estimator-is-broken-and-scope-creep-is-guaranteed",
@@ -2694,8 +2755,19 @@
           "heading_text": "The cost estimator is broken, and scope creep is guaranteed",
           "topic_sentence": "Two consequences follow from cheap implementation, and both caught me off guard.",
           "id_source": "derived",
-          "block_index": 27,
-          "points": []
+          "block_index": 43,
+          "points": [
+            {
+              "slug": "cheap-implementation-breaks-the-cost-estimator",
+              "text": "Cheap implementation breaks your sense of what things cost.",
+              "block_index": 46
+            },
+            {
+              "slug": "free-implementation-guarantees-scope-creep",
+              "text": "When implementation feels free, scope creep is guaranteed.",
+              "block_index": 48
+            }
+          ]
         },
         {
           "section_id": "your-tests-must-survive-agent-shaped-failure-modes",
@@ -2703,8 +2775,24 @@
           "heading_text": "Your tests must survive agent-shaped failure modes",
           "topic_sentence": "An agent fails differently than a person does.",
           "id_source": "derived",
-          "block_index": 31,
-          "points": []
+          "block_index": 50,
+          "points": [
+            {
+              "slug": "an-agent-fails-differently-than-a-person",
+              "text": "An agent fails differently than a person does.",
+              "block_index": 52
+            },
+            {
+              "slug": "build-tests-for-agent-failure-modes-pin-the-class",
+              "text": "Build tests for the agent's failure modes; pin the class.",
+              "block_index": 55
+            },
+            {
+              "slug": "property-testing-heads-the-generative-family",
+              "text": "Property testing heads a family of generative validation.",
+              "block_index": 57
+            }
+          ]
         },
         {
           "section_id": "vibe-coding-treats-the-program-as-an-i-o-device-engineering-treats-it-as-a-system",
@@ -2712,8 +2800,19 @@
           "heading_text": "Vibe coding treats the program as an I/O device; engineering treats it as a system",
           "topic_sentence": "Here is the distinction the whole method turns on.",
           "id_source": "derived",
-          "block_index": 37,
-          "points": []
+          "block_index": 60,
+          "points": [
+            {
+              "slug": "vibe-coding-trusts-io-engineering-checks-structure",
+              "text": "Vibe-coding trusts external evidence; engineering checks structure.",
+              "block_index": 62
+            },
+            {
+              "slug": "the-difference-is-what-counts-as-proof",
+              "text": "The difference is what counts as proof.",
+              "block_index": 64
+            }
+          ]
         },
         {
           "section_id": "explicitness-is-essential",
@@ -2721,8 +2820,19 @@
           "heading_text": "Explicitness is essential",
           "topic_sentence": "A normal codebase keeps most of its conceptual structure in human memory.",
           "id_source": "derived",
-          "block_index": 40,
-          "points": []
+          "block_index": 66,
+          "points": [
+            {
+              "slug": "agents-cant-hold-tacit-structure",
+              "text": "Agents can't hold the tacit structure humans keep.",
+              "block_index": 68
+            },
+            {
+              "slug": "explicit-artifacts-make-the-system-agent-legible",
+              "text": "Explicit, queryable artifacts make the system agent-legible.",
+              "block_index": 71
+            }
+          ]
         },
         {
           "section_id": "governance-is-a-spectrum-from-soft-to-hard",
@@ -2730,8 +2840,19 @@
           "heading_text": "Governance is a spectrum from soft to hard",
           "topic_sentence": "The mechanisms I ended up with were not all the same kind of thing, and the axis that sorted them was soft versus hard.",
           "id_source": "derived",
-          "block_index": 44,
-          "points": []
+          "block_index": 73,
+          "points": [
+            {
+              "slug": "soft-aims-hard-holds",
+              "text": "Soft governance aims the agent; hard governance holds.",
+              "block_index": 75
+            },
+            {
+              "slug": "second-occurrence-turns-an-audit-into-a-lint",
+              "text": "The second occurrence of a failure earns a lint.",
+              "block_index": 78
+            }
+          ]
         },
         {
           "section_id": "ai-is-an-autonomy-amplifier",
@@ -2739,8 +2860,19 @@
           "heading_text": "AI is an autonomy amplifier",
           "topic_sentence": "The thing agents amplify is not your typing speed.",
           "id_source": "derived",
-          "block_index": 50,
-          "points": []
+          "block_index": 82,
+          "points": [
+            {
+              "slug": "agents-amplify-autonomy-not-typing",
+              "text": "Agents amplify autonomy, not typing speed.",
+              "block_index": 84
+            },
+            {
+              "slug": "amplification-is-neutral-judgment-is-scarce",
+              "text": "Amplification is neutral; judgment is now the scarce resource.",
+              "block_index": 86
+            }
+          ]
         },
         {
           "section_id": "what-this-means-for-the-job",
@@ -2748,8 +2880,14 @@
           "heading_text": "What this means for the job",
           "topic_sentence": "Watching my own experience of software engineering get compressed, I expected to feel the role shrinking.",
           "id_source": "derived",
-          "block_index": 55,
-          "points": []
+          "block_index": 90,
+          "points": [
+            {
+              "slug": "experience-compresses-the-role-expands",
+              "text": "The experience compresses; the role expands.",
+              "block_index": 92
+            }
+          ]
         },
         {
           "section_id": "who-holds-the-authority-to-convert-a-lesson",
@@ -2757,8 +2895,24 @@
           "heading_text": "Who holds the authority to convert a lesson",
           "topic_sentence": "This is where I think companies may have trouble.",
           "id_source": "derived",
-          "block_index": 57,
-          "points": []
+          "block_index": 94,
+          "points": [
+            {
+              "slug": "converting-failures-needs-org-authority",
+              "text": "Converting failures into practice requires organizational authority.",
+              "block_index": 96
+            },
+            {
+              "slug": "future-is-converting-judgment-into-infrastructure",
+              "text": "Engineering's future is converting judgment into infrastructure.",
+              "block_index": 98
+            },
+            {
+              "slug": "solo-field-report-shape-feels-durable",
+              "text": "A solo field report; the shape still feels durable.",
+              "block_index": 100
+            }
+          ]
         }
       ],
       "preamble_points": []
