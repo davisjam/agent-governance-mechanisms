@@ -875,18 +875,18 @@
           "points": [
             {
               "slug": "a-lifecycle-is-the-healthy-path-then-a-failure-map-off-each-node",
-              "text": "Start with the lifecycles, because everything hangs off them: a lifecycle is the correct operation of one recurring activity — how a bug moves from filed to fixed, a feature from design to shipped — so write the healthy path first, then from each node map the ways it can go wrong and, for each, the action to take, a grid of every node crossed with every symptom.",
-              "block_index": 3
+              "text": "A lifecycle: write the healthy path, then map failures.",
+              "block_index": 4
             },
             {
               "slug": "fmea-names-the-way-out-and-the-prohibition-because-the-agent-knows-neither",
-              "text": "Building that grid is failure mode and effects analysis: enumerate what can go wrong, the consequence of each, and — the part people skip — how to get out of it; you know the way out (reconcile a conflict by reading both sides' intent, wipe the fat cache when the disk fills) but the agent knows none of it and may reach for something catastrophic, so coach it on where the hot points are and, in every failure path, what is not allowed — encoding the prohibition as a mechanism at the right level where you can, and stating it plainly where you cannot.",
-              "block_index": 6
+              "text": "FMEA: name each failure's way out and prohibition.",
+              "block_index": 7
             },
             {
               "slug": "name-the-sin-and-the-way-out-not-the-prohibition-alone",
-              "text": "Naming a forbidden act can plant the temptation — the pink-elephant problem — so a bare prohibition can backfire and, worse, leaves the agent stuck with nowhere to go when the forbidden lever was its only escape; what works is pairing the forbidden move with the sanctioned one that reaches the same goal safely, so the rule reads \"not that lever, this one\" and replaces the temptation instead of merely raising it.",
-              "block_index": 9
+              "text": "Pair each prohibition with its sanctioned way out.",
+              "block_index": 10
             }
           ]
         },
@@ -896,22 +896,22 @@
           "heading_text": "Runbooks: split the deterministic from the judgment",
           "topic_sentence": "Once the healthy path and the failure map are written, the thing you hand the agent is a **runbook** (or playbook): the steps to take, whether recovering from a failure or working a fresh ticket.",
           "id_source": "derived",
-          "block_index": 11,
+          "block_index": 12,
           "points": [
             {
               "slug": "a-runbook-splits-into-deterministic-and-judgment-steps-governed-differently",
-              "text": "Once the healthy path and the failure map are written, the thing you hand the agent is a runbook — the steps to take, recovering from a failure or working a fresh ticket — and the one discipline that makes it work is to split it into two kinds of step, deterministic and judgment, because the two are governed completely differently.",
-              "block_index": 12
+              "text": "A runbook splits into deterministic and judgment steps.",
+              "block_index": 14
             },
             {
               "slug": "deterministic-parts-get-tools-not-improvisation",
-              "text": "The deterministic parts get tools: anything with a single correct outcome should be an executable script the agent runs, not a procedure it improvises — improvisation gets it right most of the time, and you will wish you had automated it the one time it does not.",
-              "block_index": 17
+              "text": "Deterministic steps get executable tools, not improvisation.",
+              "block_index": 19
             },
             {
               "slug": "determinizing-a-step-buys-a-trace-with-two-consumers",
-              "text": "Determinizing a step buys more than a reliable outcome — it buys a trace: the inputs read, the branch taken, the value produced, written down in a fixed shape instead of vanishing as an improvised step's smoke, and that record has two consumers — the next turn of the loop, which starts from what was already reasoned instead of re-deriving it, and a second checker that reads the trace to audit how the answer was reached and flag a path it should not have taken.",
-              "block_index": 20
+              "text": "Determinizing buys a trace with two consumers.",
+              "block_index": 22
             }
           ]
         },
@@ -921,22 +921,22 @@
           "heading_text": "The judgment parts: the roughest algorithm that still fits",
           "topic_sentence": "**The judgment parts get the roughest algorithm that still fits.** For a well-constrained decision, write the algorithm down and let the agent do the glue.",
           "id_source": "derived",
-          "block_index": 22,
+          "block_index": 24,
           "points": [
             {
               "slug": "judgment-parts-get-the-roughest-algorithm-that-still-fits",
-              "text": "The judgment parts get the roughest algorithm that still fits: write the algorithm down for a well-constrained decision, but for an open-ended one — a threat hunt whose premise is that the attacker did something unanticipated — do not over-constrain, because you are conditioning a probability distribution and steering it down the wrong path means it never reaches the answer, so give hints where you have them, say \"solve this open-endedly\" where you truly do not, and accept that looser guidance spends more tokens and lands less often.",
-              "block_index": 23
+              "text": "Judgment steps get the roughest algorithm that fits.",
+              "block_index": 26
             },
             {
               "slug": "a-judgment-that-is-a-measurement-gets-a-rubric",
-              "text": "When a judgment step is really a measurement, give it a rubric: you cannot write a checker for \"is this painting good,\" but you can operationalize the question into gradable parts — topic sentences, technique, grammatical errors, storage blotches — and the agent, though it will not deliver a verdict on taste, returns feedback good enough to act on.",
-              "block_index": 25
+              "text": "A judgment that is a measurement gets a rubric.",
+              "block_index": 28
             },
             {
               "slug": "the-pre-canned-brief-is-the-strongest-form-templating-delegation-itself",
-              "text": "The strongest form is the pre-canned brief: when an orchestrator hands work to a sub-agent you do not want it re-inventing how to explain the task each time, so you give it a template it adapts — the work already articulated — and a brief-linter that checks the template is intact before launch, which applies the book's whole business of constraining how work is described to agents to the act of delegation itself.",
-              "block_index": 28
+              "text": "The pre-canned brief templates delegation itself.",
+              "block_index": 31
             }
           ]
         }
@@ -944,7 +944,7 @@
       "preamble_points": [
         {
           "slug": "agent-knows-git-not-your-environments-lifecycles-so-write-them-down",
-          "text": "An agent knows how to commit to Git but not the life cycles of your engineered environment — what to do when the disk fills, when two branches conflict, when an incident pages at 2 a.m. — because it has no operating context and no sense of how you do things, so a governed environment for real work must write that operational judgment down as lifecycles and the runbooks that ride on them.",
+          "text": "The agent lacks your operating context; write it down.",
           "block_index": 0
         }
       ]

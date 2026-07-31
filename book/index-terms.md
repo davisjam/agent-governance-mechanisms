@@ -312,6 +312,8 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: documentation-hierarchy | local
 - term: ouroboros | local
 - term: typed-enum | local
+- term: pink-elephant | local
+- term: reasoning-trace | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
