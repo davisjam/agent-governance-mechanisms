@@ -281,6 +281,27 @@ def term_findings() -> "list[str]":
     return findings
 
 
+def role_tier_findings() -> "list[str]":
+    """The role↔tier consistency findings — a `<!-- section-terms: … -->` slug plays the **tier-1 role**
+    (it names a major concept the section develops), so it must resolve to a term REGISTERED at tier
+    `section`. A slug registered `local` (a fine-grained tier-2 paragraph term) used in a section-terms
+    marker is a tier-role mismatch: either the term earns promotion to `section`, or the marker should
+    name the section's true tier-1 concept instead. Paragraph `terms:` (tier-2 role) slugs are
+    unconstrained — a `section` concept may be reused at paragraph granularity, and a `local` is expected
+    there. Structural + deterministic (one registry-tier lookup per section-term occurrence), so it lives
+    on the same footing as the registration walk. An UNREGISTERED slug (no tier at all) is left to
+    `term_findings()`; this check speaks only to registered slugs carrying the wrong tier for the role."""
+    registry = _registered_terms()
+    findings: "list[str]" = []
+    for term, _tier, chap, role, idx in term_occurrences():
+        if role == "section-term" and registry.get(term) == "local":
+            findings.append(f"TIER-ROLE MISMATCH {term!r} — used in a `section-terms` marker (tier-1 role) "
+                            f"at {chap}::block-{idx} but registered `local` (tier-2); promote it with "
+                            f"`- term: {term} | section` in index-terms.md, or re-tag the marker with the "
+                            f"section's true tier-1 concept")
+    return findings
+
+
 def structural_findings() -> "list[str]":
     """Every view->md reference re-resolved against the CURRENT source. A dangling reference — a section id
     / chapter / part / concept / label / point a view points at that the book no longer defines — is a

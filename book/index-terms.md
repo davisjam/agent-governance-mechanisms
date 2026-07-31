@@ -308,7 +308,7 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: world-representation | local
 - term: static-analysis | local
 - term: ban-lint | local
-- term: documentation-hierarchy | local
+- term: documentation-hierarchy | section
 - term: ouroboros | local
 - term: typed-enum | local
 - term: pink-elephant | local
@@ -320,7 +320,7 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: requirements-based-coverage | local
 - term: doc-derived-test | local
 - term: seam | local
-- term: governance-graph | local
+- term: governance-graph | section
 - term: shared-resource | local
 - term: outside-hook | local
 - term: mbse | local
@@ -333,7 +333,7 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: c4 | local
 - term: trunk | local
 - term: round-trip | local
-- term: snapshot-vs-derived | local
+- term: snapshot-vs-derived | section
 - term: symbol-anchor | local
 - term: service-flow-model | section
 - term: domain-registries | section
@@ -380,7 +380,7 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: flow-vs-task | local
 - term: closure-strength | local
 - term: closure-meaning | local
-- term: missing-model-metric | local
+- term: missing-model-metric | section
 - term: orphan-test | local
 - term: granularity-gap | local
 - term: dense-primitive-region | local

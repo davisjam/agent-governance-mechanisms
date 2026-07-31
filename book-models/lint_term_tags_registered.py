@@ -1,10 +1,17 @@
-"""LINT `term-tags-registered` — every tagged term must resolve to a registered term with a tier.
+"""LINT `term-tags-registered` — every tagged term must resolve to a registered term, AND a section-terms
+slug must carry the tier its role demands.
 
 THE TWO-TIER TAGGING.  The drain tags concepts at two tiers: a `point`'s `terms:` segment names tier-2 LOCAL
 terms a paragraph deploys; a `<!-- section-terms: <t1>, <t2> -->` marker names the tier-1 SECTION concepts a
-section develops. Every such slug must resolve to a REGISTERED term in the two-tier registry
-(`index-terms.md` §"Term tiers"), which carries the term's `tier` ∈ {section, local}. A tagged slug the
-registry does not know has no tier — the two-tier model cannot place it — so it is a finding.
+section develops. The lint checks two things:
+
+  1. REGISTRATION — every tagged slug (a point `terms:` entry OR a `section-terms:` entry) resolves to a
+     REGISTERED term in the two-tier registry (`index-terms.md` §"Term tiers"), which carries the term's
+     `tier` ∈ {section, local}. A tagged slug the registry does not know has no tier, so it is a finding.
+  2. ROLE↔TIER — a slug in a `section-terms:` marker plays the tier-1 role, so it must resolve to tier
+     `section`. A `local`-registered slug used there is a tier-role mismatch (`reverse_index.role_tier_findings`).
+     Paragraph `terms:` slugs are unconstrained — a section concept may be reused at paragraph tier, and a
+     local is expected there.
 
 THE REGISTRY.  Reuses `index-terms.md` as the single term SSOT (no parallel registry): the 135 existing
 `- concept:` slugs default to `tier: section`; an explicit `- term: <slug> | <tier>` row registers a new
@@ -27,18 +34,19 @@ import reverse_index as ri  # noqa: E402 — the term-tag drift substrate (term_
 
 
 def findings() -> "list[str]":
-    """Every tagged-term slug (point `terms:` / `section-terms:`) that does not resolve to a registered term.
-    Delegates to `reverse_index.term_findings()` so the membership rule has ONE home (the drift substrate)."""
-    return ri.term_findings()
+    """Registration findings (a tagged slug not in the registry) PLUS role↔tier findings (a `section-terms:`
+    slug registered `local`). Delegates to `reverse_index.term_findings()` + `reverse_index.role_tier_findings()`
+    so both rules have ONE home (the drift substrate); this script is their CLI face."""
+    return ri.term_findings() + ri.role_tier_findings()
 
 
 def main(argv: "list[str]") -> int:
     strict = "--strict" in argv[1:]
     fs = findings()
     mode = "STRICT (exit 1 on any finding)" if strict else "AUDIT-ONLY (prints, exits 0)"
-    print(f"== term-tags-registered — every tagged term resolves to a registered term with a tier [{mode}] ==")
+    print(f"== term-tags-registered — every tagged term registered; every section-terms slug tier `section` [{mode}] ==")
     if not fs:
-        print("  clean — every tagged term is registered in the two-tier registry")
+        print("  clean — every tagged term is registered, and every section-terms slug carries tier `section`")
         return 0
     print(f"  {len(fs)} finding(s):")
     for f in fs:
