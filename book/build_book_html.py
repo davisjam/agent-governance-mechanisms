@@ -197,7 +197,7 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
-    "inset", "data", "label",
+    "inset", "data", "label", "point",
 )
 # A comment whose first token is one of the vocabulary keywords — used to peel a marker glued to the head
 # of a prose block (placement-robust stripping: an author need not remember a blank line) and, in the gate,
@@ -697,6 +697,12 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 return True
             if inner.startswith("eq:"):
                 _emit(f'<p class="book-eq">{inline(s[len("<!--"):-len("-->")].strip()[len("eq:"):].strip())}</p>')
+                return True
+            if inner.startswith("point:"):
+                # `<!-- point: <slug> | <text> -->` — the induced canonical point of the paragraph it heads
+                # (the drain notation). An INERT decorator: consumed and stripped, renders NOTHING (the
+                # outline model reads it from the IR, not the HTML). Peeled here so it never reaches the
+                # lone-comment passthrough and leaks; degradation-friendly and byte-identical for the build.
                 return True
         return False
 

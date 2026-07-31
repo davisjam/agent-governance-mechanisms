@@ -48,8 +48,9 @@ _CONCEPT_DIRECTIVE = re.compile(r"^<!--\s*(index-def|index-example)\s*:\s*([a-z0
 
 #: The md symbol kinds the reverse index tracks. Each names a DIFFERENT source construct an edit can touch;
 #: keeping them typed (not one flat string set) lets a `deps` answer say WHAT kind of symbol you edited and
-#: lets the universe-membership drift check reason per-kind.
-SYMBOL_KINDS = ("section-id", "concept", "label", "ref", "chapter", "part", "book")
+#: lets the universe-membership drift check reason per-kind. `point` is the drain-phase symbol: each
+#: `<!-- point: <slug> | <text> -->` decorator's slug is an authored reference the outline rides.
+SYMBOL_KINDS = ("section-id", "concept", "label", "ref", "chapter", "part", "book", "point")
 
 
 # ---- the symbol universe: what the source actually DEFINES -------------------------------------------
@@ -64,6 +65,7 @@ class SymbolUniverse:
     refs: "set[str]" = field(default_factory=set)          # [ref:key] keys that appear in prose
     chapters: "set[str]" = field(default_factory=set)      # chapter slugs
     parts: "set[int]" = field(default_factory=set)         # part numbers
+    points: "set[str]" = field(default_factory=set)        # <!-- point: slug | text --> decorator slugs
 
     def resolves(self, symbol: str, kind: str) -> bool:
         """True when `symbol` is a real DEFINED symbol of the given `kind`. `book` and `part-<N>` are the
@@ -75,7 +77,7 @@ class SymbolUniverse:
             return n.isdigit() and int(n) in self.parts
         return symbol in {
             "section-id": self.section_ids, "concept": self.concepts, "label": self.labels,
-            "ref": self.refs, "chapter": self.chapters,
+            "ref": self.refs, "chapter": self.chapters, "point": self.points,
         }.get(kind, set())
 
     def unit_kind(self, unit_id: str) -> str:
@@ -91,9 +93,22 @@ class SymbolUniverse:
         return "section-id"
 
 
+def point_occurrences() -> "list[tuple[str, str, int]]":
+    """Every `<!-- point: <slug> | <text> -->` decorator in the book as (slug, chapter_slug, block_index).
+    A list (not a set) so a DUPLICATE slug — two paragraphs induced to the same canonical point, the
+    machine version of a redundancy — is visible to the drift audit, not silently deduped."""
+    doc = bs.book_ir.parse_book()
+    occ: "list[tuple[str, str, int]]" = []
+    for c in doc.chapters:
+        for b in c.blocks:
+            if b.directive == "point" and b.point_slug:
+                occ.append((b.point_slug, c.slug, b.index))
+    return occ
+
+
 def derive_universe() -> SymbolUniverse:
     """Enumerate every symbol the book DEFINES today. Section ids + chapters + parts come from the outline
-    view (one structural source, no parallel parse); concepts / labels / refs come from `book_ir`."""
+    view (one structural source, no parallel parse); concepts / labels / refs / points come from `book_ir`."""
     doc = bs.book_ir.parse_book()
     u = SymbolUniverse()
     outline = om.derive_outline()
@@ -109,6 +124,7 @@ def derive_universe() -> SymbolUniverse:
                 u.concepts.add(m.group(2))
     u.labels.update(doc.labels())
     u.refs.update(r.key for r in doc.refs())
+    u.points.update(slug for slug, _c, _i in point_occurrences())
     return u
 
 
@@ -155,6 +171,13 @@ def build_index() -> "dict[str, dict]":
             _add(index, s.section_id, "section-id",
                  Dependent(view="outline", element=f"{c.slug}::{s.section_id}", role="section-anchor"))
 
+    # OUTLINE POINTS: each `<!-- point: slug | text -->` decorator's slug is an authored symbol the outline
+    # rides at paragraph granularity. Invert it so "edit/remove this decorator → which paragraph point
+    # breaks?" is one lookup, on the same footing as a section id. The element is the chapter::block site.
+    for slug, chap, idx in point_occurrences():
+        _add(index, slug, "point",
+             Dependent(view="outline", element=f"{chap}::block-{idx}", role="paragraph-point"))
+
     # OUTCOMES: primary + secondary units are hard join edges; the anchor is a soft grounding edge.
     model = ocm.derive_model()
     for o in model.outcomes:
@@ -172,11 +195,38 @@ def build_index() -> "dict[str, dict]":
 
 # ---- structural drift: a view reference to a symbol the source no longer DEFINES --------------------
 
+def point_findings() -> "list[str]":
+    """The `point`-decorator drift findings — a DUPLICATE slug (two paragraphs induced to the SAME canonical
+    point, the machine version of a redundancy — the terseness audit) and a MALFORMED decorator (a
+    `<!-- point: … -->` with no `|` separator, so its slug/text never parsed). Structural + deterministic,
+    so it lives on the same footing as the dangling-reference walk. Text-content honesty (does the paragraph
+    still make the point?) stays a SEMANTIC review-gate audit, not this lint."""
+    findings: "list[str]" = []
+    # DUPLICATE slug — a redundancy signal. Two decorators sharing a slug are the exact-match redundancy the
+    # canonical-point model is meant to surface.
+    seen: "dict[str, tuple[str, int]]" = {}
+    for slug, chap, idx in point_occurrences():
+        if slug in seen:
+            fc, fi = seen[slug]
+            findings.append(f"DUPLICATE point slug {slug!r} — {chap}::block-{idx} and {fc}::block-{fi} induce "
+                            f"the same canonical point (a redundancy — collapse or re-point one)")
+        else:
+            seen[slug] = (chap, idx)
+    # MALFORMED — a `point` directive whose argument had no `|`, so slug/text are None.
+    doc = bs.book_ir.parse_book()
+    for c in doc.chapters:
+        for b in c.blocks:
+            if b.directive == "point" and not b.point_slug:
+                findings.append(f"MALFORMED point decorator in {c.slug}::block-{b.index} — {b.raw.strip()!r} "
+                                f"has no `<slug> | <text>` split")
+    return findings
+
+
 def structural_findings() -> "list[str]":
     """Every view->md reference re-resolved against the CURRENT source. A dangling reference — a section id
-    / chapter / part / concept / label a view points at that the book no longer defines — is a finding.
-    The reverse index makes this a single walk over the inverted edges. (STRUCTURAL half of the two-kind
-    drift split — deterministic, a lint.)"""
+    / chapter / part / concept / label / point a view points at that the book no longer defines — is a
+    finding. The reverse index makes this a single walk over the inverted edges, plus the point-decorator
+    drift walk (duplicate + malformed slugs). (STRUCTURAL half of the two-kind drift split — a lint.)"""
     universe = derive_universe()
     index = build_index()
     findings: "list[str]" = []
@@ -186,6 +236,7 @@ def structural_findings() -> "list[str]":
             dep_summary = ", ".join(f"{d['view']}:{d['element']}({d['role']})" for d in slot["dependents"])
             findings.append(f"DANGLING {kind} {symbol!r} — referenced by {len(slot['dependents'])} view "
                             f"element(s) but the book no longer defines it: {dep_summary}")
+    findings.extend(point_findings())
     return findings
 
 
@@ -209,6 +260,7 @@ def to_jsonable(index: "dict[str, dict] | None" = None) -> dict:
                 "section_ids": len(universe.section_ids), "concepts": len(universe.concepts),
                 "labels": len(universe.labels), "refs": len(universe.refs),
                 "chapters": len(universe.chapters), "parts": len(universe.parts),
+                "points": len(universe.points),
             },
         },
         # symbol -> {kind, dependents:[{view, element, role}]}, keys sorted for a stable diff.

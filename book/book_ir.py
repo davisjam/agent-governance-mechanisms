@@ -56,8 +56,20 @@ _MARKER_LINE = re.compile(r"^<!--\s*([a-z0-9-]+)\s*(?::\s*(.*?))?\s*-->$", re.I)
 #: (label, caption); `emits` directives produce a block of the named kind; the rest are inert markers the
 #: IR records as DIRECTIVE. `build_book_html.MARKER_KEYWORDS` is the render-side twin; the notation-leak
 #: gate reads that. Keep the two in step when adding notation (IR-DESIGN.md §"Adding a directive").
+#: `point` is a drain-phase inert DIRECTIVE — `<!-- point: <slug> | <canonical text> -->` — the induced
+#: canonical point of the paragraph it heads. It renders NOTHING (like an index tag), and `_parse_chapter`
+#: fills its `point_slug` / `point_text` fields so the outline can derive paragraph points from the decorator.
 _ARMS = {"label", "table"}                       # arm state consumed by the next float
 _EMITS = {"figure": BlockKind.FIGURE, "figure-iframe": BlockKind.OTHER, "eq": BlockKind.EQ}
+
+
+def _parse_point(arg: str) -> "tuple[str, str] | None":
+    """Split a `<!-- point: <slug> | <text> -->` directive argument into (slug, text). Returns None when the
+    `|` separator is absent (a malformed decorator the drain audit reports as a finding, not a crash)."""
+    if "|" not in arg:
+        return None
+    slug, text = arg.split("|", 1)
+    return slug.strip(), text.strip()
 
 
 @dataclass
@@ -78,6 +90,8 @@ class Block:
     heading_level: int = 0                     # 1..6 for HEADING
     directive: str | None = None               # for DIRECTIVE/OTHER: the marker keyword
     refs: list[Ref] = field(default_factory=list)  # [ref:key] tokens in this block's prose
+    point_slug: str | None = None              # for a `point` DIRECTIVE: the decorator's kebab slug
+    point_text: str | None = None              # for a `point` DIRECTIVE: the induced canonical-point text
 
     @property
     def is_float(self) -> bool:
@@ -265,6 +279,14 @@ def _parse_chapter(rec: dict) -> Chapter:
                 pending_label = None
             elif kw in _EMITS:
                 blocks.append(Block(_EMITS[kw], lines[0].strip(), len(blocks), directive=kw))
+            elif kw == "point":
+                # An inert DIRECTIVE carrying the induced canonical point of the paragraph it heads. `arg` is
+                # `<slug> | <text>`; a missing `|` leaves slug/text None (the drain audit flags it). The
+                # outline pairs the point with the following prose block positionally (document order).
+                pt = _parse_point(arg)
+                blocks.append(Block(BlockKind.DIRECTIVE, lines[0].strip(), len(blocks), directive="point",
+                                    point_slug=pt[0] if pt else None,
+                                    point_text=pt[1] if pt else None))
             else:
                 blocks.append(Block(BlockKind.DIRECTIVE, lines[0].strip(), len(blocks), directive=kw))
             lines = lines[1:]
