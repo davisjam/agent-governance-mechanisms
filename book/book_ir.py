@@ -56,20 +56,43 @@ _MARKER_LINE = re.compile(r"^<!--\s*([a-z0-9-]+)\s*(?::\s*(.*?))?\s*-->$", re.I)
 #: (label, caption); `emits` directives produce a block of the named kind; the rest are inert markers the
 #: IR records as DIRECTIVE. `build_book_html.MARKER_KEYWORDS` is the render-side twin; the notation-leak
 #: gate reads that. Keep the two in step when adding notation (IR-DESIGN.md §"Adding a directive").
-#: `point` is a drain-phase inert DIRECTIVE — `<!-- point: <slug> | <canonical text> -->` — the induced
-#: canonical point of the paragraph it heads. It renders NOTHING (like an index tag), and `_parse_chapter`
-#: fills its `point_slug` / `point_text` fields so the outline can derive paragraph points from the decorator.
+#: `point` is a drain-phase inert DIRECTIVE — `<!-- point: <slug> | <claim> | terms: <t1>, <t2> -->` — the
+#: induced canonical point of the paragraph it heads. It renders NOTHING (like an index tag), and
+#: `_parse_chapter` fills its `point_slug` / `point_text` / `point_terms` fields so the outline can derive
+#: paragraph points from the decorator. The 3rd `terms:` segment is OPTIONAL (a 2-segment `slug | claim`
+#: still parses, with `point_terms = []`); it names the tier-2 LOCAL term slugs the paragraph deploys.
+#: `section-terms` is the tier-1 sibling — `<!-- section-terms: <t1>, <t2> -->` — an inert DIRECTIVE placed
+#: under an H2/H3 that names the 1–3 major concepts the section develops; `_parse_chapter` fills `section_terms`.
 _ARMS = {"label", "table"}                       # arm state consumed by the next float
 _EMITS = {"figure": BlockKind.FIGURE, "figure-iframe": BlockKind.OTHER, "eq": BlockKind.EQ}
 
+#: The optional 3rd point segment (`terms: <t1>, <t2>`) — a `terms:` prefix then a comma list. The leading
+#: `terms:` keyword is matched case-insensitively; the captured group is the raw comma-separated slug list.
+_POINT_TERMS_SEG = re.compile(r"^\s*terms:\s*(.*)$", re.I)
 
-def _parse_point(arg: str) -> "tuple[str, str] | None":
-    """Split a `<!-- point: <slug> | <text> -->` directive argument into (slug, text). Returns None when the
-    `|` separator is absent (a malformed decorator the drain audit reports as a finding, not a crash)."""
+
+def _split_term_list(raw: str) -> "list[str]":
+    """Parse a comma-separated term-slug list (`t1, t2, t3`) into a clean list, dropping empty entries. The
+    shared parser for both a point's `terms:` segment and a `section-terms:` marker's whole argument."""
+    return [t.strip() for t in raw.split(",") if t.strip()]
+
+
+def _parse_point(arg: str) -> "tuple[str, str, list[str]] | None":
+    """Split a `<!-- point: <slug> | <claim> [| terms: <t1>, <t2>] -->` argument into (slug, claim, terms).
+    Returns None when the first `|` separator is absent (a malformed decorator the drain audit reports as a
+    finding, not a crash). The 3rd `terms:` segment is optional — a 2-segment `slug | claim` yields `[]`
+    terms; a 3-segment form parses the trailing comma list. A 3rd segment that is NOT a `terms:` list is
+    ignored for `terms` (its words still count toward the claim only if before the first `|`)."""
     if "|" not in arg:
         return None
-    slug, text = arg.split("|", 1)
-    return slug.strip(), text.strip()
+    parts = [p.strip() for p in arg.split("|")]
+    slug, claim = parts[0], parts[1] if len(parts) > 1 else ""
+    terms: "list[str]" = []
+    if len(parts) > 2:
+        m = _POINT_TERMS_SEG.match(parts[2])
+        if m:
+            terms = _split_term_list(m.group(1))
+    return slug, claim, terms
 
 
 @dataclass
@@ -91,7 +114,9 @@ class Block:
     directive: str | None = None               # for DIRECTIVE/OTHER: the marker keyword
     refs: list[Ref] = field(default_factory=list)  # [ref:key] tokens in this block's prose
     point_slug: str | None = None              # for a `point` DIRECTIVE: the decorator's kebab slug
-    point_text: str | None = None              # for a `point` DIRECTIVE: the induced canonical-point text
+    point_text: str | None = None              # for a `point` DIRECTIVE: the induced canonical-point CLAIM
+    point_terms: list[str] = field(default_factory=list)   # for a `point`: tier-2 LOCAL term slugs (`terms:`)
+    section_terms: list[str] = field(default_factory=list)  # for a `section-terms` DIRECTIVE: tier-1 term slugs
 
     @property
     def is_float(self) -> bool:
@@ -281,12 +306,21 @@ def _parse_chapter(rec: dict) -> Chapter:
                 blocks.append(Block(_EMITS[kw], lines[0].strip(), len(blocks), directive=kw))
             elif kw == "point":
                 # An inert DIRECTIVE carrying the induced canonical point of the paragraph it heads. `arg` is
-                # `<slug> | <text>`; a missing `|` leaves slug/text None (the drain audit flags it). The
-                # outline pairs the point with the following prose block positionally (document order).
+                # `<slug> | <claim> [| terms: <t1>, <t2>]`; a missing first `|` leaves slug/text None (the
+                # drain audit flags it). The optional 3rd `terms:` segment lists the tier-2 LOCAL term slugs
+                # the paragraph deploys. The outline pairs the point with the following prose block
+                # positionally (document order).
                 pt = _parse_point(arg)
                 blocks.append(Block(BlockKind.DIRECTIVE, lines[0].strip(), len(blocks), directive="point",
                                     point_slug=pt[0] if pt else None,
-                                    point_text=pt[1] if pt else None))
+                                    point_text=pt[1] if pt else None,
+                                    point_terms=pt[2] if pt else []))
+            elif kw == "section-terms":
+                # A tier-1 inert DIRECTIVE placed under a heading: `<!-- section-terms: <t1>, <t2> -->` names
+                # the 1–3 major concepts the section develops. Renders NOTHING; the reverse index inverts it
+                # into term→section edges (tier-1). Its whole argument is a comma list of term slugs.
+                blocks.append(Block(BlockKind.DIRECTIVE, lines[0].strip(), len(blocks),
+                                    directive="section-terms", section_terms=_split_term_list(arg)))
             else:
                 blocks.append(Block(BlockKind.DIRECTIVE, lines[0].strip(), len(blocks), directive=kw))
             lines = lines[1:]
