@@ -1785,7 +1785,10 @@ def _landing_outcomes() -> str:
             f'<a class="oc-more" href="{_esc(home)}">read →</a></li>')
     body = ('<p>Each promise below is a learning outcome projected from the book\'s outcomes model — '
             'the "after this Part, the reader can…" spine, derived from the prose and kept in sync by a '
-            'drift check. The book-level goals come first, then one per Part.</p>'
+            'drift check. The book-level goals come first, then one per Part. Want the full model? '
+            '<a href="book-models/models-view.html">Browse the book models as a reading view →</a> — '
+            'the outline and every outcome, book / Part / chapter / section, rendered from the same '
+            'models this section projects.</p>'
             f'<ul class="oc-list">{"".join(rows)}</ul>')
     return (
         '<details class="card wide accent" id="outcomes-view" open>\n'
@@ -1794,7 +1797,7 @@ def _landing_outcomes() -> str:
         '<span class="cd-frame">The book\'s and each Part\'s "you\'ll be able to…", projected from the outcomes model.</span>'
         '<span class="cd-toggle" aria-hidden="true"></span></summary>\n'
         f'  <div class="cd-body">{body}'
-        '<a class="cd-more" href="book/index.html">read the book →</a></div>\n'
+        '<a class="cd-more" href="book-models/models-view.html">browse the models as a reading view →</a></div>\n'
         '</details>')
 
 
@@ -3087,9 +3090,11 @@ def cmd_views_audit(args) -> int:
     # --- SITE-AS-PROJECTION drift: the site is a derived VIEW of the book's models, so its projection
     # drift (definitions.json ↔ the landing's def-* cards; outcomes.json/selection ↔ the outcome-* rows)
     # belongs in the same views-audit surface. See book-models/SITE-VIEW.md; checks in tests/html.py.
-    from tests.html import check_definitions_site, check_outcomes_site  # noqa: E402 — audit-time only
+    from tests.html import (check_definitions_site, check_models_view_site,  # noqa: E402 — audit-time only
+                            check_outcomes_site)
     for _label, (_status, _issues) in (("definitions", check_definitions_site()),
-                                       ("outcomes-site", check_outcomes_site())):
+                                       ("outcomes-site", check_outcomes_site()),
+                                       ("models-view", check_models_view_site())):
         findings.extend(_issues)
 
     strict = getattr(args, "strict", False)

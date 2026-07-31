@@ -21,6 +21,17 @@ def _catalog(*args: str) -> None:
 
 _catalog("validate")   # refuse to build/commit an invalid schema
 _catalog("build")      # render .md -> .html + regenerate the landing census + the skill bundle
+
+# book-models READING VIEW: re-render the browsable HTML view of the book models (outline + outcomes)
+# and stage it, exactly like the site build stays fresh. The page is a PROJECTION of the models, so a
+# model regeneration must re-flow the view; running it on every commit means the committed HTML can
+# never go stale. Tracked (not gitignored) — mirrors how GitHub Pages serves the committed site HTML.
+_render = subprocess.run([sys.executable, os.path.join("book-models", "render_models_view.py"),
+                          "regenerate"], cwd=ROOT)
+if _render.returncode:
+    sys.exit(_render.returncode)
+subprocess.run(["git", "add", "--", "book-models/models-view.html"], cwd=ROOT)
+
 subprocess.run(["git", "add", "--", "*.html"], cwd=ROOT)
 subprocess.run(["git", "add", "--", "plugin"], cwd=ROOT)  # stage the regenerated skill bundle (plugin/**/*.html is gitignored)
 
