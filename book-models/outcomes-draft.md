@@ -43,8 +43,10 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 
 ### 2.1-the-agent-stack
 
-- **[DECLARED]** (know) After this chapter, the reader can identify the four layers of the agent stack and read each as a distinct place to insert a control. — _anchor: Section titles 'the-four-layers' + 'every-layer-is-a-place-to-steer'; ts: 'Read the stack as a list of opportunities'._
+- **[DERIVED]** (know) After this chapter, the reader can identify the four layers of the agent stack and read each as a distinct place to insert a control. — _anchor: point: agent-stack-has-four-injection-layers / read-each-layer-as-an-injection-opportunity / every-layer-serves-one-goal-narrow-the-search_
   - **[DERIVED]** (know) After this section, the reader can identify each of the four layers of the agent stack. — _anchor: Heading text: 'The four layers'; ts: 'At the bottom sits the foundation model'._
+  - **[DERIVED]** (know) After this section, the reader can identify each of the four layers of the agent stack, from the foundation model up, and name the kind of governance grip each one gives. — _anchor: point: foundation-layer-spares-the-model-reasoning-cost / harness-manages-the-context-window-and-holds-two-mechanism-points / skills-are-soft-hooks-are-hard-tools-are-deterministic / engineering-environment-must-be-written-down-and-offers-git-and-ci-hooks / application-layer-makes-mistakes-structurally-impossible-via-static-analysis_
+  - **[DERIVED]** (understand) After this section, the reader can explain why each layer of the stack is an injection opportunity, all serving one goal — narrowing the agent's search — and why the mechanisms placed there must themselves be governed for interplay. _(primary: every-layer-is-a-place-to-steer · elaborated by: 2.6)_ — _anchor: point: read-each-layer-as-an-injection-opportunity / every-layer-serves-one-goal-narrow-the-search / mechanisms-interact-and-the-interplay-is-its-own-problem_
 
 ### 2.2-models-and-the-semantic-gap
 
@@ -78,6 +80,7 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 - **[DECLARED]** (analyze) After this chapter, the reader can analyze the space between controls with a governance graph and reason about mechanisms whose hooks they do not own. — _anchor: Section titles 'drawing-what-lies-between-the-controls' (ts: 'The Governance Graph draws it') + 'when-the-hooks-aren-t-yours'._
 - _elaborates (owned by 2.3):_ (understand) After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch).
 - _elaborates (owned by constraints-and-sensors):_ (understand) After this section, the reader can distinguish a constraint (prevent) from a sensor (catch) and choose which move a given failure calls for.
+- _elaborates (owned by every-layer-is-a-place-to-steer):_ (understand) After this section, the reader can explain why each layer of the stack is an injection opportunity, all serving one goal — narrowing the agent's search — and why the mechanisms placed there must themselves be governed for interplay.
 
 ## Part 3
 

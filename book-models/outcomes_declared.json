@@ -178,8 +178,29 @@
       "verb": "identify",
       "obj": "the four layers of the agent stack as four places to steer",
       "statement": "After this chapter, the reader can identify the four layers of the agent stack and read each as a distinct place to insert a control.",
-      "provenance": "declared",
-      "anchor": "Section titles 'the-four-layers' + 'every-layer-is-a-place-to-steer'; ts: 'Read the stack as a list of opportunities'."
+      "provenance": "derived",
+      "anchor": "point: agent-stack-has-four-injection-layers / read-each-layer-as-an-injection-opportunity / every-layer-serves-one-goal-narrow-the-search"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "the-four-layers",
+      "verb": "identify",
+      "obj": "the four layers of the agent stack — foundation model, harness, engineering environment, application — and the grip each gives",
+      "statement": "After this section, the reader can identify each of the four layers of the agent stack, from the foundation model up, and name the kind of governance grip each one gives.",
+      "provenance": "derived",
+      "anchor": "point: foundation-layer-spares-the-model-reasoning-cost / harness-manages-the-context-window-and-holds-two-mechanism-points / skills-are-soft-hooks-are-hard-tools-are-deterministic / engineering-environment-must-be-written-down-and-offers-git-and-ci-hooks / application-layer-makes-mistakes-structurally-impossible-via-static-analysis"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "every-layer-is-a-place-to-steer",
+      "verb": "explain",
+      "obj": "why every layer of the stack is an injection opportunity serving the one goal of narrowing the agent's search",
+      "statement": "After this section, the reader can explain why each layer of the stack is an injection opportunity, all serving one goal — narrowing the agent's search — and why the mechanisms placed there must themselves be governed for interplay.",
+      "provenance": "derived",
+      "anchor": "point: read-each-layer-as-an-injection-opportunity / every-layer-serves-one-goal-narrow-the-search / mechanisms-interact-and-the-interplay-is-its-own-problem",
+      "secondary_units": [
+        "2.6-when-guardrails-collide"
+      ]
     },
     {
       "granularity": "chapter",
