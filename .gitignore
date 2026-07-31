@@ -55,3 +55,12 @@ terseness-recs/
 
 # Raw transcript source audio/video (multi-MB binaries; transcripts are the shipped artifact)
 transcript-sources/
+
+# book-models/ agent scratch + review artifacts — kept local, MUST NOT orphan the build gate
+# or leak into publish-staging (both bit us this session: a triptych .html orphaned the build,
+# voice drafts needed a manual pre-publish move). Legit book-models files (models-view.html,
+# *.json, *.py, SITE-*.md, DESIGN.md, DRAIN-PLAN.md, outcomes-draft.md) are NOT matched.
+book-models/voice-*
+book-models/voice-candidates/
+book-models/*-review-*.md
+book-models/gap-report-*
