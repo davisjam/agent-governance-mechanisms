@@ -963,28 +963,28 @@
           "points": [
             {
               "slug": "measure-one-level-deeper-because-the-surface-number-cannot-act",
-              "text": "Ousterhout's rule in one line — measure one level deeper than the number you think you want — because a metric earns its place only when it drives a decision, and the surface number usually cannot.",
-              "block_index": 5
+              "text": "Measure one level deeper; the surface number cannot act.",
+              "block_index": 6
             },
             {
               "slug": "a-cloud-bill-reports-but-splitting-it-by-service-acts",
-              "text": "A cloud bill is real and useless: it tells you to pay the invoice, not what to change — but split the same bill by service and one usually dominates while the rest trail off in a thin tail, and the dominant one names your first target, the deeper number carrying a decision the shallow one buried.",
-              "block_index": 8
+              "text": "A cloud bill reports; splitting it by service acts.",
+              "block_index": 9
             },
             {
               "slug": "boot-time-one-level-deeper-turns-scale-out-into-fix-the-slow-phase",
-              "text": "An 8-second boot as one number means only \"scale out\"; measured one level deeper — 6 of those seconds are one initialization phase warming up — it means \"optimize that phase first,\" the same latency turned from a reflexive scale-out into a specific engineering decision.",
-              "block_index": 10
+              "text": "Boot time, one level deeper: fix the slow phase.",
+              "block_index": 11
             },
             {
               "slug": "line-coverage-is-the-invoice-level-number-and-the-flagship-is-coverage-one-level-deeper",
-              "text": "The same trap hides in test coverage: \"the suite covers 87% of lines\" is the invoice-level headline that reports and does not act, because a line in a throwaway helper counts the same as a line in the job state machine, so the chapter's flagship metric is coverage measured one level deeper — coverage that names the gap instead of hiding it in a percentage.",
-              "block_index": 12
+              "text": "Line coverage is the invoice number; go deeper.",
+              "block_index": 13
             },
             {
               "slug": "metrics-run-a-hard-to-soft-spectrum-and-the-mistake-is-treating-one-as-the-other",
-              "text": "The metric spectrum tracks the soft-versus-hard governance axis: a hard metric is deterministic — a machine reads it and the same input yields the same number — while a soft metric is judgment-laden, pointing a reader at a place to look without reducing to a self-deciding threshold; both are worth having, and the mistake is to treat one as the other — blocking a build on a soft signal, or leaving a hard fact to a reviewer's memory.",
-              "block_index": 14
+              "text": "Metrics run hard to soft; don't confuse the two.",
+              "block_index": 15
             }
           ]
         },
@@ -994,37 +994,37 @@
           "heading_text": "The hard end: cold-start latency, machine-read and model-fed",
           "topic_sentence": "Start at the deterministic end, where a metric is a millisecond number nobody argues about.",
           "id_source": "derived",
-          "block_index": 17,
+          "block_index": 18,
           "points": [
             {
               "slug": "cold-start-latency-reads-obviously-as-the-scale-from-zero-penalty",
-              "text": "A serverless fleet scales to zero, so a request that wakes a cold instance waits while the container boots and the runtime loads — the cold-start latency — and the obvious reading is the penalty of scaling from zero: measure it, and if it hurts, pay to keep a warm instance running.",
-              "block_index": 19
-            },
-            {
-              "slug": "the-deeper-cold-start-number-named-runtime-init-not-scale-from-zero-or-image-size",
-              "text": "The obvious reading was wrong: a validator service carried a multi-second warm floor a warm instance did nothing to remove, and the deeper number named its cause — a runtime relaunched once per request paying a fresh startup each time — so the fix was a re-architecture that kept the runtime resident, cutting the warm floor many-fold; the barrier was runtime initialization, not scale-from-zero and not image size, and only the deeper measurement said so.",
+              "text": "Cold-start latency reads obviously as the scale-from-zero penalty.",
               "block_index": 21
             },
             {
-              "slug": "spot-checking-doesnt-scale-so-a-model-reasons-over-the-chain-as-a-longest-path-sum",
-              "text": "Spot-checking the one service whose latency looked wrong does not scale — it catches the service that draws your eye and says nothing about how services interact — so the better instrument is a model holding every service's numbers and reasoning over the paths between them, because the sharpest question is the chain: a request landing when every downstream service is cold triggers a cascade, and the worst case is a longest-path sum, each step contributing the slowest cold-start it waits on.",
+              "slug": "the-deeper-cold-start-number-named-runtime-init-not-scale-from-zero-or-image-size",
+              "text": "The deeper number named runtime init, not scale-from-zero.",
               "block_index": 23
             },
             {
-              "slug": "the-hard-ends-defining-move-is-the-number-feeds-the-model",
-              "text": "The hard end's defining move is that the number feeds the model: the cold-start measurements do not live in a dashboard a human reads and forgets — they land as typed fields on the deployment-topology model the fleet reasons through, and a recompute tool reads those fields to derive the longest-path worst case, refining on its own whenever a fresher number is written.",
+              "slug": "spot-checking-doesnt-scale-so-a-model-reasons-over-the-chain-as-a-longest-path-sum",
+              "text": "Spot-checking fails; a model sums the longest cold-start path.",
               "block_index": 25
             },
             {
+              "slug": "the-hard-ends-defining-move-is-the-number-feeds-the-model",
+              "text": "The hard end's defining move: the number feeds the model.",
+              "block_index": 27
+            },
+            {
               "slug": "automate-the-map-upkeep-into-the-machine-rather-than-a-runbook-reminder",
-              "text": "The commit is automated because a runbook step — \"after a measurement run, remember to commit the new numbers\" — rots and the model drifts; so the pipeline commits the refreshed measurements itself under a housekeeping commit with no human in the loop, building the map's upkeep into the machine that changes the territory rather than asking a person to remember it: architecture over a reminder.",
-              "block_index": 28
+              "text": "Automate map upkeep into the machine, not a reminder.",
+              "block_index": 30
             },
             {
               "slug": "as-built-the-seam-is-in-and-the-data-catches-up",
-              "text": "As-built, the live-annotation path is built but not yet populated — the tool runs off a snapshot table of measured values because the fleet is mid-migration — which is the ordinary shape of real work, the seam in and the data catching up; what matters for the chapter is the pattern: a hard metric measured deterministically, written into a typed model, and consumed by a tool that turns it into a decision.",
-              "block_index": 30
+              "text": "As-built: the seam is in, the data catches up.",
+              "block_index": 32
             }
           ]
         },
@@ -1034,42 +1034,42 @@
           "heading_text": "The flagship: coverage measured one level deeper",
           "topic_sentence": "Now the middle of the spectrum, and the chapter's teaching example: the \"measure one level deeper\" rule applied to the number that most often gets it wrong.",
           "id_source": "derived",
-          "block_index": 32,
+          "block_index": 34,
           "points": [
             {
               "slug": "line-coverage-answers-a-syntactic-question-not-the-semantic-one",
-              "text": "Line coverage answers a syntactic question — did this line run under some test — which is useful but cannot answer the engineer's actual, semantic question: is the claim this code makes exercised by a test? A file can sit at 95% while the one function implementing a critical invariant is never called, its lines covered incidentally by an unrelated test, so the percentage is true and also a lie about the thing you care about, and the lie is invisible because a percentage has nowhere to put the gap.",
-              "block_index": 34
+              "text": "Line coverage answers a syntactic question, not the semantic one.",
+              "block_index": 37
             },
             {
               "slug": "the-fix-joins-a-traceability-graph-to-the-coverage-oracle",
-              "text": "The fix joins two things the system already has: a traceability graph linking each model claim — an invariant, a transition, a service-flow edge — to the code that implements it, pointing at an anchor (the entry-point symbol that carries the claim), and the ordinary coverage oracle that knows which source lines ran; compose them — anchor to its symbol's line range, intersected with the covered-line set — and you can ask whether this claim's code was exercised.",
-              "block_index": 36
-            },
-            {
-              "slug": "the-composition-counts-model-claims-and-reports-a-named-verdict",
-              "text": "The composition changes the unit of measurement: line coverage counts lines, this counts model claims — the anchors supply the numerator's units, coverage supplies the ground truth of what ran — so the metric reports not a percentage but a named verdict (\"this invariant's implementing code is not exercised by any test\"), turning an anonymous 87% into an actionable list of the exact model claims the suite walks past.",
+              "text": "The fix joins a traceability graph to the coverage oracle.",
               "block_index": 39
             },
             {
-              "slug": "the-genre-check-names-this-requirements-based-coverage",
-              "text": "Run the genre check and this metric has a name — requirements-based coverage, the discipline avionics certification mandates and an open-source requirements tool encodes with git-native items linked to their tests — so the work is not to dream up a bespoke number but to compute the known figure over a graph already built for it, adding the one synthesis the off-the-shelf tools lack: they check a requirement has a linked test, not that the linked test actually executes the requirement's code.",
-              "block_index": 41
+              "slug": "the-composition-counts-model-claims-and-reports-a-named-verdict",
+              "text": "The composition counts model claims and reports a named verdict.",
+              "block_index": 42
             },
             {
-              "slug": "one-primitive-supports-several-aggregations-each-a-different-decision",
-              "text": "One primitive underneath — resolve an anchor to a line range and intersect it with the covered set — supports several aggregations, each answering a different decision: model-element coverage (which claims that anchor real code go unexercised, the headline fix-list), entry-point coverage (which anchored roots a refactor regression would slip past), and chain coverage (does each claim close end-to-end — code, a test naming it as verifier, and that test actually running the code — the strictest cut that reports low at first and thereby names the verification chains still to build).",
+              "slug": "the-genre-check-names-this-requirements-based-coverage",
+              "text": "The genre check names this requirements-based coverage.",
               "block_index": 44
             },
             {
-              "slug": "the-honesty-layer-reports-a-breakdown-so-the-number-affords-engineering",
-              "text": "The honesty layer matters as much as the aggregation: a single percentage lies when its denominator is fuzzy, so every figure reports a breakdown — exercised, not-exercised, unmeasurable (anchor unresolvable), out-of-surface (legitimately not coverable code) — and \"80%\" then reads as what it is, a number that affords the engineering because you can see which part of it you can act on.",
+              "slug": "one-primitive-supports-several-aggregations-each-a-different-decision",
+              "text": "One primitive supports several aggregations, each a different decision.",
               "block_index": 47
             },
             {
+              "slug": "the-honesty-layer-reports-a-breakdown-so-the-number-affords-engineering",
+              "text": "The honesty layer reports a breakdown, not a percentage.",
+              "block_index": 50
+            },
+            {
               "slug": "measuring-one-level-deeper-cost-a-join-not-a-rebuild",
-              "text": "The design is deliberately light: computing all of this requires no change to any model — the anchors already carry their symbol, the covered-line set is a plain read of the coverage database — so the metric is a new consumer of two existing substrates whose expensive parts were already paid for, and measuring one level deeper cost a join, not a rebuild.",
-              "block_index": 49
+              "text": "Measuring one level deeper cost a join, not a rebuild.",
+              "block_index": 52
             }
           ]
         },
@@ -1079,17 +1079,17 @@
           "heading_text": "The soft end: doc-derived tests",
           "topic_sentence": "Slide to the far end of the spectrum, where the metric stops being a number a threshold can act on and becomes a judgment a human has to make.",
           "id_source": "derived",
-          "block_index": 51,
+          "block_index": 54,
           "points": [
             {
               "slug": "a-doc-derived-test-pins-a-doc-claim-and-its-metric-is-genuinely-soft",
-              "text": "A doc-derived test pins a behavior stated in a cited document, carrying a trailer that names its source so an edit to the source regenerates the pin; the metric it invites — is this doc-claim pinned by a test? — is genuinely soft, with no clean denominator, because \"how many claims does this document make?\" is a matter of reading (one reader finds six, another nine, neither wrong) and the set of claims is not enumerable by machine, so the signal points a reader at a document and says \"these deserve a pin,\" it does not decide.",
-              "block_index": 53
+              "text": "A doc-derived test pins a doc-claim; its metric is soft.",
+              "block_index": 57
             },
             {
               "slug": "the-soft-metric-is-inseparable-from-a-readiness-judgment-so-a-gate-would-manufacture-hollow-tests",
-              "text": "The softness runs deeper than a fuzzy denominator: a doc-derived test is only as good as the seam it tests against, so if decision logic is interleaved with live I/O there is no pure surface to assert against and the test falls back to pinning the source's shape — a test that stays green even when you gut the function's body — which makes the signal inseparable from a judgment about readiness that only a human can answer, and wiring it to a gate that blocks on a threshold manufactures exactly the hollow tests it was meant to prevent.",
-              "block_index": 56
+              "text": "Gating this soft signal manufactures hollow tests.",
+              "block_index": 60
             }
           ]
         },
@@ -1099,22 +1099,22 @@
           "heading_text": "The model runs the machinery",
           "topic_sentence": "The hard end and the flagship follow the same pattern.",
           "id_source": "derived",
-          "block_index": 58,
+          "block_index": 62,
           "points": [
             {
               "slug": "the-model-is-not-a-picture-of-the-machinery-it-is-the-machinery",
-              "text": "The models are not documentation that merely stays in sync with the code — they are consumed at runtime to produce the metrics: the cold-start numbers are typed fields a tool reads to derive the longest-path worst case, and the coverage flagship walks the traceability graph to each claim's anchor rather than scanning source for important-looking functions, so in both the model is not a picture of the machinery, it is the machinery — the thing the metric tool reads to know what to measure and how to weigh it.",
-              "block_index": 60
+              "text": "The model is machinery, not a picture of it.",
+              "block_index": 65
             },
             {
               "slug": "a-component-distance-grade-is-a-metric-that-drives-a-gate-three-ways",
-              "text": "The sharpest instance ties metrics back to mechanisms: a pre-commit gate deciding whether a lint finding should block grades each finding by its distance from the change in the typed component graph — HARD on a touched file (block, the commit's own debt), SOFT in the same component (report and ask, do not block, so concurrent agents do not race the same pre-existing problem), SILENT in a different component (suppress, leaving the whole-tree deploy gate as backstop).",
-              "block_index": 62
+              "text": "A component-distance grade drives a gate three ways.",
+              "block_index": 67
             },
             {
               "slug": "the-grade-is-a-metric-read-from-the-model-that-drives-a-sensors-decision",
-              "text": "The grade is a metric — a distance read from the model at check time — that drives a sensor's decision directly: the same finding gets three gate behaviors, chosen by consulting the component graph about how far it sits from the change, so here the model is not describing the system for a human to read later, it is queried at the moment of commit to grade the gate — the machinery, run by the model.",
-              "block_index": 66
+              "text": "The grade is a model-read metric driving a sensor.",
+              "block_index": 71
             }
           ]
         },
@@ -1124,12 +1124,12 @@
           "heading_text": "A compact reference",
           "topic_sentence": "[ref:metrics-table] collects every metric — the decision each drives, where it sits on the hard-soft axis, and who reads it.",
           "id_source": "derived",
-          "block_index": 68,
+          "block_index": 73,
           "points": [
             {
               "slug": "every-row-names-a-decision-because-a-metric-that-names-none-was-measured-too-shallow",
-              "text": "Read the table top to bottom and the spectrum is visible at a glance — stopwatch-hard machine-consumed rows at the top, a hard measurement turned onto a semantic unit in the middle, a reader-aiming judgment at the bottom — and every row names a decision, because a metric that names no decision was measured too shallow, and a loop steering by a shallow number is a loop that cannot steer.",
-              "block_index": 71
+              "text": "Every row names a decision, or was measured too shallow.",
+              "block_index": 77
             }
           ]
         }
@@ -1137,12 +1137,12 @@
       "preamble_points": [
         {
           "slug": "a-metric-is-the-sensing-half-of-the-agent-loop",
-          "text": "Every agent runs a loop — input, reason, act, fold the result back around — and this chapter develops the sensing half of it, because a loop with no honest sense of its own state cannot steer at all.",
+          "text": "A metric is the sensing half of the agent loop.",
           "block_index": 0
         },
         {
           "slug": "the-metric-comes-first-and-must-drive-a-decision",
-          "text": "A metric senses, a playbook acts, a mechanism enforces — and the metric comes first because the other two are blind without it: a playbook firing on the wrong number does the wrong work, a mechanism grading on too coarse a number blocks the wrong commit, so the governing question for every metric is not \"can I measure this?\" but \"does this number drive a decision?\"",
+          "text": "The metric comes first; it must drive a decision.",
           "block_index": 2
         }
       ]

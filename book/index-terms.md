@@ -314,6 +314,13 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: typed-enum | local
 - term: pink-elephant | local
 - term: reasoning-trace | local
+- term: line-coverage | local
+- term: cold-start-latency | local
+- term: longest-path-sum | local
+- term: anchor | local
+- term: requirements-based-coverage | local
+- term: doc-derived-test | local
+- term: seam | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
