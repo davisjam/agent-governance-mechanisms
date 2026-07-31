@@ -198,7 +198,7 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
-    "inset", "data", "label", "point",
+    "inset", "data", "label", "point", "section-terms",
 )
 # A comment whose first token is one of the vocabulary keywords — used to peel a marker glued to the head
 # of a prose block (placement-robust stripping: an author need not remember a blank line) and, in the gate,
@@ -219,13 +219,15 @@ _INSET_RE = re.compile(r"^<!--\s*inset:\s*(?P<title>.+?)\s*-->$")
 # model — so any body_md scan that reflects READER-VISIBLE prose (the occurrence index) must strip it, or a
 # term that appears only in a decorator would spawn a phantom index reference. `_strip_point_decorators`
 # below removes them; the outline model reads the point from the IR, never from this scrubbed prose.
-_POINT_COMMENT_RE = re.compile(r"^\s*<!--\s*point:.*?-->\s*$", re.M)
+_POINT_COMMENT_RE = re.compile(r"^\s*<!--\s*(?:point|section-terms):.*?-->\s*$", re.M)
 
 
 def _strip_point_decorators(body_md: str) -> str:
-    """Remove every `<!-- point: … -->` decorator line from a chapter's markdown. Used by the reader-visible
-    prose scans (the occurrence index) so an authored canonical-point never leaks into reader-facing output.
-    The renderer's block loop strips them separately (they render nothing); this is the text-scan twin."""
+    """Remove every `<!-- point: … -->` and `<!-- section-terms: … -->` decorator line from a chapter's
+    markdown. Used by the reader-visible prose scans (the occurrence index) so an authored canonical-point or
+    section-terms tag never leaks into reader-facing output. Both are AUTHORED MODEL-METADATA (invisible to
+    the reader, consumed only by the view-models). The renderer's block loop strips them separately (they
+    render nothing); this is the text-scan twin. The name is kept for compatibility — it strips both markers."""
     return _POINT_COMMENT_RE.sub("", body_md)
 
 
@@ -713,10 +715,15 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 _emit(f'<p class="book-eq">{inline(s[len("<!--"):-len("-->")].strip()[len("eq:"):].strip())}</p>')
                 return True
             if inner.startswith("point:"):
-                # `<!-- point: <slug> | <text> -->` — the induced canonical point of the paragraph it heads
-                # (the drain notation). An INERT decorator: consumed and stripped, renders NOTHING (the
-                # outline model reads it from the IR, not the HTML). Peeled here so it never reaches the
-                # lone-comment passthrough and leaks; degradation-friendly and byte-identical for the build.
+                # `<!-- point: <slug> | <claim> [| terms: …] -->` — the induced canonical point of the
+                # paragraph it heads (the drain notation). An INERT decorator: consumed and stripped, renders
+                # NOTHING (the outline model reads it from the IR, not the HTML). Peeled here so it never
+                # reaches the lone-comment passthrough and leaks; degradation-friendly and byte-identical.
+                return True
+            if inner.startswith("section-terms:"):
+                # `<!-- section-terms: <t1>, <t2> -->` — the tier-1 sibling of `point`: names the major
+                # concepts a section develops (the drain notation). Equally INERT — consumed, stripped,
+                # renders NOTHING (the reverse index reads it from the IR). Same byte-identical guarantee.
                 return True
         return False
 
@@ -2308,6 +2315,32 @@ def _appendix_anchor_map(entries: list[dict]) -> dict[str, str]:
 # (a concept has one canonical definition; a slug must be registered; an example needs a definition).
 
 _CONCEPT_RE = re.compile(r"-\s*concept:\s*([a-z0-9-]+)\s*\|\s*(.+?)\s*$")
+#: The two-tier term registry line: `- term: <slug> | <tier>`, tier ∈ {section, local}. The tier annotation
+#: that the drain's `terms:` / `section-terms:` tagging resolves against (index-terms.md §"Term tiers").
+_TERM_TIER_RE = re.compile(r"-\s*term:\s*([a-z0-9-]+)\s*\|\s*(section|local)\s*$")
+#: The two valid term tiers — the closed set the `term-tags-registered` lint checks membership against.
+TERM_TIERS = ("section", "local")
+
+
+def _load_term_tiers() -> dict[str, str]:
+    """Read the two-tier term registry from `index-terms.md` → {slug: tier}. Every `- concept:` slug DEFAULTS
+    to `tier: section` (seeding the 135 existing concepts as section-tier); an explicit `- term: <slug> |
+    <tier>` row registers a new local term OR overrides a concept slug's default tier. This is the SSOT the
+    drain's `terms:`/`section-terms:` tagging resolves against — one file, no parallel registry (index-terms.md
+    §"Term tiers"). A `- term:` row for an unknown tier is a build-loud error (a typo, caught before it drops
+    the term silently)."""
+    tiers: dict[str, str] = {slug: "section" for slug in _load_concept_registry()}  # concepts default section
+    it = HERE / _INDEX_TERMS_FILE
+    if it.is_file():
+        for line in it.read_text(encoding="utf-8").splitlines():
+            s = line.strip()
+            if s.startswith("- term:"):
+                m = _TERM_TIER_RE.match(s)
+                if not m:
+                    raise SystemExit(f"index-terms.md: malformed `- term:` tier row {s!r} "
+                                     f"(want `- term: <slug> | section|local`)")
+                tiers[m.group(1)] = m.group(2)  # explicit row registers / overrides
+    return tiers
 
 
 def _load_concept_registry() -> dict[str, str]:

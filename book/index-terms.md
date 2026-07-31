@@ -273,6 +273,28 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: governance-target-models-bridge | Governance target — models-bridge
 - concept: governance-target-product | Governance target — product
 
+## Term tiers
+
+The **two-tier term registry** for the drain's `terms:` / `section-terms:` tagging. Every slug a `point`'s
+`terms:` segment or a `<!-- section-terms: … -->` marker names must resolve to a REGISTERED term carrying a
+`tier` ∈ {`section`, `local`}:
+
+- **`section`** (tier-1) — a major concept a whole section develops. Every `- concept:` slug in the registry
+  above **defaults to `tier: section`** — no `- term:` row is needed for it. This seeds the 135 existing
+  concepts as section-tier so the drain can tag sections against them on day one.
+- **`local`** (tier-2) — a fine-grained concept a single paragraph deploys. New local terms that are NOT in
+  the concept registry get an explicit `- term: <slug> | local` row below.
+
+Rule for the resolver (`term-tags-registered` lint): a tagged slug is registered iff it is a `- concept:`
+slug (→ `tier: section` unless overridden) OR it has an explicit `- term: <slug> | <tier>` row here. An
+explicit `- term:` row for a concept slug OVERRIDES its default (e.g. demote a broad concept to `local`).
+This reuses `index-terms.md` as the single term SSOT — no parallel registry — keyed by the same slug the
+concept registry, `concepts.json`, and the book's `index-def` tags all join on.
+
+<!-- term-tier registry: `- term: <slug> | <tier>`; tier ∈ {section, local}. Concept slugs default to
+     section-tier, so only deviations + new local terms are listed. -->
+- term: agreement-not-correctness | local
+
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
 - context-b (timeline) concepts + any proper nouns from the ADA/timeline chapters get appended once that Fable lands.
