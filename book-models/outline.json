@@ -957,7 +957,7 @@
           "section_id": "measure-one-level-deeper",
           "level": 2,
           "heading_text": "Measure one level deeper",
-          "topic_sentence": "John Ousterhout gives the rule in one line: **measure one level deeper than the number you think you want.** A metric earns its place only when it drives a decision, and the surface number usually cannot.",
+          "topic_sentence": "John Ousterhout gives the rule in one line: **measure one level deeper than the number you think you want.** A metric earns its place only when it drives a decision, and the surface number usually cannot; the deeper the measurement, the nearer it sits to the decision it must drive.",
           "id_source": "derived",
           "block_index": 4,
           "points": [
