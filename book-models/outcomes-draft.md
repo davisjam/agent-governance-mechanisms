@@ -24,11 +24,17 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 ### 1.1-the-printer
 
 - **[DECLARED]** (evaluate) After this chapter, the reader can judge whether a task is open-ended enough to need the book's machinery, and reason about accountability when an agent produces a wrong result. — _anchor: Section titles: 'What this book is about (and what it is not)', 'an-open-ended-technology', 'whose-fault-is-it'._
+  - **[DERIVED]** (understand) After this section, the reader can distinguish one-shot scripting from supervised autonomy and name what each supplies to the agent. — _anchor: point: two-modes-fork-on-size-and-difficulty / one-shot-for-small-unsubtle-tasks / supervised-autonomy-supplies-four-things_
+  - **[DERIVED]** (evaluate) After this section, the reader can judge how long a leash a task can run on from two factors — how densely the model's training data covers the work and how capable the model is at it — and see why misjudging the mode is costly either way. — _anchor: point: leash-length-from-data-density-and-capability / mode-misjudgment-is-costly-both-ways_
+  - **[DERIVED]** (understand) After this section, the reader can explain why an agent, like a 3D printer, needs the detailed build instructions and not merely a picture of the desired result. — _anchor: point: printer-needs-a-model-not-a-photo / agents-need-the-instructions-not-just-the-picture_
+  - **[DERIVED]** (apply) After this section, the reader can adopt the posture that an agent is a printer, not a stapler — so when it produces the wrong thing, the first suspect is the instructions, and the models can build anything one can explain. — _anchor: point: agent-is-a-printer-not-a-stapler-so-suspect-the-instructions / models-can-build-anything-you-can-explain_
 
 ### 1.2-loops-and-models
 
 - **[DECLARED]** (understand) After this chapter, the reader can explain the agent as a fixed-shape loop and why giving it a model of the world is the first act of governance. — _anchor: Section titles 'everything-is-a-loop' + 'give-it-a-model-of-the-world'; ts: 'an agent runs in a loop, and the loop has a fixed shape'._
+  - **[DERIVED]** (understand) After this section, the reader can describe agent work as a fixed-shape loop — input, reasoning, output, fed around again — and see why engineering it starts with a measurable success metric. — _anchor: point: agent-work-is-a-fixed-shape-loop / loop-starts-with-a-measurable-metric_
   - **[GAP-REC]** (create) After this section, the reader can construct a world-model an agent acts against — the first governance move. — _gap: O2 finding: this H2 opens on a non-paragraph block (no topic sentence), so the outcome its heading promises is not stated in prose as written. Recommend a lead paragraph that states the move._
+  - **[DECLARED]** (understand) After this section, the reader can explain why handing the agent a model of its world conditions the probability distribution of its behavior — aiming its search and shrinking what it must hold. — _anchor: point: model-of-the-world-is-the-input-agent-reasons-over / structuring-loop-and-model-conditions-the-distribution (section opens on an aside, not a topic sentence — the O2 gap the drain records)_
 
 ## Part 2
 

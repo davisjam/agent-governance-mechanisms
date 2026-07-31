@@ -2,6 +2,60 @@
   "_note": "DECLARED / INDUCED learning outcomes for the book. Each outcome has a PRIMARY unit (where it is chiefly taught — drives coverage) and optional secondary_units (elaborative: reinforce/extend/apply). Keys are outline unit ids (section_id | chapter-slug | part-N | book). Hand-authored SOURCE — this file IS edited by hand; outcomes.json + outcomes-draft.md are generated from it. Each declaration: {granularity (of the primary), primary_unit, secondary_units?, verb (from BLOOM_VERBS), obj, statement?, provenance, anchor?, gap_note?}. provenance is 'derived' (grounded in what the primary unit actually teaches — cite the grounding prose in anchor), 'declared' (thin prose roughly supports it), or 'gap-recommended' (content the unit ought to deliver but does not yet — cite gap_note). COVERAGE: primary drives it; an elaborative-only unit is still a gap. Do NOT manufacture aspirational outcomes to fill slots. See book-models/DESIGN.md 2.6.",
   "declarations": [
     {
+      "granularity": "section",
+      "primary_unit": "the-two-modes",
+      "verb": "distinguish",
+      "obj": "one-shot scripting from supervised autonomy",
+      "statement": "After this section, the reader can distinguish one-shot scripting from supervised autonomy and name what each supplies to the agent.",
+      "provenance": "derived",
+      "anchor": "point: two-modes-fork-on-size-and-difficulty / one-shot-for-small-unsubtle-tasks / supervised-autonomy-supplies-four-things"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "where-the-emphasis-falls",
+      "verb": "judge",
+      "obj": "how long a leash a task can run on from the model's data density and capability",
+      "statement": "After this section, the reader can judge how long a leash a task can run on from two factors — how densely the model's training data covers the work and how capable the model is at it — and see why misjudging the mode is costly either way.",
+      "provenance": "derived",
+      "anchor": "point: leash-length-from-data-density-and-capability / mode-misjudgment-is-costly-both-ways"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "a-picture-is-not-enough",
+      "verb": "explain",
+      "obj": "why an agent needs a model of how to build the thing, not just a picture of it",
+      "statement": "After this section, the reader can explain why an agent, like a 3D printer, needs the detailed build instructions and not merely a picture of the desired result.",
+      "provenance": "derived",
+      "anchor": "point: printer-needs-a-model-not-a-photo / agents-need-the-instructions-not-just-the-picture"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "whose-fault-is-it",
+      "verb": "adopt",
+      "obj": "the posture that when an agent produces the wrong thing, the first suspect is the instructions",
+      "statement": "After this section, the reader can adopt the posture that an agent is a printer, not a stapler — so when it produces the wrong thing, the first suspect is the instructions, and the models can build anything one can explain.",
+      "provenance": "derived",
+      "anchor": "point: agent-is-a-printer-not-a-stapler-so-suspect-the-instructions / models-can-build-anything-you-can-explain"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "everything-is-a-loop",
+      "verb": "describe",
+      "obj": "agent work as a fixed-shape loop engineered around a measurable metric",
+      "statement": "After this section, the reader can describe agent work as a fixed-shape loop — input, reasoning, output, fed around again — and see why engineering it starts with a measurable success metric.",
+      "provenance": "derived",
+      "anchor": "point: agent-work-is-a-fixed-shape-loop / loop-starts-with-a-measurable-metric"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "give-it-a-model-of-the-world",
+      "verb": "explain",
+      "obj": "how a model of the world conditions the agent's search toward the answer",
+      "statement": "After this section, the reader can explain why handing the agent a model of its world conditions the probability distribution of its behavior — aiming its search and shrinking what it must hold.",
+      "provenance": "declared",
+      "anchor": "point: model-of-the-world-is-the-input-agent-reasons-over / structuring-loop-and-model-conditions-the-distribution (section opens on an aside, not a topic sentence — the O2 gap the drain records)"
+    },
+    {
       "granularity": "book",
       "primary_unit": "book",
       "verb": "design",

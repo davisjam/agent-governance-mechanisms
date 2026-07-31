@@ -5,7 +5,9 @@
     "sections": 164,
     "explicit_ids": 22,
     "derived_ids": 142,
-    "missing_topic_sentence": 2
+    "missing_topic_sentence": 2,
+    "sections_drained": 9,
+    "paragraph_points": 33
   },
   "chapters": [
     {
@@ -18,7 +20,8 @@
           "heading_text": "Where this book sits on the shelf",
           "topic_sentence": "Two books are the touchstones I want you to hold this one against, because between them they frame what I am trying to do.",
           "id_source": "derived",
-          "block_index": 5
+          "block_index": 5,
+          "points": []
         },
         {
           "section_id": "the-premise-mechanize-discipline",
@@ -26,7 +29,8 @@
           "heading_text": "The premise: mechanize discipline",
           "topic_sentence": "The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020).",
           "id_source": "derived",
-          "block_index": 7
+          "block_index": 7,
+          "points": []
         },
         {
           "section_id": "the-grammar-patterns-and-two-theses",
@@ -34,7 +38,8 @@
           "heading_text": "The grammar: patterns, and two theses",
           "topic_sentence": "The second is the **Gang of Four's** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994).",
           "id_source": "derived",
-          "block_index": 17
+          "block_index": 17,
+          "points": []
         },
         {
           "section_id": "three-ways-to-run-a-fleet",
@@ -42,7 +47,8 @@
           "heading_text": "Three ways to run a fleet",
           "topic_sentence": "The hard problem of building software with agents is simple to state: the tools are fast and the tools are unreliable.",
           "id_source": "derived",
-          "block_index": 32
+          "block_index": 32,
+          "points": []
         },
         {
           "section_id": "the-through-line-and-who-it-is-for",
@@ -50,7 +56,8 @@
           "heading_text": "The through-line, and who it is for",
           "topic_sentence": "The through-line is a single idea; hold every chapter against it.",
           "id_source": "derived",
-          "block_index": 42
+          "block_index": 42,
+          "points": []
         },
         {
           "section_id": "a-map-of-the-book",
@@ -58,9 +65,11 @@
           "heading_text": "A map of the book",
           "topic_sentence": "Five parts, and they compose in a particular order.",
           "id_source": "derived",
-          "block_index": 45
+          "block_index": 45,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "0.2-acknowledgments",
@@ -72,9 +81,11 @@
           "heading_text": "Acknowledgments",
           "topic_sentence": "I thank K.",
           "id_source": "derived",
-          "block_index": 1
+          "block_index": 1,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "1.1-the-printer",
@@ -86,7 +97,14 @@
           "heading_text": "What this book is about (and what it is not)",
           "topic_sentence": "Not every programming task needs the machinery this book describes.",
           "id_source": "derived",
-          "block_index": 0
+          "block_index": 0,
+          "points": [
+            {
+              "slug": "task-mode-is-first-judgment",
+              "text": "The first judgment an agentic engineer makes is whether a task needs governed autonomy at all, because some tasks a capable model completes in one pass.",
+              "block_index": 1
+            }
+          ]
         },
         {
           "section_id": "the-two-modes",
@@ -94,7 +112,29 @@
           "heading_text": "The two modes",
           "topic_sentence": "Start at the decision on the left.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 4,
+          "points": [
+            {
+              "slug": "two-modes-fork-on-size-and-difficulty",
+              "text": "Once a task's input and output are stated, the choice of mode forks on the work's size and difficulty.",
+              "block_index": 5
+            },
+            {
+              "slug": "one-shot-for-small-unsubtle-tasks",
+              "text": "One-shot scripting fits a small task that needs no subtle reasoning: specify the behavior once, take the single-pass result, skip the governance apparatus.",
+              "block_index": 7
+            },
+            {
+              "slug": "supervised-autonomy-supplies-four-things",
+              "text": "Supervised autonomy fits a hard or oversized task: rather than hand the agent the whole job, you supply four things — correctness conditions, sub-tasks, determinizing tools, and monitoring-and-intervention — in two groups, one shaping what gets built and one shaping how the building runs.",
+              "block_index": 9
+            },
+            {
+              "slug": "book-structure-fills-the-four",
+              "text": "The four elements form the skeleton of supervised autonomy, and each later part of the book develops one of them.",
+              "block_index": 14
+            }
+          ]
         },
         {
           "section_id": "where-the-emphasis-falls",
@@ -102,7 +142,29 @@
           "heading_text": "Where the emphasis falls",
           "topic_sentence": "This book is about both modes.",
           "id_source": "derived",
-          "block_index": 11
+          "block_index": 16,
+          "points": [
+            {
+              "slug": "mode-misjudgment-is-costly-both-ways",
+              "text": "Telling the two modes apart is the first skill, and misjudging it either way is expensive: over-govern a one-shot task and you drown it in ceremony; under-govern a supervised one and you get plausible, subtly wrong output at unreadable scale.",
+              "block_index": 17
+            },
+            {
+              "slug": "leash-length-from-data-density-and-capability",
+              "text": "How long a leash a task can run on depends on two things: how densely the model's training data covers the work, and how capable the model is at it — well-trodden work for a strong model can be described briefly and trusted far, edge work needs the reasoning broken into smaller checked steps.",
+              "block_index": 19
+            },
+            {
+              "slug": "books-weight-is-supervised-autonomy",
+              "text": "The book's weight falls on supervised autonomy — building products whose quality needs exceed what a model can be trusted to do alone and whose size exceeds any context window — because that is the new, unwritten engineering.",
+              "block_index": 21
+            },
+            {
+              "slug": "code-is-cheap-now-productionize-it",
+              "text": "Writing code is no longer the expensive part, so the book's premise is turning a fast code-fabricator into a production line.",
+              "block_index": 23
+            }
+          ]
         },
         {
           "section_id": "the-printer",
@@ -110,7 +172,14 @@
           "heading_text": "The printer",
           "topic_sentence": "A 3D printer will build almost anything you can imagine — a replacement gear, a prosthetic hand, a scale model of a building — out of nothing but spooled filament.",
           "id_source": "derived",
-          "block_index": 16
+          "block_index": 25,
+          "points": [
+            {
+              "slug": "printer-is-the-governing-metaphor",
+              "text": "A 3D printer builds almost anything from spooled filament, limited only by material and imagination; it is the governing metaphor of the book because coding with an agent is far more like running a printer than people expect — and that difference is the difference between blaming the tool and blaming yourself.",
+              "block_index": 26
+            }
+          ]
         },
         {
           "section_id": "an-open-ended-technology",
@@ -118,7 +187,24 @@
           "heading_text": "An open-ended technology",
           "topic_sentence": "A 3D printer is not just a machine.",
           "id_source": "derived",
-          "block_index": 19
+          "block_index": 29,
+          "points": [
+            {
+              "slug": "open-ended-technology-mints-genres",
+              "text": "A 3D printer is an open-ended technology, in the rare company of writing and the printing press: none arrives with a list of what to make, so people must invent the genres, and cheap production mints genres no predecessor could justify.",
+              "block_index": 30
+            },
+            {
+              "slug": "genai-is-open-ended-book-takes-one-genre",
+              "text": "Generative AI is open-ended the same way, so the work is not only to run the machine but to work out which genres are worth producing and a method for each; this book takes one genre — production software, code whose named quality metrics each change traces back to.",
+              "block_index": 32
+            },
+            {
+              "slug": "quality-floor-was-always-the-price-now-cheap",
+              "text": "The book's apparatus is not decoration but the price of any trustworthy software — name the properties that must hold, check them, tie every change to the property it moves; that price was always the same, and what changed is that agents drop its cost so the assurance once affordable only to a regulated few is now within nearly anyone's reach.",
+              "block_index": 35
+            }
+          ]
         },
         {
           "section_id": "a-picture-is-not-enough",
@@ -126,7 +212,24 @@
           "heading_text": "A picture is not enough",
           "topic_sentence": "Everyone can sketch a piece of software.",
           "id_source": "derived",
-          "block_index": 24
+          "block_index": 37,
+          "points": [
+            {
+              "slug": "everyone-can-sketch-software-but-a-picture-wont-print",
+              "text": "Anyone can picture a piece of software, because the concept is easy to picture — but a picture is not a thing you can print.",
+              "block_index": 38
+            },
+            {
+              "slug": "printer-needs-a-model-not-a-photo",
+              "text": "A 3D printer given a photograph produces nothing; it needs a model of internal structure plus print notes, because there are a hundred ways to misprint a part that looked fine as a picture.",
+              "block_index": 40
+            },
+            {
+              "slug": "agents-need-the-instructions-not-just-the-picture",
+              "text": "Software agents are the same: you cannot hand an agent only the picture of what you want; you must supply the detailed build instructions, and the quality of the result tracks the quality of those instructions.",
+              "block_index": 43
+            }
+          ]
         },
         {
           "section_id": "whose-fault-is-it",
@@ -134,9 +237,37 @@
           "heading_text": "Whose fault is it?",
           "topic_sentence": "Here is the shift in posture the whole book turns on.",
           "id_source": "derived",
-          "block_index": 30
+          "block_index": 46,
+          "points": [
+            {
+              "slug": "agent-is-a-printer-not-a-stapler-so-suspect-the-instructions",
+              "text": "The posture the book turns on: an agent is not a foolproof stapler but a printer that builds only what its instructions describe, so when it produces the wrong thing the first suspect is the instructions, not the model.",
+              "block_index": 47
+            },
+            {
+              "slug": "models-can-build-anything-you-can-explain",
+              "text": "In the author's experience every agent failure traced back to his own instructions: state-of-the-art models can build essentially anything one can envision so long as you can explain it, and that \"so long as\" is the whole job — a real, teachable engineering discipline.",
+              "block_index": 50
+            },
+            {
+              "slug": "the-promise-is-also-the-danger",
+              "text": "That the printer builds anything you describe is both the promise and the danger: with no judgment behind it, it builds a wrong thing as fast and willingly as a right one, carrying you at full speed exactly where your instructions point.",
+              "block_index": 53
+            },
+            {
+              "slug": "speed-exposes-the-danger-not-causes-it",
+              "text": "Speed is not the danger but exposes it: hand the machine a doomed idea and it does not slow to warn you, it builds your mistake with the same tireless fidelity as your success, and which one comes out is the instructions, which are yours.",
+              "block_index": 56
+            },
+            {
+              "slug": "running-example-is-a-real-shipped-system",
+              "text": "The book's running example is not a toy but a real shipped system — DocAble, the production accessibility-remediation tool — returned to in every later chapter so what the reader watches getting printed correctly is a system that actually shipped.",
+              "block_index": 58
+            }
+          ]
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "1.2-loops-and-models",
@@ -148,7 +279,24 @@
           "heading_text": "Everything is a loop",
           "topic_sentence": "An agent does not run in a straight line — it runs in a loop, and the loop has a fixed shape.",
           "id_source": "derived",
-          "block_index": 1
+          "block_index": 2,
+          "points": [
+            {
+              "slug": "agent-work-is-a-fixed-shape-loop",
+              "text": "An agent runs in a loop of fixed shape — input (the problem plus a notion of success), reasoning, action, output, folded back into the next input — and shaping that loop is loop engineering, of which nearly everything in the book is an instance.",
+              "block_index": 3
+            },
+            {
+              "slug": "loop-starts-with-a-measurable-metric",
+              "text": "Engineering a loop well starts with the metric, because the agent steers by it and does not know your goals; make progress measurable — deterministically, by a quantitative check, or by a rubric scoring a qualitative result — or the agent searches forever, never knowing when to stop.",
+              "block_index": 7
+            },
+            {
+              "slug": "orchestrator-is-a-worked-loop-written-as-a-model",
+              "text": "The companion repository's orchestrator is a worked example of an engineered loop: it models the dispatch → work → land → tombstone lifecycle as an explicit reactive loop written down as a model the agent can read, rather than left implicit in the code — which is exactly the second idea.",
+              "block_index": 10
+            }
+          ]
         },
         {
           "section_id": "give-it-a-model-of-the-world",
@@ -156,7 +304,56 @@
           "heading_text": "Give it a model of the world",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 12
+          "block_index": 16,
+          "points": [
+            {
+              "slug": "vibe-coding-io-device-vs-engineering-system",
+              "text": "Vibe coding treats the program as an I/O device; engineering treats it as a system.",
+              "block_index": 17
+            },
+            {
+              "slug": "io-vs-system-is-what-counts-as-proof",
+              "text": "The difference between the two is not aesthetic but what counts as proof a change is good: the I/O device asks only whether the right thing came out this time, the system asks what must stay true across every input — and the fast, seductive I/O default is what turns a hundred thousand lines into a mess nobody can reason over.",
+              "block_index": 19
+            },
+            {
+              "slug": "model-of-the-world-is-the-input-agent-reasons-over",
+              "text": "The second piece is the model the agent reasons over: a sense of the environment — what happens when it pulls a lever, and what it is even allowed to do — which is itself an input, and supplying it tells the agent what kind of reasoning the situation calls for.",
+              "block_index": 21
+            },
+            {
+              "slug": "model-is-a-probabilistic-reasoning-machine",
+              "text": "Writing the model down is not wasted breath because a foundation model is a probabilistic reasoning machine: probabilistic means it does not always do exactly what you want, reasoning machine means it genuinely reasons over real internal structure — so it reads what you write and reasons over it.",
+              "block_index": 23
+            },
+            {
+              "slug": "agent-behavior-is-a-search-over-a-vast-space",
+              "text": "The most useful way to hold this is as a search: the agent is searching an enormous space — every place the answer might live, every configuration, every function that might implement the ask — far too large to sweep.",
+              "block_index": 26
+            },
+            {
+              "slug": "structuring-loop-and-model-conditions-the-distribution",
+              "text": "Structuring the loop and handing over a model conditions the probability distribution of the agent's behavior — biasing its search toward where the answer actually is; done well this moves the agent from failing the task to completing it, and completes already-solvable tasks in fewer tokens and less time.",
+              "block_index": 29
+            },
+            {
+              "slug": "a-model-aims-the-search-and-shrinks-what-is-held",
+              "text": "A model earns its keep twice: it aims the search, and it shrinks what the agent must hold — which keeps the work from spilling the context window and churning.",
+              "block_index": 31
+            },
+            {
+              "slug": "the-printers-seam-is-determinism-vs-probability",
+              "text": "The printer metaphor's honest break: a real 3D printer is deterministic — same G-code, same part — while this printer is probabilistic — the same prompt can yield different output — which is why we condition the agent's distribution rather than merely instruct it; the metaphor claims you get only what you describe, not that you get the identical thing twice.",
+              "block_index": 33
+            }
+          ]
+        }
+      ],
+      "preamble_points": [
+        {
+          "slug": "two-ideas-loop-and-model",
+          "text": "Two ideas carry the rest of the book: all agent work is a loop, and an agent steers that loop well only when handed a model of the world it works in — engineering the loop and handing over the model, deliberately and every time, is the MAGE method.",
+          "block_index": 0
         }
       ]
     },
@@ -170,7 +367,8 @@
           "heading_text": "The four layers",
           "topic_sentence": "**At the bottom sits the foundation model.** It comes from a commercial vendor or an open-weight release, and it is a general language reasoner that can *induce* an understanding of your environment — but that induction is expensive, and it happens fresh every time.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 3,
+          "points": []
         },
         {
           "section_id": "every-layer-is-a-place-to-steer",
@@ -178,9 +376,11 @@
           "heading_text": "Every layer is a place to steer",
           "topic_sentence": "Read the stack as a list of opportunities, because that is what it is.",
           "id_source": "derived",
-          "block_index": 21
+          "block_index": 21,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "2.2-models-and-the-semantic-gap",
@@ -192,7 +392,8 @@
           "heading_text": "Words are soft, code is verbose, a model is the sweet spot",
           "topic_sentence": "Your first governance mechanism is the prompt, because the agent is a language model and words are how you talk to it.",
           "id_source": "derived",
-          "block_index": 1
+          "block_index": 1,
+          "points": []
         },
         {
           "section_id": "why-the-models-drifted-and-why-that-changes-now",
@@ -200,7 +401,8 @@
           "heading_text": "Why the models drifted — and why that changes now",
           "topic_sentence": "The models are the map; the code is the territory.",
           "id_source": "derived",
-          "block_index": 8
+          "block_index": 8,
+          "points": []
         },
         {
           "section_id": "why-agents-don-t-reach-for-models-on-their-own-a-conjecture",
@@ -208,7 +410,8 @@
           "heading_text": "Why agents don't reach for models on their own — a conjecture",
           "topic_sentence": "Here a skeptic has a fair question.",
           "id_source": "derived",
-          "block_index": 16
+          "block_index": 16,
+          "points": []
         },
         {
           "section_id": "the-apex-of-the-documentation-hierarchy-is-a-typed-model",
@@ -216,7 +419,8 @@
           "heading_text": "The apex of the documentation hierarchy is a typed model",
           "topic_sentence": "Step back from drift for a moment and look at what you actually hand an agent to work from.",
           "id_source": "derived",
-          "block_index": 19
+          "block_index": 19,
+          "points": []
         },
         {
           "section_id": "a-drift-check-proves-agreement-not-correctness",
@@ -224,7 +428,8 @@
           "heading_text": "A drift check proves agreement, not correctness",
           "topic_sentence": "The claim I just made hides a trap, and the book's enthusiasm for drift gates can be misread into a dangerous half-truth.",
           "id_source": "derived",
-          "block_index": 26
+          "block_index": 26,
+          "points": []
         },
         {
           "section_id": "just-execute-the-model-a-short-history-of-case-and-mda",
@@ -232,7 +437,8 @@
           "heading_text": "Just execute the model? A short history of CASE and MDA",
           "topic_sentence": "If the typed model is where you now start, an old idea says to finish there too: skip the code and *execute the model directly*.",
           "id_source": "derived",
-          "block_index": 34
+          "block_index": 34,
+          "points": []
         },
         {
           "section_id": "the-semantic-gap",
@@ -240,7 +446,8 @@
           "heading_text": "The semantic gap",
           "topic_sentence": "Enforce a property at the wrong level and it slips through; [ref:semantic-gap] shows the fix — lift the check to where the meaning is legible.",
           "id_source": "derived",
-          "block_index": 40
+          "block_index": 40,
+          "points": []
         },
         {
           "section_id": "a-worked-example-the-context-fullness-bank-hook",
@@ -248,7 +455,8 @@
           "heading_text": "A worked example: the context-fullness bank-hook",
           "topic_sentence": "Let me give you a second instance of the semantic gap, one that lives not in the product but in the operator's own loop.",
           "id_source": "derived",
-          "block_index": 53
+          "block_index": 53,
+          "points": []
         },
         {
           "section_id": "the-fix-a-hook-one-level-up-checking-two-things",
@@ -256,7 +464,8 @@
           "heading_text": "The fix: a hook one level up, checking two things",
           "topic_sentence": "So I moved the check up to where the property *is* legible: the operator's loop.",
           "id_source": "derived",
-          "block_index": 57
+          "block_index": 57,
+          "points": []
         },
         {
           "section_id": "why-both-conditions-and-not-one",
@@ -264,7 +473,8 @@
           "heading_text": "Why both conditions, and not one",
           "topic_sentence": "The dual check is not belt-and-suspenders.",
           "id_source": "derived",
-          "block_index": 62
+          "block_index": 62,
+          "points": []
         },
         {
           "section_id": "the-honest-part-the-pre-compact-hook-is-the-wrong-hook",
@@ -272,9 +482,11 @@
           "heading_text": "The honest part: the pre-compact hook is the wrong hook",
           "topic_sentence": "I want to be straight about a compromise buried in this, because it is the kind of thing the semantic-gap idea should make you notice rather than paper over.",
           "id_source": "derived",
-          "block_index": 67
+          "block_index": 67,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "2.3-the-governed-environment",
@@ -286,7 +498,8 @@
           "heading_text": "Ex-ante: everything you can decide up front",
           "topic_sentence": "Some things you genuinely know from the beginning, and you should write every one of them down.",
           "id_source": "derived",
-          "block_index": 1
+          "block_index": 1,
+          "points": []
         },
         {
           "section_id": "ex-post-everything-you-learn-by-building",
@@ -294,7 +507,8 @@
           "heading_text": "Ex-post: everything you learn by building",
           "topic_sentence": "But you will not know everything, and pretending otherwise is the mistake.",
           "id_source": "derived",
-          "block_index": 5
+          "block_index": 5,
+          "points": []
         },
         {
           "section_id": "constraints-and-sensors",
@@ -302,7 +516,8 @@
           "heading_text": "Constraints and sensors",
           "topic_sentence": "A mechanism is one of two moves — prevent the mistake, or catch it — and [ref:constraint-vs-sensor] draws the split.",
           "id_source": "derived",
-          "block_index": 12
+          "block_index": 12,
+          "points": []
         },
         {
           "section_id": "the-residual-goals-no-mechanism-reaches",
@@ -310,9 +525,11 @@
           "heading_text": "The residual: goals no mechanism reaches",
           "topic_sentence": "That closing line reads as if it settles everything.",
           "id_source": "derived",
-          "block_index": 34
+          "block_index": 34,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "2.4-lifecycles-and-runbooks",
@@ -324,7 +541,8 @@
           "heading_text": "Lifecycles first, then the failure map",
           "topic_sentence": "Start with the lifecycles, because everything else hangs off them.",
           "id_source": "derived",
-          "block_index": 1
+          "block_index": 1,
+          "points": []
         },
         {
           "section_id": "runbooks-split-the-deterministic-from-the-judgment",
@@ -332,7 +550,8 @@
           "heading_text": "Runbooks: split the deterministic from the judgment",
           "topic_sentence": "Once the healthy path and the failure map are written, the thing you hand the agent is a **runbook** (or playbook): the steps to take, whether recovering from a failure or working a fresh ticket.",
           "id_source": "derived",
-          "block_index": 7
+          "block_index": 7,
+          "points": []
         },
         {
           "section_id": "the-judgment-parts-the-roughest-algorithm-that-still-fits",
@@ -340,9 +559,11 @@
           "heading_text": "The judgment parts: the roughest algorithm that still fits",
           "topic_sentence": "**The judgment parts get the roughest algorithm that still fits.** For a well-constrained decision, write the algorithm down and let the agent do the glue.",
           "id_source": "derived",
-          "block_index": 15
+          "block_index": 15,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "2.5-metrics",
@@ -354,7 +575,8 @@
           "heading_text": "Measure one level deeper",
           "topic_sentence": "John Ousterhout gives the rule in one line: **measure one level deeper than the number you think you want.** A metric earns its place only when it drives a decision, and the surface number usually cannot.",
           "id_source": "derived",
-          "block_index": 2
+          "block_index": 2,
+          "points": []
         },
         {
           "section_id": "the-hard-end-cold-start-latency-machine-read-and-model-fed",
@@ -362,7 +584,8 @@
           "heading_text": "The hard end: cold-start latency, machine-read and model-fed",
           "topic_sentence": "Start at the deterministic end, where a metric is a millisecond number nobody argues about.",
           "id_source": "derived",
-          "block_index": 10
+          "block_index": 10,
+          "points": []
         },
         {
           "section_id": "the-flagship-coverage-measured-one-level-deeper",
@@ -370,7 +593,8 @@
           "heading_text": "The flagship: coverage measured one level deeper",
           "topic_sentence": "Now the middle of the spectrum, and the chapter's teaching example: the \"measure one level deeper\" rule applied to the number that most often gets it wrong.",
           "id_source": "derived",
-          "block_index": 19
+          "block_index": 19,
+          "points": []
         },
         {
           "section_id": "the-soft-end-doc-derived-tests",
@@ -378,7 +602,8 @@
           "heading_text": "The soft end: doc-derived tests",
           "topic_sentence": "Slide to the far end of the spectrum, where the metric stops being a number a threshold can act on and becomes a judgment a human has to make.",
           "id_source": "derived",
-          "block_index": 31
+          "block_index": 31,
+          "points": []
         },
         {
           "section_id": "the-model-runs-the-machinery",
@@ -386,7 +611,8 @@
           "heading_text": "The model runs the machinery",
           "topic_sentence": "The hard end and the flagship follow the same pattern.",
           "id_source": "derived",
-          "block_index": 36
+          "block_index": 36,
+          "points": []
         },
         {
           "section_id": "a-compact-reference",
@@ -394,9 +620,11 @@
           "heading_text": "A compact reference",
           "topic_sentence": "[ref:metrics-table] collects every metric — the decision each drives, where it sits on the hard-soft axis, and who reads it.",
           "id_source": "derived",
-          "block_index": 43
+          "block_index": 43,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "2.6-when-guardrails-collide",
@@ -408,7 +636,8 @@
           "heading_text": "Drawing what lies between the controls",
           "topic_sentence": "The Governance Graph draws it.",
           "id_source": "derived",
-          "block_index": 5
+          "block_index": 5,
+          "points": []
         },
         {
           "section_id": "when-the-hooks-aren-t-yours",
@@ -416,7 +645,8 @@
           "heading_text": "When the hooks aren't yours",
           "topic_sentence": "Every mechanism so far was one you wrote.",
           "id_source": "derived",
-          "block_index": 11
+          "block_index": 11,
+          "points": []
         },
         {
           "section_id": "keeping-the-model-honest",
@@ -424,9 +654,11 @@
           "heading_text": "Keeping the model honest",
           "topic_sentence": "Two disciplines keep the model honest, and both are the book's.",
           "id_source": "derived",
-          "block_index": 15
+          "block_index": 15,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "3.1-the-executable-zoo",
@@ -438,7 +670,8 @@
           "heading_text": "The expense that buried MBSE is the one a fleet pays for free",
           "topic_sentence": "Model-based systems engineering never failed on its ideas.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 3,
+          "points": []
         },
         {
           "section_id": "mbse-nav-token",
@@ -446,7 +679,8 @@
           "heading_text": "Data from the case study",
           "topic_sentence": "The fewer-tokens leg is the one we can measure directly.",
           "id_source": "explicit",
-          "block_index": 11
+          "block_index": 11,
+          "points": []
         },
         {
           "section_id": "kruchten-s-4-1-promoted-from-a-closing-sentence-to-the-spine",
@@ -454,7 +688,8 @@
           "heading_text": "Kruchten's 4+1, promoted from a closing sentence to the spine",
           "topic_sentence": "The last chapter invoked Kruchten's **4+1 views** in a final sentence — \"the reason one model is never enough.\" This Part promotes that sentence to its organizing structure.",
           "id_source": "derived",
-          "block_index": 17
+          "block_index": 17,
+          "points": []
         },
         {
           "section_id": "what-this-book-adds-to-4-1-the-drift-gate",
@@ -462,7 +697,8 @@
           "heading_text": "What this book adds to 4+1: the drift gate",
           "topic_sentence": "Kruchten described the views.",
           "id_source": "derived",
-          "block_index": 24
+          "block_index": 24,
+          "points": []
         },
         {
           "section_id": "the-framework-is-a-choice-the-core-is-not",
@@ -470,7 +706,8 @@
           "heading_text": "The framework is a choice; the core is not",
           "topic_sentence": "Making the model executable is why this Part is not really *about* 4+1.",
           "id_source": "derived",
-          "block_index": 26
+          "block_index": 26,
+          "points": []
         },
         {
           "section_id": "the-trunk-machinery-that-holds-any-view-true",
@@ -478,7 +715,8 @@
           "heading_text": "The trunk: machinery that holds any view true",
           "topic_sentence": "Before the views, one chapter of framing.",
           "id_source": "derived",
-          "block_index": 33
+          "block_index": 33,
+          "points": []
         },
         {
           "section_id": "beat-1-a-model-is-derived-and-joined-never-repeated",
@@ -486,7 +724,8 @@
           "heading_text": "Beat 1 — a model is derived and joined, never repeated",
           "topic_sentence": "The last chapter warned against repetition: two models that say the same thing must now be kept in sync.",
           "id_source": "derived",
-          "block_index": 46
+          "block_index": 46,
+          "points": []
         },
         {
           "section_id": "beat-2-name-the-direction-of-derivation",
@@ -494,7 +733,8 @@
           "heading_text": "Beat 2 — name the direction of derivation",
           "topic_sentence": "A model and the code it concerns stay equal by derivation, and derivation runs in one of two directions.",
           "id_source": "derived",
-          "block_index": 50
+          "block_index": 50,
+          "points": []
         },
         {
           "section_id": "beat-3-every-model-traces-to-the-code",
@@ -502,7 +742,8 @@
           "heading_text": "Beat 3 — every model traces to the code",
           "topic_sentence": "A model earns trust only if you can get from a model element back to the lines that realize it, and forward from a line to the model element that governs it.",
           "id_source": "derived",
-          "block_index": 57
+          "block_index": 57,
+          "points": []
         },
         {
           "section_id": "keeping-the-models-honest-the-traceability-substrate",
@@ -510,7 +751,8 @@
           "heading_text": "Keeping the models honest — the traceability substrate",
           "topic_sentence": "DocAble did not design this up front.",
           "id_source": "derived",
-          "block_index": 65
+          "block_index": 65,
+          "points": []
         },
         {
           "section_id": "reading-the-fix-off-real-drift",
@@ -518,7 +760,8 @@
           "heading_text": "Reading the fix off real drift",
           "topic_sentence": "The right sensor was not guessed.",
           "id_source": "derived",
-          "block_index": 69
+          "block_index": 69,
+          "points": []
         },
         {
           "section_id": "two-decisions-that-make-the-graph-resist-rot",
@@ -526,7 +769,8 @@
           "heading_text": "Two decisions that make the graph resist rot",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 72
+          "block_index": 72,
+          "points": []
         },
         {
           "section_id": "how-to-read-a-model-page",
@@ -534,9 +778,11 @@
           "heading_text": "How to read a model page",
           "topic_sentence": "Every model in this Part is rendered by filling the same five-field template.",
           "id_source": "derived",
-          "block_index": 76
+          "block_index": 76,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "3.2-the-logical-view",
@@ -548,7 +794,8 @@
           "heading_text": "The service-flow / API model",
           "topic_sentence": "*The typed source-of-truth for a service-oriented architecture — its services, their endpoints, their authentication, and the wiring between them — from which the access policy and environment wiring are generated and against which the real call graph is checked.*",
           "id_source": "explicit",
-          "block_index": 10
+          "block_index": 10,
+          "points": []
         },
         {
           "section_id": "domain-registries",
@@ -556,9 +803,11 @@
           "heading_text": "The domain registries",
           "topic_sentence": "The domain registries are the frozen tables the service-flow model rests on: the file types the system handles, its known conformance gaps, its scheduled jobs, its user-facing surfaces.",
           "id_source": "explicit",
-          "block_index": 24
+          "block_index": 24,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "3.3-the-process-view",
@@ -570,7 +819,8 @@
           "heading_text": "Formal invariant verification",
           "topic_sentence": "Formal invariant verification is the backbone the other three models hang their invariant tables on.",
           "id_source": "explicit",
-          "block_index": 14
+          "block_index": 14,
+          "points": []
         },
         {
           "section_id": "synchronization-model",
@@ -578,7 +828,8 @@
           "heading_text": "The synchronization model",
           "topic_sentence": "*A typed registry that models the system's synchronization behavior — every OS-level lock, which shared resource it guards, and the required acquisition ordering — so concurrency contracts are declared and checkable, not tribal.*",
           "id_source": "explicit",
-          "block_index": 19
+          "block_index": 19,
+          "points": []
         },
         {
           "section_id": "two-ways-to-make-a-concurrent-write-safe-the-mediator-and-the-single-writer-registries",
@@ -586,7 +837,8 @@
           "heading_text": "Two ways to make a concurrent write safe: the mediator and the single-writer registries",
           "topic_sentence": "The synchronization model catalogs the raw locks.",
           "id_source": "derived",
-          "block_index": 37
+          "block_index": 37,
+          "points": []
         },
         {
           "section_id": "mediator-registry",
@@ -594,7 +846,8 @@
           "heading_text": "The mediator registry",
           "topic_sentence": "The mediator registry is the *how-many* half.",
           "id_source": "explicit",
-          "block_index": 41
+          "block_index": 41,
+          "points": []
         },
         {
           "section_id": "single-writer-registry",
@@ -602,9 +855,11 @@
           "heading_text": "The single-writer registry",
           "topic_sentence": "The single-writer registry is the *exactly-one* half, and its failure mode is what makes it a separate model.",
           "id_source": "explicit",
-          "block_index": 44
+          "block_index": 44,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "3.4-the-development-view",
@@ -616,7 +871,8 @@
           "heading_text": "The component & zone model",
           "topic_sentence": "*A typed catalog of every component's code zone — its focus directories, its tags, its boundary kind, its external seams, its read surfaces — so \"which component owns this file, and what may touch it\" is a queried fact rather than a per-tool guess.*",
           "id_source": "explicit",
-          "block_index": 8
+          "block_index": 8,
+          "points": []
         },
         {
           "section_id": "rule-metadata-registry",
@@ -624,9 +880,11 @@
           "heading_text": "The rule-metadata registry",
           "topic_sentence": "The rule-metadata registry is the self-referential slice of the domain registries: the governance rules' own metadata, and so the model the governance substrate — and this book — are partly governed by.",
           "id_source": "explicit",
-          "block_index": 24
+          "block_index": 24,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "3.5-the-physical-view",
@@ -638,7 +896,8 @@
           "heading_text": "The performance/cost view: mostly embodied, one honest gap",
           "topic_sentence": "The zoo names a performance and cost model as a general type, and the framework supports it.",
           "id_source": "derived",
-          "block_index": 5
+          "block_index": 5,
+          "points": []
         },
         {
           "section_id": "deployment-topology-model",
@@ -646,7 +905,8 @@
           "heading_text": "The deployment & tier topology model",
           "topic_sentence": "*The typed statement of where things run — each service's name, its layer, and its tier — from which the deploy scripts and layering lints reason about a declared topology rather than scattered constants, and against which the real deploy table is reconciled.*",
           "id_source": "explicit",
-          "block_index": 11
+          "block_index": 11,
+          "points": []
         },
         {
           "section_id": "invariant-dag-execution-policy",
@@ -654,7 +914,8 @@
           "heading_text": "The invariant-DAG execution policy",
           "topic_sentence": "*A deploy graph whose edges carry a typed intent — correctness, cost-gate, or load — kept host-identical, plus a typed Scheduler that reads a per-host profile and rations load and cost so one host fans work out while a scarce one serializes it.*",
           "id_source": "explicit",
-          "block_index": 28
+          "block_index": 28,
+          "points": []
         },
         {
           "section_id": "control-substrate-dependency",
@@ -662,9 +923,11 @@
           "heading_text": "The control↔substrate dependency model",
           "topic_sentence": "The substrate-dependency model makes each governance mechanism declare, as typed metadata, the substrate assumption it bakes in — bound to one substrate, substrate-aware, or substrate-agnostic.",
           "id_source": "explicit",
-          "block_index": 43
+          "block_index": 43,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "3.6-the-scenarios-view",
@@ -676,7 +939,8 @@
           "heading_text": "The user-journey model",
           "topic_sentence": "The user-journey model makes the product's journeys first-class typed entities — each an actor pursuing a goal through ordered steps, every boundary-crossing step joined to the endpoint it calls.",
           "id_source": "explicit",
-          "block_index": 10
+          "block_index": 10,
+          "points": []
         },
         {
           "section_id": "agent-orchestration-model",
@@ -684,7 +948,8 @@
           "heading_text": "The agent-orchestration model",
           "topic_sentence": "The agent-orchestration model is the developer-journey counterpart — the scenarios view pointed at the fleet rather than the user.",
           "id_source": "explicit",
-          "block_index": 14
+          "block_index": 14,
+          "points": []
         },
         {
           "section_id": "journey-criticality-test-placement",
@@ -692,7 +957,8 @@
           "heading_text": "Journey-criticality → test-placement",
           "topic_sentence": "This model — the **Selector** in the join below — derives which environment tier a journey's tests run in from the journey's criticality: a `MAJOR` part runs the fast local tier and the full staging matrix, a `MINOR` part runs staging only.",
           "id_source": "explicit",
-          "block_index": 18
+          "block_index": 18,
+          "points": []
         },
         {
           "section_id": "coverage-model-mapping",
@@ -700,7 +966,8 @@
           "heading_text": "Coverage → model-node mapping",
           "topic_sentence": "Coverage-to-node mapping projects the test suite's coverage onto the model's *nodes* — states, seams, invariants, journey endpoints — instead of its lines.",
           "id_source": "explicit",
-          "block_index": 22
+          "block_index": 22,
+          "points": []
         },
         {
           "section_id": "journey-task-closure",
@@ -708,7 +975,8 @@
           "heading_text": "Journey task-closure — asserting the goal completed",
           "topic_sentence": "The three models above ask whether a journey's test *exists*, *runs*, and runs *in which tier*.",
           "id_source": "explicit",
-          "block_index": 26
+          "block_index": 26,
+          "points": []
         },
         {
           "section_id": "worked-join",
@@ -716,7 +984,8 @@
           "heading_text": "Worked join — the journey↔coverage↔deploy-policy composition",
           "topic_sentence": "*Four models composed on a shared key, so a product goal reaches all the way to how the deploy runs its tests.",
           "id_source": "explicit",
-          "block_index": 32
+          "block_index": 32,
+          "points": []
         },
         {
           "section_id": "the-three-questions-the-join-answers",
@@ -724,7 +993,8 @@
           "heading_text": "The three questions the join answers",
           "topic_sentence": "Three questions the raw deploy scripts and test config cannot answer on their own.",
           "id_source": "derived",
-          "block_index": 36
+          "block_index": 36,
+          "points": []
         },
         {
           "section_id": "the-four-models-and-their-join-keys",
@@ -732,7 +1002,8 @@
           "heading_text": "The four models and their join keys",
           "topic_sentence": "The four models compose through shared keys.",
           "id_source": "derived",
-          "block_index": 39
+          "block_index": 39,
+          "points": []
         },
         {
           "section_id": "the-composite-picture",
@@ -740,7 +1011,8 @@
           "heading_text": "The composite picture",
           "topic_sentence": "The join has no single appendix diagram, so this composite is composed from the four real panels, adding only the join edges between them.",
           "id_source": "derived",
-          "block_index": 43
+          "block_index": 43,
+          "points": []
         },
         {
           "section_id": "the-invariants-the-join-spans",
@@ -748,7 +1020,8 @@
           "heading_text": "The invariants the join spans",
           "topic_sentence": "The join's invariants span all four models, collected in [ref:scenarios-invariants]; two are the trunk derive-the-checker discipline.",
           "id_source": "derived",
-          "block_index": 47
+          "block_index": 47,
+          "points": []
         },
         {
           "section_id": "the-selector-and-scheduler-in-code",
@@ -756,7 +1029,8 @@
           "heading_text": "The Selector and Scheduler in code",
           "topic_sentence": "Two pieces of real policy code show the join landing on code, not prose.",
           "id_source": "derived",
-          "block_index": 50
+          "block_index": 50,
+          "points": []
         },
         {
           "section_id": "tracing-one-fact-through-four-models",
@@ -764,9 +1038,11 @@
           "heading_text": "Tracing one fact through four models",
           "topic_sentence": "*Model-from-code, joined.* Every leg derives from the code: the journey's deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7).",
           "id_source": "derived",
-          "block_index": 55
+          "block_index": 55,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "4.1-brownfield",
@@ -778,7 +1054,8 @@
           "heading_text": "The starting point and the destination",
           "topic_sentence": "Name both ends before you move.",
           "id_source": "derived",
-          "block_index": 4
+          "block_index": 4,
+          "points": []
         },
         {
           "section_id": "approach-one-top-down-from-a-whiteboard",
@@ -786,7 +1063,8 @@
           "heading_text": "Approach one: top-down, from a whiteboard",
           "topic_sentence": "Start coarse and refine.",
           "id_source": "derived",
-          "block_index": 8
+          "block_index": 8,
+          "points": []
         },
         {
           "section_id": "approach-two-bottom-up-inducing-the-model-from-code",
@@ -794,7 +1072,8 @@
           "heading_text": "Approach two: bottom-up, inducing the model from code",
           "topic_sentence": "The second approach starts from the code and flies upward.",
           "id_source": "derived",
-          "block_index": 12
+          "block_index": 12,
+          "points": []
         },
         {
           "section_id": "approach-three-lint-cover-then-induce",
@@ -802,7 +1081,8 @@
           "heading_text": "Approach three: lint, cover, then induce",
           "topic_sentence": "Both approaches assume you can make sense of the code — and often you cannot, because it is a mess.",
           "id_source": "derived",
-          "block_index": 20
+          "block_index": 20,
+          "points": []
         },
         {
           "section_id": "squash-zero-promote",
@@ -810,7 +1090,8 @@
           "heading_text": "Squash, zero, promote",
           "topic_sentence": "[ref:squash-zero-promote] draws how a lint is worn into a legacy tree without breaking any in-flight agent — the order is what keeps it safe.",
           "id_source": "derived",
-          "block_index": 26
+          "block_index": 26,
+          "points": []
         },
         {
           "section_id": "the-metric-that-points-at-what-you-missed",
@@ -818,7 +1099,8 @@
           "heading_text": "The metric that points at what you missed",
           "topic_sentence": "Induction gives you a first model, but it never tells you where it stops.",
           "id_source": "derived",
-          "block_index": 33
+          "block_index": 33,
+          "points": []
         },
         {
           "section_id": "coverage-run-backwards",
@@ -826,7 +1108,8 @@
           "heading_text": "Coverage, run backwards",
           "topic_sentence": "Coverage walks one direction: model to code.",
           "id_source": "derived",
-          "block_index": 36
+          "block_index": 36,
+          "points": []
         },
         {
           "section_id": "data-from-the-case-study",
@@ -834,7 +1117,8 @@
           "heading_text": "Data from the case study",
           "topic_sentence": "A pilot makes the shape concrete.",
           "id_source": "derived",
-          "block_index": 39
+          "block_index": 39,
+          "points": []
         },
         {
           "section_id": "how-much-governance-is-enough",
@@ -842,7 +1126,8 @@
           "heading_text": "How much governance is enough",
           "topic_sentence": "Which raises the real question: how much governance is enough?",
           "id_source": "derived",
-          "block_index": 45
+          "block_index": 45,
+          "points": []
         },
         {
           "section_id": "how-i-know-this",
@@ -850,9 +1135,11 @@
           "heading_text": "How I know this",
           "topic_sentence": "I know this because I lived it.",
           "id_source": "derived",
-          "block_index": 47
+          "block_index": 47,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "4.2-the-skills",
@@ -864,7 +1151,8 @@
           "heading_text": "Self-operate: the lifecycles, made runnable",
           "topic_sentence": "Self-operate is the starting point, because it holds the lifecycles of running a repo — everything an engineering team actually does.",
           "id_source": "derived",
-          "block_index": 5
+          "block_index": 5,
+          "points": []
         },
         {
           "section_id": "self-governance-the-catalogue-and-the-posture",
@@ -872,7 +1160,8 @@
           "heading_text": "Self-governance: the catalogue and the posture",
           "topic_sentence": "The second skill, self-governance, triggers on a simple signal: a bad thing happened more than once — sometimes just once, if it was bad enough.",
           "id_source": "derived",
-          "block_index": 15
+          "block_index": 15,
+          "points": []
         },
         {
           "section_id": "the-posture-minting-new-mechanisms-well",
@@ -880,7 +1169,8 @@
           "heading_text": "The posture: minting new mechanisms well",
           "topic_sentence": "The first heuristic is to **avoid a teetering tower of governance.** Do too much of this and you end up in trouble: so much code governing and constraining the behavior that it becomes a tower of governance, and you can go too far building it.",
           "id_source": "derived",
-          "block_index": 21
+          "block_index": 21,
+          "points": []
         },
         {
           "section_id": "self-communicate-how-the-agent-writes-and-draws",
@@ -888,7 +1178,8 @@
           "heading_text": "Self-communicate: how the agent writes and draws",
           "topic_sentence": "The third skill, self-communicate, governs how the agent explains itself — to you and to other people.",
           "id_source": "derived",
-          "block_index": 28
+          "block_index": 28,
+          "points": []
         },
         {
           "section_id": "the-lexicon-one-concept-one-word",
@@ -896,7 +1187,8 @@
           "heading_text": "The lexicon: one concept, one word",
           "topic_sentence": "Self-communicate also owns a **lexicon**: the house vocabulary for your repo, so one concept gets one word, used consistently.",
           "id_source": "derived",
-          "block_index": 31
+          "block_index": 31,
+          "points": []
         },
         {
           "section_id": "the-construction-recipe-is-a-pattern-of-its-own",
@@ -904,9 +1196,11 @@
           "heading_text": "The construction recipe is a pattern of its own",
           "topic_sentence": "Here is what makes the three feel of a piece: they were all built the same way.",
           "id_source": "derived",
-          "block_index": 37
+          "block_index": 37,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "4.3-transformations",
@@ -918,7 +1212,8 @@
           "heading_text": "Size the leap to the model and the guarantee",
           "topic_sentence": "Give a model an input and either examples of a transformation or a precise description of it, and it will apply that transformation to something new — as long as the new thing is close enough to the examples, or the rule is precise enough.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 3,
+          "points": []
         },
         {
           "section_id": "the-right-sized-leap-and-the-wrong-shaped-one",
@@ -926,7 +1221,8 @@
           "heading_text": "The right-sized leap, and the wrong-shaped one",
           "topic_sentence": "Two transformations from this book show the lens at work — one sized right, one shaped wrong.",
           "id_source": "derived",
-          "block_index": 7
+          "block_index": 7,
+          "points": []
         },
         {
           "section_id": "the-skills-are-transformations-all-the-way-down",
@@ -934,9 +1230,11 @@
           "heading_text": "The skills are transformations all the way down",
           "topic_sentence": "[ref:transformations-pipeline] shows the shared skeleton — each skill carrying an input to an output through a sequence of sized transformations.",
           "id_source": "derived",
-          "block_index": 12
+          "block_index": 12,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "4.4-training-data",
@@ -948,7 +1246,8 @@
           "heading_text": "The model is biased toward what it has seen",
           "topic_sentence": "Treat the training data as the whole internet and every book ever written, and treat the model as biased toward whatever it saw a lot of.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 3,
+          "points": []
         },
         {
           "section_id": "where-mbse-shines-the-novelty-axis",
@@ -956,7 +1255,8 @@
           "heading_text": "Where MBSE shines: the novelty axis",
           "topic_sentence": "[ref:novelty-axis] sets a part's novelty against the leap you can trust and the oversight you owe.",
           "id_source": "derived",
-          "block_index": 8
+          "block_index": 8,
+          "points": []
         },
         {
           "section_id": "the-diffusion-analogy",
@@ -964,7 +1264,8 @@
           "heading_text": "The diffusion analogy",
           "topic_sentence": "I hold this through an analogy to the diffusion models that draw pictures.",
           "id_source": "derived",
-          "block_index": 16
+          "block_index": 16,
+          "points": []
         },
         {
           "section_id": "demoable-is-not-productizable",
@@ -972,9 +1273,11 @@
           "heading_text": "Demoable is not productizable",
           "topic_sentence": "So think of it this way: the agent will hand you a working prototype, but look under the hood of a novel system and you find Rube Goldberg machines in the engine room.",
           "id_source": "derived",
-          "block_index": 19
+          "block_index": 19,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "4.5-lessons-learned",
@@ -986,7 +1289,8 @@
           "heading_text": "Lessons Learned",
           "topic_sentence": "I spent three months building a real piece of software with a coding agent, and the thing I came away with was a methodology, not a model release or a benchmark.",
           "id_source": "derived",
-          "block_index": 1
+          "block_index": 1,
+          "points": []
         },
         {
           "section_id": "three-ways-to-run-an-agent-and-why-i-chose-one",
@@ -994,7 +1298,8 @@
           "heading_text": "Three ways to run an agent, and why I chose one",
           "topic_sentence": "There are three ways to run a coding agent, and the choice is a matter of where you sit on the risk map, not of taste.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 3,
+          "points": []
         },
         {
           "section_id": "claude-is-the-fastest-road-to-hell",
@@ -1002,7 +1307,8 @@
           "heading_text": "Claude is the fastest road to hell",
           "topic_sentence": "The single most useful sentence I can hand you is this: coding agents accelerate *within the frame you give them* — even when the frame is wrong.",
           "id_source": "derived",
-          "block_index": 9
+          "block_index": 9,
+          "points": []
         },
         {
           "section_id": "optionality-is-poison",
@@ -1010,7 +1316,8 @@
           "heading_text": "Optionality is poison",
           "topic_sentence": "AI does not merely reduce friction.",
           "id_source": "derived",
-          "block_index": 13
+          "block_index": 13,
+          "points": []
         },
         {
           "section_id": "refactoring-used-to-be-too-costly-now-it-s-free",
@@ -1018,7 +1325,8 @@
           "heading_text": "Refactoring used to be too costly; now it's free",
           "topic_sentence": "For my whole career, refactoring was something you rationed.",
           "id_source": "derived",
-          "block_index": 18
+          "block_index": 18,
+          "points": []
         },
         {
           "section_id": "done-is-a-claim-not-a-fact",
@@ -1026,7 +1334,8 @@
           "heading_text": "\"Done\" is a claim, not a fact",
           "topic_sentence": "<!-- TODO(data): false-done RATE — % of self-marked-DONE units that failed re-review; minable from DoD-audit / tombstone history.",
           "id_source": "derived",
-          "block_index": 22
+          "block_index": 22,
+          "points": []
         },
         {
           "section_id": "the-cost-estimator-is-broken-and-scope-creep-is-guaranteed",
@@ -1034,7 +1343,8 @@
           "heading_text": "The cost estimator is broken, and scope creep is guaranteed",
           "topic_sentence": "Two consequences follow from cheap implementation, and both caught me off guard.",
           "id_source": "derived",
-          "block_index": 27
+          "block_index": 27,
+          "points": []
         },
         {
           "section_id": "your-tests-must-survive-agent-shaped-failure-modes",
@@ -1042,7 +1352,8 @@
           "heading_text": "Your tests must survive agent-shaped failure modes",
           "topic_sentence": "An agent fails differently than a person does.",
           "id_source": "derived",
-          "block_index": 31
+          "block_index": 31,
+          "points": []
         },
         {
           "section_id": "vibe-coding-treats-the-program-as-an-i-o-device-engineering-treats-it-as-a-system",
@@ -1050,7 +1361,8 @@
           "heading_text": "Vibe coding treats the program as an I/O device; engineering treats it as a system",
           "topic_sentence": "Here is the distinction the whole method turns on.",
           "id_source": "derived",
-          "block_index": 37
+          "block_index": 37,
+          "points": []
         },
         {
           "section_id": "explicitness-is-essential",
@@ -1058,7 +1370,8 @@
           "heading_text": "Explicitness is essential",
           "topic_sentence": "A normal codebase keeps most of its conceptual structure in human memory.",
           "id_source": "derived",
-          "block_index": 40
+          "block_index": 40,
+          "points": []
         },
         {
           "section_id": "governance-is-a-spectrum-from-soft-to-hard",
@@ -1066,7 +1379,8 @@
           "heading_text": "Governance is a spectrum from soft to hard",
           "topic_sentence": "The mechanisms I ended up with were not all the same kind of thing, and the axis that sorted them was soft versus hard.",
           "id_source": "derived",
-          "block_index": 44
+          "block_index": 44,
+          "points": []
         },
         {
           "section_id": "ai-is-an-autonomy-amplifier",
@@ -1074,7 +1388,8 @@
           "heading_text": "AI is an autonomy amplifier",
           "topic_sentence": "The thing agents amplify is not your typing speed.",
           "id_source": "derived",
-          "block_index": 50
+          "block_index": 50,
+          "points": []
         },
         {
           "section_id": "what-this-means-for-the-job",
@@ -1082,7 +1397,8 @@
           "heading_text": "What this means for the job",
           "topic_sentence": "Watching my own experience of software engineering get compressed, I expected to feel the role shrinking.",
           "id_source": "derived",
-          "block_index": 55
+          "block_index": 55,
+          "points": []
         },
         {
           "section_id": "who-holds-the-authority-to-convert-a-lesson",
@@ -1090,9 +1406,11 @@
           "heading_text": "Who holds the authority to convert a lesson",
           "topic_sentence": "This is where I think companies may have trouble.",
           "id_source": "derived",
-          "block_index": 57
+          "block_index": 57,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "4.6-generative-validation",
@@ -1104,7 +1422,8 @@
           "heading_text": "One move, three specifications",
           "topic_sentence": "[ref:generative-family] lays the family out on one page.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 3,
+          "points": []
         },
         {
           "section_id": "the-move-a-generator-hunts-a-counterexample-to-a-model",
@@ -1112,7 +1431,8 @@
           "heading_text": "The move: a generator hunts a counterexample to a model",
           "topic_sentence": "Before the three members, the shared shape.",
           "id_source": "derived",
-          "block_index": 10
+          "block_index": 10,
+          "points": []
         },
         {
           "section_id": "property-based-testing-the-invariant-is-the-oracle",
@@ -1120,7 +1440,8 @@
           "heading_text": "Property-based testing: the invariant is the oracle",
           "topic_sentence": "In property-based testing the author writes the law and the machine hunts the counterexample.",
           "id_source": "derived",
-          "block_index": 16
+          "block_index": 16,
+          "points": []
         },
         {
           "section_id": "fuzzing-the-contract-is-never-crash-never-corrupt",
@@ -1128,7 +1449,8 @@
           "heading_text": "Fuzzing: the contract is \"never crash, never corrupt\"",
           "topic_sentence": "Property testing asks tame inputs a rich question.",
           "id_source": "derived",
-          "block_index": 20
+          "block_index": 20,
+          "points": []
         },
         {
           "section_id": "fuzz-mbse-the-typed-model-becomes-the-oracle",
@@ -1136,7 +1458,8 @@
           "heading_text": "Fuzz + MBSE: the typed model becomes the oracle",
           "topic_sentence": "This is the synthesis.",
           "id_source": "derived",
-          "block_index": 25
+          "block_index": 25,
+          "points": []
         },
         {
           "section_id": "coverage-did-we-explore-the-spec-relevant-space",
@@ -1144,7 +1467,8 @@
           "heading_text": "Coverage: did we explore the spec-relevant space?",
           "topic_sentence": "Once you have a generator, a new question appears that example tests never had to ask: *did the campaign explore the space that matters, or did it just spin?* The book already owns coverage — the [metrics chapter](2.5-metrics.html) develops it as a flagship, with the rule to measure one level deeper than the raw percentage — so this section adds only the one cut that is genuinely native to generation and hands the rest back.",
           "id_source": "derived",
-          "block_index": 33
+          "block_index": 33,
+          "points": []
         },
         {
           "section_id": "when-to-reach-for-which",
@@ -1152,9 +1476,11 @@
           "heading_text": "When to reach for which",
           "topic_sentence": "The family gives a compact decision aid, and the axes of the opening table are the decision.",
           "id_source": "derived",
-          "block_index": 39
+          "block_index": 39,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "5.1-the-ada-context",
@@ -1166,7 +1492,8 @@
           "heading_text": "The ADA Context",
           "topic_sentence": "Every method in this book was learned building one real system, under a real deadline, for a real problem.",
           "id_source": "derived",
-          "block_index": 1
+          "block_index": 1,
+          "points": []
         },
         {
           "section_id": "a-noble-idea-with-a-crushing-implementation",
@@ -1174,7 +1501,8 @@
           "heading_text": "A noble idea with a crushing implementation",
           "topic_sentence": "The Americans with Disabilities Act starts from a simple promise: people with disabilities should have equal access to public life, able to work, travel, study, vote, and use services without barriers society could reasonably remove.",
           "id_source": "derived",
-          "block_index": 4
+          "block_index": 4,
+          "points": []
         },
         {
           "section_id": "the-rule-that-changed-the-burden",
@@ -1182,7 +1510,8 @@
           "heading_text": "The rule that changed the burden",
           "topic_sentence": "Universities have been obligated to comply with Title II since 1990.",
           "id_source": "derived",
-          "block_index": 8
+          "block_index": 8,
+          "points": []
         },
         {
           "section_id": "nearly-free",
@@ -1190,7 +1519,8 @@
           "heading_text": "What it costs to make one document accessible",
           "topic_sentence": "Compliance is not free, and the cost is easiest to feel on a single deck.",
           "id_source": "explicit",
-          "block_index": 12
+          "block_index": 12,
+          "points": []
         },
         {
           "section_id": "why-a-document-is-not-just-a-file",
@@ -1198,9 +1528,11 @@
           "heading_text": "Why a document is not just a file",
           "topic_sentence": "Underneath the institutional bind sits a technical problem deeper than it looks, and it is why this became a software project worth building rather than a policy memo worth writing.",
           "id_source": "derived",
-          "block_index": 18
+          "block_index": 18,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "5.2-the-timeline-and-the-work",
@@ -1212,7 +1544,8 @@
           "heading_text": "It started in a meeting",
           "topic_sentence": "The project began, fittingly, in a committee meeting about the very deadline described in the last chapter.",
           "id_source": "derived",
-          "block_index": 2
+          "block_index": 2,
+          "points": []
         },
         {
           "section_id": "six-stages-then-a-seventh",
@@ -1220,7 +1553,8 @@
           "heading_text": "Six stages, then a seventh",
           "topic_sentence": "What followed moved through a recognizable sequence of stages.",
           "id_source": "derived",
-          "block_index": 6
+          "block_index": 6,
+          "points": []
         },
         {
           "section_id": "velocity",
@@ -1228,7 +1562,8 @@
           "heading_text": "The velocity curve",
           "topic_sentence": "[ref:velocity-curve] plots commits per week: a steep rise as the fleet gained capability, then the dip where velocity buys trustworthiness.",
           "id_source": "explicit",
-          "block_index": 13
+          "block_index": 13,
+          "points": []
         },
         {
           "section_id": "the-kinds-of-work-it-required",
@@ -1236,9 +1571,11 @@
           "heading_text": "The kinds of work it required",
           "topic_sentence": "The most useful way to read this timeline is not as a feature list but as a catalog of the *kinds of work* agentic development turned out to need.",
           "id_source": "derived",
-          "block_index": 22
+          "block_index": 22,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "5.3-the-built-system",
@@ -1250,7 +1587,8 @@
           "heading_text": "What the system does, end to end",
           "topic_sentence": "A user uploads a file.",
           "id_source": "derived",
-          "block_index": 1
+          "block_index": 1,
+          "points": []
         },
         {
           "section_id": "the-document-is-the-hard-part",
@@ -1258,7 +1596,8 @@
           "heading_text": "The document is the hard part",
           "topic_sentence": "None of this would be worth building if a document were just text in a box.",
           "id_source": "derived",
-          "block_index": 12
+          "block_index": 12,
+          "points": []
         },
         {
           "section_id": "llm-as-function-call",
@@ -1266,7 +1605,8 @@
           "heading_text": "Designing with a probabilistic component: the LLM as a function call",
           "topic_sentence": "Here is the central problem of building on a model.",
           "id_source": "explicit",
-          "block_index": 15
+          "block_index": 15,
+          "points": []
         },
         {
           "section_id": "three-views-of-the-same-system",
@@ -1274,7 +1614,8 @@
           "heading_text": "Three views of the same system",
           "topic_sentence": "A model shows a view.",
           "id_source": "derived",
-          "block_index": 24
+          "block_index": 24,
+          "points": []
         },
         {
           "section_id": "view-1-a-reactive-service-seam-and-how-it-made-serverless-natural",
@@ -1282,7 +1623,8 @@
           "heading_text": "View 1 — a reactive service seam, and how it made serverless natural",
           "topic_sentence": "The back end is a set of small services wired to react to events.",
           "id_source": "derived",
-          "block_index": 26
+          "block_index": 26,
+          "points": []
         },
         {
           "section_id": "view-2-the-front-end-as-model-view-controller-over-a-shared-edit-language",
@@ -1290,7 +1632,8 @@
           "heading_text": "View 2 — the front end as model-view-controller over a shared edit language",
           "topic_sentence": "The front end is a small single-page application plus a set of supporting surfaces — an account view, a job history, an operator dashboard, and the editor.",
           "id_source": "derived",
-          "block_index": 34
+          "block_index": 34,
+          "points": []
         },
         {
           "section_id": "view-3-the-edit-language-as-the-target-of-automated-remediation",
@@ -1298,7 +1641,8 @@
           "heading_text": "View 3 — the edit language as the target of automated remediation",
           "topic_sentence": "Here the two halves of the system join, and the join is the function-call pattern from earlier in the chapter, seen once more.",
           "id_source": "derived",
-          "block_index": 41
+          "block_index": 41,
+          "points": []
         },
         {
           "section_id": "why-route-through-the-language-at-all",
@@ -1306,7 +1650,8 @@
           "heading_text": "Why route through the language at all",
           "topic_sentence": "The frontier models can already skip all of this.",
           "id_source": "derived",
-          "block_index": 47
+          "block_index": 47,
+          "points": []
         },
         {
           "section_id": "same-song-second-verse",
@@ -1314,9 +1659,11 @@
           "heading_text": "Same song, second verse",
           "topic_sentence": "Notice the shape of the argument, because the book made it again at a larger scale.",
           "id_source": "derived",
-          "block_index": 51
+          "block_index": 51,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "5.4-the-road-to-mage",
@@ -1328,7 +1675,8 @@
           "heading_text": "[role: Co-coder] Step one — I reviewed everything myself",
           "topic_sentence": "At the start there was one document format, a few hundred lines, and me.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 3,
+          "points": []
         },
         {
           "section_id": "role-qa-step-two-i-dispatched-an-agent-to-audit-the-work",
@@ -1336,7 +1684,8 @@
           "heading_text": "[role: QA] Step two — I dispatched an agent to audit the work",
           "topic_sentence": "The first offload was to hand the review itself to an agent.",
           "id_source": "derived",
-          "block_index": 6
+          "block_index": 6,
+          "points": []
         },
         {
           "section_id": "role-review-lead-step-three-one-audit-became-a-crew",
@@ -1344,7 +1693,8 @@
           "heading_text": "[role: Review Lead] Step three — one audit became a crew",
           "topic_sentence": "The single reviewing agent worked, but it had a flaw I could not brief away.",
           "id_source": "derived",
-          "block_index": 9
+          "block_index": 9,
+          "points": []
         },
         {
           "section_id": "role-tech-lead-step-four-zones-so-an-agent-can-reason-locally",
@@ -1352,7 +1702,8 @@
           "heading_text": "[role: Tech Lead] Step four — zones, so an agent can reason locally",
           "topic_sentence": "A crew that coordinates is still a crew of agents each of whom has to understand the code it touches.",
           "id_source": "derived",
-          "block_index": 17
+          "block_index": 17,
+          "points": []
         },
         {
           "section_id": "refactor-cost",
@@ -1360,7 +1711,8 @@
           "heading_text": "[role: Architect] Step five — the codebase modeled, from components.py to MAGE",
           "topic_sentence": "By this step I never looked at code at all.",
           "id_source": "explicit",
-          "block_index": 24
+          "block_index": 24,
+          "points": []
         },
         {
           "section_id": "a-view-per-property-i-had-to-guarantee",
@@ -1368,7 +1720,8 @@
           "heading_text": "A view per property I had to guarantee",
           "topic_sentence": "Once that first model paid off, the others followed — but the right way to see the set is not \"more models.\" Each model is a **view** of the system, and each view exists to answer for one **property or quality metric** I had to guarantee: a property like *deployability*, a quality metric like *security*.",
           "id_source": "derived",
-          "block_index": 32
+          "block_index": 32,
+          "points": []
         },
         {
           "section_id": "the-substrate-that-keeps-the-models-honest",
@@ -1376,7 +1729,8 @@
           "heading_text": "The substrate that keeps the models honest",
           "topic_sentence": "So the models grew a nervous system.",
           "id_source": "derived",
-          "block_index": 36
+          "block_index": 36,
+          "points": []
         },
         {
           "section_id": "the-architect-s-newest-instrument-measuring-what-is-still-unmodeled",
@@ -1384,9 +1738,11 @@
           "heading_text": "The Architect's newest instrument: measuring what is still unmodeled",
           "topic_sentence": "The Architect rung is where the ladder ends, but the work on it does not.",
           "id_source": "derived",
-          "block_index": 42
+          "block_index": 42,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "6.0-implications-for-se",
@@ -1398,7 +1754,8 @@
           "heading_text": "From governing what you know to discovering what you don't",
           "topic_sentence": "The tidy version of governance says: figure out your obligations in advance, encode them as mechanisms, and let the agents run inside the fence.",
           "id_source": "derived",
-          "block_index": 3
+          "block_index": 3,
+          "points": []
         },
         {
           "section_id": "managing-the-workforce-is-not-governing-the-environment",
@@ -1406,7 +1763,8 @@
           "heading_text": "Managing the workforce is not governing the environment",
           "topic_sentence": "The volume is only half of why supervision fails.",
           "id_source": "derived",
-          "block_index": 7
+          "block_index": 7,
+          "points": []
         },
         {
           "section_id": "soft-mechanisms-saturate-the-substrate-has-to-become-machine-actionable",
@@ -1414,7 +1772,8 @@
           "heading_text": "Soft mechanisms saturate; the substrate has to become machine-actionable",
           "topic_sentence": "Here is a proposition I would put money on, though I have only a single case behind it.",
           "id_source": "derived",
-          "block_index": 9
+          "block_index": 9,
+          "points": []
         },
         {
           "section_id": "models-and-agents-are-the-closest-thing-to-a-silver-bullet",
@@ -1422,7 +1781,8 @@
           "heading_text": "Models and agents are the closest thing to a silver bullet",
           "topic_sentence": "Fred Brooks warned the field off silver bullets forty years ago.",
           "id_source": "derived",
-          "block_index": 16
+          "block_index": 16,
+          "points": []
         },
         {
           "section_id": "the-judgment-moved-and-it-moved-toward-you",
@@ -1430,7 +1790,8 @@
           "heading_text": "The judgment moved, and it moved toward you",
           "topic_sentence": "If implementation is abundant, the human's comparative advantage is no longer producing code.",
           "id_source": "derived",
-          "block_index": 22
+          "block_index": 22,
+          "points": []
         },
         {
           "section_id": "what-this-changes-for-how-we-measure-staff-and-teach",
@@ -1438,7 +1799,8 @@
           "heading_text": "What this changes for how we measure, staff, and teach",
           "topic_sentence": "A few consequences follow, and I will keep them short because each could be its own argument.",
           "id_source": "derived",
-          "block_index": 26
+          "block_index": 26,
+          "points": []
         },
         {
           "section_id": "models-are-the-universal-language-of-engineering",
@@ -1446,7 +1808,8 @@
           "heading_text": "Models are the universal language of engineering",
           "topic_sentence": "Here is the claim the whole book has been climbing toward, and I will state it flat before I defend it.",
           "id_source": "derived",
-          "block_index": 32
+          "block_index": 32,
+          "points": []
         },
         {
           "section_id": "limitations",
@@ -1454,9 +1817,11 @@
           "heading_text": "Limitations",
           "topic_sentence": "I should be plain about the limits of this book.",
           "id_source": "derived",
-          "block_index": 39
+          "block_index": 39,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     },
     {
       "slug": "6.1-conclusion",
@@ -1468,7 +1833,8 @@
           "heading_text": "Fitting this book into the software engineering literature",
           "topic_sentence": "Set the MAGE methodology against the two touchstones from the preface, and the shape of the contribution comes clear.",
           "id_source": "derived",
-          "block_index": 8
+          "block_index": 8,
+          "points": []
         },
         {
           "section_id": "the-part-that-stays-yours",
@@ -1476,7 +1842,8 @@
           "heading_text": "The part that stays yours",
           "topic_sentence": "We opened by calling the agent a 3D printer, not a stapler.",
           "id_source": "derived",
-          "block_index": 17
+          "block_index": 17,
+          "points": []
         },
         {
           "section_id": "where-to-go-next",
@@ -1484,9 +1851,11 @@
           "heading_text": "Where to go next",
           "topic_sentence": "You do not have to adopt all of this at once, and you should not.",
           "id_source": "derived",
-          "block_index": 22
+          "block_index": 22,
+          "points": []
         }
-      ]
+      ],
+      "preamble_points": []
     }
   ]
 }

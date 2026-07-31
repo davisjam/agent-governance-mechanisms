@@ -213,6 +213,19 @@ _MARKER_COMMENT_RE = re.compile(rf"^<!--\s*(?:{_MARKER_KEYWORD_ALT})(?:\s*:|\s*-
 # and is peeled by the fenced-code branch, not by `_consume_leading_marker`. In the vocabulary SSOT so
 # the notation-leak gate still treats any un-consumed / mis-placed one as a leak.
 _INSET_RE = re.compile(r"^<!--\s*inset:\s*(?P<title>.+?)\s*-->$")
+# A `<!-- point: <slug> | <text> -->` drain decorator (the induced canonical point of the paragraph it
+# heads). Its text is AUTHORED MODEL-METADATA — invisible to the reader, consumed only by the outline
+# model — so any body_md scan that reflects READER-VISIBLE prose (the occurrence index) must strip it, or a
+# term that appears only in a decorator would spawn a phantom index reference. `_strip_point_decorators`
+# below removes them; the outline model reads the point from the IR, never from this scrubbed prose.
+_POINT_COMMENT_RE = re.compile(r"^\s*<!--\s*point:.*?-->\s*$", re.M)
+
+
+def _strip_point_decorators(body_md: str) -> str:
+    """Remove every `<!-- point: … -->` decorator line from a chapter's markdown. Used by the reader-visible
+    prose scans (the occurrence index) so an authored canonical-point never leaks into reader-facing output.
+    The renderer's block loop strips them separately (they render nothing); this is the text-scan twin."""
+    return _POINT_COMMENT_RE.sub("", body_md)
 
 
 def _collect_glossary(chapters: list[dict]) -> None:
@@ -2464,7 +2477,9 @@ def _scan_term_refs(term: str, pages: list[dict]) -> list[dict]:
         return []
     scored: list[tuple[int, int, dict]] = []
     for order, pg in enumerate(pages):
-        md = pg["body_md"]
+        # Scan reader-visible prose only: strip the authored `<!-- point: … -->` decorators so a term that
+        # appears solely inside a canonical-point never spawns a phantom occurrence reference.
+        md = _strip_point_decorators(pg["body_md"])
         low = md.lower()
         if not any(k in low for k in keys):
             continue

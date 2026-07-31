@@ -62,6 +62,16 @@ def first_sentence(text: str) -> str:
 
 
 @dataclass
+class PointRow:
+    """One `<!-- point: <slug> | <text> -->` decorator — the induced canonical point of the paragraph it
+    heads. Paired to its owning section by document order (the decorator sits between one heading and the
+    next). A drained section carries a list of these; an un-drained section carries none."""
+    slug: str
+    text: str
+    block_index: int                   # index of the decorator's DIRECTIVE block in the chapter
+
+
+@dataclass
 class HeadingRow:
     """A heading joined to its stable id, visible text, and the topic sentence that follows it."""
     chapter_slug: str
@@ -72,6 +82,7 @@ class HeadingRow:
     id_source: str                     # "explicit" | "derived"
     topic_sentence: str | None         # first sentence of the following paragraph, or None (an O2 finding)
     block_index: int
+    points: "list[PointRow]" = field(default_factory=list)  # canonical points under this section (drained)
 
 
 def _following_topic_sentence(blocks: "list[book_ir.Block]", i: int) -> "str | None":
@@ -86,10 +97,44 @@ def _following_topic_sentence(blocks: "list[book_ir.Block]", i: int) -> "str | N
     return None
 
 
+def _section_points(blocks: "list[book_ir.Block]", i: int) -> "list[PointRow]":
+    """The canonical points under the heading at blocks[i]: every `point` DIRECTIVE from just after the
+    heading up to (but not including) the NEXT heading. Document-order pairing — a decorator belongs to the
+    most-recent heading before it. An un-drained section returns an empty list (falls back to topic-sentence
+    behavior in the outline)."""
+    points: "list[PointRow]" = []
+    j = i + 1
+    while j < len(blocks) and blocks[j].kind is not book_ir.BlockKind.HEADING:
+        b = blocks[j]
+        if b.directive == "point" and b.point_slug and b.point_text is not None:
+            points.append(PointRow(slug=b.point_slug, text=b.point_text, block_index=b.index))
+        j += 1
+    return points
+
+
+def chapter_preamble_points(include_appendices: bool = False) -> "dict[str, list[PointRow]]":
+    """Per chapter slug, the canonical points that head a paragraph BEFORE the chapter's first heading — a
+    chapter opener that belongs to no section. Empty (absent) for an un-drained chapter. Kept separate from
+    `heading_rows` so the outline can attach them at chapter scope, not force them onto a section."""
+    doc = book_ir.parse_book(include_appendices=include_appendices)
+    out: "dict[str, list[PointRow]]" = {}
+    for c in doc.chapters:
+        pts: "list[PointRow]" = []
+        for b in c.blocks:
+            if b.kind is book_ir.BlockKind.HEADING:
+                break  # reached the first heading — the rest belong to sections
+            if b.directive == "point" and b.point_slug and b.point_text is not None:
+                pts.append(PointRow(slug=b.point_slug, text=b.point_text, block_index=b.index))
+        if pts:
+            out[c.slug] = pts
+    return out
+
+
 def heading_rows(include_appendices: bool = False) -> list[HeadingRow]:
     """Every narrative heading (H2–H4; the H1 chapter title is rendered separately by the build and is not a
-    block) as a typed row with its stable id, id-source, and topic sentence. The outline view's raw material.
-    Derived fresh from `book_ir.parse_book()` on every call — never snapshotted (DESIGN §4)."""
+    block) as a typed row with its stable id, id-source, topic sentence, and — for a DRAINED section — the
+    canonical points its `<!-- point: … -->` decorators induce. The outline view's raw material. Derived
+    fresh from `book_ir.parse_book()` on every call — never snapshotted (DESIGN §4)."""
     doc = book_ir.parse_book(include_appendices=include_appendices)
     rows: list[HeadingRow] = []
     for c in doc.chapters:
@@ -106,5 +151,6 @@ def heading_rows(include_appendices: bool = False) -> list[HeadingRow]:
                 id_source="explicit" if explicit_id else "derived",
                 topic_sentence=_following_topic_sentence(c.blocks, i),
                 block_index=b.index,
+                points=_section_points(c.blocks, i),
             ))
     return rows
