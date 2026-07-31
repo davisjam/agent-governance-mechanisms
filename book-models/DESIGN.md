@@ -177,18 +177,31 @@ view, perhaps partially derived or annotative").
 - **Typed schema.**
   ```
   OutcomeModel
-   └─ Outcome(outcome_id, granularity, unit_id, verb, obj, statement, bloom, provenance, anchor, gap_note)
+   └─ Outcome(outcome_id, granularity, primary_unit, secondary_units[],
+              verb, obj, statement, bloom, provenance, anchor, gap_note)
   ```
-  - `granularity` ∈ {`book`, `part`, `chapter`, `section`} — the four tiers the outcome tree decomposes
-    through. Book-level outcomes decompose *down* into Part → chapter → section outcomes.
-  - `unit_id` — the **join key into the outline view**: a `section_id` (section), a chapter `slug`
-    (chapter), `part-<N>` (part), or `book`. This is what ties the pedagogy to the structure — an outcome
-    whose `unit_id` no longer resolves is the finding.
+  - `primary_unit` + `secondary_units[]` — an outcome maps **one-primary-to-many-elaborative**, not
+    one-to-one. The `primary_unit` is where the outcome is **chiefly taught / delivered**; each of
+    `secondary_units` is an **elaborative** unit that reinforces, extends, or applies it. Both are join keys
+    into the outline view (a `section_id`, a chapter `slug`, `part-<N>`, or `book`). An outcome that spans
+    units — a thesis chiefly stated in Part 2 but reinforced in Part 4 and the case study — records that
+    span instead of being duplicated or arbitrarily pinned to one place. An outcome whose `primary_unit` no
+    longer resolves is a finding (U1); a `secondary_unit` that no longer resolves, or equals the primary, is
+    a finding (U7).
+  - `granularity` ∈ {`book`, `part`, `chapter`, `section`} — the tier **of the primary unit**. Book-level
+    outcomes decompose *down* into Part → chapter → section outcomes.
   - `verb` + `obj` — an outcome is an **action verb + object** ("distinguish · a constraint from a
     sensor"). `verb` comes from a closed **Bloom-level taxonomy** (below); `bloom` is derived from it.
   - `provenance` — the honesty tag (below): `derived` | `declared` | `gap-recommended`.
   - `anchor` / `gap_note` — the grounding: for a `derived`/`declared` outcome, the topic sentence or heading
     it rests on; for a `gap-recommended` one, why the unit falls short.
+- **Coverage semantics — primary drives coverage.** A unit "covers" an outcome only when it is that
+  outcome's **primary**. Appearing in `secondary_units` reinforces an outcome **owned elsewhere** and does
+  **not** by itself make the reinforcing unit covered — so a unit that only ever appears as an elaborative,
+  and is no outcome's primary, is still a coverage **gap**. The rationale is the gap list's job: it is the
+  author's fill worklist, and a unit earns its keep by *primarily delivering* something, not by echoing a
+  point taught elsewhere. The digest still shows a section's elaborative role (so the author sees it is not
+  idle), but an echo alone does not clear the gap.
 - **The verb taxonomy.** A closed set of teaching verbs grouped by the six Bloom (2001-revision) cognitive
   levels — **know** (recall/recognize/define…), **understand** (explain/describe/distinguish…),
   **apply** (apply/use/compute/write…), **analyze** (classify/map/trace/situate…), **evaluate**
@@ -216,22 +229,25 @@ view, perhaps partially derived or annotative").
   The `declared` + `gap-recommended` sets are exactly the **author's rearrange/fill worklist**; the
   `derived` set is what the book teaches today.
 - **How it maps onto the outline.** The outcome model is a *projection over the outline view*. Every
-  `unit_id` is an outline key; the coverage check re-derives the outline and joins. A chapter is "covered"
-  if it carries a chapter outcome *or* owns a section that carries one. The mechanical derivation reads the
-  outline's topic sentences directly. So the two views share one structural source — the outline is the
-  outcomes view's substrate, not a parallel parse.
+  `primary_unit` and `secondary_unit` is an outline key; the coverage check re-derives the outline and
+  joins. A chapter is "covered" when it is the primary of a chapter outcome *or* owns a section that is the
+  primary of one — an elaborative reference does not count (primary drives coverage). The mechanical
+  derivation reads the outline's topic sentences directly. So the two views share one structural source —
+  the outline is the outcomes view's substrate, not a parallel parse.
 - **Invariants (checked by the drift check).**
   - *drift* — `outcomes.json` equals a fresh derivation (declared outcomes merged with derived candidates).
-  - *U1 — every outcome's `unit_id` resolves* to a real section id / chapter slug / `part-N` / `book`.
+  - *U1 — every outcome's `primary_unit` resolves* to a real section id / chapter slug / `part-N` / `book`.
   - *U2 — every verb is in the taxonomy* and `bloom` equals the verb's level.
-  - *U3 / U4 / U5 — every chapter, every Part, and the book carry ≥1 outcome* (a bare unit is a pedagogy
-    gap the author fills).
+  - *U3 / U4 / U5 — every chapter, every Part, and the book is the PRIMARY of ≥1 outcome* (a unit that is no
+    outcome's primary is a pedagogy gap the author fills — an elaborative-only unit does not clear it).
   - *U6 — every provenance tag cites its grounding* (a `derived`/`declared` outcome names an anchor; a
     `gap-recommended` one names why the unit falls short) — the honest-labeling discipline, enforced.
-  - *(informational, not gated)* — the **uncovered-section list**: sections that teach something but carry
-    no outcome yet. This is the fill worklist for the author's next phase, printed by
-    `python3 book-models/outcomes_model.py gaps`, not a gate finding (this PoC covers a representative
-    sample of sections, not all 164).
+  - *U7 — every elaborative (`secondary`) unit resolves* to a real outline unit and is distinct from the
+    primary (a mistyped or self-referential elaboration is a finding).
+  - *(informational, not gated)* — the **no-primary-section list**: sections that primarily deliver no
+    outcome (annotated when they at least serve as an elaboration). This is the fill worklist for the
+    author's next phase, printed by `python3 book-models/outcomes_model.py gaps`, not a gate finding (this
+    PoC covers a representative sample of sections as primaries, not all 164).
 
 ---
 
@@ -412,15 +428,21 @@ files live in top-level `book-models/`; drift checks land **audit-only-first** (
 JSON artifacts are **tracked** (provenance-headed, diffable in PRs). Those four earlier questions are
 answered — the outline and outcomes PoCs both follow them.
 
+**Also settled (author review, second pass):** an outcome carries a **primary unit + elaborative
+secondary units** (one-primary-to-many), and **primary drives coverage** — a unit clears its gap only by
+being some outcome's *primary*; an elaborative-only reference does not (§2.6). The schema, the declared
+data, the digest, and the U3–U5/U7 checks all follow this.
+
 What remains open is specific to the outcomes view and to the still-unbuilt views:
 
 1. **Verb taxonomy.** Approve the six-level Bloom-grouped closed set (§2.6) as the outcome vocabulary? It is
    tuned to this book; adding a verb is a one-row edit to `BLOOM_VERBS`. A reader who prefers a
    coarser/finer scale (e.g. a three-tier know/apply/create) would change this table.
 2. **Section-coverage scope.** This PoC declares outcomes for the book, all 6 Parts, all 24 taught
-   chapters, and a **representative ~18-section sample** — not all 164 sections. Confirm the next phase
-   fills the rest (the `gaps` worklist), and confirm section outcomes stay *informational* (no U-invariant
-   forces every section to carry one — the author decides which sections earn their own outcome).
+   chapters, and a **representative ~18-section sample** as primaries — not all 164 sections. Confirm the
+   next phase fills the rest (the `gaps` worklist), and confirm a section is only *informationally* required
+   to be some outcome's primary (no U-invariant forces every section to primarily deliver one — the author
+   decides which sections earn their own primary outcome versus stay purely elaborative).
 3. **Gap-recommended review.** The three `gap-recommended` outcomes (§2.6) are *proposals* for content that
    does not exist — the author confirms, rewrites, or rejects each. Are three the right seed, or should the
    PoC surface more of the O2 / thin-opener sections as gap recommendations?

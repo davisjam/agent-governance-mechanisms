@@ -14,11 +14,12 @@ OUTLINE view (the PoC; DESIGN §2.1):
 
 OUTCOMES view (DESIGN §2.6):
   - drift: `book-models/outcomes.json` equals a fresh derivation (declared outcomes + derived candidates).
-  - U1–U6 (coverage / honesty): every outcome maps to a real unit; every verb is in the taxonomy; every
-    chapter / Part / the book carries an outcome (a bare one is a pedagogy GAP the author fills); every
-    outcome's provenance tag (derived | declared | gap-recommended) cites the grounding it claims. Walked by
-    `outcomes_model.coverage_findings`. The uncovered-section list (`section_gap_findings`) is the author's
-    fill worklist — informational, not gated.
+  - U1–U7 (coverage / honesty): each outcome has a PRIMARY unit (chiefly teaches it — drives coverage) plus
+    elaborative SECONDARY units (reinforce it — do NOT drive coverage). Primary drives coverage: every
+    chapter / Part / the book must be the PRIMARY of ≥1 outcome (an elaborative-only unit is still a GAP);
+    every primary/secondary unit resolves; every verb is in the taxonomy; every provenance tag (derived |
+    declared | gap-recommended) cites its grounding. Walked by `outcomes_model.coverage_findings`. The
+    no-primary-section list (`section_gap_findings`) is the author's fill worklist — informational, not gated.
 
 LANDS AUDIT-ONLY (repo rule-#55 discipline). The book carries deliberate draft gaps, and the outline seed
 surfaces 2 real O2 findings today; landing this blocking-red would break the gate. So it registers
@@ -68,10 +69,11 @@ def check_outline_model():
 
 def check_outcomes_model():
     """The outcomes view's drift + coverage check (audit-only). Re-derives the outcome model from the book
-    (declared outcomes + derived candidates) and reports: drift against the on-disk artifact; U1–U6 the
-    coverage / honesty invariants (every outcome maps to a real unit, every taught unit carries one, every
-    provenance tag cites its grounding). Keyed off `book-models/outcomes.json` + `outcomes_declared.json` +
-    the book prose (via book_ir)."""
+    (declared outcomes + derived candidates) and reports: drift against the on-disk artifact; U1–U7 the
+    coverage / honesty invariants (primary drives coverage — every chapter/Part/book is the PRIMARY of an
+    outcome; every primary/secondary unit resolves; verb+bloom consistent; every provenance tag cites its
+    grounding). Keyed off `book-models/outcomes.json` + `outcomes_declared.json` + the book prose (via
+    book_ir)."""
     import outcomes_model as ocm  # noqa: E402 — path set above; the book-model package
 
     issues: list[str] = []
@@ -87,7 +89,8 @@ def check_outcomes_model():
         issues.append(f"DRIFT: {rel(ocm._ARTIFACT)} disagrees with a fresh derivation from the book — "
                       f"regenerate with `python3 book-models/outcomes_model.py regenerate`")
 
-    # U1–U6 — coverage + honesty invariants (unit/part/chapter/book gaps, verb+bloom, provenance grounding).
+    # U1–U7 — coverage (primary-driven) + honesty invariants (unit resolution, verb+bloom, provenance,
+    # elaborative-unit resolution).
     issues.extend(ocm.coverage_findings(model))
 
     # Audit-only: same non-gating contract as check_outline_model — surfaced as [audt], excluded from the

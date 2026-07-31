@@ -84,17 +84,24 @@ PROVENANCE_TAGS = ("derived", "declared", "gap-recommended")
 
 @dataclass
 class Outcome:
-    """One learning outcome: an action verb + object, pinned to a unit and a Bloom level.
+    """One learning outcome: an action verb + object, pinned to a PRIMARY unit (where it is chiefly taught)
+    plus any ELABORATIVE units (that reinforce, extend, or apply it), and a Bloom level.
 
-    `unit_id` is the JOIN KEY into the outline's unit space:
+    An outcome maps ONE-primary-to-MANY-elaborative, not one-to-one. `primary_unit` and each of
+    `secondary_units` is a JOIN KEY into the outline's unit space:
       - granularity "section" → an outline `section_id`.
       - granularity "chapter" → an outline chapter `slug`.
       - granularity "part"    → `part-<N>`.
       - granularity "book"    → `book`.
+
+    COVERAGE SEMANTICS: primary drives coverage. A unit "covers" an outcome only when it is that outcome's
+    PRIMARY. Appearing in `secondary_units` reinforces an outcome OWNED ELSEWHERE and does NOT by itself
+    make the reinforcing unit covered — a unit that is only ever elaborative is still a coverage GAP.
     """
-    outcome_id: str          # stable id: "<unit_id>::<verb>-<slug-of-object>"
-    granularity: str         # book | part | chapter | section
-    unit_id: str             # the outline unit this outcome belongs to (the join key)
+    outcome_id: str          # stable id: "<primary_unit>::<verb>-<slug-of-object>"
+    granularity: str         # granularity of the PRIMARY unit: book | part | chapter | section
+    primary_unit: str        # the outline unit that chiefly teaches this outcome (drives coverage)
+    secondary_units: list[str]  # elaborative units that reinforce/extend/apply it (do NOT drive coverage)
     verb: str                # a teaching verb from BLOOM_VERBS
     obj: str                 # the object the verb acts on ("a constraint from a sensor")
     statement: str           # the full outcome sentence a reader reads
@@ -108,10 +115,19 @@ class Outcome:
 class OutcomeModel:
     outcomes: list[Outcome]
 
-    def by_unit(self) -> "dict[str, list[Outcome]]":
+    def by_primary(self) -> "dict[str, list[Outcome]]":
+        """unit → outcomes it PRIMARILY teaches (the coverage-driving map)."""
         d: "dict[str, list[Outcome]]" = {}
         for o in self.outcomes:
-            d.setdefault(o.unit_id, []).append(o)
+            d.setdefault(o.primary_unit, []).append(o)
+        return d
+
+    def elaborated_by(self) -> "dict[str, list[Outcome]]":
+        """unit → outcomes it ELABORATES (reinforces but does not own). Informational, not coverage."""
+        d: "dict[str, list[Outcome]]" = {}
+        for o in self.outcomes:
+            for u in o.secondary_units:
+                d.setdefault(u, []).append(o)
         return d
 
 
@@ -160,7 +176,7 @@ def _derive_section_candidates() -> "list[Outcome]":
             continue
         obj = _trim_object(s.topic_sentence)
         out.append(_mk_outcome(
-            granularity="section", unit_id=s.section_id, verb=lemma, obj=obj,
+            granularity="section", primary_unit=s.section_id, secondary_units=[], verb=lemma, obj=obj,
             statement=f"After this section, the reader can {lemma} {obj}.",
             provenance="derived", anchor=f"ts: {s.topic_sentence[:90]}"))
     return out
@@ -180,23 +196,25 @@ def _slug_object(obj: str) -> str:
     return bs.slugify(obj)[:40].strip("-") or "outcome"
 
 
-def _mk_outcome(*, granularity: str, unit_id: str, verb: str, obj: str, statement: str,
-                provenance: str, anchor: "str | None" = None,
+def _mk_outcome(*, granularity: str, primary_unit: str, secondary_units: "list[str]", verb: str, obj: str,
+                statement: str, provenance: str, anchor: "str | None" = None,
                 gap_note: "str | None" = None) -> Outcome:
     if verb not in _ALL_VERBS:
         raise ValueError(f"verb {verb!r} not in the outcome taxonomy (BLOOM_VERBS)")
     if provenance not in PROVENANCE_TAGS:
         raise ValueError(f"provenance {provenance!r} not in {PROVENANCE_TAGS}")
+    if primary_unit in secondary_units:
+        raise ValueError(f"primary_unit {primary_unit!r} also listed as a secondary/elaborative unit")
     return Outcome(
-        outcome_id=f"{unit_id}::{verb}-{_slug_object(obj)}",
-        granularity=granularity, unit_id=unit_id, verb=verb, obj=obj,
-        statement=statement, bloom=_VERB_TO_BLOOM[verb], provenance=provenance,
+        outcome_id=f"{primary_unit}::{verb}-{_slug_object(obj)}",
+        granularity=granularity, primary_unit=primary_unit, secondary_units=list(secondary_units),
+        verb=verb, obj=obj, statement=statement, bloom=_VERB_TO_BLOOM[verb], provenance=provenance,
         anchor=anchor, gap_note=gap_note)
 
 
 def _load_declared() -> "list[dict]":
     """The authored outcome declarations — a flat list of
-    {granularity, unit_id, verb, obj, statement?, provenance, anchor?, gap_note?}."""
+    {granularity, primary_unit, secondary_units?, verb, obj, statement?, provenance, anchor?, gap_note?}."""
     with open(_DECLARED, encoding="utf-8") as fh:
         return json.load(fh)["declarations"]
 
@@ -209,42 +227,60 @@ def _declared_outcomes() -> "list[Outcome]":
     for d in _load_declared():
         verb, obj = d["verb"], d["obj"]
         statement = d.get("statement") or f"After this unit, the reader can {verb} {obj}."
-        out.append(_mk_outcome(granularity=d["granularity"], unit_id=d["unit_id"], verb=verb, obj=obj,
+        out.append(_mk_outcome(granularity=d["granularity"], primary_unit=d["primary_unit"],
+                               secondary_units=d.get("secondary_units", []), verb=verb, obj=obj,
                                statement=statement, provenance=d.get("provenance", "declared"),
                                anchor=d.get("anchor"), gap_note=d.get("gap_note")))
     return out
 
 
-# ---- merge: declared wins per unit; derived fills the silence ---------------------------------------
+# ---- merge: a declared outcome wins on its primary unit; a derived candidate fills a silent section -----
 
 def derive_model() -> OutcomeModel:
-    """Build the full outcome model: declared outcomes, plus derived section candidates for every section a
-    declaration does not already cover. The single derivation the regen and the drift check share."""
+    """Build the full outcome model: declared outcomes, plus derived section candidates for every section
+    that is not already some declaration's PRIMARY unit. The single derivation regen + drift check share."""
     declared = _declared_outcomes()
-    declared_units = {o.unit_id for o in declared}
-    derived = [o for o in _derive_section_candidates() if o.unit_id not in declared_units]
-    # Stable order: by granularity tier, then unit_id, then verb — deterministic artifact.
+    declared_primaries = {o.primary_unit for o in declared}
+    derived = [o for o in _derive_section_candidates() if o.primary_unit not in declared_primaries]
+    # Stable order: by granularity tier, then primary_unit, then verb, then obj — deterministic artifact.
     tier = {g: i for i, g in enumerate(GRANULARITIES)}
     both = declared + derived
-    both.sort(key=lambda o: (tier[o.granularity], o.unit_id, o.verb, o.obj))
+    both.sort(key=lambda o: (tier[o.granularity], o.primary_unit, o.verb, o.obj))
     return OutcomeModel(outcomes=both)
 
 
 # ---- invariants (walked by the drift check in tests/book_models.py) ---------------------------------
 
+def _unit_resolves(unit_id: str, section_ids: "set[str]", chapter_slugs: "set[str]",
+                   parts: "set[int]") -> bool:
+    """True when a unit id names a real outline unit at ANY granularity (section id / chapter slug /
+    part-N / book). Used for both primary and secondary/elaborative units."""
+    if unit_id == "book":
+        return True
+    if unit_id.startswith("part-"):
+        n = unit_id.removeprefix("part-")
+        return n.isdigit() and int(n) in parts
+    return unit_id in chapter_slugs or unit_id in section_ids
+
+
 def coverage_findings(model: OutcomeModel) -> "list[str]":
-    """The coverage / drift invariants (U1–U5). Each finding is a GAP SIGNAL the author uses to rearrange
+    """The coverage / drift invariants (U1–U7). Each finding is a GAP SIGNAL the author uses to rearrange
     content and fill pedagogy holes — this is the view's product, not just a lint.
 
-    U1 — every outcome's unit_id resolves to a real outline unit (section id / chapter slug / part-N / book).
+    COVERAGE SEMANTICS — PRIMARY DRIVES COVERAGE. A unit covers an outcome only when it is that outcome's
+    PRIMARY. A purely elaborative (secondary) reference reinforces an outcome owned elsewhere and does NOT
+    make the reinforcing unit covered — so a unit that only ever appears as an elaborative is still a gap.
+
+    U1 — every outcome's PRIMARY unit resolves to a real outline unit (section id / chapter slug / part-N / book).
     U2 — every verb is in the taxonomy (BLOOM_VERBS); bloom equals the verb's level.
-    U3 — every chapter has ≥1 outcome (a chapter with none is a pedagogy gap).
-    U4 — every Part has ≥1 outcome (a Part with none is a pedagogy gap).
-    U5 — the book has ≥1 book-level outcome.
+    U3 — every chapter is the PRIMARY of ≥1 outcome (directly, or via a section it owns) — else a pedagogy gap.
+    U4 — every Part is the PRIMARY of ≥1 part-level outcome — else a pedagogy gap.
+    U5 — the book is the PRIMARY of ≥1 book-level outcome.
     U6 — every outcome's provenance is a valid tag; a `derived`/`declared` outcome cites an anchor and a
          `gap-recommended` one cites a gap note (honest-labeling discipline).
+    U7 — every ELABORATIVE (secondary) unit resolves to a real outline unit, and is not the primary itself.
     Section-level gaps are reported by `section_gap_findings` (informational, not a U-invariant, since not
-    every section must carry its own outcome — the author decides which do)."""
+    every section must primarily deliver its own outcome — the author decides which do)."""
     outline = om.derive_outline()
     section_ids = {s.section_id for _c, s in outline.sections()}
     chapter_slugs = {c.slug for c in outline.chapters}
@@ -252,17 +288,17 @@ def coverage_findings(model: OutcomeModel) -> "list[str]":
 
     findings: "list[str]" = []
     for o in model.outcomes:
-        # U1 — unit resolves.
-        if o.granularity == "section" and o.unit_id not in section_ids:
-            findings.append(f"U1 outcome {o.outcome_id!r} maps to unknown section id {o.unit_id!r}")
-        elif o.granularity == "chapter" and o.unit_id not in chapter_slugs:
-            findings.append(f"U1 outcome {o.outcome_id!r} maps to unknown chapter slug {o.unit_id!r}")
+        # U1 — the PRIMARY unit resolves, at the declared granularity.
+        if o.granularity == "section" and o.primary_unit not in section_ids:
+            findings.append(f"U1 outcome {o.outcome_id!r} primary maps to unknown section id {o.primary_unit!r}")
+        elif o.granularity == "chapter" and o.primary_unit not in chapter_slugs:
+            findings.append(f"U1 outcome {o.outcome_id!r} primary maps to unknown chapter slug {o.primary_unit!r}")
         elif o.granularity == "part":
-            n = o.unit_id.removeprefix("part-")
+            n = o.primary_unit.removeprefix("part-")
             if not (n.isdigit() and int(n) in parts):
-                findings.append(f"U1 outcome {o.outcome_id!r} maps to unknown part {o.unit_id!r}")
-        elif o.granularity == "book" and o.unit_id != "book":
-            findings.append(f"U1 book outcome {o.outcome_id!r} has non-'book' unit_id {o.unit_id!r}")
+                findings.append(f"U1 outcome {o.outcome_id!r} primary maps to unknown part {o.primary_unit!r}")
+        elif o.granularity == "book" and o.primary_unit != "book":
+            findings.append(f"U1 book outcome {o.outcome_id!r} has non-'book' primary {o.primary_unit!r}")
         # U2 — verb + bloom consistency.
         if o.verb not in _ALL_VERBS:
             findings.append(f"U2 outcome {o.outcome_id!r} uses non-taxonomy verb {o.verb!r}")
@@ -278,43 +314,56 @@ def coverage_findings(model: OutcomeModel) -> "list[str]":
         elif o.provenance == "gap-recommended" and not o.gap_note:
             findings.append(f"U6 outcome {o.outcome_id!r} is gap-recommended but cites no gap_note "
                             f"(a recommended outcome must name why the unit falls short)")
+        # U7 — every elaborative unit resolves and is distinct from the primary.
+        for u in o.secondary_units:
+            if u == o.primary_unit:
+                findings.append(f"U7 outcome {o.outcome_id!r} lists its primary {u!r} as an elaborative unit")
+            elif not _unit_resolves(u, section_ids, chapter_slugs, parts):
+                findings.append(f"U7 outcome {o.outcome_id!r} elaborative unit {u!r} resolves to no outline unit")
 
-    covered = model.by_unit()
-    # U3 — every chapter covered (directly, or via a section it owns).
+    # PRIMARY drives coverage — only primary_unit counts a unit as covered.
+    primary = model.by_primary()
     section_to_chapter = {s.section_id: c.slug for c in outline.chapters for s in c.sections}
-    covered_chapters = {u for u in covered if u in chapter_slugs}
-    covered_chapters |= {section_to_chapter[u] for u in covered if u in section_to_chapter}
+    # U3 — every chapter is primary of ≥1 outcome (directly, or via a section it owns as that section's primary).
+    covered_chapters = {u for u in primary if u in chapter_slugs}
+    covered_chapters |= {section_to_chapter[u] for u in primary if u in section_to_chapter}
     for c in outline.chapters:
         if c.part == 0:
             continue  # front/back matter (preface, acknowledgments) — not a taught chapter
         if c.slug not in covered_chapters:
-            findings.append(f"U3 chapter {c.slug!r} (part {c.part}) has NO outcome — pedagogy gap")
-    # U4 — every taught Part covered.
-    covered_parts = {int(u.removeprefix("part-")) for u in covered if u.startswith("part-")}
+            findings.append(f"U3 chapter {c.slug!r} (part {c.part}) is no outcome's PRIMARY — pedagogy gap")
+    # U4 — every taught Part is primary of ≥1 part-level outcome.
+    covered_parts = {int(u.removeprefix("part-")) for u in primary if u.startswith("part-")}
     for p in sorted(parts):
         if p == 0:
             continue
         if p not in covered_parts:
-            findings.append(f"U4 part {p} has NO part-level outcome — pedagogy gap")
-    # U5 — the book has a book-level outcome.
-    if "book" not in covered:
-        findings.append("U5 the book has NO book-level outcome")
+            findings.append(f"U4 part {p} is no outcome's PRIMARY — pedagogy gap")
+    # U5 — the book is primary of ≥1 book-level outcome.
+    if "book" not in primary:
+        findings.append("U5 the book is no outcome's PRIMARY — pedagogy gap")
     return findings
 
 
 def section_gap_findings(model: OutcomeModel) -> "list[str]":
-    """INFORMATIONAL: sections with no outcome (direct or derived). The author's fill worklist — a section
-    that teaches something but carries no outcome is a candidate for a declaration (or for merging away)."""
+    """INFORMATIONAL: sections that are no outcome's PRIMARY. The author's fill worklist — a section that
+    teaches something but primarily delivers no outcome is a candidate for a declaration (or for merging
+    away). A section that ONLY reinforces an outcome owned elsewhere (elaborative) still counts as a gap
+    here — primary drives coverage — but we annotate it so the author can see it already earns its keep as
+    an elaboration."""
     outline = om.derive_outline()
-    covered = set(model.by_unit())
+    primary_units = set(model.by_primary())
+    elaborated = model.elaborated_by()
     gaps: "list[str]" = []
     for c in outline.chapters:
         if c.part == 0:
             continue
         for s in c.sections:
-            if s.section_id not in covered:
+            if s.section_id not in primary_units:
                 ts = (s.topic_sentence or "(no topic sentence)")[:60]
-                gaps.append(f"[{c.slug}] section {s.section_id!r} (L{s.level}) — no outcome | ts: {ts}")
+                elab = (f" | elaborates {len(elaborated[s.section_id])} outcome(s)"
+                        if s.section_id in elaborated else "")
+                gaps.append(f"[{c.slug}] section {s.section_id!r} (L{s.level}) — no PRIMARY outcome{elab} | ts: {ts}")
     return gaps
 
 
@@ -323,7 +372,9 @@ def section_gap_findings(model: OutcomeModel) -> "list[str]":
 def to_jsonable(model: OutcomeModel) -> dict:
     outline = om.derive_outline()
     n_sections = len(outline.sections())
-    covered_sections = {o.unit_id for o in model.outcomes if o.granularity == "section"}
+    # PRIMARY drives coverage: a section counts as covered only when it is some outcome's primary.
+    primary_sections = {o.primary_unit for o in model.outcomes if o.granularity == "section"}
+    elaborated_units = set(model.elaborated_by())
     return {
         "_provenance": _PROVENANCE,
         "_counts": {
@@ -333,8 +384,11 @@ def to_jsonable(model: OutcomeModel) -> dict:
             "by_granularity": {g: sum(1 for o in model.outcomes if o.granularity == g)
                                for g in GRANULARITIES},
             "by_bloom": {b: sum(1 for o in model.outcomes if o.bloom == b) for b in BLOOM_VERBS},
+            "outcomes_with_elaborative_units": sum(1 for o in model.outcomes if o.secondary_units),
+            "elaborative_links": sum(len(o.secondary_units) for o in model.outcomes),
+            "units_serving_as_elaborative": len(elaborated_units),
             "sections_total": n_sections,
-            "sections_with_outcome": len(covered_sections),
+            "sections_primary_of_an_outcome": len(primary_sections),
         },
         "taxonomy": {b: list(vs) for b, vs in BLOOM_VERBS.items()},
         "outcomes": [asdict(o) for o in model.outcomes],
@@ -351,7 +405,9 @@ def regenerate() -> int:
     print(f"wrote {os.path.relpath(_ARTIFACT)} — {c['outcomes']} outcomes "
           f"(by provenance {c['by_provenance']}); "
           f"by granularity {c['by_granularity']}; "
-          f"{c['sections_with_outcome']}/{c['sections_total']} sections covered")
+          f"{c['outcomes_with_elaborative_units']} with elaborative units "
+          f"({c['elaborative_links']} links); "
+          f"{c['sections_primary_of_an_outcome']}/{c['sections_total']} sections are a primary")
     write_digest(model)
     cov = coverage_findings(model)
     if cov:
@@ -364,25 +420,40 @@ def regenerate() -> int:
 _DIGEST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "outcomes-draft.md")
 
 
+def _pretty_unit(unit_id: str) -> str:
+    """A short, reader-facing unit label for the digest: 'part-2' → '2', a chapter slug → its number
+    prefix ('2.3'), a section id → its slug. Chapter/section ids already read well; keep them terse."""
+    if unit_id == "book":
+        return "book"
+    if unit_id.startswith("part-"):
+        return f"Part {unit_id.removeprefix('part-')}"
+    # A chapter slug like '2.3-the-governed-environment' → '2.3'; a section id stays as-is.
+    head = unit_id.split("-", 1)[0]
+    return head if head.replace(".", "").isdigit() else unit_id
+
+
 def write_digest(model: OutcomeModel) -> None:
-    """Emit a human-readable, reviewable digest of the actual outcome STATEMENTS, organized book → Part →
-    chapter → section, each tagged with its provenance (derived | declared | gap-recommended) and anchor.
-    This is the surface the author reviews — the honesty of the induction is the thing to get right."""
+    """Emit a human-readable, reviewable digest of the actual outcome STATEMENTS, organized by PRIMARY unit
+    (book → Part → chapter → section), each tagged with its provenance (derived | declared | gap-recommended),
+    its anchor, and — when it spans more than one unit — its primary + elaborative units shown distinctly
+    ("primary: 2.3 · elaborated by: 4.5, 6.0"). This is the surface the author reviews."""
     outline = om.derive_outline()
-    part_of_chapter = {c.slug: c.part for c in outline.chapters}
     chapters_in_part: "dict[int, list[str]]" = {}
     for c in outline.chapters:
         chapters_in_part.setdefault(c.part, []).append(c.slug)
-    section_to_chapter = {s.section_id: c.slug for c in outline.chapters for s in c.sections}
-    by_unit = model.by_unit()
+    by_primary = model.by_primary()
+    elaborated = model.elaborated_by()
 
     tag = {"derived": "DERIVED", "declared": "DECLARED", "gap-recommended": "GAP-REC"}
     lines: "list[str]" = [
         "<!-- GENERATED by book-models/outcomes_model.py — reviewable digest of the outcomes view.",
         "     Do not hand-edit; edit book-models/outcomes_declared.json and regenerate. -->",
         "# Learning outcomes — reviewable draft\n",
-        "Every outcome is tagged by how honestly it reflects the prose **as written**:",
-        "- **DERIVED** — grounded in what the unit actually teaches (traceable to its anchor).",
+        "Every outcome has a **PRIMARY** unit (where it is chiefly taught — this drives coverage) and may "
+        "list **elaborative** units that reinforce, extend, or apply it. Primary drives coverage: a unit "
+        "that only ever appears as an elaborative is still a gap.\n",
+        "Each outcome is also tagged by how honestly it reflects the prose **as written**:",
+        "- **DERIVED** — grounded in what the primary unit actually teaches (traceable to its anchor).",
         "- **DECLARED** — a real outcome the existing (thin) prose roughly supports, made explicit.",
         "- **GAP-REC** — the outcome a *missing / inadequate* unit ought to deliver (content not yet written).\n",
         "The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is what the book "
@@ -393,27 +464,41 @@ def write_digest(model: OutcomeModel) -> None:
         note = f" — _anchor: {o.anchor}_" if o.anchor else ""
         if o.gap_note:
             note = f" — _gap: {o.gap_note}_"
-        lines.append(f"{indent}- **[{tag[o.provenance]}]** ({o.bloom}) {o.statement}{note}")
+        span = ""
+        if o.secondary_units:
+            elab = ", ".join(_pretty_unit(u) for u in o.secondary_units)
+            span = f" _(primary: {_pretty_unit(o.primary_unit)} · elaborated by: {elab})_"
+        lines.append(f"{indent}- **[{tag[o.provenance]}]** ({o.bloom}) {o.statement}{span}{note}")
+
+    def emit_elaborations(unit_id: str, indent: str) -> None:
+        """Show, under a unit, the outcomes it ELABORATES but does not own (owned elsewhere)."""
+        for o in elaborated.get(unit_id, []):
+            lines.append(f"{indent}- _elaborates (owned by {_pretty_unit(o.primary_unit)}):_ "
+                         f"({o.bloom}) {o.statement}")
 
     # Book level.
     lines.append("## Book\n")
-    for o in by_unit.get("book", []):
+    for o in by_primary.get("book", []):
         emit(o, "")
+    emit_elaborations("book", "")
     lines.append("")
 
     for part in sorted(p for p in chapters_in_part if p != 0):
         lines.append(f"## Part {part}\n")
-        for o in by_unit.get(f"part-{part}", []):
+        for o in by_primary.get(f"part-{part}", []):
             emit(o, "")
+        emit_elaborations(f"part-{part}", "")
         lines.append("")
         for slug in chapters_in_part[part]:
             lines.append(f"### {slug}\n")
-            for o in by_unit.get(slug, []):
+            for o in by_primary.get(slug, []):
                 emit(o, "")
+            emit_elaborations(slug, "")
             # Section-level outcomes under this chapter, in section order.
             for u in [s.section_id for c in outline.chapters if c.slug == slug for s in c.sections]:
-                for o in by_unit.get(u, []):
+                for o in by_primary.get(u, []):
                     emit(o, "  ")
+                emit_elaborations(u, "  ")
             lines.append("")
 
     with open(_DIGEST, "w", encoding="utf-8") as fh:
@@ -442,15 +527,16 @@ def verify() -> int:
 
 
 def gaps() -> int:
-    """List the pedagogy gaps — chapters/parts with no outcome (U3/U4) and sections with none. The author's
-    rearrange/fill worklist."""
+    """List the pedagogy gaps under the PRIMARY-drives-coverage rule — chapters/parts/book that are no
+    outcome's primary (U3/U4/U5), and sections that are no outcome's primary (annotated when they at least
+    serve as an elaboration). The author's rearrange/fill worklist."""
     model = derive_model()
     cov = coverage_findings(model)
     sec = section_gap_findings(model)
-    print(f"UNIT gaps (U1–U5): {len(cov)}")
+    print(f"UNIT gaps (U1–U7): {len(cov)}")
     for f in cov:
         print(f"  {f}")
-    print(f"\nSECTION gaps (informational): {len(sec)}")
+    print(f"\nSECTION gaps — sections that primarily deliver no outcome (informational): {len(sec)}")
     for f in sec:
         print(f"  {f}")
     return 0
