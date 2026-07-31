@@ -1,7 +1,8 @@
 """A THIN helper over the book IR — the symbol-extraction the view-models need but `book/book_ir.py` does
-not yet expose. Read-only over `book_ir`; a separate module by design (book_ir.py is owned by the C→A
-migration and must not be edited here). The three accessors below are the `book_ir` extensions wanted for
-reconciliation once that migration lands — see `book-models/DESIGN.md` §6.
+not yet expose. Read-only over `book_ir`. The accessors below are the `book_ir` extensions still wanted for
+reconciliation (surfacing `{#slug}` ids and the topic-sentence pairing as first-class IR accessors) —
+see `book-models/DESIGN.md` §6. Bug B1 (marker-glued heading read level 0) is now FIXED in book_ir, so this
+helper reads `Block.heading_level` directly rather than re-deriving it.
 
 WHAT IT COMPUTES (that book_ir does not, today):
   1. Heading `{#slug}` id + id-stripped text, parsed with the renderer's OWN `_HEADING_ANCHOR_RE` SSOT.
@@ -38,17 +39,6 @@ def slugify(text: str) -> str:
     """A stable, lowercase, hyphen-joined slug of heading text — the derived section id when a heading
     carries no explicit `{#slug}`. Deterministic so the same heading always yields the same id."""
     return _SLUG_STRIP.sub("-", text.lower()).strip("-")
-
-
-def heading_level(block: "book_ir.Block") -> int:
-    """The heading depth (2–4), derived from the raw `#` run rather than trusting `book_ir.Block.heading_level`.
-
-    WHY not the IR field: `book_ir` computes `heading_level` from the block's ORIGINAL first line, but when a
-    marker comment (e.g. `<!-- index-def: … -->`) is glued to the head of the same block, that first line is
-    the marker, so the IR field reads 0 for a real H2. We re-derive from the heading line the IR left in
-    `raw`. This is `book_ir` bug B1 in DESIGN §6 — fold the fix into book_ir on reconciliation."""
-    line = block.raw.strip()
-    return len(line) - len(line.lstrip("#"))
 
 
 def heading_id_and_text(block: "book_ir.Block") -> "tuple[str | None, str]":
@@ -110,7 +100,7 @@ def heading_rows(include_appendices: bool = False) -> list[HeadingRow]:
             rows.append(HeadingRow(
                 chapter_slug=c.slug,
                 part=c.part,
-                level=heading_level(b),  # re-derived; the IR field is 0 for a marker-glued heading (bug B1)
+                level=b.heading_level,  # book_ir.Block.heading_level (B1 fixed — correct through marker-peel)
                 heading_text=text,
                 section_id=explicit_id or slugify(text),
                 id_source="explicit" if explicit_id else "derived",

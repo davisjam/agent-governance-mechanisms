@@ -281,7 +281,12 @@ def _parse_chapter(rec: dict) -> Chapter:
             if kind is BlockKind.TABLE:
                 b.caption, pending_caption = pending_caption, None
         elif kind is BlockKind.HEADING:
-            b.heading_level = len(first) - len(first.lstrip("#"))
+            # B1 fix: compute the depth from the REMAINING heading line (after leading markers were peeled),
+            # not the block's original `first` line. When a marker comment is glued above the heading (e.g.
+            # `<!-- index-def: … -->` on the line before `## …`), `first` is the peeled marker and its `#`
+            # run is 0 — so the level must come from the surviving heading text.
+            head = remaining.lstrip()
+            b.heading_level = len(head) - len(head.lstrip("#"))
         else:  # prose — the only place a [ref:] introduces a float
             b.refs = _find_refs(remaining, slug, idx)
         blocks.append(b)
