@@ -99,13 +99,44 @@ that keep C→A clean hold: **one shared tokenizer** (no drift) and **raw slice 
 - **The SSOT import cycle is real.** `book_ir` imports `build_book_html` for the tokenizer, so
   `build_book_html` reaches `book_ir` through a lazy `_book_ir()` accessor, never a module-load import.
 
+## PDF generation — output via Typst, not HTML→browser
+
+Today the PDF is HTML → Paged.js (headless browser) → PDF, which inherits browser artifacts, bloat,
+imperfect print typography, and a headless-browser dependency in CI. The IR opens a **print-native** path:
+emit `IR → Typst → PDF` as a *sibling emitter* to `render_html` — the same "one model, many projections"
+the book preaches (Part 3, framework-as-projection). HTML and PDF become two projections of the one IR,
+neither derived from the other.
+
+**Clone-and-run does NOT block this** — the key difference from the source-format question below. The PDF is
+a **CI-only artifact** (the web build + `validate` stay stdlib; the Pages workflow already needs a browser
+for the current path), so the `typst` binary is fair game in CI. It is not in the clone-and-run core.
+
+**Why Typst.** Modern typesetting, one small fast binary, clean small PDFs, native SVG/image, scriptable —
+cleaner than Paged.js, lighter than LaTeX. And it maps our model annotations to **native** constructs:
+`<!-- label: k -->` + `[ref:k]` → Typst `<k>` labels + `@k` refs; `<!-- figure: … -->` → `#figure`;
+`<!-- point: … -->` / `<!-- index-def: … -->` → `#metadata(…)` + `query()` (Typst's purpose-built mechanism
+for embedded, tool-queryable data). So the Typst emitter doubles as an **annotation-feasibility study**:
+mapping every directive to a Typst native proves whether Typst could carry the whole model.
+
+**The path — each step deliberate, none foreclosed:** C → A → **Typst PDF output** → *(optional, later)*
+Typst as the SOURCE format. The last step is attractive — a real parser + native labels/refs +
+`#metadata`/`query` would retire most of our bespoke stack (the hand-rolled parser, the notation-leak gate,
+marker-peeling) — but it is gated on three things we deliberately hold today: **clone-and-run** (the `typst`
+binary would move from CI-only into the CORE build), **Typst's HTML export maturing** (the Pages site is the
+PRIMARY deliverable), and **GitHub source-degradation** (markdown renders in the repo browser; Typst does
+not). A bigger, later bet — but the IR→Typst emitter built for PDF *is* the migration tool if it ever pays.
+Build the output emitter now; keep the source question open.
+
 ## If clone-and-run is ever relaxed
 
-A `markdown-it-py` token stream is *also* just typed nodes, so "vendor the engine, turn each `_DIRECTIVES`
-row into a markdown-it plugin, map its tokens onto `Block`" is a clean **further** step: C → A → real
-engine. Building the registry now is the first stone on that path. The cost to weigh at that point: a
-vendored engine + its transitive deps, a full render-pass rewrite (mermaid→SVG, `{{token}}`, anchors, and
-the float/gloss passes all become plugins), and the loss of graceful degradation in a plain MD viewer.
+A real engine's token stream is *also* just typed nodes, so "vendor the engine, turn each `_DIRECTIVES` row
+into a plugin, map its tokens onto `Block`" is a clean **further** step: C → A → real engine. Two candidates:
+`markdown-it-py` (parsing only), or — more compelling — **Typst** (see "PDF generation" above), which
+subsumes the PDF *and* the annotation questions in one move: a real parser, native labels/refs,
+`#metadata`/`query` for model annotations, and native PDF, retiring most of the bespoke stack. The cost to
+weigh at that point: a vendored/binary engine + deps, a full render-pass rewrite (mermaid→SVG, `{{token}}`,
+anchors, the float/gloss passes all become plugins), and — for Typst — the loss of graceful degradation in a
+plain MD/GitHub viewer plus dependence on Typst's HTML export for the Pages site.
 
 ## Adding a directive (today, Foundation 1)
 
