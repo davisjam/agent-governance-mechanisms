@@ -111,6 +111,14 @@ headshot incident). The **`index-def` / `index-example` / `gloss` family may sit
 `point` (matches the 1.1 exemplar; byte-identity holds) — this spares the reference-heavy Part-3 model
 chapters (dense `index-def` runs) from over-inserting blank lines.
 
+**Worked-example subsections inherit the parent's section-terms (settled).** A run of reference-style
+subsections under one parent heading — a table/listing walk-through with no standalone teaching claim (e.g.
+3.6's five "Worked join" H3s: "The three questions…", "The four models and their join keys", "The composite
+picture", "The invariants the join spans", "The Selector and Scheduler in code") — carries NO points and NO
+`section-terms` of its own; it inherits the parent section's `section-terms` marker. This is the granularity
+rule applied at section scope: a subsection that is a figure/reference walk, not an idea-bearing section, is
+not force-tagged. Do NOT read a bare worked-example subsection as a coverage gap.
+
 **Honesty note (Part-2a).** A section whose opener is rhetorically self-undercutting can still be `derived`:
 the test is whether the section *as a whole* states a faithful teaching, not whether its first sentence is a
 clean topic sentence (2.3's "residual" — a soft opener is NOT "no teaching," so it does not force

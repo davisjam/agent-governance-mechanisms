@@ -611,7 +611,9 @@ the reform runs against.
 <!-- section-terms: <t1>, <t2> -->
 ```
 
-A NEW inert marker placed under an **H2/H3 heading**, naming the **1–3 major concepts the section develops**.
+A NEW inert marker placed under a section heading (**H2/H3**, and **H4 ratified** where a chapter drills into
+`####` sub-sections — e.g. 4.1's "Coverage, run backwards" / "Data from the case study"; the marker attaches
+to whatever section heading it sits under), naming the **1–3 major concepts the section develops**.
 Parsed into `Block.section_terms: list[str]`. It is a `MARKER_KEYWORDS` row (`section-terms`), classified in
 `book_ir` as a `DIRECTIVE`-inert block, and **stripped byte-identically** — from the render (the renderer's
 leading-marker peel) AND from the occurrence-index scan (`_strip_point_decorators` now strips both `point`
