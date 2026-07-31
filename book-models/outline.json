@@ -365,7 +365,7 @@
           "section_id": "the-four-layers",
           "level": 2,
           "heading_text": "The four layers",
-          "topic_sentence": "**At the bottom sits the foundation model.** It comes from a commercial vendor or an open-weight release, and it is a general language reasoner that can *induce* an understanding of your environment — but that induction is expensive, and it happens fresh every time.",
+          "topic_sentence": "**At the bottom sits the foundation model.** It comes from a commercial vendor or an open-weight release, and it is a general language reasoner, able to *induce* an understanding of your environment — though that induction is expensive, and it happens fresh every time.",
           "id_source": "derived",
           "block_index": 5,
           "points": [
