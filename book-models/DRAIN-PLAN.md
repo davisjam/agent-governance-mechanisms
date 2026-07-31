@@ -62,6 +62,12 @@ not leak, byte-identical build). Land it **after the Typst spike reports** (both
 
 ## Gates + discipline
 
+- **Regenerate ALL derived artifacts before gating** — the three JSONs (`outline.json` / `outcomes.json` /
+  `reverse_index.json` via their model scripts) AND `book-models/models-view.html` (via
+  `render_models_view.py`) AND `outcomes-draft.md` (auto-emitted by `outcomes_model.py regenerate`). A stale
+  `models-view.html` shows up as a THIRD `views-audit` "STALE" finding — easily mis-read as a new drain
+  defect (Part-2b, 260731). The pre-commit hook re-renders `models-view.html`, but regenerate + stage it
+  explicitly so the gate is clean before the hook runs.
 - After each step: `catalog.py build` clean + **byte-identical HTML** (`git diff` on `book/*.html` empty —
   the decorators must strip cleanly), `catalog.py validate` 0, `catalog_tests.py --tier1` 0-failed,
   `catalog.py views-audit` exits 0. Keep all view checks **audit-only** during the drain.
