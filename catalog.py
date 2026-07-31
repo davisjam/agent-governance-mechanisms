@@ -3058,6 +3058,8 @@ def cmd_views_audit(args) -> int:
     if bm not in sys.path:
         sys.path.insert(0, bm)
     # Import the view-models lazily (they carry their own book_ir path setup); keep catalog.py import-cheap.
+    import lint_point_claim_word_cap as lpwc  # noqa: E402 — the drain's new point-form lints (audit-only)
+    import lint_term_tags_registered as lttr  # noqa: E402
     import outcomes_model as ocm  # noqa: E402
     import outline_model as om  # noqa: E402
     import reverse_index as ri  # noqa: E402
@@ -3086,6 +3088,13 @@ def cmd_views_audit(args) -> int:
     # is the ONE place a committer sees every mechanical view finding. These are audit-only too.
     findings.extend(om.invariant_findings(om.derive_outline()))
     findings.extend(ocm.coverage_findings(ocm.derive_model()))
+
+    # --- The drain's NEW point-form lints (AUDIT-ONLY, landed here before the reform drains them). The
+    # word-cap reports every point whose claim exceeds 10 words (~175 today — the whole old verbose corpus,
+    # the reform's fix-worklist); term-tags-registered reports any tagged term not in the two-tier registry.
+    # Both PRINT into this surface and, like the rest, only redden under `--strict` once the seed is drained.
+    findings.extend(lpwc.findings())
+    findings.extend(lttr.findings())
 
     # --- SITE-AS-PROJECTION drift: the site is a derived VIEW of the book's models, so its projection
     # drift (definitions.json ↔ the landing's def-* cards; outcomes.json/selection ↔ the outcome-* rows)
