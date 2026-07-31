@@ -2793,6 +2793,69 @@ def _is_publishable(path: str) -> bool:
     return root in _CONTENT_ROOTS and ext in _PUBLISHABLE_EXTS
 
 
+def cmd_views_audit(args) -> int:
+    """The book-models DRIFT AUDIT — the fast pre-commit entry point over the typed 4+1 view-models
+    (`book-models/`). Runs the two MECHANICAL kinds of drift the book's own two-kind split calls a lint
+    (book part 5 §"the substrate that keeps the models honest"):
+
+      - STRUCTURAL — every view->md reference re-resolves against the CURRENT source. A section id /
+        chapter / part / concept / label a view points at must still exist; a dangling reference reddens.
+        The reverse index (`book-models/reverse_index.py`) makes this one walk over the inverted edges.
+      - FRESHNESS — re-derive each view artifact (outline.json, outcomes.json, reverse_index.json) from
+        source and diff against the committed file. A stale artifact (source edited, artifact not
+        regenerated) is a finding.
+
+    (The THIRD, SEMANTIC kind — does a paragraph's prose still deliver the point it claims? — is NOT
+    mechanical, so it is a review-gate agent audit, not this lint. See book-models/DESIGN.md §8.)
+
+    LANDS AUDIT-ONLY-FIRST (the repo's blocking-lint landing discipline): it PRINTS findings and exits 0,
+    so it never reddens an in-flight commit. `--strict` exits 1 on any finding — the flip a follow-up wires
+    into the hook once the seed findings are drained. Sub-second on this book (the IR parse is fast)."""
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in sys.path:
+        sys.path.insert(0, bm)
+    # Import the view-models lazily (they carry their own book_ir path setup); keep catalog.py import-cheap.
+    import outcomes_model as ocm  # noqa: E402
+    import outline_model as om  # noqa: E402
+    import reverse_index as ri  # noqa: E402
+
+    findings: list[str] = []
+
+    # --- FRESHNESS: each materialized artifact must equal a fresh derivation. -------------------------
+    freshness = [
+        ("outline.json", om.load_artifact(), om.to_jsonable(om.derive_outline()),
+         ("chapters", "_counts")),
+        ("outcomes.json", ocm.load_artifact(), ocm.to_jsonable(ocm.derive_model()),
+         ("outcomes", "_counts")),
+        ("reverse_index.json", ri.load_artifact(), ri.to_jsonable(), ("index", "_counts")),
+    ]
+    for name, stored, fresh, keys in freshness:
+        if stored is None:
+            findings.append(f"FRESHNESS {name} missing — regenerate the view artifact")
+        elif any(stored.get(k) != fresh[k] for k in keys):
+            findings.append(f"FRESHNESS {name} is STALE — source changed but the artifact was not "
+                            f"regenerated (`python3 book-models/{name.replace('.json', '_model.py' if name != 'reverse_index.json' else '.py')} regenerate`)")
+
+    # --- STRUCTURAL: every view->md reference resolves against the current source. --------------------
+    findings.extend(ri.structural_findings())
+
+    # --- Also surface the view-models' own invariant walks (outline O2-O4, outcomes U1-U7) so the audit
+    # is the ONE place a committer sees every mechanical view finding. These are audit-only too.
+    findings.extend(om.invariant_findings(om.derive_outline()))
+    findings.extend(ocm.coverage_findings(ocm.derive_model()))
+
+    strict = getattr(args, "strict", False)
+    mode = "STRICT (exit 1 on any finding)" if strict else "AUDIT-ONLY (prints, exits 0)"
+    print(f"== book-models views-audit — structural + freshness drift over 3 view artifacts [{mode}] ==")
+    if not findings:
+        print("  clean — every view reference resolves, every artifact is fresh, invariants hold")
+        return 0
+    print(f"  {len(findings)} finding(s):")
+    for f in findings:
+        print(f"    {f}")
+    return 1 if strict else 0
+
+
 def _stage_deploy_manifest() -> None:
     """Stage the explicit deploy manifest (see comment above). Never `git add -A`."""
     _git("add", "-u")  # all tracked modifications + deletions; never stages an untracked file
@@ -2960,6 +3023,8 @@ def main() -> int:
     dc.add_argument("--json", action="store_true", help="dump the raw manifest entries")
     cp = sub.add_parser("concepts", help="list modeled concepts (book/data/concepts.json) + kind/status/site; flag book<->site drift")
     cp.add_argument("--json", action="store_true", help="dump the raw sidecar records")
+    va = sub.add_parser("views-audit", help="book-models drift audit: structural (every view->md reference resolves) + freshness (each view artifact equals a fresh derivation). Fast pre-commit gate; AUDIT-ONLY (prints, exits 0) unless --strict")
+    va.add_argument("--strict", action="store_true", help="exit 1 on any finding (the flip a follow-up wires into the hook once seed findings are drained)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
@@ -2971,6 +3036,7 @@ def main() -> int:
             "build": cmd_build, "test": cmd_test, "check-responsive": cmd_check_responsive,
             "check-console": cmd_check_console,
             "data-claims": cmd_data_claims, "concepts": cmd_concepts,
+            "views-audit": cmd_views_audit,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 
 

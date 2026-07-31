@@ -23,3 +23,8 @@ _catalog("validate")   # refuse to build/commit an invalid schema
 _catalog("build")      # render .md -> .html + regenerate the landing census + the skill bundle
 subprocess.run(["git", "add", "--", "*.html"], cwd=ROOT)
 subprocess.run(["git", "add", "--", "plugin"], cwd=ROOT)  # stage the regenerated skill bundle (plugin/**/*.html is gitignored)
+
+# book-models DRIFT AUDIT (AUDIT-ONLY): report structural + freshness drift over the typed view-models,
+# but do NOT block the commit yet (no --strict). Sub-second. A follow-up promotes it to blocking (adds
+# --strict) once the seed findings are drained — the repo's audit-only-first landing discipline.
+subprocess.run([sys.executable, "catalog.py", "views-audit"], cwd=ROOT)

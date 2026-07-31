@@ -21,6 +21,13 @@ OUTCOMES view (DESIGN §2.6):
     declared | gap-recommended) cites its grounding. Walked by `outcomes_model.coverage_findings`. The
     no-primary-section list (`section_gap_findings`) is the author's fill worklist — informational, not gated.
 
+REVERSE INDEX (the drift layer's substrate; DESIGN §8):
+  - freshness: `book-models/reverse_index.json` equals a fresh inversion of the built views' forward refs.
+  - structural: every view->md reference resolves against the current source (no dangling section id /
+    chapter / part / concept / label). One walk over the inverted edges. Walked by
+    `reverse_index.structural_findings`. This is the STRUCTURAL + FRESHNESS half of the two-kind drift
+    split — mechanical, a lint; the SEMANTIC half is a review-gate agent audit (DESIGN §8), not here.
+
 LANDS AUDIT-ONLY (repo rule-#55 discipline). The book carries deliberate draft gaps, and the outline seed
 surfaces 2 real O2 findings today; landing this blocking-red would break the gate. So it registers
 `audit_only=True` in catalog_tests.py, reports its findings, and never contributes to the fail count. A
@@ -96,4 +103,37 @@ def check_outcomes_model():
     # Audit-only: same non-gating contract as check_outline_model — surfaced as [audt], excluded from the
     # fail tally. The uncovered-section list is deliberately NOT included here (it is the expected PoC
     # backlog, not a defect); `python3 book-models/outcomes_model.py gaps` prints it for the author.
+    return (FAIL if issues else PASS), issues
+
+
+def check_reverse_index():
+    """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
+    forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each
+    run, so it cannot itself drift — but its two mechanical drift kinds are checked here:
+
+      - FRESHNESS — the materialized `book-models/reverse_index.json` equals a fresh inversion. A view
+        edited without regenerating the index is the finding.
+      - STRUCTURAL — every view->md reference resolves against the CURRENT source. A dangling section id /
+        chapter / part a view points at (that the book no longer defines) is the finding. The reverse
+        index makes this one walk over the inverted edges.
+
+    Keyed off `book-models/reverse_index.json` + the built views + the book prose (via book_ir)."""
+    import reverse_index as ri  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+
+    # FRESHNESS — the stored artifact equals a fresh inversion.
+    fresh = ri.to_jsonable()
+    stored = ri.load_artifact()
+    if stored is None:
+        issues.append(f"{rel(ri._ARTIFACT)} missing — run "
+                      f"`python3 book-models/reverse_index.py regenerate`")
+    elif stored.get("index") != fresh["index"] or stored.get("_counts") != fresh["_counts"]:
+        issues.append(f"DRIFT: {rel(ri._ARTIFACT)} disagrees with a fresh inversion from the views — "
+                      f"regenerate with `python3 book-models/reverse_index.py regenerate`")
+
+    # STRUCTURAL — every view->md reference resolves against the current source.
+    issues.extend(ri.structural_findings())
+
+    # Audit-only: same non-gating contract as the sibling view checks — surfaced as [audt].
     return (FAIL if issues else PASS), issues

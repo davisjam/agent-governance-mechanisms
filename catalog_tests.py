@@ -34,7 +34,7 @@ import sys
 from typing import Callable, NamedTuple
 
 from tests.book import check_float_ref_gate, check_ir_render_fidelity, run_book_audit
-from tests.book_models import check_outcomes_model, check_outline_model
+from tests.book_models import check_outcomes_model, check_outline_model, check_reverse_index
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import (
@@ -101,6 +101,13 @@ CHECKS = [
     # fill worklist (printed by `outcomes_model.py gaps`), not a gate finding. See tests/book_models.py.
     Check("book-models: outcomes view drift + coverage (outcomes.json)", 1,
           lambda strict: check_outcomes_model(), audit_only=True),
+    # AUDIT-ONLY (rule #55): the REVERSE INDEX — a derived inversion of every built view's forward
+    # references into {md symbol -> [dependent view elements]} (DESIGN §8). Two mechanical drift kinds:
+    # FRESHNESS (reverse_index.json equals a fresh inversion) + STRUCTURAL (every view->md reference
+    # resolves against the current source — no dangling section id / chapter / part). The drift layer's
+    # substrate; also the `catalog.py views-audit` pre-commit entry point. See tests/book_models.py.
+    Check("book-models: reverse-index drift — structural + freshness (reverse_index.json)", 1,
+          lambda strict: check_reverse_index(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
