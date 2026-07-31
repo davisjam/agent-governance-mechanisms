@@ -178,6 +178,7 @@ class Chapter:
     part: int
     title: str
     blocks: list[Block]
+    chapter: int = 0   # the within-part chapter number; `<part>.<chapter>` is the float-numbering prefix
 
     def floats(self) -> list[Block]:
         return [b for b in self.blocks if b.is_float]
@@ -348,7 +349,8 @@ def _parse_chapter(rec: dict) -> Chapter:
         blocks.append(b)
 
     return Chapter(slug=slug, part=rec["part"],
-                   title=rec.get("chapter_title") or rec.get("part_title", ""), blocks=blocks)
+                   title=rec.get("chapter_title") or rec.get("part_title", ""), blocks=blocks,
+                   chapter=rec.get("chapter", 0))
 
 
 def parse_book(include_appendices: bool = False) -> Document:

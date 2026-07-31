@@ -519,7 +519,19 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         frag = render_typst(b, caption_md, is_def=is_def)
         if frag:
             out.append(frag)
-    return "\n\n".join(out)
+    # CHAPTER-RELATIVE float numbering (mirrors the web `_number_floats` scheme): figures/tables read
+    # "<part>.<chapter>-N" and N resets to 1 per chapter. The chapter's `<part>.<chapter>` id is baked as
+    # a literal into a per-chapter `#set figure(numbering: …)` closure (no state/context coupling — set
+    # rules are location-scoped, so @refs and the lists of figures/tables resolve each float's number at
+    # the float's own position). The image/table counters reset at the chapter boundary so the first float
+    # is N=1. Image and table sequences are independent, matching the web's separate fig_n/tbl_n.
+    chap_id = f"{chapter.part}.{chapter.chapter}"
+    num_setup = (
+        f"#set figure(numbering: (n) => [{chap_id}-#n])\n"
+        "#counter(figure.where(kind: image)).update(0)\n"
+        "#counter(figure.where(kind: table)).update(0)\n"
+    )
+    return num_setup + "\n" + "\n\n".join(out)
 
 
 # ── Preamble + document assembly ───────────────────────────────────────────────────────────────────
@@ -555,34 +567,28 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 
 
 def _cover_typst() -> str:
-    """The title page — book title, subtitle, author, from the book manifest (the same identity the web
-    cover and the site read). Its own page, no folio, but with a first-page footer carrying the copyright
-    line and the book's last-modified date.
+    """The cover page — the title-version cover art (`book/assets/cover.svg`), sized to the page. The art
+    itself carries the title + author lockup (the same identity the web cover and the site read), so this
+    page is the image, not a text setting. Its own page, no folio, but with a first-page footer carrying
+    the copyright line and the book's last-modified date.
 
-    The title sits at 1.7em (down from 2.2em) so the full title lands on ONE line at the us-letter text
-    width. The copyright is DERIVED from `author` + `copyright_years` (the manifest states the name once —
-    the same derivation the web cover's COPYRIGHT line uses). The last-modified date is injected at compile
+    The copyright is DERIVED from `author` + `copyright_years` (the manifest states the name once — the
+    same derivation the web cover's COPYRIGHT line uses). The last-modified date is injected at compile
     time via `--input last_modified=…` (see `build_book_html.build_pdf`) and read here with `sys.inputs`,
     falling back to the manifest `last_updated` when the emitter runs standalone with no input."""
     m = bb._BOOK_MANIFEST
-    title = inline_typst(m["title"])
-    subtitle = m.get("subtitle", "")
-    author = f'{m["author"]}, {m["credential"]}'
-    sub_line = f'\n  #v(0.6em)\n  #text(size: 1.1em, style: "italic")[{inline_typst(subtitle)}]' if subtitle else ""
     copyright_txt = _esc(f'© {m["author"]}, {m["copyright_years"]}')
     default_mod = _esc(m.get("last_updated", ""))
     footer = (
         '#align(center)[#text(size: 8pt, fill: dt.muted)'
         f'[{copyright_txt} #h(0.5em) · #h(0.5em) Last modified #last_modified]]'
     )
+    cover_svg = _root_rel(HERE / "assets" / "cover.svg", _EmitCtx.root)
     return (
         f'#let last_modified = sys.inputs.at("last_modified", default: "{default_mod}")\n'
         f"#page(numbering: none, footer: [{footer}])[\n"
-        "  #v(3in)\n"
-        "  #align(center)[\n"
-        f"    #text(size: 1.7em, weight: \"bold\")[{title}]{sub_line}\n"
-        "    #v(1.5em)\n"
-        f"    #text(size: 1.1em)[{inline_typst(author)}]\n"
+        "  #align(center + horizon)[\n"
+        f'    #image("{cover_svg}", width: 100%)\n'
         "  ]\n"
         "]"
     )

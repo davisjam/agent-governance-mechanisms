@@ -1307,26 +1307,27 @@ LANDING_CSS = """
     .masonry { columns: 1; }
   }
 
-  /* ---- HERO 2-up ---------------------------------------------------------------------------
-     The opening is a real two-column spine: the lead prose on the left, the MAGE-method overview
-     figure pulled up beside it on the right, so the top uses the full page width and "one picture"
-     lands immediately (was: a ~70ch left column with the entire top-right empty, and the method
-     figure marooned in a full-width box below). Collapses to a single stacked column ≤900px. */
-  .hero { display:grid; grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr); gap:26px 40px;
-          align-items:center; margin:8px 0 6px; }
+  /* ---- HERO diptych ------------------------------------------------------------------------
+     Lead prose across the top, then a balanced two-panel diptych: the analytical MAGE-method overview
+     (landscape flowchart, ~2.56:1) beside the concrete cover scene (~1.62:1). The panel columns are
+     weighted ~1.55fr : 1fr so the two SVGs — each width:100% of its cell — land at matched HEIGHT and
+     read as a genuine pair despite the aspect mismatch. Stacks to one column ≤900px. */
+  .hero { margin:8px 0 6px; }
   .hero-lead { min-width:0; }
-  .hero-lead .lead { max-width:56ch; }
+  .hero-lead .lead { max-width:74ch; }
   .hero-lead .book-h1 { margin-top:0; }
-  .hero-fig-2up { margin:0; min-width:0; }
-  .hero-fig-2up figure { margin:0; }
-  .hero-fig-2up svg { display:block; width:100%; height:auto; }
-  .hero-fig-2up figcaption { font-size:var(--fs-meta); color:var(--muted); line-height:1.55;
-                             margin:11px 2px 0; text-align:center; }
-  .hero-fig-2up figcaption b { color:var(--muted); }
+  .hero-diptych { margin:20px 0 4px; }
+  .hd-pair { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:24px 34px;
+             align-items:center; }
+  .hd-cell { min-width:0; }
+  .hd-cell svg { display:block; width:100%; height:auto; }
+  .hd-cap { display:block; font-size:var(--fs-meta); color:var(--muted); line-height:1.55;
+            margin:11px 2px 0; text-align:center; }
+  .hd-cap b { color:var(--muted); }
   @media (max-width:900px){
-    .hero { grid-template-columns:1fr; gap:18px; }
+    .hd-pair { grid-template-columns:1fr; gap:22px; }
     .hero-lead .lead { max-width:70ch; }
-    .hero-fig-2up { max-width:640px; margin:0 auto; }
+    .hd-cell { max-width:640px; margin:0 auto; }
   }
 
   /* ---- The uniform clickable CARD (a native <details>) --------------------------------------
@@ -1849,9 +1850,13 @@ function fitFig(f){
 </script>
 """
 
-LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
-       A real two-column opening: lead prose left, the MAGE-method overview figure pulled up beside it
-       on the right, so the top uses the full width and "one picture" lands immediately. -->
+LANDING_INTRO = """  <!-- ===================== HERO =====================
+       Lead prose across the top, then a balanced two-panel diptych beneath it: the analytical MAGE-method
+       overview (the churn→governed→trustworthy flowchart) beside the concrete cover scene (an engineer
+       briefing an orchestrator through models). Two views of one method, side by side; stacks ≤900px.
+       The panels' columns are sized (~1.55fr : 1fr) so their differing aspect ratios render at matched
+       height and read as a pair. The site H1 above carries the title, so the title-LESS cover cut is used
+       (no doubling). -->
   <div class="hero">
     <div class="hero-lead">
       {book_title_block}
@@ -1867,12 +1872,17 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
       below is a clickable card: open it for a quick peek, then follow the link through to the full treatment
       in the book. <a href="quick-start.html"><em>QUICK START: install the skills for Claude →</em></a></p>
     </div>
-    <div class="hero-fig-2up">
-      <figure>{hero}<figcaption>A cheap agent fleet, left ungoverned, drifts into <b>churn</b> as its work
-      outgrows the context window. Governed through the <b>Modeling Thesis</b> (a typed model the fleet reasons
-      through) and the <b>Alignment Thesis</b> (a mechanism that keeps output aligned with intent), it converges
-      on trustworthy software at velocity.</figcaption></figure>
-    </div>
+    <figure class="hero-diptych">
+      <div class="hd-pair">
+        <div class="hd-cell">{hero}<span class="hd-cap"><b>The analytical view.</b> A cheap agent fleet, left
+        ungoverned, drifts into <b>churn</b> as its work outgrows the context window. Governed through the
+        <b>Modeling Thesis</b> (a typed model the fleet reasons through) and the <b>Alignment Thesis</b> (a
+        mechanism that keeps output aligned with intent), it converges on trustworthy software at velocity.</span></div>
+        <div class="hd-cell">{cover}<span class="hd-cap"><b>The concrete view.</b> An engineer briefs an
+        orchestrator through models; the orchestrator dispatches sub-agents that work behind the glass. The
+        same method as one scene.</span></div>
+      </div>
+    </figure>
   </div>
 
   <hr class="sep" />
@@ -2848,6 +2858,7 @@ def cmd_build(_args) -> int:
     # and its expanded body) gets its internal ids namespaced per placement via _ns_svg_ids, so the two
     # copies — and any asset reused across cards — never collide (check_no_duplicate_ids).
     _mage = _inline_svg("assets/mage-overview.svg")
+    _cover_scene = _inline_svg("assets/cover-scene.svg")
     _oversight = _inline_svg("assets/oversight-modes.svg")
     _dochier = _inline_svg("assets/documentation-hierarchy.svg")
     _ctrlarch = _inline_svg("assets/control-vs-architecture.svg")
@@ -2856,6 +2867,7 @@ def cmd_build(_args) -> int:
         schools=_landing_schools(), ways=_landing_ways(),
         definitions=_landing_definitions(), outcomes=_landing_outcomes(),
         hero=_ns_svg_ids(_mage, "hero"),
+        cover=_ns_svg_ids(_cover_scene, "hero-scene"),
         schools_fig=_ns_svg_ids(_oversight, "midway-fig"),
         schools_fig_th=_ns_svg_ids(_oversight, "midway-th"),
         model_fig=_ns_svg_ids(_dochier, "modeling-fig"),

@@ -1,0 +1,191 @@
+<!-- Hand-authored SVG (not generated). MAGE book cover, TITLE cut. Composition from scratch review sheet cover-final-260731; palette remapped to the design-tokens svg_palette() and fonts to the body token stack so it passes design-token-drift. -->
+<svg viewBox="0 0 820 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MAGE cover: an engineer briefs an orchestrator through models; sub-agents work behind the glass">
+  <defs>
+    <g id="a-bot">
+      <line x1="44" y1="10" x2="44" y2="2" stroke="#1c1917" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="44" cy="1" r="2.4" fill="#2f5169"/>
+      <rect x="28" y="10" width="34" height="26" rx="5" fill="#e4e0d8" stroke="#1c1917" stroke-width="1.6"/>
+      <rect x="49" y="19" width="10" height="7" rx="2.5" fill="#2f5169"/>
+      <rect x="40" y="36" width="9" height="5" fill="#e4e0d8" stroke="#1c1917" stroke-width="1.3"/>
+      <rect x="30" y="41" width="30" height="32" rx="6" fill="#e4e0d8" stroke="#1c1917" stroke-width="1.6"/>
+      <circle cx="45" cy="52" r="2.2" fill="#1f7a4d"/>
+      <path d="M58,50 Q72,55 83,63" fill="none" stroke="#1c1917" stroke-width="4.2" stroke-linecap="round"/>
+      <path d="M58,50 Q72,55 83,63" fill="none" stroke="#e4e0d8" stroke-width="2" stroke-linecap="round"/>
+      <path d="M40,72 L61,75 L61,93 L71,93" fill="none" stroke="#1c1917" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="24" y="74" width="24" height="5" rx="2" fill="#57534e" stroke="#1c1917" stroke-width="1.2"/>
+      <line x1="36" y1="79" x2="36" y2="94" stroke="#1c1917" stroke-width="2.4"/>
+      <line x1="27" y1="95" x2="46" y2="95" stroke="#1c1917" stroke-width="2.4" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <rect width="820" height="600" fill="#fdfcf9"/>
+  <rect x="10" y="10" width="800" height="580" fill="none" stroke="#9a3f12" stroke-width="1.2" opacity=".55"/>
+  <rect x="16" y="16" width="788" height="568" fill="none" stroke="#9a3f12" stroke-width=".6" opacity=".4"/>
+  <line x1="30" y1="482" x2="790" y2="482" stroke="#e4e0d8" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="280" cy="483" rx="160" ry="7" fill="#f3efe7"/>
+  <ellipse cx="580" cy="483" rx="200" ry="8" fill="#f3efe7"/>
+
+  <!-- whiteboard: dataflow + class hierarchy -->
+  <rect x="25" y="64" width="150" height="212" rx="5" fill="#fdfcf9" stroke="#1c1917" stroke-width="1.7"/>
+  <rect x="25" y="270" width="150" height="6" fill="#e4e0d8" stroke="#1c1917" stroke-width="1"/>
+  <text x="33" y="80" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-size="7" fill="#57534e" letter-spacing="1">MODELS</text>
+  <g fill="none" stroke="#1f7a4d" stroke-width="1.5">
+    <ellipse cx="65" cy="106" rx="16" ry="10"/><ellipse cx="132" cy="98" rx="16" ry="10"/><ellipse cx="99" cy="145" rx="18" ry="10"/>
+  </g>
+  <g fill="none" stroke="#2f5169" stroke-width="1.2" stroke-linecap="round">
+    <path d="M82,101 Q99,92 114,96"/><path d="M128,109 Q122,126 112,136"/><path d="M73,117 Q82,130 88,136"/>
+  </g>
+  <path d="M114,96 l6,-3 l-2,7 z M112,136 l6,-1 l-4,5 z M88,136 l5,0 l-2,5 z" fill="#2f5169"/>
+  <line x1="33" y1="166" x2="167" y2="166" stroke="#e4e0d8" stroke-width="1" stroke-dasharray="4 4"/>
+  <g fill="#fdfcf9" stroke="#2f5169" stroke-width="1.5">
+    <rect x="74" y="175" width="50" height="20"/><line x1="74" y1="182" x2="124" y2="182"/>
+    <rect x="32" y="228" width="46" height="20"/><line x1="32" y1="235" x2="78" y2="235"/>
+    <rect x="120" y="228" width="46" height="20"/><line x1="120" y1="235" x2="166" y2="235"/>
+  </g>
+  <g stroke="#1c1917" stroke-width="1.1" fill="#fdfcf9">
+    <line x1="55" y1="228" x2="88" y2="201"/><line x1="143" y1="228" x2="116" y2="201"/>
+    <path d="M88,201 l-8,2 l4,6 z"/><path d="M116,201 l8,2 l-4,6 z"/>
+  </g>
+
+  <!-- projected graph -->
+  <g transform="rotate(-3 250 330)">
+    <rect x="206" y="284" width="88" height="96" rx="8" fill="#f6f4ef" opacity=".93" stroke="#1f7a4d" stroke-width="1.5"/>
+    <g stroke="#2f5169" stroke-width="1.1" stroke-linecap="round">
+      <line x1="226" y1="308" x2="264" y2="302"/><line x1="226" y1="308" x2="246" y2="332"/>
+      <line x1="264" y1="302" x2="246" y2="332"/><line x1="246" y1="332" x2="226" y2="356"/>
+      <line x1="246" y1="332" x2="274" y2="352"/>
+    </g>
+    <g fill="#1f7a4d" stroke="#1c1917" stroke-width="1">
+      <circle cx="226" cy="308" r="4"/><circle cx="264" cy="302" r="4"/><circle cx="246" cy="332" r="5" fill="#2f5169"/>
+      <circle cx="226" cy="356" r="3.5"/><circle cx="274" cy="352" r="4"/>
+    </g>
+  </g>
+
+  <!-- engineer: elaboration-#2 face and hair, redrawn typing pose -->
+  <rect x="212" y="384" width="60" height="9" rx="4" fill="#57534e" stroke="#1c1917" stroke-width="1.3"/>
+  <line x1="241" y1="393" x2="241" y2="466" stroke="#1c1917" stroke-width="2.4"/>
+  <path d="M217,470 Q241,458 267,470" fill="none" stroke="#1c1917" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M258,388 C284,392 298,402 302,426 M302,426 L297,466 L313,468" fill="none" stroke="#1c1917" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- far arm (tapered sleeve) -->
+  <path d="M267,287 C287,317 303,359 310,401 L323,398 C317,356 301,312 281,281 Z" fill="#2f5169" stroke="#1c1917" stroke-width="1.3" stroke-linejoin="round"/>
+  <!-- torso -->
+  <path d="M262,272 C256,306 254,348 252,386 L272,388 C272,348 275,310 280,278 Z" fill="#2f5169" stroke="#1c1917" stroke-width="1.4" stroke-linejoin="round"/>
+  <!-- near arm (tapered sleeve) -->
+  <path d="M259,293 C274,331 304,374 340,396 L348,402 L353,392 L345,388 C316,368 288,326 275,289 Z" fill="#2f5169" stroke="#1c1917" stroke-width="1.3" stroke-linejoin="round"/>
+  <!-- hands resting on the keys -->
+  <ellipse cx="318" cy="410" rx="7.5" ry="4.8" fill="#faf1e6" stroke="#1c1917" stroke-width="1.2"/>
+  <ellipse cx="354" cy="409" rx="7.5" ry="4.8" fill="#faf1e6" stroke="#1c1917" stroke-width="1.2"/>
+  <g stroke="#1c1917" stroke-width="1" stroke-linecap="round">
+    <path d="M313,413 l-1,3 M318,414 l0,3 M323,413 l1,3"/>
+    <path d="M349,412 l-1,3 M354,413 l0,3 M359,412 l1,3"/>
+  </g>
+  <!-- head: side profile, swooped hair, glasses -->
+  <g transform="translate(16,-8)" stroke="#1c1917" fill="none" stroke-linecap="round">
+    <circle cx="256" cy="258" r="20" fill="#faf1e6" stroke-width="1.6"/>
+    <path d="M237,252 Q238,236 254,236 Q272,234 275,252 L275,246 Q272,230 254,232 Q236,232 237,248 Z" fill="#1c1917" stroke-width="1"/>
+    <circle cx="268" cy="256" r="1.8" fill="#1c1917" stroke="none"/>
+    <path d="M262,254 h10" stroke-width="1.1"/>
+  </g>
+  <path d="M288,246 Q400,222 500,232" fill="none" stroke="#57534e" stroke-width="1" stroke-dasharray="2 5" stroke-linecap="round" opacity=".8"/>
+  <!-- desk + keyboard + keystrokes -->
+  <rect x="166" y="422" width="240" height="12" rx="2" fill="#e4e0d8" stroke="#1c1917" stroke-width="1.6"/>
+  <path d="M184,434 L184,478 M392,434 L392,478" stroke="#1c1917" stroke-width="2.8" stroke-linecap="round"/>
+  <rect x="306" y="414" width="72" height="8" rx="2.5" fill="#fdfcf9" stroke="#1c1917" stroke-width="1.3"/>
+  <g stroke="#57534e" stroke-width="1.1" stroke-linecap="round">
+    <path d="M310,402 l-2,-6 M336,400 l0,-6 M364,401 l2,-6"/>
+  </g>
+
+  <!-- the typed words rising into the input bar: m-o-d-e-l -->
+  <path d="M368,404 C392,392 408,382 424,372" fill="none" stroke="#1c1917" stroke-width="1" stroke-dasharray="2 4" stroke-linecap="round"/>
+  <g font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-style="italic" fill="#57534e">
+    <text x="378" y="401" font-size="7" transform="rotate(-18 378 401)">m</text>
+    <text x="394" y="392" font-size="8" transform="rotate(-18 394 392)">o</text>
+    <text x="406" y="384" font-size="9" transform="rotate(-16 406 384)">d</text>
+    <text x="416" y="377" font-size="10" transform="rotate(-14 416 377)">e</text>
+    <text x="426" y="371" font-size="11" transform="rotate(-12 426 371)">l</text>
+  </g>
+
+  <!-- monitor slab: cutaway side with sub-agent cells -->
+  <g stroke="#1c1917" stroke-linejoin="round">
+    <polygon points="738,88 800,112 806,398 746,414" fill="#e4e0d8" stroke-width="1.6"/>
+    <line x1="738" y1="88" x2="746" y2="414" stroke="#e4e0d8" stroke-width="1" stroke-dasharray="6 5"/>
+  </g>
+  <g stroke="#1c1917">
+    <polygon points="748,116 798,134 799,196 749,182" fill="#f3efe7" stroke-width="1.1"/>
+    <polygon points="749,192 799,206 801,268 750,256" fill="#f3efe7" stroke-width="1.1"/>
+    <polygon points="750,266 801,278 803,342 751,330" fill="#f3efe7" stroke-width="1.1"/>
+  </g>
+  <g font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-size="5.5" fill="#2f5169" letter-spacing=".6">
+    <text x="753" y="128" transform="rotate(6 753 128)">AGENT·A</text>
+    <text x="754" y="202" transform="rotate(6 754 202)">AGENT·B</text>
+    <text x="755" y="276" transform="rotate(6 755 276)">AGENT·C</text>
+  </g>
+  <use href="#a-bot" transform="translate(750,140) scale(0.34)"/>
+  <use href="#a-bot" transform="translate(751,214) scale(0.34)"/>
+  <use href="#a-bot" transform="translate(752,288) scale(0.34)"/>
+  <g stroke="#9a3f12" stroke-width="1" opacity=".55" stroke-linecap="round">
+    <path d="M782,150 h12 M782,156 h8 M782,162 h11"/>
+    <path d="M783,224 h12 M783,230 h8 M783,236 h11"/>
+    <path d="M784,298 h12 M784,304 h8"/>
+  </g>
+
+  <!-- screen face + bezel + stand -->
+  <g stroke="#1c1917" stroke-linejoin="round">
+    <polygon points="398,102 738,88 746,414 408,432" fill="#57534e" stroke-width="2"/>
+    <polygon points="410,114 726,101 733,402 419,419" fill="#f6f4ef" stroke-width="1.3"/>
+    <polygon points="540,432 610,428 626,478 528,478" fill="#57534e" stroke-width="1.8"/>
+  </g>
+
+  <!-- orchestrator UI, mapped onto the tilted glass -->
+  <g transform="matrix(1 -0.0411 0.0295 1 -3.36 16.85)">
+    <g>
+      <line x1="431" y1="122" x2="431" y2="119" stroke="#1c1917" stroke-width="1"/>
+      <circle cx="431" cy="118" r="1.3" fill="#2f5169"/>
+      <rect x="426" y="122" width="10" height="8" rx="2" fill="#e4e0d8" stroke="#1c1917" stroke-width="1"/>
+      <rect x="431.5" y="124.5" width="3.5" height="2.5" rx="1" fill="#2f5169"/>
+      <rect x="427.5" y="131" width="7" height="5" rx="1.5" fill="#e4e0d8" stroke="#1c1917" stroke-width=".9"/>
+    </g>
+    <text x="444" y="134" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#2f5169" letter-spacing="2">ORCHESTRATOR</text>
+    <line x1="424" y1="142" x2="716" y2="142" stroke="#e4e0d8" stroke-width=".8"/>
+    <g font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-size="9.5" fill="#1c1917">
+      <rect x="424" y="152" width="200" height="46" rx="3" fill="#fdfcf9" stroke="#2f5169" stroke-width="1.2"/>
+      <rect x="431" y="160" width="9" height="9" fill="#1f7a4d" stroke="#1c1917" stroke-width=".8"/>
+      <text x="447" y="169">Phase 1 — refine model</text>
+      <text x="447" y="188" font-size="7.5" fill="#57534e" font-style="italic" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">clarify roles &amp; seams</text>
+      <rect x="424" y="206" width="200" height="46" rx="3" fill="#fdfcf9" stroke="#2f5169" stroke-width="1.2"/>
+      <rect x="431" y="214" width="9" height="9" fill="none" stroke="#1c1917" stroke-width=".9"/>
+      <path d="M432,219 l3,3 l5,-6" stroke="#1f7a4d" stroke-width="1.2" fill="none"/>
+      <text x="447" y="223">Phase 2 — implement</text>
+      <text x="447" y="242" font-size="7.5" fill="#57534e" font-style="italic" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">dispatch sub-agents ▸</text>
+      <rect x="424" y="260" width="200" height="46" rx="3" fill="#fdfcf9" stroke="#2f5169" stroke-width="1.2"/>
+      <rect x="431" y="268" width="9" height="9" fill="none" stroke="#1c1917" stroke-width=".9"/>
+      <text x="447" y="277">Phase 3 — verify + land</text>
+      <text x="447" y="296" font-size="7.5" fill="#57534e" font-style="italic" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">tests · review · merge</text>
+    </g>
+    <g font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-size="7" fill="#2f5169">
+      <rect x="644" y="158" width="72" height="36" rx="3" fill="#f3efe7" stroke="#2f5169" stroke-width="1.1"/>
+      <text x="654" y="172">agent A</text><circle cx="654" cy="182" r="4" fill="none" stroke="#1c1917" stroke-width="1"/><line x1="654" y1="177" x2="654" y2="174" stroke="#1c1917" stroke-width="1"/>
+      <rect x="644" y="212" width="72" height="36" rx="3" fill="#f3efe7" stroke="#2f5169" stroke-width="1.1"/>
+      <text x="654" y="226">agent B</text><circle cx="654" cy="236" r="4" fill="none" stroke="#1c1917" stroke-width="1"/><line x1="654" y1="231" x2="654" y2="228" stroke="#1c1917" stroke-width="1"/>
+      <rect x="644" y="266" width="72" height="36" rx="3" fill="#f3efe7" stroke="#2f5169" stroke-width="1.1"/>
+      <text x="654" y="280">agent C</text><circle cx="654" cy="290" r="4" fill="none" stroke="#1c1917" stroke-width="1"/><line x1="654" y1="285" x2="654" y2="282" stroke="#1c1917" stroke-width="1"/>
+    </g>
+    <rect x="424" y="352" width="296" height="44" rx="5" fill="#fdfcf9" stroke="#1c1917" stroke-width="1.4"/>
+    <g font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-style="italic" font-size="9.5" fill="#1c1917">
+      <text x="434" y="370">› For the next Epic, reference the inheritance model</text>
+      <text x="442" y="384">for the abstractions; the DB schema is in db/schema —</text>
+    </g>
+    <rect x="702" y="374" width="5" height="13" fill="#2f5169"/>
+    <path d="M430,348 C426,326 424,318 428,312" fill="none" stroke="#1c1917" stroke-width="1.1" stroke-dasharray="4 3"/>
+    <path d="M428,312 l-4,7 l8,1 z" fill="#1c1917"/>
+  </g>
+  <!-- UI tiles wired through the glass to the physical cells -->
+  <g stroke="#57534e" stroke-width="1" stroke-dasharray="2 3">
+    <line x1="718" y1="163" x2="752" y2="152"/><line x1="719" y1="217" x2="754" y2="226"/><line x1="721" y1="271" x2="756" y2="300"/>
+  </g>
+
+  <!-- title lockup -->
+  <line x1="220" y1="522" x2="600" y2="522" stroke="#9a3f12" stroke-width=".8" opacity=".6"/>
+  <text x="410" y="548" text-anchor="middle" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-size="17" fill="#1c1917" letter-spacing="3.5">MODEL-BASED AGENTIC SOFTWARE ENGINEERING</text>
+  <text x="410" y="570" text-anchor="middle" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" font-size="10" fill="#9a3f12" letter-spacing="4">JAMES C. DAVIS</text>
+</svg>
