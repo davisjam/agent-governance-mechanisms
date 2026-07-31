@@ -118,6 +118,8 @@ chapter (filled as chapters settle; the generator still scans all chapters for s
 - TLA / model checking
 - Moore's Law
 - Newton (F = ma)
+- Box, George (all models are wrong, some are useful)
+- Russell and Norvig (perceive-and-act agent)
 - Othello world-model probe
 - Rolls-Royce, Boeing (high-assurance modeling)
 - Apache Software Foundation (doc exemplars)
@@ -145,6 +147,10 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: probabilistic-reasoning-machine | Probabilistic reasoning machine
 - concept: conditioning-the-search | Conditioning the search
 - concept: search-space | The search space
+- concept: engineering | Engineering
+- concept: software-engineering | Software engineering
+- concept: agent | Agent
+- concept: model | Model
 - concept: agent-stack | The agent stack
 - concept: foundation-model | The foundation model
 - concept: agentic-harness | The agentic harness
