@@ -306,6 +306,9 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: quality-floor | local
 - term: cad-model | local
 - term: running-example | local
+- term: world-representation | local
+- term: static-analysis | local
+- term: ban-lint | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.

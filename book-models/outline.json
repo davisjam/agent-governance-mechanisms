@@ -367,37 +367,37 @@
           "heading_text": "The four layers",
           "topic_sentence": "**At the bottom sits the foundation model.** It comes from a commercial vendor or an open-weight release, and it is a general language reasoner that can *induce* an understanding of your environment — but that induction is expensive, and it happens fresh every time.",
           "id_source": "derived",
-          "block_index": 4,
+          "block_index": 5,
           "points": [
             {
               "slug": "foundation-layer-spares-the-model-reasoning-cost",
-              "text": "At the bottom of the stack sits the foundation model, a general reasoner that induces an understanding of your environment fresh and expensively each time; the game at this layer is to spare that cost by telling it up front where to look — deterministically, softly, or a hybrid — because every stretch of reasoning you supply is one fewer step in the chain where a compounding error can enter.",
-              "block_index": 5
+              "text": "Tell the model where to look; spare its reasoning.",
+              "block_index": 7
             },
             {
               "slug": "the-model-reasons-over-a-world-representation",
-              "text": "The foundation layer rests on one claim — the model reasons rather than retrieving stored answers, building and causally intervening on an internal world representation (the Othello-GPT board-state result, generalized across settings) — so the job at this layer is to equip it to reason well by supplying the context, packaged as a skill, that starts its reasoning from your world instead of a guessed one.",
-              "block_index": 10
-            },
-            {
-              "slug": "harness-manages-the-context-window-and-holds-two-mechanism-points",
-              "text": "On top of the model sits the agentic harness, which manages the context window — the fixed token budget whose overflow forces a lossy compaction — and holds two of the most useful mechanism points, sharply distinguished: a hook is something the agent has to do, a skill is something it can choose to do.",
+              "text": "The model reasons over a world representation, so equip it.",
               "block_index": 12
             },
             {
+              "slug": "harness-manages-the-context-window-and-holds-two-mechanism-points",
+              "text": "The harness manages the context window and holds two mechanisms.",
+              "block_index": 14
+            },
+            {
               "slug": "skills-are-soft-hooks-are-hard-tools-are-deterministic",
-              "text": "The harness carries two mechanism kinds: a skill is a soft mechanism — trigger criteria plus guidance, whose code half is a tool that lets the model take a deterministic action instead of guessing — while a hook is a hard mechanism, a deterministic program run before or after a harness action that can inspect and forbid it, giving authoritative control at the moment the agent acts.",
-              "block_index": 16
+              "text": "Skills are soft, hooks are hard, tools take deterministic action.",
+              "block_index": 18
             },
             {
               "slug": "engineering-environment-must-be-written-down-and-offers-git-and-ci-hooks",
-              "text": "Above the harness sits the engineering environment — the tools, conventions, and processes a team carries in its head — which for an agent must be written down because it has none by default, and which offers its own injection points: git hooks on every command (the classic being a pre-commit hook that moves a fast quality check as far left as it goes) and the CI pipeline's stages above them.",
-              "block_index": 21
+              "text": "Write down the engineering environment; it offers git hooks.",
+              "block_index": 23
             },
             {
               "slug": "application-layer-makes-mistakes-structurally-impossible-via-static-analysis",
-              "text": "At the top sits the application — the product code itself, which carries governance of its own: models of how it should work, and static analyses that check the code against them; a static analysis here can make a whole class of mistake structurally impossible, as a ban-lint that routes all mutation of a format through one typed model does, enforced once at the seam and holding for every agent that touches the code.",
-              "block_index": 25
+              "text": "Static analysis makes a mistake class structurally impossible.",
+              "block_index": 27
             }
           ]
         },
@@ -407,27 +407,27 @@
           "heading_text": "Every layer is a place to steer",
           "topic_sentence": "Read the stack as a list of opportunities, because that is what it is.",
           "id_source": "derived",
-          "block_index": 28,
+          "block_index": 30,
           "points": [
             {
               "slug": "read-each-layer-as-an-injection-opportunity",
-              "text": "Read the stack as a list of injection opportunities: the harness banking a summary before a lossy compaction, the pre-commit hook catching a defect while its cause is still in-window, the CI failure turned into a message the agent can read — each layer is a place to help the model reconstruct less or catch a defect sooner.",
-              "block_index": 29
-            },
-            {
-              "slug": "every-layer-serves-one-goal-narrow-the-search",
-              "text": "The single goal under every layer never changes: prevent a bad choice and narrow the agent's search toward the choices you want — which matters because the context window cannot hold a serious system at once, so absent structure the model burns its window inducing the rules of the road, and every mechanism on the stack is a rule handed to it for free.",
+              "text": "Read each layer as an injection opportunity.",
               "block_index": 32
             },
             {
+              "slug": "every-layer-serves-one-goal-narrow-the-search",
+              "text": "Every layer serves one goal: narrow the agent's search.",
+              "block_index": 35
+            },
+            {
               "slug": "mechanisms-interact-and-the-interplay-is-its-own-problem",
-              "text": "The mechanisms installed at these layers do not act in isolation — they run together, and two that touch the same thing at the same moment pull against each other and confuse the agent, so governing each layer is not enough; the interplay between mechanisms is its own problem.",
-              "block_index": 34
+              "text": "Mechanisms interact; the interplay is its own problem.",
+              "block_index": 37
             },
             {
               "slug": "the-stack-grounds-both-theses",
-              "text": "The stack is where the book's two theses get their footing: a model handed to a layer enacts the Modeling Thesis, tying intent to implementation and shrinking what the agent holds in-window, while a hook or lint installed at a layer enacts the Alignment Thesis — and the two chapters that follow take one thesis each.",
-              "block_index": 36
+              "text": "The stack grounds both the Modeling and Alignment theses.",
+              "block_index": 39
             }
           ]
         }
@@ -435,8 +435,8 @@
       "preamble_points": [
         {
           "slug": "agent-stack-has-four-injection-layers",
-          "text": "Governing an agent means conditioning where it searches, and there is no single place to reach in — the agent stack has four layers stacked on each other, each giving a different kind of grip, so every mechanism in the book is an instance of \"pick a layer, inject a constraint.\"",
-          "block_index": 0
+          "text": "The agent stack has four layers, each an injection point.",
+          "block_index": 1
         }
       ]
     },
