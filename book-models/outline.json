@@ -95,7 +95,7 @@
           "section_id": "what-this-book-is-about-and-what-it-is-not",
           "level": 2,
           "heading_text": "What this book is about (and what it is not)",
-          "topic_sentence": "Not every programming task needs the machinery this book describes.",
+          "topic_sentence": "Of course, not every programming task needs the machinery this book describes.",
           "id_source": "derived",
           "block_index": 0,
           "points": [
@@ -170,7 +170,7 @@
           "section_id": "the-printer",
           "level": 2,
           "heading_text": "The printer",
-          "topic_sentence": "A 3D printer will build almost anything you can imagine — a replacement gear, a prosthetic hand, a scale model of a building — out of nothing but spooled filament.",
+          "topic_sentence": "Think of a 3D printer.",
           "id_source": "derived",
           "block_index": 28,
           "points": [
@@ -185,7 +185,7 @@
           "section_id": "an-open-ended-technology",
           "level": 2,
           "heading_text": "An open-ended technology",
-          "topic_sentence": "A 3D printer is not just a machine.",
+          "topic_sentence": "A 3D printer belongs to a rare class of technology — the *open-ended* kind — alongside the invention of writing and the printing press.",
           "id_source": "derived",
           "block_index": 33,
           "points": [
