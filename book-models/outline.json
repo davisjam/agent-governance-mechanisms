@@ -564,18 +564,18 @@
           "points": [
             {
               "slug": "a-drift-gate-proves-agreement-not-that-either-side-is-right",
-              "text": "A model wired to a drift check cannot rot, but it can still be wrong: the gate proves only that model and code agree, and says nothing about whether either matches what you meant — both can move together in the same wrong direction while the gate stays a contented green.",
-              "block_index": 42
+              "text": "A drift gate proves agreement, not correctness.",
+              "block_index": 43
             },
             {
               "slug": "a-mirror-model-reflects-the-code-only-a-spec-authored-from-intent-catches-a-wrong-is",
               "text": "The power was never in modeling as such but in the model being authored independently of the code: a model derived from the code is a mirror that reflects what is and cannot tell you what it reflects is wrong, while a model authored from intent is a spec that says what ought to be — and only a spec catches a wrong \"is,\" though the drift check looks identical in both cases.",
-              "block_index": 46
+              "block_index": 47
             },
             {
               "slug": "what-belongs-in-the-model-is-the-essential-residual-that-does-not-automate",
               "text": "The caveat does not weaken the drift gate; it says what the gate is for: checking that model and code agree is mechanical and automated, but deciding what belongs in the model — which concepts and \"ought\"s it must carry — does not automate, so it is the essential residual that moves one level up, from writing correct code to authoring the model that says what correct means.",
-              "block_index": 49
+              "block_index": 50
             }
           ]
         },
@@ -585,32 +585,32 @@
           "heading_text": "Just execute the model? A short history of CASE and MDA",
           "topic_sentence": "If the typed model is where you now start, an old idea says to finish there too: skip the code and *execute the model directly*.",
           "id_source": "derived",
-          "block_index": 52,
+          "block_index": 53,
           "points": [
             {
               "slug": "executing-the-model-directly-is-a-forty-year-old-idea-whose-landing-marks-a-boundary",
               "text": "If the typed model is where you now start, an old idea says to finish there too — skip the code and execute the model directly; the field spent forty years on that idea, and where it landed marks the boundary this book keeps.",
-              "block_index": 53
+              "block_index": 54
             },
             {
               "slug": "case-and-mda-were-the-named-dreams-of-round-trip-and-executable-models",
               "text": "The dream of executing the model had several names: CASE tools in the 1980s promised round-trip engineering so design and code never diverged, and in 2001 the OMG's Model-Driven Architecture — with Executable UML's action language — went the whole way to \"do not write the code, just execute the model.\"",
-              "block_index": 55
+              "block_index": 56
             },
             {
               "slug": "executable-models-failed-on-tempo-not-tooling-and-settled-into-generating-key-parts",
               "text": "Executable models failed to take the mainstream less from a tool failure than a mismatch of tempo: Agile-era software changed by the week and heavy modeling could not keep pace, so outside regulated niches the guarantees a model bought were not worth its rigidity, and a survey of practitioners found teams generate key parts through small domain-specific languages, not whole systems.",
-              "block_index": 57
+              "block_index": 58
             },
             {
               "slug": "how-far-to-model-is-a-spectrum-trading-strength-for-changeability",
               "text": "Read the outcome as a spectrum, not a verdict: from no modeling (fast, no guarantee past the tests) to the executable model that is the system (intent bound tightest, least forgiving of change), every point trades the same way — the further you model, the stronger the result and the harder it is to move — and Brooks guards the far end, since a model never eases essential complexity.",
-              "block_index": 59
+              "block_index": 60
             },
             {
               "slug": "the-books-stance-the-sweet-spot-on-the-spectrum-moved-outward-and-is-still-moving",
               "text": "The book takes no strong stance on where to stop because the sweet spot moved and is still moving: a derived gate that keeps the map equal to the territory for almost nothing lets you sit far further along the line than the Agile era could, so the old verdict against executable models is worth reopening, and the book works a comfortable stretch it does not claim is the optimum.",
-              "block_index": 61
+              "block_index": 62
             }
           ]
         },
@@ -620,27 +620,27 @@
           "heading_text": "The semantic gap",
           "topic_sentence": "Enforce a property at the wrong level and it slips through; [ref:semantic-gap] shows the fix — lift the check to where the meaning is legible.",
           "id_source": "derived",
-          "block_index": 63,
+          "block_index": 64,
           "points": [
             {
               "slug": "enforce-at-the-wrong-level-and-the-property-slips-through",
               "text": "Enforce a property at the wrong level of abstraction and it slips through; the fix is to lift the check up to where the meaning is legible.",
-              "block_index": 64
+              "block_index": 65
             },
             {
               "slug": "model-drift-at-the-commit-is-the-wrong-granularity",
               "text": "Enforcing \"call-graph changed but model not updated, reject it\" at the commit sounds like a pre-commit hook but is not one: an agent carrying out a real task makes many commits toward one goal, the model may be legitimately out of sync mid-way and correct by the end, so checking at the commit is checking a sentence for grammar before the paragraph is written.",
-              "block_index": 67
+              "block_index": 68
             },
             {
               "slug": "the-semantic-gap-is-enforcing-a-property-at-the-wrong-level-of-abstraction",
               "text": "The semantic gap is the failure you get whenever you enforce a property at the wrong level of abstraction — the same shape as OS security, where \"this program is exfiltrating data\" is a pattern across many system calls invisible in any single one; model drift at the commit is that shape, the commit being the wrong granularity.",
-              "block_index": 69
+              "block_index": 70
             },
             {
               "slug": "enforce-at-the-level-where-the-property-is-legible-agent-return-for-model-drift",
               "text": "The fix is to enforce at the level where the property is actually legible; for model drift that is the agent returning from its task, when the whole feature and its plan are visible — exactly where a definition-of-done audit runs, over the whole unit of work rather than any single commit, checking that the model was updated and the surrounding work is complete.",
-              "block_index": 73
+              "block_index": 74
             }
           ]
         },
@@ -650,12 +650,12 @@
           "heading_text": "A worked example: the context-fullness bank-hook",
           "topic_sentence": "Let me give you a second instance of the semantic gap, one that lives not in the product but in the operator's own loop.",
           "id_source": "derived",
-          "block_index": 80,
+          "block_index": 81,
           "points": [
             {
               "slug": "compaction-is-a-lossy-guess-because-the-harness-sits-below-what-is-worth-keeping",
               "text": "When a long session fills the context window the harness compacts — a lossy save whose keep-or-drop decision is a best-effort guess, because the harness sees only tokens and cannot know which parts were load-bearing; only the operator knows what was worth banking, so the harness sits below the semantics of \"what is worth keeping\" and can only approximate.",
-              "block_index": 82
+              "block_index": 83
             }
           ]
         },
@@ -665,12 +665,12 @@
           "heading_text": "The fix: a hook one level up, checking two things",
           "topic_sentence": "So I moved the check up to where the property *is* legible: the operator's loop.",
           "id_source": "derived",
-          "block_index": 85,
+          "block_index": 86,
           "points": [
             {
               "slug": "the-fix-is-a-hook-at-the-operators-loop-checking-fullness-and-staleness-together",
               "text": "The fix is to move the check up to where the property is legible — the operator's loop, at a hook the orchestrator controls — firing on two conditions together: whether the context window is getting full (the harness exposes this) and whether the durable records have gone stale (the part the harness cannot see, a fact about meaning).",
-              "block_index": 86
+              "block_index": 87
             }
           ]
         },
@@ -680,12 +680,12 @@
           "heading_text": "Why both conditions, and not one",
           "topic_sentence": "The dual check is not belt-and-suspenders.",
           "id_source": "derived",
-          "block_index": 91,
+          "block_index": 92,
           "points": [
             {
               "slug": "a-single-loose-condition-drives-into-the-ouroboros",
               "text": "Firing the reminder on fullness alone nags after every fill even when nothing changed, and firing on staleness alone nags every few minutes; either single loose condition fires too often and trains the operator into the ouroboros — the degenerate state where the model spends its turns summarizing its own recent work instead of doing new work.",
-              "block_index": 93
+              "block_index": 94
             }
           ]
         },
@@ -695,17 +695,17 @@
           "heading_text": "The honest part: the pre-compact hook is the wrong hook",
           "topic_sentence": "I want to be straight about a compromise buried in this, because it is the kind of thing the semantic-gap idea should make you notice rather than paper over.",
           "id_source": "derived",
-          "block_index": 97,
+          "block_index": 98,
           "points": [
             {
               "slug": "the-pre-compact-hook-fires-too-late-and-the-bank-itself-trips-the-compaction",
               "text": "The theoretically right moment to bank is the instant before compaction, and the harness offers a pre-compact hook there, but it is the wrong hook: it fires too close to the end to fit a comfortable bank, and worse, the bank itself costs tokens, so a save kicked off at that boundary can be the very thing that trips the compaction it was meant to precede.",
-              "block_index": 100
+              "block_index": 101
             },
             {
               "slug": "this-example-has-no-clean-rung-so-a-roughly-right-hook-beats-both",
               "text": "Unlike the drift example, where agent-return is genuinely the level at which the property is legible, this case has no clean rung — the harness gives a pre-compact hook too late to use and a fullness number too dumb to act on alone — so the honest choice is a hook at roughly the right level, the operator's loop checking fullness and staleness together, accepting a little loss.",
-              "block_index": 102
+              "block_index": 103
             }
           ]
         }
