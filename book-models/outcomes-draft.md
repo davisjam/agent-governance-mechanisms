@@ -139,6 +139,9 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 - **[DECLARED]** (analyze) After this chapter, the reader can map journeys to the environment tier that tests them, joining user-journey, orchestration, criticality, and coverage models. — _anchor: Section titles 'user-journey-model' + 'agent-orchestration-model' + 'journey-criticality-test-placement' + 'worked-join'._
 - _elaborates (owned by 3.1):_ (understand) After this chapter, the reader can explain why the cost that sank classical MBSE is one an agent fleet absorbs, and read Kruchten's 4+1 as the spine of the model zoo.
 
+### 3.7-the-scope-of-modeling
+
+
 ## Part 4
 
 - **[DECLARED]** (apply) After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes. _(primary: Part 4 · elaborated by: Part 5)_ — _anchor: Part 4 title 'Putting It to Work' + chapter arc: brownfield -> skills -> transformations -> training-data -> lessons-learned -> generative-validation._
