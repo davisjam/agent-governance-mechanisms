@@ -414,6 +414,28 @@
   .cd-body .pole { display:block; margin:10px 0 0; font-size:10px; text-transform:uppercase;
                    letter-spacing:.05em; color:var(--muted); font-weight:800; }
 
+  /* ---- The four definitions (projected from book/data/definitions.json) --------------------- */
+  .cd-body blockquote.def-box { margin:0 0 12px; padding:10px 14px; background:#f0fdf4;
+                   border-left:4px solid #15803d; border-radius:0 7px 7px 0; font-size:15px;
+                   line-height:1.55; color:#1a1a1a; }
+  .cd-body ul.def-aspects li { font-size:14px; color:#3a3a3a; }
+  .cd-body .def-trace { font-size:12px; color:var(--muted); margin:8px 0 0; }
+  .cd-body .def-trace a { color:var(--link); }
+  .cd-body .def-owed { color:#b45309; font-style:italic; }
+
+  /* ---- The learning-outcomes view (projected from book-models/outcomes.json) --------------- */
+  .cd-body ul.oc-list { margin:4px 0 12px; padding:0; list-style:none; }
+  .cd-body ul.oc-list li.oc-row { display:grid; grid-template-columns:auto auto 1fr auto; gap:10px;
+                   align-items:baseline; font-size:14.5px; color:#2a2a2a; line-height:1.5;
+                   padding:7px 0; border-top:1px solid var(--line); }
+  .cd-body ul.oc-list li.oc-row:first-child { border-top:none; }
+  .oc-row .oc-unit { font-weight:800; color:#15803d; white-space:nowrap; font-size:12.5px; }
+  .oc-row .oc-bloom { font-size:10px; text-transform:uppercase; letter-spacing:.05em; font-weight:800;
+                   color:#fff; background:#b45309; border-radius:4px; padding:1px 6px; white-space:nowrap; }
+  .oc-row .oc-stmt { color:#2a2a2a; }
+  .oc-row .oc-more { color:var(--link); white-space:nowrap; font-size:12.5px; }
+  @media (max-width:640px){ .cd-body ul.oc-list li.oc-row { grid-template-columns:1fr; gap:3px; } }
+
   /* ---- The two theses as a matched PAIR of cards -------------------------------------------
      The theses stay a grouped, adjacent pair ("Thesis I of II" / "Thesis II of II") but are now
      the same <details class="card"> primitive, sitting two-up in their own grid so they read
@@ -913,6 +935,34 @@ function fitFig(f){
 
   <hr class="sep" />
 
+  <!-- ===================== THE FOUR DEFINITIONS (projected from book/data/definitions.json) =========
+       The core vocabulary the two theses ride on — model, agent, engineering, software engineering.
+       Each card is DERIVED from the definitions model (green box + per-aspect elaboration + traceability
+       to its owed Part-2 book home); a build renders them and a drift check keeps them in sync. -->
+  <div class="fam">
+    <div class="fam-h">The four definitions — the vocabulary the theses ride on</div>
+    <div class="masonry">
+    <details class="card def-card" id="def-model">
+  <summary><span class="cd-kicker">Definition</span><span class="cd-title">Model</span><span class="cd-frame">A useful approximation of a phenomenon (simplified, but good enough to predict)…</span><span class="cd-toggle" aria-hidden="true"></span></summary>
+  <div class="cd-body"><blockquote class="def-box">🟢 <b>Model</b> — A useful approximation of a phenomenon (simplified, but good enough to predict) — and, as this book uses it, a blueprint: a prescriptive description of a system to be built, which the built system is bound to realize.</blockquote><ul class="cd-list def-aspects"><li><b>The first sense — a useful approximation</b> A simplified description prized because it predicts, not because it is exact. All models are wrong, some are useful; fidelity trades against cost, and how much fidelity you need is in the eye of the application.</li><li><b>The second sense — a blueprint</b> A prescriptive description of the system you intend to build. A system built to a model may elaborate on it but may not diverge from it — which is what lets a model serve as an agent's marching orders.</li><li><b>Constraint, blueprint, and knowledge base at once</b> A model handed to an agent is at once a constraint (bounding what may be built), a blueprint (saying what to build), and — because the agent reasons over it — the knowledge base for the artifact under construction.</li></ul><p class="def-trace"><b>Book home:</b> <span class="def-owed">Part 2 — Definitions (owed — drafted, not yet landed)</span> · <a href="book/6.2-glossary.html">lexicon</a> · projected from the definitions model.</p></div>
+</details>
+  <details class="card def-card" id="def-agent">
+  <summary><span class="cd-kicker">Definition</span><span class="cd-title">Agent</span><span class="cd-frame">A controllable intelligence capable of independent reasoning over a knowledge base…</span><span class="cd-toggle" aria-hidden="true"></span></summary>
+  <div class="cd-body"><blockquote class="def-box">🟢 <b>Agent</b> — A controllable intelligence capable of independent reasoning over a knowledge base.</blockquote><ul class="cd-list def-aspects"><li><b>On "intelligence."</b> Given a set of constraints and a goal, it can devise a means of satisfying the goal without violating the constraints — a raven dropping pebbles to raise the water it cannot otherwise reach.</li><li><b>On "controllable" (not controlled).</b> You can change its environment and the knowledge available to it and it does different things, generally following orders. Controllable means probabilistic guarantees; controlled means perfect ones. That one adjective is why governance is a major part of this book — if agents were controlled, we would not need governance at all.</li><li><b>On "independent reasoning."</b> It genuinely reasons in response to a query — not merely retrieving or pattern-matching stored answers.</li><li><b>On "over a knowledge base."</b> The thing it reasons over. For this book, the models are that knowledge base — which is what ties the agent definition to the model definition.</li></ul><p class="def-trace"><b>Book home:</b> <span class="def-owed">Part 2 — Definitions (owed — drafted, not yet landed)</span> · <a href="book/6.2-glossary.html">lexicon</a> · projected from the definitions model.</p></div>
+</details>
+  <details class="card def-card" id="def-engineering">
+  <summary><span class="cd-kicker">Definition</span><span class="cd-title">Engineering</span><span class="cd-frame">The discipline of developing operable technological artifacts to solve problems, and of analytically identifying and assessing the competing means to those solutions, each with distinct trade-offs…</span><span class="cd-toggle" aria-hidden="true"></span></summary>
+  <div class="cd-body"><blockquote class="def-box">🟢 <b>Engineering</b> — The discipline of developing operable technological artifacts to solve problems, and of analytically identifying and assessing the competing means to those solutions, each with distinct trade-offs.</blockquote><ul class="cd-list def-aspects"><li><b>On "develops operable artifacts."</b> Engineering produces something that works — a technological artifact, with human operators, that addresses a real problem.</li><li><b>On "analytical assessment of competing means."</b> This is what separates the engineer from the technician: if you cannot articulate the trade-offs, you are not engineering. An engineer weighs competing architectures and designs against desired properties.</li><li><b>On "predictive."</b> An engineer can model and predict the outcomes of the decisions they are about to make — from the architecture and design they propose — prior to building. Prediction-before-construction is the engineering move.</li></ul><p class="def-trace"><b>Book home:</b> <span class="def-owed">Part 2 — Definitions (owed — drafted, not yet landed)</span> · <a href="book/6.2-glossary.html">lexicon</a> · projected from the definitions model.</p></div>
+</details>
+  <details class="card def-card" id="def-software-engineering">
+  <summary><span class="cd-kicker">Definition</span><span class="cd-title">Software engineering</span><span class="cd-frame">Software development produces a functioning artifact…</span><span class="cd-toggle" aria-hidden="true"></span></summary>
+  <div class="cd-body"><blockquote class="def-box">🟢 <b>Software engineering</b> — Software development produces a functioning artifact. Software engineering predictively selects a software artifact according to its desired properties.</blockquote><ul class="cd-list def-aspects"><li><b>Development vs. engineering.</b> Development asks "does it function and meet requirements?" Engineering asks "of the artifacts that would function, which one should we build, given the properties we want?" — and answers before building it.</li><li><b>Why the book is about software engineering.</b> Prediction-before-construction, applied to software: choosing the artifact whose properties best serve the goal, not merely one that runs.</li></ul><p class="def-trace"><b>Book home:</b> <span class="def-owed">Part 2 — Definitions (owed — drafted, not yet landed)</span> · <a href="book/6.2-glossary.html">lexicon</a> · projected from the definitions model.</p></div>
+</details>
+    </div>
+  </div>
+
+  <hr class="sep" />
+
   <!-- ===================== FAMILY BLOCKS OF CARDS =====================
        Everything below groups into named families; within each family the cards pack into a CSS multi-column
        masonry (>= 3 columns wide, 1 on a phone — the check-responsive gate). Every card is the same clickable
@@ -1374,6 +1424,20 @@ function fitFig(f){
         <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
       </div>
     </details>
+    </div>
+  </div>
+
+  <!-- ===================== THE LEARNING OUTCOMES (projected from book-models/outcomes.json) ==========
+       "What you'll be able to do" — the book- and Part-level outcomes, projected from the outcomes view
+       model (filtered by book/data/outcomes-site.json's selection). Prose is read straight from the
+       model; the drift check keeps the selection honest. -->
+  <div class="fam">
+    <div class="fam-h">What you'll be able to do — the learning outcomes</div>
+    <div class="masonry">
+    <details class="card wide accent" id="outcomes-view" open>
+  <summary><span class="cd-kicker">What you'll be able to do</span><span class="cd-title accent-t">The learning outcomes, book and Part</span><span class="cd-frame">The book's and each Part's "you'll be able to…", projected from the outcomes model.</span><span class="cd-toggle" aria-hidden="true"></span></summary>
+  <div class="cd-body"><p>Each promise below is a learning outcome projected from the book's outcomes model — the "after this Part, the reader can…" spine, derived from the prose and kept in sync by a drift check. The book-level goals come first, then one per Part.</p><ul class="oc-list"><li id="outcome-book-design-a-governed-environment-in-which-a-fleet" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-distinguish-a-constraint-from-a-sensor-and-a-soft-me" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">understand</span><span class="oc-stmt">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-model-a-system-as-a-small-set-of-typed-drift-c" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can model a system as typed, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-part-1-judge-whether-a-task-needs-the-book-s-machiner" class="oc-row"><span class="oc-unit">Part 1</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 1, the reader can judge which tasks warrant governance machinery and which do not, and read an agent as a loop that needs a model of its world.</span><a class="oc-more" href="book/1.1-the-printer.html">read →</a></li><li id="outcome-part-2-construct-the-governed-environment-its-layers-its" class="oc-row"><span class="oc-unit">Part 2</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 2, the reader can construct a governed engineering environment: place a control at the right layer of the agent stack, split ex-ante from ex-post, write lifecycles and runbooks, and measure one level deeper.</span><a class="oc-more" href="book/2.1-the-agent-stack.html">read →</a></li><li id="outcome-part-3-model-a-system-through-kruchten-s-4-1-views-as" class="oc-row"><span class="oc-unit">Part 3</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 3, the reader can model a system as the executable 4+1 zoo — logical, process, development, physical, and scenario views — each a typed model kept honest by a drift check.</span><a class="oc-more" href="book/3.1-the-executable-zoo.html">read →</a></li><li id="outcome-part-4-apply-the-method-to-a-real-codebase-inducing-m" class="oc-row"><span class="oc-unit">Part 4</span><span class="oc-bloom">apply</span><span class="oc-stmt">After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes.</span><a class="oc-more" href="book/4.1-brownfield.html">read →</a></li><li id="outcome-part-5-trace-the-method-s-evolution-through-a-real-ac" class="oc-row"><span class="oc-unit">Part 5</span><span class="oc-bloom">analyze</span><span class="oc-stmt">After Part 5, the reader can trace how the method grew from a single reviewer to a multi-agent engineering organization in one real system, and relate each governance move to the problem that forced it.</span><a class="oc-more" href="book/5.1-the-ada-context.html">read →</a></li><li id="outcome-part-6-evaluate-what-the-method-changes-for-how-software" class="oc-row"><span class="oc-unit">Part 6</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.</span><a class="oc-more" href="book/6.0-implications-for-se.html">read →</a></li></ul><a class="cd-more" href="book/index.html">read the book →</a></div>
+</details>
     </div>
   </div>
 
