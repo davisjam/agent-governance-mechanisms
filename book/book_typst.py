@@ -43,8 +43,16 @@ import re
 
 import build_book_html as bb
 import book_ir as ir
+import design_tokens as _dtokens  # bb already put book-models on sys.path — the design-token projector
 
 HERE = pathlib.Path(__file__).resolve().parent
+
+# The Typst projection of the design-token SSOT (Umber Monograph): a `#let dt = (…)` preamble prepended
+# to every compiled document so the header + box renderers look up dt.ink / dt.box-thesis-rule / dt.fs-*
+# instead of literal hexes and luma() grays. One typed model, three surfaces (site / web book / PDF).
+_TOKENS = _dtokens.load()
+_TYPST_PREAMBLE = _dtokens.typst_preamble(_TOKENS)
+_DEF_SLUGS = frozenset({"model", "agent", "engineering", "software-engineering"})
 _MERMAID_CACHE = HERE / ".mermaid-svg-cache"
 _MERMAID_CONFIG = HERE / "assets" / "mermaid-config.json"
 
@@ -214,23 +222,25 @@ def _render_code(raw: str) -> str:
 # rendered `<p><strong>…Thesis.</strong>`); the two stay in step by construction of the same authored shape.
 _THESIS_LEAD_RE = re.compile(r"^\*\*The\b.*?\bThesis\.\*\*", re.S)
 
-# The soft-green definition palette, lifted from the site's green definition boxes (`def-box`): a pale green
-# fill with a heavier green rule down the left edge. Boxing the book's core claims in this green mirrors the
-# site's treatment of its core-term definitions, so a thesis reads as a set-apart claim, not running prose.
-_GREEN_FILL = '#f0fdf4'
-_GREEN_RULE = '#15803d'
-
-
-def _render_blockquote(raw: str) -> str:
+def _render_blockquote(raw: str, is_def: bool = False) -> str:
     """A `>`-prefixed blockquote → a Typst block. A thesis blockquote (`> **The … Thesis.** …`) becomes a
-    soft-green boxed callout mirroring the web book's `thesis-box`; any other blockquote stays a plain
-    `#quote(block: true)[…]`. Inner content is itself markdown; we recurse the whole emitter over it so an
-    inner heading/list/mermaid renders. An inner demoted heading becomes a bold lead-in (Typst `#quote` has
-    no heading slot), matching the HTML renderer's inset-title."""
+    GREEN boxed callout; a core-term definition blockquote (armed by a preceding index-def, `is_def`) a BLUE
+    def-box; any other blockquote stays a plain `#quote(block: true)[…]`. All three mirror the web book's
+    boxes and draw their colours from the shared `dt` tokens. Inner content is itself markdown; we recurse
+    the whole emitter over it so an inner heading/list/mermaid renders."""
     inner_md = "\n".join(bb._strip_blockquote_prefix(ln) for ln in raw.splitlines())
     inner = _render_markdown_body(inner_md, _EmitCtx.inert())
-    if _THESIS_LEAD_RE.match(inner_md.strip()):
-        return (f'#block(fill: rgb("{_GREEN_FILL}"), stroke: (left: 4pt + rgb("{_GREEN_RULE}")), '
+    stripped = inner_md.strip()
+    if _THESIS_LEAD_RE.match(stripped):
+        return (f'#block(fill: dt.box-thesis-fill, stroke: (left: dt.border-box-rule + dt.box-thesis-rule), '
+                f"inset: 12pt, radius: 4pt, width: 100%)[\n{_indent(inner)}\n]")
+    if is_def:
+        return (f'#block(fill: dt.box-def-fill, stroke: (left: dt.border-box-rule + dt.box-def-rule), '
+                f"inset: 12pt, radius: 4pt, width: 100%)[\n{_indent(inner)}\n]")
+    if stripped.startswith("#"):
+        # A titled concept-inset primer (`> ### Inset N — Title`) → a LAVENDER box, mirroring the web book's
+        # `concept-inset` (an inner heading heads the primer). The heading renders bold inside the panel.
+        return (f'#block(fill: dt.box-inset-fill, stroke: (left: dt.border-box-rule + dt.box-inset-rule), '
                 f"inset: 12pt, radius: 4pt, width: 100%)[\n{_indent(inner)}\n]")
     return f"#quote(block: true)[\n{_indent(inner)}\n]"
 
@@ -246,8 +256,9 @@ def _render_inset(raw: str) -> str:
         body = f'#image("{_root_rel(p, _EmitCtx.root)}", width: 90%)'
     else:
         body = f"#raw({_typst_str(inner)}, block: true)"
-    return (f"#block(inset: 10pt, stroke: 0.5pt + luma(180), radius: 3pt, width: 100%)[\n"
-            f"  #strong[{inline_typst(title)}]\n\n  {body}\n]")
+    return (f"#block(fill: dt.box-inset-fill, inset: 10pt, "
+            f"stroke: (left: dt.border-box-rule + dt.box-inset-rule), radius: 3pt, width: 100%)[\n"
+            f"  #text(fill: dt.box-inset-rule)[#strong[{inline_typst(title)}]]\n\n  {body}\n]")
 
 
 def _render_table(block: Block_t) -> str:
@@ -359,6 +370,7 @@ class _EmitCtx:
         _EmitCtx.root = root
         self.root = root
         self.metadata_emitted = 0
+        self.pending_def: list[str] = []   # a core-term index-def armed for the next block (→ blue def-box)
 
     @classmethod
     def inert(cls) -> "_EmitCtx":
@@ -366,6 +378,7 @@ class _EmitCtx:
         c = cls.__new__(cls)
         c.root = cls.root
         c.metadata_emitted = 0
+        c.pending_def = []
         return c
 
 
@@ -382,7 +395,7 @@ _INDEX_EXAMPLE_RE = bb.INDEX_EXAMPLE_RE
 _POINT_RE = re.compile(r"^<!--\s*point:\s*(?P<slug>[a-z0-9-]+)\s*\|\s*(?P<text>.+?)\s*-->$")
 
 
-def render_typst(block: Block_t, caption_md: str | None = None) -> str:
+def render_typst(block: Block_t, caption_md: str | None = None, is_def: bool = False) -> str:
     """Render ONE IR block to Typst markup — the sibling to `Block.render_html()`, reusing the SAME
     `book_ir.BlockKind` taxonomy and `classify_render_block` classification (the blocks arrive already
     classified from the IR parse). `caption_md` is the folded mermaid caption when the driving walk detects a
@@ -402,7 +415,7 @@ def render_typst(block: Block_t, caption_md: str | None = None) -> str:
     if k is K.CODE_INSET:
         return _render_inset(block.raw)
     if k is K.BLOCKQUOTE:
-        return _render_blockquote(block.raw)
+        return _render_blockquote(block.raw, is_def=is_def)
     if k is K.TABLE:
         return _render_table(block)
     if k is K.FIGURE:
@@ -449,6 +462,8 @@ def _peel_metadata_marker(line: str, ctx: _EmitCtx) -> "str | None":
     md = _INDEX_DEF_RE.match(s)
     if md:
         ctx.metadata_emitted += 1
+        if md.group(1) in _DEF_SLUGS:
+            ctx.pending_def.append(md.group(1))   # arm the blue def-box for the term's defining blockquote
         return _render_index_metadata(md.group(1), "index-def")
     me = _INDEX_EXAMPLE_RE.match(s)
     if me:
@@ -497,7 +512,11 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
                     and s.endswith("*") and "```" not in s):
                 caption_md = s.strip("*").strip()
                 skip.add(i + 1)
-        frag = render_typst(b, caption_md)
+        # A core-term index-def (a DIRECTIVE handled above) arms the blue def-box for the block it heads —
+        # this content block. Capture and clear so it applies to exactly the next content block.
+        is_def = bool(ctx.pending_def)
+        ctx.pending_def.clear()
+        frag = render_typst(b, caption_md, is_def=is_def)
         if frag:
             out.append(frag)
     return "\n\n".join(out)
@@ -505,27 +524,31 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
 
 # ── Preamble + document assembly ───────────────────────────────────────────────────────────────────
 
-_PREAMBLE = """\
+_PREAMBLE = _TYPST_PREAMBLE + """\
 // GENERATED by book/book_typst.py — the IR→Typst emitter (the production PDF path). Do not hand-edit;
 // regenerate via `python3 book/build_book_html.py --pdf` (whole book) or
 //   python3 book/book_typst.py <chapter-slug> [<slug> …]   (a subset).
 // The compiled PDF and the emitted .typ live under book/_typst/ (gitignored — created, never committed).
+// Type/colour/surface come from the design-token `dt` preamble above. Body stays at a print-native 11pt
+// (the token body step is screen-sized; print density is protected here) while the faces + palette follow
+// the tokens: Fraunces display headings, a quiet body face, umber accent, and the semantic-box anchors.
 #set document(title: "Model-Based Agentic Software Engineering")
-#set page(paper: "us-letter", margin: (x: 1.1in, y: 1in), numbering: "1")
-#set text(font: ("Georgia", "Times New Roman", "New Computer Modern"), size: 11pt, lang: "en")
+#set page(paper: "us-letter", margin: (x: 1.1in, y: 1in), numbering: "1", fill: dt.paper)
+#set text(font: dt.font-body, size: 11pt, lang: "en", fill: dt.ink)
 #set par(justify: true, leading: 0.62em, first-line-indent: 0pt, spacing: 0.9em)
 #set heading(numbering: none)
-#show heading.where(level: 1): set text(size: 1.5em, weight: "bold")
+#show heading: set text(font: dt.font-display, weight: "bold")
+#show heading.where(level: 1): set text(size: 1.5em)
 #show heading.where(level: 2): set text(size: 1.2em)
 #show heading: set block(above: 1.4em, below: 0.7em)
 #set figure(gap: 0.6em)
-#show figure.caption: set text(size: 0.9em, style: "italic", fill: luma(60))
+#show figure.caption: set text(size: 0.9em, style: "italic", fill: dt.muted)
 #show figure.where(kind: table): set figure.caption(position: top)
 // Booktabs table style (matches the HTML book's Tufte/booktabs tables): a heavy top rule, a light rule
 // under the header, a heavy bottom rule — NO vertical rules or cell boxes. Whitespace separates columns.
 #set table(stroke: none, inset: (x: 8pt, y: 5pt))
 #show table.cell.where(y: 0): set text(weight: "bold")
-#show raw.where(block: true): set block(fill: luma(244), inset: 8pt, radius: 3pt, width: 100%)
+#show raw.where(block: true): set block(fill: dt.code-bg, inset: 8pt, radius: 3pt, width: 100%)
 #set raw(tab-size: 2)
 """
 
