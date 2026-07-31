@@ -311,6 +311,7 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: ban-lint | local
 - term: documentation-hierarchy | local
 - term: ouroboros | local
+- term: typed-enum | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
