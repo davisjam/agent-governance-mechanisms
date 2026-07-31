@@ -208,12 +208,30 @@ def _render_code(raw: str) -> str:
     return f"#raw({_typst_str(inner)}, block: true{lang_arg})"
 
 
+# A thesis blockquote leads with a bold `The <Name> Thesis.` label (`> **The Modeling Thesis.** …`). The
+# HTML book lifts these into a coloured `thesis-box` panel; the print projection mirrors that by boxing them
+# instead of typesetting them as a plain quote. Matched on the raw markdown lead (the HTML twin matches the
+# rendered `<p><strong>…Thesis.</strong>`); the two stay in step by construction of the same authored shape.
+_THESIS_LEAD_RE = re.compile(r"^\*\*The\b.*?\bThesis\.\*\*", re.S)
+
+# The soft-green definition palette, lifted from the site's green definition boxes (`def-box`): a pale green
+# fill with a heavier green rule down the left edge. Boxing the book's core claims in this green mirrors the
+# site's treatment of its core-term definitions, so a thesis reads as a set-apart claim, not running prose.
+_GREEN_FILL = '#f0fdf4'
+_GREEN_RULE = '#15803d'
+
+
 def _render_blockquote(raw: str) -> str:
-    """A `>`-prefixed blockquote → a Typst `#quote(block: true)[…]`. Inner content is itself markdown; we
-    recurse the whole emitter over it so an inner heading/list/mermaid renders. An inner demoted heading
-    becomes a bold lead-in (Typst `#quote` has no heading slot), matching the HTML renderer's inset-title."""
+    """A `>`-prefixed blockquote → a Typst block. A thesis blockquote (`> **The … Thesis.** …`) becomes a
+    soft-green boxed callout mirroring the web book's `thesis-box`; any other blockquote stays a plain
+    `#quote(block: true)[…]`. Inner content is itself markdown; we recurse the whole emitter over it so an
+    inner heading/list/mermaid renders. An inner demoted heading becomes a bold lead-in (Typst `#quote` has
+    no heading slot), matching the HTML renderer's inset-title."""
     inner_md = "\n".join(bb._strip_blockquote_prefix(ln) for ln in raw.splitlines())
     inner = _render_markdown_body(inner_md, _EmitCtx.inert())
+    if _THESIS_LEAD_RE.match(inner_md.strip()):
+        return (f'#block(fill: rgb("{_GREEN_FILL}"), stroke: (left: 4pt + rgb("{_GREEN_RULE}")), '
+                f"inset: 12pt, radius: 4pt, width: 100%)[\n{_indent(inner)}\n]")
     return f"#quote(block: true)[\n{_indent(inner)}\n]"
 
 
@@ -514,17 +532,31 @@ _PREAMBLE = """\
 
 def _cover_typst() -> str:
     """The title page — book title, subtitle, author, from the book manifest (the same identity the web
-    cover and the site read). Its own page, no folio."""
+    cover and the site read). Its own page, no folio, but with a first-page footer carrying the copyright
+    line and the book's last-modified date.
+
+    The title sits at 1.7em (down from 2.2em) so the full title lands on ONE line at the us-letter text
+    width. The copyright is DERIVED from `author` + `copyright_years` (the manifest states the name once —
+    the same derivation the web cover's COPYRIGHT line uses). The last-modified date is injected at compile
+    time via `--input last_modified=…` (see `build_book_html.build_pdf`) and read here with `sys.inputs`,
+    falling back to the manifest `last_updated` when the emitter runs standalone with no input."""
     m = bb._BOOK_MANIFEST
     title = inline_typst(m["title"])
     subtitle = m.get("subtitle", "")
     author = f'{m["author"]}, {m["credential"]}'
     sub_line = f'\n  #v(0.6em)\n  #text(size: 1.1em, style: "italic")[{inline_typst(subtitle)}]' if subtitle else ""
+    copyright_txt = _esc(f'© {m["author"]}, {m["copyright_years"]}')
+    default_mod = _esc(m.get("last_updated", ""))
+    footer = (
+        '#align(center)[#text(size: 8pt, fill: luma(120))'
+        f'[{copyright_txt} #h(0.5em) · #h(0.5em) Last modified #last_modified]]'
+    )
     return (
-        "#page(numbering: none)[\n"
+        f'#let last_modified = sys.inputs.at("last_modified", default: "{default_mod}")\n'
+        f"#page(numbering: none, footer: [{footer}])[\n"
         "  #v(3in)\n"
         "  #align(center)[\n"
-        f"    #text(size: 2.2em, weight: \"bold\")[{title}]{sub_line}\n"
+        f"    #text(size: 1.7em, weight: \"bold\")[{title}]{sub_line}\n"
         "    #v(1.5em)\n"
         f"    #text(size: 1.1em)[{inline_typst(author)}]\n"
         "  ]\n"
