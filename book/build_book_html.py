@@ -52,7 +52,17 @@ def _cover_sub(cls: str) -> str:
     s = _BOOK_MANIFEST.get("subtitle", "")
     return f'<div class="{cls}">{html.escape(s)}</div>' if s else ""
 ROOT = HERE.parent  # the catalogue root — the appendix reads the entry .md files from here
-ACCENT = "#1a4a7a"
+
+# Design-token SSOT projection (Umber Monograph) — the CSS :root block + web-font link, both derived from
+# book-models/design-tokens.json by the stdlib-only projector, so the web book and the site share one
+# typed token model. Inlined into the book CSS below.
+sys.path.insert(0, str(ROOT / "book-models"))
+import design_tokens as _dtokens  # noqa: E402 — the design-token projector (stdlib-only)
+
+_TOKENS = _dtokens.load()
+CSS_ROOT_BLOCK = _dtokens.css_root_block(_TOKENS)
+FONTS_LINK = _dtokens.google_fonts_link(_TOKENS)
+ACCENT = _TOKENS.palette["accent"]  # umber — kept for the few Python-side consumers (cover / mermaid)
 COPYRIGHT = f"© {_BOOK_MANIFEST['author']}, {_BOOK_MANIFEST['copyright_years']}"
 # Cover "last updated" date. A STABLE constant, bumped intentionally — a per-build/per-commit date would
 # churn the tracked book HTML and break the `check_book_html_tracking` freshness gate.
@@ -598,6 +608,13 @@ def _inject_anchor_id(block_html: str, anchor_id: str) -> str:
 # is told apart from an ordinary `> **Term.**` definition callout (which stays a light sidenote).
 _IS_THESIS_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>\s*The\b.*?\bThesis\.\s*</strong>", re.S)
 
+# A DEFINITION blockquote leads with a bold `<Term>.` label (`> **Model.** …`) and is armed by an
+# immediately-preceding `<!-- index-def: <slug> -->` for one of the four core terms — the vocabulary the
+# theses ride on. Rendered into the blue `def-box` (mirrors the thesis-box mechanism). The index-def
+# context is the discriminator; this regex confirms the bold-lead shape.
+_DEF_SLUGS = frozenset({"model", "agent", "engineering", "software-engineering"})
+_IS_DEF_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>", re.S)
+
 
 _BOOK_IR_MOD = None  # cached `book_ir` module handle (lazy — book_ir imports THIS module as its tokenizer SSOT)
 
@@ -626,6 +643,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
     pending_anchors: list[str] = []         # anchor id(s) to attach to the next content block
     pending_table_caption: list[str] = []   # a `<!-- table: … -->` caption armed for the next table
     pending_label: list[str] = []           # a `<!-- label: … -->` cross-ref key armed for the next float
+    pending_def: list[str] = []             # a core-term `index-def` armed for the next block (→ def-box)
     occ: dict[tuple[str, str], int] = {}    # per-page (slug, kind) → next occurrence index
 
     def _with_label(frag: str) -> str:
@@ -662,6 +680,8 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             return False
         slug = (_md or _me).group(1)
         kind = "def" if _md else "ex"
+        if _md and slug in _DEF_SLUGS:
+            pending_def.append(slug)   # arm the blue def-box for the term's defining blockquote
         n = occ.get((slug, kind), 0)
         occ[(slug, kind)] = n + 1
         if anchor_map is not None:
@@ -764,6 +784,10 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                     f"notation marker must head its block (blank line before it, or move above the prose): "
                     f"mid-block marker {_ln.strip()!r}")
         block = "\n".join(blk_lines)
+        # A core-term index-def arms the blue def-box for the block it heads (this content block). Capture
+        # and clear here so it applies to exactly the next content block, never leaking further.
+        def_armed = bool(pending_def)
+        pending_def.clear()
         stripped = block.strip()
         # ── The A-flip: one classifier, one renderer per node kind. ────────────────────────────────
         # Classification is single-sourced through the typed IR (`book_ir.classify_render_block`, which
@@ -807,7 +831,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             _emit(_render_heading(block))
             continue
         if kind is _ir.BlockKind.BLOCKQUOTE:
-            _emit(_render_blockquote(block))
+            _emit(_render_blockquote(block, is_def=def_armed))
             continue
         if kind is _ir.BlockKind.TABLE:
             tbl = _render_pipe_table(block)
@@ -970,11 +994,12 @@ def _render_heading(block: str) -> str:
     return f"<h1{anc}>{inline(txt)}</h1>"
 
 
-def _render_blockquote(block: str) -> str:
+def _render_blockquote(block: str, is_def: bool = False) -> str:
     """A blockquote (every line starts with `>`) → a classified `<blockquote>`. Its inner content is itself
     markdown (heading + prose + a `> ```mermaid ``` fence), rendered recursively; an inner heading is demoted
     to a styled `inset-title` paragraph (no document-outline break). The class is picked by shape: a demoted
-    label → `concept-inset`; a `**The … Thesis.**` lead → `thesis-box`; else a light `aside-sidenote`."""
+    label → `concept-inset`; a `**The … Thesis.**` lead → `thesis-box`; a `**Term.**` lead armed by a
+    core-term `index-def` (`is_def`) → the blue `def-box`; else a light `aside-sidenote`."""
     inner_md = "\n".join(_strip_blockquote_prefix(ln) for ln in block.splitlines())
     inner_html = md_to_html(inner_md)
     inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
@@ -982,6 +1007,8 @@ def _render_blockquote(block: str) -> str:
         klass = "concept-inset"
     elif _IS_THESIS_LEAD_RE.search(inner_html):
         klass = "thesis-box"
+    elif is_def and _IS_DEF_LEAD_RE.search(inner_html):
+        klass = "def-box"
     else:
         klass = "aside-sidenote"
     return f'<blockquote class="{klass}">{inner_html}</blockquote>'
@@ -1025,24 +1052,25 @@ def _render_paragraph(block: str) -> str:
 
 
 CSS = f"""
-:root {{ --accent: {ACCENT}; }}
+{CSS_ROOT_BLOCK}
 * {{ box-sizing: border-box; }}
-body {{ font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-       color: #1a1a1a; margin: 0; background: #fdfdfc; }}
+body {{ font-family: var(--font-body); font-size: 17px; line-height: 1.65;
+       color: var(--ink); margin: 0; background: var(--paper); }}
+h1, h2, h3, h4, header.chap h1 {{ font-family: var(--font-display); font-weight: var(--display-weight); }}
 .wrap {{ max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }}
-nav.toc {{ background: #f4f3f0; border-bottom: 1px solid #e2e0da; padding: 0.9rem 1.4rem; font-size: 14px; }}
+nav.toc {{ background: var(--panel); border-bottom: 1px solid var(--rule); padding: 0.9rem 1.4rem; font-size: 14px; }}
 nav.toc .toc-inner {{ max-width: 52rem; margin: 0 auto; }}
 nav.toc details {{ margin: 0; }}
 nav.toc summary {{ cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }}
 nav.toc summary::-webkit-details-marker {{ display: none; }}
 nav.toc ol {{ list-style: none; padding: 0.6rem 0 0; margin: 0; }}
-nav.toc .part {{ font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em;
+nav.toc .part {{ font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
                  font-size: 12px; margin: 0.7rem 0 0.25rem; }}
-nav.toc a {{ color: #333; text-decoration: none; display: block; padding: 2px 0 2px 1rem; }}
+nav.toc a {{ color: var(--ink); text-decoration: none; display: block; padding: 2px 0 2px 1rem; }}
 nav.toc a:hover {{ color: var(--accent); }}
 nav.toc a.current {{ color: var(--accent); font-weight: 600; border-left: 2px solid var(--accent);
                      padding-left: calc(1rem - 2px); }}
-header.chap {{ padding: 2.6rem 0 1.2rem; border-bottom: 1px solid #eee; margin-bottom: 1.6rem; }}
+header.chap {{ padding: 2.6rem 0 1.2rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.6rem; }}
 header.chap .kicker {{ color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
                        text-transform: uppercase; }}
 /* The kicker halves are links but must stay understated — inherit the small-caps accent colour, no default
@@ -1050,10 +1078,10 @@ header.chap .kicker {{ color: var(--accent); font-weight: 700; font-size: 13px; 
 header.chap .kicker a {{ color: inherit; text-decoration: none; }}
 header.chap .kicker a:hover, header.chap .kicker a:focus {{ text-decoration: underline; }}
 header.chap h1 {{ font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }}
-.part-epigraph {{ margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid #d8d5cc;
-                  color: #555; font-style: italic; }}
+.part-epigraph {{ margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid var(--rule);
+                  color: var(--muted); font-style: italic; }}
 .part-epigraph .attr {{ display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
-                        color: #6a6a6a; }}
+                        color: var(--muted); }}
 h2 {{ font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }}
 /* Role kicker on a step heading (`## [role: Architect] …`) — the engineer's climbing title, rendered in
    the same small-caps accent register as the chapter kicker (`header.chap .kicker`) but inline before the
@@ -1061,13 +1089,13 @@ h2 {{ font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }}
 h2 .role-kick {{ color: var(--accent); font-weight: 700; font-style: italic; font-size: 0.62em; letter-spacing: 0.07em;
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }}
 h3 {{ font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }}
-h4 {{ font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: #333; }}
+h4 {{ font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: var(--ink); }}
 p {{ margin: 0 0 1rem; }}
 ul {{ margin: 0 0 1rem; padding-left: 1.3rem; }}
 ol {{ margin: 0 0 1rem; padding-left: 1.5rem; list-style: decimal; }}
 li {{ margin: 0.3rem 0; }}
-blockquote {{ margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid #d8d5cc;
-              color: #555; font-style: italic; background: #faf9f6; }}
+blockquote {{ margin: 1.2rem 0; padding: 0.6rem 1.1rem; border-left: 3px solid var(--rule);
+              color: var(--muted); font-style: italic; background: var(--panel); }}
 /* Plain editorial asides render as Tufte-style sidenotes. On a NARROW screen they collapse to a normal
    inline blockquote (the default above). On a WIDE screen the media query below floats them into the
    right gutter — smaller, ragged, unboxed — so the aside sits beside the text it comments on without
@@ -1076,22 +1104,22 @@ blockquote.aside-sidenote {{ background: transparent; }}
 @media (min-width: 60rem) {{
   blockquote.aside-sidenote {{
     float: right; clear: right; width: 13rem; margin: 0.3rem -15rem 1rem 0;
-    padding: 0 0 0 0.9rem; border-left: 2px solid #cfa14a; background: transparent;
-    font-size: 14px; line-height: 1.5; color: #4a4a4a;
+    padding: 0 0 0 0.9rem; border-left: 2px solid var(--box-inset-rule); background: transparent;
+    font-size: 14px; line-height: 1.5; color: var(--muted);
   }}
 }}
-code {{ background: #f0efeb; padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }}
+code {{ background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }}
 a {{ color: var(--accent); }}
 /* Booktabs table style (drawing/tables.md): exactly three horizontal rules — a heavy top rule, a light
    rule under the header, a heavy bottom rule — and NO vertical rules or cell borders. Whitespace separates
    columns/rows; rules only group. No zebra striping (row padding does the separating). Numbers
    right-aligned via `.num`. WHY: vertical rules and boxed cells are chartjunk (Tufte / booktabs). */
 table.book-table {{ border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 15px;
-                    border-top: 2px solid #222; border-bottom: 2px solid #222; }}
+                    border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }}
 table.book-table th, table.book-table td {{ border: none; padding: 0.6rem 0.7rem;
                                              text-align: left; vertical-align: top; line-height: 1.45; }}
 table.book-table thead th {{ background: transparent; font-weight: 600;
-                             border-bottom: 1px solid #999; }}
+                             border-bottom: 1px solid var(--muted); }}
 table.book-table th.num, table.book-table td.num {{ text-align: right; }}
 blockquote table.book-table {{ background: transparent; }}
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
@@ -1113,11 +1141,11 @@ pre.mermaid text.messageText {{ font-size: 18px; }}
    alternate house style without touching any rule below. Add e.g. a `@media print` or `:root[data-theme=…]`
    block that only re-declares these variables and the whole sidebar follows. */
 blockquote.concept-inset {{
-  --inset-bg: #f6f4ef;           /* panel fill — warm off-white, distinct from the page's #faf9f6 */
-  --inset-accent: #b07a2b;       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
-  --inset-header: #4a3a1e;       /* header title ink — dark warm brown, ~9:1 on the header band */
-  --inset-header-bg: #ece4d5;    /* header band fill — a shade deeper than the panel so the label reads */
-  --inset-body: #33302a;         /* body ink — near-black warm grey, comfortable roman reading colour */
+  --inset-bg: var(--panel);           /* panel fill — warm off-white, distinct from the page's var(--panel) */
+  --inset-accent: var(--box-inset-rule);       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
+  --inset-header: var(--box-inset-rule);       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-header-bg: var(--box-inset-fill);    /* header band fill — a shade deeper than the panel so the label reads */
+  --inset-body: var(--ink);         /* body ink — near-black warm grey, comfortable roman reading colour */
   --inset-accent-width: 5px;     /* thickness of the left accent rule */
   --inset-radius: 6px;
   --inset-pad-x: 1.35rem;
@@ -1125,7 +1153,7 @@ blockquote.concept-inset {{
   --inset-max: 34rem;            /* keep the primer to a readable measure, not the full column width */
 
   background: var(--inset-bg);
-  border: 1px solid #e3dccb;
+  border: 1px solid var(--rule);
   border-left: var(--inset-accent-width) solid var(--inset-accent);
   border-radius: var(--inset-radius);
   color: var(--inset-body);
@@ -1133,7 +1161,6 @@ blockquote.concept-inset {{
   padding: 0 var(--inset-pad-x) var(--inset-pad-y);
   margin: 1.7rem 0;
   max-width: var(--inset-max);
-  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
 }}
 /* Header treatment — the "Inset N — Title" label sits in its own tinted band, flush to the panel edges,
    set in small-caps-ish tracked type so it reads as a sidebar HEADER, not a run-in paragraph. It stays a
@@ -1145,7 +1172,7 @@ blockquote.concept-inset .inset-title {{
   margin: 0 calc(-1 * var(--inset-pad-x)) var(--inset-pad-y);
   padding: 0.6rem var(--inset-pad-x);
   border-radius: var(--inset-radius) var(--inset-radius) 0 0;
-  border-bottom: 1px solid #ddd3bf;
+  border-bottom: 1px solid var(--rule);
   font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
 }}
 blockquote.concept-inset .inset-title::before {{
@@ -1162,18 +1189,17 @@ blockquote.concept-inset em {{ font-style: italic; }}  /* inline emphasis still 
    sits flush to the panel edges; the <pre> keeps the page's usual code styling, un-boxed inside the panel
    so the box's own border is the only frame. */
 figure.code-inset {{
-  --inset-bg: #f6f4ef; --inset-accent: #b07a2b; --inset-header: #4a3a1e; --inset-header-bg: #ece4d5;
+  --inset-bg: var(--panel); --inset-accent: var(--box-inset-rule); --inset-header: var(--box-inset-rule); --inset-header-bg: var(--box-inset-fill);
   --inset-radius: 6px; --inset-pad-x: 1.35rem;
-  background: var(--inset-bg); border: 1px solid #e3dccb;
+  background: var(--inset-bg); border: 1px solid var(--rule);
   border-left: 5px solid var(--inset-accent); border-radius: var(--inset-radius);
   margin: 1.7rem 0; max-width: 40rem; overflow: hidden;
-  box-shadow: 0 1px 2px rgba(74, 58, 30, 0.06);
 }}
 figure.code-inset .inset-title {{
   font-family: "Source Sans 3", sans-serif; font-style: normal; font-weight: 700;
   color: var(--inset-header); background: var(--inset-header-bg);
   margin: 0; padding: 0.55rem var(--inset-pad-x);
-  border-bottom: 1px solid #ddd3bf;
+  border-bottom: 1px solid var(--rule);
   font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.35;
 }}
 figure.code-inset .inset-title::before {{
@@ -1182,86 +1208,96 @@ figure.code-inset .inset-title::before {{
 }}
 figure.code-inset pre {{ margin: 0; padding: 0.9rem var(--inset-pad-x); background: transparent; border: 0; }}
 /* THESIS box — a chapter's load-bearing claim, lifted out of the reading column as a light lavender panel.
-   Un-italic (a thesis is a statement, not an aside); dark ink #241f33 on #f2effb clears WCAG AA (~13.8:1).
+   Un-italic (a thesis is a statement, not an aside); dark ink var(--ink) on var(--box-thesis-fill) clears WCAG AA (~13.8:1).
    Taxonomy + spec: book/_design/callout-typography.md. */
-blockquote.thesis-box {{ background: #f2effb; border: 1px solid #d9d2ef; border-left: 4px solid #7c6bb0;
-                         color: #241f33; font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+blockquote.thesis-box {{ background: var(--box-thesis-fill); border: 1px solid var(--rule); border-left: 4px solid var(--box-thesis-rule);
+                         color: var(--ink); font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
                          border-radius: 5px; }}
 blockquote.thesis-box p {{ margin: 0 0 0.6rem; }}
 blockquote.thesis-box p:last-child {{ margin-bottom: 0; }}
-blockquote.thesis-box strong {{ color: #241f33; }}
+blockquote.thesis-box strong {{ color: var(--box-thesis-rule); }}
+/* DEFINITION box — a core-term definition (an index-def marker on a bold-lead Term blockquote), lifted
+   into a blue panel that mirrors the thesis box's shape but carries the definition-azure anchor. Blue on
+   every surface, distinct from the umber chrome accent and the green thesis claim. */
+blockquote.def-box {{ background: var(--box-def-fill); border: 1px solid var(--rule);
+                      border-left: var(--border-box-rule) solid var(--box-def-rule);
+                      color: var(--ink); font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                      border-radius: 5px; }}
+blockquote.def-box p {{ margin: 0 0 0.6rem; }}
+blockquote.def-box p:last-child {{ margin-bottom: 0; }}
+blockquote.def-box strong {{ color: var(--box-def-rule); }}
 .book-eq {{ text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
-           font-size: 1.2em; color: #2a2a2a; margin: 1.3rem 0; letter-spacing: 0.02em; }}
+           font-size: 1.2em; color: var(--ink); margin: 1.3rem 0; letter-spacing: 0.02em; }}
 figure.book-figure {{ margin: 1.8rem 0; text-align: center; }}
 figure.book-figure svg,
 figure.book-figure img {{ max-width: 100%; height: auto; }}
-figure.book-figure figcaption {{ font-size: 14px; color: #666; margin-top: 0.6rem;
+figure.book-figure figcaption {{ font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }}
 figure.book-figure figcaption.fig-label-only {{ text-align: center; }}
-.fig-label, .tbl-label {{ font-weight: 700; color: #333; }}
-table caption {{ caption-side: top; text-align: left; font-size: 14px; color: #666;
+.fig-label, .tbl-label {{ font-weight: 700; color: var(--ink); }}
+table caption {{ caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }}
 ul.list-of-floats-links {{ list-style: none; padding-left: 0; }}
 ul.list-of-floats-links li {{ margin: 0.15rem 0; }}
 .marker {{ margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }}
-.marker-fill {{ background: #fff6e5; border: 1px dashed #d8a23a; }}
-.marker-more {{ background: #eef3f7; border: 1px dashed #7aa0bd; }}
+.marker-fill {{ background: var(--accent-tint); border: 1px dashed var(--accent); }}
+.marker-more {{ background: var(--box-def-fill); border: 1px dashed var(--box-def-rule); }}
 .marker-tag {{ display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }}
-.marker-fill .marker-tag {{ background: #a06a12; color: #fff; }}
-.marker-more .marker-tag {{ background: #4a6f8c; color: #fff; }}
+.marker-fill .marker-tag {{ background: var(--accent); color: var(--paper); }}
+.marker-more .marker-tag {{ background: var(--box-def-rule); color: var(--paper); }}
 .pager {{ display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid #eee; }}
-.pager a, .pager .disabled {{ text-decoration: none; color: #333; flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid #e2e0da; border-radius: 6px; background: #fff; }}
+          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }}
+.pager a, .pager .disabled {{ text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
+            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }}
 .pager a:hover {{ border-color: var(--accent); }}
-.pager .dir {{ display: block; font-size: 12px; color: #5f5f5f; text-transform: uppercase; letter-spacing: 0.05em; }}
+.pager .dir {{ display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }}
 .pager .ttl {{ color: var(--accent); font-weight: 600; }}
 .pager .next {{ text-align: right; }}
 .pager .disabled {{ visibility: hidden; }}
 .pager .home {{ flex: 0 0 auto; align-self: center; }}
-.book-foot {{ margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #eee; color: #6a6a6a;
+.book-foot {{ margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }}
 /* index page */
 .book-title {{ padding: 3rem 0 0.5rem; }}
 .book-title h1 {{ font-size: 2.4rem; margin: 0; }}
-.book-title .sub {{ color: #666; margin-top: 0.4rem; }}
+.book-title .sub {{ color: var(--muted); margin-top: 0.4rem; }}
 .book-download {{ margin-top: 0.9rem; }}
 .book-download a {{ display: inline-block; font-size: 14px; font-weight: 600; color: var(--accent);
-                    text-decoration: none; padding: 0.45rem 0.9rem; border: 1px solid #d8d5cc;
-                    border-radius: 6px; background: #fff; }}
-.book-download a:hover {{ border-color: var(--accent); background: #f4f3f0; }}
+                    text-decoration: none; padding: 0.45rem 0.9rem; border: 1px solid var(--rule);
+                    border-radius: 6px; background: var(--paper); }}
+.book-download a:hover {{ border-color: var(--accent); background: var(--panel); }}
 .idx .part {{ font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
              font-size: 13px; margin: 2rem 0 0.5rem; }}
 .idx ol {{ list-style: none; padding: 0; margin: 0; }}
 .idx li {{ margin: 0.35rem 0; }}
 .idx a {{ text-decoration: none; }}
-.idx .cnum {{ color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }}
+.idx .cnum {{ color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 0.5rem; }}
 /* term index page */
 .idx-terms ul {{ list-style: none; padding: 0; margin: 0 0 1rem; }}
 .idx-terms li {{ margin: 0.3rem 0; }}
 .idx-terms .idx-term {{ font-weight: 600; }}
-.idx-terms .idx-refs {{ color: #5f5f5f; font-size: 14px; }}
+.idx-terms .idx-refs {{ color: var(--muted); font-size: 14px; }}
 .idx-terms .idx-refs a {{ margin-left: 0.15rem; }}
 /* curated concept entry: a definition-of / examples-of sub-block under the concept name */
 .idx-terms li.idx-concept {{ margin: 0.55rem 0; }}
 .idx-concept .idx-subs {{ display: block; margin: 0.15rem 0 0 1rem; }}
-.idx-concept .idx-sub {{ display: block; font-size: 14px; color: #444; line-height: 1.6; }}
-.idx-concept .idx-sub-lead {{ color: #595959; font-style: italic; margin-right: 0.35rem; }}
+.idx-concept .idx-sub {{ display: block; font-size: 14px; color: var(--muted); line-height: 1.6; }}
+.idx-concept .idx-sub-lead {{ color: var(--muted); font-style: italic; margin-right: 0.35rem; }}
 /* Underline the locators so a link is distinguished from the "definition of:" lead text without relying
    on color alone (axe link-in-text-block). */
 .idx-concept .idx-sub a {{ margin-right: 0.4rem; text-decoration: underline; }}
 /* iframe figure embed (the rewired mechanism map) */
-figure.book-figure.catalogue-embed iframe {{ width: 100%; height: 600px; border: 1px solid #e2e0da;
-                                             border-radius: 6px; background: #fff; }}
+figure.book-figure.catalogue-embed iframe {{ width: 100%; height: 600px; border: 1px solid var(--rule);
+                                             border-radius: 6px; background: var(--paper); }}
 /* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
    and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
    so they read calm beside the primary pager cards rather than cramped. */
 .jump {{ display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }}
 .jump a {{ display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
            font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid #d8d5cc; border-radius: 6px; background: #fff; }}
-.jump a:hover {{ border-color: var(--accent); background: #f4f3f0; }}
+           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }}
+.jump a:hover {{ border-color: var(--accent); background: var(--panel); }}
 /* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
    between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
 nav.toc .toc-inner {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
@@ -1429,7 +1465,7 @@ def page(title: str, toc: str, main: str, mermaid: bool = False) -> str:
     return (
         "<!DOCTYPE html>\n<html lang=\"en\"><head><meta charset=\"utf-8\">"
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
-        f"<title>{html.escape(title)}</title><style>{CSS}</style></head><body>"
+        f"<title>{html.escape(title)}</title>{FONTS_LINK}<style>{CSS}</style></head><body>"
         f'{toc}<main class="wrap" aria-label="{label}">{main}</main>{runtime}</body></html>\n'
     )
 
