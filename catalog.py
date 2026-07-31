@@ -614,6 +614,19 @@ def cmd_validate(_args) -> int:
             print(f"  [family] '{fam}': no italic one-liner under its INDEX header")
             n_issues += 1
     by_role = {r: sum(e.role == r for e in entries) for r in ROLES}
+    # DESIGN-TOKEN DRIFT — AUDIT-ONLY. The one-token / three-surface style gate (raw literals / off-scale
+    # sizes / SVG-palette membership / mermaid freshness / anchor-hue pins). Lands audit-only per the repo's
+    # blocking-lint discipline: it PRINTS its finding count here (so a committer sees the migration worklist)
+    # but does NOT increment n_issues, so validate stays green until the migration drains it and a follow-up
+    # flips it blocking. See book-models/lint_design_token_drift.py.
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in sys.path:
+        sys.path.insert(0, bm)
+    import lint_design_token_drift as ldtd  # noqa: E402 — audit-only drift gate
+    drift = ldtd.findings()
+    if drift:
+        print(f"  [tokens] AUDIT-ONLY: {len(drift)} design-token-drift finding(s) — "
+              f"run `python3 book-models/lint_design_token_drift.py` (does not gate)")
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")

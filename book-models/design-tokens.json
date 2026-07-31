@@ -1,0 +1,44 @@
+{
+  "_provenance": "design-tokens SSOT — edit here; renderers project via book-models/design_tokens.py (CSS :root, Typst #let dt, mermaid-config.json, SVG palette allow-list). Do not hand-edit the projected blocks in catalog.py / build_book_html.py / book_typst.py / mermaid-config.json.",
+  "option": "umber-monograph",
+  "palette": {
+    "ink":          "#1c1917",
+    "paper":        "#fdfcf9",
+    "panel":        "#f6f4ef",
+    "rule":         "#e4e0d8",
+    "muted":        "#57534e",
+    "accent":       "#9a3f12",
+    "accent-tint":  "#faf1e6",
+    "link":         "#9a3f12",
+    "code-bg":      "#f3efe7",
+
+    "box-thesis-rule":  "#15803d",  "box-thesis-fill":  "#eef7ee",
+    "box-def-rule":     "#1f6fae",  "box-def-fill":     "#eef4fb",
+    "box-inset-rule":   "#7c6bb0",  "box-inset-fill":   "#f2effb",
+
+    "diagram-churn":    "#b23b3b",  "diagram-churn-fill":    "#fbeaea",
+    "diagram-fleet":    "#2f5169",  "diagram-fleet-fill":    "#e7edf3",
+    "diagram-governed": "#1f7a4d",  "diagram-governed-fill": "#e3f0e7",
+    "diagram-trust":    "#155c38",  "diagram-trust-fill":    "#eef7f0"
+  },
+  "type": {
+    "display": { "family": "Fraunces",
+                 "css-stack": "\"Fraunces\", \"Iowan Old Style\", Palatino, Georgia, serif",
+                 "typst-stack": ["Fraunces", "Georgia", "New Computer Modern"],
+                 "display-weight": 600, "display-tracking-em": -0.03 },
+    "body":    { "family": "Source Sans 3",
+                 "css-stack": "\"Source Sans 3\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+                 "typst-stack": ["Source Sans 3", "Helvetica"] },
+    "mono":    { "family": "IBM Plex Mono",
+                 "css-stack": "\"IBM Plex Mono\", \"SF Mono\", Menlo, Consolas, monospace",
+                 "typst-stack": ["IBM Plex Mono", "Menlo"] },
+    "scale-px": [12, 14, 16, 18, 22, 28, 36, 52],
+    "roles": { "micro": 0, "meta": 1, "card-body": 2, "body": 3,
+               "card-title": 4, "section": 5, "thesis-title": 6, "display": 7 },
+    "line-height": { "body": 1.62, "display": 1.08, "card": 1.5 }
+  },
+  "space-px":  [4, 8, 16, 24, 32, 48, 64],
+  "radius-px": { "card": 10, "chip": 4, "code": 6 },
+  "border-px": { "hairline": 1, "accent-bar": 3, "box-rule": 4 },
+  "figure": { "font-role": "body", "label-min-px": 12 }
+}
