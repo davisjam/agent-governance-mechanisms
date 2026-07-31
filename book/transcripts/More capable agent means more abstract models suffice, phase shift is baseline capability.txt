@@ -1,0 +1,16 @@
+<!-- Provenance: RAW auto-transcript of 'More capable agent means more abstract models suffice, phase shift is baseline capability.m4a'. whisper.cpp large-v3-turbo, 2.2 min. NOT repaired, NOT integrated — the untouched source of record. Repair pass produces a sibling .repaired.md aligned to the lexicon; integration is pondered separately. -->
+
+# More capable agent means more abstract models suffice, phase shift is baseline capability
+
+This idea of working with increasingly capable agents using increasingly abstract models and delegating more of the sub-models and implementation to them, of course, maps rather neatly onto the experience of managers working with increasingly large parts of an organization.
+ They, of course, do not understand the organization's day-to-day operations in intricate detail.
+ They are delegating those things to their sub-managers and to the individual contributors at the bottom of the heap.
+ Hence, the enormous layoffs in the technical middle management layers and the demand of tech companies to have flatter organizations.
+ These policies are the result of AI enabling each member of an organization to work at a higher level of abstraction than they could before.
+ What is necessary to succeed is making explicit all the models that used to be implicit, all the knowledge base that used to be held within individuals.
+ These things must be articulated in order for the intelligence, the agents, to reason over.
+ And when organizations struggle to deliver on the promise of AI, it is this failure to make those things explicit that I conjecture is the underlying cause.
+ There are, of course, many other possible causes, but I think this is likely the most common.
+ To no one's surprise, very fast layoffs and disgruntled employees about to be replaced are often hesitant to articulate everything they know to teach to their replacement, nor to prepare the way for their replacement.
+ And this capitalists and their workers are at odds, as Cory Doctorow and Karl Marx would be happy to teach you further.
+ Thank you.

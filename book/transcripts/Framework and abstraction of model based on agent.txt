@@ -1,0 +1,15 @@
+<!-- Provenance: RAW auto-transcript of 'Framework and abstraction of model based on agent.m4a'. whisper.cpp large-v3-turbo, 1.7 min. NOT repaired, NOT integrated — the untouched source of record. Repair pass produces a sibling .repaired.md aligned to the lexicon; integration is pondered separately. -->
+
+# Framework and abstraction of model based on agent
+
+Well, one of course might ask, if this is a framework, how does it change as we modify variables in the framework?
+ And one of the chief variables of interest is the caliber of the agent.
+ In other words, its reasoning element and its ability to develop and reason over increasingly complex systems.
+ And to this, my reply is, one of the advantages of a model-based approach is that models are layers of abstractions.
+ And the stronger the model, the more abstraction it can be trusted to reify without direct supervision.
+ So as the models become more capable, the thing that will change is the scope of system for which an individual engineer is responsible.
+ And the levels of abstraction at which the engineer is reasoning.
+ But the approach itself will not change.
+ The main thing is the state shift from the engineer being responsible for the implementation to the engineer being responsible for the design.
+ Once that shift happens, the only difference will be of scale, not of kind.
+ This text is primarily preaching that the first and most important change is of kind from managing the implementation to managing the design.

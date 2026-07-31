@@ -1,0 +1,50 @@
+<!-- Provenance: RAW auto-transcript of 'Definitions 1.m4a'. whisper.cpp large-v3-turbo, 5.4 min. NOT repaired, NOT integrated — the untouched source of record. Repair pass produces a sibling .repaired.md aligned to the lexicon; integration is pondered separately. -->
+
+# Definitions 1
+
+The book needs to define the key terms. I think these terms are model, agent, and engineering, and I guess specifically software engineering.
+ We have a standard definition for agent, and a standard definition for engineering and software engineering is a specialization.
+ I think one distinctive perspective of the book is that the notion of a model is somewhat different between conventional model-based software engineering and agentic approaches.
+ Maybe it's been discussed in the modeling literature. I guess it must have been.
+ But perhaps the emphasis is different for this project.
+ I would say that our working definition of engineering is, of course, a discipline concerned with the development of solutions to problems amenable through technological, primarily technological means, the development of technological artifacts to address those problems with human operators or operators.
+ Operable artifacts, yes, fine.
+ And engineering is also a discipline concerned with the analytical assessment, the analytical identification and assessment of competing means to obtaining those solutions with distinct trade-offs.
+ If you cannot articulate the trade-offs, then you are not engineering, you are a technician.
+ An engineer can model and predict the outcomes and the decisions they're going to make based on the architectures that they're proposing, the designs they're proposing, par to building them.
+ There is therefore a distinction between software development, which produces a functioning artifact, and software engineering, which produces, which selects, which predictively selects a software artifact according to the desired properties.
+ So much for engineering and software engineering, the discipline that does that, fine.
+ Next, we have to consider agents.
+ This is not a book about human management.
+ And therefore, we must identify a specific actor intended to be undertaking the implementation work and participating in the design.
+ An agent is a controllable intelligence capable of independent reasoning.
+ Anything within a knowledge base.
+ There are many interesting aspects to this definition.
+ The first is controllable.
+ The first of all, perhaps, is intelligence.
+ This is, of course, intelligence, outside the scope of the book, of course, but a working definition might be that it,
+ can, given a set of constraints and a goal, can devise a means of satisfying the goal without violating the constraints.
+ You might think of a raven placing pebbles into a jar to cause the water level to rise high enough that it can drink.
+ The goal, get a drink, the constraints.
+ The beak is too big to fit all the way into the bottom of the cup.
+ Means some pebbles.
+ And thus, we have a raven Archimedes.
+ Eureka.
+ This is the definition of agent.
+ This is the definition of agent.
+ Controllable, right?
+ So we have an intelligence.
+ It needs to be controllable.
+ Controllable means that you can change its environment and the knowledge available to it.
+ And it will do different things.
+ And it will generally follow orders.
+ Controllable is maybe a different word from controlled.
+ I would say that controlled means that you have perfect guarantees of its behavior.
+ And controllable means that you have probabilistic guarantees of its behavior.
+ Any other parts of this that I uttered?
+ That's a pretty good set.
+ Now we have model.
+ The boy word for okay.
+ Now, a model.
+ Gentleman is someone who is very clothed dressed.
+ He doesn't know.

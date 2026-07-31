@@ -1,0 +1,238 @@
+<!-- Provenance: RAW auto-transcript of 'Definitions 2.m4a'. whisper.cpp large-v3-turbo, 7.0 min. NOT repaired, NOT integrated — the untouched source of record. Repair pass produces a sibling .repaired.md aligned to the lexicon; integration is pondered separately. -->
+
+# Definitions 2
+
+Now we have model.
+ Model is a very broad word.
+ It is a description that approximates
+ the phenomenon it is trying to capture
+ in a way that is useful for making predictions about that phenomenon.
+ Sometimes models are mathematical models
+ they describe a quantitative relationship between variables
+ perhaps imperfect but useful
+ think f equals ma
+ may neglect the effect of friction in a simpler model
+ but is nevertheless useful.
+ Another kind of model is a
+ you can think of supply and demand in economics
+ another kind of model is qualitative.
+ You can predict a relationship between things
+ but not necessarily the strength of that relationship
+ quantitatively.
+ You can just say
+ if this one goes up
+ that one's going to go up
+ but we don't know exactly how much
+ models can also describe
+ the relationship between things
+ these are called relational models
+ they say every time I get one of these
+ I get two of those
+ it's a quantitative relationship
+ but that's not really the point
+ the point is that these things go together.
+ You can describe the flow of information
+ through a system with a model
+ you can say that here are the set of transformations
+ that are applied to data
+ as it goes through a system
+ this too is a model
+ that's a useful approximation of reality
+ there may be other things that happen
+ for that data
+ there may be side effects
+ that result from processing the data
+ but you needn't include them
+ for the model to be useful
+ for someone auditing
+ the mathematical outcome
+ or auditing
+ who can access that data
+ on the other hand
+ the model's fidelity
+ may influence
+ your ability to use it
+ and I said the model
+ needs to be an approximation
+ that's useful
+ and useful is in the eye
+ of the application
+ to understand roughly
+ what kind of system
+ you're working with
+ it might suffice to say
+ that it does information processing
+ in a serial manner
+ but if you're trying to understand
+ cybersecurity or privacy considerations
+ you need a much higher fidelity
+ fidelity model
+ i.e. one that is much closer
+ to the real system
+ and not a coarse approximation
+ so this notion of fidelity
+ is also crucial
+ for understanding the idea of a model
+ now for the purpose of this text
+ that is what a model is
+ now we must also talk about
+ what a model implies
+ a model implies
+ constraints on the system
+ or the phenomenon
+ that is being modeled
+ for the model to be useful
+ it must be
+ an accurate approximation
+ and so a system
+ constructed on the basis
+ of such models
+ cannot take any form
+ it must take roughly
+ the form described
+ by the model
+ it can elaborate on the model
+ but it cannot diverge
+ from the model
+ to the extent that the model
+ diverges from the real thing
+ the thing signified
+ it is not
+ its utility diminishes
+ conversely
+ to the extent that the model
+ maps exactly
+ its utility increases
+ to the extent that the model's fidelity
+ is high
+ it becomes the thing signified
+ with good or bad results
+ the thing signified itself
+ is very difficult to understand
+ because of its complexity
+ a model is simpler to understand
+ so the more coarse the model
+ the cheaper it is
+ to analyze the properties
+ and yet the less accurate
+ the analysis may become
+ so you get error bars
+ around your analysis
+ shall we say
+ all right
+ so these are the core definitions
+ and terms
+ please note
+ the relationship between them
+ for the purpose of this text
+ a model allows you
+ to make predictions
+ because it provides
+ a useful perspective
+ on the functioning
+ of a phenomenon
+ or the behavior of a phenomenon
+ therefore engineers love models
+ they can
+ without excess cost
+ assess
+ the trade-offs
+ of different
+ approaches to a problem
+ that's their bread and butter
+ now an agent
+ works with
+ a knowledge base
+ to satisfy constraints
+ and produce
+ a functioning artifact
+ well a model
+ sounds pretty good
+ for them too
+ doesn't it
+ the model
+ which approximates
+ the thing being described
+ thus serves as a constraint
+ and a blueprint
+ the agent is allowed
+ to elaborate
+ on those models
+ but it cannot diverge
+ from them
+ and because agents
+ are capable of reasoning
+ over knowledge bases
+ the models serve
+ as the knowledge base
+ of interest
+ for the artifact
+ being constructed
+ well these definitions
+ and the relationship
+ between them
+ tells you the whole book
+ in a nutshell
+ our goal
+ is to describe
+ the kinds of models
+ that are of use
+ to agents
+ to show
+ how agents
+ can interact with them
+ whether it benefits
+ those agents
+ and how to keep
+ the models
+ consistent
+ with the artifact
+ as the artifact
+ is constructed
+ and finally
+ to help engineers
+ understand how to
+ construct these models
+ how to assess them
+ and how to use them
+ to make predictions
+ prior to
+ the construction
+ of a system
+ we also discussed
+ the implications
+ of
+ software agents
+ as
+ making
+ implementations
+ free
+ right
+ in the olden days
+ we
+ we offered
+ software development
+ in an agile manner
+ figuring that
+ building anything
+ that functioned
+ and met requirements
+ is better than not
+ now we can build
+ more than one
+ and in the words
+ of Fred Brooks
+ we can build one
+ to throw away
+ we can make models
+ we can assess
+ our trade-offs
+ we can build a prototype
+ in light of that
+ and we can afford
+ to do it more than once
+ to the extent
+ that the model
+ didn't work
+ this is all very desirable
+ Otherwise.

@@ -48,3 +48,6 @@ node_modules/
 
 # Terseness-audit worksheets (review artifacts, not shipped)
 terseness-recs/
+
+# Raw transcript source audio/video (multi-MB binaries; transcripts are the shipped artifact)
+transcript-sources/

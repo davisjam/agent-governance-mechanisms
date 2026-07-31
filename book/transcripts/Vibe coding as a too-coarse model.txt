@@ -1,0 +1,48 @@
+<!-- Provenance: RAW auto-transcript of 'Vibe coding as a too-coarse model.m4a'. whisper.cpp large-v3-turbo, 5.4 min. NOT repaired, NOT integrated — the untouched source of record. Repair pass produces a sibling .repaired.md aligned to the lexicon; integration is pondered separately. -->
+
+# Vibe coding as a too-coarse model
+
+This definition of model and the idea of the reasoning module and the parent module together
+ suggest why vibe coding has been so intoxicating and yet will not produce
+ engineered products. In vibe coding, one provides a verbal specification and the
+ specification is deliberately high level. It's as much as a human is willing to
+ type and typically that means a description of an application at the
+ level of its input output behavior. I would like to make a to-do list that I can
+ enter things in. I would like to make a tax processing software where I put in my
+ tax returns in the state and it does the right computation.
+ This approach does provide a module, a model, albeit an extremely coarse one. There are
+ almost no constraints on the agent's approach to satisfying the goals and
+ agents will take the easiest path. They've been designed to take that easiest path. Of course they ought
+ to be, they ought to. They are trying to minimize the amount of work they perform
+ because the agent designers, the makers of the foundation models, know that the more
+ resources used by the agent, the more it costs the user of the agent. Of course we
+ have to remember that these resources are, at the moment, extremely expensive. Operating GPUs to
+ process tokens and do analysis is pushing the limits of our society's water and
+ energy infrastructure. And it's therefore desirable for them to be reasonably efficient
+ efficient in doing so. And here, efficiency probably means doing the least work possible.
+ So they do funny things. They, with constraints, that course will hard code the simplest possible
+ approach, producing kind of a patemptive village of code. And they will not bear any resemblance
+ to the actual engineered result that you might expect from a real version. You may have heard of Bain Capital,
+ trying to reverse engineer applications, based on how much they can bibecode in a weekend. And I assure you,
+ they are getting an inaccurate understanding of the difficulty of realizing the software they're trying to reverse engineer.
+ Because they're not getting a well-engineered result, or at least not particularly well-engineered, let us say.
+ So the more articulate your model, the more constrained the agent becomes. If you say that the data in your tax processing software needs to go to a database, you've imposed,
+ an additional constraint, you've imposed, an additional constraint, you've provided a model that has not fixed.
+ So the more articulate your model, the more constrained the agent becomes. If you say that the data in your tax processing software needs to go to a database, you've imposed an additional constraint, you've provided a model that has not fixed.
+ An additional constraint. You've provided a model that has not fidelity of the implementation until you've demanded the agent produce it. But it's of higher fidelity with respect to your intended vision. It's greater constraints on the outcome.
+ The more you constrain, the more you constrain, the more you can analyze, and also the more you have confidence in the kind of thing that the agent will produce.
+ These constraints may increase the cost of producing the system at first blush. The agent will have to reason harder to satisfy all the additional constraints.
+ On the other hand, it should reduce the total cost of development because you will need to do far less iteration with the agent since you've already encoded your desires reasonably accurately.
+ Note that we can also therefore understand agents as a kind of general purpose constraint solver, which is a delightful view.
+ We know that constraint solving is NP-hard or is it NP-complete? You can think of SAT, a very simple kind of set of constraints.
+ SMT is a much more complex constraint. They get harder from there.
+ And in a sense, what agents are doing is trying to satisfy far more complex constraints than these.
+ So it is marvelous that they can do so. But if we treat them as magic boxes that can take verbal commands, they will not work.
+ They must be constrained such that the solutions they obtain are desirable.
+ Thus the job of the engineer becomes articulating those constraints.
+ And in other words, proposing models based on the desired properties of the system,
+ or perhaps in a future version of the agents, selecting among models proposed by the agents themselves.
+ There are many ways to apply the MAGE framework.
+ Thank you.
+ Thank you.
+ Thank you.

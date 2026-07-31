@@ -1,0 +1,5 @@
+<!-- Provenance: RAW auto-transcript of 'Controllability and governance.m4a'. whisper.cpp large-v3-turbo, 0.3 min. NOT repaired, NOT integrated — the untouched source of record. Repair pass produces a sibling .repaired.md aligned to the lexicon; integration is pondered separately. -->
+
+# Controllability and governance
+
+The controllable part of controllable intelligence and the definition of agent is why governance is a major part of this book. If it were controlled, we would not need the governance.

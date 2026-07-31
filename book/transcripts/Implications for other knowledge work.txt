@@ -1,0 +1,80 @@
+<!-- Provenance: RAW auto-transcript of 'Implications for other knowledge work.m4a'. whisper.cpp large-v3-turbo, 6.3 min. NOT repaired, NOT integrated — the untouched source of record. Repair pass produces a sibling .repaired.md aligned to the lexicon; integration is pondered separately. -->
+
+# Implications for other knowledge work
+
+What is the implication of this text beyond software engineering?
+ As discussed earlier in the book, software engineering is distinct among engineering disciplines in that it has no dependence on physical reality.
+ There is, of course, embedded software development, and firmware and device drivers depend on the properties of the hardware involved.
+ But those things can typically be addressed through, you guessed it, models of the hardware of physical systems and so on.
+ Think about SysML and how it handles analysis of parametric systems based on models.
+ You can think of digital twins as well.
+ You can try to model factories and other physical phenomena, jet engines and so on, well enough so that you can assess the properties of the whole system and how software will behave in it.
+ You can model the whole system.
+ With that in mind, software engineering is particularly amenable to a Solify agents because software agents have seen, been trained on, an enormous amount of software implementations.
+ They have not seen the models, but they have seen the implementations through the mining of GitHub and other open source software.
+ Note that this, of course, limits their potential utility to, because of how they're trained, the software libraries and the kinds of software, the classes of software that they've seen developed.
+ As a result, coding agents are incredibly good at building websites because they've seen every website ever made.
+ They're not so good at writing device drivers because they haven't seen that many custom device drivers for proprietary hardware in particular.
+ So they don't have a sense of what the hardware's properties are and they therefore have trouble dealing with it.
+ This, of course, footnote or back reference thing to change earlier.
+ We need to describe the foundation models as possessive two attributes.
+ The first is that they are stochastic parrots.
+ They are able to, they've been trained on very large amounts of data and they're capable of filling in missing gaps between that data.
+ The denser the data, the more accurate their fill-ins, and the less dense the data, the more unusual or obscure the kind of information being solicited, the less accurate their results are.
+ They're going to be decreasingly plausible and decreasingly useful.
+ That's part of them.
+ The other part of them is reasoning.
+ They've been trained to be able to reason in response to a query.
+ As a result, this text is primarily reliant on their property as agents, right?
+ The reasoning element rather than this statistical probability function aspect.
+ We are not interested in their ability to produce Nobel Prize-winning prose.
+ We're interested in their ability to reason over models.
+ Okay, so that part goes earlier in the definitions in part two.
+ Let's continue our conversation.
+ All knowledge work, this author conjectures,
+ is defined by how humans, as historically been defined by,
+ how humans reason over models.
+ Any undergraduate degree in a technical field consists of the communication of the foundational knowledge of the field,
+ usually expressed in terms of models of the phenomenon with increasingly high fidelity models,
+ as you move to upper-level undergraduate courses and to graduate-level courses.
+ And there are applications of those models.
+ We call these things senior design and master's thesis,
+ where a student takes the body of knowledge,
+ the body of models,
+ convey to them the reasons over those models to produce results.
+ This is true of software,
+ but it is also true of all other engineering disciplines.
+ And it is because of engineering disciplines,
+ and, you know, other STEM-y things,
+ accountants,
+ designers,
+ they are all following bodies of rules.
+ Those are the constraints.
+ And then applying some amount of judgment and intuition and taste to produce artifacts fitting the needs of a client.
+ Well,
+ without framing, of course,
+ all the ideas of this book should apply,
+ could,
+ may apply to those other disciplines.
+ That's because the AI models,
+ the foundation models,
+ can reason if you give them the right knowledge base.
+ So to apply the ideas of this book to other disciplines,
+ I suggest that one construct the appropriate models,
+ attempt to encode taste if you like.
+ You can see the appendix on how I developed skills for agents,
+ to see what embodying that taste looks like.
+ And then,
+ you ought to be off for the races.
+ No, I don't know.
+ I haven't tried.
+ It is hard for me to distinguish how much the utility of my approach relies on the agent's reasoning ability alone,
+ and how much of it relies both on the reasoning ability and the volume of software that they've mined from open-source software,
+ such that the probabilistic parrot part of them is capable of producing,
+ stringing together words in the computer language to actually produce the computation that the reasoning module recommends.
+ I don't know.
+ But I think it's worth exploring.
+ So, I suggest that the MAGE framework certainly works for software engineering,
+ and it may apply with some adaptation to all other forms of knowledge engineering.
+ Let's see what our friends in the other disciplines can come up with.
+ Okay.
