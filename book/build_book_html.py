@@ -3332,12 +3332,15 @@ def build_pdf() -> int:
     print(f"Typst source: {typ_src} ({len(typ):,} bytes, {len(slugs)} chapters)")
 
     # Compile. `--root ..` so leading-`/` image paths (figure SVGs, cached mermaid SVGs) resolve against
-    # the repo root. Typst fails loud on any unresolved reference / bad image / math error. `--input
-    # last_modified=…` feeds the cover footer the book's last content-commit date (Typst has no clock, and
-    # CI has no wall-clock intent — the date must be computed here and passed in).
+    # the repo root. `--font-path` points Typst at the bundled OFL statics (book/fonts/) — Fraunces /
+    # Source Sans 3 / IBM Plex Mono are not installed on the host or the CI runner, so without this flag
+    # Typst silently substitutes a default serif and the PDF diverges from the web book, which loads the
+    # real faces via Google Fonts. Typst fails loud on any unresolved reference / bad image / math error.
+    # `--input last_modified=…` feeds the cover footer the book's last content-commit date (Typst has no
+    # clock, and CI has no wall-clock intent — the date must be computed here and passed in).
     last_modified = _book_last_modified()
     cmd = [typst, "compile", "--input", f"last_modified={last_modified}",
-           "--root", str(ROOT), str(typ_src), str(pdf_out)]
+           "--root", str(ROOT), "--font-path", str(HERE / "fonts"), str(typ_src), str(pdf_out)]
     print("PDF compile plan:\n  " + " ".join(f'"{a}"' if " " in a else a for a in cmd))
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.stdout.strip():

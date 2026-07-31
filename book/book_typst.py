@@ -549,6 +549,7 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 #set table(stroke: none, inset: (x: 8pt, y: 5pt))
 #show table.cell.where(y: 0): set text(weight: "bold")
 #show raw.where(block: true): set block(fill: dt.code-bg, inset: 8pt, radius: 3pt, width: 100%)
+#show raw: set text(font: dt.font-mono)
 #set raw(tab-size: 2)
 """
 

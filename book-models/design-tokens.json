@@ -24,7 +24,7 @@
   "type": {
     "display": { "family": "Fraunces",
                  "css-stack": "\"Fraunces\", \"Iowan Old Style\", Palatino, Georgia, serif",
-                 "typst-stack": ["Fraunces", "Georgia", "New Computer Modern"],
+                 "typst-stack": ["Fraunces 9pt", "Georgia", "New Computer Modern"],
                  "display-weight": 600, "display-tracking-em": -0.03 },
     "body":    { "family": "Source Sans 3",
                  "css-stack": "\"Source Sans 3\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
