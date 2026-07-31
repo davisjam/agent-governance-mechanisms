@@ -19,7 +19,7 @@
       "chapters": 28,
       "parts": 7,
       "points": 332,
-      "terms": 243
+      "terms": 242
     }
   },
   "index": {
@@ -1100,16 +1100,6 @@
           "view": "outline",
           "element": "2.2-models-and-the-semantic-gap::block-30",
           "role": "paragraph-point"
-        }
-      ]
-    },
-    "agreement-not-correctness": {
-      "kind": "term",
-      "dependents": [
-        {
-          "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-47",
-          "role": "paragraph-term[tier-2]"
         }
       ]
     },
@@ -2870,6 +2860,16 @@
           "view": "outline",
           "element": "2.6-when-guardrails-collide::drawing-what-lies-between-the-controls",
           "role": "section-anchor"
+        }
+      ]
+    },
+    "drift-caveat": {
+      "kind": "term",
+      "dependents": [
+        {
+          "view": "outline",
+          "element": "2.2-models-and-the-semantic-gap::block-47",
+          "role": "paragraph-term[tier-2]"
         }
       ]
     },

@@ -293,7 +293,6 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 
 <!-- term-tier registry: `- term: <slug> | <tier>`; tier ∈ {section, local}. Concept slugs default to
      section-tier, so only deviations + new local terms are listed. -->
-- term: agreement-not-correctness | local
 - term: task-mode-decision | section
 - term: one-shot-scripting | section
 - term: supervised-autonomy | section
