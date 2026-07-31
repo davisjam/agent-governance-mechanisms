@@ -1600,13 +1600,13 @@ function fitFig(f){
       <summary>
         <span class="cd-kicker">What this site packages</span>
         <span class="cd-title">Both halves, as three Claude skills</span>
-        <span class="cd-frame">71 governance mechanisms across three roles, each a design pattern.</span>
+        <span class="cd-frame">74 governance mechanisms across three roles, each a design pattern.</span>
         <span class="cd-toggle" aria-hidden="true"></span>
       </summary>
       <div class="cd-body">
         <p>This site packages <b>both halves</b> — the guidance on what to fix in advance and the machinery for
         responding when something slips through — as three Claude skills with a
-        <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>71 governance mechanisms across
+        <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>74 governance mechanisms across
         three roles</b>, each written like a design pattern: the recurring failure it kills, and why it is
         <i>not</i> just the cheaper thing everyone already does.</p>
         <a class="cd-more" href="quick-start.html">start here →</a>
@@ -1662,7 +1662,7 @@ function fitFig(f){
   </div>
 
   <div class="fam">
-    <div class="fam-h">Explore the catalogue — 71 governance mechanisms, the repertoire this loop produced</div>
+    <div class="fam-h">Explore the catalogue — 74 governance mechanisms, the repertoire this loop produced</div>
     <div class="masonry">
     <details class="card" id="card-views-of-the-governance-catalogue">
   <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Views of the governance catalogue</span><span class="cd-frame">the whole catalogue at a glance — four views, mechanisms clickable</span><span class="cd-toggle" aria-hidden="true"></span></summary>
@@ -1785,9 +1785,12 @@ function fitFig(f){
 <tr><td class="c-name"><a href="models-bridge/system-models/service-flow-model.html">Service-flow / API model — <em>product-facing</em></a></td><td class="c-sum">The SOA source-of-truth NetworkPolicy and wiring are generated from.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/user-journey-model.html">User-journey model (product-goal → implementation) — <em>product-facing</em></a></td><td class="c-sum">User journeys as typed entities: actor, goal, ordered steps joined to the endpoints they cross.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/domain-registries.html">Domain registries — <em>product-facing</em></a></td><td class="c-sum">Frozen typed registries for the system's domain facts.</td><td class="c-enf">Hard</td></tr>
+<tr><td class="c-name"><a href="models-bridge/system-models/composed-state-machine-model.html">Composed state-machine model (typed lifecycles + cross-machine invariants) — <em>product-facing</em></a></td><td class="c-sum">Typed state machines + cross-machine invariants, each routed to its checker by its shape.</td><td class="c-enf">Hard</td></tr>
+<tr><td class="c-name"><a href="models-bridge/system-models/process-view.html">Process view (concurrent processes, lanes, racing edges) — <em>product-facing</em></a></td><td class="c-sum">Concurrent processes, their lanes, and the edges where they race over shared state.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/synchronization-model.html">Synchronization model (meta-sync) — <em>orchestration-facing</em></a></td><td class="c-sum">A registry of every lock, what it guards, and its ordering.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/agent-orchestration-model.html">Agent-orchestration model (developer journeys) — <em>orchestration-facing</em></a></td><td class="c-sum">The fleet + orchestrator loop modeled with the product's own MBSE method: developer journeys.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/governance-graph.html">Governance graph (mechanism-interaction model) — <em>orchestration-facing</em></a></td><td class="c-sum">A typed graph of the governance mechanisms, edged by their conflicts over shared resources.</td><td class="c-enf">Soft·Hard</td></tr>
+<tr><td class="c-name"><a href="models-bridge/system-models/lifecycle-model.html">Lifecycle model (typed operational map → generated runbook) — <em>orchestration-facing</em></a></td><td class="c-sum">Typed map of the system's operation: per-lifecycle health predicate, generating the runbook.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/component-zone-model.html">Component &amp; zone model — <em>shared spine</em></a></td><td class="c-sum">A typed map of every component's code zone and seams.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/concurrency-contracts.html">Mediator &amp; single-writer contracts — <em>shared spine</em></a></td><td class="c-sum">Declared mediator and single-writer contracts, coverage-checked.</td><td class="c-enf">Hard</td></tr>
 <tr><td class="c-name"><a href="models-bridge/system-models/deployment-topology-model.html">Deployment &amp; tier topology — <em>shared spine</em></a></td><td class="c-sum">Typed models of where things run and how they layer.</td><td class="c-enf">Hard</td></tr>

@@ -50,11 +50,15 @@ bridge is how an engineer hands the agent the priors its training never gave it,
 further the system sits from the well-trodden path, the more the model must reason
 through the map instead of through a guess.
 
-## The <!--census:bridge:word-->23<!--/census--> mechanisms — one method, two subjects (a Y)
+## The <!--census:bridge:word-->26<!--/census--> mechanisms — one method, two subjects (a Y)
 
 The role is a **Y**: one **method** (the trunk) reified toward the two subjects the bridge couples — the
 **product** it ships and the **orchestration** that builds it. The <!--census:bridge_method:word-->fourteen<!--/census--> method-mechanisms are
-subject-agnostic; the <!--census:bridge_models:word-->nine<!--/census--> models split by subject, with three that serve both faces (the *shared spine*).
+subject-agnostic; the <!--census:bridge_models:word-->twelve<!--/census--> models split by subject, with three that serve both faces (the *shared spine*).
+
+These model entries are a **curated sample of the portable genres**, not a full inventory. The real
+substrate carries on the order of sixty typed models; the ones written up here are those whose *shape*
+transfers to another system, so a reader adapts the genre rather than the instance.
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:
 
@@ -100,6 +104,13 @@ subject-agnostic; the <!--census:bridge_models:word-->nine<!--/census--> models 
   *goal-anchored* model).
 - [Domain registries](system-models/domain-registries.md) — filetypes, WCAG gaps, cron, UX surfaces,
   competitors, rule metadata.
+- [Composed state-machine model](system-models/composed-state-machine-model.md) — the product's
+  concurrent lifecycle as a *set* of typed machines with first-class cross-machine invariants, each
+  invariant routed to its checker by its temporal shape (safety → exhaustive, liveness → temporal, linear
+  → property). The specification the temporal verifier proves against.
+- [Process view](system-models/process-view.md) — the concurrency projected the other way: the concurrent
+  processes, their lanes, and the *racing edges* where they touch shared state, each edge joined to the
+  lock that guards it. "What runs at once and where do they collide," over the machine model.
 
 **Orchestration-facing models** — the method pointed at the agent fleet / dev substrate:
 
@@ -113,6 +124,10 @@ subject-agnostic; the <!--census:bridge_models:word-->nine<!--/census--> models 
   process-governance mechanisms themselves as a typed graph: nodes tagged by firing event + shared-resource
   footprint, edges the *conflicts* between them (contradiction / contention / ordering / soft-vs-hard) over a
   shared resource. The dynamic dual of the catalogue's static census — the interaction dimension the list omits.
+- [Lifecycle model](system-models/lifecycle-model.md) — a typed operational map of how the substrate
+  *works*: each operating lifecycle a named node with a one-line mechanics summary and a machine-checkable
+  healthy-state predicate, symptom→fix rows keyed to the lifecycle they belong to, the operator runbook
+  *generated* from the map so the prose can't drift from the system.
 
 **Shared-spine models** — one model, both faces:
 
