@@ -198,8 +198,14 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
-    "inset", "data", "label", "point", "section-terms",
+    "inset", "data", "label", "point", "section-terms", "web-only",
 )
+# `<!-- web-only: <inline markdown> -->` — a line that belongs in the WEB book but NOT the print PDF (e.g.
+# a "download the PDF" call-to-action, which would be absurd inside the PDF itself). The HTML build renders
+# its argument as an ordinary paragraph; the Typst emitter drops it (the IR records it as an inert DIRECTIVE,
+# so the print projection never sees it). One authored line, web-only by construction — no per-slug special
+# casing. The mirror-image `<!-- print-only -->` is not needed yet; add it here if a print-only line appears.
+_WEB_ONLY_RE = re.compile(r"^<!--\s*web-only:\s*(?P<content>.+?)\s*-->$")
 # A comment whose first token is one of the vocabulary keywords — used to peel a marker glued to the head
 # of a prose block (placement-robust stripping: an author need not remember a blank line) and, in the gate,
 # to recognise a leaked marker regardless of whether it shipped escaped or raw. The trailing boundary
@@ -684,6 +690,11 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             return True
         if _GLOSS_ONLY_RE.match(s):
             return True  # glossary-only: harvested by _collect_glossary; renders nothing inline
+        _wo = _WEB_ONLY_RE.match(s)
+        if _wo:
+            # Web-only line — render its inline markdown as a paragraph (the PDF projection drops the marker).
+            _emit(f"<p>{inline(_wo.group('content'))}</p>")
+            return True
         if s == "<!-- glossary-auto -->":
             items = "".join(f"<li><strong>{inline(t)}</strong> — {inline(d)}</li>"
                             for t, d in sorted(_GLOSSARY.items(), key=lambda kv: kv[0].lower()))
@@ -3229,6 +3240,22 @@ def _pdf_is_tagged(pdf_path: pathlib.Path) -> bool:
     return b"/StructTreeRoot" in data
 
 
+def _book_last_modified() -> str:
+    """The book's last content-modification date (YYYY-MM-DD) for the print cover footer. Prefers the last
+    git commit that touched `book/` (the real content change, stable across rebuilds of the same source);
+    falls back to today's date when git is unavailable (a shallow export, a non-git checkout)."""
+    import subprocess
+    import datetime
+    try:
+        r = subprocess.run(["git", "log", "-1", "--format=%cd", "--date=short", "--", "book"],
+                           cwd=str(ROOT), capture_output=True, text=True)
+    except OSError:
+        r = None  # git binary absent — fall through to the build-date fallback below
+    if r is not None and r.returncode == 0 and r.stdout.strip():
+        return r.stdout.strip()
+    return datetime.date.today().isoformat()
+
+
 def build_pdf() -> int:
     """`--pdf`: render the production print edition to `book/mage-book.pdf` via the print-native Typst
     path — emit the WHOLE-BOOK Typst source from the typed book IR, then `typst compile` it to PDF. Gates
@@ -3269,8 +3296,12 @@ def build_pdf() -> int:
     print(f"Typst source: {typ_src} ({len(typ):,} bytes, {len(slugs)} chapters)")
 
     # Compile. `--root ..` so leading-`/` image paths (figure SVGs, cached mermaid SVGs) resolve against
-    # the repo root. Typst fails loud on any unresolved reference / bad image / math error.
-    cmd = [typst, "compile", "--root", str(ROOT), str(typ_src), str(pdf_out)]
+    # the repo root. Typst fails loud on any unresolved reference / bad image / math error. `--input
+    # last_modified=…` feeds the cover footer the book's last content-commit date (Typst has no clock, and
+    # CI has no wall-clock intent — the date must be computed here and passed in).
+    last_modified = _book_last_modified()
+    cmd = [typst, "compile", "--input", f"last_modified={last_modified}",
+           "--root", str(ROOT), str(typ_src), str(pdf_out)]
     print("PDF compile plan:\n  " + " ".join(f'"{a}"' if " " in a else a for a in cmd))
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.stdout.strip():
