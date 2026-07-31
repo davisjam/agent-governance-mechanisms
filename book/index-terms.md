@@ -294,6 +294,18 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 <!-- term-tier registry: `- term: <slug> | <tier>`; tier ∈ {section, local}. Concept slugs default to
      section-tier, so only deviations + new local terms are listed. -->
 - term: agreement-not-correctness | local
+- term: task-mode-decision | section
+- term: one-shot-scripting | section
+- term: supervised-autonomy | section
+- term: open-ended-technology | section
+- term: genre | section
+- term: build-instructions | section
+- term: correctness-conditions | local
+- term: code-fabricator | local
+- term: production-software | local
+- term: quality-floor | local
+- term: cad-model | local
+- term: running-example | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
