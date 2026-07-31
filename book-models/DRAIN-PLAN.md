@@ -115,3 +115,56 @@ chapters (dense `index-def` runs) from over-inserting blank lines.
 the test is whether the section *as a whole* states a faithful teaching, not whether its first sentence is a
 clean topic sentence (2.3's "residual" — a soft opener is NOT "no teaching," so it does not force
 gap-recommended).
+
+## The CORRECTED point form — the reform the drain agents run (substrate landed 260731)
+
+The first-pass points drifted into **verbose paragraph paraphrases** — a whole sentence-run restating the
+prose. That is WRONG: a canonical point is a short *claim*, not a re-say. The corrected form (substrate now
+built; see DESIGN.md §10) is what every reform agent authors from here. The `point-claim-word-cap` lint
+reports the ~175 verbose points still to fix — that list IS the reform worklist. Drain each to the form below.
+
+### The decorator grammar (3-segment point + section-terms)
+
+```
+<!-- point: <slug> | <claim> | terms: <t1>, <t2> -->
+<!-- section-terms: <t1>, <t2> -->
+```
+
+1. **Point (paragraph, tier-2).** Three `|`-segments, the 3rd optional:
+   - **`<slug>`** — the kebab id, unchanged.
+   - **`<claim>`** — a short **declarative sentence**, capped at **≤10 words** (the machine-checked rule:
+     whitespace-separated tokens in the claim segment only). Write the irreducible claim, not a paraphrase.
+     Example (the 2.2 demo): `A drift gate proves agreement, not correctness.` (6 words) — NOT the old
+     40-word restatement.
+   - **`terms:`** (optional) — the tier-2 **LOCAL** term slugs the paragraph deploys, comma-separated. Omit
+     the whole segment when the paragraph names no fine-grained term; a 2-segment point still parses.
+2. **Section-terms (section, tier-1).** Placed under the H2/H3, names the **1–3 major concepts** the section
+   develops. One marker per section; keep it to 1–3 terms.
+
+Both markers are INERT — invisible in the reader HTML, stripped byte-identically. Adding them to a section
+must not change `book/*.html` (`git diff --stat book/*.html` empty after the build).
+
+### The two-tier tagging procedure (per section the reform touches)
+
+1. **Rewrite each point's claim to ≤10 words.** Run `python3 book-models/lint_point_claim_word_cap.py` — the
+   section's points must drop off the finding list. The claim is the *induced* point (§honesty rules above),
+   now terse.
+2. **Tag the section's tier-1 terms.** Add one `<!-- section-terms: … -->` under the heading with the 1–3
+   concepts it develops. Use **existing `- concept:` slugs** wherever they fit (they are section-tier by
+   default — no registry edit needed).
+3. **Tag each point's tier-2 terms.** Append `| terms: <t1>, <t2>` to points that deploy fine-grained
+   concepts. A term may be a concept slug (section-tier, reused at paragraph granularity) OR a new local one.
+4. **Register any NEW local term.** If a `terms:`/`section-terms:` slug is not a `- concept:` slug, add a
+   `- term: <slug> | local` row under `## Term tiers` in `book/index-terms.md`. Run
+   `python3 book-models/lint_term_tags_registered.py` — it must report clean for the section's terms. (The
+   registry reuses `index-terms.md`; do NOT invent a parallel term file.)
+5. **Regenerate + gate.** `python3 book-models/reverse_index.py regenerate` (captures the new term edges),
+   `python3 book-models/outline_model.py regenerate` if points changed, then the standard gate: build
+   byte-identical, `catalog.py validate` 0, `catalog_tests.py --tier1` 0-failed, `catalog.py views-audit`
+   exit 0. Query a term's whole footprint with `reverse_index.py deps <term>` (which sections develop it ∪
+   which paragraphs use it).
+
+### Promotion (after the reform drains the seed)
+
+Once every claim is ≤10 words and every tagged term is registered, a follow-up flips both lints to blocking
+(`--strict`), the same drain-then-gate path the outline/outcomes checks take (rule-#55 discipline).

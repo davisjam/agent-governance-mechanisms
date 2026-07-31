@@ -574,3 +574,92 @@ reference (an induced claim about a paragraph, not a structural fact) — exactl
 reverse index inverts it and the structural + freshness audit re-resolves it, on the same footing as a
 section id or an outcome unit today. So §8's guardrail already has the shape the drain needs; the drain
 adds the symbol kind, not a new drift mechanism.
+
+---
+
+## 10. The corrected point form + the two-tier term model (BUILT — the substrate for the reform)
+
+The first drain landed the `<!-- point: <slug> | <text> -->` decorator, but the *text* segment drifted into
+a **verbose paragraph paraphrase** — a whole sentence-run restating the prose, ignoring any controlled
+vocabulary. That is the wrong form: a canonical point is a short *claim*, not a re-say of the paragraph. The
+form below corrects it, and the substrate for it is now built. The **content reform** (rewriting the 175
+existing verbose points to the new form) is a **separate later pass**; this section documents the machinery
+the reform runs against.
+
+### 10.1 The corrected point grammar — three `|`-segments (3rd optional)
+
+```
+<!-- point: <slug> | <claim> | terms: <t1>, <t2> -->
+```
+
+- **`<slug>`** — the kebab id, unchanged. The reverse-index symbol the outline rides at paragraph
+  granularity; the redundancy key (two paragraphs, same slug = a redundancy).
+- **`<claim>`** — a short **declarative sentence**, not a paraphrase. Capped at **≤10 words**
+  (`CLAIM_WORD_CAP`), where a word is a whitespace-separated token in the claim segment *only* — a
+  deterministic, machine-checkable count. `book_ir` parses it into `Block.point_text`; the
+  `point-claim-word-cap` lint counts `point_text.split()`. The cap is what makes a point a *point*: it
+  forces the induced claim down to its irreducible statement, so the outline reads as a spine of terse
+  claims, not a second copy of the prose.
+- **`terms:`** (optional 3rd segment) — a comma-separated list of tier-2 **LOCAL** term slugs the paragraph
+  deploys. Parsed into `Block.point_terms: list[str]`. **Backward-compatible:** a 2-segment
+  `point: <slug> | <text>` with no `terms:` still parses, with `point_terms = []`, so the reform can migrate
+  incrementally.
+
+### 10.2 The section-terms marker — the tier-1 sibling
+
+```
+<!-- section-terms: <t1>, <t2> -->
+```
+
+A NEW inert marker placed under an **H2/H3 heading**, naming the **1–3 major concepts the section develops**.
+Parsed into `Block.section_terms: list[str]`. It is a `MARKER_KEYWORDS` row (`section-terms`), classified in
+`book_ir` as a `DIRECTIVE`-inert block, and **stripped byte-identically** — from the render (the renderer's
+leading-marker peel) AND from the occurrence-index scan (`_strip_point_decorators` now strips both `point`
+and `section-terms`, so a term named only inside a marker never spawns a phantom index reference). It renders
+NOTHING; the reverse index reads it from the IR.
+
+### 10.3 The two-tier term registry — REUSE, not a parallel registry
+
+Every tagged term (a point `terms:` slug, tier-2; a `section-terms` slug, tier-1) must resolve to a
+**registered term carrying a `tier` ∈ {`section`, `local`}**. The registry **reuses `index-terms.md`** — the
+existing SSOT of the 135 `- concept:` slugs — under a new **`## Term tiers`** section:
+
+- Every `- concept:` slug **defaults to `tier: section`** (tier-1). No per-concept row is needed; the 135
+  existing concepts are seeded section-tier on day one, so a section can be tagged against any of them
+  immediately.
+- A new fine-grained tier-2 term that is NOT a concept gets an explicit **`- term: <slug> | local`** row.
+- An explicit `- term: <slug> | <tier>` row also **overrides** a concept's default (demote a broad concept
+  to `local` where a paragraph uses it narrowly).
+
+The loader is `build_book_html._load_term_tiers()` → `{slug: tier}` (concepts seeded section, `- term:` rows
+register/override) — one reader, no parallel parse. `TERM_TIERS = ("section", "local")` is the closed tier
+set. This keeps `index-terms.md` the single term SSOT, joined on the same slug the concept registry,
+`concepts.json`, and the book's `index-def` tags all use. A `- term:` row for an unknown tier is a
+build-loud error.
+
+### 10.4 Reverse-index term edges — the tier-2 query
+
+`reverse_index.py` gains a `term` symbol kind and inverts every tagged term into a term→element edge:
+
+- a point's `terms:` entry → a **tier-2** edge (role `paragraph-term[tier-2]`, element = the point's block);
+- a `section-terms` entry → a **tier-1** edge (role `section-term[tier-1]`, element = the marker's block).
+
+So `python3 book-models/reverse_index.py deps <term>` answers **"which sections develop term X ∪ which
+paragraphs use term X"** as one lookup — the union the drain needs to see a concept's whole footprint. The
+`term` universe is the registered-term set (§10.3), so a tagged-but-unregistered term is a `DANGLING term`
+structural finding, and `term_findings()` reports it with the clearer `UNREGISTERED term` wording the
+`term-tags-registered` lint surfaces.
+
+### 10.5 The two new lints — AUDIT-ONLY-first
+
+Both land **audit-only** (print, exit 0), wired into `catalog.py views-audit` and standable as scripts:
+
+- **`point-claim-word-cap`** (`book-models/lint_point_claim_word_cap.py`) — a point's `<claim>` must be ≤10
+  words. On the current tree it reports **~175 findings** (the whole old verbose corpus) — that IS the
+  reform's fix-worklist. `--strict` exits 1 (the promotion path).
+- **`term-tags-registered`** (`book-models/lint_term_tags_registered.py`, over
+  `reverse_index.term_findings()`) — every tagged term resolves to a registered term with a tier.
+
+Neither reddens a commit today. A follow-up promotes each to blocking once the reform drains its seed
+(the claims to ≤10 words; every tagged term into the registry) — the same drain-then-gate path the outline
+and outcomes checks take.
