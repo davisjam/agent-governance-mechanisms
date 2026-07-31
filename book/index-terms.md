@@ -130,6 +130,18 @@ chapter (filled as chapters settle; the generator still scans all chapters for s
 - CUDA, OpenMP, Open MPI
 - Bun (runtime port example)
 - Starry Night (diffusion example)
+- SysML (Systems Modeling Language)
+- Booch, Rumbaugh, Jacobson (UML User Guide)
+- Friedenthal, Moore, Steiner (A Practical Guide to SysML)
+- Bass, Clements, Kazman (Software Architecture in Practice)
+- Baier, Katoen (Principles of Model Checking)
+- Lamport, Leslie (Specifying Systems — TLA+)
+- Holzmann, Gerard (SPIN model checker)
+- Alur, Dill (timed automata)
+- Kleinrock, Leonard (Queueing Systems — queuing theory)
+- Petri nets (Murata survey)
+- Lee, Seshia (Introduction to Embedded Systems — cyber-physical systems)
+- Grieves, Michael (digital twin)
 
 ## Concept registry
 
@@ -281,6 +293,8 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: governance-target-agent | Governance target — agent
 - concept: governance-target-models-bridge | Governance target — models-bridge
 - concept: governance-target-product | Governance target — product
+- concept: scope-of-modeling | The scope of modeling
+- concept: digital-twin | Digital twin
 
 ## Term tiers
 
@@ -343,6 +357,8 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: round-trip | local
 - term: snapshot-vs-derived | section
 - term: symbol-anchor | local
+- term: uml | local
+- term: cyber-physical-systems | local
 - term: service-flow-model | section
 - term: domain-registries | section
 - term: concurrency | section
