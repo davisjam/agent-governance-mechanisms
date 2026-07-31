@@ -9,8 +9,8 @@
 // everywhere, or a dropped media query) fails the deploy.
 //
 // This is NOT part of `catalog.py validate` (that gate is stdlib-only, clone-and-run, no browser
-// dep). Like the PDF density/mermaid gates, it is a non-stdlib deploy-time check that needs a
-// browser — so it lives here in book/ alongside render_pdf.mjs and reuses the same Puppeteer dep.
+// dep). It is a non-stdlib deploy-time check that needs a browser — so it lives here in book/ and
+// reuses the Puppeteer dep that the build-time mermaid-SVG pre-render already installs.
 //
 // Invoked by `python3 catalog.py check-responsive` and by the Pages CI. Chrome comes from Puppeteer's
 // bundled Chromium (installed by `npm ci` in book/) unless PUPPETEER_EXECUTABLE_PATH / CHROME_PATH

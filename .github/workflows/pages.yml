@@ -49,12 +49,13 @@ jobs:
           node-version: "22"
       - name: Install pinned test tooling (axe-core + html-validate, exact tree from lockfile)
         run: npm ci
-      # book/ node tooling must be installed BEFORE `catalog.py build`: the build now renders every
-      # ```mermaid fence to a static inline SVG at build time via mermaid-cli (mmdc), which lives in
-      # book/node_modules. `npm ci` in book/ also downloads mermaid-cli's + Puppeteer's bundled Chromium
-      # (no PUPPETEER_SKIP_DOWNLOAD), so both the SVG pre-render AND the later `--pdf` render need no
-      # system Chrome. Poppler/qpdf are only needed for the later PDF gate, so they stay below.
-      - name: Install book node tooling (mermaid-cli for build-time SVG + Puppeteer for PDF, from book/ lockfile)
+      # book/ node tooling must be installed BEFORE `catalog.py build`: the build renders every ```mermaid
+      # fence to a static inline SVG at build time via mermaid-cli (mmdc), which lives in book/node_modules.
+      # `npm ci` in book/ also downloads mermaid-cli's + Puppeteer's bundled Chromium (no
+      # PUPPETEER_SKIP_DOWNLOAD), needed for BOTH the SVG pre-render AND the served-page smoke gates
+      # (responsive + console-error) below. The book PDF is rendered by Typst (installed separately below),
+      # so no browser is in the PDF loop.
+      - name: Install book node tooling (mermaid-cli for build-time SVG + Puppeteer for the served-page smoke gates, from book/ lockfile)
         working-directory: book
         run: npm ci
       - name: Validate schema
@@ -63,16 +64,28 @@ jobs:
         run: python3 catalog.py build
       - name: Test suite (blocking — authoritative --full run; post-push HEAD==origin, so incremental would skip Tier 2)
         run: python3 catalog_tests.py --full
-      # ── PDF print edition ──────────────────────────────────────────────────────────────────────
-      # The book PDF is a CI-generated, Pages-published artifact (not committed). Render it into
-      # book/mage-book.pdf, which the rsync below copies into _site/ so it serves at /book/mage-book.pdf.
-      # book/ node tooling (Puppeteer + mermaid-cli, with bundled Chromium) was already installed above,
-      # before `catalog.py build`. `--pdf` runs the content-integrity gate internally — including the
-      # no-raw-mermaid assert — and exits non-zero (failing the build) if the render is truncated /
-      # collapsed / runaway / ships raw diagram source.
-      - name: Install poppler + qpdf (pdftotext for the content-integrity gate; qpdf for the lossless compression pass)
-        run: sudo apt-get update && sudo apt-get install -y poppler-utils qpdf
-      - name: Render book PDF (Paged.js) + content-integrity gate
+      # ── PDF print edition (print-native Typst path) ─────────────────────────────────────────────
+      # The book PDF is a CI-generated, Pages-published artifact (not committed). `--pdf` projects the
+      # typed book IR to a Typst document and runs `typst compile` to book/mage-book.pdf, which the rsync
+      # below copies into _site/ so it serves at /book/mage-book.pdf. It runs the content-integrity gate
+      # internally — page floor/ceiling, every chapter + part title present, no-raw-mermaid, density, and a
+      # tag-tree assertion — and exits non-zero (failing the build) if the render is truncated / collapsed /
+      # runaway / ships raw diagram source / drops the a11y tag tree.
+      #
+      # Typst is pinned to an exact release (clone-and-run-safe + reproducible): download the pinned tarball,
+      # verify it extracts a runnable binary, and put it on PATH. poppler (pdftotext / pdfinfo) backs the
+      # content-integrity + tag-tree gates. No qpdf — Typst output is already compact; there is no
+      # post-compression pass.
+      - name: Install Typst (pinned release; renders the print-native book PDF)
+        run: |
+          TYPST_VERSION=v0.15.1
+          curl -fsSL "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz" -o /tmp/typst.tar.xz
+          mkdir -p /tmp/typst && tar -xJf /tmp/typst.tar.xz -C /tmp/typst --strip-components=1
+          sudo install -m 0755 /tmp/typst/typst /usr/local/bin/typst
+          typst --version
+      - name: Install poppler (pdftotext / pdfinfo for the content-integrity + tag-tree gates)
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - name: Render book PDF (print-native Typst) + content-integrity gate
         run: python3 book/build_book_html.py --pdf
       # ── Responsive-layout gate (deploy-blocking) ────────────────────────────────────────────────
       # Assert the landing `.masonry` region renders a structurally different layout at wide vs phone
@@ -94,7 +107,8 @@ jobs:
         run: |
           mkdir -p _site
           rsync -a --exclude='.git' --exclude='node_modules' --exclude='.github' \
-                --exclude='__pycache__' --exclude='_site' --exclude='book/_print' ./ _site/
+                --exclude='__pycache__' --exclude='_site' --exclude='book/_print' \
+                --exclude='book/_typst' ./ _site/
           PDF="book/$(python3 -c "import json; print(json.load(open('book/book-manifest.json'))['pdf_filename'])")"
           test -f "_site/$PDF" || { echo "ERROR: $PDF missing from site artifact"; exit 1; }
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5

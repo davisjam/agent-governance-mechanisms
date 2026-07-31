@@ -99,33 +99,48 @@ that keep C→A clean hold: **one shared tokenizer** (no drift) and **raw slice 
 - **The SSOT import cycle is real.** `book_ir` imports `build_book_html` for the tokenizer, so
   `build_book_html` reaches `book_ir` through a lazy `_book_ir()` accessor, never a module-load import.
 
-## PDF generation — output via Typst, not HTML→browser
+## PDF generation — output via Typst (production)
 
-Today the PDF is HTML → Paged.js (headless browser) → PDF, which inherits browser artifacts, bloat,
-imperfect print typography, and a headless-browser dependency in CI. The IR opens a **print-native** path:
-emit `IR → Typst → PDF` as a *sibling emitter* to `render_html` — the same "one model, many projections"
-the book preaches (Part 3, framework-as-projection). HTML and PDF become two projections of the one IR,
-neither derived from the other.
+The PDF is rendered **print-native via Typst** — the production path. `book/build_book_html.py --pdf`
+projects the typed IR to a Typst document (`book/book_typst.py`), then `typst compile` lays it out to
+`book/mage-book.pdf`. HTML (the web book) and Typst (the PDF) are two projections of the one IR, neither
+derived from the other — the "one model, many projections" the book preaches (Part 3,
+framework-as-projection). This retired the earlier HTML → Paged.js (headless browser) → PDF path, which
+inherited browser artifacts, bloat, and a headless-browser dependency: the Paged.js print stylesheet, the
+combined-print-HTML assembler, and the Node PDF renderer are gone.
 
-**Clone-and-run does NOT block this** — the key difference from the source-format question below. The PDF is
-a **CI-only artifact** (the web build + `validate` stay stdlib; the Pages workflow already needs a browser
-for the current path), so the `typst` binary is fair game in CI. It is not in the clone-and-run core.
+**Emit + gate.** `emit_document(slugs, with_frontmatter=True)` leads with a title-page cover and precedes
+each numbered Part and each appendix Part with a divider page — the same structure the web book carries.
+The whole-book render then runs the content-integrity gate (`verify_pdf`): page floor/ceiling, every chapter
+and part title present (matched on a backtick/typographic-quote-normalized form, since the print renderer
+drops code-span backticks and smart-quotes an apostrophe), a distinctive tail from the last section, the
+no-raw-mermaid assert, words-per-page density, and a struct-tree (a11y tag) assertion. Any miss fails the
+build. There is no post-compression pass — Typst output is already compact (~5 MB whole book).
 
-**Why Typst.** Modern typesetting, one small fast binary, clean small PDFs, native SVG/image, scriptable —
-cleaner than Paged.js, lighter than LaTeX. And it maps our model annotations to **native** constructs:
+**A note on mermaid.** Mermaid SVGs must carry `<text>` labels, not `<foreignObject>` — Typst cannot draw
+foreign objects, so an `htmlLabels:true` diagram would render empty node boxes with no label text. The
+mermaid config forces `htmlLabels:false`; the build-time SVG cache re-renders on that config change.
+
+**Clone-and-run.** The web build + `validate` stay stdlib (clone-and-run). The `typst` binary is a
+CI/local-render tool for the PDF only — the Pages workflow installs a pinned Typst release, exactly as it
+installs poppler for the integrity gate. It is not in the clone-and-run core.
+
+**Why Typst.** Modern typesetting, one small fast binary (whole book in ~2 s), clean small tagged PDFs,
+native SVG/image, scriptable. And it maps our model annotations to **native** constructs:
 `<!-- label: k -->` + `[ref:k]` → Typst `<k>` labels + `@k` refs; `<!-- figure: … -->` → `#figure`;
 `<!-- point: … -->` / `<!-- index-def: … -->` → `#metadata(…)` + `query()` (Typst's purpose-built mechanism
 for embedded, tool-queryable data). So the Typst emitter doubles as an **annotation-feasibility study**:
 mapping every directive to a Typst native proves whether Typst could carry the whole model.
 
-**The path — each step deliberate, none foreclosed:** C → A → **Typst PDF output** → *(optional, later)*
-Typst as the SOURCE format. The last step is attractive — a real parser + native labels/refs +
-`#metadata`/`query` would retire most of our bespoke stack (the hand-rolled parser, the notation-leak gate,
-marker-peeling) — but it is gated on three things we deliberately hold today: **clone-and-run** (the `typst`
-binary would move from CI-only into the CORE build), **Typst's HTML export maturing** (the Pages site is the
-PRIMARY deliverable), and **GitHub source-degradation** (markdown renders in the repo browser; Typst does
-not). A bigger, later bet — but the IR→Typst emitter built for PDF *is* the migration tool if it ever pays.
-Build the output emitter now; keep the source question open.
+**The path — each step deliberate, none foreclosed:** C → A → **Typst PDF output (landed — the production
+PDF path)** → *(optional, later)* Typst as the SOURCE format. The last step is attractive — a real parser +
+native labels/refs + `#metadata`/`query` would retire most of our bespoke stack (the hand-rolled parser, the
+notation-leak gate, marker-peeling) — but it is gated on three things we deliberately hold today:
+**clone-and-run** (the `typst` binary would move from a PDF-render tool into the CORE build),
+**Typst's HTML export maturing** (the Pages site is the PRIMARY deliverable), and **GitHub
+source-degradation** (markdown renders in the repo browser; Typst does not). A bigger, later bet — but the
+IR→Typst emitter that now renders the PDF *is* the migration tool if it ever pays. The output emitter is
+built; keep the source question open.
 
 ## If clone-and-run is ever relaxed
 

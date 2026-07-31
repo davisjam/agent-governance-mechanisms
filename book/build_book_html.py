@@ -59,10 +59,11 @@ COPYRIGHT = f"© {_BOOK_MANIFEST['author']}, {_BOOK_MANIFEST['copyright_years']}
 LAST_UPDATED = _BOOK_MANIFEST["last_updated"]
 
 # Mermaid diagrams are rendered to STATIC INLINE SVG at BUILD time (see `render_mermaid_svg` below),
-# NOT via a client-side runtime. This is why BOTH the web book AND the PDF ship a real vector diagram:
-# the PDF pipeline (Puppeteer + Paged.js) never ran/awaited a client-side `mermaid.run()`, so the raw
-# ```mermaid source used to ship as code text in the PDF. Build-time SVG kills that whole class (no
-# JS-timing fragility) and is consistent with how every other figure in the book is inlined as SVG.
+# NOT via a client-side runtime. This is why BOTH the web book AND the Typst PDF ship a real vector
+# diagram: a PDF pipeline that never ran/awaited a client-side `mermaid.run()` would ship the raw
+# ```mermaid source as code text. Build-time SVG kills that whole class (no JS-timing fragility) and is
+# consistent with how every other figure in the book is inlined as SVG. The mermaid config forces SVG
+# `<text>` labels (htmlLabels:false) so the SVGs carry no `<foreignObject>`, which Typst cannot draw.
 # `MERMAID_CDN` is retained as an EMPTY string so the `mermaid=` chapter flag / `runtime` plumbing stays
 # wired without pulling any client-side script (diagrams are already baked into the HTML as SVG).
 MERMAID_CDN = ""
@@ -161,7 +162,7 @@ def render_mermaid_svg(source: str) -> str:
 
 def _mermaid_env() -> dict[str, str]:
     """Environment for the `mmdc` subprocess: inherit the parent env plus a Puppeteer executable-path
-    hint if one is set (mirrors render_pdf.mjs, which honors PUPPETEER_EXECUTABLE_PATH / CHROME_PATH)."""
+    hint if one is set (mmdc's headless Chrome honors PUPPETEER_EXECUTABLE_PATH / CHROME_PATH)."""
     env = dict(os.environ)
     exe = env.get("PUPPETEER_EXECUTABLE_PATH") or env.get("CHROME_PATH")
     if exe:
@@ -2753,262 +2754,11 @@ def _print_word_counts(wc: WordCounts) -> None:
 
 
 # ─────────────────────────── PDF print edition (opt-in `--pdf`) ──────────────────────────────────
-# A SECOND, opt-in build path that reuses the exact same chapter-body render as the web book, then
-# assembles every chapter into ONE combined print document paginated by Paged.js in headless Chrome.
-# Same Blink engine renders both surfaces, so the PDF cannot diverge from the web book. The default
-# `build()` above stays untouched (the fast web build is unaffected); `--pdf` is slow and separate.
-
-# Google Fonts for the print edition — Source Serif 4 at BODY weight (400) plus 600/700 for headings,
-# and Source Sans 3 for the accent kickers. Chrome fetches these while rendering the print HTML, so the
-# PDF ships the same type family as the site landing (system serif is the fallback if the fetch fails).
-_PRINT_FONTS_LINK = (
-    '<link rel="preconnect" href="https://fonts.googleapis.com">'
-    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-    '<link href="https://fonts.googleapis.com/css2?'
-    'family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&'
-    'family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400'
-    '&display=swap" rel="stylesheet">'
-)
-
-# The book-design print stylesheet. Paged.js reads the @page rules to lay a 6×9in trim with running
-# heads (title on verso, chapter title on recto), folios, a dot-leadered TOC with real page numbers
-# (target-counter), and fresh-page part dividers + chapters. Every knob lives here.
-PRINT_CSS = f"""
-:root {{ --accent: {ACCENT}; }}
-* {{ box-sizing: border-box; }}
-
-/* ── page geometry: 7×9.25in book trim (O'Reilly-class technical) ───────────────────────────── */
-@page {{
-  size: 7in 9.25in;
-  margin: 0.58in 0.5in 0.6in 0.5in;
-}}
-/* Named page for the front-matter / divider pages: no running head, no folio, full bleed feel. */
-@page plain {{ margin: 0.58in 0.5in 0.6in 0.5in; @top-center {{ content: none; }}
-               @top-left {{ content: none; }} @top-right {{ content: none; }}
-               @bottom-center {{ content: none; }} @bottom-left {{ content: none; }}
-               @bottom-right {{ content: none; }} }}
-
-/* Running heads: book title on the verso (left) page, current chapter title on the recto (right). The
-   book title is a document constant, so the verso head is a literal string (Paged.js does not reliably
-   propagate a body-level `string-set` into a left-page margin box). The recto head pulls the current
-   chapter title via `string(chap-title)`, which each chapter's h1 sets with `string-set`. */
-@page :left  {{ @top-left    {{ content: "Model-Based Agentic Software Engineering"; font: italic 8pt "Source Serif 4", Georgia, serif; color: #6a6a6a; letter-spacing: 0.02em; }}
-                @bottom-left  {{ content: counter(page); font: 9pt "Source Serif 4", Georgia, serif; color: #444; }} }}
-@page :right {{ @top-right   {{ content: string(chap-title); font: italic 8pt "Source Serif 4", Georgia, serif; color: #6a6a6a; letter-spacing: 0.02em; }}
-                @bottom-right {{ content: counter(page); font: 9pt "Source Serif 4", Georgia, serif; color: #444; }} }}
-
-html {{ font-size: 9.5pt; }}
-body {{
-  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
-  color: #1a1a1a; margin: 0; line-height: 1.2; text-align: justify; hyphens: auto;
-  /* Never justify the LAST line of a paragraph — otherwise a short final line stretches its few words
-     edge-to-edge with cavernous gaps (the classic justified-text tell). Last lines stay ragged-left. */
-  text-align-last: left;
-}}
-
-/* ── cover ──────────────────────────────────────────────────────────────────────────────────── */
-.print-cover {{ page: plain; break-after: page; height: 8.05in; display: flex; flex-direction: column;
-                justify-content: center; text-align: center; }}
-.print-cover .cov-kicker {{ font-family: "Source Sans 3", sans-serif; text-transform: uppercase;
-                            letter-spacing: 0.22em; font-size: 10pt; color: var(--accent); font-weight: 700;
-                            margin-bottom: 0.5rem; }}
-.print-cover h1 {{ font-family: "Source Serif 4", Georgia, serif; font-weight: 700; font-size: 30pt;
-                   line-height: 1.1; margin: 0 0 0.5rem; color: #17181a; text-align: center; }}
-.print-cover .cov-sub {{ font-family: "Source Serif 4", Georgia, serif; font-style: italic; font-size: 15pt;
-                         color: #555; margin: 0 0 1.6rem; }}
-.print-cover .cov-hero {{ margin: 0.6rem auto 1.6rem; width: 4in; }}
-.print-cover .cov-hero svg {{ display: block; width: 100%; height: 2.07in; }}
-.print-cover .cov-author {{ font-family: "Source Sans 3", sans-serif; font-size: 13pt; font-weight: 600;
-                            color: #2a2a2a; margin-top: 0.4rem; }}
-.print-cover .cov-copy {{ font-family: "Source Sans 3", sans-serif; font-size: 9pt; color: #888;
-                          margin-top: 1.4rem; }}
-.print-cover .cov-updated {{ font-family: "Source Sans 3", sans-serif; font-size: 8.5pt; color: #aaa;
-                             margin-top: 0.35rem; }}
-
-/* ── generated table of contents ────────────────────────────────────────────────────────────── */
-.print-toc {{ page: plain; break-after: page; }}
-.print-toc h1 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 20pt; font-weight: 700;
-                 margin: 0 0 1.4rem; text-align: left; }}
-.print-toc {{ text-align: left; }}
-.print-toc .toc-part {{ font-family: "Source Sans 3", sans-serif; text-transform: uppercase;
-                        letter-spacing: 0.06em; font-size: 9pt; font-weight: 700; color: var(--accent);
-                        margin: 0.8rem 0 0.25rem; text-align: left; }}
-.print-toc .toc-row {{ display: flex; align-items: baseline; font-size: 9.5pt; margin: 0.09rem 0;
-                       text-align: left; }}
-.print-toc .toc-row .toc-title {{ white-space: nowrap; overflow: hidden; }}
-.print-toc .toc-row .toc-cnum {{ color: #6a6a6a; font-variant-numeric: tabular-nums; margin-right: 0.5rem;
-                                 min-width: 1.9rem; display: inline-block; }}
-.print-toc .toc-row .toc-dots {{ flex: 1; margin: 0 0.4rem; border-bottom: 1px dotted #bbb;
-                                 transform: translateY(-0.18em); }}
-.print-toc .toc-row a {{ color: #1a1a1a; text-decoration: none; }}
-/* Page number pulled from the target page via Paged.js target-counter. */
-.print-toc .toc-row .toc-pg::after {{ content: target-counter(attr(href url), page);
-                                      font-variant-numeric: tabular-nums; color: #444; }}
-
-/* ── part-divider pages ─────────────────────────────────────────────────────────────────────── */
-.print-part {{ page: plain; break-before: page; height: 8.05in; display: flex; flex-direction: column;
-               justify-content: center; text-align: center; }}
-.print-part .pt-kicker {{ font-family: "Source Sans 3", sans-serif; text-transform: uppercase;
-                          letter-spacing: 0.24em; font-size: 12pt; color: var(--accent); font-weight: 700; }}
-.print-part .pt-title {{ font-family: "Source Serif 4", Georgia, serif; font-weight: 700; font-size: 25pt;
-                         line-height: 1.15; margin: 0.8rem 2rem 0; color: #17181a; }}
-.print-part .pt-rule {{ width: 2.2in; height: 2px; background: var(--accent); margin: 1.3rem auto 0;
-                        opacity: 0.7; }}
-
-/* ── chapter bodies ─────────────────────────────────────────────────────────────────────────── */
-.print-chapter {{ break-before: page; }}
-.print-chapter > header.chap {{ border-bottom: 1px solid #ddd; padding: 0 0 0.5rem; margin: 0 0 0.8rem; }}
-.print-chapter header.chap .kicker {{ font-family: "Source Sans 3", sans-serif; color: var(--accent);
-                                      font-weight: 700; font-size: 8.5pt; letter-spacing: 0.08em;
-                                      text-transform: uppercase; }}
-.print-chapter header.chap h1 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 18pt;
-                                 line-height: 1.12; margin: 0.25rem 0 0; font-weight: 700;
-                                 string-set: chap-title content(); }}
-h2 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 12pt; font-weight: 700;
-      margin: 0.9rem 0 0.32rem; break-after: avoid; text-align: left; }}
-h3 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 10.75pt; font-weight: 600;
-      margin: 0.7rem 0 0.22rem; break-after: avoid; text-align: left; }}
-h4 {{ font-family: "Source Serif 4", Georgia, serif; font-size: 9.75pt; font-weight: 600; color: #333;
-      margin: 0.55rem 0 0.16rem; break-after: avoid; text-align: left; }}
-h1, h2, h3, h4 {{ hyphens: none; }}
-p {{ margin: 0 0 0.48rem; orphans: 2; widows: 2; }}
-ul {{ margin: 0 0 0.5rem; padding-left: 1.2rem; }}
-ol {{ margin: 0 0 0.5rem; padding-left: 1.4rem; list-style: decimal; }}
-li {{ margin: 0.14rem 0; text-align: left; }}
-a {{ color: #1a1a1a; text-decoration: none; }}
-code {{ font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; background: #f0efeb;
-        padding: 0.05em 0.3em; border-radius: 3px; }}
-/* Fenced code listings: a narrow 6in column cannot hold a wide source line, so wrap long lines (with a
-   hanging indent for continuations) rather than clip them at the page edge. Small monospace, tinted panel,
-   kept off a page break. The inline-code panel styling is dropped inside a <pre> (the block owns the panel). */
-pre {{ font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8pt; line-height: 1.32;
-       background: #f6f5f2; border: 1px solid #e5e3dd; border-radius: 4px; padding: 0.5rem 0.7rem;
-       margin: 0.65rem 0; white-space: pre-wrap; overflow-wrap: break-word; word-break: break-word;
-       tab-size: 2; break-inside: avoid; text-align: left; hyphens: none; }}
-pre code {{ background: none; padding: 0; font-size: inherit; border-radius: 0; }}
-blockquote {{ margin: 0.65rem 0; padding: 0.4rem 0.9rem; border-left: 3px solid #d8d5cc; color: #444;
-              font-style: italic; background: #faf9f6; break-inside: avoid; text-align: left; }}
-blockquote.aside-sidenote {{ background: transparent; float: none; width: auto; margin: 0.9rem 0;
-                             border-left: 2px solid #cfa14a; font-size: 0.92em; }}
-blockquote.concept-inset {{ font-style: normal; background: #f6f4ef; border: 1px solid #e3dccb;
-                            border-left: 5px solid #b07a2b; border-radius: 5px; padding: 0 1rem 0.7rem;
-                            break-inside: avoid; }}
-blockquote.concept-inset .inset-title {{ font-family: "Source Sans 3", sans-serif; font-weight: 700;
-                                         color: #4a3a1e; background: #ece4d5; margin: 0 -1rem 0.7rem;
-                                         padding: 0.5rem 1rem; border-radius: 5px 5px 0 0; font-size: 0.86rem; }}
-figure.code-inset {{ background: #f6f4ef; border: 1px solid #e3dccb; border-left: 5px solid #b07a2b;
-                     border-radius: 5px; margin: 0.9rem 0; overflow: hidden; break-inside: avoid; }}
-figure.code-inset .inset-title {{ font-family: "Source Sans 3", sans-serif; font-weight: 700;
-                                  color: #4a3a1e; background: #ece4d5; margin: 0; padding: 0.42rem 0.7rem;
-                                  border-bottom: 1px solid #ddd3bf; font-size: 0.82rem; }}
-figure.code-inset pre {{ margin: 0; padding: 0.5rem 0.7rem; background: transparent; border: 0; }}
-blockquote.thesis-box {{ font-style: normal; background: #f2effb; border: 1px solid #d9d2ef;
-                         border-left: 4px solid #7c6bb0; color: #241f33; border-radius: 5px;
-                         padding: 0.8rem 1rem; break-inside: avoid; }}
-blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.3rem; }}
-.book-eq {{ text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
-            font-size: 1.15em; margin: 1rem 0; }}
-/* Booktabs table style (drawing/tables.md) — PDF/print variant: three horizontal rules only (heavy top,
-   light under-header, heavy bottom), no vertical rules or cell borders, no zebra striping. Numbers
-   right-aligned via `.num`. WHY: vertical rules and boxed cells are chartjunk (Tufte / booktabs). */
-table.book-table {{ border-collapse: collapse; width: 100%; margin: 0.65rem 0; font-size: 9pt;
-                    break-inside: avoid; border-top: 1.2pt solid #222; border-bottom: 1.2pt solid #222; }}
-table.book-table th, table.book-table td {{ border: none; padding: 0.38rem 0.5rem;
-                                            text-align: left; vertical-align: top; line-height: 1.35; }}
-table.book-table thead th {{ background: transparent; font-weight: 700;
-                             border-bottom: 0.5pt solid #999; }}
-table.book-table th.num, table.book-table td.num {{ text-align: right; }}
-figure.book-figure {{ margin: 1.1rem 0; text-align: center; break-inside: avoid; }}
-figure.book-figure svg, figure.book-figure img {{ max-width: 100%; max-height: 5in; height: auto; }}
-figure.book-figure figcaption {{ font-family: "Source Sans 3", sans-serif; font-size: 8.5pt; color: #666;
-                                 margin-top: 0.4rem; text-align: left; line-height: 1.4; }}
-figure.book-figure figcaption.fig-label-only {{ text-align: center; }}
-.fig-label, .tbl-label {{ font-weight: 700; color: #333; }}
-table caption {{ caption-side: top; text-align: left; font-family: "Source Sans 3", sans-serif;
-                 font-size: 8.5pt; color: #666; margin-bottom: 0.3rem; line-height: 1.4; }}
-ul.list-of-floats-links {{ list-style: none; padding-left: 0; }}
-figure.book-figure.catalogue-embed {{ display: none; }}  /* iframe embed cannot print — drop it */
-.marker {{ margin: 0.8rem 0; padding: 0.5rem 0.75rem; border-radius: 4px; font-size: 9.5pt;
-           break-inside: avoid; }}
-.marker-fill {{ background: #fff6e5; border: 1px dashed #d8a23a; }}
-.marker-more {{ background: #eef3f7; border: 1px dashed #7aa0bd; }}
-.marker-tag {{ font-family: "Source Sans 3", sans-serif; display: inline-block; font-weight: 700;
-               font-size: 7.5pt; letter-spacing: 0.05em; padding: 1px 5px; border-radius: 3px;
-               margin-right: 0.4rem; }}
-.marker-fill .marker-tag {{ background: #a06a12; color: #fff; }}
-.marker-more .marker-tag {{ background: #4a6f8c; color: #fff; }}
-pre.mermaid {{ text-align: center; break-inside: avoid; margin: 1rem 0; }}
-pre.mermaid svg {{ max-width: 100%; max-height: 5in; height: auto; }}
-/* Web-only chrome that must never appear in print (belt-and-suspenders — the assembler omits these). */
-nav.toc, .pager, .pager-jump, .jump, .book-foot {{ display: none !important; }}
-"""
-
-
-def _print_anchor(slug: str) -> str:
-    """A CSS-selector-safe fragment id for a chapter section in the print doc. Chapter slugs like
-    `0.1-preface` start with a digit and contain `.`, which are INVALID in a CSS selector — Paged.js
-    resolves TOC `target-counter(attr(href url), page)` via `querySelector`, and an id like `#0.1-preface`
-    throws a SyntaxError that aborts pagination (collapsing the whole book to a few pages). Prefixing with
-    a letter and swapping `.` → `-` makes every anchor a valid selector."""
-    return "ch-" + slug.replace(".", "-")
-
-
-def _cover_html() -> str:
-    """The cover page: title, subtitle, author, inlined hero SVG, copyright — from the book's own identity."""
-    hero = HERE / "assets" / "mage-overview.svg"
-    hero_svg = ""
-    if hero.is_file():
-        svg = hero.read_text(encoding="utf-8")
-        svg = re.sub(r"^\s*<\?xml[^>]*\?>\s*", "", svg)
-        m = re.search(r"<svg\b.*</svg>", svg, re.S)
-        if m:
-            svg = m.group(0)
-            svg = re.sub(r'(<svg\b[^>]*?)\swidth="[^"]*"', r"\1", svg, count=1)
-            svg = re.sub(r'(<svg\b[^>]*?)\sheight="[^"]*"', r"\1", svg, count=1)
-            hero_svg = f'<div class="cov-hero">{svg}</div>'
-    return (
-        '<section class="print-cover">'
-        f'<div class="cov-kicker">{html.escape(_BOOK_MANIFEST["kicker"])}</div>'
-        f'<h1>{html.escape(_BOOK_MANIFEST["title"])}</h1>'
-        f'{_cover_sub("cov-sub")}'
-        f'{hero_svg}'
-        f'<div class="cov-author">{html.escape(_BOOK_MANIFEST["author"])}, {html.escape(_BOOK_MANIFEST["credential"])}</div>'
-        f'<div class="cov-copy">{html.escape(COPYRIGHT)}</div>'
-        f'<div class="cov-updated">Last updated {html.escape(LAST_UPDATED)}</div>'
-        '</section>'
-    )
-
-
-def _toc_print_html(chapters: list[dict]) -> str:
-    """A generated TOC: parts + chapters with dot-leaders and real page numbers (Paged.js target-counter
-    resolves each `href` to its rendered page). Grouped by Part in reading order, matching the web index."""
-    rows: list[str] = ['<section class="print-toc"><h1>Contents</h1>']
-    last_part: int | None = None
-    for c in chapters:
-        if c["part"] != last_part:
-            rows.append(f'<div class="toc-part">{html.escape(_part_label(c))}</div>')
-            last_part = c["part"]
-        ref = _chap_ref(c)
-        if ref:
-            cnum = ref
-        elif c.get("is_appendix"):
-            m = re.search(r"Appendix\s+([A-Z])", c["part_title"])
-            cnum = m.group(1) if m else ""
-        else:
-            cnum = ""
-        anchor = html.escape(_print_anchor(c["slug"]), quote=True)
-        # The page-number span carries the href so its `::after { content: target-counter(attr(href url), page) }`
-        # resolves to the chapter section's rendered page.
-        rows.append(
-            '<div class="toc-row">'
-            f'<span class="toc-cnum">{html.escape(cnum)}</span>'
-            f'<span class="toc-title"><a href="#{anchor}">{html.escape(c["chapter_title"])}</a></span>'
-            '<span class="toc-dots"></span>'
-            f'<a class="toc-pg" href="#{anchor}"></a>'
-            '</div>'
-        )
-    rows.append("</section>")
-    return "\n".join(rows)
+# The book PDF is a SECOND, opt-in build path that projects the SAME typed book IR the web build walks —
+# but to a print-native Typst document, which `typst compile` lays out to PDF. One IR, two projections
+# (HTML web + Typst print), so the PDF cannot diverge from the web book. The default `build()` is the fast
+# web build and stays untouched; `--pdf` (see `build_pdf`) renders the print edition. The float-numbering,
+# caption, and cross-reference helpers below are shared by BOTH projections.
 
 
 # A "float" is a numbered display block — a figure or a table. Figures render as `<figure
@@ -3191,101 +2941,12 @@ def expected_page_slugs() -> set[str]:
             | {"index", "book-index", "catalogue-figure"})
 
 
-def build_print_html() -> pathlib.Path:
-    """Assemble the single combined print HTML into `book/_print/print.html` (gitignored) and return its
-    path. Reuses the EXACT web chapter-body render (`md_to_html`) plus the same appendix, concept-index,
-    and glossary machinery as `build()`, so the PDF's content cannot drift from the web book. Strips all
-    web chrome (top nav, pager, per-page wrapper): here every chapter is ONE section in one document."""
-    metrics = _load_metrics()
-    chapters = _discover_chapters(metrics)
-    if not chapters:
-        raise SystemExit("no chapter files found under the Part/Chapter hierarchy")
-    max_part = max(c["part"] for c in chapters)
-    appendix = build_appendix_chapters(next_part=max_part + 1)
-    chapters = chapters + appendix
-
-    # First chapter of each Part opens with an epigraph (numbered Parts only) — mirror build().
-    seen_parts: set[int] = set()
-    for c in chapters:
-        c["show_epigraph"] = c["part"] not in seen_parts and not c.get("is_appendix")
-        seen_parts.add(c["part"])
-
-    concept_registry, page_anchor_maps = _harvest_concept_tags(chapters)
-    _collect_glossary(chapters)
-
-    chapters, ref_map = _insert_list_of_floats(chapters, page_anchor_maps, for_print=True)
-
-    any_mermaid = any(c.get("mermaid") for c in chapters)
-
-    parts_body: list[str] = [_cover_html(), _toc_print_html(chapters)]
-    printed_parts: set[int] = set()
-    fig_n = tbl_n = 1   # monotonic figure/table counters, threaded across chapters in reading order
-    for i, c in enumerate(chapters):
-        # Part-divider page before the first chapter of each numbered Part (1–5) and each appendix Part.
-        if c["part"] not in printed_parts:
-            printed_parts.add(c["part"])
-            if c["part"] not in (0, 6):  # front/back matter get no divider — they flow after the TOC
-                if c.get("is_appendix"):
-                    kicker = "Appendix"
-                    pt_title = c["part_title"]
-                else:
-                    kicker = f'Part {c["part"]}'
-                    pt_title = _PART_TITLES.get(c["part"], c["part_title"])
-                parts_body.append(
-                    '<section class="print-part">'
-                    f'<div class="pt-kicker">{html.escape(kicker)}</div>'
-                    f'<div class="pt-title">{html.escape(pt_title)}</div>'
-                    '<div class="pt-rule"></div>'
-                    '</section>'
-                )
-        if c.get("is_appendix"):
-            num_label = "Appendix"
-        elif c.get("is_matter"):
-            num_label = c["chapter_title"]
-        else:
-            num_label = f'Chapter {c["seq"]}'
-        kicker = _kicker_html(chapters, i, num_label)
-        header = (
-            f'<header class="chap"><div class="kicker">{kicker}</div>'
-            f'<h1>{html.escape(c["chapter_title"])}</h1>'
-            + (_epigraph_html(c["part"]) if c.get("show_epigraph") else "")
-            + '</header>'
-        )
-        body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
-        body, fig_n, tbl_n = _number_floats(body, fig_n, tbl_n)
-        body = _resolve_xrefs(body, ref_map, for_print=True)
-        parts_body.append(
-            f'<section class="print-chapter" id="{html.escape(_print_anchor(c["slug"]), quote=True)}">'
-            f'{header}{body}</section>'
-        )
-
-    runtime = MERMAID_CDN if any_mermaid else ""
-    # The verso running head needs `string(book-title)`. Set it via a body::before-style rule in the
-    # stylesheet (`.print-cover` sets it) — NOT a positioned marker span, which Paged.js floats onto its
-    # own leading blank page. The cover's h1 sets book-title; each chapter h1 sets chap-title.
-    body_html = "\n".join(parts_body)
-    doc = (
-        '<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8">'
-        f'{_PRINT_FONTS_LINK}<style>{PRINT_CSS}</style></head><body>'
-        f'{body_html}'
-        f'{runtime}'
-        '<script src="../vendor/paged.polyfill.js"></script>'
-        '</body></html>\n'
-    )
-    out_dir = HERE / "_print"
-    out_dir.mkdir(exist_ok=True)
-    out = out_dir / "print.html"
-    out.write_text(doc, encoding="utf-8")
-    print(f"built combined print HTML: {out} ({len(chapters)} chapters)")
-    return out
-
-
-# The rendered PDF is gated on CONTENT INTEGRITY, not just a page count. Paged.js's failure modes are a
-# runaway pagination (a CSS bug explodes the book into hundreds of near-empty pages) OR a collapse /
-# truncation (the render stops partway, or falls to a handful of unpaginated pages). A page-count band
-# catches the explosion; a text-extraction check catches the truncation — every chapter and part title
-# from the SOURCE OF TRUTH (`_discover_chapters()` / `_PART_TITLES`) must appear in the extracted PDF text,
-# plus the cover title and a distinctive tail from the last section. Any miss → RENDER FAILURE.
+# The rendered PDF is gated on CONTENT INTEGRITY, not just a page count. The failure modes are a runaway
+# pagination (the render explodes the book into hundreds of near-empty pages) OR a collapse / truncation
+# (the render stops partway, or falls to a handful of pages). A page-count band catches the explosion; a
+# text-extraction check catches the truncation — every chapter and part title from the SOURCE OF TRUTH
+# (`_discover_chapters()` / `_PART_TITLES`) must appear in the extracted PDF text, plus the cover title and
+# a distinctive tail from the last section. Any miss → RENDER FAILURE.
 _PDF_PAGE_CEILING = 800
 _PDF_PAGE_FLOOR = 50  # a real book render; under this means the render collapsed or truncated
 _BOOK_TITLE = "Model-Based Agentic Software Engineering"
@@ -3447,11 +3108,37 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
     appendix = build_appendix_chapters(next_part=max(c["part"] for c in chapters) + 1)
     full = chapters + appendix
 
+    # Normalize for matching so a markup / typographic difference cannot false-fail on intact content:
+    #   - drop backtick markers: the typed IR renders a `code-span` in a title as PLAIN TEXT (no ` fences),
+    #     so "Aggregate-compute protection (`lint-all` host mutex)" appears without the backticks;
+    #   - fold typographic quotes/dashes to ASCII: the print renderer's smart-quotes turns a straight `'`
+    #     into `’` (U+2019) and `--` into an en/em dash, so a title like "the runtime's events" or
+    #     "read, don't hardcode" extracts with a curly apostrophe. The CONTENT matters, not the glyph.
+    def _norm(s: str) -> str:
+        s = s.replace("`", "")
+        s = (s.replace("’", "'").replace("‘", "'")
+               .replace("“", '"').replace("”", '"')
+               .replace("–", "-").replace("—", "-").replace("‐", "-"))
+        return re.sub(r"\s+", " ", s.strip())
+
+    text_norm = _norm(text)
+
     def _present(s: str) -> bool:
-        return re.sub(r"\s+", " ", s.strip()) in text
+        return _norm(s) in text_norm
+
+    # The appendix chapter heading in the print edition renders the title WITHOUT its "Appendix X - N."
+    # numeric prefix (the part-divider already names the family). Match on the title portion after that
+    # prefix so a present-but-un-prefixed appendix heading is not falsely reported missing.
+    _APPENDIX_PREFIX = re.compile(r"^Appendix\s+[A-Z]\s*[-—]\s*\d+\.\s*")
+
+    def _title_present(title: str) -> bool:
+        if _present(title):
+            return True
+        stripped = _APPENDIX_PREFIX.sub("", title)
+        return stripped != title and _present(stripped)
 
     # Every chapter title must appear.
-    missing_titles = [c["chapter_title"] for c in full if not _present(c["chapter_title"])]
+    missing_titles = [c["chapter_title"] for c in full if not _title_present(c["chapter_title"])]
     if missing_titles:
         problems.append(f"{len(missing_titles)} chapter title(s) missing from PDF: {missing_titles[:5]}")
 
@@ -3510,81 +3197,70 @@ def _pdf_is_tagged(pdf_path: pathlib.Path) -> bool:
 
 
 def build_pdf() -> int:
-    """`--pdf`: emit the combined print HTML, then render it to `book/mage-book.pdf` via the Node
-    Paged.js + Puppeteer renderer (`render_pdf.mjs`) — the reliable path (see that file's header for why
-    headless-`--print-to-pdf` and `pagedjs-cli` were both rejected). Gates the result on a page-count
-    band so a runaway or collapsed render fails instead of shipping. Slow, opt-in — NOT part of `build()`.
+    """`--pdf`: render the production print edition to `book/mage-book.pdf` via the print-native Typst
+    path — emit the WHOLE-BOOK Typst source from the typed book IR, then `typst compile` it to PDF. Gates
+    the result on the same content-integrity band (page floor/ceiling, every chapter + part title present,
+    no raw mermaid, density) so a truncated or runaway render fails instead of shipping. Fast, opt-in —
+    NOT part of `build()` (the web build is untouched).
 
-    After Puppeteer emits the raw PDF, a lossless `qpdf` pass (object-stream generation + Flate
-    recompression at level 9) shrinks it by ~37% with zero content change and full tag preservation.
-    The content-integrity gate runs on the FINAL compressed file."""
+    Typst lays out the whole book with one native binary in ~2 s and emits a small (~5 MB), tagged PDF —
+    no headless browser in the loop. Its output is already compact, so there is no post-compression pass;
+    the tag tree is asserted directly on the compiled file."""
     import shutil
     import subprocess
 
-    print_html = build_print_html()
-    # Render to a temp path inside _print/ (already gitignored); qpdf produces the final output.
-    pdf_raw = HERE / "_print" / "mage-book.raw.pdf"
+    # book_typst imports build_book_html at module scope; import it here (function-local, matching this
+    # function's existing shutil/subprocess pattern) so importing build_book_html as a library never pulls
+    # the emitter and its transitive book_ir graph.
+    import book_typst
+    import book_ir
+
+    typst = shutil.which("typst")
+    if not typst:
+        print("ERROR: `typst` not found on PATH — install it (brew install typst / download the pinned "
+              "release binary in CI).", file=sys.stderr)
+        return 2
+
     pdf_out = HERE / _PDF_FILENAME
-    renderer = HERE / "render_pdf.mjs"
+    # Emit into _typst/ (gitignored, multi-file + binary — never committed).
+    typ_dir = HERE / "_typst"
+    typ_dir.mkdir(exist_ok=True)
+    typ_src = typ_dir / "mage-book.typ"
 
-    node = shutil.which("node")
-    if not node:
-        print("ERROR: `node` not found on PATH; cannot render the PDF (need Node + Puppeteer).",
-              file=sys.stderr)
-        return 2
-    if not (HERE / "node_modules" / "puppeteer").is_dir():
-        print("ERROR: Puppeteer not installed. Run `npm install` in book/ first (or `npm ci` in CI).",
-              file=sys.stderr)
-        return 2
-    qpdf = shutil.which("qpdf")
-    if not qpdf:
-        print("ERROR: `qpdf` not found on PATH — install it (brew install qpdf / apt-get install qpdf).",
-              file=sys.stderr)
-        return 2
+    # Emit the WHOLE book (front matter → parts → back matter → appendices) as one Typst document from the
+    # typed IR — the same IR the web build walks, so the print edition cannot diverge from the web book.
+    doc = book_ir.parse_book(include_appendices=True)
+    slugs = [c.slug for c in doc.chapters]
+    typ = book_typst.emit_document(slugs, root=ROOT, with_frontmatter=True)
+    typ_src.write_text(typ, encoding="utf-8")
+    print(f"Typst source: {typ_src} ({len(typ):,} bytes, {len(slugs)} chapters)")
 
-    cmd = [node, str(renderer), str(print_html), str(pdf_raw)]
-    print("PDF render plan:\n  " + " ".join(f'"{a}"' if " " in a else a for a in cmd))
+    # Compile. `--root ..` so leading-`/` image paths (figure SVGs, cached mermaid SVGs) resolve against
+    # the repo root. Typst fails loud on any unresolved reference / bad image / math error.
+    cmd = [typst, "compile", "--root", str(ROOT), str(typ_src), str(pdf_out)]
+    print("PDF compile plan:\n  " + " ".join(f'"{a}"' if " " in a else a for a in cmd))
     r = subprocess.run(cmd, capture_output=True, text=True)
-    print(r.stdout.strip())
-    if r.returncode != 0 or not pdf_raw.is_file():
-        print(f"ERROR: PDF render failed (rc={r.returncode}).\n{r.stderr}", file=sys.stderr)
+    if r.stdout.strip():
+        print(r.stdout.strip())
+    if r.returncode != 0 or not pdf_out.is_file():
+        print(f"ERROR: Typst compile failed (rc={r.returncode}).\n{r.stderr}", file=sys.stderr)
         return 1
-
-    raw_size = pdf_raw.stat().st_size
-    print(f"Puppeteer raw PDF: {pdf_raw} ({raw_size / 1_048_576:.1f} MB)")
-
-    # Lossless qpdf compression pass — object-stream generation + Flate recompression at level 9.
-    # Keeps the tag tree intact (qpdf is structure-preserving by design).
-    qpdf_cmd = [
-        qpdf,
-        "--object-streams=generate",
-        "--recompress-flate",
-        "--compression-level=9",
-        str(pdf_raw),
-        str(pdf_out),
-    ]
-    print("qpdf compression plan:\n  " + " ".join(f'"{a}"' if " " in a else a for a in qpdf_cmd))
-    qr = subprocess.run(qpdf_cmd, capture_output=True, text=True)
-    if qr.returncode != 0 or not pdf_out.is_file():
-        print(f"ERROR: qpdf compression failed (rc={qr.returncode}).\n{qr.stderr}", file=sys.stderr)
-        return 1
+    if r.stderr.strip():
+        # Typst prints warnings to stderr on success; surface them (foreign-object warnings, etc.).
+        print(r.stderr.strip(), file=sys.stderr)
 
     final_size = pdf_out.stat().st_size
-    saving_pct = 100.0 * (1 - final_size / raw_size) if raw_size else 0.0
-    print(
-        f"PDF: {raw_size / 1_048_576:.1f} MB → {final_size / 1_048_576:.1f} MB via qpdf "
-        f"({saving_pct:.0f}% smaller)"
-    )
+    print(f"PDF: {pdf_out} ({final_size / 1_048_576:.1f} MB via typst)")
 
-    # Tag-preservation assertion — qpdf is lossless so this should always pass, but assert it so a
-    # future qpdf-flag change cannot silently drop the struct tree.
+    # Tag-preservation assertion — Typst emits a tagged PDF; assert it so a future template/flag change
+    # cannot silently drop the struct tree.
     if not _pdf_is_tagged(pdf_out):
-        print("ERROR: qpdf pass dropped the PDF struct tree — tags lost. "
-              "Check the qpdf flags before shipping.", file=sys.stderr)
+        print("ERROR: Typst PDF has no struct tree — tags lost (a11y regression). "
+              "Check the Typst document settings before shipping.", file=sys.stderr)
         return 1
-    print("Tag preservation: struct tree present in compressed PDF.")
+    print("Tag preservation: struct tree present in PDF.")
 
-    # Content-integrity gate — the whole book must be in the FINAL compressed PDF.
+    # Content-integrity gate — the whole book must be in the compiled PDF.
     return verify_pdf(pdf_out)
 
 
@@ -3728,7 +3404,7 @@ def build() -> int:
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    # `--pdf` is the opt-in print edition (slow Paged.js + Puppeteer render); default is the fast web build.
+    # `--pdf` is the opt-in print edition (the print-native Typst render); default is the fast web build.
     if "--pdf" in args:
         raise SystemExit(build_pdf())
     # `--verify-pdf` runs ONLY the content-integrity gate over an existing book/mage-book.pdf (CI reuses it).

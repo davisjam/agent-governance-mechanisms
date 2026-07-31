@@ -136,7 +136,7 @@ The site is generated from the markdown — **never hand-edit the `.html`** (it 
 | `python3 catalog.py validate` | schema + INDEX + link + summary checks; exit 1 on any violation |
 | `python3 catalog.py build` | render every `.md` → sibling `.html` + regenerate `index.html` (census) + `catalogue-views.html`; BLOCKING reachability gate — fails (exit 1) if any built page is an orphan (rendered but nothing links to it) |
 | `python3 catalog.py deploy local` | validate → build → serve at `http://127.0.0.1:8137/` (`--port` to change; **not** 8080) |
-| `python3 catalog.py deploy local --pdf` | same, but first render `book/mage-book.pdf` (slow Paged.js path) so the local preview's **Download PDF** link serves the current book |
+| `python3 catalog.py deploy local --pdf` | same, but first render `book/mage-book.pdf` (print-native Typst path) so the local preview's **Download PDF** link serves the current book |
 | `python3 catalog.py deploy github` | validate → build → commit changes → `git push origin main` (GitHub Actions then deploys Pages **and renders + publishes the PDF**) |
 | `python3 catalog.py install-hooks` | one-time: `core.hooksPath=hooks` so `pre-commit` auto-runs validate+build+stage |
 
@@ -145,13 +145,17 @@ The site is generated from the markdown — **never hand-edit the `.html`** (it 
 The book ships a **PDF** at `/book/mage-book.pdf` (the landing's "Download PDF" button). It is **gitignored
 on purpose** — a multi-MB binary does not belong in git history — so it is *created, never committed*:
 
+The PDF is rendered by the **print-native Typst path**: `book/build_book_html.py --pdf` projects the same
+typed book IR the web build walks to a Typst document, then `typst compile` lays it out. One IR, two
+projections (HTML web + Typst PDF), so the PDF cannot diverge from the web book.
+
 - **Published (authoritative):** the Pages workflow ([`.github/workflows/pages.yml`](.github/workflows/pages.yml))
   runs `python3 book/build_book_html.py --pdf` on **every push**, runs the content-integrity gate (whole-book
-  text extraction + page floor/ceiling + density + no-raw-mermaid), and hard-asserts the file into the site
-  artifact. So `deploy github` always ships a PDF freshly rendered from source — no flag needed.
-- **Local preview:** the default fast web build does **not** render the PDF (it is slow), so any
-  `book/mage-book.pdf` on disk goes stale between renders. Regenerate it on demand with
-  `catalog.py deploy local --pdf`, or directly via `python3 book/build_book_html.py --pdf`.
+  text extraction + page floor/ceiling + density + no-raw-mermaid + tag-tree present), and hard-asserts the
+  file into the site artifact. So `deploy github` always ships a PDF freshly rendered from source — no flag needed.
+- **Local preview:** the default web build does **not** render the PDF, so any `book/mage-book.pdf` on disk
+  goes stale between renders. Regenerate it on demand (Typst compiles the whole book in a couple of seconds)
+  with `catalog.py deploy local --pdf`, or directly via `python3 book/build_book_html.py --pdf`.
 
 **Two deploy modes, one command:**
 - **`deploy local`** — preview in a browser. Blocks while serving; Ctrl-C to stop. Add `--pdf` to also

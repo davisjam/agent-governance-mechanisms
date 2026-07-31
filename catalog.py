@@ -3149,11 +3149,11 @@ def cmd_deploy(args) -> int:
         print("ABORT: test suite failed — fix before deploying (run `catalog.py test` to see).")
         return 1
 
-    # opt-in local PDF render (slow Paged.js + Puppeteer path; the default web build never touches it).
+    # opt-in local PDF render (the print-native Typst path; the default web build never touches it).
     # `--pdf` regenerates book/mage-book.pdf so the local preview's "Download PDF" link serves the CURRENT
     # book, not a stale gitignored copy. Publish (github) needs no flag — CI renders the PDF on every push.
     if want_pdf:
-        print("\n== Rendering PDF (book/mage-book.pdf) — slow; content-integrity gate runs internally ==")
+        print("\n== Rendering PDF (book/mage-book.pdf) via Typst; content-integrity gate runs internally ==")
         pdf_build = subprocess.run([sys.executable, os.path.join("book", "build_book_html.py"), "--pdf"],
                                    cwd=ROOT)
         if pdf_build.returncode != 0:
@@ -3286,7 +3286,7 @@ def main() -> int:
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
     d.add_argument("--port", type=int, default=DEFAULT_PORT, help=f"localhost port for --local (default {DEFAULT_PORT})")
-    d.add_argument("--pdf", action="store_true", help="(local only) also render book/mage-book.pdf so the local preview's Download-PDF link is current; slow. Redundant for github — CI always renders the PDF on push")
+    d.add_argument("--pdf", action="store_true", help="(local only) also render book/mage-book.pdf (print-native Typst path) so the local preview's Download-PDF link is current. Redundant for github — CI always renders the PDF on push")
     d.add_argument("-m", "--message", default="deploy: rebuild site", help="commit message for github mode")
     args = p.parse_args()
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
