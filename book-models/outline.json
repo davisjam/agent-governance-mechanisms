@@ -2620,7 +2620,7 @@
           "section_id": "the-model-is-biased-toward-what-it-has-seen",
           "level": 2,
           "heading_text": "The model is biased toward what it has seen",
-          "topic_sentence": "Treat the training data as the whole internet and every book ever written, and treat the model as biased toward whatever it saw a lot of.",
+          "topic_sentence": "Think of the training data as the whole internet and every book ever written, and think of the model as biased toward whatever it saw most.",
           "id_source": "derived",
           "block_index": 4,
           "points": [
@@ -2665,7 +2665,7 @@
           "section_id": "the-diffusion-analogy",
           "level": 3,
           "heading_text": "The diffusion analogy",
-          "topic_sentence": "I hold this through an analogy to the diffusion models that draw pictures.",
+          "topic_sentence": "I hold this through an analogy.",
           "id_source": "derived",
           "block_index": 24,
           "points": [
