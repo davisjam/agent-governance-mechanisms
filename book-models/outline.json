@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 51,
-    "paragraph_points": 175
+    "sections_drained": 53,
+    "paragraph_points": 183
   },
   "chapters": [
     {
@@ -1553,8 +1553,24 @@
           "heading_text": "The service-flow / API model",
           "topic_sentence": "*The typed source-of-truth for a service-oriented architecture — its services, their endpoints, their authentication, and the wiring between them — from which the access policy and environment wiring are generated and against which the real call graph is checked.*",
           "id_source": "explicit",
-          "block_index": 10,
-          "points": []
+          "block_index": 14,
+          "points": [
+            {
+              "slug": "the-service-flow-model-is-a-service-architectures-typed-source-of-truth",
+              "text": "The service-flow model is a service architecture's typed source-of-truth.",
+              "block_index": 16
+            },
+            {
+              "slug": "the-model-answers-three-questions-scattered-config-cannot",
+              "text": "The model answers three questions scattered config cannot.",
+              "block_index": 19
+            },
+            {
+              "slug": "the-service-flow-model-derives-bidirectionally",
+              "text": "The service-flow model derives in both directions.",
+              "block_index": 29
+            }
+          ]
         },
         {
           "section_id": "domain-registries",
@@ -1562,11 +1578,38 @@
           "heading_text": "The domain registries",
           "topic_sentence": "The domain registries are the frozen tables the service-flow model rests on: the file types the system handles, its known conformance gaps, its scheduled jobs, its user-facing surfaces.",
           "id_source": "explicit",
-          "block_index": 24,
-          "points": []
+          "block_index": 32,
+          "points": [
+            {
+              "slug": "frozen-registries-are-the-single-source-every-consumer-joins-to",
+              "text": "Frozen registries are the single source every consumer joins.",
+              "block_index": 34
+            }
+          ]
         }
       ],
-      "preamble_points": []
+      "preamble_points": [
+        {
+          "slug": "the-logical-view-answers-what-the-system-is",
+          "text": "The Logical view answers what the system is.",
+          "block_index": 1
+        },
+        {
+          "slug": "two-general-types-and-two-real-models-carry-the-view",
+          "text": "Two general types and two real models carry the view.",
+          "block_index": 4
+        },
+        {
+          "slug": "a-data-flow-diagram-traces-data-across-transforms",
+          "text": "A data-flow diagram traces data across transforms.",
+          "block_index": 8
+        },
+        {
+          "slug": "an-inheritance-hierarchy-shows-what-kinds-the-system-handles",
+          "text": "An inheritance hierarchy shows which specializations exist.",
+          "block_index": 11
+        }
+      ]
     },
     {
       "slug": "3.3-the-process-view",

@@ -336,6 +336,20 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: round-trip | local
 - term: snapshot-vs-derived | local
 - term: symbol-anchor | local
+- term: service-flow-model | section
+- term: domain-registries | section
+- term: concurrency | section
+- term: inheritance-hierarchy | local
+- term: wiring | local
+- term: access-policy | local
+- term: contract-parity | local
+- term: fact-consistency | local
+- term: lock-ordering | local
+- term: lock-coverage | local
+- term: deadlock | local
+- term: mediation-coverage | local
+- term: resource-contention | local
+- term: torn-write | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
