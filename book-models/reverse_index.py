@@ -177,10 +177,14 @@ class Dependent:
 
 
 def _add(index: "dict[str, dict]", symbol: str, kind: str, dep: Dependent) -> None:
-    slot = index.setdefault(symbol, {"kind": kind, "dependents": []})
-    # A symbol keeps ONE kind; if two views disagree on a symbol's kind that is itself a signal, but in
-    # practice the kind is a property of the symbol, not the referrer — keep the first, they agree.
-    slot["dependents"].append(asdict(dep))
+    # The index key is NAMESPACED by kind — `<kind>:<slug>` (DESIGN §10.4). A term slug can equal a
+    # section-id slug (e.g. `semantic-gap` the concept vs a `semantic-gap` heading anchor); a bare-slug
+    # key would MERGE the two into one slot that then mislabels its `kind` and interleaves term edges with
+    # outcome-unit edges. Namespacing keeps each construct a distinct entry, so `kind` is always right and
+    # `deps` labels every collided sense correctly. Slugs are kebab / kinds are single lowercase words, so
+    # neither carries a `:` — `key.split(":", 1)` recovers `(kind, slug)` unambiguously.
+    key = f"{kind}:{symbol}"
+    index.setdefault(key, {"kind": kind, "dependents": []})["dependents"].append(asdict(dep))
 
 
 def build_index() -> "dict[str, dict]":
@@ -310,8 +314,9 @@ def structural_findings() -> "list[str]":
     universe = derive_universe()
     index = build_index()
     findings: "list[str]" = []
-    for symbol, slot in sorted(index.items()):
+    for key, slot in sorted(index.items()):
         kind = slot["kind"]
+        symbol = key.split(":", 1)[1]  # strip the kind namespace back to the bare slug (DESIGN §10.4)
         if not universe.resolves(symbol, kind):
             dep_summary = ", ".join(f"{d['view']}:{d['element']}({d['role']})" for d in slot["dependents"])
             findings.append(f"DANGLING {kind} {symbol!r} — referenced by {len(slot['dependents'])} view "
@@ -343,7 +348,9 @@ def to_jsonable(index: "dict[str, dict] | None" = None) -> dict:
                 "points": len(universe.points), "terms": len(universe.terms),
             },
         },
-        # symbol -> {kind, dependents:[{view, element, role}]}, keys sorted for a stable diff.
+        # "<kind>:<slug>" -> {kind, dependents:[{view, element, role}]} — keys NAMESPACED by kind
+        # (DESIGN §10.4) so a term slug that equals a section-id slug stays two distinct entries; keys
+        # sorted for a stable diff.
         "index": {k: index[k] for k in sorted(index)},
     }
 
@@ -391,8 +398,12 @@ def deps(symbol: str) -> int:
     source (a non-resolving symbol is itself a dangling / structural-drift signal)."""
     index = build_index()
     universe = derive_universe()
-    slot = index.get(symbol)
-    if slot is None:
+    # The index is keyed `<kind>:<slug>` (DESIGN §10.4), but a caller passes a bare slug. A slug can carry
+    # more than one KIND — a `semantic-gap` concept AND a `semantic-gap` section id are two entries — so
+    # gather every namespaced match and print each with its own (correct) kind label. That union IS the
+    # answer the caller wants; namespacing just stops the two senses from merging and mislabeling.
+    matches = [(k, index[f"{k}:{symbol}"]) for k in SYMBOL_KINDS if f"{k}:{symbol}" in index]
+    if not matches:
         # Not depended on by any view. Say whether it even exists in the source, so the caller can tell
         # "typo / wrong symbol" from "real symbol, but no view rides it (safe to edit)".
         defined = any(universe.resolves(symbol, k) for k in SYMBOL_KINDS)
@@ -400,13 +411,13 @@ def deps(symbol: str) -> int:
             else "is NOT a defined symbol in the source (typo, or a symbol no view tracks)"
         print(f"{symbol!r}: no dependents — {where}")
         return 0
-    kind = slot["kind"]
-    resolves = universe.resolves(symbol, kind)
-    flag = "" if resolves else "  ⚠ DANGLING — the source no longer defines this symbol"
-    print(f"{symbol!r} ({kind}){flag}")
-    print(f"  {len(slot['dependents'])} view element(s) depend on it:")
-    for d in slot["dependents"]:
-        print(f"    - {d['view']}: {d['element']}  [{d['role']}]")
+    for kind, slot in matches:
+        resolves = universe.resolves(symbol, kind)
+        flag = "" if resolves else "  ⚠ DANGLING — the source no longer defines this symbol"
+        print(f"{symbol!r} ({kind}){flag}")
+        print(f"  {len(slot['dependents'])} view element(s) depend on it:")
+        for d in slot["dependents"]:
+            print(f"    - {d['view']}: {d['element']}  [{d['role']}]")
     return 0
 
 

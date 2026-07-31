@@ -650,6 +650,24 @@ paragraphs use term X"** as one lookup — the union the drain needs to see a co
 structural finding, and `term_findings()` reports it with the clearer `UNREGISTERED term` wording the
 `term-tags-registered` lint surfaces.
 
+A section-terms slug plays the **tier-1 role**, so it must resolve to a term registered at tier `section`
+(§10.3). `role_tier_findings()` reports a `local`-registered slug used in a section-terms marker as a
+`TIER-ROLE MISMATCH`; the `term-tags-registered` lint surfaces it beside the registration findings.
+Paragraph `terms:` slugs are unconstrained — a section concept may be reused at paragraph tier, and a local
+is expected there.
+
+**Index key scheme — namespaced by kind.** The inverted index (`build_index()` → `reverse_index.json`'s
+`index`) keys every entry by **`<kind>:<slug>`**, not the bare slug. A term slug can equal a section-id slug
+(`semantic-gap` the concept vs a `semantic-gap` heading anchor; a `*-model` concept vs its chapter's
+section id — 19 such collisions across the drained book). A bare-slug key MERGES the two senses into one
+slot, which then takes the first kind it saw and interleaves term edges with outcome-unit edges — so
+`deps <slug>` mislabels the merged entry's `kind`. Namespacing keeps each construct a distinct entry, so
+`kind` is always correct. Slugs are kebab and kinds are single lowercase words, so neither carries a `:`;
+`key.split(":", 1)` recovers `(kind, slug)`. `deps <slug>` takes a **bare** slug, gathers every
+`<kind>:<slug>` match, and prints each sense with its own (correct) kind label — the by-design union output,
+now un-mislabeled. The only reader of `reverse_index.json`'s `index` is `reverse_index.py` itself (the
+`deps`/`verify`/structural walks) and the drift test; no consumer reads it by bare slug.
+
 ### 10.5 The two new lints — AUDIT-ONLY-first
 
 Both land **audit-only** (print, exit 0), wired into `catalog.py views-audit` and standable as scripts:
