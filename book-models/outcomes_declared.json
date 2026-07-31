@@ -311,9 +311,9 @@
       "primary_unit": "2.5-metrics",
       "verb": "compute",
       "obj": "a metric that measures one level deeper than the surface number",
-      "statement": "After this chapter, the reader can design a metric that measures one level deeper — turning a number that reports into one that drives a decision.",
-      "provenance": "declared",
-      "anchor": "Section 'measure-one-level-deeper'; ts quotes Ousterhout: 'measure one level deeper than the number you'.",
+      "statement": "After this chapter, the reader can design a metric that measures one level deeper — turning a number that reports into one that drives a decision — and place it on the hard-to-soft spectrum, feeding a hard number into a typed model the metric tool then consumes.",
+      "provenance": "derived",
+      "anchor": "point: a-metric-is-the-sensing-half-of-the-agent-loop / the-metric-comes-first-and-must-drive-a-decision / measure-one-level-deeper-because-the-surface-number-cannot-act / the-hard-ends-defining-move-is-the-number-feeds-the-model / the-model-is-not-a-picture-of-the-machinery-it-is-the-machinery",
       "secondary_units": [
         "4.6-generative-validation"
       ]
@@ -513,11 +513,50 @@
       "primary_unit": "measure-one-level-deeper",
       "verb": "compute",
       "obj": "a metric one level deeper than the number a decision needs",
-      "statement": "After this section, the reader can apply Ousterhout's rule and measure one level deeper than the surface number.",
+      "statement": "After this section, the reader can apply Ousterhout's rule and measure one level deeper than the surface number — reading a per-service cost split or a boot-time breakdown as a decision the invoice-level number buried.",
       "provenance": "derived",
-      "anchor": "ts: 'John Ousterhout gives the rule in one line: measure one level deeper than the number you'.",
+      "anchor": "point: measure-one-level-deeper-because-the-surface-number-cannot-act / a-cloud-bill-reports-but-splitting-it-by-service-acts / boot-time-one-level-deeper-turns-scale-out-into-fix-the-slow-phase / line-coverage-is-the-invoice-level-number-and-the-flagship-is-coverage-one-level-deeper / metrics-run-a-hard-to-soft-spectrum-and-the-mistake-is-treating-one-as-the-other",
       "secondary_units": [
         "the-flagship-coverage-measured-one-level-deeper"
+      ]
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "the-hard-end-cold-start-latency-machine-read-and-model-fed",
+      "verb": "analyze",
+      "obj": "a hard, machine-read metric whose defining move is that the number feeds a typed model",
+      "statement": "After this section, the reader can analyze a hard, deterministic metric at the level where the decision lives — reading cold-start latency one level deeper to name runtime initialization rather than scale-from-zero, computing a longest-path worst case over a service graph, and feeding the number into a typed deployment model a recompute tool consumes.",
+      "provenance": "derived",
+      "anchor": "point: cold-start-latency-reads-obviously-as-the-scale-from-zero-penalty / the-deeper-cold-start-number-named-runtime-init-not-scale-from-zero-or-image-size / spot-checking-doesnt-scale-so-a-model-reasons-over-the-chain-as-a-longest-path-sum / the-hard-ends-defining-move-is-the-number-feeds-the-model / automate-the-map-upkeep-into-the-machine-rather-than-a-runbook-reminder / as-built-the-seam-is-in-and-the-data-catches-up"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "the-flagship-coverage-measured-one-level-deeper",
+      "verb": "compute",
+      "obj": "coverage measured one level deeper — model-claim coverage joined from a traceability graph and the coverage oracle",
+      "statement": "After this section, the reader can compute coverage measured one level deeper — joining a traceability graph's claim-to-anchor edges with the coverage oracle so the metric counts model claims instead of lines, names an unexercised invariant instead of a percentage, and reports an honest exercised/unmeasurable/out-of-surface breakdown.",
+      "provenance": "derived",
+      "anchor": "point: line-coverage-answers-a-syntactic-question-not-the-semantic-one / the-fix-joins-a-traceability-graph-to-the-coverage-oracle / the-composition-counts-model-claims-and-reports-a-named-verdict / the-genre-check-names-this-requirements-based-coverage / one-primitive-supports-several-aggregations-each-a-different-decision / the-honesty-layer-reports-a-breakdown-so-the-number-affords-engineering / measuring-one-level-deeper-cost-a-join-not-a-rebuild"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "the-soft-end-doc-derived-tests",
+      "verb": "classify",
+      "obj": "a soft, judgment-laden metric that aims a reader and must not be wired to a gate",
+      "statement": "After this section, the reader can classify a soft metric — a doc-derived test's coverage-of-doc-claims — as one that aims a reader rather than deciding, recognize why its softness is inseparable from a readiness judgment about the seam, and see why wiring it to a blocking gate manufactures hollow tests.",
+      "provenance": "derived",
+      "anchor": "point: a-doc-derived-test-pins-a-doc-claim-and-its-metric-is-genuinely-soft / the-soft-metric-is-inseparable-from-a-readiness-judgment-so-a-gate-would-manufacture-hollow-tests"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "the-model-runs-the-machinery",
+      "verb": "explain",
+      "obj": "why a typed model is not a picture of the metric machinery but the machinery itself",
+      "statement": "After this section, the reader can explain why the MBSE models are consumed at runtime to produce the metrics — the cold-start numbers and the coverage graph both read at check time — so a component-distance grade read from the model drives a pre-commit gate three ways, the model being the machinery rather than a picture of it.",
+      "provenance": "derived",
+      "anchor": "point: the-model-is-not-a-picture-of-the-machinery-it-is-the-machinery / a-component-distance-grade-is-a-metric-that-drives-a-gate-three-ways / the-grade-is-a-metric-read-from-the-model-that-drives-a-sensors-decision",
+      "secondary_units": [
+        "2.6-when-guardrails-collide"
       ]
     },
     {
