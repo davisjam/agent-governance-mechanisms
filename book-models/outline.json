@@ -2728,7 +2728,7 @@
           "section_id": "three-ways-to-run-an-agent-and-why-i-chose-one",
           "level": 2,
           "heading_text": "Three ways to run an agent, and why I chose one",
-          "topic_sentence": "There are three ways to run a coding agent, and the choice is a matter of where you sit on the risk map, not of taste.",
+          "topic_sentence": "There are three ways to run a coding agent, and I suggest you choose among them by where you sit on the risk map; taste does not enter into it.",
           "id_source": "derived",
           "block_index": 4,
           "points": [
@@ -2768,7 +2768,7 @@
           "section_id": "optionality-is-poison",
           "level": 2,
           "heading_text": "Optionality is poison",
-          "topic_sentence": "AI does not merely reduce friction.",
+          "topic_sentence": "AI reduces friction, of course; but what it chiefly manufactures is optionality — an endless stream of choices, some architecturally critical, some product-relevant, and some stupid things the agent should have sorted for itself.",
           "id_source": "derived",
           "block_index": 20,
           "points": [
@@ -2933,7 +2933,7 @@
           "section_id": "ai-is-an-autonomy-amplifier",
           "level": 2,
           "heading_text": "AI is an autonomy amplifier",
-          "topic_sentence": "The thing agents amplify is not your typing speed.",
+          "topic_sentence": "The thing agents amplify is your autonomy — your capacity to turn intent into a working system without waiting on anyone.",
           "id_source": "derived",
           "block_index": 82,
           "points": [
