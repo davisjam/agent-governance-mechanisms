@@ -673,6 +673,21 @@ def check_float_ref_gate() -> "tuple[str, list[str]]":
     return (FAIL if active else PASS), [f.msg for f in active]
 
 
+def check_no_stray_comments() -> "tuple[str, list[str]]":
+    """BLOCKING gate: no book-source `<!-- … -->` may be a STRAY comment — one whose leading token is not a
+    recognized notation decorator (the `stray-book-comment` lint under `book-models/`). A stray leaks into
+    the web page as a raw comment and into the Typst/PDF projection as VISIBLE text; this is the source-side
+    twin of the notation-leak gate (which catches a leak in the built HTML). Lands blocking green — the tree
+    carries zero strays after the render-path strip + fix-up."""
+    import sys as _sys  # noqa: E402 — local path bootstrap so the book-models lint module is importable
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in _sys.path:
+        _sys.path.insert(0, bm)
+    import lint_stray_comments as _lint  # noqa: E402 — the stray-comment source lint lives under book-models/
+    fs = _lint.findings()
+    return (FAIL if fs else PASS), fs
+
+
 def check_ir_render_fidelity() -> "tuple[str, list[str]]":
     """BLOCKING gate for the C→A migration: every render-complete IR block renders byte-identically through
     `book_ir.Block.render_html()` and through the renderer (`md_to_html` on the block's raw slice). This is

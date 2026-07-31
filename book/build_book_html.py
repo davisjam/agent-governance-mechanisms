@@ -208,7 +208,7 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
-    "inset", "data", "label", "point", "section-terms", "web-only",
+    "inset", "data", "label", "table", "point", "section-terms", "web-only",
 )
 # `<!-- web-only: <inline markdown> -->` — a line that belongs in the WEB book but NOT the print PDF (e.g.
 # a "download the PDF" call-to-action, which would be absurd inside the PDF itself). The HTML build renders
@@ -236,6 +236,14 @@ _INSET_RE = re.compile(r"^<!--\s*inset:\s*(?P<title>.+?)\s*-->$")
 # term that appears only in a decorator would spawn a phantom index reference. `_strip_point_decorators`
 # below removes them; the outline model reads the point from the IR, never from this scrubbed prose.
 _POINT_COMMENT_RE = re.compile(r"^\s*<!--\s*(?:point|section-terms):.*?-->\s*$", re.M)
+# ANY HTML comment. After the block-head marker peel has consumed every recognized notation directive
+# (figure / label / table / gloss / point / …), a comment still sitting in a prose-like render block is a
+# STRAY authoring TODO/note — its leading token is not in the notation vocabulary. Left in, it leaks: raw
+# (an invisible HTML comment) into the web page, and as VISIBLE prose into the Typst/PDF projection (which
+# has no lone-comment passthrough). Both render paths strip it just before rendering. Non-greedy + DOTALL so
+# a MULTI-line authoring note is matched whole. The `stray-book-comment` source lint keeps `.md` clean, so
+# after a clean tree this strip has nothing to do — it is the render-time backstop, the lint the front line.
+_STRAY_COMMENT_RE = re.compile(r"<!--.*?-->", re.S)
 
 
 def _strip_point_decorators(body_md: str) -> str:
@@ -821,12 +829,18 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
         if stripped.startswith("[FILL IN:") or stripped.startswith("[MORE CHAPTERS FOLLOW:"):
             _emit(_render_gap_marker(block))
             continue
-        # A standalone HTML comment (e.g. an authoring TODO) — emit it raw so it stays an invisible
-        # comment in the source rather than escaped visible text. (The whole argument-taking notation
-        # vocabulary is already consumed by `_consume_leading_marker` in the block-head peel above.)
-        if stripped.startswith("<!--") and stripped.endswith("-->") and stripped.count("<!--") == 1:
-            out.append(stripped)
-            continue
+        # Strip any HTML comment still in this (prose-like) block. Every recognized display/arming directive
+        # was already consumed + peeled by `_consume_leading_marker` in the block-head pass; a comment that
+        # survives to here is a STRAY authoring TODO/note (its leading token is not in the notation
+        # vocabulary — the `stray-book-comment` lint guards the source). Left in, it leaks: raw here (an
+        # invisible HTML comment) and as VISIBLE text in the Typst/PDF projection. Drop it. Code / mermaid /
+        # inset blocks (which may hold a literal `<!-- … -->`) were emitted and `continue`d above, so this
+        # only ever touches prose. A block that was nothing but a stray comment strips to empty and is skipped.
+        if "<!--" in block:
+            block = _STRAY_COMMENT_RE.sub("", block).strip("\n")
+            stripped = block.strip()
+            if not stripped:
+                continue
         if kind is _ir.BlockKind.HEADING:
             _emit(_render_heading(block))
             continue

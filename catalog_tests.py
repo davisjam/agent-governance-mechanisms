@@ -33,7 +33,12 @@ import argparse
 import sys
 from typing import Callable, NamedTuple
 
-from tests.book import check_float_ref_gate, check_ir_render_fidelity, run_book_audit
+from tests.book import (
+    check_float_ref_gate,
+    check_ir_render_fidelity,
+    check_no_stray_comments,
+    run_book_audit,
+)
 from tests.book_models import check_outcomes_model, check_outline_model, check_reverse_index
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
@@ -87,6 +92,7 @@ CHECKS = [
     Check("html: no flow content under <summary> (stdlib twin of T2 element-permitted-content)", 1, lambda strict: check_summary_no_flow_content()),
     Check("html: no empty <th> (stdlib twin of T2 empty-table-header)", 1, lambda strict: check_no_empty_table_header()),
     Check("html: no book notation leaks (whole-vocabulary; marker / {{token}} / [+emph+])", 1, lambda strict: check_no_notation_leak()),
+    Check("book: no stray HTML comments in source (source-side twin of notation-leak; stray-book-comment)", 1, lambda strict: check_no_stray_comments()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),
     Check("book: IR render-complete blocks render byte-identically (C->A migration net)", 1, lambda strict: check_ir_render_fidelity()),

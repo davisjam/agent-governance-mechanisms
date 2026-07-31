@@ -182,7 +182,16 @@ def _render_heading(raw: str) -> str:
 
 
 def _render_paragraph(raw: str) -> str:
-    return inline_typst(" ".join(ln.strip() for ln in raw.splitlines()))
+    # Strip any stray HTML comment (an authoring TODO/note whose keyword is not in the notation vocabulary).
+    # The IR peels every RECOGNIZED marker into a DIRECTIVE (rendered as nothing); a comment that reaches a
+    # PARA block is stray and would otherwise print as VISIBLE text in the PDF (the leak this closes). Removed
+    # here, mirroring the web renderer's block-level strip; both share `build_book_html._STRAY_COMMENT_RE`. A
+    # block that was nothing but a stray comment renders empty and is dropped by `render_chapter`'s `if frag`.
+    raw = bb._STRAY_COMMENT_RE.sub("", raw)
+    lines = [ln.strip() for ln in raw.splitlines() if ln.strip()]
+    if not lines:
+        return ""
+    return inline_typst(" ".join(lines))
 
 
 def _render_unordered_list(raw: str) -> str:
