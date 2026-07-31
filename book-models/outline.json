@@ -1249,28 +1249,28 @@
           "points": [
             {
               "slug": "mbse-failed-on-upkeep-not-ideas",
-              "text": "Model-based systems engineering never failed on its ideas; it failed on its upkeep — keeping a hand-drawn model matched to a moving codebase is dull, unending human work, the first thing a deadline cuts, so the diagrams drifted, then lied, then got ignored.",
-              "block_index": 6
+              "text": "MBSE failed on upkeep, not on its ideas.",
+              "block_index": 7
             },
             {
               "slug": "the-fleet-supplies-cheaply-the-one-expense-that-buried-mbse",
-              "text": "Re-inducing a model from the code, diffing it, regenerating what it feeds is exactly the dull, unending upkeep a fleet does for nearly nothing — so the one expense that buried MBSE is the one thing an agent fleet supplies cheaply, and the map stays equal to the territory because keeping it equal now costs almost nothing.",
-              "block_index": 8
+              "text": "A fleet supplies MBSE's one fatal expense for nearly nothing.",
+              "block_index": 9
             },
             {
               "slug": "the-zoo-is-large-enough-that-one-model-is-never-the-whole-picture",
-              "text": "The move is to stop listing kinds of model and start walking them; reconciled with the general model types a systems-engineering course teaches, the real drift-checked zoo is large enough that one model is never the whole picture — which is exactly Kruchten's thesis about architecture.",
-              "block_index": 10
+              "text": "One model is never the whole picture.",
+              "block_index": 11
             },
             {
               "slug": "mbse-here-is-derived-software-modeling-of-discrete-systems",
-              "text": "MBSE here means software: the models are typed records, state machines, and the code's own structures, borrowing SysML's words where they name something but refusing its usual form of a model drawn beside the code — a second representation is a snapshot that drifts — and it stops at discrete software, since continuous or real-time dynamics want the timed and hybrid automata toolkit instead.",
-              "block_index": 13
+              "text": "MBSE here means derived software models of discrete systems.",
+              "block_index": 14
             },
             {
               "slug": "the-model-level-buys-fewer-tokens-velocity-and-quality-together",
-              "text": "Working at the model level with an agent doing the lifting buys three things a team usually trades against each other — fewer tokens, more velocity, higher quality, together — because a model shrinks what the agent must hold in-window; that combination is the shape Brooks called a silver bullet, and the careful claim is that the model level is the closest thing to one, since it changes the representation the agent reasons over rather than promising to make the hard part easy.",
-              "block_index": 15
+              "text": "The model level buys fewer tokens, velocity, and quality together.",
+              "block_index": 16
             }
           ]
         },
@@ -1280,17 +1280,17 @@
           "heading_text": "Data from the case study",
           "topic_sentence": "The fewer-tokens leg is the one we can measure directly.",
           "id_source": "explicit",
-          "block_index": 18,
+          "block_index": 19,
           "points": [
             {
               "slug": "the-fewer-tokens-leg-is-measured-by-an-ab-navigation-pilot",
-              "text": "The fewer-tokens leg is the one measured directly: in a controlled A/B pilot an agent answered four navigation questions about the modeled codebase with the model-navigation guidance loaded and without it, and the tokens each arm spent were counted.",
-              "block_index": 19
+              "text": "An A/B navigation pilot measured the fewer-tokens leg directly.",
+              "block_index": 21
             },
             {
               "slug": "the-pilot-saving-is-about-35-percent-at-zero-accuracy-loss",
-              "text": "The median saving is about −35% at zero accuracy loss — every modeled arm answered correctly on and off, so the guidance bought cheaper answers rather than different ones — and the saving scales with how much derivation the naive path would otherwise have had to redo.",
-              "block_index": 24
+              "text": "The pilot saved about 35% of tokens, zero accuracy lost.",
+              "block_index": 26
             }
           ]
         },
@@ -1300,12 +1300,12 @@
           "heading_text": "Kruchten's 4+1, promoted from a closing sentence to the spine",
           "topic_sentence": "The last chapter invoked Kruchten's **4+1 views** in a final sentence — \"the reason one model is never enough.\" This Part promotes that sentence to its organizing structure.",
           "id_source": "derived",
-          "block_index": 26,
+          "block_index": 28,
           "points": [
             {
               "slug": "this-part-promotes-4-plus-1-to-its-organizing-structure",
-              "text": "This Part promotes Kruchten's 4+1 from a closing sentence to its organizing structure: no single diagram captures a software architecture, so four complementary views — logical, process, development, physical — plus a fifth, the scenarios that validate them, cover what a working engineer needs to see.",
-              "block_index": 28
+              "text": "This Part promotes Kruchten's 4+1 to its organizing spine.",
+              "block_index": 31
             }
           ]
         },
@@ -1315,12 +1315,12 @@
           "heading_text": "What this book adds to 4+1: the drift gate",
           "topic_sentence": "Kruchten described the views.",
           "id_source": "derived",
-          "block_index": 34,
+          "block_index": 37,
           "points": [
             {
               "slug": "the-books-addition-to-4-plus-1-is-the-drift-gate",
-              "text": "This book's contribution on top of 4+1 is the drift gate: every view here is not a diagram a human maintains but a typed model a tool reads on every build, gated to fail the moment model and code disagree — 4+1 says which views you need, the drift gate keeps each from becoming a diagram that rots.",
-              "block_index": 35
+              "text": "The book adds to 4+1 a drift gate per view.",
+              "block_index": 39
             }
           ]
         },
@@ -1330,27 +1330,27 @@
           "heading_text": "The framework is a choice; the core is not",
           "topic_sentence": "Making the model executable is why this Part is not really *about* 4+1.",
           "id_source": "derived",
-          "block_index": 37,
+          "block_index": 41,
           "points": [
             {
               "slug": "once-the-core-is-executable-a-framework-is-a-projection-not-a-second-model",
-              "text": "Once the core is a typed model held equal to the code, a view framework is a projection over that core, not a second thing you maintain — you keep one executable model and render whatever view-set the audience needs from it, which is why this Part is not really about 4+1.",
-              "block_index": 38
+              "text": "An executable core makes a framework a projection.",
+              "block_index": 43
             },
             {
               "slug": "rival-frameworks-are-renderings-of-one-executable-core",
-              "text": "Change the audience and you change the projection, not the model: the Process view, a C4 Context-and-Container view, SysML constraint blocks, a data-flow diagram look like rival methodologies but are renderings of the same structure, and a system whose core is executable can derive any of them.",
-              "block_index": 40
+              "text": "Rival frameworks are renderings of one executable core.",
+              "block_index": 45
             },
             {
               "slug": "a-lens-is-a-second-projection-that-hides-content-but-cannot-invent-it",
-              "text": "The same move works one level finer: even inside a single framework a view must choose what to show, and that choice is a second projection kept honest by a clean split — the content is a pure function of the source models, authored by no one, while the lens picks which content a view shows and may hide a node but can never invent one, so even the customer's slice cannot drift from the truth.",
-              "block_index": 42
+              "text": "A lens hides content but cannot invent it.",
+              "block_index": 47
             },
             {
               "slug": "hit-the-executable-core-and-the-framework-wars-dissolve-into-projection-choices",
-              "text": "This Part teaches modeling, not a modeling framework: it uses 4+1 as a good spine for an engineer's questions and drift-gates each view on real code, but the transferable claim sits one level up — hit the executable core and the framework wars dissolve into projection choices, so choose the core with care and choose the framework and lens to fit the reader.",
-              "block_index": 46
+              "text": "Hit the executable core; framework wars become projection choices.",
+              "block_index": 51
             }
           ]
         },
@@ -1360,12 +1360,12 @@
           "heading_text": "The trunk: machinery that holds any view true",
           "topic_sentence": "Before the views, one chapter of framing.",
           "id_source": "derived",
-          "block_index": 48,
+          "block_index": 53,
           "points": [
             {
               "slug": "the-trunk-is-the-shared-machinery-that-makes-every-view-executable",
-              "text": "Most of the method models belong to no single view — they are the trunk machinery that makes every view executable and drift-proof: the executable source-of-truth, the drift and parity gates, the agent-first harness, and the read-and-generate surfaces — introduced once here and revisited by each view chapter.",
-              "block_index": 49
+              "text": "Shared trunk machinery makes every view executable and drift-proof.",
+              "block_index": 55
             }
           ]
         },
@@ -1375,17 +1375,17 @@
           "heading_text": "Beat 1 — a model is derived and joined, never repeated",
           "topic_sentence": "The last chapter warned against repetition: two models that say the same thing must now be kept in sync.",
           "id_source": "derived",
-          "block_index": 62,
+          "block_index": 68,
           "points": [
             {
               "slug": "a-model-is-derived-and-joined-never-repeated",
-              "text": "The zoo's organizing rule sharpens the last chapter's warning against repetition: a model here never sits beside the code as a parallel document — it is derived from the code, or the code from it, and it joins to its neighbours on a shared key rather than restating them.",
-              "block_index": 64
+              "text": "A model is derived and joined, never repeated.",
+              "block_index": 71
             },
             {
               "slug": "derivation-and-join-are-the-cure-for-repetition",
-              "text": "Concretely: the service-flow model is not a re-listing of the endpoints but the list the access policy is generated from and the call graph is checked against, and a journey model joins to those endpoints by call-site rather than copying them — so repetition is the failure and derivation-plus-join is the cure.",
-              "block_index": 66
+              "text": "Derivation and join are the cure for repetition.",
+              "block_index": 73
             }
           ]
         },
@@ -1395,17 +1395,17 @@
           "heading_text": "Beat 2 — name the direction of derivation",
           "topic_sentence": "A model and the code it concerns stay equal by derivation, and derivation runs in one of two directions.",
           "id_source": "derived",
-          "block_index": 68,
+          "block_index": 75,
           "points": [
             {
               "slug": "name-the-direction-of-derivation-up-front",
-              "text": "A model and the code it concerns stay equal by derivation, and that derivation runs in one of two directions — model-from-code (induce and reconcile) or model-to-code (specify and generate); say which up front, because the gate machinery differs between them.",
-              "block_index": 70
+              "text": "Name the direction of derivation up front.",
+              "block_index": 78
             },
             {
               "slug": "most-of-the-zoo-is-model-from-code-because-the-codebase-came-first",
-              "text": "Most models in the zoo run model-from-code, because the codebase pre-existed the models; the service-flow model is the clearest model-to-code case and is bidirectional — some fields generated to code, others reconciled from it — which is why its gate checks both directions.",
-              "block_index": 75
+              "text": "Most of the zoo is model-from-code; the codebase came first.",
+              "block_index": 83
             }
           ]
         },
@@ -1415,32 +1415,32 @@
           "heading_text": "Beat 3 — every model traces to the code",
           "topic_sentence": "A model earns trust only if you can get from a model element back to the lines that realize it, and forward from a line to the model element that governs it.",
           "id_source": "derived",
-          "block_index": 77,
+          "block_index": 85,
           "points": [
             {
               "slug": "every-model-traces-to-the-code-in-both-directions",
-              "text": "A model earns trust only through a round-trip — from a model element back to the lines that realize it, and forward from a line to the element that governs it — and that round-trip is traceability, exactly what the safety-critical standards demanded and exactly what the drift gate's reconciler mechanizes on every build.",
-              "block_index": 79
+              "text": "Every model traces to the code in both directions.",
+              "block_index": 88
             },
             {
               "slug": "the-template-folds-a-traceability-note-into-every-page",
-              "text": "Traceability is why the per-model template folds a one-line note into each page — the direction the model derives and the join key from a model row back to the code — so a reader always knows how to round-trip from the picture to the lines.",
-              "block_index": 81
+              "text": "The template folds a traceability note into every page.",
+              "block_index": 90
             },
             {
               "slug": "a-zoo-of-drifted-views-is-worse-than-none",
-              "text": "The whole zoo rests on the round-trip: a set of views earns trust only while every view still tracks the code it depicts, and a drifted view misleads every agent that reasons through it, so a zoo of drifted views is worse than none because it lends false confidence — and Kruchten gave the views but never said how one stays equal to the code under hundreds of authors and a fleet rewriting the territory daily.",
-              "block_index": 83
+              "text": "A zoo of drifted views is worse than none.",
+              "block_index": 92
             },
             {
               "slug": "the-round-trip-must-be-derived-not-snapshotted",
-              "text": "The answer defended here is that the round-trip must itself be derived, not snapshotted: write the traceability graph's edges down once and trust them and it is a frozen snapshot that drifts the first time a symbol it names is deleted, but give each edge the mechanism that re-proves it — resolve the target against the code and see whether it still exists — and a deletion turns the edge red, because a check that re-reads the code cannot fall behind it while a stored copy can.",
-              "block_index": 85
+              "text": "The round-trip must be derived, not snapshotted.",
+              "block_index": 94
             },
             {
               "slug": "a-resolving-edge-is-both-drift-detection-and-navigation",
-              "text": "The derived graph pays a second dividend: because a resolving edge means the map is current, an agent can walk it to pull the slice of a codebase it cannot hold in one window — up to the invariant that governs a line, down to the code that realizes it — so the systems model a senior engineer keeps in their head becomes a navigable index the fleet reasons through, and drift-detection and navigation are one property wearing two faces.",
-              "block_index": 87
+              "text": "A resolving edge is both drift-detection and navigation.",
+              "block_index": 96
             }
           ]
         },
@@ -1450,22 +1450,22 @@
           "heading_text": "Keeping the models honest — the traceability substrate",
           "topic_sentence": "DocAble did not design this up front.",
           "id_source": "derived",
-          "block_index": 90,
+          "block_index": 99,
           "points": [
             {
               "slug": "the-substrate-was-built-from-what-broke-not-designed-up-front",
-              "text": "This substrate was not designed up front: DocAble tried the cheaper approach first, watched it fail on real work, and built the substrate from what broke — a story worth walking because it shows the exact shape a snapshot rots into and why a derived edge does not.",
-              "block_index": 91
+              "text": "The substrate was built from what broke, not designed.",
+              "block_index": 101
             },
             {
               "slug": "a-stale-model-makes-agents-plan-against-a-system-that-no-longer-exists",
-              "text": "A model is only as good as its agreement with the code: let it still describe a poll-based dispatch plane after a serverless push plane has replaced it and every agent that trusts the model plans against a system that no longer exists — the map must equal the territory, or the map lies.",
-              "block_index": 93
+              "text": "A stale model makes agents plan against a dead system.",
+              "block_index": 103
             },
             {
               "slug": "the-checklist-approach-fails-because-a-hand-maintained-list-rots",
-              "text": "The tempting fix — a checklist to update the model whenever a subsystem is retired — fails the way it always fails: a cutover reconciled the docs and the agent boot context but forgot the models, and the forgotten edge stayed green because nothing re-checked it, which is the pattern under every silent drift — a hand-maintained list rots the moment the code moves without it, unnoticed until the stale fact bites.",
-              "block_index": 95
+              "text": "A hand-maintained checklist rots the moment the code moves.",
+              "block_index": 105
             }
           ]
         },
@@ -1475,17 +1475,17 @@
           "heading_text": "Reading the fix off real drift",
           "topic_sentence": "The right sensor was not guessed.",
           "id_source": "derived",
-          "block_index": 97,
+          "block_index": 107,
           "points": [
             {
               "slug": "the-fix-was-read-off-real-drift-not-guessed",
-              "text": "The right sensor was not guessed: the models were left deliberately ungoverned for weeks so the fix could be read off real drift, and an audit of the closed work turned up two dozen silent divergences at a signal-to-noise near one — sorted by what caught them, one line separated clean from drifted, the clean ones having a sensor that re-read the code at check time and the drifted ones a hand-maintained second copy of the fact that fell behind.",
-              "block_index": 98
+              "text": "The fix was read off real drift, not guessed.",
+              "block_index": 109
             },
             {
               "slug": "the-graph-is-nodes-the-system-already-has-joined-by-re-proved-edges",
-              "text": "So DocAble keeps not a checklist but a traceability graph whose every edge is derived — re-checked against the code at scan time rather than trusted from the last look — its nodes being things the system already has (a model element, the lint that enforces it, the code entry point that realizes it, the test that verifies it, a registry row, a doc surface) and its edges the joins between them, each carrying the mechanism that re-proves it: run the resolver against the target and see whether the symbol still exists.",
-              "block_index": 100
+              "text": "The graph joins existing nodes by re-proved edges.",
+              "block_index": 111
             }
           ]
         },
@@ -1495,17 +1495,17 @@
           "heading_text": "Two decisions that make the graph resist rot",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 102,
+          "block_index": 113,
           "points": [
             {
               "slug": "the-symbol-walk-fires-at-a-slower-cadence-because-the-cadence-follows-the-cost",
-              "text": "The sensor that walks the graph runs at a slower cadence than the per-commit gates on purpose — resolving a symbol against the code costs far more than the membership lookups a commit hook can afford — so the derived-edge check fires at review and done-checking time, the cadence following the cost, with a cheaper second guard on the anchors themselves catching the case a symbol walk cannot: a pointer left naming a dead implementation while a replacement was built beside it.",
-              "block_index": 104
+              "text": "The symbol walk fires slowly because cadence follows cost.",
+              "block_index": 116
             },
             {
               "slug": "derived-sensors-defend-snapshotted-ones-drift",
-              "text": "This is the one-typed-model-per-format commitment lifted one level up: there a fix through the single seam holds for every format, and here a model stays true because the join to the code is re-derived rather than remembered — a sensor that reads the source of truth at check time cannot fall behind it, while a hand-maintained copy of the same fact always can, so derived sensors defend and snapshotted ones drift.",
-              "block_index": 106
+              "text": "Derived sensors defend; snapshotted ones drift.",
+              "block_index": 118
             }
           ]
         },
@@ -1515,17 +1515,17 @@
           "heading_text": "How to read a model page",
           "topic_sentence": "Every model in this Part is rendered by filling the same five-field template.",
           "id_source": "derived",
-          "block_index": 108,
+          "block_index": 120,
           "points": [
             {
               "slug": "every-model-page-fills-the-same-five-field-template",
-              "text": "Every model in this Part is rendered by filling the same five-field template, and the uniformity is deliberate: a reader who has read one page can read any of them on reflex.",
-              "block_index": 111
+              "text": "Every model page fills the same five-field template.",
+              "block_index": 124
             },
             {
               "slug": "the-five-fields-answer-the-five-questions-a-reader-brings-to-a-model",
-              "text": "The first four fields map onto the four questions a reader brings to a model — what is it for, what is it made of, what does it look like, how do I trust it — and field (e) answers the fifth this chapter raised, how the model stays tied to the code, so each view chapter opens with the Kruchten view it embodies and then walks its models through this template.",
-              "block_index": 114
+              "text": "The five fields answer the reader's five questions.",
+              "block_index": 127
             }
           ]
         }
@@ -1533,12 +1533,12 @@
       "preamble_points": [
         {
           "slug": "this-part-walks-each-model-on-real-code",
-          "text": "This Part cashes the last chapter's promise: it walks each kind of model on real code, with real invariants, and shows how to keep the code from drifting away from them.",
+          "text": "This Part walks each model on real, drift-checked code.",
           "block_index": 0
         },
         {
           "slug": "a-real-drift-checked-codebase-sits-under-every-model",
-          "text": "Under every model in this Part is one real codebase — the production accessibility service the book runs on — carrying dozens of typed, drift-checked models and using everything in the book to stay coherent.",
+          "text": "One real codebase carries dozens of drift-checked models.",
           "block_index": 3
         }
       ]

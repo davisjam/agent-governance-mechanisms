@@ -324,6 +324,18 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: governance-graph | local
 - term: shared-resource | local
 - term: outside-hook | local
+- term: mbse | local
+- term: upkeep | local
+- term: silver-bullet | local
+- term: sysml | local
+- term: discrete-software | local
+- term: projection | local
+- term: lens | local
+- term: c4 | local
+- term: trunk | local
+- term: round-trip | local
+- term: snapshot-vs-derived | local
+- term: symbol-anchor | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
