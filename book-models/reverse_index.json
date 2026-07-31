@@ -613,7 +613,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-31",
+          "element": "5.2-the-timeline-and-the-work::block-30",
           "role": "paragraph-point"
         }
       ]
@@ -643,7 +643,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-47",
+          "element": "3.1-the-executable-zoo::block-45",
           "role": "paragraph-point"
         }
       ]
@@ -743,7 +743,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-71",
+          "element": "3.1-the-executable-zoo::block-69",
           "role": "paragraph-point"
         }
       ]
@@ -853,7 +853,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-96",
+          "element": "3.1-the-executable-zoo::block-94",
           "role": "paragraph-point"
         }
       ]
@@ -923,7 +923,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-103",
+          "element": "3.1-the-executable-zoo::block-101",
           "role": "paragraph-point"
         }
       ]
@@ -983,7 +983,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-92",
+          "element": "3.1-the-executable-zoo::block-90",
           "role": "paragraph-point"
         }
       ]
@@ -1073,7 +1073,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-85",
+          "element": "4.5-lessons-learned::block-84",
           "role": "paragraph-point"
         }
       ]
@@ -1093,7 +1093,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-69",
+          "element": "4.5-lessons-learned::block-68",
           "role": "paragraph-point"
         }
       ]
@@ -1133,7 +1133,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-87",
+          "element": "4.5-lessons-learned::block-86",
           "role": "paragraph-point"
         }
       ]
@@ -1143,7 +1143,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-53",
+          "element": "4.5-lessons-learned::block-52",
           "role": "paragraph-point"
         }
       ]
@@ -1363,7 +1363,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-56",
+          "element": "4.5-lessons-learned::block-55",
           "role": "paragraph-point"
         }
       ]
@@ -1413,7 +1413,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-47",
+          "element": "4.5-lessons-learned::block-46",
           "role": "paragraph-point"
         }
       ]
@@ -1583,7 +1583,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-97",
+          "element": "4.5-lessons-learned::block-96",
           "role": "paragraph-point"
         }
       ]
@@ -1653,7 +1653,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-73",
+          "element": "3.1-the-executable-zoo::block-71",
           "role": "paragraph-point"
         }
       ]
@@ -1663,7 +1663,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-118",
+          "element": "3.1-the-executable-zoo::block-116",
           "role": "paragraph-point"
         }
       ]
@@ -1753,7 +1753,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-39",
+          "element": "4.5-lessons-learned::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -1923,7 +1923,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-124",
+          "element": "3.1-the-executable-zoo::block-122",
           "role": "paragraph-point"
         }
       ]
@@ -1933,7 +1933,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-88",
+          "element": "3.1-the-executable-zoo::block-86",
           "role": "paragraph-point"
         }
       ]
@@ -2033,7 +2033,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-93",
+          "element": "4.5-lessons-learned::block-92",
           "role": "paragraph-point"
         }
       ]
@@ -2043,7 +2043,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-72",
+          "element": "4.5-lessons-learned::block-71",
           "role": "paragraph-point"
         }
       ]
@@ -2133,7 +2133,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-49",
+          "element": "4.5-lessons-learned::block-48",
           "role": "paragraph-point"
         }
       ]
@@ -2153,7 +2153,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-99",
+          "element": "4.5-lessons-learned::block-98",
           "role": "paragraph-point"
         }
       ]
@@ -2323,7 +2323,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-51",
+          "element": "3.1-the-executable-zoo::block-49",
           "role": "paragraph-point"
         }
       ]
@@ -2853,7 +2853,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-83",
+          "element": "3.1-the-executable-zoo::block-81",
           "role": "paragraph-point"
         }
       ]
@@ -2873,7 +2873,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-78",
+          "element": "3.1-the-executable-zoo::block-76",
           "role": "paragraph-point"
         }
       ]
@@ -2943,7 +2943,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-43",
+          "element": "3.1-the-executable-zoo::block-41",
           "role": "paragraph-point"
         }
       ]
@@ -3203,7 +3203,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-58",
+          "element": "4.5-lessons-learned::block-57",
           "role": "paragraph-point"
         }
       ]
@@ -3263,7 +3263,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-38",
+          "element": "5.2-the-timeline-and-the-work::block-37",
           "role": "paragraph-point"
         }
       ]
@@ -3333,7 +3333,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-45",
+          "element": "3.1-the-executable-zoo::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -3433,7 +3433,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-79",
+          "element": "4.5-lessons-learned::block-78",
           "role": "paragraph-point"
         }
       ]
@@ -3493,7 +3493,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-76",
+          "element": "4.5-lessons-learned::block-75",
           "role": "paragraph-point"
         }
       ]
@@ -3513,7 +3513,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-101",
+          "element": "4.5-lessons-learned::block-100",
           "role": "paragraph-point"
         }
       ]
@@ -3723,7 +3723,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-39",
+          "element": "3.1-the-executable-zoo::block-37",
           "role": "paragraph-point"
         }
       ]
@@ -3753,7 +3753,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-105",
+          "element": "3.1-the-executable-zoo::block-103",
           "role": "paragraph-point"
         }
       ]
@@ -3833,7 +3833,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-65",
+          "element": "4.5-lessons-learned::block-64",
           "role": "paragraph-point"
         }
       ]
@@ -3843,7 +3843,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-27",
+          "element": "5.2-the-timeline-and-the-work::block-26",
           "role": "paragraph-point"
         }
       ]
@@ -3883,7 +3883,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-21",
+          "element": "3.1-the-executable-zoo::block-20",
           "role": "paragraph-point"
         }
       ]
@@ -3893,7 +3893,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-127",
+          "element": "3.1-the-executable-zoo::block-125",
           "role": "paragraph-point"
         }
       ]
@@ -3923,7 +3923,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-109",
+          "element": "3.1-the-executable-zoo::block-107",
           "role": "paragraph-point"
         }
       ]
@@ -4003,7 +4003,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-111",
+          "element": "3.1-the-executable-zoo::block-109",
           "role": "paragraph-point"
         }
       ]
@@ -4053,7 +4053,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-29",
+          "element": "5.2-the-timeline-and-the-work::block-28",
           "role": "paragraph-point"
         }
       ]
@@ -4213,7 +4213,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-26",
+          "element": "3.1-the-executable-zoo::block-24",
           "role": "paragraph-point"
         }
       ]
@@ -4273,7 +4273,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-46",
+          "element": "5.2-the-timeline-and-the-work::block-45",
           "role": "paragraph-point"
         }
       ]
@@ -4323,7 +4323,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-94",
+          "element": "3.1-the-executable-zoo::block-92",
           "role": "paragraph-point"
         }
       ]
@@ -4433,7 +4433,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-33",
+          "element": "5.2-the-timeline-and-the-work::block-32",
           "role": "paragraph-point"
         }
       ]
@@ -4443,7 +4443,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-101",
+          "element": "3.1-the-executable-zoo::block-99",
           "role": "paragraph-point"
         }
       ]
@@ -4453,7 +4453,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-116",
+          "element": "3.1-the-executable-zoo::block-114",
           "role": "paragraph-point"
         }
       ]
@@ -4483,7 +4483,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-48",
+          "element": "5.2-the-timeline-and-the-work::block-47",
           "role": "paragraph-point"
         }
       ]
@@ -4513,7 +4513,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-90",
+          "element": "3.1-the-executable-zoo::block-88",
           "role": "paragraph-point"
         }
       ]
@@ -4563,7 +4563,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-55",
+          "element": "3.1-the-executable-zoo::block-53",
           "role": "paragraph-point"
         }
       ]
@@ -4653,7 +4653,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-31",
+          "element": "3.1-the-executable-zoo::block-29",
           "role": "paragraph-point"
         }
       ]
@@ -4753,7 +4753,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-41",
+          "element": "4.5-lessons-learned::block-40",
           "role": "paragraph-point"
         }
       ]
@@ -4873,7 +4873,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-63",
+          "element": "4.5-lessons-learned::block-62",
           "role": "paragraph-point"
         }
       ]
@@ -7143,7 +7143,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-79",
+          "element": "4.5-lessons-learned::block-78",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -7158,7 +7158,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-75",
+          "element": "4.5-lessons-learned::block-74",
           "role": "section-term[tier-1]"
         },
         {
@@ -7178,12 +7178,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-85",
+          "element": "4.5-lessons-learned::block-84",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-84",
+          "element": "4.5-lessons-learned::block-83",
           "role": "section-term[tier-1]"
         }
       ]
@@ -7323,17 +7323,17 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-47",
+          "element": "4.5-lessons-learned::block-46",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-49",
+          "element": "4.5-lessons-learned::block-48",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-45",
+          "element": "4.5-lessons-learned::block-44",
           "role": "section-term[tier-1]"
         }
       ]
@@ -7408,7 +7408,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-45",
+          "element": "3.1-the-executable-zoo::block-43",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -7833,17 +7833,17 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-21",
+          "element": "3.1-the-executable-zoo::block-20",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-26",
+          "element": "3.1-the-executable-zoo::block-24",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-96",
+          "element": "3.1-the-executable-zoo::block-94",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -7858,7 +7858,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-20",
+          "element": "3.1-the-executable-zoo::block-19",
           "role": "section-term[tier-1]"
         },
         {
@@ -8163,7 +8163,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-78",
+          "element": "3.1-the-executable-zoo::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8178,7 +8178,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-76",
+          "element": "3.1-the-executable-zoo::block-74",
           "role": "section-term[tier-1]"
         }
       ]
@@ -8188,17 +8188,17 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "3.1-the-executable-zoo::block-69",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "3.1-the-executable-zoo::block-71",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-73",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "3.1-the-executable-zoo::block-69",
+          "element": "3.1-the-executable-zoo::block-67",
           "role": "section-term[tier-1]"
         }
       ]
@@ -8243,7 +8243,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-31",
+          "element": "3.1-the-executable-zoo::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8338,7 +8338,7 @@
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-48",
+          "element": "5.2-the-timeline-and-the-work::block-47",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8443,12 +8443,12 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-39",
+          "element": "4.5-lessons-learned::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-41",
+          "element": "4.5-lessons-learned::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8513,22 +8513,22 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-39",
+          "element": "3.1-the-executable-zoo::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-47",
+          "element": "3.1-the-executable-zoo::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-55",
+          "element": "3.1-the-executable-zoo::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-88",
+          "element": "3.1-the-executable-zoo::block-86",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8553,22 +8553,22 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-114",
+          "element": "3.1-the-executable-zoo::block-112",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-38",
+          "element": "3.1-the-executable-zoo::block-36",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-54",
+          "element": "3.1-the-executable-zoo::block-52",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-86",
+          "element": "3.1-the-executable-zoo::block-84",
           "role": "section-term[tier-1]"
         }
       ]
@@ -8803,22 +8803,22 @@
         },
         {
           "view": "outline",
+          "element": "3.1-the-executable-zoo::block-41",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "3.1-the-executable-zoo::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-45",
+          "element": "3.1-the-executable-zoo::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-51",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "3.1-the-executable-zoo::block-55",
+          "element": "3.1-the-executable-zoo::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8848,12 +8848,12 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-42",
+          "element": "3.1-the-executable-zoo::block-40",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-54",
+          "element": "3.1-the-executable-zoo::block-52",
           "role": "section-term[tier-1]"
         },
         {
@@ -8883,17 +8883,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-69",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-72",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "4.5-lessons-learned::block-68",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-71",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-67",
           "role": "section-term[tier-1]"
         }
       ]
@@ -8948,12 +8948,12 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-79",
+          "element": "4.5-lessons-learned::block-78",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-97",
+          "element": "4.5-lessons-learned::block-96",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8963,7 +8963,7 @@
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-46",
+          "element": "5.2-the-timeline-and-the-work::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8983,12 +8983,12 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-96",
+          "element": "4.5-lessons-learned::block-95",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-37",
+          "element": "5.2-the-timeline-and-the-work::block-36",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9023,7 +9023,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-101",
+          "element": "4.5-lessons-learned::block-100",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -9133,17 +9133,17 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-31",
+          "element": "3.1-the-executable-zoo::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-39",
+          "element": "3.1-the-executable-zoo::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-43",
+          "element": "3.1-the-executable-zoo::block-41",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9168,17 +9168,17 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-30",
+          "element": "3.1-the-executable-zoo::block-28",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-38",
+          "element": "3.1-the-executable-zoo::block-36",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-42",
+          "element": "3.1-the-executable-zoo::block-40",
           "role": "section-term[tier-1]"
         },
         {
@@ -9228,7 +9228,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-58",
+          "element": "4.5-lessons-learned::block-57",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9348,17 +9348,17 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-101",
+          "element": "3.1-the-executable-zoo::block-109",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-111",
+          "element": "3.1-the-executable-zoo::block-114",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-116",
+          "element": "3.1-the-executable-zoo::block-92",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9368,7 +9368,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-96",
+          "element": "3.1-the-executable-zoo::block-99",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9393,12 +9393,12 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-100",
+          "element": "3.1-the-executable-zoo::block-112",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-114",
+          "element": "3.1-the-executable-zoo::block-98",
           "role": "section-term[tier-1]"
         },
         {
@@ -9428,7 +9428,7 @@
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-31",
+          "element": "5.2-the-timeline-and-the-work::block-30",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9808,7 +9808,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-111",
+          "element": "3.1-the-executable-zoo::block-109",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "3.1-the-executable-zoo::block-69",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9818,12 +9823,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-73",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "3.1-the-executable-zoo::block-90",
+          "element": "3.1-the-executable-zoo::block-88",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9873,7 +9873,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-69",
+          "element": "3.1-the-executable-zoo::block-67",
           "role": "section-term[tier-1]"
         },
         {
@@ -9933,7 +9933,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-101",
+          "element": "4.5-lessons-learned::block-100",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9943,37 +9943,37 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-87",
+          "element": "4.5-lessons-learned::block-86",
           "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-93",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-97",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-99",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-84",
-          "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
           "element": "4.5-lessons-learned::block-92",
-          "role": "section-term[tier-1]"
+          "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "4.5-lessons-learned::block-96",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-98",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-83",
+          "role": "section-term[tier-1]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-91",
+          "role": "section-term[tier-1]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-95",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9988,12 +9988,12 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-49",
+          "element": "4.5-lessons-learned::block-48",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-87",
+          "element": "4.5-lessons-learned::block-86",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10008,12 +10008,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-38",
+          "element": "5.2-the-timeline-and-the-work::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-37",
+          "element": "5.2-the-timeline-and-the-work::block-36",
           "role": "section-term[tier-1]"
         }
       ]
@@ -10038,12 +10038,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-47",
+          "element": "3.1-the-executable-zoo::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-51",
+          "element": "3.1-the-executable-zoo::block-49",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -10318,7 +10318,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-31",
+          "element": "3.1-the-executable-zoo::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10333,7 +10333,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-30",
+          "element": "3.1-the-executable-zoo::block-28",
           "role": "section-term[tier-1]"
         }
       ]
@@ -10428,7 +10428,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-103",
+          "element": "3.1-the-executable-zoo::block-101",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10493,7 +10493,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-72",
+          "element": "4.5-lessons-learned::block-71",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10878,27 +10878,27 @@
         },
         {
           "view": "outline",
+          "element": "3.1-the-executable-zoo::block-101",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "3.1-the-executable-zoo::block-103",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-105",
+          "element": "3.1-the-executable-zoo::block-107",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-109",
+          "element": "3.1-the-executable-zoo::block-116",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-118",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "3.1-the-executable-zoo::block-39",
+          "element": "3.1-the-executable-zoo::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10908,7 +10908,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-92",
+          "element": "3.1-the-executable-zoo::block-90",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10938,7 +10938,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-108",
+          "element": "3.1-the-executable-zoo::block-106",
           "role": "section-term[tier-1]"
         },
         {
@@ -10968,12 +10968,12 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-78",
+          "element": "3.1-the-executable-zoo::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-83",
+          "element": "3.1-the-executable-zoo::block-81",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11008,7 +11008,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-76",
+          "element": "3.1-the-executable-zoo::block-74",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11068,12 +11068,12 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-78",
+          "element": "3.1-the-executable-zoo::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-83",
+          "element": "3.1-the-executable-zoo::block-81",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11088,7 +11088,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-76",
+          "element": "3.1-the-executable-zoo::block-74",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11113,7 +11113,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-21",
+          "element": "3.1-the-executable-zoo::block-20",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11483,17 +11483,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-124",
+          "element": "3.1-the-executable-zoo::block-122",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-127",
+          "element": "3.1-the-executable-zoo::block-125",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-90",
+          "element": "3.1-the-executable-zoo::block-88",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11508,7 +11508,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-122",
+          "element": "3.1-the-executable-zoo::block-120",
           "role": "section-term[tier-1]"
         },
         {
@@ -11553,7 +11553,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-31",
+          "element": "3.1-the-executable-zoo::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11708,7 +11708,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-31",
+          "element": "3.1-the-executable-zoo::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11763,6 +11763,11 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "3.1-the-executable-zoo::block-41",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "3.1-the-executable-zoo::block-43",
           "role": "paragraph-term[tier-2]"
         },
@@ -11773,12 +11778,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-47",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "3.1-the-executable-zoo::block-51",
+          "element": "3.1-the-executable-zoo::block-49",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -11788,7 +11788,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-58",
+          "element": "4.5-lessons-learned::block-57",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12208,17 +12208,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-88",
+          "element": "3.1-the-executable-zoo::block-86",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "3.1-the-executable-zoo::block-90",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "3.1-the-executable-zoo::block-92",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "3.1-the-executable-zoo::block-94",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12353,7 +12353,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-31",
+          "element": "3.1-the-executable-zoo::block-29",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12363,7 +12363,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-30",
+          "element": "3.1-the-executable-zoo::block-28",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12683,17 +12683,17 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-109",
+          "element": "3.1-the-executable-zoo::block-107",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "3.1-the-executable-zoo::block-114",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "3.1-the-executable-zoo::block-116",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "3.1-the-executable-zoo::block-118",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12708,7 +12708,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-108",
+          "element": "3.1-the-executable-zoo::block-106",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12918,27 +12918,27 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-101",
+          "element": "3.1-the-executable-zoo::block-103",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-105",
+          "element": "3.1-the-executable-zoo::block-107",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-109",
+          "element": "3.1-the-executable-zoo::block-116",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-118",
+          "element": "3.1-the-executable-zoo::block-92",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-94",
+          "element": "3.1-the-executable-zoo::block-99",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12953,12 +12953,12 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-100",
+          "element": "3.1-the-executable-zoo::block-106",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-108",
+          "element": "3.1-the-executable-zoo::block-98",
           "role": "section-term[tier-1]"
         },
         {
@@ -12998,7 +12998,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-76",
+          "element": "4.5-lessons-learned::block-75",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13018,7 +13018,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-75",
+          "element": "4.5-lessons-learned::block-74",
           "role": "section-term[tier-1]"
         },
         {
@@ -13113,7 +13113,7 @@
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-33",
+          "element": "5.2-the-timeline-and-the-work::block-32",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13278,17 +13278,17 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-111",
+          "element": "3.1-the-executable-zoo::block-109",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-116",
+          "element": "3.1-the-executable-zoo::block-114",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-96",
+          "element": "3.1-the-executable-zoo::block-94",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13438,12 +13438,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-53",
+          "element": "4.5-lessons-learned::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-56",
+          "element": "4.5-lessons-learned::block-55",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13453,7 +13453,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-52",
+          "element": "4.5-lessons-learned::block-51",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13488,7 +13488,7 @@
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-46",
+          "element": "5.2-the-timeline-and-the-work::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13563,7 +13563,7 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-20",
+          "element": "3.1-the-executable-zoo::block-19",
           "role": "section-term[tier-1]"
         },
         {
@@ -13658,7 +13658,12 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-127",
+          "element": "3.1-the-executable-zoo::block-125",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "3.1-the-executable-zoo::block-86",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13669,11 +13674,6 @@
         {
           "view": "outline",
           "element": "3.1-the-executable-zoo::block-90",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "3.1-the-executable-zoo::block-92",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13703,17 +13703,17 @@
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-100",
+          "element": "3.1-the-executable-zoo::block-120",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-122",
+          "element": "3.1-the-executable-zoo::block-84",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-86",
+          "element": "3.1-the-executable-zoo::block-98",
           "role": "section-term[tier-1]"
         },
         {
@@ -13828,7 +13828,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.1-the-executable-zoo::block-55",
+          "element": "3.1-the-executable-zoo::block-53",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -13928,17 +13928,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-27",
+          "element": "5.2-the-timeline-and-the-work::block-26",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-29",
+          "element": "5.2-the-timeline-and-the-work::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-31",
+          "element": "5.2-the-timeline-and-the-work::block-30",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13978,7 +13978,7 @@
         },
         {
           "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-27",
+          "element": "5.2-the-timeline-and-the-work::block-26",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14003,17 +14003,17 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-63",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-65",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "4.5-lessons-learned::block-62",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-64",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-61",
           "role": "section-term[tier-1]"
         }
       ]

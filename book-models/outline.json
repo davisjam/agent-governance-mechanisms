@@ -1478,17 +1478,17 @@
           "heading_text": "Data from the case study",
           "topic_sentence": "The fewer-tokens leg is the one we can measure directly.",
           "id_source": "explicit",
-          "block_index": 19,
+          "block_index": 18,
           "points": [
             {
               "slug": "the-fewer-tokens-leg-is-measured-by-an-ab-navigation-pilot",
               "text": "An A/B navigation pilot measured the fewer-tokens leg directly.",
-              "block_index": 21
+              "block_index": 20
             },
             {
               "slug": "the-pilot-saving-is-about-35-percent-at-zero-accuracy-loss",
               "text": "The pilot saved about 35% of tokens, zero accuracy lost.",
-              "block_index": 26
+              "block_index": 24
             }
           ]
         },
@@ -1498,12 +1498,12 @@
           "heading_text": "Kruchten's 4+1, promoted from a closing sentence to the spine",
           "topic_sentence": "The last chapter invoked Kruchten's **4+1 views** in a final sentence — \"the reason one model is never enough.\" This Part promotes that sentence to its organizing structure.",
           "id_source": "derived",
-          "block_index": 28,
+          "block_index": 26,
           "points": [
             {
               "slug": "this-part-promotes-4-plus-1-to-its-organizing-structure",
               "text": "This Part promotes Kruchten's 4+1 to its organizing spine.",
-              "block_index": 31
+              "block_index": 29
             }
           ]
         },
@@ -1513,12 +1513,12 @@
           "heading_text": "What this book adds to 4+1: the drift gate",
           "topic_sentence": "Kruchten, of course, described the views; he did not have a drift gate.",
           "id_source": "derived",
-          "block_index": 37,
+          "block_index": 35,
           "points": [
             {
               "slug": "the-books-addition-to-4-plus-1-is-the-drift-gate",
               "text": "The book adds to 4+1 a drift gate per view.",
-              "block_index": 39
+              "block_index": 37
             }
           ]
         },
@@ -1528,27 +1528,27 @@
           "heading_text": "The framework is a choice; the core is not",
           "topic_sentence": "Making the model executable is why this Part is not really *about* 4+1.",
           "id_source": "derived",
-          "block_index": 41,
+          "block_index": 39,
           "points": [
             {
               "slug": "once-the-core-is-executable-a-framework-is-a-projection-not-a-second-model",
               "text": "An executable core makes a framework a projection.",
-              "block_index": 43
+              "block_index": 41
             },
             {
               "slug": "rival-frameworks-are-renderings-of-one-executable-core",
               "text": "Rival frameworks are renderings of one executable core.",
-              "block_index": 45
+              "block_index": 43
             },
             {
               "slug": "a-lens-is-a-second-projection-that-hides-content-but-cannot-invent-it",
               "text": "A lens hides content but cannot invent it.",
-              "block_index": 47
+              "block_index": 45
             },
             {
               "slug": "hit-the-executable-core-and-the-framework-wars-dissolve-into-projection-choices",
               "text": "Hit the executable core; framework wars become projection choices.",
-              "block_index": 51
+              "block_index": 49
             }
           ]
         },
@@ -1558,12 +1558,12 @@
           "heading_text": "The trunk: machinery that holds any view true",
           "topic_sentence": "Before the views, one chapter of framing.",
           "id_source": "derived",
-          "block_index": 53,
+          "block_index": 51,
           "points": [
             {
               "slug": "the-trunk-is-the-shared-machinery-that-makes-every-view-executable",
               "text": "Shared trunk machinery makes every view executable and drift-proof.",
-              "block_index": 55
+              "block_index": 53
             }
           ]
         },
@@ -1573,17 +1573,17 @@
           "heading_text": "Beat 1 — a model is derived and joined, never repeated",
           "topic_sentence": "The last chapter warned against repetition: two models that say the same thing must now be kept in sync.",
           "id_source": "derived",
-          "block_index": 68,
+          "block_index": 66,
           "points": [
             {
               "slug": "a-model-is-derived-and-joined-never-repeated",
               "text": "A model is derived and joined, never repeated.",
-              "block_index": 71
+              "block_index": 69
             },
             {
               "slug": "derivation-and-join-are-the-cure-for-repetition",
               "text": "Derivation and join are the cure for repetition.",
-              "block_index": 73
+              "block_index": 71
             }
           ]
         },
@@ -1593,17 +1593,17 @@
           "heading_text": "Beat 2 — name the direction of derivation",
           "topic_sentence": "A model and the code it concerns stay equal by derivation, and derivation runs in one of two directions.",
           "id_source": "derived",
-          "block_index": 75,
+          "block_index": 73,
           "points": [
             {
               "slug": "name-the-direction-of-derivation-up-front",
               "text": "Name the direction of derivation up front.",
-              "block_index": 78
+              "block_index": 76
             },
             {
               "slug": "most-of-the-zoo-is-model-from-code-because-the-codebase-came-first",
               "text": "Most of the zoo is model-from-code; the codebase came first.",
-              "block_index": 83
+              "block_index": 81
             }
           ]
         },
@@ -1613,32 +1613,32 @@
           "heading_text": "Beat 3 — every model traces to the code",
           "topic_sentence": "A model earns trust only if you can get from a model element back to the lines that realize it, and forward from a line to the model element that governs it.",
           "id_source": "derived",
-          "block_index": 85,
+          "block_index": 83,
           "points": [
             {
               "slug": "every-model-traces-to-the-code-in-both-directions",
               "text": "Every model traces to the code in both directions.",
-              "block_index": 88
+              "block_index": 86
             },
             {
               "slug": "the-template-folds-a-traceability-note-into-every-page",
               "text": "The template folds a traceability note into every page.",
-              "block_index": 90
+              "block_index": 88
             },
             {
               "slug": "a-zoo-of-drifted-views-is-worse-than-none",
               "text": "A zoo of drifted views is worse than none.",
-              "block_index": 92
+              "block_index": 90
             },
             {
               "slug": "the-round-trip-must-be-derived-not-snapshotted",
               "text": "The round-trip must be derived, not snapshotted.",
-              "block_index": 94
+              "block_index": 92
             },
             {
               "slug": "a-resolving-edge-is-both-drift-detection-and-navigation",
               "text": "A resolving edge is both drift-detection and navigation.",
-              "block_index": 96
+              "block_index": 94
             }
           ]
         },
@@ -1648,22 +1648,22 @@
           "heading_text": "Keeping the models honest — the traceability substrate",
           "topic_sentence": "DocAble did not design this up front.",
           "id_source": "derived",
-          "block_index": 99,
+          "block_index": 97,
           "points": [
             {
               "slug": "the-substrate-was-built-from-what-broke-not-designed-up-front",
               "text": "The substrate was built from what broke, not designed.",
-              "block_index": 101
+              "block_index": 99
             },
             {
               "slug": "a-stale-model-makes-agents-plan-against-a-system-that-no-longer-exists",
               "text": "A stale model makes agents plan against a dead system.",
-              "block_index": 103
+              "block_index": 101
             },
             {
               "slug": "the-checklist-approach-fails-because-a-hand-maintained-list-rots",
               "text": "A hand-maintained checklist rots the moment the code moves.",
-              "block_index": 105
+              "block_index": 103
             }
           ]
         },
@@ -1673,17 +1673,17 @@
           "heading_text": "Reading the fix off real drift",
           "topic_sentence": "The right sensor was read off real drift rather than guessed.",
           "id_source": "derived",
-          "block_index": 107,
+          "block_index": 105,
           "points": [
             {
               "slug": "the-fix-was-read-off-real-drift-not-guessed",
               "text": "The fix was read off real drift, not guessed.",
-              "block_index": 109
+              "block_index": 107
             },
             {
               "slug": "the-graph-is-nodes-the-system-already-has-joined-by-re-proved-edges",
               "text": "The graph joins existing nodes by re-proved edges.",
-              "block_index": 111
+              "block_index": 109
             }
           ]
         },
@@ -1693,17 +1693,17 @@
           "heading_text": "Two decisions that make the graph resist rot",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 113,
+          "block_index": 111,
           "points": [
             {
               "slug": "the-symbol-walk-fires-at-a-slower-cadence-because-the-cadence-follows-the-cost",
               "text": "The symbol walk fires slowly because cadence follows cost.",
-              "block_index": 116
+              "block_index": 114
             },
             {
               "slug": "derived-sensors-defend-snapshotted-ones-drift",
               "text": "Derived sensors defend; snapshotted ones drift.",
-              "block_index": 118
+              "block_index": 116
             }
           ]
         },
@@ -1713,17 +1713,17 @@
           "heading_text": "How to read a model page",
           "topic_sentence": "Every model in this Part is rendered by filling the same five-field template.",
           "id_source": "derived",
-          "block_index": 120,
+          "block_index": 118,
           "points": [
             {
               "slug": "every-model-page-fills-the-same-five-field-template",
               "text": "Every model page fills the same five-field template.",
-              "block_index": 124
+              "block_index": 122
             },
             {
               "slug": "the-five-fields-answer-the-five-questions-a-reader-brings-to-a-model",
               "text": "The five fields answer the reader's five questions.",
-              "block_index": 127
+              "block_index": 125
             }
           ]
         }
@@ -3013,19 +3013,19 @@
           "section_id": "done-is-a-claim-not-a-fact",
           "level": 2,
           "heading_text": "\"Done\" is a claim, not a fact",
-          "topic_sentence": "<!-- TODO(data): false-done RATE — % of self-marked-DONE units that failed re-review; minable from DoD-audit / tombstone history.",
+          "topic_sentence": "A failure mode appeared again and again: Claude reported a task complete, and my review agents later found the half-done implementations, the missing integration points, and the tests that never actually exercised the behavior.",
           "id_source": "derived",
           "block_index": 36,
           "points": [
             {
               "slug": "done-reported-but-work-is-half-done",
               "text": "Agents report done while the work stays half-done.",
-              "block_index": 39
+              "block_index": 38
             },
             {
               "slug": "trust-nothing-rerun-tests-and-lints",
               "text": "Trust nothing; re-run the tests and lints yourself.",
-              "block_index": 41
+              "block_index": 40
             }
           ]
         },
@@ -3035,17 +3035,17 @@
           "heading_text": "The cost estimator is broken, and scope creep is guaranteed",
           "topic_sentence": "Two consequences follow from cheap implementation, and both caught me off guard.",
           "id_source": "derived",
-          "block_index": 44,
+          "block_index": 43,
           "points": [
             {
               "slug": "cheap-implementation-breaks-the-cost-estimator",
               "text": "Cheap implementation breaks your sense of what things cost.",
-              "block_index": 47
+              "block_index": 46
             },
             {
               "slug": "free-implementation-guarantees-scope-creep",
               "text": "When implementation feels free, scope creep is guaranteed.",
-              "block_index": 49
+              "block_index": 48
             }
           ]
         },
@@ -3055,22 +3055,22 @@
           "heading_text": "Your tests must survive agent-shaped failure modes",
           "topic_sentence": "An agent fails differently than a person does.",
           "id_source": "derived",
-          "block_index": 51,
+          "block_index": 50,
           "points": [
             {
               "slug": "an-agent-fails-differently-than-a-person",
               "text": "An agent fails differently than a person does.",
-              "block_index": 53
+              "block_index": 52
             },
             {
               "slug": "build-tests-for-agent-failure-modes-pin-the-class",
               "text": "Build tests for the agent's failure modes; pin the class.",
-              "block_index": 56
+              "block_index": 55
             },
             {
               "slug": "property-testing-heads-the-generative-family",
               "text": "Property testing heads a family of generative validation.",
-              "block_index": 58
+              "block_index": 57
             }
           ]
         },
@@ -3080,17 +3080,17 @@
           "heading_text": "Vibe coding treats the program as an I/O device; engineering treats it as a system",
           "topic_sentence": "Here is the distinction the whole method turns on.",
           "id_source": "derived",
-          "block_index": 61,
+          "block_index": 60,
           "points": [
             {
               "slug": "vibe-coding-trusts-io-engineering-checks-structure",
               "text": "Vibe-coding trusts external evidence; engineering checks structure.",
-              "block_index": 63
+              "block_index": 62
             },
             {
               "slug": "the-difference-is-what-counts-as-proof",
               "text": "The difference is what counts as proof.",
-              "block_index": 65
+              "block_index": 64
             }
           ]
         },
@@ -3100,17 +3100,17 @@
           "heading_text": "Explicitness is essential",
           "topic_sentence": "A normal codebase keeps most of its conceptual structure in human memory.",
           "id_source": "derived",
-          "block_index": 67,
+          "block_index": 66,
           "points": [
             {
               "slug": "agents-cant-hold-tacit-structure",
               "text": "Agents can't hold the tacit structure humans keep.",
-              "block_index": 69
+              "block_index": 68
             },
             {
               "slug": "explicit-artifacts-make-the-system-agent-legible",
               "text": "Explicit, queryable artifacts make the system agent-legible.",
-              "block_index": 72
+              "block_index": 71
             }
           ]
         },
@@ -3120,17 +3120,17 @@
           "heading_text": "Governance is a spectrum from soft to hard",
           "topic_sentence": "The mechanisms I ended up with were not all the same kind of thing, and the axis that sorted them was soft versus hard.",
           "id_source": "derived",
-          "block_index": 74,
+          "block_index": 73,
           "points": [
             {
               "slug": "soft-aims-hard-holds",
               "text": "Soft governance aims the agent; hard governance holds.",
-              "block_index": 76
+              "block_index": 75
             },
             {
               "slug": "second-occurrence-turns-an-audit-into-a-lint",
               "text": "The second occurrence of a failure earns a lint.",
-              "block_index": 79
+              "block_index": 78
             }
           ]
         },
@@ -3140,17 +3140,17 @@
           "heading_text": "AI is an autonomy amplifier",
           "topic_sentence": "The thing agents amplify is your autonomy — your capacity to turn intent into a working system without waiting on anyone.",
           "id_source": "derived",
-          "block_index": 83,
+          "block_index": 82,
           "points": [
             {
               "slug": "agents-amplify-autonomy-not-typing",
               "text": "Agents amplify autonomy, not typing speed.",
-              "block_index": 85
+              "block_index": 84
             },
             {
               "slug": "amplification-is-neutral-judgment-is-scarce",
               "text": "Amplification is neutral; judgment is now the scarce resource.",
-              "block_index": 87
+              "block_index": 86
             }
           ]
         },
@@ -3160,12 +3160,12 @@
           "heading_text": "What this means for the job",
           "topic_sentence": "Watching my own experience of software engineering get compressed, I expected to feel the role shrinking.",
           "id_source": "derived",
-          "block_index": 91,
+          "block_index": 90,
           "points": [
             {
               "slug": "experience-compresses-the-role-expands",
               "text": "The experience compresses; the role expands.",
-              "block_index": 93
+              "block_index": 92
             }
           ]
         },
@@ -3175,22 +3175,22 @@
           "heading_text": "Who holds the authority to convert a lesson",
           "topic_sentence": "This is where I think companies may have trouble.",
           "id_source": "derived",
-          "block_index": 95,
+          "block_index": 94,
           "points": [
             {
               "slug": "converting-failures-needs-org-authority",
               "text": "Converting failures into practice requires organizational authority.",
-              "block_index": 97
+              "block_index": 96
             },
             {
               "slug": "future-is-converting-judgment-into-infrastructure",
               "text": "Engineering's future is converting judgment into infrastructure.",
-              "block_index": 99
+              "block_index": 98
             },
             {
               "slug": "solo-field-report-shape-feels-durable",
               "text": "A solo field report; the shape still feels durable.",
-              "block_index": 101
+              "block_index": 100
             }
           ]
         }
@@ -3577,22 +3577,22 @@
             {
               "slug": "the-dip-is-velocity-spent-on-trust",
               "text": "The velocity dip is capability spent making output trustworthy.",
-              "block_index": 27
+              "block_index": 26
             },
             {
               "slug": "the-lesson-is-the-machinery-not-the-grind",
               "text": "The lesson is the machinery, not the operator's grind.",
-              "block_index": 29
+              "block_index": 28
             },
             {
               "slug": "a-hot-fleet-needs-machinery-when-the-operator-cannot",
               "text": "A hot fleet needs machinery holding the line unattended.",
-              "block_index": 31
+              "block_index": 30
             },
             {
               "slug": "the-stages-are-drawn-afterward",
               "text": "The clean stages are a line drawn afterward.",
-              "block_index": 33
+              "block_index": 32
             }
           ]
         },
@@ -3602,22 +3602,22 @@
           "heading_text": "The kinds of work it required",
           "topic_sentence": "Read this timeline as a catalog of the *kinds of work* agentic development turned out to need — a more useful reading than any feature list.",
           "id_source": "derived",
-          "block_index": 36,
+          "block_index": 35,
           "points": [
             {
               "slug": "read-it-as-a-catalog-of-work-kinds",
               "text": "The timeline is a catalog of work agentic development needs.",
-              "block_index": 38
+              "block_index": 37
             },
             {
               "slug": "the-recurring-move-classify-then-convert",
               "text": "Velocity surfaces failure; judgment converts structural ones to mechanism.",
-              "block_index": 46
+              "block_index": 45
             },
             {
               "slug": "the-system-reached-production-for-a-few-dollars-a-deck",
               "text": "By the end the system remediated a deck for dollars.",
-              "block_index": 48
+              "block_index": 47
             }
           ]
         }
