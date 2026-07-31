@@ -395,6 +395,24 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: stable-spec-point | local
 - term: never-crash-contract | local
 - term: interleaving-search | local
+- term: document-accessibility | section
+- term: ada-title-ii | section
+- term: doj-2024-rule | section
+- term: wcag-conformance | section
+- term: remediation-cost | section
+- term: vision-language-model | section
+- term: feasibility-probe | section
+- term: stage-sequence | section
+- term: velocity-curve | section
+- term: kinds-of-work | section
+- term: ada | local
+- term: reactive-compliance | local
+- term: digital-sediment | local
+- term: escape-hatch | local
+- term: semantic-artifact | local
+- term: infinite-midwit | local
+- term: fleet-scale | local
+- term: support-ratio | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
