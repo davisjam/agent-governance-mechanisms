@@ -14,8 +14,8 @@
     "universe": {
       "section_ids": 165,
       "concepts": 135,
-      "labels": 46,
-      "refs": 46,
+      "labels": 50,
+      "refs": 50,
       "chapters": 28,
       "parts": 7,
       "points": 434,
@@ -503,7 +503,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-67",
+          "element": "2.5-metrics::block-68",
           "role": "paragraph-point"
         }
       ]
@@ -543,7 +543,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-57",
+          "element": "2.5-metrics::block-58",
           "role": "paragraph-point"
         }
       ]
@@ -553,7 +553,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-35",
+          "element": "5.1-the-ada-context::block-37",
           "role": "paragraph-point"
         }
       ]
@@ -1053,7 +1053,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-15",
+          "element": "4.5-lessons-learned::block-16",
           "role": "paragraph-point"
         }
       ]
@@ -1063,7 +1063,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-84",
+          "element": "4.5-lessons-learned::block-85",
           "role": "paragraph-point"
         }
       ]
@@ -1083,7 +1083,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-68",
+          "element": "4.5-lessons-learned::block-69",
           "role": "paragraph-point"
         }
       ]
@@ -1123,7 +1123,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-86",
+          "element": "4.5-lessons-learned::block-87",
           "role": "paragraph-point"
         }
       ]
@@ -1133,7 +1133,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-52",
+          "element": "4.5-lessons-learned::block-53",
           "role": "paragraph-point"
         }
       ]
@@ -1203,7 +1203,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-25",
+          "element": "4.5-lessons-learned::block-26",
           "role": "paragraph-point"
         }
       ]
@@ -1233,7 +1233,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-32",
+          "element": "2.5-metrics::block-33",
           "role": "paragraph-point"
         }
       ]
@@ -1273,7 +1273,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-30",
+          "element": "2.5-metrics::block-31",
           "role": "paragraph-point"
         }
       ]
@@ -1353,7 +1353,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-55",
+          "element": "4.5-lessons-learned::block-56",
           "role": "paragraph-point"
         }
       ]
@@ -1373,7 +1373,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-39",
+          "element": "5.1-the-ada-context::block-41",
           "role": "paragraph-point"
         }
       ]
@@ -1403,7 +1403,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-46",
+          "element": "4.5-lessons-learned::block-47",
           "role": "paragraph-point"
         }
       ]
@@ -1423,7 +1423,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-10",
+          "element": "4.5-lessons-learned::block-11",
           "role": "paragraph-point"
         }
       ]
@@ -1483,7 +1483,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-21",
+          "element": "2.5-metrics::block-22",
           "role": "paragraph-point"
         }
       ]
@@ -1513,7 +1513,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-16",
+          "element": "5.1-the-ada-context::block-17",
           "role": "paragraph-point"
         }
       ]
@@ -1533,7 +1533,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-41",
+          "element": "5.1-the-ada-context::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -1563,7 +1563,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-96",
+          "element": "4.5-lessons-learned::block-97",
           "role": "paragraph-point"
         }
       ]
@@ -1703,7 +1703,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-18",
+          "element": "5.1-the-ada-context::block-19",
           "role": "paragraph-point"
         }
       ]
@@ -1713,7 +1713,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-38",
+          "element": "4.5-lessons-learned::block-39",
           "role": "paragraph-point"
         }
       ]
@@ -1813,7 +1813,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-28",
+          "element": "5.1-the-ada-context::block-30",
           "role": "paragraph-point"
         }
       ]
@@ -1863,7 +1863,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-77",
+          "element": "2.5-metrics::block-78",
           "role": "paragraph-point"
         }
       ]
@@ -1943,7 +1943,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-92",
+          "element": "4.5-lessons-learned::block-93",
           "role": "paragraph-point"
         }
       ]
@@ -1953,7 +1953,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-71",
+          "element": "4.5-lessons-learned::block-72",
           "role": "paragraph-point"
         }
       ]
@@ -2043,7 +2043,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-48",
+          "element": "4.5-lessons-learned::block-49",
           "role": "paragraph-point"
         }
       ]
@@ -2063,7 +2063,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-98",
+          "element": "4.5-lessons-learned::block-99",
           "role": "paragraph-point"
         }
       ]
@@ -2393,7 +2393,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-37",
+          "element": "2.5-metrics::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -2453,7 +2453,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-22",
+          "element": "4.5-lessons-learned::block-23",
           "role": "paragraph-point"
         }
       ]
@@ -2503,7 +2503,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-52",
+          "element": "2.5-metrics::block-53",
           "role": "paragraph-point"
         }
       ]
@@ -2543,7 +2543,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-15",
+          "element": "2.5-metrics::block-16",
           "role": "paragraph-point"
         }
       ]
@@ -2803,7 +2803,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-32",
+          "element": "4.5-lessons-learned::block-33",
           "role": "paragraph-point"
         }
       ]
@@ -2843,7 +2843,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-24",
+          "element": "5.1-the-ada-context::block-26",
           "role": "paragraph-point"
         }
       ]
@@ -2893,7 +2893,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-47",
+          "element": "2.5-metrics::block-48",
           "role": "paragraph-point"
         }
       ]
@@ -2973,7 +2973,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-26",
+          "element": "5.1-the-ada-context::block-28",
           "role": "paragraph-point"
         }
       ]
@@ -3083,7 +3083,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-57",
+          "element": "4.5-lessons-learned::block-58",
           "role": "paragraph-point"
         }
       ]
@@ -3163,7 +3163,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-30",
+          "element": "4.5-lessons-learned::block-31",
           "role": "paragraph-point"
         }
       ]
@@ -3213,7 +3213,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-20",
+          "element": "5.1-the-ada-context::block-22",
           "role": "paragraph-point"
         }
       ]
@@ -3263,7 +3263,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-78",
+          "element": "4.5-lessons-learned::block-79",
           "role": "paragraph-point"
         }
       ]
@@ -3313,7 +3313,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-75",
+          "element": "4.5-lessons-learned::block-76",
           "role": "paragraph-point"
         }
       ]
@@ -3323,7 +3323,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-100",
+          "element": "4.5-lessons-learned::block-101",
           "role": "paragraph-point"
         }
       ]
@@ -3353,7 +3353,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-17",
+          "element": "4.5-lessons-learned::block-18",
           "role": "paragraph-point"
         }
       ]
@@ -3383,7 +3383,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-25",
+          "element": "2.5-metrics::block-26",
           "role": "paragraph-point"
         }
       ]
@@ -3593,7 +3593,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-42",
+          "element": "2.5-metrics::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -3613,7 +3613,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-23",
+          "element": "2.5-metrics::block-24",
           "role": "paragraph-point"
         }
       ]
@@ -3643,7 +3643,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-64",
+          "element": "4.5-lessons-learned::block-65",
           "role": "paragraph-point"
         }
       ]
@@ -3723,7 +3723,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-39",
+          "element": "2.5-metrics::block-40",
           "role": "paragraph-point"
         }
       ]
@@ -3763,7 +3763,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-44",
+          "element": "2.5-metrics::block-45",
           "role": "paragraph-point"
         }
       ]
@@ -3793,7 +3793,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-71",
+          "element": "2.5-metrics::block-72",
           "role": "paragraph-point"
         }
       ]
@@ -3843,7 +3843,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-27",
+          "element": "2.5-metrics::block-28",
           "role": "paragraph-point"
         }
       ]
@@ -3853,7 +3853,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-50",
+          "element": "2.5-metrics::block-51",
           "role": "paragraph-point"
         }
       ]
@@ -3933,7 +3933,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-65",
+          "element": "2.5-metrics::block-66",
           "role": "paragraph-point"
         }
       ]
@@ -4123,7 +4123,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-31",
+          "element": "5.1-the-ada-context::block-33",
           "role": "paragraph-point"
         }
       ]
@@ -4223,7 +4223,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-60",
+          "element": "2.5-metrics::block-61",
           "role": "paragraph-point"
         }
       ]
@@ -4483,7 +4483,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-6",
+          "element": "4.5-lessons-learned::block-7",
           "role": "paragraph-point"
         }
       ]
@@ -4553,7 +4553,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-40",
+          "element": "4.5-lessons-learned::block-41",
           "role": "paragraph-point"
         }
       ]
@@ -4673,7 +4673,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-62",
+          "element": "4.5-lessons-learned::block-63",
           "role": "paragraph-point"
         }
       ]
@@ -4693,7 +4693,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-37",
+          "element": "5.1-the-ada-context::block-39",
           "role": "paragraph-point"
         }
       ]
@@ -6853,7 +6853,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-78",
+          "element": "4.5-lessons-learned::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -6868,7 +6868,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-74",
+          "element": "4.5-lessons-learned::block-75",
           "role": "section-term[tier-1]"
         },
         {
@@ -6888,12 +6888,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-84",
+          "element": "4.5-lessons-learned::block-85",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-83",
+          "element": "4.5-lessons-learned::block-84",
           "role": "section-term[tier-1]"
         }
       ]
@@ -7028,17 +7028,17 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-46",
+          "element": "4.5-lessons-learned::block-47",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-48",
+          "element": "4.5-lessons-learned::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-44",
+          "element": "4.5-lessons-learned::block-45",
           "role": "section-term[tier-1]"
         }
       ]
@@ -7218,12 +7218,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-21",
+          "element": "2.5-metrics::block-22",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-23",
+          "element": "2.5-metrics::block-24",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -7233,12 +7233,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-67",
+          "element": "2.5-metrics::block-68",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-71",
+          "element": "2.5-metrics::block-72",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -7623,22 +7623,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-42",
+          "element": "2.5-metrics::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-44",
+          "element": "2.5-metrics::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-47",
+          "element": "2.5-metrics::block-48",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-50",
+          "element": "2.5-metrics::block-51",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -7668,7 +7668,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-35",
+          "element": "2.5-metrics::block-36",
           "role": "section-term[tier-1]"
         },
         {
@@ -7728,7 +7728,7 @@
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-39",
+          "element": "5.1-the-ada-context::block-41",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -7813,17 +7813,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-25",
+          "element": "2.5-metrics::block-26",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-27",
+          "element": "2.5-metrics::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-32",
+          "element": "2.5-metrics::block-33",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -7838,7 +7838,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-19",
+          "element": "2.5-metrics::block-20",
           "role": "section-term[tier-1]"
         },
         {
@@ -7968,7 +7968,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-20",
+          "element": "5.1-the-ada-context::block-22",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -7988,12 +7988,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-57",
+          "element": "2.5-metrics::block-58",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-60",
+          "element": "2.5-metrics::block-61",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -8018,7 +8018,7 @@
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-41",
+          "element": "5.1-the-ada-context::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8078,12 +8078,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-18",
+          "element": "5.1-the-ada-context::block-19",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-15",
+          "element": "5.1-the-ada-context::block-16",
           "role": "section-term[tier-1]"
         }
       ]
@@ -8128,17 +8128,17 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-38",
+          "element": "4.5-lessons-learned::block-39",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-40",
+          "element": "4.5-lessons-learned::block-41",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-36",
+          "element": "4.5-lessons-learned::block-37",
           "role": "section-term[tier-1]"
         }
       ]
@@ -8363,7 +8363,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-28",
+          "element": "5.1-the-ada-context::block-30",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -8438,12 +8438,12 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-27",
+          "element": "2.5-metrics::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-65",
+          "element": "2.5-metrics::block-66",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8488,7 +8488,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-63",
+          "element": "2.5-metrics::block-64",
           "role": "section-term[tier-1]"
         },
         {
@@ -8528,17 +8528,17 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "4.5-lessons-learned::block-69",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-72",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "4.5-lessons-learned::block-68",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-71",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-67",
           "role": "section-term[tier-1]"
         }
       ]
@@ -8588,17 +8588,17 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-10",
+          "element": "4.5-lessons-learned::block-11",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-78",
+          "element": "4.5-lessons-learned::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-96",
+          "element": "4.5-lessons-learned::block-97",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8628,7 +8628,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-95",
+          "element": "4.5-lessons-learned::block-96",
           "role": "section-term[tier-1]"
         },
         {
@@ -8668,7 +8668,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-100",
+          "element": "4.5-lessons-learned::block-101",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -8868,7 +8868,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-57",
+          "element": "4.5-lessons-learned::block-58",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8953,12 +8953,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-10",
+          "element": "4.5-lessons-learned::block-11",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-5",
+          "element": "4.5-lessons-learned::block-6",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9298,7 +9298,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-39",
+          "element": "5.1-the-ada-context::block-41",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9393,7 +9393,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-37",
+          "element": "2.5-metrics::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9573,7 +9573,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-100",
+          "element": "4.5-lessons-learned::block-101",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9583,37 +9583,37 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-86",
+          "element": "4.5-lessons-learned::block-87",
           "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-93",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-97",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-99",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-84",
+          "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
           "element": "4.5-lessons-learned::block-92",
-          "role": "paragraph-term[tier-2]"
+          "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
           "element": "4.5-lessons-learned::block-96",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-98",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-83",
-          "role": "section-term[tier-1]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-91",
-          "role": "section-term[tier-1]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-95",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9628,12 +9628,12 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-48",
+          "element": "4.5-lessons-learned::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-86",
+          "element": "4.5-lessons-learned::block-87",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9763,7 +9763,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-37",
+          "element": "2.5-metrics::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9943,7 +9943,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-25",
+          "element": "2.5-metrics::block-26",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -10078,7 +10078,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-71",
+          "element": "4.5-lessons-learned::block-72",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10128,12 +10128,12 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-23",
+          "element": "2.5-metrics::block-24",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-52",
+          "element": "2.5-metrics::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10143,7 +10143,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-77",
+          "element": "2.5-metrics::block-78",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10163,7 +10163,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-19",
+          "element": "2.5-metrics::block-20",
           "role": "section-term[tier-1]"
         },
         {
@@ -10173,7 +10173,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-74",
+          "element": "2.5-metrics::block-75",
           "role": "section-term[tier-1]"
         }
       ]
@@ -10458,7 +10458,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-30",
+          "element": "2.5-metrics::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10903,17 +10903,17 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "4.5-lessons-learned::block-23",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-26",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "4.5-lessons-learned::block-22",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-25",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-21",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11358,7 +11358,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-57",
+          "element": "4.5-lessons-learned::block-58",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11463,7 +11463,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-16",
+          "element": "5.1-the-ada-context::block-17",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -11508,12 +11508,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-30",
+          "element": "4.5-lessons-learned::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-32",
+          "element": "4.5-lessons-learned::block-33",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11523,7 +11523,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-29",
+          "element": "4.5-lessons-learned::block-30",
           "role": "section-term[tier-1]"
         },
         {
@@ -11588,11 +11588,6 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-24",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "5.1-the-ada-context::block-26",
           "role": "paragraph-term[tier-2]"
         },
@@ -11603,12 +11598,17 @@
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-31",
+          "element": "5.1-the-ada-context::block-30",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-23",
+          "element": "5.1-the-ada-context::block-33",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "5.1-the-ada-context::block-25",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11618,7 +11618,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-44",
+          "element": "2.5-metrics::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11863,7 +11863,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-30",
+          "element": "2.5-metrics::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11943,7 +11943,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-60",
+          "element": "2.5-metrics::block-61",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -12053,7 +12053,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-35",
+          "element": "5.1-the-ada-context::block-37",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12103,12 +12103,12 @@
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-39",
+          "element": "5.1-the-ada-context::block-41",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-41",
+          "element": "5.1-the-ada-context::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12128,7 +12128,7 @@
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-34",
+          "element": "5.1-the-ada-context::block-36",
           "role": "section-term[tier-1]"
         },
         {
@@ -12173,7 +12173,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-71",
+          "element": "2.5-metrics::block-72",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12483,7 +12483,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-15",
+          "element": "2.5-metrics::block-16",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12493,7 +12493,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-75",
+          "element": "4.5-lessons-learned::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12503,17 +12503,17 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-55",
+          "element": "2.5-metrics::block-56",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-74",
+          "element": "2.5-metrics::block-75",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-74",
+          "element": "4.5-lessons-learned::block-75",
           "role": "section-term[tier-1]"
         },
         {
@@ -12758,17 +12758,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-39",
+          "element": "2.5-metrics::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-42",
+          "element": "2.5-metrics::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-47",
+          "element": "2.5-metrics::block-48",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12928,12 +12928,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-52",
+          "element": "4.5-lessons-learned::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-55",
+          "element": "4.5-lessons-learned::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12943,7 +12943,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-51",
+          "element": "4.5-lessons-learned::block-52",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13078,12 +13078,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-6",
+          "element": "4.5-lessons-learned::block-7",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-5",
+          "element": "4.5-lessons-learned::block-6",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13133,7 +13133,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.5-metrics::block-39",
+          "element": "2.5-metrics::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13178,7 +13178,7 @@
         },
         {
           "view": "outline",
-          "element": "2.5-metrics::block-35",
+          "element": "2.5-metrics::block-36",
           "role": "section-term[tier-1]"
         },
         {
@@ -13443,12 +13443,12 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-15",
+          "element": "4.5-lessons-learned::block-16",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-17",
+          "element": "4.5-lessons-learned::block-18",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13458,7 +13458,7 @@
         },
         {
           "view": "outline",
-          "element": "4.5-lessons-learned::block-14",
+          "element": "4.5-lessons-learned::block-15",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13478,17 +13478,17 @@
         },
         {
           "view": "outline",
+          "element": "4.5-lessons-learned::block-63",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-65",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "4.5-lessons-learned::block-62",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-64",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-61",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13498,7 +13498,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-37",
+          "element": "5.1-the-ada-context::block-39",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13523,7 +13523,7 @@
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-34",
+          "element": "5.1-the-ada-context::block-36",
           "role": "section-term[tier-1]"
         },
         {
@@ -13538,12 +13538,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-20",
+          "element": "5.1-the-ada-context::block-22",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "5.1-the-ada-context::block-15",
+          "element": "5.1-the-ada-context::block-16",
           "role": "section-term[tier-1]"
         }
       ]
