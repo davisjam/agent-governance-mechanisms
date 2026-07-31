@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 90,
-    "paragraph_points": 274
+    "sections_drained": 94,
+    "paragraph_points": 283
   },
   "chapters": [
     {
@@ -2547,8 +2547,24 @@
           "heading_text": "The model is biased toward what it has seen",
           "topic_sentence": "Treat the training data as the whole internet and every book ever written, and treat the model as biased toward whatever it saw a lot of.",
           "id_source": "derived",
-          "block_index": 3,
-          "points": []
+          "block_index": 4,
+          "points": [
+            {
+              "slug": "the-model-weights-the-common-over-the-rare",
+              "text": "The model weights the common over the rare.",
+              "block_index": 6
+            },
+            {
+              "slug": "a-standard-class-is-cheap-to-vary-on",
+              "text": "A standard class the model can vary effortlessly.",
+              "block_index": 9
+            },
+            {
+              "slug": "agent-fluency-tracked-the-data-not-the-difficulty",
+              "text": "Agent fluency tracked the data, not the difficulty.",
+              "block_index": 11
+            }
+          ]
         },
         {
           "section_id": "where-mbse-shines-the-novelty-axis",
@@ -2556,8 +2572,19 @@
           "heading_text": "Where MBSE shines: the novelty axis",
           "topic_sentence": "[ref:novelty-axis] sets a part's novelty against the leap you can trust and the oversight you owe.",
           "id_source": "derived",
-          "block_index": 8,
-          "points": []
+          "block_index": 13,
+          "points": [
+            {
+              "slug": "on-novel-code-the-bias-runs-against-you",
+              "text": "On genuinely novel code the bias runs against you.",
+              "block_index": 18
+            },
+            {
+              "slug": "mbse-imposes-the-prior-the-training-never-gave",
+              "text": "MBSE imposes the prior the training never gave.",
+              "block_index": 22
+            }
+          ]
         },
         {
           "section_id": "the-diffusion-analogy",
@@ -2565,8 +2592,14 @@
           "heading_text": "The diffusion analogy",
           "topic_sentence": "I hold this through an analogy to the diffusion models that draw pictures.",
           "id_source": "derived",
-          "block_index": 16,
-          "points": []
+          "block_index": 24,
+          "points": [
+            {
+              "slug": "a-diffusion-model-cannot-render-what-it-never-saw",
+              "text": "A diffusion model cannot render what it never saw.",
+              "block_index": 26
+            }
+          ]
         },
         {
           "section_id": "demoable-is-not-productizable",
@@ -2574,11 +2607,28 @@
           "heading_text": "Demoable is not productizable",
           "topic_sentence": "So think of it this way: the agent will hand you a working prototype, but look under the hood of a novel system and you find Rube Goldberg machines in the engine room.",
           "id_source": "derived",
-          "block_index": 19,
-          "points": []
+          "block_index": 29,
+          "points": [
+            {
+              "slug": "a-novel-systems-engine-room-is-demoable-not-productizable",
+              "text": "A novel system's engine room is demoable, not productizable.",
+              "block_index": 31
+            },
+            {
+              "slug": "governing-an-untrusted-agent-is-left-for-later",
+              "text": "Governing an untrusted agent is left for later.",
+              "block_index": 34
+            }
+          ]
         }
       ],
-      "preamble_points": []
+      "preamble_points": [
+        {
+          "slug": "training-data-decides-how-much-discipline-you-need",
+          "text": "Training data decides how much discipline you need.",
+          "block_index": 0
+        }
+      ]
     },
     {
       "slug": "4.5-lessons-learned",
