@@ -1767,7 +1767,7 @@
           "section_id": "rule-metadata-registry",
           "level": 2,
           "heading_text": "The rule-metadata registry",
-          "topic_sentence": "The rule-metadata registry is the self-referential slice of the domain registries: the governance rules' own metadata, and so the model the governance substrate — and this book — are partly governed by.",
+          "topic_sentence": "The rule-metadata registry is the self-referential slice of the domain registries: the governance rules' own metadata, and so the model the governance machinery — and this book — are partly governed by.",
           "id_source": "explicit",
           "block_index": 31,
           "points": [
