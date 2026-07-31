@@ -576,3 +576,130 @@ def check_concepts_reverse_coverage():
             f"(add a record, or allowlist it in _site_only_cards if it is a navigation/adoption card)")
     # L4 is a warn: report findings but never FAIL.
     return PASS, issues
+
+
+# ─────────────────── Site-as-projection: definitions + outcomes drift lints ──────────────────────
+# The site is a DERIVED VIEW of the book's typed models. Two model surfaces are projected onto the
+# landing and owe a drift check that they stay a FAITHFUL projection — the concept-model L1–L4 shape
+# (book/data/concepts.json ↔ the concept cards) extended to the DEFINITIONS and the OUTCOMES view:
+#   - definitions: book/data/definitions.json  ↔  the landing's `id="def-<slug>"` cards.
+#   - outcomes:    book-models/outcomes.json (filtered by book/data/outcomes-site.json's selection)
+#                  ↔  the landing's `id="outcome-<...>"` rows inside `id="outcomes-view"`.
+# Each check joins SITE↔MODEL and asserts both directions: every site element traces to a model element,
+# and every model element the site claims to project actually renders. Lands AUDIT-ONLY-first (the repo's
+# blocking-lint landing discipline) — the definitions' book home is still OWED, so these seed real gaps.
+# Design: book-models/SITE-VIEW.md §"the drift check". Precedent: check_concepts_* above.
+
+def _definitions_path() -> str:
+    return os.path.join(ROOT, "book", "data", "definitions.json")
+
+
+def _outcomes_site_path() -> str:
+    return os.path.join(ROOT, "book", "data", "outcomes-site.json")
+
+
+def _outcomes_model_path() -> str:
+    return os.path.join(ROOT, "book-models", "outcomes.json")
+
+
+def _landing_all_ids() -> set[str]:
+    """Every `id="…"` on the built landing (index.html) — the site realizations the projection lints
+    join against. Reuses the shipped HTML rather than re-deriving. Unlike `_landing_card_ids` (which is
+    scoped to `card-…`), this returns ALL ids, because definition cards use `def-…` and outcome rows use
+    `outcome-…`."""
+    idx = os.path.join(ROOT, "index.html")
+    if not os.path.isfile(idx):
+        return set()
+    return set(re.findall(r'\bid="([a-z0-9][a-z0-9-]*)"', open(idx, encoding="utf-8").read()))
+
+
+def _load_json(path: str):
+    import json
+    if not os.path.isfile(path):
+        return None
+    return json.load(open(path, encoding="utf-8"))
+
+
+def check_definitions_site():
+    """The DEFINITIONS projection drift catch. book/data/definitions.json is the model; the landing's
+    `id="def-<slug>"` cards are the projection. Asserts BOTH directions:
+      (a) MODEL→SITE — every definition record's `site_home` (default `def-<slug>`) resolves to a real
+          id on the built landing (index.html). A definition in the model that the site does not render
+          is a finding.
+      (b) SITE→MODEL — every `id="def-<slug>"` on the landing has a backing record in the model. A site
+          definition with no model element is a finding (the reverse — an unbacked site framing).
+    The OWED book home is NOT gated here (the Part-2 Definitions section is drafted, not landed —
+    `book_home_owed.status: owed`); this check only pins the site↔model projection. AUDIT-ONLY-first."""
+    raw = _load_json(_definitions_path())
+    if not raw:
+        return PASS, ["no book/data/definitions.json — nothing to check"]
+    records = {k: v for k, v in raw.items() if not k.startswith("_")}
+    ids = _landing_all_ids()
+    issues: list[str] = []
+    modeled_homes: set[str] = set()
+    # (a) MODEL→SITE
+    for slug, rec in records.items():
+        site = rec.get("site_home", f"def-{slug}")
+        modeled_homes.add(site)
+        if site not in ids:
+            issues.append(
+                f"definitions: {slug!r} site_home {site!r} does not resolve to an id on the landing "
+                f"(index.html) — the definition is modeled but not projected (rebuild, or fix site_home)")
+    # (b) SITE→MODEL
+    for site_id in sorted(i for i in ids if i.startswith("def-")):
+        if site_id not in modeled_homes:
+            issues.append(
+                f"definitions: landing has id {site_id!r} with no backing record in definitions.json "
+                f"(add a record, or remove the unbacked site definition)")
+    return (FAIL if issues else PASS), issues
+
+
+def check_outcomes_site():
+    """The OUTCOMES projection drift catch. The site's learning-outcomes view is a projection of
+    book-models/outcomes.json, selected by book/data/outcomes-site.json. Asserts:
+      (a) SELECTION VALID — every `outcome_id` in the selection's `projected` list resolves to a real
+          outcome in outcomes.json (no dangling selection — an id the drain renamed/removed).
+      (b) POLICY HONEST — every book/Part outcome in outcomes.json that the `_selection_policy` WOULD
+          select (granularity ∈ {book, part}, provenance ∉ {gap-recommended}) is either projected OR
+          listed in `_excluded`. A core outcome silently dropped from the site is a finding — the
+          projection must be COMPLETE over its declared policy, not a hand-picked subset.
+      (c) SITE→MODEL — every selected+resolvable outcome renders as an `id="outcome-<...>"` row on the
+          landing (index.html), so the projection actually reached the page.
+    AUDIT-ONLY-first. This dogfoods the outcomes model's own coverage discipline onto the site slice."""
+    site = _load_json(_outcomes_site_path())
+    model = _load_json(_outcomes_model_path())
+    if not site or not model:
+        return PASS, ["no outcomes-site.json / outcomes.json — nothing to check"]
+    by_id = {o["outcome_id"]: o for o in model.get("outcomes", []) if o.get("outcome_id")}
+    projected = list(site.get("projected", []))
+    excluded = set(site.get("_excluded", []))
+    policy = site.get("_selection_policy", {})
+    gran_in = set(policy.get("granularity_in", []))
+    prov_out = set(policy.get("provenance_not_in", []))
+    ids = _landing_all_ids()
+    issues: list[str] = []
+    # (a) SELECTION VALID
+    for oid in projected:
+        if oid not in by_id:
+            issues.append(
+                f"outcomes-site: projected {oid!r} does not resolve to an outcome in outcomes.json "
+                f"(the outcomes drain renamed/removed it — re-select or drop it)")
+    # (b) POLICY HONEST — every policy-eligible book/part outcome is projected or explicitly excluded.
+    projected_set = set(projected)
+    for oid, o in by_id.items():
+        if o.get("granularity") in gran_in and o.get("provenance") not in prov_out:
+            if oid not in projected_set and oid not in excluded:
+                issues.append(
+                    f"outcomes-site: {oid!r} (granularity={o.get('granularity')}, "
+                    f"provenance={o.get('provenance')}) matches the selection policy but is neither "
+                    f"projected nor listed in _excluded — a core outcome silently dropped from the site")
+    # (c) SITE→MODEL — each resolvable selected outcome renders a row on the landing.
+    for oid in projected:
+        if oid not in by_id:
+            continue  # already reported in (a)
+        row_id = "outcome-" + re.sub(r"[^a-z0-9]+", "-", oid.lower()).strip("-")
+        if row_id not in ids:
+            issues.append(
+                f"outcomes-site: projected {oid!r} has no rendered row (expected id {row_id!r}) on the "
+                f"landing (index.html) — rebuild, or the projection dropped it")
+    return (FAIL if issues else PASS), issues

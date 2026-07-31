@@ -1,0 +1,69 @@
+{
+  "_note": "Definitions model — the SSOT for the book's four core-term definitions and their SITE realization. A sibling of concepts.json: same 'typed model the site is a projection of' discipline, scoped to the green-box DEFINITIONS. Each record is the concise green-box definition (`box`) plus the per-aspect elaboration keys the site's Definitions section renders, and the traceability every definition owes: its site realization (`site_home` — the id on the landing), its OWED book home (`book_home_owed` — the planned Part-2 Definitions section, NOT written yet; the projection thesis 'book coverage ⊇ site framings' makes this a tracked debt the drain fills), the source draft it is derived from (`derived_from`), and its cross-links to the lexicon/index-terms registry and to concepts.json. The drift check (`check_definitions_*` in tests/html.py) joins on the slug and asserts: (a) every record's `site_home` resolves to an id on the built landing (site element traces to a model element), and (b) every definition surfaced on the site has a record here (no unbacked site definition). Lands AUDIT-ONLY-first (the repo's blocking-lint landing discipline) while the book home is still owed. `book_home_owed.status` in {owed, drafted, landed}; a definition whose book home is `landed` (an `<!-- index-def: <slug> -->` tagged in a chapter) can promote to a resolved book_home the way concepts.json derives one. Queryable via `catalog.py definitions`.",
+
+  "_derivation": "Derived (not hand-copied) from book/transcripts/DEFINITIONS-DRAFT.md — the green-box + per-aspect-elaboration drafts. When that draft or its Part-2 landing changes, regenerate this record set and re-check.",
+
+  "_book_home_note": "The four definitions have NO `<!-- index-def: <slug> -->` in any chapter yet — the Part-2 Definitions section is DRAFTED in DEFINITIONS-DRAFT.md and OWED (a tracked follow-up the drain phase fills). Until it lands, `book_home_owed.status: owed` and the drift check does NOT require a resolvable book home (it only requires a resolvable SITE home). This is the projection thesis's 'book coverage ⊇ site framings' as a tracked debt, not a silent gap.",
+
+  "_order": ["model", "agent", "engineering", "software-engineering"],
+
+  "model": {
+    "term": "Model",
+    "box": "A useful approximation of a phenomenon (simplified, but good enough to predict) — and, as this book uses it, a blueprint: a prescriptive description of a system to be built, which the built system is bound to realize.",
+    "aspects": [
+      {"lead": "The first sense — a useful approximation", "text": "A simplified description prized because it predicts, not because it is exact. All models are wrong, some are useful; fidelity trades against cost, and how much fidelity you need is in the eye of the application."},
+      {"lead": "The second sense — a blueprint", "text": "A prescriptive description of the system you intend to build. A system built to a model may elaborate on it but may not diverge from it — which is what lets a model serve as an agent's marching orders."},
+      {"lead": "Constraint, blueprint, and knowledge base at once", "text": "A model handed to an agent is at once a constraint (bounding what may be built), a blueprint (saying what to build), and — because the agent reasons over it — the knowledge base for the artifact under construction."}
+    ],
+    "site_home": "def-model",
+    "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Model",
+    "book_home_owed": {"section": "Part 2 — Definitions", "status": "owed", "note": "Planned Part-2 Definitions section; drafted in DEFINITIONS-DRAFT.md, not yet tagged with `<!-- index-def: model -->` in any chapter."},
+    "lexicon_link": "book/6.2-glossary.html",
+    "concepts_link": "book/data/concepts.json"
+  },
+
+  "agent": {
+    "term": "Agent",
+    "box": "A controllable intelligence capable of independent reasoning over a knowledge base.",
+    "aspects": [
+      {"lead": "On \"intelligence.\"", "text": "Given a set of constraints and a goal, it can devise a means of satisfying the goal without violating the constraints — a raven dropping pebbles to raise the water it cannot otherwise reach."},
+      {"lead": "On \"controllable\" (not controlled).", "text": "You can change its environment and the knowledge available to it and it does different things, generally following orders. Controllable means probabilistic guarantees; controlled means perfect ones. That one adjective is why governance is a major part of this book — if agents were controlled, we would not need governance at all."},
+      {"lead": "On \"independent reasoning.\"", "text": "It genuinely reasons in response to a query — not merely retrieving or pattern-matching stored answers."},
+      {"lead": "On \"over a knowledge base.\"", "text": "The thing it reasons over. For this book, the models are that knowledge base — which is what ties the agent definition to the model definition."}
+    ],
+    "site_home": "def-agent",
+    "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Agent",
+    "book_home_owed": {"section": "Part 2 — Definitions", "status": "owed", "note": "Planned Part-2 Definitions section; drafted in DEFINITIONS-DRAFT.md, not yet tagged with `<!-- index-def: agent -->` in any chapter."},
+    "lexicon_link": "book/6.2-glossary.html",
+    "concepts_link": "book/data/concepts.json"
+  },
+
+  "engineering": {
+    "term": "Engineering",
+    "box": "The discipline of developing operable technological artifacts to solve problems, and of analytically identifying and assessing the competing means to those solutions, each with distinct trade-offs.",
+    "aspects": [
+      {"lead": "On \"develops operable artifacts.\"", "text": "Engineering produces something that works — a technological artifact, with human operators, that addresses a real problem."},
+      {"lead": "On \"analytical assessment of competing means.\"", "text": "This is what separates the engineer from the technician: if you cannot articulate the trade-offs, you are not engineering. An engineer weighs competing architectures and designs against desired properties."},
+      {"lead": "On \"predictive.\"", "text": "An engineer can model and predict the outcomes of the decisions they are about to make — from the architecture and design they propose — prior to building. Prediction-before-construction is the engineering move."}
+    ],
+    "site_home": "def-engineering",
+    "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Engineering",
+    "book_home_owed": {"section": "Part 2 — Definitions", "status": "owed", "note": "Planned Part-2 Definitions section; drafted in DEFINITIONS-DRAFT.md, not yet tagged with `<!-- index-def: engineering -->` in any chapter."},
+    "lexicon_link": "book/6.2-glossary.html",
+    "concepts_link": "book/data/concepts.json"
+  },
+
+  "software-engineering": {
+    "term": "Software engineering",
+    "box": "Software development produces a functioning artifact. Software engineering predictively selects a software artifact according to its desired properties.",
+    "aspects": [
+      {"lead": "Development vs. engineering.", "text": "Development asks \"does it function and meet requirements?\" Engineering asks \"of the artifacts that would function, which one should we build, given the properties we want?\" — and answers before building it."},
+      {"lead": "Why the book is about software engineering.", "text": "Prediction-before-construction, applied to software: choosing the artifact whose properties best serve the goal, not merely one that runs."}
+    ],
+    "site_home": "def-software-engineering",
+    "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Software-engineering",
+    "book_home_owed": {"section": "Part 2 — Definitions", "status": "owed", "note": "Planned Part-2 Definitions section; drafted in DEFINITIONS-DRAFT.md, not yet tagged with `<!-- index-def: software-engineering -->` in any chapter."},
+    "lexicon_link": "book/6.2-glossary.html",
+    "concepts_link": "book/data/concepts.json"
+  }
+}

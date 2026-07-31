@@ -1374,6 +1374,28 @@ LANDING_CSS = """
   .cd-body .pole { display:block; margin:10px 0 0; font-size:10px; text-transform:uppercase;
                    letter-spacing:.05em; color:var(--muted); font-weight:800; }
 
+  /* ---- The four definitions (projected from book/data/definitions.json) --------------------- */
+  .cd-body blockquote.def-box { margin:0 0 12px; padding:10px 14px; background:#f0fdf4;
+                   border-left:4px solid #15803d; border-radius:0 7px 7px 0; font-size:15px;
+                   line-height:1.55; color:#1a1a1a; }
+  .cd-body ul.def-aspects li { font-size:14px; color:#3a3a3a; }
+  .cd-body .def-trace { font-size:12px; color:var(--muted); margin:8px 0 0; }
+  .cd-body .def-trace a { color:var(--link); }
+  .cd-body .def-owed { color:#b45309; font-style:italic; }
+
+  /* ---- The learning-outcomes view (projected from book-models/outcomes.json) --------------- */
+  .cd-body ul.oc-list { margin:4px 0 12px; padding:0; list-style:none; }
+  .cd-body ul.oc-list li.oc-row { display:grid; grid-template-columns:auto auto 1fr auto; gap:10px;
+                   align-items:baseline; font-size:14.5px; color:#2a2a2a; line-height:1.5;
+                   padding:7px 0; border-top:1px solid var(--line); }
+  .cd-body ul.oc-list li.oc-row:first-child { border-top:none; }
+  .oc-row .oc-unit { font-weight:800; color:#15803d; white-space:nowrap; font-size:12.5px; }
+  .oc-row .oc-bloom { font-size:10px; text-transform:uppercase; letter-spacing:.05em; font-weight:800;
+                   color:#fff; background:#b45309; border-radius:4px; padding:1px 6px; white-space:nowrap; }
+  .oc-row .oc-stmt { color:#2a2a2a; }
+  .oc-row .oc-more { color:var(--link); white-space:nowrap; font-size:12.5px; }
+  @media (max-width:640px){ .cd-body ul.oc-list li.oc-row { grid-template-columns:1fr; gap:3px; } }
+
   /* ---- The two theses as a matched PAIR of cards -------------------------------------------
      The theses stay a grouped, adjacent pair ("Thesis I of II" / "Thesis II of II") but are now
      the same <details class="card"> primitive, sitting two-up in their own grid so they read
@@ -1640,6 +1662,142 @@ def _landing_ways() -> str:
     return "\n  ".join(out)
 
 
+# ── The site AS A PROJECTION of the book's typed models ──────────────────────────────────────────
+# The definitions section and the outcomes section are DERIVED VIEWS: their content is read straight
+# from the model files at build time (book/data/definitions.json, book-models/outcomes.json filtered by
+# book/data/outcomes-site.json), never hand-authored in the landing HTML. A build renders them; the
+# drift checks (check_definitions_* / check_outcomes_site_* in tests/html.py) keep the projection
+# faithful. This is the concept-model precedent (concepts.json ↔ the concept cards) extended to the
+# definitions and the core learning-outcomes view. See book-models/SITE-VIEW.md.
+
+def _load_definitions() -> list[dict]:
+    """Read book/data/definitions.json → the ordered list of definition records (meta `_`-keys stripped,
+    ordered by the `_order` meta list). The site's Definitions section is a projection of this model."""
+    path = os.path.join(ROOT, "book", "data", "definitions.json")
+    if not os.path.isfile(path):
+        return []
+    raw = json.load(open(path, encoding="utf-8"))
+    order = raw.get("_order", [])
+    recs = {k: v for k, v in raw.items() if not k.startswith("_")}
+    ordered = [recs[k] | {"_slug": k} for k in order if k in recs]
+    ordered += [v | {"_slug": k} for k, v in recs.items() if k not in order]  # any un-ordered, appended
+    return ordered
+
+
+def _landing_definitions() -> str:
+    """The four core-term definitions, each a uniform clickable card projected from
+    book/data/definitions.json. The summary carries the term + a one-line frame (the box's opening
+    clause); the peek renders the full green-box definition, the per-aspect elaboration, and the
+    traceability line (owed book home + lexicon + concept model). Site element ⟵ model element: the
+    card id is `def-<slug>` = the record's `site_home`, the join key the drift check asserts."""
+    out = []
+    for rec in _load_definitions():
+        slug = rec["_slug"]
+        site_home = rec.get("site_home", f"def-{slug}")
+        card_slug = site_home[len("card-"):] if site_home.startswith("card-") else site_home
+        term = _esc(rec.get("term", slug))
+        box = _esc(rec.get("box", ""))
+        frame = box.split(" — ")[0].split(". ")[0].rstrip(".") + "…" if box else ""
+        aspects = "".join(
+            f'<li><b>{_esc(a.get("lead", ""))}</b> {_esc(a.get("text", ""))}</li>'
+            for a in rec.get("aspects", []))
+        owed = rec.get("book_home_owed", {}) or {}
+        owed_status = owed.get("status", "owed")
+        section = _esc(owed.get("section", "the book"))
+        if owed_status == "landed" and rec.get("book_home"):
+            home = f'<a href="{_esc(rec["book_home"])}">{section}</a>'
+        else:
+            home = f'<span class="def-owed">{section} (owed — drafted, not yet landed)</span>'
+        trace = (f'<p class="def-trace"><b>Book home:</b> {home} · '
+                 f'<a href="book/6.2-glossary.html">lexicon</a> · '
+                 f'projected from the definitions model.</p>')
+        body = (f'<blockquote class="def-box">🟢 <b>{term}</b> — {box}</blockquote>'
+                f'<ul class="cd-list def-aspects">{aspects}</ul>{trace}')
+        # The card id becomes `card-<card_slug>`; site_home stores the FULL id, so we pass card_slug so
+        # _card emits id="{site_home}". When site_home is `def-<slug>`, card_slug == site_home minus no
+        # prefix — so we build the details manually to honor the exact declared id.
+        out.append(
+            f'<details class="card def-card" id="{_esc(site_home)}">\n'
+            f'  <summary><span class="cd-kicker">Definition</span>'
+            f'<span class="cd-title">{term}</span>'
+            f'<span class="cd-frame">{frame}</span>'
+            f'<span class="cd-toggle" aria-hidden="true"></span></summary>\n'
+            f'  <div class="cd-body">{body}</div>\n'
+            f'</details>')
+    return "\n  ".join(out)
+
+
+def _outcome_index_by_id() -> dict:
+    """{outcome_id: record} over book-models/outcomes.json — the derived outcomes view the site projects
+    a slice of. Read-only: the site is a projection OF this model, never an edit to it."""
+    path = os.path.join(ROOT, "book-models", "outcomes.json")
+    if not os.path.isfile(path):
+        return {}
+    raw = json.load(open(path, encoding="utf-8"))
+    return {o["outcome_id"]: o for o in raw.get("outcomes", []) if o.get("outcome_id")}
+
+
+def _load_outcomes_site() -> dict:
+    """Read book/data/outcomes-site.json — the SELECTION + traceability sidecar (which outcomes the site
+    surfaces, and each one's book-home link). Thin by design: outcome prose is read from outcomes.json."""
+    path = os.path.join(ROOT, "book", "data", "outcomes-site.json")
+    if not os.path.isfile(path):
+        return {}
+    return json.load(open(path, encoding="utf-8"))
+
+
+def _outcome_row_id(outcome_id: str) -> str:
+    """A stable per-row landing id from an outcome_id (id='outcome-<safe-slug>'), so each projected
+    outcome is deep-linkable and the drift check can join site→model per row."""
+    return "outcome-" + re.sub(r"[^a-z0-9]+", "-", outcome_id.lower()).strip("-")
+
+
+_BLOOM_ORDER = ["know", "understand", "apply", "analyze", "evaluate", "create"]
+
+
+def _landing_outcomes() -> str:
+    """The core learning-outcomes view — 'what you'll be able to do' — projected from
+    book-models/outcomes.json filtered by book/data/outcomes-site.json's selection. Book-level outcomes
+    first, then Part-level; each row renders the outcome's `statement` STRAIGHT FROM the model (no copy),
+    a bloom-verb tag, and a link to its book home. Re-running the outcomes drain re-syncs this section."""
+    site = _load_outcomes_site()
+    if not site:
+        return ""
+    by_id = _outcome_index_by_id()
+    home_map = site.get("_book_home_map", {})
+    selected = [by_id[oid] for oid in site.get("projected", []) if oid in by_id]
+    # book-level rows first, then part-level; within a granularity, keep declared order.
+    selected.sort(key=lambda o: 0 if o.get("granularity") == "book" else 1)
+    rows = []
+    for o in selected:
+        oid = o["outcome_id"]
+        gran = o.get("granularity", "")
+        unit = o.get("primary_unit", "")
+        label = "The book" if gran == "book" else unit.replace("part-", "Part ")
+        home = home_map.get(unit, "book/index.html")
+        bloom = _esc(o.get("bloom", ""))
+        stmt = _esc(o.get("statement", ""))
+        rows.append(
+            f'<li id="{_outcome_row_id(oid)}" class="oc-row">'
+            f'<span class="oc-unit">{_esc(label)}</span>'
+            f'<span class="oc-bloom">{bloom}</span>'
+            f'<span class="oc-stmt">{stmt}</span>'
+            f'<a class="oc-more" href="{_esc(home)}">read →</a></li>')
+    body = ('<p>Each promise below is a learning outcome projected from the book\'s outcomes model — '
+            'the "after this Part, the reader can…" spine, derived from the prose and kept in sync by a '
+            'drift check. The book-level goals come first, then one per Part.</p>'
+            f'<ul class="oc-list">{"".join(rows)}</ul>')
+    return (
+        '<details class="card wide accent" id="outcomes-view" open>\n'
+        '  <summary><span class="cd-kicker">What you\'ll be able to do</span>'
+        '<span class="cd-title accent-t">The learning outcomes, book and Part</span>'
+        '<span class="cd-frame">The book\'s and each Part\'s "you\'ll be able to…", projected from the outcomes model.</span>'
+        '<span class="cd-toggle" aria-hidden="true"></span></summary>\n'
+        f'  <div class="cd-body">{body}'
+        '<a class="cd-more" href="book/index.html">read the book →</a></div>\n'
+        '</details>')
+
+
 # Defined in <head> so the workflow-figure iframe's `onload="fitFig(this)"` can never fire before the
 # function exists (a fast/cached iframe load previously raced the later inline <script> → "fitFig is
 # not defined"). Doubled braces so it survives `LANDING_INTRO.format(...)` — but LANDING_INTRO is the
@@ -1734,6 +1892,19 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
         <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
       </div>
     </details>
+  </div>
+
+  <hr class="sep" />
+
+  <!-- ===================== THE FOUR DEFINITIONS (projected from book/data/definitions.json) =========
+       The core vocabulary the two theses ride on — model, agent, engineering, software engineering.
+       Each card is DERIVED from the definitions model (green box + per-aspect elaboration + traceability
+       to its owed Part-2 book home); a build renders them and a drift check keeps them in sync. -->
+  <div class="fam">
+    <div class="fam-h">The four definitions — the vocabulary the theses ride on</div>
+    <div class="masonry">
+    {definitions}
+    </div>
   </div>
 
   <hr class="sep" />
@@ -2006,6 +2177,17 @@ LANDING_INTRO = """  <!-- ===================== HERO 2-up =====================
         <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
       </div>
     </details>
+    </div>
+  </div>
+
+  <!-- ===================== THE LEARNING OUTCOMES (projected from book-models/outcomes.json) ==========
+       "What you'll be able to do" — the book- and Part-level outcomes, projected from the outcomes view
+       model (filtered by book/data/outcomes-site.json's selection). Prose is read straight from the
+       model; the drift check keeps the selection honest. -->
+  <div class="fam">
+    <div class="fam-h">What you'll be able to do — the learning outcomes</div>
+    <div class="masonry">
+    {outcomes}
     </div>
   </div>
 
@@ -2639,6 +2821,7 @@ def cmd_build(_args) -> int:
     landing_body = NAV_GRID + "\n" + LANDING_INTRO.format(
         n=len(entries), book_title_block=_book_title_block(), pdf_href=_PDF_HREF, flow=_landing_flow(), cards=_landing_cards(),
         schools=_landing_schools(), ways=_landing_ways(),
+        definitions=_landing_definitions(), outcomes=_landing_outcomes(),
         hero=_ns_svg_ids(_mage, "hero"),
         schools_fig=_ns_svg_ids(_oversight, "midway-fig"),
         schools_fig_th=_ns_svg_ids(_oversight, "midway-th"),
@@ -2772,6 +2955,63 @@ def cmd_concepts(args) -> int:
     return 0
 
 
+def cmd_definitions(args) -> int:
+    """Print each modeled definition (book/data/definitions.json) with its site realization and its OWED
+    book home — so "which definitions are on the site, and where do they land in the book?" is a query,
+    not a grep. The four core-term definitions are a projection of this model onto the landing. `--json`
+    dumps the raw records."""
+    raw = _load_json_or_none(os.path.join(ROOT, "book", "data", "definitions.json"))
+    if raw is None:
+        print("no book/data/definitions.json")
+        return 0
+    records = {k: v for k, v in raw.items() if not k.startswith("_")}
+    if args.json:
+        print(json.dumps(records, ensure_ascii=False, indent=2))
+        return 0
+    owed = 0
+    for slug in raw.get("_order", list(records)):
+        e = records.get(slug)
+        if not e:
+            continue
+        home = e.get("book_home_owed", {}) or {}
+        status = home.get("status", "owed")
+        flag = "  ⚠ BOOK HOME OWED" if status != "landed" else ""
+        if status != "landed":
+            owed += 1
+        print(f"{e.get('term', slug):24} [site: {e.get('site_home', '?')}]{flag}")
+        print(f"                         book home -> {home.get('section', '?')} [{status}]")
+    print(f"— {len(records)} definition(s), {owed} with an owed book home")
+    return 0
+
+
+def cmd_outcomes_site(args) -> int:
+    """Print the site's learning-outcomes SELECTION (book/data/outcomes-site.json) resolved against the
+    outcomes model (book-models/outcomes.json) — so "which outcomes does the site surface?" is a query,
+    not a grep. Shows each projected outcome's unit + bloom + statement, read from the model. `--json`
+    dumps the resolved selection."""
+    site = _load_json_or_none(os.path.join(ROOT, "book", "data", "outcomes-site.json"))
+    model = _load_json_or_none(os.path.join(ROOT, "book-models", "outcomes.json"))
+    if site is None or model is None:
+        print("no outcomes-site.json / outcomes.json")
+        return 0
+    by_id = {o["outcome_id"]: o for o in model.get("outcomes", []) if o.get("outcome_id")}
+    resolved = [by_id[oid] for oid in site.get("projected", []) if oid in by_id]
+    if args.json:
+        print(json.dumps(resolved, ensure_ascii=False, indent=2))
+        return 0
+    for o in resolved:
+        unit = "book" if o.get("granularity") == "book" else o.get("primary_unit", "?")
+        print(f"[{unit:8}] [{o.get('bloom', '?'):10}] {o.get('statement', '')}")
+    dangling = [oid for oid in site.get("projected", []) if oid not in by_id]
+    print(f"— {len(resolved)} projected outcome(s)" +
+          (f", {len(dangling)} DANGLING (not in model)" if dangling else ""))
+    return 0
+
+
+def _load_json_or_none(path: str):
+    return json.load(open(path, encoding="utf-8")) if os.path.isfile(path) else None
+
+
 # ── Deploy staging manifest ──────────────────────────────────────────────────
 # `deploy github` stages an EXPLICIT set of paths — never `git add -A`, which sweeps any
 # stray untracked file (a screenshot helper, a scratch `.mjs`) into a publish commit. Two
@@ -2843,6 +3083,14 @@ def cmd_views_audit(args) -> int:
     # is the ONE place a committer sees every mechanical view finding. These are audit-only too.
     findings.extend(om.invariant_findings(om.derive_outline()))
     findings.extend(ocm.coverage_findings(ocm.derive_model()))
+
+    # --- SITE-AS-PROJECTION drift: the site is a derived VIEW of the book's models, so its projection
+    # drift (definitions.json ↔ the landing's def-* cards; outcomes.json/selection ↔ the outcome-* rows)
+    # belongs in the same views-audit surface. See book-models/SITE-VIEW.md; checks in tests/html.py.
+    from tests.html import check_definitions_site, check_outcomes_site  # noqa: E402 — audit-time only
+    for _label, (_status, _issues) in (("definitions", check_definitions_site()),
+                                       ("outcomes-site", check_outcomes_site())):
+        findings.extend(_issues)
 
     strict = getattr(args, "strict", False)
     mode = "STRICT (exit 1 on any finding)" if strict else "AUDIT-ONLY (prints, exits 0)"
@@ -3023,6 +3271,10 @@ def main() -> int:
     dc.add_argument("--json", action="store_true", help="dump the raw manifest entries")
     cp = sub.add_parser("concepts", help="list modeled concepts (book/data/concepts.json) + kind/status/site; flag book<->site drift")
     cp.add_argument("--json", action="store_true", help="dump the raw sidecar records")
+    df = sub.add_parser("definitions", help="list modeled definitions (book/data/definitions.json) + their site realization + owed book home")
+    df.add_argument("--json", action="store_true", help="dump the raw definition records")
+    osub = sub.add_parser("outcomes-site", help="list the site's projected learning outcomes (book/data/outcomes-site.json resolved against outcomes.json)")
+    osub.add_argument("--json", action="store_true", help="dump the resolved selection")
     va = sub.add_parser("views-audit", help="book-models drift audit: structural (every view->md reference resolves) + freshness (each view artifact equals a fresh derivation). Fast pre-commit gate; AUDIT-ONLY (prints, exits 0) unless --strict")
     va.add_argument("--strict", action="store_true", help="exit 1 on any finding (the flip a follow-up wires into the hook once seed findings are drained)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
@@ -3036,6 +3288,7 @@ def main() -> int:
             "build": cmd_build, "test": cmd_test, "check-responsive": cmd_check_responsive,
             "check-console": cmd_check_console,
             "data-claims": cmd_data_claims, "concepts": cmd_concepts,
+            "definitions": cmd_definitions, "outcomes-site": cmd_outcomes_site,
             "views-audit": cmd_views_audit,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 

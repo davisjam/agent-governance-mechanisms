@@ -44,6 +44,8 @@ from tests.html import (
     check_concepts_reverse_coverage,
     check_concepts_site_home,
     check_data_claims,
+    check_definitions_site,
+    check_outcomes_site,
     check_html_links,
     check_no_duplicate_ids,
     check_no_empty_table_header,
@@ -127,6 +129,16 @@ CHECKS = [
           lambda strict: check_concepts_drift(), audit_only=False),
     Check("concepts: L4 reverse coverage — landing card has a backing concept (warn)", 1,
           lambda strict: check_concepts_reverse_coverage(), audit_only=True),
+    # The SITE-AS-PROJECTION drift lints (book-models/SITE-VIEW.md) — the concept-model L1-L4 shape
+    # extended to two more model surfaces the site projects: the four DEFINITIONS
+    # (book/data/definitions.json ↔ the landing's `def-<slug>` cards) and the core learning-OUTCOMES view
+    # (book-models/outcomes.json filtered by book/data/outcomes-site.json ↔ the landing's `outcome-<...>`
+    # rows). Each asserts site↔model in both directions. AUDIT-ONLY-first (rule #55): the definitions'
+    # Part-2 book home is still OWED, so these seed the drain worklist before promoting to blocking.
+    Check("site-view: definitions projection drift (definitions.json ↔ landing def-* cards)", 1,
+          lambda strict: check_definitions_site(), audit_only=True),
+    Check("site-view: outcomes projection drift (outcomes.json/selection ↔ landing outcome-* rows)", 1,
+          lambda strict: check_outcomes_site(), audit_only=True),
     Check("skill: structure + manifests", 1, lambda strict: check_skill_structure()),
     Check("skill: bundle freshness (no drift)", 1, lambda strict: check_skill_drift()),
     Check("skill: bundle link integrity", 1, lambda strict: check_bundle_links()),

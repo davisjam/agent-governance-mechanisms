@@ -1,0 +1,37 @@
+{
+  "_note": "Outcomes-projection SELECTION — the SSOT for WHICH learning outcomes the site surfaces and how each is realized on the landing. This file is deliberately THIN: it does NOT copy outcome prose (that would drift). It declares only (a) the SELECTION policy — which outcomes from the book's outcomes view (book-models/outcomes.json) the site projects — and (b) the per-outcome SITE realization + book-home link, keyed by the outcome's `outcome_id`. The build reads outcomes.json, applies this selection, and renders each outcome's `statement` + `bloom` + `verb`/`obj` STRAIGHT FROM the model — so re-running the outcomes drain re-syncs the site automatically. The drift check (`check_outcomes_site_*` in tests/html.py) joins on `outcome_id` and asserts: (a) every selected id resolves to a real outcome in outcomes.json (no dangling selection), and (b) every book/Part outcome the policy WOULD select is either projected or explicitly excluded here (no silently-dropped core outcome). Lands AUDIT-ONLY-first. Queryable via `catalog.py outcomes-site`.",
+
+  "_selection_policy": {
+    "granularity_in": ["book", "part"],
+    "provenance_not_in": ["gap-recommended"],
+    "note": "The site surfaces the BOOK- and PART-level outcomes only (the 'what you'll be able to do' spine), and only the DERIVED/DECLARED ones — NOT the gap-recommended outcomes (those are the author's fill worklist, not yet a promise the site should make). Chapter/section outcomes are book-only detail. This policy is dogfooded by the drift check: any book/part non-gap-recommended outcome in outcomes.json that is neither projected nor listed in `_excluded` is a finding."
+  },
+
+  "_site_home_section": "outcomes-view",
+  "_site_home_note": "All projected outcomes render inside one landing section id='outcomes-view' ('What you'll be able to do'). Individual outcome rows carry id='outcome-<slug>' derived from the outcome_id, so each is deep-linkable and the drift check can join site->model per row.",
+
+  "_book_home_map": {
+    "book": "book/index.html",
+    "part-1": "book/1.1-the-printer.html",
+    "part-2": "book/2.1-the-agent-stack.html",
+    "part-3": "book/3.1-the-executable-zoo.html",
+    "part-4": "book/4.1-brownfield.html",
+    "part-5": "book/5.1-the-ada-context.html",
+    "part-6": "book/6.0-implications-for-se.html",
+    "_note": "book-home link per primary_unit — book-level outcomes point at the book index; a Part outcome points at that Part's first chapter (book/index.html has no per-part anchor). Derived from book-models/outline.json (part -> first chapter slug); regenerate if the book's part->first-chapter mapping changes."
+  },
+
+  "_excluded": [],
+
+  "projected": [
+    "book::design-a-governed-environment-in-which-a-fleet",
+    "book::distinguish-a-constraint-from-a-sensor-and-a-soft-me",
+    "book::model-a-system-as-a-small-set-of-typed-drift-c",
+    "part-1::judge-whether-a-task-needs-the-book-s-machiner",
+    "part-2::construct-the-governed-environment-its-layers-its",
+    "part-3::model-a-system-through-kruchten-s-4-1-views-as",
+    "part-4::apply-the-method-to-a-real-codebase-inducing-m",
+    "part-5::trace-the-method-s-evolution-through-a-real-ac",
+    "part-6::evaluate-what-the-method-changes-for-how-software"
+  ]
+}
