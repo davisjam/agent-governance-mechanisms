@@ -63,6 +63,15 @@ pattern-matching stored answers.
 **On "over a knowledge base."** The thing it reasons *over*. For this book, the **models are that knowledge
 base** — which is what ties the agent definition to the model definition.
 
+> **Footnote (for the interested reader).** This departs from the textbook definition deliberately. For
+> Russell & Norvig an agent is anything that **perceives** its environment (sensors) and **acts** on it
+> (actuators); a *rational* agent acts to maximize an expected performance measure. That perceive-act framing
+> is the one for **building** an agent. This book is about **governing** one, so it foregrounds a different
+> property — **controllability**, in the cybernetic sense of behavior you can steer but not perfectly
+> determine. The gap between *controllable* (probabilistic guarantees) and *controlled* (perfect guarantees)
+> is not a hedge; it is the book's whole reason to exist. And "reasoning over a knowledge base" is the clause
+> that ties the agent to the model: the models *are* the knowledge base.
+
 ## Model
 
 > 🟢 **Model** — a description that approximates a phenomenon usefully enough to make **predictions** about it.
@@ -80,11 +89,30 @@ model, one much closer to the real system.
 enough, the model *becomes* the thing signified (for good or ill). And a coarser model is **cheaper to
 analyze** but yields **error bars** around the analysis — the fidelity/cost trade-off.
 
-**On "implies constraints."** A model is not just descriptive — it **constrains**. A system built on a model
-cannot take *any* form; it must take roughly the form the model describes. It may **elaborate** on the model,
-but it cannot **diverge** from it. This is the hinge to the agent: the model an agent is given serves as both
-a **constraint** (bounding what it may build) and a **blueprint** (telling it what to build) — and, because
-agents reason over knowledge bases, the model *is* the knowledge base for the artifact under construction.
+**On "model as *symbol*, not just approximation" — the load-bearing move.** An approximation is a simplified
+copy of something *present*: you measure the real thing and strip detail. But an engineering model signifies
+something **absent** — the system you *intend to build*, which does not yet exist to be approximated. So the
+model is not a faint copy but a **sign**: it stands *for* the intended artifact, the way a blueprint stands
+for a building or a word for its referent. A sign of an *intended* thing is **prescriptive** in a way a mere
+approximation is not — it does not describe what is, it tells you what to realize. This is the distinction
+that turns "approximation" into "constraint and blueprint," and it is the hinge of the book's theses.
+
+**On "implies constraints" — the payoff of signification.** Because the model *signifies* the thing-to-be,
+that thing is **bound** to it: a system built on a model cannot take *any* form; it must take roughly the form
+the model describes. It may **elaborate** on the model, but it cannot **diverge** from it. This is the hinge
+to the agent: the model an agent is given serves as both a **constraint** (bounding what it may build) and a
+**blueprint** (telling it what to build) — and, because agents reason over knowledge bases, the model *is* the
+knowledge base for the artifact under construction.
+
+> **Footnote (for the interested reader).** This definition draws on two traditions. From George Box —
+> *"all models are wrong, some are useful"* — comes the model as **approximation**, prized for predictive
+> utility over fidelity. But approximation treats a model as a copy of something already *present*; an
+> engineering model signifies something **absent** — the system you intend to build. For that I borrow from
+> Sartre's *The Imaginary*: an image is not a weak perception but an **analogon**, a present stand-in through
+> which consciousness intends an absent object. A model is the engineer's analogon — it presentifies the
+> not-yet-built system so you can reason about it, and because it *signifies* that intended thing, the built
+> thing is bound to it. (The signifier/signified vocabulary is Saussure's; the move that a sign can intend an
+> *absent* object — and thereby govern its realization — is where semiotics and Sartre's phenomenology meet.)
 
 ---
 
