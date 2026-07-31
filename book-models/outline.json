@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 60,
-    "paragraph_points": 203
+    "sections_drained": 64,
+    "paragraph_points": 216
   },
   "chapters": [
     {
@@ -1807,8 +1807,24 @@
           "heading_text": "The performance/cost view: mostly embodied, one honest gap",
           "topic_sentence": "The zoo names a performance and cost model as a general type, and the framework supports it.",
           "id_source": "derived",
-          "block_index": 5,
-          "points": []
+          "block_index": 7,
+          "points": [
+            {
+              "slug": "the-cost-view-is-partly-embodied-and-the-book-says-so",
+              "text": "The cost view is partly embodied; the book says so.",
+              "block_index": 9
+            },
+            {
+              "slug": "a-per-host-profile-rations-load-and-cost",
+              "text": "A per-host profile rations load and cost.",
+              "block_index": 11
+            },
+            {
+              "slug": "model-only-where-a-failure-lives-so-the-latency-slice-stays-empty",
+              "text": "Model only where a failure lives, so latency stays unmodeled.",
+              "block_index": 14
+            }
+          ]
         },
         {
           "section_id": "deployment-topology-model",
@@ -1816,8 +1832,29 @@
           "heading_text": "The deployment & tier topology model",
           "topic_sentence": "*The typed statement of where things run — each service's name, its layer, and its tier — from which the deploy scripts and layering lints reason about a declared topology rather than scattered constants, and against which the real deploy table is reconciled.*",
           "id_source": "explicit",
-          "block_index": 11,
-          "points": []
+          "block_index": 17,
+          "points": [
+            {
+              "slug": "the-topology-model-declares-where-each-service-deploys",
+              "text": "The topology model declares where each service deploys.",
+              "block_index": 20
+            },
+            {
+              "slug": "it-assesses-deployment-parity-and-layer-boundary-soundness",
+              "text": "It assesses deployment parity and layer-boundary soundness.",
+              "block_index": 23
+            },
+            {
+              "slug": "the-parity-check-runs-both-directions-or-misses-drift",
+              "text": "The parity check runs both directions or misses drift.",
+              "block_index": 33
+            },
+            {
+              "slug": "the-topology-model-derives-from-the-deploy-table",
+              "text": "The topology model derives from the deploy table.",
+              "block_index": 35
+            }
+          ]
         },
         {
           "section_id": "invariant-dag-execution-policy",
@@ -1825,8 +1862,24 @@
           "heading_text": "The invariant-DAG execution policy",
           "topic_sentence": "*A deploy graph whose edges carry a typed intent — correctness, cost-gate, or load — kept host-identical, plus a typed Scheduler that reads a per-host profile and rations load and cost so one host fans work out while a scarce one serializes it.*",
           "id_source": "explicit",
-          "block_index": 28,
-          "points": []
+          "block_index": 39,
+          "points": [
+            {
+              "slug": "a-host-identical-graph-plus-a-scheduler-rations-per-host",
+              "text": "A host-identical graph plus a Scheduler rations per host.",
+              "block_index": 42
+            },
+            {
+              "slug": "it-assesses-graph-portability-and-rationing-correctness",
+              "text": "It assesses graph portability and rationing correctness.",
+              "block_index": 45
+            },
+            {
+              "slug": "the-execution-plan-derives-from-the-host-profile",
+              "text": "The execution plan derives from the host profile.",
+              "block_index": 55
+            }
+          ]
         },
         {
           "section_id": "control-substrate-dependency",
@@ -1834,11 +1887,28 @@
           "heading_text": "The control↔substrate dependency model",
           "topic_sentence": "The substrate-dependency model makes each governance mechanism declare, as typed metadata, the substrate assumption it bakes in — bound to one substrate, substrate-aware, or substrate-agnostic.",
           "id_source": "explicit",
-          "block_index": 43,
-          "points": []
+          "block_index": 58,
+          "points": [
+            {
+              "slug": "declared-substrate-stances-turn-a-migration-grep-into-a-blast-radius",
+              "text": "Declared substrate stances make a migration blast radius computable.",
+              "block_index": 60
+            }
+          ]
         }
       ],
-      "preamble_points": []
+      "preamble_points": [
+        {
+          "slug": "the-physical-view-maps-where-the-parts-run",
+          "text": "The Physical view maps where the parts run.",
+          "block_index": 0
+        },
+        {
+          "slug": "a-performance-cost-model-anchors-the-view-with-one-honest-gap",
+          "text": "A performance-cost model anchors the view, one honest gap.",
+          "block_index": 3
+        }
+      ]
     },
     {
       "slug": "3.6-the-scenarios-view",

@@ -358,6 +358,21 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: boundary-soundness | local
 - term: reverse-mapping | local
 - term: rule-index-consistency | local
+- term: placement | local
+- term: honest-gap | local
+- term: per-host-load-profile | local
+- term: rationing | local
+- term: pure-latency | local
+- term: tier | local
+- term: layer | local
+- term: deployment-parity | local
+- term: layer-boundary | local
+- term: set-diff | local
+- term: bidirectional-reconciliation | local
+- term: edge-intent | local
+- term: graph-portability | local
+- term: migration-safety | local
+- term: blast-radius | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
