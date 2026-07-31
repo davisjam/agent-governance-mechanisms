@@ -38,9 +38,9 @@ Document
          refs: Ref(key, chapter_slug, block_index)
 ```
 
-`BlockKind` ∈ {heading, para, list, table, figure, mermaid, code, code-inset, blockquote, eq, directive,
-other}. The three **float** kinds (`figure`, `table`, `mermaid`) are what the build numbers "Figure N." /
-"Table N." and what an author cross-references.
+`BlockKind` ∈ {heading, para, list, ordered-list, table, figure, mermaid, code, code-inset, blockquote, eq,
+directive, other}. The three **float** kinds (`figure`, `table`, `mermaid`) are what the build numbers
+"Figure N." / "Table N." and what an author cross-references.
 
 **Tokenizer SSOT.** Block splitting, chapter discovery, and the marker regexes are imported from
 `build_book_html` — there is exactly ONE tokenizer; the IR is a typed layer over it, never a copy. This is
@@ -63,14 +63,41 @@ C (this doc) is a deliberate, low-risk **on-ramp** to A, not a detour. Three beh
 
 1. **C (done):** shared tokenizer; typed read-only IR; lints walk it; the renderer still emits HTML from
    the shared token stream.
-2. **Enrich (additive):** hang the render-relevant payload on the IR nodes (caption HTML, asset path, then
-   inline spans). Each addition is behavior-preserving and changes nothing about the analyses.
-3. **A:** flip the renderer's emit loop from "walk raw blocks" to "walk IR blocks," then delete its private
-   block-walk. One parser now feeds both rendering and analysis.
+2. **Enrich + single classifier (done):** the renderer's block dispatch is single-sourced through the IR.
+   `book_ir.classify_render_block(block)` mirrors `md_to_html`'s exact block-loop order and tests
+   (space-delimited heading, all-lines-`>` blockquote, `_is_pipe_table`); the renderer calls it instead of
+   re-testing string prefixes inline. Each content kind renders through an extracted `_render_*` primitive
+   (heading / para / list / ordered-list / code / code-inset / mermaid-figure / blockquote / table). And
+   `Block.render_html()` renders the **render-complete** kinds — heading, para, list, ordered-list, code,
+   code-inset, blockquote — from the node's raw slice alone (delegating to the same primitives), proving the
+   IR node holds enough to produce its HTML. A BLOCKING gate pins it (`check_ir_render_fidelity`): every
+   render-complete block's `render_html()` equals `md_to_html` of its raw slice (all 900 in the book, 0
+   mismatches).
+3. **A (remaining — the marker-arming layer):** the renderer still runs its OWN block segmentation
+   (`_split_blocks`) and leading-marker peel, so the marker-*arming* walk (pending label / table-caption /
+   index-anchor, gloss-sidenote emission, the mermaid caption-fold) is not yet unified with the IR's parse.
+   The next pass drives `md_to_html`'s loop off IR block objects and threads the arming state onto them,
+   then deletes the renderer's private segmentation. The stateful kinds `render_html()` refuses today
+   (MERMAID caption-fold, FIGURE / EQ / TABLE / DIRECTIVE arming markers) are exactly what that pass must
+   carry.
 
-**Safety net:** the built HTML is deterministic, so a golden-snapshot test ("build is byte-identical across
-this refactor") makes step 3 a refactor-with-a-net rather than a leap. The two rules that keep C→A clean
-are already in force: **one shared tokenizer** (no drift) and **raw slice on every node** (never lossy).
+**Safety net (in force):** the built HTML is deterministic, so the golden-snapshot check — `catalog.py
+build` then an empty `git diff` on `book/*.html` + `book/_print/print.html` — makes each step a
+refactor-with-a-net, and the new `check_ir_render_fidelity` gate pins render-completeness. The two rules
+that keep C→A clean hold: **one shared tokenizer** (no drift) and **raw slice on every node** (never lossy).
+
+### IR-shape learnings (from the flip)
+
+- **The taxonomy was NOT 1:1 as the design assumed — two gaps, both closed.** An ordered list (`N. `) was
+  silently classified PARA by `_classify_prose` (the renderer rendered `<ol>` but the IR saw a paragraph);
+  added a distinct `ORDERED_LIST` kind. And a standalone HTML-comment TODO is prose-shaped (classifies
+  PARA) but the renderer emits it RAW, not wrapped in `<p>` — `render_html` mirrors the renderer's
+  lone-comment passthrough so the two agree.
+- **Classification vs. `_classify_prose`.** `classify_render_block` deliberately does NOT reuse
+  `_classify_prose`'s looser shape tests (any-`#`, first-line-`>`). It replicates the renderer's precise
+  branch order and tests, because that — not the looser shape — is what byte-identity requires.
+- **The SSOT import cycle is real.** `book_ir` imports `build_book_html` for the tokenizer, so
+  `build_book_html` reaches `book_ir` through a lazy `_book_ir()` accessor, never a module-load import.
 
 ## If clone-and-run is ever relaxed
 
