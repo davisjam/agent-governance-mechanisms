@@ -388,6 +388,10 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: stringly-typed | local
 - term: dogfooding | local
 - term: field-report | local
+- term: mastery-skill | local
+- term: reflection-hook | local
+- term: orthogonal-models | local
+- term: team-dimension | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
