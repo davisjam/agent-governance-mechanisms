@@ -2896,9 +2896,18 @@ def _caption_el(tag: str, caption_md: str, extra_class: str = "") -> str:
 def _chapter_id(c: "dict") -> str:
     """The chapter's `<part>.<chapter>` identifier (e.g. "1.3") — the reader-facing locator floats number
     against. Chapter-relative float numbers reset per chapter and carry this prefix, so a figure reads
-    "Figure 1.3-1"; the id it derives (`fig-1.3-1`) is unique within the chapter's page and, because the
-    (part, chapter) pair is unique per chapter, across a single-document build too."""
+    "Figure 1.3-1"; the id it derives (`fig-1-3-1`, dots→dashes for a selector-safe id) is unique within the
+    chapter's page and, because the (part, chapter) pair is unique per chapter, across a single-document
+    build too."""
     return f'{c["part"]}.{c["chapter"]}'
+
+
+def _float_id(kind: str, num: str) -> str:
+    """The selector-safe id/anchor for a float: `fig-1-3-1` from num `1.3-1`. The DISPLAY label keeps the
+    period ("Figure 1.3-1"); the id must not (an HTML id with a `.` is not a valid CSS/querySelector token,
+    which the html-validate `valid-id` rule rejects). Every id, `[ref:]` anchor, and list-of-floats href
+    goes through here so the generator and the resolver share ONE dotted→dashed scheme."""
+    return f"{kind}-{num.replace('.', '-')}"
 
 
 def _number_floats(body: str, chapter_id: str, fig_n: int, tbl_n: int,
@@ -2929,7 +2938,7 @@ def _number_floats(body: str, chapter_id: str, fig_n: int, tbl_n: int,
         if m.group("fig"):
             frag, num = m.group("fig"), f"{chapter_id}-{fig_n}"
             fig_n += 1
-            frag = frag.replace("<figure ", f'<figure id="fig-{num}" ', 1)
+            frag = frag.replace("<figure ", f'<figure id="{_float_id("fig", num)}" ', 1)
             label = f'<span class="fig-label">Figure {num}.</span> '
             if "<figcaption" in frag:
                 frag = re.sub(r"(<figcaption\b[^>]*>)", lambda mm: mm.group(1) + label, frag, count=1)
@@ -2942,7 +2951,7 @@ def _number_floats(body: str, chapter_id: str, fig_n: int, tbl_n: int,
             return frag
         frag, num = m.group("tbl"), f"{chapter_id}-{tbl_n}"
         tbl_n += 1
-        frag = frag.replace("<table", f'<table id="tbl-{num}"', 1)
+        frag = frag.replace("<table", f'<table id="{_float_id("tbl", num)}"', 1)
         label = f'<span class="tbl-label">Table {num}.</span> '
         if "<caption" in frag:
             frag = re.sub(r"(<caption\b[^>]*>)", lambda mm: mm.group(1) + label, frag, count=1)
@@ -2971,7 +2980,7 @@ def _resolve_xrefs(body: str, ref_map: "dict[str, dict]", for_print: bool) -> st
             raise SystemExit(
                 f"[ref:{key}]: no float carries `<!-- label: {key} -->` — check the spelling or add the label")
         word = "Figure" if e["kind"] == "fig" else "Table"
-        anchor = f'{e["kind"]}-{e["num"]}'
+        anchor = _float_id(e["kind"], e["num"])
         href = f'#{anchor}' if for_print else f'{e["slug"]}.html#{anchor}'
         return f'<a class="xref" href="{html.escape(href, quote=True)}">{word}&nbsp;{e["num"]}</a>'
     return _XREF_RE.sub(_repl, body)
@@ -2996,20 +3005,21 @@ def _list_of_floats_chapter(entries: list[dict], for_print: bool) -> dict:
     """Generate the front-matter "List of Figures and Tables" chapter from collected floats. Entries link
     to each float by its `id`; the visible text is the SHORT caption (the list wants scannable labels, not
     the full sentence). Web links cross to the owning chapter page; print links are same-document."""
-    def _lines(kind: str, word: str, anchor: str) -> list[str]:
+    def _lines(kind: str, word: str) -> list[str]:
         rows = [e for e in entries if e["kind"] == kind]
         if not rows:
             return []
         out = [f"## {word}s", ""]
         for e in rows:
-            href = f'#{anchor}-{e["num"]}' if for_print else f'{e["slug"]}.html#{anchor}-{e["num"]}'
+            anchor = _float_id(kind, e["num"])
+            href = f'#{anchor}' if for_print else f'{e["slug"]}.html#{anchor}'
             out.append(f'- [{word} {e["num"]}]({href}) — {e["short"]}')
         out.append("")
         return out
 
     body_md = "\n".join(
         ["The figures and tables of this book, in order. Each links to where it appears.", ""]
-        + _lines("fig", "Figure", "fig") + _lines("tbl", "Table", "tbl")
+        + _lines("fig", "Figure") + _lines("tbl", "Table")
     ).strip()
     return {
         "slug": _GENERATED_PAGE_SLUGS[0], "part": 0, "part_title": _PART_TITLES.get(0, ""),
