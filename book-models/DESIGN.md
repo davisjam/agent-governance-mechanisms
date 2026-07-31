@@ -57,6 +57,7 @@ answers one quality question, built from named md symbols, held true by a drift 
 | 3 | **User-journeys** | Scenarios (+1, the paths that validate the rest) | *Does each promised reading path still traverse real parts in the promised order?* | Specified |
 | 4 | **Cross-reference graph** | Process (what connects to what) | *Does every `[ref:]` / inter-chapter link / float reference resolve, and is the reference graph acyclic-where-it-should-be?* | Specified (recommended) |
 | 5 | **Thesis-weave** | (a book-specific invariant view) | *Are the two theses (Modeling, Alignment) actually woven through the parts that claim to develop them?* | Specified (recommended) |
+| 6 | **Learning outcomes** | (a book-specific pedagogical view) | *Does every teaching unit declare what a reader can DO after it, does that outcome map to a real unit, and does the Part→chapter→section outcome tree decompose without gaps?* | **PoC built here** |
 
 Below, each view gets its quality question, typed schema, and the md symbols it references.
 
@@ -163,6 +164,75 @@ Below, each view gets its quality question, typed schema, and the md symbols it 
 - **Invariants.** Every claimed part has ≥1 `woven_at` chapter. No thesis is claimed by a part it never
   touches.
 
+### 2.6 Learning-outcomes view (built)
+
+The book is a textbook, so it is modeled as one: this view names what a reader should be able to **DO or
+KNOW** after each unit, and maps each outcome to the unit that teaches it. It has no Kruchten analogue — it
+is a book-specific pedagogical view, the direct answer to the author's ask ("learning outcomes … another
+view, perhaps partially derived or annotative").
+
+- **Quality question.** Does every teaching unit — the book, each Part, each chapter, and the sampled
+  sections — declare what a reader can do after it; does each outcome map to a real outline unit; and does
+  the Part→chapter→section outcome tree decompose without a pedagogy gap?
+- **Typed schema.**
+  ```
+  OutcomeModel
+   └─ Outcome(outcome_id, granularity, unit_id, verb, obj, statement, bloom, provenance, anchor, gap_note)
+  ```
+  - `granularity` ∈ {`book`, `part`, `chapter`, `section`} — the four tiers the outcome tree decomposes
+    through. Book-level outcomes decompose *down* into Part → chapter → section outcomes.
+  - `unit_id` — the **join key into the outline view**: a `section_id` (section), a chapter `slug`
+    (chapter), `part-<N>` (part), or `book`. This is what ties the pedagogy to the structure — an outcome
+    whose `unit_id` no longer resolves is the finding.
+  - `verb` + `obj` — an outcome is an **action verb + object** ("distinguish · a constraint from a
+    sensor"). `verb` comes from a closed **Bloom-level taxonomy** (below); `bloom` is derived from it.
+  - `provenance` — the honesty tag (below): `derived` | `declared` | `gap-recommended`.
+  - `anchor` / `gap_note` — the grounding: for a `derived`/`declared` outcome, the topic sentence or heading
+    it rests on; for a `gap-recommended` one, why the unit falls short.
+- **The verb taxonomy.** A closed set of teaching verbs grouped by the six Bloom (2001-revision) cognitive
+  levels — **know** (recall/recognize/define…), **understand** (explain/describe/distinguish…),
+  **apply** (apply/use/compute/write…), **analyze** (classify/map/trace/situate…), **evaluate**
+  (evaluate/judge/size/choose…), **create** (design/construct/author/model…). The set is tuned to *this*
+  book's pedagogy — outcomes run from "recognize a mechanism" up to "design a control." An outcome's verb
+  must be in the set, so the Bloom level is derivable from the verb alone and the vocabulary stays uniform
+  (checked as invariant U2).
+- **Derived, declared, or gap-recommended (the honesty split).** Mirroring the outline's derive-what-you-can
+  / annotate-the-residual move, one level up — but with a **three-way** tag, because the author wants the
+  induction honest *and* wants gap recommendations:
+  - **`derived`** — grounded in what the unit teaches **as written**, traceable to an anchor. Some are
+    *lifted mechanically* from a topic sentence whose first word is a teaching verb ("Name both ends before
+    you move." → *know · name both ends*); the rest are hand-authored but tightly anchored to a real heading
+    or topic sentence. The derivation is kept **high-precision on purpose**: navigational imperatives
+    ("Start at the decision on the left", "Read the stack as …") are *refused*, because lifting them would
+    manufacture a garbled outcome masquerading as taught content.
+  - **`declared`** — a real outcome the existing (sometimes thin) prose roughly supports, made explicit by
+    the author. The chapter / Part / book outcomes are declared — each synthesized across the unit's section
+    titles and arc, and citing that arc as its anchor.
+  - **`gap-recommended`** — the outcome a **missing or inadequately-delivered** unit *ought* to deliver;
+    content that does not yet exist. Never masqueraded as derived. The two sections whose heading promises a
+    teaching point but whose opening block is a non-paragraph (the outline's O2 findings) are the cleanest
+    examples — the heading names an outcome the prose does not state.
+
+  The `declared` + `gap-recommended` sets are exactly the **author's rearrange/fill worklist**; the
+  `derived` set is what the book teaches today.
+- **How it maps onto the outline.** The outcome model is a *projection over the outline view*. Every
+  `unit_id` is an outline key; the coverage check re-derives the outline and joins. A chapter is "covered"
+  if it carries a chapter outcome *or* owns a section that carries one. The mechanical derivation reads the
+  outline's topic sentences directly. So the two views share one structural source — the outline is the
+  outcomes view's substrate, not a parallel parse.
+- **Invariants (checked by the drift check).**
+  - *drift* — `outcomes.json` equals a fresh derivation (declared outcomes merged with derived candidates).
+  - *U1 — every outcome's `unit_id` resolves* to a real section id / chapter slug / `part-N` / `book`.
+  - *U2 — every verb is in the taxonomy* and `bloom` equals the verb's level.
+  - *U3 / U4 / U5 — every chapter, every Part, and the book carry ≥1 outcome* (a bare unit is a pedagogy
+    gap the author fills).
+  - *U6 — every provenance tag cites its grounding* (a `derived`/`declared` outcome names an anchor; a
+    `gap-recommended` one names why the unit falls short) — the honest-labeling discipline, enforced.
+  - *(informational, not gated)* — the **uncovered-section list**: sections that teach something but carry
+    no outcome yet. This is the fill worklist for the author's next phase, printed by
+    `python3 book-models/outcomes_model.py gaps`, not a gate finding (this PoC covers a representative
+    sample of sections, not all 164).
+
 ---
 
 ## 3. The symbol scheme
@@ -220,6 +290,34 @@ still be authored **derived-from-existing-prose** (the journeys are already full
 the thesis-weave audit already runs heuristically) — the new markers make the join *exact and stable*
 rather than heuristic, which is the upgrade, not the enabler.
 
+### 3.4 Notation decision for the outcomes view — model-file declarations, no inline marker
+
+The outcomes view carries facts the prose does not fully state (a synthesized chapter outcome, a
+gap-recommended outcome for content that does not yet exist). Two places those could live:
+
+- **In the model file** — an `outcomes_declared.json` keyed by the outline's unit ids, hand-authored, that
+  the model merges with the mechanically-derived candidates.
+- **Inline in the markdown** — an `<!-- outcome: verb | object -->` marker beside each heading.
+
+**This PoC chose the model file, and recommends it stand.** Three reasons:
+
+- **Renderer stays uncoupled.** A model-file declaration needs no `MARKER_KEYWORDS` row and no renderer
+  change — so the outcomes view ships with zero risk of the notation-leak an unknown inline keyword causes,
+  and with no reconciliation dependency on the renderer.
+- **Gap-recommended outcomes have no home in the prose by definition.** A `gap-recommended` outcome names
+  content that does not exist yet; there is no heading to hang an inline marker on. The worklist has to live
+  outside the prose it is a worklist *for*.
+- **The declarations ARE the author's editable surface.** `outcomes_declared.json` is the one file the
+  author hand-edits; `outcomes.json` and the reviewable `outcomes-draft.md` digest are generated from it.
+  Keeping the declarations in one queryable file (not scattered across 28 chapter files) is what lets the
+  author read the whole pedagogy at once — the reason to model it at all.
+
+An inline `<!-- outcome: … -->` marker remains a *possible later upgrade* for the `derived` outcomes (it
+would let a section state its own outcome next to its heading, and the model would join on it instead of
+re-deriving). If pursued, it follows the §3.3 rule — HTML-comment, `|`-delimited, one `MARKER_KEYWORDS` row
+added deliberately as a documented reconciliation step, never a silent PoC edit. It is explicitly **not**
+wired here.
+
 ---
 
 ## 4. How each model stays honest — the drift check
@@ -239,8 +337,8 @@ kit's drift-lint contract and the `concepts.json` L1–L4 precedent):
    contributes zero to the fail count until a fix-wave drains the seed findings, then a follow-up promotes
    it to blocking. This is exactly how `concepts.json`'s L1–L3 landed (audit-only → drain → gate).
 
-The outline view's drift check is implemented in `tests/book_models.py` and registered in
-`catalog_tests.py` as **audit-only**.
+The outline view's and the outcomes view's drift checks are both implemented in `tests/book_models.py` and
+registered in `catalog_tests.py` as **audit-only** (`check_outline_model`, `check_outcomes_model`).
 
 **Derived-not-stored, taken further.** The purest form (what the outline PoC does) stores *nothing* and
 re-derives the whole model on every run, so there is no sidecar to drift at all — the "stored model" is
@@ -255,10 +353,13 @@ finding). This matches the repo's auto-generated-file provenance discipline.
 ```
 book-models/
   DESIGN.md                 # this doc
-  book_symbols.py           # THIN helper over book_ir (heading ids, topic sentences, journeys) — my code,
-                            #   read-only over book_ir; the reconciliation target for book_ir extensions
+  book_symbols.py           # THIN helper over book_ir (heading ids, topic sentences) — read-only over book_ir
   outline_model.py          # the Outline view: types + derive_outline() + regenerate/verify
-  outline.json              # the materialized outline (provenance-headed, regenerated, gitignored-or-tracked TBD)
+  outline.json              # the materialized outline (provenance-headed, TRACKED)
+  outcomes_model.py         # the Outcomes view: types + verb taxonomy + derive_model() + regenerate/verify/gaps
+  outcomes_declared.json    # HAND-AUTHORED source: declared + gap-recommended outcomes, keyed by unit id
+  outcomes.json             # the materialized outcomes model (provenance-headed, TRACKED)
+  outcomes-draft.md         # GENERATED reviewable digest — the actual outcome statements, book->part->chapter->section
 tests/
   book_models.py            # the drift check(s), registered audit-only in catalog_tests.py
 ```
@@ -273,8 +374,9 @@ written down for reconciliation (§6).
 
 ## 6. `book_ir` extensions wanted (reconciliation with the C→A migration)
 
-The thin helper `book_symbols.py` computes three things `book_ir` does not yet expose. Once the C→A
-migration lands, fold these into `book_ir` so there is one typed layer, not two:
+The thin helper `book_symbols.py` computes two things `book_ir` does not yet expose (a third, B1, was a
+defect and is now fixed — see below). Once the C→A migration lands, fold these into `book_ir` so there is
+one typed layer, not two:
 
 1. **Heading `{#slug}` id extraction.** `book_ir`'s `Block` for a heading carries the raw `## Text {#slug}`
    but does not split the `{#slug}` id off. Wanted: `Block.heading_id: str | None` (parsed with the
@@ -288,34 +390,44 @@ migration lands, fold these into `book_ir` so there is one typed layer, not two:
    first_para_block)]`, the heading→following-paragraph pairing the outline derives, so every view that
    needs "the paragraph that follows this heading" shares one implementation.
 
-**Bug B1 (found while building the PoC — a real `book_ir` defect, not just an extension).**
-`book_ir.Block.heading_level` reads **0 for a real H2/H3** when a marker comment is glued to the head of
+**Bug B1 — FIXED (found while building the outline PoC; fixed while building the outcomes view).**
+`book_ir.Block.heading_level` read **0 for a real H2/H3** when a marker comment was glued to the head of
 the heading's block (e.g. `<!-- index-def: refactoring-is-free -->` on the line above `## …` with no blank
-line). Cause: `_parse_chapter` computes `heading_level` from the block's ORIGINAL `first = lines[0]`, but
-that first line is the peeled marker, not the `#` line, so `len(first) - len(first.lstrip("#"))` is 0.
-Reproduces on ≥3 headings in `4.5-lessons-learned.md`. The helper works around it by re-deriving the level
-from the heading line the IR leaves in `raw` (`book_symbols.heading_level`). The fix in `book_ir`: compute
-`heading_level` from the *remaining* heading line after marker-peeling, not the original `first`. Hand this
-to the C→A agent; until fixed, any consumer trusting `Block.heading_level` mis-reads these headings.
+line). Cause: `_parse_chapter` computed `heading_level` from the block's ORIGINAL `first = lines[0]`, but
+that first line was the peeled marker, not the `#` line, so `len(first) - len(first.lstrip("#"))` was 0. It
+reproduced on **5** headings in `4.5-lessons-learned.md`. **Fix (landed):** compute `heading_level` from the
+*remaining* heading line after marker-peeling, not the original `first`. The HTML render was never affected
+(the renderer computes its own heading depth), so the fix is byte-identical. With B1 fixed, the helper's
+former `heading_level()` workaround was dropped — `book_symbols` now reads `Block.heading_level` directly.
 
-None of the three extensions blocks the PoC — the helper computes all three today. B1 is a defect the C→A
-agent should absorb; the extensions are the *unification* targets once both agents' work is in.
+None of the remaining extensions blocks the PoC — the helper computes both today. They are the
+*unification* targets once the C→A work is fully in; B1 is now off the list.
 
 ---
 
-## 7. Ratification questions for the author
+## 7. Ratification — settled defaults, and the open calls for the outcomes view
 
-Before the full multi-view build, four calls:
+The author has **ratified the build-forward defaults**: the view set is GO (build the views out); model
+files live in top-level `book-models/`; drift checks land **audit-only-first** (rule-#55 discipline); the
+JSON artifacts are **tracked** (provenance-headed, diffable in PRs). Those four earlier questions are
+answered — the outline and outcomes PoCs both follow them.
 
-1. **View set.** Ship the three named views plus the two recommended (cross-reference graph,
-   thesis-weave), for five? Or hold the two extras until a failure demands them (the starter kit's "model
-   only where a failure lives" rule argues for holding)?
-2. **New-symbol notation.** Approve `<!-- journey: id | actor | goal -->` / `<!-- journey-step: ... -->`
-   and `<!-- thesis: slug -->` as HTML-comment, `|`-delimited markers (uniform with `figure:`)? And is the
-   `MARKER_KEYWORDS` addition a reconciliation item to hand to the C→A agent, or should the journeys view
-   stay derived-from-prose (no new marker) to keep zero coupling?
-3. **Where model files live.** Confirm top-level `book-models/` (mirrors `models-bridge/system-models/`),
-   vs. under `book/` (next to `book_ir`), vs. under `tests/` (next to the drift checks)?
-4. **Drift-check severity + artifact tracking.** Confirm audit-only-first landing (rule #55), and: is
-   `book-models/outline.json` a **tracked** provenance-headed artifact (queryable, diffable in PRs) or
-   **gitignored** and regenerated on demand (like the PDF)?
+What remains open is specific to the outcomes view and to the still-unbuilt views:
+
+1. **Verb taxonomy.** Approve the six-level Bloom-grouped closed set (§2.6) as the outcome vocabulary? It is
+   tuned to this book; adding a verb is a one-row edit to `BLOOM_VERBS`. A reader who prefers a
+   coarser/finer scale (e.g. a three-tier know/apply/create) would change this table.
+2. **Section-coverage scope.** This PoC declares outcomes for the book, all 6 Parts, all 24 taught
+   chapters, and a **representative ~18-section sample** — not all 164 sections. Confirm the next phase
+   fills the rest (the `gaps` worklist), and confirm section outcomes stay *informational* (no U-invariant
+   forces every section to carry one — the author decides which sections earn their own outcome).
+3. **Gap-recommended review.** The three `gap-recommended` outcomes (§2.6) are *proposals* for content that
+   does not exist — the author confirms, rewrites, or rejects each. Are three the right seed, or should the
+   PoC surface more of the O2 / thin-opener sections as gap recommendations?
+4. **Inline outcome marker (later).** Adopt the model-file-only notation now (§3.4), and treat an inline
+   `<!-- outcome: verb | object -->` marker as a *deferred* upgrade for `derived` outcomes — added
+   deliberately with one `MARKER_KEYWORDS` row when/if the author wants a section to state its own outcome
+   in place?
+5. **Promotion to blocking (both views).** When the seed findings are drained (the outline's 2 O2 findings;
+   the outcomes view's section-coverage backlog, once the author decides the coverage bar), flip both
+   audit-only checks to blocking — the same drain-then-gate path `concepts.json` took.

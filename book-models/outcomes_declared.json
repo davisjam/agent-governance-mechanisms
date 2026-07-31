@@ -1,0 +1,473 @@
+{
+  "_note": "DECLARED / INDUCED learning outcomes for the book, keyed by outline unit ids (section_id | chapter-slug | part-N | book). Hand-authored SOURCE for the outcomes view — this file IS edited by hand; outcomes.json is the generated materialization. Each declaration: {granularity, unit_id, verb (from BLOOM_VERBS), obj, statement?, provenance, anchor?}. provenance is 'induced' (grounded in what the unit ACTUALLY teaches — cite the grounding prose in `anchor`) or 'declared' (a residual PROPOSAL where the prose does not yet cleanly support the outcome — the author will confirm or treat as a gap). Do NOT manufacture an aspirational outcome to fill a slot; leave the unit uncovered so it surfaces as a gap. See book-models/DESIGN.md 2.6.",
+  "declarations": [
+    {
+      "granularity": "book",
+      "unit_id": "book",
+      "verb": "design",
+      "obj": "a governed environment in which a fleet of coding agents does useful engineering work at bounded risk",
+      "statement": "After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.",
+      "provenance": "declared",
+      "anchor": "Preface 'mechanize discipline' + the book's stated aim (SE-at-Google + GoF touchstones): patterns that keep a fleet productive at bounded failure."
+    },
+    {
+      "granularity": "book",
+      "unit_id": "book",
+      "verb": "distinguish",
+      "obj": "a constraint from a sensor and a soft mechanism from a hard one",
+      "statement": "After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.",
+      "provenance": "declared",
+      "anchor": "The two book-thesis axes (Alignment: constraint/sensor; soft/hard) run through Part 2 (constraints-and-sensors) and Part 4 (governance-is-a-spectrum-from-soft-to-hard)."
+    },
+    {
+      "granularity": "book",
+      "unit_id": "book",
+      "verb": "model",
+      "obj": "a system as a small set of typed, drift-checked 4+1 views",
+      "statement": "After the book, the reader can model a system as typed, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.",
+      "provenance": "declared",
+      "anchor": "The Modeling Thesis, developed across Part 3 (the executable 4+1 zoo)."
+    },
+    {
+      "granularity": "part",
+      "unit_id": "part-1",
+      "verb": "judge",
+      "obj": "whether a task needs the book's machinery at all, and read an agent as a loop that needs a model",
+      "statement": "After Part 1, the reader can judge which tasks warrant governance machinery and which do not, and read an agent as a loop that needs a model of its world.",
+      "provenance": "declared",
+      "anchor": "1.1 'Not every programming task needs the machinery this book describes' + 1.2 'an agent runs in a loop … give it a model of the world'."
+    },
+    {
+      "granularity": "part",
+      "unit_id": "part-2",
+      "verb": "construct",
+      "obj": "the governed environment — its layers, its ex-ante and ex-post mechanisms, its lifecycles, and its metrics",
+      "statement": "After Part 2, the reader can construct a governed engineering environment: place a control at the right layer of the agent stack, split ex-ante from ex-post, write lifecycles and runbooks, and measure one level deeper.",
+      "provenance": "declared",
+      "anchor": "Part 2 chapter arc: agent-stack -> semantic-gap -> ex-ante/ex-post -> lifecycles/runbooks -> metrics -> guardrails-collide."
+    },
+    {
+      "granularity": "part",
+      "unit_id": "part-3",
+      "verb": "model",
+      "obj": "a system through Kruchten's 4+1 views as typed models an agent reasons through",
+      "statement": "After Part 3, the reader can model a system as the executable 4+1 zoo — logical, process, development, physical, and scenario views — each a typed model kept honest by a drift check.",
+      "provenance": "declared",
+      "anchor": "Part 3 is the 4+1 views one chapter each (3.2 logical, 3.3 process, 3.4 development, 3.5 physical, 3.6 scenarios), spined by 3.1."
+    },
+    {
+      "granularity": "part",
+      "unit_id": "part-4",
+      "verb": "apply",
+      "obj": "the method to a real codebase — inducing models from brownfield code, wielding the skills, and sizing transformations",
+      "statement": "After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes.",
+      "provenance": "declared",
+      "anchor": "Part 4 title 'Putting It to Work' + chapter arc: brownfield -> skills -> transformations -> training-data -> lessons-learned -> generative-validation."
+    },
+    {
+      "granularity": "part",
+      "unit_id": "part-5",
+      "verb": "trace",
+      "obj": "the method's evolution through a real accessibility-remediation system",
+      "statement": "After Part 5, the reader can trace how the method grew from a single reviewer to a multi-agent engineering organization in one real system, and relate each governance move to the problem that forced it.",
+      "provenance": "declared",
+      "anchor": "Part 5 is the ADA/DocAble case study: context -> timeline/work -> built-system -> road-to-MAGE (role progression)."
+    },
+    {
+      "granularity": "part",
+      "unit_id": "part-6",
+      "verb": "evaluate",
+      "obj": "what the method changes for how software engineering is measured, staffed, and taught",
+      "statement": "After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.",
+      "provenance": "declared",
+      "anchor": "6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "1.1-the-printer",
+      "verb": "judge",
+      "obj": "when an open-ended task needs governance and who is accountable when an agent gets it wrong",
+      "statement": "After this chapter, the reader can judge whether a task is open-ended enough to need the book's machinery, and reason about accountability when an agent produces a wrong result.",
+      "provenance": "declared",
+      "anchor": "Section titles: 'What this book is about (and what it is not)', 'an-open-ended-technology', 'whose-fault-is-it'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "1.2-loops-and-models",
+      "verb": "explain",
+      "obj": "why an agent is a loop and why it needs a model of its world",
+      "statement": "After this chapter, the reader can explain the agent as a fixed-shape loop and why giving it a model of the world is the first act of governance.",
+      "provenance": "declared",
+      "anchor": "Section titles 'everything-is-a-loop' + 'give-it-a-model-of-the-world'; ts: 'an agent runs in a loop, and the loop has a fixed shape'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "2.1-the-agent-stack",
+      "verb": "identify",
+      "obj": "the four layers of the agent stack as four places to steer",
+      "statement": "After this chapter, the reader can identify the four layers of the agent stack and read each as a distinct place to insert a control.",
+      "provenance": "declared",
+      "anchor": "Section titles 'the-four-layers' + 'every-layer-is-a-place-to-steer'; ts: 'Read the stack as a list of opportunities'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "2.2-models-and-the-semantic-gap",
+      "verb": "explain",
+      "obj": "why a typed model sits at the apex of the documentation hierarchy and what a drift check does and does not prove",
+      "statement": "After this chapter, the reader can explain why a typed model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness.",
+      "provenance": "declared",
+      "anchor": "Section titles 'the-apex-of-the-documentation-hierarchy-is-a-typed-model' + 'a-drift-check-proves-agreement-not-correctness' + 'the-semantic-gap'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "2.3-the-governed-environment",
+      "verb": "distinguish",
+      "obj": "ex-ante from ex-post decisions and a constraint from a sensor",
+      "statement": "After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch).",
+      "provenance": "declared",
+      "anchor": "Section titles 'ex-ante-...' + 'ex-post-...' + 'constraints-and-sensors'; ts: 'A mechanism is one of two moves — prevent the mistake, or catch it'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "2.4-lifecycles-and-runbooks",
+      "verb": "author",
+      "obj": "a lifecycle and a runbook that splits the deterministic from the judgment",
+      "statement": "After this chapter, the reader can author a lifecycle and its runbook, giving the deterministic parts a tight algorithm and the judgment parts the roughest one that still fits.",
+      "provenance": "declared",
+      "anchor": "Section titles 'lifecycles-first-then-the-failure-map' + 'runbooks-split-the-deterministic-from-the-judgment'; ts: 'the roughest algorithm that still fits'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "2.5-metrics",
+      "verb": "compute",
+      "obj": "a metric that measures one level deeper than the surface number",
+      "statement": "After this chapter, the reader can design a metric that measures one level deeper — turning a number that reports into one that drives a decision.",
+      "provenance": "declared",
+      "anchor": "Section 'measure-one-level-deeper'; ts quotes Ousterhout: 'measure one level deeper than the number you'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "2.6-when-guardrails-collide",
+      "verb": "analyze",
+      "obj": "what lies between controls when guardrails collide, using a governance graph",
+      "statement": "After this chapter, the reader can analyze the space between controls with a governance graph and reason about mechanisms whose hooks they do not own.",
+      "provenance": "declared",
+      "anchor": "Section titles 'drawing-what-lies-between-the-controls' (ts: 'The Governance Graph draws it') + 'when-the-hooks-aren-t-yours'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "3.1-the-executable-zoo",
+      "verb": "explain",
+      "obj": "why a fleet pays for free the modeling expense that once buried MBSE",
+      "statement": "After this chapter, the reader can explain why the cost that sank classical MBSE is one an agent fleet absorbs, and read Kruchten's 4+1 as the spine of the model zoo.",
+      "provenance": "declared",
+      "anchor": "Section titles 'the-expense-that-buried-mbse-is-the-one-a-fleet-pays-for-free' + 'kruchten-s-4-1-promoted-...-to-the-spine'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "3.2-the-logical-view",
+      "verb": "model",
+      "obj": "a service-flow model and the domain registries it rests on",
+      "statement": "After this chapter, the reader can model the logical view as a typed service-flow model backed by frozen domain registries.",
+      "provenance": "declared",
+      "anchor": "Section titles 'service-flow-model' + 'domain-registries'; ts: 'The typed source-of-truth for a service-oriented architecture'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "3.3-the-process-view",
+      "verb": "model",
+      "obj": "the concurrency of a system with a synchronization model and formal invariant verification",
+      "statement": "After this chapter, the reader can model the process view — cataloging every lock in a synchronization model and backing its invariants with formal verification.",
+      "provenance": "declared",
+      "anchor": "Section titles 'formal-invariant-verification' + 'synchronization-model' (ts: 'A typed registry that models the system's synchronization behavior — every OS-level lock')."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "3.4-the-development-view",
+      "verb": "model",
+      "obj": "a codebase's zones with a component & zone model and a rule-metadata registry",
+      "statement": "After this chapter, the reader can model the development view — every component's zone and the governance rules that ride it — as typed registries.",
+      "provenance": "declared",
+      "anchor": "Section titles 'component-zone-model' + 'rule-metadata-registry'; ts: 'A typed catalog of every component's code zone'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "3.5-the-physical-view",
+      "verb": "model",
+      "obj": "where a system runs with a deployment-topology model and an invariant-DAG execution policy",
+      "statement": "After this chapter, the reader can model the physical view — deployment topology and a typed deploy DAG — and name the one honest gap in the cost view.",
+      "provenance": "declared",
+      "anchor": "Section titles 'deployment-topology-model' + 'invariant-dag-execution-policy' + 'the-performance-cost-view-mostly-embodied-one-honest-gap'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "3.6-the-scenarios-view",
+      "verb": "map",
+      "obj": "user and developer journeys to test placement through a chain of typed models",
+      "statement": "After this chapter, the reader can map journeys to the environment tier that tests them, joining user-journey, orchestration, criticality, and coverage models.",
+      "provenance": "declared",
+      "anchor": "Section titles 'user-journey-model' + 'agent-orchestration-model' + 'journey-criticality-test-placement' + 'worked-join'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "4.1-brownfield",
+      "verb": "apply",
+      "obj": "three approaches to inducing a model from existing code",
+      "statement": "After this chapter, the reader can apply top-down, bottom-up, and lint-cover-then-induce approaches to bring a brownfield codebase under a model.",
+      "provenance": "declared",
+      "anchor": "Section titles 'approach-one-top-down-...', 'approach-two-bottom-up-inducing-the-model-from-code', 'approach-three-lint-cover-then-induce'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "4.2-the-skills",
+      "verb": "use",
+      "obj": "the self-operate, self-governance, and self-communicate skills, and the recipe for minting new ones",
+      "statement": "After this chapter, the reader can use the three packaged skills and follow the construction recipe to mint a new one well.",
+      "provenance": "declared",
+      "anchor": "Section titles 'self-operate-...', 'self-governance-...', 'self-communicate-...', 'the-construction-recipe-is-a-pattern-of-its-own'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "4.3-transformations",
+      "verb": "size",
+      "obj": "a transformation to the model it produces and the guarantee it must carry",
+      "statement": "After this chapter, the reader can size a transformation to its model and guarantee, and tell a right-sized leap from a wrong-shaped one.",
+      "provenance": "declared",
+      "anchor": "Section titles 'size-the-leap-to-the-model-and-the-guarantee' + 'the-right-sized-leap-and-the-wrong-shaped-one'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "4.4-training-data",
+      "verb": "analyze",
+      "obj": "where a model's training-data bias helps and where MBSE earns its keep on the novelty axis",
+      "statement": "After this chapter, the reader can analyze how training-data bias shapes an agent's reach, and situate MBSE on the novelty axis where it shines.",
+      "provenance": "declared",
+      "anchor": "Section titles 'the-model-is-biased-toward-what-it-has-seen' + 'where-mbse-shines-the-novelty-axis'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "4.5-lessons-learned",
+      "verb": "recognize",
+      "obj": "the agent-shaped failure modes and the disciplines that survive them",
+      "statement": "After this chapter, the reader can recognize the recurring agent-shaped failure modes — optionality, false 'done', broken estimates, vibe coding — and adopt the disciplines that survive them.",
+      "provenance": "declared",
+      "anchor": "Section titles 'optionality-is-poison', 'done-is-a-claim-not-a-fact', 'the-cost-estimator-is-broken-...', 'vibe-coding-treats-the-program-as-an-i-o-device-...'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "4.6-generative-validation",
+      "verb": "choose",
+      "obj": "among property testing, fuzzing, and fuzz-MBSE by which specification a generator hunts against",
+      "statement": "After this chapter, the reader can choose among generative-validation strategies by the specification each one attacks, treating the typed model as an oracle.",
+      "provenance": "declared",
+      "anchor": "Section titles 'the-move-a-generator-hunts-a-counterexample-to-a-model', 'property-based-testing-...', 'fuzzing-...', 'fuzz-mbse-...', 'when-to-reach-for-which'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "5.1-the-ada-context",
+      "verb": "explain",
+      "obj": "why document accessibility is a hard, high-burden problem worth this machinery",
+      "statement": "After this chapter, the reader can explain the accessibility problem the case-study system solves and why a document is not just a file.",
+      "provenance": "declared",
+      "anchor": "Section titles 'a-noble-idea-with-a-crushing-implementation', 'the-rule-that-changed-the-burden', 'why-a-document-is-not-just-a-file'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "5.2-the-timeline-and-the-work",
+      "verb": "describe",
+      "obj": "the stages, velocity, and kinds of work the case-study system required",
+      "statement": "After this chapter, the reader can describe how the case-study project unfolded across its stages and the range of work it demanded.",
+      "provenance": "declared",
+      "anchor": "Section titles 'six-stages-then-a-seventh', 'velocity', 'the-kinds-of-work-it-required'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "5.3-the-built-system",
+      "verb": "analyze",
+      "obj": "the built system through three views of the same architecture",
+      "statement": "After this chapter, the reader can analyze the built system end-to-end through three complementary views over one shared edit language.",
+      "provenance": "declared",
+      "anchor": "Section titles 'three-views-of-the-same-system', 'view-1-...', 'view-2-...', 'view-3-...'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "5.4-the-road-to-mage",
+      "verb": "trace",
+      "obj": "the author's path from solo co-coder to tech lead of an agent crew",
+      "statement": "After this chapter, the reader can trace the role progression — co-coder, QA, review-lead, tech-lead — that grew a single developer into an agent organization.",
+      "provenance": "declared",
+      "anchor": "Section titles 'role-co-coder-step-one-...', 'role-qa-step-two-...', 'role-review-lead-step-three-...', 'role-tech-lead-step-four-...'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "6.0-implications-for-se",
+      "verb": "evaluate",
+      "obj": "what the method changes for how software engineering is measured, staffed, and taught",
+      "statement": "After this chapter, the reader can evaluate the discipline-level implications: where judgment moved, what saturates, and why models are the universal language of engineering.",
+      "provenance": "declared",
+      "anchor": "Section titles 'the-judgment-moved-and-it-moved-toward-you', 'what-this-changes-for-how-we-measure-staff-and-teach', 'models-are-the-universal-language-of-engineering'."
+    },
+    {
+      "granularity": "chapter",
+      "unit_id": "6.1-conclusion",
+      "verb": "situate",
+      "obj": "the book within the software-engineering literature and identify what stays the reader's own",
+      "statement": "After this chapter, the reader can situate the book in the SE literature and identify the part of the work that stays human.",
+      "provenance": "declared",
+      "anchor": "Section titles 'fitting-this-book-into-the-software-engineering-literature' + 'the-part-that-stays-yours'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "constraints-and-sensors",
+      "verb": "distinguish",
+      "obj": "a constraint from a sensor — prevent the mistake versus catch it",
+      "statement": "After this section, the reader can distinguish a constraint (prevent) from a sensor (catch) and choose which move a given failure calls for.",
+      "provenance": "derived",
+      "anchor": "ts: 'A mechanism is one of two moves — prevent the mistake, or catch it'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "measure-one-level-deeper",
+      "verb": "compute",
+      "obj": "a metric one level deeper than the number a decision needs",
+      "statement": "After this section, the reader can apply Ousterhout's rule and measure one level deeper than the surface number.",
+      "provenance": "derived",
+      "anchor": "ts: 'John Ousterhout gives the rule in one line: measure one level deeper than the number you'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "a-drift-check-proves-agreement-not-correctness",
+      "verb": "explain",
+      "obj": "why a drift check proves agreement between model and code, not correctness of either",
+      "statement": "After this section, the reader can explain the precise guarantee a drift check gives — agreement, not correctness.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'A drift check proves agreement, not correctness'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "the-semantic-gap",
+      "verb": "define",
+      "obj": "the semantic gap between a model and the code it governs",
+      "statement": "After this section, the reader can define the semantic gap and say what closes it.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'The semantic gap'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "governance-is-a-spectrum-from-soft-to-hard",
+      "verb": "classify",
+      "obj": "a mechanism on the soft-to-hard spectrum by whether it aims or holds",
+      "statement": "After this section, the reader can classify a governance mechanism on the soft-to-hard spectrum — guidance that aims versus machinery that holds.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'Governance is a spectrum from soft to hard'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "size-the-leap-to-the-model-and-the-guarantee",
+      "verb": "size",
+      "obj": "the leap a transformation makes to the model it produces and the guarantee it carries",
+      "statement": "After this section, the reader can size a transformation's leap to its model and its guarantee.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'Size the leap to the model and the guarantee'; ts: 'Give a model an input and either examples of a transformation or a precise description'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "the-move-a-generator-hunts-a-counterexample-to-a-model",
+      "verb": "apply",
+      "obj": "the core generative-validation move — a generator hunting a counterexample to a model",
+      "statement": "After this section, the reader can apply the one move behind property testing, fuzzing, and fuzz-MBSE: a generator hunting a counterexample to a stated model.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'The move: a generator hunts a counterexample to a model'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "when-to-reach-for-which",
+      "verb": "choose",
+      "obj": "which generative-validation strategy fits a given specification",
+      "statement": "After this section, the reader can choose which validation strategy to reach for by the specification it attacks.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'When to reach for which'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "the-four-layers",
+      "verb": "identify",
+      "obj": "the four layers of the agent stack from foundation model up",
+      "statement": "After this section, the reader can identify each of the four layers of the agent stack.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'The four layers'; ts: 'At the bottom sits the foundation model'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "kruchten-s-4-1-promoted-from-a-closing-sentence-to-the-spine",
+      "verb": "explain",
+      "obj": "why Kruchten's 4+1 becomes the spine of the model zoo",
+      "statement": "After this section, the reader can explain how 4+1 is promoted from a closing invocation to the organizing spine of the views.",
+      "provenance": "derived",
+      "anchor": "Heading text + ts: 'The last chapter invoked Kruchten's 4+1 views in a final sentence'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "runbooks-split-the-deterministic-from-the-judgment",
+      "verb": "author",
+      "obj": "a runbook that gives judgment parts the roughest algorithm that still fits",
+      "statement": "After this section, the reader can author a runbook that separates deterministic steps from judgment ones.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'Runbooks: split the deterministic from the judgment'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "self-governance-the-catalogue-and-the-posture",
+      "verb": "use",
+      "obj": "the self-governance skill: convert a recurred failure into a durable control",
+      "statement": "After this section, the reader can use the self-governance signal — a bad thing happened twice — to mint a control instead of re-patching the instance.",
+      "provenance": "derived",
+      "anchor": "ts: 'the second skill, self-governance, triggers on a simple signal: a bad thing happened more'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "your-tests-must-survive-agent-shaped-failure-modes",
+      "verb": "recognize",
+      "obj": "the agent-shaped failure modes a test suite must survive",
+      "statement": "After this section, the reader can recognize the agent-shaped failure modes and write tests that survive them.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'Your tests must survive agent-shaped failure modes'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "vibe-coding-treats-the-program-as-an-i-o-device-engineering-treats-it-as-a-system",
+      "verb": "distinguish",
+      "obj": "vibe coding from engineering — program as I/O device versus program as system",
+      "statement": "After this section, the reader can distinguish vibe coding from engineering by whether the program is treated as an I/O device or a system.",
+      "provenance": "derived",
+      "anchor": "Heading text: 'Vibe coding treats the program as an I/O device; engineering treats it as a system'."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "give-it-a-model-of-the-world",
+      "verb": "construct",
+      "obj": "a model of the world for an agent to act against",
+      "statement": "After this section, the reader can construct a world-model an agent acts against — the first governance move.",
+      "provenance": "gap-recommended",
+      "gap_note": "O2 finding: this H2 opens on a non-paragraph block (no topic sentence), so the outcome its heading promises is not stated in prose as written. Recommend a lead paragraph that states the move."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "two-decisions-that-make-the-graph-resist-rot",
+      "verb": "analyze",
+      "obj": "the two design decisions that keep a governance graph from rotting",
+      "statement": "After this section, the reader can analyze the two decisions that make a governance graph resist rot.",
+      "provenance": "gap-recommended",
+      "gap_note": "O2 finding: opens on a non-paragraph block (no topic sentence). The two decisions are named in the heading but the section does not open by stating them; recommend a topic sentence enumerating them."
+    },
+    {
+      "granularity": "section",
+      "unit_id": "the-residual-goals-no-mechanism-reaches",
+      "verb": "identify",
+      "obj": "the residual goals no mechanism reaches, and why they stay human judgment",
+      "statement": "After this section, the reader can identify the residual goals no mechanism reaches and explain why they remain the engineer's own.",
+      "provenance": "gap-recommended",
+      "gap_note": "Thin/self-undercutting opener ('That closing line reads as if it settles everything') — the section is a caveat rather than a stated teaching. Recommend an explicit outcome: name the residual and why it resists mechanization."
+    }
+  ]
+}

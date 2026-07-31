@@ -34,7 +34,7 @@ import sys
 from typing import Callable, NamedTuple
 
 from tests.book import check_float_ref_gate, check_ir_render_fidelity, run_book_audit
-from tests.book_models import check_outline_model
+from tests.book_models import check_outcomes_model, check_outline_model
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import (
@@ -94,6 +94,13 @@ CHECKS = [
     # promotes to blocking once drained — the same landing the concept model's L1-L3 took. See tests/book_models.py.
     Check("book-models: outline view drift + invariants (outline.json)", 1,
           lambda strict: check_outline_model(), audit_only=True),
+    # AUDIT-ONLY (rule #55): the OUTCOMES view-model — the book's 6th, pedagogical view (DESIGN §2.6).
+    # Drift (outcomes.json vs a fresh derivation) + U1-U6 coverage/honesty (every outcome maps to a real
+    # unit; every chapter/Part/book carries one; every provenance tag cites its grounding). Lands audit-only
+    # as a representative PoC — chapters/Parts/book are covered; the uncovered-section list is the author's
+    # fill worklist (printed by `outcomes_model.py gaps`), not a gate finding. See tests/book_models.py.
+    Check("book-models: outcomes view drift + coverage (outcomes.json)", 1,
+          lambda strict: check_outcomes_model(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
