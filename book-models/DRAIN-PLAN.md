@@ -74,3 +74,38 @@ Rearrange content + fill the gaps (write the missing openers, define the promise
 should-exist outcomes), then promote the view checks to blocking, then the semantic review-gate agent audit
 runs over the `(point, paragraph)` pairs. Then: full Typst PDF (`book-typst.pdf`, local-only) → website sync
 (site as a projection of the models) → publish.
+
+## Pilot refinements (Part 1 drain, 260731 — `aa98ed5`)
+
+The Part-1 pilot (21 points in 1.1, 12 in 1.2, byte-identical, gates green) taught four things every
+subsequent Part-drain MUST honor:
+
+1. **Occurrence-index hazard (byte-identity).** Decorator text is inert for the *rendered* HTML, but any scan
+   over the raw `body_md` (e.g. the reader-facing occurrence index in `book-index.html`) will pick up terms
+   that appear ONLY inside a `<!-- point: -->` decorator and spawn phantom references → byte-identity breaks.
+   Fixed in the pilot via `_strip_point_decorators` before the occurrence scan. Any new reader-visible
+   `body_md` scan must strip decorators first. This recurs on every Part.
+2. **Chapter-opener points need a home.** A `point` above a paragraph that sits *before the first heading*
+   belongs to no section; attach it at chapter scope (`OutlineChapter.preamble_points`), not to a section.
+3. **Redundancy is two-tier.** Exact-slug duplicate points = a structural lint (`point_findings`, built).
+   Semantic *near*-duplicates (e.g. 1.1's "first judgment" vs "first skill" both framing mode-selection as
+   the primary judgment) are NOT slug-identical — they are a **review-gate/semantic** finding, surfaced in the
+   gap report, not caught by the structural lint. Report near-dups explicitly.
+4. **Blockquote-point convention (settled: YES).** A *substantive* set-apart blockquote carrying a real
+   teaching claim GETS a point; a bare aphoristic epigraph whose idea is unpacked by the next paragraph does
+   not (the next paragraph gets the point).
+
+**Granularity rule (as applied):** one `point` above each *idea-bearing* prose paragraph (a claim the book
+teaches). SKIP pure transitions/segues and pure figure-walkthroughs with no standalone claim.
+
+**Blank-line rule (tightened by the Part-2a drain, 260731).** A blank line between a `point` decorator and an
+adjacent marker is REQUIRED only before **block-heading notation** markers — `figure` / `label` / `>`
+blockquote / `eq` / `noqa` (a glued one trips the "notation marker must head its block" build abort; 6.3
+headshot incident). The **`index-def` / `index-example` / `gloss` family may sit flush** directly below the
+`point` (matches the 1.1 exemplar; byte-identity holds) — this spares the reference-heavy Part-3 model
+chapters (dense `index-def` runs) from over-inserting blank lines.
+
+**Honesty note (Part-2a).** A section whose opener is rhetorically self-undercutting can still be `derived`:
+the test is whether the section *as a whole* states a faithful teaching, not whether its first sentence is a
+clean topic sentence (2.3's "residual" — a soft opener is NOT "no teaching," so it does not force
+gap-recommended).
