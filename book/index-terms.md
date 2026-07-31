@@ -321,6 +321,9 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: requirements-based-coverage | local
 - term: doc-derived-test | local
 - term: seam | local
+- term: governance-graph | local
+- term: shared-resource | local
+- term: outside-hook | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.

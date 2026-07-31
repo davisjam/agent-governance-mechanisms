@@ -1161,23 +1161,23 @@
           "points": [
             {
               "slug": "the-governance-graph-nodes-are-mechanisms-edges-are-conflicts-joined-by-shared-resource",
-              "text": "The Governance Graph draws the space between controls: nodes are the mechanisms, each tagged with the event it fires on and the resources it reads, writes, or locks, and edges are the conflicts in a closed four-value taxonomy — contradiction, contention, ordering, and soft-versus-hard — joined by the shared resource rather than any call, so two controls that never call each other still collide if they touch the same slot, and typing the turn-end slot and the context budget as resources brings hook-pileup and injection-pressure under the same machinery as a contended lock.",
-              "block_index": 8
+              "text": "Nodes are mechanisms; edges are conflicts over a shared resource.",
+              "block_index": 9
             },
             {
               "slug": "the-shared-resource-is-the-only-cross-lifecycle-coupling-surface-and-keeps-the-graph-sparse",
-              "text": "The shared resource is what lets the graph reason across lifecycles: a turn-end hook and a commit-time check live in different lifecycles but still collide if they reach for one typed resource, and the resource is the only coupling surface between lifecycles — controls that share none cannot conflict, which keeps the graph sparse — and this is the semantic gap again, the collision a property of the interaction, invisible in either control's own code and legible only at the level where both are drawn.",
-              "block_index": 10
+              "text": "The shared resource is the only cross-lifecycle coupling surface.",
+              "block_index": 11
             },
             {
               "slug": "the-graph-is-the-catalogues-dynamic-dual-splitting-decidable-edges-from-judgment-ones",
-              "text": "A catalogue lists the controls but cannot show which two will crash; the graph draws exactly those crashes — the edges a list of nodes omits, the static catalogue's dynamic dual — and the answer splits cleanly: mechanically decidable edges (a same-slot pair with no declared order, a lock cycle) route to a sensor a lint settles, while semantic edges (are two demands on a commit-set truly incompatible, or do they compose?) route to a human prompt, so each edge carries its nature derived from its type and both the flag and the prompt land before the control ships, not at the collision.",
-              "block_index": 13
+              "text": "The graph is the catalogue's dynamic dual.",
+              "block_index": 14
             },
             {
               "slug": "the-graph-makes-the-implicit-claim-that-mechanisms-compose-explicit-and-checkable",
-              "text": "The operational payoff: a governed environment is not just a pile of running mechanisms but a claim that they compose — a claim that was implicit, checked only by collision — and the graph makes it explicit and checkable, answering at authoring time \"what fires on this event, what touches this resource, is this new control consistent with the ones already wired,\" so the fleet stops merely running its guardrails and starts modeling how they interact.",
-              "block_index": 15
+              "text": "The graph makes \"mechanisms compose\" explicit and checkable.",
+              "block_index": 16
             }
           ]
         },
@@ -1187,22 +1187,22 @@
           "heading_text": "When the hooks aren't yours",
           "topic_sentence": "Every mechanism so far was one you wrote.",
           "id_source": "derived",
-          "block_index": 17,
+          "block_index": 18,
           "points": [
             {
               "slug": "outside-hooks-from-a-vendor-or-regulator-extend-the-graph-without-changing-shape",
-              "text": "Every mechanism so far was one you wrote, but some hooks arrive from outside — a plugin, a teammate, and plausibly soon a regulator or model vendor mandating \"run your agents with these prescribed governance hooks or fall out of compliance\" — and the graph extends to these without changing shape.",
-              "block_index": 18
-            },
-            {
-              "slug": "an-unanalyzed-outside-hook-sits-on-a-possible-conflict-edge-against-its-whole-slot",
-              "text": "An outside hook enters as a node with its firing event known but its resource footprint unknown — and unknown is not empty, since empty would mean \"verified to touch nothing\" — so it sits on a possible-conflict edge against every mechanism sharing its slot until someone analyzes it into a known node, and that conservative default is the honest reading of a black box, creating the right pressure: an unreconciled mandated hook shows up as unresolved conflict, never as silent trust.",
+              "text": "Outside hooks extend the graph without changing its shape.",
               "block_index": 20
             },
             {
-              "slug": "composing-governance-you-did-not-author-is-checking-the-merged-graph-for-contradiction",
-              "text": "The graph becomes a substrate for composing governance you did not author: satisfying one regulator is checking that your mechanisms plus theirs leave no unresolved conflict, satisfying several is the same check over the union, and because the graph types soft-versus-hard it can settle the property a mandate cares about most — that a required hard block is never quietly overridden by one of your soft aims on the same slot — so \"do I satisfy all of them at once?\" becomes a question the model answers at authoring time instead of at audit.",
+              "slug": "an-unanalyzed-outside-hook-sits-on-a-possible-conflict-edge-against-its-whole-slot",
+              "text": "An unanalyzed outside hook conflicts with everything on its slot.",
               "block_index": 22
+            },
+            {
+              "slug": "composing-governance-you-did-not-author-is-checking-the-merged-graph-for-contradiction",
+              "text": "Composing outside governance is checking the merged graph for contradiction.",
+              "block_index": 24
             }
           ]
         },
@@ -1212,12 +1212,12 @@
           "heading_text": "Keeping the model honest",
           "topic_sentence": "Two disciplines keep the model honest, and both are the book's.",
           "id_source": "derived",
-          "block_index": 24,
+          "block_index": 26,
           "points": [
             {
               "slug": "keep-the-graph-honest-by-symbol-anchoring-and-a-descriptive-not-aspirational-model",
-              "text": "Two disciplines keep the model honest: anchor each node to the code that implements its control by symbol, never by line, so a drift lint re-resolves the anchor every build and a control wired but unmodeled reddens the gate; and keep the model descriptive — it draws the controls that exist and checks proposed ones on request, it does not invent conflict-lints for collisions that never happened — because a governance graph is itself a governance mechanism, and the failure mode of governance is a tower nobody wants.",
-              "block_index": 25
+              "text": "Keep the graph symbol-anchored and descriptive, not aspirational.",
+              "block_index": 28
             }
           ]
         }
@@ -1225,12 +1225,12 @@
       "preamble_points": [
         {
           "slug": "a-system-of-controls-has-the-one-failure-a-list-cannot-show",
-          "text": "The stack gives four layers to steer at and a governed fleet fills them with accumulating constraints, each earning its place alone; but together they form a system, and a system of controls has the one failure a list of controls cannot show — two of them making incompatible demands on the same thing at the same moment.",
+          "text": "A control system has a failure a list cannot show.",
           "block_index": 1
         },
         {
           "slug": "each-collision-lives-in-the-space-between-two-controls-drawn-nowhere",
-          "text": "Two collisions from the case study make it concrete — a squashed-commit requirement colliding with an out-of-brief check on the same commit-set, and two turn-end hooks firing with no order declared between them — and neither lives in any one control's code: each lives in the space between two controls, two correct controls making a contradictory demand on one shared resource, a space drawn nowhere until the graph draws it.",
+          "text": "A collision lives between two controls, drawn nowhere.",
           "block_index": 3
         }
       ]
