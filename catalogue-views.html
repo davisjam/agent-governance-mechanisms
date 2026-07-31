@@ -5,46 +5,103 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Governance catalogue — codegen'd views</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#1a1a1a; --muted:#555; --line:#e2e8f0;
-          --a:#c2410c; --p:#15803d; --b:#b45309; }
+  /* The views page carries FONT_CSS's token :root too. Role top-bars keep a 3-way coding, all sourced
+     from the token palette (agent=accent umber · bridge=fleet navy · product=thesis green) — this page
+     has no thesis/def boxes, so the reuse never collides on-surface. --line aliases --rule. */
+  :root { --line: var(--rule); --a: var(--accent); --p: var(--box-thesis-rule); --b: var(--diagram-fleet); }
   * { box-sizing:border-box; }
-  body { margin:0; padding:26px 20px 70px; color:var(--ink); background:#fff; line-height:1.4;
-         font-family:"Avenir Next",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-  h1 { font-size:21px; max-width:1080px; margin:0 auto 4px; }
-  .sub { max-width:1080px; margin:0 auto 14px; font-size:12.5px; color:var(--muted); }
-  .sub a { color:#0b5cad; }
+  body { margin:0; padding:26px 20px 70px; color:var(--ink); background:var(--paper); line-height:1.4;
+         font-family:var(--font-body); }
+  h1 { font-size:var(--fs-card-title); max-width:1080px; margin:0 auto 4px; }
+  .sub { max-width:1080px; margin:0 auto 14px; font-size:var(--fs-micro); color:var(--muted); }
+  .sub a { color:var(--accent); }
   #tabs { max-width:1080px; margin:0 auto 6px; display:flex; flex-wrap:wrap; gap:6px; }
-  .tab { font:inherit; font-size:12.5px; font-weight:600; cursor:pointer; border:1px solid var(--line);
-         background:#f8fafc; color:#334155; border-radius:7px; padding:5px 11px; }
-  .tab.on { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
+  .tab { font:inherit; font-size:var(--fs-micro); font-weight:600; cursor:pointer; border:var(--border-hairline) solid var(--line);
+         background:var(--panel); color:var(--muted); border-radius:var(--radius-code); padding:5px 11px; }
+  .tab.on { background:var(--ink); color:var(--paper); border-color:var(--ink); }
   #stage { max-width:1080px; margin:10px auto 0; }
-  .blurb { font-size:12px; color:var(--muted); font-style:italic; margin:0 0 12px; }
+  .blurb { font-size:var(--fs-micro); color:var(--muted); font-style:italic; margin:0 0 12px; }
   .grp { margin:0 0 16px; }
-  .grp h2 { font-size:13.5px; margin:0 0 7px; padding-bottom:3px; border-bottom:1px solid var(--line); }
-  .grp h2 .cnt { color:var(--muted); font-weight:500; font-size:11px; }
+  .grp h2 { font-size:var(--fs-meta); margin:0 0 7px; padding-bottom:3px; border-bottom:var(--border-hairline) solid var(--line); }
+  .grp h2 .cnt { color:var(--muted); font-weight:500; font-size:var(--fs-micro); }
   .rt-a{color:var(--a);font-weight:800;} .rt-b{color:var(--b);font-weight:800;} .rt-p{color:var(--p);font-weight:800;}
   .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px; }
-  .card { display:block; text-decoration:none; color:var(--ink); border:1.4px solid #cbd5e1;
-          border-radius:8px; padding:7px 9px; background:#fff; transition:box-shadow .1s; }
-  .card:hover { box-shadow:0 2px 8px rgba(0,0,0,.10); }
-  .card.r-a { border-top:3px solid var(--a); } .card.r-p { border-top:3px solid var(--p); }
-  .card.r-b { border-top:3px solid var(--b); }
+  .card { display:block; text-decoration:none; color:var(--ink); border:var(--border-hairline) solid var(--rule);
+          border-radius:var(--radius-chip); padding:7px 9px; background:var(--paper); transition:border-color .12s, background .12s; }
+  .card:hover { border-color:var(--accent); background:var(--accent-tint); }
+  .card.r-a { border-top:var(--border-accent-bar) solid var(--a); } .card.r-p { border-top:var(--border-accent-bar) solid var(--p); }
+  .card.r-b { border-top:var(--border-accent-bar) solid var(--b); }
   .card.e-s  { border-style:dashed; }
-  .card.e-sh { border-left:4px solid #38bdf8; }
-  .card .c-t { display:block; font-size:12.5px; font-weight:700; letter-spacing:-.01em; }
-  .card .c-m { display:block; font-size:10.5px; color:var(--muted); margin-top:2px; }
-  .card .c-m code { background:#f6f8fa; padding:0 3px; border-radius:3px; }
-  .card .star { color:#f59e0b; }
-  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }
-  .site-foot { max-width:1320px; margin:40px auto 0; padding:16px 26px 30px; border-top:1px solid #e2e8f0; font-size:12.5px; color:#666; text-align:center; }
-  .site-foot a { color:#0b5cad; text-decoration:underline; } .site-foot a:hover { text-decoration:none; }
+  .card.e-sh { border-left:var(--border-box-rule) solid var(--box-def-rule); }
+  .card .c-t { display:block; font-size:var(--fs-micro); font-weight:700; letter-spacing:-.01em; }
+  .card .c-m { display:block; font-size:var(--fs-micro); color:var(--muted); margin-top:2px; }
+  .card .c-m code { background:var(--code-bg); padding:0 3px; border-radius:3px; }
+  .card .star { color:var(--accent); }
+  /* GENERATED by book-models/design_tokens.py from design-tokens.json — do not hand-edit. */
+  :root {
+    --ink: #1c1917;
+    --paper: #fdfcf9;
+    --panel: #f6f4ef;
+    --rule: #e4e0d8;
+    --muted: #57534e;
+    --accent: #9a3f12;
+    --accent-tint: #faf1e6;
+    --link: #9a3f12;
+    --code-bg: #f3efe7;
+    --box-thesis-rule: #15803d;
+    --box-thesis-fill: #eef7ee;
+    --box-def-rule: #1f6fae;
+    --box-def-fill: #eef4fb;
+    --box-inset-rule: #7c6bb0;
+    --box-inset-fill: #f2effb;
+    --diagram-churn: #b23b3b;
+    --diagram-churn-fill: #fbeaea;
+    --diagram-fleet: #2f5169;
+    --diagram-fleet-fill: #e7edf3;
+    --diagram-governed: #1f7a4d;
+    --diagram-governed-fill: #e3f0e7;
+    --diagram-trust: #155c38;
+    --diagram-trust-fill: #eef7f0;
+    --font-display: "Fraunces", "Iowan Old Style", Palatino, Georgia, serif;
+    --font-body: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+    --display-weight: 600;
+    --display-tracking: -0.03em;
+    --fs-micro: 12px;
+    --fs-meta: 14px;
+    --fs-card-body: 16px;
+    --fs-body: 18px;
+    --fs-card-title: 22px;
+    --fs-section: 28px;
+    --fs-thesis-title: 36px;
+    --fs-display: 52px;
+    --lh-body: 1.62;
+    --lh-display: 1.08;
+    --lh-card: 1.5;
+    --space-0: 4px;
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-5: 48px;
+    --space-6: 64px;
+    --radius-card: 10px;
+    --radius-chip: 4px;
+    --radius-code: 6px;
+    --border-hairline: 1px;
+    --border-accent-bar: 3px;
+    --border-box-rule: 4px;
+  }
+  body { font-family:var(--font-body); }
+  h1,h2,h3,h4,.walk-h,.section-h { font-family:var(--font-display); font-weight:var(--display-weight); }
+  .site-foot { max-width:1320px; margin:var(--space-5) auto 0; padding:var(--space-2) 26px var(--space-4); border-top:var(--border-hairline) solid var(--rule); font-size:var(--fs-micro); color:var(--muted); text-align:center; }
+  .site-foot a { color:var(--accent); text-decoration:underline; } .site-foot a:hover { text-decoration:none; }
   .site-foot .gh { white-space:nowrap; }
-  .topnav { position:absolute; top:14px; right:20px; font-size:12px; display:flex; gap:16px; }
-  .topnav a { color:#555; text-decoration:none; white-space:nowrap; } .topnav a:hover { color:#0b5cad; }
-  @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 8px; } }
+  .topnav { position:absolute; top:14px; right:20px; font-size:var(--fs-micro); display:flex; gap:var(--space-2); }
+  .topnav a { color:var(--muted); text-decoration:none; white-space:nowrap; } .topnav a:hover { color:var(--accent); }
+  @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 var(--space-1); } }
 </style>
 </head>
 <body>

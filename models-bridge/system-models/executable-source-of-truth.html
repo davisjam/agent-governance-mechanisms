@@ -5,62 +5,124 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Executable source-of-truth models</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#1a1a1a; --muted:#555; --accent:#b45309; --line:#e2e8f0; --link:#0b5cad; }
+  /* Legacy var aliases → design tokens: --line/--link predate the token model and are referenced across
+     the landing + views CSS; alias them so every site rule resolves to the Umber-Monograph tokens without
+     touching hundreds of call sites. The token :root (inlined via FONT_CSS) defines --ink/--muted/--accent. */
+  :root { --line: var(--rule); --link: var(--accent); }
   * { box-sizing: border-box; }
-  body { margin:0; font-family:"Avenir Next",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-         color:var(--ink); background:#fff; line-height:1.62; font-size:18.5px; }
+  body { margin:0; font-family:var(--font-body);
+         color:var(--ink); background:var(--paper); line-height:var(--lh-body); font-size:var(--fs-body); }
   main { width: 94vw; max-width: 1320px; margin: 0 auto; padding: 32px 26px 80px; }
-  /* The landing is a figure-prose BOARD — it spreads to a generous ceiling to use wide screens;
-     entry/prose pages keep the 1320 reading width (their prose has no 70ch cap of its own). */
-  body.landing main { max-width: 2100px; }
-  body.landing .site-foot { max-width: 2100px; }
-  nav.crumb { font-size: 13px; color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
+  /* The landing is a figure-prose BOARD — a controlled ceiling so wide-screen scan-lines stay comfortable
+     (was 2100); entry/prose pages keep the 1320 reading width. */
+  body.landing main { max-width: 1600px; }
+  body.landing .site-foot { max-width: 1600px; }
+  nav.crumb { font-size: var(--fs-meta); color: var(--muted); margin: 0 0 18px; letter-spacing:.01em; }
   nav.crumb a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
   nav.crumb a:hover { text-decoration: underline; }
-  h1 { font-size: 37px; margin: 6px 0 4px; letter-spacing:-0.02em; }
-  h2 { font-size: 25px; margin: 30px 0 8px; padding-top: 6px; border-top:1px solid var(--line); }
-  h3 { font-size: 20px; margin: 22px 0 6px; }
-  h4 { font-size: 16.5px; margin: 16px 0 4px; color:#333; }
-  p, li { font-size: 19px; }
+  h1 { font-size: var(--fs-thesis-title); margin: 6px 0 4px; letter-spacing:var(--display-tracking); line-height:1.12; }
+  h2 { font-size: var(--fs-section); margin: 30px 0 8px; padding-top: 6px; border-top:var(--border-hairline) solid var(--line); }
+  h3 { font-size: var(--fs-card-title); margin: 22px 0 6px; }
+  h4 { font-size: var(--fs-card-body); margin: 16px 0 4px; color:var(--ink); }
+  p, li { font-size: var(--fs-body); }
   a { color: var(--link); }
-  code { background:#f6f8fa; padding:1px 5px; border-radius:4px; font-size:.9em;
-         font-family:"SF Mono",Menlo,Consolas,monospace; }
-  pre { background:#f6f8fa; padding:12px 14px; border-radius:7px; overflow:auto; }
+  code { background:var(--code-bg); padding:1px 5px; border-radius:var(--radius-chip); font-size:.9em;
+         font-family:var(--font-mono); }
+  pre { background:var(--code-bg); padding:12px 14px; border-radius:var(--radius-code); overflow:auto; }
   pre code { background:none; padding:0; }
-  table { border-collapse: collapse; margin: 12px 0; font-size: 14.5px; width:100%; }
-  th, td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
-  th { background:#f8fafc; font-weight:700; }
-  hr { border:none; border-top:1px solid var(--line); margin: 22px 0; }
-  .subtitle { font-size: 15px; color:#444; font-style: italic; margin: 0 0 6px; }
-  a.abbr { color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--accent);
+  table { border-collapse: collapse; margin: 12px 0; font-size: var(--fs-meta); width:100%; }
+  th, td { border:var(--border-hairline) solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+  th { background:var(--panel); font-weight:700; }
+  hr { border:none; border-top:var(--border-hairline) solid var(--line); margin: 22px 0; }
+  .subtitle { font-size: var(--fs-meta); color:var(--muted); font-style: italic; margin: 0 0 6px; }
+  a.abbr { color:var(--ink); text-decoration:none; border-bottom:var(--border-hairline) dotted var(--accent);
            cursor:help; }
   a.abbr:hover { color:var(--accent); border-bottom-style:solid; }
   section.abbr-entry { scroll-margin-top:14px; }
-  section.abbr-entry h2 code.slug { font-size:12.5px; font-weight:400; color:var(--accent);
-           background:#fff8f0; vertical-align:middle; margin-left:8px; }
-  p.abbr-grounds { font-size:13px; color:var(--muted); margin:4px 0 2px; }
-  .tag { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform:uppercase; }
-  .census h3.role-h { color:#c2410c; border-top:2px solid var(--line); padding-top:14px; margin-top:26px; }
-  .census .role-note { font-size:12.5px; color:#8a5320; background:#fff8f0; border-left:3px solid var(--accent);
-                       padding:7px 12px; border-radius:0 6px 6px 0; margin:2px 0 10px; }
+  section.abbr-entry h2 code.slug { font-size:var(--fs-micro); font-weight:400; color:var(--accent);
+           background:var(--accent-tint); vertical-align:middle; margin-left:8px; }
+  p.abbr-grounds { font-size:var(--fs-meta); color:var(--muted); margin:4px 0 2px; }
+  .tag { color: var(--accent); font-weight: 700; font-size: var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; }
+  .census h3.role-h { color:var(--accent); border-top:var(--border-accent-bar) solid var(--line); padding-top:14px; margin-top:26px; }
+  .census .role-note { font-size:var(--fs-micro); color:var(--muted); background:var(--accent-tint); border-left:var(--border-accent-bar) solid var(--accent);
+                       padding:7px 12px; border-radius:0 var(--radius-code) var(--radius-code) 0; margin:2px 0 10px; }
+  /* Census tables read as the card language: no full cell-grid — row hairlines only, header a stronger
+     bottom rule, warm-panel header fill. */
+  table.census-t th, table.census-t td { border:none; border-bottom:var(--border-hairline) solid var(--line); }
+  table.census-t thead th { border-bottom:2px solid var(--rule); background:var(--panel); }
   table.census-t td.c-name a { font-weight:600; text-decoration:none; }
   table.census-t td.c-name a:hover { text-decoration:underline; }
-  table.census-t td.c-sum { font-size:13.5px; color:#444; }
-  table.census-t td.c-enf { white-space:nowrap; color:#333; }
+  table.census-t td.c-sum { font-size:var(--fs-meta); color:var(--muted); }
+  table.census-t td.c-enf { white-space:nowrap; color:var(--ink); }
   table.census-t th, table.census-t td { vertical-align:top; }
-  table.census-t tr:hover { background:#fafcff; }
-  .fam-lede { font-size:13px; color:var(--muted); font-style:italic; margin:2px 0 6px; }
-  .foot { font-size: 12.5px; color: var(--muted); border-top:1px solid var(--line); padding-top:14px; margin-top: 34px; }
-  body { font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-  h1,h2,h3,h4,.walk-h,.section-h { font-family:"Source Serif 4",Georgia,"Times New Roman",serif; }
-  .site-foot { max-width:1320px; margin:40px auto 0; padding:16px 26px 30px; border-top:1px solid #e2e8f0; font-size:12.5px; color:#666; text-align:center; }
-  .site-foot a { color:#0b5cad; text-decoration:underline; } .site-foot a:hover { text-decoration:none; }
+  table.census-t tr:hover { background:var(--panel); }
+  .fam-lede { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 6px; }
+  .foot { font-size: var(--fs-micro); color: var(--muted); border-top:var(--border-hairline) solid var(--line); padding-top:14px; margin-top: 34px; }
+  /* GENERATED by book-models/design_tokens.py from design-tokens.json — do not hand-edit. */
+  :root {
+    --ink: #1c1917;
+    --paper: #fdfcf9;
+    --panel: #f6f4ef;
+    --rule: #e4e0d8;
+    --muted: #57534e;
+    --accent: #9a3f12;
+    --accent-tint: #faf1e6;
+    --link: #9a3f12;
+    --code-bg: #f3efe7;
+    --box-thesis-rule: #15803d;
+    --box-thesis-fill: #eef7ee;
+    --box-def-rule: #1f6fae;
+    --box-def-fill: #eef4fb;
+    --box-inset-rule: #7c6bb0;
+    --box-inset-fill: #f2effb;
+    --diagram-churn: #b23b3b;
+    --diagram-churn-fill: #fbeaea;
+    --diagram-fleet: #2f5169;
+    --diagram-fleet-fill: #e7edf3;
+    --diagram-governed: #1f7a4d;
+    --diagram-governed-fill: #e3f0e7;
+    --diagram-trust: #155c38;
+    --diagram-trust-fill: #eef7f0;
+    --font-display: "Fraunces", "Iowan Old Style", Palatino, Georgia, serif;
+    --font-body: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+    --display-weight: 600;
+    --display-tracking: -0.03em;
+    --fs-micro: 12px;
+    --fs-meta: 14px;
+    --fs-card-body: 16px;
+    --fs-body: 18px;
+    --fs-card-title: 22px;
+    --fs-section: 28px;
+    --fs-thesis-title: 36px;
+    --fs-display: 52px;
+    --lh-body: 1.62;
+    --lh-display: 1.08;
+    --lh-card: 1.5;
+    --space-0: 4px;
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-5: 48px;
+    --space-6: 64px;
+    --radius-card: 10px;
+    --radius-chip: 4px;
+    --radius-code: 6px;
+    --border-hairline: 1px;
+    --border-accent-bar: 3px;
+    --border-box-rule: 4px;
+  }
+  body { font-family:var(--font-body); }
+  h1,h2,h3,h4,.walk-h,.section-h { font-family:var(--font-display); font-weight:var(--display-weight); }
+  .site-foot { max-width:1320px; margin:var(--space-5) auto 0; padding:var(--space-2) 26px var(--space-4); border-top:var(--border-hairline) solid var(--rule); font-size:var(--fs-micro); color:var(--muted); text-align:center; }
+  .site-foot a { color:var(--accent); text-decoration:underline; } .site-foot a:hover { text-decoration:none; }
   .site-foot .gh { white-space:nowrap; }
-  .topnav { position:absolute; top:14px; right:20px; font-size:12px; display:flex; gap:16px; }
-  .topnav a { color:#555; text-decoration:none; white-space:nowrap; } .topnav a:hover { color:#0b5cad; }
-  @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 8px; } }
+  .topnav { position:absolute; top:14px; right:20px; font-size:var(--fs-micro); display:flex; gap:var(--space-2); }
+  .topnav a { color:var(--muted); text-decoration:none; white-space:nowrap; } .topnav a:hover { color:var(--accent); }
+  @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 var(--space-1); } }
 </style>
 </head>
 <body>
