@@ -267,7 +267,7 @@ def _render_inset(raw: str) -> str:
         body = f"#raw({_typst_str(inner)}, block: true)"
     return (f"#block(fill: dt.box-inset-fill, inset: 10pt, "
             f"stroke: (left: dt.border-box-rule + dt.box-inset-rule), radius: 3pt, width: 100%)[\n"
-            f"  #text(fill: dt.box-inset-rule)[#strong[{inline_typst(title)}]]\n\n  {body}\n]")
+            f"  #text(fill: dt.ink)[#strong[{inline_typst(title)}]]\n\n  {body}\n]")
 
 
 def _render_table(block: Block_t) -> str:

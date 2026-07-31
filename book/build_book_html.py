@@ -1156,8 +1156,8 @@ pre.mermaid text.messageText {{ font-size: 18px; }}
    block that only re-declares these variables and the whole sidebar follows. */
 blockquote.concept-inset {{
   --inset-bg: var(--panel);           /* panel fill — warm off-white, distinct from the page's var(--panel) */
-  --inset-accent: var(--box-inset-rule);       /* the strong left accent rule + header label ink (amber, WCAG-AA on bg) */
-  --inset-header: var(--box-inset-rule);       /* header title ink — dark warm brown, ~9:1 on the header band */
+  --inset-accent: var(--box-inset-rule);       /* the lavender left accent rule + ::before square — a BORDER, no contrast rule */
+  --inset-header: var(--ink);       /* header title + strong TEXT ink — near-black, ~13:1 on the lavender band/panel (WCAG-AA). The lavender box-inset-rule stays the accent RULE only; used as text ink it was 4.03:1, under AA. */
   --inset-header-bg: var(--box-inset-fill);    /* header band fill — a shade deeper than the panel so the label reads */
   --inset-body: var(--ink);         /* body ink — near-black warm grey, comfortable roman reading colour */
   --inset-accent-width: 5px;     /* thickness of the left accent rule */
@@ -1203,7 +1203,7 @@ blockquote.concept-inset em {{ font-style: italic; }}  /* inline emphasis still 
    sits flush to the panel edges; the <pre> keeps the page's usual code styling, un-boxed inside the panel
    so the box's own border is the only frame. */
 figure.code-inset {{
-  --inset-bg: var(--panel); --inset-accent: var(--box-inset-rule); --inset-header: var(--box-inset-rule); --inset-header-bg: var(--box-inset-fill);
+  --inset-bg: var(--panel); --inset-accent: var(--box-inset-rule); --inset-header: var(--ink); --inset-header-bg: var(--box-inset-fill);
   --inset-radius: 6px; --inset-pad-x: 1.35rem;
   background: var(--inset-bg); border: 1px solid var(--rule);
   border-left: 5px solid var(--inset-accent); border-radius: var(--inset-radius);
