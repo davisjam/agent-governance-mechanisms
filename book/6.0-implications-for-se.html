@@ -319,32 +319,33 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
 <li><a class="" href="1.2-loops-and-models.html">2&nbsp; Loops and Models</a></li>
+<li><a class="" href="1.3-the-engineers-seat.html">3&nbsp; The Engineer&#x27;s Seat</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
-<li><a class="" href="2.1-the-agent-stack.html">3&nbsp; The Agent Stack</a></li>
-<li><a class="" href="2.2-models-and-the-semantic-gap.html">4&nbsp; Models and the Semantic Gap</a></li>
-<li><a class="" href="2.3-the-governed-environment.html">5&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
-<li><a class="" href="2.4-lifecycles-and-runbooks.html">6&nbsp; Lifecycles and Runbooks</a></li>
-<li><a class="" href="2.5-metrics.html">7&nbsp; Metrics</a></li>
-<li><a class="" href="2.6-when-guardrails-collide.html">8&nbsp; When Guardrails Collide</a></li>
+<li><a class="" href="2.1-the-agent-stack.html">4&nbsp; The Agent Stack</a></li>
+<li><a class="" href="2.2-models-and-the-semantic-gap.html">5&nbsp; Models and the Semantic Gap</a></li>
+<li><a class="" href="2.3-the-governed-environment.html">6&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
+<li><a class="" href="2.4-lifecycles-and-runbooks.html">7&nbsp; Lifecycles and Runbooks</a></li>
+<li><a class="" href="2.5-metrics.html">8&nbsp; Metrics</a></li>
+<li><a class="" href="2.6-when-guardrails-collide.html">9&nbsp; When Guardrails Collide</a></li>
 <li class="part">Part 3 — The Model Zoo</li>
-<li><a class="" href="3.1-the-executable-zoo.html">9&nbsp; The Executable Zoo</a></li>
-<li><a class="" href="3.2-the-logical-view.html">10&nbsp; The Logical View</a></li>
-<li><a class="" href="3.3-the-process-view.html">11&nbsp; The Process View</a></li>
-<li><a class="" href="3.4-the-development-view.html">12&nbsp; The Development View</a></li>
-<li><a class="" href="3.5-the-physical-view.html">13&nbsp; The Physical View</a></li>
-<li><a class="" href="3.6-the-scenarios-view.html">14&nbsp; The Scenarios View</a></li>
+<li><a class="" href="3.1-the-executable-zoo.html">10&nbsp; The Executable Zoo</a></li>
+<li><a class="" href="3.2-the-logical-view.html">11&nbsp; The Logical View</a></li>
+<li><a class="" href="3.3-the-process-view.html">12&nbsp; The Process View</a></li>
+<li><a class="" href="3.4-the-development-view.html">13&nbsp; The Development View</a></li>
+<li><a class="" href="3.5-the-physical-view.html">14&nbsp; The Physical View</a></li>
+<li><a class="" href="3.6-the-scenarios-view.html">15&nbsp; The Scenarios View</a></li>
 <li class="part">Part 4 — Putting It to Work</li>
-<li><a class="" href="4.1-brownfield.html">15&nbsp; Brownfield</a></li>
-<li><a class="" href="4.2-the-skills.html">16&nbsp; The Skills</a></li>
-<li><a class="" href="4.3-transformations.html">17&nbsp; Everything Is a Transformation</a></li>
-<li><a class="" href="4.4-training-data.html">18&nbsp; Training Data and the Novelty Axis</a></li>
-<li><a class="" href="4.5-lessons-learned.html">19&nbsp; Lessons Learned</a></li>
-<li><a class="" href="4.6-generative-validation.html">20&nbsp; Generative Validation</a></li>
+<li><a class="" href="4.1-brownfield.html">16&nbsp; Brownfield</a></li>
+<li><a class="" href="4.2-the-skills.html">17&nbsp; The Skills</a></li>
+<li><a class="" href="4.3-transformations.html">18&nbsp; Everything Is a Transformation</a></li>
+<li><a class="" href="4.4-training-data.html">19&nbsp; Training Data and the Novelty Axis</a></li>
+<li><a class="" href="4.5-lessons-learned.html">20&nbsp; Lessons Learned</a></li>
+<li><a class="" href="4.6-generative-validation.html">21&nbsp; Generative Validation</a></li>
 <li class="part">Part 5 — The Context</li>
-<li><a class="" href="5.1-the-ada-context.html">21&nbsp; The ADA Context</a></li>
-<li><a class="" href="5.2-the-timeline-and-the-work.html">22&nbsp; The Timeline and the Work</a></li>
-<li><a class="" href="5.3-the-built-system.html">23&nbsp; The Built System</a></li>
-<li><a class="" href="5.4-the-road-to-mage.html">24&nbsp; The Road to MAGE</a></li>
+<li><a class="" href="5.1-the-ada-context.html">22&nbsp; The ADA Context</a></li>
+<li><a class="" href="5.2-the-timeline-and-the-work.html">23&nbsp; The Timeline and the Work</a></li>
+<li><a class="" href="5.3-the-built-system.html">24&nbsp; The Built System</a></li>
+<li><a class="" href="5.4-the-road-to-mage.html">25&nbsp; The Road to MAGE</a></li>
 <li class="part">Back Matter</li>
 <li><a class="current" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
@@ -453,8 +454,8 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>I have a concrete one. My cleanup routine had to distinguish a finished agent's abandoned worktree from a running agent's — and my rule for it lived in the instructions I wrote for each cleanup pass: "check that the agent isn't still in flight before you delete its workspace." It read as sound, and it failed three times in five days, each time destroying a live agent's work. The trap was timing: a freshly dispatched agent looks, for its first minutes, exactly like a finished one — a single bookkeeping commit and nothing else — so any check that reads the commit history at one instant misclassifies it. Rewording the instruction did not help; I reworded it three times. What ended the recurrence was moving the check out of the prose and into the tool: the dispatcher now writes a marker file when an agent boots and the tool deletes it only after the agent is truly done, and the cleanup <em>refuses</em> to touch any workspace whose marker is still present. The convention was correct and unenforceable; the marker is a fact the tool reads the same way every time, and it cannot be reworded away.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-a-agent-registry.html">agent registry</a>.</p></blockquote>
 <p>So the governance has to move down to where a machine can enforce it: into types the compiler checks, schemas a validator reads, lints and analyses that gate a commit before a human ever sees it. None of this rejects the soft mechanisms, of course. The briefs, the templates, the prose conventions still aim the agents; they do real work. But they must be <em>mated</em> to deterministic mechanisms that hold the line whether or not the agent cooperates. The soft layer guides; the hard layer holds. At velocity you need both, and the failure mode of relying on the soft one alone is quiet: the convention looks obeyed right up until the day the volume finds the gap.</p>
-<p>There is a counterintuitive corollary here that took me a while to trust: the stronger the guardrails, the faster the fleet can safely run. An agent that hits a deterministic guardrail gets an immediate, legible signal it can act on, and recovers from its own mistake without a human in the loop. The guardrail that would have felt like friction to a human team is, to an agent fleet, the thing that lets the throughput continue at all. <a class="xref" href="6.0-implications-for-se.html#fig-36">Figure&nbsp;36</a> draws the spectrum this section has argued, with the mechanism classes seated along it.</p>
-<figure id="fig-36" class="book-figure" data-label="soft-hard-spectrum"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" role="group" aria-labelledby="frbTitle frbDesc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+<p>There is a counterintuitive corollary here that took me a while to trust: the stronger the guardrails, the faster the fleet can safely run. An agent that hits a deterministic guardrail gets an immediate, legible signal it can act on, and recovers from its own mistake without a human in the loop. The guardrail that would have felt like friction to a human team is, to an agent fleet, the thing that lets the throughput continue at all. <a class="xref" href="6.0-implications-for-se.html#fig-6.0-1">Figure&nbsp;6.0-1</a> draws the spectrum this section has argued, with the mechanism classes seated along it.</p>
+<figure id="fig-6.0-1" class="book-figure" data-label="soft-hard-spectrum"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" role="group" aria-labelledby="frbTitle frbDesc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="frbTitle">Governance runs soft to hard: a compact spectrum of mechanism classes.</title>
   <desc id="frbDesc">A horizontal spectrum runs from soft governance on the left to hard governance on the right. Soft, probabilistic mechanisms that aim an agent sit on the left: conventions, briefs, templates, prose conventions, and a reviewing agent. Judgment-laden doc-derived tests sit in the middle. Deterministic mechanisms that hold the line sit on the right: lints, types, schemas, and quality, drift, or deploy gates, together with a marker file the tool reads. Soft aims the agent; hard holds the line; a mature environment uses both.</desc>
   <defs>
@@ -486,7 +487,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="850" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">· marker file the tool reads</text>
   <text x="500" y="288" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
   <text x="500" y="314" text-anchor="middle" font-size="13" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
-</svg><figcaption data-short="Governance runs on a spectrum from soft to hard"><span class="fig-label">Figure 36.</span> Governance runs on a spectrum from soft to hard. Probabilistic mechanisms that aim an agent sit on the left; deterministic mechanisms that hold the line sit on the right. A mature environment uses both, and the skill is knowing which a given failure warrants.</figcaption></figure>
+</svg><figcaption data-short="Governance runs on a spectrum from soft to hard"><span class="fig-label">Figure 6.0-1.</span> Governance runs on a spectrum from soft to hard. Probabilistic mechanisms that aim an agent sit on the left; deterministic mechanisms that hold the line sit on the right. A mature environment uses both, and the skill is knowing which a given failure warrants.</figcaption></figure>
 <h2>Models and agents are the closest thing to a silver bullet</h2>
 <p>Fred Brooks warned the field off silver bullets forty years ago. No single development — no language, no tool, no method — would give an order-of-magnitude gain in productivity, reliability, and simplicity at once, because the hard part of software is <em>essential</em>: the complexity of the problem itself, not the <em>accidental</em> complexity our notations and tools pile on top. You can shave the accidental part. The essential part does not yield to a trick, and anything sold as making it yield is snake oil.</p>
 <p>I want to make a claim in that vocabulary, carefully. Working at the model level, with an agent doing the work, comes closer to a silver bullet than anything I expected to see. You get three things together that a team normally has to trade against one another. <strong>Fewer tokens</strong> — the agent reasons over a compact model instead of dragging a subsystem's worth of source through its window. <strong>More velocity</strong> — with the right picture in one window, the change lands faster and needs fewer round-trips. <strong>Higher quality</strong> — the same model carries invariants the agent checks its work against, so the change that lands is one a gate already vetted. Token reduction, speed, and quality do not come at each other's expense here. They arrive together, and roughly for free.</p>
@@ -515,4 +516,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>There is a sharper limit worth naming, and this book is my own evidence for it. I wrote it following the method it describes: the book has typed models of its own structure, and a drift gate holds those models to the prose, the same discipline I turned on the code. An LLM assisted with the first draft. But the final version will be entirely mine — every sentence rewritten in my own voice — and that rewrite is not a formality: it marks where the method stops.</p>
 <p>Writing for other people is human-to-human communication, and voice is part of the message. An LLM cannot imitate my voice, and it does not seem right to ask you to read my ideas at one remove, mediated by a machine that is not me. So the method governs the <em>models, the structure, the drafting</em> of a book. It does not supply the voice. That part stays human.</p>
 <p>Code is different, and the difference is the crux. Code is human-to-computer communication, and its properties are analytical all the way down — correctness, performance, security. There is no voice to preserve. That is precisely why governed autonomy transfers cleanly to code, and to other analytical, verifiable artifacts, while it stops short of the voice-bearing work of writing for other people. The method reaches exactly as far as the analytical, and no farther.</p>
-<p>If you try this on a codebase of your own, I want to hear how it goes — where it held, where it broke, where your setting behaved differently from mine. A single-author study is a starting point, not a proof, and the only way the shape gets sharper is more people running the experiment and reporting back. Come tell me what you found.</p><div class="pager"><a class="prev" href="5.4-the-road-to-mage.html"><span class="dir">‹ Previous</span><span class="ttl">24 · The Road to MAGE</span></a><a class="home" href="index.html">Contents</a><a class="next" href="6.1-conclusion.html"><span class="dir">Next ›</span><span class="ttl">Conclusion</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-the-ada-context.html">⇐ Previous part</a><a href="appendix-patterns.html">Next part ⇒</a><a href="6.1-conclusion.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>If you try this on a codebase of your own, I want to hear how it goes — where it held, where it broke, where your setting behaved differently from mine. A single-author study is a starting point, not a proof, and the only way the shape gets sharper is more people running the experiment and reporting back. Come tell me what you found.</p><div class="pager"><a class="prev" href="5.4-the-road-to-mage.html"><span class="dir">‹ Previous</span><span class="ttl">25 · The Road to MAGE</span></a><a class="home" href="index.html">Contents</a><a class="next" href="6.1-conclusion.html"><span class="dir">Next ›</span><span class="ttl">Conclusion</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-the-ada-context.html">⇐ Previous part</a><a href="appendix-patterns.html">Next part ⇒</a><a href="6.1-conclusion.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

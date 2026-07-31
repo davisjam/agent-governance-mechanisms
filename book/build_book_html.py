@@ -2879,54 +2879,65 @@ def _caption_el(tag: str, caption_md: str, extra_class: str = "") -> str:
     return f'<{tag}{cls} data-short="{html.escape(short, quote=True)}">{inline(display)}</{tag}>'
 
 
-def _number_floats(body: str, fig_n: int, tbl_n: int,
+def _chapter_id(c: "dict") -> str:
+    """The chapter's `<part>.<chapter>` identifier (e.g. "1.3") — the reader-facing locator floats number
+    against. Chapter-relative float numbers reset per chapter and carry this prefix, so a figure reads
+    "Figure 1.3-1"; the id it derives (`fig-1.3-1`) is unique within the chapter's page and, because the
+    (part, chapter) pair is unique per chapter, across a single-document build too."""
+    return f'{c["part"]}.{c["chapter"]}'
+
+
+def _number_floats(body: str, chapter_id: str, fig_n: int, tbl_n: int,
                    collect: "list[dict] | None" = None, slug: str | None = None,
                    label_sink: "dict[str, dict] | None" = None) -> tuple[str, int, int]:
-    """Prepend a monotonic, ctrl-f-able "Figure N."/"Table N." label to every figure/table caption in
-    document order, give each an `id` (`fig-N`/`tbl-N`) the list of floats links to, and — when `collect`
-    is given — record each captioned float's {kind, num, short, slug} for that list. When `label_sink` is
-    given, record each `data-label`-carrying float's key→{kind, num, slug} so `[ref:key]` cross-references
-    resolve to "Figure N"/"Table N". Numbers are DERIVED from reading-order position, never hand-authored.
-    Returns (numbered_body, next_fig_n, next_tbl_n)."""
+    """Prepend a CHAPTER-RELATIVE, ctrl-f-able "Figure <chapter>-N."/"Table <chapter>-N." label to every
+    figure/table caption in document order, give each an `id` (`fig-<chapter>-N`/`tbl-<chapter>-N`) the list
+    of floats links to, and — when `collect` is given — record each captioned float's {kind, num, short,
+    slug} for that list. When `label_sink` is given, record each `data-label`-carrying float's
+    key→{kind, num, slug} so `[ref:key]` cross-references resolve to "Figure <chapter>-N"/"Table
+    <chapter>-N". `num` is the full chapter-relative locator STRING (e.g. "1.3-1"); `chapter_id` is the
+    owning chapter's `<part>.<chapter>` identifier and `fig_n`/`tbl_n` RESET to 1 per chapter (the caller
+    threads them within one chapter only). Numbers are DERIVED from reading-order position within the
+    chapter, never hand-authored. Returns (numbered_body, next_fig_n, next_tbl_n)."""
 
-    def _harvest(frag: str, kind: str, n: int) -> None:
+    def _harvest(frag: str, kind: str, num: str) -> None:
         if collect is not None:
             ds = _DATA_SHORT_RE.search(frag)
             if ds and ds.group(1):
-                collect.append({"kind": kind, "num": n, "short": ds.group(1), "slug": slug})
+                collect.append({"kind": kind, "num": num, "short": ds.group(1), "slug": slug})
         if label_sink is not None:
             dl = _DATA_LABEL_RE.search(frag)
             if dl and dl.group(1):
-                label_sink[dl.group(1)] = {"kind": kind, "num": n, "slug": slug}
+                label_sink[dl.group(1)] = {"kind": kind, "num": num, "slug": slug}
 
     def _repl(m: "re.Match[str]") -> str:
         nonlocal fig_n, tbl_n
         if m.group("fig"):
-            frag, n = m.group("fig"), fig_n
+            frag, num = m.group("fig"), f"{chapter_id}-{fig_n}"
             fig_n += 1
-            frag = frag.replace("<figure ", f'<figure id="fig-{n}" ', 1)
-            label = f'<span class="fig-label">Figure {n}.</span> '
+            frag = frag.replace("<figure ", f'<figure id="fig-{num}" ', 1)
+            label = f'<span class="fig-label">Figure {num}.</span> '
             if "<figcaption" in frag:
                 frag = re.sub(r"(<figcaption\b[^>]*>)", lambda mm: mm.group(1) + label, frag, count=1)
             else:
                 frag = frag.replace(
                     "</figure>",
-                    f'<figcaption class="fig-label-only"><span class="fig-label">Figure {n}.</span>'
+                    f'<figcaption class="fig-label-only"><span class="fig-label">Figure {num}.</span>'
                     "</figcaption></figure>", 1)
-            _harvest(frag, "fig", n)
+            _harvest(frag, "fig", num)
             return frag
-        frag, n = m.group("tbl"), tbl_n
+        frag, num = m.group("tbl"), f"{chapter_id}-{tbl_n}"
         tbl_n += 1
-        frag = frag.replace("<table", f'<table id="tbl-{n}"', 1)
-        label = f'<span class="tbl-label">Table {n}.</span> '
+        frag = frag.replace("<table", f'<table id="tbl-{num}"', 1)
+        label = f'<span class="tbl-label">Table {num}.</span> '
         if "<caption" in frag:
             frag = re.sub(r"(<caption\b[^>]*>)", lambda mm: mm.group(1) + label, frag, count=1)
         else:
             frag = re.sub(
                 r"(<table\b[^>]*>)",
                 lambda mm: mm.group(1) + f'<caption class="tbl-label-only"><span class="tbl-label">'
-                f"Table {n}.</span></caption>", frag, count=1)
-        _harvest(frag, "tbl", n)
+                f"Table {num}.</span></caption>", frag, count=1)
+        _harvest(frag, "tbl", num)
         return frag
 
     return _FLOAT_RE.sub(_repl, body), fig_n, tbl_n
@@ -2955,14 +2966,15 @@ def _resolve_xrefs(body: str, ref_map: "dict[str, dict]", for_print: bool) -> st
 def _collect_floats(chapters: list[dict], page_anchor_maps: dict) -> "tuple[list[dict], dict[str, dict]]":
     """Render every chapter once (mermaid SVG is cached) and number its floats in reading order, returning
     (ordered captioned floats for the list of figures/tables, label→{kind,num,slug} map for [ref:] xrefs).
-    The inline numbering in the print / per-chapter builds threads the SAME counters over the SAME reading
-    order, so a float's list number equals its printed 'Figure N.' / 'Table N.' and its `[ref:]` number."""
+    The per-chapter numbering in the per-chapter page build RESETS the SAME counters at each chapter over the
+    SAME reading order, so a float's list number equals its printed 'Figure <chapter>-N.' / 'Table
+    <chapter>-N.' and its `[ref:]` number."""
     entries: list[dict] = []
     labels: dict[str, dict] = {}
-    fig_n = tbl_n = 1
     for c in chapters:
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
-        _, fig_n, tbl_n = _number_floats(body, fig_n, tbl_n, collect=entries, slug=c["slug"], label_sink=labels)
+        # Chapter-relative: counters reset to 1 at EACH chapter; the label carries the chapter id.
+        _number_floats(body, _chapter_id(c), 1, 1, collect=entries, slug=c["slug"], label_sink=labels)
     return entries, labels
 
 
@@ -3395,8 +3407,8 @@ def build() -> int:
 
     chapters, ref_map = _insert_list_of_floats(chapters, page_anchor_maps, for_print=False)
 
-    # Per-chapter pages.
-    fig_n = tbl_n = 1   # same reading-order counters as the print build, so a float keeps its number
+    # Per-chapter pages. Float numbers are CHAPTER-RELATIVE ("Figure 1.3-1"): the counters reset to 1 at
+    # each chapter, keyed to the chapter's <part>.<chapter> id, matching the label map _collect_floats built.
     for i, c in enumerate(chapters):
         prev_c = chapters[i - 1] if i > 0 else None
         next_c = chapters[i + 1] if i < len(chapters) - 1 else None
@@ -3414,7 +3426,7 @@ def build() -> int:
             + '</header>'
         )
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
-        body, fig_n, tbl_n = _number_floats(body, fig_n, tbl_n)
+        body, _fig_n, _tbl_n = _number_floats(body, _chapter_id(c), 1, 1)
         body = _resolve_xrefs(body, ref_map, for_print=False)
         if prev_c:
             prev_html = (

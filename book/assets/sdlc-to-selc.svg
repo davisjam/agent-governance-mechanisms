@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (house figure). Palette: book-models/design-tokens.json (umber-monograph) via
+     design_tokens.svg_palette(); every fill/stroke hex is a token member. Body-font token stack only.
+     Do not add off-palette hexes — book-models/lint_design_token_drift.py gates membership. -->
+<svg viewBox="0 0 940 392" xmlns="http://www.w3.org/2000/svg" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="img" aria-labelledby="s2s-title s2s-desc">
+  <title id="s2s-title">SDLC to SELC: one seat reassigned</title>
+  <desc id="s2s-desc">Two lanes of the same six lifecycle activities — requirements, specification, design, implementation, validation, maintenance. Top lane, the conventional SDLC, has every seat held by one engineering role, with implementation marked as the seat that consumes the calendar. Bottom lane, the SELC, reassigns the implementation seat to the agent fleet, drawn in the accent colour; the engineer flanks the fleet, authoring intent on the left and judging and governing the output on the right, and a governance band beneath holds every seat's output. A dashed arc returns from the last activity to the first, the cycle in "life cycle."</desc>
+  <defs>
+    <marker id="arr-ink" viewBox="0 0 8 8" markerWidth="8" markerHeight="8" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#57534e"/>
+    </marker>
+    <marker id="arr-accent" viewBox="0 0 9 9" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#9a3f12"/>
+    </marker>
+    <marker id="arr-cycle" viewBox="0 0 7 7" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#57534e"/>
+    </marker>
+  </defs>
+
+  <!-- ======== LANE 1: SDLC ======== -->
+  <text x="26" y="22" font-size="13" font-weight="700" fill="#57534e" letter-spacing="1.5">SDLC — CONVENTIONAL</text>
+  <path d="M 850 46 C 850 30, 90 30, 90 44" fill="none" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#arr-cycle)"/>
+
+  <g font-size="12.5" text-anchor="middle" fill="#1c1917" word-spacing="1.2">
+    <rect x="26"  y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="90"  y="74">Requirements</text>
+    <rect x="178" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="242" y="74">Specification</text>
+    <rect x="330" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="394" y="74">Design</text>
+    <rect x="482" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#1c1917" stroke-width="1.6"/>
+    <text x="546" y="68" font-weight="600">Implementation</text>
+    <text x="546" y="84" font-size="11" fill="#57534e">eats the calendar</text>
+    <rect x="634" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="698" y="74">Validation</text>
+    <rect x="786" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="850" y="74">Maintenance</text>
+  </g>
+  <g stroke="#57534e" stroke-width="1.4">
+    <line x1="154" y1="70" x2="172" y2="70" marker-end="url(#arr-ink)"/>
+    <line x1="306" y1="70" x2="324" y2="70" marker-end="url(#arr-ink)"/>
+    <line x1="458" y1="70" x2="476" y2="70" marker-end="url(#arr-ink)"/>
+    <line x1="610" y1="70" x2="628" y2="70" marker-end="url(#arr-ink)"/>
+    <line x1="762" y1="70" x2="780" y2="70" marker-end="url(#arr-ink)"/>
+  </g>
+  <path d="M 26 102 L 26 108 L 914 108 L 914 102" fill="none" stroke="#57534e" stroke-width="1.2"/>
+  <text x="470" y="126" font-size="12.5" text-anchor="middle" fill="#1c1917" font-weight="600">the engineering role — every seat, and above all the developer's</text>
+
+  <!-- ======== REASSIGNMENT ARROW ======== -->
+  <line x1="546" y1="136" x2="546" y2="186" stroke="#9a3f12" stroke-width="2.2" marker-end="url(#arr-accent)"/>
+  <text x="560" y="158" font-size="12.5" fill="#9a3f12" font-weight="700">one seat reassigned:</text>
+  <text x="560" y="174" font-size="12.5" fill="#9a3f12">the D is delegated to the fleet</text>
+
+  <!-- ======== LANE 2: SELC ======== -->
+  <text x="26" y="182" font-size="13" font-weight="700" fill="#57534e" letter-spacing="1.5">SELC — MAGE</text>
+  <path d="M 850 202 C 850 188, 90 188, 90 200" fill="none" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#arr-cycle)"/>
+
+  <g font-size="12.5" text-anchor="middle" fill="#1c1917" word-spacing="1.2">
+    <rect x="26"  y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="90"  y="232">Requirements</text>
+    <rect x="178" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="242" y="226">Specification</text>
+    <text x="242" y="242" font-size="11" fill="#57534e">authored as models</text>
+    <rect x="330" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="394" y="226">Design</text>
+    <text x="394" y="242" font-size="11" fill="#57534e">authored as models</text>
+    <rect x="482" y="206" width="128" height="44" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.6"/>
+    <text x="546" y="226" font-weight="600" fill="#2f5169">Implementation</text>
+    <text x="546" y="242" font-size="11" fill="#2f5169">the agents</text>
+    <rect x="634" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="698" y="226">Validation</text>
+    <text x="698" y="242" font-size="11" fill="#57534e">gates, not reading</text>
+    <rect x="786" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="850" y="226">Maintenance</text>
+    <text x="850" y="242" font-size="11" fill="#57534e">run as governance</text>
+  </g>
+  <g stroke="#57534e" stroke-width="1.4">
+    <line x1="154" y1="228" x2="172" y2="228" marker-end="url(#arr-ink)"/>
+    <line x1="306" y1="228" x2="324" y2="228" marker-end="url(#arr-ink)"/>
+    <line x1="458" y1="228" x2="476" y2="228" marker-end="url(#arr-ink)"/>
+    <line x1="610" y1="228" x2="628" y2="228" marker-end="url(#arr-ink)"/>
+    <line x1="762" y1="228" x2="780" y2="228" marker-end="url(#arr-ink)"/>
+  </g>
+
+  <path d="M 26 260 L 26 266 L 458 266 L 458 260" fill="none" stroke="#9a3f12" stroke-width="1.2"/>
+  <text x="242" y="284" font-size="12.5" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — authors the intent</text>
+  <path d="M 482 260 L 482 266 L 610 266 L 610 260" fill="none" stroke="#2f5169" stroke-width="1.2"/>
+  <text x="546" y="284" font-size="12.5" text-anchor="middle" fill="#2f5169" font-weight="600">the fleet — develops</text>
+  <path d="M 634 260 L 634 266 L 914 266 L 914 260" fill="none" stroke="#9a3f12" stroke-width="1.2"/>
+  <text x="774" y="284" font-size="12.5" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — judges and governs</text>
+
+  <rect x="26" y="304" width="888" height="34" rx="6" fill="#e3f0e7" stroke="#1f7a4d"/>
+  <text x="470" y="326" font-size="12.5" text-anchor="middle" fill="#155c38" font-weight="600">governance — the environment holds every seat's output to the standard the engineer set (Part Two)</text>
+
+  <text x="470" y="368" font-size="11.5" text-anchor="middle" fill="#57534e" font-style="italic">the keystrokes are delegated; the accountability is not</text>
+</svg>

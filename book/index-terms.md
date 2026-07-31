@@ -142,6 +142,9 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: printer-metaphor | The printer metaphor
 - concept: picture-vs-model | Picture vs. model
 - concept: whose-fault | Whose fault is a bad build
+- concept: selc | SELC — the software engineering life cycle
+- concept: lifecycle-phases | The lifecycle phases
+- concept: engineers-seat | The engineer's seat
 - concept: loop-engineering | Loop engineering
 - concept: success-metric | The success metric
 - concept: probabilistic-reasoning-machine | Probabilistic reasoning machine
