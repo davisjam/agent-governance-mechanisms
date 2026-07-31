@@ -453,3 +453,124 @@ What remains open is specific to the outcomes view and to the still-unbuilt view
 5. **Promotion to blocking (both views).** When the seed findings are drained (the outline's 2 O2 findings;
    the outcomes view's section-coverage backlog, once the author decides the coverage bar), flip both
    audit-only checks to blocking — the same drain-then-gate path `concepts.json` took.
+
+---
+
+## 8. The drift layer — the reverse index + the three kinds of drift
+
+The views point *forward* at md symbols. That is enough to build them, but not enough to answer the
+question the author asks while rearranging: **"if I edit section X, which view elements break?"** Held as
+forward references alone, that question is an O(views·elements) re-scan every time. So the drift layer adds
+one derived projection and splits drift into the kinds the book's own thesis names.
+
+### 8.1 The reverse index — a derived projection, never hand-authored
+
+`book-models/reverse_index.py` inverts every built view's forward references into
+**`{md symbol → [view elements that depend on it]}`**, materialized to a provenance-headed, tracked
+`reverse_index.json` with a `regenerate` / `verify` CLI mirroring `outline_model.py`.
+
+- **An md symbol** is a section id / heading anchor, a concept slug (`index-def`), a float label, a ref
+  key, a chapter slug, or a synthetic unit (`part-<N>` / `book`). Each symbol kind names a *different*
+  source construct an edit can touch, so the index keeps them typed, not one flat string set.
+- **The forward edges inverted, per built view:** the **outline** contributes one edge per section — a
+  section *rides* its own section id (`section-anchor` role); the **outcomes** view contributes an edge
+  per outcome's `primary_unit` (`primary-unit`) and per `secondary_units` entry (`secondary-unit`). Each
+  reverse edge records *which view*, *which element*, and *what role* — so a `deps` answer explains the
+  nature of each break, not just a count.
+- **It cannot itself drift.** It stores no hand-authored truth; `build_index()` re-inverts the views from
+  the current source every run. A stale `reverse_index.json` is caught by the freshness check below, the
+  same way `outline.json` is.
+
+**The query.** `python3 book-models/reverse_index.py deps <symbol>` prints every view element that depends
+on the symbol, with its role, and whether the symbol still resolves in the source (a non-resolving symbol
+is itself a dangling signal). This is the "edit section X → what breaks?" answer as one dict lookup.
+
+### 8.2 Three kinds of drift, split by mechanizability
+
+The book's two-kind split (structural → lint, semantic → review) resolves, for this view layer, into
+**three** concrete checks — two mechanical (a pre-commit lint) and one not (a review-gate agent audit):
+
+1. **Structural drift (deterministic → lint).** Every view→md reference re-resolves against the *current*
+   source: a section id / chapter / part / concept / label a view points at must still exist. A dangling
+   reference reddens. **The reverse index is what makes this a single walk** over the inverted edges,
+   rather than a per-view re-scan. Walked by `reverse_index.structural_findings`.
+2. **Freshness drift (deterministic → lint).** Re-derive each view artifact — `outline.json`,
+   `outcomes.json`, `reverse_index.json` — from source and diff against the committed file. A stale
+   artifact (source edited, artifact not regenerated) is a finding. This is the auto-generated-file
+   provenance discipline, applied to every view sidecar.
+3. **Semantic drift (NON-mechanical → review-gate agent audit, NOT a lint).** Does a paragraph's prose
+   still *deliver the point it claims*? No deterministic check answers this — it is "a question you keep
+   asking" (book part 5, §"the substrate that keeps the models honest"). So it is an **agent audit at a
+   review gate**, not a pre-commit lint. It is named here for completeness and to fix the boundary: the
+   pre-commit lint owns #1 and #2; #3 belongs to the drain-phase review gate (§9).
+
+### 8.3 The pre-commit home
+
+A fast entry point — `python3 catalog.py views-audit` — runs the two mechanical kinds (structural +
+freshness) over all three view artifacts, plus the views' own invariant walks (outline O2–O4, outcomes
+U1–U7), and is wired into `hooks/pre-commit`. It is **sub-second** on this ~50K-word book (the `book_ir`
+parse is the only real cost, ~0.2s including interpreter start), so it fits the commit path with no felt
+latency.
+
+It lands **audit-only-first** (the repo's blocking-lint landing discipline): it *prints* findings and
+exits 0, so it never reddens an in-flight commit. `catalog.py views-audit --strict` exits 1 on any
+finding — the one-line flip a follow-up wires into the hook once the seed findings are drained (the same
+drain-then-gate path §7.5 and `concepts.json` took). The reverse-index drift also registers as an
+audit-only `Check` in `catalog_tests.py` (`check_reverse_index`), so the test suite covers it alongside
+the outline and outcomes checks.
+
+### 8.4 What the drain phase inherits — the guardrail
+
+When the drain deepens the outline to paragraph granularity (§9), the reverse index + the structural +
+freshness audit are already in place as its guardrail: **the moment the drain authors a paragraph-point
+reference, that reference is a symbol the reverse index inverts and the structural audit re-resolves.** A
+drain edit that renames a section, retires a paragraph, or moves a point cannot silently strand a view
+element — the audit reddens (audit-only until promoted). The guardrail is built *before* the churn it
+guards, not after.
+
+---
+
+## 9. Drain-spec refinement — canonical outline points (a spec note for the future drain, not built here)
+
+The author refined how the drain will deepen the OUTLINE view. Recorded here as a spec note for the
+drain phase; **no implementation now.**
+
+> **Canonical outline points — induced, not lifted.** At paragraph granularity the outline stores each
+> paragraph's *canonical point* — "if a machine wrote this, what's the sentence" — the normalized
+> statement of the idea, NOT the prose sentence as rendered (which carries segues and rhetorical framing).
+> This reframes the outline from an index-of-the-prose into a **content/idea model the prose renders.**
+> Consequences: (a) the point is an *induction* (a faithful normalization of what the paragraph actually
+> says — honest, not invented; a paragraph with no clear point is a GAP); (b) it doubles as a
+> **redundancy detector** — two paragraphs that induce the same canonical point are a duplication;
+> (c) **concepts join at paragraph granularity** (each paragraph carries the ideas it deploys); (d) drift
+> is the two-kind split — structural (the paragraph/anchor still resolves) is a lint, semantic (does the
+> prose still make this point) is a review-gate, so paragraph-points are authored/declared references.
+> These authored paragraph-points are exactly the kind of reference the reverse index + drift audit must
+> cover once the drain lands.
+
+### 9.1 The `<!-- point: … -->` decorator (a drain-phase notation addition, flagged — not added now)
+
+What makes the semantic check (§8.2 #3) tractable at the drain: each paragraph/section gets an inline
+**`<!-- point: <canonical statement> -->` decorator** — the canonical point authored *right above* the
+prose it summarizes. Two payoffs:
+
+- **The outline becomes model-from-decorator.** Today the outline derives the topic sentence structurally
+  (the first sentence of the following paragraph). With the decorator, the model derives the point *from
+  the decorator*, and the prose is checked *against* it — the model's source of truth moves from
+  incidental prose shape to an authored statement.
+- **The semantic audit goes local.** Because the claim sits beside its prose, the review-gate agent audit
+  compares claim↔prose *locally* — a bounded, per-paragraph judgment — rather than holding the whole
+  chapter to spot a sense-mismatch. It also makes redundancy *exact* (two decorators, same point =
+  duplication) and lets concepts join at paragraph granularity.
+
+**Notation.** A `<!-- point: … -->` directive is HTML-comment style, degradation-friendly (invisible in a
+plain MD viewer), and consistent with the existing markers — but it needs one `MARKER_KEYWORDS` row so the
+renderer strips it from the HTML rather than leaking it as escaped visible text. That row is a
+**drain-phase addition and a reconciliation item with the renderer owner** (§3.3 / §6), authored
+deliberately, **not** a change made here.
+
+**The reverse index must cover it.** Once the drain lands, each `<!-- point: … -->` is an *authored*
+reference (an induced claim about a paragraph, not a structural fact) — exactly the drift-prone kind. The
+reverse index inverts it and the structural + freshness audit re-resolves it, on the same footing as a
+section id or an outcome unit today. So §8's guardrail already has the shape the drain needs; the drain
+adds the symbol kind, not a new drift mechanism.
