@@ -1313,7 +1313,7 @@
           "section_id": "what-this-book-adds-to-4-1-the-drift-gate",
           "level": 3,
           "heading_text": "What this book adds to 4+1: the drift gate",
-          "topic_sentence": "Kruchten described the views.",
+          "topic_sentence": "Kruchten, of course, described the views; he did not have a drift gate.",
           "id_source": "derived",
           "block_index": 37,
           "points": [
@@ -1473,7 +1473,7 @@
           "section_id": "reading-the-fix-off-real-drift",
           "level": 3,
           "heading_text": "Reading the fix off real drift",
-          "topic_sentence": "The right sensor was not guessed.",
+          "topic_sentence": "The right sensor was read off real drift rather than guessed.",
           "id_source": "derived",
           "block_index": 107,
           "points": [
