@@ -423,6 +423,9 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: phased-design | local
 - term: mvc | local
 - term: two-producers | local
+- term: human-as-quality-gate | section
+- term: specialist-crew | section
+- term: reflective-codebase | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
