@@ -392,6 +392,8 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: reflection-hook | local
 - term: orthogonal-models | local
 - term: team-dimension | local
+- term: closed-vocabulary | local
+- term: wrong-shape | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
