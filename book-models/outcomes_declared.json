@@ -303,8 +303,8 @@
       "verb": "author",
       "obj": "a lifecycle and a runbook that splits the deterministic from the judgment",
       "statement": "After this chapter, the reader can author a lifecycle and its runbook, giving the deterministic parts a tight algorithm and the judgment parts the roughest one that still fits.",
-      "provenance": "declared",
-      "anchor": "Section titles 'lifecycles-first-then-the-failure-map' + 'runbooks-split-the-deterministic-from-the-judgment'; ts: 'the roughest algorithm that still fits'."
+      "provenance": "derived",
+      "anchor": "point: agent-knows-git-not-your-environments-lifecycles-so-write-them-down / a-lifecycle-is-the-healthy-path-then-a-failure-map-off-each-node / a-runbook-splits-into-deterministic-and-judgment-steps-governed-differently"
     },
     {
       "granularity": "chapter",
@@ -605,10 +605,28 @@
       "granularity": "section",
       "primary_unit": "runbooks-split-the-deterministic-from-the-judgment",
       "verb": "author",
-      "obj": "a runbook that gives judgment parts the roughest algorithm that still fits",
-      "statement": "After this section, the reader can author a runbook that separates deterministic steps from judgment ones.",
+      "obj": "a runbook that gives deterministic steps tools and judgment steps the roughest algorithm that still fits",
+      "statement": "After this section, the reader can author a runbook that separates deterministic steps from judgment ones — giving the deterministic parts an executable tool that also yields a reusable trace, and the judgment parts a rubric or the roughest algorithm that still fits, up to a pre-canned brief for delegation.",
       "provenance": "derived",
-      "anchor": "Heading text: 'Runbooks: split the deterministic from the judgment'."
+      "anchor": "point: a-runbook-splits-into-deterministic-and-judgment-steps-governed-differently / deterministic-parts-get-tools-not-improvisation / determinizing-a-step-buys-a-trace-with-two-consumers / judgment-parts-get-the-roughest-algorithm-that-still-fits / a-judgment-that-is-a-measurement-gets-a-rubric / the-pre-canned-brief-is-the-strongest-form-templating-delegation-itself"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "lifecycles-first-then-the-failure-map",
+      "verb": "map",
+      "obj": "a lifecycle's healthy path and the failure states off each node, naming the way out and the prohibition",
+      "statement": "After this section, the reader can map a lifecycle — the healthy path of a recurring activity plus, from each node, its failure states and the action for each — as a failure-mode-and-effects grid, and encode the way out and the prohibition an agent cannot supply on its own.",
+      "provenance": "derived",
+      "anchor": "point: a-lifecycle-is-the-healthy-path-then-a-failure-map-off-each-node / fmea-names-the-way-out-and-the-prohibition-because-the-agent-knows-neither / name-the-sin-and-the-way-out-not-the-prohibition-alone"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "the-judgment-parts-the-roughest-algorithm-that-still-fits",
+      "verb": "apply",
+      "obj": "the roughest-algorithm rule to a judgment step, reaching for a rubric or a pre-canned brief",
+      "statement": "After this section, the reader can apply the roughest-algorithm-that-still-fits rule to a judgment step — giving a well-constrained decision an algorithm, an open-ended one only hints, a measurement a rubric, and a delegated task a pre-canned brief.",
+      "provenance": "derived",
+      "anchor": "point: judgment-parts-get-the-roughest-algorithm-that-still-fits / a-judgment-that-is-a-measurement-gets-a-rubric / the-pre-canned-brief-is-the-strongest-form-templating-delegation-itself"
     },
     {
       "granularity": "section",
