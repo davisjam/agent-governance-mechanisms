@@ -394,6 +394,13 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: team-dimension | local
 - term: closed-vocabulary | local
 - term: wrong-shape | local
+- term: fuzzing | section
+- term: grammar-coverage | section
+- term: oracle | local
+- term: shrinking | local
+- term: stable-spec-point | local
+- term: never-crash-contract | local
+- term: interleaving-search | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.

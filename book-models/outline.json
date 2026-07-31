@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 108,
-    "paragraph_points": 311
+    "sections_drained": 115,
+    "paragraph_points": 332
   },
   "chapters": [
     {
@@ -2927,8 +2927,24 @@
           "heading_text": "One move, three specifications",
           "topic_sentence": "[ref:generative-family] lays the family out on one page.",
           "id_source": "derived",
-          "block_index": 3,
-          "points": []
+          "block_index": 5,
+          "points": [
+            {
+              "slug": "oracle-richness-and-input-wildness-trade-off",
+              "text": "Oracle richness and input wildness trade off.",
+              "block_index": 10
+            },
+            {
+              "slug": "failure-means-false-law-or-crash",
+              "text": "Failure means a false law or a crash.",
+              "block_index": 12
+            },
+            {
+              "slug": "stable-spec-point-bridges-fuzzing-and-model",
+              "text": "The stable spec point bridges fuzzing and the model.",
+              "block_index": 14
+            }
+          ]
         },
         {
           "section_id": "the-move-a-generator-hunts-a-counterexample-to-a-model",
@@ -2936,8 +2952,19 @@
           "heading_text": "The move: a generator hunts a counterexample to a model",
           "topic_sentence": "Before the three members, the shared shape.",
           "id_source": "derived",
-          "block_index": 10,
-          "points": []
+          "block_index": 16,
+          "points": [
+            {
+              "slug": "generative-test-hunts-a-counterexample",
+              "text": "A generative test hunts a counterexample across the space.",
+              "block_index": 18
+            },
+            {
+              "slug": "a-property-has-no-case-to-special-case",
+              "text": "A property has no single case to special-case.",
+              "block_index": 21
+            }
+          ]
         },
         {
           "section_id": "property-based-testing-the-invariant-is-the-oracle",
@@ -2945,8 +2972,19 @@
           "heading_text": "Property-based testing: the invariant is the oracle",
           "topic_sentence": "In property-based testing the author writes the law and the machine hunts the counterexample.",
           "id_source": "derived",
-          "block_index": 16,
-          "points": []
+          "block_index": 25,
+          "points": [
+            {
+              "slug": "author-writes-law-generator-shrinks",
+              "text": "The author writes the law; the generator shrinks the counterexample.",
+              "block_index": 27
+            },
+            {
+              "slug": "property-is-the-modeling-thesis-as-a-test",
+              "text": "The property is the Modeling Thesis worn as a test.",
+              "block_index": 29
+            }
+          ]
         },
         {
           "section_id": "fuzzing-the-contract-is-never-crash-never-corrupt",
@@ -2954,8 +2992,24 @@
           "heading_text": "Fuzzing: the contract is \"never crash, never corrupt\"",
           "topic_sentence": "Property testing asks tame inputs a rich question.",
           "id_source": "derived",
-          "block_index": 20,
-          "points": []
+          "block_index": 32,
+          "points": [
+            {
+              "slug": "fuzzing-asks-a-coarse-question-of-wild-inputs",
+              "text": "Fuzzing asks a coarse question of wild inputs.",
+              "block_index": 34
+            },
+            {
+              "slug": "fix-a-crash-to-the-spec-point",
+              "text": "Fix a crash to the spec point, not the seed.",
+              "block_index": 36
+            },
+            {
+              "slug": "coverage-makes-we-fuzzed-it-a-claim",
+              "text": "Coverage makes 'we fuzzed it' a measured claim.",
+              "block_index": 38
+            }
+          ]
         },
         {
           "section_id": "fuzz-mbse-the-typed-model-becomes-the-oracle",
@@ -2963,8 +3017,34 @@
           "heading_text": "Fuzz + MBSE: the typed model becomes the oracle",
           "topic_sentence": "This is the synthesis.",
           "id_source": "derived",
-          "block_index": 25,
-          "points": []
+          "block_index": 41,
+          "points": [
+            {
+              "slug": "the-typed-model-becomes-the-oracle",
+              "text": "The typed model itself becomes the oracle.",
+              "block_index": 43
+            },
+            {
+              "slug": "sort-outcomes-against-the-closed-legal-set",
+              "text": "Sort adversarial outcomes against the model's closed legal set.",
+              "block_index": 46
+            },
+            {
+              "slug": "producer-dialect-is-the-adversarial-input",
+              "text": "Let a rival producer's legal dialect be the input.",
+              "block_index": 48
+            },
+            {
+              "slug": "harvest-producers-before-hand-rolling-a-grammar",
+              "text": "Harvest real producers before hand-rolling a grammar.",
+              "block_index": 51
+            },
+            {
+              "slug": "search-interleavings-against-the-invariant-predicate",
+              "text": "For a concurrency invariant, search interleavings against the predicate.",
+              "block_index": 53
+            }
+          ]
         },
         {
           "section_id": "coverage-did-we-explore-the-spec-relevant-space",
@@ -2972,8 +3052,24 @@
           "heading_text": "Coverage: did we explore the spec-relevant space?",
           "topic_sentence": "Once you have a generator, a new question appears that example tests never had to ask: *did the campaign explore the space that matters, or did it just spin?* The book already owns coverage — the [metrics chapter](2.5-metrics.html) develops it as a flagship, with the rule to measure one level deeper than the raw percentage — so this section adds only the one cut that is genuinely native to generation and hands the rest back.",
           "id_source": "derived",
-          "block_index": 33,
-          "points": []
+          "block_index": 55,
+          "points": [
+            {
+              "slug": "generation-adds-a-native-coverage-question",
+              "text": "Generation adds one coverage question native to it.",
+              "block_index": 57
+            },
+            {
+              "slug": "grammar-coverage-measures-inputs-not-code",
+              "text": "Grammar coverage measures the inputs, not the code.",
+              "block_index": 59
+            },
+            {
+              "slug": "model-claim-coverage-is-the-saturation-oracle",
+              "text": "Model-claim coverage is the family's real saturation oracle.",
+              "block_index": 61
+            }
+          ]
         },
         {
           "section_id": "when-to-reach-for-which",
@@ -2981,11 +3077,28 @@
           "heading_text": "When to reach for which",
           "topic_sentence": "The family gives a compact decision aid, and the axes of the opening table are the decision.",
           "id_source": "derived",
-          "block_index": 39,
-          "points": []
+          "block_index": 65,
+          "points": [
+            {
+              "slug": "generative-validation-is-hard-governance",
+              "text": "Generative validation is hard governance, the Alignment Thesis mechanical.",
+              "block_index": 69
+            }
+          ]
         }
       ],
-      "preamble_points": []
+      "preamble_points": [
+        {
+          "slug": "generate-to-falsify-a-model-supplied-spec",
+          "text": "Generate inputs to falsify a specification the model supplies.",
+          "block_index": 0
+        },
+        {
+          "slug": "generative-test-unites-both-theses",
+          "text": "A generative test unites the Modeling and Alignment theses.",
+          "block_index": 3
+        }
+      ]
     },
     {
       "slug": "5.1-the-ada-context",
