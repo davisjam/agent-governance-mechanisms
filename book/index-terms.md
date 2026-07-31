@@ -309,6 +309,8 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: world-representation | local
 - term: static-analysis | local
 - term: ban-lint | local
+- term: documentation-hierarchy | local
+- term: ouroboros | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
