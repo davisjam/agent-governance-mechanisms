@@ -36,6 +36,9 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[GAP-REC]** (create) After this section, the reader can construct a world-model an agent acts against — the first governance move. — _gap: O2 finding: this H2 opens on a non-paragraph block (no topic sentence), so the outcome its heading promises is not stated in prose as written. Recommend a lead paragraph that states the move._
   - **[DECLARED]** (understand) After this section, the reader can explain why handing the agent a model of its world conditions the probability distribution of its behavior — aiming its search and shrinking what it must hold. — _anchor: point: model-of-the-world-is-the-input-agent-reasons-over / structuring-loop-and-model-conditions-the-distribution (section opens on an aside, not a topic sentence — the O2 gap the drain records)_
 
+### 1.3-the-engineers-seat
+
+
 ## Part 2
 
 - **[DECLARED]** (create) After Part 2, the reader can construct a governed engineering environment: place a control at the right layer of the agent stack, split ex-ante from ex-post, write lifecycles and runbooks, and measure one level deeper. — _anchor: Part 2 chapter arc: agent-stack -> semantic-gap -> ex-ante/ex-post -> lifecycles/runbooks -> metrics -> guardrails-collide._
