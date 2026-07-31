@@ -64,7 +64,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>28</b> chapters · <b>164</b> sections · <b>61</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>28</b> chapters · <b>164</b> sections · <b>66</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The book — what you'll be able to do</h2>
 <div class="outcomes"><div class="oc-h">After the book — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as typed, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -176,14 +176,16 @@
 </div>
 <div class="chapter">
 <h3 id="ch-2-2-models-and-the-semantic-gap"><a href="../book/2.2-models-and-the-semantic-gap.html" class="ch-link">2.2-models-and-the-semantic-gap</a> <span class="ch-slug">2.2-models-and-the-semantic-gap</span></h3>
-<div class="outcomes"><div class="oc-h">After this chapter — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this chapter, the reader can explain why a typed model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness. <span class="prov">declared</span></span></li></ul></div>
+<div class="outcomes"><div class="oc-h">After this chapter — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this chapter, the reader can explain why a typed model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness. <span class="prov">derived</span></span></li></ul></div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--words-are-soft-code-is-verbose-a-model-is-the-sweet-spot">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">Words are soft, code is verbose, a model is the sweet spot</a></div>
 <p class="topic">Your first governance mechanism is the prompt, because the agent is a language model and words are how you talk to it.</p>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can distinguish soft prose from verbose code and explain why a model — accurate, unambiguous, yet compact — is the sweet spot an agent can reason over. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--why-the-models-drifted-and-why-that-changes-now">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">Why the models drifted — and why that changes now</a></div>
 <p class="topic">The models are the map; the code is the territory.</p>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain why hand-maintained models drifted and fell out of favor, and why agents — which reason over models, not code — flip that calculation when a linked set of models is kept in sync. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s3" id="sec-2-2-models-and-the-semantic-gap--why-agents-don-t-reach-for-models-on-their-own-a-conjecture">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">Why agents don&#x27;t reach for models on their own — a conjecture</a></div>
@@ -192,24 +194,27 @@
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--the-apex-of-the-documentation-hierarchy-is-a-typed-model">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">The apex of the documentation hierarchy is a typed model</a></div>
 <p class="topic">Step back from drift for a moment and look at what you actually hand an agent to work from.</p>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain why the apex of the documentation hierarchy is a typed model — the one description a machine can read and check the others against, binding docs, code, and tests where structured English stops one rung short. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--a-drift-check-proves-agreement-not-correctness">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">A drift check proves agreement, not correctness</a></div>
 <p class="topic">The claim I just made hides a trap, and the book&#x27;s enthusiasm for drift gates can be misread into a dangerous half-truth.</p>
-<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain the precise guarantee a drift check gives — agreement, not correctness. <span class="prov">derived</span></span></li></ul></div>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain the precise guarantee a drift check gives — agreement, not correctness — and why only a model authored from intent, not derived from code, catches a wrong &quot;is&quot;. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--just-execute-the-model-a-short-history-of-case-and-mda">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">Just execute the model? A short history of CASE and MDA</a></div>
 <p class="topic">If the typed model is where you now start, an old idea says to finish there too: skip the code and *execute the model directly*.</p>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-analyze">analyze</span><span class="oc-text">After this section, the reader can situate how far to model on a spectrum trading strength against changeability, and read the CASE/MDA history as an economic call whose sweet spot agents have moved outward. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--the-semantic-gap">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">The semantic gap</a></div>
 <p class="topic">Enforce a property at the wrong level and it slips through; [ref:semantic-gap] shows the fix — lift the check to where the meaning is legible.</p>
-<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-know">know</span><span class="oc-text">After this section, the reader can define the semantic gap and say what closes it. <span class="prov">derived</span></span></li></ul></div>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-know">know</span><span class="oc-text">After this section, the reader can define the semantic gap — enforcing a property at the wrong level of abstraction — and identify the level where it becomes legible. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--a-worked-example-the-context-fullness-bank-hook">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">A worked example: the context-fullness bank-hook</a></div>
 <p class="topic">Let me give you a second instance of the semantic gap, one that lives not in the product but in the operator&#x27;s own loop.</p>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-apply">apply</span><span class="oc-text">After this section, the reader can apply the semantic-gap fix to a second, operator-loop instance: a hook that fires on context-fullness and record-staleness together, and can name why even a roughly-right rung beats a hook that sits too late. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s3" id="sec-2-2-models-and-the-semantic-gap--the-fix-a-hook-one-level-up-checking-two-things">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">The fix: a hook one level up, checking two things</a></div>

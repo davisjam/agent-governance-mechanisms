@@ -208,11 +208,62 @@
       "verb": "explain",
       "obj": "why a typed model sits at the apex of the documentation hierarchy and what a drift check does and does not prove",
       "statement": "After this chapter, the reader can explain why a typed model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness.",
-      "provenance": "declared",
-      "anchor": "Section titles 'the-apex-of-the-documentation-hierarchy-is-a-typed-model' + 'a-drift-check-proves-agreement-not-correctness' + 'the-semantic-gap'.",
+      "provenance": "derived",
+      "anchor": "point: the-apex-of-the-hierarchy-is-a-typed-model-that-binds-the-islands / a-drift-gate-proves-agreement-not-that-either-side-is-right / a-mirror-model-reflects-the-code-only-a-spec-authored-from-intent-catches-a-wrong-is",
       "secondary_units": [
         "3.1-the-executable-zoo",
         "part-3"
+      ]
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "words-are-soft-code-is-verbose-a-model-is-the-sweet-spot",
+      "verb": "distinguish",
+      "obj": "words (too soft) from code (too verbose) and place a model as the compact, unambiguous sweet spot between them",
+      "statement": "After this section, the reader can distinguish soft prose from verbose code and explain why a model — accurate, unambiguous, yet compact — is the sweet spot an agent can reason over.",
+      "provenance": "derived",
+      "anchor": "point: words-are-soft-and-agents-need-precision-humans-do-not / code-is-precise-but-too-verbose-so-a-model-is-the-sweet-spot / a-model-is-a-cheap-honest-approximation-you-can-reason-over"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "why-the-models-drifted-and-why-that-changes-now",
+      "verb": "explain",
+      "obj": "why hand-maintained models rotted and why an agent fleet flips the calculation",
+      "statement": "After this section, the reader can explain why hand-maintained models drifted and fell out of favor, and why agents — which reason over models, not code — flip that calculation when a linked set of models is kept in sync.",
+      "provenance": "derived",
+      "anchor": "point: models-are-the-map-code-the-territory-and-hand-maintenance-drifts / hand-maintained-models-rot-when-the-maintainer-stops / agents-flip-the-calculation-they-reason-over-models-not-code / the-model-reached-for-shifts-with-the-move-so-you-need-a-linked-set / a-model-lets-the-agent-check-work-and-a-drift-gate-makes-map-equals-territory-checked"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "the-apex-of-the-documentation-hierarchy-is-a-typed-model",
+      "verb": "explain",
+      "obj": "why a typed model at the apex of the documentation hierarchy binds docs, code, and tests into a checkable whole",
+      "statement": "After this section, the reader can explain why the apex of the documentation hierarchy is a typed model — the one description a machine can read and check the others against, binding docs, code, and tests where structured English stops one rung short.",
+      "provenance": "derived",
+      "anchor": "point: what-you-hand-an-agent-is-a-hierarchy-of-partial-drifting-descriptions / the-usual-recipe-leaves-docs-code-tests-as-unbound-islands-so-drift-is-the-default / the-apex-of-the-hierarchy-is-a-typed-model-that-binds-the-islands / modeling-thesis-at-full-strength-the-model-is-the-one-description-that-cannot-silently-lie"
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "just-execute-the-model-a-short-history-of-case-and-mda",
+      "verb": "situate",
+      "obj": "the modeling choice on a spectrum from no modeling to an executable model, using the forty-year history of CASE and MDA",
+      "statement": "After this section, the reader can situate how far to model on a spectrum trading strength against changeability, and read the CASE/MDA history as an economic call whose sweet spot agents have moved outward.",
+      "provenance": "derived",
+      "anchor": "point: executing-the-model-directly-is-a-forty-year-old-idea-whose-landing-marks-a-boundary / case-and-mda-were-the-named-dreams-of-round-trip-and-executable-models / executable-models-failed-on-tempo-not-tooling-and-settled-into-generating-key-parts / how-far-to-model-is-a-spectrum-trading-strength-for-changeability / the-books-stance-the-sweet-spot-on-the-spectrum-moved-outward-and-is-still-moving",
+      "secondary_units": [
+        "3.1-the-executable-zoo"
+      ]
+    },
+    {
+      "granularity": "section",
+      "primary_unit": "a-worked-example-the-context-fullness-bank-hook",
+      "verb": "apply",
+      "obj": "the semantic-gap fix to the operator's own loop — a bank-hook checking fullness and staleness together",
+      "statement": "After this section, the reader can apply the semantic-gap fix to a second, operator-loop instance: a hook that fires on context-fullness and record-staleness together, and can name why even a roughly-right rung beats a hook that sits too late.",
+      "provenance": "derived",
+      "anchor": "point: compaction-is-a-lossy-guess-because-the-harness-sits-below-what-is-worth-keeping / the-fix-is-a-hook-at-the-operators-loop-checking-fullness-and-staleness-together / a-single-loose-condition-drives-into-the-ouroboros / this-example-has-no-clean-rung-so-a-roughly-right-hook-beats-both",
+      "secondary_units": [
+        "the-semantic-gap"
       ]
     },
     {
@@ -456,18 +507,18 @@
       "primary_unit": "a-drift-check-proves-agreement-not-correctness",
       "verb": "explain",
       "obj": "why a drift check proves agreement between model and code, not correctness of either",
-      "statement": "After this section, the reader can explain the precise guarantee a drift check gives — agreement, not correctness.",
+      "statement": "After this section, the reader can explain the precise guarantee a drift check gives — agreement, not correctness — and why only a model authored from intent, not derived from code, catches a wrong \"is\".",
       "provenance": "derived",
-      "anchor": "Heading text: 'A drift check proves agreement, not correctness'."
+      "anchor": "point: a-drift-gate-proves-agreement-not-that-either-side-is-right / a-mirror-model-reflects-the-code-only-a-spec-authored-from-intent-catches-a-wrong-is / what-belongs-in-the-model-is-the-essential-residual-that-does-not-automate"
     },
     {
       "granularity": "section",
       "primary_unit": "the-semantic-gap",
       "verb": "define",
       "obj": "the semantic gap between a model and the code it governs",
-      "statement": "After this section, the reader can define the semantic gap and say what closes it.",
+      "statement": "After this section, the reader can define the semantic gap — enforcing a property at the wrong level of abstraction — and identify the level where it becomes legible.",
       "provenance": "derived",
-      "anchor": "Heading text: 'The semantic gap'.",
+      "anchor": "point: enforce-at-the-wrong-level-and-the-property-slips-through / model-drift-at-the-commit-is-the-wrong-granularity / the-semantic-gap-is-enforcing-a-property-at-the-wrong-level-of-abstraction / enforce-at-the-level-where-the-property-is-legible-agent-return-for-model-drift",
       "secondary_units": [
         "a-worked-example-the-context-fullness-bank-hook"
       ]
