@@ -33,7 +33,7 @@ import argparse
 import sys
 from typing import Callable, NamedTuple
 
-from tests.book import check_float_ref_gate, run_book_audit
+from tests.book import check_float_ref_gate, check_ir_render_fidelity, run_book_audit
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import (
@@ -86,6 +86,7 @@ CHECKS = [
     Check("html: no book notation leaks (whole-vocabulary; marker / {{token}} / [+emph+])", 1, lambda strict: check_no_notation_leak()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),
+    Check("book: IR render-complete blocks render byte-identically (C->A migration net)", 1, lambda strict: check_ir_render_fidelity()),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.

@@ -83,6 +83,55 @@ class Block:
     def is_float(self) -> bool:
         return self.kind in FLOAT_KINDS
 
+    #: Block kinds this node can render from its raw slice with NO cross-block or arming state — the
+    #: render-complete subset (the C→A enrich step). The stateful kinds a full flip must still thread
+    #: through the renderer's arming loop are excluded: MERMAID (a following italic paragraph may fold in
+    #: as its caption), FIGURE / EQ / OTHER / DIRECTIVE (emitted by an arming marker, may carry a
+    #: `data-label`), and TABLE (a `<!-- table: -->` caption / label may arm it). See `render_html`.
+    _RENDER_COMPLETE = frozenset({
+        BlockKind.HEADING, BlockKind.PARA, BlockKind.LIST, BlockKind.ORDERED_LIST,
+        BlockKind.CODE, BlockKind.CODE_INSET, BlockKind.BLOCKQUOTE,
+    })
+
+    @property
+    def is_render_complete(self) -> bool:
+        """True when `render_html()` can produce this block's HTML from its raw slice alone — no arming
+        marker (label/caption/anchor) and no cross-block fold participates. The C→A enrich step made the IR
+        render-complete for this subset; a full flip renders these from the node and threads only the rest."""
+        return self.kind in Block._RENDER_COMPLETE
+
+    def render_html(self) -> str:
+        """Render this block's HTML from its raw slice — byte-identical to `md_to_html`'s emit for the
+        render-complete kinds (the enrich step's proof that the IR node holds enough to render). Delegates
+        to the renderer's extracted per-kind primitives (the ONE renderer, never a copy). Raises for a kind
+        that needs the renderer's arming/fold state, so a caller cannot silently drop a float's label."""
+        if not self.is_render_complete:
+            raise ValueError(
+                f"{self.kind.value} is not render-complete: it needs the renderer's arming/fold state "
+                f"(label / caption / anchor / mermaid-caption fold); render it through md_to_html")
+        import build_book_html as _bb
+        k = self.kind
+        if k is BlockKind.HEADING:
+            return _bb._render_heading(self.raw)
+        if k is BlockKind.PARA:
+            # A standalone HTML comment (an authoring TODO not in the notation vocabulary — so not peeled as
+            # a DIRECTIVE) renders RAW, not wrapped in <p>. `classify_render_block` reports it PARA because
+            # it is prose-shaped; the renderer keeps a lone-comment passthrough just ahead of prose, and this
+            # mirrors it so `render_html` on such a block equals the emit.
+            s = self.raw.strip()
+            if s.startswith("<!--") and s.endswith("-->") and s.count("<!--") == 1:
+                return s
+            return _bb._render_paragraph(self.raw)
+        if k is BlockKind.LIST:
+            return _bb._render_unordered_list(self.raw)
+        if k is BlockKind.ORDERED_LIST:
+            return _bb._render_ordered_list(self.raw)
+        if k is BlockKind.CODE:
+            return _bb._render_code(self.raw)
+        if k is BlockKind.CODE_INSET:
+            return _bb._render_inset(self.raw)
+        return _bb._render_blockquote(self.raw)  # BLOCKQUOTE
+
 
 @dataclass
 class Chapter:

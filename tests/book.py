@@ -673,6 +673,34 @@ def check_float_ref_gate() -> "tuple[str, list[str]]":
     return (FAIL if active else PASS), [f.msg for f in active]
 
 
+def check_ir_render_fidelity() -> "tuple[str, list[str]]":
+    """BLOCKING gate for the C→A migration: every render-complete IR block renders byte-identically through
+    `book_ir.Block.render_html()` and through the renderer (`md_to_html` on the block's raw slice). This is
+    the golden net the IR-DESIGN "Migration to A" step calls for — it pins that the IR node holds enough to
+    produce its HTML (render-completeness), so the renderer's per-kind primitives and the IR's classification
+    cannot silently drift. A mismatch means a render-complete kind lost information on the way into the IR, or
+    the extracted `_render_*` primitive diverged from what the node reproduces."""
+    import sys as _sys  # noqa: E402 — local path bootstrap so the book/ IR module is importable
+    if BOOK not in _sys.path:
+        _sys.path.insert(0, BOOK)
+    import book_ir as _ir       # noqa: E402 — the typed book IR lives under book/
+    import build_book_html as _bb  # noqa: E402
+
+    doc = _ir.parse_book()
+    active: list[str] = []
+    for ch in doc.chapters:
+        for b in ch.blocks:
+            if not b.is_render_complete:
+                continue
+            want = _bb.md_to_html(b.raw)
+            got = b.render_html()
+            if want != got:
+                active.append(
+                    f"{ch.slug} — {b.kind.value} (block {b.index}): render_html() diverges from md_to_html "
+                    f"of the raw slice")
+    return (FAIL if active else PASS), active
+
+
 # ---- driver: run every rule, partition suppressed vs active, print a report; ALWAYS exit-neutral --
 
 # (label, lint-name, fn). The lint-name is what an inline `<!-- noqa: <name> — <reason> -->` cites.
