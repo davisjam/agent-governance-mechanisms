@@ -2,11 +2,12 @@
   "startOnLoad": false,
   "securityLevel": "loose",
   "theme": "default",
+  "htmlLabels": false,
   "themeVariables": {
     "fontFamily": "Georgia, \"Times New Roman\", serif",
     "fontSize": "20px"
   },
-  "flowchart": { "htmlLabels": true, "nodeSpacing": 55, "rankSpacing": 60, "padding": 12 },
+  "flowchart": { "htmlLabels": false, "nodeSpacing": 55, "rankSpacing": 60, "padding": 12 },
   "sequence": { "actorFontSize": 20, "messageFontSize": 18, "noteFontSize": 18, "width": 170, "height": 55 },
   "state": { "titleTopMargin": 12 },
   "er": { "fontSize": 18 },
