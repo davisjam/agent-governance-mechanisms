@@ -40,7 +40,7 @@ Four adjacent things each carry part of this, and each falls short on a differen
   caused it. The difference is tempo. Here the matrix emits continuously, one row per commit, rather than
   being assembled by hand after the fact.
 - **Mutator-stamps attribute the wrong target.** The
-  [mutator-stamps](https://davisjam.github.io/agent-governance-mechanisms/product/provenance-and-attribution/mutator-stamps.html) record a *product mutation
+  [mutator-stamps](https://davisjam.github.io/model-based-agentic-software-engineering/product/provenance-and-attribution/mutator-stamps.html) record a *product mutation
   inside the delivered artifact*: which pass touched this PDF node. Caused-by records *the fleet's change
   to the repository*. One consumer asks who edited the document; the other asks why the fleet edited the
   code. Product-side and agent-side provenance are counterparts across the same seam, not duplicates.
@@ -102,10 +102,10 @@ Four adjacent things each carry part of this, and each falls short on a differen
   [lifecycle-hooks](lifecycle-hooks.md) *measured leash*): the leash joins firings to actions by session
   key; this threads an explicit cause-id from cause to effect, a deterministic join where an artifact
   exists.
-- **Counterpart** — [mutator-stamps](https://davisjam.github.io/agent-governance-mechanisms/product/provenance-and-attribution/mutator-stamps.html):
+- **Counterpart** — [mutator-stamps](https://davisjam.github.io/model-based-agentic-software-engineering/product/provenance-and-attribution/mutator-stamps.html):
   product-side provenance (a mutation inside the artifact) versus agent-side provenance (the fleet's
   change to the repo).
 - **Generalization** — the catalogue's claim that a *traceability matrix* can be a queried model behind a
   drift gate rather than a filed spreadsheet: caused-by is that matrix emitted one row per commit.
-- *See also* — [ddt-pin-trailers](https://davisjam.github.io/agent-governance-mechanisms/product/regression-tests/ddt-pin-trailers.html): a sibling
+- *See also* — [ddt-pin-trailers](https://davisjam.github.io/model-based-agentic-software-engineering/product/regression-tests/ddt-pin-trailers.html): a sibling
   typed-trailer discipline asserted at the commit gate.

@@ -113,7 +113,7 @@ can't name the failure a mechanism prevents in *your* system, you might not need
 
 ## Read the catalogue
 
-- **[The catalogue — interactive web view](https://davisjam.github.io/agent-governance-mechanisms/)** —
+- **[The catalogue — interactive web view](https://davisjam.github.io/model-based-agentic-software-engineering/)** —
   the best way to read it: the governance map, a clickable census, and a full writeup per mechanism.
 - **[The paper](https://arxiv.org/pdf/2607.01087)** — *Cheap Code, Costly Judgment: A Case Study on
   Governable Agentic Software Engineering*: the theory, evidence, and testable propositions.
@@ -152,7 +152,7 @@ vocabulary they're written in. govern / operate / communicate.
 
 ## Using this repo
 
-**To read it yourself, use the [web view](https://davisjam.github.io/agent-governance-mechanisms/)**:
+**To read it yourself, use the [web view](https://davisjam.github.io/model-based-agentic-software-engineering/)**:
 that's the pretty version, with the governance map, a clickable census, and a full writeup per
 mechanism. This raw repo is what you **hand to your coding agent**: vendor it (or the
 [starter `CLAUDE.md`](downloads/CLAUDE-starter.md)) into your project, point your agent at it, and ask it
