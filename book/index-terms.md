@@ -381,6 +381,13 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: flow-vs-task | local
 - term: closure-strength | local
 - term: closure-meaning | local
+- term: missing-model-metric | local
+- term: orphan-test | local
+- term: granularity-gap | local
+- term: dense-primitive-region | local
+- term: stringly-typed | local
+- term: dogfooding | local
+- term: field-report | local
 
 ## Notes
 - Terms marked `[verify …]` need a presence check against the final chapter text before shipping.
