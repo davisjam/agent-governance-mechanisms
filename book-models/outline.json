@@ -101,8 +101,8 @@
           "points": [
             {
               "slug": "task-mode-is-first-judgment",
-              "text": "The first judgment an agentic engineer makes is whether a task needs governed autonomy at all, because some tasks a capable model completes in one pass.",
-              "block_index": 1
+              "text": "The first judgment is whether a task needs governed autonomy.",
+              "block_index": 2
             }
           ]
         },
@@ -112,27 +112,27 @@
           "heading_text": "The two modes",
           "topic_sentence": "Start at the decision on the left.",
           "id_source": "derived",
-          "block_index": 4,
+          "block_index": 5,
           "points": [
             {
               "slug": "two-modes-fork-on-size-and-difficulty",
-              "text": "Once a task's input and output are stated, the choice of mode forks on the work's size and difficulty.",
-              "block_index": 5
-            },
-            {
-              "slug": "one-shot-for-small-unsubtle-tasks",
-              "text": "One-shot scripting fits a small task that needs no subtle reasoning: specify the behavior once, take the single-pass result, skip the governance apparatus.",
+              "text": "Mode forks on the work's size and difficulty.",
               "block_index": 7
             },
             {
-              "slug": "supervised-autonomy-supplies-four-things",
-              "text": "Supervised autonomy fits a hard or oversized task: rather than hand the agent the whole job, you supply four things — correctness conditions, sub-tasks, determinizing tools, and monitoring-and-intervention — in two groups, one shaping what gets built and one shaping how the building runs.",
+              "slug": "one-shot-for-small-unsubtle-tasks",
+              "text": "One-shot scripting fits a small task needing no subtle reasoning.",
               "block_index": 9
             },
             {
+              "slug": "supervised-autonomy-supplies-four-things",
+              "text": "Supervised autonomy supplies four things in two groups.",
+              "block_index": 11
+            },
+            {
               "slug": "book-structure-fills-the-four",
-              "text": "The four elements form the skeleton of supervised autonomy, and each later part of the book develops one of them.",
-              "block_index": 14
+              "text": "Each later part develops one of the four elements.",
+              "block_index": 16
             }
           ]
         },
@@ -142,27 +142,27 @@
           "heading_text": "Where the emphasis falls",
           "topic_sentence": "This book is about both modes.",
           "id_source": "derived",
-          "block_index": 16,
+          "block_index": 18,
           "points": [
             {
               "slug": "mode-misjudgment-is-costly-both-ways",
-              "text": "Telling the two modes apart is the first skill, and misjudging it either way is expensive: over-govern a one-shot task and you drown it in ceremony; under-govern a supervised one and you get plausible, subtly wrong output at unreadable scale.",
-              "block_index": 17
+              "text": "Misjudging the mode either way is expensive.",
+              "block_index": 20
             },
             {
               "slug": "leash-length-from-data-density-and-capability",
-              "text": "How long a leash a task can run on depends on two things: how densely the model's training data covers the work, and how capable the model is at it — well-trodden work for a strong model can be described briefly and trusted far, edge work needs the reasoning broken into smaller checked steps.",
-              "block_index": 19
+              "text": "Leash length follows training-data density and model capability.",
+              "block_index": 22
             },
             {
               "slug": "books-weight-is-supervised-autonomy",
-              "text": "The book's weight falls on supervised autonomy — building products whose quality needs exceed what a model can be trusted to do alone and whose size exceeds any context window — because that is the new, unwritten engineering.",
-              "block_index": 21
+              "text": "The book's weight falls on supervised autonomy.",
+              "block_index": 24
             },
             {
               "slug": "code-is-cheap-now-productionize-it",
-              "text": "Writing code is no longer the expensive part, so the book's premise is turning a fast code-fabricator into a production line.",
-              "block_index": 23
+              "text": "Code is cheap; turn the fabricator into a production line.",
+              "block_index": 26
             }
           ]
         },
@@ -172,12 +172,12 @@
           "heading_text": "The printer",
           "topic_sentence": "A 3D printer will build almost anything you can imagine — a replacement gear, a prosthetic hand, a scale model of a building — out of nothing but spooled filament.",
           "id_source": "derived",
-          "block_index": 25,
+          "block_index": 28,
           "points": [
             {
               "slug": "printer-is-the-governing-metaphor",
-              "text": "A 3D printer builds almost anything from spooled filament, limited only by material and imagination; it is the governing metaphor of the book because coding with an agent is far more like running a printer than people expect — and that difference is the difference between blaming the tool and blaming yourself.",
-              "block_index": 26
+              "text": "The 3D printer is the book's governing metaphor.",
+              "block_index": 30
             }
           ]
         },
@@ -187,22 +187,22 @@
           "heading_text": "An open-ended technology",
           "topic_sentence": "A 3D printer is not just a machine.",
           "id_source": "derived",
-          "block_index": 29,
+          "block_index": 33,
           "points": [
             {
               "slug": "open-ended-technology-mints-genres",
-              "text": "A 3D printer is an open-ended technology, in the rare company of writing and the printing press: none arrives with a list of what to make, so people must invent the genres, and cheap production mints genres no predecessor could justify.",
-              "block_index": 30
+              "text": "An open-ended technology arrives with no list; people invent genres.",
+              "block_index": 35
             },
             {
               "slug": "genai-is-open-ended-book-takes-one-genre",
-              "text": "Generative AI is open-ended the same way, so the work is not only to run the machine but to work out which genres are worth producing and a method for each; this book takes one genre — production software, code whose named quality metrics each change traces back to.",
-              "block_index": 32
+              "text": "Generative AI is open-ended; this book takes one genre.",
+              "block_index": 37
             },
             {
               "slug": "quality-floor-was-always-the-price-now-cheap",
-              "text": "The book's apparatus is not decoration but the price of any trustworthy software — name the properties that must hold, check them, tie every change to the property it moves; that price was always the same, and what changed is that agents drop its cost so the assurance once affordable only to a regulated few is now within nearly anyone's reach.",
-              "block_index": 35
+              "text": "The quality floor was the price; agents make it cheap.",
+              "block_index": 40
             }
           ]
         },
@@ -212,22 +212,22 @@
           "heading_text": "A picture is not enough",
           "topic_sentence": "Everyone can sketch a piece of software.",
           "id_source": "derived",
-          "block_index": 37,
+          "block_index": 42,
           "points": [
             {
               "slug": "everyone-can-sketch-software-but-a-picture-wont-print",
-              "text": "Anyone can picture a piece of software, because the concept is easy to picture — but a picture is not a thing you can print.",
-              "block_index": 38
+              "text": "Anyone can picture software, but a picture will not print.",
+              "block_index": 44
             },
             {
               "slug": "printer-needs-a-model-not-a-photo",
-              "text": "A 3D printer given a photograph produces nothing; it needs a model of internal structure plus print notes, because there are a hundred ways to misprint a part that looked fine as a picture.",
-              "block_index": 40
+              "text": "A printer needs a structural model plus print notes.",
+              "block_index": 46
             },
             {
               "slug": "agents-need-the-instructions-not-just-the-picture",
-              "text": "Software agents are the same: you cannot hand an agent only the picture of what you want; you must supply the detailed build instructions, and the quality of the result tracks the quality of those instructions.",
-              "block_index": 43
+              "text": "Agents need the build instructions, not just the picture.",
+              "block_index": 49
             }
           ]
         },
@@ -237,32 +237,32 @@
           "heading_text": "Whose fault is it?",
           "topic_sentence": "Here is the shift in posture the whole book turns on.",
           "id_source": "derived",
-          "block_index": 46,
+          "block_index": 52,
           "points": [
             {
               "slug": "agent-is-a-printer-not-a-stapler-so-suspect-the-instructions",
-              "text": "The posture the book turns on: an agent is not a foolproof stapler but a printer that builds only what its instructions describe, so when it produces the wrong thing the first suspect is the instructions, not the model.",
-              "block_index": 47
+              "text": "An agent is a printer, not a stapler; suspect instructions.",
+              "block_index": 54
             },
             {
               "slug": "models-can-build-anything-you-can-explain",
-              "text": "In the author's experience every agent failure traced back to his own instructions: state-of-the-art models can build essentially anything one can envision so long as you can explain it, and that \"so long as\" is the whole job — a real, teachable engineering discipline.",
-              "block_index": 50
+              "text": "Models build anything you can explain; explaining is the discipline.",
+              "block_index": 57
             },
             {
               "slug": "the-promise-is-also-the-danger",
-              "text": "That the printer builds anything you describe is both the promise and the danger: with no judgment behind it, it builds a wrong thing as fast and willingly as a right one, carrying you at full speed exactly where your instructions point.",
-              "block_index": 53
+              "text": "Building anything you describe is both promise and danger.",
+              "block_index": 60
             },
             {
               "slug": "speed-exposes-the-danger-not-causes-it",
-              "text": "Speed is not the danger but exposes it: hand the machine a doomed idea and it does not slow to warn you, it builds your mistake with the same tireless fidelity as your success, and which one comes out is the instructions, which are yours.",
-              "block_index": 56
+              "text": "Speed does not cause the danger; it exposes it.",
+              "block_index": 63
             },
             {
               "slug": "running-example-is-a-real-shipped-system",
-              "text": "The book's running example is not a toy but a real shipped system — DocAble, the production accessibility-remediation tool — returned to in every later chapter so what the reader watches getting printed correctly is a system that actually shipped.",
-              "block_index": 58
+              "text": "The running example is a shipped system, not a toy.",
+              "block_index": 65
             }
           ]
         }
@@ -283,18 +283,18 @@
           "points": [
             {
               "slug": "agent-work-is-a-fixed-shape-loop",
-              "text": "An agent runs in a loop of fixed shape — input (the problem plus a notion of success), reasoning, action, output, folded back into the next input — and shaping that loop is loop engineering, of which nearly everything in the book is an instance.",
-              "block_index": 3
+              "text": "Agent work is a loop of fixed shape.",
+              "block_index": 4
             },
             {
               "slug": "loop-starts-with-a-measurable-metric",
-              "text": "Engineering a loop well starts with the metric, because the agent steers by it and does not know your goals; make progress measurable — deterministically, by a quantitative check, or by a rubric scoring a qualitative result — or the agent searches forever, never knowing when to stop.",
-              "block_index": 7
+              "text": "Engineering a loop starts with a measurable metric.",
+              "block_index": 8
             },
             {
               "slug": "orchestrator-is-a-worked-loop-written-as-a-model",
-              "text": "The companion repository's orchestrator is a worked example of an engineered loop: it models the dispatch → work → land → tombstone lifecycle as an explicit reactive loop written down as a model the agent can read, rather than left implicit in the code — which is exactly the second idea.",
-              "block_index": 10
+              "text": "The orchestrator is a worked loop written as a model.",
+              "block_index": 11
             }
           ]
         },
@@ -304,47 +304,47 @@
           "heading_text": "Give it a model of the world",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 16,
+          "block_index": 17,
           "points": [
             {
               "slug": "vibe-coding-io-device-vs-engineering-system",
-              "text": "Vibe coding treats the program as an I/O device; engineering treats it as a system.",
-              "block_index": 17
-            },
-            {
-              "slug": "io-vs-system-is-what-counts-as-proof",
-              "text": "The difference between the two is not aesthetic but what counts as proof a change is good: the I/O device asks only whether the right thing came out this time, the system asks what must stay true across every input — and the fast, seductive I/O default is what turns a hundred thousand lines into a mess nobody can reason over.",
+              "text": "Vibe coding sees an I/O device; engineering, a system.",
               "block_index": 19
             },
             {
-              "slug": "model-of-the-world-is-the-input-agent-reasons-over",
-              "text": "The second piece is the model the agent reasons over: a sense of the environment — what happens when it pulls a lever, and what it is even allowed to do — which is itself an input, and supplying it tells the agent what kind of reasoning the situation calls for.",
+              "slug": "io-vs-system-is-what-counts-as-proof",
+              "text": "The split is what counts as proof a change works.",
               "block_index": 21
             },
             {
-              "slug": "model-is-a-probabilistic-reasoning-machine",
-              "text": "Writing the model down is not wasted breath because a foundation model is a probabilistic reasoning machine: probabilistic means it does not always do exactly what you want, reasoning machine means it genuinely reasons over real internal structure — so it reads what you write and reasons over it.",
+              "slug": "model-of-the-world-is-the-input-agent-reasons-over",
+              "text": "The world-model is the input the agent reasons over.",
               "block_index": 23
             },
             {
+              "slug": "model-is-a-probabilistic-reasoning-machine",
+              "text": "A foundation model is a probabilistic reasoning machine.",
+              "block_index": 25
+            },
+            {
               "slug": "agent-behavior-is-a-search-over-a-vast-space",
-              "text": "The most useful way to hold this is as a search: the agent is searching an enormous space — every place the answer might live, every configuration, every function that might implement the ask — far too large to sweep.",
-              "block_index": 26
+              "text": "Agent behavior is a search over a vast space.",
+              "block_index": 28
             },
             {
               "slug": "structuring-loop-and-model-conditions-the-distribution",
-              "text": "Structuring the loop and handing over a model conditions the probability distribution of the agent's behavior — biasing its search toward where the answer actually is; done well this moves the agent from failing the task to completing it, and completes already-solvable tasks in fewer tokens and less time.",
-              "block_index": 29
-            },
-            {
-              "slug": "a-model-aims-the-search-and-shrinks-what-is-held",
-              "text": "A model earns its keep twice: it aims the search, and it shrinks what the agent must hold — which keeps the work from spilling the context window and churning.",
+              "text": "Loop and model condition the agent's probability distribution.",
               "block_index": 31
             },
             {
-              "slug": "the-printers-seam-is-determinism-vs-probability",
-              "text": "The printer metaphor's honest break: a real 3D printer is deterministic — same G-code, same part — while this printer is probabilistic — the same prompt can yield different output — which is why we condition the agent's distribution rather than merely instruct it; the metaphor claims you get only what you describe, not that you get the identical thing twice.",
+              "slug": "a-model-aims-the-search-and-shrinks-what-is-held",
+              "text": "A model aims the search and shrinks what is held.",
               "block_index": 33
+            },
+            {
+              "slug": "the-printers-seam-is-determinism-vs-probability",
+              "text": "The printer metaphor breaks at determinism versus probability.",
+              "block_index": 35
             }
           ]
         }
@@ -352,7 +352,7 @@
       "preamble_points": [
         {
           "slug": "two-ideas-loop-and-model",
-          "text": "Two ideas carry the rest of the book: all agent work is a loop, and an agent steers that loop well only when handed a model of the world it works in — engineering the loop and handing over the model, deliberately and every time, is the MAGE method.",
+          "text": "Two ideas carry the book: the loop and the model.",
           "block_index": 0
         }
       ]
