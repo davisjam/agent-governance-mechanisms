@@ -7,7 +7,7 @@
      Accent #1a4a7a, source-red #8a2f2f, cream #f4ede0, panel #eef3f8. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420"
      role="group" aria-labelledby="szpTitle szpDesc"
-     font-family="'Helvetica Neue', Arial, sans-serif">
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="szpTitle">Squash, zero, promote: how a lint is worn into a legacy tree one step at a time</title>
   <desc id="szpDesc">A new smell-detecting lint moves through three states, left to right. First it
     lands audit-only: it reports every finding but blocks no commit, so it never breaks an in-flight

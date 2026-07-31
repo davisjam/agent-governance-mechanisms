@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="loop-title loop-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="group" aria-labelledby="loop-title loop-desc">
   <title id="loop-title">Loop engineering</title>
   <desc id="loop-desc">A single cycle running left to right. An Input paired with a success metric feeds Agent reasoning, which produces an Output, which feeds back around over the top into the Input. The whole loop is the unit of engineering. The success metric is emphasized in the accent color because defining it is the hard question.</desc>
 

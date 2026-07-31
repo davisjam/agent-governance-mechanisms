@@ -7,7 +7,7 @@
      source-red #8a2f2f, cream #f4ede0, panel #eef3f8. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470"
      role="group" aria-labelledby="txTitle txDesc"
-     font-family="'Helvetica Neue', Arial, sans-serif">
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="txTitle">The three skills are transformation chains all the way down</title>
   <desc id="txDesc">Each of the three skills carries an input to an output through a sequence of
     sized transformations, sharing one skeleton. Self-communicate starts from the model's language

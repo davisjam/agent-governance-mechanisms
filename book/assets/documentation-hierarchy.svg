@@ -8,7 +8,7 @@
      Mermaid lays out. Palette matches the book accent (#1a4a7a); green #2e7d32, red #8a2f2f. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="960" height="560"
      role="group" aria-labelledby="dhTitle dhDesc"
-     font-family="'Helvetica Neue', Arial, sans-serif">
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="dhTitle">The apex of the documentation hierarchy is a typed model that binds docs, code, and tests</title>
   <desc id="dhDesc">A two-panel contrast. Left panel, typical agentic methods: three
     boxes — docs, code, and tests — stand as separate islands with no glue between them.

@@ -5,7 +5,7 @@
      Accent #1a4a7a, source-red #8a2f2f, cream #f4ede0, panel #eef3f8. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400"
      role="group" aria-labelledby="naTitle naDesc"
-     font-family="'Helvetica Neue', Arial, sans-serif">
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="naTitle">The novelty axis: how a part's novelty sets the leap you can trust and the oversight you owe</title>
   <desc id="naDesc">A horizontal spectrum runs from standard software on the left to novel software on
     the right. On the standard end — a to-do list, a typical web app, a compiler — the training data

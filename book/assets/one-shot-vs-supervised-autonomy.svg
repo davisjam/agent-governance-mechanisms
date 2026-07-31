@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 660" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="group" aria-labelledby="csp-title csp-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 660" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="group" aria-labelledby="csp-title csp-desc">
   <title id="csp-title">One-shot scripting versus supervised autonomy</title>
   <desc id="csp-desc">A decision path for a computational coding task. Starting from "What kind of task", you specify the input/output behavior, then split by task size and difficulty. A simple task under a few thousand lines with no reasoning goes to one-shot scripting: describe the process and the agent produces it in a single pass. A hard task, especially one that includes reasoning, goes to supervised autonomy, where you supply four things: correctness conditions and proposed sub-tasks that shape the system, and tools that determinize recurring processes plus monitoring and intervention that shape the development process.</desc>
 

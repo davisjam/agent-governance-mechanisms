@@ -6,7 +6,7 @@
      point of the picture. Palette matches the book accent (#1a4a7a). -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470"
      role="group" aria-labelledby="sgTitle sgDesc"
-     font-family="'Helvetica Neue', Arial, sans-serif">
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="sgTitle">The semantic gap: enforce at the level where the property is legible</title>
   <desc id="sgDesc">A property is invisible at the low level and legible one level up. Bottom
     row: a sequence of small low-level events — individual commits, single system calls,

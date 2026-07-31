@@ -49,7 +49,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 
 # The Typst projection of the design-token SSOT (Umber Monograph): a `#let dt = (…)` preamble prepended
 # to every compiled document so the header + box renderers look up dt.ink / dt.box-thesis-rule / dt.fs-*
-# instead of literal hexes and luma() grays. One typed model, three surfaces (site / web book / PDF).
+# instead of literal hexes and grey values. One typed model, three surfaces (site / web book / PDF).
 _TOKENS = _dtokens.load()
 _TYPST_PREAMBLE = _dtokens.typst_preamble(_TOKENS)
 _DEF_SLUGS = frozenset({"model", "agent", "engineering", "software-engineering"})
@@ -571,7 +571,7 @@ def _cover_typst() -> str:
     copyright_txt = _esc(f'© {m["author"]}, {m["copyright_years"]}')
     default_mod = _esc(m.get("last_updated", ""))
     footer = (
-        '#align(center)[#text(size: 8pt, fill: luma(120))'
+        '#align(center)[#text(size: 8pt, fill: dt.muted)'
         f'[{copyright_txt} #h(0.5em) · #h(0.5em) Last modified #last_modified]]'
     )
     return (
@@ -609,10 +609,10 @@ def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
         "#pagebreak(to: \"odd\")\n"
         "#block(breakable: false)[\n"
         f"  #v(2.4in)\n"
-        f"  #text(size: 1.1em, fill: luma(90))[{inline_typst(kicker)}]\n"
+        f"  #text(size: 1.1em, fill: dt.muted)[{inline_typst(kicker)}]\n"
         "  #v(0.4em)\n"
         f"  #text(size: 2em, weight: \"bold\")[{inline_typst(title)}]\n"
-        "  #v(0.5em) #line(length: 30%, stroke: 1pt + luma(120))\n"
+        "  #v(0.5em) #line(length: 30%, stroke: 1pt + dt.rule)\n"
         "]"
     )
 

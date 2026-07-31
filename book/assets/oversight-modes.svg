@@ -9,7 +9,7 @@
      Palette matches the book accent (#1a4a7a). -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820" width="1180" height="820"
      role="group" aria-labelledby="omTitle omDesc"
-     font-family="'Helvetica Neue', Arial, sans-serif">
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="omTitle">Three process models for agentic software engineering</title>
   <desc id="omDesc">Three panels arranged as a triangle. The two poles sit on top:
     velocity-centric at top-left — a human sets a goal, then a ring of role-labeled agents —

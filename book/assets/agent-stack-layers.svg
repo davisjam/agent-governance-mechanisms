@@ -7,7 +7,7 @@
      model's only port points UP into the harness (internal to the stack), never
      out to the governance bar. See the .md for the rationale. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620"
-     font-family="'Helvetica Neue', Arial, sans-serif" role="group"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="group"
      aria-labelledby="diagTitle diagDesc">
   <title id="diagTitle">The four-layer stack, its governance hooks, and the methodology that plugs into them</title>
   <desc id="diagDesc">A vertical stack of four conventional layer blocks, application on top and GenAI model at the foundation. The stack bows gently downward and tapers from widest at the top to narrowest at the bottom, hinting an onion: the Application is the big outer shell and the GenAI model the small core. From top: the Application (your codebase), with a tab labelled tests / CI; the Engineering environment (git), with a tab labelled git-hooks and the note push / pull; the Harness (Claude Code), with two tabs labelled claude-hooks and claude-skills and the note prompts; the GenAI model, whose only tab points upward into the harness. Each right-edge tab is a small protrusion — the concrete hook the method grabs. On the right, a vertical Methodology and governance bar has fingers that notch into every right-edge tab, showing that governance plugs into these specific hooks. The GenAI model has no governance tab of its own: it is reached through the harness, so its single tab points up into the harness block, not out to the governance bar. The story reads model, up into harness, then out to governance.</desc>
