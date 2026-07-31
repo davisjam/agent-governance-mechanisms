@@ -64,7 +64,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>28</b> chapters · <b>164</b> sections · <b>66</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>28</b> chapters · <b>164</b> sections · <b>68</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The book — what you'll be able to do</h2>
 <div class="outcomes"><div class="oc-h">After the book — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as typed, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -231,24 +231,26 @@
 </div>
 <div class="chapter">
 <h3 id="ch-2-3-the-governed-environment"><a href="../book/2.3-the-governed-environment.html" class="ch-link">2.3-the-governed-environment</a> <span class="ch-slug">2.3-the-governed-environment</span></h3>
-<div class="outcomes"><div class="oc-h">After this chapter — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch). <span class="prov">declared</span></span></li></ul></div>
+<div class="outcomes"><div class="oc-h">After this chapter — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch). <span class="prov">derived</span></span></li></ul></div>
 <div class="section s2" id="sec-2-3-the-governed-environment--ex-ante-everything-you-can-decide-up-front">
 <div class="sec-h"><a href="../book/2.3-the-governed-environment.html">Ex-ante: everything you can decide up front</a></div>
 <p class="topic">Some things you genuinely know from the beginning, and you should write every one of them down.</p>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-apply">apply</span><span class="oc-text">After this section, the reader can apply specification-driven development to what is knowable up front: write every known rule down and determinize it with a cheap deterministic check the agent itself writes. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-3-the-governed-environment--ex-post-everything-you-learn-by-building">
 <div class="sec-h"><a href="../book/2.3-the-governed-environment.html">Ex-post: everything you learn by building</a></div>
 <p class="topic">But you will not know everything, and pretending otherwise is the mistake.</p>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain why governance is built ex-post — iteratively, as unforeseen failures reveal themselves — and why that is where most real mechanisms come from rather than a fallback for a weak plan. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-3-the-governed-environment--constraints-and-sensors">
 <div class="sec-h"><a href="../book/2.3-the-governed-environment.html">Constraints and sensors</a></div>
 <p class="topic">A mechanism is one of two moves — prevent the mistake, or catch it — and [ref:constraint-vs-sensor] draws the split.</p>
-<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can distinguish a constraint (prevent) from a sensor (catch) and choose which move a given failure calls for. <span class="prov">derived</span></span></li></ul></div>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can distinguish a constraint (prevent, costs no iteration) from a sensor (catch, costs iterations), place both on the independent soft-versus-hard axis, and tag most real mechanisms as a package by their primary move. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-3-the-governed-environment--the-residual-goals-no-mechanism-reaches">
 <div class="sec-h"><a href="../book/2.3-the-governed-environment.html">The residual: goals no mechanism reaches</a></div>
 <p class="topic">That closing line reads as if it settles everything.</p>
-<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-know">know</span><span class="oc-text">After this section, the reader can identify the residual goals no mechanism reaches and explain why they remain the engineer&#x27;s own. <span class="prov-gap">gap-recommended</span><span class="gap-note">Thin/self-undercutting opener (&#x27;That closing line reads as if it settles everything&#x27;) — the section is a caveat rather than a stated teaching. Recommend an explicit outcome: name the residual and why it resists mechanization.</span></span></li></ul></div>
+<div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-know">know</span><span class="oc-text">After this section, the reader can identify the residual — goals that are neither preventable nor detectable because the failure is an absence nobody specified — explain why it sets the throughput ceiling and is the complement of the two moves rather than a third axis value, and see how authoring the missing spec pulls a goal out of it. <span class="prov">derived</span></span></li></ul></div>
 </div>
 </div>
 <div class="chapter">

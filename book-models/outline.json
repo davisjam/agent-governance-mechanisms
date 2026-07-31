@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 22,
-    "paragraph_points": 76
+    "sections_drained": 26,
+    "paragraph_points": 95
   },
   "chapters": [
     {
@@ -728,8 +728,14 @@
           "heading_text": "Ex-ante: everything you can decide up front",
           "topic_sentence": "Some things you genuinely know from the beginning, and you should write every one of them down.",
           "id_source": "derived",
-          "block_index": 1,
-          "points": []
+          "block_index": 2,
+          "points": [
+            {
+              "slug": "ex-ante-write-down-what-you-know-and-determinize-it-with-cheap-checks",
+              "text": "Some things you genuinely know from the beginning — a coding style guide's rules are the everyday example — and you should write every one down and then determinize it with a deterministic check the agent itself can write; this specification-driven development costs almost nothing and gives a much stronger starting point.",
+              "block_index": 3
+            }
+          ]
         },
         {
           "section_id": "ex-post-everything-you-learn-by-building",
@@ -737,8 +743,24 @@
           "heading_text": "Ex-post: everything you learn by building",
           "topic_sentence": "But you will not know everything, and pretending otherwise is the mistake.",
           "id_source": "derived",
-          "block_index": 5,
-          "points": []
+          "block_index": 7,
+          "points": [
+            {
+              "slug": "ex-post-you-build-governance-as-failures-reveal-themselves",
+              "text": "You will not know everything up front, so you build governance ex-post — after the fact, iteratively, strapping on new mechanisms as failures reveal themselves and the software's real properties emerge — defining what you can in advance and staying willing to discover the rest.",
+              "block_index": 8
+            },
+            {
+              "slug": "ex-post-is-where-most-real-mechanisms-come-from-not-a-fallback",
+              "text": "The honest loop is watch it burn and then try to fix it: the failures you did not foresee teach you which mechanism to build next, so ex-post governance is not a fallback for a weak plan but where most real mechanisms come from, because most real failures are the ones no specification predicted.",
+              "block_index": 11
+            },
+            {
+              "slug": "the-engine-is-to-hold-a-quality-goal-with-a-mechanism-placed-up-front-or-after-a-failure-seen-twice",
+              "text": "The engine of the discipline is to hold a quality goal by setting up a mechanism that keeps it — placed up front from what you know, or added in response to a failure seen twice, so yesterday's manually-caught mistake becomes today's automatic check enforced on every agent — and however you arrive, the mechanism takes one of two forms: a firewall or a smoke detector.",
+              "block_index": 13
+            }
+          ]
         },
         {
           "section_id": "constraints-and-sensors",
@@ -746,8 +768,54 @@
           "heading_text": "Constraints and sensors",
           "topic_sentence": "A mechanism is one of two moves — prevent the mistake, or catch it — and [ref:constraint-vs-sensor] draws the split.",
           "id_source": "derived",
-          "block_index": 12,
-          "points": []
+          "block_index": 17,
+          "points": [
+            {
+              "slug": "a-mechanism-is-one-of-two-moves-prevent-or-catch",
+              "text": "A mechanism is one of two moves — prevent the mistake, or catch it — however you arrived at the quality goal it holds.",
+              "block_index": 18
+            },
+            {
+              "slug": "words-alone-are-a-probability-flip-so-determinize-them-into-a-gate",
+              "text": "Words alone do not hold — a prompt raises the odds of the agent following an instruction but never settles them, because it is a probability flip — so instead of hoping you determinize it: check the condition before the agent acts and refuse when it is not met, turning a soft instruction into a hard gate, and that move splits into the two forms below.",
+              "block_index": 21
+            },
+            {
+              "slug": "a-sensor-detects-drift-after-the-fact-and-costs-iterations",
+              "text": "A sensor detects drift: it lets the mistake happen and catches it after the fact — a test suite or lint in CI — and because it fires after, it fails the loop iteration and the agent must run again to fix what it caught, so a sensor's cost is iterations, which is why you do not reach for one first.",
+              "block_index": 23
+            },
+            {
+              "slug": "a-sensor-is-only-as-good-as-its-observability",
+              "text": "A sensor is only as good as the signal it can read, and observability is the property that a running system exposes enough signal to explain what it did and catch what went wrong — the wiring under every sensor; build it first and the sensor has something to watch, skip it and it stares at a blank wall.",
+              "block_index": 27
+            },
+            {
+              "slug": "a-constraint-prevents-drift-within-the-iteration-and-costs-no-iteration",
+              "text": "A constraint prevents drift by scoping the agent's action space within the iteration so the wrong move is never available to pick — a typed enumeration instead of bare strings the model would silently mis-synonym — so the compiler rejects the bad value on the spot; a constraint that removes a mistake costs no iteration, while a sensor that catches it costs at least one.",
+              "block_index": 30
+            },
+            {
+              "slug": "form-and-move-are-two-independent-axes",
+              "text": "Two independent axes cross here: a mechanism's form — soft (it aims the agent) or hard (it holds regardless) — and its move — a constraint (it prevents) or a sensor (it detects); constraint-versus-sensor is what the mechanism does, soft-versus-hard is how firmly it does it, and the two are independent.",
+              "block_index": 34
+            },
+            {
+              "slug": "most-real-mechanisms-are-a-package-so-tag-the-primary-move",
+              "text": "Most real mechanisms are a package across both axes — a typed model is a soft constraint that ships with hard sensors, the definition-of-done review a constraining runbook wrapped in flagging sensors — so name the package and tag its primary move rather than forcing it into one bin: prefer a constraint where you can build one, add a sensor for the drift you cannot scope away.",
+              "block_index": 41
+            },
+            {
+              "slug": "a-purely-organizational-answer-is-all-sensors-and-never-removes-a-failure-class",
+              "text": "A purely organizational answer to an unreliable worker — review, approval, evidence trail, sign-off — is all sensors: each catches the mistake ex-post, an iteration late, so it can shrink the blast radius but never remove a failure class, because it watches the action space instead of scoping it; the constraint is the move that answer does not have.",
+              "block_index": 43
+            },
+            {
+              "slug": "the-governed-environment-is-determinize-what-you-can-then-convert-every-surprise-into-a-constraint-or-sensor",
+              "text": "You place some constraints and sensors up front and add more as you go, and stepping back, that combination — determinize what you can, then convert every recurring surprise into a constraint or a sensor — is the governed engineering environment: policies for how the work should proceed that produce the rules of the road the agents operate within.",
+              "block_index": 45
+            }
+          ]
         },
         {
           "section_id": "the-residual-goals-no-mechanism-reaches",
@@ -755,11 +823,43 @@
           "heading_text": "The residual: goals no mechanism reaches",
           "topic_sentence": "That closing line reads as if it settles everything.",
           "id_source": "derived",
-          "block_index": 34,
-          "points": []
+          "block_index": 48,
+          "points": [
+            {
+              "slug": "some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified",
+              "text": "Some goals split into neither a constraint nor a sensor: no cheap sensor can see the failure and no constraint can scope it away, because the failure is an absence nobody specified — and you cannot watch for the violation of a rule no one wrote or forbid an action the design never mentioned.",
+              "block_index": 49
+            },
+            {
+              "slug": "the-residual-is-a-human-job-that-sets-the-throughput-ceiling",
+              "text": "Security remediation is the clean case: a missing authorization check has no failing test by definition, because a caught gap was a specified one, so the goal stays a human job — someone must know the check should be there — and this residual, the third outcome beside prevent and detect, runs at your speed while the mechanized goals run at fleet speed, so it, not the size of the catalogue, bounds the whole system.",
+              "block_index": 52
+            },
+            {
+              "slug": "the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis",
+              "text": "The residual is not the soft end of the soft-versus-hard axis: a soft mechanism is still a named artifact you can point to and add to the census, while the residual has nothing to name, nothing to tag as constraint or sensor — it is the complement of the two moves, not a third value on the axis.",
+              "block_index": 54
+            },
+            {
+              "slug": "naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible",
+              "text": "Naming the residual is not a weakness in the method — a method that claims to mechanize everything is the one to distrust — it is the honest edge that says plainly what the catalogue does not cover, and that admission is what lets you trust the coverage it does claim.",
+              "block_index": 56
+            },
+            {
+              "slug": "the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out",
+              "text": "The residual is not a fixed wall: you can pull a goal out by authoring the missing spec — the same absence that defeats a sensor defeats a derived model (a mirror cannot see what was never specified) and greens a journey test that only asserts the flow ran, until a human authors the terminal task-closure assertion that says what done means, turning an un-sensable goal into a checkable post-condition.",
+              "block_index": 58
+            }
+          ]
         }
       ],
-      "preamble_points": []
+      "preamble_points": [
+        {
+          "slug": "a-governed-environment-has-an-ex-ante-and-an-ex-post-half",
+          "text": "Because you discover what you are building by building part of it, you cannot specify everything up front, so a governed environment has two halves — what you can decide before you start and what you can only learn along the way — and every governance mechanism finally takes one of two forms.",
+          "block_index": 0
+        }
+      ]
     },
     {
       "slug": "2.4-lifecycles-and-runbooks",
