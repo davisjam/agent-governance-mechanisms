@@ -6,8 +6,8 @@
     "explicit_ids": 22,
     "derived_ids": 142,
     "missing_topic_sentence": 2,
-    "sections_drained": 53,
-    "paragraph_points": 183
+    "sections_drained": 58,
+    "paragraph_points": 196
   },
   "chapters": [
     {
@@ -1621,8 +1621,14 @@
           "heading_text": "Formal invariant verification",
           "topic_sentence": "Formal invariant verification is the backbone the other three models hang their invariant tables on.",
           "id_source": "explicit",
-          "block_index": 14,
-          "points": []
+          "block_index": 20,
+          "points": [
+            {
+              "slug": "an-invariants-temporal-form-routes-the-exhaustive-checker",
+              "text": "An invariant's temporal form routes its exhaustive checker.",
+              "block_index": 22
+            }
+          ]
         },
         {
           "section_id": "synchronization-model",
@@ -1630,8 +1636,24 @@
           "heading_text": "The synchronization model",
           "topic_sentence": "*A typed registry that models the system's synchronization behavior — every OS-level lock, which shared resource it guards, and the required acquisition ordering — so concurrency contracts are declared and checkable, not tribal.*",
           "id_source": "explicit",
-          "block_index": 19,
-          "points": []
+          "block_index": 27,
+          "points": [
+            {
+              "slug": "the-sync-model-declares-every-lock-and-its-ordering",
+              "text": "The sync model declares every lock and its ordering.",
+              "block_index": 30
+            },
+            {
+              "slug": "it-assesses-lock-coverage-and-deadlock-freedom",
+              "text": "It assesses lock coverage and deadlock-freedom.",
+              "block_index": 33
+            },
+            {
+              "slug": "the-sync-model-derives-from-code-via-lock-path",
+              "text": "The sync model derives from code by lock path.",
+              "block_index": 46
+            }
+          ]
         },
         {
           "section_id": "two-ways-to-make-a-concurrent-write-safe-the-mediator-and-the-single-writer-registries",
@@ -1639,8 +1661,14 @@
           "heading_text": "Two ways to make a concurrent write safe: the mediator and the single-writer registries",
           "topic_sentence": "The synchronization model catalogs the raw locks.",
           "id_source": "derived",
-          "block_index": 37,
-          "points": []
+          "block_index": 49,
+          "points": [
+            {
+              "slug": "capping-how-many-and-allowing-exactly-one-fail-differently",
+              "text": "Capping how-many and allowing exactly-one fail differently.",
+              "block_index": 51
+            }
+          ]
         },
         {
           "section_id": "mediator-registry",
@@ -1648,8 +1676,14 @@
           "heading_text": "The mediator registry",
           "topic_sentence": "The mediator registry is the *how-many* half.",
           "id_source": "explicit",
-          "block_index": 41,
-          "points": []
+          "block_index": 55,
+          "points": [
+            {
+              "slug": "the-mediator-registry-caps-how-many-run-at-once",
+              "text": "The mediator registry caps how many run at once.",
+              "block_index": 57
+            }
+          ]
         },
         {
           "section_id": "single-writer-registry",
@@ -1657,11 +1691,48 @@
           "heading_text": "The single-writer registry",
           "topic_sentence": "The single-writer registry is the *exactly-one* half, and its failure mode is what makes it a separate model.",
           "id_source": "explicit",
-          "block_index": 44,
-          "points": []
+          "block_index": 60,
+          "points": [
+            {
+              "slug": "the-single-writer-registry-allows-exactly-one-writer",
+              "text": "The single-writer registry allows exactly one writer.",
+              "block_index": 62
+            }
+          ]
         }
       ],
-      "preamble_points": []
+      "preamble_points": [
+        {
+          "slug": "the-process-view-asks-what-runs-at-once",
+          "text": "The Process view asks what runs at once.",
+          "block_index": 1
+        },
+        {
+          "slug": "here-invariants-become-predicates-over-an-order-of-events",
+          "text": "Here invariants become predicates over an order of events.",
+          "block_index": 4
+        },
+        {
+          "slug": "an-automaton-is-states-and-legal-transitions",
+          "text": "An automaton is states and their legal transitions.",
+          "block_index": 6
+        },
+        {
+          "slug": "claims-about-order-over-time-need-temporal-logic",
+          "text": "Claims about order over time need temporal logic.",
+          "block_index": 9
+        },
+        {
+          "slug": "the-temporal-shape-derives-the-checker",
+          "text": "An invariant's temporal shape derives its checker.",
+          "block_index": 12
+        },
+        {
+          "slug": "model-checking-explores-exhaustively-where-a-test-samples",
+          "text": "Model checking explores exhaustively where a test samples.",
+          "block_index": 16
+        }
+      ]
     },
     {
       "slug": "3.4-the-development-view",
