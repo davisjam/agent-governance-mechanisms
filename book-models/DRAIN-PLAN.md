@@ -131,7 +131,12 @@ reports the ~175 verbose points still to fix — that list IS the reform worklis
 ```
 
 1. **Point (paragraph, tier-2).** Three `|`-segments, the 3rd optional:
-   - **`<slug>`** — the kebab id, unchanged.
+   - **`<slug>`** — the kebab id, unchanged. **Soft ≤6-word guideline (term slugs, not point slugs):** a
+     new registered *term* / *concept* slug should read ≤6 words and drop a leading `the-`
+     (`semantic-gap`, not `the-semantic-gap`; `model-zoo`, not `the-model-zoo`) — a short slug avoids
+     colliding with a section-id / heading-anchor slug (which the reverse index namespaces by kind, but a
+     distinct slug is cleaner) and keeps the vocabulary terse. This governs FUTURE drains; existing long
+     slugs are not retro-renamed.
    - **`<claim>`** — a short **declarative sentence**, capped at **≤10 words** (the machine-checked rule:
      whitespace-separated tokens in the claim segment only). Write the irreducible claim, not a paraphrase.
      Example (the 2.2 demo): `A drift gate proves agreement, not correctness.` (6 words) — NOT the old

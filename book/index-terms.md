@@ -157,7 +157,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: model-as-map | Model as map
 - concept: map-and-territory | Map and territory
 - concept: model-drift | Model drift
-- concept: the-semantic-gap | The semantic gap
+- concept: semantic-gap | The semantic gap
 - concept: right-level-of-enforcement | The right level of enforcement
 - concept: measure-one-level-deeper | Measure one level deeper
 - concept: governed-environment | The governed environment
