@@ -34,6 +34,7 @@ import sys
 from typing import Callable, NamedTuple
 
 from tests.book import check_float_ref_gate, check_ir_render_fidelity, run_book_audit
+from tests.book_models import check_outline_model
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_claude_validate, check_html_valid
 from tests.html import (
@@ -87,6 +88,12 @@ CHECKS = [
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),
     Check("book: IR render-complete blocks render byte-identically (C->A migration net)", 1, lambda strict: check_ir_render_fidelity()),
+    # AUDIT-ONLY (rule #55): the OUTLINE view-model drift + invariants (book-models/outline.json vs a fresh
+    # derivation; O2 topic-sentence, O3 unique id, O4 nesting). The book's own "4+1 view held equal to the
+    # source" discipline dogfooded on the book. Seeds 2 real O2 findings today, so it lands audit-only and
+    # promotes to blocking once drained — the same landing the concept model's L1-L3 took. See tests/book_models.py.
+    Check("book-models: outline view drift + invariants (outline.json)", 1,
+          lambda strict: check_outline_model(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
