@@ -1,17 +1,17 @@
-<!-- Cover concept B — CHARCOAL v3 FULL-BLEED portrait, FINAL. Hand-authored scratch mockup; title-less; 816x1056.
+<!-- Cover concept B — CHARCOAL v3 FULL-BLEED portrait. Hand-authored scratch mockup; title-less; 816x1056.
      The whole cover is the dark charcoal field; the scene is lifted OUT of the tone. Re-composed vertically:
      a calm near-black title band across the top ~200px (light title overlays it), headroom below it, a LONG
      pendant cord dropping to the lamp, the figures + desk in the lower half, and a deep charcoal foreground.
-     FINAL edits over v3:
-       (1) the truss maquette is lifted from umber to a bright warm RED (#d5402e lines over an #e2492e
-           under-glow, plus a faint red bloom beneath) so it POPS as the single warm focal accent;
-       (2) the blueprint on the desk is now a CLEAR cool-blue drafting sheet: margin rule, a small truss
-           elevation sketch echoing the maquette, and a title-block corner — quiet, in the chalk hand.
-     Kept from v3: the working lamp (glowing bulb, falling cone, warm desk pool), the ONE continuous curved
-     light-catching cord (group-level filter sidesteps the librsvg zero-area-bbox drop), both figures 3/4
-     forward with two pale-pupil eyes dropped toward the model, the dark title band, spare chalk hand. -->
+     v3 fixes over v2:
+       (1) the lamp WORKS — a warm glowing bulb, a soft falling light cone, and a warm pool on the desk are the
+           emotional center; the cord is ONE continuous, slightly CURVED, light-catching stroke (curved path +
+           group-level filter sidesteps the librsvg zero-area-bbox drop that vanished the v2 vertical-line cord);
+       (2) engineer + robot re-drawn 3/4 FORWARD — each shows TWO eyes (pale pupils on the dark ground), pupils
+           dropped low toward the maquette, both heads pitched down at the model together;
+       (3) spare chalk-on-charcoal hand kept; RED maquette with warm under-glow is the primary accent;
+           a cool blue-tinted blueprint sheet on the desk is the quiet secondary accent. -->
 <svg viewBox="0 0 816 1056" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img"
-     aria-label="Full-bleed charcoal book cover on a dark ground: under a pendant lamp on a long cord, a 1950s engineer and a robot face slightly toward the viewer, both looking down together at a small glowing bright-red truss maquette on a desk beside a blue drafting sheet; the top of the cover is held near-black for a light title">
+     aria-label="Full-bleed charcoal book cover on a dark ground: under a pendant lamp on a long cord, a 1950s engineer and a robot face slightly toward the viewer, both looking down together at a small glowing truss maquette on a desk; the top of the cover is held near-black for a light title">
   <defs>
     <!-- chalk-light contour: displaced line with a soft pale halo -->
     <filter id="fChalk" x="-20%" y="-20%" width="140%" height="140%">
@@ -25,7 +25,7 @@
       <feOffset in="halo" dx="-1.4" dy="-1.8" result="halo2"/>
       <feMerge><feMergeNode in="halo2"/><feMergeNode in="d2"/></feMerge>
     </filter>
-    <!-- accent lines with the same hand (red maquette) -->
+    <!-- umber accent with the same hand -->
     <filter id="fUmber" x="-25%" y="-25%" width="150%" height="150%">
       <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="3" seed="11" result="w"/>
       <feDisplacementMap in="SourceGraphic" in2="w" scale="5" result="d1"/>
@@ -99,12 +99,6 @@
       <stop offset="0" stop-color="#9c8d76" stop-opacity="0.5"/>
       <stop offset="0.55" stop-color="#79695a" stop-opacity="0.26"/>
       <stop offset="1" stop-color="#79695a" stop-opacity="0"/>
-    </radialGradient>
-    <!-- red bloom under the maquette: the accent catching the lamplight -->
-    <radialGradient id="gRedBloom" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#ff5a38" stop-opacity="0.30"/>
-      <stop offset="0.6" stop-color="#e8492e" stop-opacity="0.13"/>
-      <stop offset="1" stop-color="#e8492e" stop-opacity="0"/>
     </radialGradient>
     <clipPath id="clipDeskTopF"><polygon points="210,318 630,318 656,350 184,350"/></clipPath>
   </defs>
@@ -232,36 +226,20 @@
     </g>
     <path d="M188,352 L652,351" stroke="#0f0d0b" stroke-width="2.2" fill="none" opacity="0.7" filter="url(#fSoft)"/>
 
-    <!-- BLUEPRINT: a clear cool-blue drafting sheet in the light pool, chalk hand, quiet beside the lit maquette -->
-    <g filter="url(#fChalk)" stroke-linecap="round" stroke-linejoin="round">
-      <!-- the sheet: cool blue lifted just enough off the charcoal -->
-      <polygon points="248,331 372,323 394,350 266,359" fill="#4a5f74" stroke="#dfe9f1" stroke-width="2.1"/>
-      <!-- margin rule inside the edge -->
-      <polygon points="257,334 364,327 383,348 274,355" fill="none" stroke="#c8d9e6" stroke-width="1.3" opacity="0.75"/>
-      <!-- drafting: a small truss elevation echoing the maquette -->
-      <g fill="none" stroke="#dce9f2" stroke-width="1.5" opacity="0.9">
-        <path d="M268,346 L344,340"/>
-        <path d="M276,345 L290,335 L304,343 L318,333 L332,341"/>
-        <path d="M290,335 L304,343 M318,333 L304,343"/>
-        <!-- a dimension line below, with tick ends -->
-        <path d="M272,351 L338,346 M272,349 L272,353 M338,344 L338,348" opacity="0.6"/>
-      </g>
-      <!-- title block: divided corner box, lower-right of the sheet -->
-      <g fill="none" stroke="#c8d9e6" stroke-width="1.3" opacity="0.8">
-        <polygon points="344,338 379,335 385,347 351,350"/>
-        <path d="M347,344 L382,341"/>
-        <path d="M350,340.5 L360,339.8 M352,347 L366,346"/>
-      </g>
+    <!-- blueprint: cool blue-tinted sheet in the light pool; drafting lines + a title-block corner -->
+    <g filter="url(#fChalk)" stroke="#d9e6f2" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="272,330 394,322 416,349 294,358" fill="#41586d"/>
+      <path d="M306,338 L358,334 M312,345 L324,340 336,344 348,338" fill="none" opacity="0.85"/>
+      <path d="M332,355 L328,346 M328,346 L284,348 M309,347 L307,357" fill="none" stroke-width="1.7" opacity="0.8"/>
     </g>
 
-    <!-- maquette: bright red accent — the focal pop; red bloom + under-glow + vivid line-work -->
-    <ellipse cx="438" cy="320" rx="105" ry="34" fill="url(#gRedBloom)" filter="url(#fGlow)"/>
-    <g filter="url(#fSmudge)" fill="none" stroke="#e2492e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
+    <!-- maquette: red accent with a warm under-glow -->
+    <g filter="url(#fSmudge)" fill="none" stroke="#b02a1e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
       <line x1="380" y1="309" x2="494" y2="309"/>
       <path d="M391,309 L410,291 L466,291 L484,309"/>
       <polygon points="368,330 502,330 509,341 375,341"/>
     </g>
-    <g filter="url(#fUmber)" fill="none" stroke="#d5402e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <g filter="url(#fUmber)" fill="none" stroke="#cf3a2b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="368,330 502,330 509,341 375,341" fill="#3a322b"/>
       <rect x="388" y="309" width="6" height="21"/>
       <rect x="480" y="309" width="6" height="21"/>
@@ -272,11 +250,6 @@
       <line x1="466" y1="291" x2="466" y2="309"/>
       <line x1="410" y1="291" x2="438" y2="309"/>
       <line x1="466" y1="291" x2="438" y2="309"/>
-    </g>
-    <!-- lamplit top chord: the brightest red edge where the light lands -->
-    <g filter="url(#fUmber)" fill="none" stroke="#ef5a3a" stroke-width="1.6" stroke-linecap="round" opacity="0.85">
-      <path d="M410,291 L466,291"/>
-      <line x1="380" y1="308" x2="494" y2="308"/>
     </g>
 
     <!-- engineer arms -->
