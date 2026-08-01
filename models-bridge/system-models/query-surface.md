@@ -12,8 +12,8 @@ rather than parsing raw files, and the tool itself documents how the models load
 | Move | `constraint` — prevents the error by construction |
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft** (probabilistic) — the canonical *read convenience* agents/orchestration use; it emits structured `--json` (deterministic) but doesn't block raw reads |
-
 | Governs | `all-models` — one canonical query API over every model |
+
 ## Motivation — the failure it kills
 
 The models are the agent's compressed map of the codebase, but only if the agent can *read them

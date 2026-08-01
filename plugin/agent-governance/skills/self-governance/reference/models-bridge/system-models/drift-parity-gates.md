@@ -12,8 +12,8 @@ reality** (every model row ↔ a real thing on disk, and every real thing ↔ a 
 | Move | `sensor` — detects the error after the fact |
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) · *blocking* — a model that diverges from reality fails the build |
-
 | Governs | `all-models` — every model is held bidirectionally true to reality |
+
 ## Motivation — the failure it kills
 
 An [executable model](executable-source-of-truth.md) is only trustworthy if it stays true. The failure

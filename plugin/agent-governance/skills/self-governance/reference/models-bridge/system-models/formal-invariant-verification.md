@@ -15,8 +15,8 @@ a model checker plus a bounded-BFS "simworld").
 | Move | `sensor` — detects the error after the fact |
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — an exhaustive model-check (state-space BFS / a temporal model checker) proves the invariant or emits a counterexample trace; a lint asserts the temporal form matches the routed checker |
-
 | Governs | `all-models` — every model invariant earns a temporal form and a checker |
+
 ## Motivation — the failure it kills
 
 Some invariants are about a *single reachable state*: "a job is never both leased and free." Others are

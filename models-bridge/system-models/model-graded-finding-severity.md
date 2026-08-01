@@ -14,8 +14,8 @@ governed-doc commit's deploy-scope lints against the component-and-zone model.)
 | Move | `sensor` — detects the error after the fact |
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) · *blocking* — findings at or adjacent to the change block the commit; the gate runs one central grader over every finding |
-
 | Governs | `all-models` — severity graded by each finding's relation to a model |
+
 ## Motivation — the failure it kills
 
 A whole-tree lint reports findings from all over the tree. Two ways to gate on it both fail, and both

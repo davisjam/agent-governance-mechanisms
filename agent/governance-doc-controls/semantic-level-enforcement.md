@@ -13,8 +13,8 @@ multi-commit task, never at a per-commit hook where the model is legitimately mi
 | Move | `constraint` — prevents the error by construction |
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft** — a design-time placement judgment made when a mechanism is built or reviewed; it aims where a mechanism lands, it does not itself block |
-
 | Governs | `all-models` — placed at the granularity where a model's property is legible |
+
 ## Motivation — the failure it kills
 
 A property has a **scope at which it becomes legible** — the smallest window in which enough of the world is

@@ -121,6 +121,79 @@ SECTION_ORDER = [
 REL_TAGS = ("Counterpart", "Generalization", "Enabler", "Consumer", "Layer", "Bridge", "Sibling", "See also")
 ROLE_DIRS = ["agent", "models-bridge", "product"]
 
+# ── The By-model node map (the "By model" view's grouping) ──
+# The substrate audit's assignment of every entry to the organizing model it plugs into or serves. TWO
+# organizing spines — the fleet's self-operate LIFECYCLE models and the product's 4+1 VIEWS — over one
+# METHOD TRUNK, with the 43-mechanism perimeter grouped under the lifecycle/view each mechanism serves.
+# Slugs are entry file stems. Per node: `models` = the is-a-model entries HOMED here; `cross` = a model
+# shown here but homed on another node (a shared-by-projection cross-link, rendered dashed, never a second
+# home); `perim` = the perimeter mechanisms filed under this node (for the trunk node, its method
+# mechanisms). Every entry is a home exactly once — `check_model_map` fails the build otherwise, so the map
+# can't silently fall out of sync when an entry is added. Presentation only: no files move, no prose changes.
+FLEET_ANCHOR_SLUG = "lifecycle-model"  # the is-a-model that anchors the whole fleet spine (not one node)
+MODEL_NODES = [
+    {"k": "l1", "spine": "fleet", "title": "manage-agents",
+     "sub": "Dispatch → registry → worktree isolation → the gate staircase → tombstone and clean.",
+     "models": ["agent-orchestration-model", "concurrency-contracts"], "cross": [],
+     "perim": ["role-typed-dispatch", "brief-linting", "agent-registry", "tombstone-commits",
+               "typed-event-bus", "caused-by-provenance"]},
+    {"k": "l2", "spine": "fleet", "title": "manage-context",
+     "sub": "Banking, compaction, and session-start reconstruction of the agent's working context.",
+     "models": [], "cross": [],
+     "perim": ["dynamic-context-injection", "docs-hierarchy", "lifecycle-hooks", "reflection-facet-substrate"]},
+    {"k": "l3", "spine": "fleet", "title": "manage-git-repo",
+     "sub": "Main as the deploy tip; cherry-pick and merge-train reachability; the commit gate.",
+     "models": [], "cross": [],
+     "perim": ["pre-commit-hook", "sentinel-first-commit", "merge-train-mis-batching"]},
+    {"k": "l4", "spine": "fleet", "title": "manage-deploy",
+     "sub": "The local → staging → prod staircase, its canaries, heartbeats, and topology.",
+     "models": ["deployment-topology-model"], "cross": [],
+     "perim": ["staged-deploy-gates", "deploy-heartbeats"]},
+    {"k": "l5", "spine": "fleet", "title": "manage-dev-machine",
+     "sub": "Host compute rationed across concurrent worktrees; the locks that keep them from colliding.",
+     "models": ["synchronization-model"], "cross": [],
+     "perim": ["test-serializer", "build-serializer", "aggregate-compute-protection", "resource-pressure-gating"]},
+    {"k": "lcron", "spine": "fleet", "title": "gc-cron plane",
+     "sub": "The periodic garbage-collection crons and their typed alert stream.",
+     "models": [], "cross": [], "perim": ["cron-alerts-gate"]},
+    {"k": "lorch", "spine": "fleet", "title": "orchestrator-hooks",
+     "sub": "The orchestrator session's own hook machinery and the governance-document mechanisms.",
+     "models": ["governance-graph"], "cross": [],
+     "perim": ["claude-md-rule-index", "mandatory-snippet-table", "epic-definition-of-done",
+               "doc-hygiene-lints", "operational-playbooks", "operator-runbook-skill",
+               "epic-and-design-templates"]},
+    {"k": "logical", "spine": "product", "title": "Logical",
+     "sub": "The system's functional decomposition — including the product's own document models, which "
+            "carry the artifact-side mechanisms.",
+     "models": ["service-flow-model", "domain-registries", "pdf-model", "office-models", "canonical-walkers"],
+     "cross": [],
+     "perim": ["content-validator", "standards-rule-engine", "semantic-lints", "coherence-lints",
+               "mutator-stamps", "derive-changelog", "a11y-prefix", "test-onion-tiers", "property-tests",
+               "fuzz-campaigns", "ddt-pin-trailers", "typed-categories", "remediation-verbs",
+               "codemod-first", "service-client", "raw-redis-seam"]},
+    {"k": "process", "spine": "product", "title": "Process",
+     "sub": "What runs at once and where it can collide.",
+     "models": ["composed-state-machine-model", "process-view"],
+     "cross": ["synchronization-model", "concurrency-contracts"], "perim": []},
+    {"k": "dev", "spine": "product", "title": "Development",
+     "sub": "How the codebase is zoned and layered.",
+     "models": ["component-zone-model"], "cross": [], "perim": []},
+    {"k": "phys", "spine": "product", "title": "Physical",
+     "sub": "Where things run and what depends on what.",
+     "models": ["control-substrate-dependency"], "cross": ["deployment-topology-model"], "perim": []},
+    {"k": "scen", "spine": "product", "title": "Scenarios",
+     "sub": "The journeys that tie the views together.",
+     "models": ["user-journey-model"], "cross": ["agent-orchestration-model"], "perim": []},
+    {"k": "trunk", "spine": "trunk", "title": "The method trunk",
+     "sub": "What holds ANY model true, regardless of subject — governs every model in both spines.",
+     "models": ["symbol-anchored-traceability-graph"], "cross": [],
+     "perim": ["executable-source-of-truth", "drift-parity-gates", "agent-first-mbse-harness",
+               "formal-invariant-verification", "coverage-model-mapping", "query-surface",
+               "meta-model-consumption", "model-driven-codegen", "model-graded-finding-severity",
+               "invariant-dag-execution-policy", "semantic-level-enforcement",
+               "journey-criticality-test-placement", "journey-task-closure", "f10-wiring-lint"]},
+]
+
 # ── Abstractions glossary (the interpretability de-referencer) ──
 # Entries cite concrete artifacts as [[slug]] / [[slug|text]] rather than by unshipped filename.
 ABBR_SRC = "ABSTRACTIONS.md"
@@ -394,6 +467,40 @@ def check_governs(entries: list[Entry]) -> list[str]:
     return problems
 
 
+def check_model_map(entries: list[Entry]) -> list[str]:
+    """Completeness of the By-model node map: every entry must be homed under exactly one node (as a model
+    or a perimeter mechanism) or be the fleet anchor, every cross-link must resolve to a real home, and no
+    homed slug may be a phantom. This makes the presentation grouping a checked projection over the entry
+    set — add an entry without placing it and the build fails loudly (no silently-dropped mechanism)."""
+    slugs = {e.slug for e in entries}
+    homes: dict[str, str] = {}
+    problems: list[str] = []
+
+    def claim(slug: str, where: str) -> None:
+        if slug in homes:
+            problems.append(f"model-map: '{slug}' homed twice ({homes[slug]} + {where})")
+        else:
+            homes[slug] = where
+
+    for n in MODEL_NODES:
+        for s in n["models"]:
+            claim(s, f"{n['k']}.model")
+        for s in n["perim"]:
+            claim(s, f"{n['k']}.perim")
+    claim(FLEET_ANCHOR_SLUG, "fleet-anchor")
+    for n in MODEL_NODES:
+        for s in n["cross"]:
+            if s not in homes:
+                problems.append(f"model-map: cross-link '{s}' in {n['k']} homes on no node")
+    for s in sorted(homes):
+        if s not in slugs:
+            problems.append(f"model-map: homed slug '{s}' ({homes[s]}) is not a real entry")
+    for e in entries:
+        if e.slug not in homes:
+            problems.append(f"model-map: entry '{e.slug}' has no node home (place it in MODEL_NODES)")
+    return problems
+
+
 ROLE_READMES = ["README.md", "agent/README.md", "models-bridge/README.md", "product/README.md"]
 
 
@@ -637,6 +744,9 @@ def cmd_validate(_args) -> int:
         n_issues += 1
     for msg in check_governs(entries):
         print(f"  [governs] {msg}")
+        n_issues += 1
+    for msg in check_model_map(entries):
+        print(f"  [modelmap] {msg}")
         n_issues += 1
     for msg in check_links():
         print(f"  [link]  DEAD {msg}")
@@ -2487,10 +2597,51 @@ VIEWS_CSS = """
   .card .c-m { display:block; font-size:var(--fs-micro); color:var(--muted); margin-top:2px; }
   .card .c-m code { background:var(--code-bg); padding:0 3px; border-radius:3px; }
   .card .star { color:var(--accent); }
+  /* ── "By model" map-first view (Option C): F1 as the nav + a detail rail + a no-JS static hierarchy ── */
+  #view-model .blurb { max-width:1080px; margin:0 auto 8px; }
+  .mapfig { display:block; width:100%; height:auto; max-width:960px; margin:4px auto 2px; }
+  .mapfig .node { cursor:pointer; }
+  .mapfig .node rect { transition:stroke-width .1s; }
+  .mapfig .node:hover rect, .mapfig .node.sel rect { stroke-width:3; }
+  .mapfig .node:focus { outline:none; }
+  .mapfig .node:focus-visible rect { stroke-width:3.4; }
+  .detail-rail { max-width:1080px; margin:12px auto 0; border:var(--border-hairline) solid var(--rule);
+                 background:var(--panel); border-radius:var(--radius-code); padding:12px 15px; min-height:92px; }
+  .detail-rail .dr-k { font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.1em;
+                       text-transform:uppercase; color:var(--muted); }
+  .detail-rail .dr-t { font-size:var(--fs-card-body); font-weight:700; margin:1px 0 2px; }
+  .detail-rail .dr-b { font-size:var(--fs-micro); color:var(--muted); margin:0 0 6px; max-width:92ch; }
+  .mrow { display:flex; flex-wrap:wrap; gap:5px; margin:2px 0 4px; }
+  .mcard { display:inline-block; text-decoration:none; color:var(--ink); border:var(--border-hairline) solid var(--rule);
+           border-radius:var(--radius-chip); padding:5px 9px; background:var(--paper); font-size:var(--fs-micro); }
+  .mcard:hover { border-color:var(--accent); background:var(--accent-tint); }
+  .mcard.model { border-top:var(--border-accent-bar) solid var(--box-def-rule); }
+  .mcard.xlink { border-style:dashed; color:var(--muted); background:var(--panel); }
+  .mcard .star { color:var(--accent); font-weight:700; }
+  a.chip { display:inline-block; font-size:var(--fs-micro); color:var(--ink); text-decoration:none; background:var(--panel);
+           border:var(--border-hairline) solid var(--rule); border-radius:var(--radius-code); padding:3px 8px; }
+  a.chip:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-tint); }
+  .chip-label { display:block; font-size:var(--fs-micro); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:8px 0 2px; }
+  #model-static { max-width:1080px; margin:16px auto 0; }
+  #model-static .spine-sec { margin:16px 0 0; }
+  #model-static h2 { font-size:var(--fs-section); margin:14px 0 4px; padding-bottom:3px; border-bottom:var(--border-hairline) solid var(--line); }
+  #model-static h2 .sh-sub { font-weight:400; font-size:var(--fs-micro); color:var(--muted); }
+  #model-static h3 { font-size:var(--fs-card-body); margin:12px 0 2px; }
+  #model-static .node-sec { border-left:var(--border-accent-bar) solid var(--rule); padding-left:12px; margin:8px 0; }
+  #model-static .n-sub { font-size:var(--fs-meta); color:var(--muted); margin:1px 0 2px; }
+  #model-static .lbl { font-size:var(--fs-micro); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:6px 0 0; }
+  #model-static ul { margin:2px 0 6px; padding-left:20px; }
+  #model-static li { font-size:var(--fs-meta); margin:2px 0; }
+  #model-static .spine-anchor { font-size:var(--fs-meta); color:var(--muted); margin:2px 0 6px; }
+  #model-static .star { color:var(--accent); }
+  #model-static .xtag { font-size:var(--fs-micro); color:var(--muted); font-style:italic; }
+  .spine-sec.fleet h2 { color:var(--b); } .spine-sec.product h2 { color:var(--p); } .spine-sec.trunk h2 { color:var(--accent); }
 """
 
 VIEWS_JS = r"""
 const ROLE_ORDER = ["Agent","Bridge","Product"];
+// The card-grid views (rendered into #stage). "By model" (id:"model") is handled specially below —
+// its content is the F1 map + a detail rail + a static hierarchy, already present in #view-model.
 const VIEWS = [
   { id:"family",  label:"By role & family", blurb:"The logical view — the structural inventory, grouped as it ships.", key:c=>c.role+" · "+c.family, order:null },
   { id:"enf",     label:"By enforcement",   blurb:"soft (probabilistic, cannot block) → soft·hard → hard (deterministic).", key:c=>c.enforcement, order:["Soft","Soft·Hard","Hard"] },
@@ -2498,6 +2649,8 @@ const VIEWS = [
 ];
 const roleCls = c => c.role==="Agent"?"r-a":c.role==="Product"?"r-p":"r-b";
 const enfCls  = c => c.enforcement==="Hard"?"e-h":c.enforcement==="Soft"?"e-s":"e-sh";
+const esc = s => (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const attr = s => (s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;");
 function renderForView(card){                       // one card ← its metadata; clickable + tooltipped
   const star = card.star ? ' <span class="star">★</span>' : '';
   const tip = (card.summary||"").replace(/"/g,'&quot;');
@@ -2525,13 +2678,61 @@ function renderView(v){
       '<section class="grp"><h2>'+label(k)+' <span class="cnt">('+cs.length+')</span></h2>'
       + '<div class="cards">'+cs.map(renderForView).join("")+'</div></section>').join("");
 }
-function setView(id){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.v===id));
-  renderView(VIEWS.find(v=>v.id===id));
+// ── the "By model" detail rail — driven by the F1 map's nodes ──
+const rail = document.getElementById("model-rail");
+function modelCard(m){
+  const lead = m.cross ? '⇆ ' : (m.star ? '<span class="star">★</span> ' : '');
+  return '<a class="mcard '+(m.cross?"xlink":"model")+'" href="'+attr(m.href)+'">'
+       + '<span class="t">'+lead+esc(m.t)+'</span></a>';
 }
-document.getElementById("tabs").innerHTML = VIEWS.map(v=>'<button class="tab" data-v="'+v.id+'">'+v.label+'</button>').join("");
-document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>setView(t.dataset.v));
-setView("family");
+function showModelGroup(k){
+  const g = MODEL_GROUPS[k]; if(!g || !rail) return;
+  document.querySelectorAll("#modelmap .node").forEach(n=>{
+    const on = n.dataset.k===k;
+    n.classList.toggle("sel", on);
+    n.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  const models = g.models.map(modelCard).join("");
+  const mechs  = g.mechs.map(m=>'<a class="chip" href="'+attr(m.href)+'">'+esc(m.t)+'</a>').join("");
+  const mechLbl = g.trunk ? (g.mechs.length+" method mechanisms — govern every model")
+                          : (g.mechs.length+" mechanisms filed here");
+  rail.innerHTML =
+      '<div class="dr-k">'+esc(g.kick)+'</div>'
+    + '<div class="dr-t">'+esc(g.t)+'</div>'
+    + '<div class="dr-b">'+esc(g.b)+'</div>'
+    + (models ? '<div class="chip-label">Models plugged in</div><div class="mrow">'+models+'</div>' : '')
+    + (mechs  ? '<div class="chip-label">'+mechLbl+'</div><div class="mrow">'+mechs+'</div>' : '');
+}
+function setView(id){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on", t.dataset.v===id));
+  const vm = document.getElementById("view-model"), st = document.getElementById("stage");
+  if(id==="model"){ vm.hidden=false; st.hidden=true; }
+  else { vm.hidden=true; st.hidden=false; renderView(VIEWS.find(v=>v.id===id)); }
+}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click", ()=>setView(t.dataset.v)));
+// Progressive enhancement: upgrade the decorative F1 map into an interactive, keyboard-operable nav.
+// (Without JS the SVG stays aria-hidden and #model-static carries the accessible hierarchy.)
+(function(){
+  const svg = document.getElementById("modelmap");
+  const stat = document.getElementById("model-static");
+  if(!svg){ return; }
+  svg.removeAttribute("aria-hidden");
+  svg.setAttribute("role","group");
+  svg.setAttribute("aria-label","Model map — activate a lifecycle, a view, or the method trunk to see the models and mechanisms grouped under it");
+  if(rail) rail.hidden = false;
+  if(stat) stat.hidden = true;
+  svg.querySelectorAll(".node").forEach(n=>{
+    const g = MODEL_GROUPS[n.dataset.k]; if(!g) return;
+    n.setAttribute("role","button");
+    n.setAttribute("tabindex","0");
+    n.setAttribute("aria-pressed","false");
+    n.setAttribute("aria-label", g.t+" — "+g.b);
+    n.addEventListener("click", ()=>showModelGroup(n.dataset.k));
+    n.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); showModelGroup(n.dataset.k); } });
+  });
+  showModelGroup("l1");
+})();
+setView("model");
 """
 
 
@@ -2570,6 +2771,82 @@ def _governed_by_block(e: Entry, entries: list[Entry], rel_root: str) -> str:
             f'<ul class="gb-list">{rows}</ul>\n</section>\n')
 
 
+_SPINE_KICK = {"fleet": "Fleet spine · lifecycle model", "product": "Product spine · 4+1 view",
+               "trunk": "Tier 2 · the method trunk"}
+_SPINE_HEAD = {
+    "fleet": ("The fleet", "the self-operate lifecycle models — Part 2's spine"),
+    "product": ("The product", "the 4+1 views of the shipped system — Part 3's spine"),
+    "trunk": ("The method trunk", "governs every model in both spines"),
+}
+
+
+def _model_view(entries: list[Entry]) -> tuple[str, str]:
+    """Build the "By model" view: the F1 map's detail-rail data (JS) + the no-JS static hierarchy (HTML).
+    Both project over the real entries via the NODE_MAP grouping — titles/summaries/links come from the
+    entries, only the grouping is the audit's map. Returns (static_hierarchy_html, model_groups_json)."""
+    by_slug = {e.slug: e for e in entries}
+
+    def resolve(slug: str, cross: bool = False) -> dict | None:
+        e = by_slug.get(slug)
+        if e is None:
+            return None
+        return {"t": e.title_only(), "href": _md_link_rewrite(e.path), "sum": e.summary,
+                "star": e.model == "is-a-model", "cross": cross}
+
+    # (1) the rail groups (consumed by showModelGroup in VIEWS_JS)
+    groups: dict[str, dict] = {}
+    for n in MODEL_NODES:
+        models = [r for r in (resolve(s) for s in n["models"]) if r]
+        models += [r for r in (resolve(s, cross=True) for s in n["cross"]) if r]
+        mechs = [r for r in (resolve(s) for s in n["perim"]) if r]
+        groups[n["k"]] = {"kick": _SPINE_KICK[n["spine"]], "t": n["title"], "b": n["sub"],
+                          "models": models, "mechs": mechs, "trunk": n["spine"] == "trunk"}
+
+    # (2) the static hierarchy — the accessible, no-JS fallback (headings + link lists)
+    def li_model(r: dict) -> str:
+        lead = "⇆ " if r["cross"] else ('<span class="star">★</span> ' if r["star"] else "")
+        tail = ' <span class="xtag">shared by projection</span>' if r["cross"] else ""
+        summ = f" — {_esc(r['sum'])}" if r["sum"] else ""
+        return f'<li>{lead}<a href="{_attr(r["href"])}">{_esc(r["t"])}</a>{tail}{summ}</li>'
+
+    def li_mech(r: dict) -> str:
+        summ = f" — {_esc(r['sum'])}" if r["sum"] else ""
+        return f'<li><a href="{_attr(r["href"])}">{_esc(r["t"])}</a>{summ}</li>'
+
+    def node_block(n: dict) -> str:
+        g = groups[n["k"]]
+        parts = [f'<section class="node-sec"><h3>{_esc(n["title"])}</h3>'
+                 f'<p class="n-sub">{_esc(n["sub"])}</p>']
+        if g["models"]:
+            parts.append('<p class="lbl">Models plugged in</p><ul>'
+                         + "".join(li_model(r) for r in g["models"]) + "</ul>")
+        if g["mechs"]:
+            lbl = "The method mechanisms — govern every model" if n["spine"] == "trunk" \
+                else "Perimeter — filed under this " + ("view" if n["spine"] == "product" else "lifecycle")
+            parts.append(f'<p class="lbl">{lbl}</p><ul>'
+                         + "".join(li_mech(r) for r in g["mechs"]) + "</ul>")
+        parts.append("</section>")
+        return "".join(parts)
+
+    static_parts = []
+    for spine in ("fleet", "product", "trunk"):
+        h, sub = _SPINE_HEAD[spine]
+        static_parts.append(f'<section class="spine-sec {spine}"><h2>{_esc(h)} '
+                            f'<span class="sh-sub">— {_esc(sub)}</span></h2>')
+        if spine == "fleet":
+            anchor = resolve(FLEET_ANCHOR_SLUG)
+            if anchor:
+                static_parts.append(
+                    f'<p class="spine-anchor">Anchored by <span class="star">★</span> '
+                    f'<a href="{_attr(anchor["href"])}">{_esc(anchor["t"])}</a> — {_esc(anchor["sum"])}</p>')
+        for n in MODEL_NODES:
+            if n["spine"] == spine:
+                static_parts.append(node_block(n))
+        static_parts.append("</section>")
+    static_html = '<div id="model-static">\n' + "\n".join(static_parts) + "\n</div>"
+    return static_html, json.dumps(groups, ensure_ascii=False)
+
+
 def build_views_page(entries: list[Entry]) -> str:
     stars = {os.path.normpath(r["path"]) for fam in parse_census() for r in fam["rows"] if r["star"]}
     cards = []
@@ -2581,18 +2858,38 @@ def build_views_page(entries: list[Entry]) -> str:
             "enforcement": d["enforcement"],
             "summary": d["summary"], "star": e.path in stars,
         })
+    static_html, groups_json = _model_view(entries)
+    mapfig = _inline_svg("assets/model-map.svg")
     head = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
             f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
             f"<title>Governance catalogue — codegen'd views</title>\n{FONTS_LINK}\n"
             f"<style>{VIEWS_CSS}{FONT_CSS}</style>\n</head>\n<body>\n")
+    # Tabs are rendered server-side (so they exist without JS); "By model" is the default. The card-based
+    # views (family/enf/form) render into #stage on demand; the model view lives in #view-model.
+    tabs = ('<button type="button" class="tab on" data-v="model">By model</button>'
+            '<button type="button" class="tab" data-v="family">By role &amp; family</button>'
+            '<button type="button" class="tab" data-v="enf">By enforcement</button>'
+            '<button type="button" class="tab" data-v="form">By form</button>')
+    model_blurb = ('Two organizing spines over one method trunk: the fleet\'s <b>lifecycle models</b> and the '
+                   'product\'s <b>4+1 views</b>, with the sub-models that plug into each and the perimeter '
+                   'grouped under the model it serves. Activate a node on the map — or read the full hierarchy '
+                   'below. ★ = an is-a-model entry; ⇆ = a model shared across spines by projection.')
     body = ("<h1>Governance catalogue — codegen'd views</h1>\n"
             f'<p class="sub">The same {len(entries)} mechanisms, re-grouped live from card metadata. Every card is emitted by '
             '<code>renderForView(card)</code>; a view is just a grouping key + order, so <b>adding a mechanism or a '
             'view is data, not layout</b>. Click a card for its writeup; hover for its one-line summary. '
             '&nbsp;·&nbsp; <a href="catalogue-figure.html">the governance map</a> '
             '&nbsp;·&nbsp; <a href="index.html">catalogue</a></p>\n'
-            '<div id="tabs"></div>\n<div id="stage"></div>\n')
-    script = "<script>\nconst CARDS = " + json.dumps(cards, ensure_ascii=False) + ";\n" + VIEWS_JS + "</script>\n"
+            f'<div id="tabs">{tabs}</div>\n'
+            '<section id="view-model" aria-label="By model">\n'
+            f'<p class="blurb">{model_blurb}</p>\n'
+            f'{mapfig}\n'
+            '<div id="model-rail" class="detail-rail" aria-live="polite" hidden></div>\n'
+            f'{static_html}\n'
+            '</section>\n'
+            '<div id="stage" hidden></div>\n')
+    script = ("<script>\nconst CARDS = " + json.dumps(cards, ensure_ascii=False) + ";\n"
+              + "const MODEL_GROUPS = " + groups_json + ";\n" + VIEWS_JS + "</script>\n")
     return head + "<main>\n" + body + script + _site_footer("") + "\n</main>\n</body>\n</html>\n"
 
 
