@@ -17,10 +17,10 @@
 //
 // The fix: assert the SUCCESS METRIC across a family of the landing's responsive containers, and degrade
 // gracefully per selector. The family (enumerated from the built landing CSS):
-//   - `.hero-grid` — grid, 2 cols (prose | figure) → 1 col at max-width:900px   [PRIMARY]
-//   - `.slot`      — grid, 2 cols (prose | figure) → 1 col
+//   - `.slot`      — grid, 2 cols (Big-Idea prose | figure) → 1 col at max-width:900px   [PRIMARY]
 //   - `.pair`      — grid, 2 cols (two-up cells)   → 1 col
 //   - `.nav-grid`  — flex-wrap, many cells wide    → fewer per row on phone (reduces, need not reach 1)
+// (The hero itself is now a single-column prose lead — no grid to collapse — so it is not a member.)
 //
 // The contract (aggregate, not per-selector):
 //   PASS  when the landing demonstrates responsive collapse — at least one present grid member goes
@@ -67,12 +67,11 @@ const PHONE_VIEWPORT = 390;
 
 // The responsive-container family, enumerated from the built landing CSS. Each member declares:
 //   mode        — "grid" (left-edge column count) or "flex" (widest-row child count).
-//   primary     — the hero band; reported as the primary demonstrator when present.
+//   primary     — the lead demonstrator; reported as the primary demonstrator when present.
 //   reachSingle — whether a full collapse for this member means exactly 1 column on phone. Grids that
 //                 flip to `grid-template-columns:1fr` reach single; flex-wrap only needs to REDUCE.
 const FAMILY = [
-  { sel: ".hero-grid", mode: "grid", primary: true,  reachSingle: true,  desc: "hero prose | figure" },
-  { sel: ".slot",      mode: "grid", primary: false, reachSingle: true,  desc: "thesis prose | figure slots" },
+  { sel: ".slot",      mode: "grid", primary: true,  reachSingle: true,  desc: "Big-Idea prose | figure slots" },
   { sel: ".pair",      mode: "grid", primary: false, reachSingle: true,  desc: "two-up comparison cells" },
   { sel: ".nav-grid",  mode: "flex", primary: false, reachSingle: false, desc: "primary nav cells (flex-wrap)" },
 ];

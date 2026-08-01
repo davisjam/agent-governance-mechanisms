@@ -1405,12 +1405,12 @@ LANDING_CSS = """
   .m-cap { display:block; font-size:var(--fs-meta); color:var(--muted); line-height:1.55; margin:11px 2px 0; text-align:center; }
   .m-cap b { color:var(--muted); }
 
-  /* ---- HERO band: lead prose beside the concrete cover scene (the void fix) ----------------- */
+  /* ---- HERO band: a prose-led lead that flows straight into the Big Idea 1 churn flowchart ---- */
   .hero-band { margin:8px 0 6px; }
-  .hero-grid { display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,1fr); gap:18px 44px; align-items:center; }
-  .hero-grid .hg-prose { min-width:0; }
-  .hero-grid .hg-prose .book-h1 { margin-top:0; }
-  .hero-grid .hg-fig svg { display:block; width:100%; height:auto; }
+  .hero-lead { max-width:860px; margin:0 auto; text-align:center; }
+  .hero-lead .book-h1 { margin-top:0; }
+  .hero-lead .book-sub { margin-left:auto; margin-right:auto; }
+  .hero-lead .m-lead { max-width:70ch; margin-left:auto; margin-right:auto; }
 
   /* ---- the Big-Ideas argument ---------------------------------------------------------------- */
   .big-ideas { margin:20px 0 4px; }
@@ -1422,7 +1422,7 @@ LANDING_CSS = """
   .s-claim b, .s-claim .term { color:var(--ink); }
   .s-fig svg { display:block; width:100%; height:auto; }
 
-  /* Big Idea 1 - fused with the hero: the churn flowchart full-width beneath the diptych. */
+  /* Big Idea 1 - the landing's lead visual: the churn flowchart full-width beneath the hero lead. */
   .idea-hero { margin:22px 0 0; }
   .idea-hero .ih-fig svg { display:block; width:100%; height:auto; max-width:1080px; margin:0 auto; }
   .idea-hero .ih-words { max-width:74ch; margin:16px auto 0; text-align:center; }
@@ -1510,8 +1510,6 @@ LANDING_CSS = """
 
   /* ---- responsive: stack every two-column primitive at <= 900px ----------------------------- */
   @media (max-width:900px){
-    .hero-grid { grid-template-columns:1fr; gap:20px; }
-    .hero-grid .hg-fig { max-width:640px; margin:0 auto; }
     .slot { grid-template-columns:1fr; gap:14px; }
     .slot.figright .s-fig { order:0; }
     .slot .s-fig { max-width:640px; margin:0 auto; }
@@ -1936,29 +1934,25 @@ EXPAND_JS = """<script>
 
 LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 =====================
        The landing is a PROJECTION of the Big-Ideas model (book-models/landing-big-ideas.json), laid out
-       as the book's own argument in the book's own order (Option 3 "the argument"). The hero band — lead
-       prose beside the concrete cover scene — flows directly into Big Idea 1, whose churn flowchart renders
-       full-width beneath it. Then the stance (one band), the two theses (a matched pair), practice and
-       seat (alternating bands), and the CLOSING — the conclusion + three ways in (full catalogue · book ·
-       quickstart). The census and the quiet vocabulary/definitions/outcomes reference strip follow as
-       back-matter (appended in cmd_build). Each Big-Idea slot = figure · concise claim · a light "expand
-       to learn more" · "Read in the book →". No card masonry, no <details> peeks — a build renders every
-       slot from the model. -->
+       as the book's own argument in the book's own order (Option 3 "the argument"). The hero is a
+       prose-led lead — the title + the framing paragraph — that flows straight into Big Idea 1, whose
+       churn flowchart renders full-width beneath it as the landing's LEAD VISUAL. Then the stance (one
+       band), the two theses (a matched pair), practice and seat (alternating bands), and the CLOSING —
+       the conclusion + three ways in (full catalogue · book · quickstart). The census and the quiet
+       vocabulary/definitions/outcomes reference strip follow as back-matter (appended in cmd_build). Each
+       Big-Idea slot = figure · concise claim · a light "expand to learn more" · "Read in the book →". No
+       card masonry, no <details> peeks — a build renders every slot from the model. -->
   <div class="hero-band">
-    <div class="hero-grid">
-      <div class="hg-prose">
-        {book_title_block}
-        <p class="m-lead">Generative AI is shifting software engineering from a practice built around scarce
-        implementation toward one built around abundant, low-cost code. The hard part stops being writing
-        code and becomes <span class="term">governing the conditions under which fast code can be
-        trusted</span>. This site serves a method for doing that — <span class="term">Model-Based Agentic
-        Software Engineering</span> (MAGE) — as six big ideas; the book carries the full treatment of every
-        one.</p>
-        <p class="m-lead"><a class="hero-cta" href="quick-start.html"><em>Quick start — install the skills
-        for Claude →</em></a></p>
-      </div>
-      <figure class="hg-fig">{cover}<figcaption class="m-cap"><b>The concrete view.</b> An engineer briefs an
-      orchestrator through models; the orchestrator dispatches sub-agents that work behind the glass.</figcaption></figure>
+    <div class="hero-lead">
+      {book_title_block}
+      <p class="m-lead">Generative AI is shifting software engineering from a practice built around scarce
+      implementation toward one built around abundant, low-cost code. The hard part stops being writing
+      code and becomes <span class="term">governing the conditions under which fast code can be
+      trusted</span>. This site serves a method for doing that — <span class="term">Model-Based Agentic
+      Software Engineering</span> (MAGE) — as six big ideas; the book carries the full treatment of every
+      one.</p>
+      <p class="m-lead"><a class="hero-cta" href="quick-start.html"><em>Quick start — install the skills
+      for Claude →</em></a></p>
     </div>
   </div>
 
@@ -2668,10 +2662,9 @@ def cmd_build(_args) -> int:
     # from book-models/landing-big-ideas.json; figures splice as bare responsive <svg> with their internal
     # ids namespaced per slot (_ns_svg_ids) so no two figures collide (check_no_duplicate_ids). The census
     # stays on the landing because the reachability gate derives every entry page's inbound link from it.
-    _cover_scene = _inline_svg("assets/cover-scene.svg")
+    # The hero carries NO cover figure — the Big Idea 1 churn flowchart is the landing's lead visual now.
     landing_body = (NAV_GRID + "\n" + LANDING_INTRO.format(
         book_title_block=_book_title_block(),
-        cover=_ns_svg_ids(_cover_scene, "hero-scene"),
         big_ideas=_landing_big_ideas(),
         closing=_landing_closing(),
     ) + "\n" + build_census(entries) + "\n" + _landing_reference() + "\n" + EXPAND_JS)

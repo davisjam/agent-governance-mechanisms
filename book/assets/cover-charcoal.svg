@@ -1,0 +1,325 @@
+<!-- Cover concept B — CHARCOAL v3 FULL-BLEED portrait, FINAL. Hand-authored scratch mockup; title-less; 816x1056.
+     The whole cover is the dark charcoal field; the scene is lifted OUT of the tone. Re-composed vertically:
+     a calm near-black title band across the top ~200px (light title overlays it), headroom below it, a LONG
+     pendant cord dropping to the lamp, the figures + desk in the lower half, and a deep charcoal foreground.
+     FINAL edits over v3:
+       (1) the truss maquette is lifted from umber to a bright warm RED (#d5402e lines over an #e2492e
+           under-glow, plus a faint red bloom beneath) so it POPS as the single warm focal accent;
+       (2) the blueprint on the desk is now a CLEAR cool-blue drafting sheet: margin rule, a small truss
+           elevation sketch echoing the maquette, and a title-block corner — quiet, in the chalk hand.
+     Kept from v3: the working lamp (glowing bulb, falling cone, warm desk pool), the ONE continuous curved
+     light-catching cord (group-level filter sidesteps the librsvg zero-area-bbox drop), both figures 3/4
+     forward with two pale-pupil eyes dropped toward the model, the dark title band, spare chalk hand. -->
+<svg viewBox="0 0 816 1056" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img"
+     aria-label="Full-bleed charcoal book cover on a dark ground: under a pendant lamp on a long cord, a 1950s engineer and a robot face slightly toward the viewer, both looking down together at a small glowing bright-red truss maquette on a desk beside a blue drafting sheet; the top of the cover is held near-black for a light title">
+  <defs>
+    <!-- chalk-light contour: displaced line with a soft pale halo -->
+    <filter id="fChalk" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="7" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="6" result="d1"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.22" numOctaves="2" seed="19" result="r"/>
+      <feDisplacementMap in="d1" in2="r" scale="2.6" result="d2"/>
+      <feGaussianBlur in="d2" stdDeviation="1.8" result="soft"/>
+      <feColorMatrix in="soft" type="matrix"
+        values="0 0 0 0 0.74  0 0 0 0 0.70  0 0 0 0 0.64  0 0 0 0.38 0" result="halo"/>
+      <feOffset in="halo" dx="-1.4" dy="-1.8" result="halo2"/>
+      <feMerge><feMergeNode in="halo2"/><feMergeNode in="d2"/></feMerge>
+    </filter>
+    <!-- accent lines with the same hand (red maquette) -->
+    <filter id="fUmber" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="3" seed="11" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="5" result="d1"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.22" numOctaves="2" seed="29" result="r"/>
+      <feDisplacementMap in="d1" in2="r" scale="2.2" result="d2"/>
+    </filter>
+    <!-- broad rubbed smudge -->
+    <filter id="fSmudge" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="3" seed="5" result="n"/>
+      <feDisplacementMap in="b" in2="n" scale="26"/>
+    </filter>
+    <!-- soft small smudge for shading strokes -->
+    <filter id="fSoft" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="13" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="1.1"/>
+    </filter>
+    <!-- glow smudge: soft warm light masses -->
+    <filter id="fGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="11" result="b"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="b" in2="n" scale="14"/>
+    </filter>
+    <!-- paper tooth catching light through the charcoal -->
+    <filter id="fToothLight" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="23" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix"
+        values="0 0 0 0 0.93  0 0 0 0 0.89  0 0 0 0 0.82  1.6 1.6 1.6 0 -2.25"/>
+    </filter>
+    <!-- deep dust mottle over the field -->
+    <filter id="fMottleDark" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="4" seed="41" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix"
+        values="0 0 0 0 0.05  0 0 0 0 0.04  0 0 0 0 0.04  0.85 0.85 0.85 0 -1.0"/>
+    </filter>
+    <!-- the charcoal field: darkest at the top (title), opening toward the lamplit middle, sinking again below -->
+    <linearGradient id="gField" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141110"/>
+      <stop offset="0.28" stop-color="#211d1a"/>
+      <stop offset="0.55" stop-color="#2c2824"/>
+      <stop offset="0.78" stop-color="#272320"/>
+      <stop offset="1" stop-color="#191512"/>
+    </linearGradient>
+    <!-- extra-dark, extra-even band across the top: the title zone -->
+    <linearGradient id="gTitleBand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#100d0b" stop-opacity="0.95"/>
+      <stop offset="0.6" stop-color="#100d0b" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#100d0b" stop-opacity="0"/>
+    </linearGradient>
+    <!-- warm bulb halo -->
+    <radialGradient id="gBulb" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffe4a6" stop-opacity="0.9"/>
+      <stop offset="0.35" stop-color="#f0c67c" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#f0c67c" stop-opacity="0"/>
+    </radialGradient>
+    <!-- falling light cone -->
+    <linearGradient id="gCone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2cd87" stop-opacity="0.34"/>
+      <stop offset="0.65" stop-color="#e9c37e" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#e9c37e" stop-opacity="0.05"/>
+    </linearGradient>
+    <!-- warm pool on the desktop -->
+    <radialGradient id="gDeskPool" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f2cd8e" stop-opacity="0.6"/>
+      <stop offset="0.6" stop-color="#e2b877" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#e2b877" stop-opacity="0"/>
+    </radialGradient>
+    <!-- broad ambient lamp pool behind the whole scene -->
+    <radialGradient id="gScenePool" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#9c8d76" stop-opacity="0.5"/>
+      <stop offset="0.55" stop-color="#79695a" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#79695a" stop-opacity="0"/>
+    </radialGradient>
+    <!-- red bloom under the maquette: the accent catching the lamplight -->
+    <radialGradient id="gRedBloom" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ff5a38" stop-opacity="0.30"/>
+      <stop offset="0.6" stop-color="#e8492e" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#e8492e" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="clipDeskTopF"><polygon points="210,318 630,318 656,350 184,350"/></clipPath>
+  </defs>
+
+  <rect width="816" height="1056" fill="url(#gField)"/>
+
+  <!-- hand-rubbed variation in the field -->
+  <g filter="url(#fSmudge)">
+    <path d="M-20,880 Q200,840 420,868 Q650,900 840,858 L840,1080 L-20,1080 Z" fill="#120f0d" opacity="0.6"/>
+    <path d="M50,470 Q115,438 175,458 Q135,510 85,532 Z" fill="#191512" opacity="0.5"/>
+    <path d="M660,450 Q735,470 775,522 Q705,517 655,492 Z" fill="#191512" opacity="0.5"/>
+    <path d="M230,300 Q420,272 610,300 Q420,330 230,300 Z" fill="#3a342f" opacity="0.14"/>
+  </g>
+
+  <!-- broad ambient pool the lamp throws over the whole scene -->
+  <ellipse cx="428" cy="660" rx="370" ry="270" fill="url(#gScenePool)" filter="url(#fSmudge)"/>
+
+  <!-- ===================== THE SCENE (scene space 820x505, lifted out of the field) ===================== -->
+  <g transform="translate(-43,330) scale(1.1)">
+
+    <!-- LAMPLIGHT: falling cone from the shade down over figures + desk -->
+    <path d="M400,138 L282,340 L578,340 L460,138 Z" fill="url(#gCone)" filter="url(#fGlow)"/>
+    <!-- bulb halo -->
+    <ellipse cx="430" cy="132" rx="70" ry="58" fill="url(#gBulb)" filter="url(#fGlow)"/>
+
+    <!-- lamp shade + bright bulb (the cord arrives from page space above) -->
+    <g filter="url(#fChalk)" fill="none" stroke="#e8e0d0" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M396,132 Q430,96 464,132" stroke-width="2.8"/>
+    </g>
+    <path d="M396,132 Q430,96 464,132 Z" fill="#0f0d0b" opacity="0.55" filter="url(#fSoft)"/>
+    <circle cx="430" cy="129" r="6.5" fill="#ffedbe" stroke="#e8e0d0" stroke-width="1.4" filter="url(#fSoft)"/>
+
+    <!-- floor line -->
+    <g filter="url(#fChalk)" fill="none" stroke="#ded6c8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M118,468 Q410,465 702,468" stroke-width="2.2" opacity="0.5"/>
+    </g>
+
+    <!-- ENGINEER: torso lifted from the ground, chalk contour -->
+    <g filter="url(#fChalk)" stroke="#e6dfd2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M300,224 C289,228 283,236 281,243 C273,259 268,291 266,326 L334,324 C333,296 336,259 339,246 C338,236 331,227 322,224 Z" fill="#4a443d"/>
+      <path d="M301,227 L311,242 L320,226" fill="none" stroke-width="2"/>
+      <path d="M311,242 L322,274 L316,287 L306,270 Z" fill="none" stroke-width="2"/>
+    </g>
+    <!-- ENGINEER: head, 3/4 forward, pitched down; TWO eyes behind glasses, pale pupils low-right -->
+    <g transform="rotate(7 312 188)">
+      <g filter="url(#fChalk)" stroke="#e6dfd2" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M290,174 C286,188 288,202 297,210 C306,218 320,219 328,212 C336,205 339,194 338,182 C337,169 328,160 316,159 C304,158 293,163 290,174 Z" fill="#544d45"/>
+        <!-- hair mass: deepest black, top + turned-away side -->
+        <path d="M288,180 C285,164 296,154 310,153 C324,152 336,159 339,172 C331,164 321,161 312,162 C300,163 292,170 288,180 Z" fill="#12100e" stroke-width="2"/>
+        <!-- ear on the turned-away side -->
+        <path d="M289,190 C286,187 285,192 288,196" fill="none" stroke-width="2"/>
+        <!-- glasses: both lenses visible; temple arm back to the ear -->
+        <circle cx="304" cy="192" r="7" fill="none" stroke-width="2"/>
+        <circle cx="324" cy="193" r="7" fill="none" stroke-width="2"/>
+        <path d="M311,192 L317,193" fill="none" stroke-width="2"/>
+        <path d="M297,190 L290,188" fill="none" stroke-width="1.8"/>
+        <!-- brows knit down in concentration -->
+        <path d="M298,182 L309,184" fill="none" stroke-width="2"/>
+        <path d="M319,184 L330,183" fill="none" stroke-width="2"/>
+        <!-- nose + mouth, low in the face (chin tucked) -->
+        <path d="M316,197 C318,201 317,204 313,205" fill="none" stroke-width="1.8"/>
+        <path d="M307,210 C311,212 317,212 320,210" fill="none" stroke-width="1.8"/>
+      </g>
+      <!-- pale pupils: dropped LOW and toward the model (down-right) -->
+      <g fill="#f9f3e4" filter="url(#fSoft)">
+        <circle cx="306" cy="195" r="2.3"/>
+        <circle cx="326" cy="196" r="2.3"/>
+      </g>
+    </g>
+    <!-- engineer shading: shadow flank + lit crown of the shoulders -->
+    <g filter="url(#fSoft)" stroke-linecap="round" fill="none">
+      <path d="M271,262 C267,284 266,306 266,322" stroke="#0f0d0b" stroke-width="6" opacity="0.5"/>
+      <path d="M290,232 C302,224 320,224 332,232" stroke="#f0e9da" stroke-width="3.2" opacity="0.55"/>
+    </g>
+
+    <!-- ROBOT: 3/4 forward, head tipped down-left toward the maquette; TWO eyes, pale pupils low-left -->
+    <g transform="rotate(-8 566 272)">
+      <g filter="url(#fChalk)" stroke="#e6dfd2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <!-- head: front face + a hint of the turned side panel -->
+        <rect x="534" y="160" width="62" height="48" rx="10" fill="#4c463f"/>
+        <path d="M596,166 L603,172 L603,198 L596,204" fill="none" stroke-width="2"/>
+        <line x1="560" y1="160" x2="555" y2="144" stroke-width="2"/>
+        <circle cx="554" cy="140" r="3.5" fill="#4c463f"/>
+        <line x1="556" y1="208" x2="555" y2="220" stroke-width="2"/>
+        <line x1="576" y1="208" x2="575" y2="220" stroke-width="2"/>
+        <rect x="530" y="220" width="76" height="106" rx="11" fill="#443e38"/>
+        <!-- two eyes -->
+        <circle cx="551" cy="182" r="7.5" fill="none" stroke-width="2"/>
+        <circle cx="579" cy="182" r="7.5" fill="none" stroke-width="2"/>
+        <!-- mouth: a small speaker slot, low on the face -->
+        <path d="M557,200 L575,200" fill="none" stroke-width="2.2"/>
+        <line x1="562" y1="197.5" x2="562" y2="202.5" stroke-width="1.4"/>
+        <line x1="570" y1="197.5" x2="570" y2="202.5" stroke-width="1.4"/>
+        <!-- chest dial + panel lines -->
+        <circle cx="568" cy="252" r="7" fill="none" stroke-width="2"/>
+        <line x1="568" y1="252" x2="573" y2="247" stroke-width="2"/>
+        <line x1="548" y1="278" x2="588" y2="278" stroke-width="2"/>
+        <line x1="548" y1="286" x2="580" y2="286" stroke-width="2"/>
+      </g>
+      <!-- pale pupils: dropped LOW and toward the model (down-left) -->
+      <g fill="#f2ecdf" filter="url(#fSoft)">
+        <circle cx="548" cy="185" r="2.3"/>
+        <circle cx="576" cy="185" r="2.3"/>
+      </g>
+      <!-- shadow flank + lit head-top -->
+      <g filter="url(#fSoft)" stroke-linecap="round" fill="none">
+        <line x1="598" y1="228" x2="602" y2="310" stroke="#0f0d0b" stroke-width="5" opacity="0.5"/>
+        <path d="M540,162 L590,162" stroke="#f0e9da" stroke-width="3" opacity="0.55"/>
+      </g>
+    </g>
+
+    <!-- desk: top catches the lamplight; underside falls to the deepest black -->
+    <g filter="url(#fChalk)" stroke="#e6dfd2" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="210,318 630,318 656,350 184,350" fill="#5f574d"/>
+      <rect x="184" y="350" width="472" height="15" fill="#2c2824"/>
+      <line x1="206" y1="366" x2="192" y2="468" stroke-width="2.4" opacity="0.8"/>
+      <line x1="634" y1="366" x2="648" y2="468" stroke-width="2.4" opacity="0.8"/>
+    </g>
+    <!-- the lamp pool landing warm on the desktop -->
+    <ellipse cx="430" cy="333" rx="195" ry="25" fill="url(#gDeskPool)" clip-path="url(#clipDeskTopF)" filter="url(#fGlow)"/>
+    <!-- deepest black: the void under the desk + cast shadow -->
+    <g filter="url(#fSmudge)">
+      <polygon points="196,368 644,368 650,455 190,455" fill="#0c0a09" opacity="0.75"/>
+      <ellipse cx="420" cy="470" rx="255" ry="15" fill="#080706" opacity="0.8"/>
+    </g>
+    <path d="M188,352 L652,351" stroke="#0f0d0b" stroke-width="2.2" fill="none" opacity="0.7" filter="url(#fSoft)"/>
+
+    <!-- BLUEPRINT: a clear cool-blue drafting sheet in the light pool, chalk hand, quiet beside the lit maquette -->
+    <g filter="url(#fChalk)" stroke-linecap="round" stroke-linejoin="round">
+      <!-- the sheet: cool blue lifted just enough off the charcoal -->
+      <polygon points="248,331 372,323 394,350 266,359" fill="#4a5f74" stroke="#dfe9f1" stroke-width="2.1"/>
+      <!-- margin rule inside the edge -->
+      <polygon points="257,334 364,327 383,348 274,355" fill="none" stroke="#c8d9e6" stroke-width="1.3" opacity="0.75"/>
+      <!-- drafting: a small truss elevation echoing the maquette -->
+      <g fill="none" stroke="#dce9f2" stroke-width="1.5" opacity="0.9">
+        <path d="M268,346 L344,340"/>
+        <path d="M276,345 L290,335 L304,343 L318,333 L332,341"/>
+        <path d="M290,335 L304,343 M318,333 L304,343"/>
+        <!-- a dimension line below, with tick ends -->
+        <path d="M272,351 L338,346 M272,349 L272,353 M338,344 L338,348" opacity="0.6"/>
+      </g>
+      <!-- title block: divided corner box, lower-right of the sheet -->
+      <g fill="none" stroke="#c8d9e6" stroke-width="1.3" opacity="0.8">
+        <polygon points="344,338 379,335 385,347 351,350"/>
+        <path d="M347,344 L382,341"/>
+        <path d="M350,340.5 L360,339.8 M352,347 L366,346"/>
+      </g>
+    </g>
+
+    <!-- maquette: bright red accent — the focal pop; red bloom + under-glow + vivid line-work -->
+    <ellipse cx="438" cy="320" rx="105" ry="34" fill="url(#gRedBloom)" filter="url(#fGlow)"/>
+    <g filter="url(#fSmudge)" fill="none" stroke="#e2492e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
+      <line x1="380" y1="309" x2="494" y2="309"/>
+      <path d="M391,309 L410,291 L466,291 L484,309"/>
+      <polygon points="368,330 502,330 509,341 375,341"/>
+    </g>
+    <g filter="url(#fUmber)" fill="none" stroke="#d5402e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="368,330 502,330 509,341 375,341" fill="#3a322b"/>
+      <rect x="388" y="309" width="6" height="21"/>
+      <rect x="480" y="309" width="6" height="21"/>
+      <line x1="380" y1="309" x2="494" y2="309"/>
+      <path d="M391,309 L410,291 L466,291 L484,309"/>
+      <line x1="410" y1="291" x2="410" y2="309"/>
+      <line x1="438" y1="291" x2="438" y2="309"/>
+      <line x1="466" y1="291" x2="466" y2="309"/>
+      <line x1="410" y1="291" x2="438" y2="309"/>
+      <line x1="466" y1="291" x2="438" y2="309"/>
+    </g>
+    <!-- lamplit top chord: the brightest red edge where the light lands -->
+    <g filter="url(#fUmber)" fill="none" stroke="#ef5a3a" stroke-width="1.6" stroke-linecap="round" opacity="0.85">
+      <path d="M410,291 L466,291"/>
+      <line x1="380" y1="308" x2="494" y2="308"/>
+    </g>
+
+    <!-- engineer arms -->
+    <g filter="url(#fChalk)" stroke="#e6dfd2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M331,231 C349,241 366,259 380,279 C384,285 388,290 392,293 L401,297 L399,302 L390,300 C385,298 380,294 376,289 C362,271 346,255 325,244 Z" fill="#453f39"/>
+      <line x1="357" y1="262" x2="349" y2="272" stroke-width="2"/>
+      <path d="M287,240 C282,260 283,284 290,306 C292,313 295,319 298,322 L292,325 C287,320 283,313 281,306 C275,285 275,259 280,241 Z" fill="#453f39"/>
+      <path d="M292,323 C298,318 307,318 312,323 L309,328 L294,328 Z" fill="#4c463f"/>
+    </g>
+
+    <!-- robot arms -->
+    <g filter="url(#fChalk)" stroke="#e6dfd2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M531,246 C517,255 506,268 499,281 C497,285 495,290 494,294 L503,299 C504,295 506,290 509,285 C515,274 524,264 536,257 Z" fill="#443e38"/>
+      <path d="M494,294 L483,304 L487,310" fill="none" stroke-width="2"/>
+      <path d="M503,299 L491,314" fill="none" stroke-width="2"/>
+      <path d="M600,244 C609,264 610,292 602,314 L594,311 C601,291 600,266 592,249 Z" fill="#443e38"/>
+      <path d="M596,314 C603,311 609,314 610,320 L606,325 L595,323 Z" fill="#4a443d"/>
+    </g>
+  </g>
+  <!-- ===================== end scene ===================== -->
+
+  <!-- the title band: even extra-dark charcoal across the top; field fades up into it -->
+  <rect width="816" height="240" fill="url(#gTitleBand)"/>
+
+  <!-- THE CORD: one continuous, slightly curved, light-catching stroke from the top of the sheet to the shade.
+       Curved path + filter on the GROUP (never on a lone vertical line) so librsvg always keeps it.
+       Ghosted through the title band, brightening as it nears the bulb. -->
+  <g filter="url(#fChalk)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M424,0 C429,70 419,150 425,225 C429,290 420,360 426,438"
+          stroke="#a89d8b" stroke-width="2.2" opacity="0.34"/>
+    <path d="M425,225 C429,290 420,360 426,438"
+          stroke="#eadfc6" stroke-width="2.4" opacity="0.75"/>
+    <path d="M425,368 C427,392 424,416 426,438" stroke="#f7ecd0" stroke-width="2.6" opacity="0.9"/>
+  </g>
+
+  <!-- edge vignette: charcoal pressed harder at the sheet's edges -->
+  <g filter="url(#fSmudge)">
+    <path d="M0,1056 L816,1056 L816,1012 Q408,986 0,1012 Z" fill="#0c0a09" opacity="0.6"/>
+    <path d="M0,0 L30,0 Q52,528 30,1056 L0,1056 Z" fill="#0e0c0a" opacity="0.5"/>
+    <path d="M816,0 L788,0 Q768,528 788,1056 L816,1056 Z" fill="#0e0c0a" opacity="0.5"/>
+  </g>
+
+  <!-- paper tooth catching light + deep dust, over everything -->
+  <rect width="816" height="1056" filter="url(#fToothLight)" opacity="0.45"/>
+  <rect width="816" height="1056" filter="url(#fMottleDark)" opacity="0.45"/>
+</svg>
