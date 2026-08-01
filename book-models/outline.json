@@ -1375,27 +1375,27 @@
           "heading_text": "Drawing what lies between the controls",
           "topic_sentence": "The Governance Graph draws it.",
           "id_source": "derived",
-          "block_index": 7,
+          "block_index": 6,
           "points": [
             {
               "slug": "the-governance-graph-nodes-are-mechanisms-edges-are-conflicts-joined-by-shared-resource",
               "text": "Nodes are mechanisms; edges are conflicts over a shared resource.",
-              "block_index": 9
+              "block_index": 8
             },
             {
               "slug": "the-shared-resource-is-the-only-cross-lifecycle-coupling-surface-and-keeps-the-graph-sparse",
               "text": "The shared resource is the only cross-lifecycle coupling surface.",
-              "block_index": 11
+              "block_index": 10
             },
             {
               "slug": "the-graph-is-the-catalogues-dynamic-dual-splitting-decidable-edges-from-judgment-ones",
               "text": "The graph is the catalogue's dynamic dual.",
-              "block_index": 14
+              "block_index": 13
             },
             {
               "slug": "the-graph-makes-the-implicit-claim-that-mechanisms-compose-explicit-and-checkable",
               "text": "The graph makes \"mechanisms compose\" explicit and checkable.",
-              "block_index": 16
+              "block_index": 15
             }
           ]
         },
@@ -1405,22 +1405,22 @@
           "heading_text": "When the hooks aren't yours",
           "topic_sentence": "Every mechanism so far was one you wrote.",
           "id_source": "derived",
-          "block_index": 18,
+          "block_index": 17,
           "points": [
             {
               "slug": "outside-hooks-from-a-vendor-or-regulator-extend-the-graph-without-changing-shape",
               "text": "Outside hooks extend the graph without changing its shape.",
-              "block_index": 20
+              "block_index": 19
             },
             {
               "slug": "an-unanalyzed-outside-hook-sits-on-a-possible-conflict-edge-against-its-whole-slot",
               "text": "An unanalyzed outside hook conflicts with everything on its slot.",
-              "block_index": 22
+              "block_index": 21
             },
             {
               "slug": "composing-governance-you-did-not-author-is-checking-the-merged-graph-for-contradiction",
               "text": "Composing outside governance is checking the merged graph for contradiction.",
-              "block_index": 24
+              "block_index": 23
             }
           ]
         },
@@ -1430,12 +1430,12 @@
           "heading_text": "Keeping the model honest",
           "topic_sentence": "Two disciplines keep the model honest, and both are the book's.",
           "id_source": "derived",
-          "block_index": 26,
+          "block_index": 25,
           "points": [
             {
               "slug": "keep-the-graph-honest-by-symbol-anchoring-and-a-descriptive-not-aspirational-model",
               "text": "Keep the graph symbol-anchored and descriptive, not aspirational.",
-              "block_index": 28
+              "block_index": 27
             }
           ]
         }
@@ -1568,7 +1568,7 @@
             {
               "slug": "hit-the-executable-core-and-the-framework-wars-dissolve-into-projection-choices",
               "text": "Hit the executable core; framework wars become projection choices.",
-              "block_index": 49
+              "block_index": 48
             }
           ]
         },
@@ -1578,12 +1578,12 @@
           "heading_text": "The trunk: machinery that holds any view true",
           "topic_sentence": "Before the views, one chapter of framing.",
           "id_source": "derived",
-          "block_index": 51,
+          "block_index": 50,
           "points": [
             {
               "slug": "the-trunk-is-the-shared-machinery-that-makes-every-view-executable",
               "text": "Shared trunk machinery makes every view executable and drift-proof.",
-              "block_index": 53
+              "block_index": 52
             }
           ]
         },
@@ -1593,17 +1593,17 @@
           "heading_text": "Beat 1 — a model is derived and joined, never repeated",
           "topic_sentence": "The last chapter warned against repetition: two models that say the same thing must now be kept in sync.",
           "id_source": "derived",
-          "block_index": 66,
+          "block_index": 65,
           "points": [
             {
               "slug": "a-model-is-derived-and-joined-never-repeated",
               "text": "A model is derived and joined, never repeated.",
-              "block_index": 69
+              "block_index": 68
             },
             {
               "slug": "derivation-and-join-are-the-cure-for-repetition",
               "text": "Derivation and join are the cure for repetition.",
-              "block_index": 71
+              "block_index": 70
             }
           ]
         },
@@ -1613,17 +1613,17 @@
           "heading_text": "Beat 2 — name the direction of derivation",
           "topic_sentence": "A model and the code it concerns stay equal by derivation, and derivation runs in one of two directions.",
           "id_source": "derived",
-          "block_index": 73,
+          "block_index": 72,
           "points": [
             {
               "slug": "name-the-direction-of-derivation-up-front",
               "text": "Name the direction of derivation up front.",
-              "block_index": 76
+              "block_index": 75
             },
             {
               "slug": "most-of-the-zoo-is-model-from-code-because-the-codebase-came-first",
               "text": "Most of the zoo is model-from-code; the codebase came first.",
-              "block_index": 81
+              "block_index": 80
             }
           ]
         },
@@ -1633,32 +1633,32 @@
           "heading_text": "Beat 3 — every model traces to the code",
           "topic_sentence": "A model earns trust only if you can get from a model element back to the lines that realize it, and forward from a line to the model element that governs it.",
           "id_source": "derived",
-          "block_index": 83,
+          "block_index": 82,
           "points": [
             {
               "slug": "every-model-traces-to-the-code-in-both-directions",
               "text": "Every model traces to the code in both directions.",
-              "block_index": 86
+              "block_index": 85
             },
             {
               "slug": "the-template-folds-a-traceability-note-into-every-page",
               "text": "The template folds a traceability note into every page.",
-              "block_index": 88
+              "block_index": 87
             },
             {
               "slug": "a-zoo-of-drifted-views-is-worse-than-none",
               "text": "A zoo of drifted views is worse than none.",
-              "block_index": 90
+              "block_index": 89
             },
             {
               "slug": "the-round-trip-must-be-derived-not-snapshotted",
               "text": "The round-trip must be derived, not snapshotted.",
-              "block_index": 92
+              "block_index": 91
             },
             {
               "slug": "a-resolving-edge-is-both-drift-detection-and-navigation",
               "text": "A resolving edge is both drift-detection and navigation.",
-              "block_index": 94
+              "block_index": 93
             }
           ]
         },
@@ -1668,22 +1668,22 @@
           "heading_text": "Keeping the models honest — the traceability substrate",
           "topic_sentence": "DocAble did not design this up front.",
           "id_source": "derived",
-          "block_index": 97,
+          "block_index": 96,
           "points": [
             {
               "slug": "the-substrate-was-built-from-what-broke-not-designed-up-front",
               "text": "The substrate was built from what broke, not designed.",
-              "block_index": 99
+              "block_index": 98
             },
             {
               "slug": "a-stale-model-makes-agents-plan-against-a-system-that-no-longer-exists",
               "text": "A stale model makes agents plan against a dead system.",
-              "block_index": 101
+              "block_index": 100
             },
             {
               "slug": "the-checklist-approach-fails-because-a-hand-maintained-list-rots",
               "text": "A hand-maintained checklist rots the moment the code moves.",
-              "block_index": 103
+              "block_index": 102
             }
           ]
         },
@@ -1693,17 +1693,17 @@
           "heading_text": "Reading the fix off real drift",
           "topic_sentence": "The right sensor was read off real drift rather than guessed.",
           "id_source": "derived",
-          "block_index": 105,
+          "block_index": 104,
           "points": [
             {
               "slug": "the-fix-was-read-off-real-drift-not-guessed",
               "text": "The fix was read off real drift, not guessed.",
-              "block_index": 107
+              "block_index": 106
             },
             {
               "slug": "the-graph-is-nodes-the-system-already-has-joined-by-re-proved-edges",
               "text": "The graph joins existing nodes by re-proved edges.",
-              "block_index": 109
+              "block_index": 108
             }
           ]
         },
@@ -1713,17 +1713,17 @@
           "heading_text": "Two decisions that make the graph resist rot",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 111,
+          "block_index": 110,
           "points": [
             {
               "slug": "the-symbol-walk-fires-at-a-slower-cadence-because-the-cadence-follows-the-cost",
               "text": "The symbol walk fires slowly because cadence follows cost.",
-              "block_index": 114
+              "block_index": 113
             },
             {
               "slug": "derived-sensors-defend-snapshotted-ones-drift",
               "text": "Derived sensors defend; snapshotted ones drift.",
-              "block_index": 116
+              "block_index": 115
             }
           ]
         },
@@ -1733,17 +1733,17 @@
           "heading_text": "How to read a model page",
           "topic_sentence": "Every model in this Part is rendered by filling the same five-field template.",
           "id_source": "derived",
-          "block_index": 118,
+          "block_index": 117,
           "points": [
             {
               "slug": "every-model-page-fills-the-same-five-field-template",
               "text": "Every model page fills the same five-field template.",
-              "block_index": 122
+              "block_index": 121
             },
             {
               "slug": "the-five-fields-answer-the-five-questions-a-reader-brings-to-a-model",
               "text": "The five fields answer the reader's five questions.",
-              "block_index": 125
+              "block_index": 124
             }
           ]
         }
@@ -1786,7 +1786,7 @@
             {
               "slug": "the-service-flow-model-derives-bidirectionally",
               "text": "The service-flow model derives in both directions.",
-              "block_index": 29
+              "block_index": 28
             }
           ]
         },
@@ -1796,12 +1796,12 @@
           "heading_text": "The domain registries",
           "topic_sentence": "The domain registries are the frozen tables the service-flow model rests on: the file types the system handles, its known conformance gaps, its scheduled jobs, its user-facing surfaces.",
           "id_source": "explicit",
-          "block_index": 32,
+          "block_index": 31,
           "points": [
             {
               "slug": "frozen-registries-are-the-single-source-every-consumer-joins-to",
               "text": "Frozen registries are the single source every consumer joins.",
-              "block_index": 34
+              "block_index": 33
             }
           ]
         }
@@ -1869,7 +1869,7 @@
             {
               "slug": "the-sync-model-derives-from-code-via-lock-path",
               "text": "The sync model derives from code by lock path.",
-              "block_index": 46
+              "block_index": 45
             }
           ]
         },
@@ -1879,12 +1879,12 @@
           "heading_text": "Two ways to make a concurrent write safe: the mediator and the single-writer registries",
           "topic_sentence": "The synchronization model catalogs the raw locks.",
           "id_source": "derived",
-          "block_index": 49,
+          "block_index": 48,
           "points": [
             {
               "slug": "capping-how-many-and-allowing-exactly-one-fail-differently",
               "text": "Capping how-many and allowing exactly-one fail differently.",
-              "block_index": 51
+              "block_index": 50
             }
           ]
         },
@@ -1894,12 +1894,12 @@
           "heading_text": "The mediator registry",
           "topic_sentence": "The mediator registry is the *how-many* half.",
           "id_source": "explicit",
-          "block_index": 55,
+          "block_index": 54,
           "points": [
             {
               "slug": "the-mediator-registry-caps-how-many-run-at-once",
               "text": "The mediator registry caps how many run at once.",
-              "block_index": 57
+              "block_index": 56
             }
           ]
         },
@@ -1909,12 +1909,12 @@
           "heading_text": "The single-writer registry",
           "topic_sentence": "The single-writer registry is the *exactly-one* half, and its failure mode is what makes it a separate model.",
           "id_source": "explicit",
-          "block_index": 60,
+          "block_index": 59,
           "points": [
             {
               "slug": "the-single-writer-registry-allows-exactly-one-writer",
               "text": "The single-writer registry allows exactly one writer.",
-              "block_index": 62
+              "block_index": 61
             }
           ]
         }
@@ -1977,7 +1977,7 @@
             {
               "slug": "the-component-zone-model-derives-from-the-directory-tree",
               "text": "The component-zone model derives from the directory tree.",
-              "block_index": 27
+              "block_index": 26
             }
           ]
         },
@@ -1987,12 +1987,12 @@
           "heading_text": "The rule-metadata registry",
           "topic_sentence": "The rule-metadata registry is the self-referential slice of the domain registries: the governance rules' own metadata, and so the model the governance machinery — and this book — are partly governed by.",
           "id_source": "explicit",
-          "block_index": 31,
+          "block_index": 30,
           "points": [
             {
               "slug": "rule-metadata-lives-beside-each-rule-and-generates-the-index",
               "text": "Rule metadata lives beside each rule and generates the index.",
-              "block_index": 33
+              "block_index": 32
             }
           ]
         }
@@ -2070,12 +2070,12 @@
             {
               "slug": "the-parity-check-runs-both-directions-or-misses-drift",
               "text": "The parity check runs both directions or misses drift.",
-              "block_index": 35
+              "block_index": 34
             },
             {
               "slug": "the-topology-model-derives-from-the-deploy-table",
               "text": "The topology model derives from the deploy table.",
-              "block_index": 37
+              "block_index": 36
             }
           ]
         },
@@ -2085,22 +2085,22 @@
           "heading_text": "The invariant-DAG execution policy",
           "topic_sentence": "*A deploy graph whose edges carry a typed intent — correctness, cost-gate, or load — kept host-identical, plus a typed Scheduler that reads a per-host profile and rations load and cost so one host fans work out while a scarce one serializes it.*",
           "id_source": "explicit",
-          "block_index": 41,
+          "block_index": 40,
           "points": [
             {
               "slug": "a-host-identical-graph-plus-a-scheduler-rations-per-host",
               "text": "A host-identical graph plus a Scheduler rations per host.",
-              "block_index": 44
+              "block_index": 43
             },
             {
               "slug": "it-assesses-graph-portability-and-rationing-correctness",
               "text": "It assesses graph portability and rationing correctness.",
-              "block_index": 47
+              "block_index": 46
             },
             {
               "slug": "the-execution-plan-derives-from-the-host-profile",
               "text": "The execution plan derives from the host profile.",
-              "block_index": 57
+              "block_index": 55
             }
           ]
         },
@@ -2110,12 +2110,12 @@
           "heading_text": "The control↔substrate dependency model",
           "topic_sentence": "The substrate-dependency model makes each governance mechanism declare, as typed metadata, the substrate assumption it bakes in — bound to one substrate, substrate-aware, or substrate-agnostic.",
           "id_source": "explicit",
-          "block_index": 60,
+          "block_index": 58,
           "points": [
             {
               "slug": "declared-substrate-stances-turn-a-migration-grep-into-a-blast-radius",
               "text": "Declared substrate stances make a migration blast radius computable.",
-              "block_index": 62
+              "block_index": 60
             }
           ]
         }
@@ -2265,7 +2265,7 @@
           "heading_text": "The invariants the join spans",
           "topic_sentence": "The join's invariants span all four models, collected in [ref:scenarios-invariants]; two are the trunk derive-the-checker discipline.",
           "id_source": "derived",
-          "block_index": 64,
+          "block_index": 63,
           "points": []
         },
         {
@@ -2274,7 +2274,7 @@
           "heading_text": "The Selector and Scheduler in code",
           "topic_sentence": "Two pieces of real policy code make the join concrete.",
           "id_source": "derived",
-          "block_index": 67,
+          "block_index": 66,
           "points": []
         },
         {
@@ -2283,12 +2283,12 @@
           "heading_text": "Tracing one fact through four models",
           "topic_sentence": "*Model-from-code, joined.* Every leg derives from the code: the journey's deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7).",
           "id_source": "derived",
-          "block_index": 72,
+          "block_index": 71,
           "points": [
             {
               "slug": "four-chained-join-keys-round-trip-major-to-serialized",
               "text": "Four chained join keys round-trip major to serialized.",
-              "block_index": 74
+              "block_index": 73
             }
           ]
         }
@@ -3297,17 +3297,17 @@
           "heading_text": "Property-based testing: the invariant is the oracle",
           "topic_sentence": "In property-based testing the author writes the law and the machine hunts the counterexample.",
           "id_source": "derived",
-          "block_index": 25,
+          "block_index": 24,
           "points": [
             {
               "slug": "author-writes-law-generator-shrinks",
               "text": "The author writes the law; the generator shrinks the counterexample.",
-              "block_index": 27
+              "block_index": 26
             },
             {
               "slug": "property-is-the-modeling-thesis-as-a-test",
               "text": "The property is the Modeling Thesis worn as a test.",
-              "block_index": 29
+              "block_index": 28
             }
           ]
         },
@@ -3317,22 +3317,22 @@
           "heading_text": "Fuzzing: the contract is \"never crash, never corrupt\"",
           "topic_sentence": "Property testing asks tame inputs a rich question.",
           "id_source": "derived",
-          "block_index": 32,
+          "block_index": 31,
           "points": [
             {
               "slug": "fuzzing-asks-a-coarse-question-of-wild-inputs",
               "text": "Fuzzing asks a coarse question of wild inputs.",
-              "block_index": 34
+              "block_index": 33
             },
             {
               "slug": "fix-a-crash-to-the-spec-point",
               "text": "Fix a crash to the spec point, not the seed.",
-              "block_index": 36
+              "block_index": 35
             },
             {
               "slug": "coverage-makes-we-fuzzed-it-a-claim",
               "text": "Coverage makes 'we fuzzed it' a measured claim.",
-              "block_index": 38
+              "block_index": 37
             }
           ]
         },
@@ -3342,32 +3342,32 @@
           "heading_text": "Fuzz + MBSE: the structured model becomes the oracle",
           "topic_sentence": "This is the synthesis.",
           "id_source": "derived",
-          "block_index": 41,
+          "block_index": 40,
           "points": [
             {
               "slug": "the-typed-model-becomes-the-oracle",
               "text": "The structured model itself becomes the oracle.",
-              "block_index": 43
+              "block_index": 42
             },
             {
               "slug": "sort-outcomes-against-the-closed-legal-set",
               "text": "Sort adversarial outcomes against the model's closed legal set.",
-              "block_index": 46
+              "block_index": 45
             },
             {
               "slug": "producer-dialect-is-the-adversarial-input",
               "text": "Let a rival producer's legal dialect be the input.",
-              "block_index": 48
+              "block_index": 47
             },
             {
               "slug": "harvest-producers-before-hand-rolling-a-grammar",
               "text": "Harvest real producers before hand-rolling a grammar.",
-              "block_index": 51
+              "block_index": 50
             },
             {
               "slug": "search-interleavings-against-the-invariant-predicate",
               "text": "For a concurrency invariant, search interleavings against the predicate.",
-              "block_index": 53
+              "block_index": 52
             }
           ]
         },
@@ -3377,22 +3377,22 @@
           "heading_text": "Coverage: did we explore the spec-relevant space?",
           "topic_sentence": "Once you have a generator, a new question appears that example tests never had to ask: *did the campaign explore the space that matters, or did it just spin?* The book already owns coverage — the [metrics chapter](2.5-metrics.html) develops it as a flagship, with the rule to measure one level deeper than the raw percentage — so this section adds only the one cut that is genuinely native to generation and hands the rest back.",
           "id_source": "derived",
-          "block_index": 55,
+          "block_index": 54,
           "points": [
             {
               "slug": "generation-adds-a-native-coverage-question",
               "text": "Generation adds one coverage question native to it.",
-              "block_index": 57
+              "block_index": 56
             },
             {
               "slug": "grammar-coverage-measures-inputs-not-code",
               "text": "Grammar coverage measures the inputs, not the code.",
-              "block_index": 59
+              "block_index": 58
             },
             {
               "slug": "model-claim-coverage-is-the-saturation-oracle",
               "text": "Model-claim coverage is the family's real saturation oracle.",
-              "block_index": 61
+              "block_index": 60
             }
           ]
         },
@@ -3402,12 +3402,12 @@
           "heading_text": "When to reach for which",
           "topic_sentence": "The family gives a compact decision aid, and the axes of the opening table are the decision.",
           "id_source": "derived",
-          "block_index": 65,
+          "block_index": 63,
           "points": [
             {
               "slug": "generative-validation-is-hard-governance",
               "text": "Generative validation is hard governance, the Alignment Thesis mechanical.",
-              "block_index": 69
+              "block_index": 67
             }
           ]
         }
@@ -4113,32 +4113,32 @@
           "heading_text": "The Architect's newest instrument: measuring what is still unmodeled",
           "topic_sentence": "The Architect rung is where the ladder ends, but the work on it does not.",
           "id_source": "derived",
-          "block_index": 75,
+          "block_index": 74,
           "points": [
             {
               "slug": "turn-brownfield-inward",
               "text": "Turn the brownfield problem inward: what is still unmodeled?",
-              "block_index": 77
+              "block_index": 76
             },
             {
               "slug": "missing-model-metric-walks-code-to-model",
               "text": "The Missing Model Metric finds tests reaching no model.",
-              "block_index": 79
+              "block_index": 78
             },
             {
               "slug": "a-loop-drives-orphans-down",
               "text": "A loop lowers the orphan rate by adding models.",
-              "block_index": 81
+              "block_index": 80
             },
             {
               "slug": "modeling-found-real-shipping-bugs",
               "text": "Modeling found real shipping bugs the green tests missed.",
-              "block_index": 83
+              "block_index": 82
             },
             {
               "slug": "mage-was-demanded-not-designed",
               "text": "MAGE was demanded step by step, never designed.",
-              "block_index": 85
+              "block_index": 84
             }
           ]
         }

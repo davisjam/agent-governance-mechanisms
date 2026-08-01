@@ -68,6 +68,6 @@
   <circle cx="90" cy="352" r="22" fill="#8a2f2f"/>
   <path d="M80,342 L100,362 M100,342 L80,362" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
 
-  <text x="480" y="410" text-anchor="middle" font-size="26" font-weight="700" fill="#1a1a1a">Enforce here — the property is not yet legible</text>
+  <text x="480" y="410" text-anchor="middle" font-size="26" font-weight="700" fill="#1a1a1a">Not here — the property is not yet legible</text>
   <text x="480" y="440" text-anchor="middle" font-size="20" font-style="italic" fill="#5f5f5f">a single commit, a single system call, a single turn</text>
 </svg>

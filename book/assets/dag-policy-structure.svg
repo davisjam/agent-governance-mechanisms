@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: dag-policy-structure).
+     A deploy-graph edge carries one of three intents; correctness and cost-gate edges stay in
+     the graph, the load intent is banned from the graph and migrates to the Scheduler, which
+     reads a per-host profile and emits the execution plan. Palette: Umber Monograph tokens
+     (fleet #2f5169 graph, churn #b23b3b banned, accent #9a3f12 profile, governed #1f7a4d plan). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 470" width="1180" height="470"
+     role="group" aria-labelledby="dpTitle dpDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="dpTitle">Edge intents route; load leaves the graph for the Scheduler</title>
+  <desc id="dpDesc">A deploy-graph edge carries one of three intents. Correctness and cost-gate
+    edges stay in the graph, host-identical. A load edge is banned from the graph and migrated
+    to the Scheduler, which reads a per-host profile and emits an execution plan — the
+    concurrency and cost-gate decisions for that host. Moving the stress burden between hosts
+    is a profile edit, never a graph edit.</desc>
+
+  <defs>
+    <marker id="dp-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- ===== the edge and its three intents ===== -->
+  <rect x="40" y="145" width="220" height="70" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
+  <text x="150" y="188" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Edge intent</text>
+
+  <g stroke="#1c1917" stroke-width="2" fill="none">
+    <path d="M262,162 C300,130 310,100 344,74" marker-end="url(#dp-ah)"/>
+    <line x1="262" y1="180" x2="344" y2="180" marker-end="url(#dp-ah)"/>
+    <path d="M262,198 C300,230 310,262 344,286" marker-end="url(#dp-ah)"/>
+  </g>
+
+  <g>
+    <rect x="350" y="30" width="250" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="475" y="64" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">CORRECTNESS</text>
+    <text x="475" y="90" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">in the graph</text>
+
+    <rect x="350" y="140" width="250" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="475" y="174" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">COST_GATE</text>
+    <text x="475" y="200" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">in the graph</text>
+
+    <rect x="350" y="250" width="250" height="80" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
+    <text x="475" y="284" text-anchor="middle" font-size="22" font-weight="700" fill="#b23b3b">LOAD</text>
+    <text x="475" y="310" text-anchor="middle" font-size="19" font-style="italic" fill="#b23b3b">banned from the graph</text>
+  </g>
+
+  <!-- ===== the load intent migrates to the Scheduler ===== -->
+  <line x1="602" y1="290" x2="694" y2="290" stroke="#1c1917" stroke-width="2" marker-end="url(#dp-ah)"/>
+
+  <rect x="700" y="258" width="190" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="795" y="298" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Scheduler</text>
+
+  <!-- the per-host profile drives the plan -->
+  <g>
+    <path d="M 560,388 v 46 a 118,12 0 0 0 236,0 v -46" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <ellipse cx="678" cy="388" rx="118" ry="12" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <text x="678" y="420" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Per-host profile</text>
+  </g>
+  <path d="M750,376 C770,358 775,346 786,328" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#dp-ah)"/>
+
+  <!-- scheduler -> execution plan -->
+  <line x1="892" y1="290" x2="948" y2="290" stroke="#1c1917" stroke-width="2" marker-end="url(#dp-ah)"/>
+  <rect x="954" y="260" width="210" height="60" rx="30" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="1059" y="298" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Execution plan</text>
+</svg>

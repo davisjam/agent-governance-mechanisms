@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: metric-spectrum).
+     Governance metrics laid on the book's hard-to-soft axis: two hard, machine-read metrics,
+     the flagship deeper cut in the middle, and a soft, judgment-laden one at the far end —
+     each card naming the decision it drives. Palette: Umber Monograph tokens
+     (fleet #2f5169 hard, accent #9a3f12 flagship, muted #57534e soft). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400"
+     role="group" aria-labelledby="msTitle msDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="msTitle">The metric spectrum, hard to soft</title>
+  <desc id="msDesc">Four governance metrics laid on a left-to-right spectrum. On the hard,
+    deterministic, machine-read end sit cold-start latency, fed into the perf model, and the
+    component-distance grade, which decides whether a gate fires. In the middle sits the
+    flagship, entry-point-native coverage, the deeper cut that asks whether a model claim is
+    exercised and names the untested invariant. On the soft, judgment-laden end sits
+    doc-derived-test pinning, which asks whether a doc-claim is pinned by a test and nudges
+    what to test next. A spine arrow runs hard to soft: the harder the metric, the more a
+    machine can block on it alone; the softer, the more it can only aim a reader.</desc>
+
+  <defs>
+    <marker id="ms-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- zone kickers + role-colored underlines -->
+  <text x="304" y="52" text-anchor="middle" font-size="18" font-style="italic" fill="#2f5169">HARD · deterministic · machine-read</text>
+  <line x1="25" y1="66" x2="584" y2="66" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="760" y="52" text-anchor="middle" font-size="18" font-style="italic" fill="#9a3f12">FLAGSHIP · the deeper cut</text>
+  <line x1="600" y1="66" x2="920" y2="66" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="1065" y="52" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">SOFT · aims a reader</text>
+  <line x1="935" y1="66" x2="1195" y2="66" stroke="#57534e" stroke-width="1.5"/>
+
+  <!-- hard card 1: cold-start latency -->
+  <rect x="25" y="110" width="272" height="150" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="161" y="148" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">cold-start latency</text>
+  <text x="161" y="180" text-anchor="middle" font-size="15" fill="#57534e">ms per service · longest-path Σ</text>
+  <text x="161" y="228" text-anchor="middle" font-size="15.5" font-style="italic" fill="#2f5169">→ fed into the perf model</text>
+
+  <!-- hard card 2: component-distance grade -->
+  <rect x="312" y="110" width="272" height="150" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="448" y="148" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">component-distance grade</text>
+  <text x="448" y="180" text-anchor="middle" font-size="15" fill="#57534e">HARD / SOFT / SILENT</text>
+  <text x="448" y="228" text-anchor="middle" font-size="15.5" font-style="italic" fill="#2f5169">→ decides whether a gate fires</text>
+
+  <!-- flagship card: entry-point-native coverage -->
+  <rect x="600" y="95" width="320" height="180" rx="10" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="760" y="136" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">entry-point-native coverage</text>
+  <text x="760" y="172" text-anchor="middle" font-size="15.5" fill="#57534e">is the model claim exercised?</text>
+  <text x="760" y="238" text-anchor="middle" font-size="15.5" font-style="italic" fill="#9a3f12">→ names the untested invariant</text>
+
+  <!-- soft card: doc-derived-test pinning -->
+  <rect x="935" y="110" width="260" height="150" rx="10" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="1065" y="148" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">doc-derived-test pinning</text>
+  <text x="1065" y="176" text-anchor="middle" font-size="15" fill="#57534e">is this doc-claim</text>
+  <text x="1065" y="196" text-anchor="middle" font-size="15" fill="#57534e">pinned by a test?</text>
+  <text x="1065" y="234" text-anchor="middle" font-size="15.5" font-style="italic" fill="#57534e">→ nudges what to test next</text>
+
+  <!-- the spine: hard to soft -->
+  <line x1="40" y1="320" x2="1160" y2="320" stroke="#1c1917" stroke-width="3" marker-end="url(#ms-ah)"/>
+  <text x="40" y="356" font-size="17" font-style="italic" fill="#57534e">a machine blocks on it alone</text>
+  <text x="1160" y="356" text-anchor="end" font-size="17" font-style="italic" fill="#57534e">a reader must still judge</text>
+</svg>

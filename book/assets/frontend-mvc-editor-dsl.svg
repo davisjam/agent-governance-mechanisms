@@ -6,63 +6,63 @@
 
   <defs>
     <marker id="mvc-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#2B2416"/>
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
     </marker>
   </defs>
 
-  <text x="30" y="42" font-size="30" font-weight="bold" fill="#12324f">The editor: one MVC loop over the document</text>
+  <text x="30" y="42" font-size="30" font-weight="bold" fill="#2f5169">The editor: one MVC loop over the document</text>
 
   <!-- VIEW box (two-pane) -->
-  <rect x="24" y="66" width="300" height="150" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="174" y="96" text-anchor="middle" font-size="19" font-weight="bold" fill="#12324f">View — two-pane editor</text>
+  <rect x="24" y="66" width="300" height="150" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>
+  <text x="174" y="96" text-anchor="middle" font-size="19" font-weight="bold" fill="#2f5169">View — two-pane editor</text>
   <!-- left mini-pane -->
-  <rect x="44" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#8aa6bf" stroke-width="1.2"/>
-  <rect x="56" y="126" width="60" height="18" rx="2" fill="#d8e6f2" stroke="#8aa6bf" stroke-width="1"/>
-  <rect x="56" y="152" width="90" height="14" rx="2" fill="#f0e6d8" stroke="#c0a878" stroke-width="1"/>
-  <text x="104" y="192" text-anchor="middle" font-size="19" fill="#3d5a70">page + overlays</text>
+  <rect x="44" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#2f5169" stroke-width="1.2"/>
+  <rect x="56" y="126" width="60" height="18" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
+  <rect x="56" y="152" width="90" height="14" rx="2" fill="#faf1e6" stroke="#9a3f12" stroke-width="1"/>
+  <text x="104" y="192" text-anchor="middle" font-size="19" fill="#2f5169">page + overlays</text>
   <!-- right mini-pane -->
-  <rect x="184" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#8aa6bf" stroke-width="1.2"/>
-  <rect x="196" y="124" width="96" height="20" rx="2" fill="#eef3f7" stroke="#8aa6bf" stroke-width="1"/>
-  <rect x="196" y="150" width="96" height="20" rx="2" fill="#eef3f7" stroke="#8aa6bf" stroke-width="1"/>
-  <text x="244" y="192" text-anchor="middle" font-size="19" fill="#3d5a70">editable cards</text>
+  <rect x="184" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#2f5169" stroke-width="1.2"/>
+  <rect x="196" y="124" width="96" height="20" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
+  <rect x="196" y="150" width="96" height="20" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
+  <text x="244" y="192" text-anchor="middle" font-size="19" fill="#2f5169">editable cards</text>
 
   <!-- gesture arrow View -> Controller -->
-  <line x1="174" y1="216" x2="174" y2="272" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
-  <text x="186" y="248" text-anchor="start" font-size="19" font-style="italic" fill="#5a5240">user gesture</text>
+  <line x1="174" y1="216" x2="174" y2="272" stroke="#1c1917" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
+  <text x="186" y="248" text-anchor="start" font-size="19" font-style="italic" fill="#57534e">user gesture</text>
 
   <!-- CONTROLLER box -->
-  <rect x="24" y="276" width="300" height="96" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="174" y="308" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Controller</text>
-  <text x="174" y="336" text-anchor="middle" font-size="15" fill="#3d5a70">emits one typed edit operation</text>
-  <text x="174" y="357" text-anchor="middle" font-size="19" fill="#3d5a70">— never a raw mutation</text>
+  <rect x="24" y="276" width="300" height="96" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>
+  <text x="174" y="308" text-anchor="middle" font-size="25" font-weight="bold" fill="#2f5169">Controller</text>
+  <text x="174" y="336" text-anchor="middle" font-size="15" fill="#2f5169">emits one typed edit operation</text>
+  <text x="174" y="357" text-anchor="middle" font-size="19" fill="#2f5169">— never a raw mutation</text>
 
   <!-- emit arrow Controller -> DSL -->
-  <line x1="324" y1="324" x2="424" y2="324" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
-  <text x="374" y="312" text-anchor="middle" font-size="19" font-style="italic" fill="#5a5240">emits</text>
+  <line x1="324" y1="324" x2="424" y2="324" stroke="#1c1917" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
+  <text x="374" y="312" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">emits</text>
 
   <!-- SHARED DSL box -->
-  <rect x="428" y="240" width="430" height="168" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="2"/>
-  <text x="643" y="270" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">The shared edit language</text>
-  <text x="643" y="292" text-anchor="middle" font-size="19" font-style="italic" fill="#5a4570">one closed set of edit operations</text>
-  <text x="448" y="320" font-size="19" fill="#3a2350">set-alt-text · set-role · set-decorative</text>
-  <text x="448" y="343" font-size="19" fill="#3a2350">reorder-reading · set-title · set-lang</text>
-  <text x="448" y="366" font-size="19" fill="#3a2350">set-actual-text</text>
-  <text x="643" y="394" text-anchor="middle" font-size="19" font-style="italic" fill="#7a5a2a">also what the pipeline produces</text>
+  <rect x="428" y="240" width="430" height="168" rx="3" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="643" y="270" text-anchor="middle" font-size="24" font-weight="bold" fill="#7c6bb0">The shared edit language</text>
+  <text x="643" y="292" text-anchor="middle" font-size="19" font-style="italic" fill="#7c6bb0">one closed set of edit operations</text>
+  <text x="448" y="320" font-size="19" fill="#7c6bb0">set-alt-text · set-role · set-decorative</text>
+  <text x="448" y="343" font-size="19" fill="#7c6bb0">reorder-reading · set-title · set-lang</text>
+  <text x="448" y="366" font-size="19" fill="#7c6bb0">set-actual-text</text>
+  <text x="643" y="394" text-anchor="middle" font-size="19" font-style="italic" fill="#9a3f12">also what the pipeline produces</text>
 
   <!-- apply arrow DSL -> Model -->
-  <line x1="643" y1="408" x2="643" y2="456" stroke="#2B2416" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
-  <text x="655" y="436" text-anchor="start" font-size="19" font-style="italic" fill="#5a5240">applies to</text>
+  <line x1="643" y1="408" x2="643" y2="456" stroke="#1c1917" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>
+  <text x="655" y="436" text-anchor="start" font-size="19" font-style="italic" fill="#57534e">applies to</text>
 
   <!-- MODEL box -->
-  <rect x="428" y="460" width="430" height="66" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="643" y="490" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Model — the document IR</text>
-  <text x="643" y="514" text-anchor="middle" font-size="19" fill="#3d5a70">applies the op, returns updated state</text>
+  <rect x="428" y="460" width="430" height="66" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>
+  <text x="643" y="490" text-anchor="middle" font-size="25" font-weight="bold" fill="#2f5169">Model — the document IR</text>
+  <text x="643" y="514" text-anchor="middle" font-size="19" fill="#2f5169">applies the op, returns updated state</text>
 
   <!-- re-render arrow Model -> View (long path up the left) -->
-  <path d="M428,493 L28,493 L28,141" fill="none" stroke="#1a4a7a" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#mvc-arrow)"/>
-  <text x="40" y="470" text-anchor="start" font-size="19" font-style="italic" fill="#3d5a70">re-render</text>
+  <path d="M428,493 L28,493 L28,141" fill="none" stroke="#2f5169" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#mvc-arrow)"/>
+  <text x="40" y="470" text-anchor="start" font-size="19" font-style="italic" fill="#2f5169">re-render</text>
 
   <!-- takeaway -->
-  <text x="30" y="410" font-size="19" font-weight="bold" fill="#12324f">One model,</text>
-  <text x="30" y="432" font-size="19" font-weight="bold" fill="#12324f">one way to change it.</text>
+  <text x="30" y="410" font-size="19" font-weight="bold" fill="#2f5169">One model,</text>
+  <text x="30" y="432" font-size="19" font-weight="bold" fill="#2f5169">one way to change it.</text>
 </svg>

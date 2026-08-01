@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (ported from the blockquoted mermaid inside Inset I5, 3.2 "What is a
+     data-flow diagram?" — no label marker in the source; spliced by line). A raw document
+     flows as bytes into Parse, as a structured model into Remediate, and out as a stamped
+     model — each edge naming the data on the wire. Kept small: it is an inline illustration
+     inside an inset, not a chapter figure. Palette: Umber Monograph tokens
+     (fleet #2f5169 transforms, governed #1f7a4d the stamped output). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 170" width="1040" height="170"
+     role="group" aria-labelledby="dfTitle dfDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="dfTitle">A data-flow diagram: each edge names the data on the wire</title>
+  <desc id="dfDesc">A raw document enters as bytes, is parsed into a structured model,
+    remediated into a stamped model, and written out — each edge naming the data that crosses
+    it, so a reader can see every component that touches the document.</desc>
+
+  <defs>
+    <marker id="df-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- raw document (input, parallelogram) -->
+  <polygon points="34,55 214,55 200,115 20,115" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="117" y="92" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Raw document</text>
+
+  <!-- -> Parse -->
+  <line x1="218" y1="85" x2="294" y2="85" stroke="#1c1917" stroke-width="2" marker-end="url(#df-ah)"/>
+  <text x="257" y="42" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">bytes</text>
+
+  <rect x="300" y="55" width="120" height="60" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="360" y="92" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Parse</text>
+
+  <!-- -> Remediate -->
+  <line x1="424" y1="85" x2="544" y2="85" stroke="#1c1917" stroke-width="2" marker-end="url(#df-ah)"/>
+  <text x="484" y="42" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">structured model</text>
+
+  <rect x="550" y="55" width="160" height="60" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="630" y="92" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Remediate</text>
+
+  <!-- -> output document -->
+  <line x1="714" y1="85" x2="834" y2="85" stroke="#1c1917" stroke-width="2" marker-end="url(#df-ah)"/>
+  <text x="774" y="42" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">stamped model</text>
+
+  <!-- the written output (parallelogram, governed) -->
+  <polygon points="854,55 1034,55 1020,115 840,115" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="937" y="92" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Output document</text>
+</svg>

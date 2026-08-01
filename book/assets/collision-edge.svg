@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: collision-edge).
+     Two correct controls act on one shared resource; the contradiction between them is the
+     dotted edge — it lives in neither node's code. Palette: Umber Monograph tokens
+     (fleet #2f5169 controls, churn #b23b3b conflict edge). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400"
+     role="group" aria-labelledby="ceTitle ceDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="ceTitle">The conflict is the edge — a collision drawn nowhere until the graph draws it</title>
+  <desc id="ceDesc">Two control nodes — Control A, which requires a squashed commit, and Control B,
+    which flags out-of-brief changes — each correct when read alone. Both point by a solid arrow to
+    one shared resource, the commit-set, that they act on. A dotted edge runs directly between the
+    two controls, labelled as the contradiction: the conflict is that edge, present in neither
+    node's own code, arising because the two make incompatible demands on the one resource they
+    share.</desc>
+
+  <defs>
+    <marker id="ce-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+    <marker id="ce-ah-churn" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
+    </marker>
+  </defs>
+
+  <!-- Control A -->
+  <rect x="60" y="40" width="340" height="90" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="230" y="78" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Control A</text>
+  <text x="230" y="108" text-anchor="middle" font-size="19" fill="#57534e">requires a squashed commit ✓</text>
+
+  <!-- Control B -->
+  <rect x="60" y="270" width="340" height="90" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="230" y="308" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Control B</text>
+  <text x="230" y="338" text-anchor="middle" font-size="19" fill="#57534e">flags out-of-brief changes ✓</text>
+
+  <!-- the shared resource both controls act on -->
+  <rect x="640" y="155" width="300" height="90" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
+  <text x="790" y="192" text-anchor="middle" font-size="19" fill="#57534e">shared resource:</text>
+  <text x="790" y="222" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">the one commit-set</text>
+
+  <!-- A acts on the resource -->
+  <path d="M402,102 C520,120 570,150 634,178" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#ce-ah)"/>
+  <text x="512" y="118" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">acts on</text>
+
+  <!-- B acts on the resource -->
+  <path d="M402,298 C520,280 570,250 634,222" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#ce-ah)"/>
+  <text x="512" y="298" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">acts on</text>
+
+  <!-- the contradiction: a dotted edge between the two controls, in neither node's code -->
+  <line x1="230" y1="136" x2="230" y2="264" stroke="#b23b3b" stroke-width="2.2" stroke-dasharray="7 6"
+        marker-start="url(#ce-ah-churn)" marker-end="url(#ce-ah-churn)"/>
+  <text x="252" y="192" font-size="19" font-weight="700" fill="#b23b3b">the conflict is this edge:</text>
+  <text x="252" y="216" font-size="19" fill="#b23b3b">in neither node's code</text>
+</svg>

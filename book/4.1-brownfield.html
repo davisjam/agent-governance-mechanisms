@@ -249,6 +249,9 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 .gallery-source { font-size: 13px; color: var(--muted); text-align: center; margin: 0.5rem 0 0; }
 .gallery-source a { color: var(--accent); text-decoration: underline; }
 .gallery hr { border: none; border-top: 1px solid var(--rule); margin: 2.4rem 0; }
+.gallery-group { margin: 0 0 2.4rem; }
+.gallery-group > h2 { margin: 2.6rem 0 0.2rem; padding-bottom: 0.3rem; border-bottom: 2px solid var(--rule); }
+.gallery-group-note { font-size: 14px; color: var(--muted); margin: 0 0 1.6rem; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: var(--accent-tint); border: 1px dashed var(--accent); }
 .marker-more { background: var(--box-def-fill); border: 1px dashed var(--box-def-rule); }
@@ -487,54 +490,54 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <defs>
     <marker id="szpArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
     </marker>
     <marker id="szpArrowRed" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#8a2f2f"/>
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#b23b3b"/>
     </marker>
   </defs>
 
   <!-- start -->
-  <circle cx="70" cy="150" r="12" fill="#33383d"/>
-  <text x="70" y="192" text-anchor="middle" font-size="17" fill="#5f5f5f">new lint</text>
+  <circle cx="70" cy="150" r="12" fill="#1c1917"/>
+  <text x="70" y="192" text-anchor="middle" font-size="17" fill="#57534e">new lint</text>
 
   <!-- state 1: audit-only -->
-  <rect x="130" y="110" width="230" height="80" rx="10" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2.5"/>
-  <text x="245" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Audit-only</text>
-  <text x="245" y="172" text-anchor="middle" font-size="18" fill="#5f5f5f">reports, blocks nothing</text>
+  <rect x="130" y="110" width="230" height="80" rx="10" fill="#faf1e6" stroke="#b23b3b" stroke-width="2.5"/>
+  <text x="245" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Audit-only</text>
+  <text x="245" y="172" text-anchor="middle" font-size="18" fill="#57534e">reports, blocks nothing</text>
 
   <!-- state 2: draining (the middle work) -->
-  <rect x="410" y="110" width="230" height="80" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="525" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Findings → 0</text>
-  <text x="525" y="172" text-anchor="middle" font-size="18" fill="#33383d">a fix wave drains it</text>
+  <rect x="410" y="110" width="230" height="80" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="525" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#2f5169">Findings → 0</text>
+  <text x="525" y="172" text-anchor="middle" font-size="18" fill="#1c1917">a fix wave drains it</text>
 
   <!-- state 3: blocking -->
-  <rect x="690" y="110" width="230" height="80" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="805" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Blocking</text>
-  <text x="805" y="172" text-anchor="middle" font-size="16" fill="#33383d">fails a regressing commit</text>
+  <rect x="690" y="110" width="230" height="80" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="805" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#2f5169">Blocking</text>
+  <text x="805" y="172" text-anchor="middle" font-size="16" fill="#1c1917">fails a regressing commit</text>
 
   <!-- edges along the spine -->
-  <g fill="none" stroke="#33383d" stroke-width="2.5" marker-end="url(#szpArrow)">
+  <g fill="none" stroke="#1c1917" stroke-width="2.5" marker-end="url(#szpArrow)">
     <path d="M82,150 L128,150"/>
     <path d="M360,150 L408,150"/>
     <path d="M640,150 L688,150"/>
   </g>
-  <text x="386" y="140" text-anchor="middle" font-size="16" fill="#5f5f5f">land</text>
-  <text x="666" y="140" text-anchor="middle" font-size="16" fill="#5f5f5f">at zero</text>
+  <text x="386" y="140" text-anchor="middle" font-size="16" fill="#57534e">land</text>
+  <text x="666" y="140" text-anchor="middle" font-size="16" fill="#57534e">at zero</text>
 
   <!-- fix-wave loop under the middle state -->
-  <g fill="none" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#szpArrow)">
+  <g fill="none" stroke="#2f5169" stroke-width="2.5" marker-end="url(#szpArrow)">
     <path d="M470,190 C440,250 610,250 580,192"/>
   </g>
-  <text x="525" y="268" text-anchor="middle" font-size="18" font-style="italic" fill="#1a4a7a">behavior-preserving fixes, under test coverage</text>
+  <text x="525" y="268" text-anchor="middle" font-size="18" font-style="italic" fill="#2f5169">behavior-preserving fixes, under test coverage</text>
 
   <!-- one-way barrier after blocking: the class can't return -->
-  <line x1="932" y1="96" x2="932" y2="204" stroke="#8a2f2f" stroke-width="4"/>
-  <g fill="none" stroke="#8a2f2f" stroke-width="2.5" marker-end="url(#szpArrowRed)">
+  <line x1="932" y1="96" x2="932" y2="204" stroke="#b23b3b" stroke-width="4"/>
+  <g fill="none" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#szpArrowRed)">
     <path d="M805,206 C805,240 900,240 926,206"/>
   </g>
-  <text x="812" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#8a2f2f">the smell can never return</text>
+  <text x="812" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">the smell can never return</text>
 </svg><figcaption data-short="How one lint is worn into a legacy tree"><span class="fig-label">Figure 4.1-1.</span> How one lint is worn into a legacy tree. A new smell-detecting lint lands audit-only — it reports every finding but blocks no commit, so it never breaks an in-flight agent. A fix wave drains its findings to zero with behavior-preserving edits under test coverage. Only then is it promoted to blocking, where it fails any commit that reintroduces the smell. The barrier after the final state marks the payoff: the class of smell can never return.</figcaption></figure>
 <p id="idx-def-make-lint-blocking">Then comes the move that makes it stick: <strong>as each lint reaches zero, make it blocking.</strong> Now the success metric is "all tests pass <em>and</em> that lint still passes" — no more unnamed tuples, no more imports buried mid-function, ever again. This is the Alignment Thesis worn into a legacy tree one lint at a time: each promotion is a governance mechanism that bounds what any later agent can reintroduce. Order matters, and the companion repository holds to it deliberately — flipping a lint to blocking while findings remain would break every agent's commit at once, so the figure's sequence is the safe one: audit-only, drain to zero, then promote. The smells that leave never return. When you are done, you have cleaned-up spaghetti with enough shape that model induction has something to grip: classes and enums and named structs give the induction real structure to reason over, the structure that spaghetti hid. The catalogue's coverage-to-model mapping closes the loop from the other side — it projects your test coverage onto the model's nodes, so an untested invariant shows up as a visible gap rather than hiding inside a line-coverage percentage.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-coverage-model-mapping.html">coverage-to-model mapping</a>.</p></blockquote>

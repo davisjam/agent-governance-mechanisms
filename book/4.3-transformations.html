@@ -249,6 +249,9 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 .gallery-source { font-size: 13px; color: var(--muted); text-align: center; margin: 0.5rem 0 0; }
 .gallery-source a { color: var(--accent); text-decoration: underline; }
 .gallery hr { border: none; border-top: 1px solid var(--rule); margin: 2.4rem 0; }
+.gallery-group { margin: 0 0 2.4rem; }
+.gallery-group > h2 { margin: 2.6rem 0 0.2rem; padding-bottom: 0.3rem; border-bottom: 2px solid var(--rule); }
+.gallery-group-note { font-size: 14px; color: var(--muted); margin: 0 0 1.6rem; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: var(--accent-tint); border: 1px dashed var(--accent); }
 .marker-more { background: var(--box-def-fill); border: 1px dashed var(--box-def-rule); }
@@ -482,57 +485,57 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <defs>
     <marker id="txArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
     </marker>
   </defs>
 
   <!-- column input / output caps -->
-  <text x="70" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#5f5f5f">input</text>
-  <text x="890" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#5f5f5f">output</text>
+  <text x="70" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#57534e">input</text>
+  <text x="890" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#57534e">output</text>
 
   <!-- ============ lane rows ============ -->
   <!-- geometry: 4 step-boxes per lane, evenly spaced -->
   <!-- lane 1: self-communicate -->
-  <text x="70" y="92" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">self-</text>
-  <text x="70" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">communicate</text>
+  <text x="70" y="92" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-</text>
+  <text x="70" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">communicate</text>
   <g>
-    <rect x="150" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="220" y="103" text-anchor="middle" font-size="16" fill="#33383d">language weights</text>
-    <rect x="330" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="400" y="103" text-anchor="middle" font-size="17" fill="#33383d">figures + genre</text>
-    <rect x="510" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="580" y="103" text-anchor="middle" font-size="17" fill="#33383d">the lexicon</text>
-    <rect x="690" y="72" width="140" height="52" rx="8" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2"/>
-    <text x="760" y="95" text-anchor="middle" font-size="17" fill="#1a1a1a">audience</text>
-    <text x="760" y="114" text-anchor="middle" font-size="14" font-style="italic" fill="#8a2f2f">(you supply)</text>
+    <rect x="150" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="220" y="103" text-anchor="middle" font-size="16" fill="#1c1917">language weights</text>
+    <rect x="330" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="400" y="103" text-anchor="middle" font-size="17" fill="#1c1917">figures + genre</text>
+    <rect x="510" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="580" y="103" text-anchor="middle" font-size="17" fill="#1c1917">the lexicon</text>
+    <rect x="690" y="72" width="140" height="52" rx="8" fill="#faf1e6" stroke="#b23b3b" stroke-width="2"/>
+    <text x="760" y="95" text-anchor="middle" font-size="17" fill="#1c1917">audience</text>
+    <text x="760" y="114" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">(you supply)</text>
   </g>
 
   <!-- lane 2: self-operate -->
-  <text x="70" y="210" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">self-operate</text>
+  <text x="70" y="210" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-operate</text>
   <g>
-    <rect x="150" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="220" y="213" text-anchor="middle" font-size="16" fill="#33383d">event → activity</text>
-    <rect x="330" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="400" y="213" text-anchor="middle" font-size="17" fill="#33383d">design / defect</text>
-    <rect x="510" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="580" y="213" text-anchor="middle" font-size="17" fill="#33383d">steps</text>
-    <rect x="690" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="760" y="213" text-anchor="middle" font-size="17" fill="#33383d">agent launches</text>
+    <rect x="150" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="220" y="213" text-anchor="middle" font-size="16" fill="#1c1917">event → activity</text>
+    <rect x="330" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="400" y="213" text-anchor="middle" font-size="17" fill="#1c1917">design / defect</text>
+    <rect x="510" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="580" y="213" text-anchor="middle" font-size="17" fill="#1c1917">steps</text>
+    <rect x="690" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="760" y="213" text-anchor="middle" font-size="17" fill="#1c1917">agent launches</text>
   </g>
 
   <!-- lane 3: self-governance -->
-  <text x="70" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">self-governance</text>
+  <text x="70" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-governance</text>
   <g>
-    <rect x="150" y="292" width="140" height="52" rx="8" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2"/>
-    <text x="220" y="323" text-anchor="middle" font-size="17" fill="#1a1a1a">a symptom</text>
-    <rect x="330" y="292" width="320" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="490" y="323" text-anchor="middle" font-size="17" fill="#33383d">one entry = the transformation</text>
-    <rect x="690" y="292" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="760" y="323" text-anchor="middle" font-size="17" fill="#33383d">the mechanism</text>
+    <rect x="150" y="292" width="140" height="52" rx="8" fill="#faf1e6" stroke="#b23b3b" stroke-width="2"/>
+    <text x="220" y="323" text-anchor="middle" font-size="17" fill="#1c1917">a symptom</text>
+    <rect x="330" y="292" width="320" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="490" y="323" text-anchor="middle" font-size="17" fill="#1c1917">one entry = the transformation</text>
+    <rect x="690" y="292" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="760" y="323" text-anchor="middle" font-size="17" fill="#1c1917">the mechanism</text>
   </g>
 
   <!-- arrows between boxes, per lane -->
-  <g fill="none" stroke="#33383d" stroke-width="2.2" marker-end="url(#txArrow)">
+  <g fill="none" stroke="#1c1917" stroke-width="2.2" marker-end="url(#txArrow)">
     <!-- input caps into first box -->
     <path d="M70,50 L70,98 L148,98"/>
     <path d="M70,50 L70,208 L148,208"/>
@@ -550,9 +553,9 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   </g>
 
   <!-- shared takeaway band -->
-  <rect x="150" y="392" width="680" height="52" rx="10" fill="none" stroke="#1a4a7a" stroke-width="2" stroke-dasharray="6 5"/>
-  <text x="490" y="416" text-anchor="middle" font-size="19" font-weight="700" fill="#1a4a7a">One skeleton: a reasoning task broken into sized input-to-output steps</text>
-  <text x="490" y="437" text-anchor="middle" font-size="16" font-style="italic" fill="#5f5f5f">each step sized to the model and the guarantee you need</text>
+  <rect x="150" y="392" width="680" height="52" rx="10" fill="none" stroke="#2f5169" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="490" y="416" text-anchor="middle" font-size="19" font-weight="700" fill="#2f5169">One skeleton: a reasoning task broken into sized input-to-output steps</text>
+  <text x="490" y="437" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">each step sized to the model and the guarantee you need</text>
 </svg><figcaption data-short="The three skills share one skeleton"><span class="fig-label">Figure 4.3-1.</span> The three skills share one skeleton. Each carries an input to an output through a sequence of sized transformations. Self-communicate stacks language weights, rhetorical figures and genre, then the lexicon, and leaves the audience to you. Self-operate maps an event to an activity, then to a design, then to steps, then to agent launches. Self-governance turns a symptom into a mechanism, one catalogue entry per arrow. The shape is the same: a reasoning task broken into input-to-output steps the model can follow, each sized to the model and the guarantee you need.</figcaption></figure>
 <p>Once you see everything as a sized transformation, the three skills reveal a common skeleton. Each holds a set of models the agent reasons over, and each names the steps — the transformations — that carry an input to an output. What you supply, in your own context, is the breakdown: the playbooks and runbooks for the steps your work actually takes.</p>
 <ul><li><strong>Self-communicate</strong> stacks its transformations on the model's language weights, then layers the rhetorical figures (the "not X, but Y" among many others), then the writing genre from Diátaxis, then the lexicon for this context. It leaves the top layer to you: who is the audience, and what do they know? The skill cannot know that; you tell it.</li><li><strong>Self-operate</strong> puts the lifecycle models at the base, maps an incoming event to the kind of activity it is (development, bug fix, resource management, deploy), and then transforms forward: event to defect characterization or design document, design to steps, steps to distinct agent launches with their briefs. Each arrow is one transformation of input to output toward a goal.</li><li><strong>Self-governance</strong> holds a model of governance itself — architecture versus sensors, the properties that should hold of any codebase (don't-repeat-yourself among them), the kinds of sensor (static analysis, dynamic tests), the invariants you write over models, the languages you write them in, the checkers that validate them. Each catalogue entry is itself a transformation: from the <em>symptom</em> — the recurring failure you are living with — to the <em>mechanism</em> that ends it.</li></ul>

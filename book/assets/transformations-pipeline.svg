@@ -3,8 +3,8 @@
      chains sharing one skeleton — an input carried to an output through a sequence of sized
      steps. Three stacked lanes with a shared "input → ... → output" spine and per-lane step
      labels; the common skeleton is the takeaway, so the lanes must align column-by-column,
-     which Mermaid's three separate flowcharts would not keep in register. Accent #1a4a7a,
-     source-red #8a2f2f, cream #f4ede0, panel #eef3f8. -->
+     which Mermaid's three separate flowcharts would not keep in register. Accent #2f5169,
+     source-red #b23b3b, cream #faf1e6, panel #e7edf3. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470"
      role="group" aria-labelledby="txTitle txDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
@@ -22,57 +22,57 @@
   <defs>
     <marker id="txArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
     </marker>
   </defs>
 
   <!-- column input / output caps -->
-  <text x="70" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#5f5f5f">input</text>
-  <text x="890" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#5f5f5f">output</text>
+  <text x="70" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#57534e">input</text>
+  <text x="890" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#57534e">output</text>
 
   <!-- ============ lane rows ============ -->
   <!-- geometry: 4 step-boxes per lane, evenly spaced -->
   <!-- lane 1: self-communicate -->
-  <text x="70" y="92" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">self-</text>
-  <text x="70" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">communicate</text>
+  <text x="70" y="92" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-</text>
+  <text x="70" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">communicate</text>
   <g>
-    <rect x="150" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="220" y="103" text-anchor="middle" font-size="16" fill="#33383d">language weights</text>
-    <rect x="330" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="400" y="103" text-anchor="middle" font-size="17" fill="#33383d">figures + genre</text>
-    <rect x="510" y="72" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="580" y="103" text-anchor="middle" font-size="17" fill="#33383d">the lexicon</text>
-    <rect x="690" y="72" width="140" height="52" rx="8" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2"/>
-    <text x="760" y="95" text-anchor="middle" font-size="17" fill="#1a1a1a">audience</text>
-    <text x="760" y="114" text-anchor="middle" font-size="14" font-style="italic" fill="#8a2f2f">(you supply)</text>
+    <rect x="150" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="220" y="103" text-anchor="middle" font-size="16" fill="#1c1917">language weights</text>
+    <rect x="330" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="400" y="103" text-anchor="middle" font-size="17" fill="#1c1917">figures + genre</text>
+    <rect x="510" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="580" y="103" text-anchor="middle" font-size="17" fill="#1c1917">the lexicon</text>
+    <rect x="690" y="72" width="140" height="52" rx="8" fill="#faf1e6" stroke="#b23b3b" stroke-width="2"/>
+    <text x="760" y="95" text-anchor="middle" font-size="17" fill="#1c1917">audience</text>
+    <text x="760" y="114" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">(you supply)</text>
   </g>
 
   <!-- lane 2: self-operate -->
-  <text x="70" y="210" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">self-operate</text>
+  <text x="70" y="210" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-operate</text>
   <g>
-    <rect x="150" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="220" y="213" text-anchor="middle" font-size="16" fill="#33383d">event → activity</text>
-    <rect x="330" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="400" y="213" text-anchor="middle" font-size="17" fill="#33383d">design / defect</text>
-    <rect x="510" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="580" y="213" text-anchor="middle" font-size="17" fill="#33383d">steps</text>
-    <rect x="690" y="182" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="760" y="213" text-anchor="middle" font-size="17" fill="#33383d">agent launches</text>
+    <rect x="150" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="220" y="213" text-anchor="middle" font-size="16" fill="#1c1917">event → activity</text>
+    <rect x="330" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="400" y="213" text-anchor="middle" font-size="17" fill="#1c1917">design / defect</text>
+    <rect x="510" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="580" y="213" text-anchor="middle" font-size="17" fill="#1c1917">steps</text>
+    <rect x="690" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="760" y="213" text-anchor="middle" font-size="17" fill="#1c1917">agent launches</text>
   </g>
 
   <!-- lane 3: self-governance -->
-  <text x="70" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#1a4a7a">self-governance</text>
+  <text x="70" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-governance</text>
   <g>
-    <rect x="150" y="292" width="140" height="52" rx="8" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2"/>
-    <text x="220" y="323" text-anchor="middle" font-size="17" fill="#1a1a1a">a symptom</text>
-    <rect x="330" y="292" width="320" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="490" y="323" text-anchor="middle" font-size="17" fill="#33383d">one entry = the transformation</text>
-    <rect x="690" y="292" width="140" height="52" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="760" y="323" text-anchor="middle" font-size="17" fill="#33383d">the mechanism</text>
+    <rect x="150" y="292" width="140" height="52" rx="8" fill="#faf1e6" stroke="#b23b3b" stroke-width="2"/>
+    <text x="220" y="323" text-anchor="middle" font-size="17" fill="#1c1917">a symptom</text>
+    <rect x="330" y="292" width="320" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="490" y="323" text-anchor="middle" font-size="17" fill="#1c1917">one entry = the transformation</text>
+    <rect x="690" y="292" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="760" y="323" text-anchor="middle" font-size="17" fill="#1c1917">the mechanism</text>
   </g>
 
   <!-- arrows between boxes, per lane -->
-  <g fill="none" stroke="#33383d" stroke-width="2.2" marker-end="url(#txArrow)">
+  <g fill="none" stroke="#1c1917" stroke-width="2.2" marker-end="url(#txArrow)">
     <!-- input caps into first box -->
     <path d="M70,50 L70,98 L148,98"/>
     <path d="M70,50 L70,208 L148,208"/>
@@ -90,7 +90,7 @@
   </g>
 
   <!-- shared takeaway band -->
-  <rect x="150" y="392" width="680" height="52" rx="10" fill="none" stroke="#1a4a7a" stroke-width="2" stroke-dasharray="6 5"/>
-  <text x="490" y="416" text-anchor="middle" font-size="19" font-weight="700" fill="#1a4a7a">One skeleton: a reasoning task broken into sized input-to-output steps</text>
-  <text x="490" y="437" text-anchor="middle" font-size="16" font-style="italic" fill="#5f5f5f">each step sized to the model and the guarantee you need</text>
+  <rect x="150" y="392" width="680" height="52" rx="10" fill="none" stroke="#2f5169" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="490" y="416" text-anchor="middle" font-size="19" font-weight="700" fill="#2f5169">One skeleton: a reasoning task broken into sized input-to-output steps</text>
+  <text x="490" y="437" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">each step sized to the model and the guarantee you need</text>
 </svg>

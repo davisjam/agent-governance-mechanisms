@@ -249,6 +249,9 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 .gallery-source { font-size: 13px; color: var(--muted); text-align: center; margin: 0.5rem 0 0; }
 .gallery-source a { color: var(--accent); text-decoration: underline; }
 .gallery hr { border: none; border-top: 1px solid var(--rule); margin: 2.4rem 0; }
+.gallery-group { margin: 0 0 2.4rem; }
+.gallery-group > h2 { margin: 2.6rem 0 0.2rem; padding-bottom: 0.3rem; border-bottom: 2px solid var(--rule); }
+.gallery-group-note { font-size: 14px; color: var(--muted); margin: 0 0 1.6rem; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: var(--accent-tint); border: 1px dashed var(--accent); }
 .marker-more { background: var(--box-def-fill); border: 1px dashed var(--box-def-rule); }
@@ -468,73 +471,73 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 
   <defs>
     <marker id="cor-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1a4a7a"/>
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
     </marker>
   </defs>
 
   <!-- ===================== LIFECYCLE LOOP (run -> measure -> assess), wrapping the spine ===================== -->
-  <text x="210" y="60" text-anchor="middle" font-size="40" font-weight="700" fill="#1a4a7a">run</text>
-  <text x="650" y="60" text-anchor="middle" font-size="40" font-weight="700" fill="#1a4a7a">measure</text>
-  <text x="1090" y="60" text-anchor="middle" font-size="40" font-weight="700" fill="#1a4a7a">assess</text>
+  <text x="210" y="60" text-anchor="middle" font-size="40" font-weight="700" fill="#2f5169">run</text>
+  <text x="650" y="60" text-anchor="middle" font-size="40" font-weight="700" fill="#2f5169">measure</text>
+  <text x="1090" y="60" text-anchor="middle" font-size="40" font-weight="700" fill="#2f5169">assess</text>
 
   <!-- run -> measure (arc arches ABOVE the words, concave north) -->
-  <path d="M255,22 C400,-2 520,-2 595,22" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <path d="M255,22 C400,-2 520,-2 595,22" fill="none" stroke="#2f5169" stroke-width="2.2" marker-end="url(#cor-ah)"/>
   <!-- measure -> assess (arc arches ABOVE the words, concave north) -->
-  <path d="M725,22 C840,-2 960,-2 1055,22" fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <path d="M725,22 C840,-2 960,-2 1055,22" fill="none" stroke="#2f5169" stroke-width="2.2" marker-end="url(#cor-ah)"/>
 
   <!-- assess -> down right -> across bottom -> up left -> back into "run" -->
   <path d="M1128,74 C1240,180 1240,600 1110,690 C860,780 400,780 190,690 C60,600 60,180 172,76"
-        fill="none" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+        fill="none" stroke="#2f5169" stroke-width="2.2" marker-end="url(#cor-ah)"/>
 
   <!-- ===================== SPINE: Determinize -> Judgment -> Determinize ===================== -->
-  <text x="650" y="176" text-anchor="middle" font-size="32" font-weight="700" fill="#12324a">A determinize &#8594; judgment &#8594; determinize split</text>
+  <text x="650" y="176" text-anchor="middle" font-size="32" font-weight="700" fill="#2f5169">A determinize → judgment → determinize split</text>
 
   <!-- Step 1: Determinize (data-space) -->
-  <rect x="70" y="220" width="336" height="150" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
-  <text x="238" y="270" text-anchor="middle" font-size="40" font-weight="700" fill="#12324a">Determinize</text>
-  <text x="238" y="310" text-anchor="middle" font-size="24" fill="#3a4a58">mechanical &#183; automatable</text>
-  <text x="238" y="344" text-anchor="middle" font-size="24" font-style="italic" fill="#3a4a58">data-space</text>
+  <rect x="70" y="220" width="336" height="150" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="238" y="270" text-anchor="middle" font-size="40" font-weight="700" fill="#2f5169">Determinize</text>
+  <text x="238" y="310" text-anchor="middle" font-size="24" fill="#57534e">mechanical · automatable</text>
+  <text x="238" y="344" text-anchor="middle" font-size="24" font-style="italic" fill="#57534e">data-space</text>
 
   <!-- arrow: determinize -> judgment -->
-  <line x1="408" y1="295" x2="452" y2="295" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <line x1="408" y1="295" x2="452" y2="295" stroke="#2f5169" stroke-width="2.2" marker-end="url(#cor-ah)"/>
 
   <!-- Step 2: Judgment (reasoning decides) -->
-  <polygon points="650,208 810,295 650,382 490,295" fill="#1a4a7a" stroke="#12324a" stroke-width="1.5"/>
+  <polygon points="650,208 810,295 650,382 490,295" fill="#2f5169" stroke="#2f5169" stroke-width="1.5"/>
   <text x="650" y="292" text-anchor="middle" font-size="32" font-weight="700" fill="#ffffff">Judgment</text>
-  <text x="650" y="324" text-anchor="middle" font-size="24" fill="#dbe6f0">reasoning decides</text>
+  <text x="650" y="324" text-anchor="middle" font-size="24" fill="#e7edf3">reasoning decides</text>
 
   <!-- arrow: judgment -> determinize (right) -->
-  <line x1="812" y1="295" x2="892" y2="295" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <line x1="812" y1="295" x2="892" y2="295" stroke="#2f5169" stroke-width="2.2" marker-end="url(#cor-ah)"/>
 
   <!-- Step 3: Determinize again (experiment-space) -->
-  <rect x="894" y="220" width="336" height="150" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="1062" y="270" text-anchor="middle" font-size="40" font-weight="700" fill="#12324a">Determinize</text>
-  <text x="1062" y="310" text-anchor="middle" font-size="24" fill="#3a4a58">mechanical &#183; automatable</text>
-  <text x="1062" y="344" text-anchor="middle" font-size="24" font-style="italic" fill="#3a4a58">experiment-space</text>
+  <rect x="894" y="220" width="336" height="150" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="1062" y="270" text-anchor="middle" font-size="40" font-weight="700" fill="#2f5169">Determinize</text>
+  <text x="1062" y="310" text-anchor="middle" font-size="24" fill="#57534e">mechanical · automatable</text>
+  <text x="1062" y="344" text-anchor="middle" font-size="24" font-style="italic" fill="#57534e">experiment-space</text>
 
   <!-- ===================== logged reasoning trace, two consumers ===================== -->
-  <line x1="1062" y1="370" x2="1062" y2="416" stroke="#1a4a7a" stroke-width="2.2" marker-end="url(#cor-ah)"/>
+  <line x1="1062" y1="370" x2="1062" y2="416" stroke="#2f5169" stroke-width="2.2" marker-end="url(#cor-ah)"/>
 
   <!-- logged reasoning trace box -->
-  <rect x="800" y="414" width="500" height="116" rx="6" fill="#ffffff" stroke="#1a4a7a" stroke-width="1.5" stroke-dasharray="6 4"/>
-  <text x="1050" y="450" text-anchor="middle" font-size="30" font-weight="700" fill="#1a4a7a">Logged reasoning trace</text>
-  <text x="1050" y="482" text-anchor="middle" font-size="24" fill="#3a4a58">why this configuration was chosen</text>
-  <text x="1050" y="512" text-anchor="middle" font-size="24" font-style="italic" fill="#3a4a58">captured: step 3 is deterministic</text>
+  <rect x="800" y="414" width="500" height="116" rx="6" fill="#ffffff" stroke="#2f5169" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="1050" y="450" text-anchor="middle" font-size="30" font-weight="700" fill="#2f5169">Logged reasoning trace</text>
+  <text x="1050" y="482" text-anchor="middle" font-size="24" fill="#57534e">why this configuration was chosen</text>
+  <text x="1050" y="512" text-anchor="middle" font-size="24" font-style="italic" fill="#57534e">captured: step 3 is deterministic</text>
 
   <!-- consumer (a): input to next iteration -->
-  <path d="M838,466 C600,494 300,470 208,424" fill="none" stroke="#1a4a7a" stroke-width="2" marker-end="url(#cor-ah)"/>
-  <rect x="120" y="416" width="650" height="102" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
-  <text x="445" y="454" text-anchor="middle" font-size="30" font-weight="700" fill="#12324a">(a) Input to the next iteration</text>
-  <text x="445" y="490" text-anchor="middle" font-size="24" fill="#3a4a58">the loop learns from its own trace</text>
+  <path d="M838,466 C600,494 300,470 208,424" fill="none" stroke="#2f5169" stroke-width="2" marker-end="url(#cor-ah)"/>
+  <rect x="120" y="416" width="650" height="102" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="445" y="454" text-anchor="middle" font-size="30" font-weight="700" fill="#2f5169">(a) Input to the next iteration</text>
+  <text x="445" y="490" text-anchor="middle" font-size="24" fill="#57534e">the loop learns from its own trace</text>
 
   <!-- consumer (b): decision trace for a secondary checker -->
-  <line x1="1030" y1="530" x2="1030" y2="576" stroke="#1a4a7a" stroke-width="2" marker-end="url(#cor-ah)"/>
-  <rect x="686" y="578" width="600" height="102" rx="6" fill="#eef2f6" stroke="#1a4a7a" stroke-width="1.5"/>
-  <text x="986" y="614" text-anchor="middle" font-size="28" font-weight="700" fill="#12324a">(b) Decision trace for a secondary checker</text>
-  <text x="986" y="650" text-anchor="middle" font-size="24" fill="#3a4a58">the trace evaluates better than the raw output alone</text>
+  <line x1="1030" y1="530" x2="1030" y2="576" stroke="#2f5169" stroke-width="2" marker-end="url(#cor-ah)"/>
+  <rect x="686" y="578" width="600" height="102" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="986" y="614" text-anchor="middle" font-size="28" font-weight="700" fill="#2f5169">(b) Decision trace for a secondary checker</text>
+  <text x="986" y="650" text-anchor="middle" font-size="24" fill="#57534e">the trace evaluates better than the raw output alone</text>
 
   <!-- ===================== BOTTOM LABEL ===================== -->
-  <text x="355" y="612" text-anchor="middle" font-size="30" font-weight="700" fill="#12324a">A lifecycle the runbook is anchored to</text>
+  <text x="355" y="612" text-anchor="middle" font-size="30" font-weight="700" fill="#2f5169">A lifecycle the runbook is anchored to</text>
 </svg><figcaption data-short="A config-optimization runbook"><span class="fig-label">Figure 2.4-1.</span> A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice. Fencing the one judgment step between two deterministic ends is the move: the messy part is bounded, and the logged trace turns an otherwise opaque tuning decision into something a checker can grade and the next iteration can improve on.</figcaption></figure>
 <p id="idx-def-deterministic-vs-judgment-split"><strong>The deterministic parts get tools.</strong> Anything that has a single correct outcome should be an executable script the agent runs, not a procedure it improvises. Leave it to improvisation and it will get it right most of the time — and you will wish you had automated it the one time it does not.</p>
 <p>Determinizing a step buys you more than a reliable outcome — it buys you a <strong>trace</strong>. When a step improvises, its reasoning is smoke: gone the moment it finishes, impossible to inspect or compare. Pin the step to an executable procedure and the reasoning becomes a record — the inputs it read, the branch it took, the value it produced — written down in a fixed shape. That record has two consumers, and between them they are the reason to capture the trace and not merely the outcome. The first is <strong>the next turn of the loop</strong>: last run's trace is this run's input, so the agent starts from what was already reasoned instead of re-deriving it, and the loop converges instead of wandering. The second is <strong>a second checker that reads the trace itself</strong> — a reviewer, human or agent, that never watched the step run but can now audit <em>how</em> it reached its answer and flag a trace that took a path it should not have. A judgment step gives you only its verdict; a determinized step gives you the verdict and the reasoning behind it, and the reasoning is the part a checker can hold to account.</p>

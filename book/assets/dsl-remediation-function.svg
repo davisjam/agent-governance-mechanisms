@@ -6,60 +6,60 @@
 
   <defs>
     <marker id="dsl-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#2B2416"/>
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
     </marker>
   </defs>
 
-  <text x="30" y="48" font-size="30" font-weight="bold" fill="#12324f">Two producers, one edit language</text>
+  <text x="30" y="48" font-size="30" font-weight="bold" fill="#2f5169">Two producers, one edit language</text>
 
   <!-- HUMAN PATH (top) -->
-  <rect x="24" y="76" width="270" height="86" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="159" y="112" text-anchor="middle" font-size="25" font-weight="bold" fill="#12324f">Editor (human)</text>
-  <text x="159" y="142" text-anchor="middle" font-size="24" fill="#3d5a70">emits ops by hand</text>
+  <rect x="24" y="76" width="270" height="86" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>
+  <text x="159" y="112" text-anchor="middle" font-size="25" font-weight="bold" fill="#2f5169">Editor (human)</text>
+  <text x="159" y="142" text-anchor="middle" font-size="24" fill="#2f5169">emits ops by hand</text>
 
   <!-- AUTOMATED PATH (bottom): task -> function -->
-  <rect x="24" y="288" width="264" height="86" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="156" y="324" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Remediation</text>
-  <text x="156" y="352" text-anchor="middle" font-size="22" fill="#3d5a70">task (e.g. alt text)</text>
+  <rect x="24" y="288" width="264" height="86" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>
+  <text x="156" y="324" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">Remediation</text>
+  <text x="156" y="352" text-anchor="middle" font-size="22" fill="#2f5169">task (e.g. alt text)</text>
 
   <!-- task->edit function box (dashed model inside) -->
-  <line x1="290" y1="331" x2="316" y2="331" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
-  <rect x="320" y="238" width="386" height="196" rx="3" fill="#fbfaf4" stroke="#7a6a2a" stroke-width="1.8"/>
-  <text x="513" y="276" text-anchor="middle" font-size="24" font-weight="bold" fill="#5a4a10">task-to-edit function</text>
-  <text x="513" y="302" text-anchor="middle" font-size="19" font-style="italic" fill="#7a6a2a">an instance of LLM-as-function-call</text>
+  <line x1="290" y1="331" x2="316" y2="331" stroke="#1c1917" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <rect x="320" y="238" width="386" height="196" rx="3" fill="#fdfcf9" stroke="#9a3f12" stroke-width="1.8"/>
+  <text x="513" y="276" text-anchor="middle" font-size="24" font-weight="bold" fill="#9a3f12">task-to-edit function</text>
+  <text x="513" y="302" text-anchor="middle" font-size="19" font-style="italic" fill="#9a3f12">an instance of LLM-as-function-call</text>
   <!-- model (dashed) inside -->
-  <rect x="344" y="320" width="160" height="92" rx="3" fill="#FFFBEA" stroke="#BFA45A" stroke-width="1.6" stroke-dasharray="6 4"/>
-  <text x="424" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#2B2416">Model</text>
-  <text x="424" y="386" text-anchor="middle" font-size="19" fill="#6b6250">bounded call</text>
+  <rect x="344" y="320" width="160" height="92" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="424" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#1c1917">Model</text>
+  <text x="424" y="386" text-anchor="middle" font-size="19" fill="#57534e">bounded call</text>
   <!-- validator inside -->
-  <rect x="522" y="320" width="160" height="92" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
-  <text x="602" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Validator</text>
-  <text x="602" y="386" text-anchor="middle" font-size="19" fill="#3d5a70">checks candidate</text>
-  <line x1="504" y1="366" x2="520" y2="366" stroke="#2B2416" stroke-width="1.4" marker-end="url(#dsl-arrow)"/>
+  <rect x="522" y="320" width="160" height="92" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.6"/>
+  <text x="602" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">Validator</text>
+  <text x="602" y="386" text-anchor="middle" font-size="19" fill="#2f5169">checks candidate</text>
+  <line x1="504" y1="366" x2="520" y2="366" stroke="#1c1917" stroke-width="1.4" marker-end="url(#dsl-arrow)"/>
 
   <!-- both converge to DSL -->
-  <line x1="294" y1="119" x2="736" y2="119" stroke="#2B2416" stroke-width="1.6"/>
-  <line x1="736" y1="119" x2="736" y2="164" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
-  <line x1="706" y1="331" x2="768" y2="331" stroke="#2B2416" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <line x1="294" y1="119" x2="736" y2="119" stroke="#1c1917" stroke-width="1.6"/>
+  <line x1="736" y1="119" x2="736" y2="164" stroke="#1c1917" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <line x1="706" y1="331" x2="768" y2="331" stroke="#1c1917" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
 
   <!-- SHARED DSL -->
-  <rect x="632" y="166" width="256" height="80" rx="3" fill="#f3eef7" stroke="#5a3a7a" stroke-width="2"/>
-  <text x="760" y="198" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">Shared edit</text>
-  <text x="760" y="226" text-anchor="middle" font-size="24" font-weight="bold" fill="#3a2350">language</text>
+  <rect x="632" y="166" width="256" height="80" rx="3" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="760" y="198" text-anchor="middle" font-size="24" font-weight="bold" fill="#7c6bb0">Shared edit</text>
+  <text x="760" y="226" text-anchor="middle" font-size="24" font-weight="bold" fill="#7c6bb0">language</text>
 
   <!-- DSL -> document model -->
-  <rect x="740" y="292" width="316" height="82" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.8"/>
-  <text x="898" y="326" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Document model</text>
-  <text x="898" y="354" text-anchor="middle" font-size="19" fill="#3d5a70">applies + stamps each edit</text>
+  <rect x="740" y="292" width="316" height="82" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>
+  <text x="898" y="326" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">Document model</text>
+  <text x="898" y="354" text-anchor="middle" font-size="19" fill="#2f5169">applies + stamps each edit</text>
 
   <!-- hardcoded note -->
-  <text x="320" y="466" font-size="19" font-style="italic" fill="#7a5a2a">The task-to-edit mapping is mostly hardcoded today — to be fleshed out.</text>
-  <text x="320" y="488" font-size="19" font-style="italic" fill="#7a5a2a">Concept and trajectory, not a finished build.</text>
+  <text x="320" y="466" font-size="19" font-style="italic" fill="#9a3f12">The task-to-edit mapping is mostly hardcoded today — to be fleshed out.</text>
+  <text x="320" y="488" font-size="19" font-style="italic" fill="#9a3f12">Concept and trajectory, not a finished build.</text>
 
   <!-- takeaway strip -->
-  <line x1="24" y1="506" x2="1096" y2="506" stroke="#c8d6e5" stroke-width="1.4"/>
-  <text x="30" y="536" font-size="24" font-weight="bold" fill="#12324f">Traceability and confidence — plus cheaper reasoning</text>
-  <text x="30" y="564" font-size="19" fill="#333">One language and one validated boundary makes every edit a typed, validated, stamped result</text>
-  <text x="30" y="588" font-size="19" fill="#333">you can explain and reverse (traceability); the deterministic validator holds the line (confidence).</text>
-  <text x="30" y="612" font-size="19" fill="#333">Scoping each call to one task also scopes the reasoning — the same move as small transformations, priced.</text>
+  <line x1="24" y1="506" x2="1096" y2="506" stroke="#e4e0d8" stroke-width="1.4"/>
+  <text x="30" y="536" font-size="24" font-weight="bold" fill="#2f5169">Traceability and confidence — plus cheaper reasoning</text>
+  <text x="30" y="564" font-size="19" fill="#1c1917">One language and one validated boundary makes every edit a typed, validated, stamped result</text>
+  <text x="30" y="588" font-size="19" fill="#1c1917">you can explain and reverse (traceability); the deterministic validator holds the line (confidence).</text>
+  <text x="30" y="612" font-size="19" fill="#1c1917">Scoping each call to one task also scopes the reasoning — the same move as small transformations, priced.</text>
 </svg>

@@ -6,56 +6,56 @@
 
   <defs>
     <marker id="lfc-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
-      <path d="M0,0 L9,4.5 L0,9 z" fill="#2B2416"/>
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#1c1917"/>
     </marker>
   </defs>
 
   <!-- CALLER -->
-  <rect x="24" y="150" width="200" height="112" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
-  <text x="124" y="182" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Deterministic</text>
-  <text x="124" y="206" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">caller</text>
-  <text x="124" y="230" text-anchor="middle" font-size="19" fill="#3d5a70">owns the workflow;</text>
-  <text x="124" y="252" text-anchor="middle" font-size="19" fill="#3d5a70">decides each step</text>
+  <rect x="24" y="150" width="200" height="112" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.6"/>
+  <text x="124" y="182" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">Deterministic</text>
+  <text x="124" y="206" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">caller</text>
+  <text x="124" y="230" text-anchor="middle" font-size="19" fill="#2f5169">owns the workflow;</text>
+  <text x="124" y="252" text-anchor="middle" font-size="19" fill="#2f5169">decides each step</text>
 
   <!-- input contract -->
-  <line x1="224" y1="206" x2="300" y2="206" stroke="#2B2416" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
-  <text x="262" y="184" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">typed input</text>
-  <text x="262" y="200" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">contract</text>
+  <line x1="224" y1="206" x2="300" y2="206" stroke="#1c1917" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
+  <text x="262" y="184" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">typed input</text>
+  <text x="262" y="200" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">contract</text>
 
   <!-- MODEL (probabilistic — dashed) -->
-  <rect x="304" y="150" width="200" height="112" rx="3" fill="#FFFBEA" stroke="#BFA45A" stroke-width="1.6" stroke-dasharray="6 4"/>
-  <text x="404" y="184" text-anchor="middle" font-size="24" font-weight="bold" fill="#2B2416">Model</text>
-  <text x="404" y="210" text-anchor="middle" font-size="19" fill="#6b6250">the probabilistic</text>
-  <text x="404" y="232" text-anchor="middle" font-size="19" fill="#6b6250">"function" — one</text>
-  <text x="404" y="254" text-anchor="middle" font-size="19" fill="#6b6250">bounded task</text>
+  <rect x="304" y="150" width="200" height="112" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="404" y="184" text-anchor="middle" font-size="24" font-weight="bold" fill="#1c1917">Model</text>
+  <text x="404" y="210" text-anchor="middle" font-size="19" fill="#57534e">the probabilistic</text>
+  <text x="404" y="232" text-anchor="middle" font-size="19" fill="#57534e">"function" — one</text>
+  <text x="404" y="254" text-anchor="middle" font-size="19" fill="#57534e">bounded task</text>
 
   <!-- output contract -->
-  <line x1="504" y1="206" x2="580" y2="206" stroke="#2B2416" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
-  <text x="542" y="184" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">typed output</text>
-  <text x="542" y="200" text-anchor="middle" font-size="18" font-style="italic" fill="#5a5240">contract</text>
+  <line x1="504" y1="206" x2="580" y2="206" stroke="#1c1917" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
+  <text x="542" y="184" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">typed output</text>
+  <text x="542" y="200" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">contract</text>
 
   <!-- VALIDATOR -->
-  <rect x="584" y="150" width="240" height="112" rx="3" fill="#eef3f7" stroke="#1a4a7a" stroke-width="1.6"/>
-  <text x="704" y="188" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">Deterministic</text>
-  <text x="704" y="212" text-anchor="middle" font-size="24" font-weight="bold" fill="#12324f">validator</text>
-  <text x="704" y="240" text-anchor="middle" font-size="19" fill="#3d5a70">checks the candidate</text>
+  <rect x="584" y="150" width="240" height="112" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.6"/>
+  <text x="704" y="188" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">Deterministic</text>
+  <text x="704" y="212" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">validator</text>
+  <text x="704" y="240" text-anchor="middle" font-size="19" fill="#2f5169">checks the candidate</text>
 
   <!-- trust boundary marker under validator; broken around the typed-output-contract label -->
-  <line x1="554" y1="116" x2="554" y2="166" stroke="#a33" stroke-width="1" stroke-dasharray="3 3"/>
-  <line x1="554" y1="210" x2="554" y2="300" stroke="#a33" stroke-width="1" stroke-dasharray="3 3"/>
-  <text x="554" y="108" text-anchor="middle" font-size="18" font-weight="bold" fill="#a33">trust boundary</text>
+  <line x1="554" y1="116" x2="554" y2="166" stroke="#b23b3b" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="554" y1="210" x2="554" y2="300" stroke="#b23b3b" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="554" y="108" text-anchor="middle" font-size="18" font-weight="bold" fill="#b23b3b">trust boundary</text>
 
   <!-- PASS out -->
-  <line x1="824" y1="188" x2="876" y2="188" stroke="#2B2416" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
-  <text x="850" y="176" text-anchor="middle" font-size="19" font-weight="bold" fill="#2a6b2a">pass</text>
-  <text x="886" y="182" text-anchor="start" font-size="18" fill="#2a6b2a">result</text>
-  <text x="886" y="202" text-anchor="start" font-size="18" fill="#2a6b2a">incorporated</text>
+  <line x1="824" y1="188" x2="876" y2="188" stroke="#1c1917" stroke-width="1.4" marker-end="url(#lfc-arrow)"/>
+  <text x="850" y="176" text-anchor="middle" font-size="19" font-weight="bold" fill="#1f7a4d">pass</text>
+  <text x="886" y="182" text-anchor="start" font-size="18" fill="#1f7a4d">result</text>
+  <text x="886" y="202" text-anchor="start" font-size="18" fill="#1f7a4d">incorporated</text>
 
   <!-- FAIL loop back to caller -->
-  <path d="M704,262 L704,330 L124,330 L124,262" fill="none" stroke="#a33" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#lfc-arrow)"/>
-  <text x="404" y="350" text-anchor="middle" font-size="19" font-weight="bold" fill="#a33">fail → caller retries or falls back</text>
+  <path d="M704,262 L704,330 L124,330 L124,262" fill="none" stroke="#b23b3b" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#lfc-arrow)"/>
+  <text x="404" y="350" text-anchor="middle" font-size="19" font-weight="bold" fill="#b23b3b">fail → caller retries or falls back</text>
 
   <!-- caption strip -->
-  <text x="520" y="388" text-anchor="middle" font-size="18" font-style="italic" fill="#555">The model is called like a function: a typed task in, a typed answer out —</text>
-  <text x="520" y="410" text-anchor="middle" font-size="18" font-style="italic" fill="#555">never trusted until a deterministic check has passed it.</text>
+  <text x="520" y="388" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">The model is called like a function: a typed task in, a typed answer out —</text>
+  <text x="520" y="410" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">never trusted until a deterministic check has passed it.</text>
 </svg>

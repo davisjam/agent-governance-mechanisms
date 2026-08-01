@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: projection-axes).
+     One executable core, two projection axes: a first fan picks the framework (4+1, C4,
+     SysML, data-flow), a second fan picks the lens within one framework (customer,
+     internal, privacy/storage). Palette: Umber Monograph tokens (accent #9a3f12 core,
+     fleet #2f5169 projections). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520"
+     role="group" aria-labelledby="paTitle paDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="paTitle">One core, two projection axes — framework and lens</title>
+  <desc id="paDesc">One executable core sits at the left. A first fan of arrows, under the axis
+    label "projection: which framework", reaches four sibling renderings of that one core —
+    Kruchten's 4+1 views (this book's spine), C4 (Context and Container), SysML constraint
+    blocks, and a data-flow diagram. From the C4 node a second fan, under the axis label
+    "lens: which slice", reaches three views of the same derived content — customer, internal,
+    and privacy/storage. Both fans are projections off the one core: choosing a framework, and
+    choosing a lens within it, are rendering decisions, never a second model to maintain.</desc>
+
+  <defs>
+    <marker id="pa-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
+    </marker>
+  </defs>
+
+  <!-- axis labels, as column headers -->
+  <text x="550" y="26" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">projection: which framework</text>
+  <text x="883" y="86" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">lens: which slice</text>
+
+  <!-- ===== the one executable core ===== -->
+  <rect x="24" y="185" width="290" height="150" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="169" y="222" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">One executable core</text>
+  <text x="169" y="252" text-anchor="middle" font-size="18" fill="#57534e">typed model</text>
+  <text x="169" y="276" text-anchor="middle" font-size="18" fill="#57534e">held equal to the code</text>
+  <text x="169" y="300" text-anchor="middle" font-size="18" fill="#57534e">drift-gated</text>
+
+  <!-- ===== first fan: core -> four frameworks ===== -->
+  <g stroke="#2f5169" stroke-width="2" fill="none">
+    <path d="M318,225 C370,180 385,120 424,86" marker-end="url(#pa-ah)"/>
+    <path d="M318,250 C360,235 380,215 424,202" marker-end="url(#pa-ah)"/>
+    <path d="M318,275 C360,290 380,305 424,318" marker-end="url(#pa-ah)"/>
+    <path d="M318,300 C370,345 385,400 424,434" marker-end="url(#pa-ah)"/>
+  </g>
+
+  <g>
+    <rect x="430" y="42" width="240" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="550" y="76" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">4+1 views</text>
+    <text x="550" y="102" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">this book's spine</text>
+
+    <rect x="430" y="162" width="240" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="550" y="196" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">C4</text>
+    <text x="550" y="222" text-anchor="middle" font-size="18" fill="#57534e">Context · Container</text>
+
+    <rect x="430" y="282" width="240" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="550" y="316" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">SysML</text>
+    <text x="550" y="342" text-anchor="middle" font-size="18" fill="#57534e">constraint blocks</text>
+
+    <rect x="430" y="402" width="240" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="550" y="436" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Data-flow</text>
+    <text x="550" y="462" text-anchor="middle" font-size="18" fill="#57534e">diagram</text>
+  </g>
+
+  <!-- ===== second fan: C4 -> three lenses ===== -->
+  <g stroke="#2f5169" stroke-width="2" fill="none">
+    <path d="M674,190 C720,170 745,150 784,134" marker-end="url(#pa-ah)"/>
+    <path d="M674,202 C715,212 745,225 784,238" marker-end="url(#pa-ah)"/>
+    <path d="M674,222 C725,260 745,305 784,340" marker-end="url(#pa-ah)"/>
+  </g>
+
+  <g>
+    <rect x="790" y="100" width="186" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="883" y="140" text-anchor="middle" font-size="20" fill="#1c1917">customer</text>
+
+    <rect x="790" y="210" width="186" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="883" y="250" text-anchor="middle" font-size="20" fill="#1c1917">internal</text>
+
+    <rect x="790" y="320" width="186" height="80" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="883" y="354" text-anchor="middle" font-size="20" fill="#1c1917">privacy /</text>
+    <text x="883" y="380" text-anchor="middle" font-size="20" fill="#1c1917">storage</text>
+  </g>
+</svg>

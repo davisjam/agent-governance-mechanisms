@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: deployment-model-structure).
+     The build host runs the test serializer and build semaphore and produces the image the
+     runtime cluster deploys: web enqueues onto a queue drained by a worker. Drawn to match its
+     sibling figure dag-policy-structure (3.5-2). Palette: Umber Monograph tokens
+     (fleet #2f5169 services, panel #f6f4ef hosts, muted #57534e boundaries). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 400" width="1180" height="400"
+     role="group" aria-labelledby="dmTitle dmDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="dmTitle">The build host produces the image; the runtime cluster deploys it</title>
+  <desc id="dmDesc">A build host runs the test serializer and build semaphore and produces
+    the image the runtime cluster deploys, where the web service enqueues onto a queue
+    drained by a worker. The model declares this placement; a parity lint holds it to the
+    real deploy tables.</desc>
+
+  <defs>
+    <marker id="dm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- ===== the build host ===== -->
+  <rect x="40" y="50" width="330" height="310" rx="10" fill="#f6f4ef" stroke="#57534e" stroke-width="1.5"/>
+  <text x="60" y="88" font-size="20" font-weight="700" fill="#1c1917">Build host</text>
+
+  <rect x="70" y="120" width="270" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="205" y="160" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Test serializer</text>
+
+  <rect x="70" y="240" width="270" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="205" y="280" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Build semaphore</text>
+
+  <!-- host -> cluster: the image crosses the boundary -->
+  <line x1="374" y1="205" x2="554" y2="205" stroke="#1c1917" stroke-width="2" marker-end="url(#dm-ah)"/>
+  <text x="465" y="184" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">produces the image</text>
+
+  <!-- ===== the runtime cluster ===== -->
+  <rect x="560" y="50" width="580" height="310" rx="10" fill="#f6f4ef" stroke="#57534e" stroke-width="1.5"/>
+  <text x="580" y="88" font-size="20" font-weight="700" fill="#1c1917">Runtime cluster</text>
+
+  <rect x="590" y="173" width="130" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="655" y="213" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Web</text>
+
+  <line x1="724" y1="205" x2="782" y2="205" stroke="#1c1917" stroke-width="2" marker-end="url(#dm-ah)"/>
+
+  <!-- the queue (cylinder) -->
+  <g>
+    <path d="M 788,168 v 62 a 65,10 0 0 0 130,0 v -62" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+    <ellipse cx="853" cy="168" rx="65" ry="10" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+    <text x="853" y="213" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Queue</text>
+  </g>
+
+  <line x1="922" y1="205" x2="980" y2="205" stroke="#1c1917" stroke-width="2" marker-end="url(#dm-ah)"/>
+
+  <rect x="986" y="173" width="130" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="1051" y="213" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Worker</text>
+</svg>

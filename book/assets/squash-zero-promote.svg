@@ -4,7 +4,7 @@
      under the middle state and a "can never return" back-barrier after the final state.
      Mermaid's stateDiagram draws the three states but not the drain-loop-under-a-state plus
      the one-way barrier that is the point; the barrier + loop want bespoke placement.
-     Accent #1a4a7a, source-red #8a2f2f, cream #f4ede0, panel #eef3f8. -->
+     Accent #2f5169, source-red #b23b3b, cream #faf1e6, panel #e7edf3. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420"
      role="group" aria-labelledby="szpTitle szpDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
@@ -21,52 +21,52 @@
   <defs>
     <marker id="szpArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
     </marker>
     <marker id="szpArrowRed" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#8a2f2f"/>
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#b23b3b"/>
     </marker>
   </defs>
 
   <!-- start -->
-  <circle cx="70" cy="150" r="12" fill="#33383d"/>
-  <text x="70" y="192" text-anchor="middle" font-size="17" fill="#5f5f5f">new lint</text>
+  <circle cx="70" cy="150" r="12" fill="#1c1917"/>
+  <text x="70" y="192" text-anchor="middle" font-size="17" fill="#57534e">new lint</text>
 
   <!-- state 1: audit-only -->
-  <rect x="130" y="110" width="230" height="80" rx="10" fill="#f4ede0" stroke="#8a2f2f" stroke-width="2.5"/>
-  <text x="245" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Audit-only</text>
-  <text x="245" y="172" text-anchor="middle" font-size="18" fill="#5f5f5f">reports, blocks nothing</text>
+  <rect x="130" y="110" width="230" height="80" rx="10" fill="#faf1e6" stroke="#b23b3b" stroke-width="2.5"/>
+  <text x="245" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Audit-only</text>
+  <text x="245" y="172" text-anchor="middle" font-size="18" fill="#57534e">reports, blocks nothing</text>
 
   <!-- state 2: draining (the middle work) -->
-  <rect x="410" y="110" width="230" height="80" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="525" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Findings → 0</text>
-  <text x="525" y="172" text-anchor="middle" font-size="18" fill="#33383d">a fix wave drains it</text>
+  <rect x="410" y="110" width="230" height="80" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="525" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#2f5169">Findings → 0</text>
+  <text x="525" y="172" text-anchor="middle" font-size="18" fill="#1c1917">a fix wave drains it</text>
 
   <!-- state 3: blocking -->
-  <rect x="690" y="110" width="230" height="80" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="805" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#1a4a7a">Blocking</text>
-  <text x="805" y="172" text-anchor="middle" font-size="16" fill="#33383d">fails a regressing commit</text>
+  <rect x="690" y="110" width="230" height="80" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="805" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#2f5169">Blocking</text>
+  <text x="805" y="172" text-anchor="middle" font-size="16" fill="#1c1917">fails a regressing commit</text>
 
   <!-- edges along the spine -->
-  <g fill="none" stroke="#33383d" stroke-width="2.5" marker-end="url(#szpArrow)">
+  <g fill="none" stroke="#1c1917" stroke-width="2.5" marker-end="url(#szpArrow)">
     <path d="M82,150 L128,150"/>
     <path d="M360,150 L408,150"/>
     <path d="M640,150 L688,150"/>
   </g>
-  <text x="386" y="140" text-anchor="middle" font-size="16" fill="#5f5f5f">land</text>
-  <text x="666" y="140" text-anchor="middle" font-size="16" fill="#5f5f5f">at zero</text>
+  <text x="386" y="140" text-anchor="middle" font-size="16" fill="#57534e">land</text>
+  <text x="666" y="140" text-anchor="middle" font-size="16" fill="#57534e">at zero</text>
 
   <!-- fix-wave loop under the middle state -->
-  <g fill="none" stroke="#1a4a7a" stroke-width="2.5" marker-end="url(#szpArrow)">
+  <g fill="none" stroke="#2f5169" stroke-width="2.5" marker-end="url(#szpArrow)">
     <path d="M470,190 C440,250 610,250 580,192"/>
   </g>
-  <text x="525" y="268" text-anchor="middle" font-size="18" font-style="italic" fill="#1a4a7a">behavior-preserving fixes, under test coverage</text>
+  <text x="525" y="268" text-anchor="middle" font-size="18" font-style="italic" fill="#2f5169">behavior-preserving fixes, under test coverage</text>
 
   <!-- one-way barrier after blocking: the class can't return -->
-  <line x1="932" y1="96" x2="932" y2="204" stroke="#8a2f2f" stroke-width="4"/>
-  <g fill="none" stroke="#8a2f2f" stroke-width="2.5" marker-end="url(#szpArrowRed)">
+  <line x1="932" y1="96" x2="932" y2="204" stroke="#b23b3b" stroke-width="4"/>
+  <g fill="none" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#szpArrowRed)">
     <path d="M805,206 C805,240 900,240 926,206"/>
   </g>
-  <text x="812" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#8a2f2f">the smell can never return</text>
+  <text x="812" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">the smell can never return</text>
 </svg>

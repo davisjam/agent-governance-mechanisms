@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: service-model-structure).
+     The service model feeds generators (access policy, env wiring) and parity gates; the gates
+     compare it against the real trees and handlers and block the build on divergence.
+     Palette: Umber Monograph tokens (accent #9a3f12 model, fleet #2f5169 machinery,
+     governed #1f7a4d generated artifacts, churn #b23b3b failure). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440"
+     role="group" aria-labelledby="smTitle smDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="smTitle">The service model feeds generators and parity gates</title>
+  <desc id="smDesc">The service model feeds generators that emit the access policy and
+    environment wiring, and it feeds parity gates that compare it against the real service
+    trees and handlers. When either the model or reality diverges, the build is blocked. The
+    model is authoritative for what it generates and reconciled against reality for what it
+    checks.</desc>
+
+  <defs>
+    <marker id="sm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- ===== the service model (authoritative, cylinder) ===== -->
+  <g>
+    <path d="M 50,62 v 80 a 115,12 0 0 0 230,0 v -80" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <ellipse cx="165" cy="62" rx="115" ry="12" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <text x="165" y="112" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Service model</text>
+  </g>
+
+  <!-- ===== reality: the real trees and handlers (cylinder) ===== -->
+  <g>
+    <path d="M 50,302 v 80 a 115,12 0 0 0 230,0 v -80" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+    <ellipse cx="165" cy="302" rx="115" ry="12" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+    <text x="165" y="352" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Trees + handlers</text>
+  </g>
+
+  <!-- ===== generators ===== -->
+  <rect x="390" y="63" width="200" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="490" y="103" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Generators</text>
+
+  <!-- model -> generators -->
+  <line x1="284" y1="95" x2="384" y2="95" stroke="#1c1917" stroke-width="2" marker-end="url(#sm-ah)"/>
+
+  <!-- generated artifacts -->
+  <g>
+    <polygon points="712,26 924,26 910,82 698,82" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="811" y="62" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Access policy</text>
+    <polygon points="712,116 924,116 910,172 698,172" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="811" y="152" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Env wiring</text>
+  </g>
+
+  <!-- generators -> artifacts -->
+  <path d="M594,80 C640,72 655,64 692,56" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#sm-ah)"/>
+  <path d="M594,110 C640,118 655,128 692,138" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#sm-ah)"/>
+
+  <!-- ===== parity gates (decision diamond) ===== -->
+  <polygon points="480,275 580,330 480,385 380,330" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="480" y="324" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Parity</text>
+  <text x="480" y="350" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">gates</text>
+
+  <!-- model -> parity gates (down the left, into the diamond's top vertex) -->
+  <path d="M165,158 C165,240 340,255 472,272" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#sm-ah)"/>
+  <!-- reality -> parity gates -->
+  <line x1="284" y1="330" x2="374" y2="330" stroke="#1c1917" stroke-width="2" marker-end="url(#sm-ah)"/>
+
+  <!-- parity gates -> build blocked -->
+  <line x1="584" y1="330" x2="714" y2="330" stroke="#1c1917" stroke-width="2" marker-end="url(#sm-ah)"/>
+  <text x="650" y="300" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">either side</text>
+  <text x="650" y="320" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">diverges</text>
+
+  <!-- build blocked (stadium, failure) -->
+  <rect x="720" y="300" width="210" height="60" rx="30" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
+  <text x="825" y="338" text-anchor="middle" font-size="22" font-weight="700" fill="#b23b3b">build blocked</text>
+</svg>

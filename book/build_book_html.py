@@ -825,6 +825,14 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
         if kind is _ir.BlockKind.CODE:
             _emit(_render_code(block))
             continue
+        # A blockquote renders its inner content recursively (its own `md_to_html` pass over the
+        # prefix-stripped body handles any inner directive AND strips any inner stray comment), so it MUST
+        # be dispatched with the block INTACT — before the prose-block stray-comment strip below. Left to
+        # that strip, a legitimate directive living inside the quote (an inline `> <!-- figure: … -->` inset
+        # diagram) is deleted as if it were a stray authoring comment, silently dropping the figure.
+        if kind is _ir.BlockKind.BLOCKQUOTE:
+            _emit(_render_blockquote(block, is_def=def_armed))
+            continue
         # Gap-marker callouts (`[FILL IN: …]` / `[MORE CHAPTERS FOLLOW: …]`) — the IR classifies these as
         # PARA (they are prose-shaped), so the renderer keeps the shape test for them just ahead of prose.
         if stripped.startswith("[FILL IN:") or stripped.startswith("[MORE CHAPTERS FOLLOW:"):
@@ -844,9 +852,6 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 continue
         if kind is _ir.BlockKind.HEADING:
             _emit(_render_heading(block))
-            continue
-        if kind is _ir.BlockKind.BLOCKQUOTE:
-            _emit(_render_blockquote(block, is_def=def_armed))
             continue
         if kind is _ir.BlockKind.TABLE:
             tbl = _render_pipe_table(block)
@@ -1261,6 +1266,9 @@ ul.list-of-floats-links li {{ margin: 0.15rem 0; }}
 .gallery-source {{ font-size: 13px; color: var(--muted); text-align: center; margin: 0.5rem 0 0; }}
 .gallery-source a {{ color: var(--accent); text-decoration: underline; }}
 .gallery hr {{ border: none; border-top: 1px solid var(--rule); margin: 2.4rem 0; }}
+.gallery-group {{ margin: 0 0 2.4rem; }}
+.gallery-group > h2 {{ margin: 2.6rem 0 0.2rem; padding-bottom: 0.3rem; border-bottom: 2px solid var(--rule); }}
+.gallery-group-note {{ font-size: 14px; color: var(--muted); margin: 0 0 1.6rem; }}
 .marker {{ margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }}
 .marker-fill {{ background: var(--accent-tint); border: 1px dashed var(--accent); }}
 .marker-more {{ background: var(--box-def-fill); border: 1px dashed var(--box-def-rule); }}
@@ -1836,7 +1844,8 @@ Every pattern follows the same template:
 - **Intent** — the failure class this mechanism kills, and the shape that kills it.
 - **Motivation** — the recurring failure told as a scenario, and why the naive fix does not hold.
 - **Applicability** — the conditions under which reaching for this pattern pays off.
-- **Structure** — a diagram of the moving parts and how they connect.
+- **Structure** — a diagram of the moving parts and how they connect, drawn as a lighter reference \
+schematic than the hand-drawn figures in the chapters.
 - **Sample Code** — a concrete instance of the pattern.
 - **Consequences** — what adopting it costs and buys, and the second-order effects to watch.
 - **Example use within DocAble** — where the mechanism runs in DocAble.
@@ -3102,8 +3111,8 @@ def build_figures_page(chapters: list[dict], entries: list[dict]) -> str:
     don't collide once both land on this one page."""
     title_by_slug = {c["slug"]: c for c in chapters}
     figs = [e for e in entries if e["kind"] == "fig"]
-    items: list[str] = []
-    for e in figs:
+
+    def _gallery_item(e: dict) -> str:
         src = title_by_slug.get(e["slug"])
         anchor = _float_id("fig", e["num"])
         fig_html = _namespace_element_ids(e["html"], anchor)
@@ -3112,7 +3121,26 @@ def build_figures_page(chapters: list[dict], entries: list[dict]) -> str:
             f'<p class="gallery-source">From <a href="{html.escape(e["slug"], quote=True)}.html#{anchor}">'
             f'{html.escape(from_label)}</a></p>'
         )
-        items.append(f'<section class="gallery-item">{fig_html}{from_link}</section>')
+        return f'<section class="gallery-item">{fig_html}{from_link}</section>'
+
+    # Two REGISTERS live in one gallery: the book-proper chapter figures are hand-drawn to the house
+    # palette; the appendix pattern pages carry lighter schematic diagrams. Section the gallery by the
+    # source chapter's `is_appendix` flag so the two registers don't shuffle together — a reader scanning
+    # the visuals sees the deliberate style shift, not an inconsistency. Every figure still appears.
+    chapter_figs = [e for e in figs if not (title_by_slug.get(e["slug"]) or {}).get("is_appendix")]
+    appendix_figs = [e for e in figs if (title_by_slug.get(e["slug"]) or {}).get("is_appendix")]
+
+    def _group(heading: str, blurb: str, group: list[dict]) -> str:
+        if not group:
+            return ""
+        inner = "<hr>".join(_gallery_item(e) for e in group)
+        return (
+            '<section class="gallery-group">'
+            f"<h2>{html.escape(heading)}</h2>"
+            f'<p class="gallery-group-note">{blurb}</p>'
+            f'<div class="gallery">{inner}</div></section>'
+        )
+
     header = (
         '<header class="chap"><div class="kicker">Front Matter</div>'
         "<h1>Figures Gallery</h1></header>"
@@ -3120,11 +3148,19 @@ def build_figures_page(chapters: list[dict], entries: list[dict]) -> str:
     intro = (
         f"<p>Every figure in the book — {len(figs)} in all — gathered here in reading order, each with its "
         "full caption. A quick way to review the book's visuals in one place; every figure links back to "
-        "where it appears in the text. (See also the "
+        "where it appears in the text. The chapter figures come first; the appendix pattern pages follow "
+        "in a lighter schematic style. (See also the "
         f'<a href="{_GENERATED_PAGE_SLUGS[0]}.html">List of Figures and Tables</a> for tables, and a '
         "scannable index of short captions.)</p>"
     )
-    body = header + intro + '<div class="gallery">' + "<hr>".join(items) + "</div>"
+    body = (
+        header + intro
+        + _group("Chapter figures", "The book-proper figures, hand-drawn to the house palette.",
+                 chapter_figs)
+        + _group("Appendix schematics",
+                 "Diagrams from the pattern-catalogue appendix, drawn in a lighter reference style.",
+                 appendix_figs)
+    )
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
     jump = (
         '<div class="jump">'

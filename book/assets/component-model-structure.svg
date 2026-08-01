@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: component-model-structure).
+     The component registry feeds the boundary lints, agent dispatch, and context injection;
+     a reverse-mapping test joins the registry to the real directory tree in both directions.
+     Palette: Umber Monograph tokens (accent #9a3f12 registry, fleet #2f5169 consumers). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" width="960" height="460"
+     role="group" aria-labelledby="cmTitle cmDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="cmTitle">One component registry, every tool reading the same ownership answer</title>
+  <desc id="cmDesc">The component registry feeds the boundary lints, the agent dispatch, and the
+    dynamic context injection, so every tool reads the same ownership answer. A reverse-mapping
+    test joins the registry to the real directory tree and fails the build if the declared zones
+    and the tree disagree in either direction.</desc>
+
+  <defs>
+    <marker id="cm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- ===== the component registry (authoritative, cylinder) ===== -->
+  <g>
+    <path d="M 50,62 v 88 a 125,13 0 0 0 250,0 v -88" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <ellipse cx="175" cy="62" rx="125" ry="13" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+    <text x="175" y="104" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Component</text>
+    <text x="175" y="132" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">registry</text>
+  </g>
+
+  <!-- ===== the three consumers ===== -->
+  <g>
+    <rect x="560" y="40" width="270" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="695" y="77" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Boundary lints</text>
+
+    <rect x="560" y="130" width="270" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="695" y="167" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Dispatch</text>
+
+    <rect x="560" y="220" width="270" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="695" y="257" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Context injection</text>
+  </g>
+
+  <!-- registry -> the three consumers -->
+  <g stroke="#1c1917" stroke-width="2" fill="none">
+    <path d="M305,90 C420,80 470,74 554,69" marker-end="url(#cm-ah)"/>
+    <path d="M305,120 C420,130 470,145 554,157" marker-end="url(#cm-ah)"/>
+    <path d="M305,145 C420,180 460,220 554,246" marker-end="url(#cm-ah)"/>
+  </g>
+
+  <!-- ===== reality: the real directory tree (cylinder) ===== -->
+  <g>
+    <path d="M 50,318 v 70 a 125,13 0 0 0 250,0 v -70" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+    <ellipse cx="175" cy="318" rx="125" ry="13" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+    <text x="175" y="352" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Real directory</text>
+    <text x="175" y="378" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">tree</text>
+  </g>
+
+  <!-- ===== the reverse-mapping test (join, hexagon) ===== -->
+  <polygon points="445,362 478,320 652,320 685,362 652,404 478,404"
+           fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="565" y="356" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">Reverse-mapping</text>
+  <text x="565" y="382" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">test</text>
+
+  <!-- registry -> reverse-mapping test (down past the tree cylinder) -->
+  <path d="M290,158 C350,230 420,280 500,314" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#cm-ah)"/>
+  <!-- tree -> reverse-mapping test -->
+  <line x1="305" y1="362" x2="439" y2="362" stroke="#1c1917" stroke-width="2" marker-end="url(#cm-ah)"/>
+</svg>

@@ -49,7 +49,7 @@
     "order": 4,
     "kicker": "Big idea 4 · Thesis 2",
     "title": "A quality goal splits into a constraint and a sensor",
-    "figure": "control-vs-architecture.svg",
+    "figure": "constraint-vs-sensor.svg",
     "book_home": "book/2.3-the-governed-environment.html",
     "claim": "Split a quality goal in two: a constraint prevents the error; a sensor detects it after the fact. Costly failures earn both.",
     "more": "A type the compiler checks, a lint that blocks the commit, a gate that refuses the deploy: each holds a policy decided once against every later change. What splits into neither stays a human job."
