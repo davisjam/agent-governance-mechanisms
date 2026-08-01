@@ -44,6 +44,16 @@
   section.abbr-entry h2 code.slug { font-size:var(--fs-micro); font-weight:400; color:var(--accent);
            background:var(--accent-tint); vertical-align:middle; margin-left:8px; }
   p.abbr-grounds { font-size:var(--fs-meta); color:var(--muted); margin:4px 0 2px; }
+  /* Derived "Governed by" block — appended to is-a-model entry pages (reverse of the Governs join). */
+  .govby { margin-top:28px; border-top:var(--border-accent-bar) solid var(--accent); padding-top:6px; }
+  .govby h2 { border-top:none; padding-top:0; margin-top:8px; }
+  .gb-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 8px; }
+  .gb-list { margin:0; padding-left:20px; }
+  .gb-list li { font-size:var(--fs-meta); margin:4px 0; }
+  .gb-list li a { font-weight:600; text-decoration:none; }
+  .gb-list li a:hover { text-decoration:underline; color:var(--accent); }
+  .gb-all { font-size:var(--fs-micro); color:var(--muted); background:var(--panel); border:var(--border-hairline) solid var(--rule);
+            border-radius:var(--radius-chip); padding:0 6px; margin-left:5px; white-space:nowrap; }
   .tag { color: var(--accent); font-weight: 700; font-size: var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:var(--accent); border-top:var(--border-accent-bar) solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:var(--fs-micro); color:var(--muted); background:var(--accent-tint); border-left:var(--border-accent-bar) solid var(--accent);
@@ -132,6 +142,7 @@
 <h1>F10 mutator-stamp-wiring lint</h1>
 <p><strong>Intent</strong> — A lint that fails the build if <em>any</em> mutator verb in the Model <code>Primitives</code> lacks stamp wiring, so a new mutator cannot land producing unattributable mutations.</p>
 <table><tbody><tr><td>Summary</td><td>Fail the build if any mutator verb lacks a stamp.</td></tr><tr><td>Target</td><td>Product · <strong>Provenance &amp; attribution</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Move</td><td><code>sensor</code> — detects the error after the fact</td></tr><tr><td>Model</td><td><code>governs-a-model</code> — a gate/generator/API/policy whose subject is a model</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking</em> — scans every mutator verb; fails the build on an unwired one (0 open gaps)</td></tr></tbody></table>
+<table><thead><tr><th>Governs</th><th><code>pdf-model</code> · <code>office-models</code> — every mutator verb in the document models is stamped</th></tr></thead><tbody></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p><a href="mutator-stamps.html">Attribution stamps</a> only work if <strong>every</strong> mutator stamps. Add one new verb without wiring and it silently produces unattributable mutations, a hole in the audit trail that no one sees until an RCA hits it and finds no stamp. The failure is <em>an unstamped mutator (an attribution gap)</em>, and it recurs when a new verb is added — usually under time pressure, when "remember to stamp" is most likely to be forgotten.</p>
 <h2>Why it's not just "remember to add the stamp" (or "review new mutators")</h2>

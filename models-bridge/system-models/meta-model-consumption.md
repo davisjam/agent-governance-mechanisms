@@ -13,6 +13,7 @@ the model it was copied from.
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) · *blocking* — a forward-policing lint fails on embedded snapshots (verify the lint is built before relying on it as a live gate) |
 
+| Governs | `all-models` — every model is read at runtime, never snapshotted |
 ## Motivation — the failure it kills
 
 The models are only a bridge if consumers *read* them. The moment a consumer **hardcodes a snapshot**

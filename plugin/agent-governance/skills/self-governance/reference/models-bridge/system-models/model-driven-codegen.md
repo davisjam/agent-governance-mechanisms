@@ -13,6 +13,7 @@ the model *drives the system* (not merely describes it) and hand-edits are caugh
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — generated artifacts carry a re-emitted provenance marker + a freshness/drift lint |
 
+| Governs | `all-models` — real artifacts are generated from the models |
 ## Motivation — the failure it kills
 
 If the models only *described* the system, they would be optional — nice docs, easy to ignore, quick to

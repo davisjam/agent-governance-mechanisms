@@ -12,6 +12,7 @@ wiring, so a new mutator cannot land producing unattributable mutations.
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) · *blocking* — scans every mutator verb; fails the build on an unwired one (0 open gaps) |
 
+| Governs | `pdf-model` · `office-models` — every mutator verb in the document models is stamped |
 ## Motivation — the failure it kills
 
 [Attribution stamps](mutator-stamps.md) only work if **every** mutator stamps. Add one new verb without

@@ -17,6 +17,7 @@ budget)` profile).
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft·Hard** — the per-host profile *aims* the execution plan (soft: it computes concurrency and budget policy, an operator still sets the values); two lints *hold* the separation (hard: a load edge in the DAG, or a per-environment edge divergence, is a finding) |
 
+| Governs | `all-models` — the correctness DAG over every model's build obligations |
 ## Motivation — the failure it kills
 
 A build or deploy pipeline is a dependency graph: `B needs A` means B runs after A. The graph is supposed

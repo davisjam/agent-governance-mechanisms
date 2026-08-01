@@ -44,6 +44,16 @@
   section.abbr-entry h2 code.slug { font-size:var(--fs-micro); font-weight:400; color:var(--accent);
            background:var(--accent-tint); vertical-align:middle; margin-left:8px; }
   p.abbr-grounds { font-size:var(--fs-meta); color:var(--muted); margin:4px 0 2px; }
+  /* Derived "Governed by" block — appended to is-a-model entry pages (reverse of the Governs join). */
+  .govby { margin-top:28px; border-top:var(--border-accent-bar) solid var(--accent); padding-top:6px; }
+  .govby h2 { border-top:none; padding-top:0; margin-top:8px; }
+  .gb-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 8px; }
+  .gb-list { margin:0; padding-left:20px; }
+  .gb-list li { font-size:var(--fs-meta); margin:4px 0; }
+  .gb-list li a { font-weight:600; text-decoration:none; }
+  .gb-list li a:hover { text-decoration:underline; color:var(--accent); }
+  .gb-all { font-size:var(--fs-micro); color:var(--muted); background:var(--panel); border:var(--border-hairline) solid var(--rule);
+            border-radius:var(--radius-chip); padding:0 6px; margin-left:5px; white-space:nowrap; }
   .tag { color: var(--accent); font-weight: 700; font-size: var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:var(--accent); border-top:var(--border-accent-bar) solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:var(--fs-micro); color:var(--muted); background:var(--accent-tint); border-left:var(--border-accent-bar) solid var(--accent);
@@ -132,6 +142,7 @@
 <h1>Formal invariant verification (temporal form → model checking)</h1>
 <p><strong>Intent</strong> — Give every model invariant a <strong>temporal form</strong>: a temporal-logic operator saying whether it is <em>safety</em> (<code>[]P</code>, always holds) or <em>liveness</em> (<code>P ~&gt; Q</code>, eventually leads to), and make that form <strong>the routing input</strong>: it derives <em>which exhaustive checker verifies the invariant</em>. An invariant is then proven by the method its shape demands, a state-space model-check rather than a sampled test, and it cannot be silently mis-verified (our instance: temporal-logic operators on the cross-service state model, checked by a model checker plus a bounded-BFS "simworld").</p>
 <table><tbody><tr><td>Summary</td><td>Each invariant's temporal-logic form derives its checker — proven, not sampled.</td></tr><tr><td>Target</td><td>Bridge · <strong>System models</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Move</td><td><code>sensor</code> — detects the error after the fact</td></tr><tr><td>Model</td><td><code>governs-a-model</code> — a gate/generator/API/policy whose subject is a model</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) — an exhaustive model-check (state-space BFS / a temporal model checker) proves the invariant or emits a counterexample trace; a lint asserts the temporal form matches the routed checker</td></tr></tbody></table>
+<table><thead><tr><th>Governs</th><th><code>all-models</code> — every model invariant earns a temporal form and a checker</th></tr></thead><tbody></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p>Some invariants are about a <em>single reachable state</em>: "a job is never both leased and free." Others are about <em>interleavings over time</em>: "a preempted job eventually re-runs." Stated in prose, or pinned by one example test, either kind can be <strong>believed</strong> true while a rare interleaving violates it: a property test <em>samples</em> the input space and sails past the one adversarial schedule; a distributed race has failure traces no hand-picked example hits. Worse, when the same invariant is restated in three places (prose, a runtime assertion, a formal spec) with nothing tying them, they drift; and a <strong>mis-declared</strong> liveness invariant gets routed to a safety runtime that structurally cannot see its violation, with zero signal.</p>
 <h2>Why it's not just "property-based testing"</h2>

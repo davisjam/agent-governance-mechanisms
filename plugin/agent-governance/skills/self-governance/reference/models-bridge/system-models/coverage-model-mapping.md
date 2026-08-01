@@ -15,6 +15,7 @@ model's nodes at function granularity).
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft·Hard** — a per-node coverage map that *surfaces* untested nodes (a backlog); promotable to a gate that *requires* a covering test for critical nodes |
 
+| Governs | `all-models` — test coverage is projected onto every model's nodes |
 ## Motivation — the failure it kills
 
 Line and branch coverage tell you what *fraction of the code* ran under test, not *which of the system's

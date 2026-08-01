@@ -44,6 +44,16 @@
   section.abbr-entry h2 code.slug { font-size:var(--fs-micro); font-weight:400; color:var(--accent);
            background:var(--accent-tint); vertical-align:middle; margin-left:8px; }
   p.abbr-grounds { font-size:var(--fs-meta); color:var(--muted); margin:4px 0 2px; }
+  /* Derived "Governed by" block — appended to is-a-model entry pages (reverse of the Governs join). */
+  .govby { margin-top:28px; border-top:var(--border-accent-bar) solid var(--accent); padding-top:6px; }
+  .govby h2 { border-top:none; padding-top:0; margin-top:8px; }
+  .gb-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 8px; }
+  .gb-list { margin:0; padding-left:20px; }
+  .gb-list li { font-size:var(--fs-meta); margin:4px 0; }
+  .gb-list li a { font-weight:600; text-decoration:none; }
+  .gb-list li a:hover { text-decoration:underline; color:var(--accent); }
+  .gb-all { font-size:var(--fs-micro); color:var(--muted); background:var(--panel); border:var(--border-hairline) solid var(--rule);
+            border-radius:var(--radius-chip); padding:0 6px; margin-left:5px; white-space:nowrap; }
   .tag { color: var(--accent); font-weight: 700; font-size: var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:var(--accent); border-top:var(--border-accent-bar) solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:var(--fs-micro); color:var(--muted); background:var(--accent-tint); border-left:var(--border-accent-bar) solid var(--accent);
@@ -132,6 +142,7 @@
 <h1>Drift &amp; parity gates</h1>
 <p><strong>Intent</strong> — The fleet of lints and tests that enforce <strong>bidirectional parity between each model and reality</strong> (every model row ↔ a real thing on disk, and every real thing ↔ a model row), so the models <em>cannot drift</em>.</p>
 <table><tbody><tr><td>Summary</td><td>Bidirectional model↔reality checks so models cannot drift.</td></tr><tr><td>Target</td><td>Bridge · <strong>System models</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Move</td><td><code>sensor</code> — detects the error after the fact</td></tr><tr><td>Model</td><td><code>governs-a-model</code> — a gate/generator/API/policy whose subject is a model</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking</em> — a model that diverges from reality fails the build</td></tr></tbody></table>
+<table><thead><tr><th>Governs</th><th><code>all-models</code> — every model is held bidirectionally true to reality</th></tr></thead><tbody></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p>An <a href="executable-source-of-truth.html">executable model</a> is only trustworthy if it stays true. The failure this kills is <strong>silent model drift</strong>: the model says one thing, the code does another, and everything downstream (dispatch, codegen, deploy) reasons from a lie. Because the model <em>looks</em> authoritative, drift is worse than absence. It recurs whenever code changes without the model, or the model changes without the code.</p>
 <h2>Why it's not just "regenerate the model from the code" (or "trust people to update it")</h2>

@@ -44,6 +44,16 @@
   section.abbr-entry h2 code.slug { font-size:var(--fs-micro); font-weight:400; color:var(--accent);
            background:var(--accent-tint); vertical-align:middle; margin-left:8px; }
   p.abbr-grounds { font-size:var(--fs-meta); color:var(--muted); margin:4px 0 2px; }
+  /* Derived "Governed by" block — appended to is-a-model entry pages (reverse of the Governs join). */
+  .govby { margin-top:28px; border-top:var(--border-accent-bar) solid var(--accent); padding-top:6px; }
+  .govby h2 { border-top:none; padding-top:0; margin-top:8px; }
+  .gb-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 8px; }
+  .gb-list { margin:0; padding-left:20px; }
+  .gb-list li { font-size:var(--fs-meta); margin:4px 0; }
+  .gb-list li a { font-weight:600; text-decoration:none; }
+  .gb-list li a:hover { text-decoration:underline; color:var(--accent); }
+  .gb-all { font-size:var(--fs-micro); color:var(--muted); background:var(--panel); border:var(--border-hairline) solid var(--rule);
+            border-radius:var(--radius-chip); padding:0 6px; margin-left:5px; white-space:nowrap; }
   .tag { color: var(--accent); font-weight: 700; font-size: var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:var(--accent); border-top:var(--border-accent-bar) solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:var(--fs-micro); color:var(--muted); background:var(--accent-tint); border-left:var(--border-accent-bar) solid var(--accent);
@@ -132,6 +142,7 @@
 <h1>The agent-first MBSE harness</h1>
 <p><strong>Intent</strong> — Build the typed system-models as a <strong>thin, hand-rolled harness over plain frozen records</strong>: adopt the <em>vocabulary and schema</em> of the right modeling genre per view, but skip its runtime and hand-roll the executable layer. The model then captures your project's own invariants, and a set of build-time checks keeps it equal to the code (our instance: frozen Python dataclasses under five recurring disciplines, not a SysML tool).</p>
 <table><tbody><tr><td>Summary</td><td>Typed frozen-record models + five hand-rolled disciplines; adopt the schema, skip the runtime.</td></tr><tr><td>Target</td><td>Bridge · <strong>System models</strong></td></tr><tr><td>Form</td><td><code>typed-ir</code></td></tr><tr><td>Move</td><td><code>package</code> — a constraint shipped with its sensors</td></tr><tr><td>Model</td><td><code>governs-a-model</code> — a gate/generator/API/policy whose subject is a model</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) — the harness <em>is</em> construction (typed records); the counted sensors are the per-view drift lints that fail the build when a stored value or a model row diverges from the code</td></tr></tbody></table>
+<table><thead><tr><th>Governs</th><th><code>all-models</code> — every typed model is built on this harness</th></tr></thead><tbody></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p>You decide to model your system as <a href="executable-source-of-truth.html">executable source-of-truth</a>, and the first instinct is to reach for a real modeling tool: SysML, Alloy, an EMF metamodel. Then two failures land. <strong>First, the tool's schema doesn't fit.</strong> A real system-model carries project-specific invariants (a verification tier derived from an invariant's temporal shape, a lock-ordering rule, a zone-boundary predicate) that don't map onto any standard library's schema, so you spend more effort fighting the tool's model than building yours. <strong>Second, the tool draws or checks; it does not run inside your own lints.</strong> A SysML diagram is data a viewer renders; an Alloy model is data a solver checks. Neither ships the discipline that makes the model <em>unable to lie about your code</em>: a build-time check that loads the model, loads the code, and blocks on divergence. The failure is <strong>a modeling layer that either doesn't fit your invariants or doesn't wire into your build</strong>, so it drifts, and a drifted model is worse than none.</p>
 <h2>Why it's not just a modeling language, or bare dataclasses</h2>

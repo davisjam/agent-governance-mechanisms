@@ -44,6 +44,16 @@
   section.abbr-entry h2 code.slug { font-size:var(--fs-micro); font-weight:400; color:var(--accent);
            background:var(--accent-tint); vertical-align:middle; margin-left:8px; }
   p.abbr-grounds { font-size:var(--fs-meta); color:var(--muted); margin:4px 0 2px; }
+  /* Derived "Governed by" block — appended to is-a-model entry pages (reverse of the Governs join). */
+  .govby { margin-top:28px; border-top:var(--border-accent-bar) solid var(--accent); padding-top:6px; }
+  .govby h2 { border-top:none; padding-top:0; margin-top:8px; }
+  .gb-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 8px; }
+  .gb-list { margin:0; padding-left:20px; }
+  .gb-list li { font-size:var(--fs-meta); margin:4px 0; }
+  .gb-list li a { font-weight:600; text-decoration:none; }
+  .gb-list li a:hover { text-decoration:underline; color:var(--accent); }
+  .gb-all { font-size:var(--fs-micro); color:var(--muted); background:var(--panel); border:var(--border-hairline) solid var(--rule);
+            border-radius:var(--radius-chip); padding:0 6px; margin-left:5px; white-space:nowrap; }
   .tag { color: var(--accent); font-weight: 700; font-size: var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:var(--accent); border-top:var(--border-accent-bar) solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:var(--fs-micro); color:var(--muted); background:var(--accent-tint); border-left:var(--border-accent-bar) solid var(--accent);
@@ -132,6 +142,7 @@
 <h1>Journey-criticality → test-tier placement (which host a test runs on, derived)</h1>
 <p><strong>Intent</strong> — Make a journey's <strong>criticality</strong> the single input that <em>derives</em> which environment tier its tests run in, and hold a coverage floor over the derivation: every high-criticality journey-part carries a test in the fast local tier, so a green local run means the major paths work. Placement is derived from a typed trait, never hand-drawn (our instance: a typed journey-criticality model whose <code>MAJOR</code>/<code>MINOR</code> axis derives each journey-part's <code>local</code> vs <code>staging</code> tier, guarded by a coverage-floor lint).</p>
 <table><tbody><tr><td>Summary</td><td>A journey's criticality derives its test's host tier; a lint holds the local-coverage floor.</td></tr><tr><td>Target</td><td>Bridge · <strong>System models</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Move</td><td><code>package</code> — a constraint shipped with its sensors</td></tr><tr><td>Model</td><td><code>governs-a-model</code> — a gate/generator/API/policy whose subject is a model</td></tr><tr><td>Enforcement</td><td><strong>Soft·Hard</strong> — the typed model <em>aims</em> placement (soft: it computes the tier, a human still authors the test); a coverage-floor lint <em>holds</em> the invariant (hard: a major part with no local test fails)</td></tr></tbody></table>
+<table><thead><tr><th>Governs</th><th><code>user-journey-model</code> — a journey's criticality derives its test tier</th></tr></thead><tbody></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p>A test suite runs across environments of different cost. A fast local tier gates every commit; a heavier staging tier runs the full matrix. Which test runs where is usually a <strong>hand-drawn line</strong> — "keep the important journeys local, push the heavy remainder to staging" — and a hand-drawn line drifts from what actually matters. So a major user path ends up <strong>staging-only</strong>: the local gate passes, a reviewer merges, and the broken revenue-core flow surfaces only later on staging. Call it the <strong>local-green / staging-red surprise</strong>. It has two causes, and both come from the line being drawn by hand:</p>
 <ul><li><strong>A major path has no local test at all.</strong> Nothing ran it in the fast tier, so local-green says nothing about it.</li><li><strong>The tier was mis-assigned to speed up the local run.</strong> Someone shoved a major path staging-only as a local-time optimization, and the criticality signal never objected.</li></ul>

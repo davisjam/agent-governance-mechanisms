@@ -15,6 +15,7 @@ derives each journey-part's `local` vs `staging` tier, guarded by a coverage-flo
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft·Hard** — the typed model *aims* placement (soft: it computes the tier, a human still authors the test); a coverage-floor lint *holds* the invariant (hard: a major part with no local test fails) |
 
+| Governs | `user-journey-model` — a journey's criticality derives its test tier |
 ## Motivation — the failure it kills
 
 A test suite runs across environments of different cost. A fast local tier gates every commit; a heavier

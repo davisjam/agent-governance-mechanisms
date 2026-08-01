@@ -92,7 +92,13 @@ ENF_CLASSES = {"Hard", "Soft", "Soft·Hard"}
 MOVE_CLASSES = {"constraint", "sensor", "package"}      # prevent · detect · both-bundled
 MODEL_CLASSES = {"is-a-model", "governs-a-model", "—"}  # a typed model · gates/generates/queries one · neither
 DERIVATION_CLASSES = {"model-from-code", "model-to-code", "both"}
-META_ORDER = ["Summary", "Target", "Form", "Move", "Model", "Enforcement"]  # + optional trailing "Derivation"
+# `Governs` is the join key: an optional trailing row on `governs-a-model` entries naming the model(s) it
+# governs — either `all-models` (the whole zoo; the method trunk) or a ` · `-separated list of is-a-model
+# entry slugs (file stems). Exact precedent: the `Derivation` row (optional, one Model class only, NOT
+# mirrored in INDEX → zero INDEX churn). Referential integrity (each slug resolves) is a cross-entry check
+# in `check_governs`; the per-row format check lives in Entry._parse.
+GOVERNS_ALL = "all-models"
+META_ORDER = ["Summary", "Target", "Form", "Move", "Model", "Enforcement"]  # + optional trailing Derivation|Governs
 SUMMARY_MAX = 100  # chars — a tooltip-friendly gloss, deliberately shorter than Intent
 SECTION_ORDER = [
     "Motivation", "Why it's not just", "Mechanism", "Prerequisites",
@@ -158,13 +164,15 @@ class Entry:
         if "🚧" in t:
             self.issues.append("carries a 🚧 stub banner")
 
-        # Recognized metadata labels = the six required (META_ORDER) + the optional trailing Derivation.
-        META_LABELS = META_ORDER + ["Derivation"]
+        # Recognized metadata labels = the six required (META_ORDER) + one optional trailing row, which is
+        # `Derivation` (is-a-model only) OR `Governs` (governs-a-model only) — never both (their Model
+        # classes are disjoint).
+        META_LABELS = META_ORDER + ["Derivation", "Governs"]
         rows = re.findall(r"^\| ([^|]+?) \| (.+?) \|$", t, re.M)
         self.meta = {k.strip(): v.strip() for k, v in rows if k.strip() in META_LABELS}
         labels = [k.strip() for k, _ in rows if k.strip() in META_LABELS]
-        # The six required rows must appear in order; Derivation, if present, must trail them.
-        if labels[:len(META_ORDER)] != META_ORDER or labels[len(META_ORDER):] not in ([], ["Derivation"]):
+        # The six required rows must appear in order; a single optional row (Derivation|Governs) may trail.
+        if labels[:len(META_ORDER)] != META_ORDER or labels[len(META_ORDER):] not in ([], ["Derivation"], ["Governs"]):
             self.issues.append(f"metadata rows/order = {labels or '(none)'}")
 
         self.form = None
@@ -210,6 +218,22 @@ class Entry:
             if self.model != "is-a-model":
                 self.issues.append("Derivation row present but Model is not `is-a-model` "
                                    "(Derivation is only for is-a-model entries)")
+
+        # Governs (optional): allowed ONLY on governs-a-model entries. The value leads with a ` · `-separated
+        # list of backticked slugs (an is-a-model file stem, or the sentinel `all-models`), optionally
+        # followed by ` — gloss`. Per-row format lives here; slug referential integrity is `check_governs`.
+        self.governs: list[str] | None = None
+        if "Governs" in self.meta:
+            head = self.meta["Governs"].split(" — ", 1)[0]  # slugs precede the em-dash gloss
+            self.governs = re.findall(r"`([a-z][a-z0-9-]*)`", head)
+            if not self.governs:
+                self.issues.append(f"Governs row has no backticked model slug(s): {self.meta['Governs']!r}")
+            if self.model != "governs-a-model":
+                self.issues.append("Governs row present but Model is not `governs-a-model` "
+                                   "(Governs is only for governs-a-model entries)")
+            if GOVERNS_ALL in self.governs and len(self.governs) != 1:
+                self.issues.append(f"Governs `all-models` must stand alone, not mixed with slugs: "
+                                   f"{self.governs}")
 
         m = re.search(r"\*\*(Soft·Hard|Hard|Soft)\*\*", self.meta.get("Enforcement", ""))
         self.enf = m.group(1) if m else None
@@ -260,11 +284,18 @@ class Entry:
         m = re.search(r"^# (.+)$", self.text, re.M)
         return m.group(1).strip() if m else self.path
 
+    @property
+    def slug(self) -> str:
+        """The entry's stable slug — its file stem (`service-flow-model`). The Governs join key resolves to
+        these; the By-model node map groups by them."""
+        return os.path.splitext(os.path.basename(self.path))[0]
+
     def as_dict(self) -> dict:
         return {
             "path": self.path, "role": self.role, "family": self.family,
             "form": self.form, "move": self.move, "model": self.model,
-            "derivation": self.derivation, "enforcement": self.enf, "summary": self.summary,
+            "derivation": self.derivation, "governs": self.governs, "slug": self.slug,
+            "enforcement": self.enf, "summary": self.summary,
             "title": (re.search(r"^# (.+)$", self.text, re.M) or [None, self.path])[1],
         }
 
@@ -345,6 +376,21 @@ def check_index(entries: list[Entry]) -> list[str]:
             problems.append(f"ENF mismatch {path}: INDEX={ienf_base} entry={e.enf}")
     if len(rows) != len(entries):
         problems.append(f"INDEX rows ({len(rows)}) != entry files ({len(entries)})")
+    return problems
+
+
+def check_governs(entries: list[Entry]) -> list[str]:
+    """Referential integrity for the `Governs` join key: every slug a governs-a-model entry names must be
+    `all-models` or resolve to a real is-a-model entry. The reverse "Governed by" blocks are derived from
+    exactly these edges, so a dangling slug would render a broken back-link — fail it at validate time."""
+    model_slugs = {e.slug for e in entries if e.model == "is-a-model"}
+    problems = []
+    for e in entries:
+        for slug in e.governs or []:
+            if slug == GOVERNS_ALL:
+                continue
+            if slug not in model_slugs:
+                problems.append(f"Governs slug `{slug}` in {e.path} resolves to no is-a-model entry")
     return problems
 
 
@@ -589,6 +635,9 @@ def cmd_validate(_args) -> int:
     for msg in check_index(entries):
         print(f"  [index] {msg}")
         n_issues += 1
+    for msg in check_governs(entries):
+        print(f"  [governs] {msg}")
+        n_issues += 1
     for msg in check_links():
         print(f"  [link]  DEAD {msg}")
         n_issues += 1
@@ -783,6 +832,16 @@ PAGE_CSS = """
   section.abbr-entry h2 code.slug { font-size:var(--fs-micro); font-weight:400; color:var(--accent);
            background:var(--accent-tint); vertical-align:middle; margin-left:8px; }
   p.abbr-grounds { font-size:var(--fs-meta); color:var(--muted); margin:4px 0 2px; }
+  /* Derived "Governed by" block — appended to is-a-model entry pages (reverse of the Governs join). */
+  .govby { margin-top:28px; border-top:var(--border-accent-bar) solid var(--accent); padding-top:6px; }
+  .govby h2 { border-top:none; padding-top:0; margin-top:8px; }
+  .gb-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 8px; }
+  .gb-list { margin:0; padding-left:20px; }
+  .gb-list li { font-size:var(--fs-meta); margin:4px 0; }
+  .gb-list li a { font-weight:600; text-decoration:none; }
+  .gb-list li a:hover { text-decoration:underline; color:var(--accent); }
+  .gb-all { font-size:var(--fs-micro); color:var(--muted); background:var(--panel); border:var(--border-hairline) solid var(--rule);
+            border-radius:var(--radius-chip); padding:0 6px; margin-left:5px; white-space:nowrap; }
   .tag { color: var(--accent); font-weight: 700; font-size: var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:var(--accent); border-top:var(--border-accent-bar) solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:var(--fs-micro); color:var(--muted); background:var(--accent-tint); border-left:var(--border-accent-bar) solid var(--accent);
@@ -2476,6 +2535,41 @@ setView("family");
 """
 
 
+def _governed_by_block(e: Entry, entries: list[Entry], rel_root: str) -> str:
+    """The derived "Governed by" block appended to an is-a-model entry page. Inverts the `Governs` join:
+    every governs-a-model entry whose `Governs` names this model's slug (a direct governor) or `all-models`
+    (a trunk mechanism that governs every model). Rendered at build time from the metadata — never a
+    hand-maintained back-link, so it cannot drift from the forward edges."""
+    if e.model != "is-a-model":
+        return ""
+    direct, trunk = [], []
+    for g in entries:
+        if not g.governs:
+            continue
+        if e.slug in g.governs:
+            direct.append(g)
+        elif GOVERNS_ALL in g.governs:
+            trunk.append(g)
+    if not direct and not trunk:
+        return ""
+
+    def li(g: Entry, all_models: bool) -> str:
+        href = _attr(rel_root + _md_link_rewrite(g.path))
+        badge = ' <span class="gb-all">governs every model</span>' if all_models else ""
+        summ = f" — {_esc(g.summary)}" if g.summary else ""
+        return f'<li><a href="{href}">{_esc(g.title_only())}</a>{summ}{badge}</li>'
+
+    rows = "".join(li(g, False) for g in sorted(direct, key=lambda x: x.title_only()))
+    rows += "".join(li(g, True) for g in sorted(trunk, key=lambda x: x.title_only()))
+    note = ("The mechanisms that hold this model true — inverted from their <code>Governs</code> edges at "
+            "build time, never hand-written. A direct governor names this model; a trunk mechanism governs "
+            "every model.")
+    return ('\n<section class="govby" aria-labelledby="gb-h">\n'
+            '<h2 id="gb-h">Governed by</h2>\n'
+            f'<p class="gb-note">{note}</p>\n'
+            f'<ul class="gb-list">{rows}</ul>\n</section>\n')
+
+
 def build_views_page(entries: list[Entry]) -> str:
     stars = {os.path.normpath(r["path"]) for fam in parse_census() for r in fam["rows"] if r["star"]}
     cards = []
@@ -2839,7 +2933,7 @@ def cmd_build(_args) -> int:
             seg0 = rel.split(os.sep)[0]
             trail = [(ROLE_DISPLAY.get(seg0, e.role or ""), f"{rel_root}{seg0}/README.html"),
                      (e.family or "", ""), (e.title_only(), "")]  # family has no page → plain text
-            body = render_md(md)
+            body = render_md(md) + _governed_by_block(e, entries, rel_root)
             html = _page(e.title_only(), _crumb(rel_root, trail), body, subtitle=e.summary, rel_root=rel_root)
         else:  # README / INDEX
             trail = []

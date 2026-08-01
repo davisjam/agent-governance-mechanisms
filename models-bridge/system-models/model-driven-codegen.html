@@ -44,6 +44,16 @@
   section.abbr-entry h2 code.slug { font-size:var(--fs-micro); font-weight:400; color:var(--accent);
            background:var(--accent-tint); vertical-align:middle; margin-left:8px; }
   p.abbr-grounds { font-size:var(--fs-meta); color:var(--muted); margin:4px 0 2px; }
+  /* Derived "Governed by" block — appended to is-a-model entry pages (reverse of the Governs join). */
+  .govby { margin-top:28px; border-top:var(--border-accent-bar) solid var(--accent); padding-top:6px; }
+  .govby h2 { border-top:none; padding-top:0; margin-top:8px; }
+  .gb-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 8px; }
+  .gb-list { margin:0; padding-left:20px; }
+  .gb-list li { font-size:var(--fs-meta); margin:4px 0; }
+  .gb-list li a { font-weight:600; text-decoration:none; }
+  .gb-list li a:hover { text-decoration:underline; color:var(--accent); }
+  .gb-all { font-size:var(--fs-micro); color:var(--muted); background:var(--panel); border:var(--border-hairline) solid var(--rule);
+            border-radius:var(--radius-chip); padding:0 6px; margin-left:5px; white-space:nowrap; }
   .tag { color: var(--accent); font-weight: 700; font-size: var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; }
   .census h3.role-h { color:var(--accent); border-top:var(--border-accent-bar) solid var(--line); padding-top:14px; margin-top:26px; }
   .census .role-note { font-size:var(--fs-micro); color:var(--muted); background:var(--accent-tint); border-left:var(--border-accent-bar) solid var(--accent);
@@ -132,6 +142,7 @@
 <h1>Model-driven codegen</h1>
 <p><strong>Intent</strong> — Generate real artifacts <strong>from</strong> the models — NetworkPolicy, service catalog, env wiring, public-API docs, competitor catalog, wire-contract types, docker — each carrying a provenance header, so the model <em>drives the system</em> (not merely describes it) and hand-edits are caught.</p>
 <table><tbody><tr><td>Summary</td><td>Generate real artifacts from the models, provenance-headed.</td></tr><tr><td>Target</td><td>Bridge · <strong>System models</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Move</td><td><code>sensor</code> — detects the error after the fact</td></tr><tr><td>Model</td><td><code>governs-a-model</code> — a gate/generator/API/policy whose subject is a model</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) — generated artifacts carry a re-emitted provenance marker + a freshness/drift lint</td></tr></tbody></table>
+<table><thead><tr><th>Governs</th><th><code>all-models</code> — real artifacts are generated from the models</th></tr></thead><tbody></tbody></table>
 <h2>Motivation — the failure it kills</h2>
 <p>If the models only <em>described</em> the system, they would be optional — nice docs, easy to ignore, quick to drift. The failure this addresses is <strong>a model nothing depends on</strong>: nothing breaks if it's wrong, so nothing keeps it right. And separately: a <em>generated</em> artifact that someone hand-edits loses the edit on the next regen, silently.</p>
 <h2>Why it's not just "hand-write the config / docs"</h2>

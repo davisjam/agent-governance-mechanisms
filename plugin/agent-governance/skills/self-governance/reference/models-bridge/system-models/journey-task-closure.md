@@ -15,6 +15,7 @@ standard predicate library, from which a pure function derives `TASK_CLOSED` / `
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Soft·Hard** — the typed closure *aims* the terminal assertion (soft: it declares what DONE means, a human still writes the spec); a strength-derivation gate *holds* the floor (hard: a major journey deriving `FLOW_ONLY` fails) |
 
+| Governs | `user-journey-model` — a journey's terminal post-condition, typed |
 ## Motivation — the failure it kills
 
 A journey test usually asserts that the **flow ran** — a page returned 200, a URL was reached, a card

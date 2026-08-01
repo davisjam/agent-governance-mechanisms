@@ -13,6 +13,7 @@ operable by a context-bounded agent.
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — the models are *construction* (typed IR); the counted sensors are the [drift/parity gates](drift-parity-gates.md) that fail the build when a model diverges from reality |
 
+| Governs | `all-models` — every model is the typed data this reads on every run |
 > **★ The bridge.** This is the flagship of the third role: the model layer is the **interface through
 > which a context-bounded agent operates a context-exceeding codebase.** It faces both ways. Agents
 > read it to reason; the codebase is governed from it, and a limited slice (config, docs, IPC contracts) is generated from it too. The other bridge entries are its

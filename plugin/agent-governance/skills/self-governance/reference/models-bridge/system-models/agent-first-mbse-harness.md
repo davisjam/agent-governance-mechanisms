@@ -15,6 +15,7 @@ five recurring disciplines, not a SysML tool).
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — the harness *is* construction (typed records); the counted sensors are the per-view drift lints that fail the build when a stored value or a model row diverges from the code |
 
+| Governs | `all-models` — every typed model is built on this harness |
 ## Motivation — the failure it kills
 
 You decide to model your system as [executable source-of-truth](executable-source-of-truth.md), and
