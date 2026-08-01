@@ -6,7 +6,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->74<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->81<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Two independent axes: move and form*): **`Hard`** = deterministic
@@ -84,7 +84,7 @@ of soft/hard.
 
 ## 6. System models
 
-*One MBSE **method** (the trunk — <!--census:bridge_method:word-->fourteen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Twelve<!--/census--> models split product-facing (service-flow, user-journey, domain-registries, composed-state-machine, process-view) · orchestration-facing (synchronization, agent-orch, governance-graph, lifecycle) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->fourteen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. These model entries are a **curated sample of the portable genres**, not the whole zoo: the real substrate carries on the order of sixty typed models, and these cover the ones that transfer. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — <!--census:bridge_method:word-->fifteen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Eighteen<!--/census--> models split product-facing (service-flow, user-journey, domain-registries, composed-state-machine, process-view) · orchestration-facing (synchronization, agent-orch, governance-graph, lifecycle) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->fifteen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. These model entries are a **curated sample of the portable genres**, not the whole zoo: the real substrate carries on the order of sixty typed models, and these cover the ones that transfer. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Move | Model | Enf. | Entry |
 |---|---|---|---|---|---|---|
@@ -102,11 +102,18 @@ of soft/hard.
 | ✅ | Control↔substrate dependency (computed blast-radius) — *trunk / method* | `typed-ir` | `package` | `is-a-model` | Hard | [control-substrate-dependency.md](models-bridge/system-models/control-substrate-dependency.md) |
 | ✅ | Symbol-anchored traceability graph (derived edges) — *trunk / method* | `typed-ir` | `package` | `is-a-model` | Hard | [symbol-anchored-traceability-graph.md](models-bridge/system-models/symbol-anchored-traceability-graph.md) |
 | ✅ | Model-graded finding severity (distance-graded gate) — *trunk / method* | `quality-gate` | `sensor` | `governs-a-model` | Hard | [model-graded-finding-severity.md](models-bridge/system-models/model-graded-finding-severity.md) |
+| ✅ | Model-derived test-obligation census (derive obligations, lint the gap) — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Hard | [model-derived-test-obligation-census.md](models-bridge/system-models/model-derived-test-obligation-census.md) |
 | ✅ | Service-flow / API model — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [service-flow-model.md](models-bridge/system-models/service-flow-model.md) |
 | ✅ | User-journey model (product-goal → implementation) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
 | ✅ | Domain registries — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |
 | ✅ | Composed state-machine model (typed lifecycles + cross-machine invariants) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [composed-state-machine-model.md](models-bridge/system-models/composed-state-machine-model.md) |
 | ✅ | Process view (concurrent processes, lanes, racing edges) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [process-view.md](models-bridge/system-models/process-view.md) |
+| ✅ | Typed contract surfaces (checked boundary, not a comment) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [typed-contract-surfaces.md](models-bridge/system-models/typed-contract-surfaces.md) |
+| ✅ | Compliance data-flow model (typed sinks & edges for privacy) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [data-flow-model.md](models-bridge/system-models/data-flow-model.md) |
+| ✅ | Timeout-budget ordering model (nested wall-clock budgets, checked) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [timeout-budget-ordering-model.md](models-bridge/system-models/timeout-budget-ordering-model.md) |
+| ✅ | Required-config-per-role manifest (admission on complete env) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [required-config-per-role-manifest.md](models-bridge/system-models/required-config-per-role-manifest.md) |
+| ✅ | Telemetry-collection provenance (origin · landing · per-env coverage) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [telemetry-collection-provenance.md](models-bridge/system-models/telemetry-collection-provenance.md) |
+| ✅ | Rule-metadata registry (queryable governance metadata) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [rule-metadata-registry.md](models-bridge/system-models/rule-metadata-registry.md) |
 | ✅ | Synchronization model (meta-sync) — *orchestration-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [synchronization-model.md](models-bridge/system-models/synchronization-model.md) |
 | ✅ | Agent-orchestration model (developer journeys) — *orchestration-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [agent-orchestration-model.md](models-bridge/system-models/agent-orchestration-model.md) |
 | ✅ | Governance graph (mechanism-interaction model) — *orchestration-facing* | `typed-ir` | `package` | `is-a-model` | Soft·Hard | [governance-graph.md](models-bridge/system-models/governance-graph.md) |
