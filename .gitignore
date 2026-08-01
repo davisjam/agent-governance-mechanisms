@@ -64,3 +64,6 @@ book-models/voice-*
 book-models/voice-candidates/
 book-models/*-review-*.md
 book-models/gap-report-*
+
+# Touchstone reference PDFs (copyrighted books, kept locally for comparison — NEVER commit/publish)
+/_reference/

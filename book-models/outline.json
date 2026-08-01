@@ -6,7 +6,7 @@
     "explicit_ids": 22,
     "derived_ids": 152,
     "missing_topic_sentence": 2,
-    "sections_drained": 151,
+    "sections_drained": 152,
     "paragraph_points": 456
   },
   "chapters": [
@@ -18,27 +18,27 @@
           "section_id": "where-this-book-sits-on-the-shelf",
           "level": 2,
           "heading_text": "Where this book sits on the shelf",
-          "topic_sentence": "Two books are the touchstones I want you to hold this one against, because between them they frame what I am trying to do.",
+          "topic_sentence": "Two books frame what this one attempts.",
           "id_source": "derived",
-          "block_index": 5,
+          "block_index": 6,
           "points": []
         },
         {
           "section_id": "the-premise-mechanize-discipline",
           "level": 3,
           "heading_text": "The premise: mechanize discipline",
-          "topic_sentence": "The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020).",
+          "topic_sentence": "The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020), whose premise this book shares: engineering discipline should be *mechanized, not remembered* — pushed into review, testing, tooling, and culture so that correctness does not depend on any one engineer keeping a rule in their head.",
           "id_source": "derived",
-          "block_index": 7,
+          "block_index": 8,
           "points": []
         },
         {
           "section_id": "the-grammar-patterns-and-two-theses",
           "level": 3,
           "heading_text": "The grammar: patterns, and two theses",
-          "topic_sentence": "The second is the **Gang of Four's** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994).",
+          "topic_sentence": "The second is the **Gang of Four's** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994), whose lasting contribution was less any single pattern than the *form* — name, recurring problem, solution shape, consequences, known uses — written so an engineer could reach for a vetted answer instead of re-deriving one.",
           "id_source": "derived",
-          "block_index": 17,
+          "block_index": 18,
           "points": []
         },
         {
@@ -47,7 +47,7 @@
           "heading_text": "Three ways to run a fleet",
           "topic_sentence": "The hard problem of building software with agents is simple to state: the tools are fast and the tools are unreliable.",
           "id_source": "derived",
-          "block_index": 32,
+          "block_index": 33,
           "points": []
         },
         {
@@ -56,7 +56,7 @@
           "heading_text": "The through-line, and who it is for",
           "topic_sentence": "The through-line is a single idea; hold every chapter against it.",
           "id_source": "derived",
-          "block_index": 42,
+          "block_index": 43,
           "points": []
         },
         {
@@ -65,7 +65,7 @@
           "heading_text": "A map of the book",
           "topic_sentence": "Five parts, and they compose in a particular order.",
           "id_source": "derived",
-          "block_index": 45,
+          "block_index": 46,
           "points": []
         }
       ],
@@ -362,10 +362,10 @@
       "part": 1,
       "sections": [
         {
-          "section_id": "the-lifecycle-briefly",
+          "section_id": "the-lifecycle-it-keeps",
           "level": 2,
-          "heading_text": "The lifecycle, briefly",
-          "topic_sentence": "Engineering ran on the same handful of activities long before software existed.",
+          "heading_text": "The lifecycle it keeps",
+          "topic_sentence": "Engineering ran on the same handful of activities long before software, and software inherits them whole: **requirements** (find out what the system must do, and for whom — usually the hard part, since the people who need it cannot state it), **specification** (say what it will do, precisely enough to check later), **design** (decide the parts, the seams, and how the whole meets its constraints), **implementation** (build it — for software, write the code), **validation** (show the built thing meets the spec), and **maintenance** (change it over the long life without breaking what already works).",
           "id_source": "derived",
           "block_index": 2,
           "points": [
@@ -377,57 +377,42 @@
             {
               "slug": "software-loosens-physics-copies-free-stays-malleable",
               "text": "Software loosens physics, copies free, stays malleable.",
-              "block_index": 9
-            },
-            {
-              "slug": "sketch-defers-to-standard-texts",
-              "text": "The sketch defers to the standard texts.",
-              "block_index": 11
+              "block_index": 8
             },
             {
               "slug": "process-models-reorder-never-replace",
               "text": "Process models reorder the activities, never replace them.",
-              "block_index": 13
+              "block_index": 10
             }
           ]
         },
         {
-          "section_id": "the-seat-that-moved",
+          "section_id": "the-two-seats",
           "level": 2,
-          "heading_text": "The seat that moved",
-          "topic_sentence": "In the conventional lifecycle one role holds every seat: requirements, specification, design, implementation, validation.",
+          "heading_text": "The two seats",
+          "topic_sentence": "Two words for two jobs, and this book keeps them apart.",
           "id_source": "derived",
-          "block_index": 16,
+          "block_index": 13,
           "points": [
-            {
-              "slug": "conventionally-one-role-holds-every-seat",
-              "text": "Conventionally one role holds every seat.",
-              "block_index": 18
-            },
             {
               "slug": "engineer-authors-intent-developer-writes-code",
               "text": "The engineer authors intent; the developer writes code.",
-              "block_index": 20
-            },
-            {
-              "slug": "engineer-technician-split-kept-collapsing",
-              "text": "The engineer/technician split kept collapsing back together.",
-              "block_index": 23
+              "block_index": 15
             },
             {
               "slug": "mage-reassigns-only-the-developer-seat",
               "text": "MAGE reassigns exactly one seat: the developer's.",
-              "block_index": 25
-            },
-            {
-              "slug": "engineers-always-had-models-unwritten",
-              "text": "Engineers always had models; writing them down stopped paying.",
-              "block_index": 27
+              "block_index": 18
             },
             {
               "slug": "role-shrinks-nothing-judgment-more-consequential",
               "text": "The role shrinks nothing; judgment grows more consequential.",
-              "block_index": 29
+              "block_index": 20
+            },
+            {
+              "slug": "engineers-always-had-models-unwritten",
+              "text": "Engineers always had models; writing them down stopped paying.",
+              "block_index": 22
             }
           ]
         },
@@ -437,22 +422,22 @@
           "heading_text": "SDLC to SELC",
           "topic_sentence": "The field's own name for the lifecycle gives the old arrangement away: SDLC, the software *development* life cycle.",
           "id_source": "derived",
-          "block_index": 31,
+          "block_index": 24,
           "points": [
             {
               "slug": "sdlc-names-the-delegated-activity",
               "text": "SDLC names the activity the human no longer performs.",
-              "block_index": 34
+              "block_index": 27
             },
             {
               "slug": "rename-to-selc-engineering-life-cycle",
               "text": "Rename it SELC: the software engineering life cycle.",
-              "block_index": 36
+              "block_index": 29
             },
             {
               "slug": "delegation-keeps-accountability-intact",
               "text": "Delegating the keystrokes keeps accountability intact.",
-              "block_index": 41
+              "block_index": 34
             }
           ]
         },
@@ -462,30 +447,30 @@
           "heading_text": "A different seat is a different discipline",
           "topic_sentence": "Same lifecycle, then; no new phases.",
           "id_source": "derived",
-          "block_index": 43,
+          "block_index": 36,
           "points": [
             {
               "slug": "reassigned-seat-remakes-the-discipline",
               "text": "Same phases; the reassigned seat remakes the discipline.",
-              "block_index": 45
+              "block_index": 38
             },
             {
               "slug": "executing-from-models-repeats-assembly-to-code",
               "text": "Executing from models repeats the assembly-to-code move.",
-              "block_index": 47
+              "block_index": 40
             },
             {
               "slug": "rest-of-book-equips-the-engineers-seat",
               "text": "The rest of the book equips the engineer's seat.",
-              "block_index": 49
+              "block_index": 42
             }
           ]
         }
       ],
       "preamble_points": [
         {
-          "slug": "mage-keeps-lifecycle-reassigns-one-seat",
-          "text": "MAGE keeps the lifecycle; it reassigns one seat.",
+          "slug": "the-split-kept-collapsing-agents-finally-hold-it-apart",
+          "text": "Software's engineer/developer split kept collapsing; agents hold it apart.",
           "block_index": 0
         }
       ]
@@ -2029,8 +2014,13 @@
             },
             {
               "slug": "model-only-where-a-failure-lives-so-the-latency-slice-stays-empty",
-              "text": "Model only where a failure lives, so latency stays unmodeled.",
+              "text": "Model only where a failure lives; latency slice stayed empty.",
               "block_index": 14
+            },
+            {
+              "slug": "scale-to-zero-shipped-without-a-latency-model-and-production-paid",
+              "text": "Scale-to-zero shipped without a latency model; production paid.",
+              "block_index": 17
             }
           ]
         },
@@ -2040,27 +2030,27 @@
           "heading_text": "The deployment & tier topology model",
           "topic_sentence": "*The typed statement of where things run — each service's name, its layer, and its tier — from which the deploy scripts and layering lints reason about a declared topology rather than scattered constants, and against which the real deploy table is reconciled.*",
           "id_source": "explicit",
-          "block_index": 17,
+          "block_index": 19,
           "points": [
             {
               "slug": "the-topology-model-declares-where-each-service-deploys",
               "text": "The topology model declares where each service deploys.",
-              "block_index": 20
+              "block_index": 22
             },
             {
               "slug": "it-assesses-deployment-parity-and-layer-boundary-soundness",
               "text": "It assesses deployment parity and layer-boundary soundness.",
-              "block_index": 23
+              "block_index": 25
             },
             {
               "slug": "the-parity-check-runs-both-directions-or-misses-drift",
               "text": "The parity check runs both directions or misses drift.",
-              "block_index": 33
+              "block_index": 35
             },
             {
               "slug": "the-topology-model-derives-from-the-deploy-table",
               "text": "The topology model derives from the deploy table.",
-              "block_index": 35
+              "block_index": 37
             }
           ]
         },
@@ -2070,22 +2060,22 @@
           "heading_text": "The invariant-DAG execution policy",
           "topic_sentence": "*A deploy graph whose edges carry a typed intent — correctness, cost-gate, or load — kept host-identical, plus a typed Scheduler that reads a per-host profile and rations load and cost so one host fans work out while a scarce one serializes it.*",
           "id_source": "explicit",
-          "block_index": 39,
+          "block_index": 41,
           "points": [
             {
               "slug": "a-host-identical-graph-plus-a-scheduler-rations-per-host",
               "text": "A host-identical graph plus a Scheduler rations per host.",
-              "block_index": 42
+              "block_index": 44
             },
             {
               "slug": "it-assesses-graph-portability-and-rationing-correctness",
               "text": "It assesses graph portability and rationing correctness.",
-              "block_index": 45
+              "block_index": 47
             },
             {
               "slug": "the-execution-plan-derives-from-the-host-profile",
               "text": "The execution plan derives from the host profile.",
-              "block_index": 55
+              "block_index": 57
             }
           ]
         },
@@ -2095,12 +2085,12 @@
           "heading_text": "The control↔substrate dependency model",
           "topic_sentence": "The substrate-dependency model makes each governance mechanism declare, as typed metadata, the substrate assumption it bakes in — bound to one substrate, substrate-aware, or substrate-agnostic.",
           "id_source": "explicit",
-          "block_index": 58,
+          "block_index": 60,
           "points": [
             {
               "slug": "declared-substrate-stances-turn-a-migration-grep-into-a-blast-radius",
               "text": "Declared substrate stances make a migration blast radius computable.",
-              "block_index": 60
+              "block_index": 62
             }
           ]
         }
@@ -2321,17 +2311,37 @@
           ]
         },
         {
+          "section_id": "when-you-graduate-to-a-heavier-tool",
+          "level": 2,
+          "heading_text": "When you graduate to a heavier tool",
+          "topic_sentence": "There is a moment when a working sketch stops carrying its weight, and it is worth learning to see it coming.",
+          "id_source": "derived",
+          "block_index": 5,
+          "points": [
+            {
+              "slug": "graduate-when-the-goal-sharpens-past-the-sketch",
+              "text": "Graduate tools when the quality goal sharpens past the sketch.",
+              "block_index": 7
+            },
+            {
+              "slug": "the-recognition-signal-is-a-preference-hardening-into-a-constraint",
+              "text": "The signal: a soft preference hardening into a hard constraint.",
+              "block_index": 9
+            }
+          ]
+        },
+        {
           "section_id": "where-our-models-stop",
           "level": 2,
           "heading_text": "Where our models stop",
           "topic_sentence": "Each view here is a working sketch.",
           "id_source": "derived",
-          "block_index": 5,
+          "block_index": 11,
           "points": [
             {
               "slug": "each-view-is-a-sketch-a-deeper-tool-waits",
               "text": "Each view is a sketch; a deeper tool waits.",
-              "block_index": 6
+              "block_index": 12
             }
           ]
         },
@@ -2341,12 +2351,12 @@
           "heading_text": "A short shelf",
           "topic_sentence": "If you read a few things past this book, read these.",
           "id_source": "derived",
-          "block_index": 9,
+          "block_index": 15,
           "points": [
             {
               "slug": "a-short-shelf-of-standard-works",
               "text": "A short shelf of standard works to read next.",
-              "block_index": 10
+              "block_index": 16
             }
           ]
         },
@@ -2356,12 +2366,12 @@
           "heading_text": "Digital twins — the branch this book does not enter",
           "topic_sentence": "One branch of modeling this book leaves untouched is the *digital twin*: a live model of a physical thing, kept in step with its real counterpart by a stream of sensor data, and used to predict and control it.",
           "id_source": "derived",
-          "block_index": 13,
+          "block_index": 19,
           "points": [
             {
               "slug": "digital-twins-shadow-a-physical-thing-out-of-scope",
               "text": "The digital twin shadows a physical thing, not code.",
-              "block_index": 15
+              "block_index": 21
             }
           ]
         },
@@ -2371,12 +2381,12 @@
           "heading_text": "The through-line",
           "topic_sentence": "One thread ties every entry here to the book behind it.",
           "id_source": "derived",
-          "block_index": 17,
+          "block_index": 23,
           "points": [
             {
               "slug": "every-tool-keeps-a-model-honest-against-some-territory",
               "text": "Every tool keeps a model honest against some territory.",
-              "block_index": 18
+              "block_index": 24
             }
           ]
         }
@@ -4158,9 +4168,9 @@
           "points": []
         },
         {
-          "section_id": "models-and-agents-are-the-closest-thing-to-a-silver-bullet",
+          "section_id": "three-gains-that-usually-trade-against-each-other",
           "level": 2,
-          "heading_text": "Models and agents are the closest thing to a silver bullet",
+          "heading_text": "Three gains that usually trade against each other",
           "topic_sentence": "Fred Brooks warned the field off silver bullets forty years ago.",
           "id_source": "derived",
           "block_index": 17,
@@ -4172,7 +4182,7 @@
           "heading_text": "The judgment moved, and it moved toward you",
           "topic_sentence": "If implementation is abundant, the human's comparative advantage moves to the work that surrounds the code: framing the problem, discovering the abstraction, making the architectural call, and designing the governance under which fast code can be trusted.",
           "id_source": "derived",
-          "block_index": 23,
+          "block_index": 24,
           "points": []
         },
         {
@@ -4181,16 +4191,16 @@
           "heading_text": "What this changes for how we measure, staff, and teach",
           "topic_sentence": "A few consequences follow, and I will keep them short because each could be its own argument.",
           "id_source": "derived",
-          "block_index": 27,
+          "block_index": 28,
           "points": []
         },
         {
-          "section_id": "models-are-the-universal-language-of-engineering",
+          "section_id": "models-as-the-universal-language-of-engineering",
           "level": 2,
-          "heading_text": "Models are the universal language of engineering",
-          "topic_sentence": "Here is the claim the whole book has been climbing toward, and I will state it flat before I defend it.",
+          "heading_text": "Models as the universal language of engineering",
+          "topic_sentence": "Here is the claim the whole book has been climbing toward — and I offer it as a proposal, not a law I can prove from one case.",
           "id_source": "derived",
-          "block_index": 33,
+          "block_index": 34,
           "points": []
         },
         {
@@ -4199,7 +4209,7 @@
           "heading_text": "Limitations",
           "topic_sentence": "I should be plain about the limits of this book.",
           "id_source": "derived",
-          "block_index": 40,
+          "block_index": 41,
           "points": []
         }
       ],
@@ -4210,21 +4220,12 @@
       "part": 6,
       "sections": [
         {
-          "section_id": "fitting-this-book-into-the-software-engineering-literature",
-          "level": 2,
-          "heading_text": "Fitting this book into the software engineering literature",
-          "topic_sentence": "Set the MAGE methodology against the two touchstones from the preface, and the shape of the contribution comes clear.",
-          "id_source": "derived",
-          "block_index": 8,
-          "points": []
-        },
-        {
           "section_id": "the-part-that-stays-yours",
           "level": 2,
           "heading_text": "The part that stays yours",
           "topic_sentence": "We opened by calling the agent a 3D printer, not a stapler.",
           "id_source": "derived",
-          "block_index": 17,
+          "block_index": 12,
           "points": []
         },
         {
@@ -4233,7 +4234,7 @@
           "heading_text": "Where to go next",
           "topic_sentence": "You do not have to adopt all of this at once, and you should not.",
           "id_source": "derived",
-          "block_index": 22,
+          "block_index": 17,
           "points": []
         }
       ],
