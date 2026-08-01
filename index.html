@@ -71,12 +71,14 @@
   .fam-lede { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 6px; }
   .foot { font-size: var(--fs-micro); color: var(--muted); border-top:var(--border-hairline) solid var(--line); padding-top:14px; margin-top: 34px; }
 
+  /* ============================================================================================
+     THE BIG-IDEAS LANDING — a projection of book-models/landing-big-ideas.json (Option 3, "the
+     argument"). Every colour/size references a design token (the Umber-Monograph :root, inlined via
+     FONT_CSS). Landing-only styles; the census + prose pages use PAGE_CSS. --line aliases --rule. */
+
+  /* ---- shared chrome: title, nav pills, lead prose, dividers -------------------------------- */
   .book-h1 { margin:6px 0 2px; }
-  .book-sub { color:var(--accent); font-weight:700; font-size:var(--fs-body); letter-spacing:.01em;
-              margin:0 0 16px; }
-  /* A STATIC in-flow pill row above the H1 — no longer position:absolute, so it can never overlap the
-     hero figure's title at wide viewports (the review's one outright bug). A compact wrapping row of
-     nav pills; the old 6-track grid + @media(820px) absolute-fallback are retired with the positioning. */
+  .book-sub { color:var(--accent); font-weight:700; font-size:var(--fs-body); letter-spacing:.01em; margin:0 0 12px; }
   .nav-grid { display:flex; flex-wrap:wrap; gap:9px; margin:0 0 22px; }
   .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:1px;
               border:1.6px solid var(--rule); border-radius:10px; padding:7px 13px; background:var(--paper);
@@ -87,83 +89,103 @@
   .nav-grid .ng-s { font-size:var(--fs-micro); color:var(--muted); line-height:1.25; }
   .nav-grid .ng-book { border-color:var(--accent); background:var(--accent-tint); }
   .nav-grid .ng-book .ng-t { color:var(--accent); }
-.site-foot .book-foot { white-space:nowrap; font-weight:600; }
-  .loop { border:1px solid var(--line); border-radius:11px; padding:16px 17px 15px; margin:4px 0 20px; background:var(--panel); }
-  .loop .hd { margin:0 0 12px; font-size:var(--fs-meta); color:var(--ink); }
-  .flow { display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; }
-  .fstep { flex:1 1 150px; min-width:140px; border:1.4px solid var(--rule); border-top:3px solid var(--accent);
-           border-radius:9px; padding:9px 11px; background:var(--paper); position:relative; }
-  .fstep .fn { display:inline-flex; align-items:center; justify-content:center; width:19px; height:19px;
-               border-radius:50%; background:var(--accent); color:var(--paper); font-size:var(--fs-micro); font-weight:800; margin-bottom:5px; }
-  .fstep b { display:block; font-size:var(--fs-micro); line-height:1.25; margin-bottom:3px; }
-  .fstep span { font-size:var(--fs-micro); color:var(--muted); line-height:1.35; }
-  .farrow { align-self:center; color:var(--muted); font-size:var(--fs-body); font-weight:700; }
-  @media (max-width:720px){ .farrow{ transform:rotate(90deg); width:100%; text-align:center; } .fstep{ flex-basis:100%; } }
-  .mustache { display:block; width:100%; height:auto; margin:0; }
-  .loop-outcome { text-align:center; margin:10px 0 2px; font-size:var(--fs-meta); color:var(--muted); }
-  .loop-outcome b { color:var(--accent); }
-  .loop .tail { margin:14px 0 0; font-size:var(--fs-micro); color:var(--muted); line-height:1.55; text-align:center; }
-  .tail-pair { max-width:760px; margin:8px auto 0; padding-left:20px; }
-  .tail-pair li { font-size:var(--fs-micro); color:var(--muted); line-height:1.5; margin:0 0 6px; }
-  .refs { margin:0 0 24px; }
-  .refs .r { border-left:3px solid var(--accent); padding:3px 0 3px 12px; margin:0 0 7px; font-size:var(--fs-meta); color:var(--muted); }
-  .refs .r b { color:var(--muted); font-weight:700; }
-  .cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:11px; margin:0 0 26px; }
-  .lcard { display:block; text-decoration:none; border:1.4px solid var(--line); border-radius:10px;
-           padding:13px 15px; background:var(--paper); transition:box-shadow .12s, border-color .12s; }
-  .lcard:hover { border-color:var(--rule); }
-  .lcard b { display:block; font-size:var(--fs-card-body); color:var(--link); letter-spacing:-.01em; margin-bottom:3px; }
-  .lcard span { display:block; font-size:var(--fs-meta); color:var(--muted); line-height:1.4; }
-  .lead, .subtitle, .walk-sub, .section-sub, .census-legend { max-width:70ch; }
-  .lead { font-size:var(--fs-body); color:var(--ink); line-height:1.66; margin:0 0 13px; }
-  .lead .term { font-weight:700; }
-  .wf { position:relative; left:50%; transform:translateX(-50%); width:min(1400px,96vw); margin:14px 0 6px; }
-  .wf-frame { width:100%; overflow:hidden; }
-  .wf-frame iframe { display:block; border:none; background:var(--paper); }
-  .wf figcaption { font-size:var(--fs-meta); color:var(--muted); margin:10px auto 0; text-align:center;
-                   max-width:780px; line-height:1.55; }
-  hr.sep { border:none; border-top:1px solid var(--line); margin:26px 0 20px; }
-  .walk-h { font-size:var(--fs-card-title); margin:0 0 4px; letter-spacing:-.01em; }
-  .walk-sub { font-size:var(--fs-card-body); color:var(--muted); margin:0 0 14px; }
-  .section-h { font-size:var(--fs-section); margin:24px 0 3px; letter-spacing:-.01em; }
-  .section-sub { font-size:var(--fs-card-body); color:var(--muted); margin:0 0 12px; }
-  .section-sub a { color:var(--link); }
-  .spectrum { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:4px 0 6px; align-items:stretch; }
-  .school { border:1.4px solid var(--line); border-radius:10px; padding:12px 13px; background:var(--paper); display:flex; flex-direction:column; }
-  .school.mid { border:2px solid var(--accent); background:var(--accent-tint); }
-  .school h3 { margin:0 0 5px; font-size:var(--fs-body); }
-  .school.mid h3 { color:var(--accent); }
-  .school p { margin:0 0 9px; font-size:var(--fs-card-body); color:var(--muted); line-height:1.55; }
-  .school .srefs { font-size:var(--fs-micro); color:var(--muted); margin:0 0 10px; }
-  .school .srefs .lbl { font-weight:700; color:var(--muted); }
-  .school .srefs ul { margin:3px 0 0; padding-left:16px; }
-  .school .srefs li { margin:0 0 2px; line-height:1.4; }
-  .school .srefs a { color:var(--link); }
-  .school .pole { margin-top:auto; font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:800; }
-  .spectrum-axis { text-align:center; font-size:var(--fs-micro); color:var(--muted); letter-spacing:.03em; margin:0 0 20px; }
-  .cols3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:4px 0 8px; }
-  .col h3 { margin:0 0 8px; font-size:var(--fs-card-body); padding-bottom:5px; border-bottom:2px solid var(--accent); }
-  .col ul { margin:0; padding:0; list-style:none; }
-  .col li { font-size:var(--fs-card-body); color:var(--muted); line-height:1.5; margin:0 0 9px; padding-left:15px; position:relative; }
-  .col li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
-  .ways-note { font-size:var(--fs-micro); color:var(--muted); margin:2px 0 22px; }
-  .mechanisms { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:4px 0 8px; }
-  .mech { border:1.4px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:12px 15px; background:var(--paper); }
-  .mech.right { border-left:1.4px solid var(--line); border-right:4px solid var(--accent); text-align:right; }
-  .mech h3 { margin:0 0 5px; font-size:var(--fs-card-body); }
-  .mech p { margin:0; font-size:var(--fs-card-body); color:var(--muted); line-height:1.55; }
-  @media (max-width:900px){ .cols3 { grid-template-columns:1fr 1fr; } }
-  @media (max-width:720px){ .spectrum, .cols3, .mechanisms { grid-template-columns:1fr; } }
-  /* Figures align to the text column's left edge (text is max-width:840, margin:0),
-     so each figure sits directly under its prose rather than auto-centering in the wider
-     content box (which read as a rightward offset). The SVG scales within the figure. */
-  .lfig, .hero-fig { margin:14px 0 18px; max-width:840px; }
-  .hero-fig { max-width:920px; margin:18px 0 22px; }
-  .lfig svg, .hero-fig svg { display:block; width:100%; height:auto; margin:0 auto; }
-  .lfig figcaption, .hero-fig figcaption { font-size:var(--fs-meta); color:var(--muted); line-height:1.55;
-                   margin:9px auto 0; max-width:70ch; text-align:center; }
-  .lfig figcaption b, .hero-fig figcaption b { color:var(--muted); }
-  .book-cta { text-align:center; margin:6px 0 28px; }
+  .site-foot .book-foot { white-space:nowrap; font-weight:600; }
+  .lead, .m-lead { max-width:74ch; font-size:var(--fs-body); color:var(--ink); line-height:1.66; margin:0 0 13px; }
+  .m-lead .term, .lead .term { font-weight:700; }
+  .hero-cta { color:var(--accent); font-weight:600; text-decoration:none; }
+  .hero-cta:hover { text-decoration:underline; }
+  hr.sep { border:none; border-top:1px solid var(--line); margin:30px 0 24px; }
+  hr.i-sep { border:none; border-top:1px solid var(--rule); margin:34px 0; }
+  figure { margin:0; min-width:0; }
+  .m-cap { display:block; font-size:var(--fs-meta); color:var(--muted); line-height:1.55; margin:11px 2px 0; text-align:center; }
+  .m-cap b { color:var(--muted); }
+
+  /* ---- HERO band: lead prose beside the concrete cover scene (the void fix) ----------------- */
+  .hero-band { margin:8px 0 6px; }
+  .hero-grid { display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,1fr); gap:18px 44px; align-items:center; }
+  .hero-grid .hg-prose { min-width:0; }
+  .hero-grid .hg-prose .book-h1 { margin-top:0; }
+  .hero-grid .hg-fig svg { display:block; width:100%; height:auto; }
+
+  /* ---- the Big-Ideas argument ---------------------------------------------------------------- */
+  .big-ideas { margin:20px 0 4px; }
+  .s-kick { font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.08em; font-weight:800;
+            color:var(--accent); margin:0 0 3px; }
+  .s-title { font-family:var(--font-display); font-size:var(--fs-card-title); font-weight:var(--display-weight);
+             letter-spacing:-.01em; line-height:1.22; margin:0 0 8px; border-top:none; padding-top:0; }
+  .s-claim { font-size:var(--fs-card-body); color:var(--muted); line-height:1.62; margin:0 0 10px; max-width:62ch; }
+  .s-claim b, .s-claim .term { color:var(--ink); }
+  .s-fig svg { display:block; width:100%; height:auto; }
+
+  /* Big Idea 1 - fused with the hero: the churn flowchart full-width beneath the diptych. */
+  .idea-hero { margin:22px 0 0; }
+  .idea-hero .ih-fig svg { display:block; width:100%; height:auto; max-width:1080px; margin:0 auto; }
+  .idea-hero .ih-words { max-width:74ch; margin:16px auto 0; text-align:center; }
+  .idea-hero .ih-words .s-claim { max-width:78ch; margin-left:auto; margin-right:auto; }
+
+  /* A Big-Idea band: figure beside words, sides alternate for rhythm. */
+  .slot { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:16px 42px; align-items:center; }
+  .slot.figright .s-fig { order:2; }
+  .slot .s-words { min-width:0; }
+
+  /* The matched thesis PAIR - two half-width cells, figure above words. */
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+  .pair .p-cell { border-top:3px solid var(--box-thesis-rule); padding-top:14px; scroll-margin-top:16px; }
+  .pair .p-cell .s-kick { color:var(--box-thesis-rule); }
+  .pair .p-cell .s-fig { margin:0 0 12px; }
+
+  /* The LIGHT "expand to learn more" disclosure. The button is INJECTED by EXPAND_JS; with JS off the
+     .s-more-text block simply shows (no broken control). */
+  .s-more-text { font-size:var(--fs-card-body); color:var(--muted); line-height:1.6; margin:0 0 10px; max-width:64ch; }
+  .idea-hero .s-more-text { margin-left:auto; margin-right:auto; }
+  button.s-expand { display:block; font:inherit; font-size:var(--fs-meta); font-weight:700;
+             color:var(--accent); background:none; border:none; padding:0; margin:0 0 10px; cursor:pointer;
+             letter-spacing:.01em; text-align:left; }
+  button.s-expand::before { content:"\203A\00a0"; }
+  button.s-expand:hover { text-decoration:underline; }
+  button.s-expand:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:3px; }
+  .idea-hero button.s-expand { margin:0 auto 10px; text-align:center; }
+  .s-read { display:inline-block; font-size:var(--fs-meta); font-weight:700; color:var(--accent);
+            text-decoration:none; }
+  .s-read:hover { text-decoration:underline; }
+
+  /* ---- the F1 gateway into the census ------------------------------------------------------- */
+  .gateway { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:18px 42px; align-items:center;
+             border:1.6px solid var(--rule); border-left:4px solid var(--accent); border-radius:12px;
+             background:var(--paper); padding:22px 26px; margin:8px 0; }
+  .gateway .gw-fig svg { display:block; width:100%; height:auto; }
+  .gateway .s-title { font-size:var(--fs-card-title); }
+  .gw-primary { margin-right:16px; }
+
+  /* ---- the subordinated "Deeper in the book" strip ------------------------------------------ */
+  .deeper { margin:26px 0 6px; }
+  .deep-h { font-family:var(--font-display); font-size:var(--fs-section); margin:0 0 4px; border-top:none; padding-top:0; letter-spacing:-.01em; }
+  .deep-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:0 0 14px; max-width:74ch; }
+  .deep-grp { margin:0 0 14px; }
+  .deep-lbl { display:block; font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.06em;
+              font-weight:800; color:var(--muted); margin:0 0 7px; }
+  .deep-row { display:flex; flex-wrap:wrap; gap:9px; }
+  .deep-item { display:block; border:1.4px solid var(--rule); border-radius:9px; background:var(--panel);
+               padding:8px 13px; text-decoration:none; color:var(--ink); font-size:var(--fs-meta); line-height:1.3;
+               scroll-margin-top:16px; }
+  .deep-item b { display:block; font-size:var(--fs-meta); font-weight:700; color:var(--ink); }
+  .deep-item span { display:block; color:var(--muted); font-size:var(--fs-micro); margin-top:1px; }
+  .deep-item:hover { border-color:var(--accent); background:var(--accent-tint); }
+
+  /* The learning-outcomes list (projected from book-models/outcomes.json), compact. */
+  ul.oc-list { margin:4px 0 4px; padding:0; list-style:none; }
+  ul.oc-list li.oc-row { display:grid; grid-template-columns:auto auto 1fr auto; gap:10px; align-items:baseline;
+                   font-size:var(--fs-meta); color:var(--ink); line-height:1.5; padding:7px 0;
+                   border-top:1px solid var(--line); scroll-margin-top:16px; }
+  ul.oc-list li.oc-row:first-child { border-top:none; }
+  .oc-row .oc-unit { font-weight:800; color:var(--accent); white-space:nowrap; font-size:var(--fs-micro); }
+  .oc-row .oc-bloom { font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.05em; font-weight:800;
+                   color:var(--paper); background:var(--accent); border-radius:4px; padding:1px 6px; white-space:nowrap; }
+  .oc-row .oc-stmt { color:var(--ink); }
+  .oc-row .oc-more { color:var(--link); white-space:nowrap; font-size:var(--fs-micro); text-decoration:none; }
+
+  /* ---- the bottom book CTA ------------------------------------------------------------------- */
+  .book-cta { text-align:center; margin:20px 0 30px; }
   .book-cta a { color:var(--accent); font-size:var(--fs-body); text-decoration:none; }
   .book-cta a:hover { text-decoration:underline; }
   .book-cta-pdf { display:inline-block; margin-left:14px; }
@@ -171,312 +193,19 @@
                     padding:3px 10px; border:1px solid var(--rule); border-radius:6px; }
   .book-cta-pdf a:hover { border-color:var(--accent); background:var(--panel); text-decoration:none; }
 
-  /* ---- Responsive figure-prose board -------------------------------------
-     The one-page summary lays out as a board of bordered boxes on a grid:
-     three tracks on a wide viewport, collapsing to one column on mobile. Each
-     box pairs a figure or a bolded lead with a few lines of prose so the page
-     is scannable at a glance instead of a long scroll. Boxes opt into a wider
-     span with .span2 / .spanfull; the hero MAGE figure is a full-span lead. */
-  .board { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:16px; align-items:stretch;
-           margin:6px 0 10px; }
-  .box { border:1.4px solid var(--line); border-radius:11px; padding:16px 18px; background:var(--paper);
-         display:flex; flex-direction:column; transition:box-shadow .12s, border-color .12s; }
-  .box:hover { border-color:var(--rule); }
-  .box > :first-child { margin-top:0; }
-  .box > :last-child { margin-bottom:0; }
-  .box.span2 { grid-column:span 2; }
-  .box.spanfull { grid-column:1 / -1; }
-  .box.accent { border-top:3px solid var(--accent); }
-  .box.tint { background:var(--accent-tint); border-color:var(--rule); }
-  .box .bx-h { font-family:var(--font-display); font-size:var(--fs-card-title); margin:0 0 7px;
-               letter-spacing:-.01em; }
-  .box .bx-h.accent-t { color:var(--accent); }
-  .box .bx-eyebrow { font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.06em; font-weight:800;
-                     color:var(--accent); margin:0 0 4px; }
-  .box p { font-size:var(--fs-card-body); color:var(--muted); line-height:1.58; margin:0 0 10px; }
-  .box p:last-child { margin-bottom:0; }
-  .box .term { font-weight:700; color:var(--ink); }
-  /* A figure-prose lead box: the SVG sits beside (wide) or above (narrow) its prose. */
-  .fp { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:20px 26px;
-        align-items:center; }
-  .fp .fp-fig { margin:0; }
-  .fp .fp-fig svg { display:block; width:100%; height:auto; }
-  .fp .fp-fig figcaption { display:none; }
-  .fp .fp-body > :first-child { margin-top:0; }
-  .fp .fp-body > :last-child { margin-bottom:0; }
-  .fp .fp-body ul.theses { margin:8px 0 11px; padding-left:20px; }
-  .fp .fp-body ul.theses li { margin:0 0 7px; line-height:1.55; }
-  /* A figure that sits at the top of a box, prose beneath it (used inside thesis boxes). */
-  .box .bx-fig { margin:2px 0 12px; }
-  .box .bx-fig svg { display:block; width:100%; height:auto; }
-  .box .bx-fig figcaption { display:none; }
-  /* Nested constraint/sensor pair inside a thesis box, side by side then stacked. */
-  .duo { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:10px 0 0; }
-  .duo .mech { margin:0; }
+  /* ---- responsive: stack every two-column primitive at <= 900px ----------------------------- */
   @media (max-width:900px){
-    .board { grid-template-columns:repeat(2, 1fr); }
-    .box.span2 { grid-column:1 / -1; }
-    .fp { grid-template-columns:1fr; gap:16px; }
-    .fp .fp-fig { max-width:560px; margin:0 auto; }
+    .hero-grid { grid-template-columns:1fr; gap:20px; }
+    .hero-grid .hg-fig { max-width:640px; margin:0 auto; }
+    .slot { grid-template-columns:1fr; gap:14px; }
+    .slot.figright .s-fig { order:0; }
+    .slot .s-fig { max-width:640px; margin:0 auto; }
+    .pair { grid-template-columns:1fr; gap:22px; }
+    .gateway { grid-template-columns:1fr; }
   }
-  @media (max-width:720px){
-    .board { grid-template-columns:1fr; gap:14px; }
-    .box.span2, .box.spanfull { grid-column:auto; }
-    .duo { grid-template-columns:1fr; }
+  @media (max-width:640px){
+    ul.oc-list li.oc-row { grid-template-columns:1fr; gap:3px; }
   }
-
-  /* ---- The pair of theses (two-up on wide, stacked on narrow) --------------------------------
-     The two theses are a matched pair and must read as a grouped unit, and the top spine must use
-     the full page width. So they sit side-by-side in a two-track grid that spans the whole 2100px
-     spine (was: two lonely 70ch left columns that wasted the right half). Each thesis is a bordered
-     card; its figure fills the card's column, so at 2560px each figure renders ≈1000px wide — far
-     more legible than the old fixed 920px pinned in a narrow column. */
-  .theses-pair { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin:22px 0 8px;
-                 align-items:stretch; }
-  .thesis { border:1.4px solid var(--line); border-radius:12px; padding:20px 24px 22px; background:var(--paper);
-            display:flex; flex-direction:column; }
-  .thesis.accent { border-top:3px solid var(--accent); }
-  .thesis .th-eyebrow { font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.07em; font-weight:800;
-                        color:var(--accent); margin:0 0 6px; }
-  .thesis .th-h { font-size:var(--fs-card-title); margin:0 0 8px; letter-spacing:-.01em; line-height:1.25;
-                  font-family:var(--font-display); }
-  .thesis .th-sub { font-size:var(--fs-card-body); color:var(--muted); margin:0 0 6px; line-height:1.62; max-width:none; }
-  .thesis .th-fig { margin:auto 0 0; padding-top:14px; }
-  .thesis .th-fig svg { display:block; width:100%; height:auto; }
-  .thesis .th-fig figcaption { font-size:var(--fs-meta); color:var(--muted); line-height:1.55;
-                               margin:11px 0 0; text-align:center; max-width:none; }
-  .thesis .th-fig figcaption b { color:var(--muted); }
-  /* Below 960px the pair can't hold two legible columns; stack it and keep each figure full-width. */
-  @media (max-width:960px){
-    .theses-pair { grid-template-columns:1fr; gap:16px; }
-  }
-
-  /* ---- Cheat-sheet MASONRY (below the prose spine) -----------------------------------------
-     Everything under the two theses tiles into a Pinterest-style pack: CSS multi-column with
-     break-inside:avoid on each self-contained card, so varying-height cards float up and fill
-     the width instead of leaving the right half of a wide screen empty. `column-width` lets the
-     column COUNT grow with the viewport (≈4 tracks at 2100px, 1 track ≤720px) with no media
-     queries for the count. A handful of intrinsically-wide cards (the horizontal flow strip, the
-     dev-workflow figure) opt out with `.wide { column-span:all }` and punctuate the pack full-bleed. */
-  /* The card families lay out as a responsive GRID (was CSS multi-column): with only a handful of
-     cards per family, multi-column filled column 1 then column 2 and left the right half of a wide
-     screen empty, whereas grid `auto-fill, minmax(320px,1fr)` spreads the cards ACROSS the full width
-     (≈5-6 tracks at 2560px, 1 at ≤720px). A `.card.wide` spans every track. An open <details> just
-     grows its own grid cell's row — cleaner than a multi-column reflow. */
-  .masonry { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
-             gap:16px; align-items:start; margin: 4px 0 8px; }
-  @media (max-width:720px){ .masonry { grid-template-columns:1fr; } }
-  .tile { break-inside: avoid; -webkit-column-break-inside: avoid; page-break-inside: avoid;
-          display: inline-block; width: 100%; margin: 0 0 16px;
-          border:1.4px solid var(--line); border-radius:11px; padding:15px 17px; background:var(--paper);
-          transition:box-shadow .12s, border-color .12s; }
-  .tile:hover { border-color:var(--rule); }
-  .tile > :first-child { margin-top:0; }
-  .tile > :last-child { margin-bottom:0; }
-  .tile.accent { border-top:3px solid var(--accent); }
-  .tile.tint { background:var(--accent-tint); border-color:var(--rule); }
-  .tile.mid { border:2px solid var(--accent); background:var(--accent-tint); }
-  /* Lightweight card headers/kickers — the demoted band H2s become these, no full-width heading rows. */
-  .tile .tl-kicker { font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.07em; font-weight:800;
-                     color:var(--accent); margin:0 0 4px; }
-  .tile .tl-h { font-family:var(--font-display); font-size:var(--fs-card-title); margin:0 0 6px;
-                letter-spacing:-.01em; color:var(--ink); }
-  .tile .tl-h.accent-t { color:var(--accent); }
-  .tile p { font-size:var(--fs-card-body); color:var(--muted); line-height:1.56; margin:0 0 9px; }
-  .tile p:last-child { margin-bottom:0; }
-  .tile .bx-fig { margin:2px 0 11px; }
-  .tile .bx-fig svg { display:block; width:100%; height:auto; }
-  .tile .bx-fig figcaption { display:none; }
-  .tile .term { font-weight:700; color:var(--ink); }
-  .tile .pole { display:block; margin-top:8px; font-size:var(--fs-micro); text-transform:uppercase;
-                letter-spacing:.05em; color:var(--muted); font-weight:800; }
-  .tile .srefs { font-size:var(--fs-micro); color:var(--muted); margin:8px 0 0; }
-  .tile .srefs .lbl { font-weight:700; color:var(--muted); }
-  .tile .srefs ul { margin:3px 0 0; padding-left:16px; }
-  .tile .srefs li { margin:0 0 2px; line-height:1.4; }
-  .tile.axis { text-align:center; font-size:var(--fs-micro); color:var(--muted); letter-spacing:.03em;
-               padding:9px 12px; background:var(--panel); }
-  /* A stance/skill card whose body is an arrow-bulleted list. */
-  .tile ul.tl-list { margin:0; padding:0; list-style:none; }
-  .tile ul.tl-list li { font-size:var(--fs-meta); color:var(--muted); line-height:1.5; margin:0 0 8px;
-                        padding-left:15px; position:relative; }
-  .tile ul.tl-list li:last-child { margin-bottom:0; }
-  .tile ul.tl-list li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
-  /* An action card that is itself a link (the catalogue-explore cards). */
-  a.tile { text-decoration:none; color:var(--ink); }
-  a.tile b { display:block; font-size:var(--fs-card-body); color:var(--link); letter-spacing:-.01em; margin-bottom:3px; }
-  a.tile span { display:block; font-size:var(--fs-meta); color:var(--muted); line-height:1.4; }
-  /* Refs as a compact card. */
-  .tile .r { border-left:3px solid var(--accent); padding:2px 0 2px 11px; margin:0 0 7px;
-             font-size:var(--fs-meta); color:var(--muted); }
-  .tile .r:last-child { margin-bottom:0; }
-  .tile .r b { color:var(--muted); font-weight:700; }
-  /* CTA card. */
-  .tile.cta { text-align:center; }
-  .tile.cta .book-cta { margin:0; }
-  /* Intrinsically-wide cards span every column and punctuate the pack full-bleed. */
-  .tile.wide { column-span: all; -webkit-column-span: all; width:auto; display:block; }
-  .tile.wide .loop { border:none; background:none; padding:0; margin:0; }
-  /* Inside a full-bleed tile the .wf figure no longer needs the 50%-viewport centering trick it
-     used in the old full-width main; reset it to a normal centered block so the iframe fits the tile. */
-  .tile.wide .wf { position:static; left:auto; transform:none; width:100%; max-width:1400px;
-                   margin:8px auto 0; }
-  /* The midway-discipline figure sits beside its prose in a full-bleed tile: the SVG gets a generous
-     column so its three-panel labels are legible, prose reads alongside on wide screens. */
-  .tile.wide .midway-fp { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
-                          gap:20px 30px; align-items:center; margin-top:4px; }
-  .tile.wide .midway-fp .bx-fig { margin:0; }
-  .tile.wide .midway-fp .bx-fig svg { display:block; width:100%; height:auto; }
-  .tile.wide .midway-body > :first-child { margin-top:0; }
-  .tile.wide .midway-body > :last-child { margin-bottom:0; }
-  @media (max-width:820px){
-    .tile.wide .midway-fp { grid-template-columns:1fr; gap:14px; }
-  }
-  @media (max-width:720px){
-    .masonry { columns: 1; }
-  }
-
-  /* ---- HERO diptych ------------------------------------------------------------------------
-     Lead prose across the top, then a balanced two-panel diptych: the analytical MAGE-method overview
-     (landscape flowchart, ~2.56:1) beside the concrete cover scene (~1.62:1). The panel columns are
-     weighted ~1.55fr : 1fr so the two SVGs — each width:100% of its cell — land at matched HEIGHT and
-     read as a genuine pair despite the aspect mismatch. Stacks to one column ≤900px. */
-  .hero { margin:8px 0 6px; }
-  .hero-lead { min-width:0; }
-  .hero-lead .lead { max-width:74ch; }
-  .hero-lead .book-h1 { margin-top:0; }
-  .hero-diptych { margin:20px 0 4px; }
-  .hd-pair { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:24px 34px;
-             align-items:center; }
-  .hd-cell { min-width:0; }
-  .hd-cell svg { display:block; width:100%; height:auto; }
-  .hd-cap { display:block; font-size:var(--fs-meta); color:var(--muted); line-height:1.55;
-            margin:11px 2px 0; text-align:center; }
-  .hd-cap b { color:var(--muted); }
-  @media (max-width:900px){
-    .hd-pair { grid-template-columns:1fr; gap:22px; }
-    .hero-lead .lead { max-width:70ch; }
-    .hd-cell { max-width:640px; margin:0 auto; }
-  }
-
-  /* ---- The uniform clickable CARD (a native <details>) --------------------------------------
-     Every landing unit is the same primitive: a <details class="card"> whose <summary> is the
-     always-visible header (kicker + title + one-line frame, and a figure thumbnail when the card
-     has a figure). Expanding reveals the figure large-and-legible and/or the fuller summary
-     INLINE (the "peek"), then a "read the full treatment →" link-through to the book/entry page.
-     Native <details> keeps it accessible and JS-free — no custom modal/accordion. The whole card
-     carries id="card-<slug>" so it is deep-linkable (index.html#card-tombstone-commits). */
-  .card { border:1.4px solid var(--line); border-radius:11px; background:var(--paper); overflow:hidden;
-          width:100%; margin:0; align-self:start;
-          transition:box-shadow .12s, border-color .12s; scroll-margin-top:16px; }
-  .card:hover { border-color:var(--rule); }
-  .card[open] { border-color:var(--rule); }
-  .card.accent { border-top:3px solid var(--accent); }
-  .card.tint { background:var(--accent-tint); border-color:var(--rule); }
-  .card.mid { border:2px solid var(--accent); background:var(--accent-tint); }
-  /* The summary IS the card header — no default disclosure triangle; we draw our own affordance. */
-  .card > summary { list-style:none; cursor:pointer; padding:15px 17px; display:grid;
-                    grid-template-columns:1fr auto; gap:4px 12px; align-items:start; position:relative; }
-  .card > summary::-webkit-details-marker { display:none; }
-  .card > summary:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
-  .cd-kicker { grid-column:1; font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.07em;
-               font-weight:800; color:var(--accent); margin:0 0 4px; }
-  .cd-title { grid-column:1; font-family:var(--font-display); font-size:var(--fs-card-title);
-              letter-spacing:-.01em; color:var(--ink); line-height:1.25; margin:0; }
-  .card.mid .cd-title, .card.accent .cd-title.accent-t { color:var(--accent); }
-  .cd-frame { grid-column:1; font-size:var(--fs-meta); color:var(--muted); line-height:1.5; margin:5px 0 0; }
-  /* Figure thumbnail on the summary — a small, cropped preview so a figure-bearing card reads as one. */
-  .cd-thumb { grid-column:2; grid-row:1 / span 3; width:96px; height:64px; border-radius:7px;
-              border:1px solid var(--line); background:var(--panel); overflow:hidden; display:flex;
-              align-items:center; justify-content:center; }
-  .cd-thumb svg { width:100%; height:100%; object-fit:contain; }
-  /* A figure card opens by default so its figure is never lost behind a peek; the summary thumbnail is
-     then redundant with the large figure below it, so hide it while open (the peek/close chip stays). */
-  .card[open] .cd-thumb { display:none; }
-  /* The open/closed affordance — a "peek ▸ / close ▾" chip bottom-right of the summary. */
-  .cd-toggle { grid-column:2; align-self:end; font-size:var(--fs-micro); font-weight:700; color:var(--accent);
-               letter-spacing:.02em; white-space:nowrap; margin-top:6px; }
-  .card[open] .cd-toggle::after { content:"Close ▾"; }
-  .card:not([open]) .cd-toggle::after { content:"Peek ▸"; }
-  /* When a card has a thumb, the toggle sits under it (row 4); else it shares column 2 row 1. */
-  .cd-body { padding:0 17px 16px; border-top:1px solid var(--line); margin-top:2px; }
-  .cd-body > :first-child { margin-top:12px; }
-  .cd-body p { font-size:var(--fs-card-body); color:var(--muted); line-height:1.56; margin:0 0 10px; }
-  .cd-body p:last-of-type { margin-bottom:10px; }
-  .cd-body .term { font-weight:700; color:var(--ink); }
-  .cd-body .cd-fig { margin:12px 0 12px; }
-  .cd-body .cd-fig svg { display:block; width:100%; height:auto; }
-  .cd-body .cd-fig figcaption { font-size:var(--fs-meta); color:var(--muted); line-height:1.5;
-                                margin:9px 2px 0; text-align:center; }
-  .cd-body .cd-fig figcaption b { color:var(--muted); }
-  /* The link-through — always the last thing in an expanded card. */
-  .cd-more { display:inline-block; margin-top:4px; font-size:var(--fs-meta); font-weight:700;
-             color:var(--accent); text-decoration:none; }
-  .cd-more:hover { text-decoration:underline; }
-  /* Arrow-bulleted lists inside a card body (the "way of thinking" skill cards). */
-  .cd-body ul.cd-list { margin:0 0 12px; padding:0; list-style:none; }
-  .cd-body ul.cd-list li { font-size:var(--fs-meta); color:var(--muted); line-height:1.5; margin:0 0 8px;
-                           padding-left:15px; position:relative; }
-  .cd-body ul.cd-list li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
-  .cd-body .srefs { font-size:var(--fs-micro); color:var(--muted); margin:8px 0 0; }
-  .cd-body .srefs .lbl { font-weight:700; color:var(--muted); }
-  .cd-body .srefs ul { margin:3px 0 0; padding-left:16px; }
-  .cd-body .srefs li { margin:0 0 3px; line-height:1.4; }
-  .cd-body .srefs a { color:var(--link); }
-  .cd-body .pole { display:block; margin:10px 0 0; font-size:var(--fs-micro); text-transform:uppercase;
-                   letter-spacing:.05em; color:var(--muted); font-weight:800; }
-
-  /* ---- The four definitions (projected from book/data/definitions.json) --------------------- */
-  .cd-body blockquote.def-box { margin:0 0 12px; padding:10px 14px; background:var(--box-def-fill);
-                   border-left:var(--border-box-rule) solid var(--box-def-rule); border-radius:0 7px 7px 0; font-size:var(--fs-meta);
-                   line-height:1.55; color:var(--ink); }
-  .cd-body ul.def-aspects li { font-size:var(--fs-meta); color:var(--muted); }
-  .cd-body .def-trace { font-size:var(--fs-micro); color:var(--muted); margin:8px 0 0; }
-  .cd-body .def-trace a { color:var(--link); }
-  .cd-body .def-owed { color:var(--accent); font-style:italic; }
-
-  /* ---- The learning-outcomes view (projected from book-models/outcomes.json) --------------- */
-  .cd-body ul.oc-list { margin:4px 0 12px; padding:0; list-style:none; }
-  .cd-body ul.oc-list li.oc-row { display:grid; grid-template-columns:auto auto 1fr auto; gap:10px;
-                   align-items:baseline; font-size:var(--fs-meta); color:var(--ink); line-height:1.5;
-                   padding:7px 0; border-top:1px solid var(--line); }
-  .cd-body ul.oc-list li.oc-row:first-child { border-top:none; }
-  .oc-row .oc-unit { font-weight:800; color:var(--accent); white-space:nowrap; font-size:var(--fs-micro); }
-  .oc-row .oc-bloom { font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.05em; font-weight:800;
-                   color:var(--paper); background:var(--accent); border-radius:4px; padding:1px 6px; white-space:nowrap; }
-  .oc-row .oc-stmt { color:var(--ink); }
-  .oc-row .oc-more { color:var(--link); white-space:nowrap; font-size:var(--fs-micro); }
-  @media (max-width:640px){ .cd-body ul.oc-list li.oc-row { grid-template-columns:1fr; gap:3px; } }
-
-  /* ---- The two theses as a matched PAIR of cards -------------------------------------------
-     The theses stay a grouped, adjacent pair ("Thesis I of II" / "Thesis II of II") but are now
-     the same <details class="card"> primitive, sitting two-up in their own grid so they read
-     together and each figure renders at ~half the page width. Stacks ≤900px. */
-  .theses-cards { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:20px 0 8px;
-                  align-items:start; }
-  .theses-cards .card { margin:0; }
-  @media (max-width:900px){ .theses-cards { grid-template-columns:1fr; gap:16px; } }
-  /* Semantic-box rotation (the decided anchors): the two thesis cards read GREEN on every surface
-     (top-bar + kicker), and the definition cards read BLUE (kicker matches their blue def-box). Ordinary
-     accent cards keep the umber accent. */
-  .theses-cards .card.accent { border-top-color:var(--box-thesis-rule); }
-  .theses-cards .cd-kicker, .theses-cards .cd-title.accent-t { color:var(--box-thesis-rule); }
-  .def-card .cd-kicker { color:var(--box-def-rule); }
-
-  /* A card-family block: a light kicker heading over a masonry pack of its cards. */
-  .fam { margin:0 0 6px; }
-  .fam-h { font-size:var(--fs-meta); text-transform:uppercase; letter-spacing:.06em; font-weight:800;
-           color:var(--muted); margin:20px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--line); }
-  /* Full-bleed cards inside a family grid (the midway strip, the workflow figure, the alignment-grows
-     strip) span every track. */
-  .card.wide { grid-column:1 / -1; }
-  .card.wide .loop { border:none; background:none; padding:0; margin:8px 0 0; }
-  .card.wide .wf { position:static; left:auto; transform:none; width:100%; max-width:1400px;
-                   margin:8px auto 0; }
-  .card.wide .midway-fp { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
-                          gap:20px 30px; align-items:center; margin-top:4px; }
-  .card.wide .midway-fp .cd-fig { margin:0; }
-  @media (max-width:820px){ .card.wide .midway-fp { grid-template-columns:1fr; gap:14px; } }
   /* GENERATED by book-models/design_tokens.py from design-tokens.json — do not hand-edit. */
   :root {
     --ink: #1c1917;
@@ -541,126 +270,32 @@
   .topnav a { color:var(--muted); text-decoration:none; white-space:nowrap; } .topnav a:hover { color:var(--accent); }
   @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 var(--space-1); } }
 </style>
-<script>
-function fitFig(f){
-  try{
-    var d=f.contentWindow.document, w=d.documentElement.scrollWidth||1040, h=d.documentElement.scrollHeight||600;
-    var frame=f.parentElement, wf=frame.parentElement;
-    var avail=wf.clientWidth, s=Math.min(1, avail/w);
-    f.style.width=w+'px'; f.style.height=h+'px';
-    f.style.transformOrigin='top left'; f.style.transform='scale('+s+')';
-    // size the frame to the SCALED figure and center it, so a figure narrower than the
-    // column isn't pinned left by the top-left transform origin
-    frame.style.width=(w*s)+'px'; frame.style.height=(h*s)+'px'; frame.style.margin='0 auto';
-  }catch(e){}
-}
-</script>
 </head>
 <body class="landing">
 <main>
 <nav class="nav-grid" aria-label="Primary"><a class="ng-cell" href="https://davisjam.github.io"><span class="ng-t">Author</span><span class="ng-s">James C. Davis · Purdue</span></a><a class="ng-cell" href="https://github.com/davisjam/agent-governance-mechanisms"><span class="ng-t"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> GitHub</span><span class="ng-s">the source repository</span></a><a class="ng-cell" href="quick-start.html"><span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a><a class="ng-cell ng-book ng-bottom" href="book/index.html"><span class="ng-t">Book</span><span class="ng-s">read the web book</span></a><a class="ng-cell ng-book ng-bottom" href="book/mage-book.pdf"><span class="ng-t"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M4 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V4.5L9.5 0H4zm5 1.5L12.5 5H9V1.5zM4.9 8.2h1c.5 0 .9.4.9.9s-.4.9-.9.9h-.4v1.1h-.6V8.2zm.6.5v.8h.3c.2 0 .3-.1.3-.4s-.1-.4-.3-.4h-.3zm2 .0h.9c.6 0 1 .5 1 1.4s-.4 1.5-1 1.5h-.9V8.7zm.6.5v1.8h.2c.3 0 .5-.3.5-.9s-.2-.9-.5-.9h-.2zm2.3-.5h1.7v.5h-1.1v.6h1v.5h-1v1.2h-.6V8.7z"></path></svg> Book (PDF)</span><span class="ng-s">download offline</span></a></nav>
-  <!-- ===================== HERO =====================
-       Lead prose across the top, then a balanced two-panel diptych beneath it: the analytical MAGE-method
-       overview (the churn→governed→trustworthy flowchart) beside the concrete cover scene (an engineer
-       briefing an orchestrator through models). Two views of one method, side by side; stacks ≤900px.
-       The panels' columns are sized (~1.55fr : 1fr) so their differing aspect ratios render at matched
-       height and read as a pair. The site H1 above carries the title, so the title-LESS cover cut is used
-       (no doubling). -->
-  <div class="hero">
-    <div class="hero-lead">
-      <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
-      <p class="lead">Generative AI is shifting software engineering from a practice built around scarce
-      implementation toward one built around abundant, low-cost code. The hard part
-      stops being writing code and becomes <span class="term">governing the conditions under which fast code
-      can be trusted</span>. This catalogue serves a method for doing that:
-      <span class="term">Model-Based Agentic Software Engineering</span> (MAGE) — engineering with a fleet of
-      coding agents by binding intent to typed models the fleet reasons through, and governing what it builds
-      with mechanisms that prevent or detect drift.</p>
-      <p class="lead">MAGE is one method with two theses —
-      a Modeling Thesis and an Alignment Thesis — and this page is built around them. Every unit
-      below is a clickable card: open it for a quick peek, then follow the link through to the full treatment
-      in the book. <a href="quick-start.html"><em>QUICK START: install the skills for Claude →</em></a></p>
-    </div>
-    <figure class="hero-diptych">
-      <div class="hd-pair">
-        <div class="hd-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title>The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
-  <desc>A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
-  <defs>
-    <marker id="hero-mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#b23b3b"/>
-    </marker>
-    <marker id="hero-mg-ah-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#1f7a4d"/>
-    </marker>
-    <marker id="hero-mg-ah-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#2f5169"/>
-    </marker>
-  </defs>
-
-  <rect x="0" y="0" width="1080" height="512" fill="#ffffff"/>
-
-  <!-- Title block -->
-
-  <!-- Churn box: a short reject-branch, parked right above the fleet -->
-  <rect x="44" y="104" width="228" height="98" rx="12" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
-  <text x="158" y="140" text-anchor="middle" font-size="23" font-weight="700" fill="#b23b3b">Churn</text>
-  <text x="158" y="165" text-anchor="middle" font-size="13" fill="#b23b3b">work outgrows the window;</text>
-  <text x="158" y="185" text-anchor="middle" font-size="13" fill="#b23b3b">drift, confidently-wrong</text>
-
-  <!-- ================= BAD PATH: a short fray, straight up out of the fleet to Churn ================= -->
-  <!-- the reject-branch: ORIGINATES on the fleet top edge (y=293), frays up, TERMINATES on Churn's bottom edge (y=202) -->
-  <path d="M160 293 L144 280 L176 266 L142 250 L174 236"
-        fill="none" stroke="#b23b3b" stroke-width="3" stroke-linejoin="round" opacity="0.95"/>
-  <path d="M174 236 L150 224 L166 214 L158 204"
-        fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"
-        marker-end="url(#hero-mg-ah-red)" opacity="0.9"/>
-  <text x="238" y="258" text-anchor="middle" font-size="14.5" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
-
-  <!-- ============ THE FLEET: single origin, centered on the spine (y=344) ============ -->
-  <rect x="46" y="293" width="196" height="102" rx="12" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="144" y="333" text-anchor="middle" font-size="20" font-weight="700" fill="#2f5169">The agent fleet</text>
-  <text x="144" y="359" text-anchor="middle" font-size="14.5" fill="#2f5169">fast · cheap</text>
-  <text x="144" y="380" text-anchor="middle" font-size="13" fill="#57534e">one input, two fates</text>
-
-  <!-- ============ SPINE: fleet -> governed env -> trustworthy (all straight, y=344) ============ -->
-  <!-- tail on the fleet's right edge (x=242), head on the container's left edge (x=308) -->
-  <path d="M242 344 L306 344" fill="none" stroke="#2f5169" stroke-width="3" marker-end="url(#hero-mg-ah-navy)"/>
-
-  <!-- The governed environment: the HERO container (center y=344) -->
-  <rect x="308" y="216" width="452" height="256" rx="16" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
-  <path d="M308 232 a16 16 0 0 1 16 -16 h420 a16 16 0 0 1 16 16 v22 h-452 z" fill="#1f7a4d"/>
-  <text x="534" y="245" text-anchor="middle" font-size="17" font-weight="700" fill="#ffffff" letter-spacing="0.3">The governed environment</text>
-
-  <rect x="334" y="278" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
-  <text x="534" y="311" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">Modeling Thesis</text>
-  <text x="534" y="335" text-anchor="middle" font-size="13.5" fill="#2f5169">a typed model the fleet reasons through</text>
-
-  <rect x="334" y="370" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
-  <text x="534" y="403" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">Alignment Thesis</text>
-  <text x="534" y="427" text-anchor="middle" font-size="13.5" fill="#2f5169">keeps output aligned with intent</text>
-
-  <!-- straight output arrow, rightward on the spine: tail on container edge (x=760), head on Trustworthy edge (x=846) -->
-  <path d="M760 344 L844 344" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#hero-mg-ah-green)"/>
-
-  <!-- Trustworthy software: the reward, on the spine — three earned attributes -->
-  <rect x="846" y="274" width="204" height="140" rx="12" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
-  <text x="948" y="309" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">Trustworthy</text>
-  <text x="948" y="331" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">software</text>
-  <text x="948" y="358" text-anchor="middle" font-size="13.5" fill="#155c38">high quality · auditable</text>
-  <text x="948" y="378" text-anchor="middle" font-size="13.5" font-style="italic" fill="#1f7a4d">at velocity</text>
-  <!-- auditability motif: a small model-traceability tag, centered in the box -->
-  <rect x="876" y="390" width="144" height="18" rx="9" fill="#ffffff" stroke="#1f7a4d" stroke-width="1.2"/>
-  <path d="M888 399 l3 3 l5.5 -6.5" fill="none" stroke="#1f7a4d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="953" y="403.5" text-anchor="middle" font-size="10.5" fill="#155c38" letter-spacing="0.2">traces to the models</text>
-
-  <!-- takeaway caption -->
-  <text x="540" y="497" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
-</svg><span class="hd-cap"><b>The analytical view.</b> A cheap agent fleet, left
-        ungoverned, drifts into <b>churn</b> as its work outgrows the context window. Governed through the
-        <b>Modeling Thesis</b> (a typed model the fleet reasons through) and the <b>Alignment Thesis</b> (a
-        mechanism that keeps output aligned with intent), it converges on trustworthy software at velocity.</span></div>
-        <div class="hd-cell"><svg viewBox="0 0 820 505" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An engineer briefs an orchestrator through models; sub-agents work behind the glass">
+  <!-- ===================== HERO + BIG IDEA 1 =====================
+       The landing is a PROJECTION of the Big-Ideas model (book-models/landing-big-ideas.json), laid out
+       as the book's own argument in the book's own order (Option 3 "the argument"). The hero band — lead
+       prose beside the concrete cover scene — flows directly into Big Idea 1, whose churn flowchart renders
+       full-width beneath it. Then the stance (one band), the two theses (a matched pair), practice and
+       seat (alternating bands), the F1 gateway into the census, and one compact "Deeper in the book"
+       strip. Each Big-Idea slot = figure · concise claim · a light "expand to learn more" · "Read in the
+       book →". No card masonry, no <details> peeks — a build renders every slot from the model. -->
+  <div class="hero-band">
+    <div class="hero-grid">
+      <div class="hg-prose">
+        <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
+        <p class="m-lead">Generative AI is shifting software engineering from a practice built around scarce
+        implementation toward one built around abundant, low-cost code. The hard part stops being writing
+        code and becomes <span class="term">governing the conditions under which fast code can be
+        trusted</span>. This site serves a method for doing that — <span class="term">Model-Based Agentic
+        Software Engineering</span> (MAGE) — as six big ideas; the book carries the full treatment of every
+        one.</p>
+        <p class="m-lead"><a class="hero-cta" href="quick-start.html"><em>Quick start — install the skills
+        for Claude →</em></a></p>
+      </div>
+      <figure class="hg-fig"><svg viewBox="0 0 820 505" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An engineer briefs an orchestrator through models; sub-agents work behind the glass">
   <defs>
     <g id="hero-scene-b-bot">
       <line x1="44" y1="10" x2="44" y2="2" stroke="#1c1917" stroke-width="1.6" stroke-linecap="round"/>
@@ -838,434 +473,104 @@ function fitFig(f){
   <g stroke="#57534e" stroke-width="1" stroke-dasharray="2 3">
     <line x1="718" y1="163" x2="752" y2="152"/><line x1="719" y1="217" x2="754" y2="226"/><line x1="721" y1="271" x2="756" y2="300"/>
   </g>
-</svg><span class="hd-cap"><b>The concrete view.</b> An engineer briefs an
-        orchestrator through models; the orchestrator dispatches sub-agents that work behind the glass. The
-        same method as one scene.</span></div>
-      </div>
-    </figure>
-  </div>
-
-  <hr class="sep" />
-
-  <!-- ===================== THE PAIR OF THESES (matched card set) =====================
-       The two theses stay a grouped, adjacent pair ("Thesis I of II" / "Thesis II of II") but are now the
-       same <details class="card"> primitive as every other card. Two-up on wide, stacked ≤900px; each carries
-       a unique id (card-thesis-modeling / card-thesis-alignment) and each peek surfaces its figure large. -->
-  <div class="theses-cards">
-    <details class="card accent" id="card-thesis-modeling" open>
-      <summary>
-        <span class="cd-kicker">Thesis I of II</span>
-        <span class="cd-title accent-t">The Modeling Thesis</span>
-        <span class="cd-frame">Documentation, taken to its limit, is a typed model.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-        <span class="cd-thumb" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560"
-     role="group" aria-labelledby="dhTitle dhDesc"
-     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="modeling-th-dhTitle">The apex of the documentation hierarchy is a typed model that binds docs, code, and tests</title>
-  <desc id="modeling-th-dhDesc">A two-panel contrast. Left panel, typical agentic methods: three
-    boxes — docs, code, and tests — stand as separate islands with no glue between them.
-    Nothing binds them, so they drift apart and there are no guardrails; a red marker notes
-    the missing binding. Right panel, the MAGE move: a single typed model sits at the apex
-    and binds the same three — docs, code, and tests — with checked edges. The model is the one
-    description the machine can check the others against, so a drift check fails the build when
-    any of the three disagrees with it. The lesson: lift documentation to its apex, a typed
-    model, and the three that used to drift become one checkable whole.</desc>
-
-  <defs>
-    <marker id="modeling-th-dhArrow" markerWidth="10" markerHeight="10" refX="8" refY="5"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,1 L9,5 L0,9 Z" fill="#1a4a7a"/>
-    </marker>
-  </defs>
-
-  <!-- panel divider -->
-  <line x1="480" y1="70" x2="480" y2="530" stroke="#cdd6df" stroke-width="1.5" stroke-dasharray="6 6"/>
-
-  <!-- ================= LEFT PANEL — typical agentic methods ================= -->
-  <text x="240" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">Typical agentic methods</text>
-  <text x="240" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#8a2f2f">three islands, no glue</text>
-
-  <!-- three unconnected islands -->
-  <g stroke="#33383d" stroke-width="2" fill="#f4f2ee">
-    <rect x="70"  y="150" width="150" height="66" rx="8"/>
-    <rect x="260" y="150" width="150" height="66" rx="8"/>
-    <rect x="165" y="290" width="150" height="66" rx="8"/>
-  </g>
-  <g font-size="22" fill="#33383d" text-anchor="middle">
-    <text x="145" y="190">docs</text>
-    <text x="335" y="190">code</text>
-    <text x="240" y="330">tests</text>
-  </g>
-
-  <!-- broken tethers between the islands: dashed stubs that do not connect -->
-  <g stroke="#8a2f2f" stroke-width="2.5" stroke-dasharray="5 7" stroke-linecap="round">
-    <line x1="222" y1="183" x2="258" y2="183"/>
-    <line x1="205" y1="220" x2="250" y2="286"/>
-    <line x1="332" y1="220" x2="285" y2="286"/>
-  </g>
-
-  <!-- drift indicator -->
-  <text x="240" y="418" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">nothing binds them → they drift</text>
-  <text x="240" y="446" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">no guardrails</text>
-
-  <!-- ================= RIGHT PANEL — the MAGE move ================= -->
-  <text x="720" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">The MAGE move</text>
-  <text x="720" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">a typed model at the apex</text>
-
-  <!-- the apex: the typed model (box widened so the italic caption fits inside its rect) -->
-  <rect x="560" y="100" width="320" height="72" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="3"/>
-  <text x="720" y="132" text-anchor="middle" font-size="23" font-weight="700" fill="#1a4a7a">typed model</text>
-  <text x="720" y="158" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">binds intent to implementation</text>
-
-  <!-- the three bound below -->
-  <g stroke="#1a4a7a" stroke-width="2" fill="#ffffff">
-    <rect x="565" y="330" width="130" height="60" rx="8"/>
-    <rect x="745" y="330" width="130" height="60" rx="8"/>
-    <rect x="655" y="440" width="130" height="60" rx="8"/>
-  </g>
-  <g font-size="21" fill="#33383d" text-anchor="middle">
-    <text x="630" y="367">docs</text>
-    <text x="810" y="367">code</text>
-    <text x="720" y="477">tests</text>
-  </g>
-
-  <!-- binding edges from the apex to each of the three (checked) -->
-  <g stroke="#1a4a7a" stroke-width="2.5" fill="none">
-    <line x1="660" y1="172" x2="630" y2="326" marker-end="url(#modeling-th-dhArrow)"/>
-    <line x1="780" y1="172" x2="810" y2="326" marker-end="url(#modeling-th-dhArrow)"/>
-    <line x1="720" y1="172" x2="720" y2="436" marker-end="url(#modeling-th-dhArrow)"/>
-  </g>
-
-  <!-- green check on each binding: the drift check that keeps them in sync -->
-  <g>
-    <circle cx="642" cy="250" r="15" fill="#2e7d32"/>
-    <path d="M635,250 L640,256 L650,244" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="798" cy="250" r="15" fill="#2e7d32"/>
-    <path d="M791,250 L796,256 L806,244" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="737" cy="305" r="15" fill="#2e7d32"/>
-    <path d="M730,305 L735,311 L745,299" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-
-  <text x="720" y="533" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">checked: the map must match the territory</text>
-</svg></span>
-      </summary>
-      <div class="cd-body">
-        <figure class="cd-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560"
-     role="group" aria-labelledby="dhTitle dhDesc"
-     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="modeling-fig-dhTitle">The apex of the documentation hierarchy is a typed model that binds docs, code, and tests</title>
-  <desc id="modeling-fig-dhDesc">A two-panel contrast. Left panel, typical agentic methods: three
-    boxes — docs, code, and tests — stand as separate islands with no glue between them.
-    Nothing binds them, so they drift apart and there are no guardrails; a red marker notes
-    the missing binding. Right panel, the MAGE move: a single typed model sits at the apex
-    and binds the same three — docs, code, and tests — with checked edges. The model is the one
-    description the machine can check the others against, so a drift check fails the build when
-    any of the three disagrees with it. The lesson: lift documentation to its apex, a typed
-    model, and the three that used to drift become one checkable whole.</desc>
-
-  <defs>
-    <marker id="modeling-fig-dhArrow" markerWidth="10" markerHeight="10" refX="8" refY="5"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,1 L9,5 L0,9 Z" fill="#1a4a7a"/>
-    </marker>
-  </defs>
-
-  <!-- panel divider -->
-  <line x1="480" y1="70" x2="480" y2="530" stroke="#cdd6df" stroke-width="1.5" stroke-dasharray="6 6"/>
-
-  <!-- ================= LEFT PANEL — typical agentic methods ================= -->
-  <text x="240" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">Typical agentic methods</text>
-  <text x="240" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#8a2f2f">three islands, no glue</text>
-
-  <!-- three unconnected islands -->
-  <g stroke="#33383d" stroke-width="2" fill="#f4f2ee">
-    <rect x="70"  y="150" width="150" height="66" rx="8"/>
-    <rect x="260" y="150" width="150" height="66" rx="8"/>
-    <rect x="165" y="290" width="150" height="66" rx="8"/>
-  </g>
-  <g font-size="22" fill="#33383d" text-anchor="middle">
-    <text x="145" y="190">docs</text>
-    <text x="335" y="190">code</text>
-    <text x="240" y="330">tests</text>
-  </g>
-
-  <!-- broken tethers between the islands: dashed stubs that do not connect -->
-  <g stroke="#8a2f2f" stroke-width="2.5" stroke-dasharray="5 7" stroke-linecap="round">
-    <line x1="222" y1="183" x2="258" y2="183"/>
-    <line x1="205" y1="220" x2="250" y2="286"/>
-    <line x1="332" y1="220" x2="285" y2="286"/>
-  </g>
-
-  <!-- drift indicator -->
-  <text x="240" y="418" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">nothing binds them → they drift</text>
-  <text x="240" y="446" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">no guardrails</text>
-
-  <!-- ================= RIGHT PANEL — the MAGE move ================= -->
-  <text x="720" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">The MAGE move</text>
-  <text x="720" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">a typed model at the apex</text>
-
-  <!-- the apex: the typed model (box widened so the italic caption fits inside its rect) -->
-  <rect x="560" y="100" width="320" height="72" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="3"/>
-  <text x="720" y="132" text-anchor="middle" font-size="23" font-weight="700" fill="#1a4a7a">typed model</text>
-  <text x="720" y="158" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">binds intent to implementation</text>
-
-  <!-- the three bound below -->
-  <g stroke="#1a4a7a" stroke-width="2" fill="#ffffff">
-    <rect x="565" y="330" width="130" height="60" rx="8"/>
-    <rect x="745" y="330" width="130" height="60" rx="8"/>
-    <rect x="655" y="440" width="130" height="60" rx="8"/>
-  </g>
-  <g font-size="21" fill="#33383d" text-anchor="middle">
-    <text x="630" y="367">docs</text>
-    <text x="810" y="367">code</text>
-    <text x="720" y="477">tests</text>
-  </g>
-
-  <!-- binding edges from the apex to each of the three (checked) -->
-  <g stroke="#1a4a7a" stroke-width="2.5" fill="none">
-    <line x1="660" y1="172" x2="630" y2="326" marker-end="url(#modeling-fig-dhArrow)"/>
-    <line x1="780" y1="172" x2="810" y2="326" marker-end="url(#modeling-fig-dhArrow)"/>
-    <line x1="720" y1="172" x2="720" y2="436" marker-end="url(#modeling-fig-dhArrow)"/>
-  </g>
-
-  <!-- green check on each binding: the drift check that keeps them in sync -->
-  <g>
-    <circle cx="642" cy="250" r="15" fill="#2e7d32"/>
-    <path d="M635,250 L640,256 L650,244" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="798" cy="250" r="15" fill="#2e7d32"/>
-    <path d="M791,250 L796,256 L806,244" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="737" cy="305" r="15" fill="#2e7d32"/>
-    <path d="M730,305 L735,311 L745,299" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-
-  <text x="720" y="533" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">checked: the map must match the territory</text>
-</svg><figcaption>Documentation, at its limit, is a typed model — one an
-        agent reasons over without error and that a build-time drift check keeps honest.</figcaption></figure>
-        <p>Give agents good documentation and tests, then point them at it — the first move everyone finds on
-        their own. The step the training data won't suggest is the next one: <b>documentation has a hierarchy,
-        and its top is not prose. It is a typed model.</b> A context-bounded agent working on a
-        context-<em>exceeding</em> system needs a <b>typed, queryable, drift-checked model</b> to reason
-        through — the bridge between the agent and the codebase it cannot fit in its head. The catalogue's
-        <b>models-bridge</b> role is this bridge, made concrete.</p>
-        <a class="cd-more" href="book/1.2-loops-and-models.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card accent" id="card-thesis-alignment" open>
-      <summary>
-        <span class="cd-kicker">Thesis II of II</span>
-        <span class="cd-title accent-t">The Alignment Thesis</span>
-        <span class="cd-frame">A quality goal splits into a constraint that prevents and a sensor that catches.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-        <span class="cd-thumb" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440"
-     role="group" aria-labelledby="caTitle caDesc"
-     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="alignment-th-caTitle">Two forms a quality goal splits into: a constraint or a sensor</title>
-  <desc id="alignment-th-caDesc">A quality goal you want to hold splits into two moves — prevent the mistake, or
-    catch it — however you arrived at the goal, up front from the domain or in response to a failure.
-    On the left, a constraint: it makes the whole class of mistake impossible by scoping the action space,
-    like choosing a typed enumeration over free-form strings so an unlisted value cannot be represented,
-    like a firewall. On the right, a sensor: it lets the mistake happen but detects it and surfaces it
-    in time to stop the damage, like a test suite in CI or a smoke detector. The wall forbids the bug;
-    the sensor watches for it. The wall is cheaper to live behind than the sensor is to keep reading.</desc>
-
-  <defs>
-    <marker id="alignment-th-caArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
-    </marker>
-  </defs>
-
-  <!-- source: quality goal -->
-  <rect x="330" y="30" width="300" height="66" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-  <text x="480" y="63" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Quality goal</text>
-  <text x="480" y="88" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">prevent the mistake, or catch it</text>
-
-  <!-- fork edges -->
-  <g fill="none" stroke="#33383d" stroke-width="2" marker-end="url(#alignment-th-caArrow)">
-    <path d="M400,96 C360,128 300,132 250,158"/>
-    <path d="M560,96 C600,128 660,132 710,158"/>
-  </g>
-
-  <!-- ================= LEFT — constraint / wall ================= -->
-  <rect x="70" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Constraint — prevents</text>
-
-  <!-- wall icon: brick courses -->
-  <g stroke="#1a4a7a" stroke-width="2" fill="none">
-    <rect x="216" y="230" width="68" height="44"/>
-    <line x1="216" y1="252" x2="284" y2="252"/>
-    <line x1="250" y1="230" x2="250" y2="252"/>
-    <line x1="233" y1="252" x2="233" y2="274"/>
-    <line x1="267" y1="252" x2="267" y2="274"/>
-  </g>
-
-  <text x="250" y="312" text-anchor="middle" font-size="20" fill="#33383d">Makes the whole class</text>
-  <text x="250" y="337" text-anchor="middle" font-size="20" fill="#33383d">of mistake impossible.</text>
-  <text x="250" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">typed enum over strings · firewall</text>
-
-  <!-- ================= RIGHT — sensor / detector ================= -->
-  <rect x="530" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Sensor — detects</text>
-
-  <!-- sensor icon: a dish detecting a spark -->
-  <circle cx="710" cy="252" r="26" fill="none" stroke="#1a4a7a" stroke-width="2.5"/>
-  <circle cx="710" cy="252" r="6" fill="#1a4a7a"/>
-  <path d="M710,226 A26,26 0 0,1 736,252" fill="none" stroke="#8a2f2f" stroke-width="3"/>
-
-  <text x="710" y="312" text-anchor="middle" font-size="20" fill="#33383d">Lets the mistake happen,</text>
-  <text x="710" y="337" text-anchor="middle" font-size="20" fill="#33383d">detects it before it ships.</text>
-  <text x="710" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">test suite in CI · smoke detector</text>
-</svg></span>
-      </summary>
-      <div class="cd-body">
-        <figure class="cd-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440"
-     role="group" aria-labelledby="caTitle caDesc"
-     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="alignment-fig-caTitle">Two forms a quality goal splits into: a constraint or a sensor</title>
-  <desc id="alignment-fig-caDesc">A quality goal you want to hold splits into two moves — prevent the mistake, or
-    catch it — however you arrived at the goal, up front from the domain or in response to a failure.
-    On the left, a constraint: it makes the whole class of mistake impossible by scoping the action space,
-    like choosing a typed enumeration over free-form strings so an unlisted value cannot be represented,
-    like a firewall. On the right, a sensor: it lets the mistake happen but detects it and surfaces it
-    in time to stop the damage, like a test suite in CI or a smoke detector. The wall forbids the bug;
-    the sensor watches for it. The wall is cheaper to live behind than the sensor is to keep reading.</desc>
-
-  <defs>
-    <marker id="alignment-fig-caArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
-    </marker>
-  </defs>
-
-  <!-- source: quality goal -->
-  <rect x="330" y="30" width="300" height="66" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-  <text x="480" y="63" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Quality goal</text>
-  <text x="480" y="88" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">prevent the mistake, or catch it</text>
-
-  <!-- fork edges -->
-  <g fill="none" stroke="#33383d" stroke-width="2" marker-end="url(#alignment-fig-caArrow)">
-    <path d="M400,96 C360,128 300,132 250,158"/>
-    <path d="M560,96 C600,128 660,132 710,158"/>
-  </g>
-
-  <!-- ================= LEFT — constraint / wall ================= -->
-  <rect x="70" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Constraint — prevents</text>
-
-  <!-- wall icon: brick courses -->
-  <g stroke="#1a4a7a" stroke-width="2" fill="none">
-    <rect x="216" y="230" width="68" height="44"/>
-    <line x1="216" y1="252" x2="284" y2="252"/>
-    <line x1="250" y1="230" x2="250" y2="252"/>
-    <line x1="233" y1="252" x2="233" y2="274"/>
-    <line x1="267" y1="252" x2="267" y2="274"/>
-  </g>
-
-  <text x="250" y="312" text-anchor="middle" font-size="20" fill="#33383d">Makes the whole class</text>
-  <text x="250" y="337" text-anchor="middle" font-size="20" fill="#33383d">of mistake impossible.</text>
-  <text x="250" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">typed enum over strings · firewall</text>
-
-  <!-- ================= RIGHT — sensor / detector ================= -->
-  <rect x="530" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Sensor — detects</text>
-
-  <!-- sensor icon: a dish detecting a spark -->
-  <circle cx="710" cy="252" r="26" fill="none" stroke="#1a4a7a" stroke-width="2.5"/>
-  <circle cx="710" cy="252" r="6" fill="#1a4a7a"/>
-  <path d="M710,226 A26,26 0 0,1 736,252" fill="none" stroke="#8a2f2f" stroke-width="3"/>
-
-  <text x="710" y="312" text-anchor="middle" font-size="20" fill="#33383d">Lets the mistake happen,</text>
-  <text x="710" y="337" text-anchor="middle" font-size="20" fill="#33383d">detects it before it ships.</text>
-  <text x="710" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">test suite in CI · smoke detector</text>
-</svg><figcaption>A quality goal splits into two moves: a constraint that
-        prevents the error, and a sensor that catches it.</figcaption></figure>
-        <p>A mechanism the environment enforces keeps output aligned with intent, and it takes one of two
-        forms: <b>prevent</b> the error, or <b>catch</b> it. However you arrived at the goal — up front from
-        the domain or in response to a failure — a <b>constraint</b> scopes the action space so the whole class
-        is impossible, and a <b>sensor</b> lets the mistake happen but detects it in time, failing the loop
-        iteration so the agent runs again to fix it. A third set of goals splits into <b>neither</b> — no sensor
-        and no constraint reaches them, so they stay a human job; that <b>residual</b> is what the mechanisms
-        leave behind.</p>
-        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
-      </div>
-    </details>
-  </div>
-
-  <hr class="sep" />
-
-  <!-- ===================== THE FOUR DEFINITIONS (projected from book/data/definitions.json) =========
-       The core vocabulary the two theses ride on — model, agent, engineering, software engineering.
-       Each card is DERIVED from the definitions model (green box + per-aspect elaboration + traceability
-       to its owed Part-2 book home); a build renders them and a drift check keeps them in sync. -->
-  <div class="fam">
-    <div class="fam-h">The four definitions — the vocabulary the theses ride on</div>
-    <div class="masonry">
-    <details class="card def-card" id="def-model">
-  <summary><span class="cd-kicker">Definition</span><span class="cd-title">Model</span><span class="cd-frame">A useful approximation of a phenomenon (simplified, but good enough to predict)…</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><blockquote class="def-box">🔵 <b>Model</b> — A useful approximation of a phenomenon (simplified, but good enough to predict) — and, as this book uses it, a blueprint: a prescriptive description of a system to be built, which the built system is bound to realize.</blockquote><ul class="cd-list def-aspects"><li><b>The first sense — a useful approximation</b> A simplified description prized because it predicts, not because it is exact. All models are wrong, some are useful; fidelity trades against cost, and how much fidelity you need is in the eye of the application.</li><li><b>The second sense — a blueprint</b> A prescriptive description of the system you intend to build. A system built to a model may elaborate on it but may not diverge from it — which is what lets a model serve as an agent's marching orders.</li><li><b>Constraint, blueprint, and knowledge base at once</b> A model handed to an agent is at once a constraint (bounding what may be built), a blueprint (saying what to build), and — because the agent reasons over it — the knowledge base for the artifact under construction.</li></ul><p class="def-trace"><b>Book home:</b> <a href="book/2.1-the-agent-stack.html#idx-def-model">Part 2 — §2.1 The Agent Stack</a> · <a href="book/6.2-glossary.html">lexicon</a> · projected from the definitions model.</p></div>
-</details>
-  <details class="card def-card" id="def-agent">
-  <summary><span class="cd-kicker">Definition</span><span class="cd-title">Agent</span><span class="cd-frame">A controllable intelligence capable of independent reasoning over a knowledge base…</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><blockquote class="def-box">🔵 <b>Agent</b> — A controllable intelligence capable of independent reasoning over a knowledge base.</blockquote><ul class="cd-list def-aspects"><li><b>On "intelligence."</b> Given a set of constraints and a goal, it can devise a means of satisfying the goal without violating the constraints — a raven dropping pebbles to raise the water it cannot otherwise reach.</li><li><b>On "controllable" (not controlled).</b> You can change its environment and the knowledge available to it and it does different things, generally following orders. Controllable means probabilistic guarantees; controlled means perfect ones. That one adjective is why governance is a major part of this book — if agents were controlled, we would not need governance at all.</li><li><b>On "independent reasoning."</b> It genuinely reasons in response to a query — not merely retrieving or pattern-matching stored answers.</li><li><b>On "over a knowledge base."</b> The thing it reasons over. For this book, the models are that knowledge base — which is what ties the agent definition to the model definition.</li></ul><p class="def-trace"><b>Book home:</b> <a href="book/2.1-the-agent-stack.html#idx-def-agent">Part 2 — §2.1 The Agent Stack</a> · <a href="book/6.2-glossary.html">lexicon</a> · projected from the definitions model.</p></div>
-</details>
-  <details class="card def-card" id="def-engineering">
-  <summary><span class="cd-kicker">Definition</span><span class="cd-title">Engineering</span><span class="cd-frame">The discipline of developing operable technological artifacts to solve problems, and of analytically identifying and assessing the competing means to those solutions, each with distinct trade-offs…</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><blockquote class="def-box">🔵 <b>Engineering</b> — The discipline of developing operable technological artifacts to solve problems, and of analytically identifying and assessing the competing means to those solutions, each with distinct trade-offs.</blockquote><ul class="cd-list def-aspects"><li><b>On "develops operable artifacts."</b> Engineering produces something that works — a technological artifact, with human operators, that addresses a real problem.</li><li><b>On "analytical assessment of competing means."</b> This is what separates the engineer from the technician: if you cannot articulate the trade-offs, you are not engineering. An engineer weighs competing architectures and designs against desired properties.</li><li><b>On "predictive."</b> An engineer can model and predict the outcomes of the decisions they are about to make — from the architecture and design they propose — prior to building. Prediction-before-construction is the engineering move.</li></ul><p class="def-trace"><b>Book home:</b> <a href="book/2.1-the-agent-stack.html#idx-def-engineering">Part 2 — §2.1 The Agent Stack</a> · <a href="book/6.2-glossary.html">lexicon</a> · projected from the definitions model.</p></div>
-</details>
-  <details class="card def-card" id="def-software-engineering">
-  <summary><span class="cd-kicker">Definition</span><span class="cd-title">Software engineering</span><span class="cd-frame">Software development produces a functioning artifact…</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><blockquote class="def-box">🔵 <b>Software engineering</b> — Software development produces a functioning artifact. Software engineering predictively selects a software artifact according to its desired properties.</blockquote><ul class="cd-list def-aspects"><li><b>Development vs. engineering.</b> Development asks "does it function and meet requirements?" Engineering asks "of the artifacts that would function, which one should we build, given the properties we want?" — and answers before building it.</li><li><b>Why the book is about software engineering.</b> Prediction-before-construction, applied to software: choosing the artifact whose properties best serve the goal, not merely one that runs.</li></ul><p class="def-trace"><b>Book home:</b> <a href="book/2.1-the-agent-stack.html#idx-def-software-engineering">Part 2 — §2.1 The Agent Stack</a> · <a href="book/6.2-glossary.html">lexicon</a> · projected from the definitions model.</p></div>
-</details>
+</svg><figcaption class="m-cap"><b>The concrete view.</b> An engineer briefs an
+      orchestrator through models; the orchestrator dispatches sub-agents that work behind the glass.</figcaption></figure>
     </div>
   </div>
 
-  <hr class="sep" />
+  <div class="big-ideas">
+  <div class="idea-hero" id="bi-churn">
+  <figure class="ih-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title>The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
+  <desc>A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+  <defs>
+    <marker id="bi-churn-mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#b23b3b"/>
+    </marker>
+    <marker id="bi-churn-mg-ah-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#1f7a4d"/>
+    </marker>
+    <marker id="bi-churn-mg-ah-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2f5169"/>
+    </marker>
+  </defs>
 
-  <!-- ===================== FAMILY BLOCKS OF CARDS =====================
-       Everything below groups into named families; within each family the cards pack into a CSS multi-column
-       masonry (>= 3 columns wide, 1 on a phone — the check-responsive gate). Every card is the same clickable
-       <details> primitive with a unique id, a peek, and a link-through. -->
+  <rect x="0" y="0" width="1080" height="512" fill="#ffffff"/>
 
-  <div class="fam">
-    <div class="fam-h">Two schools, and the midway between them</div>
-    <div class="masonry">
-    <details class="card" id="card-school-vibe-coding">
-  <summary><span class="cd-kicker">Between two schools</span><span class="cd-title">Vibe coding</span><span class="cd-frame">all velocity — no durable guardrails</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>Prompt an agent, accept what looks right, iterate by feel. Fast and fluid, but quality rests on the model and your eye. At scale the same failures keep recurring, and human review becomes the bottleneck.</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://x.com/karpathy/status/1886192184808149383">Karpathy — coined “vibe coding”</a></li><li><a href="https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04">Steve Yegge’s Gas Town</a></li></ul></div><span class="pole">all velocity — no durable guardrails</span><a class="cd-more" href="book/1.1-the-printer.html">read the full treatment →</a></div>
-</details>
-  <details class="card mid" id="card-school-governance-centric">
-  <summary><span class="cd-kicker">The midway</span><span class="cd-title">Governance-centric</span><span class="cd-frame">velocity + guardrails grown from failure</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>The midway. Velocity <b>exposes</b> failures; you <b>convert</b> each recurring one into a guardrail: a type, a lint, a gate. The guardrails grow out of real failures, so code stays fast <i>and</i> stays trustworthy.</p><span class="pole">velocity + guardrails grown from failure</span><a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a></div>
-</details>
-  <details class="card" id="card-school-oversight-centric">
-  <summary><span class="cd-kicker">Between two schools</span><span class="cd-title">Oversight-centric</span><span class="cd-frame">all oversight — everything checked</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>Check <i>everything</i> before you trust it, whether a human reviews every change or a formal specification is verified against. Rigorous and safe, but checking becomes the bottleneck: all of it must be vetted, and neither humans nor specs anticipate the failures that only appear at velocity. (Spec-driven development is this, with the spec as the checker.)</p><div class="srefs"><span class="lbl">Examples:</span><ul><li><a href="https://dl.acm.org/doi/full/10.1145/3773295">Meyer, CACM — “From Probable to Provable”</a></li><li><a href="https://homes.cs.washington.edu/~oskin/vibeos/vibetools.html">vibe-OS / vibe-tools (formal tooling for AI)</a></li></ul></div><span class="pole">all oversight — everything checked</span><a class="cd-more" href="book/1.1-the-printer.html">read the full treatment →</a></div>
-</details>
-    <details class="card" id="card-velocity-oversight-axis">
-      <summary>
-        <span class="cd-kicker">The spectrum</span>
-        <span class="cd-title">← velocity &nbsp;•&nbsp; oversight →</span>
-        <span class="cd-frame">Where each school sits on the one axis that orders them.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>The two poles trade off the same way: <b>all velocity</b> ships fast but leaves quality implicit;
-        <b>all oversight</b> checks everything but makes checking the bottleneck. The <span class="term">midway</span>
-        keeps velocity <i>and</i> grows guardrails from the failures velocity surfaces.</p>
-        <a class="cd-more" href="book/1.1-the-printer.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card wide accent" id="card-midway-discipline">
-      <summary>
-        <span class="cd-kicker">The midway is a discipline</span>
-        <span class="cd-title">Governance-centric — the synthesis</span>
-        <span class="cd-frame">Three process models for agentic engineering; this site takes the third.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-        <span class="cd-thumb" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
+  <!-- Title block -->
+
+  <!-- Churn box: a short reject-branch, parked right above the fleet -->
+  <rect x="44" y="104" width="228" height="98" rx="12" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
+  <text x="158" y="140" text-anchor="middle" font-size="23" font-weight="700" fill="#b23b3b">Churn</text>
+  <text x="158" y="165" text-anchor="middle" font-size="13" fill="#b23b3b">work outgrows the window;</text>
+  <text x="158" y="185" text-anchor="middle" font-size="13" fill="#b23b3b">drift, confidently-wrong</text>
+
+  <!-- ================= BAD PATH: a short fray, straight up out of the fleet to Churn ================= -->
+  <!-- the reject-branch: ORIGINATES on the fleet top edge (y=293), frays up, TERMINATES on Churn's bottom edge (y=202) -->
+  <path d="M160 293 L144 280 L176 266 L142 250 L174 236"
+        fill="none" stroke="#b23b3b" stroke-width="3" stroke-linejoin="round" opacity="0.95"/>
+  <path d="M174 236 L150 224 L166 214 L158 204"
+        fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"
+        marker-end="url(#bi-churn-mg-ah-red)" opacity="0.9"/>
+  <text x="238" y="258" text-anchor="middle" font-size="14.5" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
+
+  <!-- ============ THE FLEET: single origin, centered on the spine (y=344) ============ -->
+  <rect x="46" y="293" width="196" height="102" rx="12" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="144" y="333" text-anchor="middle" font-size="20" font-weight="700" fill="#2f5169">The agent fleet</text>
+  <text x="144" y="359" text-anchor="middle" font-size="14.5" fill="#2f5169">fast · cheap</text>
+  <text x="144" y="380" text-anchor="middle" font-size="13" fill="#57534e">one input, two fates</text>
+
+  <!-- ============ SPINE: fleet -> governed env -> trustworthy (all straight, y=344) ============ -->
+  <!-- tail on the fleet's right edge (x=242), head on the container's left edge (x=308) -->
+  <path d="M242 344 L306 344" fill="none" stroke="#2f5169" stroke-width="3" marker-end="url(#bi-churn-mg-ah-navy)"/>
+
+  <!-- The governed environment: the HERO container (center y=344) -->
+  <rect x="308" y="216" width="452" height="256" rx="16" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <path d="M308 232 a16 16 0 0 1 16 -16 h420 a16 16 0 0 1 16 16 v22 h-452 z" fill="#1f7a4d"/>
+  <text x="534" y="245" text-anchor="middle" font-size="17" font-weight="700" fill="#ffffff" letter-spacing="0.3">The governed environment</text>
+
+  <rect x="334" y="278" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
+  <text x="534" y="311" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">Modeling Thesis</text>
+  <text x="534" y="335" text-anchor="middle" font-size="13.5" fill="#2f5169">a typed model the fleet reasons through</text>
+
+  <rect x="334" y="370" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
+  <text x="534" y="403" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">Alignment Thesis</text>
+  <text x="534" y="427" text-anchor="middle" font-size="13.5" fill="#2f5169">keeps output aligned with intent</text>
+
+  <!-- straight output arrow, rightward on the spine: tail on container edge (x=760), head on Trustworthy edge (x=846) -->
+  <path d="M760 344 L844 344" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#bi-churn-mg-ah-green)"/>
+
+  <!-- Trustworthy software: the reward, on the spine — three earned attributes -->
+  <rect x="846" y="274" width="204" height="140" rx="12" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="948" y="309" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">Trustworthy</text>
+  <text x="948" y="331" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">software</text>
+  <text x="948" y="358" text-anchor="middle" font-size="13.5" fill="#155c38">high quality · auditable</text>
+  <text x="948" y="378" text-anchor="middle" font-size="13.5" font-style="italic" fill="#1f7a4d">at velocity</text>
+  <!-- auditability motif: a small model-traceability tag, centered in the box -->
+  <rect x="876" y="390" width="144" height="18" rx="9" fill="#ffffff" stroke="#1f7a4d" stroke-width="1.2"/>
+  <path d="M888 399 l3 3 l5.5 -6.5" fill="none" stroke="#1f7a4d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="953" y="403.5" text-anchor="middle" font-size="10.5" fill="#155c38" letter-spacing="0.2">traces to the models</text>
+
+  <!-- takeaway caption -->
+  <text x="540" y="497" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
+</svg></figure>
+  <div class="ih-words">
+    <p class="s-kick">Big idea 1 · the problem</p>
+    <h2 class="s-title">Churn is the scaling limit</h2>
+    <p class="s-claim">Left ungoverned, a cheap agent fleet drifts as its work outgrows the context window. Governed, it converges on trustworthy software at velocity.</p>
+    <div class="s-more-text" id="more-bi-churn" data-more>The scaling limit is not the model's raw ability but churn: confidently-wrong work, faster every week. Two theses — a Modeling Thesis and an Alignment Thesis — are what hold it off, and this page is built around them.</div>
+    <a class="s-read" href="book/1.1-the-printer.html">Read in the book →</a>
+  </div>
+</div>
+
+  <hr class="i-sep" />
+
+  <div class="slot figright" id="bi-governance-centric">
+  <figure class="s-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
      role="group" aria-labelledby="omTitle omDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="midway-th-omTitle">Three process models for agentic software engineering</title>
-  <desc id="midway-th-omDesc">Three panels arranged as a triangle. The two poles sit on top:
+  <title id="bi-governance-centric-omTitle">Three process models for agentic software engineering</title>
+  <desc id="bi-governance-centric-omDesc">Three panels arranged as a triangle. The two poles sit on top:
     velocity-centric at top-left — a human sets a goal, then a ring of role-labeled agents —
     planner, developer, tester, reviewer, security, deploy — passes work around a cycle, with
     insufficient quality control; and oversight-centric at top-right — a human and a single
@@ -1275,7 +580,7 @@ function fitFig(f){
     obligations become controls before the agent works. The book takes the third stance.</desc>
 
   <defs>
-    <marker id="midway-th-omArrow" markerWidth="8" markerHeight="8" refX="6.5" refY="3"
+    <marker id="bi-governance-centric-omArrow" markerWidth="8" markerHeight="8" refX="6.5" refY="3"
             orient="auto" markerUnits="userSpaceOnUse">
       <path d="M0,0 L7,3 L0,6 Z" fill="#33383d"/>
     </marker>
@@ -1302,7 +607,7 @@ function fitFig(f){
     <text x="179" y="256">Deploy</text>
 
     <!-- cycle arrows (clockwise) -->
-    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#midway-th-omArrow)">
+    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#bi-governance-centric-omArrow)">
       <path d="M345,202 C383,214 403,232 413,246"/>
       <path d="M431,276 C437,296 437,306 431,322"/>
       <path d="M413,350 C403,366 383,384 347,394"/>
@@ -1320,7 +625,7 @@ function fitFig(f){
     <text x="1017" y="258" text-anchor="middle">Agent:</text>
     <text x="1017" y="290" text-anchor="middle" font-size="22" fill="#5f5f5f">bounded work</text>
 
-    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#midway-th-omArrow)">
+    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#bi-governance-centric-omArrow)">
       <path d="M811,240 C871,206 899,206 959,240"/>
       <path d="M959,282 C899,316 871,316 811,282"/>
     </g>
@@ -1341,574 +646,505 @@ function fitFig(f){
     <rect x="584" y="726" width="140" height="46" rx="4" fill="none" stroke="#33383d" stroke-width="1.4"/>
     <text x="654" y="756" text-anchor="middle" font-size="24">Agent</text>
 
-    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#midway-th-omArrow)">
-      <path d="M452,686 L452,738 L512,738"/>
-    </g>
-    <text x="480" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#5f5f5f">policies</text>
-  </g>
-  <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#1a4a7a">Known policies become controls</text>
-</svg></span>
-      </summary>
-      <div class="cd-body">
-        <div class="midway-fp">
-          <figure class="cd-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
-     role="group" aria-labelledby="omTitle omDesc"
-     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="midway-fig-omTitle">Three process models for agentic software engineering</title>
-  <desc id="midway-fig-omDesc">Three panels arranged as a triangle. The two poles sit on top:
-    velocity-centric at top-left — a human sets a goal, then a ring of role-labeled agents —
-    planner, developer, tester, reviewer, security, deploy — passes work around a cycle, with
-    insufficient quality control; and oversight-centric at top-right — a human and a single
-    agent exchange a prompt and an output in a round trip, so human attention gates every step
-    of progress. Governance-centric sits centered beneath them as the synthesis: a human hands
-    policies into a governed engineering environment that contains the agent, so known
-    obligations become controls before the agent works. The book takes the third stance.</desc>
-
-  <defs>
-    <marker id="midway-fig-omArrow" markerWidth="8" markerHeight="8" refX="6.5" refY="3"
-            orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L7,3 L0,6 Z" fill="#33383d"/>
-    </marker>
-  </defs>
-
-  <!-- faint synthesis connectors: from the two top corners down to the governance panel -->
-  <g fill="none" stroke="#c9c6bf" stroke-width="2" stroke-dasharray="5,7">
-    <path d="M295,470 C360,545 470,560 560,590"/>
-    <path d="M885,470 C820,545 710,560 620,590"/>
-  </g>
-
-  <!-- ============ (a) Velocity-centric: role ring (top-left) ============ -->
-  <text x="295" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1a1a1a">(a) Velocity-centric</text>
-  <g font-size="28" fill="#33383d" text-anchor="middle">
-    <text x="295" y="112" font-weight="700">Human</text>
-    <text x="295" y="144" font-size="22" font-style="italic" fill="#5f5f5f">goal ↓</text>
-
-    <!-- six roles around a cycle -->
-    <text x="295" y="196">Planner</text>
-    <text x="411" y="256">Developer</text>
-    <text x="411" y="336">Tester</text>
-    <text x="295" y="396">Reviewer</text>
-    <text x="179" y="336">Security</text>
-    <text x="179" y="256">Deploy</text>
-
-    <!-- cycle arrows (clockwise) -->
-    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#midway-fig-omArrow)">
-      <path d="M345,202 C383,214 403,232 413,246"/>
-      <path d="M431,276 C437,296 437,306 431,322"/>
-      <path d="M413,350 C403,366 383,384 347,394"/>
-      <path d="M243,398 C207,388 187,370 177,353"/>
-      <path d="M161,322 C155,306 155,290 161,276"/>
-      <path d="M177,246 C187,232 207,214 245,202"/>
-    </g>
-  </g>
-  <text x="295" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#8a2f2f">Insufficient quality control</text>
-
-  <!-- ============ (b) Oversight-centric: round trip (top-right) ============ -->
-  <text x="885" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1a1a1a">(b) Oversight-centric</text>
-  <g font-size="28" fill="#33383d">
-    <text x="753" y="266" text-anchor="middle" font-weight="700">Human</text>
-    <text x="1017" y="258" text-anchor="middle">Agent:</text>
-    <text x="1017" y="290" text-anchor="middle" font-size="22" fill="#5f5f5f">bounded work</text>
-
-    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#midway-fig-omArrow)">
-      <path d="M811,240 C871,206 899,206 959,240"/>
-      <path d="M959,282 C899,316 871,316 811,282"/>
-    </g>
-    <text x="885" y="196" text-anchor="middle" font-size="22" font-style="italic" fill="#5f5f5f">prompt</text>
-    <text x="885" y="348" text-anchor="middle" font-size="22" font-style="italic" fill="#5f5f5f">output</text>
-  </g>
-  <text x="885" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#5f5f5f">Human attention gates progress</text>
-
-  <!-- ============ (c) Governance-centric: env box (bottom-center, the synthesis) ============ -->
-  <text x="590" y="606" text-anchor="middle" font-size="38" font-weight="700" fill="#1a1a1a">(c) Governance-centric</text>
-  <g font-size="28" fill="#33383d">
-    <text x="452" y="674" text-anchor="middle" font-weight="700">Human</text>
-
-    <rect x="518" y="638" width="272" height="150" rx="8" fill="none" stroke="#1a4a7a" stroke-width="2"/>
-    <text x="654" y="670" text-anchor="middle" font-size="24" fill="#1a4a7a">Governed</text>
-    <text x="654" y="696" text-anchor="middle" font-size="24" fill="#1a4a7a">engineering</text>
-    <text x="654" y="720" text-anchor="middle" font-size="24" fill="#1a4a7a">environment</text>
-    <rect x="584" y="726" width="140" height="46" rx="4" fill="none" stroke="#33383d" stroke-width="1.4"/>
-    <text x="654" y="756" text-anchor="middle" font-size="24">Agent</text>
-
-    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#midway-fig-omArrow)">
+    <g fill="none" stroke="#33383d" stroke-width="1.5" marker-end="url(#bi-governance-centric-omArrow)">
       <path d="M452,686 L452,738 L512,738"/>
     </g>
     <text x="480" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#5f5f5f">policies</text>
   </g>
   <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#1a4a7a">Known policies become controls</text>
 </svg></figure>
-          <div class="midway-body">
-          <p>Three process models for agentic engineering. The two poles: velocity-centric agents hand work
-          around a ring of job titles with the quality mechanism left implicit; oversight-centric keeps a human
-          next to each bounded piece — honest, but the human's attention does not scale with the fleet.
-          <span class="term">Governance-centric</span> is the synthesis: the agents sit inside a containing
-          environment of enforced mechanisms the human sets up in advance. This site takes the third.</p>
-          <p>That midway means <span class="term">establishing and maintaining a governed engineering
-          environment</span> — working in two directions at once: <b>up front</b> you specify what you can (the
-          architecture that makes a class of error impossible, the model the fleet reasons through, the templates
-          that put a change on rails); <b>in flight</b> you let velocity surface the failures you couldn't foresee
-          and convert each recurring one into a durable guardrail.</p>
-          <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
-          </div>
-        </div>
-      </div>
-    </details>
-    </div>
+  <div class="s-words">
+    <p class="s-kick">Big idea 2 · the stance</p>
+    <h2 class="s-title">Governance-centric — the midway between two schools</h2>
+    <p class="s-claim">Between all-velocity and all-oversight sits the midway: put the agents inside a containing environment of enforced mechanisms.</p>
+    <div class="s-more-text" id="more-bi-governance-centric" data-more>Velocity-centric hands work around a ring of job titles, quality left implicit; oversight-centric parks a human beside each piece — honest, but attention does not scale with the fleet. The synthesis specifies what it can up front and converts what velocity surfaces in flight.</div>
+    <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a>
+  </div>
+</div>
+
+  <hr class="i-sep" />
+
+  <div class="pair">
+<div class="p-cell" id="card-thesis-modeling">
+  <figure class="s-fig" id="bi-modeling-thesis"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560"
+     role="group" aria-labelledby="dhTitle dhDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="bi-modeling-thesis-dhTitle">The apex of the documentation hierarchy is a typed model that binds docs, code, and tests</title>
+  <desc id="bi-modeling-thesis-dhDesc">A two-panel contrast. Left panel, typical agentic methods: three
+    boxes — docs, code, and tests — stand as separate islands with no glue between them.
+    Nothing binds them, so they drift apart and there are no guardrails; a red marker notes
+    the missing binding. Right panel, the MAGE move: a single typed model sits at the apex
+    and binds the same three — docs, code, and tests — with checked edges. The model is the one
+    description the machine can check the others against, so a drift check fails the build when
+    any of the three disagrees with it. The lesson: lift documentation to its apex, a typed
+    model, and the three that used to drift become one checkable whole.</desc>
+
+  <defs>
+    <marker id="bi-modeling-thesis-dhArrow" markerWidth="10" markerHeight="10" refX="8" refY="5"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#1a4a7a"/>
+    </marker>
+  </defs>
+
+  <!-- panel divider -->
+  <line x1="480" y1="70" x2="480" y2="530" stroke="#cdd6df" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <!-- ================= LEFT PANEL — typical agentic methods ================= -->
+  <text x="240" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">Typical agentic methods</text>
+  <text x="240" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#8a2f2f">three islands, no glue</text>
+
+  <!-- three unconnected islands -->
+  <g stroke="#33383d" stroke-width="2" fill="#f4f2ee">
+    <rect x="70"  y="150" width="150" height="66" rx="8"/>
+    <rect x="260" y="150" width="150" height="66" rx="8"/>
+    <rect x="165" y="290" width="150" height="66" rx="8"/>
+  </g>
+  <g font-size="22" fill="#33383d" text-anchor="middle">
+    <text x="145" y="190">docs</text>
+    <text x="335" y="190">code</text>
+    <text x="240" y="330">tests</text>
+  </g>
+
+  <!-- broken tethers between the islands: dashed stubs that do not connect -->
+  <g stroke="#8a2f2f" stroke-width="2.5" stroke-dasharray="5 7" stroke-linecap="round">
+    <line x1="222" y1="183" x2="258" y2="183"/>
+    <line x1="205" y1="220" x2="250" y2="286"/>
+    <line x1="332" y1="220" x2="285" y2="286"/>
+  </g>
+
+  <!-- drift indicator -->
+  <text x="240" y="418" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">nothing binds them → they drift</text>
+  <text x="240" y="446" text-anchor="middle" font-size="21" font-style="italic" fill="#8a2f2f">no guardrails</text>
+
+  <!-- ================= RIGHT PANEL — the MAGE move ================= -->
+  <text x="720" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1a1a1a">The MAGE move</text>
+  <text x="720" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">a typed model at the apex</text>
+
+  <!-- the apex: the typed model (box widened so the italic caption fits inside its rect) -->
+  <rect x="560" y="100" width="320" height="72" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="3"/>
+  <text x="720" y="132" text-anchor="middle" font-size="23" font-weight="700" fill="#1a4a7a">typed model</text>
+  <text x="720" y="158" text-anchor="middle" font-size="18" font-style="italic" fill="#5f5f5f">binds intent to implementation</text>
+
+  <!-- the three bound below -->
+  <g stroke="#1a4a7a" stroke-width="2" fill="#ffffff">
+    <rect x="565" y="330" width="130" height="60" rx="8"/>
+    <rect x="745" y="330" width="130" height="60" rx="8"/>
+    <rect x="655" y="440" width="130" height="60" rx="8"/>
+  </g>
+  <g font-size="21" fill="#33383d" text-anchor="middle">
+    <text x="630" y="367">docs</text>
+    <text x="810" y="367">code</text>
+    <text x="720" y="477">tests</text>
+  </g>
+
+  <!-- binding edges from the apex to each of the three (checked) -->
+  <g stroke="#1a4a7a" stroke-width="2.5" fill="none">
+    <line x1="660" y1="172" x2="630" y2="326" marker-end="url(#bi-modeling-thesis-dhArrow)"/>
+    <line x1="780" y1="172" x2="810" y2="326" marker-end="url(#bi-modeling-thesis-dhArrow)"/>
+    <line x1="720" y1="172" x2="720" y2="436" marker-end="url(#bi-modeling-thesis-dhArrow)"/>
+  </g>
+
+  <!-- green check on each binding: the drift check that keeps them in sync -->
+  <g>
+    <circle cx="642" cy="250" r="15" fill="#2e7d32"/>
+    <path d="M635,250 L640,256 L650,244" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="798" cy="250" r="15" fill="#2e7d32"/>
+    <path d="M791,250 L796,256 L806,244" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="737" cy="305" r="15" fill="#2e7d32"/>
+    <path d="M730,305 L735,311 L745,299" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="720" y="533" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">checked: the map must match the territory</text>
+</svg></figure>
+  <p class="s-kick">Big idea 3 · Thesis 1</p>
+  <h2 class="s-title">Documentation, taken to its limit, is a typed model</h2>
+  <p class="s-claim">The apex of documentation is not prose — it is a typed model an agent reasons through without error.</p>
+  <div class="s-more-text" id="more-bi-modeling-thesis" data-more>A context-bounded agent working on a context-exceeding system needs a typed, queryable, drift-checked model to reason through — the bridge to the codebase it cannot fit in its head. The catalogue's models-bridge role is that bridge made concrete.</div>
+  <a class="s-read" href="book/1.2-loops-and-models.html">Read in the book →</a>
+</div>
+<div class="p-cell" id="card-thesis-alignment">
+  <figure class="s-fig" id="bi-alignment-thesis"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440"
+     role="group" aria-labelledby="caTitle caDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="bi-alignment-thesis-caTitle">Two forms a quality goal splits into: a constraint or a sensor</title>
+  <desc id="bi-alignment-thesis-caDesc">A quality goal you want to hold splits into two moves — prevent the mistake, or
+    catch it — however you arrived at the goal, up front from the domain or in response to a failure.
+    On the left, a constraint: it makes the whole class of mistake impossible by scoping the action space,
+    like choosing a typed enumeration over free-form strings so an unlisted value cannot be represented,
+    like a firewall. On the right, a sensor: it lets the mistake happen but detects it and surfaces it
+    in time to stop the damage, like a test suite in CI or a smoke detector. The wall forbids the bug;
+    the sensor watches for it. The wall is cheaper to live behind than the sensor is to keep reading.</desc>
+
+  <defs>
+    <marker id="bi-alignment-thesis-caArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
+    </marker>
+  </defs>
+
+  <!-- source: quality goal -->
+  <rect x="330" y="30" width="300" height="66" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
+  <text x="480" y="63" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Quality goal</text>
+  <text x="480" y="88" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">prevent the mistake, or catch it</text>
+
+  <!-- fork edges -->
+  <g fill="none" stroke="#33383d" stroke-width="2" marker-end="url(#bi-alignment-thesis-caArrow)">
+    <path d="M400,96 C360,128 300,132 250,158"/>
+    <path d="M560,96 C600,128 660,132 710,158"/>
+  </g>
+
+  <!-- ================= LEFT — constraint / wall ================= -->
+  <rect x="70" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Constraint — prevents</text>
+
+  <!-- wall icon: brick courses -->
+  <g stroke="#1a4a7a" stroke-width="2" fill="none">
+    <rect x="216" y="230" width="68" height="44"/>
+    <line x1="216" y1="252" x2="284" y2="252"/>
+    <line x1="250" y1="230" x2="250" y2="252"/>
+    <line x1="233" y1="252" x2="233" y2="274"/>
+    <line x1="267" y1="252" x2="267" y2="274"/>
+  </g>
+
+  <text x="250" y="312" text-anchor="middle" font-size="20" fill="#33383d">Makes the whole class</text>
+  <text x="250" y="337" text-anchor="middle" font-size="20" fill="#33383d">of mistake impossible.</text>
+  <text x="250" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">typed enum over strings · firewall</text>
+
+  <!-- ================= RIGHT — sensor / detector ================= -->
+  <rect x="530" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
+  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Sensor — detects</text>
+
+  <!-- sensor icon: a dish detecting a spark -->
+  <circle cx="710" cy="252" r="26" fill="none" stroke="#1a4a7a" stroke-width="2.5"/>
+  <circle cx="710" cy="252" r="6" fill="#1a4a7a"/>
+  <path d="M710,226 A26,26 0 0,1 736,252" fill="none" stroke="#8a2f2f" stroke-width="3"/>
+
+  <text x="710" y="312" text-anchor="middle" font-size="20" fill="#33383d">Lets the mistake happen,</text>
+  <text x="710" y="337" text-anchor="middle" font-size="20" fill="#33383d">detects it before it ships.</text>
+  <text x="710" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">test suite in CI · smoke detector</text>
+</svg></figure>
+  <p class="s-kick">Big idea 4 · Thesis 2</p>
+  <h2 class="s-title">A quality goal splits into a constraint and a sensor</h2>
+  <p class="s-claim">Every mechanism is one of two moves: a constraint that prevents the error, or a sensor that catches it.</p>
+  <div class="s-more-text" id="more-bi-alignment-thesis" data-more>Make the class impossible before the fact, or detect the mistake after; costly failures earn both. A third set of goals splits into neither and stays a human job — the residual the mechanisms leave behind.</div>
+  <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a>
+</div>
+</div>
+
+  <hr class="i-sep" />
+
+  <div class="slot" id="bi-convert-failures">
+  <figure class="s-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" role="group" aria-labelledby="frbTitle frbDesc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="bi-convert-failures-frbTitle">Governance runs soft to hard: a compact spectrum of mechanism classes.</title>
+  <desc id="bi-convert-failures-frbDesc">A horizontal spectrum runs from soft governance on the left to hard governance on the right. Soft, probabilistic mechanisms that aim an agent sit on the left: conventions, briefs, templates, prose conventions, and a reviewing agent. Judgment-laden doc-derived tests sit in the middle. Deterministic mechanisms that hold the line sit on the right: lints, types, schemas, and quality, drift, or deploy gates, together with a marker file the tool reads. Soft aims the agent; hard holds the line; a mature environment uses both.</desc>
+  <defs>
+    <linearGradient id="bi-convert-failures-frbGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f6f4ef"/>
+      <stop offset="0.5" stop-color="#faf1e6"/>
+      <stop offset="1" stop-color="#9a3f12"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1000" height="340" fill="#fdfcf9"/>
+  <text x="500" y="46" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Governance runs soft to hard</text>
+  <text x="500" y="72" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">Soft aims the agent; hard holds the line. A mature environment uses both.</text>
+  <text x="150" y="112" text-anchor="middle" font-size="13.5" fill="#57534e">probabilistic · aims an agent</text>
+  <text x="850" y="112" text-anchor="middle" font-size="13.5" fill="#9a3f12">deterministic · holds the line</text>
+  <rect x="70" y="126" width="860" height="46" rx="12" fill="url(#bi-convert-failures-frbGrad)" stroke="#e4e0d8" stroke-width="1.5"/>
+  <text x="150" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">SOFT</text>
+  <text x="850" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#fdfcf9">HARD</text>
+  <line x1="150" y1="172" x2="150" y2="196" stroke="#e4e0d8" stroke-width="1.5"/>
+  <text x="150" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">convention · brief</text>
+  <text x="150" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">template · prose</text>
+  <line x1="330" y1="172" x2="330" y2="196" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="330" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">reviewing agent</text>
+  <line x1="500" y1="172" x2="500" y2="196" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="500" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">doc-derived test</text>
+  <line x1="680" y1="172" x2="680" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="680" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">lint · type · schema</text>
+  <line x1="850" y1="172" x2="850" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="850" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">quality / drift / deploy gate</text>
+  <text x="850" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">· marker file the tool reads</text>
+  <text x="500" y="288" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
+  <text x="500" y="314" text-anchor="middle" font-size="13" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
+</svg></figure>
+  <div class="s-words">
+    <p class="s-kick">Big idea 5 · the practice</p>
+    <h2 class="s-title">Convert recurring failures into controls</h2>
+    <p class="s-claim">Velocity surfaces the failures you could not foresee; convert each recurring one into a durable control.</p>
+    <div class="s-more-text" id="more-bi-convert-failures" data-more>A type, a lint, a gate, a schema — the guardrail grows out of the real failure, so every later agent inherits a smaller space to be wrong in. That conversion is the way of thinking inside the method.</div>
+    <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a>
+  </div>
+</div>
+
+  <hr class="i-sep" />
+
+  <div class="slot figright" id="bi-seat-moves">
+  <figure class="s-fig"><svg viewBox="0 0 940 392" xmlns="http://www.w3.org/2000/svg" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="img" aria-labelledby="s2s-title s2s-desc">
+  <title id="bi-seat-moves-s2s-title">SDLC to SELC: one seat reassigned</title>
+  <desc id="bi-seat-moves-s2s-desc">Two lanes of the same six lifecycle activities — requirements, specification, design, implementation, validation, maintenance. Top lane, the conventional SDLC, has every seat held by one engineering role, with implementation marked as the seat that consumes the calendar. Bottom lane, the SELC, reassigns the implementation seat to the agent fleet, drawn in the accent colour; the engineer flanks the fleet, authoring intent on the left and judging and governing the output on the right, and a governance band beneath holds every seat's output. A dashed arc returns from the last activity to the first, the cycle in "life cycle."</desc>
+  <defs>
+    <marker id="bi-seat-moves-arr-ink" viewBox="0 0 8 8" markerWidth="8" markerHeight="8" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#57534e"/>
+    </marker>
+    <marker id="bi-seat-moves-arr-accent" viewBox="0 0 9 9" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#9a3f12"/>
+    </marker>
+    <marker id="bi-seat-moves-arr-cycle" viewBox="0 0 7 7" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#57534e"/>
+    </marker>
+  </defs>
+
+  <!-- ======== LANE 1: SDLC ======== -->
+  <text x="26" y="22" font-size="13" font-weight="700" fill="#57534e" letter-spacing="1.5">SDLC — CONVENTIONAL</text>
+  <path d="M 850 46 C 850 30, 90 30, 90 44" fill="none" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#bi-seat-moves-arr-cycle)"/>
+
+  <g font-size="12.5" text-anchor="middle" fill="#1c1917" word-spacing="1.2">
+    <rect x="26"  y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="90"  y="74">Requirements</text>
+    <rect x="178" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="242" y="74">Specification</text>
+    <rect x="330" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="394" y="74">Design</text>
+    <rect x="482" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#1c1917" stroke-width="1.6"/>
+    <text x="546" y="68" font-weight="600">Implementation</text>
+    <text x="546" y="84" font-size="11" fill="#57534e">eats the calendar</text>
+    <rect x="634" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="698" y="74">Validation</text>
+    <rect x="786" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
+    <text x="850" y="74">Maintenance</text>
+  </g>
+  <g stroke="#57534e" stroke-width="1.4">
+    <line x1="154" y1="70" x2="172" y2="70" marker-end="url(#bi-seat-moves-arr-ink)"/>
+    <line x1="306" y1="70" x2="324" y2="70" marker-end="url(#bi-seat-moves-arr-ink)"/>
+    <line x1="458" y1="70" x2="476" y2="70" marker-end="url(#bi-seat-moves-arr-ink)"/>
+    <line x1="610" y1="70" x2="628" y2="70" marker-end="url(#bi-seat-moves-arr-ink)"/>
+    <line x1="762" y1="70" x2="780" y2="70" marker-end="url(#bi-seat-moves-arr-ink)"/>
+  </g>
+  <path d="M 26 102 L 26 108 L 914 108 L 914 102" fill="none" stroke="#57534e" stroke-width="1.2"/>
+  <text x="470" y="126" font-size="12.5" text-anchor="middle" fill="#1c1917" font-weight="600">the engineering role — every seat, and above all the developer's</text>
+
+  <!-- ======== REASSIGNMENT ARROW ======== -->
+  <line x1="546" y1="136" x2="546" y2="186" stroke="#9a3f12" stroke-width="2.2" marker-end="url(#bi-seat-moves-arr-accent)"/>
+  <text x="560" y="158" font-size="12.5" fill="#9a3f12" font-weight="700">one seat reassigned:</text>
+  <text x="560" y="174" font-size="12.5" fill="#9a3f12">the D is delegated to the fleet</text>
+
+  <!-- ======== LANE 2: SELC ======== -->
+  <text x="26" y="182" font-size="13" font-weight="700" fill="#57534e" letter-spacing="1.5">SELC — MAGE</text>
+  <path d="M 850 202 C 850 188, 90 188, 90 200" fill="none" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#bi-seat-moves-arr-cycle)"/>
+
+  <g font-size="12.5" text-anchor="middle" fill="#1c1917" word-spacing="1.2">
+    <rect x="26"  y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="90"  y="232">Requirements</text>
+    <rect x="178" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="242" y="226">Specification</text>
+    <text x="242" y="242" font-size="11" fill="#57534e">authored as models</text>
+    <rect x="330" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="394" y="226">Design</text>
+    <text x="394" y="242" font-size="11" fill="#57534e">authored as models</text>
+    <rect x="482" y="206" width="128" height="44" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.6"/>
+    <text x="546" y="226" font-weight="600" fill="#2f5169">Implementation</text>
+    <text x="546" y="242" font-size="11" fill="#2f5169">the agents</text>
+    <rect x="634" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="698" y="226">Validation</text>
+    <text x="698" y="242" font-size="11" fill="#57534e">gates, not reading</text>
+    <rect x="786" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
+    <text x="850" y="226">Maintenance</text>
+    <text x="850" y="242" font-size="11" fill="#57534e">run as governance</text>
+  </g>
+  <g stroke="#57534e" stroke-width="1.4">
+    <line x1="154" y1="228" x2="172" y2="228" marker-end="url(#bi-seat-moves-arr-ink)"/>
+    <line x1="306" y1="228" x2="324" y2="228" marker-end="url(#bi-seat-moves-arr-ink)"/>
+    <line x1="458" y1="228" x2="476" y2="228" marker-end="url(#bi-seat-moves-arr-ink)"/>
+    <line x1="610" y1="228" x2="628" y2="228" marker-end="url(#bi-seat-moves-arr-ink)"/>
+    <line x1="762" y1="228" x2="780" y2="228" marker-end="url(#bi-seat-moves-arr-ink)"/>
+  </g>
+
+  <path d="M 26 260 L 26 266 L 458 266 L 458 260" fill="none" stroke="#9a3f12" stroke-width="1.2"/>
+  <text x="242" y="284" font-size="12.5" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — authors the intent</text>
+  <path d="M 482 260 L 482 266 L 610 266 L 610 260" fill="none" stroke="#2f5169" stroke-width="1.2"/>
+  <text x="546" y="284" font-size="12.5" text-anchor="middle" fill="#2f5169" font-weight="600">the fleet — develops</text>
+  <path d="M 634 260 L 634 266 L 914 266 L 914 260" fill="none" stroke="#9a3f12" stroke-width="1.2"/>
+  <text x="774" y="284" font-size="12.5" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — judges and governs</text>
+
+  <rect x="26" y="304" width="888" height="34" rx="6" fill="#e3f0e7" stroke="#1f7a4d"/>
+  <text x="470" y="326" font-size="12.5" text-anchor="middle" fill="#155c38" font-weight="600">governance — the environment holds every seat's output to the standard the engineer set (Part Two)</text>
+
+  <text x="470" y="368" font-size="11.5" text-anchor="middle" fill="#57534e" font-style="italic">the keystrokes are delegated; the accountability is not</text>
+</svg></figure>
+  <div class="s-words">
+    <p class="s-kick">Big idea 6 · the seat</p>
+    <h2 class="s-title">The lifecycle stays; the developer's seat moves to the agents</h2>
+    <p class="s-claim">SDLC becomes SELC: same activities, no new phases — but implementation is now the agents'.</p>
+    <div class="s-more-text" id="more-bi-seat-moves" data-more>The engineer flanks the fleet: authoring intent on the left, judging and governing the output on the right. The seat moved up a level, from writing the code to authoring the model that says what correct means.</div>
+    <a class="s-read" href="book/1.3-the-engineers-seat.html">Read in the book →</a>
+  </div>
+</div>
   </div>
 
-  <div class="fam">
-    <div class="fam-h">The Modeling Thesis — why a typed model beats prose</div>
-    <div class="masonry">
-    <details class="card" id="card-agent-legible-precise">
-      <summary>
-        <span class="cd-kicker">Modeling Thesis</span>
-        <span class="cd-title">Agent-legible &amp; precise</span>
-        <span class="cd-frame">Abstraction shrinks the space an agent can be wrong in.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>A six-state machine with typed invariants is something an agent reasons over <b>without error</b>
-        the way it cannot over 300,000 lines of prose-and-code. Abstraction shrinks the space it can be wrong
-        in, not just the token count. A model is more precise than any document.</p>
-        <a class="cd-more" href="book/1.2-loops-and-models.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card" id="card-it-cant-lie">
-      <summary>
-        <span class="cd-kicker">Modeling Thesis</span>
-        <span class="cd-title">It can’t lie</span>
-        <span class="cd-frame">A model wired to a build-time drift check cannot rot.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>A document rots the moment the code moves; a model wired to a <b>build-time drift check cannot</b>:
-        the gate stays red until the map matches the territory again. That guarantee is what prose can never
-        give — though a drift gate proves the model and code <i>agree</i>, not that either is <i>right</i>: the
-        model must be <b>authored</b>, not merely read off the code, or a mirror of the bug passes green (2.2).</p>
-        <a class="cd-more" href="book/2.2-models-and-the-semantic-gap.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card tint" id="card-model-pays-back">
-      <summary>
-        <span class="cd-kicker">Modeling Thesis</span>
-        <span class="cd-title">Cheap to keep, pays back</span>
-        <span class="cd-frame">Agents maintain the model like docs and tests.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>Because agents build and maintain the model the way they maintain docs and tests, pointing them at it
-        costs almost nothing, and it pays back in <b>higher code quality, fewer tokens spent rederiving what the
-        model already states, and fewer mistakes.</b></p>
-        <a class="cd-more" href="book/1.2-loops-and-models.html">read the full treatment →</a>
-      </div>
-    </details>
-    </div>
-  </div>
+  <hr class="sep" />
 
-  <div class="fam">
-    <div class="fam-h">The Alignment Thesis — constraints and sensors</div>
-    <div class="masonry">
-    <details class="card accent" id="card-constraint">
-      <summary>
-        <span class="cd-kicker">Alignment Thesis</span>
-        <span class="cd-title accent-t">Constraint</span>
-        <span class="cd-frame">Make the wrong move impossible to pick.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>Scope the agent's action space so the wrong move is <b>never available to pick</b>: the typed model,
-        an enum instead of a free-form string, one sanctioned seam. A constraint <i>prevents</i> drift — the
-        mistake costs no iteration, because the compiler rejects it on the spot.
-        (<a href="https://en.wikipedia.org/wiki/Poka-yoke">Poka-yoke</a> for software; building a constraint
-        is what "architecture" does.)</p>
-        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card accent" id="card-sensor">
-      <summary>
-        <span class="cd-kicker">Alignment Thesis</span>
-        <span class="cd-title accent-t">Sensor</span>
-        <span class="cd-frame">Where you can't prevent it, detect it after the fact.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>Where you can't prevent it, <b>detect it after the fact</b>: a lint, a gate, a validator, a test
-        suite that fires on a violation and holds the line. A sensor <i>detects</i> drift and fails the loop
-        iteration, so the agent runs again to fix what it caught. It costs iterations — which is why you don't
-        reach for it first.</p>
-        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card" id="card-generate-to-falsify">
-      <summary>
-        <span class="cd-kicker">Alignment Thesis · validation</span>
-        <span class="cd-title">Generate inputs to falsify a model</span>
-        <span class="cd-frame">Property tests, fuzzing, and fuzz+model are one move.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>The strongest sensors don't check one example — they <b>generate</b> inputs and try to falsify a
-        specification the model supplies. Property-based testing, fuzzing, and fuzzing driven by the typed model
-        are one move at three richnesses of oracle: the model names the stable point in the spec, and the
-        generator hunts a counterexample to it.</p>
-        <a class="cd-more" href="book/4.6-generative-validation.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card" id="card-constraint-vs-sensor">
-      <summary>
-        <span class="cd-kicker">Constraint vs. sensor</span>
-        <span class="cd-title">Firewall vs. smoke detector</span>
-        <span class="cd-frame">Prefer a constraint; wrap in sensors for what you can't scope away.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>A <b>sensor</b> lets the mistake happen and catches it in time — a smoke detector. A
-        <b>constraint</b> makes the whole class of mistake impossible — a firewall. Prefer a constraint where
-        you can build one, because a sensor still spends an iteration. But a constraint across the only exit
-        blocks the people trying to leave — an over-scoped design stops legitimate work as surely as the error,
-        so add a sensor for the drift you cannot scope away. Most real mechanisms are a package across both: a
-        soft constraint that aims the agent, wrapped in hard sensors that catch what it only aims at.</p>
-        <a class="cd-more" href="book/2.6-when-guardrails-collide.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card tint" id="card-residual">
-      <summary>
-        <span class="cd-kicker">The residual</span>
-        <span class="cd-title">Neither move reaches it</span>
-        <span class="cd-frame">Some goals have no sensor and no constraint — they stay a human job.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>Not every goal splits into a constraint or a sensor. Some have <b>neither</b> — no cheap sensor can
-        see the failure, no constraint can scope it away, because the failure is an absence nobody specified. A
-        missing authorization check has <b>no failing test by definition</b>: a test that caught it would mean it
-        was specified, and a specified check would not be missing. That goal stays a <b>human</b> job, and which
-        of your goals land here sets your real throughput ceiling. This is not the soft end of a spectrum — a
-        soft mechanism is still a mechanism; the residual has none. Naming it is the framework's honest edge:
-        here is what the catalogue does <i>not</i> reach.</p>
-        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card wide accent" id="card-alignment-grows">
-      <summary>
-        <span class="cd-kicker">How the Alignment half grows</span>
-        <span class="cd-title">Reading failure as a missing mechanism</span>
-        <span class="cd-frame">Velocity surfaces a failure class; you convert each recurring one into a mechanism.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>You place some constraints and sensors up front, from what you know about the domain. The rest you
-        learn along the way: velocity surfaces a failure class earlier governance didn't address, and you convert
-        each recurring one into a mechanism. That conversion is the way of thinking inside MAGE — how the
-        Alignment Thesis grows past what you could specify in advance.</p>
-        <div class="loop">
-        <div class="flow">
-    <div class="fstep"><span class="fn">1</span><b>Velocity exposes failure</b><span>Agent changes surface ambiguity, drift, and weak boundaries — fast.</span></div>
-    <div class="farrow">→</div>
-    <div class="fstep"><span class="fn">2</span><b>Monitoring intelligence classifies it</b><span>Local defect, or a recurring structural weakness?</span></div>
-    <div class="farrow">→</div>
-    <div class="fstep"><span class="fn">3</span><b>Convert to governance</b><span>Encode it: a type, a lint, a schema, a gate, or a harness rule.</span></div>
-    <div class="farrow">→</div>
-    <div class="fstep"><span class="fn">4</span><b>Action space narrows</b><span>Every later agent inherits a smaller, more explicit space.</span></div>
-    </div>
-    <svg class="mustache" viewBox="0 0 1000 76" aria-hidden="true"><path d="M885 10 V52 Q885 62 875 62 H125 Q115 62 115 52 V17" fill="none" stroke="#9aa4b2" stroke-width="2.5" stroke-linejoin="round"/><polygon points="115,3 107,17 123,17" fill="#9aa4b2"/></svg>
-    <p class="loop-outcome"><b>Governability compounds.</b> The environment absorbs more agent work, so velocity stays sustainable.</p>
-        <p class="tail">Implementation is cheap; the judgment that decides <i>which governance should
-        exist</i> is the costly, human part. Two paired concepts hold it together:</p>
-        <ul class="tail-pair">
-          <li><b>Governance makes velocity sustainable</b> — guardrails are what let the fleet keep shipping
-          fast without drowning in its own failures.</li>
-          <li><b>Judgment decides which governance to build</b> — recognizing which failures deserve a
-          guardrail (and which are one-offs) is the hard, human call.</li>
-        </ul>
-        </div>
-        <a class="cd-more" href="book/4.5-lessons-learned.html">read the full treatment →</a>
-      </div>
-    </details>
-    </div>
+  <div class="gateway" id="bi-gateway">
+  <div class="gw-words">
+    <p class="s-kick">Kept honest — the gateway to the catalogue</p>
+    <h2 class="s-title">The models are the interface; the map is kept equal to the territory</h2>
+    <p class="s-claim">Two spines of models over one method trunk govern this very repo; the catalogue's mechanisms hold them true.</p>
+    <div class="s-more-text" id="more-bi-gateway" data-more>The models are the interface a context-bounded fleet operates a context-exceeding codebase through. Browse the mechanisms by the model they govern.</div>
+    <a class="s-read gw-primary" href="catalogue-views.html">Explore the catalogue →</a>
+    <a class="s-read" href="book/3.1-the-executable-zoo.html">Read in the book →</a>
   </div>
+  <figure class="gw-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 600" id="bi-gateway-modelmap" class="mapfig" aria-hidden="true"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <!-- spine trunk lines -->
+  <line x1="300" y1="88" x2="300" y2="524" stroke="#2f5169" stroke-width="3"/>
+  <line x1="680" y1="88" x2="680" y2="524" stroke="#1f7a4d" stroke-width="3"/>
 
-  <div class="fam">
-    <div class="fam-h">What the engineer's job becomes</div>
-    <div class="masonry">
-    <details class="card wide accent" id="card-universal-language">
-      <summary>
-        <span class="cd-kicker">The engineer's job</span>
-        <span class="cd-title accent-t">Models are the universal language of engineering</span>
-        <span class="cd-frame">Code was the bottleneck; now the model is the work.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>For most of software's history the scarce resource was <b>implementation</b> — someone had to type
-        the thing into existence, and that typing was the bottleneck everything queued behind. Agents moved
-        that bottleneck: code is cheap to produce and fast to change, and a model wired to a drift check keeps
-        the map in sync for free. What is <b>not</b> cheap is deciding what to build and authoring the model
-        whose properties drive the tradeoffs. So the engineer's job <b>relocates up</b> — from producing code to
-        <b>authoring the models</b> every other engineering discipline has always reasoned in, now finally cheap
-        enough for software to speak too.</p>
-        <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card" id="card-judgment-moved-up">
-      <summary>
-        <span class="cd-kicker">The engineer's job</span>
-        <span class="cd-title">The judgment moved up, not away</span>
-        <span class="cd-frame">You're still accountable for the code an agent typed.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>An engineer was always accountable for choices they did not hand-implement — the compiler they
-        picked, the library, the algorithm. Delegating the keystrokes never delegated the accountability. The
-        model level strips the <i>accidental</i> cost of holding a large system in a small window and leaves the
-        <i>essential</i> difficulty in plain view, where judgment has to meet it. That essential residual does
-        not yield to a tool — it moves <b>one level up</b>, from "write correct code" to "author the model that
-        says what correct means."</p>
-        <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card tint" id="card-modelling-democratizes">
-      <summary>
-        <span class="cd-kicker">The engineer's job</span>
-        <span class="cd-title">Modelling democratizes</span>
-        <span class="cd-frame">The map used to be the architect's; now everyone can hold one.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>Modelling used to be senior work — the one person who could hold the whole system in their head drew
-        the map, and everyone else worked below it. Freed from the cost of <b>typing</b> and of <b>keeping the
-        map in sync by hand</b>, every engineer can now reason about the system's properties and how their own
-        change moves the whole. The map got cheap enough that everyone can hold one.</p>
-        <a class="cd-more" href="book/6.0-implications-for-se.html">read the full treatment →</a>
-      </div>
-    </details>
+  <!-- spine headers -->
+  <text x="300" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#2f5169">THE FLEET</text>
+  <text x="300" y="70" text-anchor="middle" font-size="12" fill="#57534e">the self-operate lifecycle models</text>
+  <text x="680" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#1f7a4d">THE PRODUCT</text>
+  <text x="680" y="70" text-anchor="middle" font-size="12" fill="#57534e">the 4+1 views of the shipped system</text>
+
+  <!-- cross-links (drawn under nodes): models shared by projection -->
+  <path d="M 205 120 C 430 100, 560 320, 593 208" fill="none" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <path d="M 205 300 C 430 300, 560 340, 593 372" fill="none" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <path d="M 205 360 C 430 360, 560 240, 593 208" fill="none" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <path d="M 205 120 C 440 150, 560 420, 593 448" fill="none" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="490" y="492" text-anchor="middle" font-size="11" fill="#57534e" font-style="italic">⇆ shared by projection — a cross-link, not a duplicate</text>
+
+  <!-- ===================== FLEET lifecycle nodes (left spine); model pills to the LEFT ===================== -->
+  <g class="node" data-k="l1"><rect x="215" y="100" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+    <text x="300" y="117" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-agents</text>
+    <text x="300" y="132" text-anchor="middle" font-size="11" fill="#57534e">2 models · 6 mechanisms</text></g>
+  <line x1="205" y1="120" x2="215" y2="120" stroke="#2f5169" stroke-width="1.5"/>
+  <rect x="38" y="98" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="121" y="112" text-anchor="middle" font-size="11" fill="#1c1917">★ agent-orchestration</text>
+  <rect x="38" y="122" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="121" y="136" text-anchor="middle" font-size="11" fill="#1c1917">★ mediator contracts</text>
+
+  <g class="node" data-k="l2"><rect x="215" y="160" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+    <text x="300" y="177" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-context</text>
+    <text x="300" y="192" text-anchor="middle" font-size="11" fill="#57534e">4 mechanisms</text></g>
+
+  <g class="node" data-k="l3"><rect x="215" y="220" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+    <text x="300" y="237" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-git-repo</text>
+    <text x="300" y="252" text-anchor="middle" font-size="11" fill="#57534e">3 mechanisms</text></g>
+
+  <g class="node" data-k="l4"><rect x="215" y="280" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+    <text x="300" y="297" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-deploy</text>
+    <text x="300" y="312" text-anchor="middle" font-size="11" fill="#57534e">1 model · 2 mechanisms</text></g>
+  <line x1="205" y1="300" x2="215" y2="300" stroke="#2f5169" stroke-width="1.5"/>
+  <rect x="38" y="290" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="121" y="304" text-anchor="middle" font-size="11" fill="#1c1917">★ deployment topology</text>
+
+  <g class="node" data-k="l5"><rect x="215" y="340" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+    <text x="300" y="357" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-dev-machine</text>
+    <text x="300" y="372" text-anchor="middle" font-size="11" fill="#57534e">1 model · 4 mechanisms</text></g>
+  <line x1="205" y1="360" x2="215" y2="360" stroke="#2f5169" stroke-width="1.5"/>
+  <rect x="38" y="350" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="121" y="364" text-anchor="middle" font-size="11" fill="#1c1917">★ synchronization</text>
+
+  <g class="node" data-k="lcron"><rect x="215" y="400" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+    <text x="300" y="417" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">gc-cron plane</text>
+    <text x="300" y="432" text-anchor="middle" font-size="11" fill="#57534e">1 mechanism</text></g>
+
+  <g class="node" data-k="lorch"><rect x="215" y="460" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+    <text x="300" y="477" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">orchestrator-hooks</text>
+    <text x="300" y="492" text-anchor="middle" font-size="11" fill="#57534e">1 model · 7 mechanisms</text></g>
+  <line x1="205" y1="480" x2="215" y2="480" stroke="#2f5169" stroke-width="1.5"/>
+  <rect x="38" y="470" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="121" y="484" text-anchor="middle" font-size="11" fill="#1c1917">★ governance graph</text>
+
+  <!-- ===================== PRODUCT view nodes (right spine); model pills to the RIGHT ===================== -->
+  <g class="node" data-k="logical"><rect x="595" y="100" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
+    <text x="680" y="117" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Logical</text>
+    <text x="680" y="132" text-anchor="middle" font-size="11" fill="#57534e">5 models · 16 mechanisms</text></g>
+  <line x1="765" y1="120" x2="775" y2="120" stroke="#1f7a4d" stroke-width="1.5"/>
+  <rect x="775" y="90" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="860" y="104" text-anchor="middle" font-size="11" fill="#1c1917">★ service-flow · ★ registries</text>
+  <rect x="775" y="114" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="860" y="128" text-anchor="middle" font-size="11" fill="#1c1917">★ PdfModel · ★ Office</text>
+  <rect x="775" y="138" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="860" y="152" text-anchor="middle" font-size="11" fill="#1c1917">★ canonical walkers</text>
+
+  <g class="node" data-k="process"><rect x="595" y="188" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
+    <text x="680" y="205" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Process</text>
+    <text x="680" y="220" text-anchor="middle" font-size="11" fill="#57534e">2 models · 2 shared in</text></g>
+  <line x1="765" y1="208" x2="775" y2="208" stroke="#1f7a4d" stroke-width="1.5"/>
+  <rect x="775" y="186" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="860" y="200" text-anchor="middle" font-size="11" fill="#1c1917">★ composed state-machines</text>
+  <rect x="775" y="210" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="860" y="224" text-anchor="middle" font-size="11" fill="#1c1917">★ process view</text>
+
+  <g class="node" data-k="dev"><rect x="595" y="276" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
+    <text x="680" y="293" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Development</text>
+    <text x="680" y="308" text-anchor="middle" font-size="11" fill="#57534e">1 model</text></g>
+  <line x1="765" y1="296" x2="775" y2="296" stroke="#1f7a4d" stroke-width="1.5"/>
+  <rect x="775" y="286" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="860" y="300" text-anchor="middle" font-size="11" fill="#1c1917">★ component &amp; zone</text>
+
+  <g class="node" data-k="phys"><rect x="595" y="352" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
+    <text x="680" y="369" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Physical</text>
+    <text x="680" y="384" text-anchor="middle" font-size="11" fill="#57534e">1 model · 1 shared in</text></g>
+  <line x1="765" y1="372" x2="775" y2="372" stroke="#1f7a4d" stroke-width="1.5"/>
+  <rect x="775" y="362" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="860" y="376" text-anchor="middle" font-size="11" fill="#1c1917">★ control↔substrate</text>
+
+  <g class="node" data-k="scen"><rect x="595" y="428" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
+    <text x="680" y="445" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Scenarios</text>
+    <text x="680" y="460" text-anchor="middle" font-size="11" fill="#57534e">1 model · 1 shared in</text></g>
+  <line x1="765" y1="448" x2="775" y2="448" stroke="#1f7a4d" stroke-width="1.5"/>
+  <rect x="775" y="438" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="860" y="452" text-anchor="middle" font-size="11" fill="#1c1917">★ user-journey</text>
+
+  <!-- ===================== the method trunk band (holds both spines) ===================== -->
+  <g class="node" data-k="trunk"><rect x="60" y="524" width="860" height="56" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.5"/>
+    <text x="490" y="547" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3f12">THE METHOD TRUNK — 14 mechanisms that hold every model true</text>
+    <text x="490" y="566" text-anchor="middle" font-size="11" fill="#57534e">executable source-of-truth · drift &amp; parity gates · verification · coverage→node · codegen · query surface · …</text></g>
+  <!-- fleet-spine anchor pill on the trunk -->
+  <rect x="222" y="514" width="156" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
+  <text x="300" y="528" text-anchor="middle" font-size="11" fill="#1c1917">★ lifecycle model (anchor)</text>
+</svg></figure>
+</div>
+
+  <section class="deeper" aria-labelledby="deeper-h">
+  <h2 id="deeper-h" class="deep-h">Deeper in the book</h2>
+  <p class="deep-note">The site is a preview; the book claims and expands every framing. These are entry points, not a second copy.</p>
+  <div class="deep-grp">
+    <span class="deep-lbl">The four definitions — the vocabulary the theses ride on</span>
+    <div class="deep-row">
+      <a class="deep-item" id="def-model" href="book/2.1-the-agent-stack.html#idx-def-model"><b>Model</b><span>A useful approximation of a phenomenon (simplified, but good enough to predict)</span></a>
+      <a class="deep-item" id="def-agent" href="book/2.1-the-agent-stack.html#idx-def-agent"><b>Agent</b><span>A controllable intelligence capable of independent reasoning over a knowledge base</span></a>
+      <a class="deep-item" id="def-engineering" href="book/2.1-the-agent-stack.html#idx-def-engineering"><b>Engineering</b><span>The discipline of developing operable technological artifacts to solve problems, and of analytically identifying and assessing the competing means to those solutions, each with distinct trade-offs</span></a>
+      <a class="deep-item" id="def-software-engineering" href="book/2.1-the-agent-stack.html#idx-def-software-engineering"><b>Software engineering</b><span>Software development produces a functioning artifact</span></a>
     </div>
   </div>
-
-  <!-- ===================== THE LEARNING OUTCOMES (projected from book-models/outcomes.json) ==========
-       "What you'll be able to do" — the book- and Part-level outcomes, projected from the outcomes view
-       model (filtered by book/data/outcomes-site.json's selection). Prose is read straight from the
-       model; the drift check keeps the selection honest. -->
-  <div class="fam">
-    <div class="fam-h">What you'll be able to do — the learning outcomes</div>
-    <div class="masonry">
-    <details class="card wide accent" id="outcomes-view">
-  <summary><span class="cd-kicker">What you'll be able to do</span><span class="cd-title accent-t">The learning outcomes, book and Part</span><span class="cd-frame">The book's and each Part's "you'll be able to…", projected from the outcomes model.</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>Each promise below is a learning outcome projected from the book's outcomes model — the "after this Part, the reader can…" spine, derived from the prose and kept in sync by a drift check. The book-level goals come first, then one per Part. Want the full model? <a href="book-models/models-view.html">Browse the book models as a reading view →</a> — the outline and every outcome, book / Part / chapter / section, rendered from the same models this section projects.</p><ul class="oc-list"><li id="outcome-book-design-a-governed-environment-in-which-a-fleet" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-distinguish-a-constraint-from-a-sensor-and-a-soft-me" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">understand</span><span class="oc-stmt">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-model-a-system-as-a-small-set-of-typed-drift-c" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can model a system as typed, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-part-1-judge-whether-a-task-needs-the-book-s-machiner" class="oc-row"><span class="oc-unit">Part 1</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 1, the reader can judge which tasks warrant governance machinery and which do not, and read an agent as a loop that needs a model of its world.</span><a class="oc-more" href="book/1.1-the-printer.html">read →</a></li><li id="outcome-part-2-construct-the-governed-environment-its-layers-its" class="oc-row"><span class="oc-unit">Part 2</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 2, the reader can construct a governed engineering environment: place a control at the right layer of the agent stack, split ex-ante from ex-post, write lifecycles and runbooks, and measure one level deeper.</span><a class="oc-more" href="book/2.1-the-agent-stack.html">read →</a></li><li id="outcome-part-3-model-a-system-through-kruchten-s-4-1-views-as" class="oc-row"><span class="oc-unit">Part 3</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 3, the reader can model a system as the executable 4+1 zoo — logical, process, development, physical, and scenario views — each a typed model kept honest by a drift check.</span><a class="oc-more" href="book/3.1-the-executable-zoo.html">read →</a></li><li id="outcome-part-4-apply-the-method-to-a-real-codebase-inducing-m" class="oc-row"><span class="oc-unit">Part 4</span><span class="oc-bloom">apply</span><span class="oc-stmt">After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes.</span><a class="oc-more" href="book/4.1-brownfield.html">read →</a></li><li id="outcome-part-5-trace-the-method-s-evolution-through-a-real-ac" class="oc-row"><span class="oc-unit">Part 5</span><span class="oc-bloom">analyze</span><span class="oc-stmt">After Part 5, the reader can trace how the method grew from a single reviewer to a multi-agent engineering organization in one real system, and relate each governance move to the problem that forced it.</span><a class="oc-more" href="book/5.1-the-ada-context.html">read →</a></li><li id="outcome-part-6-evaluate-what-the-method-changes-for-how-software" class="oc-row"><span class="oc-unit">Part 6</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.</span><a class="oc-more" href="book/6.0-implications-for-se.html">read →</a></li></ul><a class="cd-more" href="book-models/models-view.html">browse the models as a reading view →</a></div>
-</details>
+  <div class="deep-grp">
+    <span class="deep-lbl">The alignment &amp; modeling vocabulary</span>
+    <div class="deep-row">
+      <a class="deep-item" id="card-universal-language" href="book/6.0-implications-for-se.html"><b>Models as the universal language</b></a>
+      <a class="deep-item" id="card-constraint" href="book/2.3-the-governed-environment.html"><b>Constraint</b></a>
+      <a class="deep-item" id="card-sensor" href="book/2.3-the-governed-environment.html"><b>Sensor</b></a>
+      <a class="deep-item" id="card-residual" href="book/2.3-the-governed-environment.html"><b>The residual</b></a>
+      <a class="deep-item" id="card-generate-to-falsify" href="book/4.6-generative-validation.html"><b>Generative validation</b></a>
     </div>
   </div>
-
-  <div class="fam">
-    <div class="fam-h">The way of thinking — three stances</div>
-    <div class="masonry">
-    <details class="card" id="card-way-architect-deliberately">
-  <summary><span class="cd-kicker">Way of thinking</span><span class="cd-title">Architect deliberately</span><span class="cd-frame">buy the right design; name shapes with types</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><ul class="cd-list"><li>Implementation is cheap; architecture compounds. Buy the right design, not the fast one.</li><li>Name shapes with types; primitive-passing leaves the architecture anonymous.</li><li>Make models, state, and policy explicit: state machines over scattered counters, enums over magic strings.</li><li>One canonical way beats many clever ones. Agents will apply patterns they see 200× with no debate.</li><li>Attack accidental complexity; budget for the essential kind.</li></ul><a class="cd-more" href="book/4.5-lessons-learned.html">read the full treatment →</a></div>
-</details>
-  <details class="card" id="card-way-convert-failure-into-machinery">
-  <summary><span class="cd-kicker">Way of thinking</span><span class="cd-title">Convert failure into machinery</span><span class="cd-frame">encode each recurring failure as a lint, type, or gate</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><ul class="cd-list"><li>When a failure recurs, encode it (a lint, type, gate, or schema) instead of re-inspecting for it.</li><li>Move audits to lints: cheap, at-commit, deterministic beats expensive and post-hoc.</li><li>Let the compiler and gates hold the line; review is not a substitute for static analysis.</li><li>Never fail quiet: every caught error logs, re-throws, or is justified in a comment.</li><li>No compatibility shims. Migrate every call site in the same change.</li></ul><a class="cd-more" href="book/4.5-lessons-learned.html">read the full treatment →</a></div>
-</details>
-  <details class="card" id="card-way-keep-judgment-scarce-central">
-  <summary><span class="cd-kicker">Way of thinking</span><span class="cd-title">Keep judgment scarce &amp; central</span><span class="cd-frame">carry work autonomously; spend human judgment where it counts</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><ul class="cd-list"><li>Carry work autonomously; surface only the architectural calls.</li><li>Hyper-experimentation: pilot, compare, measure; a cheap experiment beats a debate, and negative results are wins.</li><li>Verify claims and trust nothing stale. Re-run the gates yourself, because markers rot.</li><li>Reason about second-order dynamics: what happens at T+100, or under concurrency?</li><li>Documentation encodes invariants that drive tests, not prose that rots.</li></ul><a class="cd-more" href="book/4.5-lessons-learned.html">read the full treatment →</a></div>
-</details>
-    <details class="card tint" id="card-ways-note">
-      <summary>
-        <span class="cd-kicker">Way of thinking</span>
-        <span class="cd-title">Where the stances come from</span>
-        <span class="cd-frame">Distilled from the AI-First Engineering Method.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>Three stances that make the midway work, distilled from the AI-First Engineering Method
-        (architecture, controls, and the stance that wields them); the full set ships in the
-        <a href="downloads/CLAUDE-starter.md" download>starter CLAUDE.md</a>.</p>
-        <a class="cd-more" href="downloads/CLAUDE-starter.md" download>download the starter CLAUDE.md →</a>
-      </div>
-    </details>
+  <div class="deep-grp">
+    <span class="deep-lbl">What you'll be able to do — the learning outcomes</span>
+    <ul class="oc-list"><li id="outcome-book-design-a-governed-environment-in-which-a-fleet" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-distinguish-a-constraint-from-a-sensor-and-a-soft-me" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">understand</span><span class="oc-stmt">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-model-a-system-as-a-small-set-of-typed-drift-c" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can model a system as typed, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-part-1-judge-whether-a-task-needs-the-book-s-machiner" class="oc-row"><span class="oc-unit">Part 1</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 1, the reader can judge which tasks warrant governance machinery and which do not, and read an agent as a loop that needs a model of its world.</span><a class="oc-more" href="book/1.1-the-printer.html">read →</a></li><li id="outcome-part-2-construct-the-governed-environment-its-layers-its" class="oc-row"><span class="oc-unit">Part 2</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 2, the reader can construct a governed engineering environment: place a control at the right layer of the agent stack, split ex-ante from ex-post, write lifecycles and runbooks, and measure one level deeper.</span><a class="oc-more" href="book/2.1-the-agent-stack.html">read →</a></li><li id="outcome-part-3-model-a-system-through-kruchten-s-4-1-views-as" class="oc-row"><span class="oc-unit">Part 3</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 3, the reader can model a system as the executable 4+1 zoo — logical, process, development, physical, and scenario views — each a typed model kept honest by a drift check.</span><a class="oc-more" href="book/3.1-the-executable-zoo.html">read →</a></li><li id="outcome-part-4-apply-the-method-to-a-real-codebase-inducing-m" class="oc-row"><span class="oc-unit">Part 4</span><span class="oc-bloom">apply</span><span class="oc-stmt">After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes.</span><a class="oc-more" href="book/4.1-brownfield.html">read →</a></li><li id="outcome-part-5-trace-the-method-s-evolution-through-a-real-ac" class="oc-row"><span class="oc-unit">Part 5</span><span class="oc-bloom">analyze</span><span class="oc-stmt">After Part 5, the reader can trace how the method grew from a single reviewer to a multi-agent engineering organization in one real system, and relate each governance move to the problem that forced it.</span><a class="oc-more" href="book/5.1-the-ada-context.html">read →</a></li><li id="outcome-part-6-evaluate-what-the-method-changes-for-how-software" class="oc-row"><span class="oc-unit">Part 6</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.</span><a class="oc-more" href="book/6.0-implications-for-se.html">read →</a></li></ul>
+  </div>
+  <div class="deep-grp">
+    <span class="deep-lbl">More</span>
+    <div class="deep-row">
+      <a class="deep-item" href="book/4.5-lessons-learned.html"><b>The way of thinking</b></a>
+      <a class="deep-item" href="book/4.2-the-skills.html"><b>The three skills</b></a>
+      <a class="deep-item" href="development-workflow.html"><b>The development process, as a figure</b></a>
+      <a class="deep-item" href="book-models/models-view.html"><b>Browse the book models</b></a>
+      <a class="deep-item" href="quick-start.html"><b>Quick start — install the skills</b></a>
+      <a class="deep-item" href="ABSTRACTIONS.html"><b>Abstractions glossary</b></a>
+      <a class="deep-item" href="book/index.html"><b>Case study &amp; references</b></a>
     </div>
   </div>
-
-  <div class="fam">
-    <div class="fam-h">The three skills — harden · operate · communicate</div>
-    <div class="masonry">
-    <details class="card" id="card-skill-self-governance">
-      <summary>
-        <span class="cd-kicker">The three skills</span>
-        <span class="cd-title">self-governance · <i>harden</i></span>
-        <span class="cd-frame">The design-time lens — the census plus the engine that mints new controls.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>The <b>design-time</b> lens: the census of controls plus the engine that mints new ones — what
-        exists, what you're missing, how to add one.</p>
-        <a class="cd-more" href="book/4.2-the-skills.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card" id="card-skill-self-operations">
-      <summary>
-        <span class="cd-kicker">The three skills</span>
-        <span class="cd-title">self-operations · <i>operate</i></span>
-        <span class="cd-frame">The run-time lens — it runs the substrate those controls govern.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>The <b>run-time</b> lens: it runs the substrate those controls govern — the lifecycle you operate,
-        the runbook you follow, the hook you wire.</p>
-        <a class="cd-more" href="book/4.2-the-skills.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card" id="card-skill-self-communicate">
-      <summary>
-        <span class="cd-kicker">The three skills</span>
-        <span class="cd-title">self-communicate · <i>communicate</i></span>
-        <span class="cd-frame">The prose-and-diagram craft for the docs the other two produce.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>The <b>prose-and-diagram</b> craft: a rhetoric toolkit, the Diátaxis register, a house lexicon, and
-        an audit that emits fixes — for the docs the other two produce <i>and</i> the operator's own reports to
-        the human.</p>
-        <a class="cd-more" href="book/4.2-the-skills.html">read the full treatment →</a>
-      </div>
-    </details>
-    <details class="card tint" id="card-skills-loop">
-      <summary>
-        <span class="cd-kicker">The three skills</span>
-        <span class="cd-title">One substrate, seen three ways</span>
-        <span class="cd-frame">The loop closes across govern, operate, and communicate.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>Govern and operate are one substrate seen two ways; communicate is the craft that keeps their output
-        legible. The loop closes across all three: operate surfaces a recurring break, govern mints the control,
-        communicate writes it up in the shared register.</p>
-        <a class="cd-more" href="quick-start.html">install all three →</a>
-      </div>
-    </details>
-    </div>
-  </div>
-
-  <div class="fam">
-    <div class="fam-h">The goal, packaged, and the references</div>
-    <div class="masonry">
-    <details class="card tint" id="card-both-halves">
-      <summary>
-        <span class="cd-kicker">What this site packages</span>
-        <span class="cd-title">Both halves, as three Claude skills</span>
-        <span class="cd-frame">74 governance mechanisms across three roles, each a design pattern.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <p>This site packages <b>both halves</b> — the guidance on what to fix in advance and the machinery for
-        responding when something slips through — as three Claude skills with a
-        <a href="quick-start.html">quick-start</a>. The catalogue itself is <b>74 governance mechanisms across
-        three roles</b>, each written like a design pattern: the recurring failure it kills, and why it is
-        <i>not</i> just the cheaper thing everyone already does.</p>
-        <a class="cd-more" href="quick-start.html">start here →</a>
-      </div>
-    </details>
-    <details class="card wide" id="card-governed-environment-figure" open>
-      <summary>
-        <span class="cd-kicker">The goal: a governed engineering environment</span>
-        <span class="cd-title">The development process, as a figure</span>
-        <span class="cd-frame">From reviewing your agents' code to reviewing their failures.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <figure class="wf">
-          <div class="wf-frame"><iframe id="wf-frame" src="development-workflow.html"
-            title="The development-process figure" tabindex="0" onload="window.fitFig&&fitFig(this)"></iframe></div>
-          <figcaption>The goal is a governed engineering environment. Some of the governance mechanisms you
-          probably know up front: business requirements, security scanners you always run, etc. Others you
-          need to figure out through trial and
-          error, because they depend on the nature of the errors made by the models you're working with. The
-          mindset shift is from reviewing your agents' code, to reviewing their failures and constraining their
-          future moves as needed.</figcaption>
-        </figure>
-        <a class="cd-more" href="book/2.3-the-governed-environment.html">read the full treatment →</a>
-        <script>
-        // fitFig is DEFINED in <head> (LANDING_HEAD_SCRIPT). The iframe lives inside a <details>, so it may
-        // load lazily on first-open; addEventListener('load') fires reliably even after this script runs, and
-        // a 'toggle' listener refits when the card is expanded (the iframe has zero size while collapsed).
-        (function(){
-          var f=document.getElementById('wf-frame');
-          if(f){ f.addEventListener('load', function(){ window.fitFig&&fitFig(f); }); if(window.fitFig) fitFig(f); }
-          var card=document.getElementById('card-governed-environment-figure');
-          if(card) card.addEventListener('toggle', function(){ if(card.open){ var el=document.getElementById('wf-frame'); if(el&&window.fitFig) fitFig(el); } });
-          window.addEventListener('resize', function(){ var el=document.getElementById('wf-frame'); if(el&&window.fitFig) fitFig(el); });
-        })();
-        </script>
-      </div>
-    </details>
-    <details class="card" id="card-references">
-      <summary>
-        <span class="cd-kicker">References</span>
-        <span class="cd-title">Case study &amp; the live system</span>
-        <span class="cd-frame">The paper, and the production system it governs.</span>
-        <span class="cd-toggle" aria-hidden="true"></span>
-      </summary>
-      <div class="cd-body">
-        <div class="r"><b>Case study:</b> <a href="https://arxiv.org/pdf/2607.01087"><i>Cheap Code, Costly
-        Judgment: A Case Study on Governable Agentic Software Engineering</i></a></div>
-        <div class="r"><b>Live system it governs:</b> <a href="https://scholaccess.com">DocAble (scholaccess.com)</a></div>
-      </div>
-    </details>
-    </div>
-  </div>
-
-  <div class="fam">
-    <div class="fam-h">Explore the catalogue — 74 governance mechanisms, the repertoire this loop produced</div>
-    <div class="masonry">
-    <details class="card" id="card-views-of-the-governance-catalogue">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Views of the governance catalogue</span><span class="cd-frame">the whole catalogue at a glance — four views, mechanisms clickable</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>the whole catalogue at a glance — four views, mechanisms clickable</p><a class="cd-more" href="catalogue-figure.html">open →</a></div>
-</details>
-  <details class="card" id="card-abstractions-glossary">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Abstractions glossary</span><span class="cd-frame">the artifacts the mechanisms are built from — named by role, not filename</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>the artifacts the mechanisms are built from — named by role, not filename</p><a class="cd-more" href="ABSTRACTIONS.html">open →</a></div>
-</details>
-  <details class="card" id="card-quick-start">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Quick start</span><span class="cd-frame">two ways to adopt — DIY the catalogue, or install the self-governance skill</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>two ways to adopt — DIY the catalogue, or install the self-governance skill</p><a class="cd-more" href="quick-start.html">open →</a></div>
-</details>
-  <details class="card" id="card-starter-claude-md">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Starter CLAUDE.md</span><span class="cd-frame">a mature one — have Claude fold it into your CLAUDE.md (see Quick start)</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>a mature one — have Claude fold it into your CLAUDE.md (see Quick start)</p><a class="cd-more" href="downloads/CLAUDE-starter.md" download>download →</a></div>
-</details>
-  <details class="card" id="card-epic-template">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Epic template</span><span class="cd-frame">the section shape + Definition-of-Done, portable</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>the section shape + Definition-of-Done, portable</p><a class="cd-more" href="downloads/EPIC-TEMPLATE-starter.md" download>download →</a></div>
-</details>
-  <details class="card" id="card-design-doc-template">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Design-doc template</span><span class="cd-frame">invariants-driven; dynamics + observability blocks</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>invariants-driven; dynamics + observability blocks</p><a class="cd-more" href="downloads/design-doc-template-starter.md" download>download →</a></div>
-</details>
-  <details class="card" id="card-agent-brief-template">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Agent-brief template</span><span class="cd-frame">the dispatch — scope, context, acceptance, hand-back</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>the dispatch — scope, context, acceptance, hand-back</p><a class="cd-more" href="downloads/agent-brief-starter.md" download>download →</a></div>
-</details>
-  <details class="card" id="card-op-playbook-template">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Op-playbook template</span><span class="cd-frame">situation → inspect → healthy → what-to-do</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>situation → inspect → healthy → what-to-do</p><a class="cd-more" href="downloads/op-playbook-starter.md" download>download →</a></div>
-</details>
-  <details class="card" id="card-governance-lint-example">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Governance-lint example</span><span class="cd-frame">a real, runnable lint — copy the shape, change the check</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>a real, runnable lint — copy the shape, change the check</p><a class="cd-more" href="downloads/governance-lint-example.py" download>download →</a></div>
-</details>
-  <details class="card" id="card-download-the-catalogue">
-  <summary><span class="cd-kicker">Explore the catalogue</span><span class="cd-title">Download the catalogue</span><span class="cd-frame">all writeups as a markdown ZIP</span><span class="cd-toggle" aria-hidden="true"></span></summary>
-  <div class="cd-body"><p>all writeups as a markdown ZIP</p><a class="cd-more" href="https://github.com/davisjam/agent-governance-mechanisms/archive/refs/heads/main.zip">open →</a></div>
-</details>
-    </div>
-  </div>
-
-  <div class="book-cta" style="margin:14px 0 28px;">
-    <a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a>
-    <span class="book-cta-pdf"><a href="book/mage-book.pdf">Download PDF</a></span>
-  </div>
+</section>
 
 <section class="census">
 <h2>The catalogue</h2>
@@ -2036,6 +1272,31 @@ function fitFig(f){
 <tr><td class="c-name"><a href="product/repair-vocabulary/codemod-first.html">Codemod-first threshold (N≳50 → AST transformer)</a></td><td class="c-sum">For 50+ deterministic sites, write one AST transformer.</td><td class="c-enf">Soft</td></tr>
 </tbody></table>
 </section>
+  <div class="book-cta" style="margin:20px 0 30px;">
+    <a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a>
+    <span class="book-cta-pdf"><a href="book/mage-book.pdf">Download PDF</a></span>
+  </div>
+<script>
+(function(){
+  var blocks = document.querySelectorAll('.s-more-text[data-more]');
+  Array.prototype.forEach.call(blocks, function(m){
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 's-expand';
+    btn.setAttribute('aria-controls', m.id);
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = 'Expand to learn more';
+    m.parentNode.insertBefore(btn, m);
+    m.setAttribute('hidden', '');
+    btn.addEventListener('click', function(){
+      var willOpen = m.hasAttribute('hidden');
+      if (willOpen) { m.removeAttribute('hidden'); } else { m.setAttribute('hidden', ''); }
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      btn.textContent = willOpen ? 'Show less' : 'Expand to learn more';
+    });
+  });
+})();
+</script>
 <footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the book →</a></footer>
 </main>
 </body>

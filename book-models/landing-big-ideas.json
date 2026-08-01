@@ -1,0 +1,94 @@
+{
+  "_note": "Big-Ideas model — the SSOT for the site landing, projected model-first (a sibling of definitions.json and outcomes.json: same 'the site is a projection of a typed model' discipline). The landing IS the book's argument in the book's own order: six Big Ideas, each rendered as one slot — its figure, a concise claim, a light 'expand to learn more', and a 'Read in the book →' link — plus a gateway that fronts the catalogue's By-model view. catalog.py's _landing_big_ideas() iterates this file at build time; nothing on the landing's Big-Ideas argument is hand-authored in HTML. The drift check (check_big_ideas in catalog.py validate) joins on the slug and asserts: (a) every book_home resolves to a real chapter/page on disk (the 'site is a preview, book ⊇ site' rule made mechanical), (b) every figure exists under book/assets/ (palette conformance for every asset is enforced separately + audit-only by the design-token drift lint), (c) every claim is within the word cap, and (d) every slot id resolves on the built landing. Queryable/rendered via `python3 catalog.py build`.",
+
+  "_derivation": "The confirmed six-idea → figure mapping ratified in the Big-Ideas reorg design (landing-bigideas-260731, Option 3 'the argument'). Ideas 1 and the old F1-modeling candidate merged: F1 (the model map) is the Modeling Thesis instantiated over this repo, so it becomes the gateway into the By-model catalogue view rather than a competing mid-page slot. The two-schools/midway material is promoted into the set as the stance idea.",
+
+  "_word_cap": 26,
+
+  "_order": ["churn", "governance-centric", "modeling-thesis", "alignment-thesis", "convert-failures", "seat-moves"],
+
+  "churn": {
+    "id": "bi-churn",
+    "role": "problem",
+    "order": 1,
+    "kicker": "Big idea 1 · the problem",
+    "title": "Churn is the scaling limit",
+    "figure": "mage-overview.svg",
+    "book_home": "book/1.1-the-printer.html",
+    "claim": "Left ungoverned, a cheap agent fleet drifts as its work outgrows the context window. Governed, it converges on trustworthy software at velocity.",
+    "more": "The scaling limit is not the model's raw ability but churn: confidently-wrong work, faster every week. Two theses — a Modeling Thesis and an Alignment Thesis — are what hold it off, and this page is built around them."
+  },
+
+  "governance-centric": {
+    "id": "bi-governance-centric",
+    "role": "stance",
+    "order": 2,
+    "kicker": "Big idea 2 · the stance",
+    "title": "Governance-centric — the midway between two schools",
+    "figure": "oversight-modes.svg",
+    "book_home": "book/2.3-the-governed-environment.html",
+    "claim": "Between all-velocity and all-oversight sits the midway: put the agents inside a containing environment of enforced mechanisms.",
+    "more": "Velocity-centric hands work around a ring of job titles, quality left implicit; oversight-centric parks a human beside each piece — honest, but attention does not scale with the fleet. The synthesis specifies what it can up front and converts what velocity surfaces in flight."
+  },
+
+  "modeling-thesis": {
+    "id": "bi-modeling-thesis",
+    "role": "thesis-1",
+    "order": 3,
+    "kicker": "Big idea 3 · Thesis 1",
+    "title": "Documentation, taken to its limit, is a typed model",
+    "figure": "documentation-hierarchy.svg",
+    "book_home": "book/1.2-loops-and-models.html",
+    "claim": "The apex of documentation is not prose — it is a typed model an agent reasons through without error.",
+    "more": "A context-bounded agent working on a context-exceeding system needs a typed, queryable, drift-checked model to reason through — the bridge to the codebase it cannot fit in its head. The catalogue's models-bridge role is that bridge made concrete."
+  },
+
+  "alignment-thesis": {
+    "id": "bi-alignment-thesis",
+    "role": "thesis-2",
+    "order": 4,
+    "kicker": "Big idea 4 · Thesis 2",
+    "title": "A quality goal splits into a constraint and a sensor",
+    "figure": "control-vs-architecture.svg",
+    "book_home": "book/2.3-the-governed-environment.html",
+    "claim": "Every mechanism is one of two moves: a constraint that prevents the error, or a sensor that catches it.",
+    "more": "Make the class impossible before the fact, or detect the mistake after; costly failures earn both. A third set of goals splits into neither and stays a human job — the residual the mechanisms leave behind."
+  },
+
+  "convert-failures": {
+    "id": "bi-convert-failures",
+    "role": "practice",
+    "order": 5,
+    "kicker": "Big idea 5 · the practice",
+    "title": "Convert recurring failures into controls",
+    "figure": "soft-hard-spectrum.svg",
+    "book_home": "book/2.3-the-governed-environment.html",
+    "claim": "Velocity surfaces the failures you could not foresee; convert each recurring one into a durable control.",
+    "more": "A type, a lint, a gate, a schema — the guardrail grows out of the real failure, so every later agent inherits a smaller space to be wrong in. That conversion is the way of thinking inside the method."
+  },
+
+  "seat-moves": {
+    "id": "bi-seat-moves",
+    "role": "seat",
+    "order": 6,
+    "kicker": "Big idea 6 · the seat",
+    "title": "The lifecycle stays; the developer's seat moves to the agents",
+    "figure": "sdlc-to-selc.svg",
+    "book_home": "book/1.3-the-engineers-seat.html",
+    "claim": "SDLC becomes SELC: same activities, no new phases — but implementation is now the agents'.",
+    "more": "The engineer flanks the fleet: authoring intent on the left, judging and governing the output on the right. The seat moved up a level, from writing the code to authoring the model that says what correct means."
+  },
+
+  "gateway": {
+    "id": "bi-gateway",
+    "role": "gateway",
+    "order": 7,
+    "kicker": "Kept honest — the gateway to the catalogue",
+    "title": "The models are the interface; the map is kept equal to the territory",
+    "figure": "model-map.svg",
+    "book_home": "book/3.1-the-executable-zoo.html",
+    "explore_href": "catalogue-views.html",
+    "claim": "Two spines of models over one method trunk govern this very repo; the catalogue's mechanisms hold them true.",
+    "more": "The models are the interface a context-bounded fleet operates a context-exceeding codebase through. Browse the mechanisms by the model they govern."
+  }
+}
