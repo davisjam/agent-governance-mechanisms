@@ -481,27 +481,27 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <defs>
     <marker id="caArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#33383d"/>
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
     </marker>
   </defs>
 
   <!-- source: quality goal -->
-  <rect x="330" y="30" width="300" height="66" rx="8" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2"/>
-  <text x="480" y="63" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Quality goal</text>
-  <text x="480" y="88" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">prevent the mistake, or catch it</text>
+  <rect x="330" y="30" width="300" height="66" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="480" y="63" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Quality goal</text>
+  <text x="480" y="88" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">prevent the mistake, or catch it</text>
 
   <!-- fork edges -->
-  <g fill="none" stroke="#33383d" stroke-width="2" marker-end="url(#caArrow)">
+  <g fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#caArrow)">
     <path d="M400,96 C360,128 300,132 250,158"/>
     <path d="M560,96 C600,128 660,132 710,158"/>
   </g>
 
   <!-- ================= LEFT — constraint / wall ================= -->
-  <rect x="70" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Constraint — prevents</text>
+  <rect x="70" y="164" width="360" height="228" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#2f5169">Constraint — prevents</text>
 
   <!-- wall icon: brick courses -->
-  <g stroke="#1a4a7a" stroke-width="2" fill="none">
+  <g stroke="#2f5169" stroke-width="2" fill="none">
     <rect x="216" y="230" width="68" height="44"/>
     <line x1="216" y1="252" x2="284" y2="252"/>
     <line x1="250" y1="230" x2="250" y2="252"/>
@@ -509,22 +509,22 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
     <line x1="267" y1="252" x2="267" y2="274"/>
   </g>
 
-  <text x="250" y="312" text-anchor="middle" font-size="20" fill="#33383d">Makes the whole class</text>
-  <text x="250" y="337" text-anchor="middle" font-size="20" fill="#33383d">of mistake impossible.</text>
-  <text x="250" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">typed enum over strings · firewall</text>
+  <text x="250" y="312" text-anchor="middle" font-size="20" fill="#1c1917">Makes the whole class</text>
+  <text x="250" y="337" text-anchor="middle" font-size="20" fill="#1c1917">of mistake impossible.</text>
+  <text x="250" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">typed enum over strings · firewall</text>
 
   <!-- ================= RIGHT — sensor / detector ================= -->
-  <rect x="530" y="164" width="360" height="228" rx="10" fill="#eef3f8" stroke="#1a4a7a" stroke-width="2.5"/>
-  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#1a4a7a">Sensor — detects</text>
+  <rect x="530" y="164" width="360" height="228" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#2f5169">Sensor — detects</text>
 
   <!-- sensor icon: a dish detecting a spark -->
-  <circle cx="710" cy="252" r="26" fill="none" stroke="#1a4a7a" stroke-width="2.5"/>
-  <circle cx="710" cy="252" r="6" fill="#1a4a7a"/>
-  <path d="M710,226 A26,26 0 0,1 736,252" fill="none" stroke="#8a2f2f" stroke-width="3"/>
+  <circle cx="710" cy="252" r="26" fill="none" stroke="#2f5169" stroke-width="2.5"/>
+  <circle cx="710" cy="252" r="6" fill="#2f5169"/>
+  <path d="M710,226 A26,26 0 0,1 736,252" fill="none" stroke="#b23b3b" stroke-width="3"/>
 
-  <text x="710" y="312" text-anchor="middle" font-size="20" fill="#33383d">Lets the mistake happen,</text>
-  <text x="710" y="337" text-anchor="middle" font-size="20" fill="#33383d">detects it before it ships.</text>
-  <text x="710" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#5f5f5f">test suite in CI · smoke detector</text>
+  <text x="710" y="312" text-anchor="middle" font-size="20" fill="#1c1917">Lets the mistake happen,</text>
+  <text x="710" y="337" text-anchor="middle" font-size="20" fill="#1c1917">detects it before it ships.</text>
+  <text x="710" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">test suite in CI · smoke detector</text>
 </svg><figcaption data-short="The two moves a quality goal you want to hold splits into — prevent the…"><span class="fig-label">Figure 2.3-1.</span> The two moves a quality goal you want to hold splits into — prevent the mistake, or catch it — however you arrived at the goal, up front from the domain or in response to a failure. A constraint scopes the agent's action space so the whole class of mistake is impossible, and no iteration is wasted (a typed enumeration over free-form strings, a firewall). A sensor lets the mistake happen but detects it in time to stop the damage, and fails the loop iteration so the agent runs again to fix it (a test suite in CI, a smoke detector). The constraint forbids the bug; the sensor watches for it.</figcaption></figure>
 <p>Before the two forms, the argument for reaching for a mechanism at all. Words alone do not hold. Tell the agent "make sure the briefs always follow this template" and it will say, <em>"Sure, boss"</em> — and then it will not reliably do it, not all the time, because it is a probability flip. A prompt raises the odds; it does not settle them. But you can <em>determinize that</em>. Instead of hoping, you check: before the agent launches, confirm every required part of the template is present, and refuse the launch when it is not. The soft instruction becomes a hard gate. That move — from a probability you nudge to a condition you enforce — is the reason the rest of this chapter exists, and it splits into the two forms below.</p>
 <span id="idx-def-sensor"></span><span id="idx-ex-observability-1"></span><p><strong>A sensor detects drift.</strong> It lets the mistake happen and catches it after the fact — and because it fires after, it fails the loop iteration: the agent has to run again to fix what the sensor caught. Your test suite in CI is a sensor, and so are your lints. It would be better if the model never wrote the bug; but if it does, the sensor catches it before the code ships. The cost of a sensor is iterations — detect, fail, re-iterate — and that cost is the reason you do not reach for one first.</p>

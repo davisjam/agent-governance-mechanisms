@@ -69,8 +69,8 @@
 
   <!-- Leaf 4: Monitoring and intervention -->
   <rect x="804" y="420" width="240" height="116" rx="6" fill="#2f5169" stroke="#1c1917" stroke-width="1.5"/>
-  <text x="924" y="458" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">Monitoring and</text>
-  <text x="924" y="492" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">intervention</text>
+  <text x="924" y="458" text-anchor="middle" font-size="26" font-weight="700" fill="#ffffff">Monitoring and</text>
+  <text x="924" y="492" text-anchor="middle" font-size="26" font-weight="700" fill="#ffffff">intervention</text>
 
   <!-- ===================== GROUP LABELS ===================== -->
   <!-- divider between the System pair and the Development pair -->

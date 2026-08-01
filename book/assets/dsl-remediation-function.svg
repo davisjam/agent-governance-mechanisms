@@ -28,14 +28,14 @@
   <text x="513" y="276" text-anchor="middle" font-size="24" font-weight="bold" fill="#9a3f12">task-to-edit function</text>
   <text x="513" y="302" text-anchor="middle" font-size="19" font-style="italic" fill="#9a3f12">an instance of LLM-as-function-call</text>
   <!-- model (dashed) inside -->
-  <rect x="344" y="320" width="160" height="92" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="6 4"/>
-  <text x="424" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#1c1917">Model</text>
-  <text x="424" y="386" text-anchor="middle" font-size="19" fill="#57534e">bounded call</text>
+  <rect x="344" y="320" width="146" height="92" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="417" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#1c1917">Model</text>
+  <text x="417" y="386" text-anchor="middle" font-size="19" fill="#57534e">bounded call</text>
   <!-- validator inside -->
-  <rect x="522" y="320" width="160" height="92" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.6"/>
-  <text x="602" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">Validator</text>
-  <text x="602" y="386" text-anchor="middle" font-size="19" fill="#2f5169">checks candidate</text>
-  <line x1="504" y1="366" x2="520" y2="366" stroke="#1c1917" stroke-width="1.4" marker-end="url(#dsl-arrow)"/>
+  <rect x="506" y="320" width="178" height="92" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.6"/>
+  <text x="595" y="358" text-anchor="middle" font-size="24" font-weight="bold" fill="#2f5169">Validator</text>
+  <text x="595" y="386" text-anchor="middle" font-size="19" fill="#2f5169">checks candidate</text>
+  <line x1="492" y1="366" x2="502" y2="366" stroke="#1c1917" stroke-width="1.4" marker-end="url(#dsl-arrow)"/>
 
   <!-- both converge to DSL -->
   <line x1="294" y1="119" x2="736" y2="119" stroke="#1c1917" stroke-width="1.6"/>

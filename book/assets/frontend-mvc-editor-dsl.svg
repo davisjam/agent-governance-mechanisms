@@ -16,15 +16,15 @@
   <rect x="24" y="66" width="300" height="150" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>
   <text x="174" y="96" text-anchor="middle" font-size="19" font-weight="bold" fill="#2f5169">View — two-pane editor</text>
   <!-- left mini-pane -->
-  <rect x="44" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#2f5169" stroke-width="1.2"/>
-  <rect x="56" y="126" width="60" height="18" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
-  <rect x="56" y="152" width="90" height="14" rx="2" fill="#faf1e6" stroke="#9a3f12" stroke-width="1"/>
-  <text x="104" y="192" text-anchor="middle" font-size="19" fill="#2f5169">page + overlays</text>
+  <rect x="44" y="112" width="120" height="64" rx="2" fill="#ffffff" stroke="#2f5169" stroke-width="1.2"/>
+  <rect x="56" y="124" width="60" height="18" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
+  <rect x="56" y="150" width="90" height="14" rx="2" fill="#faf1e6" stroke="#9a3f12" stroke-width="1"/>
+  <text x="104" y="196" text-anchor="middle" font-size="19" fill="#2f5169">page + overlays</text>
   <!-- right mini-pane -->
-  <rect x="184" y="112" width="120" height="88" rx="2" fill="#ffffff" stroke="#2f5169" stroke-width="1.2"/>
-  <rect x="196" y="124" width="96" height="20" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
-  <rect x="196" y="150" width="96" height="20" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
-  <text x="244" y="192" text-anchor="middle" font-size="19" fill="#2f5169">editable cards</text>
+  <rect x="184" y="112" width="120" height="64" rx="2" fill="#ffffff" stroke="#2f5169" stroke-width="1.2"/>
+  <rect x="196" y="122" width="96" height="20" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
+  <rect x="196" y="148" width="96" height="20" rx="2" fill="#e7edf3" stroke="#2f5169" stroke-width="1"/>
+  <text x="244" y="196" text-anchor="middle" font-size="19" fill="#2f5169">editable cards</text>
 
   <!-- gesture arrow View -> Controller -->
   <line x1="174" y1="216" x2="174" y2="272" stroke="#1c1917" stroke-width="1.6" marker-end="url(#mvc-arrow)"/>

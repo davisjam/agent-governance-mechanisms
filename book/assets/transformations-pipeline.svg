@@ -36,8 +36,8 @@
   <text x="70" y="92" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-</text>
   <text x="70" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">communicate</text>
   <g>
-    <rect x="150" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="220" y="103" text-anchor="middle" font-size="16" fill="#1c1917">language weights</text>
+    <rect x="150" y="72" width="156" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="228" y="103" text-anchor="middle" font-size="16" fill="#1c1917">language weights</text>
     <rect x="330" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
     <text x="400" y="103" text-anchor="middle" font-size="17" fill="#1c1917">figures + genre</text>
     <rect x="510" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
@@ -50,8 +50,8 @@
   <!-- lane 2: self-operate -->
   <text x="70" y="210" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-operate</text>
   <g>
-    <rect x="150" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="220" y="213" text-anchor="middle" font-size="16" fill="#1c1917">event → activity</text>
+    <rect x="150" y="182" width="156" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="228" y="213" text-anchor="middle" font-size="16" fill="#1c1917">event → activity</text>
     <rect x="330" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
     <text x="400" y="213" text-anchor="middle" font-size="17" fill="#1c1917">design / defect</text>
     <rect x="510" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
@@ -63,8 +63,8 @@
   <!-- lane 3: self-governance -->
   <text x="70" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-governance</text>
   <g>
-    <rect x="150" y="292" width="140" height="52" rx="8" fill="#faf1e6" stroke="#b23b3b" stroke-width="2"/>
-    <text x="220" y="323" text-anchor="middle" font-size="17" fill="#1c1917">a symptom</text>
+    <rect x="150" y="292" width="156" height="52" rx="8" fill="#faf1e6" stroke="#b23b3b" stroke-width="2"/>
+    <text x="228" y="323" text-anchor="middle" font-size="17" fill="#1c1917">a symptom</text>
     <rect x="330" y="292" width="320" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
     <text x="490" y="323" text-anchor="middle" font-size="17" fill="#1c1917">one entry = the transformation</text>
     <rect x="690" y="292" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
@@ -78,11 +78,11 @@
     <path d="M70,50 L70,208 L148,208"/>
     <path d="M70,50 L70,318 L148,318"/>
     <!-- lane 1 -->
-    <path d="M290,98 L328,98"/><path d="M470,98 L508,98"/><path d="M650,98 L688,98"/>
+    <path d="M306,98 L328,98"/><path d="M470,98 L508,98"/><path d="M650,98 L688,98"/>
     <!-- lane 2 -->
-    <path d="M290,208 L328,208"/><path d="M470,208 L508,208"/><path d="M650,208 L688,208"/>
+    <path d="M306,208 L328,208"/><path d="M470,208 L508,208"/><path d="M650,208 L688,208"/>
     <!-- lane 3 -->
-    <path d="M290,318 L328,318"/><path d="M650,318 L688,318"/>
+    <path d="M306,318 L328,318"/><path d="M650,318 L688,318"/>
     <!-- last box into output cap -->
     <path d="M830,98 L890,98 L890,50"/>
     <path d="M830,208 L890,208 L890,50"/>
