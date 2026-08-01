@@ -1,6 +1,11 @@
 """External (Tier-2) checks that need a tool beyond the stdlib: axe-core accessibility over the built
 site, and `claude plugin validate` on the manifests. Each SKIPs when its tool is absent (FAIL only under
---strict), so a fresh clone / browser-less CI stays green on the Tier-1 core."""
+--strict), so a fresh clone / browser-less CI stays green on the Tier-1 core.
+
+One stdlib companion lives here too — `check_axe_coverage_set` — the Tier-1 twin of the axe pass. It
+gates the DETERMINISTIC, model-derived coverage set the axe scan always includes, so the a11y gate stays
+trustworthy even on a browser-less runner where the axe pass itself SKIPs (same "stdlib twin of a T2
+check" pattern the suite uses elsewhere)."""
 from __future__ import annotations
 
 import os
@@ -57,21 +62,37 @@ def _axe_bucket(rel: str) -> str:
     return f"{seg}/{kind}"
 
 
-def _axe_sample(pages: list[str], target: int, rng: random.Random) -> list[str]:
-    """Pick ≤`target` pages: one random representative from every template-family bucket (deterministic
-    coverage of each renderer path every run), then a uniform-random tail from the remainder up to `target`.
-    `pages` are ROOT-relative. Returns the chosen ROOT-relative paths, sorted."""
+def _axe_coverage_set(pages: list[str]) -> list[str]:
+    """The DETERMINISTIC, model-derived coverage set: one canonical page per template-family bucket.
+
+    The buckets are DERIVED from the built page list (`_axe_bucket` keys off each path's structure), so this
+    is a lookup over the actual site — never a hardcoded page list. A new template family enters coverage the
+    moment its first page builds; a removed one drops out. Within a bucket the representative is the
+    lexicographically-first page, so the set is STABLE run to run. Every structural page-shape is therefore
+    axe-checked on EVERY run — closing the false-green window where an unseeded pick could skip a broken
+    shape between the exhaustive publish scans. `pages` are ROOT-relative; returns the chosen paths, sorted."""
     buckets: dict[str, list[str]] = {}
     for p in pages:
         buckets.setdefault(_axe_bucket(p), []).append(p)
-    chosen: set[str] = {rng.choice(members) for members in buckets.values()}
+    return sorted(min(members) for members in buckets.values())
+
+
+def _axe_sample(pages: list[str], target: int, rng: random.Random) -> tuple[list[str], list[str]]:
+    """Choose the pages to scan: the deterministic coverage set (`_axe_coverage_set` — one canonical page
+    per template family, scanned every run) PLUS a uniform-random tail drawn from the remaining pages up to
+    `target` (catches regressions in the long tail; `rng` is unseeded so the tail varies per run and coverage
+    accumulates over time). The coverage set is ALWAYS included in full, even if it alone meets or exceeds
+    `target` — `target` caps only the random tail, never the trustworthy floor. Returns `(coverage, sample)`:
+    the coverage set and the full page list (coverage ∪ tail), both ROOT-relative, sorted."""
+    coverage = _axe_coverage_set(pages)
+    chosen: set[str] = set(coverage)
     remainder = [p for p in pages if p not in chosen]
     rng.shuffle(remainder)
     for p in remainder:
         if len(chosen) >= target:
             break
         chosen.add(p)
-    return sorted(chosen)
+    return coverage, sorted(chosen)
 
 
 def check_axe(strict: bool):
@@ -82,13 +103,17 @@ def check_axe(strict: bool):
     sample runs in ~1-2 min, which is what makes it usable in BOTH local `--full` and CI).
 
     Sampling has two parts (see `_axe_sample`):
-      - REPRESENTATIVE — bucket the pages by template family (`_axe_bucket`) and always include ≥1 per
-        bucket, so every renderer path is exercised every run (deterministic coverage). The representative
-        within a multi-page bucket is picked at random so it varies run to run.
+      - DETERMINISTIC COVERAGE SET — bucket the pages by template family (`_axe_bucket`) and always include
+        the canonical (lexicographically-first) page of every bucket (`_axe_coverage_set`), so every
+        structural page-shape is axe-checked on EVERY run. The set is DERIVED from the built pages, not a
+        hardcoded snapshot, so it tracks the site as families are added or removed. This is what makes the
+        CI gate trustworthy between the exhaustive publish scans: an unseeded random pick could skip a
+        broken shape, but the deterministic floor never does. Its stdlib twin `check_axe_coverage_set` gates
+        the set's soundness even where no browser is present.
       - RANDOM TAIL — fill up to the target with a uniform-random sample of the remaining pages, using an
-        UNSEEDED `random.Random()` so the sample varies per run and coverage accumulates over time. This is
-        a test helper (a template-level bug shows up on the first sampled page from that template) — plain
-        unseeded randomness is deliberately fine here; we do NOT want per-run determinism.
+        UNSEEDED `random.Random()` so the sample varies per run and long-tail coverage accumulates over time
+        (a content-level regression on a specific page surfaces the run it is drawn). Plain unseeded
+        randomness is deliberately fine for the tail; the deterministic floor above carries the guarantee.
     Target size defaults to 25, overridable via `ADA_CATALOG_AXE_SAMPLE` for tuning. The chosen count +
     per-bucket sample is printed so a failure is reproducible and the reader sees it's a sample.
 
@@ -115,13 +140,16 @@ def check_axe(strict: bool):
         target = int(os.environ.get("ADA_CATALOG_AXE_SAMPLE", "25"))
     except ValueError:
         target = 25
-    rng = random.Random()  # UNSEEDED on purpose — sample varies per run, coverage accumulates over time
-    sample = _axe_sample(all_pages, target, rng)
+    rng = random.Random()  # UNSEEDED on purpose — the TAIL varies per run, long-tail coverage accumulates
+    coverage, sample = _axe_sample(all_pages, target, rng)
+    cover_set = set(coverage)
     buckets_hit = sorted({_axe_bucket(p) for p in sample})
-    print(f"          axe: sampling {len(sample)}/{len(all_pages)} pages across {len(buckets_hit)} "
-          f"template-family buckets (representative + random tail; unseeded — varies per run):")
+    tail_n = len(sample) - len(cover_set)
+    print(f"          axe: scanning {len(sample)}/{len(all_pages)} pages across {len(buckets_hit)} "
+          f"template-family buckets — {len(cover_set)} deterministic coverage-set (one per family, every "
+          f"run) + {tail_n} random tail:")
     for p in sample:
-        print(f"            - {p}")
+        print(f"            [{'cover' if p in cover_set else 'rand '}] {p}")
     pages = sample
     port = free_port()
     httpd = ThreadingHTTPServer(("127.0.0.1", port), partial(_SiteHandler, directory=ROOT))
@@ -143,6 +171,35 @@ def check_axe(strict: bool):
     if r.returncode != 0:  # non-zero without a violations summary = launch/browser failure
         return (FAIL if strict else SKIP), [f"axe did not complete (no headless browser?): {out.strip()[:200]}"]
     return PASS, []
+
+
+def check_axe_coverage_set(strict: bool):
+    """Tier-1 stdlib gate on the axe coverage set (no browser needed): the deterministic, model-derived set
+    the axe pass always scans must be SOUND — one canonical representative per template-family bucket,
+    DERIVED from the built pages (not a hardcoded snapshot; tests look up substrate values), and STABLE
+    under input reordering. This is what makes the a11y gate trustworthy between exhaustive publish scans:
+    even on a browser-less runner where the axe pass SKIPs, this pins that every structural page-shape sits
+    in the every-run coverage set. SKIP (FAIL under --strict) if the site is not built yet."""
+    all_pages = sorted(os.path.relpath(p, ROOT) for p in html_files())
+    if not all_pages:
+        return (FAIL if strict else SKIP), ["no built pages to check (run `catalog.py build` first)"]
+    coverage = _axe_coverage_set(all_pages)
+    all_buckets = {_axe_bucket(p) for p in all_pages}
+    covered = {_axe_bucket(p) for p in coverage}
+    issues = []
+    missing = sorted(all_buckets - covered)
+    if missing:
+        issues.append(f"template families with no coverage page: {missing}")
+    if len(coverage) != len(all_buckets):
+        issues.append(f"coverage set has {len(coverage)} page(s) for {len(all_buckets)} template families "
+                      f"(expected exactly one per family)")
+    if len(set(coverage)) != len(coverage):
+        issues.append("coverage set contains duplicate pages")
+    shuffled = list(all_pages)
+    random.Random(1).shuffle(shuffled)  # determinism: reordering the input must not change the derived set
+    if _axe_coverage_set(shuffled) != coverage:
+        issues.append("coverage set is not order-independent — the derivation is not deterministic")
+    return (FAIL if issues else PASS), issues
 
 
 def check_html_valid(strict: bool):
