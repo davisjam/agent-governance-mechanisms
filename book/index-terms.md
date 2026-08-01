@@ -16,6 +16,10 @@ chapter (filled as chapters settle; the generator still scans all chapters for s
 
 - 3D-printer metaphor @ch01
 - picture vs. CAD model vs. print instructions @ch01
+- Toyota Production System (lean production) @ch01
+- poka-yoke (mistake-proofing) @ch01
+- jidoka (stop the line) @ch01
+- kaizen (continuous improvement) @ch01
 - loop engineering @ch02
 - success metric / rubric @ch02
 - conditioning the probability distribution @ch02
