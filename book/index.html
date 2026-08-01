@@ -242,6 +242,13 @@ table caption { caption-side: top; text-align: left; font-size: 14px; color: var
                  margin-bottom: 0.45rem; line-height: 1.5; }
 ul.list-of-floats-links { list-style: none; padding-left: 0; }
 ul.list-of-floats-links li { margin: 0.15rem 0; }
+/* Figures Gallery (figures.html) — every figure verbatim (same rendered fragment the chapters ship),
+   `<hr>`-separated, each followed by a small "from <chapter>" back-link. */
+.gallery-item { margin: 0; }
+.gallery-item .book-figure { margin-top: 0; }
+.gallery-source { font-size: 13px; color: var(--muted); text-align: center; margin: 0.5rem 0 0; }
+.gallery-source a { color: var(--accent); text-decoration: underline; }
+.gallery hr { border: none; border-top: 1px solid var(--rule); margin: 2.4rem 0; }
 .marker { margin: 1.3rem 0; padding: 0.75rem 1rem; border-radius: 5px; font-size: 15px; }
 .marker-fill { background: var(--accent-tint); border: 1px dashed var(--accent); }
 .marker-more { background: var(--box-def-fill); border: 1px dashed var(--box-def-rule); }
@@ -456,4 +463,5 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 </ol>
 <div class="part">Index</div><ol>
 <li><a href="book-index.html"><span class="cnum"> ★</span>Index (terms)</a></li>
+<li><a href="figures.html"><span class="cnum"> ◫</span>Figures Gallery</a></li>
 </ol></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

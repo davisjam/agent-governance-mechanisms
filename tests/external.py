@@ -44,7 +44,7 @@ def _axe_bucket(rel: str) -> str:
     top_level_singletons = {
         "index.html", "catalogue-views.html", "quick-start.html",
         "catalogue-figure.html", "development-workflow.html",
-        "book/index.html", "book/book-index.html", "book/list-of-figures.html",
+        "book/index.html", "book/book-index.html", "book/list-of-figures.html", "book/figures.html",
     }
     if rel in top_level_singletons:
         return rel  # its own bucket
