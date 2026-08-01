@@ -12,6 +12,13 @@ hooks on your own loop**: turning an ambient judgment you keep meaning to make i
 at the moment it is due, biased hard toward silence so it aims without nagging. It is the seam where
 *operate* hands a recurring break to *harden* (partner with self-governance).
 
+L6 has **two halves**. The first is the *reflection* half above — putting a nudge on a skipped judgment.
+The second is **substrate health**: those hooks are *themselves a managed resource*, with a healthy
+baseline of their own (registered, firing, no-op where they shouldn't fire, no kill switch stuck on). A hook
+that silently stopped firing, or fires in a context it was meant to skip, is a resource that has left
+healthy — and because a soft nudge is invisible when it dies, the substrate needs its own drift check, not
+just faith that it's still wired.
+
 ## Healthy baseline
 
 - An ambient operator judgment that keeps getting skipped is backed by a hook that fires the reflex at its
@@ -20,6 +27,11 @@ at the moment it is due, biased hard toward silence so it aims without nagging. 
   window**, and carries a **kill switch**.
 - Each hook is **telemetered** — you can watch it fire and correlate its firings against the thing it was
   meant to provoke, so a dead or over-firing hook is visible rather than silent (the measured leash).
+- The hook substrate as a whole has a **stated healthy baseline you can check**: every hook is registered,
+  each fires at its event and **no-ops in the contexts it must skip** (an operator-only nudge must not fire
+  inside a sub-agent), and **no kill switch is stuck on**. A build-time or session-start drift check
+  reconciles the wired set against the declared set, so a hook that quietly fell out of the config is caught
+  rather than discovered by its absence months later.
 
 ## Symptom classes → resolving docs (Part B fills the doc column)
 
@@ -30,6 +42,7 @@ skipped-judgments:
 |---|---|
 | A failure class recurs across the session but you keep re-patching the instance, never converting the *class* into a control | a **turn-end reflection nudge** — at most once per window, "did the same failure recur ≥2×? consider handing the class to your hardening discipline" (→ self-governance) |
 | A durable lesson is about to be written to the wrong store — stashed as a one-off memory when it belongs in a runbook/playbook, or the reverse | a **pre-write routing nudge** on the memory file — "a true contextual one-off, or should this update an associated runbook/playbook/pointer instead?" |
+| A hook silently stopped firing, fires in a context it was meant to skip (an operator-only nudge firing inside a sub-agent), or a kill switch is stuck on from a debugging session | a **substrate-health drift check** — reconcile the wired hook set against the declared set at session-start / build time, and assert each hook's context-guard + kill-switch state |
 
 ## Owned runbooks
 
@@ -37,6 +50,9 @@ skipped-judgments:
   once-per-window hook that fires the reflex at its decision point; bias the payload toward silence.
 - **put-the-hook-on-a-leash** — ship per-firing telemetry + a yield query, and set a written pull
   condition (it over-fires, or shows near-zero yield across sessions → pull it).
+- **audit-the-hook-substrate** — reconcile the wired hooks against the declared set; confirm each is
+  registered, fires at its event, no-ops where it must, and carries no stuck kill switch. A hook that fell
+  out of the config is a silent gap; the drift check is what surfaces it.
 
 ## Observability surface
 

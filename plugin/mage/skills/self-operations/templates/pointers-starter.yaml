@@ -1,0 +1,79 @@
+# pointers-starter.yaml — the typed source-of-truth for a self-operations "Part B"
+# (the positive lifecycle map + the symptom→doc catalog). ADOPT & ADAPT.
+#
+# WHY a typed SSOT and not hand-written markdown: a non-executable index earns
+# trust from a ref-check, not from tests. You edit THIS file; a generator renders
+# the Part B prose between provenance markers, and a ref-lint proves every `ref`
+# below resolves (see `gen-and-lint-partb-starter.py`). One source of truth, a
+# derived doc, a lint that keeps them honest — the same SSOT→generator→lint
+# triangle the catalogue teaches everywhere.
+#
+# Fill every `# TODO(adapt)`. Strip the example rows once yours replace them.
+#
+# ── ref grammar (the load-bearing detail) ─────────────────────────────────────
+# A `ref` is a repo-relative path, optionally suffixed with `#anchor`:
+#     docs/operations/agents.md              (file only — must exist)
+#     docs/operations/agents.md#healthy-baseline
+#                                            (anchor — must resolve to a heading)
+# The anchor is a GitHub-style slug of a markdown heading in the target file. The
+# lint parses the target's `#`/`##`/… headings, slugifies them, and fails if the
+# anchor matches none. A `ref` with no `#` is file-exists only. A non-`.md` target
+# (a code file) may NOT carry an anchor — code has no headings to resolve.
+
+schema_version: 1
+
+# ── §A Positive lifecycle models (positive-first) ─────────────────────────────
+# The resources the operator manages, each with a HEALTHY baseline. Lead with
+# these — a symptom row (below) is the OBSERVABLE of one of these leaving healthy.
+lifecycle_models:
+  - id: L1
+    name: manage-agents
+    summary: >-
+      # TODO(adapt): how agents are dispatched, isolated, gated, and torn down in
+      YOUR repo. Example: dispatch worktree agents; each is registered in a fleet
+      registry, isolated in its own worktree, gated by a pre-merge staircase, and
+      reclaimed on completion.
+    healthy: >-
+      # TODO(adapt): the observable healthy state. Example: the fleet registry
+      reflects who is in flight; every in-flight agent has a live record; landed
+      work is cleaned up and no orphaned worktrees accrue.
+    refs:
+      - docs/operations/agents.md            # TODO(adapt): your real doc/anchor
+      - docs/operations/agents.md#healthy-baseline
+  # TODO(adapt): add L2 manage-context, L3 manage-git-repo, L4 manage-deploy,
+  # L5 manage-dev-env, and (where present) cron + your own hook substrate. Keep
+  # only the lifecycles that are real resources in your repo.
+
+# ── §B Canonical docs + tools index (positive: "the map") ─────────────────────
+canonical_docs:
+  - name: Architecture overview               # TODO(adapt)
+    ref: docs/ARCHITECTURE.md
+    why: components, data flow, cross-subsystem rules.
+  # TODO(adapt): the handful of docs an operator reaches for first — mission,
+  # observability surfaces, deploy pipeline, local-dev guide. Each `ref` is
+  # ref-linted, so cite real files/anchors.
+
+# ── §C Symptom → doc catalog (the runbook rows) ───────────────────────────────
+# Each row: id, lifecycle, symptom (a GENERAL class + a recognizable `e.g.`),
+# action, refs, see_also (sibling row ids), status. `carried_brief` (optional)
+# names a standing reasoning-brief the operator can dispatch for a JUDGMENT step
+# (see runbooks-starter.yaml). Phrase the symptom as `<general class> (e.g.,
+# <seed incident>)` — you match on the CLASS, the e.g. is only the anchor.
+catalog:
+  - id: L1-a
+    lifecycle: L1
+    symptom: >-
+      # TODO(adapt): a general failure class + its recognizable anchor. Example:
+      a dispatch is refused for low disk (e.g., a "dispatch refused: disk low"
+      error at worktree-create).
+    action: >-
+      # TODO(adapt): what to do — lead with the class fix, cite the doc. Example:
+      this is the OBSERVABLE of host-disk → low; reclaim via the disk-reclaim menu
+      (see the L5 row), highest-yield site first.
+    refs:
+      - docs/operations/agents.md
+    see_also: []                              # TODO(adapt): sibling row ids
+    status: ok                                # ok | incident-doc (single-incident
+    #                                           field-note — generalize on recurrence)
+  # TODO(adapt): one row per recurring symptom you actually see. A row you cannot
+  # attach to a real failure is one you don't need yet — leave it out.

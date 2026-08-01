@@ -98,6 +98,11 @@ SELF_OPERATIONS = SkillSpec(
         "EPIC-TEMPLATE-starter.md",
         "design-doc-template-starter.md",
         "emit-handoff-starter.py",  # machine-generate the reconstructable handoff sections (L2 banking).
+        # The Part-B substrate: two typed SSOTs + a combined generator/ref-lint, so the bootstrap's
+        # "emit Part B" step is scaffolded machinery, not prose (the SSOT→generator→ref-lint triangle).
+        "pointers-starter.yaml",
+        "runbooks-starter.yaml",
+        "gen-and-lint-partb-starter.py",
     ),
 )
 

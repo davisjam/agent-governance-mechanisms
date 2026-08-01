@@ -1,0 +1,72 @@
+# runbooks-starter.yaml — the typed source-of-truth for a self-operations runbook
+# catalog. ADOPT & ADAPT. Companion to `pointers-starter.yaml`; rendered + linted
+# by `gen-and-lint-partb-starter.py`.
+#
+# WHY typed steps: a runbook is code + prose + carried-brief. Decomposing each
+# step into a TYPED kind makes the JUDGMENT-automatable middle (a dispatchable
+# reasoning brief) a first-class, LINTABLE resource instead of under-specified
+# prose. The typing is checkable, not stylistic — the lint enforces the required
+# field per kind.
+#
+# Fill every `# TODO(adapt)`. Strip the example runbook once yours replace it.
+#
+# ── step-kind grammar ─────────────────────────────────────────────────────────
+# Every step declares a `kind`, one of three. The kind sets the REQUIRED field
+# (the lint enforces it):
+#
+#   RUNNABLE               a deterministic tool invocation.
+#                          REQUIRES: `command` (the shell/tool line to run).
+#   JUDGMENT_AUTOMATABLE   reasoning a code tool cannot do, but a strong-model
+#                          dispatch CAN — the "missing middle." REQUIRES:
+#                          `carried_brief` (a repo-relative path to a standing
+#                          brief the operator dispatches). The file MUST exist.
+#   JUDGMENT_IRREDUCIBLE   reasoning that must be surfaced to a human, not
+#                          dispatched. REQUIRES: `prose` (what to surface + why).
+#
+# Every step also carries a `do` (one-line human description of its goal). A
+# `carried_brief` on a non-JUDGMENT_AUTOMATABLE step, or a `command` on a
+# non-RUNNABLE step, is a lint finding (typed-shape enforcement).
+#
+# ── carried_brief grammar ─────────────────────────────────────────────────────
+# A `carried_brief` is a repo-relative path to a standing brief — a reusable,
+# dispatchable prompt living at one sanctioned folder the lint resolves. The
+# convention "standing briefs live at one path the lint checks" is portable; pick
+# your own path. The lint verifies the file exists.
+
+schema_version: 1
+
+# ── Runbooks: id, title, lifecycle, catalog_row, steps[] ──────────────────────
+# `catalog_row` links the runbook to the symptom→doc row (in pointers-starter.yaml)
+# it operationalizes — the runbook is the STEP-BY-STEP for that symptom's `action`.
+# `refs` are supporting docs (same ref grammar as pointers). `resources` lists the
+# carried briefs the runbook depends on (co-located discoverability).
+runbooks:
+  - id: RB-example
+    title: Recover the fleet after a crash          # TODO(adapt)
+    lifecycle: L1
+    catalog_row: L1-a
+    summary: >-
+      # TODO(adapt): the universal problem this runbook solves, in one or two
+      sentences. Example: a crash killed agents mid-flight; on restart, for each
+      orphan decide land / tombstone / surface.
+    refs:
+      - docs/operations/agents.md
+    resources:
+      - briefs/reused/disposition-table.md          # TODO(adapt): a real standing brief
+    steps:
+      - kind: RUNNABLE
+        do: Enumerate the registered agents from the authoritative registry.
+        command: <your registry query> --list-in-flight   # TODO(adapt)
+      - kind: JUDGMENT_AUTOMATABLE
+        do: >-
+          Draft the disposition table — read the classification, propose per
+          orphan land | tombstone | surface, with the reason.
+        carried_brief: briefs/reused/disposition-table.md  # TODO(adapt): file must exist
+      - kind: JUDGMENT_IRREDUCIBLE
+        do: Surface the ambiguous orphans (dirty tree / mid-rebase) to a human.
+        prose: >-
+          # TODO(adapt): what to surface and why the driver must not guess it.
+          Example: a dirty working tree or a mid-rebase conflict is a judgment
+          call — report it, never auto-destroy.
+  # TODO(adapt): one runbook per symptom class whose fix is more than a single
+  # RUNNABLE line. A one-liner belongs in the symptom row's `action`, not here.

@@ -74,6 +74,13 @@ shape before you commit it.*
   solution steps right, and correctly typed?). Their operational judgment is what inspection can't supply.
 - **Emit Part B** as the typed source-of-truth (a pointer catalog + a runbook catalog) and wire the
   reference-validity lint — because a non-executable index earns trust from a ref-check, not from tests.
+  Don't hand-roll it: start from the scaffolds in [`templates/`](templates/) —
+  [pointers-starter.yaml](templates/pointers-starter.yaml) (the lifecycle + docs-map + symptom schema, with
+  the `ref`+`#anchor` grammar in its header), [runbooks-starter.yaml](templates/runbooks-starter.yaml) (the
+  typed-step schema — RUNNABLE / JUDGMENT-AUTOMATABLE / JUDGMENT-IRREDUCIBLE, one required field per kind),
+  and [gen-and-lint-partb-starter.py](templates/gen-and-lint-partb-starter.py) (one stdlib+PyYAML script that
+  renders Part B between provenance markers *and* lints it — file-exists, anchor-resolves, and
+  counts-derived-never-quoted). Edit the YAML SSOTs, regenerate, let the lint keep the two honest.
 
 ## Examples — read one before you author Part B
 
@@ -96,13 +103,19 @@ place. Pick by what you want to see:
   [recover-a-broken-scheduler](examples/runbook-recover-a-broken-scheduler.md) ·
   [keep-the-tree-clean](examples/runbook-keep-the-tree-clean.md) ·
   [query-the-caused-by-mix](examples/runbook-query-the-caused-by-mix.md) ·
-  [audit-model-code-drift](examples/runbook-audit-model-code-drift.md) — each shows the typed steps
+  [audit-model-code-drift](examples/runbook-audit-model-code-drift.md) ·
+  [convert-a-recurring-failure-to-a-control](examples/runbook-convert-recurring-failure-to-control.md) —
+  each shows the typed steps
   end to end (a RUNNABLE line, a JUDGMENT-AUTOMATABLE carried brief, a JUDGMENT-IRREDUCIBLE escalation),
   opening with its universal problem statement, then illustrative solution steps. The
   [drift-audit](examples/runbook-audit-model-code-drift.md) one is the sharpest case of the split this
   skill's runbooks are built on: it mechanizes the enumerate-and-diff of a typed model against the code it
   claims, and reserves the human for the one question a machine can't answer — is this drift a real
-  divergence or an intended as-built gap?
+  divergence or an intended as-built gap? The
+  [convert-a-recurring-failure-to-a-control](examples/runbook-convert-recurring-failure-to-control.md) one is
+  the operate↔govern bridge: it is what you run when a break RECURS — confirm genuine recurrence, hand the
+  class to the partner [`self-governance`](../self-governance/SKILL.md) skill, design the control as a
+  first-class artifact, and surface the open design forks.
 - **The runnable hook library** → [`hooks/`](hooks/) — a self-contained, stdlib-only Claude Code hook
   substrate you copy into your `.claude/` and adapt, in three independently-adoptable layers: **(1)** the
   reflection substrate (a Template-Method `ReflectionFacet` base + typed registry, a shared once-per-window
