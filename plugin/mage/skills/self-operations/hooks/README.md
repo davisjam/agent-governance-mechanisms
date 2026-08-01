@@ -30,6 +30,11 @@ not any one hook:
 - **(e) capability-derived** — a hook's allowed output shape is *derived from the
   vendored schema*, never hand-declared (so a block-only event can't claim to inject).
 
+**One pattern makes that discipline enforceable once: the meta-hook**
+([below](#the-meta-hook-one-registration-seam-per-event)). Register every control into one
+typed seam per event, and your governance layer ports across harnesses and reads as a
+census from one place. The three layers below are its existence proof.
+
 ## The pattern
 
 Some judgments you *mean* to make every session — "did this failure recur, so should
@@ -234,3 +239,71 @@ the model only described in prose.
 The `ON_MEMORY_WRITE` facet needs the same optional `PostToolUse` emitter as the
 memory-routing facet (see step 3 of *How to wire it*); `bank_status.py`,
 `hook_skill_usage_telemetry.py`, and the query run standalone.
+
+## The meta-hook: one registration seam per event
+
+The three layers above share one move. Named as a pattern it outlives this substrate, and
+the value it buys is **portability across agent environments.**
+
+Your governance layer is the set of controls that watch a session: the guards, the nudges,
+the telemetry taps, the compaction steers. Each agent harness wires those in its own config
+format. Wire a control straight into that config and you weld it to the harness. Move to
+another vendor and you re-wire every one, and you cannot even list what you had without
+reading a vendor-specific config plus every script it points at.
+
+The meta-hook inverts that dependency. Register every control into **one typed registry you
+own**, and wire **one thin seam per event** into whatever harness you run on. The registry
+ports across harnesses; only the seam is vendor-specific. Because registration is the only
+way in, the registry *is* the census: *"what governs this session?"* becomes a query over
+your own typed data, not a grep across a config and a pile of scripts. Portability and
+introspectability are one property here. Your governance layer becomes a first-class
+artifact you own, decoupled from any one agent environment.
+
+Each registry entry declares six typed fields:
+
+- **event** — the moment it fires: a turn end, a tool call, a memory write, a compaction.
+- **capability** — its allowed output shape, *derived from the vendored schema* and never
+  hand-set, so a block-only event cannot claim to inject (the (e) discipline above, made
+  mechanical).
+- **kill-switch** — the env var that turns it off.
+- **order** — where it sits when two controls share an event.
+- **context-guard** — operator-only versus everywhere; a nudge meant for the operator
+  no-ops inside a sub-agent.
+- **resource footprint** — what it reads, writes, and locks, over a closed shared-resource
+  vocabulary.
+
+**Why this is the enabling move, not housekeeping.**
+
+- **The shared discipline stops being per-hook virtue.** The five-part discipline at the
+  top of this README is a rule each hook re-implements today. Registered behind one seam,
+  the driver holds it once. Fix the driver and every hook inherits the fix.
+- **Two hooks on one event become a declared arrangement.** Order is a registry field. "At
+  most one blocker per event" turns into a checkable property instead of an accident of
+  wiring order.
+- **Outside governance gets a place to land.** A plugin's hook, a teammate's, or a mandated
+  one enters as a registered node with a known event and an unknown footprint,
+  conservatively conflicting with everything on its event until you analyze it. Composing
+  governance you did not author becomes a merged-registry question.
+
+**The adoption staircase (adopt it at hook two).** Wire your first hook straight into the
+config; one hook needs no registry. The second hook is where the registry earns its keep,
+so consolidate there: register both, wire one seam per event, and read the registry as the
+census from then on. This rides the same earn-its-keep curve the reflection substrate
+already teaches ("start with one facet; the substrate earns its keep at facet two"), applied
+to every hook rather than the reflection ones alone.
+
+**Ship the concept, not a runtime dispatcher.** The portable, shippable half is the
+registry and the registration discipline. Do not ship a runnable dispatcher that takes over
+the harness's own hook execution: ordering, first-block-wins, injection budgets, timeouts.
+The harness owns runtime merge; you own the registry. This substrate already ships the
+existence proof for one event. The reflection layer *is* this pattern realized for the Stop
+event: one emitter, a typed facet registry, round-robin, one window. The meta-hook
+generalizes that move to every event, and keeps it at the level of a registry you can query
+rather than a driver that reruns the harness.
+
+![Before: N controls, a guard and a nudge and a telemetry tap and a steer and a banker,
+each wired individually into one harness's config and welded to it with no census. After,
+adopted at the second hook: every control registers into one typed registry you own —
+event, capability, kill-switch, order, context-guard, resource footprint — read by one thin
+seam per event. The registry is your governance layer: portable across harnesses and
+queryable as the census.](meta-hook.svg)

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 384" role="img"
+     aria-labelledby="mh-title mh-desc"
+     font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <!-- Hand-authored SVG (not Mermaid): a two-panel before/after infographic. The rhetorical payload is
+       the visual contrast between N tangled ad-hoc wires and one clean registration seam — an infographic
+       geometry, not a graph Mermaid auto-layout would place. Self-contained: system fonts only, no external
+       refs. Accessible: role=img + title/desc (no interactive children). -->
+  <title id="mh-title">The meta-hook: one registration seam per event</title>
+  <desc id="mh-desc">Before: N controls — a guard, a nudge, a telemetry tap, a steer, a banker — each wired
+    as its own entry in one harness's config, so the governance layer is welded to that harness with no
+    census. After, adopted at the second hook: every control registers into one typed registry you own
+    (event, capability, kill-switch, order, context-guard, resource footprint), and one thin seam per event
+    reads it. The registry is your governance layer — portable across harnesses and introspectable from one
+    place; it is the census. The shared discipline (fail-open, kill-switch, context-guard, telemetry) is
+    enforced once instead of re-implemented per hook.</desc>
+
+  <defs>
+    <marker id="mh-arrow" viewBox="0 0 10 10" markerWidth="7" markerHeight="7" refX="9" refY="5"
+            orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9a3f12"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== BEFORE ===================== -->
+  <text x="30" y="40" font-family="monospace" font-size="16" letter-spacing="1.5" fill="#b23b3b">TODAY — N AD-HOC HOOKS</text>
+
+  <g transform="rotate(-0.6 118 150)">
+    <rect x="34" y="120" width="150" height="62" rx="10" fill="#f2f0ea" stroke="#57534e" stroke-width="1.5"/>
+    <text x="109" y="147" text-anchor="middle" font-size="20" font-weight="600" fill="#1c1917">harness</text>
+    <text x="109" y="170" text-anchor="middle" font-size="18" fill="#57534e">config</text>
+  </g>
+
+  <!-- five scattered controls, individually wired -->
+  <g font-size="17" fill="#1c1917">
+    <g transform="rotate(1.4 330 74)"><rect x="270" y="56" width="120" height="34" rx="7" fill="#ffffff" stroke="#b23b3b" stroke-width="1.5" stroke-dasharray="5 3"/><text x="330" y="79" text-anchor="middle">guard</text></g>
+    <g transform="rotate(-1.4 340 124)"><rect x="280" y="106" width="120" height="34" rx="7" fill="#ffffff" stroke="#b23b3b" stroke-width="1.5" stroke-dasharray="5 3"/><text x="340" y="129" text-anchor="middle">nudge</text></g>
+    <g transform="rotate(0.9 332 176)"><rect x="266" y="158" width="132" height="34" rx="7" fill="#ffffff" stroke="#b23b3b" stroke-width="1.5" stroke-dasharray="5 3"/><text x="332" y="181" text-anchor="middle">telemetry</text></g>
+    <g transform="rotate(-0.9 340 228)"><rect x="280" y="210" width="120" height="34" rx="7" fill="#ffffff" stroke="#b23b3b" stroke-width="1.5" stroke-dasharray="5 3"/><text x="340" y="233" text-anchor="middle">steer</text></g>
+    <g transform="rotate(1.2 332 280)"><rect x="272" y="262" width="120" height="34" rx="7" fill="#ffffff" stroke="#b23b3b" stroke-width="1.5" stroke-dasharray="5 3"/><text x="332" y="285" text-anchor="middle">banker</text></g>
+  </g>
+  <g stroke="#b23b3b" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.72">
+    <path d="M184 134 C 226 108, 238 88, 268 74"/>
+    <path d="M186 148 C 226 138, 246 130, 278 124"/>
+    <path d="M186 160 C 222 168, 238 174, 264 178"/>
+    <path d="M184 170 C 224 200, 246 220, 278 230"/>
+    <path d="M180 180 C 220 238, 244 268, 270 280"/>
+  </g>
+  <text x="212" y="330" text-anchor="middle" font-size="16" fill="#57534e" font-style="italic">N seams · no census · welded to one harness</text>
+
+  <!-- ===================== STAIRCASE PIVOT ===================== -->
+  <line x1="470" y1="60" x2="470" y2="300" stroke="#e4e0d8" stroke-width="1"/>
+  <path d="M436 176 L 502 176" stroke="#9a3f12" stroke-width="2.5" fill="none" marker-end="url(#mh-arrow)" stroke-linecap="round"/>
+  <text x="470" y="160" text-anchor="middle" font-family="monospace" font-size="16" fill="#9a3f12">at hook ≥ 2</text>
+
+  <!-- ===================== AFTER ===================== -->
+  <text x="520" y="40" font-family="monospace" font-size="16" letter-spacing="1.5" fill="#9a3f12">ONE SEAM PER EVENT</text>
+
+  <rect x="514" y="122" width="106" height="60" rx="18" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="567" y="149" text-anchor="middle" font-size="19" font-weight="600" fill="#9a3f12">event</text>
+  <text x="567" y="171" text-anchor="middle" font-size="17" fill="#57534e">fires</text>
+
+  <path d="M622 152 L 662 152" stroke="#9a3f12" stroke-width="2.5" fill="none" marker-end="url(#mh-arrow)" stroke-linecap="round"/>
+
+  <rect x="666" y="116" width="120" height="72" rx="10" fill="#ffffff" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="726" y="146" text-anchor="middle" font-size="20" font-weight="600" fill="#1c1917">meta-hook</text>
+  <text x="726" y="168" text-anchor="middle" font-size="17" fill="#57534e">one seam</text>
+
+  <path d="M786 152 L 826 152" stroke="#9a3f12" stroke-width="2.5" fill="none" marker-end="url(#mh-arrow)" stroke-linecap="round"/>
+
+  <!-- typed registry = your governance layer -->
+  <rect x="830" y="86" width="164" height="176" rx="10" fill="#f2f0ea" stroke="#57534e" stroke-width="1.5"/>
+  <text x="912" y="112" text-anchor="middle" font-size="19" font-weight="600" fill="#1c1917">typed registry</text>
+  <line x1="844" y1="124" x2="980" y2="124" stroke="#e4e0d8" stroke-width="1"/>
+  <g font-family="monospace" font-size="15" fill="#57534e">
+    <text x="848" y="146">event · capability</text>
+    <text x="848" y="168">kill-switch · order</text>
+    <text x="848" y="190">context-guard</text>
+    <text x="848" y="212">footprint (r/w/lock)</text>
+  </g>
+  <text x="912" y="244" text-anchor="middle" font-size="16" font-weight="600" fill="#9a3f12">your governance layer</text>
+
+  <text x="726" y="214" text-anchor="middle" font-size="16" fill="#57534e" font-style="italic">fail-open · kill-switch · guard ·</text>
+  <text x="726" y="234" text-anchor="middle" font-size="16" fill="#57534e" font-style="italic">telemetry — enforced once</text>
+
+  <text x="757" y="330" text-anchor="middle" font-size="16" fill="#57534e" font-style="italic">portable across harnesses · the census is a query, not a grep</text>
+
+  <!-- ===================== FOOTER ===================== -->
+  <text x="500" y="370" text-anchor="middle" font-size="16" fill="#57534e">Registration is the only way in — so the node list can be trusted. An outside hook (a plugin's, a teammate's, a mandated one) lands as a registered node.</text>
+</svg>

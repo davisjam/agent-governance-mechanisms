@@ -126,6 +126,9 @@ place. Pick by what you want to see:
   runnable half of [L2 manage-context](examples/lifecycle-L2-manage-context.md). The runnable complement to
   the [L6 govern-your-own-loop](examples/lifecycle-L6-govern-your-own-loop.md) model — read its
   [`README.md`](hooks/README.md) for the wiring + how-to-add-a-facet, and its five-part hook discipline.
+  The pattern behind all three layers is **the meta-hook**: register every control into one typed seam
+  per event, so your governance layer is portable across agent harnesses and readable as a census from
+  one place (see [the meta-hook](hooks/README.md#the-meta-hook-one-registration-seam-per-event)).
 - **Design + Epic + handoff templates** → [`templates/`](templates/) — when operating spills into
   *building* (an infra change, or the design → ratify → build → DoD feature-dev flow), author from the
   shipped [Epic template](templates/EPIC-TEMPLATE-starter.md) and
