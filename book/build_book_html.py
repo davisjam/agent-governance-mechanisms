@@ -3200,6 +3200,10 @@ def expected_page_slugs() -> set[str]:
 # a distinctive tail from the last section. Any miss → RENDER FAILURE.
 _PDF_PAGE_CEILING = 800
 _PDF_PAGE_FLOOR = 50  # a real book render; under this means the render collapsed or truncated
+# Shipped-size ceiling: the FINAL (post-repack) PDF must be <= 8 MiB. A dense whole-book render is ~4.3 MB;
+# a full-bleed rasterized cover or an un-downsampled image blows this past 30 MB. The gate blocks such a
+# bloated PDF from shipping via CI or the local push. Measured on the post-qpdf-repack file (what ships).
+_PDF_MAX_BYTES = 8 * 1024 * 1024  # 8 MiB = 8388608 bytes
 _BOOK_TITLE = "Model-Based Agentic Software Engineering"
 
 
@@ -3428,6 +3432,26 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
     return 0
 
 
+def assert_pdf_size(pdf_path: pathlib.Path) -> None:
+    """Shipped-size gate. Fails loud (raises SystemExit) if the FINAL PDF exceeds `_PDF_MAX_BYTES` (8 MiB).
+
+    Call this AFTER the qpdf repack so the number checked is the post-repack size that actually ships. A
+    bloated PDF is almost always a full-bleed cover or an un-downsampled image rasterized at print DPI —
+    a dense whole-book render is ~4.3 MB, so 8 MiB leaves generous headroom while still catching a 30 MB
+    regression. Prints a PASS line when green so the control is visible in the build log alongside the
+    content-integrity gate."""
+    size = pdf_path.stat().st_size
+    if size > _PDF_MAX_BYTES:
+        raise SystemExit(
+            f"PDF SIZE GATE: FAIL — {pdf_path.name} is {size / 1_048_576:.1f} MB "
+            f"({size:,} bytes), over the {_PDF_MAX_BYTES / 1_048_576:.0f} MB "
+            f"({_PDF_MAX_BYTES:,} bytes) ceiling.\n"
+            "  Hint: a filter-heavy full-bleed cover rasterizes huge — pre-rasterize it to a compressed "
+            "image (or downsample any oversized image) before shipping.")
+    print(f"PDF SIZE GATE: PASS — {size / 1_048_576:.1f} MB "
+          f"<= {_PDF_MAX_BYTES / 1_048_576:.0f} MB ceiling.")
+
+
 def _pdf_is_tagged(pdf_path: pathlib.Path) -> bool:
     """Return True if the PDF is tagged (has a struct tree root).
 
@@ -3563,6 +3587,11 @@ def build_pdf() -> int:
               "Check the Typst document settings before shipping.", file=sys.stderr)
         return 1
     print("Tag preservation: struct tree present in PDF.")
+
+    # Shipped-size gate — measured on the REPACKED file (what actually ships), so it fails loud on a
+    # bloated PDF (e.g. a full-bleed rasterized cover) that content-integrity alone would pass. Raises
+    # SystemExit on breach; prints its PASS line adjacent to the content-integrity gate below.
+    assert_pdf_size(pdf_out)
 
     # Content-integrity gate — the whole book must be in the compiled PDF.
     return verify_pdf(pdf_out)

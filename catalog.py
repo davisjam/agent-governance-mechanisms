@@ -2973,14 +2973,18 @@ def _stage_deploy_manifest() -> None:
 def cmd_deploy(args) -> int:
     """Build the site, then serve it locally (--local) or publish it to GitHub (--github)."""
     want_pdf = getattr(args, "pdf", False) and args.target == "local"
+    # github ALWAYS renders the PDF pre-push as a BLOCKING gate (content-integrity + shipped-size ceiling),
+    # so a bloated or broken PDF aborts the push before CI ever runs — mirroring what CI enforces on push.
+    github_pdf_gate = args.target == "github"
     print(f"== Deploy plan: target={args.target} ==")
     print("  1. validate   2. build   3. test (BLOCKING — aborts on any failure)   "
           + ("3b. render PDF   " if want_pdf else "")
+          + ("3b. render PDF + size/integrity gate (BLOCKING)   " if github_pdf_gate else "")
           + ("4. serve on localhost" if args.target == "local"
              else "4. commit + push to origin main (CI deploys)"))
     if getattr(args, "pdf", False) and args.target == "github":
-        # The Pages workflow ALWAYS renders + publishes the PDF on push, so --pdf is redundant here.
-        print("  (note: --pdf is a no-op for github — the Pages workflow always renders the PDF on push)")
+        # The github path already renders the PDF as a pre-push gate, so an explicit --pdf adds nothing.
+        print("  (note: --pdf is implied for github — the PDF is always rendered pre-push as a BLOCKING gate)")
     if cmd_validate(None) != 0:
         print("ABORT: schema invalid — fix before deploying.")
         return 1
@@ -3013,6 +3017,18 @@ def cmd_deploy(args) -> int:
         except KeyboardInterrupt:
             print("\nstopped.")
         return 0
+
+    # --github PRE-PUSH PDF GATE (BLOCKING): render the PDF via the same `--pdf` path CI runs, which carries
+    # the content-integrity gate AND the shipped-size ceiling (<= 8 MiB, measured post-repack). This refuses
+    # to push a bloated PDF (e.g. a full-bleed rasterized cover regressing to 30+ MB) — the exact failure CI
+    # renders on push. Mirrors the `local --pdf` abort pattern. CI still re-renders authoritatively on push.
+    print("\n== Pre-push PDF gate (book/mage-book.pdf) via Typst; content-integrity + size ceiling (8 MiB) ==")
+    pdf_gate = subprocess.run([sys.executable, os.path.join("book", "build_book_html.py"), "--pdf"],
+                              cwd=ROOT)
+    if pdf_gate.returncode != 0:
+        print("ABORT: PDF gate failed — will not push (see build_book_html.py --pdf output above; "
+              "a >8 MiB PDF or a content-integrity miss blocks the push).")
+        return 1
 
     # --github: stage the EXPLICIT manifest (never `git add -A`), commit, push.
     _stage_deploy_manifest()
@@ -3130,7 +3146,7 @@ def main() -> int:
     d = sub.add_parser("deploy", help="build, then serve locally (local) or publish to GitHub (github)")
     d.add_argument("target", choices=["local", "github"], help="local = serve on localhost; github = commit + push (CI deploys)")
     d.add_argument("--port", type=int, default=DEFAULT_PORT, help=f"localhost port for --local (default {DEFAULT_PORT})")
-    d.add_argument("--pdf", action="store_true", help="(local only) also render book/mage-book.pdf (print-native Typst path) so the local preview's Download-PDF link is current. Redundant for github — CI always renders the PDF on push")
+    d.add_argument("--pdf", action="store_true", help="(local only) also render book/mage-book.pdf (print-native Typst path) so the local preview's Download-PDF link is current. Implied for github — the PDF is always rendered pre-push as a BLOCKING content-integrity + size (<=8 MiB) gate")
     d.add_argument("-m", "--message", default="deploy: rebuild site", help="commit message for github mode")
     args = p.parse_args()
     return {"validate": cmd_validate, "query": cmd_query, "summaries": cmd_summaries,
