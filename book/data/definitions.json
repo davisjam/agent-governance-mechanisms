@@ -3,7 +3,7 @@
 
   "_derivation": "Derived (not hand-copied) from book/transcripts/DEFINITIONS-DRAFT.md — the green-box + per-aspect-elaboration drafts. When that draft or its Part-2 landing changes, regenerate this record set and re-check.",
 
-  "_book_home_note": "The four CORE-TERM definitions (model, agent, engineering, software-engineering) are tagged with an index-def in §2.1 (The Agent Stack), so their `book_home_owed.status: landed` and each carries a resolved `book_home` (the `#idx-def-<slug>` anchor on the 2.1 page). The fifth record, `structured`, is the ADJECTIVE rider on the model definition — it lands in §2.1 as prose now (`book_home_owed.status: drafted`) but is NOT yet index-def-tagged, so its `book_home` points at the 2.1 page (no anchor) and its landing `def-structured` site element is owned by the landing-revision pass; promote to landed when the index-def + def-box are tagged. The drift check still only requires a resolvable SITE home; the book home is the honest 'book coverage ⊇ site framings' realization.",
+  "_book_home_note": "The four CORE-TERM definitions (model, agent, engineering, software-engineering) are tagged with an index-def in §2.1 (The Agent Stack), so their `book_home_owed.status: landed` and each carries a resolved `book_home` (the `#idx-def-<slug>` anchor on the 2.1 page). The fifth record, `structured`, is the ADJECTIVE rider on the model definition — now also index-def-tagged in §2.1 (`book_home_owed.status: landed`, `book_home` → `#idx-def-structured`), rendering as the blue def-box in the web book + PDF; on the landing it reads as the rider on the four definitions, not a fifth peer (the 'four definitions' framing is preserved). The drift check still only requires a resolvable SITE home; the book home is the honest 'book coverage ⊇ site framings' realization.",
 
   "_order": ["model", "agent", "engineering", "software-engineering", "structured"],
 
@@ -81,8 +81,8 @@
     ],
     "site_home": "def-structured",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Structured",
-    "book_home": "book/2.1-the-agent-stack.html",
-    "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "drafted", "note": "Drafted: a rider on the model definition in §2.1 — the adjective every blueprint carries. Promote to landed when the index-def is tagged in the chapter and the def-box renders in the web book + PDF; the landing-revision pass owns the def-structured site element (already auto-projected onto the landing by the definitions strip)."},
+    "book_home": "book/2.1-the-agent-stack.html#idx-def-structured",
+    "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the adjective rider on the model definition in §2.1 is tagged with an index-def and renders as the blue def-box in the web book + PDF (the #idx-def-structured anchor). On the landing it reads as the rider on the four definitions, not a fifth peer."},
     "lexicon_link": "book/6.2-glossary.html",
     "concepts_link": "book/data/concepts.json"
   }

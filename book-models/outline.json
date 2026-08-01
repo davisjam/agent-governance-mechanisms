@@ -7,7 +7,7 @@
     "derived_ids": 151,
     "missing_topic_sentence": 2,
     "sections_drained": 152,
-    "paragraph_points": 458
+    "paragraph_points": 461
   },
   "chapters": [
     {
@@ -383,6 +383,11 @@
               "slug": "process-models-reorder-never-replace",
               "text": "Process models reorder the activities, never replace them.",
               "block_index": 10
+            },
+            {
+              "slug": "improving-the-process-is-engineering-too-toyota-named-the-moves",
+              "text": "Improving the process is engineering too; Toyota named the moves.",
+              "block_index": 13
             }
           ]
         },
@@ -392,27 +397,27 @@
           "heading_text": "The two seats",
           "topic_sentence": "Two words for two jobs, and this book keeps them apart.",
           "id_source": "derived",
-          "block_index": 13,
+          "block_index": 15,
           "points": [
             {
               "slug": "engineer-authors-intent-developer-writes-code",
               "text": "The engineer authors intent; the developer writes code.",
-              "block_index": 15
+              "block_index": 17
             },
             {
               "slug": "mage-reassigns-only-the-developer-seat",
               "text": "MAGE reassigns exactly one seat: the developer's.",
-              "block_index": 18
+              "block_index": 20
             },
             {
               "slug": "role-shrinks-nothing-judgment-more-consequential",
               "text": "The role shrinks nothing; judgment grows more consequential.",
-              "block_index": 20
+              "block_index": 22
             },
             {
               "slug": "engineers-always-had-models-unwritten",
               "text": "Engineers always had models; writing them down stopped paying.",
-              "block_index": 22
+              "block_index": 24
             }
           ]
         },
@@ -422,22 +427,22 @@
           "heading_text": "SDLC to SELC",
           "topic_sentence": "The field's own name for the lifecycle gives the old arrangement away: SDLC, the software *development* life cycle.",
           "id_source": "derived",
-          "block_index": 24,
+          "block_index": 26,
           "points": [
             {
               "slug": "sdlc-names-the-delegated-activity",
               "text": "SDLC names the activity the human no longer performs.",
-              "block_index": 27
+              "block_index": 29
             },
             {
               "slug": "rename-to-selc-engineering-life-cycle",
               "text": "Rename it SELC: the software engineering life cycle.",
-              "block_index": 29
+              "block_index": 31
             },
             {
               "slug": "delegation-keeps-accountability-intact",
               "text": "Delegating the keystrokes keeps accountability intact.",
-              "block_index": 34
+              "block_index": 36
             }
           ]
         },
@@ -447,22 +452,22 @@
           "heading_text": "A different seat is a different discipline",
           "topic_sentence": "Same lifecycle, then; no new phases.",
           "id_source": "derived",
-          "block_index": 36,
+          "block_index": 38,
           "points": [
             {
               "slug": "reassigned-seat-remakes-the-discipline",
               "text": "Same phases; the reassigned seat remakes the discipline.",
-              "block_index": 38
+              "block_index": 40
             },
             {
               "slug": "executing-from-models-repeats-assembly-to-code",
               "text": "Executing from models repeats the assembly-to-code move.",
-              "block_index": 40
+              "block_index": 42
             },
             {
               "slug": "rest-of-book-equips-the-engineers-seat",
               "text": "The rest of the book equips the engineer's seat.",
-              "block_index": 42
+              "block_index": 44
             }
           ]
         }
@@ -555,12 +560,12 @@
             {
               "slug": "structured-is-what-admits-the-machine",
               "text": "The structure is what admits the machine.",
-              "block_index": 43
+              "block_index": 44
             },
             {
               "slug": "definition-relations-tell-the-book-in-a-nutshell",
               "text": "The four definitions' relations summarize the whole book.",
-              "block_index": 45
+              "block_index": 46
             }
           ]
         },
@@ -570,37 +575,37 @@
           "heading_text": "The four layers",
           "topic_sentence": "**At the bottom sits the foundation model.** It comes from a commercial vendor or an open-weight release, and it is a general language reasoner, able to *induce* an understanding of your environment — though that induction is expensive, and it happens fresh every time.",
           "id_source": "derived",
-          "block_index": 47,
+          "block_index": 48,
           "points": [
             {
               "slug": "foundation-layer-spares-the-model-reasoning-cost",
               "text": "Tell the model where to look; spare its reasoning.",
-              "block_index": 49
+              "block_index": 50
             },
             {
               "slug": "the-model-reasons-over-a-world-representation",
               "text": "The model reasons over a world representation, so equip it.",
-              "block_index": 54
+              "block_index": 55
             },
             {
               "slug": "harness-manages-the-context-window-and-holds-two-mechanism-points",
               "text": "The harness manages the context window and holds two mechanisms.",
-              "block_index": 56
+              "block_index": 57
             },
             {
               "slug": "skills-are-soft-hooks-are-hard-tools-are-deterministic",
               "text": "Skills are soft, hooks are hard, tools take deterministic action.",
-              "block_index": 60
+              "block_index": 61
             },
             {
               "slug": "engineering-environment-must-be-written-down-and-offers-git-and-ci-hooks",
               "text": "Write down the engineering environment; it offers git hooks.",
-              "block_index": 65
+              "block_index": 66
             },
             {
               "slug": "application-layer-makes-mistakes-structurally-impossible-via-static-analysis",
               "text": "Static analysis makes a mistake class structurally impossible.",
-              "block_index": 69
+              "block_index": 70
             }
           ]
         },
@@ -610,27 +615,27 @@
           "heading_text": "Every layer is a place to steer",
           "topic_sentence": "Read the stack as a list of opportunities, because that is what it is.",
           "id_source": "derived",
-          "block_index": 72,
+          "block_index": 73,
           "points": [
             {
               "slug": "read-each-layer-as-an-injection-opportunity",
               "text": "Read each layer as an injection opportunity.",
-              "block_index": 74
+              "block_index": 75
             },
             {
               "slug": "every-layer-serves-one-goal-narrow-the-search",
               "text": "Every layer serves one goal: narrow the agent's search.",
-              "block_index": 77
+              "block_index": 78
             },
             {
               "slug": "mechanisms-interact-and-the-interplay-is-its-own-problem",
               "text": "Mechanisms interact; the interplay is its own problem.",
-              "block_index": 79
+              "block_index": 80
             },
             {
               "slug": "the-stack-grounds-both-theses",
               "text": "The stack grounds both the Modeling and Alignment theses.",
-              "block_index": 81
+              "block_index": 82
             }
           ]
         }
@@ -999,24 +1004,34 @@
               "block_index": 33
             },
             {
+              "slug": "constraint-and-sensor-are-control-engineerings-working-terms",
+              "text": "Constraint and sensor come from control engineering.",
+              "block_index": 37
+            },
+            {
               "slug": "form-and-move-are-two-independent-axes",
               "text": "Form and move are two independent axes.",
-              "block_index": 37
+              "block_index": 39
             },
             {
               "slug": "most-real-mechanisms-are-a-package-so-tag-the-primary-move",
               "text": "Most mechanisms are a package; tag the primary move.",
-              "block_index": 44
+              "block_index": 46
             },
             {
               "slug": "a-purely-organizational-answer-is-all-sensors-and-never-removes-a-failure-class",
               "text": "A purely organizational answer is all sensors, removing no class.",
-              "block_index": 46
+              "block_index": 48
+            },
+            {
+              "slug": "the-constraint-is-poka-yoke-the-sensors-stop-is-jidoka",
+              "text": "The constraint is poka-yoke; the sensor's stop is jidoka.",
+              "block_index": 50
             },
             {
               "slug": "the-governed-environment-is-determinize-what-you-can-then-convert-every-surprise-into-a-constraint-or-sensor",
               "text": "Determinize what you can; convert every surprise into a mechanism.",
-              "block_index": 48
+              "block_index": 52
             }
           ]
         },
@@ -1026,32 +1041,32 @@
           "heading_text": "The residual: goals no mechanism reaches",
           "topic_sentence": "That closing line reads as if it settles everything.",
           "id_source": "derived",
-          "block_index": 51,
+          "block_index": 55,
           "points": [
             {
               "slug": "some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified",
               "text": "Some goals split into neither, being an absence nobody specified.",
-              "block_index": 53
+              "block_index": 57
             },
             {
               "slug": "the-residual-is-a-human-job-that-sets-the-throughput-ceiling",
               "text": "The residual is a human job setting the throughput ceiling.",
-              "block_index": 56
+              "block_index": 60
             },
             {
               "slug": "the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis",
               "text": "The residual is the complement of both moves, not soft.",
-              "block_index": 58
+              "block_index": 62
             },
             {
               "slug": "naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible",
               "text": "Naming the residual is the honest edge that earns trust.",
-              "block_index": 60
+              "block_index": 64
             },
             {
               "slug": "the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out",
               "text": "The residual is not fixed; authoring the spec shrinks it.",
-              "block_index": 62
+              "block_index": 66
             }
           ]
         }

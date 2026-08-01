@@ -26,7 +26,7 @@
   "projected": [
     "book::design-a-governed-environment-in-which-a-fleet",
     "book::distinguish-a-constraint-from-a-sensor-and-a-soft-me",
-    "book::model-a-system-as-a-small-set-of-typed-drift-c",
+    "book::model-a-system-as-a-small-set-of-structured-dr",
     "part-1::judge-whether-a-task-needs-the-book-s-machiner",
     "part-2::construct-the-governed-environment-its-layers-its",
     "part-3::model-a-system-through-kruchten-s-4-1-views-as",

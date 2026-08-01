@@ -37,6 +37,16 @@ FONTS_LINK = _dtokens.google_fonts_link()
 BOOK_MANIFEST = json.loads(open(os.path.join(ROOT, "book", "book-manifest.json"), encoding="utf-8").read())
 _PDF_HREF = "book/" + BOOK_MANIFEST["pdf_filename"]  # root-relative href to the published PDF (single source: the manifest)
 
+# Repo-metadata SSOT — owner/repo/URLs read once from book-models/repo-metadata.json (stdlib-read, the
+# design-tokens.json pattern). The GitHub repo link in the chrome (footer, top nav, landing nav grid) and
+# the deploy "watch the Actions run" line all resolve from HERE, so a repo rename touches one file, not four.
+_REPO_META = json.loads(open(os.path.join(ROOT, "book-models", "repo-metadata.json"), encoding="utf-8").read())
+_REPO_OWNER = _REPO_META["owner"]
+_REPO_NAME = _REPO_META["repo"]
+_REPO_URL = f"https://github.com/{_REPO_OWNER}/{_REPO_NAME}"          # <site>/<owner>/<repo>
+_REPO_ACTIONS_URL = _REPO_META.get("actions_url", f"{_REPO_URL}/actions")
+_SITE_URL = _REPO_META["site_url"]                                    # the author's Pages root
+
 
 def _book_title_block() -> str:
     """The site-landing hero title + optional subtitle, from BOOK_MANIFEST (single source of truth)."""
@@ -731,18 +741,46 @@ def check_escape_seam() -> list[str]:
             for i, ln in enumerate(src) if needle in ln]
 
 
+def _landing_id_scan() -> "set[str] | None":
+    """Every `id="…"` on the BUILT landing (index.html), or None when the site is not built yet. The
+    id-set the model→site projection-drift join runs against."""
+    idx = os.path.join(ROOT, "index.html")
+    if not os.path.isfile(idx):
+        return None
+    return set(re.findall(r'\bid="([a-z0-9][a-z0-9-]*)"', open(idx, encoding="utf-8").read()))
+
+
+def projection_drift(records: dict, landing_ids: "set[str] | None", id_of) -> "list[tuple[str, str]]":
+    """The shared model→SITE projection-drift core (rule #11 second-site DRY — extracted from
+    check_big_ideas + the definitions site check, which both projected a model file then asserted every
+    record's id resolved on the built landing). Given a model's `records`, the set of ids on the built
+    landing, and a per-record extractor `id_of(slug, rec) -> projected_id`, return the (slug, projected_id)
+    pairs whose id is modeled but does NOT resolve on the landing — "modeled but not projected".
+    `landing_ids is None` (site not built yet) returns [] so the join stays best-effort; each caller
+    formats its own domain finding string."""
+    if landing_ids is None:
+        return []
+    missing: list[tuple[str, str]] = []
+    for slug, rec in records.items():
+        pid = id_of(slug, rec)
+        if pid and pid not in landing_ids:
+            missing.append((slug, pid))
+    return missing
+
+
 def check_big_ideas() -> list[str]:
     """The BIG-IDEAS projection drift catch. book-models/landing-big-ideas.json is the model; the landing's
-    Big-Ideas argument (index.html) is its projection. Mirrors the definitions drift check. Asserts per
-    slot + gateway:
+    Big-Ideas argument (index.html) is its projection. Mirrors the definitions drift check. Asserts:
       (a) BOOK HOME — `book_home` (minus any `#anchor`) resolves to a real chapter/page on disk (the
           "site is a preview; book coverage ⊇ site framings" rule made mechanical).
       (b) FIGURE — `figure` exists under book/assets/. Every asset's palette conformance is enforced
           separately + audit-only by the design-token drift lint, so a real asset is palette-governed;
           this check does not re-gate palette (it would redden validate on the existing audit-only drift).
       (c) WORD CAP — `claim` is within the model's declared `_word_cap`.
-      (d) MODEL→SITE — when index.html is present, each record's `id` resolves to an id on the built
-          landing (the projection actually reached the page).
+      (d) MODEL→SITE — when index.html is present, each SIX-idea record's `id` resolves to an id on the
+          built landing (via the shared `projection_drift`). The `gateway` record is EXCLUDED: the landing
+          closes on the conclusion + three ways-in buttons and no longer renders the F1-gateway band, so
+          its id is intentionally not projected — the six ideas ARE.
     Returns a list of problem strings (empty = clean)."""
     path = os.path.join(ROOT, "book-models", "landing-big-ideas.json")
     if not os.path.isfile(path):
@@ -754,10 +792,6 @@ def check_big_ideas() -> list[str]:
     for slug in raw.get("_order", []):
         if slug not in recs:
             problems.append(f"_order references {slug!r} with no record")
-    # index.html ids (best-effort MODEL→SITE join; skipped if the site is not built yet).
-    idx = os.path.join(ROOT, "index.html")
-    site_ids = set(re.findall(r'\bid="([a-z0-9][a-z0-9-]*)"', open(idx, encoding="utf-8").read())) \
-        if os.path.isfile(idx) else None
     for slug, rec in recs.items():
         bh = (rec.get("book_home") or "").split("#")[0]
         if not bh or not os.path.exists(os.path.join(ROOT, bh)):
@@ -769,10 +803,11 @@ def check_big_ideas() -> list[str]:
         n = len((rec.get("claim") or "").split())
         if n > cap:
             problems.append(f"big-ideas: {slug!r} claim is {n} words (cap {cap}): {rec.get('claim')!r}")
-        rid = rec.get("id", "")
-        if site_ids is not None and rid and rid not in site_ids:
-            problems.append(f"big-ideas: {slug!r} id {rid!r} does not resolve on the landing "
-                            f"(index.html) — modeled but not projected (rebuild, or fix the renderer)")
+    # (d) MODEL→SITE via the shared helper — the six ideas only (gateway excluded, see docstring).
+    projected = {k: v for k, v in recs.items() if k != "gateway"}
+    for slug, rid in projection_drift(projected, _landing_id_scan(), lambda s, r: r.get("id", "")):
+        problems.append(f"big-ideas: {slug!r} id {rid!r} does not resolve on the landing "
+                        f"(index.html) — modeled but not projected (rebuild, or fix the renderer)")
     return problems
 
 
@@ -948,15 +983,17 @@ PDF_SVG = ('<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" '
            'v.8h.3c.2 0 .3-.1.3-.4s-.1-.4-.3-.4h-.3zm2 .0h.9c.6 0 1 .5 1 1.4s-.4 1.5-1 1.5h-.9V8.7zm.6.5v1.8h.2'
            'c.3 0 .5-.3.5-.9s-.2-.9-.5-.9h-.2zm2.3-.5h1.7v.5h-1.1v.6h1v.5h-1v1.2h-.6V8.7z"></path></svg>')
 
-SITE_FOOTER = (f'<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, '
+SITE_FOOTER = (f'<footer class="site-foot">© <a href="{_SITE_URL}">James C. Davis</a>, '
                f'2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; '
-               f'<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
-               f'{GITHUB_SVG} agent-governance-mechanisms</a>'
+               f'<a class="gh" href="{_REPO_URL}">'
+               f'{GITHUB_SVG} {_REPO_NAME}</a>'
                f'&nbsp;·&nbsp; <a class="book-foot" href="{{book_prefix}}book/index.html">'
-               f'Read the book →</a></footer>')
+               f'Read the book →</a>'
+               f'<span class="foot-nsf">This work was supported by the U.S. National Science Foundation '
+               f'under grants #2541917 and #2452533.</span></footer>')
 
-TOPNAV = ('<div class="topnav"><a href="https://davisjam.github.io">James C. Davis, Purdue University</a>'
-          '<a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms">'
+TOPNAV = (f'<div class="topnav"><a href="{_SITE_URL}">James C. Davis, Purdue University</a>'
+          f'<a class="gh" href="{_REPO_URL}">'
           f'{GITHUB_SVG} GitHub</a></div>')
 
 # Landing top-right 3×2 nav grid — bigger, higher-contrast tap targets than the old topnav link pair.
@@ -964,9 +1001,9 @@ TOPNAV = ('<div class="topnav"><a href="https://davisjam.github.io">James C. Dav
 #          Book | Book (PDF)                (bottom row, 2 cells centered under the 3-col track)
 NAV_GRID = (
     '<nav class="nav-grid" aria-label="Primary">'
-    '<a class="ng-cell" href="https://davisjam.github.io">'
+    f'<a class="ng-cell" href="{_SITE_URL}">'
     '<span class="ng-t">Author</span><span class="ng-s">James C. Davis · Purdue</span></a>'
-    '<a class="ng-cell" href="https://github.com/davisjam/agent-governance-mechanisms">'
+    f'<a class="ng-cell" href="{_REPO_URL}">'
     f'<span class="ng-t">{GITHUB_SVG} GitHub</span><span class="ng-s">the source repository</span></a>'
     '<a class="ng-cell" href="quick-start.html">'
     '<span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a>'
@@ -988,6 +1025,7 @@ FONT_CSS = (CSS_ROOT_BLOCK +
             ' font-size:var(--fs-micro); color:var(--muted); text-align:center; }\n'
             '  .site-foot a { color:var(--accent); text-decoration:underline; } .site-foot a:hover { text-decoration:none; }\n'
             '  .site-foot .gh { white-space:nowrap; }\n'
+            '  .site-foot .foot-nsf { display:block; margin-top:var(--space-1); color:var(--muted); }\n'
             '  .topnav { position:absolute; top:14px; right:20px; font-size:var(--fs-micro); display:flex; gap:var(--space-2); }\n'
             '  .topnav a { color:var(--muted); text-decoration:none; white-space:nowrap; } .topnav a:hover { color:var(--accent); }\n'
             '  @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 var(--space-1); } }\n')
@@ -1377,16 +1415,19 @@ LANDING_CSS = """
             text-decoration:none; }
   .s-read:hover { text-decoration:underline; }
 
-  /* ---- the F1 gateway into the census ------------------------------------------------------- */
-  .gateway { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:18px 42px; align-items:center;
-             border:1.6px solid var(--rule); border-left:4px solid var(--accent); border-radius:12px;
-             background:var(--paper); padding:22px 26px; margin:8px 0; }
-  .gateway .gw-fig svg { display:block; width:100%; height:auto; }
-  .gateway .s-title { font-size:var(--fs-card-title); }
-  .gw-primary { margin-right:16px; }
+  /* ---- the closing: conclusion + three ways in ---------------------------------------------- */
+  .closing { max-width:840px; margin:8px auto 8px; text-align:center; }
+  .close-lead { font-size:var(--fs-body); line-height:var(--lh-body); color:var(--ink); margin:0 auto 20px; max-width:70ch; }
+  .close-ways { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  .close-btn { display:block; border:1.6px solid var(--rule); border-top:4px solid var(--accent); border-radius:12px;
+               background:var(--paper); padding:14px 20px; text-decoration:none; color:var(--ink); min-width:200px;
+               transition:border-color .12s, background .12s; }
+  .close-btn:hover { border-color:var(--accent); background:var(--accent-tint); }
+  .close-btn .cb-t { display:block; font-family:var(--font-display); font-size:var(--fs-card-title); font-weight:600; }
+  .close-btn .cb-s { display:block; font-size:var(--fs-micro); color:var(--muted); margin-top:3px; }
 
-  /* ---- the subordinated "Deeper in the book" strip ------------------------------------------ */
-  .deeper { margin:26px 0 6px; }
+  /* ---- the quiet back-matter vocabulary/definitions/outcomes reference strip ----------------- */
+  .reference { margin:26px 0 6px; }
   .deep-h { font-family:var(--font-display); font-size:var(--fs-section); margin:0 0 4px; border-top:none; padding-top:0; letter-spacing:-.01em; }
   .deep-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:0 0 14px; max-width:74ch; }
   .deep-grp { margin:0 0 14px; }
@@ -1399,6 +1440,9 @@ LANDING_CSS = """
   .deep-item b { display:block; font-size:var(--fs-meta); font-weight:700; color:var(--ink); }
   .deep-item span { display:block; color:var(--muted); font-size:var(--fs-micro); margin-top:1px; }
   .deep-item:hover { border-color:var(--accent); background:var(--accent-tint); }
+  /* the `structured` adjective, held out of the four peers as a rider — blue def-box tint ties it to §2.1 */
+  .def-rider-lead { display:block; width:100%; font-size:var(--fs-micro); font-style:italic; color:var(--muted); margin:8px 0 0; }
+  .deep-item.def-rider { border-style:dashed; border-color:var(--box-def-rule); }
 
   /* The learning-outcomes list (projected from book-models/outcomes.json), compact. */
   ul.oc-list { margin:4px 0 4px; padding:0; list-style:none; }
@@ -1429,7 +1473,7 @@ LANDING_CSS = """
     .slot.figright .s-fig { order:0; }
     .slot .s-fig { max-width:640px; margin:0 auto; }
     .pair { grid-template-columns:1fr; gap:22px; }
-    .gateway { grid-template-columns:1fr; }
+    .close-btn { min-width:0; flex:1 1 100%; }
   }
   @media (max-width:640px){
     ul.oc-list li.oc-row { grid-template-columns:1fr; gap:3px; }
@@ -1509,24 +1553,38 @@ def _load_definitions() -> list[dict]:
     return ordered
 
 
-def _landing_definitions() -> str:
-    """The four core-term definitions, projected COMPACTLY from book/data/definitions.json as a strip of
-    anchored links (no expandable card — the book carries the full green-box + elaboration). Site element
-    ⟵ model element: each link's id is `def-<slug>` = the record's `site_home`, the join key the
-    definitions drift check asserts resolves on the landing. Each link goes to the definition's book home
-    (the fuller treatment), honoring `site is a preview; book coverage ⊇ site framings`."""
-    out = []
-    for rec in _load_definitions():
-        slug = rec["_slug"]
-        site_home = rec.get("site_home", f"def-{slug}")
-        term = _esc(rec.get("term", slug))
-        box = _esc(rec.get("box", ""))
-        frame = box.split(" — ")[0].split(". ")[0].rstrip(".") if box else ""
-        href = _esc(rec.get("book_home", "book/2.1-the-agent-stack.html"))
-        out.append(
-            f'<a class="deep-item" id="{_esc(site_home)}" href="{href}">'
+def _def_strip_link(rec: dict, cls: str) -> str:
+    """One anchored definition link — `<a id="def-<slug>">` carries the record's `site_home` (the drift
+    check's join key) and points at the definition's book home (the fuller treatment)."""
+    slug = rec["_slug"]
+    site_home = rec.get("site_home", f"def-{slug}")
+    term = _esc(rec.get("term", slug))
+    box = _esc(rec.get("box", ""))
+    frame = box.split(" — ")[0].split(". ")[0].rstrip(".") if box else ""
+    href = _esc(rec.get("book_home", "book/2.1-the-agent-stack.html"))
+    return (f'<a class="{cls}" id="{_esc(site_home)}" href="{href}">'
             f'<b>{term}</b><span>{frame}</span></a>')
-    return "\n      ".join(out)
+
+
+def _landing_definitions() -> str:
+    """The FOUR core-term definitions projected COMPACTLY from book/data/definitions.json as a strip of
+    anchored links, then the adjective every one of them rides on — `structured` — as a RIDER after the
+    four, NOT a fifth peer (the '2.1 rider, not a fifth term' shape, on the landing). Site element ⟵ model
+    element: each link's id is `def-<slug>` = the record's `site_home`, the join key the definitions drift
+    check asserts resolves on the landing (the rider keeps `def-structured` present, so the projection
+    still resolves both directions). Each link goes to its book home, honoring `site previews; book ⊇ site`."""
+    peers: list[str] = []
+    rider: dict | None = None
+    for rec in _load_definitions():
+        if rec["_slug"] == "structured":
+            rider = rec          # the adjective — held out of the peer strip, appended as a rider
+        else:
+            peers.append(_def_strip_link(rec, "deep-item"))
+    strip = "\n      ".join(peers)
+    if rider is not None:
+        strip += ('\n      <span class="def-rider-lead">— and the adjective every one of them rides on:</span>'
+                  f'\n      {_def_strip_link(rider, "deep-item def-rider")}')
+    return strip
 
 
 def _outcome_index_by_id() -> dict:
@@ -1701,33 +1759,34 @@ def _landing_big_ideas() -> str:
     return "\n\n  ".join(parts)
 
 
-def _landing_gateway() -> str:
-    """The F1 model-map as the gateway into the census. Its primary call to action is 'Explore the
-    catalogue →' (the By-model view, `catalogue-views.html`, which opens on that view by default); a
-    secondary 'Read in the book →' points at its chapter home. F1 is the Modeling Thesis instantiated
-    over this repo, so it fronts the catalogue rather than competing as a mid-page idea."""
-    g = _load_big_ideas().get("gateway", {})
-    if not g:
-        return ""
-    g = g | {"_slug": "gateway"}
-    explore = _attr(g.get("explore_href", "catalogue-views.html"))
+def _landing_closing() -> str:
+    """The page's conclusion — the argument's sign-off, drawn from the book's own closing chapter — then
+    the three ways in: the full catalogue, the book, and the Claude quickstart. This CLOSES the landing
+    after Big Idea 6; it replaces the old F1-gateway band, so the reader leaves on the conclusion and a
+    choice of entry rather than a mid-page gateway."""
+    ways = [
+        ("Full catalogue", "catalogue-views.html", "every mechanism, by role · model · enforcement"),
+        ("Book", "book/index.html", "the full treatment of the method"),
+        ("Claude quickstart", "quick-start.html", "install the skills in your repo"),
+    ]
+    buttons = "\n    ".join(
+        f'<a class="close-btn" href="{_attr(h)}"><span class="cb-t">{_esc(t)}</span>'
+        f'<span class="cb-s">{_esc(s)}</span></a>'
+        for t, h, s in ways)
     return (
-        f'<div class="gateway" id="{_attr(g.get("id", ""))}">\n'
-        '  <div class="gw-words">\n'
-        f'    <p class="s-kick">{_esc(g.get("kicker", ""))}</p>\n'
-        f'    <h2 class="s-title">{_esc(g.get("title", ""))}</h2>\n'
-        f'    <p class="s-claim">{_esc(g.get("claim", ""))}</p>\n'
-        f'    {_more_block(g.get("id", ""), g.get("more", ""))}\n'
-        f'    <a class="s-read gw-primary" href="{explore}">Explore the catalogue →</a>\n'
-        f'    {_read_link(g.get("book_home", ""))}\n'
-        '  </div>\n'
-        f'  <figure class="gw-fig">{_idea_figure(g)}</figure>\n'
-        '</div>')
+        '<section class="closing" aria-label="In closing">\n'
+        '  <p class="close-lead">The code got cheap; the judgment got expensive. Govern the conditions '
+        'under which fast code can be trusted — the machine can search faster than any of us, but it cannot '
+        'tell us what is worth searching for. So start with one recurring failure your agents keep handing '
+        'you, and convert it: one type, one lint, one gate. The method grows from there; below are three '
+        'ways in.</p>\n'
+        f'  <div class="close-ways">\n    {buttons}\n  </div>\n'
+        '</section>')
 
 
 # The remaining site-eligible concepts whose `card-<slug>` id must resolve on the landing (the thesis
 # concepts land on the pair cells above; these five are the alignment/modeling vocabulary). Each renders
-# as an anchored link in the "Deeper in the book" strip → its book home. (title, id, book_home)
+# as an anchored link in the back-matter reference strip → its book home. (title, id, book_home)
 _DEEP_CONCEPTS = [
     ("Models as the universal language", "card-universal-language", "book/6.0-implications-for-se.html"),
     ("Constraint", "card-constraint", "book/2.3-the-governed-environment.html"),
@@ -1737,31 +1796,30 @@ _DEEP_CONCEPTS = [
 ]
 
 
-def _landing_deeper() -> str:
-    """The subordinated 'Deeper in the book' region — one compact nav strip that absorbs the definitions,
-    the alignment/modeling vocabulary, the learning outcomes, and the way-of-thinking / skills / adoption
-    links that the old masonry card-families carried. The definitions (`def-<slug>`) and the concept
-    vocabulary (`card-<slug>`) keep their site ids here so their projection drift checks still resolve;
-    the conceptual detail lives in the book (site is a preview; book coverage ⊇ site framings)."""
+def _landing_reference() -> str:
+    """The quiet back-matter reference strip — trimmed from the old 'Deeper in the book' masonry to the
+    rows the site still OWES the reader and the projection-drift gates require: the four definitions + the
+    adjective they ride on, the alignment/modeling vocabulary, and the learning outcomes. It keeps the
+    `def-<slug>`, `card-<slug>`, and `outcome-<…>` ids the projection-drift gates (definitions, concepts
+    L2/L3, outcomes) join against, so the model→site projection stays checkable. The F1-gateway band and
+    the duplicate 'More' nav row are DROPPED — the top nav-grid and the closing's three buttons carry
+    navigation now; the book claims and expands every framing (site previews; book ⊇ site)."""
     concept_items = "\n      ".join(
         f'<a class="deep-item" id="{_attr(cid)}" href="{_attr(home)}"><b>{_esc(title)}</b></a>'
         for title, cid, home in _DEEP_CONCEPTS)
+    # The two method-view pages the landing is the sole entry point for — kept linked so the reachability
+    # gate stays green (the rest of the old "More" row is reachable from the top nav-grid + the book index).
     more_links = "\n      ".join(
         f'<a class="deep-item" href="{_attr(h)}"><b>{_esc(t)}</b></a>'
         for t, h in [
-            ("The way of thinking", "book/4.5-lessons-learned.html"),
-            ("The three skills", "book/4.2-the-skills.html"),
-            ("The development process, as a figure", "development-workflow.html"),
             ("Browse the book models", "book-models/models-view.html"),
-            ("Quick start — install the skills", "quick-start.html"),
-            ("Abstractions glossary", "ABSTRACTIONS.html"),
-            ("Case study & references", "book/index.html"),
+            ("The development process, as a figure", "development-workflow.html"),
         ])
     return (
-        '<section class="deeper" aria-labelledby="deeper-h">\n'
-        '  <h2 id="deeper-h" class="deep-h">Deeper in the book</h2>\n'
-        '  <p class="deep-note">The site is a preview; the book claims and expands every framing. These '
-        'are entry points, not a second copy.</p>\n'
+        '<section class="reference" aria-labelledby="reference-h">\n'
+        '  <h2 id="reference-h" class="deep-h">The vocabulary, in brief</h2>\n'
+        '  <p class="deep-note">The site previews; the book claims and expands every framing. Each row '
+        'is an entry point into the fuller treatment.</p>\n'
         '  <div class="deep-grp">\n'
         '    <span class="deep-lbl">The four definitions — the vocabulary the theses ride on</span>\n'
         f'    <div class="deep-row">\n      {_landing_definitions()}\n    </div>\n'
@@ -1775,7 +1833,7 @@ def _landing_deeper() -> str:
         f'    {_landing_outcomes()}\n'
         '  </div>\n'
         '  <div class="deep-grp">\n'
-        '    <span class="deep-lbl">More</span>\n'
+        '    <span class="deep-lbl">More views of the method</span>\n'
         f'    <div class="deep-row">\n      {more_links}\n    </div>\n'
         '  </div>\n'
         '</section>')
@@ -1812,9 +1870,11 @@ LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 ==============
        as the book's own argument in the book's own order (Option 3 "the argument"). The hero band — lead
        prose beside the concrete cover scene — flows directly into Big Idea 1, whose churn flowchart renders
        full-width beneath it. Then the stance (one band), the two theses (a matched pair), practice and
-       seat (alternating bands), the F1 gateway into the census, and one compact "Deeper in the book"
-       strip. Each Big-Idea slot = figure · concise claim · a light "expand to learn more" · "Read in the
-       book →". No card masonry, no <details> peeks — a build renders every slot from the model. -->
+       seat (alternating bands), and the CLOSING — the conclusion + three ways in (full catalogue · book ·
+       quickstart). The census and the quiet vocabulary/definitions/outcomes reference strip follow as
+       back-matter (appended in cmd_build). Each Big-Idea slot = figure · concise claim · a light "expand
+       to learn more" · "Read in the book →". No card masonry, no <details> peeks — a build renders every
+       slot from the model. -->
   <div class="hero-band">
     <div class="hero-grid">
       <div class="hg-prose">
@@ -1839,9 +1899,7 @@ LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 ==============
 
   <hr class="sep" />
 
-  {gateway}
-
-  {deeper}
+  {closing}
 """
 
 
@@ -2525,23 +2583,19 @@ def cmd_build(_args) -> int:
         out_path = f[:-3] + ".html"
         open(out_path, "w", encoding="utf-8").write(html)
         written += 1
-    # landing index.html = a projection of the Big-Ideas model (hero + six slots + gateway + deeper) then
-    # the census, the book CTA, and the end-of-body progressive-enhancement script. Every Big-Idea slot is
-    # rendered from book-models/landing-big-ideas.json; figures splice as bare responsive <svg> with their
-    # internal ids namespaced per slot (_ns_svg_ids) so no two figures collide (check_no_duplicate_ids).
+    # landing index.html = a projection of the Big-Ideas model (hero + six slots + the closing conclusion +
+    # three ways-in buttons), then the census and the quiet vocabulary/definitions/outcomes reference strip
+    # as back-matter, then the end-of-body progressive-enhancement script. Every Big-Idea slot is rendered
+    # from book-models/landing-big-ideas.json; figures splice as bare responsive <svg> with their internal
+    # ids namespaced per slot (_ns_svg_ids) so no two figures collide (check_no_duplicate_ids). The census
+    # stays on the landing because the reachability gate derives every entry page's inbound link from it.
     _cover_scene = _inline_svg("assets/cover-scene.svg")
-    book_cta = (
-        '  <div class="book-cta" style="margin:20px 0 30px;">\n'
-        '    <a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a>\n'
-        f'    <span class="book-cta-pdf"><a href="{_PDF_HREF}">Download PDF</a></span>\n'
-        '  </div>')
     landing_body = (NAV_GRID + "\n" + LANDING_INTRO.format(
         book_title_block=_book_title_block(),
         cover=_ns_svg_ids(_cover_scene, "hero-scene"),
         big_ideas=_landing_big_ideas(),
-        gateway=_landing_gateway(),
-        deeper=_landing_deeper(),
-    ) + "\n" + build_census(entries) + "\n" + book_cta + "\n" + EXPAND_JS)
+        closing=_landing_closing(),
+    ) + "\n" + build_census(entries) + "\n" + _landing_reference() + "\n" + EXPAND_JS)
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
                f"<title>Agent Governance Mechanisms</title>\n{FONTS_LINK}\n"
@@ -2903,7 +2957,7 @@ def cmd_deploy(args) -> int:
         return 1
     head = _git("rev-parse", "--short", "HEAD", capture=True).stdout.strip()
     print(f"\n== Pushed {head} to origin/main. GitHub Actions will build + deploy Pages. ==")
-    print("   Watch: https://github.com/davisjam/agent-governance-mechanisms/actions")
+    print(f"   Watch: {_REPO_ACTIONS_URL}")
     return 0
 
 

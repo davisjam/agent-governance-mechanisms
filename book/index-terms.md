@@ -166,6 +166,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: software-engineering | Software engineering
 - concept: agent | Agent
 - concept: model | Model
+- concept: structured | Structured
 - concept: agent-stack | The agent stack
 - concept: foundation-model | The foundation model
 - concept: agentic-harness | The agentic harness
@@ -332,7 +333,6 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: static-analysis | local
 - term: ban-lint | local
 - term: documentation-hierarchy | section
-- term: structured | section
 - term: ouroboros | local
 - term: typed-enum | local
 - term: pink-elephant | local

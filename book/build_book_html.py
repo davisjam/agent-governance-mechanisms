@@ -618,9 +618,10 @@ _IS_THESIS_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>\s*The\b.*?\bThesis\.\s*</st
 
 # A DEFINITION blockquote leads with a bold `<Term>.` label (`> **Model.** …`) and is armed by an
 # immediately-preceding `<!-- index-def: <slug> -->` for one of the four core terms — the vocabulary the
-# theses ride on. Rendered into the blue `def-box` (mirrors the thesis-box mechanism). The index-def
-# context is the discriminator; this regex confirms the bold-lead shape.
-_DEF_SLUGS = frozenset({"model", "agent", "engineering", "software-engineering"})
+# theses ride on — plus `structured`, the adjective riding on the model definition. Rendered into the blue
+# `def-box` (mirrors the thesis-box mechanism). The index-def context is the discriminator; this regex
+# confirms the bold-lead shape.
+_DEF_SLUGS = frozenset({"model", "agent", "engineering", "software-engineering", "structured"})
 _IS_DEF_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>", re.S)
 
 

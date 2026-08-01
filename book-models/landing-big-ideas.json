@@ -1,5 +1,5 @@
 {
-  "_note": "Big-Ideas model — the SSOT for the site landing, projected model-first (a sibling of definitions.json and outcomes.json: same 'the site is a projection of a typed model' discipline). The landing IS the book's argument in the book's own order: six Big Ideas, each rendered as one slot — its figure, a concise claim, a light 'expand to learn more', and a 'Read in the book →' link — plus a gateway that fronts the catalogue's By-model view. catalog.py's _landing_big_ideas() iterates this file at build time; nothing on the landing's Big-Ideas argument is hand-authored in HTML. The drift check (check_big_ideas in catalog.py validate) joins on the slug and asserts: (a) every book_home resolves to a real chapter/page on disk (the 'site is a preview, book ⊇ site' rule made mechanical), (b) every figure exists under book/assets/ (palette conformance for every asset is enforced separately + audit-only by the design-token drift lint), (c) every claim is within the word cap, and (d) every slot id resolves on the built landing. Queryable/rendered via `python3 catalog.py build`.",
+  "_note": "Big-Ideas model — the SSOT for the site landing, projected model-first (a sibling of definitions.json and outcomes.json: same 'the site is a projection of a structured model' discipline). The landing IS the book's argument in the book's own order: six Big Ideas, each rendered as one slot — its figure, a concise claim, a light 'expand to learn more', and a 'Read in the book →' link — plus a gateway that fronts the catalogue's By-model view. catalog.py's _landing_big_ideas() iterates this file at build time; nothing on the landing's Big-Ideas argument is hand-authored in HTML. The drift check (check_big_ideas in catalog.py validate) joins on the slug and asserts: (a) every book_home resolves to a real chapter/page on disk (the 'site is a preview, book ⊇ site' rule made mechanical), (b) every figure exists under book/assets/ (palette conformance for every asset is enforced separately + audit-only by the design-token drift lint), (c) every claim is within the word cap, and (d) every slot id resolves on the built landing. Queryable/rendered via `python3 catalog.py build`.",
 
   "_derivation": "The confirmed six-idea → figure mapping ratified in the Big-Ideas reorg design (landing-bigideas-260731, Option 3 'the argument'). Ideas 1 and the old F1-modeling candidate merged: F1 (the model map) is the Modeling Thesis instantiated over this repo, so it becomes the gateway into the By-model catalogue view rather than a competing mid-page slot. The two-schools/midway material is promoted into the set as the stance idea.",
 
@@ -15,8 +15,8 @@
     "title": "Churn is the scaling limit",
     "figure": "mage-overview.svg",
     "book_home": "book/1.1-the-printer.html",
-    "claim": "Left ungoverned, a cheap agent fleet drifts as its work outgrows the context window. Governed, it converges on trustworthy software at velocity.",
-    "more": "The scaling limit is not the model's raw ability but churn: confidently-wrong work, faster every week. Two theses — a Modeling Thesis and an Alignment Thesis — are what hold it off, and this page is built around them."
+    "claim": "An agent fleet scales until the work outgrows its context window. Then it churns: it re-derives what it already built and confidently undoes yesterday's fix.",
+    "more": "A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window. Churn has two causes, and the theses below attack one each: models shrink what the agent must hold, and governance makes its errors impossible or visible."
   },
 
   "governance-centric": {
@@ -27,8 +27,8 @@
     "title": "Governance-centric — the midway between two schools",
     "figure": "oversight-modes.svg",
     "book_home": "book/2.3-the-governed-environment.html",
-    "claim": "Between all-velocity and all-oversight sits the midway: put the agents inside a containing environment of enforced mechanisms.",
-    "more": "Velocity-centric hands work around a ring of job titles, quality left implicit; oversight-centric parks a human beside each piece — honest, but attention does not scale with the fleet. The synthesis specifies what it can up front and converts what velocity surfaces in flight."
+    "claim": "Build the environment first: encode each obligation as a mechanism the environment enforces, so quality is a property of the ground the agents stand on.",
+    "more": "Velocity-centric hands work around a ring of job titles and leaves quality implicit; oversight-centric parks a human beside each change, and attention does not scale with the fleet. Governance pays attention per class of failure instead: once, when you build the mechanism that retires it."
   },
 
   "modeling-thesis": {
@@ -36,11 +36,11 @@
     "role": "thesis-1",
     "order": 3,
     "kicker": "Big idea 3 · Thesis 1",
-    "title": "Documentation, taken to its limit, is a typed model",
+    "title": "Documentation, taken to its limit, is a structured model",
     "figure": "documentation-hierarchy.svg",
     "book_home": "book/1.2-loops-and-models.html",
-    "claim": "The apex of documentation is not prose — it is a typed model an agent reasons through without error.",
-    "more": "A context-bounded agent working on a context-exceeding system needs a typed, queryable, drift-checked model to reason through — the bridge to the codebase it cannot fit in its head. The catalogue's models-bridge role is that bridge made concrete."
+    "claim": "A context-bounded agent cannot hold the whole system. Give it a structured, drift-checked model to reason through, and the work fits in the window.",
+    "more": "Models used to die because keeping them current was somebody's unpaid job; agents now do that job for cents, re-checking the map against the code on every change. A drifted prose doc lies quietly — a drifted model fails the build."
   },
 
   "alignment-thesis": {
@@ -51,8 +51,8 @@
     "title": "A quality goal splits into a constraint and a sensor",
     "figure": "control-vs-architecture.svg",
     "book_home": "book/2.3-the-governed-environment.html",
-    "claim": "Every mechanism is one of two moves: a constraint that prevents the error, or a sensor that catches it.",
-    "more": "Make the class impossible before the fact, or detect the mistake after; costly failures earn both. A third set of goals splits into neither and stays a human job — the residual the mechanisms leave behind."
+    "claim": "Split a quality goal in two: a constraint prevents the error; a sensor detects it after the fact. Costly failures earn both.",
+    "more": "A type the compiler checks, a lint that blocks the commit, a gate that refuses the deploy: each holds a policy decided once against every later change. What splits into neither stays a human job."
   },
 
   "convert-failures": {
@@ -63,8 +63,8 @@
     "title": "Convert recurring failures into controls",
     "figure": "soft-hard-spectrum.svg",
     "book_home": "book/2.3-the-governed-environment.html",
-    "claim": "Velocity surfaces the failures you could not foresee; convert each recurring one into a durable control.",
-    "more": "A type, a lint, a gate, a schema — the guardrail grows out of the real failure, so every later agent inherits a smaller space to be wrong in. That conversion is the way of thinking inside the method."
+    "claim": "Velocity surfaces the failures you could not foresee. Convert each recurring one into a mechanism, pushed as far toward hard enforcement as it will go.",
+    "more": "Mechanisms sit on a spectrum from soft to hard: a convention or a brief aims the agent but cannot block it; a lint or a gate holds the line whether the agent cooperates or not. The second time a soft rule fails, move it right — the documented rule becomes a lint the agent cannot talk past."
   },
 
   "seat-moves": {
@@ -75,8 +75,8 @@
     "title": "The lifecycle stays; the developer's seat moves to the agents",
     "figure": "sdlc-to-selc.svg",
     "book_home": "book/1.3-the-engineers-seat.html",
-    "claim": "SDLC becomes SELC: same activities, no new phases — but implementation is now the agents'.",
-    "more": "The engineer flanks the fleet: authoring intent on the left, judging and governing the output on the right. The seat moved up a level, from writing the code to authoring the model that says what correct means."
+    "claim": "SDLC becomes SELC: one seat reassigned, the lifecycle otherwise intact. The fleet writes the code; the engineer keeps the seats that were always the engineering.",
+    "more": "The engineer flanks the fleet: models carry intent in on one side, judgment meets the output on the other. The seats the human keeps — requirements, specification, design, validation — were always the consequential ones; now they are the job."
   },
 
   "gateway": {

@@ -8,6 +8,7 @@ import re
 import sys as _sys
 from html.parser import HTMLParser
 
+import catalog  # the site-projection SSOT — home of the shared model→site projection_drift helper (rule #11)
 from tests.common import FAIL, PASS, ROOT, html_files, rel
 
 
@@ -636,15 +637,16 @@ def check_definitions_site():
     records = {k: v for k, v in raw.items() if not k.startswith("_")}
     ids = _landing_all_ids()
     issues: list[str] = []
-    modeled_homes: set[str] = set()
-    # (a) MODEL→SITE
-    for slug, rec in records.items():
-        site = rec.get("site_home", f"def-{slug}")
-        modeled_homes.add(site)
-        if site not in ids:
-            issues.append(
-                f"definitions: {slug!r} site_home {site!r} does not resolve to an id on the landing "
-                f"(index.html) — the definition is modeled but not projected (rebuild, or fix site_home)")
+
+    def _def_home(slug, rec):
+        return rec.get("site_home", f"def-{slug}")
+
+    modeled_homes = {_def_home(s, r) for s, r in records.items()}
+    # (a) MODEL→SITE — the shared projection-drift core (rule #11 DRY; same helper check_big_ideas calls).
+    for slug, site in catalog.projection_drift(records, ids, _def_home):
+        issues.append(
+            f"definitions: {slug!r} site_home {site!r} does not resolve to an id on the landing "
+            f"(index.html) — the definition is modeled but not projected (rebuild, or fix site_home)")
     # (b) SITE→MODEL
     for site_id in sorted(i for i in ids if i.startswith("def-")):
         if site_id not in modeled_homes:

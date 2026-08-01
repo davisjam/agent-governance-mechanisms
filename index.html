@@ -149,16 +149,19 @@
             text-decoration:none; }
   .s-read:hover { text-decoration:underline; }
 
-  /* ---- the F1 gateway into the census ------------------------------------------------------- */
-  .gateway { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:18px 42px; align-items:center;
-             border:1.6px solid var(--rule); border-left:4px solid var(--accent); border-radius:12px;
-             background:var(--paper); padding:22px 26px; margin:8px 0; }
-  .gateway .gw-fig svg { display:block; width:100%; height:auto; }
-  .gateway .s-title { font-size:var(--fs-card-title); }
-  .gw-primary { margin-right:16px; }
+  /* ---- the closing: conclusion + three ways in ---------------------------------------------- */
+  .closing { max-width:840px; margin:8px auto 8px; text-align:center; }
+  .close-lead { font-size:var(--fs-body); line-height:var(--lh-body); color:var(--ink); margin:0 auto 20px; max-width:70ch; }
+  .close-ways { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  .close-btn { display:block; border:1.6px solid var(--rule); border-top:4px solid var(--accent); border-radius:12px;
+               background:var(--paper); padding:14px 20px; text-decoration:none; color:var(--ink); min-width:200px;
+               transition:border-color .12s, background .12s; }
+  .close-btn:hover { border-color:var(--accent); background:var(--accent-tint); }
+  .close-btn .cb-t { display:block; font-family:var(--font-display); font-size:var(--fs-card-title); font-weight:600; }
+  .close-btn .cb-s { display:block; font-size:var(--fs-micro); color:var(--muted); margin-top:3px; }
 
-  /* ---- the subordinated "Deeper in the book" strip ------------------------------------------ */
-  .deeper { margin:26px 0 6px; }
+  /* ---- the quiet back-matter vocabulary/definitions/outcomes reference strip ----------------- */
+  .reference { margin:26px 0 6px; }
   .deep-h { font-family:var(--font-display); font-size:var(--fs-section); margin:0 0 4px; border-top:none; padding-top:0; letter-spacing:-.01em; }
   .deep-note { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:0 0 14px; max-width:74ch; }
   .deep-grp { margin:0 0 14px; }
@@ -171,6 +174,9 @@
   .deep-item b { display:block; font-size:var(--fs-meta); font-weight:700; color:var(--ink); }
   .deep-item span { display:block; color:var(--muted); font-size:var(--fs-micro); margin-top:1px; }
   .deep-item:hover { border-color:var(--accent); background:var(--accent-tint); }
+  /* the `structured` adjective, held out of the four peers as a rider — blue def-box tint ties it to §2.1 */
+  .def-rider-lead { display:block; width:100%; font-size:var(--fs-micro); font-style:italic; color:var(--muted); margin:8px 0 0; }
+  .deep-item.def-rider { border-style:dashed; border-color:var(--box-def-rule); }
 
   /* The learning-outcomes list (projected from book-models/outcomes.json), compact. */
   ul.oc-list { margin:4px 0 4px; padding:0; list-style:none; }
@@ -201,7 +207,7 @@
     .slot.figright .s-fig { order:0; }
     .slot .s-fig { max-width:640px; margin:0 auto; }
     .pair { grid-template-columns:1fr; gap:22px; }
-    .gateway { grid-template-columns:1fr; }
+    .close-btn { min-width:0; flex:1 1 100%; }
   }
   @media (max-width:640px){
     ul.oc-list li.oc-row { grid-template-columns:1fr; gap:3px; }
@@ -266,6 +272,7 @@
   .site-foot { max-width:1320px; margin:var(--space-5) auto 0; padding:var(--space-2) 26px var(--space-4); border-top:var(--border-hairline) solid var(--rule); font-size:var(--fs-micro); color:var(--muted); text-align:center; }
   .site-foot a { color:var(--accent); text-decoration:underline; } .site-foot a:hover { text-decoration:none; }
   .site-foot .gh { white-space:nowrap; }
+  .site-foot .foot-nsf { display:block; margin-top:var(--space-1); color:var(--muted); }
   .topnav { position:absolute; top:14px; right:20px; font-size:var(--fs-micro); display:flex; gap:var(--space-2); }
   .topnav a { color:var(--muted); text-decoration:none; white-space:nowrap; } .topnav a:hover { color:var(--accent); }
   @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 var(--space-1); } }
@@ -273,15 +280,17 @@
 </head>
 <body class="landing">
 <main>
-<nav class="nav-grid" aria-label="Primary"><a class="ng-cell" href="https://davisjam.github.io"><span class="ng-t">Author</span><span class="ng-s">James C. Davis · Purdue</span></a><a class="ng-cell" href="https://github.com/davisjam/agent-governance-mechanisms"><span class="ng-t"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> GitHub</span><span class="ng-s">the source repository</span></a><a class="ng-cell" href="quick-start.html"><span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a><a class="ng-cell ng-book ng-bottom" href="book/index.html"><span class="ng-t">Book</span><span class="ng-s">read the web book</span></a><a class="ng-cell ng-book ng-bottom" href="book/mage-book.pdf"><span class="ng-t"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M4 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V4.5L9.5 0H4zm5 1.5L12.5 5H9V1.5zM4.9 8.2h1c.5 0 .9.4.9.9s-.4.9-.9.9h-.4v1.1h-.6V8.2zm.6.5v.8h.3c.2 0 .3-.1.3-.4s-.1-.4-.3-.4h-.3zm2 .0h.9c.6 0 1 .5 1 1.4s-.4 1.5-1 1.5h-.9V8.7zm.6.5v1.8h.2c.3 0 .5-.3.5-.9s-.2-.9-.5-.9h-.2zm2.3-.5h1.7v.5h-1.1v.6h1v.5h-1v1.2h-.6V8.7z"></path></svg> Book (PDF)</span><span class="ng-s">download offline</span></a></nav>
+<nav class="nav-grid" aria-label="Primary"><a class="ng-cell" href="https://davisjam.github.io"><span class="ng-t">Author</span><span class="ng-s">James C. Davis · Purdue</span></a><a class="ng-cell" href="https://github.com/davisjam/model-based-agentic-software-engineering"><span class="ng-t"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> GitHub</span><span class="ng-s">the source repository</span></a><a class="ng-cell" href="quick-start.html"><span class="ng-t">Quick Start</span><span class="ng-s">adopt it in your repo</span></a><a class="ng-cell ng-book ng-bottom" href="book/index.html"><span class="ng-t">Book</span><span class="ng-s">read the web book</span></a><a class="ng-cell ng-book ng-bottom" href="book/mage-book.pdf"><span class="ng-t"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M4 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V4.5L9.5 0H4zm5 1.5L12.5 5H9V1.5zM4.9 8.2h1c.5 0 .9.4.9.9s-.4.9-.9.9h-.4v1.1h-.6V8.2zm.6.5v.8h.3c.2 0 .3-.1.3-.4s-.1-.4-.3-.4h-.3zm2 .0h.9c.6 0 1 .5 1 1.4s-.4 1.5-1 1.5h-.9V8.7zm.6.5v1.8h.2c.3 0 .5-.3.5-.9s-.2-.9-.5-.9h-.2zm2.3-.5h1.7v.5h-1.1v.6h1v.5h-1v1.2h-.6V8.7z"></path></svg> Book (PDF)</span><span class="ng-s">download offline</span></a></nav>
   <!-- ===================== HERO + BIG IDEA 1 =====================
        The landing is a PROJECTION of the Big-Ideas model (book-models/landing-big-ideas.json), laid out
        as the book's own argument in the book's own order (Option 3 "the argument"). The hero band — lead
        prose beside the concrete cover scene — flows directly into Big Idea 1, whose churn flowchart renders
        full-width beneath it. Then the stance (one band), the two theses (a matched pair), practice and
-       seat (alternating bands), the F1 gateway into the census, and one compact "Deeper in the book"
-       strip. Each Big-Idea slot = figure · concise claim · a light "expand to learn more" · "Read in the
-       book →". No card masonry, no <details> peeks — a build renders every slot from the model. -->
+       seat (alternating bands), and the CLOSING — the conclusion + three ways in (full catalogue · book ·
+       quickstart). The census and the quiet vocabulary/definitions/outcomes reference strip follow as
+       back-matter (appended in cmd_build). Each Big-Idea slot = figure · concise claim · a light "expand
+       to learn more" · "Read in the book →". No card masonry, no <details> peeks — a build renders every
+       slot from the model. -->
   <div class="hero-band">
     <div class="hero-grid">
       <div class="hg-prose">
@@ -557,8 +566,8 @@
   <div class="ih-words">
     <p class="s-kick">Big idea 1 · the problem</p>
     <h2 class="s-title">Churn is the scaling limit</h2>
-    <p class="s-claim">Left ungoverned, a cheap agent fleet drifts as its work outgrows the context window. Governed, it converges on trustworthy software at velocity.</p>
-    <div class="s-more-text" id="more-bi-churn" data-more>The scaling limit is not the model's raw ability but churn: confidently-wrong work, faster every week. Two theses — a Modeling Thesis and an Alignment Thesis — are what hold it off, and this page is built around them.</div>
+    <p class="s-claim">An agent fleet scales until the work outgrows its context window. Then it churns: it re-derives what it already built and confidently undoes yesterday's fix.</p>
+    <div class="s-more-text" id="more-bi-churn" data-more>A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window. Churn has two causes, and the theses below attack one each: models shrink what the agent must hold, and governance makes its errors impossible or visible.</div>
     <a class="s-read" href="book/1.1-the-printer.html">Read in the book →</a>
   </div>
 </div>
@@ -656,8 +665,8 @@
   <div class="s-words">
     <p class="s-kick">Big idea 2 · the stance</p>
     <h2 class="s-title">Governance-centric — the midway between two schools</h2>
-    <p class="s-claim">Between all-velocity and all-oversight sits the midway: put the agents inside a containing environment of enforced mechanisms.</p>
-    <div class="s-more-text" id="more-bi-governance-centric" data-more>Velocity-centric hands work around a ring of job titles, quality left implicit; oversight-centric parks a human beside each piece — honest, but attention does not scale with the fleet. The synthesis specifies what it can up front and converts what velocity surfaces in flight.</div>
+    <p class="s-claim">Build the environment first: encode each obligation as a mechanism the environment enforces, so quality is a property of the ground the agents stand on.</p>
+    <div class="s-more-text" id="more-bi-governance-centric" data-more>Velocity-centric hands work around a ring of job titles and leaves quality implicit; oversight-centric parks a human beside each change, and attention does not scale with the fleet. Governance pays attention per class of failure instead: once, when you build the mechanism that retires it.</div>
     <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a>
   </div>
 </div>
@@ -757,9 +766,9 @@
   <text x="720" y="533" text-anchor="middle" font-size="20" font-style="italic" fill="#2e7d32">checked: the map must match the territory</text>
 </svg></figure>
   <p class="s-kick">Big idea 3 · Thesis 1</p>
-  <h2 class="s-title">Documentation, taken to its limit, is a typed model</h2>
-  <p class="s-claim">The apex of documentation is not prose — it is a typed model an agent reasons through without error.</p>
-  <div class="s-more-text" id="more-bi-modeling-thesis" data-more>A context-bounded agent working on a context-exceeding system needs a typed, queryable, drift-checked model to reason through — the bridge to the codebase it cannot fit in its head. The catalogue's models-bridge role is that bridge made concrete.</div>
+  <h2 class="s-title">Documentation, taken to its limit, is a structured model</h2>
+  <p class="s-claim">A context-bounded agent cannot hold the whole system. Give it a structured, drift-checked model to reason through, and the work fits in the window.</p>
+  <div class="s-more-text" id="more-bi-modeling-thesis" data-more>Models used to die because keeping them current was somebody's unpaid job; agents now do that job for cents, re-checking the map against the code on every change. A drifted prose doc lies quietly — a drifted model fails the build.</div>
   <a class="s-read" href="book/1.2-loops-and-models.html">Read in the book →</a>
 </div>
 <div class="p-cell" id="card-thesis-alignment">
@@ -825,8 +834,8 @@
 </svg></figure>
   <p class="s-kick">Big idea 4 · Thesis 2</p>
   <h2 class="s-title">A quality goal splits into a constraint and a sensor</h2>
-  <p class="s-claim">Every mechanism is one of two moves: a constraint that prevents the error, or a sensor that catches it.</p>
-  <div class="s-more-text" id="more-bi-alignment-thesis" data-more>Make the class impossible before the fact, or detect the mistake after; costly failures earn both. A third set of goals splits into neither and stays a human job — the residual the mechanisms leave behind.</div>
+  <p class="s-claim">Split a quality goal in two: a constraint prevents the error; a sensor detects it after the fact. Costly failures earn both.</p>
+  <div class="s-more-text" id="more-bi-alignment-thesis" data-more>A type the compiler checks, a lint that blocks the commit, a gate that refuses the deploy: each holds a policy decided once against every later change. What splits into neither stays a human job.</div>
   <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a>
 </div>
 </div>
@@ -870,8 +879,8 @@
   <div class="s-words">
     <p class="s-kick">Big idea 5 · the practice</p>
     <h2 class="s-title">Convert recurring failures into controls</h2>
-    <p class="s-claim">Velocity surfaces the failures you could not foresee; convert each recurring one into a durable control.</p>
-    <div class="s-more-text" id="more-bi-convert-failures" data-more>A type, a lint, a gate, a schema — the guardrail grows out of the real failure, so every later agent inherits a smaller space to be wrong in. That conversion is the way of thinking inside the method.</div>
+    <p class="s-claim">Velocity surfaces the failures you could not foresee. Convert each recurring one into a mechanism, pushed as far toward hard enforcement as it will go.</p>
+    <div class="s-more-text" id="more-bi-convert-failures" data-more>Mechanisms sit on a spectrum from soft to hard: a convention or a brief aims the agent but cannot block it; a lint or a gate holds the line whether the agent cooperates or not. The second time a soft rule fails, move it right — the documented rule becomes a lint the agent cannot talk past.</div>
     <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a>
   </div>
 </div>
@@ -974,8 +983,8 @@
   <div class="s-words">
     <p class="s-kick">Big idea 6 · the seat</p>
     <h2 class="s-title">The lifecycle stays; the developer's seat moves to the agents</h2>
-    <p class="s-claim">SDLC becomes SELC: same activities, no new phases — but implementation is now the agents'.</p>
-    <div class="s-more-text" id="more-bi-seat-moves" data-more>The engineer flanks the fleet: authoring intent on the left, judging and governing the output on the right. The seat moved up a level, from writing the code to authoring the model that says what correct means.</div>
+    <p class="s-claim">SDLC becomes SELC: one seat reassigned, the lifecycle otherwise intact. The fleet writes the code; the engineer keeps the seats that were always the engineering.</p>
+    <div class="s-more-text" id="more-bi-seat-moves" data-more>The engineer flanks the fleet: models carry intent in on one side, judgment meets the output on the other. The seats the human keeps — requirements, specification, design, validation — were always the consequential ones; now they are the job.</div>
     <a class="s-read" href="book/1.3-the-engineers-seat.html">Read in the book →</a>
   </div>
 </div>
@@ -983,167 +992,12 @@
 
   <hr class="sep" />
 
-  <div class="gateway" id="bi-gateway">
-  <div class="gw-words">
-    <p class="s-kick">Kept honest — the gateway to the catalogue</p>
-    <h2 class="s-title">The models are the interface; the map is kept equal to the territory</h2>
-    <p class="s-claim">Two spines of models over one method trunk govern this very repo; the catalogue's mechanisms hold them true.</p>
-    <div class="s-more-text" id="more-bi-gateway" data-more>The models are the interface a context-bounded fleet operates a context-exceeding codebase through. Browse the mechanisms by the model they govern.</div>
-    <a class="s-read gw-primary" href="catalogue-views.html">Explore the catalogue →</a>
-    <a class="s-read" href="book/3.1-the-executable-zoo.html">Read in the book →</a>
-  </div>
-  <figure class="gw-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 600" id="bi-gateway-modelmap" class="mapfig" aria-hidden="true"
-     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <!-- spine trunk lines -->
-  <line x1="300" y1="88" x2="300" y2="524" stroke="#2f5169" stroke-width="3"/>
-  <line x1="680" y1="88" x2="680" y2="524" stroke="#1f7a4d" stroke-width="3"/>
-
-  <!-- spine headers -->
-  <text x="300" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#2f5169">THE FLEET</text>
-  <text x="300" y="70" text-anchor="middle" font-size="12" fill="#57534e">the self-operate lifecycle models</text>
-  <text x="680" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#1f7a4d">THE PRODUCT</text>
-  <text x="680" y="70" text-anchor="middle" font-size="12" fill="#57534e">the 4+1 views of the shipped system</text>
-
-  <!-- cross-links (drawn under nodes): models shared by projection -->
-  <path d="M 205 120 C 430 100, 560 320, 593 208" fill="none" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <path d="M 205 300 C 430 300, 560 340, 593 372" fill="none" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <path d="M 205 360 C 430 360, 560 240, 593 208" fill="none" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <path d="M 205 120 C 440 150, 560 420, 593 448" fill="none" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <text x="490" y="492" text-anchor="middle" font-size="11" fill="#57534e" font-style="italic">⇆ shared by projection — a cross-link, not a duplicate</text>
-
-  <!-- ===================== FLEET lifecycle nodes (left spine); model pills to the LEFT ===================== -->
-  <g class="node" data-k="l1"><rect x="215" y="100" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
-    <text x="300" y="117" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-agents</text>
-    <text x="300" y="132" text-anchor="middle" font-size="11" fill="#57534e">2 models · 6 mechanisms</text></g>
-  <line x1="205" y1="120" x2="215" y2="120" stroke="#2f5169" stroke-width="1.5"/>
-  <rect x="38" y="98" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="121" y="112" text-anchor="middle" font-size="11" fill="#1c1917">★ agent-orchestration</text>
-  <rect x="38" y="122" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="121" y="136" text-anchor="middle" font-size="11" fill="#1c1917">★ mediator contracts</text>
-
-  <g class="node" data-k="l2"><rect x="215" y="160" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
-    <text x="300" y="177" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-context</text>
-    <text x="300" y="192" text-anchor="middle" font-size="11" fill="#57534e">4 mechanisms</text></g>
-
-  <g class="node" data-k="l3"><rect x="215" y="220" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
-    <text x="300" y="237" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-git-repo</text>
-    <text x="300" y="252" text-anchor="middle" font-size="11" fill="#57534e">3 mechanisms</text></g>
-
-  <g class="node" data-k="l4"><rect x="215" y="280" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
-    <text x="300" y="297" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-deploy</text>
-    <text x="300" y="312" text-anchor="middle" font-size="11" fill="#57534e">1 model · 2 mechanisms</text></g>
-  <line x1="205" y1="300" x2="215" y2="300" stroke="#2f5169" stroke-width="1.5"/>
-  <rect x="38" y="290" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="121" y="304" text-anchor="middle" font-size="11" fill="#1c1917">★ deployment topology</text>
-
-  <g class="node" data-k="l5"><rect x="215" y="340" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
-    <text x="300" y="357" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">manage-dev-machine</text>
-    <text x="300" y="372" text-anchor="middle" font-size="11" fill="#57534e">1 model · 4 mechanisms</text></g>
-  <line x1="205" y1="360" x2="215" y2="360" stroke="#2f5169" stroke-width="1.5"/>
-  <rect x="38" y="350" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="121" y="364" text-anchor="middle" font-size="11" fill="#1c1917">★ synchronization</text>
-
-  <g class="node" data-k="lcron"><rect x="215" y="400" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
-    <text x="300" y="417" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">gc-cron plane</text>
-    <text x="300" y="432" text-anchor="middle" font-size="11" fill="#57534e">1 mechanism</text></g>
-
-  <g class="node" data-k="lorch"><rect x="215" y="460" width="170" height="40" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
-    <text x="300" y="477" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">orchestrator-hooks</text>
-    <text x="300" y="492" text-anchor="middle" font-size="11" fill="#57534e">1 model · 7 mechanisms</text></g>
-  <line x1="205" y1="480" x2="215" y2="480" stroke="#2f5169" stroke-width="1.5"/>
-  <rect x="38" y="470" width="167" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="121" y="484" text-anchor="middle" font-size="11" fill="#1c1917">★ governance graph</text>
-
-  <!-- ===================== PRODUCT view nodes (right spine); model pills to the RIGHT ===================== -->
-  <g class="node" data-k="logical"><rect x="595" y="100" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
-    <text x="680" y="117" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Logical</text>
-    <text x="680" y="132" text-anchor="middle" font-size="11" fill="#57534e">5 models · 16 mechanisms</text></g>
-  <line x1="765" y1="120" x2="775" y2="120" stroke="#1f7a4d" stroke-width="1.5"/>
-  <rect x="775" y="90" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="860" y="104" text-anchor="middle" font-size="11" fill="#1c1917">★ service-flow · ★ registries</text>
-  <rect x="775" y="114" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="860" y="128" text-anchor="middle" font-size="11" fill="#1c1917">★ PdfModel · ★ Office</text>
-  <rect x="775" y="138" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="860" y="152" text-anchor="middle" font-size="11" fill="#1c1917">★ canonical walkers</text>
-
-  <g class="node" data-k="process"><rect x="595" y="188" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
-    <text x="680" y="205" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Process</text>
-    <text x="680" y="220" text-anchor="middle" font-size="11" fill="#57534e">2 models · 2 shared in</text></g>
-  <line x1="765" y1="208" x2="775" y2="208" stroke="#1f7a4d" stroke-width="1.5"/>
-  <rect x="775" y="186" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="860" y="200" text-anchor="middle" font-size="11" fill="#1c1917">★ composed state-machines</text>
-  <rect x="775" y="210" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="860" y="224" text-anchor="middle" font-size="11" fill="#1c1917">★ process view</text>
-
-  <g class="node" data-k="dev"><rect x="595" y="276" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
-    <text x="680" y="293" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Development</text>
-    <text x="680" y="308" text-anchor="middle" font-size="11" fill="#57534e">1 model</text></g>
-  <line x1="765" y1="296" x2="775" y2="296" stroke="#1f7a4d" stroke-width="1.5"/>
-  <rect x="775" y="286" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="860" y="300" text-anchor="middle" font-size="11" fill="#1c1917">★ component &amp; zone</text>
-
-  <g class="node" data-k="phys"><rect x="595" y="352" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
-    <text x="680" y="369" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Physical</text>
-    <text x="680" y="384" text-anchor="middle" font-size="11" fill="#57534e">1 model · 1 shared in</text></g>
-  <line x1="765" y1="372" x2="775" y2="372" stroke="#1f7a4d" stroke-width="1.5"/>
-  <rect x="775" y="362" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="860" y="376" text-anchor="middle" font-size="11" fill="#1c1917">★ control↔substrate</text>
-
-  <g class="node" data-k="scen"><rect x="595" y="428" width="170" height="40" rx="6" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
-    <text x="680" y="445" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1917">Scenarios</text>
-    <text x="680" y="460" text-anchor="middle" font-size="11" fill="#57534e">1 model · 1 shared in</text></g>
-  <line x1="765" y1="448" x2="775" y2="448" stroke="#1f7a4d" stroke-width="1.5"/>
-  <rect x="775" y="438" width="170" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="860" y="452" text-anchor="middle" font-size="11" fill="#1c1917">★ user-journey</text>
-
-  <!-- ===================== the method trunk band (holds both spines) ===================== -->
-  <g class="node" data-k="trunk"><rect x="60" y="524" width="860" height="56" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.5"/>
-    <text x="490" y="547" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3f12">THE METHOD TRUNK — 14 mechanisms that hold every model true</text>
-    <text x="490" y="566" text-anchor="middle" font-size="11" fill="#57534e">executable source-of-truth · drift &amp; parity gates · verification · coverage→node · codegen · query surface · …</text></g>
-  <!-- fleet-spine anchor pill on the trunk -->
-  <rect x="222" y="514" width="156" height="20" rx="10" fill="#fdfcf9" stroke="#1f6fae"/>
-  <text x="300" y="528" text-anchor="middle" font-size="11" fill="#1c1917">★ lifecycle model (anchor)</text>
-</svg></figure>
-</div>
-
-  <section class="deeper" aria-labelledby="deeper-h">
-  <h2 id="deeper-h" class="deep-h">Deeper in the book</h2>
-  <p class="deep-note">The site is a preview; the book claims and expands every framing. These are entry points, not a second copy.</p>
-  <div class="deep-grp">
-    <span class="deep-lbl">The four definitions — the vocabulary the theses ride on</span>
-    <div class="deep-row">
-      <a class="deep-item" id="def-model" href="book/2.1-the-agent-stack.html#idx-def-model"><b>Model</b><span>A useful approximation of a phenomenon (simplified, but good enough to predict)</span></a>
-      <a class="deep-item" id="def-agent" href="book/2.1-the-agent-stack.html#idx-def-agent"><b>Agent</b><span>A controllable intelligence capable of independent reasoning over a knowledge base</span></a>
-      <a class="deep-item" id="def-engineering" href="book/2.1-the-agent-stack.html#idx-def-engineering"><b>Engineering</b><span>The discipline of developing operable technological artifacts to solve problems, and of analytically identifying and assessing the competing means to those solutions, each with distinct trade-offs</span></a>
-      <a class="deep-item" id="def-software-engineering" href="book/2.1-the-agent-stack.html#idx-def-software-engineering"><b>Software engineering</b><span>Software development produces a functioning artifact</span></a>
-      <a class="deep-item" id="def-structured" href="book/2.1-the-agent-stack.html"><b>Structured</b><span>Said of a model: written in an explicit, declared shape a machine can read and validate</span></a>
-    </div>
-  </div>
-  <div class="deep-grp">
-    <span class="deep-lbl">The alignment &amp; modeling vocabulary</span>
-    <div class="deep-row">
-      <a class="deep-item" id="card-universal-language" href="book/6.0-implications-for-se.html"><b>Models as the universal language</b></a>
-      <a class="deep-item" id="card-constraint" href="book/2.3-the-governed-environment.html"><b>Constraint</b></a>
-      <a class="deep-item" id="card-sensor" href="book/2.3-the-governed-environment.html"><b>Sensor</b></a>
-      <a class="deep-item" id="card-residual" href="book/2.3-the-governed-environment.html"><b>The residual</b></a>
-      <a class="deep-item" id="card-generate-to-falsify" href="book/4.6-generative-validation.html"><b>Generative validation</b></a>
-    </div>
-  </div>
-  <div class="deep-grp">
-    <span class="deep-lbl">What you'll be able to do — the learning outcomes</span>
-    <ul class="oc-list"><li id="outcome-book-design-a-governed-environment-in-which-a-fleet" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-distinguish-a-constraint-from-a-sensor-and-a-soft-me" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">understand</span><span class="oc-stmt">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-model-a-system-as-a-small-set-of-typed-drift-c" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can model a system as typed, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-part-1-judge-whether-a-task-needs-the-book-s-machiner" class="oc-row"><span class="oc-unit">Part 1</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 1, the reader can judge which tasks warrant governance machinery and which do not, and read an agent as a loop that needs a model of its world.</span><a class="oc-more" href="book/1.1-the-printer.html">read →</a></li><li id="outcome-part-2-construct-the-governed-environment-its-layers-its" class="oc-row"><span class="oc-unit">Part 2</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 2, the reader can construct a governed engineering environment: place a control at the right layer of the agent stack, split ex-ante from ex-post, write lifecycles and runbooks, and measure one level deeper.</span><a class="oc-more" href="book/2.1-the-agent-stack.html">read →</a></li><li id="outcome-part-3-model-a-system-through-kruchten-s-4-1-views-as" class="oc-row"><span class="oc-unit">Part 3</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 3, the reader can model a system as the executable 4+1 zoo — logical, process, development, physical, and scenario views — each a typed model kept honest by a drift check.</span><a class="oc-more" href="book/3.1-the-executable-zoo.html">read →</a></li><li id="outcome-part-4-apply-the-method-to-a-real-codebase-inducing-m" class="oc-row"><span class="oc-unit">Part 4</span><span class="oc-bloom">apply</span><span class="oc-stmt">After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes.</span><a class="oc-more" href="book/4.1-brownfield.html">read →</a></li><li id="outcome-part-5-trace-the-method-s-evolution-through-a-real-ac" class="oc-row"><span class="oc-unit">Part 5</span><span class="oc-bloom">analyze</span><span class="oc-stmt">After Part 5, the reader can trace how the method grew from a single reviewer to a multi-agent engineering organization in one real system, and relate each governance move to the problem that forced it.</span><a class="oc-more" href="book/5.1-the-ada-context.html">read →</a></li><li id="outcome-part-6-evaluate-what-the-method-changes-for-how-software" class="oc-row"><span class="oc-unit">Part 6</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.</span><a class="oc-more" href="book/6.0-implications-for-se.html">read →</a></li></ul>
-  </div>
-  <div class="deep-grp">
-    <span class="deep-lbl">More</span>
-    <div class="deep-row">
-      <a class="deep-item" href="book/4.5-lessons-learned.html"><b>The way of thinking</b></a>
-      <a class="deep-item" href="book/4.2-the-skills.html"><b>The three skills</b></a>
-      <a class="deep-item" href="development-workflow.html"><b>The development process, as a figure</b></a>
-      <a class="deep-item" href="book-models/models-view.html"><b>Browse the book models</b></a>
-      <a class="deep-item" href="quick-start.html"><b>Quick start — install the skills</b></a>
-      <a class="deep-item" href="ABSTRACTIONS.html"><b>Abstractions glossary</b></a>
-      <a class="deep-item" href="book/index.html"><b>Case study &amp; references</b></a>
-    </div>
+  <section class="closing" aria-label="In closing">
+  <p class="close-lead">The code got cheap; the judgment got expensive. Govern the conditions under which fast code can be trusted — the machine can search faster than any of us, but it cannot tell us what is worth searching for. So start with one recurring failure your agents keep handing you, and convert it: one type, one lint, one gate. The method grows from there; below are three ways in.</p>
+  <div class="close-ways">
+    <a class="close-btn" href="catalogue-views.html"><span class="cb-t">Full catalogue</span><span class="cb-s">every mechanism, by role · model · enforcement</span></a>
+    <a class="close-btn" href="book/index.html"><span class="cb-t">Book</span><span class="cb-s">the full treatment of the method</span></a>
+    <a class="close-btn" href="quick-start.html"><span class="cb-t">Claude quickstart</span><span class="cb-s">install the skills in your repo</span></a>
   </div>
 </section>
 
@@ -1280,10 +1134,42 @@
 <tr><td class="c-name"><a href="product/repair-vocabulary/codemod-first.html">Codemod-first threshold (N≳50 → AST transformer)</a></td><td class="c-sum">For 50+ deterministic sites, write one AST transformer.</td><td class="c-enf">Soft</td></tr>
 </tbody></table>
 </section>
-  <div class="book-cta" style="margin:20px 0 30px;">
-    <a href="book/index.html"><b>To learn more about the MAGE method, read the book! →</b></a>
-    <span class="book-cta-pdf"><a href="book/mage-book.pdf">Download PDF</a></span>
+<section class="reference" aria-labelledby="reference-h">
+  <h2 id="reference-h" class="deep-h">The vocabulary, in brief</h2>
+  <p class="deep-note">The site previews; the book claims and expands every framing. Each row is an entry point into the fuller treatment.</p>
+  <div class="deep-grp">
+    <span class="deep-lbl">The four definitions — the vocabulary the theses ride on</span>
+    <div class="deep-row">
+      <a class="deep-item" id="def-model" href="book/2.1-the-agent-stack.html#idx-def-model"><b>Model</b><span>A useful approximation of a phenomenon (simplified, but good enough to predict)</span></a>
+      <a class="deep-item" id="def-agent" href="book/2.1-the-agent-stack.html#idx-def-agent"><b>Agent</b><span>A controllable intelligence capable of independent reasoning over a knowledge base</span></a>
+      <a class="deep-item" id="def-engineering" href="book/2.1-the-agent-stack.html#idx-def-engineering"><b>Engineering</b><span>The discipline of developing operable technological artifacts to solve problems, and of analytically identifying and assessing the competing means to those solutions, each with distinct trade-offs</span></a>
+      <a class="deep-item" id="def-software-engineering" href="book/2.1-the-agent-stack.html#idx-def-software-engineering"><b>Software engineering</b><span>Software development produces a functioning artifact</span></a>
+      <span class="def-rider-lead">— and the adjective every one of them rides on:</span>
+      <a class="deep-item def-rider" id="def-structured" href="book/2.1-the-agent-stack.html#idx-def-structured"><b>Structured</b><span>Said of a model: written in an explicit, declared shape a machine can read and validate</span></a>
+    </div>
   </div>
+  <div class="deep-grp">
+    <span class="deep-lbl">The alignment &amp; modeling vocabulary</span>
+    <div class="deep-row">
+      <a class="deep-item" id="card-universal-language" href="book/6.0-implications-for-se.html"><b>Models as the universal language</b></a>
+      <a class="deep-item" id="card-constraint" href="book/2.3-the-governed-environment.html"><b>Constraint</b></a>
+      <a class="deep-item" id="card-sensor" href="book/2.3-the-governed-environment.html"><b>Sensor</b></a>
+      <a class="deep-item" id="card-residual" href="book/2.3-the-governed-environment.html"><b>The residual</b></a>
+      <a class="deep-item" id="card-generate-to-falsify" href="book/4.6-generative-validation.html"><b>Generative validation</b></a>
+    </div>
+  </div>
+  <div class="deep-grp">
+    <span class="deep-lbl">What you'll be able to do — the learning outcomes</span>
+    <ul class="oc-list"><li id="outcome-book-design-a-governed-environment-in-which-a-fleet" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-distinguish-a-constraint-from-a-sensor-and-a-soft-me" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">understand</span><span class="oc-stmt">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-book-model-a-system-as-a-small-set-of-structured-dr" class="oc-row"><span class="oc-unit">The book</span><span class="oc-bloom">create</span><span class="oc-stmt">After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.</span><a class="oc-more" href="book/index.html">read →</a></li><li id="outcome-part-1-judge-whether-a-task-needs-the-book-s-machiner" class="oc-row"><span class="oc-unit">Part 1</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 1, the reader can judge which tasks warrant governance machinery and which do not, and read an agent as a loop that needs a model of its world.</span><a class="oc-more" href="book/1.1-the-printer.html">read →</a></li><li id="outcome-part-2-construct-the-governed-environment-its-layers-its" class="oc-row"><span class="oc-unit">Part 2</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 2, the reader can construct a governed engineering environment: place a control at the right layer of the agent stack, split ex-ante from ex-post, write lifecycles and runbooks, and measure one level deeper.</span><a class="oc-more" href="book/2.1-the-agent-stack.html">read →</a></li><li id="outcome-part-3-model-a-system-through-kruchten-s-4-1-views-as" class="oc-row"><span class="oc-unit">Part 3</span><span class="oc-bloom">create</span><span class="oc-stmt">After Part 3, the reader can model a system as the executable 4+1 zoo — logical, process, development, physical, and scenario views — each a structured model kept honest by a drift check.</span><a class="oc-more" href="book/3.1-the-executable-zoo.html">read →</a></li><li id="outcome-part-4-apply-the-method-to-a-real-codebase-inducing-m" class="oc-row"><span class="oc-unit">Part 4</span><span class="oc-bloom">apply</span><span class="oc-stmt">After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes.</span><a class="oc-more" href="book/4.1-brownfield.html">read →</a></li><li id="outcome-part-5-trace-the-method-s-evolution-through-a-real-ac" class="oc-row"><span class="oc-unit">Part 5</span><span class="oc-bloom">analyze</span><span class="oc-stmt">After Part 5, the reader can trace how the method grew from a single reviewer to a multi-agent engineering organization in one real system, and relate each governance move to the problem that forced it.</span><a class="oc-more" href="book/5.1-the-ada-context.html">read →</a></li><li id="outcome-part-6-evaluate-what-the-method-changes-for-how-software" class="oc-row"><span class="oc-unit">Part 6</span><span class="oc-bloom">evaluate</span><span class="oc-stmt">After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.</span><a class="oc-more" href="book/6.0-implications-for-se.html">read →</a></li></ul>
+  </div>
+  <div class="deep-grp">
+    <span class="deep-lbl">More views of the method</span>
+    <div class="deep-row">
+      <a class="deep-item" href="book-models/models-view.html"><b>Browse the book models</b></a>
+      <a class="deep-item" href="development-workflow.html"><b>The development process, as a figure</b></a>
+    </div>
+  </div>
+</section>
 <script>
 (function(){
   var blocks = document.querySelectorAll('.s-more-text[data-more]');
@@ -1305,7 +1191,7 @@
   });
 })();
 </script>
-<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/agent-governance-mechanisms"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> agent-governance-mechanisms</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the book →</a></footer>
+<footer class="site-foot">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; <a class="gh" href="https://github.com/davisjam/model-based-agentic-software-engineering"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> model-based-agentic-software-engineering</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the book →</a><span class="foot-nsf">This work was supported by the U.S. National Science Foundation under grants #2541917 and #2452533.</span></footer>
 </main>
 </body>
 </html>

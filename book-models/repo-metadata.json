@@ -1,0 +1,8 @@
+{
+  "_note": "Repo-metadata SSOT — the one governed place the catalogue's GitHub / Pages identity lives, so the chrome links (site footer, top nav, the landing nav grid) and the deploy 'watch the Actions run' line read from HERE instead of hardcoding the owner/repo/URL in four places. Stdlib-read at build time by catalog.py (like design-tokens.json): catalog.py derives the repository URL as https://github.com/<owner>/<repo> and the Actions URL as <repo-url>/actions. Rename the repo once here and every link follows. No auto-generation — hand-authored; edit in place.",
+  "owner": "davisjam",
+  "repo": "model-based-agentic-software-engineering",
+  "pages_url": "https://davisjam.github.io/model-based-agentic-software-engineering",
+  "site_url": "https://davisjam.github.io",
+  "actions_url": "https://github.com/davisjam/model-based-agentic-software-engineering/actions"
+}
