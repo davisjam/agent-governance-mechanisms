@@ -13,6 +13,12 @@
       "chapter": 26,
       "section": 42
     },
+    "by_tier": {
+      "program": 3,
+      "module": 6,
+      "lesson": 26,
+      "outcome": 42
+    },
     "by_bloom": {
       "know": 8,
       "understand": 21,
@@ -25,7 +31,9 @@
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
     "sections_total": 174,
-    "sections_primary_of_an_outcome": 40
+    "sections_primary_of_an_outcome": 40,
+    "modules": 6,
+    "lessons": 28
   },
   "taxonomy": {
     "know": [
@@ -84,6 +92,332 @@
       "build",
       "model",
       "generate"
+    ]
+  },
+  "hierarchy": {
+    "tiers": [
+      "program",
+      "module",
+      "lesson",
+      "outcome"
+    ],
+    "program": {
+      "unit": "book",
+      "own_outcomes": [
+        "book::design-a-governed-environment-in-which-a-fleet",
+        "book::distinguish-a-constraint-from-a-sensor-and-a-soft-me",
+        "book::model-a-system-as-a-small-set-of-structured-dr"
+      ]
+    },
+    "modules": [
+      {
+        "module": "part-1",
+        "number": 1,
+        "title": "The Mindset",
+        "own_outcomes": [
+          "part-1::judge-whether-a-task-needs-the-book-s-machiner"
+        ],
+        "lessons": [
+          {
+            "lesson": "1.1-the-printer",
+            "own_outcomes": [
+              "1.1-the-printer::judge-when-an-open-ended-task-needs-governance"
+            ],
+            "section_outcomes": [
+              "the-two-modes::distinguish-one-shot-scripting-from-supervised-auton",
+              "where-the-emphasis-falls::judge-how-long-a-leash-a-task-can-run-on-from",
+              "a-picture-is-not-enough::explain-why-an-agent-needs-a-model-of-how-to-bui",
+              "whose-fault-is-it::adopt-the-posture-that-when-an-agent-produces"
+            ]
+          },
+          {
+            "lesson": "1.2-loops-and-models",
+            "own_outcomes": [
+              "1.2-loops-and-models::explain-why-an-agent-is-a-loop-and-why-it-needs"
+            ],
+            "section_outcomes": [
+              "everything-is-a-loop::describe-agent-work-as-a-fixed-shape-loop-enginee",
+              "give-it-a-model-of-the-world::construct-a-model-of-the-world-for-an-agent-to-act",
+              "give-it-a-model-of-the-world::explain-how-a-model-of-the-world-conditions-the"
+            ]
+          },
+          {
+            "lesson": "1.3-the-engineers-seat",
+            "own_outcomes": [],
+            "section_outcomes": []
+          }
+        ]
+      },
+      {
+        "module": "part-2",
+        "number": 2,
+        "title": "The Governed Engineering Environment",
+        "own_outcomes": [
+          "part-2::construct-the-governed-environment-its-layers-its"
+        ],
+        "lessons": [
+          {
+            "lesson": "2.1-the-agent-stack",
+            "own_outcomes": [
+              "2.1-the-agent-stack::identify-the-four-layers-of-the-agent-stack-as-fo"
+            ],
+            "section_outcomes": [
+              "the-four-layers::identify-the-four-layers-of-the-agent-stack-from",
+              "the-four-layers::identify-the-four-layers-of-the-agent-stack-found",
+              "every-layer-is-a-place-to-steer::explain-why-every-layer-of-the-stack-is-an-injec"
+            ]
+          },
+          {
+            "lesson": "2.2-models-and-the-semantic-gap",
+            "own_outcomes": [
+              "2.2-models-and-the-semantic-gap::explain-why-a-structured-model-sits-at-the-apex"
+            ],
+            "section_outcomes": [
+              "words-are-soft-code-is-verbose-a-model-is-the-sweet-spot::distinguish-words-too-soft-from-code-too-verbose-and",
+              "why-the-models-drifted-and-why-that-changes-now::explain-why-hand-maintained-models-rotted-and-wh",
+              "the-apex-of-the-documentation-hierarchy-is-a-typed-model::explain-why-a-structured-model-at-the-apex-of-th",
+              "a-drift-check-proves-agreement-not-correctness::explain-why-a-drift-check-proves-agreement-betwe",
+              "just-execute-the-model-a-short-history-of-case-and-mda::situate-the-modeling-choice-on-a-spectrum-from-n",
+              "the-semantic-gap::define-the-semantic-gap-between-a-model-and-the",
+              "a-worked-example-the-context-fullness-bank-hook::apply-the-semantic-gap-fix-to-the-operator-s-o"
+            ]
+          },
+          {
+            "lesson": "2.3-the-governed-environment",
+            "own_outcomes": [
+              "2.3-the-governed-environment::distinguish-ex-ante-from-ex-post-decisions-and-a-con"
+            ],
+            "section_outcomes": [
+              "ex-ante-everything-you-can-decide-up-front::apply-specification-driven-development-to-what",
+              "ex-post-everything-you-learn-by-building::explain-why-most-real-mechanisms-are-built-ex-po",
+              "constraints-and-sensors::distinguish-a-constraint-from-a-sensor-prevent-the-m",
+              "the-residual-goals-no-mechanism-reaches::identify-the-residual-goals-no-mechanism-reaches"
+            ]
+          },
+          {
+            "lesson": "2.4-lifecycles-and-runbooks",
+            "own_outcomes": [
+              "2.4-lifecycles-and-runbooks::author-a-lifecycle-and-a-runbook-that-splits-th"
+            ],
+            "section_outcomes": [
+              "lifecycles-first-then-the-failure-map::map-a-lifecycle-s-healthy-path-and-the-failu",
+              "runbooks-split-the-deterministic-from-the-judgment::author-a-runbook-that-gives-deterministic-steps",
+              "the-judgment-parts-the-roughest-algorithm-that-still-fits::apply-the-roughest-algorithm-rule-to-a-judgmen"
+            ]
+          },
+          {
+            "lesson": "2.5-metrics",
+            "own_outcomes": [
+              "2.5-metrics::compute-a-metric-that-measures-one-level-deeper"
+            ],
+            "section_outcomes": [
+              "measure-one-level-deeper::compute-a-metric-one-level-deeper-than-the-numbe",
+              "the-hard-end-cold-start-latency-machine-read-and-model-fed::analyze-a-hard-machine-read-metric-whose-definin",
+              "the-flagship-coverage-measured-one-level-deeper::compute-coverage-measured-one-level-deeper-model",
+              "the-soft-end-doc-derived-tests::classify-a-soft-judgment-laden-metric-that-aims-a",
+              "the-model-runs-the-machinery::explain-why-a-structured-model-is-not-a-picture"
+            ]
+          },
+          {
+            "lesson": "2.6-when-guardrails-collide",
+            "own_outcomes": [
+              "2.6-when-guardrails-collide::analyze-what-lies-between-controls-when-guardrai"
+            ],
+            "section_outcomes": [
+              "drawing-what-lies-between-the-controls::analyze-the-collisions-between-controls-as-edges",
+              "when-the-hooks-aren-t-yours::apply-the-governance-graph-to-hooks-you-did-no",
+              "keeping-the-model-honest::justify-the-two-disciplines-that-keep-a-governan"
+            ]
+          }
+        ]
+      },
+      {
+        "module": "part-3",
+        "number": 3,
+        "title": "The Model Zoo",
+        "own_outcomes": [
+          "part-3::model-a-system-through-kruchten-s-4-1-views-as"
+        ],
+        "lessons": [
+          {
+            "lesson": "3.1-the-executable-zoo",
+            "own_outcomes": [
+              "3.1-the-executable-zoo::explain-why-a-fleet-pays-for-free-the-modeling-e"
+            ],
+            "section_outcomes": [
+              "kruchten-s-4-1-promoted-from-a-closing-sentence-to-the-spine::explain-why-kruchten-s-4-1-becomes-the-spine-of",
+              "two-decisions-that-make-the-graph-resist-rot::analyze-the-two-design-decisions-that-keep-a-gov"
+            ]
+          },
+          {
+            "lesson": "3.2-the-logical-view",
+            "own_outcomes": [
+              "3.2-the-logical-view::model-a-service-flow-model-and-the-domain-regi"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "3.3-the-process-view",
+            "own_outcomes": [
+              "3.3-the-process-view::model-the-concurrency-of-a-system-with-a-synch"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "3.4-the-development-view",
+            "own_outcomes": [
+              "3.4-the-development-view::model-a-codebase-s-zones-with-a-component-zone"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "3.5-the-physical-view",
+            "own_outcomes": [
+              "3.5-the-physical-view::model-where-a-system-runs-with-a-deployment-to"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "3.6-the-scenarios-view",
+            "own_outcomes": [
+              "3.6-the-scenarios-view::map-user-and-developer-journeys-to-test-plac"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "3.7-the-scope-of-modeling",
+            "own_outcomes": [],
+            "section_outcomes": []
+          }
+        ]
+      },
+      {
+        "module": "part-4",
+        "number": 4,
+        "title": "Putting It to Work",
+        "own_outcomes": [
+          "part-4::apply-the-method-to-a-real-codebase-inducing-m"
+        ],
+        "lessons": [
+          {
+            "lesson": "4.1-brownfield",
+            "own_outcomes": [
+              "4.1-brownfield::apply-three-approaches-to-inducing-a-model-fro"
+            ],
+            "section_outcomes": [
+              "the-starting-point-and-the-destination::name-both-ends-before-you-move"
+            ]
+          },
+          {
+            "lesson": "4.2-the-skills",
+            "own_outcomes": [
+              "4.2-the-skills::use-the-self-operate-self-governance-and-sel"
+            ],
+            "section_outcomes": [
+              "self-governance-the-catalogue-and-the-posture::use-the-self-governance-skill-convert-a-recu"
+            ]
+          },
+          {
+            "lesson": "4.3-transformations",
+            "own_outcomes": [
+              "4.3-transformations::size-a-transformation-to-the-model-it-produce"
+            ],
+            "section_outcomes": [
+              "size-the-leap-to-the-model-and-the-guarantee::size-the-leap-a-transformation-makes-to-the-m"
+            ]
+          },
+          {
+            "lesson": "4.4-training-data",
+            "own_outcomes": [
+              "4.4-training-data::analyze-where-a-model-s-training-data-bias-helps"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "4.5-lessons-learned",
+            "own_outcomes": [
+              "4.5-lessons-learned::recognize-the-agent-shaped-failure-modes-and-the-d"
+            ],
+            "section_outcomes": [
+              "your-tests-must-survive-agent-shaped-failure-modes::recognize-the-agent-shaped-failure-modes-a-test-su",
+              "vibe-coding-treats-the-program-as-an-i-o-device-engineering-treats-it-as-a-system::distinguish-vibe-coding-from-engineering-program-as",
+              "governance-is-a-spectrum-from-soft-to-hard::classify-a-mechanism-on-the-soft-to-hard-spectrum"
+            ]
+          },
+          {
+            "lesson": "4.6-generative-validation",
+            "own_outcomes": [
+              "4.6-generative-validation::choose-among-property-testing-fuzzing-and-fuzz"
+            ],
+            "section_outcomes": [
+              "the-move-a-generator-hunts-a-counterexample-to-a-model::apply-the-core-generative-validation-move-a-ge",
+              "when-to-reach-for-which::choose-which-generative-validation-strategy-fit"
+            ]
+          }
+        ]
+      },
+      {
+        "module": "part-5",
+        "number": 5,
+        "title": "A MAGE Case Study",
+        "own_outcomes": [
+          "part-5::trace-the-method-s-evolution-through-a-real-ac"
+        ],
+        "lessons": [
+          {
+            "lesson": "5.1-the-ada-context",
+            "own_outcomes": [
+              "5.1-the-ada-context::explain-why-document-accessibility-is-a-hard-hig"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "5.2-the-timeline-and-the-work",
+            "own_outcomes": [
+              "5.2-the-timeline-and-the-work::describe-the-stages-velocity-and-kinds-of-work-th"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "5.3-the-built-system",
+            "own_outcomes": [
+              "5.3-the-built-system::analyze-the-built-system-through-three-views-of"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "5.4-the-road-to-mage",
+            "own_outcomes": [
+              "5.4-the-road-to-mage::trace-the-author-s-path-from-solo-co-coder-to"
+            ],
+            "section_outcomes": []
+          }
+        ]
+      },
+      {
+        "module": "part-6",
+        "number": 6,
+        "title": "Implications for Software Engineering",
+        "own_outcomes": [
+          "part-6::evaluate-what-the-method-changes-for-how-software"
+        ],
+        "lessons": [
+          {
+            "lesson": "6.0-implications-for-se",
+            "own_outcomes": [
+              "6.0-implications-for-se::evaluate-what-the-method-changes-for-how-software"
+            ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "6.1-conclusion",
+            "own_outcomes": [
+              "6.1-conclusion::situate-the-book-within-the-software-engineering"
+            ],
+            "section_outcomes": []
+          }
+        ]
+      }
     ]
   },
   "outcomes": [

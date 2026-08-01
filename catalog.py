@@ -1483,7 +1483,11 @@ LANDING_CSS = """
   .def-rider-lead { display:block; width:100%; font-size:var(--fs-micro); font-style:italic; color:var(--muted); margin:8px 0 0; }
   .deep-item.def-rider { border-style:dashed; border-color:var(--box-def-rule); }
 
-  /* The learning-outcomes list (projected from book-models/outcomes.json), compact. */
+  /* The learning-outcomes list (projected from book-models/outcomes.json), tiered Program → Module. */
+  .oc-tier { margin:0 0 4px; }
+  .oc-tier-h { font-size:var(--fs-micro); text-transform:uppercase; letter-spacing:.05em; font-weight:800;
+               color:var(--muted); margin:10px 0 1px; }
+  .oc-unit small { display:block; font-weight:600; text-transform:none; letter-spacing:0; color:var(--muted); }
   ul.oc-list { margin:4px 0 4px; padding:0; list-style:none; }
   ul.oc-list li.oc-row { display:grid; grid-template-columns:auto auto 1fr auto; gap:10px; align-items:baseline;
                    font-size:var(--fs-meta); color:var(--ink); line-height:1.5; padding:7px 0;
@@ -1636,6 +1640,15 @@ def _outcome_index_by_id() -> dict:
     return {o["outcome_id"]: o for o in raw.get("outcomes", []) if o.get("outcome_id")}
 
 
+def _outcomes_hierarchy() -> dict:
+    """The Module → Lesson → outcome hierarchy block from book-models/outcomes.json (derived by the
+    outcomes model). Read-only; the site projects a slice of it. Empty dict if absent (thin-fallback)."""
+    path = os.path.join(ROOT, "book-models", "outcomes.json")
+    if not os.path.isfile(path):
+        return {}
+    return json.load(open(path, encoding="utf-8")).get("hierarchy", {})
+
+
 def _load_outcomes_site() -> dict:
     """Read book/data/outcomes-site.json — the SELECTION + traceability sidecar (which outcomes the site
     surfaces, and each one's book-home link). Thin by design: outcome prose is read from outcomes.json."""
@@ -1656,33 +1669,50 @@ _BLOOM_ORDER = ["know", "understand", "apply", "analyze", "evaluate", "create"]
 
 def _landing_outcomes() -> str:
     """The core learning-outcomes view — 'what you'll be able to do' — projected from
-    book-models/outcomes.json filtered by book/data/outcomes-site.json's selection. Book-level outcomes
-    first, then Part-level; each row renders the outcome's `statement` STRAIGHT FROM the model (no copy),
-    a bloom-verb tag, and a link to its book home. Re-running the outcomes drain re-syncs this section."""
+    book-models/outcomes.json filtered by book/data/outcomes-site.json's selection, tiered as a
+    Module → Lesson → outcome course structure (Module = Part, Lesson = chapter). The site surfaces two
+    tiers: the whole-book PROGRAM outcomes, then one row per MODULE (each carrying its Part-level outcome
+    and a count of the Lessons it contains — the finer Lesson/section outcomes stay book-only). Each row
+    renders the outcome's `statement` STRAIGHT FROM the model (no copy), a bloom-verb tag, and a link to
+    its book home. Re-running the outcomes drain re-syncs this section (row ids stay `outcome-<slug>`)."""
     site = _load_outcomes_site()
     if not site:
         return ""
     by_id = _outcome_index_by_id()
     home_map = site.get("_book_home_map", {})
+    lessons_by_module = {m.get("module"): len(m.get("lessons", []))
+                         for m in _outcomes_hierarchy().get("modules", [])}
     selected = [by_id[oid] for oid in site.get("projected", []) if oid in by_id]
-    # book-level rows first, then part-level; within a granularity, keep declared order.
-    selected.sort(key=lambda o: 0 if o.get("granularity") == "book" else 1)
-    rows = []
-    for o in selected:
+
+    def _row(o: dict, label: str, sub: str = "") -> str:
         oid = o["outcome_id"]
-        gran = o.get("granularity", "")
-        unit = o.get("primary_unit", "")
-        label = "The book" if gran == "book" else unit.replace("part-", "Part ")
-        home = home_map.get(unit, "book/index.html")
-        bloom = _esc(o.get("bloom", ""))
-        stmt = _esc(o.get("statement", ""))
-        rows.append(
+        home = home_map.get(o.get("primary_unit", ""), "book/index.html")
+        sub_html = f"<small>{_esc(sub)}</small>" if sub else ""
+        return (
             f'<li id="{_outcome_row_id(oid)}" class="oc-row">'
-            f'<span class="oc-unit">{_esc(label)}</span>'
-            f'<span class="oc-bloom">{bloom}</span>'
-            f'<span class="oc-stmt">{stmt}</span>'
+            f'<span class="oc-unit">{_esc(label)}{sub_html}</span>'
+            f'<span class="oc-bloom">{_esc(o.get("bloom", ""))}</span>'
+            f'<span class="oc-stmt">{_esc(o.get("statement", ""))}</span>'
             f'<a class="oc-more" href="{_esc(home)}">read →</a></li>')
-    return f'<ul class="oc-list">{"".join(rows)}</ul>'
+
+    program = [o for o in selected if o.get("granularity") == "book"]
+    modules = sorted((o for o in selected if o.get("granularity") == "part"),
+                     key=lambda o: o.get("primary_unit", ""))
+    blocks = []
+    if program:
+        rows = "".join(_row(o, "The book") for o in program)
+        blocks.append('<div class="oc-tier"><p class="oc-tier-h">Across the whole program</p>'
+                      f'<ul class="oc-list">{rows}</ul></div>')
+    if modules:
+        rows = []
+        for o in modules:
+            unit = o.get("primary_unit", "")
+            n = lessons_by_module.get(unit, 0)
+            rows.append(_row(o, unit.replace("part-", "Module "),
+                             sub=f"{n} lesson{'s' if n != 1 else ''}"))
+        blocks.append('<div class="oc-tier"><p class="oc-tier-h">Module by module</p>'
+                      f'<ul class="oc-list">{"".join(rows)}</ul></div>')
+    return "".join(blocks)
 
 
 # ── The Big-Ideas model — the landing AS A PROJECTION of the book's argument ─────────────────────
@@ -2883,7 +2913,7 @@ def cmd_views_audit(args) -> int:
         ("outline.json", om.load_artifact(), om.to_jsonable(om.derive_outline()),
          ("chapters", "_counts")),
         ("outcomes.json", ocm.load_artifact(), ocm.to_jsonable(ocm.derive_model()),
-         ("outcomes", "_counts")),
+         ("outcomes", "_counts", "hierarchy")),
         ("reverse_index.json", ri.load_artifact(), ri.to_jsonable(), ("index", "_counts")),
     ]
     for name, stored, fresh, keys in freshness:

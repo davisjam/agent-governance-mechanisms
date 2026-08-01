@@ -1643,7 +1643,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-36",
+          "element": "1.3-the-engineers-seat::block-40",
           "role": "paragraph-point"
         }
       ]
@@ -1843,7 +1843,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-17",
+          "element": "1.3-the-engineers-seat::block-21",
           "role": "paragraph-point"
         }
       ]
@@ -1883,7 +1883,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-24",
+          "element": "1.3-the-engineers-seat::block-28",
           "role": "paragraph-point"
         }
       ]
@@ -2023,7 +2023,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-42",
+          "element": "1.3-the-engineers-seat::block-46",
           "role": "paragraph-point"
         }
       ]
@@ -2563,7 +2563,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-20",
+          "element": "1.3-the-engineers-seat::block-24",
           "role": "paragraph-point"
         }
       ]
@@ -3293,7 +3293,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-40",
+          "element": "1.3-the-engineers-seat::block-44",
           "role": "paragraph-point"
         }
       ]
@@ -3333,7 +3333,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-31",
+          "element": "1.3-the-engineers-seat::block-35",
           "role": "paragraph-point"
         }
       ]
@@ -3343,7 +3343,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-44",
+          "element": "1.3-the-engineers-seat::block-48",
           "role": "paragraph-point"
         }
       ]
@@ -3363,7 +3363,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-22",
+          "element": "1.3-the-engineers-seat::block-26",
           "role": "paragraph-point"
         }
       ]
@@ -3443,7 +3443,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-29",
+          "element": "1.3-the-engineers-seat::block-33",
           "role": "paragraph-point"
         }
       ]
@@ -8773,17 +8773,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-17",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.3-the-engineers-seat::block-20",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.3-the-engineers-seat::block-22",
+          "element": "1.3-the-engineers-seat::block-21",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8793,12 +8783,22 @@
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-16",
+          "element": "1.3-the-engineers-seat::block-26",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.3-the-engineers-seat::block-28",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.3-the-engineers-seat::block-20",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-39",
+          "element": "1.3-the-engineers-seat::block-43",
           "role": "section-term[tier-1]"
         }
       ]
@@ -10828,12 +10828,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-24",
+          "element": "1.3-the-engineers-seat::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-42",
+          "element": "1.3-the-engineers-seat::block-46",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12568,22 +12568,17 @@
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-20",
+          "element": "1.3-the-engineers-seat::block-24",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-29",
+          "element": "1.3-the-engineers-seat::block-33",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-31",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.3-the-engineers-seat::block-36",
+          "element": "1.3-the-engineers-seat::block-35",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12593,27 +12588,32 @@
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-42",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "1.3-the-engineers-seat::block-44",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-16",
+          "element": "1.3-the-engineers-seat::block-46",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.3-the-engineers-seat::block-48",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.3-the-engineers-seat::block-20",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-28",
+          "element": "1.3-the-engineers-seat::block-32",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-39",
+          "element": "1.3-the-engineers-seat::block-43",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14173,7 +14173,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-42",
+          "element": "1.3-the-engineers-seat::block-46",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14263,7 +14263,7 @@
         },
         {
           "view": "outline",
-          "element": "1.3-the-engineers-seat::block-36",
+          "element": "1.3-the-engineers-seat::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {

@@ -79,6 +79,30 @@ GRANULARITIES = ("book", "part", "chapter", "section")
 #:   gap-recommended → the outcome a MISSING / inadequate unit ought to deliver (content not yet written).
 PROVENANCE_TAGS = ("derived", "declared", "gap-recommended")
 
+#: The PEDAGOGICAL TIERS the outcome spine presents through — the flat outcomes read as a course
+#: structure. Module = Part, Lesson = chapter: the SAME unit keys the outcomes already carry (no prose is
+#: re-authored), relabeled into a hierarchy. The whole-book (book-level) outcomes sit ABOVE the modules as
+#: the PROGRAM tier — they span every module, so they are not forced under any one of them; section
+#: outcomes nest under their Lesson. A pure presentation relabel of `granularity`, so it cannot say
+#: anything the outcomes do not already carry.
+TIERS = ("program", "module", "lesson", "outcome")
+_TIER_OF_GRANULARITY = {"book": "program", "part": "module", "chapter": "lesson", "section": "outcome"}
+
+#: Module titles, keyed by Part number — the one fact the unit keys do not carry (they key on numeric part
+#: / chapter slug). Canonical HERE so the reviewable digest and the models reading-view read ONE source
+#: (the reading-view reads these titles back out of the emitted `hierarchy`, not a second hand-kept copy).
+#: Part 0 is front matter (preface / acknowledgments) — not a teaching Module, so it is omitted from the
+#: module tier (matching the coverage invariants, which already skip it).
+PART_TITLES = {
+    0: "Front Matter",
+    1: "The Mindset",
+    2: "The Governed Engineering Environment",
+    3: "The Model Zoo",
+    4: "Putting It to Work",
+    5: "A MAGE Case Study",
+    6: "Implications for Software Engineering",
+}
+
 
 # ---- typed model ------------------------------------------------------------------------------------
 
@@ -249,6 +273,51 @@ def derive_model() -> OutcomeModel:
     return OutcomeModel(outcomes=both)
 
 
+# ---- the Module → Lesson → outcome hierarchy (derived presentation of the flat spine) ----------------
+
+def tiered_view(model: OutcomeModel) -> dict:
+    """Present the flat outcome spine as a Module → Lesson → outcome COURSE STRUCTURE. Module = Part,
+    Lesson = chapter — the unit keys the outcomes already carry, grouped by the outline's
+    part → chapter → section containment. The whole-book outcomes form the PROGRAM tier above the modules;
+    each Module carries its own part-level outcome(s) and its Lessons; each Lesson carries its own
+    chapter-level outcome(s) plus the section outcomes nested beneath it.
+
+    DERIVED, not authored: every id here is an `outcome_id` already in `model.outcomes`, placed by its
+    `primary_unit`. No prose is written, so the hierarchy cannot drift from the outcomes it groups — it
+    re-derives from the same source (invariant U8 asserts it partitions the outcomes exactly once). Part 0
+    (front matter) is not a teaching Module and is omitted."""
+    outline = om.derive_outline()
+    by_primary = model.by_primary()
+    chapters_in_part: "dict[int, list[str]]" = {}
+    sections_in_chapter: "dict[str, list[str]]" = {}
+    for c in outline.chapters:
+        chapters_in_part.setdefault(c.part, []).append(c.slug)
+        sections_in_chapter[c.slug] = [s.section_id for s in c.sections]
+
+    def ids_for(unit: str) -> "list[str]":
+        return [o.outcome_id for o in by_primary.get(unit, [])]
+
+    modules: "list[dict]" = []
+    for part in sorted(p for p in chapters_in_part if p != 0):
+        lessons = [{
+            "lesson": slug,
+            "own_outcomes": ids_for(slug),
+            "section_outcomes": [oid for sid in sections_in_chapter[slug] for oid in ids_for(sid)],
+        } for slug in chapters_in_part[part]]
+        modules.append({
+            "module": f"part-{part}",
+            "number": part,
+            "title": PART_TITLES.get(part, f"Part {part}"),
+            "own_outcomes": ids_for(f"part-{part}"),
+            "lessons": lessons,
+        })
+    return {
+        "tiers": list(TIERS),
+        "program": {"unit": "book", "own_outcomes": ids_for("book")},
+        "modules": modules,
+    }
+
+
 # ---- invariants (walked by the drift check in tests/book_models.py) ---------------------------------
 
 def _unit_resolves(unit_id: str, section_ids: "set[str]", chapter_slugs: "set[str]",
@@ -279,6 +348,9 @@ def coverage_findings(model: OutcomeModel) -> "list[str]":
     U6 — every outcome's provenance is a valid tag; a `derived`/`declared` outcome cites an anchor and a
          `gap-recommended` one cites a gap note (honest-labeling discipline).
     U7 — every ELABORATIVE (secondary) unit resolves to a real outline unit, and is not the primary itself.
+    U8 — the Module → Lesson hierarchy PARTITIONS the outcomes: every outcome is placed exactly once
+         (program / a Module's own / a Lesson's own / a Lesson's section) — a drop or double-placement means
+         the tiering silently disagrees with the flat spine.
     Section-level gaps are reported by `section_gap_findings` (informational, not a U-invariant, since not
     every section must primarily deliver its own outcome — the author decides which do)."""
     outline = om.derive_outline()
@@ -342,6 +414,27 @@ def coverage_findings(model: OutcomeModel) -> "list[str]":
     # U5 — the book is primary of ≥1 book-level outcome.
     if "book" not in primary:
         findings.append("U5 the book is no outcome's PRIMARY — pedagogy gap")
+
+    # U8 — the Module/Lesson hierarchy partitions the outcomes exactly once.
+    h = tiered_view(model)
+    placed: "list[str]" = list(h["program"]["own_outcomes"])
+    for m in h["modules"]:
+        placed += m["own_outcomes"]
+        for les in m["lessons"]:
+            placed += les["own_outcomes"] + les["section_outcomes"]
+    seen: "set[str]" = set()
+    dups = sorted({i for i in placed if i in seen or seen.add(i)})  # add(i) returns None → falsy
+    all_ids = {o.outcome_id for o in model.outcomes}
+    missing = sorted(all_ids - set(placed))
+    unknown = sorted(set(placed) - all_ids)
+    if dups:
+        findings.append(f"U8 hierarchy places {len(dups)} outcome(s) under more than one Module/Lesson: "
+                        f"{dups[:3]}")
+    if missing:
+        findings.append(f"U8 hierarchy omits {len(missing)} outcome(s) from every Module/Lesson: "
+                        f"{missing[:3]}")
+    if unknown:
+        findings.append(f"U8 hierarchy places {len(unknown)} id(s) that are no known outcome: {unknown[:3]}")
     return findings
 
 
@@ -375,6 +468,7 @@ def to_jsonable(model: OutcomeModel) -> dict:
     # PRIMARY drives coverage: a section counts as covered only when it is some outcome's primary.
     primary_sections = {o.primary_unit for o in model.outcomes if o.granularity == "section"}
     elaborated_units = set(model.elaborated_by())
+    hierarchy = tiered_view(model)
     return {
         "_provenance": _PROVENANCE,
         "_counts": {
@@ -383,14 +477,21 @@ def to_jsonable(model: OutcomeModel) -> dict:
                               for p in PROVENANCE_TAGS},
             "by_granularity": {g: sum(1 for o in model.outcomes if o.granularity == g)
                                for g in GRANULARITIES},
+            "by_tier": {t: sum(1 for o in model.outcomes
+                               if _TIER_OF_GRANULARITY.get(o.granularity) == t) for t in TIERS},
             "by_bloom": {b: sum(1 for o in model.outcomes if o.bloom == b) for b in BLOOM_VERBS},
             "outcomes_with_elaborative_units": sum(1 for o in model.outcomes if o.secondary_units),
             "elaborative_links": sum(len(o.secondary_units) for o in model.outcomes),
             "units_serving_as_elaborative": len(elaborated_units),
             "sections_total": n_sections,
             "sections_primary_of_an_outcome": len(primary_sections),
+            "modules": len(hierarchy["modules"]),
+            "lessons": sum(len(m["lessons"]) for m in hierarchy["modules"]),
         },
         "taxonomy": {b: list(vs) for b, vs in BLOOM_VERBS.items()},
+        # The Module → Lesson → outcome course structure — a derived presentation of the flat spine below
+        # (Module = Part, Lesson = chapter). See `tiered_view`. Every id here also appears in `outcomes`.
+        "hierarchy": hierarchy,
         "outcomes": [asdict(o) for o in model.outcomes],
     }
 
@@ -404,7 +505,7 @@ def regenerate() -> int:
     c = payload["_counts"]
     print(f"wrote {os.path.relpath(_ARTIFACT)} — {c['outcomes']} outcomes "
           f"(by provenance {c['by_provenance']}); "
-          f"by granularity {c['by_granularity']}; "
+          f"by tier {c['by_tier']} across {c['modules']} modules / {c['lessons']} lessons; "
           f"{c['outcomes_with_elaborative_units']} with elaborative units "
           f"({c['elaborative_links']} links); "
           f"{c['sections_primary_of_an_outcome']}/{c['sections_total']} sections are a primary")
@@ -421,12 +522,13 @@ _DIGEST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "outcomes-dra
 
 
 def _pretty_unit(unit_id: str) -> str:
-    """A short, reader-facing unit label for the digest: 'part-2' → '2', a chapter slug → its number
-    prefix ('2.3'), a section id → its slug. Chapter/section ids already read well; keep them terse."""
+    """A short, reader-facing unit label for the digest: 'part-2' → 'Module 2', a chapter slug → its
+    number prefix ('2.3', the Lesson id), a section id → its slug. Chapter/section ids already read well;
+    keep them terse."""
     if unit_id == "book":
-        return "book"
+        return "the program"
     if unit_id.startswith("part-"):
-        return f"Part {unit_id.removeprefix('part-')}"
+        return f"Module {unit_id.removeprefix('part-')}"
     # A chapter slug like '2.3-the-governed-environment' → '2.3'; a section id stays as-is.
     head = unit_id.split("-", 1)[0]
     return head if head.replace(".", "").isdigit() else unit_id
@@ -449,6 +551,9 @@ def write_digest(model: OutcomeModel) -> None:
         "<!-- GENERATED by book-models/outcomes_model.py — reviewable digest of the outcomes view.",
         "     Do not hand-edit; edit book-models/outcomes_declared.json and regenerate. -->",
         "# Learning outcomes — reviewable draft\n",
+        "The outcomes read as a **Module → Lesson → outcome** course structure: **Module = Part**, "
+        "**Lesson = chapter** (the unit keys the outcomes already carry). The whole-book outcomes form the "
+        "**Program** tier above the modules.\n",
         "Every outcome has a **PRIMARY** unit (where it is chiefly taught — this drives coverage) and may "
         "list **elaborative** units that reinforce, extend, or apply it. Primary drives coverage: a unit "
         "that only ever appears as an elaborative is still a gap.\n",
@@ -476,21 +581,21 @@ def write_digest(model: OutcomeModel) -> None:
             lines.append(f"{indent}- _elaborates (owned by {_pretty_unit(o.primary_unit)}):_ "
                          f"({o.bloom}) {o.statement}")
 
-    # Book level.
-    lines.append("## Book\n")
+    # Program level (the whole-book outcomes, above the modules).
+    lines.append("## Program — across the whole book\n")
     for o in by_primary.get("book", []):
         emit(o, "")
     emit_elaborations("book", "")
     lines.append("")
 
     for part in sorted(p for p in chapters_in_part if p != 0):
-        lines.append(f"## Part {part}\n")
+        lines.append(f"## Module {part} — {PART_TITLES.get(part, f'Part {part}')}\n")
         for o in by_primary.get(f"part-{part}", []):
             emit(o, "")
         emit_elaborations(f"part-{part}", "")
         lines.append("")
         for slug in chapters_in_part[part]:
-            lines.append(f"### {slug}\n")
+            lines.append(f"### Lesson {slug}\n")
             for o in by_primary.get(slug, []):
                 emit(o, "")
             emit_elaborations(slug, "")
@@ -519,7 +624,8 @@ def verify() -> int:
         print(f"no {os.path.relpath(_ARTIFACT)} — run `regenerate` first")
         return 1
     fresh = to_jsonable(derive_model())
-    if stored.get("outcomes") != fresh["outcomes"] or stored.get("_counts") != fresh["_counts"]:
+    if (stored.get("outcomes") != fresh["outcomes"] or stored.get("_counts") != fresh["_counts"]
+            or stored.get("hierarchy") != fresh["hierarchy"]):
         print("DRIFT: outcomes.json disagrees with a fresh derivation — regenerate")
         return 1
     print(f"outcomes.json is in sync ({fresh['_counts']['outcomes']} outcomes)")

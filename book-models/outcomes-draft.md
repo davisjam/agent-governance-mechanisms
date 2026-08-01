@@ -2,6 +2,8 @@
      Do not hand-edit; edit book-models/outcomes_declared.json and regenerate. -->
 # Learning outcomes — reviewable draft
 
+The outcomes read as a **Module → Lesson → outcome** course structure: **Module = Part**, **Lesson = chapter** (the unit keys the outcomes already carry). The whole-book outcomes form the **Program** tier above the modules.
+
 Every outcome has a **PRIMARY** unit (where it is chiefly taught — this drives coverage) and may list **elaborative** units that reinforce, extend, or apply it. Primary drives coverage: a unit that only ever appears as an elaborative is still a gap.
 
 Each outcome is also tagged by how honestly it reflects the prose **as written**:
@@ -11,17 +13,17 @@ Each outcome is also tagged by how honestly it reflects the prose **as written**
 
 The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is what the book teaches today.
 
-## Book
+## Program — across the whole book
 
-- **[DECLARED]** (create) After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. _(primary: book · elaborated by: Part 2, Part 4)_ — _anchor: Preface 'mechanize discipline' + the book's stated aim (SE-at-Google + GoF touchstones): patterns that keep a fleet productive at bounded failure._
-- **[DECLARED]** (understand) After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. _(primary: book · elaborated by: constraints-and-sensors, governance-is-a-spectrum-from-soft-to-hard)_ — _anchor: The two book-thesis axes (Alignment: constraint/sensor; soft/hard) run through Part 2 (constraints-and-sensors) and Part 4 (governance-is-a-spectrum-from-soft-to-hard)._
-- **[DECLARED]** (create) After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human's head. _(primary: book · elaborated by: Part 3, a-drift-check-proves-agreement-not-correctness)_ — _anchor: The Modeling Thesis, developed across Part 3 (the executable 4+1 zoo)._
+- **[DECLARED]** (create) After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. _(primary: the program · elaborated by: Module 2, Module 4)_ — _anchor: Preface 'mechanize discipline' + the book's stated aim (SE-at-Google + GoF touchstones): patterns that keep a fleet productive at bounded failure._
+- **[DECLARED]** (understand) After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. _(primary: the program · elaborated by: constraints-and-sensors, governance-is-a-spectrum-from-soft-to-hard)_ — _anchor: The two book-thesis axes (Alignment: constraint/sensor; soft/hard) run through Part 2 (constraints-and-sensors) and Part 4 (governance-is-a-spectrum-from-soft-to-hard)._
+- **[DECLARED]** (create) After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human's head. _(primary: the program · elaborated by: Module 3, a-drift-check-proves-agreement-not-correctness)_ — _anchor: The Modeling Thesis, developed across Part 3 (the executable 4+1 zoo)._
 
-## Part 1
+## Module 1 — The Mindset
 
 - **[DECLARED]** (evaluate) After Part 1, the reader can judge which tasks warrant governance machinery and which do not, and read an agent as a loop that needs a model of its world. — _anchor: 1.1 'Not every programming task needs the machinery this book describes' + 1.2 'an agent runs in a loop … give it a model of the world'._
 
-### 1.1-the-printer
+### Lesson 1.1-the-printer
 
 - **[DECLARED]** (evaluate) After this chapter, the reader can judge whether a task is open-ended enough to need the book's machinery, and reason about accountability when an agent produces a wrong result. — _anchor: Section titles: 'What this book is about (and what it is not)', 'an-open-ended-technology', 'whose-fault-is-it'._
   - **[DERIVED]** (understand) After this section, the reader can distinguish one-shot scripting from supervised autonomy and name what each supplies to the agent. — _anchor: point: two-modes-fork-on-size-and-difficulty / one-shot-for-small-unsubtle-tasks / supervised-autonomy-supplies-four-things_
@@ -29,36 +31,36 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[DERIVED]** (understand) After this section, the reader can explain why an agent, like a 3D printer, needs the detailed build instructions and not merely a picture of the desired result. — _anchor: point: printer-needs-a-model-not-a-photo / agents-need-the-instructions-not-just-the-picture_
   - **[DERIVED]** (apply) After this section, the reader can adopt the posture that an agent is a printer, not a stapler — so when it produces the wrong thing, the first suspect is the instructions, and the models can build anything one can explain. — _anchor: point: agent-is-a-printer-not-a-stapler-so-suspect-the-instructions / models-can-build-anything-you-can-explain_
 
-### 1.2-loops-and-models
+### Lesson 1.2-loops-and-models
 
 - **[DECLARED]** (understand) After this chapter, the reader can explain the agent as a fixed-shape loop and why giving it a model of the world is the first act of governance. — _anchor: Section titles 'everything-is-a-loop' + 'give-it-a-model-of-the-world'; ts: 'an agent runs in a loop, and the loop has a fixed shape'._
   - **[DERIVED]** (understand) After this section, the reader can describe agent work as a fixed-shape loop — input, reasoning, output, fed around again — and see why engineering it starts with a measurable success metric. — _anchor: point: agent-work-is-a-fixed-shape-loop / loop-starts-with-a-measurable-metric_
   - **[GAP-REC]** (create) After this section, the reader can construct a world-model an agent acts against — the first governance move. — _gap: O2 finding: this H2 opens on a non-paragraph block (no topic sentence), so the outcome its heading promises is not stated in prose as written. Recommend a lead paragraph that states the move._
   - **[DECLARED]** (understand) After this section, the reader can explain why handing the agent a model of its world conditions the probability distribution of its behavior — aiming its search and shrinking what it must hold. — _anchor: point: model-of-the-world-is-the-input-agent-reasons-over / structuring-loop-and-model-conditions-the-distribution (section opens on an aside, not a topic sentence — the O2 gap the drain records)_
 
-### 1.3-the-engineers-seat
+### Lesson 1.3-the-engineers-seat
 
 
-## Part 2
+## Module 2 — The Governed Engineering Environment
 
 - **[DECLARED]** (create) After Part 2, the reader can construct a governed engineering environment: place a control at the right layer of the agent stack, split ex-ante from ex-post, write lifecycles and runbooks, and measure one level deeper. — _anchor: Part 2 chapter arc: agent-stack -> semantic-gap -> ex-ante/ex-post -> lifecycles/runbooks -> metrics -> guardrails-collide._
-- _elaborates (owned by book):_ (create) After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.
+- _elaborates (owned by the program):_ (create) After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.
 
-### 2.1-the-agent-stack
+### Lesson 2.1-the-agent-stack
 
 - **[DERIVED]** (know) After this chapter, the reader can identify the four layers of the agent stack and read each as a distinct place to insert a control. — _anchor: point: agent-stack-has-four-injection-layers / read-each-layer-as-an-injection-opportunity / every-layer-serves-one-goal-narrow-the-search_
   - **[DERIVED]** (know) After this section, the reader can identify each of the four layers of the agent stack. — _anchor: Heading text: 'The four layers'; ts: 'At the bottom sits the foundation model'._
   - **[DERIVED]** (know) After this section, the reader can identify each of the four layers of the agent stack, from the foundation model up, and name the kind of governance grip each one gives. — _anchor: point: foundation-layer-spares-the-model-reasoning-cost / harness-manages-the-context-window-and-holds-two-mechanism-points / skills-are-soft-hooks-are-hard-tools-are-deterministic / engineering-environment-must-be-written-down-and-offers-git-and-ci-hooks / application-layer-makes-mistakes-structurally-impossible-via-static-analysis_
   - **[DERIVED]** (understand) After this section, the reader can explain why each layer of the stack is an injection opportunity, all serving one goal — narrowing the agent's search — and why the mechanisms placed there must themselves be governed for interplay. _(primary: every-layer-is-a-place-to-steer · elaborated by: 2.6)_ — _anchor: point: read-each-layer-as-an-injection-opportunity / every-layer-serves-one-goal-narrow-the-search / mechanisms-interact-and-the-interplay-is-its-own-problem_
 
-### 2.2-models-and-the-semantic-gap
+### Lesson 2.2-models-and-the-semantic-gap
 
-- **[DERIVED]** (understand) After this chapter, the reader can explain why a structured model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness. _(primary: 2.2 · elaborated by: 3.1, Part 3)_ — _anchor: point: the-apex-of-the-hierarchy-is-a-typed-model-that-binds-the-islands / a-drift-gate-proves-agreement-not-that-either-side-is-right / a-mirror-model-reflects-the-code-only-a-spec-authored-from-intent-catches-a-wrong-is_
+- **[DERIVED]** (understand) After this chapter, the reader can explain why a structured model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness. _(primary: 2.2 · elaborated by: 3.1, Module 3)_ — _anchor: point: the-apex-of-the-hierarchy-is-a-typed-model-that-binds-the-islands / a-drift-gate-proves-agreement-not-that-either-side-is-right / a-mirror-model-reflects-the-code-only-a-spec-authored-from-intent-catches-a-wrong-is_
   - **[DERIVED]** (understand) After this section, the reader can distinguish soft prose from verbose code and explain why a model — accurate, unambiguous, yet compact — is the sweet spot an agent can reason over. — _anchor: point: words-are-soft-and-agents-need-precision-humans-do-not / code-is-precise-but-too-verbose-so-a-model-is-the-sweet-spot / a-model-is-a-cheap-honest-approximation-you-can-reason-over_
   - **[DERIVED]** (understand) After this section, the reader can explain why hand-maintained models drifted and fell out of favor, and why agents — which reason over models, not code — flip that calculation when a linked set of models is kept in sync. — _anchor: point: models-are-the-map-code-the-territory-and-hand-maintenance-drifts / hand-maintained-models-rot-when-the-maintainer-stops / agents-flip-the-calculation-they-reason-over-models-not-code / the-model-reached-for-shifts-with-the-move-so-you-need-a-linked-set / a-model-lets-the-agent-check-work-and-a-drift-gate-makes-map-equals-territory-checked_
   - **[DERIVED]** (understand) After this section, the reader can explain why the apex of the documentation hierarchy is a structured model — the one description a machine can read and check the others against, binding docs, code, and tests where structured English stops one rung short. — _anchor: point: what-you-hand-an-agent-is-a-hierarchy-of-partial-drifting-descriptions / the-usual-recipe-leaves-docs-code-tests-as-unbound-islands-so-drift-is-the-default / the-apex-of-the-hierarchy-is-a-typed-model-that-binds-the-islands / modeling-thesis-at-full-strength-the-model-is-the-one-description-that-cannot-silently-lie_
   - **[DERIVED]** (understand) After this section, the reader can explain the precise guarantee a drift check gives — agreement, not correctness — and why only a model authored from intent, not derived from code, catches a wrong "is". — _anchor: point: a-drift-gate-proves-agreement-not-that-either-side-is-right / a-mirror-model-reflects-the-code-only-a-spec-authored-from-intent-catches-a-wrong-is / what-belongs-in-the-model-is-the-essential-residual-that-does-not-automate_
-  - _elaborates (owned by book):_ (create) After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.
+  - _elaborates (owned by the program):_ (create) After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.
   - **[DERIVED]** (analyze) After this section, the reader can situate how far to model on a spectrum trading strength against changeability, and read the CASE/MDA history as an economic call whose sweet spot agents have moved outward. _(primary: just-execute-the-model-a-short-history-of-case-and-mda · elaborated by: 3.1)_ — _anchor: point: executing-the-model-directly-is-a-forty-year-old-idea-whose-landing-marks-a-boundary / case-and-mda-were-the-named-dreams-of-round-trip-and-executable-models / executable-models-failed-on-tempo-not-tooling-and-settled-into-generating-key-parts / how-far-to-model-is-a-spectrum-trading-strength-for-changeability / the-books-stance-the-sweet-spot-on-the-spectrum-moved-outward-and-is-still-moving_
   - **[DERIVED]** (know) After this section, the reader can define the semantic gap — enforcing a property at the wrong level of abstraction — and identify the level where it becomes legible. _(primary: the-semantic-gap · elaborated by: a-worked-example-the-context-fullness-bank-hook)_ — _anchor: point: enforce-at-the-wrong-level-and-the-property-slips-through / model-drift-at-the-commit-is-the-wrong-granularity / the-semantic-gap-is-enforcing-a-property-at-the-wrong-level-of-abstraction / enforce-at-the-level-where-the-property-is-legible-agent-return-for-model-drift_
   - _elaborates (owned by a-worked-example-the-context-fullness-bank-hook):_ (apply) After this section, the reader can apply the semantic-gap fix to a second, operator-loop instance: a hook that fires on context-fullness and record-staleness together, and can name why even a roughly-right rung beats a hook that sits too late.
@@ -66,24 +68,24 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[DERIVED]** (apply) After this section, the reader can apply the semantic-gap fix to a second, operator-loop instance: a hook that fires on context-fullness and record-staleness together, and can name why even a roughly-right rung beats a hook that sits too late. _(primary: a-worked-example-the-context-fullness-bank-hook · elaborated by: the-semantic-gap)_ — _anchor: point: compaction-is-a-lossy-guess-because-the-harness-sits-below-what-is-worth-keeping / the-fix-is-a-hook-at-the-operators-loop-checking-fullness-and-staleness-together / a-single-loose-condition-drives-into-the-ouroboros / this-example-has-no-clean-rung-so-a-roughly-right-hook-beats-both_
   - _elaborates (owned by the-semantic-gap):_ (know) After this section, the reader can define the semantic gap — enforcing a property at the wrong level of abstraction — and identify the level where it becomes legible.
 
-### 2.3-the-governed-environment
+### Lesson 2.3-the-governed-environment
 
 - **[DERIVED]** (understand) After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch). _(primary: 2.3 · elaborated by: 2.6, 4.5)_ — _anchor: point: a-governed-environment-has-an-ex-ante-and-an-ex-post-half / a-mechanism-is-one-of-two-moves-prevent-or-catch / the-governed-environment-is-determinize-what-you-can-then-convert-every-surprise-into-a-constraint-or-sensor_
   - **[DERIVED]** (apply) After this section, the reader can apply specification-driven development to what is knowable up front: write every known rule down and determinize it with a cheap deterministic check the agent itself writes. — _anchor: point: ex-ante-write-down-what-you-know-and-determinize-it-with-cheap-checks_
   - **[DERIVED]** (understand) After this section, the reader can explain why governance is built ex-post — iteratively, as unforeseen failures reveal themselves — and why that is where most real mechanisms come from rather than a fallback for a weak plan. — _anchor: point: ex-post-you-build-governance-as-failures-reveal-themselves / ex-post-is-where-most-real-mechanisms-come-from-not-a-fallback / the-engine-is-to-hold-a-quality-goal-with-a-mechanism-placed-up-front-or-after-a-failure-seen-twice_
   - **[DERIVED]** (understand) After this section, the reader can distinguish a constraint (prevent, costs no iteration) from a sensor (catch, costs iterations), place both on the independent soft-versus-hard axis, and tag most real mechanisms as a package by their primary move. _(primary: constraints-and-sensors · elaborated by: governance-is-a-spectrum-from-soft-to-hard, 2.6)_ — _anchor: point: a-mechanism-is-one-of-two-moves-prevent-or-catch / a-sensor-detects-drift-after-the-fact-and-costs-iterations / a-constraint-prevents-drift-within-the-iteration-and-costs-no-iteration / form-and-move-are-two-independent-axes / most-real-mechanisms-are-a-package-so-tag-the-primary-move_
-  - _elaborates (owned by book):_ (understand) After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.
+  - _elaborates (owned by the program):_ (understand) After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.
   - _elaborates (owned by governance-is-a-spectrum-from-soft-to-hard):_ (analyze) After this section, the reader can classify a governance mechanism on the soft-to-hard spectrum — guidance that aims versus machinery that holds.
   - **[DERIVED]** (know) After this section, the reader can identify the residual — goals that are neither preventable nor detectable because the failure is an absence nobody specified — explain why it sets the throughput ceiling and is the complement of the two moves rather than a third axis value, and see how authoring the missing spec pulls a goal out of it. _(primary: the-residual-goals-no-mechanism-reaches · elaborated by: 6.0)_ — _anchor: point: some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified / the-residual-is-a-human-job-that-sets-the-throughput-ceiling / the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis / naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible / the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out_
 
-### 2.4-lifecycles-and-runbooks
+### Lesson 2.4-lifecycles-and-runbooks
 
 - **[DERIVED]** (create) After this chapter, the reader can author a lifecycle and its runbook, giving the deterministic parts a tight algorithm and the judgment parts the roughest one that still fits. — _anchor: point: agent-knows-git-not-your-environments-lifecycles-so-write-them-down / a-lifecycle-is-the-healthy-path-then-a-failure-map-off-each-node / a-runbook-splits-into-deterministic-and-judgment-steps-governed-differently_
   - **[DERIVED]** (analyze) After this section, the reader can map a lifecycle — the healthy path of a recurring activity plus, from each node, its failure states and the action for each — as a failure-mode-and-effects grid, and encode the way out and the prohibition an agent cannot supply on its own. — _anchor: point: a-lifecycle-is-the-healthy-path-then-a-failure-map-off-each-node / fmea-names-the-way-out-and-the-prohibition-because-the-agent-knows-neither / name-the-sin-and-the-way-out-not-the-prohibition-alone_
   - **[DERIVED]** (create) After this section, the reader can author a runbook that separates deterministic steps from judgment ones — giving the deterministic parts an executable tool that also yields a reusable trace, and the judgment parts a rubric or the roughest algorithm that still fits, up to a pre-canned brief for delegation. — _anchor: point: a-runbook-splits-into-deterministic-and-judgment-steps-governed-differently / deterministic-parts-get-tools-not-improvisation / determinizing-a-step-buys-a-trace-with-two-consumers / judgment-parts-get-the-roughest-algorithm-that-still-fits / a-judgment-that-is-a-measurement-gets-a-rubric / the-pre-canned-brief-is-the-strongest-form-templating-delegation-itself_
   - **[DERIVED]** (apply) After this section, the reader can apply the roughest-algorithm-that-still-fits rule to a judgment step — giving a well-constrained decision an algorithm, an open-ended one only hints, a measurement a rubric, and a delegated task a pre-canned brief. — _anchor: point: judgment-parts-get-the-roughest-algorithm-that-still-fits / a-judgment-that-is-a-measurement-gets-a-rubric / the-pre-canned-brief-is-the-strongest-form-templating-delegation-itself_
 
-### 2.5-metrics
+### Lesson 2.5-metrics
 
 - **[DERIVED]** (apply) After this chapter, the reader can design a metric that measures one level deeper — turning a number that reports into one that drives a decision — and place it on the hard-to-soft spectrum, feeding a hard number into a structured model the metric tool then consumes. _(primary: 2.5 · elaborated by: 4.6)_ — _anchor: point: a-metric-is-the-sensing-half-of-the-agent-loop / the-metric-comes-first-and-must-drive-a-decision / measure-one-level-deeper-because-the-surface-number-cannot-act / the-hard-ends-defining-move-is-the-number-feeds-the-model / the-model-is-not-a-picture-of-the-machinery-it-is-the-machinery_
   - **[DERIVED]** (apply) After this section, the reader can apply Ousterhout's rule and measure one level deeper than the surface number — reading a per-service cost split or a boot-time breakdown as a decision the invoice-level number buried. _(primary: measure-one-level-deeper · elaborated by: the-flagship-coverage-measured-one-level-deeper)_ — _anchor: point: measure-one-level-deeper-because-the-surface-number-cannot-act / a-cloud-bill-reports-but-splitting-it-by-service-acts / boot-time-one-level-deeper-turns-scale-out-into-fix-the-slow-phase / line-coverage-is-the-invoice-level-number-and-the-flagship-is-coverage-one-level-deeper / metrics-run-a-hard-to-soft-spectrum-and-the-mistake-is-treating-one-as-the-other_
@@ -93,7 +95,7 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[DERIVED]** (analyze) After this section, the reader can classify a soft metric — a doc-derived test's coverage-of-doc-claims — as one that aims a reader rather than deciding, recognize why its softness is inseparable from a readiness judgment about the seam, and see why wiring it to a blocking gate manufactures hollow tests. — _anchor: point: a-doc-derived-test-pins-a-doc-claim-and-its-metric-is-genuinely-soft / the-soft-metric-is-inseparable-from-a-readiness-judgment-so-a-gate-would-manufacture-hollow-tests_
   - **[DERIVED]** (understand) After this section, the reader can explain why the MBSE models are consumed at runtime to produce the metrics — the cold-start numbers and the coverage graph both read at check time — so a component-distance grade read from the model drives a pre-commit gate three ways, the model being the machinery rather than a picture of it. _(primary: the-model-runs-the-machinery · elaborated by: 2.6)_ — _anchor: point: the-model-is-not-a-picture-of-the-machinery-it-is-the-machinery / a-component-distance-grade-is-a-metric-that-drives-a-gate-three-ways / the-grade-is-a-metric-read-from-the-model-that-drives-a-sensors-decision_
 
-### 2.6-when-guardrails-collide
+### Lesson 2.6-when-guardrails-collide
 
 - **[DERIVED]** (analyze) After this chapter, the reader can analyze the space between controls with a governance graph — nodes tagged by event and resource, edges a closed conflict taxonomy joined by the shared resource — and reason about mechanisms whose hooks they do not own. — _anchor: point: a-system-of-controls-has-the-one-failure-a-list-cannot-show / each-collision-lives-in-the-space-between-two-controls-drawn-nowhere / the-governance-graph-nodes-are-mechanisms-edges-are-conflicts-joined-by-shared-resource / outside-hooks-from-a-vendor-or-regulator-extend-the-graph-without-changing-shape_
 - _elaborates (owned by 2.3):_ (understand) After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch).
@@ -104,13 +106,13 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[DERIVED]** (apply) After this section, the reader can apply the governance graph to hooks they did not author — entering an outside hook as a node on a conservative possible-conflict edge against its whole slot until analyzed — and reduce satisfying one or several regulators to checking that the merged graph carries no unresolved contradiction, including that no required hard block is overridden by a soft aim. — _anchor: point: outside-hooks-from-a-vendor-or-regulator-extend-the-graph-without-changing-shape / an-unanalyzed-outside-hook-sits-on-a-possible-conflict-edge-against-its-whole-slot / composing-governance-you-did-not-author-is-checking-the-merged-graph-for-contradiction_
   - **[DERIVED]** (evaluate) After this section, the reader can justify the two disciplines that keep a governance graph honest — anchoring each node to its control's code by symbol so a drift lint reddens an unmodeled control, and keeping the model descriptive rather than inventing conflict-lints for collisions that never happened. — _anchor: point: keep-the-graph-honest-by-symbol-anchoring-and-a-descriptive-not-aspirational-model_
 
-## Part 3
+## Module 3 — The Model Zoo
 
 - **[DECLARED]** (create) After Part 3, the reader can model a system as the executable 4+1 zoo — logical, process, development, physical, and scenario views — each a structured model kept honest by a drift check. — _anchor: Part 3 is the 4+1 views one chapter each (3.2 logical, 3.3 process, 3.4 development, 3.5 physical, 3.6 scenarios), spined by 3.1._
-- _elaborates (owned by book):_ (create) After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.
+- _elaborates (owned by the program):_ (create) After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human's head.
 - _elaborates (owned by 2.2):_ (understand) After this chapter, the reader can explain why a structured model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness.
 
-### 3.1-the-executable-zoo
+### Lesson 3.1-the-executable-zoo
 
 - **[DECLARED]** (understand) After this chapter, the reader can explain why the cost that sank classical MBSE is one an agent fleet absorbs, and read Kruchten's 4+1 as the spine of the model zoo. _(primary: 3.1 · elaborated by: 3.6)_ — _anchor: Section titles 'the-expense-that-buried-mbse-is-the-one-a-fleet-pays-for-free' + 'kruchten-s-4-1-promoted-...-to-the-spine'._
 - _elaborates (owned by 2.2):_ (understand) After this chapter, the reader can explain why a structured model beats prose and code as the thing an agent reasons through, and why a drift check proves agreement, not correctness.
@@ -118,66 +120,66 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[DERIVED]** (understand) After this section, the reader can explain how 4+1 is promoted from a closing invocation to the organizing spine of the views. — _anchor: Heading text + ts: 'The last chapter invoked Kruchten's 4+1 views in a final sentence'._
   - **[GAP-REC]** (analyze) After this section, the reader can analyze the two decisions that make a governance graph resist rot. — _gap: O2 finding: opens on a non-paragraph block (no topic sentence). The two decisions are named in the heading but the section does not open by stating them; recommend a topic sentence enumerating them._
 
-### 3.2-the-logical-view
+### Lesson 3.2-the-logical-view
 
 - **[DECLARED]** (create) After this chapter, the reader can model the logical view as a structured service-flow model backed by frozen domain registries. — _anchor: Section titles 'service-flow-model' + 'domain-registries'; ts: 'The typed source-of-truth for a service-oriented architecture'._
 
-### 3.3-the-process-view
+### Lesson 3.3-the-process-view
 
 - **[DECLARED]** (create) After this chapter, the reader can model the process view — cataloging every lock in a synchronization model and backing its invariants with formal verification. — _anchor: Section titles 'formal-invariant-verification' + 'synchronization-model' (ts: 'A typed registry that models the system's synchronization behavior — every OS-level lock')._
 
-### 3.4-the-development-view
+### Lesson 3.4-the-development-view
 
 - **[DECLARED]** (create) After this chapter, the reader can model the development view — every component's zone and the governance rules that ride it — as typed registries. — _anchor: Section titles 'component-zone-model' + 'rule-metadata-registry'; ts: 'A typed catalog of every component's code zone'._
 
-### 3.5-the-physical-view
+### Lesson 3.5-the-physical-view
 
 - **[DECLARED]** (create) After this chapter, the reader can model the physical view — deployment topology and a typed deploy DAG — and name the one honest gap in the cost view. — _anchor: Section titles 'deployment-topology-model' + 'invariant-dag-execution-policy' + 'the-performance-cost-view-mostly-embodied-one-honest-gap'._
 
-### 3.6-the-scenarios-view
+### Lesson 3.6-the-scenarios-view
 
 - **[DECLARED]** (analyze) After this chapter, the reader can map journeys to the environment tier that tests them, joining user-journey, orchestration, criticality, and coverage models. — _anchor: Section titles 'user-journey-model' + 'agent-orchestration-model' + 'journey-criticality-test-placement' + 'worked-join'._
 - _elaborates (owned by 3.1):_ (understand) After this chapter, the reader can explain why the cost that sank classical MBSE is one an agent fleet absorbs, and read Kruchten's 4+1 as the spine of the model zoo.
 
-### 3.7-the-scope-of-modeling
+### Lesson 3.7-the-scope-of-modeling
 
 
-## Part 4
+## Module 4 — Putting It to Work
 
-- **[DECLARED]** (apply) After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes. _(primary: Part 4 · elaborated by: Part 5)_ — _anchor: Part 4 title 'Putting It to Work' + chapter arc: brownfield -> skills -> transformations -> training-data -> lessons-learned -> generative-validation._
-- _elaborates (owned by book):_ (create) After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.
+- **[DECLARED]** (apply) After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes. _(primary: Module 4 · elaborated by: Module 5)_ — _anchor: Part 4 title 'Putting It to Work' + chapter arc: brownfield -> skills -> transformations -> training-data -> lessons-learned -> generative-validation._
+- _elaborates (owned by the program):_ (create) After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class.
 
-### 4.1-brownfield
+### Lesson 4.1-brownfield
 
 - **[DECLARED]** (apply) After this chapter, the reader can apply top-down, bottom-up, and lint-cover-then-induce approaches to bring a brownfield codebase under a model. — _anchor: Section titles 'approach-one-top-down-...', 'approach-two-bottom-up-inducing-the-model-from-code', 'approach-three-lint-cover-then-induce'._
   - **[DERIVED]** (know) After this section, the reader can name both ends before you move. — _anchor: ts: Name both ends before you move._
 
-### 4.2-the-skills
+### Lesson 4.2-the-skills
 
 - **[DECLARED]** (apply) After this chapter, the reader can use the three packaged skills and follow the construction recipe to mint a new one well. — _anchor: Section titles 'self-operate-...', 'self-governance-...', 'self-communicate-...', 'the-construction-recipe-is-a-pattern-of-its-own'._
 - _elaborates (owned by 4.3):_ (evaluate) After this chapter, the reader can size a transformation to its model and guarantee, and tell a right-sized leap from a wrong-shaped one.
   - **[DERIVED]** (apply) After this section, the reader can use the self-governance signal — a bad thing happened twice — to mint a control instead of re-patching the instance. — _anchor: ts: 'the second skill, self-governance, triggers on a simple signal: a bad thing happened more'._
 
-### 4.3-transformations
+### Lesson 4.3-transformations
 
 - **[DECLARED]** (evaluate) After this chapter, the reader can size a transformation to its model and guarantee, and tell a right-sized leap from a wrong-shaped one. _(primary: 4.3 · elaborated by: 4.2)_ — _anchor: Section titles 'size-the-leap-to-the-model-and-the-guarantee' + 'the-right-sized-leap-and-the-wrong-shaped-one'._
   - **[DERIVED]** (evaluate) After this section, the reader can size a transformation's leap to its model and its guarantee. — _anchor: Heading text: 'Size the leap to the model and the guarantee'; ts: 'Give a model an input and either examples of a transformation or a precise description'._
 
-### 4.4-training-data
+### Lesson 4.4-training-data
 
 - **[DECLARED]** (analyze) After this chapter, the reader can analyze how training-data bias shapes an agent's reach, and situate MBSE on the novelty axis where it shines. — _anchor: Section titles 'the-model-is-biased-toward-what-it-has-seen' + 'where-mbse-shines-the-novelty-axis'._
 
-### 4.5-lessons-learned
+### Lesson 4.5-lessons-learned
 
 - **[DECLARED]** (know) After this chapter, the reader can recognize the recurring agent-shaped failure modes — optionality, false 'done', broken estimates, vibe coding — and adopt the disciplines that survive them. — _anchor: Section titles 'optionality-is-poison', 'done-is-a-claim-not-a-fact', 'the-cost-estimator-is-broken-...', 'vibe-coding-treats-the-program-as-an-i-o-device-...'._
 - _elaborates (owned by 2.3):_ (understand) After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch).
   - **[DERIVED]** (know) After this section, the reader can recognize the agent-shaped failure modes and write tests that survive them. — _anchor: Heading text: 'Your tests must survive agent-shaped failure modes'._
   - **[DERIVED]** (understand) After this section, the reader can distinguish vibe coding from engineering by whether the program is treated as an I/O device or a system. — _anchor: Heading text: 'Vibe coding treats the program as an I/O device; engineering treats it as a system'._
   - **[DERIVED]** (analyze) After this section, the reader can classify a governance mechanism on the soft-to-hard spectrum — guidance that aims versus machinery that holds. _(primary: governance-is-a-spectrum-from-soft-to-hard · elaborated by: constraints-and-sensors)_ — _anchor: Heading text: 'Governance is a spectrum from soft to hard'._
-  - _elaborates (owned by book):_ (understand) After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.
+  - _elaborates (owned by the program):_ (understand) After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.
   - _elaborates (owned by constraints-and-sensors):_ (understand) After this section, the reader can distinguish a constraint (prevent, costs no iteration) from a sensor (catch, costs iterations), place both on the independent soft-versus-hard axis, and tag most real mechanisms as a package by their primary move.
 
-### 4.6-generative-validation
+### Lesson 4.6-generative-validation
 
 - **[DECLARED]** (evaluate) After this chapter, the reader can choose among generative-validation strategies by the specification each one attacks, treating the structured model as an oracle. — _anchor: Section titles 'the-move-a-generator-hunts-a-counterexample-to-a-model', 'property-based-testing-...', 'fuzzing-...', 'fuzz-mbse-...', 'when-to-reach-for-which'._
 - _elaborates (owned by 2.5):_ (apply) After this chapter, the reader can design a metric that measures one level deeper — turning a number that reports into one that drives a decision — and place it on the hard-to-soft spectrum, feeding a hard number into a structured model the metric tool then consumes.
@@ -185,37 +187,37 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[DERIVED]** (evaluate) After this section, the reader can choose which validation strategy to reach for by the specification it attacks. — _anchor: Heading text: 'When to reach for which'._
   - _elaborates (owned by the-move-a-generator-hunts-a-counterexample-to-a-model):_ (apply) After this section, the reader can apply the one move behind property testing, fuzzing, and fuzz-MBSE: a generator hunting a counterexample to a stated model.
 
-## Part 5
+## Module 5 — A MAGE Case Study
 
 - **[DECLARED]** (analyze) After Part 5, the reader can trace how the method grew from a single reviewer to a multi-agent engineering organization in one real system, and relate each governance move to the problem that forced it. — _anchor: Part 5 is the ADA/DocAble case study: context -> timeline/work -> built-system -> road-to-MAGE (role progression)._
-- _elaborates (owned by Part 4):_ (apply) After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes.
+- _elaborates (owned by Module 4):_ (apply) After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes.
 
-### 5.1-the-ada-context
+### Lesson 5.1-the-ada-context
 
 - **[DECLARED]** (understand) After this chapter, the reader can explain the accessibility problem the case-study system solves and why a document is not just a file. — _anchor: Section titles 'a-noble-idea-with-a-crushing-implementation', 'the-rule-that-changed-the-burden', 'why-a-document-is-not-just-a-file'._
 
-### 5.2-the-timeline-and-the-work
+### Lesson 5.2-the-timeline-and-the-work
 
 - **[DECLARED]** (understand) After this chapter, the reader can describe how the case-study project unfolded across its stages and the range of work it demanded. — _anchor: Section titles 'six-stages-then-a-seventh', 'velocity', 'the-kinds-of-work-it-required'._
 
-### 5.3-the-built-system
+### Lesson 5.3-the-built-system
 
 - **[DECLARED]** (analyze) After this chapter, the reader can analyze the built system end-to-end through three complementary views over one shared edit language. — _anchor: Section titles 'three-views-of-the-same-system', 'view-1-...', 'view-2-...', 'view-3-...'._
 
-### 5.4-the-road-to-mage
+### Lesson 5.4-the-road-to-mage
 
 - **[DECLARED]** (analyze) After this chapter, the reader can trace the role progression — co-coder, QA, review-lead, tech-lead — that grew a single developer into an agent organization. — _anchor: Section titles 'role-co-coder-step-one-...', 'role-qa-step-two-...', 'role-review-lead-step-three-...', 'role-tech-lead-step-four-...'._
 
-## Part 6
+## Module 6 — Implications for Software Engineering
 
-- **[DECLARED]** (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering. _(primary: Part 6 · elaborated by: 6.1)_ — _anchor: 6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours._
+- **[DECLARED]** (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering. _(primary: Module 6 · elaborated by: 6.1)_ — _anchor: 6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours._
 
-### 6.0-implications-for-se
+### Lesson 6.0-implications-for-se
 
 - **[DECLARED]** (evaluate) After this chapter, the reader can evaluate the discipline-level implications: where judgment moved, what saturates, and why models are the universal language of engineering. — _anchor: Section titles 'the-judgment-moved-and-it-moved-toward-you', 'what-this-changes-for-how-we-measure-staff-and-teach', 'models-are-the-universal-language-of-engineering'._
 - _elaborates (owned by the-residual-goals-no-mechanism-reaches):_ (know) After this section, the reader can identify the residual — goals that are neither preventable nor detectable because the failure is an absence nobody specified — explain why it sets the throughput ceiling and is the complement of the two moves rather than a third axis value, and see how authoring the missing spec pulls a goal out of it.
 
-### 6.1-conclusion
+### Lesson 6.1-conclusion
 
 - **[DECLARED]** (analyze) After this chapter, the reader can situate the book in the SE literature and identify the part of the work that stays human. — _anchor: Section titles 'fitting-this-book-into-the-software-engineering-literature' + 'the-part-that-stays-yours'._
-- _elaborates (owned by Part 6):_ (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.
+- _elaborates (owned by Module 6):_ (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.
