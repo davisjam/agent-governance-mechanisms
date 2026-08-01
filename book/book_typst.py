@@ -576,10 +576,13 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 
 
 def _cover_typst() -> str:
-    """The cover page — the title-version cover art (`book/assets/cover.svg`), sized to the page. The art
-    itself carries the title + author lockup (the same identity the web cover and the site read), so this
-    page is the image, not a text setting. Its own page, no folio, but with a first-page footer carrying
-    the copyright line and the book's last-modified date.
+    """The cover page — a vertical lockup, not a single baked image: the book title as the dominant
+    display-text element on top (the token display face + palette, the same identity the site hero and
+    the web book's title block carry), the author lockup beneath it, and the title-LESS scene art
+    (`book/assets/cover-scene.svg` — the same cut the site landing hero splices) filling the width below.
+    Title, subtitle, and author all read from the manifest (single source of truth), so the three cover
+    surfaces (site hero, web book, print) can never disagree on the words. Its own page, no folio, but
+    with a first-page footer carrying the copyright line and the book's last-modified date.
 
     The copyright is DERIVED from `author` + `copyright_years` (the manifest states the name once — the
     same derivation the web cover's COPYRIGHT line uses). The last-modified date is injected at compile
@@ -588,17 +591,41 @@ def _cover_typst() -> str:
     m = bb._BOOK_MANIFEST
     copyright_txt = _esc(f'© {m["author"]}, {m["copyright_years"]}')
     default_mod = _esc(m.get("last_updated", ""))
+    title = _esc(m["title"])
+    author = _esc(m["author"].upper())
+    subtitle = _esc(m.get("subtitle", ""))
     footer = (
         '#align(center)[#text(size: 8pt, fill: dt.muted)'
         f'[{copyright_txt} #h(0.5em) · #h(0.5em) Last modified #last_modified]]'
     )
-    cover_svg = _root_rel(HERE / "assets" / "cover.svg", _EmitCtx.root)
+    scene_svg = _root_rel(HERE / "assets" / "cover-scene.svg", _EmitCtx.root)
+    # Subtitle renders only when the manifest carries one (empty string = omitted, per the manifest contract).
+    subtitle_block = (
+        "    #v(0.7em)\n"
+        f"    #text(font: dt.font-body, size: 14pt, fill: dt.muted)[{subtitle}]\n"
+    ) if subtitle else ""
     return (
         f'#let last_modified = sys.inputs.at("last_modified", default: "{default_mod}")\n'
         f"#page(numbering: none, footer: [{footer}])[\n"
-        "  #align(center + horizon)[\n"
-        f'    #image("{cover_svg}", width: 100%)\n'
+        "  #v(0.55in)\n"
+        "  #align(center)[\n"
+        "    #par(justify: false, leading: 0.42em)[\n"
+        "      #text(font: dt.font-display, weight: dt.display-weight, size: dt.fs-display,\n"
+        f"        tracking: dt.display-tracking, fill: dt.ink)[{title}]\n"
+        "    ]\n"
+        + subtitle_block +
+        "    #v(1.6em)\n"
+        "    #line(length: 22%, stroke: 1pt + dt.rule)\n"
+        "    #v(1.4em)\n"
+        # The author lockup mirrors the retired baked-art cover's register: uppercase, wide-tracked,
+        # accent-coloured, in the body face — small beneath the display title.
+        f"    #text(font: dt.font-body, size: 12pt, tracking: 0.3em, fill: dt.accent)[{author}]\n"
         "  ]\n"
+        "  #v(1fr)\n"
+        "  #align(center)[\n"
+        f'    #image("{scene_svg}", width: 100%)\n'
+        "  ]\n"
+        "  #v(0.45fr)\n"
         "]"
     )
 
