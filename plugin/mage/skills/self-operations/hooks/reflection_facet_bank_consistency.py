@@ -249,10 +249,10 @@ class BankConsistencyFacet(ReflectionFacet):
         # resolve inside this catalogue; swap for yours.
         return (
             MaterialPointer(
-                path="plugin/agent-governance/skills/self-operations/examples/lifecycle-L2-manage-context.md"
+                path="plugin/mage/skills/self-operations/examples/lifecycle-L2-manage-context.md"
             ),
             MaterialPointer(
-                path="plugin/agent-governance/skills/self-operations/hooks/bank_status.py"
+                path="plugin/mage/skills/self-operations/hooks/bank_status.py"
             ),
         )
 

@@ -1,6 +1,6 @@
 # self-operations starter — the operating mindset (portable)
 
-*A portable starter for the `self-operations` skill, the operate half of the agent-governance pair. Part A
+*A portable starter for the `self-operations` skill, the operate half of the mage pair. Part A
 below is the operating mindset; the skill lifts it into `principles.md`. Part B is the stub you fill for
 your own repo (the skill's bootstrap generates it for you). Companion to the `self-governance` skill:
 operate routes a break to its fix; when a failure recurs, self-governance converts it into a durable

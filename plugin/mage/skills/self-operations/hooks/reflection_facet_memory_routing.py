@@ -193,10 +193,10 @@ class MemoryRoutingFacet(ReflectionFacet):
         # illustrative refs resolve inside this catalogue; swap for yours.
         return (
             MaterialPointer(
-                path="plugin/agent-governance/skills/self-operations/examples/lifecycle-L6-govern-your-own-loop.md"
+                path="plugin/mage/skills/self-operations/examples/lifecycle-L6-govern-your-own-loop.md"
             ),
             MaterialPointer(
-                path="plugin/agent-governance/skills/self-operations/SKILL.md"
+                path="plugin/mage/skills/self-operations/SKILL.md"
             ),
         )
 

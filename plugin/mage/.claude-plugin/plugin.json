@@ -1,0 +1,21 @@
+{
+  "name": "mage",
+  "description": "The mage toolkit — the Davis AI-First Engineering Method plus the control catalogue, packaged as installable skills. Ships three partner skills: self-governance (harden — audit a repo for missing guardrails, or convert a recurring failure into a durable control), self-operations (operate — run the agent-fleet substrate; route a break to its fix, and escalate a recurring one to self-governance), and self-communicate (communicate — write and diagram engineer-facing docs well: rhetoric, the Diátaxis register, a house lexicon, and a prose+diagram audit).",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "James C. Davis, PhD",
+    "email": "davisjam@purdue.edu"
+  },
+  "homepage": "https://davisjam.github.io/agent-governance-mechanisms/",
+  "repository": "https://github.com/davisjam/agent-governance-mechanisms",
+  "keywords": [
+    "governance",
+    "agents",
+    "ai-engineering",
+    "linting",
+    "code-review",
+    "guardrails",
+    "mbse"
+  ]
+}

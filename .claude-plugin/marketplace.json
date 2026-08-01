@@ -10,8 +10,8 @@
   },
   "plugins": [
     {
-      "name": "agent-governance",
-      "source": "./plugin/agent-governance",
+      "name": "mage",
+      "source": "./plugin/mage",
       "description": "Two partner skills for agent-fleet repos — self-governance (harden: audit for missing guardrails, or convert a recurring failure into a durable control) and self-operations (operate: run the substrate, route breaks to their fix). Grounded in the agent-governance-mechanisms catalogue."
     }
   ]

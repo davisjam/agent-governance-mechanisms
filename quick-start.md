@@ -28,16 +28,16 @@ advises, and *interpret-failure* acts only on your greenlight. In Claude Code:
 
 ```
 /plugin marketplace add davisjam/agent-governance-mechanisms
-/plugin install agent-governance@agent-governance-mechanisms
+/plugin install mage@agent-governance-mechanisms
 ```
 
-The `agent-governance` plugin ships **three partner skills**: **self-governance** (*harden* — audit for
+The `mage` plugin ships **three partner skills**: **self-governance** (*harden* — audit for
 missing guardrails, or convert a recurring failure into a durable mechanism), **self-operations**
 (*operate* — run the agent-fleet substrate day-to-day), and **self-communicate** (*communicate* — write
 and diagram engineer-facing docs well: the rhetoric toolkit, the Diátaxis register, a house lexicon, and a
 prose-plus-diagram audit). All three install with the one plugin; start a new session and they load. Pull a
 later release with `/plugin marketplace update agent-governance-mechanisms`. No marketplace? Vendor the
-folder: copy `plugin/agent-governance/skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/`
+folder: copy `plugin/mage/skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/`
 (one repo), then start a fresh session.
 
 **Path B — DIY (installs nothing).** The conservative choice, for a company or anyone who can't run a

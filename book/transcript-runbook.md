@@ -11,7 +11,7 @@ recording to integrated book material. It is **executable** for the mechanical s
 - **Raw transcripts** → `book/transcripts/<stem>.txt` — **tracked**. The untouched source of record.
 - **Repaired transcripts** → `book/transcripts/<stem>.repaired.md` — **tracked**. Lexicon-aligned,
   de-noised; the author's words/meaning preserved (de-noising, not rewriting).
-- **Lexicon** → `plugin/agent-governance/skills/self-communicate/writing/lexicon.md` — the house
+- **Lexicon** → `plugin/mage/skills/self-communicate/writing/lexicon.md` — the house
   vocabulary the repair pass aligns terminology to.
 
 ## The sequence

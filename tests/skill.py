@@ -59,7 +59,7 @@ def check_skill_drift():
     r = run([sys.executable, "bundle_skill.py"])
     if r.returncode != 0:
         return FAIL, [f"bundle_skill.py failed (rc={r.returncode}): {r.stderr.strip()[:200]}"]
-    pathspecs = [f"plugin/agent-governance/skills/{n}" for n in sorted(BUNDLED_SKILLS)]
+    pathspecs = [f"plugin/mage/skills/{n}" for n in sorted(BUNDLED_SKILLS)]
     d = run(["git", "status", "--porcelain", "--"] + pathspecs)
     changed = [ln for ln in d.stdout.splitlines() if ln.strip()]
     if changed:

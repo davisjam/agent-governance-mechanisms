@@ -69,7 +69,7 @@ author's monitor is a non-label for a reader presenting to a room or reading at 
 only when the box can't grow, the canvas can't grow, and the words can't shorten.
 
 The floor is the drawing-skill minimum (see the annotation-tier table in the drawing style doc,
-`plugin/agent-governance/skills/self-communicate/drawing/diagrams.md` — its "Annotation — three tiers"
+`plugin/mage/skills/self-communicate/drawing/diagrams.md` — its "Annotation — three tiers"
 section). Sized to a ~500-unit viewBox, a primary label wants ~15–17 user units and a heading ~20–24;
 scale up for a wider viewBox (multiply by ~1.9 for a 960-wide one). A primary label is never smaller than
 the body text it sits beside. If reducing the font would push a label under that floor, the fix is wrong —

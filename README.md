@@ -122,7 +122,7 @@ can't name the failure a mechanism prevents in *your* system, you might not need
 
 ## The three skills
 
-The catalogue also ships as **three partner Claude skills** (one plugin, `agent-governance`):
+The catalogue also ships as **three partner Claude skills** (one plugin, `mage`):
 
 - **self-governance** — *harden.* Audit your repo for missing guardrails, or convert a recurring failure
   into a durable mechanism. Carries the AI-First Engineering Method as its operating stance, plus the

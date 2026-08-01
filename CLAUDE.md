@@ -89,11 +89,11 @@ for Hemingway — short sentences, strong verbs, few qualifiers.
   deliberately. The tell is *sameness and density*: the same figure on a fixed beat. So cap em-dash density
   (prefer a period, comma, or colon; reach for the dash only for a genuine aside), and don't let any one
   figure recur on every beat. Draw variety from the toolkit in
-  [`writing/rhetoric.md`](plugin/agent-governance/skills/self-communicate/writing/rhetoric.md),
+  [`writing/rhetoric.md`](plugin/mage/skills/self-communicate/writing/rhetoric.md),
   and match the house voice in
-  [`writing/voice.md`](plugin/agent-governance/skills/self-communicate/writing/voice.md). To audit existing
+  [`writing/voice.md`](plugin/mage/skills/self-communicate/writing/voice.md). To audit existing
   prose against all of these rules and emit concrete fixes, follow
-  [`writing/audit.md`](plugin/agent-governance/skills/self-communicate/writing/audit.md). These style files are
+  [`writing/audit.md`](plugin/mage/skills/self-communicate/writing/audit.md). These style files are
   the resources of the `self-communicate` skill.
 - **Instance entries lead with the portable pattern.** When an entry instantiates a general pattern,
   open its Intent with the transferable claim, then name the project instance in parentheses —

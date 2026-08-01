@@ -76,11 +76,11 @@ class RecurrenceNudgeFacet(ReflectionFacet):
         # These illustrative refs resolve inside this catalogue; swap for yours.
         return (
             MaterialPointer(
-                path="plugin/agent-governance/skills/self-operations/principles.md",
+                path="plugin/mage/skills/self-operations/principles.md",
                 anchor="a6-you-have-the-freedom-and-duty-to-improve-the-substrate",
             ),
             MaterialPointer(
-                path="plugin/agent-governance/skills/self-operations/SKILL.md"
+                path="plugin/mage/skills/self-operations/SKILL.md"
             ),
         )
 

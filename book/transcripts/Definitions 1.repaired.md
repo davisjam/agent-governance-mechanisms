@@ -1,5 +1,5 @@
 <!-- Provenance: REPAIRED from book/transcripts/Definitions 1.txt (whisper.cpp large-v3-turbo, 5.4 min).
-De-noised + aligned to plugin/agent-governance/skills/self-communicate/writing/lexicon.md. whisper
+De-noised + aligned to plugin/mage/skills/self-communicate/writing/lexicon.md. whisper
 stutters/repeats removed, mis-hearings fixed; the author's exact words, jokes, and meaning PRESERVED —
 de-noising, not rewriting. A garbled ~15-word tail (whisper noise as the memo trailed off mid-thought on
 "model") was dropped; the "model" definition continues in Definitions 2. The RAW .txt is the source of record. -->

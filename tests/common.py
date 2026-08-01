@@ -14,7 +14,7 @@ import subprocess
 import catalog  # the catalogue's shared model (ROOT, all_entries, catalogue_md_files, ...)
 
 ROOT = catalog.ROOT
-SKILL = os.path.join(ROOT, "plugin", "agent-governance")  # the umbrella plugin dir
+SKILL = os.path.join(ROOT, "plugin", "mage")  # the umbrella plugin dir
 # Every skill the plugin ships: (name, skill_dir, has_reference_mirror). The skill checks iterate this;
 # a skill with no catalogue mirror (has_reference=False) ships its reference in its authored SKILL.md.
 SKILLS = (

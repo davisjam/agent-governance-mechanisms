@@ -2517,7 +2517,7 @@ def _harvest_concept_tags(chapters: list[dict]) -> tuple[dict, dict]:
 # single alphabetized `book-index.html`. It is a soft, best-effort index: a term that never occurs in the
 # prose is dropped, so the index only lists terms the reader can actually find.
 
-_LEXICON_REL = ("..", "plugin", "agent-governance", "skills", "self-communicate", "writing", "lexicon.md")
+_LEXICON_REL = ("..", "plugin", "mage", "skills", "self-communicate", "writing", "lexicon.md")
 _INDEX_TERMS_FILE = "index-terms.md"
 _MAX_REFS_PER_TERM = 4  # cap so the index reads curated, not a word-frequency dump
 _MIN_TERM_LEN = 3       # skip 1–2 char "terms" (noise)

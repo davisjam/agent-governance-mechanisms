@@ -287,7 +287,7 @@ def check_svg_text_fit():
 #      stroke-through-glyph). Enforces the self-communicate drawing rule "use the native construct, not
 #      stitched primitives" that a text-width heuristic is blind to. -------------------------------------
 
-DRAWING_DOC = "plugin/agent-governance/skills/self-communicate/drawing/diagrams.md"
+DRAWING_DOC = "plugin/mage/skills/self-communicate/drawing/diagrams.md"
 _ARROWHEAD_BBOX_MAX = 30.0  # a filled triangle smaller than this (user units) reads as an arrowhead
 
 
