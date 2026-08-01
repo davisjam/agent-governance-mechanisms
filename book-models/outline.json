@@ -7,7 +7,7 @@
     "derived_ids": 152,
     "missing_topic_sentence": 2,
     "sections_drained": 151,
-    "paragraph_points": 454
+    "paragraph_points": 456
   },
   "chapters": [
     {
@@ -420,9 +420,14 @@
               "block_index": 25
             },
             {
+              "slug": "engineers-always-had-models-unwritten",
+              "text": "Engineers always had models; writing them down stopped paying.",
+              "block_index": 27
+            },
+            {
               "slug": "role-shrinks-nothing-judgment-more-consequential",
               "text": "The role shrinks nothing; judgment grows more consequential.",
-              "block_index": 27
+              "block_index": 29
             }
           ]
         },
@@ -432,22 +437,22 @@
           "heading_text": "SDLC to SELC",
           "topic_sentence": "The field's own name for the lifecycle gives the old arrangement away: SDLC, the software *development* life cycle.",
           "id_source": "derived",
-          "block_index": 29,
+          "block_index": 31,
           "points": [
             {
               "slug": "sdlc-names-the-delegated-activity",
               "text": "SDLC names the activity the human no longer performs.",
-              "block_index": 32
+              "block_index": 34
             },
             {
               "slug": "rename-to-selc-engineering-life-cycle",
               "text": "Rename it SELC: the software engineering life cycle.",
-              "block_index": 34
+              "block_index": 36
             },
             {
               "slug": "delegation-keeps-accountability-intact",
               "text": "Delegating the keystrokes keeps accountability intact.",
-              "block_index": 39
+              "block_index": 41
             }
           ]
         },
@@ -457,17 +462,22 @@
           "heading_text": "A different seat is a different discipline",
           "topic_sentence": "Same lifecycle, then; no new phases.",
           "id_source": "derived",
-          "block_index": 41,
+          "block_index": 43,
           "points": [
             {
               "slug": "reassigned-seat-remakes-the-discipline",
               "text": "Same phases; the reassigned seat remakes the discipline.",
-              "block_index": 43
+              "block_index": 45
+            },
+            {
+              "slug": "executing-from-models-repeats-assembly-to-code",
+              "text": "Executing from models repeats the assembly-to-code move.",
+              "block_index": 47
             },
             {
               "slug": "rest-of-book-equips-the-engineers-seat",
               "text": "The rest of the book equips the engineer's seat.",
-              "block_index": 45
+              "block_index": 49
             }
           ]
         }
