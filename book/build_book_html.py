@@ -3526,8 +3526,38 @@ def build_pdf() -> int:
     final_size = pdf_out.stat().st_size
     print(f"PDF: {pdf_out} ({final_size / 1_048_576:.1f} MB via typst)")
 
-    # Tag-preservation assertion — Typst emits a tagged PDF; assert it so a future template/flag change
-    # cannot silently drop the struct tree.
+    # Post-compression repack — Typst emits every object as an uncompressed indirect object with NO object
+    # streams (~20K individual objects, dominated by the accessibility struct tree's thousands of small
+    # StructElem objects). qpdf's lossless repack packs those into compressed object streams and recompresses
+    # the content streams, cutting the whole-book PDF by ~35% (≈ 6.7 MB → 4.3 MB) with the tag tree fully
+    # preserved. Object streams are PDF-spec-standard and PDF/UA-safe. The tag assertion + content-integrity
+    # gate below run on the REPACKED file, so what ships is what we validate (the verify helpers read via
+    # pdfinfo/pdftotext, which see through object streams). If qpdf is absent (fresh checkout without it), the
+    # uncompressed PDF still ships — larger — so clone-and-run never hard-fails on a missing optimizer.
+    qpdf = shutil.which("qpdf")
+    if qpdf:
+        opt_tmp = pdf_out.with_suffix(".opt.pdf")
+        qr = subprocess.run(
+            [qpdf, "--object-streams=generate", "--compress-streams=y", "--recompress-flate",
+             "--compression-level=9", str(pdf_out), str(opt_tmp)],
+            capture_output=True, text=True)
+        # qpdf exit 0 = clean, 3 = warnings (still wrote a valid file); accept both.
+        if qr.returncode in (0, 3) and opt_tmp.is_file():
+            opt_tmp.replace(pdf_out)
+            new_size = pdf_out.stat().st_size
+            print(f"PDF: qpdf object-stream repack {final_size / 1_048_576:.1f} MB "
+                  f"-> {new_size / 1_048_576:.1f} MB")
+            final_size = new_size
+        else:
+            opt_tmp.unlink(missing_ok=True)
+            print(f"WARNING: qpdf repack failed (rc={qr.returncode}); shipping uncompressed PDF.\n"
+                  f"{qr.stderr}", file=sys.stderr)
+    else:
+        print("WARNING: qpdf not found on PATH — shipping the uncompressed (larger) PDF. Install qpdf "
+              "to enable the lossless object-stream repack.", file=sys.stderr)
+
+    # Tag-preservation assertion — Typst emits a tagged PDF; assert it (on the repacked file) so a future
+    # template/flag change — or an optimizer that strips structure — cannot silently drop the struct tree.
     if not _pdf_is_tagged(pdf_out):
         print("ERROR: Typst PDF has no struct tree — tags lost (a11y regression). "
               "Check the Typst document settings before shipping.", file=sys.stderr)

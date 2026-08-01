@@ -594,7 +594,14 @@ def _cover_typst() -> str:
     author = _esc(m["author"].upper())
     kicker = _esc(m.get("kicker", "")).upper()
     subtitle = _esc(m.get("subtitle", ""))
-    cover_img = _root_rel(HERE / "assets" / "cover-charcoal.svg", _EmitCtx.root)
+    # The cover art embeds as a PRE-RASTERIZED JPEG, not the SVG. The SVG stacks feTurbulence /
+    # feDisplacementMap / blur filters the print engine cannot vectorize, so it would rasterize the whole
+    # page at high DPI (~26 MB embedded). `cover-charcoal.svg` stays the tracked SOURCE; regenerate the JPEG
+    # from it when the art changes with (175 DPI for 8.5x11, quality-88 4:2:0):
+    #   rsvg-convert -w 1487 -h 1925 assets/cover-charcoal.svg -o /tmp/cc.png
+    #   magick /tmp/cc.png -quality 88 -sampling-factor 4:2:0 assets/cover-charcoal.jpg
+    # The title text below stays live Typst (crisp); only the art is a raster.
+    cover_img = _root_rel(HERE / "assets" / "cover-charcoal.jpg", _EmitCtx.root)
     # The eyebrow renders only when the manifest carries a kicker; the subtitle only when it carries one
     # (empty string = omitted, per the manifest contract).
     eyebrow_block = (

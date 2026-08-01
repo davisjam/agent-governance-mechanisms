@@ -74,8 +74,10 @@ jobs:
       #
       # Typst is pinned to an exact release (clone-and-run-safe + reproducible): download the pinned tarball,
       # verify it extracts a runnable binary, and put it on PATH. poppler (pdftotext / pdfinfo) backs the
-      # content-integrity + tag-tree gates. No qpdf — Typst output is already compact; there is no
-      # post-compression pass.
+      # content-integrity + tag-tree gates. qpdf runs a lossless object-stream repack after `typst compile`
+      # (Typst emits ~20K uncompressed indirect objects, dominated by the a11y struct tree; the repack packs
+      # them into compressed object streams, cutting the whole-book PDF by ~35% — ≈ 6.7 MB → 4.3 MB — with the
+      # tag tree preserved). Without it the full-bleed rasterized cover pushes the PDF well over its size floor.
       - name: Install Typst (pinned release; renders the print-native book PDF)
         run: |
           TYPST_VERSION=v0.15.1
@@ -83,8 +85,8 @@ jobs:
           mkdir -p /tmp/typst && tar -xJf /tmp/typst.tar.xz -C /tmp/typst --strip-components=1
           sudo install -m 0755 /tmp/typst/typst /usr/local/bin/typst
           typst --version
-      - name: Install poppler (pdftotext / pdfinfo for the content-integrity + tag-tree gates)
-        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - name: Install poppler + qpdf (pdftotext / pdfinfo back the content-integrity + tag-tree gates; qpdf does the lossless object-stream repack)
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils qpdf
       - name: Render book PDF (print-native Typst) + content-integrity gate
         run: python3 book/build_book_html.py --pdf
       # ── Responsive-layout gate (deploy-blocking) ────────────────────────────────────────────────
