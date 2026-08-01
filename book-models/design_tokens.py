@@ -89,6 +89,19 @@ class Tokens:
     def typst_stack(self, kind: str) -> list[str]:
         return self.type[kind]["typst-stack"]
 
+    @property
+    def figure_styles(self) -> dict:
+        return self.raw["figure_styles"]
+
+    def figure_pad_min(self) -> int:
+        """Min horizontal breathing room (px, at reference width) a glyph must keep from its box
+        edge. The one number the overflow sensor imports so its padding threshold is never hardcoded."""
+        return self.figure_styles["box"]["text_pad_min_px"]
+
+    def figure_font_px(self, role: str) -> int:
+        """Font-size in px for a figure text ROLE (`figure_title`, `box_title`, `label`, …)."""
+        return self.figure_styles["font"]["role_px"][role]
+
 
 def load(path: pathlib.Path = TOKENS_JSON) -> Tokens:
     with open(path, encoding="utf-8") as fh:
@@ -240,11 +253,47 @@ def svg_palette(t: Tokens | None = None) -> frozenset[str]:
     return frozenset(members)
 
 
+# ── Figure-style projection ───────────────────────────────────────────────────────────────────────────
+# The enforceable geometry for hand-authored house SVGs (padding floor, stroke ladder, type ramp, arrow
+# spec). Two consumers read the SAME numbers: the authoring guidance and the overflow sensor's threshold.
+# The sensor imports `figure_pad_min()` so re-tuning the budget in the token file re-tunes the sensor —
+# the same one-token discipline the drift lint uses with `svg_palette()`.
+
+
+def figure_styles(t: Tokens | None = None) -> dict:
+    """The raw `figure_styles` block (padding/stroke/type/arrow geometry for house SVGs)."""
+    t = t or load()
+    return t.figure_styles
+
+
+def figure_pad_min(t: Tokens | None = None) -> int:
+    """Min horizontal padding (px, at reference width) between a glyph and its box edge — the single
+    declared budget the overflow sensor keys off. Never hardcode 16 in the lint; import this."""
+    t = t or load()
+    return t.figure_pad_min()
+
+
+def figure_arrow_marker(marker_id: str, color: str, t: Tokens | None = None) -> str:
+    """Emit the canonical `<marker>` string so authors paste a correct-by-construction arrowhead
+    (the `markerUnits="userSpaceOnUse"` fix that renders the head at figure scale) instead of
+    re-deriving it. `color` should be a connector stroke color from the SVG palette."""
+    t = t or load()
+    a = t.figure_styles["arrow"]
+    return (
+        f'<marker id="{marker_id}" viewBox="{a["viewbox"]}" '
+        f'markerWidth="{a["marker_wh_px"]}" markerHeight="{a["marker_wh_px"]}" '
+        f'refX="{a["refX"]}" refY="{a["refY"]}" orient="{a["orient"]}" '
+        f'markerUnits="{a["marker_units"]}">'
+        f'<path d="{a["path"]}" fill="{color}"/></marker>'
+    )
+
+
 # ── CLI ─────────────────────────────────────────────────────────────────────────────────────────────
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("cmd", choices=["css", "typst", "palette", "emit-mermaid", "check-mermaid"])
+    ap.add_argument("cmd", choices=["css", "typst", "palette", "figure-styles",
+                                    "emit-mermaid", "check-mermaid"])
     args = ap.parse_args(argv)
     t = load()
     if args.cmd == "css":
@@ -253,6 +302,9 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write(typst_preamble(t))
     elif args.cmd == "palette":
         sys.stdout.write("\n".join(sorted(svg_palette(t))) + "\n")
+    elif args.cmd == "figure-styles":
+        sys.stdout.write(json.dumps(figure_styles(t), indent=2) + "\n")
+        sys.stdout.write(f"# figure_pad_min() = {figure_pad_min(t)}px\n")
     elif args.cmd == "emit-mermaid":
         emit_mermaid(t)
         sys.stdout.write(f"wrote {MERMAID_CONFIG}\n")

@@ -919,6 +919,16 @@ def cmd_validate(_args) -> int:
     if drift:
         print(f"  [tokens] AUDIT-ONLY: {len(drift)} design-token-drift finding(s) — "
               f"run `python3 book-models/lint_design_token_drift.py` (does not gate)")
+    # FIGURE OVERFLOW — the text-fits-its-box sensor over book/assets/*.svg. Lands AUDIT-ONLY-first per the
+    # repo's blocking-lint discipline: it PRINTS its per-figure worklist here but does NOT increment
+    # n_issues, so validate stays green until a fix-wave drains the offenders and a follow-up flips it
+    # blocking (BLOCKING once the tree is clean — the sensor's `--strict` exit is that flip). See
+    # book-models/lint_figure_overflow.py.
+    import lint_figure_overflow as lfo  # noqa: E402 — audit-only overflow sensor
+    overflow = lfo.findings()
+    if overflow:
+        print(f"  [overflow] AUDIT-ONLY: {lfo.summary_line(overflow)} — "
+              f"run `python3 book-models/lint_figure_overflow.py` (does not gate)")
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")

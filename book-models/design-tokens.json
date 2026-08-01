@@ -40,5 +40,45 @@
   "space-px":  [4, 8, 16, 24, 32, 48, 64],
   "radius-px": { "card": 10, "chip": 4, "code": 6 },
   "border-px": { "hairline": 1, "accent-bar": 3, "box-rule": 4 },
-  "figure": { "font-role": "body", "label-min-px": 12 }
+  "figure": { "font-role": "body", "label-min-px": 12 },
+  "figure_styles": {
+    "_note": "Enforceable geometry for hand-authored house SVGs (book/assets/*.svg). The overflow sensor keys its padding threshold off box.text_pad_min_px; design-token-drift gates palette+font membership. Sizes/padding quoted at canvas.reference_width_px; scale proportionally with the viewBox.",
+    "canvas": {
+      "background": "transparent",
+      "background_paper": "#fdfcf9",
+      "font_stack_role": "body",
+      "reference_width_px": 1000
+    },
+    "box": {
+      "radius_px":        { "label": 6, "content": 10, "hero": 16, "pill": 10 },
+      "min_content_px":   { "w": 120, "h": 40 },
+      "text_pad_min_px":     16,
+      "text_pad_comfort_px": 24,
+      "nested_gutter_px":    24,
+      "sibling_gutter_px":   16
+    },
+    "stroke_px": {
+      "hairline":     1,
+      "box":          1.5,
+      "box_emphasis": 2.5,
+      "connector":    2,
+      "spine":        3
+    },
+    "font": {
+      "role_px":  { "figure_title": 24, "box_title": 18, "label": 14, "sub_label": 12, "caption": 14 },
+      "min_px":   12,
+      "weight":   { "title": 700, "emphasis": 600, "body": 400 },
+      "anchor":   { "box_label": "middle", "kicker": "start", "caption": "middle" }
+    },
+    "arrow": {
+      "viewbox": "0 0 10 10",
+      "marker_wh_px": 8,
+      "refX": 8.5,
+      "refY": 5,
+      "orient": "auto-start-reverse",
+      "marker_units": "userSpaceOnUse",
+      "path": "M0 0 L10 5 L0 10 z"
+    },
+    "line": { "cap_decorative": "round", "join": "round" }
+  }
 }

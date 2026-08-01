@@ -122,6 +122,38 @@ so they stay invisible if the markdown is read raw.
   Inline: `**bold**`, `*italic*`, `[text](url)`, and `[[slug|text]]` abstraction citations (link into the
   catalogue's glossary).
 
+### The figure register — hand-SVG for the book proper, Mermaid for the appendix
+
+The book draws its figures two ways, split by where they sit:
+
+- **Book proper (Part 1–6 + frontmatter) → hand-authored inline SVG.** Every figure in the narrative
+  chapters is a hand-drawn `.svg` in `assets/`, inlined via `<!-- figure: -->`. These carry the argument's
+  *shape*, so they earn deliberate composition — chosen geometry, the umber-monograph palette, real
+  typography.
+- **Appendix fills → Mermaid.** The GoF pattern fills (`appendix-fills/`) render their `### Structure`
+  diagram from a ` ```mermaid ` fence, themed by the shared `assets/mermaid-config.json`.
+
+This inverts the portable drawing default (the `self-communicate` skill's *Mermaid-first, hand-SVG only
+when it can't* rule). The inversion is deliberate, and the reasons are three:
+
+- **The register-shift is the signal.** A hand-drawn figure reads as *narrative* — a picture composed for
+  this argument. A Mermaid diagram reads as *reference* — one node-and-edge schema in a long, uniform
+  catalogue. The book proper narrates; the appendix references. Letting the drawing medium track that
+  split tells the reader which mode they are in before they read a word.
+- **Mermaid earns its keep on the churn-y appendix.** The appendix holds dozens of structurally similar
+  pattern diagrams that get added and reworded constantly. Mermaid is text: it diffs like code, rebuilds
+  in the same pass as the prose, and cannot silently fall out of date. That payoff lands precisely where
+  the volume and churn are — not on the handful of stable, bespoke narrative figures.
+- **The coherence controls split to match.** Two mediums, two guarantees. The hand-SVGs are held on-system
+  by the `figure_styles` token block (the padding / stroke / type / arrow SSOT) plus the overflow sensor
+  (text-fits-its-box), with palette and font membership gated by design-token-drift. The Mermaid appendix
+  is held by the single shared theme projected from the same design tokens. One visual system, enforced
+  through the control each medium needs.
+
+**So:** draw a Part 1–6 figure by hand (start from `figure_styles`; run `lint_design_token_drift.py` and
+`lint_figure_overflow.py` before saving). Draw an appendix Structure diagram in Mermaid. Do not reach for
+Mermaid inside a narrative chapter, and do not hand-roll an SVG for an appendix fill.
+
 ### Data from the case study — show the evidence, not just the number
 
 This book's differentiator is that the real system produces **actual measurements**, and it shows them. A
@@ -338,6 +370,9 @@ concept registry.
 - New figure → drop the asset in `assets/`, reference with `<!-- figure: assets/<file> | caption -->`,
   and **introduce it**: put `<!-- label: <key> -->` on the line above it and name it with a `[ref:<key>]`
   in the prose before it (same for any table or standalone mermaid — see the float-labels convention in §3).
+  A Part 1–6 figure is hand-SVG, an appendix Structure diagram is Mermaid (the figure-register split, §3);
+  for a hand-SVG start from the `figure_styles` token block and run `book-models/lint_design_token_drift.py`
+  + `book-models/lint_figure_overflow.py` before saving.
 - New appendix Structure/Sample Code → `appendix-fills/<role>/<slug>.md`, keyed by the entry slug.
 - New index concept → register in `index-terms.md`; annotate per §6 once the tags are implemented.
 - Rebuild with `python3 catalog.py build` (runs the reachability gate); commit both the source and the
