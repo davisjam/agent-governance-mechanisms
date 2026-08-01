@@ -100,6 +100,7 @@ ENF_CLASSES = {"Hard", "Soft", "Soft·Hard"}
 # Both independent of soft/hard: a `constraint` can be soft or hard; an `is-a-model` can be any Move.
 # `Derivation` is optional and appears ONLY on is-a-model entries (book part 3.1 Beat 2).
 MOVE_CLASSES = {"constraint", "sensor", "package"}      # prevent · detect · both-bundled
+MOVE_ORDER = ["constraint", "sensor", "package"]        # Alignment-Thesis display order for the By-move view: prevent → detect → both (set == MOVE_CLASSES; parity checked in check_views_move)
 MODEL_CLASSES = {"is-a-model", "governs-a-model", "—"}  # a typed model · gates/generates/queries one · neither
 DERIVATION_CLASSES = {"model-from-code", "model-to-code", "both"}
 # `Governs` is the join key: an optional trailing row on `governs-a-model` entries naming the model(s) it
@@ -516,6 +517,31 @@ def check_model_map(entries: list[Entry]) -> list[str]:
     return problems
 
 
+def check_views_move(entries: list[Entry]) -> list[str]:
+    """Completeness/drift guard for the codegen'd 'By move' card-grid view — the sibling of check_model_map
+    for the Alignment-Thesis Move axis. The axis is a closed set (MOVE_CLASSES) and the view groups every
+    entry under it, so the build fails if: (a) MOVE_ORDER drifts from MOVE_CLASSES; (b) some Move class has
+    no entry (an empty bucket / axis value uncovered); or (c) the VIEWS_JS 'move' view's declared bucket
+    order drifts from MOVE_ORDER (a class added without teaching the view about it). This ties the JS view
+    declaration to the Python source of truth, so the presentation grouping stays a checked projection over
+    the closed axis — a new Move class can't silently rot the view."""
+    problems: list[str] = []
+    if set(MOVE_ORDER) != MOVE_CLASSES:
+        problems.append(f"move-view: MOVE_ORDER {MOVE_ORDER} ≠ MOVE_CLASSES {sorted(MOVE_CLASSES)}")
+    seen = {e.move for e in entries}
+    for cls in MOVE_ORDER:
+        if cls not in seen:
+            problems.append(f"move-view: no entry carries Move `{cls}` — the '{cls}' bucket would render empty")
+    m = re.search(r'id:"move",.*?order:\[([^\]]*)\]', VIEWS_JS, re.S)
+    if not m:
+        problems.append('move-view: no {id:"move", …, order:[…]} card-grid view found in VIEWS_JS')
+    else:
+        declared = re.findall(r'"([^"]+)"', m.group(1))
+        if declared != MOVE_ORDER:
+            problems.append(f"move-view: VIEWS_JS 'move' bucket order {declared} ≠ MOVE_ORDER {MOVE_ORDER}")
+    return problems
+
+
 ROLE_READMES = ["README.md", "agent/README.md", "models-bridge/README.md", "product/README.md"]
 
 
@@ -861,6 +887,9 @@ def cmd_validate(_args) -> int:
         n_issues += 1
     for msg in check_model_map(entries):
         print(f"  [modelmap] {msg}")
+        n_issues += 1
+    for msg in check_views_move(entries):
+        print(f"  [moveview] {msg}")
         n_issues += 1
     for msg in check_links():
         print(f"  [link]  DEAD {msg}")
@@ -1933,6 +1962,7 @@ VIEWS_CSS = """
   .grp { margin:0 0 16px; }
   .grp h2 { font-size:var(--fs-meta); margin:0 0 7px; padding-bottom:3px; border-bottom:var(--border-hairline) solid var(--line); }
   .grp h2 .cnt { color:var(--muted); font-weight:500; font-size:var(--fs-micro); }
+  .grp h2 .gloss { color:var(--muted); font-weight:400; font-size:var(--fs-micro); font-style:italic; }
   .rt-a{color:var(--a);font-weight:800;} .rt-b{color:var(--b);font-weight:800;} .rt-p{color:var(--p);font-weight:800;}
   .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px; }
   .card { display:block; text-decoration:none; color:var(--ink); border:var(--border-hairline) solid var(--rule);
@@ -1989,16 +2019,24 @@ VIEWS_CSS = """
 
 VIEWS_JS = r"""
 const ROLE_ORDER = ["Agent","Bridge","Product"];
+const esc = s => (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+// The By-move headings pair each Move bucket with its one-line Alignment-Thesis gloss (prevent / detect / both).
+const MOVE_DESC = {
+  "constraint":"prevents the class, costs no iteration",
+  "sensor":"detects after the fact, costs an iteration",
+  "package":"both, bundled",
+};
+const moveHeading = k => esc(k)+' <span class="gloss">— '+esc(MOVE_DESC[k]||"n/a")+'</span>';
 // The card-grid views (rendered into #stage). "By model" (id:"model") is handled specially below —
 // its content is the F1 map + a detail rail + a static hierarchy, already present in #view-model.
 const VIEWS = [
   { id:"family",  label:"By role & family", blurb:"The logical view — the structural inventory, grouped as it ships.", key:c=>c.role+" · "+c.family, order:null },
   { id:"enf",     label:"By enforcement",   blurb:"soft (probabilistic, cannot block) → soft·hard → hard (deterministic).", key:c=>c.enforcement, order:["Soft","Soft·Hard","Hard"] },
+  { id:"move",    label:"By move",          blurb:"The Alignment-Thesis axis — how a control holds its goal: constraint (prevent) → sensor (detect) → package (both, bundled).", key:c=>c.move, order:["constraint","sensor","package"], heading:moveHeading },
   { id:"form",    label:"By form",          blurb:"The nine recurring shapes a control takes.", key:c=>c.form, order:null },
 ];
 const roleCls = c => c.role==="Agent"?"r-a":c.role==="Product"?"r-p":"r-b";
 const enfCls  = c => c.enforcement==="Hard"?"e-h":c.enforcement==="Soft"?"e-s":"e-sh";
-const esc = s => (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const attr = s => (s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;");
 function renderForView(card){                       // one card ← its metadata; clickable + tooltipped
   const star = card.star ? ' <span class="star">★</span>' : '';
@@ -2024,7 +2062,7 @@ function label(k){
 function renderView(v){
   document.getElementById("stage").innerHTML = '<p class="blurb">'+v.blurb+'</p>' +
     groupsFor(v).map(([k,cs]) =>
-      '<section class="grp"><h2>'+label(k)+' <span class="cnt">('+cs.length+')</span></h2>'
+      '<section class="grp"><h2>'+(v.heading?v.heading(k):label(k))+' <span class="cnt">('+cs.length+')</span></h2>'
       + '<div class="cards">'+cs.map(renderForView).join("")+'</div></section>').join("");
 }
 // ── the "By model" detail rail — driven by the F1 map's nodes ──
@@ -2204,7 +2242,7 @@ def build_views_page(entries: list[Entry]) -> str:
         cards.append({
             "title": d["title"], "html": _md_link_rewrite(e.path),
             "role": d["role"], "family": d["family"], "form": d["form"],
-            "enforcement": d["enforcement"],
+            "move": d["move"], "enforcement": d["enforcement"],
             "summary": d["summary"], "star": e.path in stars,
         })
     static_html, groups_json = _model_view(entries)
@@ -2218,6 +2256,7 @@ def build_views_page(entries: list[Entry]) -> str:
     tabs = ('<button type="button" class="tab on" data-v="model">By model</button>'
             '<button type="button" class="tab" data-v="family">By role &amp; family</button>'
             '<button type="button" class="tab" data-v="enf">By enforcement</button>'
+            '<button type="button" class="tab" data-v="move">By move</button>'
             '<button type="button" class="tab" data-v="form">By form</button>')
     model_blurb = ('Two organizing spines over one method trunk: the fleet\'s <b>lifecycle models</b> and the '
                    'product\'s <b>4+1 views</b>, with the sub-models that plug into each and the perimeter '
