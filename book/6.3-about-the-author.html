@@ -127,11 +127,13 @@ table.book-table th.num, table.book-table td.num { text-align: right; }
 blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
-/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
-   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
-   theme knob is missed. */
-pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 20px; }
-pre.mermaid text.messageText { font-size: 18px; }
+/* Mermaid label DISPLAY size — driven from the SAME design token as the mermaid LAYOUT config
+   (assets/mermaid-config.json, emitted by the token projector). Mermaid sizes each node box at the
+   config font-size; these rules render the text at that identical px, so a label can never overflow the
+   box mermaid drew for it (the config==CSS invariant). Do not hardcode a literal here — it would drift
+   from the config and re-introduce the overflow class. */
+pre.mermaid .nodeLabel, pre.mermaid .label text { font-size: 18px; }
+pre.mermaid text.messageText { font-size: 16px; }
 /* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
    quote: it is a deliberately designed aside that teaches a background concept beside the main argument
    (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its

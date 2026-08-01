@@ -62,6 +62,10 @@ import design_tokens as _dtokens  # noqa: E402 — the design-token projector (s
 _TOKENS = _dtokens.load()
 CSS_ROOT_BLOCK = _dtokens.css_root_block(_TOKENS)
 FONTS_LINK = _dtokens.google_fonts_link(_TOKENS)
+# Mermaid label sizes — the SAME token that drives the mermaid LAYOUT config (`mermaid_theme`) so the
+# CSS that DISPLAYS the labels below can never render bigger than the boxes mermaid laid out (the
+# config==CSS invariant that stops label overflow). Do not hardcode these px; they follow the tokens.
+_MERMAID_LABEL_PX = _dtokens.mermaid_label_px(_TOKENS)
 ACCENT = _TOKENS.palette["accent"]  # umber — kept for the few Python-side consumers (cover / mermaid)
 COPYRIGHT = f"© {_BOOK_MANIFEST['author']}, {_BOOK_MANIFEST['copyright_years']}"
 # Cover "last updated" date. A STABLE constant, bumped intentionally — a per-build/per-commit date would
@@ -1144,11 +1148,13 @@ table.book-table th.num, table.book-table td.num {{ text-align: right; }}
 blockquote table.book-table {{ background: transparent; }}
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
 blockquote pre.mermaid {{ font-style: normal; }}
-/* Mermaid legibility floor — pairs with the central mermaid.initialize config (single source of truth
-   for diagram styling). Guarantees rendered label text clears the body-legibility floor even if a
-   theme knob is missed. */
-pre.mermaid .nodeLabel, pre.mermaid .label text {{ font-size: 20px; }}
-pre.mermaid text.messageText {{ font-size: 18px; }}
+/* Mermaid label DISPLAY size — driven from the SAME design token as the mermaid LAYOUT config
+   (assets/mermaid-config.json, emitted by the token projector). Mermaid sizes each node box at the
+   config font-size; these rules render the text at that identical px, so a label can never overflow the
+   box mermaid drew for it (the config==CSS invariant). Do not hardcode a literal here — it would drift
+   from the config and re-introduce the overflow class. */
+pre.mermaid .nodeLabel, pre.mermaid .label text {{ font-size: {_MERMAID_LABEL_PX['node']}px; }}
+pre.mermaid text.messageText {{ font-size: {_MERMAID_LABEL_PX['message']}px; }}
 /* CONCEPT INSET — a textbook-style primer sidebar (a `> ### Inset N — Title` block). It is NOT a plain
    quote: it is a deliberately designed aside that teaches a background concept beside the main argument
    (e.g. "What is an automaton?"). So it drops the base blockquote's grey border + italic run and gets its
