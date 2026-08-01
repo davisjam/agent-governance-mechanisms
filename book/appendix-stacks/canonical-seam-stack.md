@@ -1,8 +1,8 @@
 ## Concept
 
-Route every mutation of a format through one typed model, and stamp every mutation so it can be
+Route every mutation of a format through one structured model, and stamp every mutation so it can be
 explained and reversed. The stack is what makes a remediation *auditable*: one place where change
-happens, and a durable record of each change made there. A typed model with no attribution can still
+happens, and a durable record of each change made there. A structured model with no attribution can still
 corrupt trust silently; attribution with no single seam has too many un-covered doors to stamp.
 
 ## Mandatory members

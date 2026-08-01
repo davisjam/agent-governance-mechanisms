@@ -13,7 +13,7 @@ inline metadata blocks on the numbered project rules, extracted into a typed rul
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — each rule's metadata block is structured and extractable, and the derived registry is reconciled against the document so a rule without a well-formed block, or a block citing a missing enforcer, is a build finding |
 | Derivation | `model-from-code` — the registry is extracted from the inline metadata blocks in the governance document |
 

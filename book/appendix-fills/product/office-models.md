@@ -9,7 +9,7 @@
 
 ## Office Models ({Slides,Docs,Sheets}Model)
 
-**Intent** — Route all remediation of a format family through one typed model per format, with raw
+**Intent** — Route all remediation of a format family through one structured model per format, with raw
 library access *and* raw string-matching into the serialized form banned by lint. The same
 construction-plus-ban-lint pattern as the PDF model, on a second object model.
 
@@ -23,14 +23,14 @@ separate document formats.
 ### Applicability
 
 Reach for this when the same defect class the sole-seam pattern already killed for one format applies to
-a *different* object model that the first seam cannot cover. One typed model per format, plus a shared
+a *different* object model that the first seam cannot cover. One structured model per format, plus a shared
 common layer, consolidates the corruption class across all of them: a fix to the pattern benefits every
 format at once. Add a second ban-lint on raw string-matching when the serialized form is text a regex
 could reach into behind the SDK's back.
 
 ### Structure
 
-Three formats, one pattern. Each format's call sites route through its typed model; the models share a
+Three formats, one pattern. Each format's call sites route through its structured model; the models share a
 common layer. Two ban-lints guard the raw edges — one on the raw SDK, one on regexing the serialized
 XML.
 
@@ -46,13 +46,13 @@ flowchart LR
   L{{Two ban-lints}} -. raw SDK + raw-XML regex .-> Raw
 ```
 
-*Accessible description: three format-specific call sites route through three typed models into a shared
+*Accessible description: three format-specific call sites route through three structured models into a shared
 common layer, which is the only path to the raw office SDK. Two ban-lints guard the raw edges — one bans
 the raw SDK, one bans regexing the serialized XML — so no site skips the models.*
 
 ### Sample Code
 
-The pattern is the same sole-seam-plus-ban-lint as any typed model, applied once per format over a shared
+The pattern is the same sole-seam-plus-ban-lint as any structured model, applied once per format over a shared
 base. What is worth showing is the *second* lint: the raw-SDK ban alone leaves a hole, because the
 serialized document is text and a caller can regex into it behind the model's back. The string-match ban
 closes that path.
@@ -70,10 +70,10 @@ def lint(path: str, mod: str, source: str) -> list[str]:
     for node in ast.walk(ast.parse(source)):
         # ban 1: importing the raw SDK anywhere but the seam
         if isinstance(node, ast.ImportFrom) and (node.module or "").startswith(RAW_SDK_ROOT):
-            findings.append(f"{path}:{node.lineno}: raw office SDK import — route through a typed model")
+            findings.append(f"{path}:{node.lineno}: raw office SDK import — route through a structured model")
         # ban 2: the sneaky path — a regex reaching into the serialized XML
         if isinstance(node, ast.Attribute) and node.attr in {"search", "match", "findall"}:
-            findings.append(f"{path}:{node.lineno}: regex over serialized XML — walk the typed model instead")
+            findings.append(f"{path}:{node.lineno}: regex over serialized XML — walk the structured model instead")
     return findings
 
 if __name__ == "__main__":
@@ -91,13 +91,13 @@ if __name__ == "__main__":
 
 ### Known Uses
 
-- One typed model per office format (slides, docs, sheets) plus a shared common layer; the checking path
+- One structured model per office format (slides, docs, sheets) plus a shared common layer; the checking path
   routes through the canonical rule walkers.
 - Two ban-lints: one on raw SDK access, one on raw-XML string-matching.
 
 ### Related Patterns
 
-- **See also (sibling)** — the PDF half of the unified typed-model-plus-ban-lint pattern; together they
+- **See also (sibling)** — the PDF half of the unified structured-model-plus-ban-lint pattern; together they
   consolidate raw-library corruption across every document format into one defect class.
 - **Counterpart** — the two ban-lints hold these construction seams in place.
 - **See also** — canonical walkers: traversal over the office models' trees.

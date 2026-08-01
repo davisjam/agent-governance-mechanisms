@@ -99,6 +99,35 @@ it, the **knowledge base** for the artifact under construction.
 > than *describes* — is what semiotics calls signification (a sign standing for its object); *blueprint* is
 > the engineer's word for it, and the one I use.
 
+## Structured
+
+> 🟢 **Structured** — said of a model: written in an explicit, declared shape a machine can read and
+> validate — a schema, not prose. The declared structure is what lets a machine hold the system up to the
+> model: read the shape, check it for drift, query it, reason over it, enforce it. Prose can be a model;
+> only a **structured** model can be checked.
+
+Not a fifth term but an **adjective** — the property the fourth definition (*model*) comes to need. The
+foundation model is a model in the approximation sense and is not structured in this one; the blueprints
+this book teaches are.
+
+**On "declared shape."** The structure is a written-down form — fields, states, relations — that a program
+can parse without a human in the loop. This is not the narrow programming-language sense of a variable's
+type; it is the broader one. A **type** is one way to declare a shape, and type-checking is its sharpest
+case, but a schema, a state table, or a registry declares a shape just as well. What matters: the model has
+a shape, the shape is explicit, and a checker can validate any instance against it.
+
+**On what the shape buys — analyzability.** A machine can do to a structured model what it cannot do to
+prose: **read** it, **check** it against the code and fail the build when they disagree, **query** it
+without re-deriving structure from the source, **reason** over it, and **enforce** it — refusing work that
+diverges. *Structured* was chosen over *typed* precisely because it names this whole span — analyzability —
+not the type-check alone. **Structured subsumes typing.**
+
+**Why it is the load-bearing half of the Modeling Thesis.** Prose can be a model — simplified, predictive,
+even prescriptive. But only a **structured** model can sit at the apex of the documentation hierarchy,
+because only a machine-readable description can be the one the machine checks the others against. Every
+"structured, drift-checked model" in this book leans on the adjective: drop it and the drift gate has
+nothing to read.
+
 ---
 
 *The relationship between the four is "the whole book in a nutshell" (the author's phrase): engineers love

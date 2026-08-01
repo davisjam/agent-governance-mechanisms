@@ -13,7 +13,7 @@ dialect).
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — a typed source-of-truth held true by a call-site drift lint (declared deps ↔ real call sites) plus two-way endpoint-coverage audits; the lints land audit-only, then promote to blocking |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 

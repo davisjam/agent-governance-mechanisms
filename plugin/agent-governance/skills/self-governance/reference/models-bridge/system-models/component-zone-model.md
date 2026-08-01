@@ -10,8 +10,8 @@ fact, not a guess.
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
-| Enforcement | **Hard** (deterministic) — a typed model *held true* by its reverse-mapping test + boundary lints (the drift gate is the counted sensor) |
+| Model | `is-a-model` — a structured model you check a system property against |
+| Enforcement | **Hard** (deterministic) — a structured model *held true* by its reverse-mapping test + boundary lints (the drift gate is the counted sensor) |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 
 ## Motivation — the failure it kills

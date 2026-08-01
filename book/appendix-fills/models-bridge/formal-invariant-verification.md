@@ -23,7 +23,7 @@ mis-declared liveness invariant routed to a safety runtime cannot be seen to fai
 
 ### Applicability
 
-Reach for this when a typed invariant model exists, at least one exhaustive checker is available, and the
+Reach for this when a structured invariant model exists, at least one exhaustive checker is available, and the
 state space is bounded. You need a required, *consumed* temporal-form field — optional or defaulted, it
 rots — so the form both routes the checker and is validated against it.
 
@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
 ### Related Patterns
 
-- **Enabler** — executable source-of-truth: the invariants are fields on the typed model; the temporal
+- **Enabler** — executable source-of-truth: the invariants are fields on the structured model; the temporal
   form is one more consumed field.
 - **Counterpart** — drift & parity gates keep the model equal to *reality*; this keeps its *invariants*
   sound. Two faces of trusting the model.

@@ -22,7 +22,7 @@ later. The fast gate is trusted to mean more than it covers.
 
 ### Applicability
 
-Reach for this when environments differ in cost enough that placement matters, and a typed journey model
+Reach for this when environments differ in cost enough that placement matters, and a structured journey model
 carries a criticality field on addressable parts. You need a total criticality→tier derivation, a
 sanctioned set of local test homes, and a join key from a journey-part to its tests.
 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
 ### Known Uses
 
-- A typed journey-criticality model whose two-value axis derives each part's local-vs-staging tier at
+- A structured journey-criticality model whose two-value axis derives each part's local-vs-staging tier at
   load, storing the tier nowhere by hand.
 - The coverage-floor lint: every major part must map to a real-gesture spec in a sanctioned local home.
 - A per-context selector — a pure function from a deploy context to a frozen test roster — that the deploy

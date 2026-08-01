@@ -22,9 +22,9 @@ a sea of blue. Fewer, higher-value links beat exhaustive cross-referencing.
    catalogue's own rule that an entry's examples must instantiate *it*. If no single entry clearly
    fits, do **not** force a link.
 4. **Prefer the high-value sites.** Strong candidates: a named mechanism in prose ("the
-   drift-and-parity gates," "role-typed dispatch," "the one typed model under every format"); a
+   drift-and-parity gates," "role-typed dispatch," "the one structured model under every format"); a
    concrete DocAble example that maps to an entry (the ban-lint that routes all format mutation
-   through one typed model → the canonical-typed-model entry); a "the companion catalogue" /
+   through one structured model → the canonical-structured-model entry); a "the companion catalogue" /
    "in the appendix" gesture that points at a *specific* entry or role. Weak/no candidates: a
    generic noun, a concept with no single entry, a hand-wave at the catalogue as a whole.
 5. **Density cap.** Link the meaningful mechanisms a chapter actually exemplifies — roughly a

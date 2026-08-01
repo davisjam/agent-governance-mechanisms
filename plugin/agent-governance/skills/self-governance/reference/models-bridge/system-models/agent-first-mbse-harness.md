@@ -1,6 +1,6 @@
 # The agent-first MBSE harness
 
-**Intent** — Build the typed system-models as a **thin, hand-rolled harness over plain frozen
+**Intent** — Build the structured system-models as a **thin, hand-rolled harness over plain frozen
 records**: adopt the *vocabulary and schema* of the right modeling genre per view, but skip its
 runtime and hand-roll the executable layer. The model then captures your project's own invariants, and
 a set of build-time checks keeps it equal to the code (our instance: frozen Python dataclasses under
@@ -8,13 +8,13 @@ five recurring disciplines, not a SysML tool).
 
 | | |
 |---|---|
-| Summary | Typed frozen-record models + five hand-rolled disciplines; adopt the schema, skip the runtime. |
+| Summary | Structured frozen-record models + five hand-rolled disciplines; adopt the schema, skip the runtime. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
 | Enforcement | **Hard** (deterministic) — the harness *is* construction (typed records); the counted sensors are the per-view drift lints that fail the build when a stored value or a model row diverges from the code |
-| Governs | `all-models` — every typed model is built on this harness |
+| Governs | `all-models` — every structured model is built on this harness |
 
 ## Motivation — the failure it kills
 
@@ -72,7 +72,7 @@ than a snapshot:
    way the model does, set-diff, re-run every derived field's derivation, exit non-zero on any
    divergence. This is the gate that makes the model **unable to lie**, the counted sensor of this
    mechanism.
-5. **The generic query projection.** One introspection pass turns any typed-record model into JSON,
+5. **The generic query projection.** One introspection pass turns any structured-record model into JSON,
    giving the fleet a read-API over the model without a bespoke serializer per view.
 
 ## The default posture — hand-roll, and stay portable

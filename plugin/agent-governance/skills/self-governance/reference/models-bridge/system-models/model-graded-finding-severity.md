@@ -1,7 +1,7 @@
 # Model-graded finding severity (distance-graded gate)
 
 **Intent** — Grade each lint finding's severity — **block, warn, or silence** — by the finding's
-*distance*, in a typed component model, from the files the commit actually changed, computed by **one
+*distance*, in a structured component model, from the files the commit actually changed, computed by **one
 central join the gate runs over every finding** rather than by each lint scoping itself. The pre-commit
 hook reads the model at check time and dogfoods it to run a mechanism. (Our instance grades a
 governed-doc commit's deploy-scope lints against the component-and-zone model.)
@@ -58,7 +58,7 @@ finding to what the commit changed?"
   path it is attributed to, which may be a file the commit never touched), its **causing input** (the
   file whose presence, absence, or content produced the finding — the cross-file link), a machine-readable
   **kind**, and **fix-guidance**. The lint stops deciding relevance; it reports facts about each finding.
-- **The gate reads the model at check time.** The pre-commit hook loads the typed component model in the
+- **The gate reads the model at check time.** The pre-commit hook loads the structured component model in the
   same process that runs the commit — never a snapshot. Each finding's site maps to a model component; the
   changed files map to their components. The grade reflects the model as it stands at the commit, and a
   commit that edits the model itself grades against the version it is creating.
@@ -85,7 +85,7 @@ at worst let an unrelated finding slip to the downstream backstop; it cannot fab
 
 ## Prerequisites
 
-- **A typed component model** the gate can read at check time — a map from repo path to component, and a
+- **A structured component model** the gate can read at check time — a map from repo path to component, and a
   way to ask which components a set of paths touches.
 - **A structured-finding contract that already ships.** The lints must emit findings as typed records —
   site, causing input, kind, fix-guidance — and the gate must be able to parse them. In the instance this
@@ -127,7 +127,7 @@ at worst let an unrelated finding slip to the downstream backstop; it cannot fab
 
 ## Related mechanisms
 
-- **Enabler** — [component & zone model](component-zone-model.md): the typed model the grader reads at
+- **Enabler** — [component & zone model](component-zone-model.md): the structured model the grader reads at
   check time. This is the sharpest instance of a model *consumed to run a mechanism* — the gate dogfoods the
   component map on every governed commit, not as documentation but as the thing that decides severity.
 - **Enabler** — [meta-model consumption](meta-model-consumption.md): the read-don't-snapshot discipline

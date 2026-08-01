@@ -2,7 +2,7 @@
 
 > **Exemplar draft.** Worked Structure + Sample Code slots for the catalogue entry
 > `models-bridge/system-models/drift-parity-gates.md`, rendered in the book's Gang-of-Four appendix
-> layout. This is the reference bar for the drift / parity-gate archetype (typed model as
+> layout. This is the reference bar for the drift / parity-gate archetype (structured model as
 > source-of-truth + a build-time check that fails when model and reality disagree). The follow-up pass
 > injects the two filled slots at the placeholders keyed by the entry name `Drift & parity gates`.
 > Intent / Motivation / Applicability / Consequences / Known Uses / Related Patterns are projected from
@@ -10,7 +10,7 @@
 
 ## Drift & parity gates
 
-**Intent** — A build-time check that enforces **bidirectional parity between a typed model and reality**
+**Intent** — A build-time check that enforces **bidirectional parity between a structured model and reality**
 — every model row maps to a real thing on disk, and every real thing maps back to a model row — so the
 model cannot silently drift from the system it describes.
 
@@ -23,7 +23,7 @@ recurs whenever the code changes without the model, or the model changes without
 
 ### Applicability
 
-Reach for this when a typed model is the source of truth that downstream steps trust — dispatch,
+Reach for this when a structured model is the source of truth that downstream steps trust — dispatch,
 codegen, deploy — and both the model and the reality it describes are machine-readable. You need a
 predicate that runs in *both* directions (neither side may drift unilaterally) and a blocking placement
 in the gates, or drift is merely reported.
@@ -36,13 +36,13 @@ direction failing turns the gate red.
 
 ```mermaid
 flowchart LR
-  M[(Typed model)] --> G{Parity gate}
+  M[(Structured model)] --> G{Parity gate}
   R[(Reality on disk)] --> G
   G -->|model ⊆ reality<br/>and reality ⊆ model| Pass([build proceeds])
   G -->|either side diverges| Fail([build blocked])
 ```
 
-*Accessible description: the parity gate takes two inputs — the typed model and the enumerated reality
+*Accessible description: the parity gate takes two inputs — the structured model and the enumerated reality
 on disk. It checks both inclusions: every model row exists in reality, and every real thing is modeled.
 When both hold the build proceeds; when either side diverges the build is blocked.*
 
@@ -83,14 +83,14 @@ if __name__ == "__main__":
 
 ### Known Uses
 
-- Parity lints pairing a typed model against its realization: a service-flow model against the real
+- Parity lints pairing a structured model against its realization: a service-flow model against the real
   service trees, a public-API model against the live handlers, a deploy-phase table against the deploy
   scripts.
 - Reverse-mapping tests that walk reality and assert each item resolves to a model row.
 
 ### Related Patterns
 
-- **Counterpart** — each typed system model is the *construction*; its drift gate is the *detection*
+- **Counterpart** — each structured system model is the *construction*; its drift gate is the *detection*
   that holds it true. Construction-held-by-detection is the family's pervasive pairing.
 - **See also (sibling)** — the product-side coherence lints apply the same relational-invariant idea
   across product data sources, where this applies it across model and reality.

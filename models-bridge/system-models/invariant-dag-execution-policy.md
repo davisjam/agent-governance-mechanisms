@@ -114,7 +114,7 @@ Four parts.
 
 ## Prerequisites
 
-- **A typed dependency-graph model with addressable edges.** The intent axis attaches to edges; without a
+- **A structured dependency-graph model with addressable edges.** The intent axis attaches to edges; without a
   typed edge record there is nowhere to declare correctness-vs-cost-vs-load.
 - **A host taxonomy with a real cost or concurrency gradient.** The Scheduler earns its keep only when hosts
   differ — one elastic, one single-boxed, one budget-bounded. A uniform execution environment needs no
@@ -170,7 +170,7 @@ Four parts.
 - **Consumer** — [deployment-topology-model](deployment-topology-model.md): supplies the host taxonomy
   the per-host profile keys on. The Scheduler's profile is one row per host in that model's terms.
 - **Enabler** — [executable-source-of-truth](executable-source-of-truth.md): the edge intents and the
-  per-host profiles are fields on the typed deploy model, one more consumer of that substrate;
+  per-host profiles are fields on the structured deploy model, one more consumer of that substrate;
   [drift-parity-gates](drift-parity-gates.md) keep the model's graph matching the real deploy phases the
   lint reads.
 - **Sibling** — [control-substrate-dependency](control-substrate-dependency.md): both attach *typed metadata to

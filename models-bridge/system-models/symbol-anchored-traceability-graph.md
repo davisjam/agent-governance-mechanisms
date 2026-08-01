@@ -12,7 +12,7 @@ defend; snapshotted ones drift.**
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — a derived meta-lint re-resolves every edge's anchor and reddens on a broken one; runs at DoD/audit cadence because symbol resolution is costly. Lands audit-only, then promotes to blocking |
 | Derivation | `both` — some fields generated to code, others reconciled from it |
 
@@ -126,7 +126,7 @@ unresolved anchor routes to a refactoring target, not an error.
 - **Static symbol resolvers already exist** — a language-aware analyzer per code language whose
   cross-reference the graph *composes*, rather than a new resolution engine. The graph is a typed view
   over resolvers that already ship.
-- **Typed models with addressable elements** — the nodes the edges terminate on (model invariants, lints,
+- **Structured models with addressable elements** — the nodes the edges terminate on (model invariants, lints,
   code roots, tests, registry rows) are first-class, citable things.
 - **A place for the edge to live in-situ** — the anchor rides *with* the code or model site (a typed
   reference field, a structured comment trailer) so it travels when the symbol moves, read by a derived
@@ -181,7 +181,7 @@ unresolved anchor routes to a refactoring target, not an error.
 - **Counterpart** — [drift & parity gates](drift-parity-gates.md): a per-model model↔reality equality
   check. This generalizes that one edge kind into a typed graph spanning model↔lint↔code↔proof↔registry,
   and turns "does the edge still hold?" from a hand-maintained matrix into a re-derived walk.
-- **Enabler** — [executable source-of-truth](executable-source-of-truth.md): the typed models are the
+- **Enabler** — [executable source-of-truth](executable-source-of-truth.md): the structured models are the
   nodes this graph's edges terminate on; the graph is one more consumer of that substrate.
 - **See also** — [coverage → model-node mapping](coverage-model-mapping.md): a sibling join over the same
   nodes. That maps *tests* onto model nodes to show which invariants are exercised; this maps *code,

@@ -1,18 +1,18 @@
 # PdfModel (sole PDF mutation surface)
 
-**Intent** — Route *all* reads and writes of a complex file format through one typed model, with raw
+**Intent** — Route *all* reads and writes of a complex file format through one structured model, with raw
 access to the underlying library banned by a lint, so the structure is compiler-checked and every
 mutation passes through a surface that encodes the format's invariants (our instance: `PdfModel` over
 the canonical PDF library).
 
 | | |
 |---|---|
-| Summary | All PDF I/O through one typed model; raw canonical-PDF-library access banned. |
+| Summary | All PDF I/O through one structured model; raw canonical-PDF-library access banned. |
 | Target | Product · **Canonical models & seams** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
-| Enforcement | **Hard** (deterministic) · *blocking* — a raw-PDF-library ban-lint fails the build on any raw library call; the typed model is *construction*, the ban-lint is the counted sensor |
+| Model | `is-a-model` — a structured model you check a system property against |
+| Enforcement | **Hard** (deterministic) · *blocking* — a raw-PDF-library ban-lint fails the build on any raw library call; the structured model is *construction*, the ban-lint is the counted sensor |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 
 ## Motivation — the failure it kills
@@ -30,7 +30,7 @@ code, and reviewers miss it because nothing in the diff flags it. `PdfModel` mak
 API **unreachable**: typed mutators encode the invariants (they can't forget `SetModified()`), and the
 raw-PDF-library ban-lint fails the build on any raw constructor, `AddTag`, `dict.Put`, or
 `structRoot.AddKid`. The distinction is *a typed sole-seam whose raw alternative is lint-banned* versus
-*disciplined use of a raw API*. The typed model is **construction**: the bug becomes unrepresentable.
+*disciplined use of a raw API*. The structured model is **construction**: the bug becomes unrepresentable.
 The ban-lint is the **counted detection sensor** that keeps every call site on the seam.
 
 ## Mechanism
@@ -42,7 +42,7 @@ verb cannot land un-wired.
 
 ## Prerequisites
 
-- **A typed model covering the domain surface.** Every operation callers need must exist as a typed
+- **A structured model covering the domain surface.** Every operation callers need must exist as a typed
   mutator, or they're forced back to the raw API.
 - **A ban-lint on the raw API** (the counted sensor) plus a migration of *all* existing call sites.
 - **A pinned library version.** Minor bumps of the canonical PDF library can silently change
@@ -66,7 +66,7 @@ verb cannot land un-wired.
 
 - **Counterpart** — the raw-PDF-library ban-lint (hard) holds this construction-mode seam
   in place; without it, "route through PdfModel" is an unenforced convention.
-- *See also (sibling)* — [office-models](office-models.md): the same typed-model + ban-lint pattern for
+- *See also (sibling)* — [office-models](office-models.md): the same structured-model + ban-lint pattern for
   the OpenXML formats; the pair is the *defect-class consolidation* of raw-library corruption across
   all four document formats.
-- *See also* — [canonical-walkers](canonical-walkers.md): how traversal over this typed model is done.
+- *See also* — [canonical-walkers](canonical-walkers.md): how traversal over this structured model is done.

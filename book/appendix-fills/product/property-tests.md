@@ -45,7 +45,7 @@ that still breaks it and reports that counterexample.*
 ### Sample Code
 
 A property test states a law and lets the framework hunt for a violation. The round-trip law — parse then
-serialize returns the original model — is the canonical shape for a typed document model. The generator
+serialize returns the original model — is the canonical shape for a structured document model. The generator
 supplies structured inputs; the framework shrinks a failure to the smallest model that still breaks the
 law, so the counterexample is debuggable.
 
@@ -81,5 +81,5 @@ def test_parse_serialize_round_trips(doc):
 
 - **See also (sibling)** — the tiered test suite and fuzz campaigns: examples-in-tiers and
   adversarial-fuzzing complement invariant-checking.
-- **Consumer** — properties are asserted over the typed models; round-trip properties over a model are how
+- **Consumer** — properties are asserted over the structured models; round-trip properties over a model are how
   you pin its read/write invariants.

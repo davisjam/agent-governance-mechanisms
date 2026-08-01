@@ -6,7 +6,7 @@ operable by a context-bounded agent.
 
 | | |
 |---|---|
-| Summary | Typed models read every run and generated from; can't drift. |
+| Summary | Structured models read every run and generated from; can't drift. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
@@ -46,7 +46,7 @@ practical, and the same models let an agent operate a codebase larger than its c
 
 ## Mechanism
 
-The model catalog holds typed models (Backstage-dialect YAML for services, typed loaders for the rest)
+The model catalog holds structured models (Backstage-dialect YAML for services, typed loaders for the rest)
 that **import nothing**: pure data. Consumers read them at run/lint-time (a lint that *reads* the
 meta-file is preferred over codegen, which is preferred over a hand-rolled copy). Every model is (a)
 *pinned* by a doc-derived characterization test, (b) *held true* by a drift/parity gate, and (c)
@@ -54,7 +54,7 @@ frequently *read* or *generated-from*, so it is exercised constantly.
 
 ## Prerequisites
 
-- **Typed models that import nothing.** Data, not code, so anything can read them cheaply.
+- **Structured models that import nothing.** Data, not code, so anything can read them cheaply.
 - **Continuous consumption.** The model must be read on real runs, or it is just another doc.
 - **A drift gate per model** ([drift-parity-gates](drift-parity-gates.md)). Without enforcement the
   "cannot drift" claim is a hope.

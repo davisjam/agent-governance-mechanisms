@@ -14,7 +14,7 @@ first-class modeled node).
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — a typed source-of-truth held true by a drift gate (its declared states + facet-nodes reconciled against the live registry), each invariant's checker tier *derived* from its temporal shape, lands audit-only then blocking |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 

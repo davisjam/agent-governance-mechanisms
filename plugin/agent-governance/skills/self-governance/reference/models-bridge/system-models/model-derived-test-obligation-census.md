@@ -1,6 +1,6 @@
 # Model-derived test-obligation census (derive what should be tested, lint the gap)
 
-**Intent** — Derive the set of things that *should* be tested from the typed models themselves — every
+**Intent** — Derive the set of things that *should* be tested from the structured models themselves — every
 external seam that should be fuzzed, every failure edge that should have an injection test, every invariant
 that should have a checker — and lint the **gap** between that derived obligation set and the tests that
 actually exist. Coverage stops being a percentage over lines you happened to write and becomes a walk over
@@ -44,7 +44,7 @@ obligations the models declare.
 
 ## Mechanism
 
-- **Derive the obligation set from the models.** Walk the typed models that declare a testable surface —
+- **Derive the obligation set from the models.** Walk the structured models that declare a testable surface —
   external seams, failure edges, cross-service invariants — and compute the set of things each says should
   be tested, rather than enumerating tests by hand.
 - **Match obligations to existing tests.** Join each derived obligation against the test corpus: this seam

@@ -9,7 +9,7 @@
 
 ## The agent-first MBSE harness
 
-**Intent** — Build the typed system-models as a thin harness over plain frozen records: adopt the
+**Intent** — Build the structured system-models as a thin harness over plain frozen records: adopt the
 vocabulary of the right modeling genre per view, skip its runtime, and hand-roll five disciplines that
 keep the records equal to the code.
 

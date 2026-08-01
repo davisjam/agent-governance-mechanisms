@@ -23,23 +23,23 @@ codebase agents can operate on at all.
 ### Applicability
 
 Reach for this when you want one compact map that agents reason from and the build is generated from, and
-you have agents to pay the upkeep humans resent. You need typed models that import nothing, continuous
+you have agents to pay the upkeep humans resent. You need structured models that import nothing, continuous
 consumption on real runs, and a drift gate per model.
 
 ### Structure
 
-The typed model sits at the center. Agents read it to reason; the build generates artifacts from it; a
+The structured model sits at the center. Agents read it to reason; the build generates artifacts from it; a
 drift gate holds it equal to reality. Because it is read and checked on every run, it cannot go stale.
 
 ```mermaid
 flowchart LR
-  M[(Typed model<br/>imports nothing)] --> Agent[Agent reads]
+  M[(Structured model<br/>imports nothing)] --> Agent[Agent reads]
   M --> Gen[Generate artifacts]
   M --> Gate{{Drift gate}}
   Gate -->|diverges| Fail([build blocked])
 ```
 
-*Accessible description: one typed model that imports nothing feeds three consumers — an agent that reads
+*Accessible description: one structured model that imports nothing feeds three consumers — an agent that reads
 it, generators that emit real artifacts from it, and a drift gate that blocks the build when the model
 diverges from reality. Continuous reads and checks keep it from staling.*
 

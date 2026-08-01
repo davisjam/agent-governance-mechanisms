@@ -1,18 +1,18 @@
 # Office Models ({Slides,Docs,Sheets}Model)
 
-**Intent** — Route all remediation of a format family through one typed model, with raw library access
+**Intent** — Route all remediation of a format family through one structured model, with raw library access
 (and raw string-matching into the serialized form) banned by lint. The same construction+ban-lint pattern
 as [pdf-model](pdf-model.md), on a second object model (our instance: `{Slides,Docs,Sheets}Model` over
 `DocumentFormat.OpenXml`).
 
 | | |
 |---|---|
-| Summary | All OOXML through typed models; raw SDK access banned. |
+| Summary | All OOXML through structured models; raw SDK access banned. |
 | Target | Product · **Canonical models & seams** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
-| Enforcement | **Hard** (deterministic) · *blocking* — the two lints fail the build on raw OpenXml / raw-XML string-match; the typed models are *construction*, the lints are the counted sensors |
+| Model | `is-a-model` — a structured model you check a system property against |
+| Enforcement | **Hard** (deterministic) · *blocking* — the two lints fail the build on raw OpenXml / raw-XML string-match; the structured models are *construction*, the lints are the counted sensors |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 
 ## Motivation — the failure it kills
@@ -26,7 +26,7 @@ formats.
 
 Office is a *different object model* (the OpenXML SDK), so `PdfModel` cannot cover it, but the **same
 defect class** (raw-library corruption) applies. The Office Models are the parallel typed seam, and
-routing all three formats through the same typed-model + ban-lint pattern is **defect-class
+routing all three formats through the same structured-model + ban-lint pattern is **defect-class
 consolidation**: a fix to the pattern benefits all four formats at once, which is sufficient
 justification on its own: capability parity, not new capability. Applying one construction + ban-lint
 pattern per object-model keeps the corruption class killed everywhere; per-format ad hoc handling lets
@@ -41,7 +41,7 @@ Checking layer routes through `RuleWalkers/`. `openxml-direct-access` bans raw
 
 ## Prerequisites
 
-- **A typed model per Office format** plus a shared common layer for cross-format primitives.
+- **A structured model per Office format** plus a shared common layer for cross-format primitives.
 - **Two ban-lints**: one on the raw SDK, one on raw-XML string-matching (the sneaky path).
 - **Call-site migration** across all three formats.
 
@@ -59,7 +59,7 @@ Checking layer routes through `RuleWalkers/`. `openxml-direct-access` bans raw
 
 ## Related mechanisms
 
-- *See also (sibling)* — [pdf-model](pdf-model.md): the PDF half of the unified "typed model + ban-lint"
+- *See also (sibling)* — [pdf-model](pdf-model.md): the PDF half of the unified "structured model + ban-lint"
   pattern; together they consolidate the raw-library corruption defect class across all four formats.
 - **Counterpart** — the `openxml-direct-access` + `no-raw-xml-string-match` lints (hard) hold these
   construction-mode seams in place.

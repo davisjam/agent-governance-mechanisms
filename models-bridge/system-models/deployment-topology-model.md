@@ -1,17 +1,17 @@
 # Deployment & tier topology
 
-**Intent** — Typed models of *where things run and how they layer* (the managed-deployment topology,
+**Intent** — Structured models of *where things run and how they layer* (the managed-deployment topology,
 each service's tier class, and the agent-substrate's layer boundaries), so deploy scripts and layering
 lints reason about a declared topology, not scattered constants.
 
 | | |
 |---|---|
-| Summary | Typed models of where things run and how they layer. |
+| Summary | Structured models of where things run and how they layer. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
-| Enforcement | **Hard** (deterministic) — typed models *held true* by the deploy-parity + layer-boundary lints |
+| Model | `is-a-model` — a structured model you check a system property against |
+| Enforcement | **Hard** (deterministic) — structured models *held true* by the deploy-parity + layer-boundary lints |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 
 ## Motivation — the failure it kills
@@ -24,7 +24,7 @@ reasoning about "can layer X import layer Y?" needs the boundary declared, not i
 ## Why it's not just "encode the topology in the deploy scripts"
 
 Topology in the deploy scripts is a *copy*. It drifts from the real service set and from the layering
-the code actually has. These typed models **declare** the topology once (managed-deployment loader,
+the code actually has. These structured models **declare** the topology once (managed-deployment loader,
 tier classification, layer-boundary contracts), and parity lints check the declaration against reality
 (deploy phase tables, import-layer checks). One declared topology, validated against the running system,
 means a moved tier or a crossed boundary fails a lint at author time — the scattered constants had no

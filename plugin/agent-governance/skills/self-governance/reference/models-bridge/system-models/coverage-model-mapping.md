@@ -28,7 +28,7 @@ coverage number sitting over an untested critical invariant.
 ## Why it's not just "line coverage" (or a coverage threshold)
 
 A coverage percentage is over *lines*, aggregated; this map is over *model nodes* (a state, an IPC seam,
-an invariant). It joins the coverage data to the typed model, so the question becomes "which invariants /
+an invariant). It joins the coverage data to the structured model, so the question becomes "which invariants /
 states / seams have a covering test, and which have none?", answerable **per node**, not as one number. A
 line-coverage threshold can be met while a specific invariant is untested; a per-node map cannot hide
 that. And it is *actionable*: an uncovered node is a concrete next test, so the model becomes the test
@@ -43,13 +43,13 @@ state, an IPC seam, an invariant) is joined to the tests that exercise it (e.g. 
 which covered functions realize the node). The result is a per-node coverage fact: covered / uncovered /
 by-which-tests. Two uses ride on it — a **backlog** (the uncovered critical nodes are the next tests
 to write; a sweep walks them), and, promoted, a **gate** (a critical invariant node with no covering
-test fails the build). It sits on the executable-source-of-truth substrate (the nodes are typed model
+test fails the build). It sits on the executable-source-of-truth substrate (the nodes are structured model
 entities) and completes the verification family: parity keeps the model matching reality, formal
 verification *proves* an invariant, this *measures* whether any test exercises it at all.
 
 ## Prerequisites
 
-- **A typed model with addressable nodes** — states, seams, invariants as first-class entities coverage
+- **A structured model with addressable nodes** — states, seams, invariants as first-class entities coverage
   can join to.
 - **Coverage data mappable to nodes** — line/function coverage that can be attributed to the code
   realizing each node.
@@ -82,7 +82,7 @@ verification *proves* an invariant, this *measures* whether any test exercises i
   invariant holds across every interleaving; this *measures* whether any test exercises the node at all.
   Proof vs exercise: complementary, and a critical node ideally has both.
 - **Enabler** — [executable-source-of-truth](executable-source-of-truth.md): the nodes coverage joins to
-  are fields on the typed model; this is one more consumer of that substrate.
+  are fields on the structured model; this is one more consumer of that substrate.
 - *See also* — [drift-parity-gates](drift-parity-gates.md): three angles on trusting the model. Parity
   keeps it matching the world, formal verification keeps its claims *true*, and this keeps its claims
   *exercised*.

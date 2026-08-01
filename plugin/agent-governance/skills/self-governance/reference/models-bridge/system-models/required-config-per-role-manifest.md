@@ -13,7 +13,7 @@ incomplete).
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — the manifest declares each role-and-plane's required set, and an admission check refuses to start a process whose environment omits any required entry |
 | Derivation | `model-from-code` — the required set is reconciled against what each role's code actually reads |
 

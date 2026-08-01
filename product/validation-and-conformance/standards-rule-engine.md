@@ -33,7 +33,7 @@ scope doc is the counterpart that keeps the coverage claim honest (Covered / Cov
 ## Mechanism
 
 A standards-mapping step maps findings → the SCs they close (our instance:
-`CheckRunner.ComputeStandards`); the canonical rule walkers produce those findings over the typed
+`CheckRunner.ComputeStandards`); the canonical rule walkers produce those findings over the structured
 models. The PDF runtime gate emits new findings per pass on a dedicated JSON marker (staging). The
 WCAG-scope-mapping doc is the source of truth for which SCs are in scope, out of scope, and their
 coverage status.
@@ -65,4 +65,4 @@ coverage status.
 - **Counterpart** — the WCAG-scope doc keeps the coverage *claims* honest (like the DoD ↔ rule index
   pairing on the agent side).
 - **Consumer** — reads the [canonical-walkers](../canonical-models-and-seams/canonical-walkers.md)
-  (`RuleWalkers`) that traverse the typed models to produce findings.
+  (`RuleWalkers`) that traverse the structured models to produce findings.

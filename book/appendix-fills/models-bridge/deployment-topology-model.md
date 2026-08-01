@@ -9,7 +9,7 @@
 
 ## Deployment & tier topology
 
-**Intent** — Typed models of *where things run and how they layer* — the managed-deployment topology,
+**Intent** — Structured models of *where things run and how they layer* — the managed-deployment topology,
 each service's tier class, and the substrate's layer boundaries — so deploy scripts and layering lints
 reason about a declared topology, not scattered constants.
 
@@ -27,7 +27,7 @@ You need a typed topology schema plus parity lints against the real deploy table
 
 ### Structure
 
-Typed models declare where each service runs and how the layers may depend. A deployment diagram places
+Structured models declare where each service runs and how the layers may depend. A deployment diagram places
 the parts by runtime boundary; parity lints check the declared topology against the real deploy tables
 and imports.
 

@@ -10,7 +10,7 @@ run this, and how many at once" becomes declared and enforceable.
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — typed contracts *held true* by the mediator enforcers + a registry-coverage lint |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 

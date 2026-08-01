@@ -35,7 +35,7 @@ They differ only in what the specification *is* and how wild the inputs get. A p
 rich oracle (the invariant) but asks it of tame, well-typed inputs. A fuzzer has a coarse oracle
 ("never crash, never corrupt") but reaches wild, malformed inputs a typed generator never emits. The
 synthesis — **fuzz + model-based engineering** — takes both halves: wild inputs judged against the
-typed model as oracle, so you fuzz against a stable point in the specification and the fix generalizes
+structured model as oracle, so you fuzz against a stable point in the specification and the fix generalizes
 to every legal input. That synthesis is where the model *becomes* the oracle; for its detail, see the
 [fuzz-campaigns](fuzz-campaigns.md) entry. This entry stays on the property side: the author-declared
 invariant over generated inputs.
@@ -68,6 +68,6 @@ shrinks any failure to the smallest input that still breaks it.
 
 - *See also (sibling)* — [test-onion-tiers](test-onion-tiers.md), [fuzz-campaigns](fuzz-campaigns.md):
   examples-in-tiers and adversarial-fuzzing complement invariant-checking.
-- **Consumer** — properties are asserted over the typed models
+- **Consumer** — properties are asserted over the structured models
   ([pdf-model](../canonical-models-and-seams/pdf-model.md) et al.): round-trip properties over a model
   are how you pin its read/write invariants.

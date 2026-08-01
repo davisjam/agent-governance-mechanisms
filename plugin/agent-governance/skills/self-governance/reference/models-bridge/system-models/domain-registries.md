@@ -10,7 +10,7 @@ competitor set, the CLAUDE.md rule metadata), each the single source of truth fo
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — typed registries *held true* by their coverage/parity lints |
 | Derivation | `both` — some fields generated to code, others reconciled from it |
 

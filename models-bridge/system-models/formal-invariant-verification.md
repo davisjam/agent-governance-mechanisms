@@ -52,7 +52,7 @@ parallel one, since an established model checker already subsumes the temporal l
 
 ## Prerequisites
 
-- **A typed invariant model** with invariants as first-class entities the form attaches to. This rides on
+- **A structured invariant model** with invariants as first-class entities the form attaches to. This rides on
   the executable-source-of-truth substrate.
 - **A required, consumed temporal-form field.** Optional or defaulted, it rots; the point is that the
   form is *the* routing input, so it must be present *and* acted on.
@@ -88,7 +88,7 @@ parallel one, since an established model checker already subsumes the temporal l
 ## Related mechanisms
 
 - **Enabler** — [executable-source-of-truth](executable-source-of-truth.md): the invariants it verifies are
-  fields on the typed model; the temporal form is one more *consumed* field, held true by the same
+  fields on the structured model; the temporal form is one more *consumed* field, held true by the same
   data-not-code discipline.
 - **Counterpart** — [drift-parity-gates](drift-parity-gates.md): parity keeps the model equal to
   *reality* (every model row ↔ a real thing on disk); this keeps the model's *invariants* sound (every

@@ -332,6 +332,7 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: static-analysis | local
 - term: ban-lint | local
 - term: documentation-hierarchy | section
+- term: structured | section
 - term: ouroboros | local
 - term: typed-enum | local
 - term: pink-elephant | local

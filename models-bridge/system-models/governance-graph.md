@@ -11,7 +11,7 @@ is caught by construction, not at the moment they trip each other in production.
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Soft·Hard** — a soft-constraint model (the query surface an operator *chooses* to run) shipped with hard sensors: a consistency check that flags mechanically-decidable conflicts, and a drift lint that holds the graph equal to the wired mechanisms |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 

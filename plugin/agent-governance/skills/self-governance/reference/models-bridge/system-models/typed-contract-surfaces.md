@@ -1,20 +1,20 @@
 # Typed contract surfaces (the contract is a checked model, not a comment)
 
 **Intent** — Turn the contract between two parties — an HTTP API and its clients, two languages sharing
-a wire format, a command-line tool and the scripts that parse its output — into a **typed, checked
+a wire format, a command-line tool and the scripts that parse its output — into a **structured, checked
 model** instead of a shared assumption. The producer's shape and the consumer's expectation both
 reconcile against one declared surface, so a breaking change reddens a build gate rather than silently
-breaking the far side at runtime (our instance: a typed endpoint model with visibility and auth
+breaking the far side at runtime (our instance: a structured endpoint model with visibility and auth
 extensions, a cross-language marker-and-JSON schema registry, and a per-subcommand stdout spec used as a
 fuzz oracle).
 
 | | |
 |---|---|
-| Summary | The contract between two parties is a typed, checked model, not a shared assumption. |
+| Summary | The contract between two parties is a structured, checked model, not a shared assumption. |
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — each contract is a typed surface reconciled against its real producer and consumer; a handler whose shape diverges from the declared endpoint, or output that violates the declared spec, is a build finding |
 | Derivation | `model-from-code` — the contract surface is reconciled against the live producer and consumer sites |
 
@@ -83,7 +83,7 @@ model.
 
 ## Known uses
 
-- A typed endpoint model carrying per-endpoint visibility, auth, and billing, reconciled against the
+- A structured endpoint model carrying per-endpoint visibility, auth, and billing, reconciled against the
   request handlers that serve it.
 - A cross-language wire-contract registry: the status markers and JSON shapes a worker in one language
   emits and a coordinator in another consumes, checked against both emit and parse sites.

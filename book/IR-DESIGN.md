@@ -5,10 +5,10 @@
 `build_book_html.py` parses the book **several times over** — float numbering, concept-tag harvest,
 glossary, the notation-leak gate, and every structural check in `tests/book.py` — each pass with its own
 regexes, each able to drift from the others. That is the classic pre-IR smell: **N walkers, each
-re-deriving structure.** `book/book_ir.py` is the one typed model those walks share. The book is ~50K
+re-deriving structure.** `book/book_ir.py` is the one structured model those walks share. The book is ~50K
 words; the whole IR fits in memory on a bare CI runner.
 
-The move is the book's own thesis turned inward: a **canonical walker over a typed model** instead of
+The move is the book's own thesis turned inward: a **canonical walker over a structured model** instead of
 scattered bespoke parses.
 
 ## Foundation — a directive registry on our *own* stdlib parser

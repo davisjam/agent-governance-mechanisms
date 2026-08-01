@@ -14,7 +14,7 @@ first-class element).
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — a typed projection *held true* against the concurrency structure it views; a declared racing edge with no guarding lock, or a lock guarding no declared edge, is a build finding |
 | Derivation | `model-from-code` — projected from the concurrency structure and reconciled against the real concurrent processes |
 

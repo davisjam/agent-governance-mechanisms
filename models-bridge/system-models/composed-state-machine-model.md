@@ -14,7 +14,7 @@ invariants, each routed to its checker by its declared temporal form).
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — typed machines *held true* by a drift gate (declared states reconciled against the live lifecycle), and every cross-machine invariant carries a temporal form that *derives* which checker verifies it |
 | Derivation | `both` — the machines are reconciled against the live lifecycle (from-code), and each invariant's verification obligation is generated from its temporal shape (to-code) |
 

@@ -13,7 +13,7 @@ of origin, landing sink, and per-environment coverage across the telemetry strea
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — each stream's origin, landing, and per-environment coverage are declared and reconciled against the real emit and collection sites; a stream emitted but not collected in a declared-covered environment is a build finding |
 | Derivation | `model-from-code` — the provenance record is reconciled against the real emit and collection sites |
 

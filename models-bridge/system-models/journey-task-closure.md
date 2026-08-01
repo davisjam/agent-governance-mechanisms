@@ -58,7 +58,7 @@ the terminal assertion.
 
 ## Mechanism
 
-Four parts sit on the typed journey model.
+Four parts sit on the structured journey model.
 
 - **A typed `closure` block on the journey entity.** Each journey carries `Task = (entry → flow steps →
   closure)`. The `closure` is the terminal post-condition, promoted out of prose into a typed field the
@@ -89,7 +89,7 @@ the backlog drains.
 
 ## Prerequisites
 
-- **A typed journey model with addressable parts** — the same carrier the sibling journey models key off,
+- **A structured journey model with addressable parts** — the same carrier the sibling journey models key off,
   so the closure attaches to a journey the coverage and placement models already name.
 - **A way to resolve an observable to a real signal** — an accessibility role or label, a DOM id, an HTTP
   status, a file's magic bytes, a content-subset check — so each leaf binds to something checkable rather

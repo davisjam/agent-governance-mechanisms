@@ -3,7 +3,7 @@
 **Intent** — Make a journey's **criticality** the single input that *derives* which environment tier its
 tests run in, and hold a coverage floor over the derivation: every high-criticality journey-part carries a
 test in the fast local tier, so a green local run means the major paths work. Placement is derived from a
-typed trait, never hand-drawn (our instance: a typed journey-criticality model whose `MAJOR`/`MINOR` axis
+typed trait, never hand-drawn (our instance: a structured journey-criticality model whose `MAJOR`/`MINOR` axis
 derives each journey-part's `local` vs `staging` tier, guarded by a coverage-floor lint).
 
 | | |
@@ -13,7 +13,7 @@ derives each journey-part's `local` vs `staging` tier, guarded by a coverage-flo
 | Form | `validation` |
 | Move | `package` — a constraint shipped with its sensors |
 | Model | `governs-a-model` — a gate/generator/API/policy whose subject is a model |
-| Enforcement | **Soft·Hard** — the typed model *aims* placement (soft: it computes the tier, a human still authors the test); a coverage-floor lint *holds* the invariant (hard: a major part with no local test fails) |
+| Enforcement | **Soft·Hard** — the structured model *aims* placement (soft: it computes the tier, a human still authors the test); a coverage-floor lint *holds* the invariant (hard: a major part with no local test fails) |
 | Governs | `user-journey-model` — a journey's criticality derives its test tier |
 
 ## Motivation — the failure it kills
@@ -60,7 +60,7 @@ derive-a-tier-from-a-model-trait reflex and the audit-becomes-a-lint reflex, app
 
 ## Mechanism
 
-Three parts sit on the typed model.
+Three parts sit on the structured model.
 
 - **A typed criticality axis.** Each journey, and optionally each journey-*part* (a step), carries a
   criticality level — a two-value enum (major / minor), a part inheriting its journey's level when unset. A
@@ -90,7 +90,7 @@ a property test over any spec universe and a lint that recomputes containment ag
 
 ## Prerequisites
 
-- **A typed journey model with a criticality field and addressable parts.** The derivation attaches to
+- **A structured journey model with a criticality field and addressable parts.** The derivation attaches to
   parts; without part-granularity the placement is too coarse.
 - **A tier taxonomy with a total derivation.** Every criticality level must map to exactly one tier, or the
   function is partial and a new level falls through silently.
@@ -113,7 +113,7 @@ a property test over any spec universe and a lint that recomputes containment ag
 
 ## Known uses
 
-- A typed journey-criticality model whose `MAJOR`/`MINOR` axis derives each journey-part's `local-depth` vs
+- A structured journey-criticality model whose `MAJOR`/`MINOR` axis derives each journey-part's `local-depth` vs
   `staging-full` tier at load, storing the tier nowhere by hand.
 - The coverage-floor lint: every major journey-part must map to a `@journey`-tagged real-gesture spec in a
   sanctioned local test home, or it is a finding (landed audit-only first, since the composed
@@ -137,7 +137,7 @@ a property test over any spec universe and a lint that recomputes containment ag
   runs on from a criticality trait, and holds a floor that the fast tier covers the majors. Test-adequacy
   from two angles: is the node tested at all, versus does the cheap gate cover what matters.
 - **Enabler** — [executable-source-of-truth](executable-source-of-truth.md): the criticality axis and the
-  derived tiers are fields on the typed model; this is one more consumer of that substrate, and
+  derived tiers are fields on the structured model; this is one more consumer of that substrate, and
   [drift-parity-gates](drift-parity-gates.md) keep the model's journeys matching the real specs the lint
   reads.
 - **Consumer** — the [user-journey model](user-journey-model.md) supplies the journeys and the

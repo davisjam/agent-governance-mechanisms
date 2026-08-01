@@ -15,7 +15,7 @@ predicate, projected into an operator skill).
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — each lifecycle's healthy predicate is machine-checkable against the live substrate, and the operator runbook is generated from the model so prose can't drift from the map |
 | Derivation | `model-to-code` — the operator runbook / skill is generated from the typed lifecycle map |
 
@@ -33,7 +33,7 @@ nothing ties the prose to the system.
 
 ## Why it's not just a runbook document
 
-A runbook is prose someone wrote down; this is a **typed model the runbook is generated from**, and the
+A runbook is prose someone wrote down; this is a **structured model the runbook is generated from**, and the
 difference is the difference between a document and a model everywhere in this catalogue. A written
 runbook has no healthy-state predicate a machine can evaluate — it says "the queue should be draining,"
 not a check that *tests* whether it is. It has no structural key tying a symptom to the subsystem it

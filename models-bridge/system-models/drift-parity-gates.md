@@ -64,7 +64,7 @@ fails on divergence.
 ## Related mechanisms
 
 - **Counterpart** — of every model here: [component-zone](component-zone-model.md) ·
-  [synchronization](synchronization-model.md) · [service-flow](service-flow-model.md) · … each typed
+  [synchronization](synchronization-model.md) · [service-flow](service-flow-model.md) · … each structured
   model (construction) is *held true* by its drift gate (the counted sensor). This is the family's
   pervasive construction-held-by-detection pairing.
 - *See also (sibling)* — the product [coherence-lints](../../product/validation-and-conformance/coherence-lints.md):

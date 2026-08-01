@@ -10,7 +10,7 @@ and how the repair move-space is bounded. (The artifact is *produced by* the [ag
 
 ## The five families
 
-1. **[Canonical models & seams](canonical-models-and-seams/)** — the one sanctioned typed model or seam
+1. **[Canonical models & seams](canonical-models-and-seams/)** — the one sanctioned structured model or seam
    per concern (document models, walkers, the cross-service client, the sole raw-Redis seam).
 2. **[Validation & conformance](validation-and-conformance/)** — deterministic pass/fail checks over the
    artifact: content-fidelity, semantic lints, the standards/WCAG rule engine, cross-source coherence.
@@ -23,9 +23,9 @@ and how the repair move-space is bounded. (The artifact is *produced by* the [ag
 
 ## The reconciliation that lives here
 
-**Construction, held by a ban-lint.** The *Canonical models & seams* family is *typed models and seams*
+**Construction, held by a ban-lint.** The *Canonical models & seams* family is *structured models and seams*
 — which the catalogue elsewhere says it "shows by example, never counts" (that is *construction*, not
-detection). The reconciliation is the catalogue's own rule: the typed model/seam is the construction
+detection). The reconciliation is the catalogue's own rule: the structured model/seam is the construction
 mechanism (shown by example), and the entry's **counted, enforced sensor is the ban-lint that holds it
 in place** (the [raw-PDF-library ban-lint](canonical-models-and-seams/pdf-model.md),
 the [raw-OpenXML ban-lint](canonical-models-and-seams/office-models.md), the sole-seam lints). Each entry

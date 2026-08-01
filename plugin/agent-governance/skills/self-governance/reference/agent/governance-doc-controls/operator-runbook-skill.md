@@ -89,8 +89,8 @@ scope where its property is legible, not the cheapest hook.
   catalog for breaks.
 - Runbooks with typed step-kinds (runnable / carried-brief / surface-to-user), making the
   judgment-automatable middle a lintable resource.
-- **A drift-audit runbook that reads a typed model to know what changed** — the sharpest case of the step
-  typing. Given a typed model and the code it claims, its *runnable* steps mechanize the determinizable
+- **A drift-audit runbook that reads a structured model to know what changed** — the sharpest case of the step
+  typing. Given a structured model and the code it claims, its *runnable* steps mechanize the determinizable
   work (enumerate every claim-to-code anchor, resolve each symbol to flag a broken one, batch-re-run the
   model's own owned checks for any gone red since the work closed) and its *surface-to-user* step reserves
   the one question a machine can't take: is a mismatch a real divergence, or an intended as-built gap the
@@ -115,4 +115,4 @@ scope where its property is legible, not the cheapest hook.
   from a typed source.
 - **Enabler** — the reference-validity lint is the same "every pointer ↔ a real target" discipline as the
   models' [drift-parity gates](../../models-bridge/system-models/drift-parity-gates.md), applied to a
-  doc-skill instead of a typed model.
+  doc-skill instead of a structured model.

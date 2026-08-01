@@ -23,7 +23,7 @@ others.
 
 Reach for this when a tree is walked from many sites, each walk must honor the same invariants (visit
 every node type, in order, resolve indirect references), and hand-rolled recursion keeps drifting from
-those invariants. Pair it with the typed model the tree lives in: the walker is the one sanctioned
+those invariants. Pair it with the structured model the tree lives in: the walker is the one sanctioned
 traversal over that model, and the same ban-lint that guards raw model access also bans raw recursion.
 
 ### Structure
@@ -95,7 +95,7 @@ def collect_alt_text(root, walker: TreeWalker) -> list[str]:
 
 ### Related Patterns
 
-- **See also** — the typed models the trees belong to: a canonical walker is *how you traverse* those
+- **See also** — the structured models the trees belong to: a canonical walker is *how you traverse* those
   models, part of the same typed-seam discipline.
-- **Enabler** — a canonical walker makes routing traversal through the typed models practical; without
+- **Enabler** — a canonical walker makes routing traversal through the structured models practical; without
   it, callers reach for raw recursion and re-open the ban-lint's door.

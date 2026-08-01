@@ -22,7 +22,7 @@ green number sitting over an untested critical invariant.
 
 ### Applicability
 
-Reach for this when a typed model already names states, seams, and invariants as first-class nodes, and
+Reach for this when a structured model already names states, seams, and invariants as first-class nodes, and
 coverage data can be attributed to the code realizing each node. You need a node→code join and a
 criticality policy naming which nodes *must* be covered.
 
@@ -95,6 +95,6 @@ if __name__ == "__main__":
 
 - **Counterpart** — formal invariant verification *proves* an invariant across every interleaving; this
   *measures* whether any test exercises the node at all.
-- **Enabler** — executable source-of-truth: the nodes coverage joins to are fields on the typed model.
+- **Enabler** — executable source-of-truth: the nodes coverage joins to are fields on the structured model.
 - **See also** — drift & parity gates: three angles on trusting the model — matches the world, claims are
   true, claims are exercised.

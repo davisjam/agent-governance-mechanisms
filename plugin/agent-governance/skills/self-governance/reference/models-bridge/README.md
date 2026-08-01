@@ -1,16 +1,16 @@
 # The models-bridge — the MBSE substrate between agents and codebase
 
-<!-- summary: Typed models between agents and codebase — the MBSE substrate that makes scaling possible. -->
+<!-- summary: Structured models between agents and codebase — the MBSE substrate that makes scaling possible. -->
 
 *The third role in the [catalogue](../README.md). Not "agent" and not "product," but the layer that
-**couples** them: typed models of the system that agents **read** to reason about the codebase, and
+**couples** them: structured models of the system that agents **read** to reason about the codebase, and
 that **govern** it (a limited slice — config, docs, IPC contracts — is generated from them too). This is the interface through which a
 context-bounded agent operates a context-exceeding codebase — the thing that lets agentic engineering
 scale past a toy.*
 
 ```
      AGENT CONTROLS   ◀────  THE MODELS-BRIDGE  ────▶   PRODUCT / CODEBASE
-     (govern fleet)    read    (typed system-models)   govern & generate   (the artifact)
+     (govern fleet)    read    (structured system-models)   govern & generate   (the artifact)
 
   brief-linting  ┐                 ┌ system-model catalog ┐               ┌ NetworkPolicy / wiring gen
   dyn-ctx-inject ┼── query/inject ─┤ meta-sync ══ drift   ├── parity/gen ─┼ deployment topology
@@ -44,7 +44,7 @@ strong priors for the code it saw often — a CRUD web app, a REST service, the 
 framework. Point it at novel, obscure, or research and HPC software and those priors
 turn against you: the model reaches for the nearest reference class it knows and
 imposes the wrong one, confidently. The bridge's value rises as the code departs from
-that training distribution. A typed model states the domain's real shapes — its states,
+that training distribution. A structured model states the domain's real shapes — its states,
 its seams, its invariants — where the model's own prior states the wrong ones. The
 bridge is how an engineer hands the agent the priors its training never gave it, so the
 further the system sits from the well-trodden path, the more the model must reason
@@ -57,7 +57,7 @@ The role is a **Y**: one **method** (the trunk) reified toward the two subjects 
 subject-agnostic; the <!--census:bridge_models:word-->eighteen<!--/census--> models split by subject, with three that serve both faces (the *shared spine*).
 
 These model entries are a **curated sample of the portable genres**, not a full inventory. The real
-substrate carries on the order of sixty typed models; the ones written up here are those whose *shape*
+substrate carries on the order of sixty structured models; the ones written up here are those whose *shape*
 transfers to another system, so a reader adapts the genre rather than the instance.
 
 **The method — the trunk (subject-agnostic).** The pattern, plus the machinery that holds *any* model true:

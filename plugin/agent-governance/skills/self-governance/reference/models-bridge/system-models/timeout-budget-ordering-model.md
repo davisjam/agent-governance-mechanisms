@@ -14,7 +14,7 @@ nesting order).
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — the budgets live in one declared surface and a property test proves the nesting order (each inner budget strictly less than its container) holds across every declared pair |
 | Derivation | `model-from-code` — the surface mirrors the scattered authoritative constants, reconciled against them |
 

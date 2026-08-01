@@ -3,11 +3,11 @@
   "_counts": {
     "chapters": 30,
     "sections": 174,
-    "explicit_ids": 22,
-    "derived_ids": 152,
+    "explicit_ids": 23,
+    "derived_ids": 151,
     "missing_topic_sentence": 2,
     "sections_drained": 152,
-    "paragraph_points": 456
+    "paragraph_points": 458
   },
   "chapters": [
     {
@@ -483,7 +483,7 @@
           "section_id": "first-four-definitions",
           "level": 2,
           "heading_text": "First, four definitions",
-          "topic_sentence": "Before the walk, I owe you four definitions: *engineering*, *software engineering*, *agent*, and *model*.",
+          "topic_sentence": "Before the walk, I owe you four definitions — *engineering*, *software engineering*, *agent*, and *model* — and, before we leave them, one adjective the last of them will come to lean on: *structured*.",
           "id_source": "derived",
           "block_index": 5,
           "points": [
@@ -548,9 +548,19 @@
               "block_index": 37
             },
             {
+              "slug": "structured-is-the-broad-sense-a-declared-verifiable-shape",
+              "text": "Structured means a declared, verifiable shape, not a variable's type.",
+              "block_index": 39
+            },
+            {
+              "slug": "structured-is-what-admits-the-machine",
+              "text": "The structure is what admits the machine.",
+              "block_index": 43
+            },
+            {
               "slug": "definition-relations-tell-the-book-in-a-nutshell",
               "text": "The four definitions' relations summarize the whole book.",
-              "block_index": 39
+              "block_index": 45
             }
           ]
         },
@@ -560,37 +570,37 @@
           "heading_text": "The four layers",
           "topic_sentence": "**At the bottom sits the foundation model.** It comes from a commercial vendor or an open-weight release, and it is a general language reasoner, able to *induce* an understanding of your environment — though that induction is expensive, and it happens fresh every time.",
           "id_source": "derived",
-          "block_index": 41,
+          "block_index": 47,
           "points": [
             {
               "slug": "foundation-layer-spares-the-model-reasoning-cost",
               "text": "Tell the model where to look; spare its reasoning.",
-              "block_index": 43
+              "block_index": 49
             },
             {
               "slug": "the-model-reasons-over-a-world-representation",
               "text": "The model reasons over a world representation, so equip it.",
-              "block_index": 48
+              "block_index": 54
             },
             {
               "slug": "harness-manages-the-context-window-and-holds-two-mechanism-points",
               "text": "The harness manages the context window and holds two mechanisms.",
-              "block_index": 50
+              "block_index": 56
             },
             {
               "slug": "skills-are-soft-hooks-are-hard-tools-are-deterministic",
               "text": "Skills are soft, hooks are hard, tools take deterministic action.",
-              "block_index": 54
+              "block_index": 60
             },
             {
               "slug": "engineering-environment-must-be-written-down-and-offers-git-and-ci-hooks",
               "text": "Write down the engineering environment; it offers git hooks.",
-              "block_index": 59
+              "block_index": 65
             },
             {
               "slug": "application-layer-makes-mistakes-structurally-impossible-via-static-analysis",
               "text": "Static analysis makes a mistake class structurally impossible.",
-              "block_index": 63
+              "block_index": 69
             }
           ]
         },
@@ -600,27 +610,27 @@
           "heading_text": "Every layer is a place to steer",
           "topic_sentence": "Read the stack as a list of opportunities, because that is what it is.",
           "id_source": "derived",
-          "block_index": 66,
+          "block_index": 72,
           "points": [
             {
               "slug": "read-each-layer-as-an-injection-opportunity",
               "text": "Read each layer as an injection opportunity.",
-              "block_index": 68
+              "block_index": 74
             },
             {
               "slug": "every-layer-serves-one-goal-narrow-the-search",
               "text": "Every layer serves one goal: narrow the agent's search.",
-              "block_index": 71
+              "block_index": 77
             },
             {
               "slug": "mechanisms-interact-and-the-interplay-is-its-own-problem",
               "text": "Mechanisms interact; the interplay is its own problem.",
-              "block_index": 73
+              "block_index": 79
             },
             {
               "slug": "the-stack-grounds-both-theses",
               "text": "The stack grounds both the Modeling and Alignment theses.",
-              "block_index": 75
+              "block_index": 81
             }
           ]
         }
@@ -715,9 +725,9 @@
         {
           "section_id": "the-apex-of-the-documentation-hierarchy-is-a-typed-model",
           "level": 2,
-          "heading_text": "The apex of the documentation hierarchy is a typed model",
+          "heading_text": "The apex of the documentation hierarchy is a structured model",
           "topic_sentence": "Step back from drift for a moment and look at what you actually hand an agent to work from.",
-          "id_source": "derived",
+          "id_source": "explicit",
           "block_index": 32,
           "points": [
             {
@@ -732,12 +742,12 @@
             },
             {
               "slug": "the-apex-of-the-hierarchy-is-a-typed-model-that-binds-the-islands",
-              "text": "The hierarchy's apex is a typed model that binds everything.",
+              "text": "The hierarchy's apex is a structured model that binds everything.",
               "block_index": 39
             },
             {
               "slug": "modeling-thesis-at-full-strength-the-model-is-the-one-description-that-cannot-silently-lie",
-              "text": "The typed model is the one description that cannot lie.",
+              "text": "The structured model is the one description that cannot lie.",
               "block_index": 41
             },
             {
@@ -776,7 +786,7 @@
           "section_id": "just-execute-the-model-a-short-history-of-case-and-mda",
           "level": 2,
           "heading_text": "Just execute the model? A short history of CASE and MDA",
-          "topic_sentence": "If the typed model is where you now start, an old idea says to finish there too: skip the code and *execute the model directly*.",
+          "topic_sentence": "If the structured model is where you now start, an old idea says to finish there too: skip the code and *execute the model directly*.",
           "id_source": "derived",
           "block_index": 57,
           "points": [
@@ -2602,7 +2612,7 @@
             },
             {
               "slug": "induce-a-typed-model-per-dense-primitive-region-iteratively",
-              "text": "Induce a typed model per dense primitive region.",
+              "text": "Induce a structured model per dense primitive region.",
               "block_index": 84
             }
           ]
@@ -3312,16 +3322,16 @@
           ]
         },
         {
-          "section_id": "fuzz-mbse-the-typed-model-becomes-the-oracle",
+          "section_id": "fuzz-mbse-the-structured-model-becomes-the-oracle",
           "level": 2,
-          "heading_text": "Fuzz + MBSE: the typed model becomes the oracle",
+          "heading_text": "Fuzz + MBSE: the structured model becomes the oracle",
           "topic_sentence": "This is the synthesis.",
           "id_source": "derived",
           "block_index": 41,
           "points": [
             {
               "slug": "the-typed-model-becomes-the-oracle",
-              "text": "The typed model itself becomes the oracle.",
+              "text": "The structured model itself becomes the oracle.",
               "block_index": 43
             },
             {
@@ -3679,7 +3689,7 @@
             },
             {
               "slug": "two-commitments-typed-model-and-fail-loud",
-              "text": "One typed model per format; the pipeline fails loud.",
+              "text": "One structured model per format; the pipeline fails loud.",
               "block_index": 14
             }
           ]
@@ -4162,7 +4172,7 @@
           "section_id": "soft-mechanisms-saturate-the-substrate-has-to-become-machine-actionable",
           "level": 2,
           "heading_text": "Soft mechanisms saturate; the substrate has to become machine-actionable",
-          "topic_sentence": "Here is a proposition I would put money on, though I have only a single case behind it.",
+          "topic_sentence": "Here is a proposition I would put money on.",
           "id_source": "derived",
           "block_index": 9,
           "points": []
@@ -4198,7 +4208,7 @@
           "section_id": "models-as-the-universal-language-of-engineering",
           "level": 2,
           "heading_text": "Models as the universal language of engineering",
-          "topic_sentence": "Here is the claim the whole book has been climbing toward — and I offer it as a proposal, not a law I can prove from one case.",
+          "topic_sentence": "Here is the claim the whole book has been climbing toward.",
           "id_source": "derived",
           "block_index": 34,
           "points": []

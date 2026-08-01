@@ -28,18 +28,18 @@ aspirational) don't drift from the engine.
 
 ### Structure
 
-The engine walks the typed model, produces findings, and maps each finding to the standard criterion it
+The engine walks the structured model, produces findings, and maps each finding to the standard criterion it
 closes. The scope document, kept in sync, records which criteria are covered, gaps, or aspirational.
 
 ```mermaid
 flowchart LR
-  Model[(Typed document model)] --> Engine[Rule engine]
+  Model[(Structured document model)] --> Engine[Rule engine]
   Engine -->|findings| Map[Finding → criterion]
   Map --> Claim([per-criterion conformance])
   Map -. same-commit sync .-> Scope[(Coverage scope doc)]
 ```
 
-*Accessible description: the rule engine walks the typed document model and produces findings, then maps
+*Accessible description: the rule engine walks the structured document model and produces findings, then maps
 each finding to the exact standard criterion it closes, yielding a per-criterion conformance claim. A
 coverage scope document is kept in sync in the same commit, recording which criteria are covered, gaps, or
 aspirational.*
@@ -88,4 +88,4 @@ def conformance(findings: list[Finding], in_scope: set[str]) -> dict[str, str]:
 - **Layer** — with the content validator: fidelity (nothing lost) and conformance (standards met) are the
   two product gates over the artifact.
 - **Counterpart** — the coverage scope document keeps the coverage *claims* honest.
-- **Consumer** — reads the canonical walkers that traverse the typed models to produce findings.
+- **Consumer** — reads the canonical walkers that traverse the structured models to produce findings.

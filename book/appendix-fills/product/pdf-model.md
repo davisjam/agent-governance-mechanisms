@@ -10,7 +10,7 @@
 
 ## PdfModel (sole PDF mutation surface)
 
-**Intent** — Route *all* reads and writes of a complex file format through one typed model, with raw
+**Intent** — Route *all* reads and writes of a complex file format through one structured model, with raw
 access to the underlying library banned by a lint, so the structure is compiler-checked and every
 mutation passes through a surface that encodes the format's invariants.
 
@@ -30,7 +30,7 @@ raw alternative, and a one-time migration of every existing call site onto the s
 
 ### Structure
 
-The diagram shows the shape of the seam: every call site reaches the resource through the one typed
+The diagram shows the shape of the seam: every call site reaches the resource through the one structured
 model, and the ban-lint guards the direct edge — it fails the build on any call that tries to skip the
 model and touch the raw library.
 
@@ -39,14 +39,14 @@ flowchart LR
   C1[Call site A] --> M
   C2[Call site B] --> M
   C3[Call site C] --> M
-  M["Typed model<br/>(sole seam)"] --> R[(Raw format library)]
+  M["Structured model<br/>(sole seam)"] --> R[(Raw format library)]
   C1 -. banned direct call .-> R
   L{{Ban-lint}} -. fails build .-> C1
 ```
 
-*Accessible description: three call sites all route through one typed model to reach the raw format
+*Accessible description: three call sites all route through one structured model to reach the raw format
 library. A dashed red edge marks a call site attempting a direct call to the library; the ban-lint node
-fails the build on that edge, so the only surviving path to the library runs through the typed model.*
+fails the build on that edge, so the only surviving path to the library runs through the structured model.*
 
 ### Sample Code
 
@@ -106,6 +106,6 @@ if __name__ == "__main__":
 
 ### Related Patterns
 
-- **Sibling** — the same typed-model-plus-ban-lint pattern applied to the office document formats; the
+- **Sibling** — the same structured-model-plus-ban-lint pattern applied to the office document formats; the
   pair consolidates raw-library corruption across every document format into one defect class.
-- **See also** — canonical walkers, which define the one sanctioned traversal *over* this typed model.
+- **See also** — canonical walkers, which define the one sanctioned traversal *over* this structured model.

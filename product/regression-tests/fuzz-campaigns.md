@@ -34,7 +34,7 @@ so gains are measurable, not assumed.
 Two moves sharpen this beyond random bytes, and they are the depth of this entry — the **producer-
 dialect corpus** (real independent producers of a format supply the adversarial input, so the campaign
 occupies the whole spec-allowed producer space instead of a random slice) and **fuzz + model-based
-engineering** (the typed model becomes the oracle, so you fuzz against a stable point in the
+engineering** (the structured model becomes the oracle, so you fuzz against a stable point in the
 specification and the fix generalizes to every legal input). Both are detailed below.
 
 ## Mechanism
@@ -69,9 +69,9 @@ spec-legal-but-rare paths a from-scratch byte generator will almost never reach.
 
 ## The deepest form — fuzz + model-based engineering (the model as oracle)
 
-The synthesis that makes fuzzing precise: **let the typed model itself be the fuzzer's oracle.** Plain
+The synthesis that makes fuzzing precise: **let the structured model itself be the fuzzer's oracle.** Plain
 fuzzing has a coarse oracle — "never crash, never corrupt" — because it has no declared notion of what
-a *correct* answer looks like on a wild input. When the tool has an explicit typed model of the
+a *correct* answer looks like on a wild input. When the tool has an explicit structured model of the
 domain, that model already names a *stable point in the specification*: a closed set of legal outcome
 classes, an invariant predicate, a state-transition table. Point the wild inputs at the model's own
 entry surface, and judge the outcome against that declared set.
@@ -104,7 +104,7 @@ oracle, and a fix that holds for the whole format — all at once.
   for the sharper corpus, a set of real third-party producers of the format to round-trip through.
 - **A coverage collector + aggregator + baseline** so reach is measurable.
 - **RCA discipline** (fix to the spec, not the seed) — without it, fuzzing devolves into seed whack-a-mole.
-- **For the model-as-oracle form: a typed model** that declares the stable spec point — a closed
+- **For the model-as-oracle form: a structured model** that declares the stable spec point — a closed
   legal-outcome set, an invariant predicate, or a state-transition table — for the wild input to be
   judged against.
 
@@ -124,7 +124,7 @@ oracle, and a fix that holds for the whole format — all at once.
 - A **producer-dialect corpus** built from a set of independent third-party producers of the document
   formats (rival office suites, PDF writers, document-conversion and from-code generators): each
   round-trips a document so its legal-but-unusual dialect becomes fuzz input.
-- The **model-as-oracle** form, where malformed inputs are pointed at the typed document model's read
+- The **model-as-oracle** form, where malformed inputs are pointed at the structured document model's read
   entry point and classified against its declared legal-outcome set — and the concurrency-invariant
   variant, where an exhaustive interleaving search judges outcomes against a state-machine's invariant
   predicate.

@@ -11,7 +11,7 @@ instances: one walker for the PDF structure tree, one for the checking pass, one
 | Target | Product · **Canonical models & seams** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) · *blocking* — routed via the model ban-lints; raw recursion / regex-into-tree is banned alongside raw library access |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 
@@ -29,7 +29,7 @@ Hand-rolled recursion **duplicates the traversal logic**, and duplicated logic d
 each site. A canonical walker **centralizes** the traversal so those invariants are fixed once and
 inherited everywhere. N ad hoc recursions each re-introduce the same class of omission; one canonical
 walker cannot, because there is only one copy of the traversal to get right. A standard
-DRY-plus-walker-discipline move, it keeps the typed models usable without re-opening the raw-access
+DRY-plus-walker-discipline move, it keeps the structured models usable without re-opening the raw-access
 door.
 
 
@@ -61,6 +61,6 @@ into the tree or hand-recursing is banned together with raw library access.
 ## Related mechanisms
 
 - *See also* — [pdf-model](pdf-model.md), [office-models](office-models.md): walkers are *how you
-  traverse* those typed models; they are part of the same typed-seam discipline.
-- **Enabler** — a canonical walker makes routing traversal through the typed models practical;
+  traverse* those structured models; they are part of the same typed-seam discipline.
+- **Enabler** — a canonical walker makes routing traversal through the structured models practical;
   without it, callers reach for raw recursion and re-open the ban-lint's door.

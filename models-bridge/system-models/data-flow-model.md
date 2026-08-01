@@ -14,7 +14,7 @@ evaluator checks against it).
 | Target | Bridge · **System models** |
 | Form | `typed-ir` |
 | Move | `package` — a constraint shipped with its sensors |
-| Model | `is-a-model` — a typed model you check a system property against |
+| Model | `is-a-model` — a structured model you check a system property against |
 | Enforcement | **Hard** (deterministic) — the declared sinks and edges are reconciled against the real storage and transfer sites, and a policy evaluator checks properties (every sink erasable, no edge into an uncovered sink) over the graph |
 | Derivation | `model-from-code` — the sink-and-edge graph is reconciled against the real storage and transfer sites |
 
