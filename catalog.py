@@ -2869,20 +2869,31 @@ def _load_json_or_none(path: str):
 
 # ── Deploy staging manifest ──────────────────────────────────────────────────
 # `deploy github` stages an EXPLICIT set of paths — never `git add -A`, which sweeps any
-# stray untracked file (a screenshot helper, a scratch `.mjs`) into a publish commit. Two
-# gated moves: (1) every tracked modification/deletion via `git add -u`, which by definition
-# never stages an untracked file; (2) NEW publishable content under the content roots, matched
-# by extension so a scratch file of an unexpected type is left alone. Anything still untracked
-# is reported, not committed — explicit, not implicit.
-_PUBLISHABLE_EXTS = ("md", "html", "svg", "css", "js", "json",
+# stray untracked file (a design-doc draft, a screenshot helper, a scratch `.mjs`) into a
+# publish commit. Two gated moves: (1) every tracked modification/deletion via `git add -u`,
+# which by definition never stages an untracked file; (2) NEW *derived build outputs* under
+# the content roots, matched by extension.
+#
+# The extension set is DERIVED build outputs only. The build EMITS `.html` page renders (a
+# sibling per `.md`, plus the census + book pages) and generated figures/data/bundles; it
+# NEVER emits `.md`. A `.md` is always hand-authored SOURCE — a chapter, a design doc, a
+# stray draft — so a new `.md` is NEVER auto-staged: source is the author's to `git add`
+# deliberately, with its own commit message, not swept into a "rebuild site" commit. (A new
+# design draft under `book/_design/` getting swept into a `deploy: rebuild site` commit —
+# then reverted — is the exact incident this exclusion kills.) A brand-new chapter's rendered
+# `.html` and a new build-generated figure ARE derived outputs and still stage; the chapter's
+# source `.md` is reported for the author to add. Anything unmatched is reported, not committed.
+_PUBLISHABLE_EXTS = ("html", "svg", "css", "js", "json",
                      "png", "jpg", "jpeg", "gif", "webp", "ico", "woff", "woff2", "ttf")
 _CONTENT_ROOTS = ("agent", "models-bridge", "product", "book", "plugin", "assets")
 
 
 def _is_publishable(path: str) -> bool:
-    """True if a repo-relative path is NEW content the deploy should stage: a publishable
-    file type under one of the content roots. Scratch of an unexpected type (a `.mjs`
-    helper, a `.log`) fails this and is left for the human to add explicitly."""
+    """True if a repo-relative NEW file is a DERIVED build output the deploy should stage: a
+    generated artifact type (`.html`, figures, data, bundles — never `.md` source) under a
+    content root. Hand-authored source (any `.md`: chapter, design doc, draft) and scratch of
+    an unexpected type (a `.mjs` helper, a `.log`) fail this and are left for the human to add
+    explicitly — deploy publishes the regenerated site, it does not author-commit source."""
     root = path.split("/", 1)[0]
     ext = path.rsplit(".", 1)[-1].lower() if "." in path else ""
     return root in _CONTENT_ROOTS and ext in _PUBLISHABLE_EXTS
