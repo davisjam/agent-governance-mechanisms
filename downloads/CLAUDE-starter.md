@@ -156,6 +156,10 @@ you see:
   source of truth the tools query, instead of restating it. Two things are worth modeling: **the world**
   (domain state, config, statuses, entities hardcoded across files) and **the codebase itself** (its own
   structure — ownership, zones, seams — re-analyzed by each tool). Model whichever you keep repeating.
+- **The second surface of a pair** (one fact or contract now stated in two places) → name the join and
+  hold it at the highest affordable rung: **UNIFY** (one surface; the compiler holds it) > **CODEGEN**
+  (regeneration enforces it) > **parity sensor** (a lint or test catches drift) — never a comment, which
+  holds nothing (→ A.2.5).
 - **Retried / queued / time-delayed consumption** → design the second-order dynamics up front (→ A.2.10).
 - **A decision point that changes state on a timer or threshold and emits no structured record of what it
   decided** → emit the signal (inputs, computed value, decision, reason) at design time; a silent
@@ -454,6 +458,11 @@ become tomorrow's lint: if a bug is in N>1 files, the right fix shape is "fix
 N sites + add a lint," not "fix N sites and wait for the next audit." For a
 class-level failure, propose a lint that prevents the class — not just a one-off fix.
 
+**Roll out audit-first when a new blocking check lands red.** A new (or scope-extended) blocking check
+that finds >0 violations on the current tree lands **audit-only** first — it reports, but does not gate.
+A fix-wave drains the findings to zero; a follow-up then promotes it to blocking. Landing it
+blocking-and-red breaks every in-flight agent's gate at once, over findings none of them introduced.
+
 ### A.3.2. Quality gates — grade on the commodity-lint floor
 
 Every commit should pass the project's standing gates (type-check, tests,
@@ -498,7 +507,10 @@ A specific test is a control; the *strategy* is the general means of building on
   exhaustive state-space check.
 
 Reach for the right *kind*, not one canonical suite; a strong-but-static unit suite misses the dynamics
-and error-path ones every time.
+and error-path ones every time. And across every kind, **look up, don't copy**: when a test value is
+expressible as a lookup against an in-repo source of truth (a registry, an enum, a schema constant, a
+typed set), the test performs the lookup — never an embedded snapshot. The snapshot passes today and rots
+silently when the source shifts; the lookup keeps the test pinned to the substrate itself.
 
 ### A.3.5. Documentation — the invariants-driven pattern
 
@@ -543,6 +555,12 @@ session"); a cause-key the actor mints at the moment of action and carries to th
 pull decision, an ablation, a defensible claim. Where the cause is known when the change is made, stamp it
 from a closed taxonomy and assert it at the gate; where it can only be inferred, name the metric `_proxy`
 and never reward a rate — the trace exists to explain, not to be optimized.
+
+**Build the tools legible — plan before, parseable results after.** The design-time corollary, applied to
+the substrate's own tooling: every agent-callable tool emits (a) a planned-actions preamble before it
+executes (a plan, a dry-run, a DAG of steps) and (b) mechanically parseable results after (durations,
+counts, an exit record) — so an agent reading the output can spot a behavior problem, not just a nonzero
+exit. A tool that works silently is a future un-pinnable diagnosis.
 
 ### A.3.7. Hook the operator's own loop — interpose on the runtime's lifecycle events
 
