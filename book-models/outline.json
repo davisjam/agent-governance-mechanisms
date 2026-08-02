@@ -7,7 +7,7 @@
     "derived_ids": 152,
     "missing_topic_sentence": 2,
     "sections_drained": 152,
-    "paragraph_points": 461
+    "paragraph_points": 464
   },
   "chapters": [
     {
@@ -592,29 +592,44 @@
               "block_index": 50
             },
             {
+              "slug": "model-constituents-are-a-control-surface",
+              "text": "The model's three parts steer differently.",
+              "block_index": 55
+            },
+            {
+              "slug": "models-pack-the-window-denser",
+              "text": "You cannot widen the window; pack it denser.",
+              "block_index": 58
+            },
+            {
+              "slug": "window-control-is-the-books-bet",
+              "text": "Model choice is yours; the book bets on the window.",
+              "block_index": 60
+            },
+            {
               "slug": "the-model-reasons-over-a-world-representation",
               "text": "The model reasons over a world representation, so equip it.",
-              "block_index": 55
+              "block_index": 62
             },
             {
               "slug": "harness-manages-the-context-window-and-holds-two-mechanism-points",
               "text": "The harness manages the context window and holds two mechanisms.",
-              "block_index": 57
+              "block_index": 64
             },
             {
               "slug": "skills-are-soft-hooks-are-hard-tools-are-deterministic",
               "text": "Skills are soft, hooks are hard, tools take deterministic action.",
-              "block_index": 61
+              "block_index": 68
             },
             {
               "slug": "engineering-environment-must-be-written-down-and-offers-git-and-ci-hooks",
               "text": "Write down the engineering environment; it offers git hooks.",
-              "block_index": 66
+              "block_index": 73
             },
             {
               "slug": "application-layer-makes-mistakes-structurally-impossible-via-static-analysis",
               "text": "Static analysis makes a mistake class structurally impossible.",
-              "block_index": 70
+              "block_index": 77
             }
           ]
         },
@@ -624,27 +639,27 @@
           "heading_text": "Every layer is a place to steer",
           "topic_sentence": "Read the stack as a list of opportunities, because that is what it is.",
           "id_source": "derived",
-          "block_index": 73,
+          "block_index": 80,
           "points": [
             {
               "slug": "read-each-layer-as-an-injection-opportunity",
               "text": "Read each layer as an injection opportunity.",
-              "block_index": 75
+              "block_index": 82
             },
             {
               "slug": "every-layer-serves-one-goal-narrow-the-search",
               "text": "Every layer serves one goal: narrow the agent's search.",
-              "block_index": 78
+              "block_index": 85
             },
             {
               "slug": "mechanisms-interact-and-the-interplay-is-its-own-problem",
               "text": "Mechanisms interact; the interplay is its own problem.",
-              "block_index": 80
+              "block_index": 87
             },
             {
               "slug": "the-stack-grounds-both-theses",
               "text": "The stack grounds both the Modeling and Alignment theses.",
-              "block_index": 82
+              "block_index": 89
             }
           ]
         }
