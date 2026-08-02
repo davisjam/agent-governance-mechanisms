@@ -252,21 +252,30 @@
       <line x1="466" y1="291" x2="438" y2="309"/>
     </g>
 
-    <!-- engineer arms -->
+    <!-- engineer arms (v2 ENGAGED): reaching arm drops to a defined elbow (~352,266) then the forearm
+         rises to an articulated explaining hand — index extended to the maquette's left chord, thumb up,
+         other fingers curled; the second arm carries a soft elbow bend down to a hand braced flat on the
+         desktop, fingers spread — an active working posture -->
     <g filter="url(#fChalk)" stroke="#e6dfd2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M331,231 C349,241 366,259 380,279 C384,285 388,290 392,293 L401,297 L399,302 L390,300 C385,298 380,294 376,289 C362,271 346,255 325,244 Z" fill="#453f39"/>
-      <line x1="357" y1="262" x2="349" y2="272" stroke-width="2"/>
-      <path d="M287,240 C282,260 283,284 290,306 C292,313 295,319 298,322 L292,325 C287,320 283,313 281,306 C275,285 275,259 280,241 Z" fill="#453f39"/>
-      <path d="M292,323 C298,318 307,318 312,323 L309,328 L294,328 Z" fill="#4c463f"/>
+      <path d="M329,228 C339,235 348,248 353,262 C355,266 357,268 360,270 C368,274 378,278 388,281 C392,282 395,283 398,285 L406,290 C408,291 408,293 406,294 L399,293 C398,296 396,298 393,299 C391,301 388,301 386,300 C384,299 384,297 384,294 C376,291 366,286 358,280 C353,276 349,272 347,267 C342,255 335,245 324,240 Z" fill="#453f39"/>
+      <path d="M352,264 L346,271" fill="none" stroke-width="2"/>
+      <path d="M395,286 C397,288 397,291 395,293" fill="none" stroke-width="1.6"/>
+      <path d="M393,294 C392,296 390,297 388,297" fill="none" stroke-width="1.6"/>
+      <path d="M283,236 C276,244 272,254 271,264 C270,272 271,280 274,288 C277,297 282,306 288,313 L295,308 C290,301 285,292 282,283 C280,276 280,268 282,261 C284,252 288,244 293,240 Z" fill="#453f39"/>
+      <path d="M273,270 L279,274" fill="none" stroke-width="2"/>
+      <path d="M289,311 C292,307 298,306 303,308 C308,310 311,315 312,320 L313,326 C309,329 304,330 299,329 L289,328 C286,322 286,316 289,311 Z" fill="#4c463f"/>
+      <path d="M297,317 L295,328 M302,316 L302,328 M307,317 L310,327" fill="none" stroke-width="1.6"/>
     </g>
 
-    <!-- robot arms -->
+    <!-- robot arms: straight-segment silhouettes with hard elbow kinks, circular elbow pivots, pincer digits, notched gripper -->
     <g filter="url(#fChalk)" stroke="#e6dfd2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M531,246 C517,255 506,268 499,281 C497,285 495,290 494,294 L503,299 C504,295 506,290 509,285 C515,274 524,264 536,257 Z" fill="#443e38"/>
-      <path d="M494,294 L483,304 L487,310" fill="none" stroke-width="2"/>
-      <path d="M503,299 L491,314" fill="none" stroke-width="2"/>
-      <path d="M600,244 C609,264 610,292 602,314 L594,311 C601,291 600,266 592,249 Z" fill="#443e38"/>
-      <path d="M596,314 C603,311 609,314 610,320 L606,325 L595,323 Z" fill="#4a443d"/>
+      <path d="M531,246 L508,264 L494,294 L503,299 L517,271 L536,257 Z" fill="#443e38"/>
+      <circle cx="512" cy="268" r="3.5" fill="none" stroke-width="2"/>
+      <path d="M494,294 L482,301 L488,309" fill="none" stroke-width="2"/>
+      <path d="M503,299 L492,310 L499,315" fill="none" stroke-width="2"/>
+      <path d="M600,244 L610,268 L602,314 L594,311 L600,272 L592,249 Z" fill="#443e38"/>
+      <circle cx="602" cy="270" r="3.5" fill="none" stroke-width="2"/>
+      <path d="M595,314 L610,313 L611,321 L603,321 L607,326 L595,324 Z" fill="#4a443d"/>
     </g>
   </g>
   <!-- ===================== end scene ===================== -->
