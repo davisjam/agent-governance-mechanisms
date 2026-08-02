@@ -82,13 +82,13 @@ B, or asserts the book holds pole B." That regularity is a schema affordance (§
 | id | kind | statement (canonical) | asserted at | what would CONTRADICT it (audit predicate) |
 |---|---|---|---|---|
 | `direction-agnostic` | distinction | MAGE's claim is about **maintenance** (model=code equality under drift gates), not authoring **direction**; whichever artifact came first. | 0.1 Lineage; 3.1 scope box | Prose stating MAGE prescribes model→code (or code→model) as *its own* authoring direction — the very drift `6641b8a` fixed. |
-| `derived-not-snapshotted` | distinction | A model is **bound to the code and re-derived/gated on every change**; a representation drawn *alongside* is a snapshot that drifts. | 3.1 scope box; 0.1 (map kept "in sync for cents") | Endorsing a model maintained as a separately hand-updated artifact, or "draw the model beside the code." |
+| `ssot-not-snapshot` | distinction | One source of truth, kept equal **either way**; a parallel snapshot is a second source that drifts. | 3.1 scope box; 0.1 (map kept "in sync for cents") | Endorsing a model kept as a separate hand-updated artifact (a second source), or asserting one *fixed derivation direction* as the rule. |
 | `double-win` | causal | A model **earns its keep twice**: it solves the agent's context problem *and* it holds quality. | 0.1 Lineage; landing gateway; 3.1 | Framing models as *only* a context-savings, or *only* a quality tool. |
 | `churn-is-symptom` | distinction | **Churn is the symptom**; its causes are the three not-knowings; every technique attacks a cause, not the symptom. | 0.1 premise | Treating churn as the root problem to fix directly, or a technique aimed at the symptom. |
-| `scaling-limit-is-context-window` | distinction | The agent-fleet scaling limit is the **context window** (churn), not Brooks's-Law N² communication overhead. | 0.1 premise | Attributing agent-fleet velocity decay to coordination/communication overhead. |
+| `fleet-scaling-bounds` | distinction | The fleet is bounded by **reasoning power and context window** — not Brooks N² communication overhead. | 0.1 premise ⚠️ (see §2b) | Blaming coordination/communication overhead; OR treating the context window as the *sole* bound, ignoring reasoning capacity. |
 | `three-not-knowings` | structural | Churn's causes are exactly three: not knowing **what** to build, **how** to realize it, how to change **without breaking**. | 0.1 premise | Enumerating a different count or set of causes. |
 | `theses-divide-the-not-knowings` | mapping | The **Modeling Thesis** treats the first two not-knowings; the **Alignment Thesis** treats the third. | 0.1 premise | Assigning them differently (e.g. Alignment attacks "what to build"). |
-| `governance-not-on-the-dial` | distinction | Governance is **not a point** on the velocity↔oversight axis; it changes what reliability is *made of* — pay per-class-of-failure, not per-change. | 0.1 "Three ways"; Big Idea 2 | Prose placing governance as a *midpoint/balance* on the speed-safety dial. ⚠️ See §2a — a live internal tension worth surfacing. |
+| `governance-not-on-the-dial` | distinction | Governance is **not a point** on the velocity↔oversight axis; it changes what reliability is *made of* — pay per-class-of-failure, not per-change. | 0.1 "Three ways"; Big Idea 2 ("the enabling substrate") | Prose placing governance as a *midpoint/balance* on the speed-safety dial. (§2a tension RESOLVED — see below.) |
 | `mechanize-not-remember` | premise | Engineering discipline must be **mechanized, not remembered** — pushed into tooling so correctness never depends on holding a rule in mind. | 0.1 premise (SE@Google) | Relying on an agent/human *remembering* or *being careful* as the enforcement. |
 | `constraint-prevents-sensor-detects` | distinction | A quality goal splits into a **constraint** (prevents the error) and a **sensor** (detects it after); costly failures earn both. | 0.1 Alignment Thesis; 2.3; Big Idea 4 | Conflating the two; calling a detector a constraint or a preventer a sensor. |
 | `convert-failures-to-controls` | practice | **Velocity exposes** the unforeseeable failure; **judgment converts** each recurring one into a mechanism (convert judgment into infrastructure). | 0.1 "Three ways" close; Big Idea 5 | Prescribing up-front enumeration of *all* obligations as the method, or per-instance patching without retiring the class. |
@@ -98,15 +98,27 @@ B, or asserts the book holds pole B." That regularity is a schema affordance (§
 | `seat-moves-not-lifecycle` | distinction | **SDLC → SELC**: the lifecycle stays intact; only the developer's seat moves to the fleet; the human keeps requirements/spec/design/validation. | 1.3; Big Idea 6 | Claiming agents replace the whole lifecycle, or that the lifecycle itself changes. |
 | `single-case-humility` | caveat | This is a **single-case field report**; numbers are observations from one system, not measured laws; the contribution is *mechanism* (how/why). | 0.1 caution | Stating a number as a general/measured law across systems. |
 
-### 2a. A live internal tension the model would surface on day one
+### 2a. A surfaced tension — RESOLVED (the model earning its keep before it was built)
 
 `governance-not-on-the-dial` is asserted in the preface ("Governance is **not a point on that line**").
-But `landing-big-ideas.json` titles the same idea "**Governance-centric — the midway between two
-schools**." "Midway" reads as *a point between the poles* — the precise thing the claim denies. The
-figure reconciles it (governance sits *beneath* as a synthesis, not *between* on the line), so this is
-arguably consistent — **but it is exactly the judgment call the claims model exists to route to a
-human.** A `direction-agnostic`-class slip in slow motion. Cited here as proof the model earns its keep
-before it is even built.
+The landing's Big Idea 2 titled the same idea "**Governance-centric — the midway between two schools**"
+— and "midway" reads as *a point between the poles*, the precise thing the claim denies. This design
+surfaced it; the author ratified the fix (2026-08-01): the Big Idea title becomes **"Governance-centric
+— the enabling substrate,"** naming what governance *is* (the foundation the double-win stands on, in the
+book's substrate vocabulary) and dropping the on-the-dial locator entirely. The preface's sharp
+"not-a-point" claim stands unchanged. **Queued [FIX]:** apply the title edit to `landing-big-ideas.json`
+(a live-tree change, deferred under quiesce). Recorded as the model's first real catch — a
+`direction-agnostic`-class slip in slow motion.
+
+### 2b. A second surfaced tension — claim `fleet-scaling-bounds` vs. the preface
+
+The sharpened claim says two capacities bound the fleet: **reasoning power and context window**. The
+preface (0.1) currently asserts the scaling limit *is* the context window — window-only — so the claim
+now contradicts the live text: the model's second day-one catch. Reconciliation (ratified 2026-08-01):
+both bounds are *engineered* — you size tasks to models (or the orchestrator routes them) against the
+reasoning bound, and MAGE's models compress the problem to fit the window; the Modeling Thesis is
+specifically the window move. **Queued [FIX]:** nuance the preface to name reasoning as a co-bound and
+frame the window as the bound MAGE's models attack (a live-tree prose edit, deferred under quiesce).
 
 ---
 
@@ -286,11 +298,17 @@ is UNTESTED until Phase 2 lands its check.
 
 ## 8. Open calls for the author (ratify before build)
 
+> **RATIFIED 2026-08-01.** All six calls approved as recommended, with three refinements folded into §2:
+> (A) Big Idea 2 title → "**the enabling substrate**" (§2a); (B) claim #2 reframed to `ssot-not-snapshot`
+> (single source of truth, not one-way "derived"); (C) claim #5 → `fleet-scaling-bounds` (**reasoning
+> power *and* context window**), which surfaced a second preface tension (§2b). Two **[FIX]es queued**,
+> deferred under quiesce: the landing title edit, and a preface nuance naming reasoning as a co-bound.
+
 1. **New model, not an extension?** Confirm `claims.json` as a fifth sibling (§1) rather than folding
    into big-ideas or concepts. (Recommendation: new model — the contradiction predicate has no home in
    the others.)
 2. **Seed inventory.** Is the §2 set of ~16 right — trim, extend, re-word any statement? In particular:
-   keep `derived-not-snapshotted` and `direction-agnostic` as *separate* claims (different axes:
+   keep `ssot-not-snapshot` and `direction-agnostic` as *separate* claims (different axes:
    snapshot-vs-derived vs. authoring-direction), or merge?
 3. **`kind` taxonomy.** Approve the closed set `{distinction, thesis, stance, causal, mapping,
    scope-boundary, metaphor, caveat, practice}`? A coarser set (e.g. just distinction/stance/caveat)
