@@ -77,13 +77,22 @@ def _axe_coverage_set(pages: list[str]) -> list[str]:
     return sorted(min(members) for members in buckets.values())
 
 
+# Fixed seed for the axe tail shuffle. The tail is a deterministic function of the CURRENT sorted page
+# list: it still rotates as pages are added/removed, but a RE-RUN on the same tree draws the SAME sample,
+# so the gate is reproducible — a flaked page can be re-scanned to the identical set instead of vanishing
+# behind a fresh unseeded draw. (Sibling `random.Random(1)` in `check_axe_coverage_set` seeds for the same
+# reason.) Coverage is unchanged: same deterministic floor, same tail COUNT — only the nondeterminism is gone.
+_AXE_TAIL_SEED = 1
+
+
 def _axe_sample(pages: list[str], target: int, rng: random.Random) -> tuple[list[str], list[str]]:
     """Choose the pages to scan: the deterministic coverage set (`_axe_coverage_set` — one canonical page
-    per template family, scanned every run) PLUS a uniform-random tail drawn from the remaining pages up to
-    `target` (catches regressions in the long tail; `rng` is unseeded so the tail varies per run and coverage
-    accumulates over time). The coverage set is ALWAYS included in full, even if it alone meets or exceeds
-    `target` — `target` caps only the random tail, never the trustworthy floor. Returns `(coverage, sample)`:
-    the coverage set and the full page list (coverage ∪ tail), both ROOT-relative, sorted."""
+    per template family, scanned every run) PLUS a tail drawn from the remaining pages up to `target`
+    (catches regressions in the long tail). `rng` is SEEDED (`_AXE_TAIL_SEED`), so with the pages passed
+    sorted the tail is a reproducible function of the current page set — it shifts as the site grows but a
+    re-run on the same tree picks the same tail. The coverage set is ALWAYS included in full, even if it
+    alone meets or exceeds `target` — `target` caps only the tail, never the trustworthy floor. Returns
+    `(coverage, sample)`: the coverage set and the full page list (coverage ∪ tail), both ROOT-relative, sorted."""
     coverage = _axe_coverage_set(pages)
     chosen: set[str] = set(coverage)
     remainder = [p for p in pages if p not in chosen]
@@ -107,13 +116,15 @@ def check_axe(strict: bool):
         the canonical (lexicographically-first) page of every bucket (`_axe_coverage_set`), so every
         structural page-shape is axe-checked on EVERY run. The set is DERIVED from the built pages, not a
         hardcoded snapshot, so it tracks the site as families are added or removed. This is what makes the
-        CI gate trustworthy between the exhaustive publish scans: an unseeded random pick could skip a
-        broken shape, but the deterministic floor never does. Its stdlib twin `check_axe_coverage_set` gates
+        CI gate trustworthy between the exhaustive publish scans: a sampled tail could skip a broken shape
+        on any given run, but the deterministic floor never does. Its stdlib twin `check_axe_coverage_set` gates
         the set's soundness even where no browser is present.
-      - RANDOM TAIL — fill up to the target with a uniform-random sample of the remaining pages, using an
-        UNSEEDED `random.Random()` so the sample varies per run and long-tail coverage accumulates over time
-        (a content-level regression on a specific page surfaces the run it is drawn). Plain unseeded
-        randomness is deliberately fine for the tail; the deterministic floor above carries the guarantee.
+      - REPRODUCIBLE TAIL — fill up to the target with a sample of the remaining pages, using a SEEDED
+        `random.Random(_AXE_TAIL_SEED)` over the sorted page list so the tail is a deterministic function of
+        the current site: it shifts as pages are added or removed, but a re-run on the same tree draws the
+        SAME tail. That reproducibility is what lets a flaked page (e.g. a mid-paint Mermaid contrast
+        false-positive) be re-scanned to the identical sample and diagnosed, instead of vanishing behind a
+        fresh unseeded draw. The deterministic coverage floor above still carries the structural guarantee.
     Target size defaults to 25, overridable via `ADA_CATALOG_AXE_SAMPLE` for tuning. The chosen count +
     per-bucket sample is printed so a failure is reproducible and the reader sees it's a sample.
 
@@ -140,7 +151,7 @@ def check_axe(strict: bool):
         target = int(os.environ.get("ADA_CATALOG_AXE_SAMPLE", "25"))
     except ValueError:
         target = 25
-    rng = random.Random()  # UNSEEDED on purpose — the TAIL varies per run, long-tail coverage accumulates
+    rng = random.Random(_AXE_TAIL_SEED)  # SEEDED — tail is reproducible per-tree so a flaked page re-runs identically
     coverage, sample = _axe_sample(all_pages, target, rng)
     cover_set = set(coverage)
     buckets_hit = sorted({_axe_bucket(p) for p in sample})
