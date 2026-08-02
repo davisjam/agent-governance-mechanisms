@@ -106,6 +106,38 @@ def check_outcomes_model():
     return (FAIL if issues else PASS), issues
 
 
+def check_claims_model():
+    """The claims view's drift + structural check (audit-only). Re-derives the claim model from the
+    hand-authored `claims_declared.json` and reports: C7-drift against the on-disk artifact; C1-C6 the
+    structural / schema invariants (every home + asserted_at site resolves; every relates_to link resolves;
+    every claim carries a contradiction predicate; kind ∈ taxonomy + a distinction names two poles; every
+    claim is asserted at ≥1 site or flagged implicit; statement within the word cap). The SEMANTIC
+    contradiction check is a review-gate judgment-audit, NOT walked here (DESIGN §4.2). Keyed off
+    `book-models/claims.json` + `claims_declared.json` + the outline + sibling models."""
+    import claims_model as clm  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+
+    # C7-drift — the stored artifact equals a fresh derivation.
+    fresh = clm.to_jsonable()
+    stored = clm.load_artifact()
+    if stored is None:
+        issues.append(f"{rel(clm._ARTIFACT)} missing — run "
+                      f"`python3 book-models/claims_model.py regenerate`")
+    elif stored.get("claims") != fresh["claims"] or stored.get("_counts") != fresh["_counts"]:
+        issues.append(f"DRIFT: {rel(clm._ARTIFACT)} disagrees with a fresh derivation — regenerate "
+                      f"with `python3 book-models/claims_model.py regenerate`")
+
+    # C1-C6 — structural / schema invariants (site + link resolution, contradiction predicate, kind + pole
+    # shape, assertion coverage, word cap).
+    issues.extend(clm.structural_findings())
+
+    # Audit-only: same non-gating contract as the sibling view checks — surfaced as [audt], excluded from
+    # the fail tally. A follow-up promotes C1-C6 + freshness to blocking once a clean session confirms the
+    # seed drains to 0; the watch-phrase lint (C7) stays audit-only forever (DESIGN §4.2).
+    return (FAIL if issues else PASS), issues
+
+
 def check_reverse_index():
     """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
     forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each

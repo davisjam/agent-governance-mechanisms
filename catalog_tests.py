@@ -39,7 +39,12 @@ from tests.book import (
     check_no_stray_comments,
     run_book_audit,
 )
-from tests.book_models import check_outcomes_model, check_outline_model, check_reverse_index
+from tests.book_models import (
+    check_claims_model,
+    check_outcomes_model,
+    check_outline_model,
+    check_reverse_index,
+)
 from tests.citations import (
     check_cite_fresh,
     check_cite_mirror,
@@ -144,6 +149,15 @@ CHECKS = [
     # substrate; also the `catalog.py views-audit` pre-commit entry point. See tests/book_models.py.
     Check("book-models: reverse-index drift — structural + freshness (reverse_index.json)", 1,
           lambda strict: check_reverse_index(), audit_only=True),
+    # AUDIT-ONLY (rule #55): the CLAIMS view-model — a fifth sibling model holding the book's load-bearing
+    # propositions + the contradiction predicate none of the others carry (DESIGN book-claims-model-260801).
+    # C7-drift (claims.json vs a fresh derivation) + C1-C6 structural/schema (every home + asserted_at site
+    # resolves; every relates_to link resolves; every claim carries a contradiction predicate; kind ∈
+    # taxonomy + a distinction names two poles; asserted at ≥1 site; statement within the word cap). Lands
+    # audit-only; a follow-up promotes C1-C6 + freshness to blocking once a clean session confirms the drain.
+    # The SEMANTIC contradiction check + the watch-phrase lint stay judgment-audit / audit-only (§4.2).
+    Check("book-models: claims view drift + structure (claims.json)", 1,
+          lambda strict: check_claims_model(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.

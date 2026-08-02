@@ -33,6 +33,7 @@ from dataclasses import asdict, dataclass, field
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import book_symbols as bs  # noqa: E402 — read-only symbol-extraction over book_ir
+import claims_model as clm  # noqa: E402 — the claims view (built) — a source of claim-assertion edges
 import outcomes_model as ocm  # noqa: E402 — the outcomes view (built) — a source of forward references
 import outline_model as om  # noqa: E402 — the outline view (built) — a source of forward references
 
@@ -53,7 +54,11 @@ _CONCEPT_DIRECTIVE = re.compile(r"^<!--\s*(index-def|index-example)\s*:\s*([a-z0
 #: rides. `term` is the two-tier tagging symbol: a slug a point's `terms:` segment (tier-2) or a
 #: `<!-- section-terms: … -->` marker (tier-1) names — it inverts into term→point and term→section edges,
 #: so "which sections develop term X ∪ which paragraphs use term X" is one lookup.
-SYMBOL_KINDS = ("section-id", "concept", "label", "ref", "chapter", "part", "book", "point", "term")
+#: `claim` is the CLAIMS-view symbol: each claim id is an authored symbol (the join key + the deferred inline
+#: `<!-- claim: <id> -->` marker's target). The claims view rides the outline at each `asserted_at` site, so
+#: its edges are keyed by those SITE symbols (section-id / chapter / part / book) with role `claim-assertion`
+#: / `claim-home` — that is how `deps <section>` answers "edit section X → which claims are asserted here?".
+SYMBOL_KINDS = ("section-id", "concept", "label", "ref", "chapter", "part", "book", "point", "term", "claim")
 
 
 # ---- the symbol universe: what the source actually DEFINES -------------------------------------------
@@ -70,6 +75,7 @@ class SymbolUniverse:
     parts: "set[int]" = field(default_factory=set)         # part numbers
     points: "set[str]" = field(default_factory=set)        # <!-- point: slug | text --> decorator slugs
     terms: "set[str]" = field(default_factory=set)         # registered term slugs (index-terms.md two-tier registry)
+    claims: "set[str]" = field(default_factory=set)        # claim ids (book-models/claims.json) — the claims view's symbols
 
     def resolves(self, symbol: str, kind: str) -> bool:
         """True when `symbol` is a real DEFINED symbol of the given `kind`. `book` and `part-<N>` are the
@@ -84,6 +90,7 @@ class SymbolUniverse:
         return symbol in {
             "section-id": self.section_ids, "concept": self.concepts, "label": self.labels,
             "ref": self.refs, "chapter": self.chapters, "point": self.points, "term": self.terms,
+            "claim": self.claims,
         }.get(kind, set())
 
     def unit_kind(self, unit_id: str) -> str:
@@ -160,6 +167,7 @@ def derive_universe() -> SymbolUniverse:
     u.refs.update(r.key for r in doc.refs())
     u.points.update(slug for slug, _c, _i in point_occurrences())
     u.terms.update(_registered_terms())
+    u.claims.update(c.id for c in clm.derive_model().claims)
     return u
 
 
@@ -233,6 +241,20 @@ def build_index() -> "dict[str, dict]":
         for u in o.secondary_units:
             _add(index, u, universe.unit_kind(u),
                  Dependent(view="outcomes", element=o.outcome_id, role="secondary-unit"))
+
+    # CLAIMS: each claim rides the outline at its `home` (chiefly argued) and every `asserted_at` site. Invert
+    # both so `deps <section>` answers "edit this unit → which claims are asserted / homed here?" — the claims
+    # analogue of the outcomes coverage join (DESIGN §4.1 RI). Keyed by the SITE symbol, like an outcome unit.
+    for cl in clm.derive_model().claims:
+        _add(index, cl.home, universe.unit_kind(cl.home),
+             Dependent(view="claims", element=cl.id, role="claim-home"))
+        for site in cl.asserted_at:
+            if site == cl.home:
+                continue  # home already recorded above; keep one edge per (claim, site)
+            kind = "point" if site.startswith("point:") else universe.unit_kind(site)
+            symbol = site.removeprefix("point:") if site.startswith("point:") else site
+            _add(index, symbol, kind,
+                 Dependent(view="claims", element=cl.id, role="claim-assertion"))
 
     # Stable order: sort dependents within each symbol for a deterministic artifact.
     for slot in index.values():
@@ -346,6 +368,7 @@ def to_jsonable(index: "dict[str, dict] | None" = None) -> dict:
                 "labels": len(universe.labels), "refs": len(universe.refs),
                 "chapters": len(universe.chapters), "parts": len(universe.parts),
                 "points": len(universe.points), "terms": len(universe.terms),
+                "claims": len(universe.claims),
             },
         },
         # "<kind>:<slug>" -> {kind, dependents:[{view, element, role}]} — keys NAMESPACED by kind
