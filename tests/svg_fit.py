@@ -345,7 +345,8 @@ def check_svg_drawing_hygiene():
         bug). The apex must point +x.
       - **stitched arrowhead** — a small filled triangle used as an arrowhead OUTSIDE a `<marker>`
         (hand-composed; use a native marker so it can't drift off the line).
-      - **stroke through glyph** — a `<line>` whose stroke passes through a `<text>`'s estimated bbox.
+      - **stroke through glyph** — a `<line>` OR a straight-segment `<path>` polyline whose stroke passes
+        through a `<text>`'s estimated bbox.
     Heuristic; audit-only. Fix guidance -> the drawing style doc."""
     assets_dir = os.path.join(ROOT, "book", "assets")
     if not os.path.isdir(assets_dir):
@@ -444,6 +445,44 @@ def check_svg_drawing_hygiene():
                 if hit:
                     issues.append(
                         f"{rel(path)}: STROKE through glyph — a <line> passes through a text box "
+                        f"(~x{tl:.0f}-{tr:.0f}, y{tt:.0f}-{tb:.0f}); route it aside, break it, or move the text")
+                    flagged.add(fn)
+                    break
+
+        # (3b) a straight-segment <path> stroke must not run through a <text> glyph box either. Many
+        # connectors are polyline paths (`M x,y L x,y L x,y`), not <line>s — the <line>-only test above is
+        # blind to them (this is the class that hid the input-spine-through-lane-label collision). Only
+        # reason about pure M/L polylines (skip curves/arcs/relative/H-V per _triangle_from_path_d's guard),
+        # skip marker-internal shapes, and skip the tiny closed triangles the stitched-arrowhead check owns.
+        for el in root.iter():
+            if _local(el.tag) != "path" or id(el) in in_marker:
+                continue
+            d = el.get("d") or ""
+            if not d or re.search(r"[csqtahvCSQTAHV]|[mlz]", d):
+                continue  # not a pure absolute M/L polyline — don't reason about it
+            if _triangle_from_path_d(d) is not None:
+                continue  # an arrowhead triangle, not a connector
+            nums = re.findall(r"-?[0-9.]+", d)
+            if len(nums) < 4:
+                continue
+            pts = [(float(nums[i]), float(nums[i + 1])) for i in range(0, len(nums) - 1, 2)]
+            hit = False
+            for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+                if ax == bx and ay == by:
+                    continue  # zero-length segment
+                for (tl, tt, tr, tb) in texts:
+                    for k in range(2, 19):  # sample the segment interior (skip endpoints)
+                        tt_ = k / 20.0
+                        px = ax + tt_ * (bx - ax)
+                        py = ay + tt_ * (by - ay)
+                        if tl < px < tr and tt < py < tb:
+                            hit = True
+                            break
+                    if hit:
+                        break
+                if hit:
+                    issues.append(
+                        f"{rel(path)}: STROKE through glyph — a <path> segment passes through a text box "
                         f"(~x{tl:.0f}-{tr:.0f}, y{tt:.0f}-{tb:.0f}); route it aside, break it, or move the text")
                     flagged.add(fn)
                     break
