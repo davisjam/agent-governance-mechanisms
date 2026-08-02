@@ -511,7 +511,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>Sizing is only half of it. The transformation also has to be the right <em>shape</em> for the task and the model. I learned this the expensive way. For two weeks I sized a transformation beautifully and pointed it at the wrong problem — pulling a PDF's reading order out of the geometry of its bounding boxes, and handing that geometry to cheap vision models, which are bad at geometry. The model cheerfully made a doomed shape better and better. A well-sized transformation of the wrong shape is still the wrong transformation. So the skill has two halves: sizing the leap, and finding the one leap that fits both your task and your model — then abandoning the one that does not.</p>
 <h2>The skills are transformations all the way down</h2>
 <p><a class="xref" href="4.3-transformations.html#fig-4-3-1">Figure&nbsp;4.3-1</a> shows the shared skeleton — each skill carrying an input to an output through a sequence of sized transformations.</p>
-<figure id="fig-4-3-1" class="book-figure" data-label="transformations-pipeline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470"
+<figure id="fig-4-3-1" class="book-figure" data-label="transformations-pipeline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-80 0 1040 470"
      role="group" aria-labelledby="txTitle txDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="txTitle">The three skills are transformation chains all the way down</title>
@@ -539,8 +539,8 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <!-- ============ lane rows ============ -->
   <!-- geometry: 4 step-boxes per lane, evenly spaced -->
   <!-- lane 1: self-communicate -->
-  <text x="70" y="92" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-</text>
-  <text x="70" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">communicate</text>
+  <text x="60" y="92" text-anchor="end" font-size="18" font-weight="700" fill="#2f5169">self-</text>
+  <text x="60" y="112" text-anchor="end" font-size="18" font-weight="700" fill="#2f5169">communicate</text>
   <g>
     <rect x="150" y="72" width="156" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
     <text x="228" y="103" text-anchor="middle" font-size="16" fill="#1c1917">language weights</text>
@@ -554,7 +554,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   </g>
 
   <!-- lane 2: self-operate -->
-  <text x="70" y="210" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-operate</text>
+  <text x="60" y="210" text-anchor="end" font-size="18" font-weight="700" fill="#2f5169">self-operate</text>
   <g>
     <rect x="150" y="182" width="156" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
     <text x="228" y="213" text-anchor="middle" font-size="16" fill="#1c1917">event → activity</text>
@@ -567,7 +567,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   </g>
 
   <!-- lane 3: self-governance -->
-  <text x="70" y="320" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">self-governance</text>
+  <text x="60" y="320" text-anchor="end" font-size="18" font-weight="700" fill="#2f5169">self-governance</text>
   <g>
     <rect x="150" y="292" width="156" height="52" rx="8" fill="#faf1e6" stroke="#b23b3b" stroke-width="2"/>
     <text x="228" y="323" text-anchor="middle" font-size="17" fill="#1c1917">a symptom</text>

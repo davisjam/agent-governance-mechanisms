@@ -523,9 +523,9 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <blockquote id="idx-def-thesis-modeling" class="thesis-box"><p><strong>The Modeling Thesis.</strong> Binding intent to implementation with a structured model optimizes the agent's context window — it reasons over a compact model instead of the whole subsystem — so the work fits in-window and stays coherent instead of churning.</p></blockquote>
 <blockquote id="idx-def-thesis-alignment" class="thesis-box"><p><strong>The Alignment Thesis.</strong> A governance mechanism the environment enforces keeps implementation aligned with intent — a policy decided once holds against every later change — so confidently-wrong work is prevented, or made visible, instead of shipped.</p></blockquote>
 <p>The two theses divide the three not-knowings named above. The Modeling Thesis treats the first two — knowing what to build and how to realize it — by binding intent to a model compact enough to hold in-window; the Alignment Thesis treats the third, changing the system without breaking it, by catching the confidently-wrong edit before it compounds. A model chapter is the Modeling Thesis worked out; a lint, gate, or validator chapter is the Alignment Thesis. Hold those two in mind and the book stops being a list of tricks and becomes two ideas applied over and over. <a class="xref" href="0.1-preface.html#fig-0-1-1">Figure&nbsp;0.1-1</a> draws the whole method in one picture.</p>
-<figure id="fig-0-1-1" class="book-figure" data-label="mage-overview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title>The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
-  <desc>A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+<figure id="fig-0-1-1" class="book-figure" data-label="mage-overview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" role="group" aria-labelledby="mg-title mg-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="mg-title">The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
+  <desc id="mg-desc">A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
   <defs>
     <marker id="mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
       <path d="M0 0 L10 5 L0 10 z" fill="#b23b3b"/>
@@ -647,12 +647,12 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 
     <!-- cycle arrows (clockwise) -->
     <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#omArrow)">
-      <path d="M345,202 C383,214 403,232 413,246"/>
-      <path d="M431,276 C437,296 437,306 431,322"/>
-      <path d="M413,350 C403,366 383,384 347,394"/>
-      <path d="M243,398 C207,388 187,370 177,353"/>
-      <path d="M161,322 C155,306 155,290 161,276"/>
-      <path d="M177,246 C187,232 207,214 245,202"/>
+      <path d="M345,202 C383,214 403,232 406,236"/>
+      <path d="M431,276 C437,296 437,306 435,311"/>
+      <path d="M413,350 C403,366 383,384 359,391"/>
+      <path d="M243,398 C207,388 187,370 183,363"/>
+      <path d="M161,322 C155,306 155,290 156,287"/>
+      <path d="M177,246 C187,232 207,214 234,206"/>
     </g>
   </g>
   <text x="295" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#b23b3b">Insufficient quality control</text>
@@ -688,7 +688,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
     <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#omArrow)">
       <path d="M452,686 L452,738 L512,738"/>
     </g>
-    <text x="480" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
+    <text x="460" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
   </g>
   <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#2f5169">Known policies become controls</text>
 </svg><figcaption data-short="Three process models for agentic software engineering"><span class="fig-label">Figure 0.1-2.</span> Three process models for agentic software engineering. The two poles sit on top. Velocity-centric: agents in a ring of job titles (planner, developer, tester, reviewer) hand work around, and the quality mechanism stays implicit. Oversight-centric: a human straddles the implementation loop, reading and prompting each bounded piece — honest about the failure mode, but the human's attention does not scale with the agents. Governance-centric sits beneath them as the synthesis: the agents work inside a containing environment of enforced mechanisms (types, lints, gates) the human sets up in advance. The three differ in where reliability comes from. Only the governance-centric model puts it somewhere that scales — in mechanisms set up once, not in attention spent per piece. That is the model this book builds toward.</figcaption></figure>

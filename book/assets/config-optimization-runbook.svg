@@ -58,7 +58,7 @@
   <text x="1050" y="512" text-anchor="middle" font-size="24" font-style="italic" fill="#57534e">captured: step 3 is deterministic</text>
 
   <!-- consumer (a): input to next iteration -->
-  <path d="M838,466 C600,494 300,470 208,424" fill="none" stroke="#2f5169" stroke-width="2" marker-end="url(#cor-ah)"/>
+  <path d="M798,466 L774,466" fill="none" stroke="#2f5169" stroke-width="2" marker-end="url(#cor-ah)"/>
   <rect x="120" y="416" width="650" height="102" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
   <text x="445" y="454" text-anchor="middle" font-size="30" font-weight="700" fill="#2f5169">(a) Input to the next iteration</text>
   <text x="445" y="490" text-anchor="middle" font-size="24" fill="#57534e">the loop learns from its own trace</text>
@@ -70,5 +70,5 @@
   <text x="986" y="650" text-anchor="middle" font-size="24" fill="#57534e">the trace evaluates better than the raw output alone</text>
 
   <!-- ===================== BOTTOM LABEL ===================== -->
-  <text x="355" y="612" text-anchor="middle" font-size="30" font-weight="700" fill="#2f5169">A lifecycle the runbook is anchored to</text>
+  <text x="150" y="560" font-size="30" font-weight="700" fill="#2f5169">A lifecycle the runbook is anchored to</text>
 </svg>

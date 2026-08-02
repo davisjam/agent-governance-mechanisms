@@ -49,12 +49,12 @@
 
     <!-- cycle arrows (clockwise) -->
     <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#omArrow)">
-      <path d="M345,202 C383,214 403,232 413,246"/>
-      <path d="M431,276 C437,296 437,306 431,322"/>
-      <path d="M413,350 C403,366 383,384 347,394"/>
-      <path d="M243,398 C207,388 187,370 177,353"/>
-      <path d="M161,322 C155,306 155,290 161,276"/>
-      <path d="M177,246 C187,232 207,214 245,202"/>
+      <path d="M345,202 C383,214 403,232 406,236"/>
+      <path d="M431,276 C437,296 437,306 435,311"/>
+      <path d="M413,350 C403,366 383,384 359,391"/>
+      <path d="M243,398 C207,388 187,370 183,363"/>
+      <path d="M161,322 C155,306 155,290 156,287"/>
+      <path d="M177,246 C187,232 207,214 234,206"/>
     </g>
   </g>
   <text x="295" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#b23b3b">Insufficient quality control</text>
@@ -90,7 +90,7 @@
     <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#omArrow)">
       <path d="M452,686 L452,738 L512,738"/>
     </g>
-    <text x="480" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
+    <text x="460" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
   </g>
   <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#2f5169">Known policies become controls</text>
 </svg>

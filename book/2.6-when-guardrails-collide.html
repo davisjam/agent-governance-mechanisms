@@ -510,7 +510,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
     which flags out-of-brief changes — each correct when read alone. Both point by a solid arrow to
     one shared resource, the commit-set, that they act on. A dotted edge runs directly between the
     two controls, labelled as the contradiction: the conflict is that edge, present in neither
-    node's own code, arising because the two make incompatible demands on the one resource they
+    node’s own code, arising because the two make incompatible demands on the one resource they
     share.</desc>
 
   <defs>
@@ -549,7 +549,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <line x1="230" y1="136" x2="230" y2="264" stroke="#b23b3b" stroke-width="2.2" stroke-dasharray="7 6"
         marker-start="url(#ce-ah-churn)" marker-end="url(#ce-ah-churn)"/>
   <text x="252" y="192" font-size="19" font-weight="700" fill="#b23b3b">the conflict is this edge:</text>
-  <text x="252" y="216" font-size="19" fill="#b23b3b">in neither node's code</text>
+  <text x="252" y="216" font-size="19" fill="#b23b3b">in neither node’s code</text>
 </svg><figcaption data-short="The conflict is the edge, not either node"><span class="fig-label">Figure 2.6-1.</span> The conflict is the edge, not either node. Read Control A alone and it is correct; read Control B alone and it is correct. What they demand of the one resource they share collides — and that collision is drawn nowhere until the graph draws it.</figcaption></figure>
 <h2>Drawing what lies between the controls</h2>
 <p>The Governance Graph draws it. The nodes are the mechanisms — each tagged with the event it fires on and the resources it reads, writes, or locks. The edges are the conflicts, in a closed four-value taxonomy: <strong>contradiction</strong> (two demand incompatible shapes of one resource), <strong>contention</strong> (two lock one resource, risking a deadlock cycle), <strong>ordering</strong> (one writes what the other reads on the same slot, with no guaranteed order), and <strong>soft-versus-hard</strong> (a soft aim overridden by a hard block on the same slot). The join key is the shared resource. Two controls that never call each other still collide if they both touch the turn-end slot, so the resource — not the call — is what makes them comparable. Type the turn-end slot and the context budget as resources too, and hook-pileup and injection-pressure fall under the same conflict machinery as a contended lock. One analysis covers all of it.</p>

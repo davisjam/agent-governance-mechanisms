@@ -515,7 +515,9 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p>The two-line summary of the whole sequence is that the product grew, and the <em>apparatus that governs the product grew faster</em>. Measured in source size, the support machinery — tests, lints, load-bearing documentation, agent infrastructure, and tooling — ran about 2.9 times the size of the production code, and the test suite alone was roughly the size of the product. A ratio like that will, of course, read as gold-plating — until you recall that at 200 commits a day no human reads the diffs (the apparatus stands in — more on that in <a href="5.3-the-built-system.html">the built system</a>). It is the price of the velocity.</p>
 <h2 id="velocity">The velocity curve</h2>
 <p><a class="xref" href="5.2-the-timeline-and-the-work.html#fig-5-2-1">Figure&nbsp;5.2-1</a> plots commits per week: a steep rise as the fleet gained capability, then the dip where velocity buys trustworthiness.</p>
-<figure id="fig-5-2-1" class="book-figure" data-label="velocity-curve"><svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 763.2225 403.345625" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<figure id="fig-5-2-1" class="book-figure" data-label="velocity-curve"><svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 763.2225 403.345625" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="vel-title vel-desc">
+ <title id="vel-title">Commits per week across the project’s history — the velocity curve</title>
+ <desc id="vel-desc">A bar chart of commits per week over the seven-week build. Each bar is one week. The curve rises steeply as the agent fleet acquired capability, peaking through May, then dips during a hardening stretch. An inset panel reports commit size in lines of code. The shape is the argument in miniature: raw velocity is easy to buy, and the dip is where that velocity is spent making the output trustworthy rather than merely fast.</desc>
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -1854,7 +1856,7 @@ z
 <p>The six stages read like a plan. They were not one. Each stage is a line drawn <em>afterward</em> through a run of dated, ordinary moments — a breakfast, a keynote walked out of, a hospital waiting room, a purchased fourth subscription at midnight on a holiday weekend. Set the clean account against the lived one and the stages stop reading as strategy. They are what they were: the shape you can only see once the mess is behind you. <a class="xref" href="5.2-the-timeline-and-the-work.html#fig-5-2-2">Figure&nbsp;5.2-2</a> plots the real days behind the clean stages.</p>
 <figure id="fig-5-2-2" class="book-figure" data-label="phased-timeline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 1520" role="group" aria-labelledby="ptl-title ptl-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="ptl-title">The messy timeline behind the clean stages</title>
-  <desc id="ptl-desc">A vertical dated timeline of nine real moments from the seven-week build, each a cream card threaded on a gold vertical line with a dot at its date. The moments are: April 6, cooking breakfast while the family sleeps as the code flies; a Spring Break kickoff when no undergraduate replies and the architect supervises agents instead; April 15, leaving a conference keynote because the room's wifi cannot reach the model; April 30, a clean full-context handoff celebrated in the lab chat; May 5, a graduate student crossing a retreat dining room to complete a two-factor prompt for a saturated account; May 13, waking to funding emails because the overnight green-build run cost real money; May 19, the orchestration running two hours unattended while the architect skips a vacation; May 21, working from a hospital waiting room where the network permits the tool; and May 28, sprinting between two buildings during a campus outage so the agents never notice it stopped. The clean six-stage development narrative maps onto these lived moments.</desc>
+  <desc id="ptl-desc">A vertical dated timeline of nine real moments from the seven-week build, each a cream card threaded on a gold vertical line with a dot at its date. The moments are: April 6, cooking breakfast while the family sleeps as the code flies; a Spring Break kickoff when no undergraduate replies and the architect supervises agents instead; April 15, leaving a conference keynote because the room’s wifi cannot reach the model; April 30, a clean full-context handoff celebrated in the lab chat; May 5, a graduate student crossing a retreat dining room to complete a two-factor prompt for a saturated account; May 13, waking to funding emails because the overnight green-build run cost real money; May 19, the orchestration running two hours unattended while the architect skips a vacation; May 21, working from a hospital waiting room where the network permits the tool; and May 28, sprinting between two buildings during a campus outage so the agents never notice it stopped. The clean six-stage development narrative maps onto these lived moments.</desc>
 
   <rect x="0" y="0" width="700" height="1520" fill="#ffffff"/>
 
@@ -1891,7 +1893,7 @@ z
     <rect x="66" y="412" width="630" height="112" rx="2.5" fill="#faf1e6" stroke="#9a3f12" stroke-width="0.7"/>
     <text x="82" y="440" font-size="18" font-weight="bold" fill="#1c1917" font-variant="small-caps">Wednesday, April 15</text>
     <text x="82" y="467" font-size="18" fill="#1c1917">A keynote on the future of software in the age of AI.</text>
-    <text x="82" y="490" font-size="18" fill="#1c1917">The room's routers are overwhelmed. The model cannot hear me.</text>
+    <text x="82" y="490" font-size="18" fill="#1c1917">The room’s routers are overwhelmed. The model cannot hear me.</text>
     <text x="82" y="513" font-size="18" fill="#1c1917" font-style="italic">We should do this, not discuss it. We leave.</text>
   </g>
 
@@ -1940,7 +1942,7 @@ z
   <g>
     <rect x="66" y="1162" width="630" height="112" rx="2.5" fill="#faf1e6" stroke="#9a3f12" stroke-width="0.7"/>
     <text x="82" y="1190" font-size="18" font-weight="bold" fill="#1c1917" font-variant="small-caps">Thursday, May 21</text>
-    <text x="82" y="1217" font-size="18" fill="#1c1917">A family member's seventh ER trip in two weeks.</text>
+    <text x="82" y="1217" font-size="18" fill="#1c1917">A family member’s seventh ER trip in two weeks.</text>
     <text x="82" y="1240" font-size="18" fill="#1c1917">The hospital network blocks one assistant, but not the other.</text>
     <text x="82" y="1263" font-size="18" fill="#1c1917" font-style="italic">So the work continues from the waiting room.</text>
   </g>

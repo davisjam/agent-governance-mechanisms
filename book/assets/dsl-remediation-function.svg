@@ -2,7 +2,7 @@
   <title id="dsl-title">Two producers of one edit language, and the task-to-edit function</title>
   <desc id="dsl-desc">Two producers converge on one shared edit language, which drives one document model. The top producer is the human path: a person working in the editor emits edit operations by hand. The bottom producer is the automated path: a remediation task, such as a figure that needs alt text, becomes an edit operation through a task-to-edit function. Inside that function, the bounded task is packed into a typed input and handed to a model as a typed function call; the model returns a candidate; a deterministic validator checks it before it is allowed through. This is the same LLM-as-function-call shape described earlier in the chapter, applied here. Both producers emit the same closed set of edit operations, and both flow into one document model that applies them and stamps each change. A note marks the task-to-edit mapping as mostly hardcoded today, to be fleshed out, so this is the concept and the trajectory rather than a finished implementation. Two takeaways sit at the bottom. First, routing both producers through one language and one validated boundary buys traceability, every edit is a typed, validated, stamped result you can explain and reverse, and confidence, the deterministic validator holds the line. Second, scoping each call to one bounded task also scopes the reasoning, which lowers token cost. That scoping is the same move as building the whole remediation as a series of small, bounded transformations, seen from the cost angle instead of the pipeline angle.</desc>
 
-  <rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+  <rect x="0" y="0" width="1120" height="620" fill="#fdfcf9"/>
 
   <defs>
     <marker id="dsl-arrow" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
@@ -39,13 +39,13 @@
 
   <!-- both converge to DSL -->
   <line x1="294" y1="119" x2="736" y2="119" stroke="#1c1917" stroke-width="1.6"/>
-  <line x1="736" y1="119" x2="736" y2="164" stroke="#1c1917" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
-  <line x1="706" y1="331" x2="768" y2="331" stroke="#1c1917" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <line x1="736" y1="119" x2="736" y2="144" stroke="#1c1917" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
+  <line x1="706" y1="331" x2="736" y2="331" stroke="#1c1917" stroke-width="1.6" marker-end="url(#dsl-arrow)"/>
 
   <!-- SHARED DSL -->
-  <rect x="632" y="166" width="256" height="80" rx="3" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="760" y="198" text-anchor="middle" font-size="24" font-weight="bold" fill="#7c6bb0">Shared edit</text>
-  <text x="760" y="226" text-anchor="middle" font-size="24" font-weight="bold" fill="#7c6bb0">language</text>
+  <rect x="632" y="146" width="256" height="80" rx="3" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="760" y="178" text-anchor="middle" font-size="24" font-weight="bold" fill="#7c6bb0">Shared edit</text>
+  <text x="760" y="206" text-anchor="middle" font-size="24" font-weight="bold" fill="#7c6bb0">language</text>
 
   <!-- DSL -> document model -->
   <rect x="740" y="292" width="316" height="82" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>

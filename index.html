@@ -309,9 +309,9 @@
 
   <div class="big-ideas">
   <div class="idea-hero" id="bi-churn">
-  <figure class="ih-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title>The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
-  <desc>A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+  <figure class="ih-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" role="group" aria-labelledby="mg-title mg-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="bi-churn-mg-title">The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
+  <desc id="bi-churn-mg-desc">A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
   <defs>
     <marker id="bi-churn-mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
       <path d="M0 0 L10 5 L0 10 z" fill="#b23b3b"/>
@@ -437,12 +437,12 @@
 
     <!-- cycle arrows (clockwise) -->
     <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#bi-governance-centric-omArrow)">
-      <path d="M345,202 C383,214 403,232 413,246"/>
-      <path d="M431,276 C437,296 437,306 431,322"/>
-      <path d="M413,350 C403,366 383,384 347,394"/>
-      <path d="M243,398 C207,388 187,370 177,353"/>
-      <path d="M161,322 C155,306 155,290 161,276"/>
-      <path d="M177,246 C187,232 207,214 245,202"/>
+      <path d="M345,202 C383,214 403,232 406,236"/>
+      <path d="M431,276 C437,296 437,306 435,311"/>
+      <path d="M413,350 C403,366 383,384 359,391"/>
+      <path d="M243,398 C207,388 187,370 183,363"/>
+      <path d="M161,322 C155,306 155,290 156,287"/>
+      <path d="M177,246 C187,232 207,214 234,206"/>
     </g>
   </g>
   <text x="295" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#b23b3b">Insufficient quality control</text>
@@ -478,7 +478,7 @@
     <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#bi-governance-centric-omArrow)">
       <path d="M452,686 L452,738 L512,738"/>
     </g>
-    <text x="480" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
+    <text x="460" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
   </g>
   <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#2f5169">Known policies become controls</text>
 </svg></figure>
@@ -710,7 +710,7 @@
   <div class="slot figright" id="bi-seat-moves">
   <figure class="s-fig"><svg viewBox="0 0 940 392" xmlns="http://www.w3.org/2000/svg" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="img" aria-labelledby="s2s-title s2s-desc">
   <title id="bi-seat-moves-s2s-title">SDLC to SELC: one seat reassigned</title>
-  <desc id="bi-seat-moves-s2s-desc">Two lanes of the same six lifecycle activities — requirements, specification, design, implementation, validation, maintenance. Top lane, the conventional SDLC, has every seat held by one engineering role, with implementation marked as the seat that consumes the calendar. Bottom lane, the SELC, reassigns the implementation seat to the agent fleet, drawn in the accent colour; the engineer flanks the fleet, authoring intent on the left and judging and governing the output on the right, and a governance band beneath holds every seat's output. A dashed arc returns from the last activity to the first, the cycle in "life cycle."</desc>
+  <desc id="bi-seat-moves-s2s-desc">Two lanes of the same six lifecycle activities — requirements, specification, design, implementation, validation, maintenance. Top lane, the conventional SDLC, has every seat held by one engineering role, with implementation marked as the seat that consumes the calendar. Bottom lane, the SELC, reassigns the implementation seat to the agent fleet, drawn in the accent colour; the engineer flanks the fleet, authoring intent on the left and judging and governing the output on the right, and a governance band beneath holds every seat’s output. A dashed arc returns from the last activity to the first, the cycle in “life cycle.”</desc>
   <defs>
     <marker id="bi-seat-moves-arr-ink" viewBox="0 0 8 8" markerWidth="8" markerHeight="8" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
       <path d="M0,0 L7,3.5 L0,7 Z" fill="#57534e"/>
@@ -750,7 +750,7 @@
     <line x1="762" y1="70" x2="780" y2="70" marker-end="url(#bi-seat-moves-arr-ink)"/>
   </g>
   <path d="M 26 102 L 26 108 L 914 108 L 914 102" fill="none" stroke="#57534e" stroke-width="1.2"/>
-  <text x="470" y="126" font-size="12.5" text-anchor="middle" fill="#1c1917" font-weight="600">the engineering role — every seat, and above all the developer's</text>
+  <text x="470" y="126" font-size="12.5" text-anchor="middle" fill="#1c1917" font-weight="600">the engineering role — every seat, and above all the developer’s</text>
 
   <!-- ======== REASSIGNMENT ARROW ======== -->
   <line x1="546" y1="136" x2="546" y2="186" stroke="#9a3f12" stroke-width="2.2" marker-end="url(#bi-seat-moves-arr-accent)"/>
@@ -796,7 +796,7 @@
   <text x="774" y="284" font-size="12.5" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — judges and governs</text>
 
   <rect x="26" y="304" width="888" height="34" rx="6" fill="#e3f0e7" stroke="#1f7a4d"/>
-  <text x="470" y="326" font-size="12.5" text-anchor="middle" fill="#155c38" font-weight="600">governance — the environment holds every seat's output to the standard the engineer set (Part Two)</text>
+  <text x="470" y="326" font-size="12.5" text-anchor="middle" fill="#155c38" font-weight="600">governance — the environment holds every seat’s output to the standard the engineer set (Part Two)</text>
 
   <text x="470" y="368" font-size="11.5" text-anchor="middle" fill="#57534e" font-style="italic">the keystrokes are delegated; the accountability is not</text>
 </svg></figure>

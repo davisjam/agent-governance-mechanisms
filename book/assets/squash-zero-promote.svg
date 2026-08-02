@@ -5,7 +5,7 @@
      Mermaid's stateDiagram draws the three states but not the drain-loop-under-a-state plus
      the one-way barrier that is the point; the barrier + loop want bespoke placement.
      Accent #2f5169, source-red #b23b3b, cream #faf1e6, panel #e7edf3. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" width="1000" height="420"
      role="group" aria-labelledby="szpTitle szpDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="szpTitle">Squash, zero, promote: how a lint is worn into a legacy tree one step at a time</title>
@@ -39,34 +39,34 @@
   <text x="245" y="172" text-anchor="middle" font-size="18" fill="#57534e">reports, blocks nothing</text>
 
   <!-- state 2: draining (the middle work) -->
-  <rect x="410" y="110" width="230" height="80" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="525" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#2f5169">Findings → 0</text>
-  <text x="525" y="172" text-anchor="middle" font-size="18" fill="#1c1917">a fix wave drains it</text>
+  <rect x="430" y="110" width="230" height="80" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="545" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#2f5169">Findings → 0</text>
+  <text x="545" y="172" text-anchor="middle" font-size="18" fill="#1c1917">a fix wave drains it</text>
 
   <!-- state 3: blocking -->
-  <rect x="690" y="110" width="230" height="80" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="805" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#2f5169">Blocking</text>
-  <text x="805" y="172" text-anchor="middle" font-size="16" fill="#1c1917">fails a regressing commit</text>
+  <rect x="730" y="110" width="230" height="80" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="845" y="146" text-anchor="middle" font-size="24" font-weight="700" fill="#2f5169">Blocking</text>
+  <text x="845" y="172" text-anchor="middle" font-size="16" fill="#1c1917">fails a regressing commit</text>
 
   <!-- edges along the spine -->
   <g fill="none" stroke="#1c1917" stroke-width="2.5" marker-end="url(#szpArrow)">
     <path d="M82,150 L128,150"/>
-    <path d="M360,150 L408,150"/>
-    <path d="M640,150 L688,150"/>
+    <path d="M360,150 L428,150"/>
+    <path d="M660,150 L728,150"/>
   </g>
-  <text x="386" y="140" text-anchor="middle" font-size="16" fill="#57534e">land</text>
-  <text x="666" y="140" text-anchor="middle" font-size="16" fill="#57534e">at zero</text>
+  <text x="395" y="140" text-anchor="middle" font-size="16" fill="#57534e">land</text>
+  <text x="695" y="140" text-anchor="middle" font-size="16" fill="#57534e">at zero</text>
 
   <!-- fix-wave loop under the middle state -->
   <g fill="none" stroke="#2f5169" stroke-width="2.5" marker-end="url(#szpArrow)">
-    <path d="M470,190 C440,250 610,250 580,192"/>
+    <path d="M490,190 C460,250 630,250 600,192"/>
   </g>
-  <text x="525" y="268" text-anchor="middle" font-size="18" font-style="italic" fill="#2f5169">behavior-preserving fixes, under test coverage</text>
+  <text x="545" y="268" text-anchor="middle" font-size="18" font-style="italic" fill="#2f5169">behavior-preserving fixes, under test coverage</text>
 
   <!-- one-way barrier after blocking: the class can't return -->
-  <line x1="932" y1="96" x2="932" y2="204" stroke="#b23b3b" stroke-width="4"/>
+  <line x1="972" y1="96" x2="972" y2="204" stroke="#b23b3b" stroke-width="4"/>
   <g fill="none" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#szpArrowRed)">
-    <path d="M805,206 C805,240 900,240 926,206"/>
+    <path d="M845,206 C845,240 940,240 966,206"/>
   </g>
-  <text x="812" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">the smell can never return</text>
+  <text x="852" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">the smell can never return</text>
 </svg>

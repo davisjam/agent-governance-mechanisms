@@ -576,7 +576,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="1050" y="512" text-anchor="middle" font-size="24" font-style="italic" fill="#57534e">captured: step 3 is deterministic</text>
 
   <!-- consumer (a): input to next iteration -->
-  <path d="M838,466 C600,494 300,470 208,424" fill="none" stroke="#2f5169" stroke-width="2" marker-end="url(#cor-ah)"/>
+  <path d="M798,466 L774,466" fill="none" stroke="#2f5169" stroke-width="2" marker-end="url(#cor-ah)"/>
   <rect x="120" y="416" width="650" height="102" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
   <text x="445" y="454" text-anchor="middle" font-size="30" font-weight="700" fill="#2f5169">(a) Input to the next iteration</text>
   <text x="445" y="490" text-anchor="middle" font-size="24" fill="#57534e">the loop learns from its own trace</text>
@@ -588,7 +588,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="986" y="650" text-anchor="middle" font-size="24" fill="#57534e">the trace evaluates better than the raw output alone</text>
 
   <!-- ===================== BOTTOM LABEL ===================== -->
-  <text x="355" y="612" text-anchor="middle" font-size="30" font-weight="700" fill="#2f5169">A lifecycle the runbook is anchored to</text>
+  <text x="150" y="560" font-size="30" font-weight="700" fill="#2f5169">A lifecycle the runbook is anchored to</text>
 </svg><figcaption data-short="A config-optimization runbook"><span class="fig-label">Figure 7.506-2.</span> A config-optimization runbook. A run-measure-assess lifecycle loop wraps a three-step spine: determinize the data space, apply judgment in reasoning space, then determinize the experiment space again. The third, deterministic step logs the reasoning trace for why a configuration was chosen; that trace feeds both the next iteration of the loop and a secondary checker that evaluates the choice. Fencing the one judgment step between two deterministic ends is the move: the messy part is bounded, and the logged trace turns an otherwise opaque tuning decision into something a checker can grade and the next iteration can improve on.</figcaption></figure>
 <p>The runbook is anchored to a lifecycle the reader already knows: <strong>run, measure, assess</strong>, then around again. Every pass of the loop moves through three steps, and the discipline is in how the steps are typed.</p>
 <ul><li><strong>Step 1 — determinize the data space.</strong> Fix where the metrics live, their schema, and a model of what a normal value looks like against an anomalous one. This step is mechanical. It takes no reasoning, so an agent should never improvise it; write it down as an ordered procedure the playbook names, and the agent follows it the same way every pass.</li><li><strong>Step 2 — apply judgment.</strong> From that data, decide which knobs to turn and by how much. This is the step that genuinely needs reasoning: reading the measurements, weighing a heuristic against a hunch, choosing the next configuration to try. It is where the agent earns its keep, and the one step the playbook cannot reduce to a fixed procedure.</li><li><strong>Step 3 — determinize again.</strong> Render the judgment back into the world. Take the knob choices the reasoning produced and apply them to the next experiment. Applying a configuration is mechanical, so this step, like the first, should be deterministic rather than improvised.</li></ul>
