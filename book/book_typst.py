@@ -591,10 +591,20 @@ def _cover_typst() -> str:
     has no clean seat for them; they move to the copyright page that follows (see `_copyright_page_typst`)."""
     m = bb._BOOK_MANIFEST
     title = _esc(m["title"])
-    # Force the cover title to break after the first word so line 1 is "Model-Based" alone and line 2 is the
-    # rest ("Agentic Software Engineering"); the backslash is Typst's forced linebreak, added AFTER _esc so it
-    # is not itself escaped. The title stays SSOT-driven from the manifest.
-    title_cover = title.replace(" ", r" \ ", 1)
+    # The full-bleed cover applies an OPTIONAL soft line-break HINT from the manifest. `cover_title_break_after`
+    # names the substring after which the cover title should break (e.g. "Model-Based" → line 1 "Model-Based",
+    # line 2 "Agentic Software Engineering"). We insert Typst's forced linebreak (` \ `) right after that
+    # substring — AFTER _esc so the backslash is not itself escaped — and only when the substring is actually
+    # found. Absent / empty / not-found ⇒ no forced break, the title auto-wraps. `title` itself stays SSOT
+    # (used verbatim by the site hero and the web book); only the cover consults the hint.
+    title_cover = title
+    break_after = str(m.get("cover_title_break_after", "")).strip()
+    if break_after:
+        break_after_esc = _esc(break_after)
+        idx = title_cover.find(break_after_esc)
+        if idx != -1:
+            cut = idx + len(break_after_esc)
+            title_cover = title_cover[:cut] + r" \ " + title_cover[cut:].lstrip()
     author = _esc(m["author"].upper())
     kicker = _esc(m.get("kicker", "")).upper()
     subtitle = _esc(m.get("subtitle", ""))
