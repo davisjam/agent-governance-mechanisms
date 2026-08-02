@@ -520,7 +520,10 @@ def _render_note_marker(escaped_text: str) -> str:
     _CITE_STATE["note_i"] = i + 1
     glyph = html.escape(_note_glyph(i))
     label = html.escape(f"note {i + 1}", quote=True)
-    return (f'<sup class="note-ref" aria-label="{label}">{glyph}</sup>'
+    # role="doc-noteref" (DPUB-ARIA: a mark referencing a note) — a bare <sup> is generic, and
+    # html-validate rejects aria-label on a generic element (aria-label-misuse); the role both
+    # legitimizes the name AND says what the mark is.
+    return (f'<sup class="note-ref" role="doc-noteref" aria-label="{label}">{glyph}</sup>'
             f'<span class="editorial-note"><span class="cn-mark">{glyph}</span> {escaped_text}</span>')
 
 
