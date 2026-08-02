@@ -6,7 +6,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400"
      role="group" aria-labelledby="naTitle naDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="naTitle">The novelty axis: how a part's novelty sets the leap you can trust and the oversight you owe</title>
+  <title id="naTitle">The novelty axis: how a part’s novelty sets the leap you can trust and the oversight you owe</title>
   <desc id="naDesc">A horizontal spectrum runs from standard software on the left to novel software on
     the right. On the standard end — a to-do list, a typical web app, a compiler — the training data
     is full of the class, so the model is biased toward the code you need; you can trust a big leap and
@@ -16,7 +16,7 @@
     modeling is not optional, and you coach the agent step by step. Three knobs slide together along the
     axis: as novelty rises, the trustable leap shrinks, the oversight you give grows, and the reasoning
     you allow between checks shortens. Model-based software engineering earns its keep on the right,
-    where you impose the bias the model's training never gave it.</desc>
+    where you impose the bias the model’s training never gave it.</desc>
 
   <defs>
     <linearGradient id="naGrad" x1="0" y1="0" x2="1" y2="0">

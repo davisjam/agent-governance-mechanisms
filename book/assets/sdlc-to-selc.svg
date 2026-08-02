@@ -4,7 +4,7 @@
      Do not add off-palette hexes — book-models/lint_design_token_drift.py gates membership. -->
 <svg viewBox="0 0 940 392" xmlns="http://www.w3.org/2000/svg" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="img" aria-labelledby="s2s-title s2s-desc">
   <title id="s2s-title">SDLC to SELC: one seat reassigned</title>
-  <desc id="s2s-desc">Two lanes of the same six lifecycle activities — requirements, specification, design, implementation, validation, maintenance. Top lane, the conventional SDLC, has every seat held by one engineering role, with implementation marked as the seat that consumes the calendar. Bottom lane, the SELC, reassigns the implementation seat to the agent fleet, drawn in the accent colour; the engineer flanks the fleet, authoring intent on the left and judging and governing the output on the right, and a governance band beneath holds every seat's output. A dashed arc returns from the last activity to the first, the cycle in "life cycle."</desc>
+  <desc id="s2s-desc">Two lanes of the same six lifecycle activities — requirements, specification, design, implementation, validation, maintenance. Top lane, the conventional SDLC, has every seat held by one engineering role, with implementation marked as the seat that consumes the calendar. Bottom lane, the SELC, reassigns the implementation seat to the agent fleet, drawn in the accent colour; the engineer flanks the fleet, authoring intent on the left and judging and governing the output on the right, and a governance band beneath holds every seat’s output. A dashed arc returns from the last activity to the first, the cycle in “life cycle.”</desc>
   <defs>
     <marker id="arr-ink" viewBox="0 0 8 8" markerWidth="8" markerHeight="8" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
       <path d="M0,0 L7,3.5 L0,7 Z" fill="#57534e"/>
@@ -44,7 +44,7 @@
     <line x1="762" y1="70" x2="780" y2="70" marker-end="url(#arr-ink)"/>
   </g>
   <path d="M 26 102 L 26 108 L 914 108 L 914 102" fill="none" stroke="#57534e" stroke-width="1.2"/>
-  <text x="470" y="126" font-size="12.5" text-anchor="middle" fill="#1c1917" font-weight="600">the engineering role — every seat, and above all the developer's</text>
+  <text x="470" y="126" font-size="12.5" text-anchor="middle" fill="#1c1917" font-weight="600">the engineering role — every seat, and above all the developer’s</text>
 
   <!-- ======== REASSIGNMENT ARROW ======== -->
   <line x1="546" y1="136" x2="546" y2="186" stroke="#9a3f12" stroke-width="2.2" marker-end="url(#arr-accent)"/>
@@ -90,7 +90,7 @@
   <text x="774" y="284" font-size="12.5" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — judges and governs</text>
 
   <rect x="26" y="304" width="888" height="34" rx="6" fill="#e3f0e7" stroke="#1f7a4d"/>
-  <text x="470" y="326" font-size="12.5" text-anchor="middle" fill="#155c38" font-weight="600">governance — the environment holds every seat's output to the standard the engineer set (Part Two)</text>
+  <text x="470" y="326" font-size="12.5" text-anchor="middle" fill="#155c38" font-weight="600">governance — the environment holds every seat’s output to the standard the engineer set (Part Two)</text>
 
   <text x="470" y="368" font-size="11.5" text-anchor="middle" fill="#57534e" font-style="italic">the keystrokes are delegated; the accountability is not</text>
 </svg>

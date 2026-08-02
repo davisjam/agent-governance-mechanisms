@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="763.2225pt" height="403.345625pt" viewBox="0 0 763.2225 403.345625" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="763.2225pt" height="403.345625pt" viewBox="0 0 763.2225 403.345625" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="vel-title vel-desc">
+ <title id="vel-title">Commits per week across the project’s history — the velocity curve</title>
+ <desc id="vel-desc">A bar chart of commits per week over the seven-week build. Each bar is one week. The curve rises steeply as the agent fleet acquired capability, peaking through May, then dips during a hardening stretch. An inset panel reports commit size in lines of code. The shape is the argument in miniature: raw velocity is easy to buy, and the dip is where that velocity is spent making the output trustworthy rather than merely fast.</desc>
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>

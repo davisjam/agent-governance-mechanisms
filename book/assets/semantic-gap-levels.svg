@@ -13,7 +13,7 @@
     single turns — where the property you care about is spread across many of them and cannot
     be seen in any one. A red cross marks enforcing here as the mistake. Top row: the whole
     unit of work — the agent returning from its task, the ten calls stitched together, the
-    session's durable record — where the same property becomes checkable. A green check marks
+    session’s durable record — where the same property becomes checkable. A green check marks
     enforcing here. The lesson: lift the check to the level where the meaning is legible.</desc>
 
   <defs>
@@ -30,7 +30,7 @@
   <!-- one wide box = the whole unit of work -->
   <rect x="150" y="66" width="660" height="70" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
   <text x="480" y="103" text-anchor="middle" font-size="24" fill="#2f5169">The whole unit of work is in view</text>
-  <text x="480" y="128" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">agent returns · ten calls stitched · the session's record</text>
+  <text x="480" y="128" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">agent returns · ten calls stitched · the session’s record</text>
 
   <!-- green check -->
   <circle cx="840" cy="101" r="22" fill="#1f7a4d"/>
