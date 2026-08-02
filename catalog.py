@@ -2846,6 +2846,23 @@ def cmd_outcomes_site(args) -> int:
     return 0
 
 
+def cmd_claims(args) -> int:
+    """The PRE-EDIT CONSULT — print the claims a chapter asserts and their contradiction predicates, so an
+    agent editing that chapter's prose can confirm its edit negates no listed stance (the claims model's
+    forward-facing use; book/_design/book-claims-model-260801.md §4.2). Reads the claims model
+    (book-models/claims.json via claims_model). `--json` dumps the resolved claim records."""
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in sys.path:
+        sys.path.insert(0, bm)
+    import claims_model as clm  # noqa: E402 — book-model package (carries its own book_ir path setup)
+    hits = clm.claims_for_chapter(args.chapter)
+    if args.json:
+        from dataclasses import asdict  # noqa: E402 — local dump only
+        print(json.dumps([asdict(c) for c in hits], ensure_ascii=False, indent=2))
+        return 0
+    return clm.consult(args.chapter)
+
+
 def _load_json_or_none(path: str):
     return json.load(open(path, encoding="utf-8")) if os.path.isfile(path) else None
 
@@ -3140,6 +3157,9 @@ def main() -> int:
     df.add_argument("--json", action="store_true", help="dump the raw definition records")
     osub = sub.add_parser("outcomes-site", help="list the site's projected learning outcomes (book/data/outcomes-site.json resolved against outcomes.json)")
     osub.add_argument("--json", action="store_true", help="dump the resolved selection")
+    cl = sub.add_parser("claims", help="PRE-EDIT CONSULT: list the claims a chapter asserts + their contradiction predicates (book-models/claims.json). Run before editing a chapter's prose and confirm your edit negates no listed stance")
+    cl.add_argument("chapter", help="chapter slug or number prefix (e.g. 3.1 or 3.1-the-executable-zoo)")
+    cl.add_argument("--json", action="store_true", help="dump the resolved claim records")
     va = sub.add_parser("views-audit", help="book-models drift audit: structural (every view->md reference resolves) + freshness (each view artifact equals a fresh derivation). Fast pre-commit gate; AUDIT-ONLY (prints, exits 0) unless --strict")
     va.add_argument("--strict", action="store_true", help="exit 1 on any finding (the flip a follow-up wires into the hook once seed findings are drained)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
@@ -3154,6 +3174,7 @@ def main() -> int:
             "check-console": cmd_check_console,
             "data-claims": cmd_data_claims, "concepts": cmd_concepts,
             "definitions": cmd_definitions, "outcomes-site": cmd_outcomes_site,
+            "claims": cmd_claims,
             "views-audit": cmd_views_audit,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 
