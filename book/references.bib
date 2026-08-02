@@ -1,0 +1,198 @@
+% references.bib — the single source of truth (SSOT) for every cited work in the MAGE book.
+%
+% One entry per work. A `[cite: <key>]` marker in a chapter resolves against a key here (an unknown
+% key fails the build loud — the CITE-RESOLVE gate). Chicago strings are rendered ONCE from this file
+% by book/render_citations.py (Typst/Hayagriva engine) into book/data/citations.json, which BOTH the
+% HTML web build and the Typst PDF consume — so the two surfaces cannot drift. Do NOT author reference
+% strings anywhere else; edit the data here and re-run render_citations.py.
+%
+% After editing this file: `python3 book/render_citations.py` (regenerates + re-stamps citations.json;
+% the CITE-FRESH gate fails the build until you do).
+
+% ─────────────────────────── Scholarly works ───────────────────────────
+
+@book{winters2020,
+  author    = {Winters, Titus and Manshreck, Tom and Wright, Hyrum},
+  title     = {Software Engineering at Google: Lessons Learned from Programming Over Time},
+  year      = {2020},
+  publisher = {O'Reilly Media},
+  address   = {Sebastopol, CA},
+}
+
+@book{gof1994,
+  author    = {Gamma, Erich and Helm, Richard and Johnson, Ralph and Vlissides, John},
+  title     = {Design Patterns: Elements of Reusable Object-Oriented Software},
+  year      = {1994},
+  publisher = {Addison-Wesley},
+  address   = {Reading, MA},
+}
+
+@book{brambilla2017,
+  author    = {Brambilla, Marco and Cabot, Jordi and Wimmer, Manuel},
+  title     = {Model-Driven Software Engineering in Practice},
+  year      = {2017},
+  edition   = {2},
+  publisher = {Morgan \& Claypool},
+}
+
+@book{brooks1995,
+  author    = {Brooks, Frederick P.},
+  title     = {The Mythical Man-Month: Essays on Software Engineering},
+  year      = {1995},
+  edition   = {Anniversary},
+  publisher = {Addison-Wesley},
+  address   = {Reading, MA},
+}
+
+@article{brooks1987,
+  author    = {Brooks, Frederick P.},
+  title     = {No Silver Bullet: Essence and Accidents of Software Engineering},
+  journal   = {Computer},
+  volume    = {20},
+  number    = {4},
+  pages     = {10--19},
+  year      = {1987},
+}
+
+@book{ousterhout2018,
+  author    = {Ousterhout, John},
+  title     = {A Philosophy of Software Design},
+  year      = {2018},
+  publisher = {Yaknyam Press},
+}
+
+@book{leveson2011,
+  author    = {Leveson, Nancy G.},
+  title     = {Engineering a Safer World: Systems Thinking Applied to Safety},
+  year      = {2011},
+  publisher = {MIT Press},
+  address   = {Cambridge, MA},
+}
+
+@article{kruchten1995,
+  author    = {Kruchten, Philippe},
+  title     = {The 4+1 View Model of Architecture},
+  journal   = {IEEE Software},
+  volume    = {12},
+  number    = {6},
+  pages     = {42--50},
+  year      = {1995},
+}
+
+@book{booch-uml,
+  author    = {Booch, Grady and Rumbaugh, James and Jacobson, Ivar},
+  title     = {The Unified Modeling Language User Guide},
+  year      = {2005},
+  edition   = {2},
+  publisher = {Addison-Wesley},
+}
+
+@book{friedenthal-sysml,
+  author    = {Friedenthal, Sanford and Moore, Alan and Steiner, Rick},
+  title     = {A Practical Guide to SysML: The Systems Modeling Language},
+  year      = {2014},
+  edition   = {3},
+  publisher = {Morgan Kaufmann},
+}
+
+@book{bass-saip,
+  author    = {Bass, Len and Clements, Paul and Kazman, Rick},
+  title     = {Software Architecture in Practice},
+  year      = {2012},
+  edition   = {3},
+  publisher = {Addison-Wesley},
+}
+
+@book{baier-katoen2008,
+  author    = {Baier, Christel and Katoen, Joost-Pieter},
+  title     = {Principles of Model Checking},
+  year      = {2008},
+  publisher = {MIT Press},
+  address   = {Cambridge, MA},
+}
+
+@book{lamport2002,
+  author    = {Lamport, Leslie},
+  title     = {Specifying Systems: The TLA+ Language and Tools for Hardware and Software Engineers},
+  year      = {2002},
+  publisher = {Addison-Wesley},
+}
+
+@article{meyer-probable,
+  author    = {Meyer, Bertrand},
+  title     = {From Probable to Provable},
+  journal   = {Communications of the ACM},
+  year      = {2025},
+  doi       = {10.1145/3773295},
+  url       = {https://dl.acm.org/doi/full/10.1145/3773295},
+}
+
+@article{alur-dill1994,
+  author    = {Alur, Rajeev and Dill, David L.},
+  title     = {A Theory of Timed Automata},
+  journal   = {Theoretical Computer Science},
+  volume    = {126},
+  number    = {2},
+  pages     = {183--235},
+  year      = {1994},
+}
+
+@misc{othello-gpt,
+  author       = {Li, Kenneth and Hopkins, Aspen K. and Bau, David and Vi{\'e}gas, Fernanda and Pfister, Hanspeter and Wattenberg, Martin},
+  title        = {Emergent World Representations: Exploring a Sequence Model Trained on a Synthetic Task},
+  year         = {2022},
+  howpublished = {arXiv preprint arXiv:2210.13382},
+  url          = {https://arxiv.org/abs/2210.13382},
+}
+
+@misc{arxiv-2605-10712,
+  author       = {{DocAble Research Group}},
+  title        = {Deterministic Workflows with Bounded Model Delegation for Software Verification},
+  year         = {2026},
+  howpublished = {arXiv preprint arXiv:2605.10712 (CCS 2026)},
+  url          = {https://arxiv.org/abs/2605.10712},
+}
+
+% ─────────────────────────── Glossary / reference links (Wikipedia) ───────────────────────────
+% Author decision (2026-08-01): everything currently linked to an external source becomes a .bib entry
+% and is cited like everything else — the Wikipedia glossary links are NOT kept inline-only.
+
+@online{wiki-case,
+  author  = {{Wikipedia}},
+  title   = {Computer-Aided Software Engineering},
+  year    = {2026},
+  url     = {https://en.wikipedia.org/wiki/Computer-aided_software_engineering},
+  urldate = {2026-08-01},
+}
+
+@online{wiki-mda,
+  author  = {{Wikipedia}},
+  title   = {Model-Driven Architecture},
+  year    = {2026},
+  url     = {https://en.wikipedia.org/wiki/Model-driven_architecture},
+  urldate = {2026-08-01},
+}
+
+@online{wiki-sysml,
+  author  = {{Wikipedia}},
+  title   = {Systems Modeling Language},
+  year    = {2026},
+  url     = {https://en.wikipedia.org/wiki/Systems_modeling_language},
+  urldate = {2026-08-01},
+}
+
+@online{wiki-timed-automaton,
+  author  = {{Wikipedia}},
+  title   = {Timed Automaton},
+  year    = {2026},
+  url     = {https://en.wikipedia.org/wiki/Timed_automaton},
+  urldate = {2026-08-01},
+}
+
+@online{wiki-hybrid-system,
+  author  = {{Wikipedia}},
+  title   = {Hybrid System},
+  year    = {2026},
+  url     = {https://en.wikipedia.org/wiki/Hybrid_system},
+  urldate = {2026-08-01},
+}
