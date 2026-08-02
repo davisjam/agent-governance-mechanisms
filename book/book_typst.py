@@ -101,6 +101,19 @@ def _inline(s: str, stash: list[str]) -> str:
 
     # 1. Cross-references FIRST — `[ref:key]` → a Typst `@key`. Held so later escaping leaves the `@` alone.
     s = _XREF_RE.sub(lambda m: _hold(f"@{m.group(1)}"), s)
+    # 1b. Citations `[cite: key(, loc); key2]` → Typst `#cite(<key>)` (chicago-notes → a numbered footnote
+    #     citation). Multiple keys emit multiple #cite; a locator becomes the citation supplement. The
+    #     #bibliography emit_document appends renders these — Typst's own engine, the SAME references.bib
+    #     that generated citations.json, so the PDF's reference strings equal the web book's (BIB-5 parity).
+    def _cite(m: "re.Match[str]") -> str:
+        frags = []
+        for key, loc in bb.parse_cite_spec(m.group(1)):
+            frags.append(f"#cite(<{key}>, supplement: [{_esc(loc)}])" if loc else f"#cite(<{key}>)")
+        return _hold("".join(frags))
+    s = bb._CITE_MARKER_RE.sub(_cite, s)
+    # 1c. Editorial notes `[note: text]` → a Typst footnote (the print projection uses standard numbered
+    #     footnotes; the web book's symbolic superscripts are a screen affordance).
+    s = bb._NOTE_MARKER_RE.sub(lambda m: _hold(f"#footnote[{_inline(m.group(1).strip(), stash)}]"), s)
     # 2. Intra-word emphasis `[+X+]` → emphasised run.
     s = _INTRAWORD_RE.sub(lambda m: _hold(f"#emph[{_esc(m.group(1))}]"), s)
     # 3. Code spans `` `x` `` → raw inline; content is literal, no further passes run inside it.
@@ -773,7 +786,20 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
         elif n:
             parts.append("#pagebreak()")
         parts.append(render_chapter(ch, ctx))
+    # End-of-book Bibliography — Chicago notes, rendered by Typst from the SAME references.bib that
+    # generated citations.json, so the PDF's reference strings equal the web book's by construction
+    # (CITE-PARITY / BIB-5). Emitted only when the book actually cites something (an empty #bibliography is
+    # a bare heading). Path is Typst-root-absolute (`/book/references.bib`), resolved against `--root ..`.
+    if _any_cites(doc):
+        bib_rel = _root_rel(bb.HERE / "references.bib", root)
+        parts.append("#pagebreak()")
+        parts.append(f'#bibliography({_typst_str(bib_rel)}, style: "chicago-notes", title: "Bibliography")')
     return "\n\n".join(parts) + "\n"
+
+
+def _any_cites(doc: "ir.Document") -> bool:
+    """True when any chapter carries a `[cite:]` marker — the guard for whether to emit the #bibliography."""
+    return any(bb.iter_cite_keys(b.raw) for c in doc.chapters for b in c.blocks)
 
 
 def _main(argv: list[str]) -> int:

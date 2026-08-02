@@ -44,6 +44,7 @@ from tests.citations import (
     check_cite_fresh,
     check_cite_mirror,
     check_cite_orphans,
+    check_cite_parity,
     check_cite_resolve,
     check_cite_symbology,
     check_scholar_meta,
@@ -119,6 +120,8 @@ CHECKS = [
           lambda strict: check_cite_symbology()),
     Check("book: SCHOLAR-META — chapter <head> carries highwire citation_* tags (BIB-8)", 1,
           lambda strict: check_scholar_meta()),
+    Check("book: CITE-PARITY — HTML + PDF surfaces cite the same keys from the same .bib (BIB-5)", 1,
+          lambda strict: check_cite_parity()),
     Check("book: CITE-ORPHAN — a .bib entry nothing cites (audit-only; decision #4)", 1,
           lambda strict: check_cite_orphans(), audit_only=True),
     # AUDIT-ONLY (rule #55): the OUTLINE view-model drift + invariants (book-models/outline.json vs a fresh

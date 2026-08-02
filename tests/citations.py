@@ -173,6 +173,35 @@ def check_cite_symbology():
     return (FAIL if issues else PASS), issues
 
 
+def check_cite_parity():
+    """BIB-5 (BLOCKING). The two surfaces render the SAME reference data. It holds by construction — the
+    HTML reads citations.json, which render_citations.py produced from references.bib via Typst, and the
+    PDF renders the SAME references.bib natively through the SAME Typst engine, so the PDF's strings equal
+    the JSON strings (which CITE-FRESH pins to the .bib). This gate asserts the two structural preconditions
+    of that guarantee: the emitted Typst document (a) cites every corpus key via `#cite(<key>)`, and (b)
+    draws its bibliography from the same references.bib. A key cited in prose but absent from the Typst
+    projection — or a Typst bibliography pointed at a different file — would break parity."""
+    corpus_keys = sorted({k for f in _all_book_md_files()
+                          for k in bb.iter_cite_keys(open(f, encoding="utf-8").read())})
+    if not corpus_keys:
+        return PASS, ["no [cite:] markers — parity holds vacuously"]
+    try:
+        import book_typst  # noqa: PLC0415 — heavy import; only needed when the corpus cites
+        doc = book_typst.ir.parse_book(include_appendices=True)
+        typ = book_typst.emit_document([c.slug for c in doc.chapters], with_frontmatter=True)
+    except Exception as e:  # noqa: BLE001 — a Typst-emit failure is itself a parity finding
+        return FAIL, [f"could not emit the Typst projection to check parity: {e}"]
+    issues: list[str] = []
+    for k in corpus_keys:
+        if f"#cite(<{k}>)" not in typ and f"#cite(<{k}>," not in typ:
+            issues.append(f"key {k!r} is cited in prose but the Typst (PDF) projection has no #cite(<{k}>) "
+                          f"— the surfaces would diverge")
+    if "references.bib" not in typ:
+        issues.append("the Typst projection cites works but its #bibliography does not draw from "
+                      "references.bib — the PDF would render from a different source than the web book")
+    return (FAIL if issues else PASS), issues
+
+
 _REQUIRED_META = ("citation_title", "citation_author", "citation_book_title",
                   "citation_publication_date", "citation_fulltext_html_url", "citation_pdf_url")
 
