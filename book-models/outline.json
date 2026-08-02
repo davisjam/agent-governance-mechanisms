@@ -27,7 +27,7 @@
           "section_id": "the-premise-mechanize-discipline",
           "level": 3,
           "heading_text": "The premise: mechanize discipline",
-          "topic_sentence": "The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020) — three Google engineers' account of how the company sustains software engineering across tens of thousands of people and one vast codebase over decades — whose premise this book shares: engineering discipline should be *mechanized, not remembered* — pushed into review, testing, tooling, and culture so that correctness does not depend on any one engineer keeping a rule in their head.",
+          "topic_sentence": "The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020) [cite: winters2020] — three Google engineers' account of how the company sustains software engineering across tens of thousands of people and one vast codebase over decades — whose premise this book shares: engineering discipline should be *mechanized, not remembered* — pushed into review, testing, tooling, and culture so that correctness does not depend on any one engineer keeping a rule in their head.",
           "id_source": "derived",
           "block_index": 8,
           "points": []
@@ -36,7 +36,7 @@
           "section_id": "the-grammar-patterns-and-two-theses",
           "level": 3,
           "heading_text": "The grammar: patterns, and two theses",
-          "topic_sentence": "The second is the **Gang of Four's** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994), the catalogue that gave object-oriented design its shared vocabulary of reusable solutions, whose lasting contribution was less any single pattern than the *form* — name, recurring problem, solution shape, consequences, known uses — written so an engineer could reach for a vetted answer instead of re-deriving one.",
+          "topic_sentence": "The second is the **Gang of Four's** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994) [cite: gof1994], the catalogue that gave object-oriented design its shared vocabulary of reusable solutions, whose lasting contribution was less any single pattern than the *form* — name, recurring problem, solution shape, consequences, known uses — written so an engineer could reach for a vetted answer instead of re-deriving one.",
           "id_source": "derived",
           "block_index": 18,
           "points": []
@@ -45,7 +45,7 @@
           "section_id": "the-lineage-the-modeling-tradition",
           "level": 3,
           "heading_text": "The lineage: the modeling tradition",
-          "topic_sentence": "The third is **Model-Driven Software Engineering in Practice** (Brambilla, Cabot, and Wimmer, 2017), the standard concise statement of the modeling tradition: treat models as first-class engineering artifacts, structured representations with defined semantics a tool can check, not pictures pinned beside the code.",
+          "topic_sentence": "The third is **Model-Driven Software Engineering in Practice** (Brambilla, Cabot, and Wimmer, 2017) [cite: brambilla2017], the standard concise statement of the modeling tradition: treat models as first-class engineering artifacts, structured representations with defined semantics a tool can check, not pictures pinned beside the code.",
           "id_source": "derived",
           "block_index": 31,
           "points": []
@@ -1184,7 +1184,7 @@
           "section_id": "measure-one-level-deeper",
           "level": 2,
           "heading_text": "Measure one level deeper",
-          "topic_sentence": "John Ousterhout gives the rule in one line: **measure one level deeper than the number you think you want.** A metric earns its place only when it drives a decision, and the surface number usually cannot; the deeper the measurement, the nearer it sits to the decision it must drive.",
+          "topic_sentence": "John Ousterhout gives the rule in one line [cite: ousterhout2018]: **measure one level deeper than the number you think you want.** A metric earns its place only when it drives a decision, and the surface number usually cannot; the deeper the measurement, the nearer it sits to the decision it must drive.",
           "id_source": "derived",
           "block_index": 4,
           "points": [

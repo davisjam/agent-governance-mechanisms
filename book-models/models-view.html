@@ -82,15 +82,15 @@
 </div>
 <div class="section s3" id="sec-0-1-preface--the-premise-mechanize-discipline">
 <div class="sec-h"><a href="../book/0.1-preface.html">The premise: mechanize discipline</a></div>
-<p class="topic">The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020) — three Google engineers&#x27; account of how the company sustains software engineering across tens of thousands of people and one vast codebase over decades — whose premise this book shares: engineering discipline should be *mechanized, not remembered* — pushed into review, testing, tooling, and culture so that correctness does not depend on any one engineer keeping a rule in their head.</p>
+<p class="topic">The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020) [cite: winters2020] — three Google engineers&#x27; account of how the company sustains software engineering across tens of thousands of people and one vast codebase over decades — whose premise this book shares: engineering discipline should be *mechanized, not remembered* — pushed into review, testing, tooling, and culture so that correctness does not depend on any one engineer keeping a rule in their head.</p>
 </div>
 <div class="section s3" id="sec-0-1-preface--the-grammar-patterns-and-two-theses">
 <div class="sec-h"><a href="../book/0.1-preface.html">The grammar: patterns, and two theses</a></div>
-<p class="topic">The second is the **Gang of Four&#x27;s** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994), the catalogue that gave object-oriented design its shared vocabulary of reusable solutions, whose lasting contribution was less any single pattern than the *form* — name, recurring problem, solution shape, consequences, known uses — written so an engineer could reach for a vetted answer instead of re-deriving one.</p>
+<p class="topic">The second is the **Gang of Four&#x27;s** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994) [cite: gof1994], the catalogue that gave object-oriented design its shared vocabulary of reusable solutions, whose lasting contribution was less any single pattern than the *form* — name, recurring problem, solution shape, consequences, known uses — written so an engineer could reach for a vetted answer instead of re-deriving one.</p>
 </div>
 <div class="section s3" id="sec-0-1-preface--the-lineage-the-modeling-tradition">
 <div class="sec-h"><a href="../book/0.1-preface.html">The lineage: the modeling tradition</a></div>
-<p class="topic">The third is **Model-Driven Software Engineering in Practice** (Brambilla, Cabot, and Wimmer, 2017), the standard concise statement of the modeling tradition: treat models as first-class engineering artifacts, structured representations with defined semantics a tool can check, not pictures pinned beside the code.</p>
+<p class="topic">The third is **Model-Driven Software Engineering in Practice** (Brambilla, Cabot, and Wimmer, 2017) [cite: brambilla2017], the standard concise statement of the modeling tradition: treat models as first-class engineering artifacts, structured representations with defined semantics a tool can check, not pictures pinned beside the code.</p>
 </div>
 <div class="section s2" id="sec-0-1-preface--three-ways-to-run-a-fleet">
 <div class="sec-h"><a href="../book/0.1-preface.html">Three ways to run a fleet</a></div>
@@ -306,7 +306,7 @@
 <div class="outcomes"><div class="oc-h">After this lesson — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-apply">apply</span><span class="oc-text">After this chapter, the reader can design a metric that measures one level deeper — turning a number that reports into one that drives a decision — and place it on the hard-to-soft spectrum, feeding a hard number into a structured model the metric tool then consumes. <span class="prov">derived</span></span></li></ul></div>
 <div class="section s2" id="sec-2-5-metrics--measure-one-level-deeper">
 <div class="sec-h"><a href="../book/2.5-metrics.html">Measure one level deeper</a></div>
-<p class="topic">John Ousterhout gives the rule in one line: **measure one level deeper than the number you think you want.** A metric earns its place only when it drives a decision, and the surface number usually cannot; the deeper the measurement, the nearer it sits to the decision it must drive.</p>
+<p class="topic">John Ousterhout gives the rule in one line [cite: ousterhout2018]: **measure one level deeper than the number you think you want.** A metric earns its place only when it drives a decision, and the surface number usually cannot; the deeper the measurement, the nearer it sits to the decision it must drive.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-apply">apply</span><span class="oc-text">After this section, the reader can apply Ousterhout&#x27;s rule and measure one level deeper than the surface number — reading a per-service cost split or a boot-time breakdown as a decision the invoice-level number buried. <span class="prov">derived</span></span></li></ul></div>
 </div>
 <div class="section s2" id="sec-2-5-metrics--the-hard-end-cold-start-latency-machine-read-and-model-fed">

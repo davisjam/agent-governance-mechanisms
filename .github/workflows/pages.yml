@@ -58,6 +58,23 @@ jobs:
       - name: Install book node tooling (mermaid-cli for build-time SVG + Puppeteer for the served-page smoke gates, from book/ lockfile)
         working-directory: book
         run: npm ci
+      # Typst backs BOTH the citation render (below) and the PDF print edition (further down), so install it
+      # up front — the pinned release, clone-and-run-safe + reproducible (verify it extracts a runnable
+      # binary, put it on PATH).
+      - name: Install Typst (pinned release; renders citations + the print-native book PDF)
+        run: |
+          TYPST_VERSION=v0.15.1
+          curl -fsSL "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz" -o /tmp/typst.tar.xz
+          mkdir -p /tmp/typst && tar -xJf /tmp/typst.tar.xz -C /tmp/typst --strip-components=1
+          sudo install -m 0755 /tmp/typst/typst /usr/local/bin/typst
+          typst --version
+      # Render the Chicago citation strings ONCE from references.bib (the SSOT) → book/data/citations.json,
+      # which BOTH the HTML build (catalog.py build) and the PDF consume. Runs BEFORE the build that reads it,
+      # the same "regenerate from source in CI" discipline the mermaid SVGs and the committed HTML follow. The
+      # committed citations.json is the local cache; CI re-derives it so the published strings can never lag
+      # references.bib (the CITE-FRESH gate in the test suite pins the two in sync either way).
+      - name: Render citations (references.bib -> citations.json via Typst, chicago-notes)
+        run: python3 book/render_citations.py
       - name: Validate schema
         run: python3 catalog.py validate
       - name: Render markdown -> HTML (renders ```mermaid fences to inline SVG via book/ mmdc)
@@ -72,19 +89,11 @@ jobs:
       # tag-tree assertion — and exits non-zero (failing the build) if the render is truncated / collapsed /
       # runaway / ships raw diagram source / drops the a11y tag tree.
       #
-      # Typst is pinned to an exact release (clone-and-run-safe + reproducible): download the pinned tarball,
-      # verify it extracts a runnable binary, and put it on PATH. poppler (pdftotext / pdfinfo) backs the
-      # content-integrity + tag-tree gates. qpdf runs a lossless object-stream repack after `typst compile`
+      # Typst is already installed (up front, before the citation render). poppler (pdftotext / pdfinfo) backs
+      # the content-integrity + tag-tree gates. qpdf runs a lossless object-stream repack after `typst compile`
       # (Typst emits ~20K uncompressed indirect objects, dominated by the a11y struct tree; the repack packs
       # them into compressed object streams, cutting the whole-book PDF by ~35% — ≈ 6.7 MB → 4.3 MB — with the
       # tag tree preserved). Without it the full-bleed rasterized cover pushes the PDF well over its size floor.
-      - name: Install Typst (pinned release; renders the print-native book PDF)
-        run: |
-          TYPST_VERSION=v0.15.1
-          curl -fsSL "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz" -o /tmp/typst.tar.xz
-          mkdir -p /tmp/typst && tar -xJf /tmp/typst.tar.xz -C /tmp/typst --strip-components=1
-          sudo install -m 0755 /tmp/typst/typst /usr/local/bin/typst
-          typst --version
       - name: Install poppler + qpdf (pdftotext / pdfinfo back the content-integrity + tag-tree gates; qpdf does the lossless object-stream repack)
         run: sudo apt-get update && sudo apt-get install -y poppler-utils qpdf
       - name: Render book PDF (print-native Typst) + content-integrity gate
