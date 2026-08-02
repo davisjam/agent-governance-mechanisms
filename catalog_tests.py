@@ -40,6 +40,14 @@ from tests.book import (
     run_book_audit,
 )
 from tests.book_models import check_outcomes_model, check_outline_model, check_reverse_index
+from tests.citations import (
+    check_cite_fresh,
+    check_cite_mirror,
+    check_cite_orphans,
+    check_cite_resolve,
+    check_cite_symbology,
+    check_scholar_meta,
+)
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
 from tests.external import check_axe, check_axe_coverage_set, check_claude_validate, check_html_valid
 from tests.html import (
@@ -96,6 +104,23 @@ CHECKS = [
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),
     Check("book: IR render-complete blocks render byte-identically (C->A migration net)", 1, lambda strict: check_ir_render_fidelity()),
+    # Bibliography subsystem gates (book/_design/bibliography-subsystem-260801.md §8-§9). BLOCKING: every
+    # [cite:] resolves to references.bib (BIB-2); citations.json is fresh vs the .bib (BIB-6); the
+    # sidebar↔Works-Cited number mirror holds (BIB-4); citation glyphs (digits) and note glyphs (symbols)
+    # are disjoint (BIB-7); every chapter <head> carries the highwire citation_* tags (BIB-8). An uncited
+    # .bib entry is AUDIT-ONLY (author decision #4 — a bibliography may carry further-reading works).
+    Check("book: CITE-RESOLVE — every [cite:] resolves to references.bib (BIB-2)", 1,
+          lambda strict: check_cite_resolve()),
+    Check("book: CITE-FRESH — citations.json in sync with references.bib (BIB-6)", 1,
+          lambda strict: check_cite_fresh()),
+    Check("book: CITE-MIRROR — sidebar citation N == Works-Cited entry N (BIB-4)", 1,
+          lambda strict: check_cite_mirror()),
+    Check("book: CITE-SYMBOLOGY — citation digits vs note symbols disjoint (BIB-7)", 1,
+          lambda strict: check_cite_symbology()),
+    Check("book: SCHOLAR-META — chapter <head> carries highwire citation_* tags (BIB-8)", 1,
+          lambda strict: check_scholar_meta()),
+    Check("book: CITE-ORPHAN — a .bib entry nothing cites (audit-only; decision #4)", 1,
+          lambda strict: check_cite_orphans(), audit_only=True),
     # AUDIT-ONLY (rule #55): the OUTLINE view-model drift + invariants (book-models/outline.json vs a fresh
     # derivation; O2 topic-sentence, O3 unique id, O4 nesting). The book's own "4+1 view held equal to the
     # source" discipline dogfooded on the book. Seeds 2 real O2 findings today, so it lands audit-only and

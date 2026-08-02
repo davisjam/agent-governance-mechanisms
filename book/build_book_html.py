@@ -377,6 +377,231 @@ def _apply_part_refs(md: str) -> str:
     return re.sub(r"\{\{\s*part:(\d+)\s*\}\}", repl, md)
 
 
+# ─────────────────────────── Bibliography & citations (references.bib → citations.json → two surfaces) ──
+# The bib is the single source of truth; Chicago is rendered ONCE by render_citations.py through Typst and
+# committed to book/data/citations.json, which BOTH surfaces consume so they cannot drift. Design:
+# book/_design/bibliography-subsystem-260801.md. This module holds the SSOT marker vocabulary (the
+# CITE-RESOLVE / CITE-FRESH gates import these), the chapter-scoped numbering pre-pass, and the HTML
+# projections (numeric sidebar citations, symbolic editorial notes, per-chapter Works Cited).
+
+# Deployed Pages root — read from the same repo-metadata SSOT catalog.py uses, so the Scholar meta URLs
+# (citation_fulltext_html_url / citation_pdf_url) can never drift from the site's real address.
+_PAGES_URL = json.loads(
+    (ROOT / "book-models" / "repo-metadata.json").read_text(encoding="utf-8"))["pages_url"].rstrip("/")
+_PUB_YEAR = (re.match(r"\d{4}", _BOOK_MANIFEST.get("copyright_years", "")) or [""])[0] or "2026"
+
+# The inline citation + note markers — they join the existing inline bracket family (`[ref:]`, `[data:]`,
+# `[[…]]`). SSOT for the renderer AND the CITE-RESOLVE gate (which imports these), so the gate can never
+# drift from what the build parses. A `[note:]` body must not contain a `]` (the non-greedy stop).
+_CITE_MARKER_RE = re.compile(r"\[cite:\s*([^\]]+?)\s*\]")
+_NOTE_MARKER_RE = re.compile(r"\[note:\s*(.+?)\s*\]", re.S)
+# Editorial-note glyph cycle: `* † ‡ § ‖ ¶`, then doubled (`** †† …`). DISJOINT from the citation glyph set
+# (digits) by construction — the CITE-SYMBOLOGY gate asserts it. `_note_glyph(i)` is 0-indexed.
+_NOTE_GLYPHS = ("*", "†", "‡", "§", "‖", "¶")
+
+# The rendered Chicago strings (per key: note_html / works_cited_html / bib_html / csl), loaded once from
+# the committed citations.json. Empty until _load_citations() runs (start of build()).
+_CITATIONS: dict[str, dict] = {}
+# Per-chapter citation state, set by _number_citations() before a chapter renders and read inside inline()
+# — the same module-global pattern the glossary (`_GLOSSARY`) uses to thread chapter state into inline().
+_CITE_STATE: dict = {"ns": "", "numbers": {}, "order": [], "notes_emitted": set(), "note_i": 0}
+
+
+def _load_citations() -> dict[str, dict]:
+    """Read book/data/citations.json (the committed render of references.bib) into `_CITATIONS`. Stdlib
+    json only — this keeps catalog.py's clone-and-run promise (the Typst render is a dev/CI-time step; the
+    build only ever reads the JSON). A missing file leaves the map empty (a tree with no citations still
+    builds); the CITE-FRESH gate is what fails loud on a STALE file."""
+    path = HERE / "data" / "citations.json"
+    _CITATIONS.clear()
+    if path.is_file():
+        _CITATIONS.update(json.loads(path.read_text(encoding="utf-8")).get("citations", {}))
+    return _CITATIONS
+
+
+def parse_cite_spec(spec: str) -> list[tuple[str, str | None]]:
+    """A `[cite: …]` payload → [(key, locator|None), …]. Multiple works are `;`-separated; an optional
+    locator follows a key after the first `,`: `winters2020, 42; gof1994` → [('winters2020','42'),
+    ('gof1994', None)]."""
+    out: list[tuple[str, str | None]] = []
+    for part in spec.split(";"):
+        part = part.strip()
+        if not part:
+            continue
+        if "," in part:
+            key, loc = part.split(",", 1)
+            out.append((key.strip(), loc.strip()))
+        else:
+            out.append((part, None))
+    return out
+
+
+def iter_cite_keys(text: str) -> list[str]:
+    """Every cite key in `text`, in first-appearance document order (repeats included). The SSOT scan the
+    numbering pre-pass, the end-of-book Bibliography union, and the CITE-RESOLVE gate all share."""
+    keys: list[str] = []
+    for m in _CITE_MARKER_RE.finditer(text):
+        keys.extend(key for key, _loc in parse_cite_spec(m.group(1)))
+    return keys
+
+
+def _cite_ns(slug: str) -> str:
+    """A slug → a citation id namespace (`wc-<ns>-N`), sanitised to the `[a-z0-9-]` an HTML id / CSS
+    selector accepts (the chapter slug carries dots: `0.1-preface` → `0-1-preface`)."""
+    return re.sub(r"[^a-z0-9]+", "-", slug.lower()).strip("-")
+
+
+def _number_citations(slug: str, body_md: str) -> None:
+    """Set `_CITE_STATE` for one chapter: assign each DISTINCT cite key the next integer in first-reference
+    order (a repeat reuses its number), and reset the editorial-note counter. Runs before md_to_html so
+    inline() can look the numbers up. This is what makes the sidebar number equal the Works-Cited entry
+    number (BIB-4 mirror) — both read this one ordering."""
+    numbers: dict[str, int] = {}
+    order: list[str] = []
+    for key in iter_cite_keys(body_md):
+        if key not in numbers:
+            numbers[key] = len(order) + 1
+            order.append(key)
+    _CITE_STATE.clear()
+    _CITE_STATE.update({"ns": _cite_ns(slug), "numbers": numbers, "order": order,
+                        "notes_emitted": set(), "note_i": 0})
+
+
+def _note_glyph(i: int) -> str:
+    """The i-th editorial-note glyph (0-indexed): `* † ‡ § ‖ ¶`, doubled after six (`** †† …`)."""
+    return _NOTE_GLYPHS[i % len(_NOTE_GLYPHS)] * (i // len(_NOTE_GLYPHS) + 1)
+
+
+def _render_cite_marker(spec: str) -> str:
+    """Render one `[cite: …]` payload → numeric superscript(s) linked to the chapter's Works Cited, each
+    followed (first occurrence of the key only) by a right-gutter citation NOTE carrying the Chicago
+    note-form string. Fails loud on a key absent from citations.json OR unnumbered (a cite outside a
+    numbered chapter) — a dead citation must stop the build, like an unknown `{{token}}` / `[data:]`."""
+    ns = _CITE_STATE["ns"]
+    numbers = _CITE_STATE["numbers"]
+    emitted = _CITE_STATE["notes_emitted"]
+    out: list[str] = []
+    for key, loc in parse_cite_spec(spec):
+        if key not in _CITATIONS:
+            raise SystemExit(f"[cite: {key}] names no entry in references.bib / citations.json")
+        if key not in numbers:
+            raise SystemExit(f"[cite: {key}] appears outside a numbered chapter (internal numbering error)")
+        n = numbers[key]
+        label = html.escape(f"citation {n}", quote=True)
+        sup = f'<sup class="cite-ref"><a href="#wc-{ns}-{n}" aria-label="{label}">{n}</a></sup>'
+        note = ""
+        if key not in emitted:
+            emitted.add(key)
+            loc_txt = f", {html.escape(loc)}" if loc else ""
+            note = (f'<span class="cite-note"><span class="cn-mark">{n}.</span> '
+                    f'{_CITATIONS[key]["note_html"]}{loc_txt}</span>')
+        out.append(sup + note)
+    return "".join(out)
+
+
+def _render_note_marker(escaped_text: str) -> str:
+    """Render one `[note: …]` → a symbolic superscript (`*†‡§…`) + a right-gutter editorial note. `escaped_text`
+    is already HTML-escaped by inline() (a note body is plain editorial text, no inner markdown). The sup
+    carries an aria-label so a screen reader announces "note N", not a bare symbol (decision #3)."""
+    i = _CITE_STATE["note_i"]
+    _CITE_STATE["note_i"] = i + 1
+    glyph = html.escape(_note_glyph(i))
+    label = html.escape(f"note {i + 1}", quote=True)
+    return (f'<sup class="note-ref" aria-label="{label}">{glyph}</sup>'
+            f'<span class="editorial-note"><span class="cn-mark">{glyph}</span> {escaped_text}</span>')
+
+
+def works_cited_section() -> str:
+    """The current chapter's Works Cited — a numbered list (Chicago notes; decision #1) in first-reference
+    order, so entry N is the work cited by superscript N (BIB-4). Empty string when the chapter cites
+    nothing. The `<ol>` numbering equals the entry ids (`wc-<ns>-N`) the superscripts link to."""
+    order = _CITE_STATE.get("order", [])
+    if not order:
+        return ""
+    ns = _CITE_STATE["ns"]
+    items = "".join(
+        f'<li id="wc-{ns}-{n}">{_CITATIONS[key]["works_cited_html"]}</li>'
+        for n, key in enumerate(order, 1)
+    )
+    return (f'<section class="works-cited" aria-labelledby="wc-{ns}-h">'
+            f'<h2 id="wc-{ns}-h" class="wc-h">Works Cited</h2>'
+            f'<ol class="wc-list">{items}</ol></section>')
+
+
+def _highwire_reference(csl: dict) -> str:
+    """One cited work → Google Scholar's compressed `citation_reference` form
+    (`citation_title=…;citation_author=…;citation_publication_date=…`), a repeated `citation_author=` per
+    author. Built straight from the key's CSL block — this is what lets Scholar build the citation graph OUT
+    of the book (§6, BIB-8)."""
+    parts = [f"citation_title={csl.get('title', '')}"]
+    for a in csl.get("author", []):
+        name = f"{a.get('given', '')} {a.get('family', '')}".strip()
+        if name:
+            parts.append(f"citation_author={name}")
+    if csl.get("year"):
+        parts.append(f"citation_publication_date={csl['year']}")
+    return ";".join(parts)
+
+
+def _chapter_head_meta(chapter: dict, cited_keys: list[str]) -> str:
+    """The highwire_press `<meta>` block for a chapter page's <head> (§6, BIB-8): the chapter as a book
+    section (citation_book_title marks it), the book author + date, the canonical HTML + PDF URLs, and one
+    `citation_reference` per work cited on the page. Every content attribute is escaped."""
+    def meta(name: str, content: str) -> str:
+        return f'<meta name="{name}" content="{html.escape(content, quote=True)}">'
+    tags = [
+        meta("citation_title", chapter["chapter_title"]),
+        meta("citation_author", _BOOK_MANIFEST["author"]),
+        meta("citation_book_title", _BOOK_MANIFEST["title"]),
+        meta("citation_publication_date", _PUB_YEAR),
+        meta("citation_fulltext_html_url", f"{_PAGES_URL}/book/{chapter['slug']}.html"),
+        meta("citation_pdf_url", f"{_PAGES_URL}/book/{_PDF_FILENAME}"),
+    ]
+    tags += [meta("citation_reference", _highwire_reference(_CITATIONS[k]["csl"])) for k in cited_keys]
+    return "".join(tags)
+
+
+def _bib_sort_key(key: str) -> tuple[str, str]:
+    """Alphabetical bibliography order: by first author's surname, then title (Chicago). A corporate/no-
+    author work sorts by title."""
+    csl = _CITATIONS[key]["csl"]
+    authors = csl.get("author", [])
+    fam = (authors[0].get("family", "") if authors else csl.get("title", "")).lower()
+    return (fam, csl.get("title", "").lower())
+
+
+def build_bibliography_page(chapters: list[dict], nav_first: str, nav_last: str) -> str:
+    """The end-of-book Bibliography — the alphabetical union (by author surname) of every work cited across
+    all chapters, deduplicated, rendered from the same citations.json strings as the per-chapter Works
+    Cited; ordering is the only difference (§5). Also emits one `citation_reference` per entry so Scholar
+    gets the whole reference list on one page (§6). Always produced (a tree with no cites yields the
+    'no works cited yet' note) so the tracked-HTML gate's expected set stays stable."""
+    all_keys = sorted({k for c in chapters for k in iter_cite_keys(c["body_md"])}, key=_bib_sort_key)
+    if all_keys:
+        items = "".join(f'<li id="bib-{k}">{_CITATIONS[k]["bib_html"]}</li>' for k in all_keys)
+        body = f'<ul class="bib-list">{items}</ul>'
+    else:
+        body = '<p class="bib-empty">No works are cited yet.</p>'
+    head_meta = "".join(
+        f'<meta name="citation_reference" content="{html.escape(_highwire_reference(_CITATIONS[k]["csl"]), quote=True)}">'
+        for k in all_keys)
+    provenance = "<!-- GENERATED by book/build_book_html.py (build_bibliography_page) — DO NOT EDIT. -->"
+    header = ('<header class="chap"><div class="kicker">Back Matter</div>'
+              '<h1>Bibliography</h1></header>')
+    intro = ('<p>Every work cited in this book, in one alphabetical list. Each chapter also carries its own '
+             'numbered <em>Works Cited</em>; this is their union.</p>')
+    pager = (f'<div class="pager"><a class="prev" href="{nav_last}.html">'
+             f'<span class="dir">‹ Previous</span><span class="ttl">Back matter</span></a>'
+             f'<a class="home" href="index.html">Contents</a>'
+             f'<span class="next disabled" aria-hidden="true"></span></div>')
+    foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
+    main = header + intro + f'<section class="bibliography" aria-label="Bibliography">{body}</section>' + pager + foot
+    toc = (f'<div class="topnav"><a href="index.html">Contents</a>'
+           f'<a href="{nav_first}.html">Start ⇤</a></div>')
+    return page("Bibliography · Model-Based Agentic Software Engineering", toc, main,
+                provenance=provenance, head_meta=head_meta)
+
+
 def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str, str]) -> dict:
     text = _apply_part_refs(_apply_metrics(path.read_text(encoding="utf-8"), metrics))
     meta = {k: v for k, v in META_RE.findall(text)}
@@ -474,6 +699,17 @@ def inline(s: str) -> str:
     # Abstraction citations (`[[slug|text]]`) → links into the catalogue glossary. After escaping (the
     # brackets survive escaping); before the markdown-link pass so the emitted <a> is left intact.
     s = re.sub(r"\[\[([^\]|]+?)(?:\|([^\]]*))?\]\]", _abbr_cite, s)
+    # Inline citation / editorial-note markers render to raw HTML (superscript + gutter note) that the
+    # bold/italic passes below must not touch, so stash each behind a placeholder and restore at the end —
+    # the same shield the code spans use. Both read the chapter-scoped `_CITE_STATE` set before this block.
+    cite_spans: list[str] = []
+
+    def _stash_cite(frag: str) -> str:
+        cite_spans.append(frag)
+        return f"\x00CITE{len(cite_spans) - 1}\x00"
+
+    s = _CITE_MARKER_RE.sub(lambda m: _stash_cite(_render_cite_marker(m.group(1))), s)
+    s = _NOTE_MARKER_RE.sub(lambda m: _stash_cite(_render_note_marker(m.group(1).strip())), s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
     # Bold: non-greedy so an inner *italic* span survives (e.g. `**a typed *derived* edge**`); the
     # italic pass below then converts the inner single-asterisk pair. (`[^*]+` used to fail whenever a
@@ -484,6 +720,8 @@ def inline(s: str) -> str:
     s = re.sub(r"\x00CODE(\d+)\x00", lambda m: f"<code>{code_spans[int(m.group(1))]}</code>", s)
     # Restore the stashed intra-word emphasis spans (content already HTML-escaped).
     s = re.sub(r"\x00EM(\d+)\x00", lambda m: f"<em>{em_spans[int(m.group(1))]}</em>", s)
+    # Restore the stashed citation / editorial-note HTML (raw superscript + gutter note, shielded above).
+    s = re.sub(r"\x00CITE(\d+)\x00", lambda m: cite_spans[int(m.group(1))], s)
     return s
 
 
@@ -1144,6 +1382,39 @@ blockquote.aside-sidenote {{ background: transparent; }}
     font-size: 14px; line-height: 1.5; color: var(--muted);
   }}
 }}
+/* CITATIONS & EDITORIAL NOTES (bibliography subsystem). Two visibly-distinct in-text marker families:
+   `[cite:]` → a NUMERIC superscript linked to the chapter's numbered Works Cited; `[note:]` → a SYMBOLIC
+   superscript (* † ‡ § …). Each is followed by a right-gutter note (an inline <span>, valid inside a <p>,
+   styled to reuse the same Tufte gutter geometry as `.aside-sidenote`). The number/symbol sets are
+   disjoint by construction (a check asserts it). */
+sup.cite-ref, sup.note-ref {{ line-height: 0; font-size: 0.72em; }}
+sup.cite-ref a {{ color: var(--accent); font-weight: 600; text-decoration: none; }}
+sup.cite-ref a:hover {{ text-decoration: underline; }}
+sup.note-ref {{ color: var(--muted); font-weight: 600; padding-left: 0.05em; }}
+.cite-note, .editorial-note {{
+  display: block; margin: 0.3rem 0 1rem; padding: 0 0 0 0.9rem;
+  border-left: 2px solid var(--box-inset-rule); font-size: 14px; line-height: 1.5;
+  color: var(--muted); font-style: normal;
+}}
+.cite-note .cn-mark, .editorial-note .cn-mark {{ color: var(--accent); font-weight: 600; margin-right: 0.15em; }}
+.cite-note a, .editorial-note a {{ color: var(--accent); word-break: break-word; }}
+@media (min-width: 60rem) {{
+  .cite-note, .editorial-note {{
+    float: right; clear: right; width: 13rem; margin: 0.2rem -15rem 0.9rem 0;
+  }}
+}}
+/* Per-chapter Works Cited — a numbered list set off from the body by a top rule; the <ol> numbering
+   equals each entry's id, so citation superscript N links to entry N (the mirror). */
+section.works-cited {{ margin: 2.4rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--rule); clear: both; }}
+section.works-cited .wc-h {{ font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em;
+                             color: var(--muted); margin: 0 0 0.6rem; }}
+ol.wc-list {{ font-size: 15px; line-height: 1.5; }}
+ol.wc-list li {{ margin: 0.35rem 0; padding-left: 0.2rem; }}
+ol.wc-list li em, ul.bib-list li em {{ font-style: italic; }}
+/* End-of-book Bibliography — a hanging-indent alphabetical list (unnumbered). */
+section.bibliography ul.bib-list {{ list-style: none; padding-left: 0; font-size: 15px; line-height: 1.55; }}
+section.bibliography ul.bib-list li {{ margin: 0 0 0.7rem; padding-left: 1.4rem; text-indent: -1.4rem; }}
+section.bibliography .bib-empty {{ color: var(--muted); font-style: italic; }}
 code {{ background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }}
 a {{ color: var(--accent); }}
 /* Booktabs table style (drawing/tables.md): exactly three horizontal rules — a heavy top rule, a light
@@ -1386,6 +1657,7 @@ def _pager_label(c: dict) -> str:
 
 BOOK_INDEX_SLUG = "book-index"  # the autogenerated term index page (see build_index_page)
 _FIGURES_GALLERY_SLUG = "figures"  # the autogenerated figures-only page (see build_figures_page)
+_BIBLIOGRAPHY_SLUG = "bibliography"  # the end-of-book alphabetical bibliography (see build_bibliography_page)
 
 
 def _jump_targets(chapters: list[dict], idx: int) -> list[tuple[str, str]]:
@@ -1512,7 +1784,8 @@ def _kicker_html(chapters: list[dict], idx: int, num_label: str) -> str:
     return f'{part_link} &nbsp;::&nbsp; {chap_link}'
 
 
-def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str = "") -> str:
+def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str = "",
+         head_meta: str = "") -> str:
     runtime = MERMAID_CDN if mermaid else ""
     # <main> landmark so the content is a single main region (axe landmark-one-main / region). It carries
     # an aria-label of the page title so it stays a UNIQUELY-NAMED main landmark even when a page embeds the
@@ -1527,6 +1800,7 @@ def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str
     return (
         f'<!DOCTYPE html>\n<html lang="en">{provenance}<head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        f'{head_meta}'
         f"<title>{html.escape(title)}</title>{FONTS_LINK}<style>{CSS}</style></head><body>"
         f'{toc}<main class="wrap" aria-label="{label}">{main}</main>{runtime}</body></html>\n'
     )
@@ -3215,7 +3489,7 @@ def expected_page_slugs() -> set[str]:
     chapters = _discover_chapters(_load_metrics())
     chapters += build_appendix_chapters(next_part=max(c["part"] for c in chapters) + 1)
     return ({c["slug"] for c in chapters} | set(_GENERATED_PAGE_SLUGS)
-            | {"index", "book-index", "catalogue-figure", _FIGURES_GALLERY_SLUG})
+            | {"index", "book-index", "catalogue-figure", _FIGURES_GALLERY_SLUG, _BIBLIOGRAPHY_SLUG})
 
 
 # The rendered PDF is gated on CONTENT INTEGRITY, not just a page count. The failure modes are a runaway
@@ -3625,6 +3899,7 @@ def build_pdf() -> int:
 
 def build() -> int:
     metrics = _load_metrics()
+    _load_citations()  # the committed Chicago render of references.bib — read once, consumed per chapter
     chapters = _discover_chapters(metrics)
     if not chapters:
         print("no chapter files found under the Part/Chapter hierarchy", file=sys.stderr)
@@ -3669,9 +3944,14 @@ def build() -> int:
             + (_epigraph_html(c["part"]) if c.get("show_epigraph") else "")
             + '</header>'
         )
+        # Assign this chapter's citation numbers (first-reference order) BEFORE rendering, so inline()'s
+        # `[cite:]` superscripts and the Works Cited list below both read the one ordering (BIB-4 mirror).
+        _number_citations(c["slug"], c["body_md"])
+        cited_keys = list(_CITE_STATE["order"])
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
         body, _fig_n, _tbl_n = _number_floats(body, _chapter_id(c), 1, 1)
         body = _resolve_xrefs(body, ref_map, for_print=False)
+        body += works_cited_section()  # per-chapter numbered Works Cited (empty when nothing is cited)
         if prev_c:
             prev_html = (
                 f'<a class="prev" href="{prev_c["slug"]}.html"><span class="dir">‹ Previous</span>'
@@ -3698,7 +3978,8 @@ def build() -> int:
         toc = toc_html(chapters, c["slug"], jump=jump)
         out = HERE / f'{c["slug"]}.html'
         out.write_text(
-            page(f'{num_label} · {c["chapter_title"]}', toc, main, mermaid=c.get("mermaid", False)),
+            page(f'{num_label} · {c["chapter_title"]}', toc, main, mermaid=c.get("mermaid", False),
+                 head_meta=_chapter_head_meta(c, cited_keys)),
             encoding="utf-8",
         )
 
@@ -3738,6 +4019,10 @@ def build() -> int:
         f'<li><a href="{_FIGURES_GALLERY_SLUG}.html">'
         f'<span class="cnum">{"◫":>2}</span>Figures Gallery</a></li>'
     )
+    idx_rows.append(
+        f'<li><a href="{_BIBLIOGRAPHY_SLUG}.html">'
+        f'<span class="cnum">{"❧":>2}</span>Bibliography</a></li>'
+    )
     idx_rows.append("</ol>")
     title_block = (
         f'<div class="book-title"><h1>{html.escape(_BOOK_MANIFEST["title"])}</h1>'
@@ -3766,6 +4051,11 @@ def build() -> int:
     # standalone page. Reachable from the landing page, the List of Figures and Tables, and its own pager.
     (HERE / f"{_FIGURES_GALLERY_SLUG}.html").write_text(
         build_figures_page(chapters, float_entries), encoding="utf-8")
+
+    # End-of-book Bibliography — the alphabetical union of every cited work (always written so the
+    # tracked-HTML gate's expected set stays stable). Its pager points back to the last chapter.
+    (HERE / f"{_BIBLIOGRAPHY_SLUG}.html").write_text(
+        build_bibliography_page(chapters, chapters[0]["slug"], chapters[-1]["slug"]), encoding="utf-8")
     fig_count = sum(1 for e in float_entries if e["kind"] == "fig")
 
     print(f"built {len(chapters)} chapter pages + index.html + {BOOK_INDEX_SLUG}.html + "
