@@ -226,11 +226,19 @@ blockquote.thesis-box strong { color: var(--box-thesis-rule); }
    every surface, distinct from the umber chrome accent and the green thesis claim. */
 blockquote.def-box { background: var(--box-def-fill); border: 1px solid var(--rule);
                       border-left: var(--border-box-rule) solid var(--box-def-rule);
-                      color: var(--ink); font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                      color: var(--ink); font-style: italic; padding: 1rem 1.3rem; margin: 1.6rem 0;
                       border-radius: 5px; }
 blockquote.def-box p { margin: 0 0 0.6rem; }
 blockquote.def-box p:last-child { margin-bottom: 0; }
 blockquote.def-box strong { color: var(--box-def-rule); }
+/* DEFINITION body typography — the definition prose reads in italics (it is an aside on a term), while the
+   bold Term LEAD stays upright (a label, not emphasis). Applies to both the light `> **Term.**` sidenote
+   (`def-inset`) and the boxed core-term definition (`def-box`). Only the FIRST paragraph's leading <strong>
+   is uprighted, so the term label reads as a label; any later inline bold keeps the surrounding italic.
+   Footnotes (em-led), plain sidenotes, primers, and theses are untouched. Taxonomy: _design/callout-typography.md. */
+blockquote.def-inset { font-style: italic; }
+blockquote.def-inset > p:first-child > strong:first-child,
+blockquote.def-box > p:first-child > strong:first-child { font-style: normal; }
 .book-eq { text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
            font-size: 1.2em; color: var(--ink); margin: 1.3rem 0; letter-spacing: 0.02em; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
@@ -477,7 +485,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2 id="llm-as-function-call">Designing with a probabilistic component: the LLM as a function call</h2>
 <p>Here is the central problem of building on a model. A model is a <strong>probabilistic component</strong>. Ask it the same question twice and you may get two answers. Ask it a question slightly outside what it saw in training and it will answer anyway, confidently, wrong. A deterministic function you can reason about; a probabilistic one you cannot. And yet the model is the only thing that can look at a figure and describe it. You have to build a reliable system out of an unreliable part.</p>
 <p>The pattern that makes this work is to treat the model as a <strong>typed function call</strong>. Deterministic algorithms control the workflow and define the objective of each step. When a step needs semantic understanding, the system delegates a <em>bounded</em> task to a tool-equipped model — then a deterministic module validates the returned artifact before it is allowed in. The workflow is deterministic. The model is a subroutine inside it. The subroutine is never trusted on its word.</p>
-<blockquote class="aside-sidenote"><p><strong>The same pattern, in another domain.</strong> We develop it — deterministic algorithms driving the workflow, delegating a bounded task to a tool-equipped model, with a deterministic check at the trust boundary — for software verification, in a CCS 2026 paper from our group: <a href="https://arxiv.org/abs/2605.10712">arxiv.org/abs/2605.10712</a>.</p></blockquote>
+<blockquote class="aside-sidenote def-inset"><p><strong>The same pattern, in another domain.</strong> We develop it — deterministic algorithms driving the workflow, delegating a bounded task to a tool-equipped model, with a deterministic check at the trust boundary — for software verification, in a CCS 2026 paper from our group: <a href="https://arxiv.org/abs/2605.10712">arxiv.org/abs/2605.10712</a>.</p></blockquote>
 <p>Read the pattern in three moves, drawn in <a class="xref" href="5.3-the-built-system.html#fig-5-3-1">Figure&nbsp;5.3-1</a>.</p>
 <ul><li><strong>The caller is deterministic, and it owns the workflow.</strong> Ordinary code decides what happens and in what order. It decides <em>when</em> a step needs the model at all — most steps do not. When a step is a matter of judgment rather than a matter of rule, and only then, the caller reaches for the model.</li><li><strong>The call has a typed contract on both sides.</strong> The task handed to the model is packed into a typed input — this figure, this context, this question — and the answer must come back in a typed output shape the caller can act on. The return value is a structured, checkable artifact, never a free-form paragraph.</li><li><strong>A deterministic validator sits at the trust boundary.</strong> The model's answer is a <em>candidate</em>, not a result. Before it is incorporated, deterministic code checks it: does it satisfy the standard, does it preserve the input's meaning, does it fit the contract. On a pass, the caller incorporates the candidate and moves on; on a fail, it retries or falls back.</li></ul>
 <figure id="fig-5-3-1" class="book-figure" data-label="llm-function-call"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 430" role="group" aria-labelledby="lfc-title lfc-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">

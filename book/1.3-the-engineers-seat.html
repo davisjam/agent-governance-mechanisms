@@ -226,11 +226,19 @@ blockquote.thesis-box strong { color: var(--box-thesis-rule); }
    every surface, distinct from the umber chrome accent and the green thesis claim. */
 blockquote.def-box { background: var(--box-def-fill); border: 1px solid var(--rule);
                       border-left: var(--border-box-rule) solid var(--box-def-rule);
-                      color: var(--ink); font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                      color: var(--ink); font-style: italic; padding: 1rem 1.3rem; margin: 1.6rem 0;
                       border-radius: 5px; }
 blockquote.def-box p { margin: 0 0 0.6rem; }
 blockquote.def-box p:last-child { margin-bottom: 0; }
 blockquote.def-box strong { color: var(--box-def-rule); }
+/* DEFINITION body typography — the definition prose reads in italics (it is an aside on a term), while the
+   bold Term LEAD stays upright (a label, not emphasis). Applies to both the light `> **Term.**` sidenote
+   (`def-inset`) and the boxed core-term definition (`def-box`). Only the FIRST paragraph's leading <strong>
+   is uprighted, so the term label reads as a label; any later inline bold keeps the surrounding italic.
+   Footnotes (em-led), plain sidenotes, primers, and theses are untouched. Taxonomy: _design/callout-typography.md. */
+blockquote.def-inset { font-style: italic; }
+blockquote.def-inset > p:first-child > strong:first-child,
+blockquote.def-box > p:first-child > strong:first-child { font-style: normal; }
 .book-eq { text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
            font-size: 1.2em; color: var(--ink); margin: 1.3rem 0; letter-spacing: 0.02em; }
 figure.book-figure { margin: 1.8rem 0; text-align: center; }
@@ -474,7 +482,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2>SDLC to SELC</h2>
 <p>The field's own name for the lifecycle gives the old arrangement away: SDLC, the software <em>development</em> life cycle. The name centers development because development was the bottleneck; you name the cycle after the seat where the calendar goes. Move that seat to the fleet and the name is pointing at a chair the human has left.</p>
 <p id="idx-def-selc">So the rename follows on its own: <strong>SELC</strong>, the software <em>engineering</em> life cycle. The D is delegated — development belongs to the fleet now, and a name should not center a seat the human has left. The E is what remains, and it was always the point: stating intent precisely, structuring the system, deciding what proof a change owes, and holding the line. SELC names the job that is left, which is the job this book teaches. <a class="xref" href="1.3-the-engineers-seat.html#fig-1-3-1">Figure&nbsp;1.3-1</a> draws the two arrangements.</p>
-<blockquote class="aside-sidenote"><p><strong>SELC.</strong> The software engineering life cycle — the classic lifecycle with the developer seat reassigned to the agent fleet. The engineer keeps requirements, specification, design, validation, and governance; the agents do the development. The rename marks that the human's remaining work is the E, not the D.</p></blockquote>
+<blockquote class="aside-sidenote def-inset"><p><strong>SELC.</strong> The software engineering life cycle — the classic lifecycle with the developer seat reassigned to the agent fleet. The engineer keeps requirements, specification, design, validation, and governance; the agents do the development. The rename marks that the human's remaining work is the E, not the D.</p></blockquote>
 <figure id="fig-1-3-1" class="book-figure" data-label="sdlc-to-selc"><svg viewBox="0 0 940 392" xmlns="http://www.w3.org/2000/svg" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="img" aria-labelledby="s2s-title s2s-desc">
   <title id="s2s-title">SDLC to SELC: one seat reassigned</title>
   <desc id="s2s-desc">Two lanes of the same six lifecycle activities — requirements, specification, design, implementation, validation, maintenance. Top lane, the conventional SDLC, has every seat held by one engineering role, with implementation marked as the seat that consumes the calendar. Bottom lane, the SELC, reassigns the implementation seat to the agent fleet, drawn in the accent colour; the engineer flanks the fleet, authoring intent on the left and judging and governing the output on the right, and a governance band beneath holds every seat's output. A dashed arc returns from the last activity to the first, the cycle in "life cycle."</desc>

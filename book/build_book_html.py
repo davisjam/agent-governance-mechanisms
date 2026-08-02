@@ -628,6 +628,14 @@ _IS_THESIS_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>\s*The\b.*?\bThesis\.\s*</st
 _DEF_SLUGS = frozenset({"model", "agent", "engineering", "software-engineering", "structured"})
 _IS_DEF_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>", re.S)
 
+# A DEFINITION sidenote is the light (non-core-term) cousin: a `> **Term.** …` aside whose bold lead ENDS
+# in a period (`> **Churn.** …`, `> **Lint.** …`), authored into `<p><strong>Churn.</strong> …`. It carries
+# a `def-inset` modifier so its definition body italicises while the bold Term stays upright. The trailing
+# period inside the bold is the discriminator: it tells a `**Term.**` glossary/aside label apart from an
+# em-led footnote (`> *A footnote…*`, no <strong> lead) and a plain sidenote (no bold lead), both of which
+# keep their as-authored rendering. Theses and core-term def-boxes are classified earlier, so never reach it.
+_IS_DEFN_SIDENOTE_LEAD_RE = re.compile(r"^\s*<p>\s*<strong>[^<]*\.\s*</strong>", re.S)
+
 
 _BOOK_IR_MOD = None  # cached `book_ir` module handle (lazy — book_ir imports THIS module as its tokenizer SSOT)
 
@@ -718,7 +726,9 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             return True
         _gm = _GLOSS_RE.match(s)
         if _gm:
-            _emit(f'<blockquote class="aside-sidenote"><p><strong>{inline(_gm.group("term"))}.</strong> '
+            # A gloss first-reference sidenote is itself a `**Term.**` definition inset, so it carries the
+            # `def-inset` modifier (italic body, upright bold Term) like an authored `> **Term.**` blockquote.
+            _emit(f'<blockquote class="aside-sidenote def-inset"><p><strong>{inline(_gm.group("term"))}.</strong> '
                   f'{inline(_gm.group("def"))}</p></blockquote>')
             return True
         if _GLOSS_ONLY_RE.match(s):
@@ -1033,6 +1043,8 @@ def _render_blockquote(block: str, is_def: bool = False) -> str:
         klass = "thesis-box"
     elif is_def and _IS_DEF_LEAD_RE.search(inner_html):
         klass = "def-box"
+    elif _IS_DEFN_SIDENOTE_LEAD_RE.search(inner_html):
+        klass = "aside-sidenote def-inset"
     else:
         klass = "aside-sidenote"
     return f'<blockquote class="{klass}">{inner_html}</blockquote>'
@@ -1247,11 +1259,19 @@ blockquote.thesis-box strong {{ color: var(--box-thesis-rule); }}
    every surface, distinct from the umber chrome accent and the green thesis claim. */
 blockquote.def-box {{ background: var(--box-def-fill); border: 1px solid var(--rule);
                       border-left: var(--border-box-rule) solid var(--box-def-rule);
-                      color: var(--ink); font-style: normal; padding: 1rem 1.3rem; margin: 1.6rem 0;
+                      color: var(--ink); font-style: italic; padding: 1rem 1.3rem; margin: 1.6rem 0;
                       border-radius: 5px; }}
 blockquote.def-box p {{ margin: 0 0 0.6rem; }}
 blockquote.def-box p:last-child {{ margin-bottom: 0; }}
 blockquote.def-box strong {{ color: var(--box-def-rule); }}
+/* DEFINITION body typography — the definition prose reads in italics (it is an aside on a term), while the
+   bold Term LEAD stays upright (a label, not emphasis). Applies to both the light `> **Term.**` sidenote
+   (`def-inset`) and the boxed core-term definition (`def-box`). Only the FIRST paragraph's leading <strong>
+   is uprighted, so the term label reads as a label; any later inline bold keeps the surrounding italic.
+   Footnotes (em-led), plain sidenotes, primers, and theses are untouched. Taxonomy: _design/callout-typography.md. */
+blockquote.def-inset {{ font-style: italic; }}
+blockquote.def-inset > p:first-child > strong:first-child,
+blockquote.def-box > p:first-child > strong:first-child {{ font-style: normal; }}
 .book-eq {{ text-align: center; font-family: Georgia, "Times New Roman", serif; font-style: italic;
            font-size: 1.2em; color: var(--ink); margin: 1.3rem 0; letter-spacing: 0.02em; }}
 figure.book-figure {{ margin: 1.8rem 0; text-align: center; }}

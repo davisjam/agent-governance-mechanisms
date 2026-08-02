@@ -231,6 +231,18 @@ def _render_code(raw: str) -> str:
 # rendered `<p><strong>…Thesis.</strong>`); the two stay in step by construction of the same authored shape.
 _THESIS_LEAD_RE = re.compile(r"^\*\*The\b.*?\bThesis\.\*\*", re.S)
 
+# A DEFINITION lead: a bold `**Term.**` label whose bold text ENDS in a period (`> **Churn.** …`). Mirrors
+# the web book's `def-inset` — the definition body italicises while the bold Term stays upright. The trailing
+# period inside the bold is the discriminator (an em-led footnote or a plain sidenote has no such lead), and
+# theses / core-term def-boxes are matched earlier, so this only ever fires on a light glossary/aside label.
+_DEFN_LEAD_RE = re.compile(r"^\*\*[^*]+\.\*\*")
+
+# Definition typography, injected at the head of a def-inset / def-box block: italicise the body, but reset
+# every `strong` to upright so the bold Term LEAD reads as a label, not emphasis. (Definitions are short
+# glossary asides, so a body-wide strong-reset matches the web's "leading term upright" without a first-only
+# selector.) Mirrors `blockquote.def-inset`/`.def-box` typography in the web stylesheet.
+_DEFN_ITALIC_PRELUDE = '#show strong: set text(style: "normal")\n  #set text(style: "italic")\n  '
+
 def _render_blockquote(raw: str, is_def: bool = False) -> str:
     """A `>`-prefixed blockquote → a Typst block. A thesis blockquote (`> **The … Thesis.** …`) becomes a
     GREEN boxed callout; a core-term definition blockquote (armed by a preceding index-def, `is_def`) a BLUE
@@ -244,13 +256,17 @@ def _render_blockquote(raw: str, is_def: bool = False) -> str:
         return (f'#block(fill: dt.box-thesis-fill, stroke: (left: dt.border-box-rule + dt.box-thesis-rule), '
                 f"inset: 12pt, radius: 4pt, width: 100%)[\n{_indent(inner)}\n]")
     if is_def:
+        # A core-term def-box: blue panel, definition body italic with the bold Term lead upright.
         return (f'#block(fill: dt.box-def-fill, stroke: (left: dt.border-box-rule + dt.box-def-rule), '
-                f"inset: 12pt, radius: 4pt, width: 100%)[\n{_indent(inner)}\n]")
+                f"inset: 12pt, radius: 4pt, width: 100%)[\n  {_DEFN_ITALIC_PRELUDE}{_indent(inner).lstrip()}\n]")
     if stripped.startswith("#"):
         # A titled concept-inset primer (`> ### Inset N — Title`) → a LAVENDER box, mirroring the web book's
         # `concept-inset` (an inner heading heads the primer). The heading renders bold inside the panel.
         return (f'#block(fill: dt.box-inset-fill, stroke: (left: dt.border-box-rule + dt.box-inset-rule), '
                 f"inset: 12pt, radius: 4pt, width: 100%)[\n{_indent(inner)}\n]")
+    if _DEFN_LEAD_RE.match(stripped):
+        # A light `> **Term.** …` definition aside: plain quote, body italic, bold Term lead upright.
+        return (f"#quote(block: true)[\n  {_DEFN_ITALIC_PRELUDE}{_indent(inner).lstrip()}\n]")
     return f"#quote(block: true)[\n{_indent(inner)}\n]"
 
 
