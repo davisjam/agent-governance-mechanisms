@@ -591,6 +591,10 @@ def _cover_typst() -> str:
     has no clean seat for them; they move to the copyright page that follows (see `_copyright_page_typst`)."""
     m = bb._BOOK_MANIFEST
     title = _esc(m["title"])
+    # Force the cover title to break after the first word so line 1 is "Model-Based" alone and line 2 is the
+    # rest ("Agentic Software Engineering"); the backslash is Typst's forced linebreak, added AFTER _esc so it
+    # is not itself escaped. The title stays SSOT-driven from the manifest.
+    title_cover = title.replace(" ", r" \ ", 1)
     author = _esc(m["author"].upper())
     kicker = _esc(m.get("kicker", "")).upper()
     subtitle = _esc(m.get("subtitle", ""))
@@ -624,7 +628,7 @@ def _cover_typst() -> str:
         + eyebrow_block +
         "        #par(justify: false, leading: 0.36em)[\n"
         "          #text(font: dt.font-display, weight: dt.display-weight, size: 27pt, "
-        f"tracking: -0.02em, fill: dt.paper)[{title}]\n"
+        f"tracking: -0.02em, fill: dt.paper)[{title_cover}]\n"
         "        ]\n"
         + subtitle_block +
         "        #v(1.3em)\n"
