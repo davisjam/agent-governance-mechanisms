@@ -707,7 +707,13 @@ def check_ir_render_fidelity() -> "tuple[str, list[str]]":
         for b in ch.blocks:
             if not b.is_render_complete:
                 continue
+            # Citation rendering is chapter-scoped stateful (first-reference numbering + first-occurrence
+            # gutter notes), so a block that carries `[cite:]`/`[note:]` renders differently the SECOND
+            # time unless the citation context is reset. Reset it to THIS block's own numbering before each
+            # render so both start from an identical state — the byte-identity the gate pins still holds.
+            _bb._number_citations(ch.slug, b.raw)
             want = _bb.md_to_html(b.raw)
+            _bb._number_citations(ch.slug, b.raw)
             got = b.render_html()
             if want != got:
                 active.append(

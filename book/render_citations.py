@@ -28,6 +28,7 @@ import hashlib
 import json
 import pathlib
 import re
+import html as _html
 import shutil
 import subprocess
 import sys
@@ -167,7 +168,7 @@ class _FragmentCleaner(HTMLParser):
                 self._anchor_stack.append(False)
                 return
             self._anchor_stack.append(True)
-            self.parts.append(f'<a href="{href}">')
+            self.parts.append(f'<a href="{_html.escape(href, quote=True)}">')
             return
         # keep phrasing tags (em, i, b, strong, span, sub, sup non-backlink)
         self.parts.append(f"<{tag}>")
@@ -187,7 +188,10 @@ class _FragmentCleaner(HTMLParser):
     def handle_data(self, data: str) -> None:
         if self._skip_depth:
             return
-        self.parts.append(data)
+        # Text nodes are emitted into HTML raw (both surfaces inject these strings without re-escaping), so
+        # encode `& < >` here — a publisher like "Morgan & Claypool" or a URL query in text would otherwise
+        # ship a bare `&` (an html-validate no-raw-characters error). Typographic quotes stay as unicode.
+        self.parts.append(_html.escape(data, quote=False))
 
 
 def _clean_fragment(frag: str) -> str:

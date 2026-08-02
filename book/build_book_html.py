@@ -472,11 +472,20 @@ def _note_glyph(i: int) -> str:
     return _NOTE_GLYPHS[i % len(_NOTE_GLYPHS)] * (i // len(_NOTE_GLYPHS) + 1)
 
 
+def _ensure_citations() -> None:
+    """Populate `_CITATIONS` if empty — so ANY render path (a per-body float/word-count pass, the IR
+    render-fidelity check, a direct md_to_html/inline call) resolves cite markers, not only build(), which
+    loads them explicitly. Idempotent; a missing citations.json leaves it empty (CITE-FRESH fails loud)."""
+    if not _CITATIONS:
+        _load_citations()
+
+
 def _render_cite_marker(spec: str) -> str:
     """Render one `[cite: …]` payload → numeric superscript(s) linked to the chapter's Works Cited, each
     followed (first occurrence of the key only) by a right-gutter citation NOTE carrying the Chicago
     note-form string. Fails loud on a key absent from citations.json OR unnumbered (a cite outside a
     numbered chapter) — a dead citation must stop the build, like an unknown `{{token}}` / `[data:]`."""
+    _ensure_citations()
     ns = _CITE_STATE["ns"]
     numbers = _CITE_STATE["numbers"]
     emitted = _CITE_STATE["notes_emitted"]
@@ -485,7 +494,11 @@ def _render_cite_marker(spec: str) -> str:
         if key not in _CITATIONS:
             raise SystemExit(f"[cite: {key}] names no entry in references.bib / citations.json")
         if key not in numbers:
-            raise SystemExit(f"[cite: {key}] appears outside a numbered chapter (internal numbering error)")
+            # The main chapter loop pre-numbers every key via _number_citations, so this only fires in an
+            # AUXILIARY render pass (float collection / word count) whose HTML is discarded — number on
+            # demand so those passes never crash. A genuinely unknown key already failed above.
+            numbers[key] = len(_CITE_STATE["order"]) + 1
+            _CITE_STATE["order"].append(key)
         n = numbers[key]
         label = html.escape(f"citation {n}", quote=True)
         sup = f'<sup class="cite-ref"><a href="#wc-{ns}-{n}" aria-label="{label}">{n}</a></sup>'
