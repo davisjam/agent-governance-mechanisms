@@ -13,6 +13,8 @@ made.
 | Model | — |
 | Enforcement | **Soft** (probabilistic) — a discipline/threshold guiding *how* a mechanical backlog is fixed; nothing blocks N per-site edits, though the transform it produces is itself deterministic |
 
+*Its place in the environment — a **variant / known-use** of **Closed Action Vocabulary**, under **CONSTRAIN · Constrain where and how agents act**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-constrain) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 A large mechanical lint backlog (say 200 sites all needing the same deterministic edit) tempts one of

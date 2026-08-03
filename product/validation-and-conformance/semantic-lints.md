@@ -16,6 +16,8 @@ violations the compiler and review can't catch.
 > **This entry represents the fleet, not each lint.** Per the README scope note, the ~500+ individual
 > custom lints are a *magnitude reported in prose*; this is the one entry for the pattern.
 
+*Its place in the environment — the **canonical mechanism** for **CONSTRAIN · Constrain where and how agents act**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-constrain).*
+
 ## Motivation — the failure it kills
 
 The codebase carries hundreds of structural invariants: no silent `catch`, no banned API in prod, every

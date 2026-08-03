@@ -13,6 +13,8 @@ service is banned.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — the sole-seam lint bans direct cross-service `requests.post`; the `BinaryIO` type makes the bug unrepresentable |
 
+*Its place in the environment — a **variant / known-use** of **One Door Enforced**, under **CONSTRAIN · Constrain where and how agents act**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-constrain) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 Cross-service calls that pass a **file path over the wire** (instead of the file's *bytes*) are a

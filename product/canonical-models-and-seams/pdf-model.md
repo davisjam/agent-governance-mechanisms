@@ -15,6 +15,8 @@ the canonical PDF library).
 | Enforcement | **Hard** (deterministic) · *blocking* — a raw-PDF-library ban-lint fails the build on any raw library call; the structured model is *construction*, the ban-lint is the counted sensor |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 
+*Its place in the environment — the **canonical mechanism** for **CONSTRAIN · Constrain where and how agents act**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-constrain).*
+
 ## Motivation — the failure it kills
 
 The raw canonical PDF library is a minefield of silent, invisible-at-the-call-site failures. Forget `SetModified()` on an
