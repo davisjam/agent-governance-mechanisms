@@ -1038,3 +1038,69 @@ that baseline (26 passed / 2 pre-existing failed), never adding a new failure.
 - **Gate baseline note:** the tier-1 suite carries 2 pre-existing FAILs at HEAD, both in `3.1-the-executable-zoo`
   (a `<!-- TODO(W7) -->` stray comment; an IR render-complete byte-identity divergence at block 110) — W7
   territory, present before W4 and untouched by it. Every W4 commit held the gate at 26 passed / 2 pre-existing failed.
+
+---
+
+## W3-FOLDOUT — deep patterns-primary rewrite of the catalogue (260803)
+
+The editorial payoff of the W3 reframe: every one of the 24 canonical patterns in
+`constructing-the-gee.md` rewritten from the compact scar/built-as form to the full pattern-entry
+template (Intent · Vivid failure · Solution · Guarantee · Forces & limits · facet-examples ·
+known-uses · Deep dive · Related), so the catalogue reads as patterns illustrated by examples.
+
+### STEP 0 — housekeeping chore (commit `eaae377`)
+- **Removed** 3 untracked stray briefs from `book/_design/`: `phase3c-brief-260803.md`,
+  `spine-tune-and-sync-brief-260803.md`, `task7-brief-260803.md` (verified headers = phase3c/spine-tune/task7
+  scratch; untracked, so pure disk cleanup).
+- **`.gitignore` guard added:** `book/_design/*-brief*.md` — guards against a future stray brief being
+  swept into a commit by a broad `git add -A`. Confirmed it does NOT hide the real tracked `_design` docs
+  (editorial-run-results, model-sync-section-DRAFT, evidence-study-design — none end in `-brief`), and the
+  6 pre-existing tracked `*-brief*.md` files stay tracked (gitignore never untracks).
+
+### The fold-out — 24 patterns, 4 batches (commits `18f41e2`, `f0b7263`, `c5a2843`, + intro/results)
+- **All 24 patterns rewritten** across the 9 capabilities: KNOW (3) · SYNC (2) · CONSTRAIN (3) ·
+  ADMIT (2) · COMPLETE (3) · PRESERVE (1) · PROVENANCE (1) · MANAGE (4) · GOVERN (5).
+- **Split landed:** ~23 full facet-examples (each named for the one facet it alone shows) · 14
+  flagship-short example bullets ending "Deep dive → <stack> (alt appendix)" · ~15 one-line known-use rows.
+- **Flagship anti-double-placement:** of the 16 disposition FLAGSHIP members, 13 became short examples +
+  stack link; the 3 provenance members (a11y-prefix MARK, f10-wiring-lint COVER, derive-changelog READ)
+  fold as **Solution components** of Caused-By Provenance (components ≠ examples), their deep treatment
+  living once in the provenance-fidelity stack via the section `*Deep dive:*` link. `resource-pressure-gating`
+  (SHED) also rendered as a flagship-short (it is a resource-mediation member). No member is deep-treated twice.
+
+### Fable Q6 caveats — applied
+- **service-flow** leads with the **topology** facet (its generation half is explicitly ceded to the
+  model-driven-codegen EMIT member, so the facets stay disjoint).
+- **invariant-dag-execution-policy reconciliation — DECISION: demoted to a known-use row** under Executable
+  Source of Truth (correctness-vs-resource-separation stated as its KU clause: "a closed edge-intent enum
+  separating correctness edges from resource edges"). This keeps ESoT's facet-example set at exactly the
+  five prime facets (structural-ownership · topology · subject-shift · temporal-containment ·
+  transitive-reachability), resolving the disposition's 5-vs-6 inconsistency Fable flagged. The five stay
+  clean; invariant-dag survives as a row, not a sixth example.
+- **Q2 (aggregate-compute):** the Mediated Resource Admission Forces clause carries the
+  aggregate-vs-per-invocation granularity point (not merely "coarsest cardinality"); aggregate-compute-protection
+  is a known-use row (online-only).
+
+### Prior-art placeholders — intact for LPP-PROSE
+All **5** `<!-- prior-art: LPP §… -->` placeholders preserved in place (ESoT §6, Model-Derived Assurance §5,
+Mediated Resource §?, Point-of-Action §2/§3, Self-governance §2/§3). None filled — LPP-PROSE owns them.
+
+### Cross-link fixes made along the way
+- Two "safe-launch stack" references mis-pointed at the context-management stack HTML; safe-launch is a
+  **composition**, not one of the 7 flagship-stack pages — re-pointed to `#compositions` (new anchor added).
+- Computed Control Blast Radius correctly rendered as a standalone pattern with a "see also → gov-of-gov
+  stack" cross-link (NOT a stack part — its INTERPRET slot went to self-governance in the W2b swap).
+
+### Gates — every commit green; 3.1 baseline held
+- `catalog.py validate` 0 issues · `catalog.py build` reachability 0 orphans · `flagship_stack_model.py
+  regenerate` FS1–FS5 clean, 0 unresolved (7 stacks / 37 parts / 36 distinct) · `build_book_html.py` green
+  (129 chapters, 118 figures) · argument_spine / chapter_shape / flagship_stack / lit_positioning all
+  `verify` in sync.
+- **Scope isolation:** the only source files changed across all commits are `.gitignore` and
+  `constructing-the-gee.md`. `3.1-the-executable-zoo` and the book IR were never touched, so the 2
+  pre-existing tier-1 FAILs there (TODO(W7) stray comment + block-110 IR divergence) are untouched and no
+  new failure is introduced — baseline held.
+
+### Parked
+- **None.** Every §2 facet assignment fit once written; the only judgment call surfaced (invariant-dag
+  5-vs-6) was resolved explicitly above rather than parked.

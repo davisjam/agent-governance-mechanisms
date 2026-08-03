@@ -110,9 +110,14 @@ the mechanism set to sit here as a principle in its own right.
 
 # The nine capabilities
 
-Each capability names a job the environment must do, then lists the canonical mechanisms that do it. Under
-each mechanism are the variants and known uses that fold into it — preserved, subordinated, each a real
-case of *this* mechanism rather than a sibling's.
+Each capability names a job the environment must do, then works its canonical mechanisms as design-pattern
+entries: **Intent**, the **vivid failure** that motivates it, the **Solution** structure, the
+**Guarantee** and its boundary, and the **Forces &amp; limits**. Each entry is then illustrated by its
+folded variants — every example named for the **one facet it alone shows**, so the catalogue reads as
+patterns instanced by examples, not a flat list. A folded entry that is also a member of a flagship stack
+appears as a **short example plus a deep-dive link** to that stack, where its full treatment lives once;
+the rest fold as one-line **known uses**. Every example is a real case of *this* mechanism, never a
+sibling's.
 
 <a id="cap-know"></a>
 ## KNOW · Maintain authoritative system knowledge
