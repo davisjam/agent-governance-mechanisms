@@ -24,15 +24,15 @@
       "x": "Foundation-model capability has been read off the model weights.",
       "y": "Recent work locates coding-agent capability in the runtime harness — tools, middleware, memory — more than the prompt; Lin et al. ablate the gain to tools/middleware/long-term memory, not the system prompt.",
       "z": "MAGE treats the harness as ONE layer of a governed environment, not a synonym for it — the environment encodes obligations the harness alone does not.",
-      "target_locations": ["1.4-why-mage-follows-from-the-machine", "2.1-the-agent-stack"],
+      "target_locations": ["1.4-why-mage-follows-from-the-machine"],
       "citations": [
         {"key": "zhong-zhu2026", "backs_claims": ["govern-the-environment"], "relation": "situates"},
-        {"key": "lin2026agentic", "backs_claims": ["govern-the-environment", "failures-become-machinery"], "relation": "corroborates"}
+        {"key": "lin2026agentic", "backs_claims": ["govern-the-environment", "failures-become-machinery"], "relation": "corroborates", "illustrates_pattern": "dynamic-context-injection"}
       ],
       "advances_theses": ["govern-the-environment"],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "STANDALONE wave. CORRECTION: Lin et al. = 11 authors (draft dropped Zhiheng Xi after Shihan Dou and Yu-Gang Jiang as final author). Checklist framing: harness = one layer of the governed environment, NOT a synonym. zhong-zhu2026 already in references.bib (recon key was zhong2026harness) — reuse the existing key to avoid a duplicate. lin2026agentic (arXiv 2604.25850) planned — not yet in the .bib."
+      "notes": "STANDALONE wave — LANDED (LPP-PROSE) in 1.4-why-mage-follows-from-the-machine, the emerging-consensus paragraph: Lin et al.'s ablation sentence inserted after the thin-harness cite, before the 'MAGE stands on this literature' close (harness stays ONE layer of the governed environment). zhong-zhu2026 was already cited in 1.4 (reused, not re-added); Lin's ablation localizes the capability gain to tools/middleware/long-term memory, not the system prompt. Lin = 11 authors (Zhiheng Xi after Shihan Dou; Yu-Gang Jiang last). target_locations trimmed to the actual landing chapter (both cites appear in 1.4). illustrates_pattern=dynamic-context-injection on Lin: convergent evidence that agent capability rides on delivered harness structure, not prompt prose (§2/context prior-art double-duty, Point-of-Action Policy Delivery)."
     },
     {
       "id": "persistent-context-code-graphs",

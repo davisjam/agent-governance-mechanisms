@@ -3,10 +3,10 @@
   "_note": "The literature-positioning model holds the book's Literature-Positioning Pass — each place the book situates itself against outside work, carrying the X (established lineage) -> Y (current frontier) -> Z (narrow MAGE move) frame and its citations as MODELED objects {key, backs_claims, relation} nested under the argument spine. It is the LITERATURE half of the substantiation aggregator (the data-claim ledger is the DATA half). The LP1-LP6 conformance check holds the frame mechanically: traceability + schema, thesis join, landing integrity, location join, coverage/burndown, citation join. It lands audit-only-first — a record that drops its X/Y/Z or (once landed) cites a key absent from the .bib reddens the audit but does not gate while the LPP prose waves are still landing. `status` planned|landed is the burndown signal; only §3 (graphify) and §4 (spec-driven development) are landed today.",
   "_counts": {
     "interventions": 10,
-    "landed": 3,
-    "planned": 7,
+    "landed": 4,
+    "planned": 6,
     "citations_total": 33,
-    "citations_pending_bib": 25,
+    "citations_pending_bib": 24,
     "distinct_theses": 9
   },
   "taxonomy": {
@@ -71,8 +71,7 @@
       "y": "Recent work locates coding-agent capability in the runtime harness — tools, middleware, memory — more than the prompt; Lin et al. ablate the gain to tools/middleware/long-term memory, not the system prompt.",
       "z": "MAGE treats the harness as ONE layer of a governed environment, not a synonym for it — the environment encodes obligations the harness alone does not.",
       "target_locations": [
-        "1.4-why-mage-follows-from-the-machine",
-        "2.1-the-agent-stack"
+        "1.4-why-mage-follows-from-the-machine"
       ],
       "citations": [
         {
@@ -92,25 +91,24 @@
             "failures-become-machinery"
           ],
           "relation": "corroborates",
-          "illustrates_pattern": "",
-          "resolves_bib": false,
+          "illustrates_pattern": "dynamic-context-injection",
+          "resolves_bib": true,
           "backs_resolve": true
         }
       ],
       "advances_theses": [
         "govern-the-environment"
       ],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "STANDALONE wave. CORRECTION: Lin et al. = 11 authors (draft dropped Zhiheng Xi after Shihan Dou and Yu-Gang Jiang as final author). Checklist framing: harness = one layer of the governed environment, NOT a synonym. zhong-zhu2026 already in references.bib (recon key was zhong2026harness) — reuse the existing key to avoid a duplicate. lin2026agentic (arXiv 2604.25850) planned — not yet in the .bib.",
+      "notes": "STANDALONE wave — LANDED (LPP-PROSE) in 1.4-why-mage-follows-from-the-machine, the emerging-consensus paragraph: Lin et al.'s ablation sentence inserted after the thin-harness cite, before the 'MAGE stands on this literature' close (harness stays ONE layer of the governed environment). zhong-zhu2026 was already cited in 1.4 (reused, not re-added); Lin's ablation localizes the capability gain to tools/middleware/long-term memory, not the system prompt. Lin = 11 authors (Zhiheng Xi after Shihan Dou; Yu-Gang Jiang last). target_locations trimmed to the actual landing chapter (both cites appear in 1.4). illustrates_pattern=dynamic-context-injection on Lin: convergent evidence that agent capability rides on delivered harness structure, not prompt prose (§2/context prior-art double-duty, Point-of-Action Policy Delivery).",
       "locations_resolve": [
-        true,
         true
       ],
       "theses_resolve": [
         true
       ],
-      "landed_appears": false
+      "landed_appears": true
     },
     {
       "id": "persistent-context-code-graphs",
