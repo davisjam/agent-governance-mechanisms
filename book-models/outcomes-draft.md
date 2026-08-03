@@ -153,6 +153,9 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 ### Lesson 3.7-the-scope-of-modeling
 
 
+### Lesson 3.8-keeping-models-in-sync
+
+
 ## Module 4 — Putting It to Work
 
 - **[DECLARED]** (apply) After Part 4, the reader can put the method to work: induce models from an existing codebase, deploy the self-operate / self-govern / self-communicate skills, size a transformation to its model and guarantee, and recognize the agent-shaped failure modes. _(primary: Module 4 · elaborated by: Module 5)_ — _anchor: Part 4 title 'Putting It to Work' + chapter arc: brownfield -> skills -> transformations -> training-data -> lessons-learned -> generative-validation._

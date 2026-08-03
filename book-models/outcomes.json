@@ -30,10 +30,10 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 204,
+    "sections_total": 213,
     "sections_primary_of_an_outcome": 41,
     "modules": 6,
-    "lessons": 30
+    "lessons": 31
   },
   "taxonomy": {
     "know": [
@@ -301,6 +301,11 @@
           },
           {
             "lesson": "3.7-the-scope-of-modeling",
+            "own_outcomes": [],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "3.8-keeping-models-in-sync",
             "own_outcomes": [],
             "section_outcomes": []
           }

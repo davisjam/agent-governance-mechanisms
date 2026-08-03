@@ -7,7 +7,7 @@
     "derived_ids": 186,
     "missing_topic_sentence": 2,
     "sections_drained": 173,
-    "paragraph_points": 527
+    "paragraph_points": 529
   },
   "chapters": [
     {
@@ -293,7 +293,7 @@
         },
         {
           "slug": "the-agent-is-a-printer-so-a-bad-build-indicts-the-instructions",
-          "text": "An agent is a printer; a bad build indicts the instructions.",
+          "text": "An agent is a printer; a bad build indicts instructions.",
           "block_index": 2
         }
       ]
@@ -1101,24 +1101,34 @@
               "block_index": 15
             },
             {
+              "slug": "keeping-the-map-equal-is-an-old-research-program",
+              "text": "Keeping map equal to territory is a decades-old research program.",
+              "block_index": 18
+            },
+            {
+              "slug": "the-book-measures-the-changed-sync-economics-rather-than-asserting-it",
+              "text": "The book measures the changed sync economics, not asserts it.",
+              "block_index": 20
+            },
+            {
               "slug": "hand-maintained-models-rot-when-the-maintainer-stops",
               "text": "A hand-maintained model rots the moment its maintainer stops.",
-              "block_index": 18
+              "block_index": 22
             },
             {
               "slug": "agents-flip-the-calculation-they-reason-over-models-not-code",
               "text": "Agents flip it: they reason over models, not the code.",
-              "block_index": 20
+              "block_index": 24
             },
             {
               "slug": "the-model-reached-for-shifts-with-the-move-so-you-need-a-linked-set",
               "text": "The model shifts with the move; keep a linked set.",
-              "block_index": 22
+              "block_index": 26
             },
             {
               "slug": "a-model-lets-the-agent-check-work-and-a-drift-gate-makes-map-equals-territory-checked",
               "text": "A drift gate makes \"map equals territory\" a checked property.",
-              "block_index": 24
+              "block_index": 28
             }
           ]
         },
@@ -1128,12 +1138,12 @@
           "heading_text": "Why agents don't reach for models on their own — a conjecture",
           "topic_sentence": "Here a skeptic has a fair question.",
           "id_source": "derived",
-          "block_index": 27,
+          "block_index": 31,
           "points": [
             {
               "slug": "agents-reluctance-to-model-is-a-conjectured-echo-of-the-corpus-not-evidence-against-models",
               "text": "The agent's reluctance to model echoes its corpus, not merit.",
-              "block_index": 30
+              "block_index": 34
             }
           ]
         },
@@ -1143,32 +1153,32 @@
           "heading_text": "The apex of the documentation hierarchy is a structured model",
           "topic_sentence": "Step back from drift for a moment and look at what you actually hand an agent to work from.",
           "id_source": "explicit",
-          "block_index": 32,
+          "block_index": 36,
           "points": [
             {
               "slug": "what-you-hand-an-agent-is-a-hierarchy-of-partial-drifting-descriptions",
               "text": "You hand an agent a hierarchy of partial, drifting descriptions.",
-              "block_index": 34
+              "block_index": 38
             },
             {
               "slug": "the-usual-recipe-leaves-docs-code-tests-as-unbound-islands-so-drift-is-the-default",
               "text": "Nothing binds docs, code, and tests, so drift is default.",
-              "block_index": 36
+              "block_index": 40
             },
             {
               "slug": "the-apex-of-the-hierarchy-is-a-typed-model-that-binds-the-islands",
               "text": "The hierarchy's apex is a structured model that binds everything.",
-              "block_index": 39
+              "block_index": 43
             },
             {
               "slug": "modeling-thesis-at-full-strength-the-model-is-the-one-description-that-cannot-silently-lie",
               "text": "The structured model is the one description that cannot lie.",
-              "block_index": 41
+              "block_index": 45
             },
             {
               "slug": "structured-english-stops-one-rung-short-because-a-checker-cannot-act-on-its-words",
               "text": "Structured English stops one rung short; a checker cannot act.",
-              "block_index": 43
+              "block_index": 47
             }
           ]
         },
@@ -1178,22 +1188,22 @@
           "heading_text": "A drift check proves agreement, not correctness",
           "topic_sentence": "The claim I just made hides a trap, and the book's enthusiasm for drift gates can be misread into a dangerous half-truth.",
           "id_source": "derived",
-          "block_index": 45,
+          "block_index": 49,
           "points": [
             {
               "slug": "a-drift-gate-proves-agreement-not-that-either-side-is-right",
               "text": "A drift gate proves agreement, not correctness.",
-              "block_index": 47
+              "block_index": 51
             },
             {
               "slug": "a-mirror-model-reflects-the-code-only-a-spec-authored-from-intent-catches-a-wrong-is",
               "text": "A mirror reflects code; only a spec catches wrong.",
-              "block_index": 51
+              "block_index": 55
             },
             {
               "slug": "what-belongs-in-the-model-is-the-essential-residual-that-does-not-automate",
               "text": "Deciding what belongs in the model is the essential residual.",
-              "block_index": 54
+              "block_index": 58
             }
           ]
         },
@@ -1203,32 +1213,32 @@
           "heading_text": "Just execute the model? A short history of CASE and MDA",
           "topic_sentence": "If the structured model is where you now start, an old idea says to finish there too: skip the code and *execute the model directly*.",
           "id_source": "derived",
-          "block_index": 57,
+          "block_index": 61,
           "points": [
             {
               "slug": "executing-the-model-directly-is-a-forty-year-old-idea-whose-landing-marks-a-boundary",
               "text": "Executing the model directly is a forty-year-old idea.",
-              "block_index": 59
+              "block_index": 63
             },
             {
               "slug": "case-and-mda-were-the-named-dreams-of-round-trip-and-executable-models",
               "text": "CASE and MDA were the named dreams of executable models.",
-              "block_index": 61
+              "block_index": 65
             },
             {
               "slug": "executable-models-failed-on-tempo-not-tooling-and-settled-into-generating-key-parts",
               "text": "Executable models failed on tempo; teams generate key parts.",
-              "block_index": 63
+              "block_index": 67
             },
             {
               "slug": "how-far-to-model-is-a-spectrum-trading-strength-for-changeability",
               "text": "How far to model is a spectrum: strength for changeability.",
-              "block_index": 65
+              "block_index": 69
             },
             {
               "slug": "the-books-stance-the-sweet-spot-on-the-spectrum-moved-outward-and-is-still-moving",
               "text": "The sweet spot moved outward and is still moving.",
-              "block_index": 67
+              "block_index": 71
             }
           ]
         },
@@ -1238,27 +1248,27 @@
           "heading_text": "The semantic gap",
           "topic_sentence": "Enforce a property at the wrong level and it slips through; [ref:semantic-gap] shows the fix — lift the check to where the meaning is legible.",
           "id_source": "derived",
-          "block_index": 69,
+          "block_index": 73,
           "points": [
             {
               "slug": "enforce-at-the-wrong-level-and-the-property-slips-through",
               "text": "Enforce a property at the wrong level; it slips through.",
-              "block_index": 71
+              "block_index": 75
             },
             {
               "slug": "model-drift-at-the-commit-is-the-wrong-granularity",
               "text": "Checking model drift at the commit is the wrong granularity.",
-              "block_index": 74
+              "block_index": 78
             },
             {
               "slug": "the-semantic-gap-is-enforcing-a-property-at-the-wrong-level-of-abstraction",
               "text": "The semantic gap is enforcing at the wrong level.",
-              "block_index": 76
+              "block_index": 80
             },
             {
               "slug": "enforce-at-the-level-where-the-property-is-legible-agent-return-for-model-drift",
               "text": "Enforce where the property is legible: at agent-return.",
-              "block_index": 80
+              "block_index": 84
             }
           ]
         },
@@ -1268,12 +1278,12 @@
           "heading_text": "A worked example: the context-fullness bank-hook",
           "topic_sentence": "Let me give you a second instance of the semantic gap, one that lives not in the product but in the operator's own loop.",
           "id_source": "derived",
-          "block_index": 87,
+          "block_index": 91,
           "points": [
             {
               "slug": "compaction-is-a-lossy-guess-because-the-harness-sits-below-what-is-worth-keeping",
               "text": "Compaction is a lossy guess; the harness sits below meaning.",
-              "block_index": 90
+              "block_index": 94
             }
           ]
         },
@@ -1283,12 +1293,12 @@
           "heading_text": "The fix: a hook one level up, checking two things",
           "topic_sentence": "So I moved the check up to where the property *is* legible: the operator's loop.",
           "id_source": "derived",
-          "block_index": 93,
+          "block_index": 97,
           "points": [
             {
               "slug": "the-fix-is-a-hook-at-the-operators-loop-checking-fullness-and-staleness-together",
               "text": "The fix is a hook checking fullness and staleness together.",
-              "block_index": 95
+              "block_index": 99
             }
           ]
         },
@@ -1298,12 +1308,12 @@
           "heading_text": "Why both conditions, and not one",
           "topic_sentence": "Why insist on both conditions?",
           "id_source": "derived",
-          "block_index": 100,
+          "block_index": 104,
           "points": [
             {
               "slug": "a-single-loose-condition-drives-into-the-ouroboros",
               "text": "A single loose condition fires too often, driving the ouroboros.",
-              "block_index": 103
+              "block_index": 107
             }
           ]
         },
@@ -1313,17 +1323,17 @@
           "heading_text": "The honest part: the pre-compact hook is the wrong hook",
           "topic_sentence": "I want to be straight about a compromise buried in this, because it is the kind of thing the semantic-gap idea should make you notice rather than paper over.",
           "id_source": "derived",
-          "block_index": 107,
+          "block_index": 111,
           "points": [
             {
               "slug": "the-pre-compact-hook-fires-too-late-and-the-bank-itself-trips-the-compaction",
               "text": "The pre-compact hook fires too late; the bank trips compaction.",
-              "block_index": 111
+              "block_index": 115
             },
             {
               "slug": "this-example-has-no-clean-rung-so-a-roughly-right-hook-beats-both",
               "text": "With no clean rung, a roughly-right hook beats both.",
-              "block_index": 113
+              "block_index": 117
             }
           ]
         }
@@ -2212,32 +2222,32 @@
           "heading_text": "Beat 3 — every model traces to the code",
           "topic_sentence": "A model earns trust only if you can get from a model element back to the lines that realize it, and forward from a line to the model element that governs it.",
           "id_source": "derived",
-          "block_index": 111,
+          "block_index": 110,
           "points": [
             {
               "slug": "every-model-traces-to-the-code-in-both-directions",
               "text": "Every model traces to the code in both directions.",
-              "block_index": 114
+              "block_index": 113
             },
             {
               "slug": "the-template-folds-a-traceability-note-into-every-page",
               "text": "The template folds a traceability note into every page.",
-              "block_index": 116
+              "block_index": 115
             },
             {
               "slug": "a-zoo-of-drifted-views-is-worse-than-none",
               "text": "A zoo of drifted views is worse than none.",
-              "block_index": 118
+              "block_index": 117
             },
             {
               "slug": "the-round-trip-must-be-derived-not-snapshotted",
               "text": "The round-trip must be derived, not snapshotted.",
-              "block_index": 120
+              "block_index": 119
             },
             {
               "slug": "a-resolving-edge-is-both-drift-detection-and-navigation",
               "text": "A resolving edge is both drift-detection and navigation.",
-              "block_index": 122
+              "block_index": 121
             }
           ]
         },
@@ -2247,22 +2257,22 @@
           "heading_text": "Keeping the models honest — the traceability substrate",
           "topic_sentence": "DocAble did not design this up front.",
           "id_source": "derived",
-          "block_index": 125,
+          "block_index": 124,
           "points": [
             {
               "slug": "the-substrate-was-built-from-what-broke-not-designed-up-front",
               "text": "The substrate was built from what broke, not designed.",
-              "block_index": 127
+              "block_index": 126
             },
             {
               "slug": "a-stale-model-makes-agents-plan-against-a-system-that-no-longer-exists",
               "text": "A stale model makes agents plan against a dead system.",
-              "block_index": 129
+              "block_index": 128
             },
             {
               "slug": "the-checklist-approach-fails-because-a-hand-maintained-list-rots",
               "text": "A hand-maintained checklist rots the moment the code moves.",
-              "block_index": 131
+              "block_index": 130
             }
           ]
         },
@@ -2272,17 +2282,17 @@
           "heading_text": "Reading the fix off real drift",
           "topic_sentence": "The right sensor was read off real drift rather than guessed.",
           "id_source": "derived",
-          "block_index": 133,
+          "block_index": 132,
           "points": [
             {
               "slug": "the-fix-was-read-off-real-drift-not-guessed",
               "text": "The fix was read off real drift, not guessed.",
-              "block_index": 135
+              "block_index": 134
             },
             {
               "slug": "the-graph-is-nodes-the-system-already-has-joined-by-re-proved-edges",
               "text": "The graph joins existing nodes by re-proved edges.",
-              "block_index": 137
+              "block_index": 136
             }
           ]
         },
@@ -2292,17 +2302,17 @@
           "heading_text": "Two decisions that make the graph resist rot",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 139,
+          "block_index": 138,
           "points": [
             {
               "slug": "the-symbol-walk-fires-at-a-slower-cadence-because-the-cadence-follows-the-cost",
               "text": "The symbol walk fires slowly because cadence follows cost.",
-              "block_index": 142
+              "block_index": 141
             },
             {
               "slug": "derived-sensors-defend-snapshotted-ones-drift",
               "text": "Derived sensors defend; snapshotted ones drift.",
-              "block_index": 144
+              "block_index": 143
             }
           ]
         },
@@ -2312,22 +2322,22 @@
           "heading_text": "How to read a model page",
           "topic_sentence": "Every model in this Part is rendered by filling the same five-field template.",
           "id_source": "derived",
-          "block_index": 146,
+          "block_index": 145,
           "points": [
             {
               "slug": "every-model-page-fills-the-same-five-field-template",
               "text": "Every model page fills the same five-field template.",
-              "block_index": 150
+              "block_index": 149
             },
             {
               "slug": "the-five-fields-answer-the-five-questions-a-reader-brings-to-a-model",
               "text": "The five fields answer the reader's five questions.",
-              "block_index": 153
+              "block_index": 152
             },
             {
               "slug": "the-trunk-is-built-so-the-branches-can-be-walked",
               "text": "The trunk is built; the five views are the branches.",
-              "block_index": 163
+              "block_index": 162
             }
           ]
         }
@@ -4841,7 +4851,7 @@
         },
         {
           "slug": "staircase-of-delegated-jobs",
-          "text": "The seat climbs only as far as each step's model or control makes safe.",
+          "text": "Each step mints the model or control the next needs.",
           "block_index": 2
         },
         {
