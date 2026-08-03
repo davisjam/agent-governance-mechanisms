@@ -182,6 +182,22 @@
       "status": "planned",
       "fold_target": "W5-Part5",
       "notes": "FOLD into W5/Part-5 (build-reports table + academic-methodology INSET: Anthropic/Cloudflare critical inline, academic methodology in a skippable inset for professors). CORRECTION: Carlini = 16 agents / ~100K-line Rust C compiler / Linux 6.9 (x86/ARM/RISC-V), not a generic 'Linux kernel'; vinext ~1 week / 1 engineer / ~$1,100; Bun million-line Zig->Rust in <2 weeks / 100% tests. Practitioner build-reports are convergent-evidence, NOT 'establish' (verb discipline). davis2026cheapcode is the author's own paper (2607.01087). All keys planned, not yet in the .bib."
+    },
+    {
+      "id": "automated-governance-dsl",
+      "section": "§12",
+      "title": "Automated governance / policy DSL for human-agent teams",
+      "x": "Deciding who does what in a software project has long been an organizational, human concern.",
+      "y": "The field is beginning to treat governance of agentic software engineering as a first-class, formalizable subject — Ait et al. propose a domain-specific language for defining and enforcing governance policies across mixed human-agent teams.",
+      "z": "MAGE converges with that direction but works at a different grain: not a single policy language, but a repertoire of governance mechanisms grounded in a production case.",
+      "target_locations": ["2.3-the-governed-environment"],
+      "citations": [
+        {"key": "ait2025governance", "backs_claims": ["govern-the-environment"], "relation": "convergent-evidence"}
+      ],
+      "advances_theses": ["govern-the-environment"],
+      "status": "landed",
+      "fold_target": "",
+      "notes": "AUTHOR-SUPPLIED (coordinator, 260803) — LANDED (LPP-PROSE) in 2.3-the-governed-environment, right after the chapter intro's 'two forms every governance mechanism finally takes', before the ex-ante section. A light 2-3-sentence convergent-evidence note: the field is beginning to formalize governance of agentic SE (Ait et al.'s policy DSL for human-agent collaboration, ASE 2025 NIER); MAGE develops a full governed environment well beyond a single policy language. Respectful, non-dismissive per the author's steer. relation=convergent-evidence (they independently converge on governing agentic SE, NOT 'establish'). ait2025governance (arXiv 2510.14465) added to references.bib."
     }
   ]
 }
