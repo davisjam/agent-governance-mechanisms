@@ -183,6 +183,15 @@
     },
     {
       "granularity": "chapter",
+      "primary_unit": "1.4-why-mage-follows-from-the-machine",
+      "verb": "derive",
+      "obj": "the two theses and the governed engineering environment from the substrate's properties — four of the foundation model, four of the harness",
+      "statement": "After this chapter, the reader can derive the Modeling and Alignment theses from the properties of the foundation model and the agentic harness, and say why their combination requires the governed engineering environment.",
+      "provenance": "declared",
+      "anchor": "Section titles: 'the-reasoners-properties', 'what-the-harness-adds', 'the-engineering-that-follows', 'the-theses-follow'."
+    },
+    {
+      "granularity": "chapter",
       "primary_unit": "2.1-the-agent-stack",
       "verb": "identify",
       "obj": "the four layers of the agent stack as four places to steer",

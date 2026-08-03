@@ -42,7 +42,11 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[GAP-REC]** (create) After this section, the reader can construct a world-model an agent acts against — the first governance move. — _gap: O2 finding: this H2 opens on a non-paragraph block (no topic sentence), so the outcome its heading promises is not stated in prose as written. Recommend a lead paragraph that states the move._
   - **[DECLARED]** (understand) After this section, the reader can explain why handing the agent a model of its world conditions the probability distribution of its behavior — aiming its search and shrinking what it must hold. — _anchor: point: model-of-the-world-is-the-input-agent-reasons-over / structuring-loop-and-model-conditions-the-distribution (section opens on an aside, not a topic sentence — the O2 gap the drain records)_
 
-### Lesson 1.4-the-engineers-seat
+### Lesson 1.4-why-mage-follows-from-the-machine
+
+- **[DECLARED]** (create) After this chapter, the reader can derive the Modeling and Alignment theses from the properties of the foundation model and the agentic harness, and say why their combination requires the governed engineering environment. — _anchor: Section titles: 'the-reasoners-properties', 'what-the-harness-adds', 'the-engineering-that-follows', 'the-theses-follow'._
+
+### Lesson 1.5-the-engineers-seat
 
 
 ## Module 2 — The Governed Engineering Environment
