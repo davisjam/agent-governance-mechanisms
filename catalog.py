@@ -2880,6 +2880,74 @@ def cmd_claims(args) -> int:
     return clm.consult(args.chapter)
 
 
+def cmd_spine(args) -> int:
+    """Query the argument-spine model (book-models/argument-spine.json) — the book's linear argument as an
+    ordered run of claims, each labeled with the chapters that advance it. Three modes, mirroring the
+    claims/concepts siblings: no arg lists the 14 claims in order with advance-counts; a CLAIM-ID prints
+    that claim's statement and the chapters that advance it (`advanced_by`); a CHAPTER-SLUG (or number
+    prefix, e.g. 3.1) prints that chapter and the claims it advances. Reads the GENERATED artifact — run
+    `python3 book-models/argument_spine_model.py regenerate` if it is stale. `--json` dumps the raw match."""
+    art = _load_json_or_none(os.path.join(ROOT, "book-models", "argument-spine.json"))
+    if art is None:
+        print("no book-models/argument-spine.json — run "
+              "`python3 book-models/argument_spine_model.py regenerate`")
+        return 0
+    spine = art.get("spine", [])
+    chapters = art.get("chapters", [])
+    by_id = {s["id"]: s for s in spine}
+
+    target = getattr(args, "target", None)
+    if not target:
+        if args.json:
+            print(json.dumps(spine, ensure_ascii=False, indent=2))
+            return 0
+        print("== the argument spine (14 claims in order) ==")
+        for s in sorted(spine, key=lambda s: s["order"]):
+            n = len(s.get("advanced_by", []))
+            print(f"{s['order']:>3}. {s['id']:34} advanced by {n:>2} chapter(s)")
+            print(f"       {s['statement']}")
+        return 0
+
+    # A claim id wins over a chapter slug (ids are kebab, slugs are number-prefixed — no collision).
+    if target in by_id:
+        s = by_id[target]
+        if args.json:
+            print(json.dumps(s, ensure_ascii=False, indent=2))
+            return 0
+        seeds = f" [seeds {','.join(map(str, s.get('seeds', [])))}]" if s.get("seeds") else ""
+        print(f"claim {s['order']}. {s['id']}{seeds}")
+        print(f"  {s['statement']}")
+        adv = s.get("advanced_by", [])
+        print(f"  advanced by ({len(adv)}): {', '.join(adv) if adv else '— none'}")
+        return 0
+
+    # Chapter slug — exact, or a unique number/slug prefix (3.1 -> 3.1-the-executable-zoo).
+    matches = [c for c in chapters if c["slug"] == target] or \
+              [c for c in chapters if c["slug"].startswith(target)]
+    if len(matches) == 1:
+        c = matches[0]
+        if args.json:
+            print(json.dumps(c, ensure_ascii=False, indent=2))
+            return 0
+        exempt = f"  (exempt: {c['exempt']})" if c.get("exempt") else ""
+        print(f"chapter {c['slug']}{exempt}")
+        adv = c.get("advances", [])
+        if not adv:
+            print("  advances no spine claim")
+            return 0
+        print(f"  advances ({len(adv)}):")
+        for sid in adv:
+            stmt = by_id.get(sid, {}).get("statement", "?")
+            print(f"    {sid} — {stmt}")
+        return 0
+    if len(matches) > 1:
+        print(f"'{target}' matches {len(matches)} chapters: {', '.join(c['slug'] for c in matches)}")
+        return 1
+    print(f"'{target}' is neither a spine claim id nor a chapter slug. "
+          f"Run `python3 catalog.py spine` to list the claims.")
+    return 1
+
+
 def _load_json_or_none(path: str):
     return json.load(open(path, encoding="utf-8")) if os.path.isfile(path) else None
 
@@ -3188,6 +3256,9 @@ def main() -> int:
     cl = sub.add_parser("claims", help="PRE-EDIT CONSULT: list the claims a chapter asserts + their contradiction predicates (book-models/claims.json). Run before editing a chapter's prose and confirm your edit negates no listed stance")
     cl.add_argument("chapter", help="chapter slug or number prefix (e.g. 3.1 or 3.1-the-executable-zoo)")
     cl.add_argument("--json", action="store_true", help="dump the resolved claim records")
+    sp = sub.add_parser("spine", help="query the argument-spine model (book-models/argument-spine.json): no arg lists the 14 claims in order with advance-counts; a CLAIM-ID prints its statement + advancing chapters; a CHAPTER-SLUG prints the claims that chapter advances")
+    sp.add_argument("target", nargs="?", help="a spine claim id (e.g. alignment-thesis) or a chapter slug / number prefix (e.g. 2.3 or 2.3-the-governed-environment); omit to list the whole spine")
+    sp.add_argument("--json", action="store_true", help="dump the raw matched record(s)")
     va = sub.add_parser("views-audit", help="book-models drift audit: structural (every view->md reference resolves) + freshness (each view artifact equals a fresh derivation). Fast pre-commit gate; AUDIT-ONLY (prints, exits 0) unless --strict")
     va.add_argument("--strict", action="store_true", help="exit 1 on any finding (the flip a follow-up wires into the hook once seed findings are drained)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
@@ -3202,7 +3273,7 @@ def main() -> int:
             "check-console": cmd_check_console,
             "data-claims": cmd_data_claims, "concepts": cmd_concepts,
             "definitions": cmd_definitions, "outcomes-site": cmd_outcomes_site,
-            "claims": cmd_claims,
+            "claims": cmd_claims, "spine": cmd_spine,
             "views-audit": cmd_views_audit,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 
