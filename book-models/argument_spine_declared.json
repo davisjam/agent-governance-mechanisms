@@ -165,6 +165,7 @@
     "3.5-the-physical-view": ["modeling-thesis"],
     "3.6-the-scenarios-view": ["modeling-thesis", "alignment-thesis"],
     "3.7-the-scope-of-modeling": ["modeling-thesis", "mage-becomes-practical"],
+    "3.8-keeping-models-in-sync": ["modeling-thesis", "sync-cost-reduced"],
     "4.1-brownfield": ["govern-the-environment", "modeling-thesis", "failures-become-machinery"],
     "4.2-the-skills": ["govern-the-environment", "failures-become-machinery"],
     "4.3-transformations": ["modeling-thesis", "alignment-thesis"],

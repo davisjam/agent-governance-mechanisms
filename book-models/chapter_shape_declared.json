@@ -302,6 +302,21 @@
       "closing_anchor": "the day you feel that graduation — it is worth your time."
     },
     {
+      "slug": "3.8-keeping-models-in-sync",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "modeling"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "The measurement chapter. Opening states the failure (map must equal the territory, or the bridge lies) and the modeling-thesis link outright; answer is the two-layer net + liveness-as-a-property. 'The honest reading' closes by bounding the claim — a synthesis, not a re-announcement.",
+      "opening_anchor": "A context-bounded fleet governs a context-exceeding codebase *through* typed models. The models",
+      "closing_anchor": "extends the net. That boundary is the honest shape of the result."
+    },
+    {
       "slug": "4.1-brownfield",
       "opening": {
         "failure_question": "explicit",
