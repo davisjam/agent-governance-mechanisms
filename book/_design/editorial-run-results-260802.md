@@ -471,4 +471,4 @@ data bump into that pass.
 re-rendered).
 
 ### Live SHA
-(filled post-deploy below)
+`64f3dbf` — pushed to origin/main (deploy gate green: validate 0 + build + test suite + PDF integrity gate all passed); GitHub Actions building Pages (not blocked-on per brief). Live curl 200 at push time (still serving the prior build mid-CI — the refreshed numbers land when the Actions run completes). Untracked sibling briefs left unstaged by design.
