@@ -556,3 +556,55 @@ Author-ratified claim-health corrections (260803) applied to the argument-spine 
 - **Gates:** `check_argument_spine` (AS1–AS9) PASS · `check_chapter_shape` PASS · claims C7 PASS ·
   `check_concepts_hierarchy` PASS · `catalog.py validate` 0 issues (82 entries) ·
   `book/build_book_html.py` green (127 pages). Live SHA: 91463f9.
+
+---
+
+## W2 flagship-stack model + Provenance exemplar deep-dive (260803)
+
+Models-first build of the alternative-appendix flagship deep-dives (flagships = STACKS/packages, not
+individual mechanisms). Exemplar-first: the Provenance + fidelity stack DEFINES the reusable per-part
+template the other six stacks then match. DRAFT for author review; NOT deployed (orchestrator batches one
+deploy after all waves). Commits: `ea98c00` (model) · `eb3e697` (FS check) · `a6eb4e2` (page + figure).
+
+- **(a) Model** — `book-models/flagship_stack_declared.json` (hand-authored source) →
+  `book-models/flagship_stack_model.py` (generator + FS1–FS5) → `book-models/flagship-stack.json`
+  (generated). Schema per stack: `id · name · goal · capability (GEE) · overview_figure · page_source ·
+  cross_links · parts[]`, each part = `{slug, role, failure, mechanism, seam, durability}`. Sibling to
+  argument-spine / chapter-shape (same declared→generated + `regenerate`/`verify` idiom). CLI adds
+  `list` + `flagship <id>`. Only the Provenance record is populated (1/7); the other six are a later wave.
+  `parts[].slug` joins to the bare catalogue-entry slug (unique across all 82 entries), resolved against
+  the entry `.md` files on disk at check time.
+- **(b) FS check** — `check_flagship_stack()` in `tests/book_models.py`, registered **audit-only**
+  (rule #55) in `catalog_tests.py`, and surfaced as a non-gating `[flagship]` print in `catalog.py
+  validate`. FS1 join-integrity · FS2 page shape (goal + GEE capability + overview_figure EXISTS + ≥2
+  parts × 6 non-empty fields + kebab id) · FS3 figure house-rules (per-figure overflow sensor +
+  design-token palette, not the global scan) · FS4 coverage (DEFERRED note while <7 stacks) · FS5
+  freshness (page source renders the model's figure + every part slug). **FS output at HEAD: FS1–FS5
+  clean; FS4 = "coverage DEFERRED — 1/7 flagship stacks populated."**
+- **(c) Exemplar page + figure** — `book/appendix-stacks/provenance-fidelity-stack.md` (GOAL line +
+  overview figure + 5 six-field per-part entries; `role:<slug>` tokens resolve to the catalogue pages and
+  back-link) registered in `build_book_html._STACKS` as a DRAFT Appendix D.7 (+1 book page). Overview SVG
+  `book/assets/provenance-fidelity-stack.svg` — self-communicate house rules: two lanes (the sanctioned
+  door / the guarantee), palette tokens only (0 off-palette hexes), a11y title+desc, overflow-clean (0
+  overflow findings). Caption spine: *mark it, cover the marking, read it back, and gate what leaves.*
+- **Recommended home:** the flagship deep-dives should live as evolved **Appendix D** pages (Appendix D is
+  already "Mechanism Stacks"). Parked for the author: whether the seven flagship deep-dives SUPERSEDE /
+  merge with the six existing Appendix-D stack pages (mbse / self-operations / semantic-lint /
+  worktree-lifecycle / canonical-seam / observability), which use the older two-tier template. The
+  exemplar currently sits alongside them as D.7 with a DRAFT banner so the author can rule in context.
+- **Gates (verbatim):** `flagship verify` — "flagship-stack.json is in sync (1 stack(s), 5 parts)" ·
+  `catalog.py validate` — "validated 82 entries (agent 28 · bridge 34 · product 20) — 0 issue(s)" ·
+  `book/build_book_html.py` — "built 128 chapter pages … figures.html (109 figures)" (was 127/108, +1/+1)
+  · `check_flagship_stack` / `check_argument_spine` / `check_chapter_shape` / `check_claims_model` all
+  PASS (0). `catalog.py build` reachability gate exit 0. stray-comments lint clean.
+- **Pre-existing, NOT mine:** the pre-commit `views-audit` shows outline.json / reverse_index.json STALE
+  + definitions/outcomes-site landing gaps — these are other in-flight agents' book-source edits
+  (outline has 0 appendix-d refs, so the new page does not touch it); all audit-only (exit 0). The 115
+  design-token-drift findings are the pre-existing repo-wide audit; the new SVG contributes 0.
+- **Template feedback (for the other 6 stacks):** the `role:<slug>` → appendix-link resolution + the
+  member back-link index came for free from the existing `_STACKS` machinery, so authoring the parts is
+  cheap. Two rough edges: (1) FS1 joins to the BARE entry slug while the compositions in
+  catalogue-classification.json key by L2-PATTERN name — so FS4 coverage owes an L2-pattern→entry-slug
+  map before it can promote from a deferred note to a real check. (2) `capability` is singular in the
+  schema, but the Provenance stack genuinely serves two GEE capabilities (track-provenance + preserve-
+  semantics); a future stack may want `capabilities[]`. Neither blocks the exemplar.
