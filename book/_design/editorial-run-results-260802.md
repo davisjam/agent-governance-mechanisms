@@ -1190,3 +1190,56 @@ FRESHNESS drift my prose added.
 - **§4-extend + §3-extend DEFERRED to W7** (in 3.1; not touched). §5 optional Tu cite: INCLUDED
   (clean prose slot); §5 second optional (fang) SKIPPED. §10 Jackson kept in 1.5 (not split to 6.0),
   per the draft's recommendation.
+
+## W5 — "Empirical research opportunities" section (6.0-implications-for-se) — ✅ DONE
+
+Landed the three-part **Empirical research opportunities** section INSIDE
+`book/backmatter/6.0-implications-for-se.md`, appended BEFORE the existing `## Limitations`. The
+scratchpad DRAFT / resume-note / rulings were gone from disk at boot (session-isolated scratch);
+recovered the full verbatim draft + 14 BibTeX entries from the `w5-write` / `w5-draft` agents.
+
+- **Part 1 — Governing the oracle (`245a16a`).** Fallible test-suites as a research frontier: the
+  APR-overfitting lineage (Smith et al.), the SWE-bench Verified retirement (OpenAI, 59.4% flawed
+  test cases + the training-exposure quote), memorization/contamination (SWE-Bench Illusion, Scale
+  AI's SWE-Bench Pro ~23%, SWE-bench-Live, SWE-rebench), agent-authored oracle degradation (Hora &
+  Robbes over-mocking; the LLM-oracle study), and the obligation-census guardrail. Cite the OpenAI
+  quote via HN corroboration (openai.com 403'd the fetcher) with an APPROXIMATE date ("early 2026",
+  no invented day).
+- **Part 2 — The beautiful garden (garden-null).** Why per-task recall ablation cannot price a
+  governed environment: the R=3 four-cell null, "delta ≈ 0 by construction" (redundant re-encoding),
+  the over-read fence, the positive agenda (efficiency-at-matched-recall · system-level ablations ·
+  redundant-encoding density). **Ruling (a) applied — CONSERVATIVE null-framing:** the two draft
+  blockquotes replaced by ONE — "*consistent with* the governance method achieving its stated
+  goal…", DROPPED "strongest evidence available", KEPT "Map ≡ territory: the ablation cannot find a
+  gap precisely because the governance has left no gap to find" as the closer; fence stays.
+- **Part 3 — Deep single-case methodology.** Two-evidence-forms frame + the 3-row evidence table +
+  the skippable academic-methodology inset. **Build-report FACTS corrected:** Cloudflare vinext
+  (Next.js-on-Vite, ~1 wk / 1 eng) — NOT an OAuth library; Carlini = 16 agents / ~100K-line Rust C
+  compiler / Linux 6.9; Anthropic = million-line Bun Zig→Rust. Runeson/Höst + Beach/Pedersen in the
+  inset; Merton name-dropped only (no cite).
+- **Cites (14 new → references.bib, 46→60):** key-corrections applied vs the SSOT
+  (`lit_positioning_declared.json`): `liang2026illusion`→`liang2026swebenchillusion` ·
+  `oracles2024actual`→`llmoracle2024` · `faulkner2025vinext`→`faulkner2026vinext` ·
+  `anthropic2026bun`→`anthropic2026migration`; phantom `anthropic2026ccompiler` REMOVED (the
+  C-compiler is Carlini's → `carlini2026ccompiler`); `swerebench2025` added as a 14th (distinct from
+  `zhang2025swebenchlive`) + wired into the §9 record. All bare `[key]`→`[cite: key]`; cites in PROSE,
+  not table cells; `render_citations` regenerated (60 keys resolve).
+- **Float discipline:** both markdown tables registered as numbered floats (`<!-- label: -->` +
+  `<!-- table: -->` caption + a `[ref:]` intro in prose before each) — else `book-float-ref` FAILs.
+  `garden-null-cells` + `evidence-forms`.
+- **Lit-positioning FLIP:** §9 `fallible-oracles-swebench` + §11 `single-case-methodology`
+  `planned`→`landed`, `target_locations`→`["6.0-implications-for-se"]`, regenerated. LP3 reports the
+  6.0 cites as "appears in none of its target chapters" — the EXPECTED audit-only backmatter-glob
+  limitation (LP3 `_chapter_text` globs `book/part*/` only, same as the 0.1-preface precedent);
+  non-gating, annotated in both records' notes.
+- **MBSE row (`evidence-study-design-260803.md` §3e):** `PENDING author artifact` → `LANDED:
+  actual-garden-null`; Status para rewritten; `Actual (as-run)` line appended to the interpretation
+  bullet; spine-table row 12 + open-item O4 flipped to RESOLVED.
+- **Cross-links:** §3.8 model-sync chapter doesn't exist yet → referenced BY CONCEPT only, no hard
+  link, no TODO comment (W7 wires it). Internal `6.X.1/2/3` cross-refs converted to named phrases
+  ("the fallible-oracle discussion above" / "the garden null above" / "the single-case methodology
+  discussion below"). PARKED for W7: reverse back-refs from 5.2 (velocity/churn) + 2.5 (mmm-drain).
+- **Gates:** `render_citations` green (60 keys) · `catalog.py validate` **0 issues** ·
+  `book/build_book_html.py` green (129 chapter pages; all `[cite:]` resolve, no stray comments) ·
+  `catalog_tests.py --tier1` = **exactly 2 pre-existing FAILs HELD** (both in 3.1 — the stray
+  `<!-- todo -->` L426 + the IR-render byte-identity block; 3.1 UNTOUCHED). No deploy (batched).

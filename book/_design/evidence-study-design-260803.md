@@ -128,7 +128,7 @@ feed was CUT, the entry says so rather than silently narrowing the claim's evide
 | 9 | `theses-treat-the-causes` | [C] | — a mapping claim | — |
 | 10 | `failures-become-machinery` | [Q] | **partial** | episodes reports + emergence timeline are qualitative/chronological; the *fraction of controls with a documented originating failure* is uncounted | **(b)** — descriptive provenance-fraction only (downgraded per author ruling) |
 | 11 | `sync-cost-reduced` | [Q] | **under-quantified** | "kept in sync for cents" is asserted; no measured sync cost | **No planned measurement after the v2 prune** — (g) was cut with the Q8 prune (judgment-heavy coding pass). The assertion stays an assertion; recorded as an accepted limitation (§4.4). |
-| 12 | `mage-becomes-practical` | [Q] | **partial** | model-zoo census (29 named models; 7,380 model LoC), nav-token pilot; the *practicality* contrast (why it wasn't practical before) rests on the external MBSE baseline | **(e)** — pending author artifact; (c) |
+| 12 | `mage-becomes-practical` | [Q] | **partial** | model-zoo census (29 named models; 7,380 model LoC), nav-token pilot; the *practicality* contrast (why it wasn't practical before) rests on the external MBSE baseline | **(e)** — LANDED (garden-null); (c) |
 | 13 | `seat-moves` | [Q] | **partial** | "six to eight agents", "four accounts" are anecdote-grade; the human-vs-agent share of authored change is measurable and unmeasured | (j) — late-window only |
 | 14 | `grounded-in-one-case` | [C] | — the study's own frame; this design document is its enforcement | all (by discipline) |
 
@@ -360,15 +360,21 @@ drain series, honestly scoped as such.**
   serves the book if reported straight.
 - *Feasibility:* LOW (run existing tools at HEAD).
 
-### (e) MBSE BENCHMARK — the external baseline *(bears on spine 12; contextualizes spine 7)* — PENDING author artifact
+### (e) MBSE BENCHMARK — the external baseline *(bears on spine 12; contextualizes spine 7)* — LANDED: actual-garden-null
 
-**Status (author, Q5): STAY TUNED — the author is supplying the external negative-result
-artifact.** The row is held open as **the one external baseline** in the study. It is **distinct
-from the in-repo `mbse-nav-token` A/B pilot** in `data-claims.json` — that is a different,
-*positive*, internal result (N=4 tasks, −35% median tokens-to-answer, preliminary); this row is the
-author's prior *negative-result* benchmark of LLM/agent performance on classical MBSE tasks,
-presumed to live in the author's academic-lab materials. Nothing below activates until the artifact
-and its citable numbers arrive (§5-O4).
+**Status (as-run, 260803): LANDED — the artifact arrived and the result is the *garden-null*, not
+the anticipated flat deflationary reading.** The external baseline is the author's MAGE
+method-ablation benchmark (`docs/design/mage-garden-thesis-results-260803.md`); it is landed in the
+book as the "Empirical research opportunities" section of the implications chapter (the "beautiful
+garden" subsection). It is **distinct from the in-repo `mbse-nav-token` A/B pilot** in
+`data-claims.json` — that is a different, *positive*, internal result (N=4 tasks, −35% median
+tokens-to-answer, preliminary). The MAGE result is subtler than "models can't do classical MBSE": in
+a governed repo the MBSE map is redundantly re-encoded into code, tests, comments, and docs, so a
+per-task recall ablation returns Δ ≈ 0 **by construction** (pilot-scale, R=3; closest cell +0.20 of a
+required +0.25; one cell the stripped arm slightly ahead) — simultaneously a benchmark null *and* a
+system-level validation of the governance method. The per-task recall instrument cannot price the
+environment; the open measurands (efficiency at matched recall; system-level ablations;
+redundant-encoding density) are the section's positive agenda.
 
 - *Instrument:* none to run — this is a citation of completed external work.
 - *Baseline role:* **contrastive framing, not replication**: unaided LLMs perform poorly on
@@ -384,7 +390,12 @@ and its citable numbers arrive (§5-O4).
   may show current models *can't* do classical MBSE, which bounds spine 12 ("practical" = the
   lightweight executable-zoo styles, not SysML-grade MBSE) — arguably the book's actual position;
   confirm with the author when the artifact lands.
-- *Feasibility:* LOW effort, blocked on the artifact (§5-O4).
+  **Actual (as-run):** neither R nor the plain deflationary R′ — the *garden-null*: the ablation
+  cannot isolate the map's per-task value from its own propagated copies, so the recall delta is ≈0
+  regardless of the map's worth. This bounds spine 12 the same direction R′ anticipated (practicality
+  came from the environment, not raw capability) but via a redundancy mechanism, not a capability
+  ceiling.
+- *Feasibility:* LOW effort; artifact has landed (§5-O4 RESOLVED).
 
 ### (f) Governance-investment share over time *(seeds spine 6; framing for spine 3)* — KEPT
 
@@ -564,9 +575,11 @@ would not defend under hostile review.
 - **O3 — Provenance-fraction coding rule (b1).** What counts as "names an originating failure":
   field note or RCA or Epic-§1 rationale naming a concrete failure (recommended); is
   commit-message-only evidence admitted as "trace-grade" or excluded?
-- **O4 — MBSE artifact (e).** Awaiting the author's negative-result artifact: where it lives, what
-  it measured, which numbers are citable, and whether the deflationary reading (§3e R′) is the
-  book's intended position.
+- **O4 — MBSE artifact (e). RESOLVED (260803).** The artifact arrived: the MAGE method-ablation
+  benchmark (`docs/design/mage-garden-thesis-results-260803.md`). The result is the *garden-null*
+  (Δ ≈ 0 by construction), landed in the book's "Empirical research opportunities" section (6.0). The
+  deflationary reading (§3e R′) was refined to the garden-null: practicality came from the
+  environment, via redundant re-encoding, not a capability ceiling.
 - **O5 — Per-row status ceilings.** The Q10 rule is ratified; the per-row assignment is not: which
   of the mechanical measurements ((a), (c), (d), (f), (j)) may print as `final` vs `preliminary`
   in the first edition?
