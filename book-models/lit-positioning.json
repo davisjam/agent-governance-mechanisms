@@ -5,7 +5,7 @@
     "interventions": 11,
     "landed": 11,
     "planned": 0,
-    "citations_total": 34,
+    "citations_total": 35,
     "citations_pending_bib": 0,
     "distinct_theses": 9
   },
@@ -196,6 +196,16 @@
           "illustrates_pattern": "",
           "resolves_bib": true,
           "backs_resolve": true
+        },
+        {
+          "key": "vilasboas2026onedeveloper",
+          "backs_claims": [
+            "modeling-thesis"
+          ],
+          "relation": "corroborates",
+          "illustrates_pattern": "",
+          "resolves_bib": true,
+          "backs_resolve": true
         }
       ],
       "advances_theses": [
@@ -204,7 +214,7 @@
       ],
       "status": "landed",
       "fold_target": "",
-      "notes": "= W-SDD. Core LANDED (W-SDD c2225e0); the blog cite sdd-abdurrahman-2026 resolves in references.bib and appears in 3.1-the-executable-zoo. EXTEND (planned): academic SDD papers vilasboas2026onedeveloper (2605.18461) + panda2026citationdiscipline (2606.30689) at preface / loops-and-models / modeling-thesis / epic-design / user-journeys / obligations. Those two keys are NOT yet in the .bib, so they are held in this note (not in citations[]) to keep the landed record's LP3 green until the prose wave inserts them.",
+      "notes": "= W-SDD. Core LANDED (W-SDD c2225e0); the blog cite sdd-abdurrahman-2026 resolves in references.bib and appears in 3.1-the-executable-zoo. EXTEND: academic SDD paper vilasboas2026onedeveloper (2605.18461) LANDED as a one-sentence corroborating strengthening in the 3.1 spec-driven passage (resolves in references.bib + appears in 3.1-the-executable-zoo). panda2026citationdiscipline (2606.30689) SKIPPED per the wave ruling (conservative — vilasboas alone carries the academic beat); not in the .bib.",
       "locations_resolve": [
         true
       ],
