@@ -89,5 +89,16 @@
     "data_source": "git log --numstat scoped per path over the parent repo (2026-03-12 -> 2026-08-03), split into the four study-v2 commit-date windows (re-runnable commands in the w4-data scratchpad).",
     "limitation": "Add/delete counts include generated, bundle, and vendored files — a churn/velocity signal, not hand-authored SLOC, and not a clean measure of wasted rediscovery/undo/reconcile effort; a bundle-excluding pathspec would tighten it (parked). Series render + holds pins land in W4.",
     "gloss": "Path churn (web/ + backend/) across four windows: mechanization is the add-and-delete peak; later windows go net-additive as the built environment stabilizes the code."
+  },
+  "control-growth": {
+    "source": "2.3-the-governed-environment",
+    "anchor": "control-growth",
+    "holds": ["336", "595", "747", "20", "76", "102", "993 registered", "208 commits", "27 lints"],
+    "status": "final",
+    "spine_claim": "failures-become-machinery",
+    "observable": "The count of governance controls in the tree at four dated windows — project-specific lint files (0 -> 336 -> 595 -> 747) and gate scripts (0 -> 20 -> 76 -> 102) — with 993 registered lint specs at the final window, plus the failure-attribution discipline's footprint: 208 commits carrying a paired fix-and-lint tag and 27 lints citing a specific dated incident in their own text.",
+    "data_source": "A tree scan (git ls-tree per window SHA) counting lint-* files under the lint directory and gate scripts, at the four study-v2 commit-date boundaries c55f3637 (prototype 04-09) / e0f10aea (mechanization 05-31) / b1a4c1d4 (hardening 06-30) / HEAD (now 08-03); registered-spec count from the lint-registration modules at HEAD; the 208 fix-and-lint commits and 27 incident-citing lints from a commit-message and lint-docstring grep (w4b-measurements scratchpad).",
+    "limitation": "A control-growth curve, not a causal rate: the telemetry that would record the fire->control edge captured only the reflection hook firing (event/ts/session/facet), never the resulting control, so the fraction of controls born from a failure versus authored up front is not measured. Attribution is a documented, named discipline (the paired fix-and-lint tag in 208 commits; 27 lints citing a dated incident), reported as an honest range (27 high-confidence -> 260 loose keyword proxy), not a precise causal percentage. Single repo, single fleet; counts are at HEAD 700533b6 / 2026-08-03 and drift upward on re-run.",
+    "gloss": "The control substrate accumulating across four windows: project-specific lint files 0 -> 336 -> 595 -> 747 and gate scripts 0 -> 20 -> 76 -> 102 (993 registered lint specs at the final window), the environment converting failures into durable machinery as a documented, named, growing discipline."
   }
 }
