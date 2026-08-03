@@ -606,7 +606,12 @@ a real test written at the right tier and strength.
 (alt appendix) — its CENSUS member, fed by the Composed State-Machine Model as specification.
 *Related:* Consumer — [Composed State-Machine Model](#cap-know) (the spec it verifies against) · Bridge —
 [Re-Derived Definition of Done](#cap-complete).
-<!-- prior-art: LPP §5 verification / test-adequacy literature, populated by LPP-PROSE -->
+*Known uses in the literature:* the untrusted-generator / trusted-checker split is the discipline of
+proof engineering — Ringer and colleagues' survey *QED at Large* (2019) documents what it takes to engineer
+formally verified software, and AutoSOUP (Amusuo et al., 2026) routes an LLM's memory-safety reasoning
+through a checker that admits only what it can verify. Our operationalization draws the owed-check
+denominator from the model and routes each obligation to the checker its shape demands (the
+formal-invariant-verification member).
 
 ### [Generative Validation](product/regression-tests/fuzz-campaigns.md) · principle P4
 
@@ -861,7 +866,11 @@ part stays hard and the soft part stays honestly soft.
 lifecycle hooks are its HOOK member.
 *Related:* Enabler — [Governed Knowledge Base](#cap-govern) (the substrate it slices) · Sibling —
 [Fleet Observability Surface](#cap-manage) (both hang off the runtime lifecycle).
-<!-- prior-art: LPP §2/§3 context-management / knowledge-delivery literature, populated by LPP-PROSE -->
+*Known uses in the literature:* that agent capability rides on delivered structure, not prompt prose, is
+convergent — Lin and colleagues' ablation of an auto-evolving coding-agent harness (2026) localizes the
+gain to tools, middleware, and long-term memory rather than the system prompt. Our operationalization
+pushes the rules governing an action to the actor at the moment of action (dynamic context injection),
+delivering the knowledge through the environment rather than hoping the prompt carried it.
 
 <a id="cap-govern"></a>
 ## GOVERN · Govern the control estate itself
@@ -915,12 +924,12 @@ it computes over *declared* dependencies — an undeclared assumption is invisib
 declaration discipline is the load-bearing part.
 
 **Forces &amp; limits.** A declaration that drifts from the control's real assumption computes a false
-radius, so the fact must be co-located with the control it describes. This is a strong standalone pattern;
-after the governance-of-governance stack's INTERPRET slot went to self-governance, blast-radius stays a
-catalogue pattern with a cross-link rather than a stack part.
+radius, so the fact must be co-located with the control it describes. This is both a standalone catalogue
+pattern and the RADIUS member of the six-part governance-of-governance stack: the stack *expanded* to add
+self-governance as its INTERPRET member, it did not swap blast-radius out.
 
-*Deep dive:* see also [the governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html)
-(alt appendix) — a neighbour of the estate-modeling subject, though not a stack part.
+*Deep dive:* [the governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html)
+(alt appendix) — its RADIUS member, computing what a substrate change breaks across the estate.
 *Related:* Sibling — [Governance Graph](#cap-govern) (conflict vs. dependency lens on the same estate).
 
 ### [Governed Knowledge Base](agent/governance-doc-controls/claude-md-rule-index.md) · principle P7
@@ -1010,7 +1019,11 @@ appendix) — its INTERPRET member, the beating heart of governing the control e
 *Related:* Sibling — [the operator runbook skill](agent/governance-doc-controls/operator-runbook-skill.md)
 (executes *within* the estate; self-governance *grows* it) · Enabler —
 [Governed Knowledge Base](#cap-govern) (where each converted control lands).
-<!-- prior-art: LPP §2/§3 reflection + self-improvement literature, populated by LPP-PROSE -->
+*Known uses in the literature:* converting a recurring failure into a durable control is old practice —
+Shingo's poka-yoke (1986) builds mistake-proofing into the fixture itself, and site-reliability
+blameless-postmortem culture (Beyer et al., 2016) turns each incident into durable reliability work. Our
+operationalization fires the conversion on a cadence — a turn-end reflection hook — so a recurring class
+reliably meets the question "should this become a control?" rather than depending on whoever remembers.
 
 <a id="folds"></a>
 ### Two borderline folds, kept as named variants
