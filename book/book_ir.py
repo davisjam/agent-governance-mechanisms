@@ -159,7 +159,10 @@ class Block:
             # mirrors it so `render_html` on such a block equals the emit.
             s = self.raw.strip()
             if s.startswith("<!--") and s.endswith("-->") and s.count("<!--") == 1:
-                return s
+                # A lone HTML comment emits nothing — `md_to_html` strips standalone comments to '',
+                # so this mirror returns '' too. (Returning the comment verbatim was a stale mirror
+                # that produced a render-complete IR byte-identity divergence.)
+                return ''
             return _bb._render_paragraph(self.raw)
         if k is BlockKind.LIST:
             return _bb._render_unordered_list(self.raw)
