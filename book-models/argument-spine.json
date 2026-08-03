@@ -3,13 +3,13 @@
   "_note": "The argument-spine model holds the book's linear argument as an ordered run of claims, each reconciling the author's seed statements, the claims model, and the Big-Ideas model into one step — plus the per-chapter labeling of which steps each chapter advances. The `flags` block is DERIVED editorial signal (a non-exempt chapter advancing 0 steps is suspect; one advancing more than the focus cap is probably unfocused); it is the refactor worklist for the directive's Phase 1c and never gates. Exempt chapters (preface / conclusion / discussion / end-of-part synthesis / apparatus) are the ones whose breadth or silence is their job.",
   "_counts": {
     "spine_claims": 14,
-    "chapters_labeled": 0,
-    "chapters_exempt": 0,
-    "advancement_edges": 0,
+    "chapters_labeled": 30,
+    "chapters_exempt": 6,
+    "advancement_edges": 84,
     "reconciled_claims": 17,
     "reconciled_big_ideas": 6,
-    "zero_claim_suspects": 31,
-    "over_cap_unfocused": 0,
+    "zero_claim_suspects": 0,
+    "over_cap_unfocused": 1,
     "max_statement_words": 26
   },
   "taxonomy": {
@@ -39,7 +39,14 @@
       "reconciles_claims": [],
       "reconciles_big_ideas": [],
       "word_count": 12,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "1.1-the-printer",
+        "1.2-mage-by-example",
+        "4.4-training-data",
+        "4.5-lessons-learned",
+        "5.2-the-timeline-and-the-work"
+      ]
     },
     {
       "id": "fault-lies-in-instructions",
@@ -53,7 +60,12 @@
       ],
       "reconciles_big_ideas": [],
       "word_count": 20,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "1.1-the-printer",
+        "4.5-lessons-learned",
+        "6.1-conclusion"
+      ]
     },
     {
       "id": "oversight-does-not-scale",
@@ -65,7 +77,12 @@
       "reconciles_claims": [],
       "reconciles_big_ideas": [],
       "word_count": 19,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "1.2-mage-by-example",
+        "5.4-the-road-to-mage",
+        "6.0-implications-for-se"
+      ]
     },
     {
       "id": "churn-is-the-limit",
@@ -81,7 +98,11 @@
         "churn"
       ],
       "word_count": 22,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "1.1-the-printer",
+        "1.3-loops-and-models"
+      ]
     },
     {
       "id": "three-not-knowings-cause-churn",
@@ -96,7 +117,9 @@
       ],
       "reconciles_big_ideas": [],
       "word_count": 22,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface"
+      ]
     },
     {
       "id": "govern-the-environment",
@@ -113,7 +136,18 @@
         "governance-centric"
       ],
       "word_count": 26,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "1.2-mage-by-example",
+        "2.1-the-agent-stack",
+        "2.3-the-governed-environment",
+        "2.4-lifecycles-and-runbooks",
+        "2.6-when-guardrails-collide",
+        "4.1-brownfield",
+        "4.2-the-skills",
+        "4.5-lessons-learned",
+        "6.0-implications-for-se"
+      ]
     },
     {
       "id": "modeling-thesis",
@@ -131,7 +165,25 @@
         "modeling-thesis"
       ],
       "word_count": 23,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "1.3-loops-and-models",
+        "2.1-the-agent-stack",
+        "2.2-models-and-the-semantic-gap",
+        "2.5-metrics",
+        "2.6-when-guardrails-collide",
+        "3.1-the-executable-zoo",
+        "3.2-the-logical-view",
+        "3.3-the-process-view",
+        "3.4-the-development-view",
+        "3.5-the-physical-view",
+        "3.6-the-scenarios-view",
+        "3.7-the-scope-of-modeling",
+        "4.1-brownfield",
+        "4.3-transformations",
+        "4.6-generative-validation",
+        "5.3-the-built-system"
+      ]
     },
     {
       "id": "alignment-thesis",
@@ -148,7 +200,20 @@
         "alignment-thesis"
       ],
       "word_count": 21,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "2.2-models-and-the-semantic-gap",
+        "2.3-the-governed-environment",
+        "2.5-metrics",
+        "3.2-the-logical-view",
+        "3.3-the-process-view",
+        "3.4-the-development-view",
+        "3.5-the-physical-view",
+        "3.6-the-scenarios-view",
+        "4.3-transformations",
+        "4.5-lessons-learned",
+        "4.6-generative-validation"
+      ]
     },
     {
       "id": "theses-treat-the-causes",
@@ -163,7 +228,9 @@
       ],
       "reconciles_big_ideas": [],
       "word_count": 14,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface"
+      ]
     },
     {
       "id": "failures-become-machinery",
@@ -180,7 +247,14 @@
         "convert-failures"
       ],
       "word_count": 15,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "1.2-mage-by-example",
+        "2.3-the-governed-environment",
+        "4.1-brownfield",
+        "4.2-the-skills",
+        "4.5-lessons-learned"
+      ]
     },
     {
       "id": "sync-cost-removed",
@@ -192,7 +266,11 @@
       "reconciles_claims": [],
       "reconciles_big_ideas": [],
       "word_count": 18,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "2.2-models-and-the-semantic-gap",
+        "3.1-the-executable-zoo"
+      ]
     },
     {
       "id": "mage-becomes-practical",
@@ -206,7 +284,13 @@
       ],
       "reconciles_big_ideas": [],
       "word_count": 21,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "3.7-the-scope-of-modeling",
+        "4.4-training-data",
+        "6.0-implications-for-se",
+        "6.1-conclusion"
+      ]
     },
     {
       "id": "seat-moves",
@@ -220,7 +304,13 @@
         "seat-moves"
       ],
       "word_count": 21,
-      "advanced_by": []
+      "advanced_by": [
+        "1.4-the-engineers-seat",
+        "4.5-lessons-learned",
+        "5.4-the-road-to-mage",
+        "6.0-implications-for-se",
+        "6.1-conclusion"
+      ]
     },
     {
       "id": "grounded-in-one-case",
@@ -235,293 +325,302 @@
       ],
       "reconciles_big_ideas": [],
       "word_count": 20,
-      "advanced_by": []
+      "advanced_by": [
+        "0.1-preface",
+        "1.2-mage-by-example",
+        "5.1-the-ada-context",
+        "5.2-the-timeline-and-the-work",
+        "5.3-the-built-system",
+        "5.4-the-road-to-mage",
+        "6.0-implications-for-se"
+      ]
     }
   ],
   "chapters": [
     {
       "slug": "0.1-preface",
-      "advances": [],
-      "exempt": null
+      "advances": [
+        "abundant-implementation",
+        "fault-lies-in-instructions",
+        "oversight-does-not-scale",
+        "churn-is-the-limit",
+        "three-not-knowings-cause-churn",
+        "govern-the-environment",
+        "modeling-thesis",
+        "alignment-thesis",
+        "theses-treat-the-causes",
+        "failures-become-machinery",
+        "sync-cost-removed",
+        "mage-becomes-practical",
+        "grounded-in-one-case"
+      ],
+      "exempt": "preface"
     },
     {
       "slug": "0.2-acknowledgments",
       "advances": [],
-      "exempt": null
+      "exempt": "apparatus"
     },
     {
       "slug": "1.1-the-printer",
-      "advances": [],
+      "advances": [
+        "abundant-implementation",
+        "fault-lies-in-instructions",
+        "churn-is-the-limit"
+      ],
       "exempt": null
     },
     {
       "slug": "1.2-mage-by-example",
-      "advances": [],
+      "advances": [
+        "abundant-implementation",
+        "oversight-does-not-scale",
+        "govern-the-environment",
+        "failures-become-machinery",
+        "grounded-in-one-case"
+      ],
       "exempt": null
     },
     {
       "slug": "1.3-loops-and-models",
-      "advances": [],
+      "advances": [
+        "churn-is-the-limit",
+        "modeling-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "1.4-the-engineers-seat",
-      "advances": [],
+      "advances": [
+        "seat-moves"
+      ],
       "exempt": null
     },
     {
       "slug": "2.1-the-agent-stack",
-      "advances": [],
+      "advances": [
+        "govern-the-environment",
+        "modeling-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "2.2-models-and-the-semantic-gap",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis",
+        "sync-cost-removed"
+      ],
       "exempt": null
     },
     {
       "slug": "2.3-the-governed-environment",
-      "advances": [],
+      "advances": [
+        "govern-the-environment",
+        "alignment-thesis",
+        "failures-become-machinery"
+      ],
       "exempt": null
     },
     {
       "slug": "2.4-lifecycles-and-runbooks",
-      "advances": [],
+      "advances": [
+        "govern-the-environment"
+      ],
       "exempt": null
     },
     {
       "slug": "2.5-metrics",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "2.6-when-guardrails-collide",
-      "advances": [],
+      "advances": [
+        "govern-the-environment",
+        "modeling-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "3.1-the-executable-zoo",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "sync-cost-removed"
+      ],
       "exempt": null
     },
     {
       "slug": "3.2-the-logical-view",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "3.3-the-process-view",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "3.4-the-development-view",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "3.5-the-physical-view",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "3.6-the-scenarios-view",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "3.7-the-scope-of-modeling",
-      "advances": [],
-      "exempt": null
+      "advances": [
+        "modeling-thesis",
+        "mage-becomes-practical"
+      ],
+      "exempt": "end-of-part-synthesis"
     },
     {
       "slug": "4.1-brownfield",
-      "advances": [],
+      "advances": [
+        "govern-the-environment",
+        "modeling-thesis",
+        "failures-become-machinery"
+      ],
       "exempt": null
     },
     {
       "slug": "4.2-the-skills",
-      "advances": [],
+      "advances": [
+        "govern-the-environment",
+        "failures-become-machinery"
+      ],
       "exempt": null
     },
     {
       "slug": "4.3-transformations",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "4.4-training-data",
-      "advances": [],
+      "advances": [
+        "abundant-implementation",
+        "mage-becomes-practical"
+      ],
       "exempt": null
     },
     {
       "slug": "4.5-lessons-learned",
-      "advances": [],
-      "exempt": null
+      "advances": [
+        "abundant-implementation",
+        "fault-lies-in-instructions",
+        "govern-the-environment",
+        "alignment-thesis",
+        "failures-become-machinery",
+        "seat-moves"
+      ],
+      "exempt": "discussion"
     },
     {
       "slug": "4.6-generative-validation",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "alignment-thesis"
+      ],
       "exempt": null
     },
     {
       "slug": "5.1-the-ada-context",
-      "advances": [],
+      "advances": [
+        "grounded-in-one-case"
+      ],
       "exempt": null
     },
     {
       "slug": "5.2-the-timeline-and-the-work",
-      "advances": [],
+      "advances": [
+        "abundant-implementation",
+        "grounded-in-one-case"
+      ],
       "exempt": null
     },
     {
       "slug": "5.3-the-built-system",
-      "advances": [],
+      "advances": [
+        "modeling-thesis",
+        "grounded-in-one-case"
+      ],
       "exempt": null
     },
     {
       "slug": "5.4-the-road-to-mage",
-      "advances": [],
+      "advances": [
+        "oversight-does-not-scale",
+        "seat-moves",
+        "grounded-in-one-case"
+      ],
       "exempt": null
     },
     {
       "slug": "6.0-implications-for-se",
-      "advances": [],
-      "exempt": null
+      "advances": [
+        "oversight-does-not-scale",
+        "govern-the-environment",
+        "mage-becomes-practical",
+        "seat-moves",
+        "grounded-in-one-case"
+      ],
+      "exempt": "discussion"
     },
     {
       "slug": "6.1-conclusion",
-      "advances": [],
-      "exempt": null
+      "advances": [
+        "fault-lies-in-instructions",
+        "mage-becomes-practical",
+        "seat-moves"
+      ],
+      "exempt": "conclusion"
     }
   ],
   "flags": {
-    "zero_claim_suspects": [
-      {
-        "chapter": "0.1-preface",
-        "advances": 0
-      },
-      {
-        "chapter": "0.2-acknowledgments",
-        "advances": 0
-      },
-      {
-        "chapter": "1.1-the-printer",
-        "advances": 0
-      },
+    "zero_claim_suspects": [],
+    "over_cap_unfocused": [
       {
         "chapter": "1.2-mage-by-example",
-        "advances": 0
-      },
-      {
-        "chapter": "1.3-loops-and-models",
-        "advances": 0
-      },
-      {
-        "chapter": "1.4-the-engineers-seat",
-        "advances": 0
-      },
-      {
-        "chapter": "2.1-the-agent-stack",
-        "advances": 0
-      },
-      {
-        "chapter": "2.2-models-and-the-semantic-gap",
-        "advances": 0
-      },
-      {
-        "chapter": "2.3-the-governed-environment",
-        "advances": 0
-      },
-      {
-        "chapter": "2.4-lifecycles-and-runbooks",
-        "advances": 0
-      },
-      {
-        "chapter": "2.5-metrics",
-        "advances": 0
-      },
-      {
-        "chapter": "2.6-when-guardrails-collide",
-        "advances": 0
-      },
-      {
-        "chapter": "3.1-the-executable-zoo",
-        "advances": 0
-      },
-      {
-        "chapter": "3.2-the-logical-view",
-        "advances": 0
-      },
-      {
-        "chapter": "3.3-the-process-view",
-        "advances": 0
-      },
-      {
-        "chapter": "3.4-the-development-view",
-        "advances": 0
-      },
-      {
-        "chapter": "3.5-the-physical-view",
-        "advances": 0
-      },
-      {
-        "chapter": "3.6-the-scenarios-view",
-        "advances": 0
-      },
-      {
-        "chapter": "3.7-the-scope-of-modeling",
-        "advances": 0
-      },
-      {
-        "chapter": "4.1-brownfield",
-        "advances": 0
-      },
-      {
-        "chapter": "4.2-the-skills",
-        "advances": 0
-      },
-      {
-        "chapter": "4.3-transformations",
-        "advances": 0
-      },
-      {
-        "chapter": "4.4-training-data",
-        "advances": 0
-      },
-      {
-        "chapter": "4.5-lessons-learned",
-        "advances": 0
-      },
-      {
-        "chapter": "4.6-generative-validation",
-        "advances": 0
-      },
-      {
-        "chapter": "5.1-the-ada-context",
-        "advances": 0
-      },
-      {
-        "chapter": "5.2-the-timeline-and-the-work",
-        "advances": 0
-      },
-      {
-        "chapter": "5.3-the-built-system",
-        "advances": 0
-      },
-      {
-        "chapter": "5.4-the-road-to-mage",
-        "advances": 0
-      },
-      {
-        "chapter": "6.0-implications-for-se",
-        "advances": 0
-      },
-      {
-        "chapter": "6.1-conclusion",
-        "advances": 0
+        "advances": 5,
+        "spine_ids": [
+          "abundant-implementation",
+          "oversight-does-not-scale",
+          "govern-the-environment",
+          "failures-become-machinery",
+          "grounded-in-one-case"
+        ]
       }
-    ],
-    "over_cap_unfocused": []
+    ]
   }
 }
