@@ -2225,7 +2225,7 @@ _STACKS: list[tuple[str, str]] = [
     ("observe-react-stack", "The observe → react loop"),
     ("resource-mediation-stack", "The resource-mediation stack"),
     ("governance-of-governance-stack", "The governance-of-governance stack"),
-    ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
+    ("context-management-stack", "The context-management stack"),
 ]
 
 _APPENDIX_STACKS_OPENING_PROSE = """\

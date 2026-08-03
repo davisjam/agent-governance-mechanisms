@@ -300,32 +300,53 @@ def _l2_name_to_slug() -> "dict[str, str]":
     """Build the FS4 JOIN — L2-pattern NAME → catalogue entry SLUG — from the classification's
     `canonical_card` path per pattern. The compositions key their members by L2-pattern NAME; a stack's
     parts key by entry SLUG. This map is the join that lets FS4 compare the two (single source of truth:
-    the classification file, read at check time — no snapshot)."""
+    the classification file, read at check time — no snapshot). The `canonical_card` is a `<role>/<family>/
+    <slug>` path (with or without a `.md` suffix); the bare slug is its basename."""
     out: "dict[str, str]" = {}
     if not os.path.isfile(_CLASSIFICATION):
         return out
     data = json.load(open(_CLASSIFICATION, encoding="utf-8"))
     for name, rec in data.get("L2_patterns", {}).items():
         card = rec.get("canonical_card", "") if isinstance(rec, dict) else ""
-        if card.endswith(".md"):
-            out[name] = os.path.basename(card)[:-3]
+        if not card:
+            continue
+        base = os.path.basename(card)
+        out[name] = base[:-3] if base.endswith(".md") else base
     return out
+
+
+def _fs4_moved_members() -> "set[str]":
+    """FS4 EXEMPTION SET — the L2-pattern names appearing in any moved composition. A member handled outside
+    the flagship deep-dives (e.g. Staged Admission Gates, in the moved evidence-staircase) is exempt even
+    where it ALSO appears in a non-moved composition, so it is not spuriously reported as an uncovered gap."""
+    if not os.path.isfile(_CLASSIFICATION):
+        return set()
+    data = json.load(open(_CLASSIFICATION, encoding="utf-8"))
+    moved: "set[str]" = set()
+    for comp in data.get("compositions", []):
+        if comp.get("name", "") in _FS4_MOVED_COMPOSITIONS:
+            moved.update(comp.get("joins", []))
+    return moved
 
 
 def _strong_composition_members() -> "list[tuple[str, str, str]]":
     """FS4 coverage TARGET — every (composition-name, L2-pattern-name, entry-slug) triple across the
-    classification's strong compositions, resolved through the L2→slug join. A member whose composition is
-    in `_FS4_MOVED_COMPOSITIONS` is dropped (covered outside the flagship deep-dives)."""
+    classification's strong compositions, resolved through the L2→slug join, EXCLUDING members that belong
+    to a moved composition (covered outside the flagship deep-dives). A composition entirely in
+    `_FS4_MOVED_COMPOSITIONS` contributes nothing; a member shared with a moved composition is also dropped."""
     if not os.path.isfile(_CLASSIFICATION):
         return []
     data = json.load(open(_CLASSIFICATION, encoding="utf-8"))
     join = _l2_name_to_slug()
+    moved_members = _fs4_moved_members()
     triples: "list[tuple[str, str, str]]" = []
     for comp in data.get("compositions", []):
         cname = comp.get("name", "")
         if cname in _FS4_MOVED_COMPOSITIONS:
             continue
         for l2 in comp.get("joins", []):
+            if l2 in moved_members:
+                continue
             triples.append((cname, l2, join.get(l2, "")))
     return triples
 

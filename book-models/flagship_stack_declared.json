@@ -315,6 +315,57 @@
           "durability": "Durable — an enforced, capped rule index is infrastructure, not a 2026 convenience. Its cost is the discipline of stable numbering and the cap; it fails where a rule is added without its enforcement counterpart, which the conformance lint refuses."
         }
       ]
+    },
+    {
+      "id": "context-management",
+      "name": "The context-management stack",
+      "goal": "Get the right policy and context to an agent at the moment a decision is due: map the files it is about to touch to the constraints that govern them, paste the standing safety boilerplate into its brief, load the numbered rule index into its boot context, fire the steps it would otherwise omit off the runtime lifecycle, and nudge a standing discipline at the right cadence — so the agent acts on the relevant slice, not the whole corpus and not its memory. This stack is the book's explicit durable-versus-2026-transient exemplar: each part is marked for whether it is infrastructure that endures or a crutch a stronger model eases.",
+      "capabilities": ["Manage work, state, and resources"],
+      "overview_figure": "book/assets/context-management-stack.svg",
+      "page_source": "book/appendix-stacks/context-management-stack.md",
+      "cross_links": ["governance-of-governance", "resource-mediation"],
+      "parts": [
+        {
+          "slug": "dynamic-context-injection",
+          "role": "INJECT — map the files an agent is about to touch to the exact constraints that govern them — lints, conventions, boundaries, tests — and inject that slice into the brief before it writes code.",
+          "failure": "An agent is handed a task and a whole rulebook; it either reads none of it or the wrong part, and violates a constraint it would have honored had the constraint been in front of it.",
+          "mechanism": "Resolve the files-about-to-be-touched to the constraints that govern them and inject that subset into the brief, moving detection LEFT of the cheapest CI gate — prevention before the first commit.",
+          "seam": "Opens the stack. It is the just-in-time face of context delivery: where the snippet table and the rule index deliver STANDING policy, injection delivers the slice specific to THIS task, so the agent sees exactly the constraints its files invoke.",
+          "durability": "2026-TRANSIENT in degree — the smaller the context window, the more injection earns its keep; as windows grow, the pressure to pre-select the slice eases, though relevance-focusing never fully disappears. It fails where the file-to-constraint map is incomplete, which widens rather than breaks it."
+        },
+        {
+          "slug": "mandatory-snippet-table",
+          "role": "SNIPPET — a registry of mandatory brief snippets (PATH export, commit cadence, worktree discovery, submodule check) whose presence is asserted at dispatch.",
+          "failure": "A brief ships missing a piece of safety boilerplate; the agent drifts its working directory, skips the commit cadence, or misses the submodule, and the omission surfaces as a failure far downstream.",
+          "mechanism": "A typed registry of the mandatory snippets, with a dispatch-time brief-lint asserting each required one is present, so every brief carries the safety and context boilerplate it needs by construction.",
+          "seam": "The point-of-action delivery member. It sits beside INJECT: injection delivers the task-specific constraints, the snippet table delivers the invariant safety boilerplate, and both land in the same brief at the moment of dispatch.",
+          "durability": "MIXED — the delivery half is 2026-transient (a model that reliably held every convention would need fewer pasted snippets); the assert-at-dispatch enforcement half is DURABLE, since a required snippet's absence is a deterministic check regardless of model capability."
+        },
+        {
+          "slug": "claude-md-rule-index",
+          "role": "INDEX — the numbered, stable-numbered governance rule index loaded into every agent's boot context — standing policy delivered by construction at the start of every run.",
+          "failure": "The standing rules live in a document no one loads; an agent boots without them and re-derives conventions it should have inherited, inconsistently.",
+          "mechanism": "A numbered, stable-numbered index loaded into every agent's boot context — held honest by a cap lint and a rule-conformance lint — so the standing policy is present at boot, not fetched on demand.",
+          "seam": "The standing-policy delivery surface beneath INJECT and SNIPPET. Where those two deliver the task-specific and the mandatory-per-brief, the index delivers the always-on baseline every agent shares — the common ground the other deliveries specialize.",
+          "durability": "DURABLE — an enforced rule index is infrastructure regardless of model; only its boot-context delivery role is context-window-sensitive, and even a large-window model benefits from a stable numbered index it can cite. (Its govern-itself facet lives in the governance-of-governance stack.)"
+        },
+        {
+          "slug": "lifecycle-hooks",
+          "role": "HOOK — bind a script to the agent runtime's lifecycle events — turn-stop, pre-compaction, session-start, before-a-tool-call — so a step the operator keeps omitting fires deterministically.",
+          "failure": "A step that must happen at a specific moment — a checkpoint before compaction, a check before a tool call — depends on someone remembering it, and the moment it is forgotten the state it protected is lost.",
+          "mechanism": "Register a script against the runtime lifecycle event, so the step fires whether or not anyone remembered — deterministic delivery of an ACTION at the moment it is due, not a reminder to take it.",
+          "seam": "The runtime-event face of context delivery. Where INJECT, SNIPPET, and INDEX deliver POLICY into a brief or a boot, the hook delivers an ACTION at a lifecycle moment — the same just-in-time principle applied to the runtime rather than the context.",
+          "durability": "DURABLE and model-independent — a deterministic lifecycle binding does not depend on model capability; a step that must fire regardless of memory is infrastructure, not a 2026 crutch. It fails only where the runtime exposes no hook for the moment that matters."
+        },
+        {
+          "slug": "reflection-facet-substrate",
+          "role": "NUDGE — tempo-gated policy nudges: a registry of reflection facets, each reflecting the running context against one policy dimension, the whole family emitting at most one reflection per window.",
+          "failure": "Several soft reminders each fire on their own cadence; together they become a wall of nudges the operator learns to ignore, and the alarm fatigue kills all of them at once.",
+          "mechanism": "Consolidate the nudges into one tempo-gated substrate — each facet references a policy dimension rather than copying it, and the family emits at most one reflection per window — so soft reflections cannot compound into fatigue.",
+          "seam": "Closes the stack. It is the lowest-pressure delivery: where INJECT, SNIPPET, INDEX, and HOOK deliver required policy and actions, the nudge delivers a SOFT reminder of a standing discipline, rate-limited so it aims without overwhelming.",
+          "durability": "2026-TRANSIENT — tempo-gated nudges compensate for a model losing track of a standing discipline over a long run; a model that reliably held its disciplines would need fewer, though the at-most-one-per-window substrate that prevents alarm fatigue is durable."
+        }
+      ]
     }
   ]
 }
