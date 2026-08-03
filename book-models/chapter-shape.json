@@ -4,7 +4,7 @@
   "_counts": {
     "chapters_assessed": 32,
     "chapters_exempt": 7,
-    "openings_failing": 6,
+    "openings_failing": 2,
     "closings_failing": 2,
     "thesis_spine_mismatches": 1,
     "openings_implicit_thesis": 10
@@ -334,13 +334,13 @@
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",
-        "thesis_link": "absent",
-        "thesis_target": "none"
+        "thesis_link": "explicit",
+        "thesis_target": "modeling"
       },
       "closing": {
         "kind": "transition"
       },
-      "note": "View chapters class-flag: the designer's question + the view's answer are present, but the opening never says how the view advances a thesis (the reason-through/drift-gate content sits on the model pages; the thesis frame rides at Part level in 3.1). Ending exemplary: the ---kicker transition to the Process view.",
+      "note": "Question (what is this system, as concepts?) + answer (the functional structure) present; Phase-2c added the thesis clause — held as a drift-checked model, the view is the representation the fleet reasons through, the Modeling Thesis at the grain of one view. Ending exemplary: the ---kicker transition to the Process view.",
       "opening_anchor": "The Logical view is the functional structure — the objects, the types,",
       "closing_anchor": "stop being predicates over one state and become predicates over an interleaving.",
       "exempt": null,
@@ -354,13 +354,13 @@
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",
-        "thesis_link": "absent",
-        "thesis_target": "none"
+        "thesis_link": "explicit",
+        "thesis_target": "alignment"
       },
       "closing": {
         "kind": "transition"
       },
-      "note": "Same class as 3.2: question (what happens when parts run at once?) + answer (states/locks/invariants lens) present; thesis-link absent from the opening. Ending: kicker transition to the Development view.",
+      "note": "Question (what happens when parts run at once?) + answer (states/locks/invariants lens) present; Phase-2c added the thesis clause — the invariants are not comments, a checker holds the running system to them, the Alignment Thesis at the grain of concurrency. Ending: kicker transition to the Development view.",
       "opening_anchor": "The Logical view named the parts. The Process view asks the question",
       "closing_anchor": "how the code is packaged, layered, and owned — the Development view.",
       "exempt": null,
@@ -394,13 +394,13 @@
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",
-        "thesis_link": "absent",
-        "thesis_target": "none"
+        "thesis_link": "explicit",
+        "thesis_target": "modeling"
       },
       "closing": {
         "kind": "transition"
       },
-      "note": "Same class as 3.2: failure (functionally correct yet mis-deployed) + answer (the placement lens) present; thesis-link absent. Ending: kicker transition to the +1 view.",
+      "note": "Failure (functionally correct yet mis-deployed) + answer (the placement lens) present; Phase-2c added the thesis clause — written down as a placement model the fleet reads, the where is something an agent reasons over before it deploys, the Modeling Thesis reaching the one view the others cannot see. Ending: kicker transition to the +1 view.",
       "opening_anchor": "The Development view mapped how the source is organized. The Physical view",
       "closing_anchor": "validate that the other four actually hold up. That is the +1.",
       "exempt": null,
@@ -414,13 +414,13 @@
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",
-        "thesis_link": "absent",
-        "thesis_target": "none"
+        "thesis_link": "explicit",
+        "thesis_target": "alignment"
       },
       "closing": {
         "kind": "synthesis"
       },
-      "note": "Same class as 3.2: question (do the views hold up?) + answer (scenarios walk them) present; thesis-link absent. Ending: Part-closing synthesis — five views walked, why the upkeep is now affordable.",
+      "note": "Question (do the views hold up?) + answer (scenarios walk them) present; Phase-2c added the thesis clause — the walk re-checks the other four against a real goal, so the scenario is where the models are held honest, the Alignment Thesis turned back on the views themselves. Ending: Part-closing synthesis — five views walked, why the upkeep is now affordable.",
       "opening_anchor": "The four views so far are static portraits. The Logical view says",
       "closing_anchor": "because there is no cheaper way to trust what a fleet ships.",
       "exempt": null,
@@ -708,34 +708,6 @@
           "thesis-link"
         ],
         "note": "No untitled lead at all — the chapter opens mid-taxonomy (one-shot vs supervised autonomy) without stating the chapter-level failure/question, its answer, or its argument role; the printer frame and fault-lies-in-instructions arrive only in the closing section. Closing is strong: the printer builds your mistake with the same fidelity (consequence) + hand-off to 1.2."
-      },
-      {
-        "chapter": "3.2-the-logical-view",
-        "missing": [
-          "thesis-link"
-        ],
-        "note": "View chapters class-flag: the designer's question + the view's answer are present, but the opening never says how the view advances a thesis (the reason-through/drift-gate content sits on the model pages; the thesis frame rides at Part level in 3.1). Ending exemplary: the ---kicker transition to the Process view."
-      },
-      {
-        "chapter": "3.3-the-process-view",
-        "missing": [
-          "thesis-link"
-        ],
-        "note": "Same class as 3.2: question (what happens when parts run at once?) + answer (states/locks/invariants lens) present; thesis-link absent from the opening. Ending: kicker transition to the Development view."
-      },
-      {
-        "chapter": "3.5-the-physical-view",
-        "missing": [
-          "thesis-link"
-        ],
-        "note": "Same class as 3.2: failure (functionally correct yet mis-deployed) + answer (the placement lens) present; thesis-link absent. Ending: kicker transition to the +1 view."
-      },
-      {
-        "chapter": "3.6-the-scenarios-view",
-        "missing": [
-          "thesis-link"
-        ],
-        "note": "Same class as 3.2: question (do the views hold up?) + answer (scenarios walk them) present; thesis-link absent. Ending: Part-closing synthesis — five views walked, why the upkeep is now affordable."
       },
       {
         "chapter": "4.2-the-skills",
