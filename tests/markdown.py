@@ -42,7 +42,11 @@ def check_markdown_anchors():
     slugs: dict[str, set[str]] = {}
     for f in files:
         txt = open(f, encoding="utf-8").read()
-        slugs[os.path.abspath(f)] = {slug(h) for h in re.findall(r"^#{1,6}\s+(.+?)\s*$", txt, re.M)}
+        headings = {slug(h) for h in re.findall(r"^#{1,6}\s+(.+?)\s*$", txt, re.M)}
+        # Explicit in-page anchors (`<a id="…"></a>`) are valid targets too — they render raw (see
+        # render_md) and are how a page names an anchor that is not a heading slug.
+        ids = set(re.findall(r'<a id="([^"]+)"></a>', txt))
+        slugs[os.path.abspath(f)] = headings | ids | {slug(i) for i in ids}
     issues = []
     for f in files:
         base = os.path.dirname(f)

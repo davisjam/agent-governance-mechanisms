@@ -237,6 +237,10 @@ def _rewrite_outbound_links(spec: SkillSpec) -> None:
         txt = open(f, encoding="utf-8").read()
         txt = re.sub(r"\]\((?:\.\./)+product/([^)\s#]+)\.md\)", lambda m: f"]({PUBLIC}product/{m.group(1)}.html)", txt)
         txt = re.sub(r"\]\((?:\.\./)+product/\)", f"]({PUBLIC}product/)", txt)
+        # The construction-kit page is a root catalogue page, not vendored into the bundle (its own links
+        # reach the excluded product entries) — repoint entry references to the live published page.
+        txt = re.sub(r"\]\((?:\.\./)*constructing-the-gee\.md(#[^)\s]*)?\)",
+                     lambda m: f"]({PUBLIC}constructing-the-gee.html{m.group(1) or ''})", txt)
         txt = re.sub(r"\[([^\]]*)\]\(docs/[^)]+\)", r"\1", txt)  # unpublished treatise -> keep text, drop the link
         with open(f, "w", encoding="utf-8") as fh:
             fh.write(txt)
