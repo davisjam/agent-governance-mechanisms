@@ -417,4 +417,4 @@ Each declared claim carries a **`reviewed_hash`** — the 12-hex SHA-256 of the 
 `2136290` SENSORS (declared + model + artifact + tests + catalog spine health).
 
 ### Live SHA
-`__PENDING_DEPLOY__`
+`5eb21f1` — pushed to origin/main (deploy gate 28/28 passed, 0 failed); GitHub Actions building Pages (not blocked on per author directive). Deployed tip carries the sensors (`2136290`) + this record (`5eb21f1`); the published models-view reads the freshly-regenerated `argument-spine.json`. (This SHA-fill is a doc-only follow-up.)
