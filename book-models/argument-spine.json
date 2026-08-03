@@ -6,7 +6,7 @@
     "chapters_labeled": 30,
     "chapters_exempt": 6,
     "advancement_edges": 84,
-    "reconciled_claims": 17,
+    "reconciled_claims": 18,
     "reconciled_big_ideas": 6,
     "zero_claim_suspects": 0,
     "over_cap_unfocused": 1,
@@ -194,7 +194,8 @@
       ],
       "reconciles_claims": [
         "constraint-prevents-sensor-detects",
-        "soft-to-hard-spectrum"
+        "soft-to-hard-spectrum",
+        "model-not-mechanism-until-enforced"
       ],
       "reconciles_big_ideas": [
         "alignment-thesis"

@@ -104,6 +104,22 @@
     "concepts_link": "book/data/concepts.json"
   },
 
+  "governance-mechanism": {
+    "term": "Governance mechanism",
+    "box": "A repeatable environmental structure that encodes an engineering policy and either constrains an action, detects a violation, requires evidence, or controls admission.",
+    "aspects": [
+      {"lead": "The four classes", "text": "Prevention (a constraint — scopes the action space so the mistake is impossible), detection (a sensor — catches the violation and fails the iteration), evidence (demands the change carry its proof — a provenance stamp, a re-derived result), and admission (decides whether the result may advance — the loop's last door). Prevention and detection are the catalogue's constraint/sensor move axis; package names a bundle."},
+      {"lead": "A model is not a mechanism until enforced", "text": "A structured model on disk aims nobody. The lint that reads it, the gate that checks against it, the generator that derives from it — those are the mechanisms. The model supplies the policy; the mechanism supplies the holding."},
+      {"lead": "Why 'repeatable environmental structure'", "text": "A one-off inspection is not a mechanism; a mechanism fires on every subsequent change without anyone remembering it. That repeatability is what lets attention be spent per class of failure instead of per change."}
+    ],
+    "site_home": "N/A",
+    "derived_from": "book/_design/book-editorial-discipline-directive-260802.md#bound-the-governance-mechanism-definition",
+    "book_home": "book/2.3-the-governed-environment.html#idx-def-governance-mechanism",
+    "book_home_owed": {"section": "Part 2 — §2.3 The Governed Environment", "status": "landed", "note": "Landed: the bounded-definition inset in 2.3's 'Four classes, one bounded term' subsection carries the index-def tag. Book-only by design."},
+    "lexicon_link": "book/6.2-glossary.html",
+    "concepts_link": "book/data/concepts.json"
+  },
+
   "engineered-agent-loop": {
     "term": "Engineered agent loop",
     "box": "A feedback process in which the environment supplies a modeled state, constrains available actions, measures progress against an explicit criterion, and determines whether the result may advance.",

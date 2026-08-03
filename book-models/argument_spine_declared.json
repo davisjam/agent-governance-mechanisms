@@ -55,7 +55,7 @@
       "order": 8,
       "statement": "Each quality goal splits into a constraint that prevents and a sensor that detects; enforced mechanisms keep implementation aligned with intent.",
       "seeds": [5],
-      "reconciles": {"claims": ["constraint-prevents-sensor-detects", "soft-to-hard-spectrum"], "big_ideas": ["alignment-thesis"]}
+      "reconciles": {"claims": ["constraint-prevents-sensor-detects", "soft-to-hard-spectrum", "model-not-mechanism-until-enforced"], "big_ideas": ["alignment-thesis"]}
     },
     {
       "id": "theses-treat-the-causes",

@@ -121,8 +121,8 @@
   "governance-mechanism": {
     "kind": "core-construct",
     "site_home": "N/A",
-    "status": "planned",
-    "note": "Core construct 3 of 6 (_hierarchy). A repeatable environmental structure that encodes an engineering policy and either constrains an action, detects a violation, requires evidence, or controls admission — four classes: prevention, detection, evidence, admission. A model is NOT a governance mechanism until something reads or enforces it. Definitional text homed in definitions.json. Book home: 2.3 (index-def lands with the governance-mechanism item of the core-concepts pass; status flips to book-only then)."
+    "status": "book-only",
+    "note": "Core construct 3 of 6 (_hierarchy). A repeatable environmental structure that encodes an engineering policy and either constrains an action, detects a violation, requires evidence, or controls admission — four classes: prevention, detection, evidence, admission (prevention/detection = the catalogue's constraint/sensor move axis; package bundles both). A model is NOT a governance mechanism until something reads or enforces it (the model-not-mechanism-until-enforced claim). Definitional text homed in definitions.json. Book index-def tagged at the 2.3 'Four classes, one bounded term' inset."
   },
   "churn": {
     "kind": "core-construct",
