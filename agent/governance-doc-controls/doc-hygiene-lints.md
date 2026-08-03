@@ -13,6 +13,8 @@ stale, or be hand-edited where they will be overwritten.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — a doc missing its index entry or provenance header fails the lint |
 
+*Its place in the environment — a **variant / known-use** of **Drift / Parity Gate**, under **SYNC · Keep representations equal to reality**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-sync) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 Docs drift silently in ways a diff doesn't reveal: an auto-generated file gets hand-edited and is then

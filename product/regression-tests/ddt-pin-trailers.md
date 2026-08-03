@@ -13,6 +13,8 @@ edited.
 | Model | — |
 | Enforcement | **Hard** (deterministic) — a repeatable characterization body; the presence lint is BLOCKING |
 
+*Its place in the environment — a **variant / known-use** of **Drift / Parity Gate**, under **SYNC · Keep representations equal to reality**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-sync) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 Before a big refactor you want to **pin current behaviour** so the change is provably behaviour-
