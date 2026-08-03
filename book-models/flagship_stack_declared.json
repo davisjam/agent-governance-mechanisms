@@ -1,0 +1,57 @@
+{
+  "_provenance": "HAND-AUTHORED source for the flagship-stack model. Edited by hand; the generated artifact book-models/flagship-stack.json is derived from this by book-models/flagship_stack_model.py. Add a stack = add a record here + its overview SVG + its appendix page, then `python3 book-models/flagship_stack_model.py regenerate`.",
+  "_note": "A flagship stack is a PACKAGE of catalogue entries that together make one governed capability — the alternative-appendix deep-dives. Each record carries the stack's goal, the GEE capability it serves, an overview figure, and one entry per PART with the six fields the deep-dive template renders: role, failure, mechanism, seam (the interlock with adjacent parts), and durability. This file holds ONLY the Provenance + fidelity exemplar for now; the other six stacks land in a later wave once the template is ratified.",
+  "stacks": [
+    {
+      "id": "provenance-and-fidelity",
+      "name": "The provenance + fidelity stack",
+      "goal": "Reconstruct a remediated document's mutation history from the artifact itself, and catch any damage done through the sanctioned door — who and why for every change, and nothing silently lost.",
+      "capability": "Track provenance and trace causes",
+      "overview_figure": "book/assets/provenance-fidelity-stack.svg",
+      "page_source": "book/appendix-stacks/provenance-fidelity-stack.md",
+      "cross_links": ["model-coherence", "specification-and-verification"],
+      "parts": [
+        {
+          "slug": "a11y-prefix",
+          "role": "MARK — name every insertion so it is distinguishable from authored content and registry-covered by construction.",
+          "failure": "An inserted artifact is indistinguishable from what the author wrote, so nothing can tell what the tool added — and a validator cannot cover what it cannot name.",
+          "mechanism": "A three-way naming rule: an invisible insert takes a reserved prefix, a user-visible insert keeps an ordinary name, a spec-mandated name keeps its spec name — and every inserter records into one registry.",
+          "seam": "Opens the chain. It hands the next part a closed, registry-covered population of insertions to attribute; nothing enters the artifact unmarked, so the stamp-writer downstream has a complete set to stamp.",
+          "durability": "Durable and model-independent — a naming convention costs nothing at runtime and leans on no 2026 model capability. It fails only if an inserter bypasses the registry, which the fidelity gate then catches."
+        },
+        {
+          "slug": "mutator-stamps",
+          "role": "EMIT — every sanctioned mutation embeds an attribution stamp, carrying its pass and its visibility, into the artifact itself.",
+          "failure": "A change is made but leaves no durable trace of who made it or why; once the file leaves the pipeline the mutation history is unrecoverable.",
+          "mechanism": "One sanctioned stamp-writer per format — the raw stamp mutation is ban-linted away — so every mutator verb writes its stamp through a single surface.",
+          "seam": "Takes the marked, registry-covered inserts from MARK and turns each sanctioned mutation into embedded evidence. It hands the wiring-lint a closed verb set to prove complete, and the changelog an embedded registry to read back.",
+          "durability": "Durable — evidence embedded in the artifact (not a side log) survives copy, download, and re-open. Cost is one stamp per mutation; it fails only where a mutation skips the sanctioned writer, which the next part forbids."
+        },
+        {
+          "slug": "f10-wiring-lint",
+          "role": "COVER — a blocking lint asserts every mutator verb wires the stamp, so completeness is a guarantee, not an aspiration.",
+          "failure": "A new mutator lands without stamp wiring; provenance quietly develops a hole and 'we attribute every change' silently stops being true.",
+          "mechanism": "A build-time lint scans every mutator verb in the model Primitives and fails on any unwired one — the closed verb set held at zero open gaps.",
+          "seam": "Sits over EMIT. It reads the same closed verb set the stamp-writer serves and proves the writer is called across all of it, so the changelog READ downstream can trust the stamped population is complete.",
+          "durability": "Durable — a deterministic lint over a closed set does not decay. Its guarantee is only as strong as the one door it presumes: mutations must route through the sanctioned Primitives, held by a separate ban-lint."
+        },
+        {
+          "slug": "derive-changelog",
+          "role": "READ — a command reconstructs a human-legible ChangeLog from the embedded stamp registry, each entry a mutation attributed to its pass.",
+          "failure": "The provenance is present but unusable — stamps sit in the artifact with no consumer, so 'auditable' is a claim no one can exercise.",
+          "mechanism": "A command reads the embedded stamps and projects them into an attributed history — the mutation record reconstructed from the artifact itself, never a trusted external log.",
+          "seam": "Consumes what EMIT wrote and COVER proved complete. It turns the embedded evidence into the reconstructable history the stack's goal promises — provenance that finally has a reader.",
+          "durability": "Durable — a read-only projection of embedded data, with no runtime dependency; it reconstructs history from any conformant artifact and is exactly as complete as the stamps the wiring-lint guarantees."
+        },
+        {
+          "slug": "content-validator",
+          "role": "GATE — the fidelity gate: extract the input's content, assert input is a subset of output, and fail the job when meaning was dropped.",
+          "failure": "A remediation pass silently drops the user's content — the file looks fixed but lost a table, a note, a paragraph — and the damage ships invisibly.",
+          "mechanism": "A deterministic gate extracts input content and asserts it survives into the output, failing the job in production; a per-pass staging variant names which pass dropped it.",
+          "seam": "Closes the chain. Where MARK, EMIT, COVER, and READ attribute what the tool ADDED, the validator catches what a sanctioned pass silently REMOVED — damage done through the same door provenance covers. 'Content was lost somewhere' becomes 'pass N lost it.'",
+          "durability": "Durable and model-independent — a set-containment assertion over extracted content. Cost is one extract-and-compare per job; the per-pass variant is staging-only. It weakens only if extraction under-reads the format, bounded by the canonical reader."
+        }
+      ]
+    }
+  ]
+}
