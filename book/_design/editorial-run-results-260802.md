@@ -472,3 +472,20 @@ re-rendered).
 
 ### Live SHA
 `64f3dbf` — pushed to origin/main (deploy gate green: validate 0 + build + test suite + PDF integrity gate all passed); GitHub Actions building Pages (not blocked-on per brief). Live curl 200 at push time (still serving the prior build mid-CI — the refreshed numbers land when the Actions run completes). Untracked sibling briefs left unstaged by design.
+
+## STUDY-DESIGN v2
+
+The empirical study-design doc is committed as the **pre-registration of record** at
+`book/_design/evidence-study-design-260803.md` (v2, 260803 — the author's red-pen rulings folded
+into the v1 draft; nothing measured yet). Key deltas from v1: window periodization is now FOUR
+windows (prototype Mar 12–Apr 9 / mechanization Apr 10–May 31 / hardening Jun 1–Jun 30 /
+loop-management & autonomy Jul 1–present); the measurement matrix is pruned to the kept set — MMM
+drain series (publish the already-collected 56%→20.9% dispatch-scoped series; v1's "production tool
+deferred / HIGH" corrected), churn rescoped to `web/`+remediate, control-coverage census at HEAD,
+support-ratio 4-point trend, real-bug yield, seat-composition (late-window only) — with cut rows
+retained as CUT records (contrastive-subsystems: author-attention bias; failure→control recurrence:
+"not reliably measurable"; repo-wide re-touch; sync cost; promotion recurrence). Four quantifiable
+claims (spine 8, spine 11, `soft-to-hard-spectrum`, `mechanize-not-remember`) deliberately remain
+unquantified as recorded accepted limitations. MBSE external-baseline row held PENDING the author's
+artifact. Remaining open items: churn path-set, re-touch N/exclusions, provenance-fraction coding
+rule, MBSE artifact, per-row status ceilings (§5 of the doc).
