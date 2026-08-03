@@ -874,3 +874,83 @@ pages … (115 figures)" · `argument_spine`/`flagship_stack`/`chapter_shape`/`l
 sync" (no chapter-shape spine cascade — the W1 lesson held) · harness `check_argument_spine` /
 `check_chapter_shape` / `check_flagship_stack` / `check_lit_positioning` all PASS · `check_data_claims`
 audit-only (DL1/DL2 clean; DL3 + uncited-WARN informational). **Not deployed** (batched).
+
+---
+
+## W3-EXECUTE — catalogue → patterns-with-examples + self-governance + gov-of-gov expand (260803)
+
+Executed the ratified W3 disposition (`scratchpad/w3-disposition-260803.md`) with all author +
+Fable rulings folded (`scratchpad/W3-EXECUTE-brief-260803.md`). Six landing steps, one commit each,
+gates green on every commit.
+
+### Step 1 — self-governance entry (24th pattern) · 449a1ee
+New entry `agent/governance-doc-controls/self-governance.md`. Intent LEADS with the abstracted
+portable claim — *"give the system permission to detect its own recurring issues and introduce
+tasteful (proportionate) constraints and controls to prevent their recurrence"* — with the loadable
+INTERPRET-FAILURE skill + turn-end reflection hook named in parens as the operationalization, not the
+pattern. Standalone-interpretable (no parent-repo rule numbers / dangling paths). Card:
+`agent-output` · `package` · Model `—` · **Soft·Hard**. INDEX row + census 82→83 (agent 28→29,
+gov-doc family 8→9). `MODEL_NODES` home under orchestrator-hooks; catalogue-figure Soft·Hard column
+3→4. Classification: self-governance disposition (keep-as-L2 Self-governance); **Adaptive
+Resource-Pressure Admission → FOLDED** under Mediated Resource Admission; **Conformance-to-External-Spec
+→ MOVED** to book-proper case.
+
+### Step 2 — gov-of-gov EXPAND to 6 parts (ruling B: keep RADIUS, add INTERPRET) · 5cd8aff
+`flagship_stack_declared.json`: added `self-governance` as the INTERPRET part between RADIUS and
+REGISTRY → `GRAPH · CENSUS · RADIUS · INTERPRET · REGISTRY · INDEX`. Regenerate: **FS1 join clean,
+parts_unresolved==0**, 37 parts / 36 distinct members (was 36/35). Appendix page
+(`governance-of-governance-stack.md`) INTERPRET section + REGISTRY→5, INDEX→6 + goal/interlock prose;
+**overview SVG re-laid to 6 boxes** (width 160, step 175), figure-overflow clean. Computed Control
+Blast Radius KEPT (expand-not-swap → nothing ejected).
+
+### Step 3 — GEE construction-kit reconciled to the moves (25→24 patterns) · 0e6dabb
+`constructing-the-gee.md` consistency pass: GOVERN gains Self-governance (INTERPRET member, sibling to
+operator-runbook-skill); Adaptive folded under Mediated Resource Admission (condition-vs-count variant)
++ the **aggregate-vs-per-invocation Forces clause** (Fable Q4 — a semaphore over pieces still lets two
+whole sweeps overlap; only a singleton mutex over the aggregate bounds it); Conformance moved out to
+the product case; **Fleet Observability marked online-only with the load-bearing thin print pointer**
+to the observe→react stack (Fable Q7). Compositions: resource-mediation pair → one folded stack;
+gov-of-gov gains Self-governance; evidence-staircase noted as routed to the validation chapter (both
+patterns stay). Counts reconciled 25→24 (gee summary/body, INDEX line 13, README). **NEW optional
+template slot** "Prior art / known uses in the literature": `<!-- prior-art: LPP §N … -->` placeholders
+on the LPP-mapping patterns (Executable Source of Truth ←§6, Model-Derived Assurance Coverage ←§5,
+Point-of-Action Policy Delivery ←§2/§3, Adaptive/host-mediation, self-governance ←§2/§3) — no `[cite:]`
+yet (CITE-FRESH; LPP-PROSE fills them). Fixed cross-tree links to the served `appendix-d-*-stack.html`.
+**NOTE — the full patterns-primary facet-example rewrite (folding all 54 L3 as per-facet examples /
+known-use rows under each of the 23 patterns) is EDITORIAL, not gate-bearing, and is DEFERRED to a
+follow-up wave.** This step landed the consistency-critical moves so the page does not contradict the
+ratified structure; the deep facet-example fold-out remains.
+
+### Step 4 — chapter routing · e1e9c6b (evidence-staircase); Conformance already home
+(a) Conformance-to-External-Spec → product case was **already in place** (5.3-the-built-system +
+appendix-c-standards-rule-engine). (b) Evidence-staircase composition → a focused passage added to
+2.3 (Ex-Ante and Ex-Post), where the evidence + admission mechanism classes live; woven as untagged
+prose to avoid a chapter-shape spine cascade (W1 lesson).
+
+### Step 5 — delete 6 stale appendix-d html · 6397200
+`git rm` of `appendix-d-{canonical-seam,mbse,observability,self-operations,semantic-lint,worktree-
+lifecycle}-stack.html` (Fable Q8 AGREE). Verified: no `.md` source regenerates them, 0 external inbound
+links (closed orphan cluster), reversible from history. 7 canonical stacks remain.
+
+### Step 6 — final census / reachability / cross-link · this commit
+`catalog.py validate` 0 issues (83 entries: agent 29 · bridge 34 · product 20) · `catalog.py build`
+reachability gate green, 0 orphans (91 entry/index pages, 83-mechanism census) · flagship FS1–FS5 clean
+(7 stacks, 37 parts, 0 unresolved) · `book/build_book_html.py` green · `check_argument_spine` /
+`check_chapter_shape` / `check_flagship_stack` / `check_lit_positioning` all PASS (0 issues) · CLAUDE.md
+census token auto-synced 82→83.
+
+### Net result
+- **24 catalogue patterns** (23 print — Fleet Obs online-only) **+ self-governance** distilled as a
+  standalone pattern; Conformance moved to the product case; Adaptive folded.
+- **NO catalogue entry hard-deleted** — every "cut" (aggregate-compute-protection, codemod-first,
+  test-onion-tiers, required-config-per-role-manifest) is preserved as an online-only known-use; only
+  the 6 stale generated `.html` were removed.
+- Gov-of-gov flagship is 6 parts (Blast Radius kept + INTERPRET added).
+
+### Parked / deferred (for orchestrator awareness)
+- **Full patterns-primary facet-example rewrite of `constructing-the-gee.md`** (the 54 L3 folded as
+  per-facet examples + known-use rows under each pattern, flagship members as short-example-plus-stack-
+  link per the anti-double-placement rule). Editorial, non-gating; the consistency moves landed. This is
+  the bulk of the "patterns-with-examples" editorial vision and is the main remaining W3 work.
+- Prior-art slot placeholders added on the clear LPP-mappers only; a complete pass over every
+  literature-mapping pattern can follow when LPP-PROSE lands the actual `references.bib` keys.
