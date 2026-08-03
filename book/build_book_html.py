@@ -2223,6 +2223,7 @@ _STACKS: list[tuple[str, str]] = [
     ("model-coherence-stack", "The model-coherence stack"),
     ("specification-verification-stack", "The specification + verification stack"),
     ("observe-react-stack", "The observe → react loop"),
+    ("resource-mediation-stack", "The resource-mediation stack"),
     ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
 ]
 

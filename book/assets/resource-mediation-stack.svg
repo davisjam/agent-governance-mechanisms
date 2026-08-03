@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): the resource-mediation flagship stack as a left-to-right pipeline of
+     four parts. The declared contract (violet — DECLARE), two host-level mediators (fleet blue — SERIALIZE,
+     the N=1 flock; governed green — SEMAPHORE, the M=8 counting lock), and the adaptive pressure gate
+     (accent umber — SHED). Palette: Umber Monograph tokens only (violet #7c6bb0/#f2effb, fleet
+     #2f5169/#e7edf3, governed #1f7a4d/#e3f0e7, accent #9a3f12/#faf1e6, ink #1c1917, muted #57534e). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360"
+     role="group" aria-labelledby="rmTitle rmDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="rmTitle">The resource-mediation stack: declare the contract, serialize the monopoly, share to capacity, shed on pressure</title>
+  <desc id="rmDesc">Four parts run left to right. DECLARE (violet) is the typed registry of concurrency
+    contracts — which invocations are serialized and which mutations are single-writer. SERIALIZE (fleet
+    blue) is the host-level flock that admits one run of the heaviest tool at a time, N equals one.
+    SEMAPHORE (governed green) is the counting lock that admits up to eight concurrent runs of the adjacent
+    heavy tools, sharing to the machine's capacity. SHED (accent umber) governs a saturable host resource
+    with a live pressure signal at two layers: an admission gate that refuses heavy work before dispatch and
+    an execution shed that stops running work when pressure spikes. The contract says how many; the
+    mediators hold that many; the pressure gate decides whether they run at all.</desc>
+
+  <defs>
+    <marker id="rmArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- header -->
+  <text x="44" y="36" font-size="15" font-weight="700" fill="#1c1917">The resource-mediation stack — declare the contract, hold it with a mediator, shed on live pressure</text>
+
+  <!-- capability legend (free-floating swatches) -->
+  <rect x="120" y="104" width="15" height="15" rx="3" fill="#f2effb" stroke="#7c6bb0" stroke-width="1.5"/>
+  <text x="142" y="116" font-size="12.5" fill="#57534e">the declared contract</text>
+  <rect x="360" y="104" width="15" height="15" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="382" y="116" font-size="12.5" fill="#57534e">N=1 serializer</text>
+  <rect x="600" y="104" width="15" height="15" rx="3" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
+  <text x="622" y="116" font-size="12.5" fill="#57534e">M=8 semaphore</text>
+  <rect x="840" y="104" width="15" height="15" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="862" y="116" font-size="12.5" fill="#57534e">adaptive pressure gate</text>
+
+  <!-- ============ stage boxes ============ -->
+  <!-- 1 DECLARE -->
+  <rect x="120" y="150" width="200" height="78" rx="8" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="220" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">DECLARE</text>
+  <text x="220" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#7c6bb0">the contracts</text>
+  <!-- 2 SERIALIZE -->
+  <rect x="360" y="150" width="200" height="78" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="460" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">SERIALIZE</text>
+  <text x="460" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#2f5169">single writer</text>
+  <!-- 3 SEMAPHORE -->
+  <rect x="600" y="150" width="200" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="700" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">SEMAPHORE</text>
+  <text x="700" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#1f7a4d">up to eight</text>
+  <!-- 4 SHED -->
+  <rect x="840" y="150" width="200" height="78" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+  <text x="940" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">SHED</text>
+  <text x="940" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#9a3f12">pressure gate</text>
+
+  <!-- ============ per-part action row (free-floating) ============ -->
+  <g font-size="12" font-style="italic" fill="#57534e" text-anchor="middle">
+    <text x="220" y="252">who may run, how many</text>
+    <text x="460" y="252">the monopoly resource</text>
+    <text x="700" y="252">share up to capacity</text>
+    <text x="940" y="252">refuse, then shed</text>
+  </g>
+
+  <!-- ============ arrows ============ -->
+  <g fill="none" stroke="#1c1917" stroke-width="2.2" marker-end="url(#rmArrow)">
+    <path d="M90,189 L118,189"/>
+    <path d="M320,189 L358,189"/>
+    <path d="M560,189 L598,189"/>
+    <path d="M800,189 L838,189"/>
+  </g>
+
+  <!-- synthesis caption -->
+  <text x="600" y="308" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">The contract says how many; the mediators hold that many —</text>
+  <text x="600" y="328" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">and the pressure gate decides whether they run at all.</text>
+</svg>
