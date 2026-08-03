@@ -188,7 +188,7 @@ def cap_sync_assurance_govern_models(d):
 
     # Drift/Parity variants (product coherence-lints handled in product group)
     dispose(d, "models-bridge/system-models/drift-parity-gates", "keep-as-L2 Drift / Parity Gate", "Canonical CAP-SYNC mechanism.")
-    dispose(d, "models-bridge/system-models/doc-hygiene-lints", "demote-to-L3-under Drift / Parity Gate",
+    dispose(d, "agent/governance-doc-controls/doc-hygiene-lints", "demote-to-L3-under Drift / Parity Gate",
             "Corpus-structure parity: doc corpus ⟷ its declared structure (index ⊇ docs; emitted file → declared emitter; pointer → resolvable target). Same parity relation applied to the documentation corpus; enforces the Governed Knowledge Base.")
 
     # Model-Derived Assurance Coverage variants
