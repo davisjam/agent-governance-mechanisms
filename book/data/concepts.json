@@ -127,8 +127,8 @@
   "churn": {
     "kind": "core-construct",
     "site_home": "N/A",
-    "status": "planned",
-    "note": "Core construct 4 of 6 (_hierarchy). The failure mode the book opens on; churn stays the SYMPTOM (the three not-knowings are its causes — the churn-is-symptom claim). Definitional text homed in definitions.json. Book home: the preface churn inset (index-def lands with the churn item of the core-concepts pass; status flips to book-only then). The landing realizes it as the bi-churn Big-Idea slot, not a card- concept card."
+    "status": "book-only",
+    "note": "Core construct 4 of 6 (_hierarchy). The failure mode the book opens on; churn stays the SYMPTOM (the three not-knowings are its causes — the churn-is-symptom claim). Definitional text homed in definitions.json (the churn record — canonical box, directive 260802 phrasing). Book index-def tagged at the preface churn inset. The landing realizes it as the bi-churn Big-Idea slot, not a card- concept card."
   },
   "failure-to-mechanism": {
     "kind": "core-construct",

@@ -5,7 +5,9 @@
 
   "_book_home_note": "The four CORE-TERM definitions (model, agent, engineering, software-engineering) are tagged with an index-def in §2.1 (The Agent Stack), so their `book_home_owed.status: landed` and each carries a resolved `book_home` (the `#idx-def-<slug>` anchor on the 2.1 page). The fifth record, `structured`, is the ADJECTIVE rider on the model definition — now also index-def-tagged in §2.1 (`book_home_owed.status: landed`, `book_home` → `#idx-def-structured`), rendering as the blue def-box in the web book + PDF; on the landing it reads as the rider on the four definitions, not a fifth peer (the 'four definitions' framing is preserved). The drift check still only requires a resolvable SITE home; the book home is the honest 'book coverage ⊇ site framings' realization.",
 
-  "_order": ["model", "agent", "engineering", "software-engineering", "structured"],
+  "_book_only_note": "Records whose `site_home` is \"N/A\" are BOOK-ONLY definitions — the core-construct insets the CORE-CONCEPTS pass (directive 260802) formalized: churn, governance-mechanism, engineered-agent-loop. The site does NOT project them (the landing keeps its four-definitions + rider framing): `_landing_definitions` filters them out and `check_definitions_site` skips them in the model→site direction. Only the book home is owed, held by the concepts model's L1 (each is a core-construct record there, joined by the same slug where the slugs coincide). Their definitional text here is the SSOT the prose insets mirror.",
+
+  "_order": ["model", "agent", "engineering", "software-engineering", "structured", "churn", "governance-mechanism", "engineered-agent-loop"],
 
   "model": {
     "term": "Model",
@@ -83,6 +85,21 @@
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Structured",
     "book_home": "book/2.1-the-agent-stack.html#idx-def-structured",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the adjective rider on the model definition in §2.1 is tagged with an index-def and renders as the blue def-box in the web book + PDF (the #idx-def-structured anchor). On the landing it reads as the rider on the four definitions, not a fifth peer."},
+    "lexicon_link": "book/6.2-glossary.html",
+    "concepts_link": "book/data/concepts.json"
+  },
+
+  "churn": {
+    "term": "Churn",
+    "box": "The condition in which an increasing share of agent effort is spent rediscovering context, undoing recent changes, repairing regressions, or reconciling inconsistencies rather than advancing the system.",
+    "aspects": [
+      {"lead": "The symptom, not the cause", "text": "Churn is what you can watch — the velocity decay. Its causes are the three not-knowings: what to build, how to realize it, how to change the system without breaking it. Every technique in the book attacks a cause, never the symptom (the churn-is-symptom claim)."},
+      {"lead": "Why it is the agent-era scaling wall", "text": "A team of people slows under Brooks's Law. A fleet does not drown in communication; it churns when the work outgrows what it can hold in view — re-deriving what exists, confidently undoing yesterday's fix. Fixing crowds out building."}
+    ],
+    "site_home": "N/A",
+    "derived_from": "book/_design/book-editorial-discipline-directive-260802.md#the-churn-definition",
+    "book_home": "book/0.1-preface.html#idx-def-churn",
+    "book_home_owed": {"section": "Front Matter — Preface", "status": "landed", "note": "Landed: the churn inset in the preface premise carries the index-def tag and renders as the light def-inset. Book-only by design; the landing realizes churn as the bi-churn Big-Idea slot."},
     "lexicon_link": "book/6.2-glossary.html",
     "concepts_link": "book/data/concepts.json"
   }

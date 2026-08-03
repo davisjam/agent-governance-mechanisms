@@ -1624,6 +1624,8 @@ def _landing_definitions() -> str:
     peers: list[str] = []
     rider: dict | None = None
     for rec in _load_definitions():
+        if rec.get("site_home") == "N/A":
+            continue             # book-only definition (core-construct inset) — never projected to the site
         if rec["_slug"] == "structured":
             rider = rec          # the adjective — held out of the peer strip, appended as a rider
         else:

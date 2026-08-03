@@ -683,6 +683,9 @@ def check_definitions_site():
     if not raw:
         return PASS, ["no book/data/definitions.json — nothing to check"]
     records = {k: v for k, v in raw.items() if not k.startswith("_")}
+    # BOOK-ONLY definitions (site_home "N/A" — the core-construct insets) declare no site presence, so
+    # the model→site direction skips them; their book home is held by the concepts model's L1 instead.
+    records = {k: v for k, v in records.items() if v.get("site_home") != "N/A"}
     ids = _landing_all_ids()
     issues: list[str] = []
 

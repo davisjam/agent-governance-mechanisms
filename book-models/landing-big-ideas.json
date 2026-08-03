@@ -16,7 +16,7 @@
     "figure": "mage-overview.svg",
     "book_home": "book/1.1-the-printer.html",
     "claim": "An agent fleet scales until the work outgrows its context window. Then it churns: it re-derives what it already built and confidently undoes yesterday's fix.",
-    "more": "A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window. Churn has two causes, and the theses below attack one each: models shrink what the agent must hold, and governance makes its errors impossible or visible."
+    "more": "A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window. Churn is the symptom; its causes are three not-knowings — what to build, how to realize it, how to change safely — and the theses below divide them: models treat the first two, governance the third."
   },
 
   "governance-centric": {
