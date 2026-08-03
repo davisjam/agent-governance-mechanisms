@@ -362,4 +362,4 @@ Mirrors the `claims`/`concepts`/`definitions` siblings; reads the generated `arg
 `2e6ab22` STEP 1 (6 statements + rename + cap) · `5c9fffa` STEP 2 (spine subcommand) · `1cd04f0` STEP 3 A+B (fault + churn prose + claims reconcile) · `0eaee21` STEP 3 C (landing alignment slot) · `7c9cfc9` STEP 3 D (sync-cost prose) · `fa296ad` STEP 3 E (universal-language claim reconcile).
 
 ### Live SHA
-`__PENDING_DEPLOY__`
+`91f59bf` — pushed to origin/main; Deploy Pages CI **success**; touched pages + models-view all HTTP **200**; live content verified (3.1 "now pays cheaply", 1.1 "not, by reflex, as a fixed ceiling", landing Big-Idea "prevent first, sense the rest", published `argument-spine.json` carries `sync-cost-reduced` + the tuned alignment statement).
