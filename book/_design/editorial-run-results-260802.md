@@ -1104,3 +1104,89 @@ Mediated Resource §?, Point-of-Action §2/§3, Self-governance §2/§3). None f
 ### Parked
 - **None.** Every §2 facet assignment fit once written; the only judgment call surfaced (invariant-dag
   5-vs-6) was resolved explicitly above rather than parked.
+
+---
+
+## LPP-PROSE writer wave — literature-positioning insertions + Preface subsection (260803)
+
+Landed the standalone LPP sections (§1/§2/§5/§8/§10), the isolated W-PREFACE subsection, the
+coordinator-supplied §12 (Ait et al.), the catalogue prior-art known-uses slots, and the
+blast-radius prose fix. Commit-per-section (resumable). §4-extend + §3-extend DEFERRED to W7
+(they live in 3.1-the-executable-zoo, which carries 2 pre-existing tier-1 FAILs; not touched).
+
+### Per-section landing
+
+| § | Location (file · beat) | Cites (new / reused) | Spine claim | Relation | Status | SHA |
+|---|---|---|---|---|---|---|
+| §1 | `frontmatter/0.1-preface.md` · "three ways to run a fleet", oversight beat | `dhanorkar2026oversight` (new) | `oversight-does-not-scale` | substantiates | landed | 31dd44a |
+| §2 | `part1/1.4-…machine.md` · emerging-consensus para, after thin-harness | `lin2026agentic` (new); `zhong-zhu2026` REUSED (already in 1.4) | `govern-the-environment` | corroborates | landed | b1c1aa1 |
+| §5 | `part5/5.3-the-built-system.md` · LLM-as-function-call sidebar (expanded to 2 paras) | `ringer2019qed` (new), `tu2025agenticverification` (new); `arxiv-2605-10712` (AutoSOUP) REUSED | `alignment-thesis` | situates + substantiates | landed | 7e966ed |
+| §8 | `part2/2.3-the-governed-environment.md` · ex-post failure-to-mechanism beat | `hollnagel2006resilience`, `beyer2016sre`, `shingo1986zqc` (all new) | `failures-become-machinery` | situates | landed | 01ebfff |
+| §10 | `part1/1.5-the-engineers-seat.md` · after "role shrinks nothing" beat | `vella2026impact`, `jackson2025genaidesign` (both new) | `seat-moves` | substantiates + corroborates | landed | 62a6229 |
+| W-PREFACE | `frontmatter/0.1-preface.md` · after motivation, before "Where this book sits" | none (cite-free) | none (overview-exempt) | n/a | n/a | 4490f4b |
+| §12 | `part2/2.3-the-governed-environment.md` · after chapter intro, before ex-ante | `ait2025governance` (new; author-supplied) | `govern-the-environment` | convergent-evidence | landed (NEW record) | aa8c0d5 |
+
+### references.bib additions (10 new; 2 reused, not re-added)
+NEW: `dhanorkar2026oversight`, `lin2026agentic` (11 authors incl. Zhiheng Xi + Yu-Gang Jiang),
+`ringer2019qed`, `tu2025agenticverification`, `hollnagel2006resilience`, `beyer2016sre`,
+`shingo1986zqc`, `vella2026impact`, `jackson2025genaidesign`, `ait2025governance`.
+REUSED (existing keys, per the draft's cite-key reconciliation): `zhong-zhu2026` (= the
+requested `zhong2026harness`), `arxiv-2605-10712` (= the requested `amusuo2026autosoup`).
+render_citations: 46 entries rendered, CITE-FRESH green.
+
+### Key-spelling reconciliation (bib key == `[cite:]` == model-record key)
+Aligned to the MODELS-wave model records (the authoritative key source): `lin2026agentic`
+(not `lin2026agenticharness`), `shingo1986zqc` (not `shingo1986pokayoke`), `vella2026impact`
+(not `vella2026aiassistants`), `tu2025agenticverification` (not `tu2025autorocq`). fang2026trustworthy
+verified but NOT landed (kept the §5 sidebar to one AutoSOUP-adjacent system; removed from the §5
+record's citations, noted as an available alternative).
+
+### lit-positioning model
+Flipped §1/§2/§5/§8/§10 status→landed; added a NEW §12 `automated-governance-dsl` record
+(status landed). §6/§9/§11 stay planned (§4 spec-driven + §3 code-graphs were already landed).
+target_locations trimmed per record to the ACTUAL landing chapter. Extended the `Citation`
+dataclass with an optional `illustrates_pattern` field (GoF prior-art double-duty; round-trips
+into the artifact). Set `illustrates_pattern`: §5 Ringer + AutoSOUP → `formal-invariant-verification`;
+§8 all three → `self-governance`; §2 Lin → `dynamic-context-injection`.
+LP burndown: 8/11 landed. LP1–LP6 clean EXCEPT one known audit-only finding (below).
+
+### Catalogue prior-art known-uses slots (constructing-the-gee.md)
+Populated 3 of the 5 `<!-- prior-art -->` slots — as PLAIN AUTHOR-YEAR PROSE, not `[cite:]`
+(the catalogue is rendered by catalog.py, which does NOT resolve `[cite:]`; verified 0 raw cite
+markers in the built HTML, and plain prose matches the catalogue's standalone-interpretability
+rule): Model-Derived Assurance Coverage ← §5 (Ringer, AutoSOUP); Point-of-Action Policy Delivery
+← §2 (Lin et al.); Self-governance ← §8 (Shingo poka-yoke, SRE postmortems). Left the §6
+(Executable Source of Truth, model-sync → W7) and host-mediation slots as placeholders (cites
+not landed this wave).
+
+### Blast-radius prose fix (constructing-the-gee.md)
+Corrected the W3-FOLDOUT error that Computed Control Blast Radius was "ejected from the
+gov-of-gov stack by the INTERPRET swap." Ruling B was EXPAND: the gov-of-gov stack is 6 parts
+INCLUDING `control-substrate-dependency` (RADIUS) PLUS `self-governance` (INTERPRET). Blast
+Radius is BOTH a standalone catalogue pattern AND the RADIUS member; the cross-link now reads
+"its RADIUS member" (matching the composition summary + flagship-stack.json's 6 parts).
+
+### Gates
+`render_citations` CITE-FRESH green; `catalog.py validate` 0 issues; `catalog.py build` exit 0
+(reachability gate green); `build_book_html.py` exit 0 (CITE-RESOLVE green, no dangling); book
+tier-1 FAIL baseline HELD at 2 (both pre-existing in 3.1-the-executable-zoo — stray `<!-- todo -->`
+L426 + IR-render byte-identity block 110; untouched). check_argument_spine / check_chapter_shape
+audit-only green. View artifacts (outline/outcomes/reverse_index) regenerated to clear the
+FRESHNESS drift my prose added.
+
+### Deviations / parked
+- **§1 LP3 (audit-only, non-gating):** §1 landed in the Preface (frontmatter) per the task/draft;
+  LP3's `_chapter_text` globs `book/part*/` only, so it cannot read frontmatter and reports
+  `dhanorkar2026oversight` as "appears in none of its target chapters". The cite IS present in
+  the preface. Documented in the §1 record's notes. (Structural limitation of LP3, not a real miss.)
+- **W-PREFACE TODO marker OMITTED:** the draft asked to leave a `<!-- TODO: one-sentence echo in
+  limitations/conclusion -->` marker; a raw todo comment trips the tier-1 "no stray HTML comments"
+  lint (the same check that flags 3.1:426), which would introduce a new failure. PARKED for a
+  later wave: add a one-sentence echo of the "why build a system" argument in the limitations /
+  conclusion (do NOT expand).
+- **§8 prior-art slot placement:** the L1013 slot's comment guessed "§2/§3 reflection"; it sits on
+  the Self-governance pattern, whose genuine prior-art is the §8 failure-conversion lineage
+  (poka-yoke / SRE). Populated with §8 accordingly (the on-point mapping).
+- **§4-extend + §3-extend DEFERRED to W7** (in 3.1; not touched). §5 optional Tu cite: INCLUDED
+  (clean prose slot); §5 second optional (fang) SKIPPED. §10 Jackson kept in 1.5 (not split to 6.0),
+  per the draft's recommendation.
