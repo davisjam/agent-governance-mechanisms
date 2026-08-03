@@ -111,6 +111,65 @@
           "durability": "Durable and model-independent — a typed seam plus a ban-lint is deterministic infrastructure. Its cost is building the model and migrating every call site; it weakens only where a raw call escapes the ban, which the lint is there to catch."
         }
       ]
+    },
+    {
+      "id": "specification-and-verification",
+      "name": "The specification + verification stack",
+      "goal": "Turn a concurrent behavioral spec into checked assurance: model the lifecycle as composed state machines, derive from it every test obligation, discharge each at the rigor its shape demands — an exhaustive proof for a safety or liveness invariant, a deterministic lint for a linear one — then map coverage back onto the model so an unexercised invariant is a visible gap, not a guess.",
+      "capabilities": ["Establish completion on re-derived evidence", "Constrain where and how agents act"],
+      "overview_figure": "book/assets/specification-verification-stack.svg",
+      "page_source": "book/appendix-stacks/specification-verification-stack.md",
+      "cross_links": ["model-coherence", "observe-and-react"],
+      "parts": [
+        {
+          "slug": "composed-state-machine-model",
+          "role": "SPEC — model a concurrent lifecycle as a set of typed state machines running at once, and name the predicates that must hold ACROSS them as first-class invariants.",
+          "failure": "Concurrency correctness lives as scattered ad-hoc guards; the invariants that must hold across components are never named, so no one can say what 'correct' even means, let alone check it.",
+          "mechanism": "Model the lifecycle as composed state machines, name each cross-machine predicate as an invariant, and derive each invariant's verification obligation from its shape — a safety predicate earns an exhaustive state-space check, a liveness one a temporal check, a linear one a property test.",
+          "seam": "Opens the stack. It is the spec every later part discharges: the census reads its invariants to build the obligation set, the prover reads their temporal form to pick a checker, the coverage map projects tests back onto these same nodes.",
+          "durability": "Durable — a typed state-machine model is the standard way to make concurrency legible, and it leans on no 2026 model capability. Its cost is authoring the machines and the invariants; it is only as honest as the parity gate that keeps the model equal to the running code."
+        },
+        {
+          "slug": "model-derived-test-obligation-census",
+          "role": "CENSUS — derive the set of things that SHOULD be tested from the models: every external seam to fuzz, every failure edge to inject, every invariant to check.",
+          "failure": "Coverage is a percentage over the lines someone happened to write a test for; an entire untested seam or failure edge is invisible because nothing knows it was owed a test.",
+          "mechanism": "Walk the models to derive the obligation set — the seams, edges, and invariants that demand a test — and lint the GAP between that derived set and the tests that actually exist.",
+          "seam": "Reads the SPEC's invariants and seams and turns them into a work-list. It hands the prover and the lints a NAMED backlog of obligations, so 'what still needs verifying' is a query over the model, not a memory.",
+          "durability": "Durable — deriving obligations from a typed model is deterministic and re-runs on every change. Its cost is the derivation rules; it fails only where an obligation kind is not yet modeled, which widens the census rather than breaking it."
+        },
+        {
+          "slug": "formal-invariant-verification",
+          "role": "PROVE — give each invariant a temporal form — safety (`[]P`, always) or liveness (`P ~> Q`, eventually) — and let that form route WHICH exhaustive checker verifies it.",
+          "failure": "A concurrency invariant is 'tested' by a sampled unit test that walks a handful of interleavings; the one interleaving that violates it is never sampled, and the bug ships proven-absent.",
+          "mechanism": "Tag each invariant with its temporal-logic form and make the form the routing input: a safety predicate is discharged by an exhaustive state-space model-check, a liveness one by a temporal checker — proven by the method its shape demands, not by a sample.",
+          "seam": "Consumes the SPEC's invariants and the CENSUS's obligation set. It is the heavy-rigor tier: the invariants whose shape is HAIRY get an exhaustive proof here, leaving the linear ones for the deterministic lints beside it.",
+          "durability": "Durable — an exhaustive check over a bounded state space does not decay, though its cost grows with the space. It fails where the model abstracts away the detail that carried the bug, bounded by how faithfully the SPEC mirrors the code."
+        },
+        {
+          "slug": "semantic-lints",
+          "role": "LINT — a fleet of blocking semantic checks over the tool's own source (banned APIs, silent-catch bans, typed-seam violations) that fail the build on invariant violations the compiler and review miss (folded from the semantic-lint stack).",
+          "failure": "A recurring class of mistake keeps re-entering through review; a convention says 'don't do that,' but a convention decays under a fleet and the class re-appears one commit at a time.",
+          "mechanism": "A blocking check reads structure — not a regex over surface text — and rejects the violation at commit time, moving a recurring judgment out of review and into a deterministic gate.",
+          "seam": "The linear-rigor tier beside the prover. Where PROVE discharges the HAIRY invariants exhaustively, LINT discharges the LINEAR ones deterministically at commit — the two together cover the obligation set the CENSUS derived, each at the rigor its invariant's shape demands.",
+          "durability": "Durable — a deterministic structural check does not decay and fires on every commit. Its guarantee is only as good as the level it targets, which the next part holds."
+        },
+        {
+          "slug": "semantic-level-enforcement",
+          "role": "LEVEL — place each check at the granularity where the property it guards first becomes legible, not at the cheapest or earliest point.",
+          "failure": "A lint aimed one level too low passes on a spec-legal variation it should have caught and fires on a legal one it should have allowed — the check is present but wrong.",
+          "mechanism": "Choose the scope where the invariant is actually observable — for instance, check model-to-code drift when an agent RETURNS from a multi-commit task, never at a per-commit hook where the model is legitimately mid-flight.",
+          "seam": "Sits over LINT. It is what makes the deterministic tier CORRECT rather than merely present: the check the CENSUS demanded is only trustworthy once it fires at the level its invariant lives at.",
+          "durability": "Durable — a level, once chosen right, does not decay. Its cost is the judgment of choosing it; it fails silently when a check is placed a level off, which reads as a false pass rather than a red gate — the most expensive failure mode to notice."
+        },
+        {
+          "slug": "coverage-model-mapping",
+          "role": "COVER — project test coverage onto the model's own nodes — its states, seams, and invariants — so 'is this invariant tested?' is a queried fact, not a guess from a line-coverage percentage.",
+          "failure": "Line coverage says 80% and everyone relaxes; a critical invariant node sits at zero covering tests, invisible because the percentage averages it away.",
+          "mechanism": "Map each test to the model nodes it exercises, turning the model into a work-list: an invariant node with no covering test is a visible gap that drives the next test.",
+          "seam": "Closes the stack. It reads the SPEC's nodes and asks, of everything the CENSUS owed and PROVE and LINT discharged, which is actually EXERCISED — so a verified-in-principle invariant with no live test becomes a named gap, not a comfortable average.",
+          "durability": "Durable — a projection of coverage onto model nodes is a query, not a runtime dependency. Its cost is maintaining the test-to-node map; it is exactly as complete as the SPEC's node set, which the census keeps honest."
+        }
+      ]
     }
   ]
 }

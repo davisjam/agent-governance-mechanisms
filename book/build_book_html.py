@@ -2221,8 +2221,8 @@ _STACKS: list[tuple[str, str]] = [
     # durability). The thin two-tier precursor pages were superseded and folded into these seven.
     ("provenance-fidelity-stack", "The provenance + fidelity stack"),
     ("model-coherence-stack", "The model-coherence stack"),
+    ("specification-verification-stack", "The specification + verification stack"),
     ("self-operations-stack", "The self-operations stack"),
-    ("semantic-lint-stack", "The semantic-lint stack"),
     ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
     ("observability-stack", "The observability stack"),
 ]
