@@ -8,14 +8,14 @@
       "x": "Human review has long been the accepted safeguard on machine-generated changes.",
       "y": "At agent throughput, per-change oversight becomes emergent, effortful work that does not keep pace — Dhanorkar et al. document 17 developers doing four forms of oversight.",
       "z": "MAGE spends human attention per class of failure, encoded as a mechanism the environment enforces, not per individual change.",
-      "target_locations": ["2.3-the-governed-environment", "6.0-implications-for-se"],
+      "target_locations": ["0.1-preface"],
       "citations": [
         {"key": "dhanorkar2026oversight", "backs_claims": ["oversight-does-not-scale"], "relation": "substantiates"}
       ],
       "advances_theses": ["oversight-does-not-scale"],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "STANDALONE wave. Claim CONFIRMED: interviews with 17 developers surface four forms of emergent oversight (a priori control, co-planning, real-time monitoring, post hoc review). Title-case rendering is a choice, not an error (arXiv renders sentence-case). Key dhanorkar2026oversight (arXiv 2606.05391) planned — not yet in references.bib."
+      "notes": "STANDALONE wave — LANDED (LPP-PROSE) in 0.1-preface, the 'three ways to run a fleet' oversight beat, right before 'The third answer is governance'. Claim CONFIRMED: interviews with 17 developers surface four forms of emergent oversight (a priori control, co-planning, real-time monitoring, post hoc review). Title-case rendering is a choice, not an error (arXiv renders sentence-case). target_locations trimmed to the actual landing chapter (was the MODELS-wave planned set 2.3/6.0; the prose draft's editorial judgment put it at the preface's oversight beat, the strongest spot). NOTE: 0.1-preface is a frontmatter chapter, so LP3's _chapter_text (which globs book/part*/ only) cannot read it — LP3 reports this landed cite as not-appearing-in-a-target-chapter (audit-only, non-gating). The cite IS present in book/frontmatter/0.1-preface.md."
     },
     {
       "id": "harness-engineering",

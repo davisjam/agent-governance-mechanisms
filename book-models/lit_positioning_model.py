@@ -100,6 +100,10 @@ class Citation:
     key: str
     backs_claims: list[str]
     relation: str
+    illustrates_pattern: str = ""        # OPTIONAL: the catalogue pattern slug this cite is a prior-art
+                                         # known-use of (the GoF double-duty — spine substantiation via
+                                         # backs_claims + catalogue prior-art via this). "" when the cite
+                                         # instantiates no catalogue pattern.
     resolves_bib: bool = False           # derived (LP3): the key is present in references.bib
     backs_resolve: bool = False          # derived (LP6): every backs_claims id names a spine claim
 
@@ -189,6 +193,7 @@ def derive_model() -> LitPositioningModel:
     for r in decl.get("interventions", []):
         cites = [Citation(
             key=c["key"], backs_claims=list(c.get("backs_claims", [])), relation=c.get("relation", ""),
+            illustrates_pattern=c.get("illustrates_pattern", ""),
             resolves_bib=c["key"] in bib,
             backs_resolve=all(cid in spine for cid in c.get("backs_claims", [])) and bool(c.get("backs_claims")),
         ) for c in r.get("citations", [])]

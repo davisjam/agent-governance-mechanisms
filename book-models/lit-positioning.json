@@ -3,10 +3,10 @@
   "_note": "The literature-positioning model holds the book's Literature-Positioning Pass — each place the book situates itself against outside work, carrying the X (established lineage) -> Y (current frontier) -> Z (narrow MAGE move) frame and its citations as MODELED objects {key, backs_claims, relation} nested under the argument spine. It is the LITERATURE half of the substantiation aggregator (the data-claim ledger is the DATA half). The LP1-LP6 conformance check holds the frame mechanically: traceability + schema, thesis join, landing integrity, location join, coverage/burndown, citation join. It lands audit-only-first — a record that drops its X/Y/Z or (once landed) cites a key absent from the .bib reddens the audit but does not gate while the LPP prose waves are still landing. `status` planned|landed is the burndown signal; only §3 (graphify) and §4 (spec-driven development) are landed today.",
   "_counts": {
     "interventions": 10,
-    "landed": 2,
-    "planned": 8,
+    "landed": 3,
+    "planned": 7,
     "citations_total": 33,
-    "citations_pending_bib": 26,
+    "citations_pending_bib": 25,
     "distinct_theses": 9
   },
   "taxonomy": {
@@ -35,8 +35,7 @@
       "y": "At agent throughput, per-change oversight becomes emergent, effortful work that does not keep pace — Dhanorkar et al. document 17 developers doing four forms of oversight.",
       "z": "MAGE spends human attention per class of failure, encoded as a mechanism the environment enforces, not per individual change.",
       "target_locations": [
-        "2.3-the-governed-environment",
-        "6.0-implications-for-se"
+        "0.1-preface"
       ],
       "citations": [
         {
@@ -45,18 +44,18 @@
             "oversight-does-not-scale"
           ],
           "relation": "substantiates",
-          "resolves_bib": false,
+          "illustrates_pattern": "",
+          "resolves_bib": true,
           "backs_resolve": true
         }
       ],
       "advances_theses": [
         "oversight-does-not-scale"
       ],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "STANDALONE wave. Claim CONFIRMED: interviews with 17 developers surface four forms of emergent oversight (a priori control, co-planning, real-time monitoring, post hoc review). Title-case rendering is a choice, not an error (arXiv renders sentence-case). Key dhanorkar2026oversight (arXiv 2606.05391) planned — not yet in references.bib.",
+      "notes": "STANDALONE wave — LANDED (LPP-PROSE) in 0.1-preface, the 'three ways to run a fleet' oversight beat, right before 'The third answer is governance'. Claim CONFIRMED: interviews with 17 developers surface four forms of emergent oversight (a priori control, co-planning, real-time monitoring, post hoc review). Title-case rendering is a choice, not an error (arXiv renders sentence-case). target_locations trimmed to the actual landing chapter (was the MODELS-wave planned set 2.3/6.0; the prose draft's editorial judgment put it at the preface's oversight beat, the strongest spot). NOTE: 0.1-preface is a frontmatter chapter, so LP3's _chapter_text (which globs book/part*/ only) cannot read it — LP3 reports this landed cite as not-appearing-in-a-target-chapter (audit-only, non-gating). The cite IS present in book/frontmatter/0.1-preface.md.",
       "locations_resolve": [
-        true,
         true
       ],
       "theses_resolve": [
@@ -82,6 +81,7 @@
             "govern-the-environment"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": true,
           "backs_resolve": true
         },
@@ -92,6 +92,7 @@
             "failures-become-machinery"
           ],
           "relation": "corroborates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         }
@@ -128,6 +129,7 @@
             "modeling-thesis"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": true,
           "backs_resolve": true
         },
@@ -137,6 +139,7 @@
             "modeling-thesis"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": true,
           "backs_resolve": true
         },
@@ -146,6 +149,7 @@
             "modeling-thesis"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": true,
           "backs_resolve": true
         },
@@ -155,6 +159,7 @@
             "modeling-thesis"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": true,
           "backs_resolve": true
         }
@@ -190,6 +195,7 @@
             "modeling-thesis"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": true,
           "backs_resolve": true
         }
@@ -228,6 +234,7 @@
             "alignment-thesis"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -237,6 +244,7 @@
             "alignment-thesis"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": true,
           "backs_resolve": true
         },
@@ -246,6 +254,7 @@
             "alignment-thesis"
           ],
           "relation": "corroborates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -255,6 +264,7 @@
             "alignment-thesis"
           ],
           "relation": "corroborates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         }
@@ -291,6 +301,7 @@
             "sync-cost-reduced"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -300,6 +311,7 @@
             "sync-cost-reduced"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -309,6 +321,7 @@
             "alignment-thesis"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         }
@@ -345,6 +358,7 @@
             "failures-become-machinery"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -354,6 +368,7 @@
             "failures-become-machinery"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -363,6 +378,7 @@
             "failures-become-machinery"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         }
@@ -399,6 +415,7 @@
             "alignment-thesis"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -408,6 +425,7 @@
             "alignment-thesis"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -417,6 +435,7 @@
             "alignment-thesis"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -426,6 +445,7 @@
             "alignment-thesis"
           ],
           "relation": "corroborates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -435,6 +455,7 @@
             "alignment-thesis"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -444,6 +465,7 @@
             "alignment-thesis"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -453,6 +475,7 @@
             "alignment-thesis"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         }
@@ -489,6 +512,7 @@
             "seat-moves"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -498,6 +522,7 @@
             "seat-moves"
           ],
           "relation": "corroborates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         }
@@ -535,6 +560,7 @@
             "grounded-in-one-case"
           ],
           "relation": "substantiates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -544,6 +570,7 @@
             "grounded-in-one-case"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -553,6 +580,7 @@
             "grounded-in-one-case"
           ],
           "relation": "situates",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -562,6 +590,7 @@
             "abundant-implementation"
           ],
           "relation": "convergent-evidence",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -571,6 +600,7 @@
             "abundant-implementation"
           ],
           "relation": "convergent-evidence",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         },
@@ -580,6 +610,7 @@
             "abundant-implementation"
           ],
           "relation": "convergent-evidence",
+          "illustrates_pattern": "",
           "resolves_bib": false,
           "backs_resolve": true
         }
