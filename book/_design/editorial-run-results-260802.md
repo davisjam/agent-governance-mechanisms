@@ -1243,3 +1243,62 @@ recovered the full verbatim draft + 14 BibTeX entries from the `w5-write` / `w5-
   `book/build_book_html.py` green (129 chapter pages; all `[cite:]` resolve, no stray comments) ·
   `catalog_tests.py --tier1` = **exactly 2 pre-existing FAILs HELD** (both in 3.1 — the stray
   `<!-- todo -->` L426 + the IR-render byte-identity block; 3.1 UNTOUCHED). No deploy (batched).
+
+---
+
+## W4c — control-growth render (failures-become-machinery off DL3) + churn-caveat tighten (260803)
+
+Two small evidence renders off the `w4b-measurements-260803` scratchpad. Commit-no-deploy (batched).
+
+### Part 1 — control-growth chart + table + ledger bind (`7633a1d`; meta-sync `f6abe45`)
+- **New section `## The controls accumulate {#control-growth}`** in `book/part2/2.3-the-governed-environment.md`,
+  placed at the end of the ex-post narrative (right after "…accumulate reliability one failure class at a
+  time"), with the existing "Either way you arrive there…" bridge flowing on into Constraints and sensors.
+- **Chart** `book/assets/control-growth.svg` — hand-authored two-line chart, house Umber Monograph tokens
+  (accent `#9a3f12` lint files, diagram-fleet `#2f5169` gate scripts) + a11y `<title>`/`<desc>`. Lint files
+  **0 → 336 → 595 → 747**; gate scripts **0 → 20 → 76 → 102**; both start at literal zero (post-prototype
+  substrate). Top gridline dropped at 800 so the 747 peak floats (mirrors the support-ratio chart), which
+  also cleared the one svg-drawing-hygiene stroke-through flag.
+- **Table** `control-growth-table` (registered numbered float + `[ref:]` intro) carries the four-window
+  counts; figure is `control-growth-curve` (also `[ref:]`-introduced) — `book-float-ref` gate green.
+- **HONEST framing (per brief):** prose frames it as "a documented, named, growing discipline" — the paired
+  fix-and-lint tag in **208 commits**, **27 lints** citing a specific dated incident, **993 registered lint
+  specs** at HEAD — explicitly NOT a causal percentage. The closing line: "Read the curve as a documented,
+  growing discipline, then — not a measured causal rate."
+- **Ledger bind:** new `control-growth` record in `book/data/data-claims.json`, `spine_claim:
+  failures-become-machinery`, `status: final`, `anchor: control-growth`, holds = the four-window curve
+  numbers + `993 registered` / `208 commits` / `27 lints`. `limitation` states the telemetry gap (the
+  reflection hook records fires only — `{event,ts,session,facet}` — never the resulting control, so no clean
+  fire→control causal fraction). `[data: control-growth]` marker wired into the prose (not WARN-uncited).
+- **Substantiation:** `failures-become-machinery` now shows `data: control-growth [final]` and **dropped off
+  the DL3 UNDERQUANTIFIED report** (remaining DL3: `oversight-does-not-scale`, `seat-moves`).
+- **Meta-sync (`f6abe45`):** the new section shifted block indices + added one section → regenerated
+  `outline.json` / `outcomes.json` / `reverse_index.json` / `outcomes-draft.md` / `models-view.html`
+  (diffs confined to 2.3; clears the views-audit FRESHNESS findings).
+
+### Part 2 — churn-caveat tighten (`abe0584`)
+- Rewrote the `{#churn}` caveat in `book/part5/5.2-the-timeline-and-the-work.md` FROM "measurement is pending"
+  TO the landed bundle-exclusion finding: **backend/ 0% generated · web/ 14.6% of additions (24.5% in the
+  mechanization window, 1-2% after compiled output was git-ignored) · 5.2% combined** — the inflation is
+  bounded and time-localized, the curve predominantly real source. Removed the measurement-pending note.
+- Updated the `churn` data-claim `limitation` to match (dropped the "(parked)" / "land in W4" note). The
+  churn `holds` (371,855 / 941,120 / 286,378 / 3,767) are untouched in the table; no meta artifact re-staled
+  (same block structure).
+
+### Future-observability note (OUT OF BOOK — for the product repo)
+The clean causal % ("what fraction of controls were born from a failure") would need the turn-end reflection
+hook's telemetry extended to record the **resulting control**, not just the fire. Today's record schema is
+`{event, ts, session_id, facet_key}` (the `failure_control` facet fired 123× since 260720 but carries no
+fire→control edge). Adding a control-id/commit-sha field to that record — closing the second half of the
+edge — is the one change that would license a measured conversion rate. Not a book change; noted for the
+author's substrate backlog.
+
+### Gates
+- `catalog.py validate` → **0 issues** (83 entries).
+- `book/build_book_html.py` → green (129 chapter pages; **119 figures**, +1 for control-growth).
+- `catalog.py substantiation` → `failures-become-machinery` **data_backed, off DL3**.
+- `catalog_tests.py` tier-1 → `26 passed, 2 failed` = **exactly the 2 pre-existing 3.1 FAILs HELD** (stray
+  `<!-- todo -->` L426 + IR-render byte-identity; **3.1 UNTOUCHED**). No new failures.
+- `book-float-ref` green · `figure-overflow` clean (control-growth not flagged) · design-token-drift:
+  control-growth introduces **0** new findings (all 5 hexes in `svg_palette()`) · svg drawing-hygiene:
+  control-growth clean. No deploy (batched).
