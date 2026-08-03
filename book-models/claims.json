@@ -22,7 +22,7 @@
     "with_watch_phrases": 5,
     "assertion_sites": 32,
     "relates_to_links": 22,
-    "max_statement_words": 17
+    "max_statement_words": 18
   },
   "taxonomy": {
     "kinds": [
@@ -282,7 +282,7 @@
     {
       "id": "printer-not-coder",
       "kind": "metaphor",
-      "statement": "Building with an agent is running a printer, not managing a coder: bad output means bad instructions.",
+      "statement": "Building with an agent is running a printer, not a coder: suspect the instructions before the agent's capability.",
       "distinguishes": [],
       "home": "the-printer",
       "asserted_at": [
@@ -290,14 +290,14 @@
         "whose-fault-is-it",
         "the-through-line-and-who-it-is-for"
       ],
-      "contradicted_by": "Locating the fault in the agent's capability rather than in the instructions or the model.",
+      "contradicted_by": "Treating a bad output as a fixed capability ceiling by reflex, without first examining the instructions, representation, task boundary, or environment.",
       "watch_phrases": [],
       "relates_to": [
         "definition:agent"
       ],
       "provenance": "stated",
-      "anchor": "Preface through-line + 1.1 the-printer / whose-fault-is-it: the agent is a printer that builds anything you can explain; a bad output means bad instructions.",
-      "word_count": 17
+      "anchor": "Preface through-line + 1.1 the-printer / whose-fault-is-it: the agent is a printer; a bad output is first evidence about the instructions, representation, task boundary, or environment, not by reflex a fixed capability ceiling.",
+      "word_count": 18
     },
     {
       "id": "seat-moves-not-lifecycle",
