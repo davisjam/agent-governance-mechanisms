@@ -127,3 +127,76 @@ Move from a flat list to THREE LEVELS:
 - 3c (Opus/Fable, EXECUTE the restructure): write the L1 principles; (re)write each L2 canonical pattern retaining the empirical texture — **one vivid failure · one concrete DocAble impl · one diagram · one model/code fragment · ≥1 alternative · clear limits**; demote L3 items to variants / known-uses / sidebars / examples under their parent. Reframe the catalogue's own claim ("~70 mechanisms → reduced by comparative analysis to N families+patterns, remainder as variants/known-uses"). Update ALL models (census count, INDEX, MODEL_NODES, catalogue-views, reachability gate) + the CUTS/MERGES RECORD. THE TEST: a reader gets BOTH the general move AND exactly-how-Davis-did-it.
 
 **Cross-cutting discipline (all phases):** serial · Fable-led then Opus follow-up · slow+correct > fast+lossy · keep a durable CUTS/MERGES RECORD (summary + details) · keep the MODELS the SSOT and current at every step · generalize+group is a WIN.
+
+---
+
+## TASK 4 — DURABILITY MODELING (obligation vs 2026-implementation) — **NEXT SESSION; author 260802: "do not act, surface a report for the next session."** Runs AFTER Phases 1–3 + the final deploy.
+
+**The distinction to model.** Every mechanism / pattern / claim carries two separable things: (1) a **durable engineering OBLIGATION** — the general, permanent requirement it serves (e.g. "expose the relevant constraints at the point of action"; "establish completion by independently re-derived evidence"; "keep the map equal to the territory") — *canon-worthy*; and (2) a **2026 IMPLEMENTATION** of that obligation — the specific mechanism as built today (e.g. "pre-compact hooks that capture the right state"; context re-injection; model-tier routing on today's capability gaps) — *a time-stamped artifact*.
+
+**Tag every 2026 implementation by change-likelihood:** **near-term-volatile** (likely to change as foundation models improve — pre-compact/context-loss compensations, reminders-for-forgetfulness, prompt-format tricks, token-boundary hacks, today's-tier routing) vs. **mid/long-term durable**.
+
+**MODELING FIRST.** Capture the obligation↔implementation split + the volatility tag in a model (a new `durability` model, or fields on the claims/catalogue models) so we can QUERY the manuscript: **how much of the book is 2026-era vs. timeless?** Produce the durability REPORT — an inventory + % of durable-obligation content vs. 2026-implementation content, and within the latter the volatile-vs-durable split.
+
+**WHY — the goal is to JOIN THE SE CANON.** A canon book foregrounds the DURABLE obligations (which outlast the current agent generation) and clearly marks the 2026-era implementations as dated artifacts, so they age gracefully rather than dragging the book down. Drives: (a) what PRINT leads with (durable obligations) vs. relegates/time-stamps (2026 implementations → online or explicitly marked); (b) the framing throughout ("the obligation survives even if this implementation changes"). Operationalizes Phase-3 rubric criterion 6 (durability) across the WHOLE book, not just the catalogue.
+
+**Next-session flow:** (1) model the obligation↔implementation↔volatility split across every mechanism/claim; (2) produce the durability report (2026-era vs. timeless inventory + %); (3) surface for author review; (4) then plan the print-vs-online + framing consequences.
+
+---
+
+## PUNCH-LIST ITEM — broaden the MODELING THESIS (author 260802; do IN this run, MODELS-FIRST)
+
+The Modeling Thesis is currently phrased too tightly around the context window (≈ "binding intent to implementation with a structured model optimizes the agent's context window") — which **dates the thesis and understates its value.** Broaden it. **Canonical new phrasing:**
+> **The Modeling Thesis.** Binding intent and system structure into an explicit model gives agents a compact, coherent representation to reason through, and gives engineers a surface on which to specify, analyze, and predict the system.
+
+Context-window efficiency is then the **immediate agentic MECHANISM, not the whole thesis.** Models ALSO provide: semantic compression · a shared vocabulary · explicit intent · stable join keys · analyzable structure · prediction before construction · a surface for derivation and validation.
+
+**MODELS-FIRST execution:** update the CANONICAL Modeling-Thesis statement in the model (claims model / the Phase-1 argument-spine / big-ideas — wherever the thesis is declared) FIRST, then propagate to EVERY prose site that states or leans on it (preface, Part 3, `2.6` census coverage which cites the two theses, `1.2` MAGE-by-Example's thesis mention, etc.) — keeping "context-window efficiency = the immediate agentic mechanism, one of several benefits." Do it as a serial step: **fold into the Phase-1 core-argument work** (natural — the spine reconciliation already touches the theses) or a dedicated quick step right after. Record in the results-log; keep the C7/watch-phrase discipline if the thesis is a claims entry.
+
+---
+
+## PUNCH-LIST ITEM — the formal "MODEL" definition (author 260802; do IN this run, MODELS-FIRST) — **the most important + least-settled definition**
+
+The book's intuitive definition — *"prose is too vague, code is too verbose, and a model occupies the useful middle"* — is memorable + pedagogically strong, but **not operationally sufficient**: the catalogue calls MANY things models (registries · graphs · manifests · state machines · tables · typed records · obligations · topology descriptions · provenance maps), risking "any useful structured representation." KEEP the intuition; ADD ONE FORMAL definition **early**:
+> **Model.** A deliberately reduced, machine-readable representation of system intent, structure, behavior, policy, or evidence that supports reasoning, derivation, or checking, and whose relationship to the implemented or observed system is mechanically maintained.
+
+Load-bearing terms (each does real gatekeeping work): **deliberately reduced** (not the whole codebase) · **machine-readable** (excludes ordinary prose) · **a representation of something named** — intent / structure / behavior / policy / evidence (prevents "everything is a model") · **supports an operation** — reasoning / derivation / prediction / checking · **mechanically maintained** (distinguishes MAGE models from stale diagrams). This **stabilizes Part 3** AND directly **feeds Phase-3 catalogue consolidation** (what qualifies as a "model" entry; the family/pattern/instance clustering). MODELS-FIRST: update the `Model` entry in `book/data/definitions.json` (the green-box defs) FIRST, then propagate to Part 3 (`3.1` the executable zoo, `3.7` scope of modeling) + everywhere "model" is defined or leaned on as a term.
+
+## PUNCH-LIST ITEM — the CHURN definition (author 260802; MODELS-FIRST)
+
+Update the Churn definition to:
+> **Churn.** The condition in which an increasing share of agent effort is spent rediscovering context, undoing recent changes, repairing regressions, or reconciling inconsistencies rather than advancing the system.
+
+MODELS-FIRST: update the canonical `Churn` definition (its `> **Churn.**` inset / `definitions.json` / the claims model if homed there) FIRST, then propagate to the preface (where churn is introduced) + any prose on the old phrasing. Keep the `churn-is-symptom` claim consistent (churn stays the SYMPTOM; the three not-knowings its causes).
+
+---
+
+## PUNCH-LIST ITEM — the "engineered agent LOOP" refinement + elaborate the LOOP DIAGRAM (author 260802; MODELS-FIRST + figure)
+
+The book's claim that all agent work is a loop (input · success-metric · reasoning/action · output · feedback) is sound + unifying (task execution / testing / orchestration / governance). But as framed it reads as **generic control-loop language.** The distinctive MAGE content is NOT merely that agents operate in loops — it is that **the ENGINEER SHAPES FOUR THINGS:** (1) **the state exposed** to the agent · (2) **the action surface** available · (3) **the success criterion** · (4) **the admission rule** for the output. That is the more useful primitive. Define an **engineered agent loop:**
+> a feedback process in which the environment supplies a modeled state, constrains available actions, measures progress against an explicit criterion, and determines whether the result may advance.
+
+This directly connects the loop to BOTH theses: **modeled state → Modeling Thesis**; **constrained actions + explicit criterion + admission rule → Alignment Thesis.** **FIGURE:** the current loop diagram (`generative-loop.svg` / `loop-engineering.svg` — find it) reads generic; make it **more elaborate + distinctive to this work** — foreground the FOUR engineered levers (state / action-surface / success-criterion / admission-rule) as the engineer's control points on the loop (not a plain OODA/control loop). House style, overflow-clean. MODELS-FIRST: update the loop concept in the model (the loop lives in ch **`1.3-loops-and-models`** [renumbered from 1.2]) FIRST, then the 1.3 prose + the diagram.
+
+## PUNCH-LIST ITEM — bound the "GOVERNANCE MECHANISM" definition (author 260802; MODELS-FIRST) — clarifies the catalogue
+
+The Alignment Thesis uses "a mechanism the environment enforces" (good), but does not DEFINE what qualifies — so prompts / documents / lints / tests / code-gen / metrics / hooks / models / skills all risk becoming "governance mechanisms." Bound it:
+> **Governance mechanism.** A repeatable environmental structure that encodes an engineering policy and either constrains an action, detects a violation, requires evidence, or controls admission.
+
+Yields FOUR mechanism CLASSES: **prevention · detection · evidence · admission.** Load-bearing distinction: **a model itself is NOT necessarily a governance mechanism — it becomes part of governance when something READS or ENFORCES it.** This materially clarifies the catalogue. MODELS-FIRST: add to `definitions.json` + the Alignment-Thesis statement/claim. Connects to the catalogue's existing **Move** axis (constraint / sensor / package) — the four classes (prevention→constrains, detection→detects, evidence→requires-evidence, admission→controls-admission) likely refine/extend it; feeds **Phase 3** (a classification axis for entries; the model-vs-governance distinction sharpens family/pattern boundaries).
+
+## PUNCH-LIST ITEM — the CONCEPT MODEL (how it all fits) + rename "primitive" (author 260802; MODELS-FIRST) — **the CAPSTONE / organizing frame**
+
+**We probably need a CONCEPT MODEL** (check `book/data/concepts.json` — extend it, or add a proper concept-hierarchy model if insufficient). The theses explain WHAT KINDS of machinery you create; the loop explains HOW the environment evolves. Model this clean HIERARCHY explicitly (the SSOT for the book's conceptual structure):
+- **Premise:** implementation is abundant; judgment remains scarce.
+- **Failure mode:** churn.
+- **Two theses:** Modeling · Alignment.
+- **Method:** the governance-conversion loop.
+- **Resulting system:** the governed engineering environment.
+- **Construction repertoire:** the catalogue (models · mechanisms · compositions · known uses).
+
+**RENAME "primitive" (it's overloaded):** (1) low-level CODE operations (the "dense primitive region"); (2) foundational conceptual units. SPLIT the term — for the book's conceptual structure use **core concepts / foundational constructs** (NOT "primitives"); RESERVE **primitive** for implementation-level ops (raw calls · strings · mutations · traversals — "dense primitive region" DEPENDS on this meaning). Grep + disambiguate carefully. The **CORE CONSTRUCTS**: agent loop · model · governance mechanism · churn · governance-conversion loop · governed engineering environment — **and the two theses RELATE them.**
+
+MODELS-FIRST: build/extend the concept model (the hierarchy + the 6 core constructs + theses-as-relations) — this is the CAPSTONE that FRAMES the other five items (the Model/Churn/Loop/Governance-mechanism defs + the Modeling-Thesis broadening become this model's entries). Then the "primitive"→"core-concept/construct" terminology sweep. Record in the results-log.
+
+### ⇒ These SIX items are ONE foundational **CORE-CONCEPTS PASS**, organized by the concept model above: the concept-hierarchy + `agent loop` · `model` · `governance mechanism` · `churn` · `governance-conversion loop` · `governed engineering environment`, with the Modeling/Alignment theses as the relations. Execute MODELS-FIRST as/right-after **Phase 1** (it stabilizes the concepts Phases 2–3 depend on — the argument spine, and Phase-3 catalogue consolidation which leans on "what IS a model" + "what IS a governance mechanism"). All touch `concepts.json`/`definitions.json` / the claims|spine|theses model + the same prose sites (preface · Part 1 `1.3` · Part 3 `3.1`/`3.7` · `2.6` · `1.2`); the Loop adds a figure. Record each in the results-log; keep C7/watch-phrase discipline on any claim/definition entry. NOTE this hierarchy is the book's SPINE — reconcile it WITH Phase-1's argument-spine (they are the same object at different grains).
