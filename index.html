@@ -324,15 +324,15 @@
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="1080" height="512" fill="#ffffff"/>
+  <rect x="0" y="0" width="1080" height="512" fill="#fdfcf9"/>
 
   <!-- Title block -->
 
   <!-- Churn box: a short reject-branch, parked right above the fleet -->
   <rect x="44" y="104" width="228" height="98" rx="12" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
   <text x="158" y="140" text-anchor="middle" font-size="23" font-weight="700" fill="#b23b3b">Churn</text>
-  <text x="158" y="165" text-anchor="middle" font-size="13" fill="#b23b3b">work outgrows the window;</text>
-  <text x="158" y="185" text-anchor="middle" font-size="13" fill="#b23b3b">drift, confidently-wrong</text>
+  <text x="158" y="165" text-anchor="middle" font-size="15" fill="#b23b3b">work outgrows the window;</text>
+  <text x="158" y="185" text-anchor="middle" font-size="15" fill="#b23b3b">drift, confidently-wrong</text>
 
   <!-- ================= BAD PATH: a short fray, straight up out of the fleet to Churn ================= -->
   <!-- the reject-branch: ORIGINATES on the fleet top edge (y=293), frays up, TERMINATES on Churn's bottom edge (y=202) -->
@@ -341,13 +341,13 @@
   <path d="M174 236 L150 224 L166 214 L158 204"
         fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"
         marker-end="url(#bi-churn-mg-ah-red)" opacity="0.9"/>
-  <text x="238" y="258" text-anchor="middle" font-size="14.5" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
+  <text x="238" y="258" text-anchor="middle" font-size="15.5" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
 
   <!-- ============ THE FLEET: single origin, centered on the spine (y=344) ============ -->
   <rect x="46" y="293" width="196" height="102" rx="12" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
   <text x="144" y="333" text-anchor="middle" font-size="20" font-weight="700" fill="#2f5169">The agent fleet</text>
-  <text x="144" y="359" text-anchor="middle" font-size="14.5" fill="#2f5169">fast · cheap</text>
-  <text x="144" y="380" text-anchor="middle" font-size="13" fill="#57534e">one input, two fates</text>
+  <text x="144" y="359" text-anchor="middle" font-size="15.5" fill="#2f5169">fast · cheap</text>
+  <text x="144" y="380" text-anchor="middle" font-size="15" fill="#57534e">one input, two fates</text>
 
   <!-- ============ SPINE: fleet -> governed env -> trustworthy (all straight, y=344) ============ -->
   <!-- tail on the fleet's right edge (x=242), head on the container's left edge (x=308) -->
@@ -360,11 +360,11 @@
 
   <rect x="334" y="278" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
   <text x="534" y="311" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">Modeling Thesis</text>
-  <text x="534" y="335" text-anchor="middle" font-size="13.5" fill="#2f5169">a typed model the fleet reasons through</text>
+  <text x="534" y="335" text-anchor="middle" font-size="15.5" fill="#2f5169">a typed model the fleet reasons through</text>
 
   <rect x="334" y="370" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
   <text x="534" y="403" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">Alignment Thesis</text>
-  <text x="534" y="427" text-anchor="middle" font-size="13.5" fill="#2f5169">keeps output aligned with intent</text>
+  <text x="534" y="427" text-anchor="middle" font-size="15.5" fill="#2f5169">keeps output aligned with intent</text>
 
   <!-- straight output arrow, rightward on the spine: tail on container edge (x=760), head on Trustworthy edge (x=846) -->
   <path d="M760 344 L844 344" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#bi-churn-mg-ah-green)"/>
@@ -373,15 +373,15 @@
   <rect x="846" y="274" width="204" height="140" rx="12" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
   <text x="948" y="309" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">Trustworthy</text>
   <text x="948" y="331" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">software</text>
-  <text x="948" y="358" text-anchor="middle" font-size="13.5" fill="#155c38">high quality · auditable</text>
-  <text x="948" y="378" text-anchor="middle" font-size="13.5" font-style="italic" fill="#1f7a4d">at velocity</text>
+  <text x="948" y="358" text-anchor="middle" font-size="15.5" fill="#155c38">high quality · auditable</text>
+  <text x="948" y="378" text-anchor="middle" font-size="15.5" font-style="italic" fill="#1f7a4d">at velocity</text>
   <!-- auditability motif: a small model-traceability tag, centered in the box -->
-  <rect x="876" y="390" width="144" height="18" rx="9" fill="#ffffff" stroke="#1f7a4d" stroke-width="1.2"/>
-  <path d="M888 399 l3 3 l5.5 -6.5" fill="none" stroke="#1f7a4d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="953" y="403.5" text-anchor="middle" font-size="10.5" fill="#155c38" letter-spacing="0.2">traces to the models</text>
+  <rect x="870" y="389" width="156" height="20" rx="10" fill="#ffffff" stroke="#1f7a4d" stroke-width="1.2"/>
+  <path d="M881 399 l3 3 l5.5 -6.5" fill="none" stroke="#1f7a4d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="956" y="404" text-anchor="middle" font-size="12" fill="#155c38" letter-spacing="0.2">traces to the models</text>
 
   <!-- takeaway caption -->
-  <text x="540" y="497" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
+  <text x="540" y="497" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
 </svg></figure>
   <div class="ih-words">
     <p class="s-kick">Big idea 1 · the problem</p>
@@ -691,8 +691,8 @@
   <line x1="680" y1="172" x2="680" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
   <text x="680" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">lint · type · schema</text>
   <line x1="850" y1="172" x2="850" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="850" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">quality / drift / deploy gate</text>
-  <text x="850" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">· marker file the tool reads</text>
+  <text x="850" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">quality / drift / deploy gate ·</text>
+  <text x="850" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">marker file the tool reads</text>
   <text x="500" y="288" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
   <text x="500" y="314" text-anchor="middle" font-size="13" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
 </svg></figure>

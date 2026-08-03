@@ -21,8 +21,8 @@
   <rect x="308" y="82" width="340" height="76" rx="6" fill="#2f5169" stroke="#1c1917" stroke-width="1.5"/>
   <text x="478" y="130" text-anchor="middle" font-size="26" font-weight="700" fill="#ffffff">Specify I/O behavior</text>
 
-  <!-- "Simple task" annotation above the right arrow -->
-  <text x="676" y="60" text-anchor="middle" font-size="24" font-style="italic" fill="#1c1917">Simple task — under a few KLOC</text>
+  <!-- "Simple task" annotation above the right arrow (raised clear of the One-shot box top edge) -->
+  <text x="676" y="46" text-anchor="middle" font-size="24" font-style="italic" fill="#1c1917">Simple task — under a few KLOC</text>
   <!-- arrow: specify -> one-shot -->
   <line x1="648" y1="120" x2="700" y2="120" stroke="#2f5169" stroke-width="2.2" marker-end="url(#csp-ah)"/>
 
@@ -47,10 +47,10 @@
 
   <!-- ===================== FAN-OUT to four leaves ===================== -->
   <!-- leaf centers: 130, 350, 620, 900 ; leaf tops at y=420 ; hub at (460,340) -->
-  <line x1="460" y1="340" x2="130" y2="415" stroke="#2f5169" stroke-width="1.5"/>
-  <line x1="460" y1="340" x2="350" y2="415" stroke="#2f5169" stroke-width="1.5"/>
-  <line x1="460" y1="340" x2="620" y2="415" stroke="#2f5169" stroke-width="1.5"/>
-  <line x1="460" y1="340" x2="900" y2="415" stroke="#2f5169" stroke-width="1.5"/>
+  <line x1="460" y1="340" x2="130" y2="415" stroke="#2f5169" stroke-width="1.5" marker-end="url(#csp-ah)"/>
+  <line x1="460" y1="340" x2="350" y2="415" stroke="#2f5169" stroke-width="1.5" marker-end="url(#csp-ah)"/>
+  <line x1="460" y1="340" x2="620" y2="415" stroke="#2f5169" stroke-width="1.5" marker-end="url(#csp-ah)"/>
+  <line x1="460" y1="340" x2="900" y2="415" stroke="#2f5169" stroke-width="1.5" marker-end="url(#csp-ah)"/>
 
   <!-- Leaf 1: Correctness conditions -->
   <rect x="16" y="420" width="228" height="116" rx="6" fill="#2f5169" stroke="#1c1917" stroke-width="1.5"/>
