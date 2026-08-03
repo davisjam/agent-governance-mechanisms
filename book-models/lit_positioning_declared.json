@@ -76,17 +76,16 @@
       "x": "Formal verification gives machine-checked guarantees but at heavy human cost (Ringer et al., QED at Large).",
       "y": "Recent work pairs an untrusted LLM generator with a trusted checker or prover — kernel-checked admission (AutoSOUP; AutoRocq; Fang & Xiong's ITP-checked project generation).",
       "z": "MAGE preserves the guarantee boundary: the stochastic generator proposes, a deterministic mechanism admits — the environment enforces the check, not the agent.",
-      "target_locations": ["4.6-generative-validation", "2.3-the-governed-environment"],
+      "target_locations": ["5.3-the-built-system"],
       "citations": [
-        {"key": "ringer2019qed", "backs_claims": ["alignment-thesis"], "relation": "situates"},
-        {"key": "arxiv-2605-10712", "backs_claims": ["alignment-thesis"], "relation": "substantiates"},
-        {"key": "tu2025agenticverification", "backs_claims": ["alignment-thesis"], "relation": "corroborates"},
-        {"key": "fang2026trustworthy", "backs_claims": ["alignment-thesis"], "relation": "corroborates"}
+        {"key": "ringer2019qed", "backs_claims": ["alignment-thesis"], "relation": "situates", "illustrates_pattern": "formal-invariant-verification"},
+        {"key": "arxiv-2605-10712", "backs_claims": ["alignment-thesis"], "relation": "substantiates", "illustrates_pattern": "formal-invariant-verification"},
+        {"key": "tu2025agenticverification", "backs_claims": ["alignment-thesis"], "relation": "corroborates"}
       ],
       "advances_theses": ["alignment-thesis"],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "STANDALONE wave. AutoSOUP (Amusuo...Davis, author's own paper) already in references.bib as arxiv-2605-10712 (recon key was amusuo2026autosoup) — reuse the existing key. Ringer arXiv preprint year is 2020 (journal 2019); both correct in context. AutoRocq (tu2025agenticverification, 2511.17330) is the best AutoSOUP-adjacent pick; Fang & Xiong (fang2026trustworthy, 2605.26017) the second. Checklist: preserve the guarantee boundary. ringer/tu/fang keys planned — not yet in the .bib."
+      "notes": "STANDALONE wave — LANDED (LPP-PROSE) in 5.3-the-built-system, expanding the 'LLM as a function call' sidebar to two paragraphs: the untrusted-author/trusted-kernel lineage (Ringer, QED at Large), a recent LLM-in-the-loop system (AutoRocq, tu2025agenticverification), and the author's own AutoSOUP; then MAGE carries the trust boundary into production, preserving the guarantee boundary (a lint proves less than a verifier; no green local check certifies the whole system) and disclaiming invention. AutoSOUP reused as arxiv-2605-10712 (already cited in 5.3; the requested amusuo2026autosoup would be a duplicate). target_locations trimmed to 5.3 (the actual landing; the MODELS-wave planned set was 4.6/2.3). illustrates_pattern=formal-invariant-verification on Ringer + AutoSOUP (§5 prior-art double-duty, Model-Derived Assurance Coverage's proof-pole member). fang2026trustworthy (2605.26017) was verified and available as a second AutoSOUP-adjacent pick but is NOT landed (kept the sidebar to one adjacent system per the conservative-cite directive); it can anchor a future echo. Ringer arXiv preprint year is 2020 (journal 2019); both correct in context."
     },
     {
       "id": "model-sync-coevolution",
