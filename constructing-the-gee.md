@@ -119,72 +119,204 @@ case of *this* mechanism rather than a sibling's.
 
 *Represent intent and structure in typed models the fleet reasons through.*
 
-**[Executable Source of Truth](models-bridge/system-models/executable-source-of-truth.md).** Keep the
-authoritative knowledge as machine-readable typed data that is continuously consumed and mechanically held
-true. It is the interface through which a bounded agent operates an unbounded system. *The scar:* a stale
-architecture paragraph that no longer matched the code, so agents reasoned from a lie. *Built as:* a typed
-system-models bridge projected as data, not code, and held true by build-time gates.
-*Known uses (subject models that share the declare-typed-data-plus-parity structure, each preserving its
-own relation):*
-[service-flow](models-bridge/system-models/service-flow-model.md) ·
-[user-journey](models-bridge/system-models/user-journey-model.md) ·
-[component & zone](models-bridge/system-models/component-zone-model.md) ·
-[domain registries](models-bridge/system-models/domain-registries.md) ·
-[data-flow](models-bridge/system-models/data-flow-model.md) ·
-[deployment topology](models-bridge/system-models/deployment-topology-model.md) ·
-[synchronization](models-bridge/system-models/synchronization-model.md) ·
-[concurrency contracts](models-bridge/system-models/concurrency-contracts.md) ·
-[process view](models-bridge/system-models/process-view.md) ·
-[typed contract surfaces](models-bridge/system-models/typed-contract-surfaces.md) ·
-[timeout-budget ordering](models-bridge/system-models/timeout-budget-ordering-model.md) ·
-[required-config-per-role manifest](models-bridge/system-models/required-config-per-role-manifest.md) ·
-[telemetry-collection provenance](models-bridge/system-models/telemetry-collection-provenance.md) ·
-[rule-metadata registry](models-bridge/system-models/rule-metadata-registry.md) ·
-[agent-orchestration model](models-bridge/system-models/agent-orchestration-model.md) ·
-[lifecycle model](models-bridge/system-models/lifecycle-model.md) ·
-[invariant-DAG execution policy](models-bridge/system-models/invariant-dag-execution-policy.md) ·
-[model-driven codegen](models-bridge/system-models/model-driven-codegen.md) ·
-[agent-first MBSE harness](models-bridge/system-models/agent-first-mbse-harness.md).
+### [Executable Source of Truth](models-bridge/system-models/executable-source-of-truth.md) · principle P1
+
+**Intent.** Keep the authoritative knowledge as machine-readable typed data that the fleet continuously
+consumes and the build mechanically holds true (our instance: a typed system-models bridge). This is the
+interface through which a bounded-context agent operates a system it cannot hold in view.
+
+**Vivid failure.** A stale architecture paragraph no longer matched the code, so agents reasoned from a lie.
+
+**Solution.** Author the knowledge as typed data — projected as data, not code — and wire a build-time
+parity gate to each model so drift fails the build. The model files, the projection, and the parity wiring
+are the machinery; the subject models below are what that machinery is turned on.
+
+**Guarantee.** Every consumer reads one authoritative answer, and a model change reaches all of them at
+once. The boundary: only facts the model expresses are held true — a fact still living in code drifts
+unseen until it too is modeled.
+
+**Forces &amp; limits.** A model is only as strong as its parity coverage. Authoring costs real effort, so
+a model earns its slot by being read by at least one gate; a model nothing consumes is documentation
+wearing a schema. An alternative keeps the same discipline as a doc *generated from* code — weaker, because
+code becomes the source and the model only its derived view.
+
+*Examples — each a different facet:*
+
+- **[component &amp; zone model](models-bridge/system-models/component-zone-model.md) — structural-ownership
+  facet.** The fix-once registry every tool queries for "what are our internal packages and focus dirs."
+  This is the mechanism at its plainest: one typed list, read at lint time by many consumers, so a moved
+  boundary updates all of them instead of staling each tool's private inference of the tree.
+- **[service-flow model](models-bridge/system-models/service-flow-model.md) — architecture-topology facet.**
+  Models the cross-service call graph as typed nodes and edges — who calls whom, across which seam — so an
+  architectural question becomes a graph walk, not a code read. Its generation half (projecting stubs from
+  the topology) belongs to the codegen member below; the facet here is the topology itself.
+- **[agent-orchestration model](models-bridge/system-models/agent-orchestration-model.md) — subject-shift
+  facet.** The reflexivity showpiece: the same modeling discipline turned on the fleet that produces the
+  work. Dispatch lifecycle, roles, and worktree topology become typed data the orchestrator reasons
+  through, so governance models its own producer.
+- **[timeout-budget ordering model](models-bridge/system-models/timeout-budget-ordering-model.md) —
+  temporal-containment facet.** Encodes the nesting order of timeout budgets along a call chain as a typed
+  constraint. An inner budget that outlives its outer one surfaces as a build finding rather than a latent
+  production hang found under load — the mechanism catching a dynamics bug at author time.
+- **[data-flow model](models-bridge/system-models/data-flow-model.md) — transitive-reachability facet.**
+  Models data movement as a graph, so a compliance question ("can sensitive data reach this sink?") is a
+  reachability query. The facet only a graph carries: a property no single node holds, only the closure of
+  edges does.
+
+*Flagship members (short — the deep treatment lives in the stack):*
+
+- **[model-driven codegen](models-bridge/system-models/model-driven-codegen.md) — generation facet.** The
+  model's other face — projected into code artifacts, so hand-drift between spec and generated surface
+  cannot open. Deep dive → [the model-coherence stack](book/appendix-d-model-coherence-stack.html) (alt
+  appendix).
+- **[rule-metadata registry](models-bridge/system-models/rule-metadata-registry.md) —
+  prose-as-queryable-model facet.** Governance prose lifted into typed rows a lint can query, so "which
+  rules govern this path?" is a lookup. Deep dive →
+  [the governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html) (alt appendix).
+- **[concurrency contracts](models-bridge/system-models/concurrency-contracts.md) — declared-coverage
+  facet.** The model side of resource mediation: every permitted concurrent seam declared, so a coverage
+  lint detects any unmediated bypass. Deep dive →
+  [the resource-mediation stack](book/appendix-d-resource-mediation-stack.html) (alt appendix).
+
+*Known uses:*
+[user-journey](models-bridge/system-models/user-journey-model.md) (goal→implementation, a capability gated
+on its governance) ·
+[domain registries](models-bridge/system-models/domain-registries.md) (fact-canonicalization across the
+codebase) ·
+[process view](models-bridge/system-models/process-view.md) (Kruchten's concurrency enumeration, derived) ·
+[typed contract surfaces](models-bridge/system-models/typed-contract-surfaces.md) (boundary contracts that
+double as fuzz oracles) ·
+[synchronization](models-bridge/system-models/synchronization-model.md) (an undeclared lock or inverted
+order fails at author time) ·
+[lifecycle model](models-bridge/system-models/lifecycle-model.md) (the operational map the operator runbook
+is projected from) ·
+[deployment topology](models-bridge/system-models/deployment-topology-model.md) (physical topology) ·
+[telemetry-collection provenance](models-bridge/system-models/telemetry-collection-provenance.md)
+(observability coverage) ·
+[agent-first MBSE harness](models-bridge/system-models/agent-first-mbse-harness.md) (adopt the schema, skip
+the runtime) ·
+[invariant-DAG execution policy](models-bridge/system-models/invariant-dag-execution-policy.md) (a closed
+edge-intent enum separating correctness edges from resource edges) ·
+[required-config-per-role manifest](models-bridge/system-models/required-config-per-role-manifest.md)
+(fail-fast env validation with an admission face; online-only).
+
+*Deep dive:* [the model-coherence stack](book/appendix-d-model-coherence-stack.html) (alt appendix) — this
+is its DATA member.
+*Related:* Enabler — [Read the Model, Don't Copy It](#cap-know) (the consumption half) · Counterpart —
+[Drift / Parity Gate](#cap-sync) (holds it true) · Layer — [Derived Traceability](#cap-sync) (the rung
+above parity).
 <!-- prior-art: LPP §6 model-sync / drift-detection literature, populated by LPP-PROSE -->
 
-**[Read the Model, Don't Copy It](models-bridge/system-models/meta-model-consumption.md).** Consumers
-derive answers from the live model at use time; the copied-out value is banned. One authoritative answer
-holds, and a model change updates every consumer at once. *The scar:* a value snapshotted out of the model
-drifted from it, silently disabling a check keyed on the stale copy. *Built as:* a ban-lint that flags
-copied-out values on policed paths.
-*Known uses:*
-[model query surface](models-bridge/system-models/query-surface.md) (the ergonomic read API) ·
-[model-graded finding severity](models-bridge/system-models/model-graded-finding-severity.md) (a
-model-consuming gate — see the [borderline fold](#folds) below).
+### [Read the Model, Don't Copy It](models-bridge/system-models/meta-model-consumption.md) · principle P1
 
-**[Composed State-Machine Model](models-bridge/system-models/composed-state-machine-model.md).** Author
-the concurrency composition as one checkable object: which lifecycles exist, how they compose, and the
-predicates that must hold across them, each predicate carrying a derived verification obligation. *The
-scar:* two async lifecycles, legal alone, deadlocked when composed, and no single-machine model could see
-it. *Built as:* typed lifecycle machines with cross-machine invariants — the specification a formal
-verifier runs against.
+**Intent.** Consumers derive answers from the live model at use time; the copied-out value is banned (our
+instance: a ban-lint on snapshotted model values).
+
+**Vivid failure.** A value snapshotted out of the model drifted from it, silently disabling a check keyed
+on the stale copy.
+
+**Solution.** A ban-lint flags copied-out values on policed paths; consumers call the read surface instead
+of caching a snapshot.
+
+**Guarantee.** One authoritative answer holds; a model change updates every consumer at once.
+
+**Forces &amp; limits.** The ban-lint covers only policed paths — a copy on an unpoliced path still drifts.
+And the read surface must be ergonomic, or consumers route around it and copy anyway.
+
+*Examples — each a different facet:*
+
+- **[model query surface](models-bridge/system-models/query-surface.md) — ergonomic-read facet.** The soft
+  carrot to the ban-lint's stick. A clean read API makes reading the model easier than copying from it, so
+  compliance becomes the path of least resistance rather than a rule fought against.
+- **[model-graded finding severity](models-bridge/system-models/model-graded-finding-severity.md) —
+  consume-to-grade facet.** Severity computed as a function of the finding and the change against the live
+  component model at gate time — reading the model to *decide*, not merely to look up. A borderline fold;
+  see [the folds note](#folds).
+
+*Related:* Counterpart — [Executable Source of Truth](#cap-know) (the authored half) · Sibling —
+[Drift / Parity Gate](#cap-sync).
+
+### [Composed State-Machine Model](models-bridge/system-models/composed-state-machine-model.md) · principle P1
+
+**Intent.** Author the concurrency composition as one checkable object: which lifecycles exist, how they
+compose, and the predicates that must hold across them, each predicate carrying a derived verification
+obligation.
+
+**Vivid failure.** Two async lifecycles, legal alone, deadlocked when composed — and no single-machine
+model could see it.
+
+**Solution.** Typed lifecycle machines with cross-machine invariants — the specification a formal verifier
+runs against.
+
+**Guarantee.** A cross-machine predicate that can be violated is caught by the routed checker, not
+discovered in production.
+
+**Forces &amp; limits.** The model must stay faithful to the real lifecycles or it proves the wrong thing.
+Composition explodes the state space, so the checker is routed by the invariant's temporal shape rather
+than run whole.
+
+*Deep dive:* [the specification-and-verification stack](book/appendix-d-specification-verification-stack.html)
+(alt appendix) — its SPEC member.
+*Related:* Bridge — [Model-Derived Assurance Coverage](#cap-complete) (the checker it feeds) · Enabler —
+[formal invariant verification](models-bridge/system-models/formal-invariant-verification.md).
 
 <a id="cap-sync"></a>
 ## SYNC · Keep representations equal to reality
 
 *Reconcile the model against the code it describes, and catch drift mechanically.*
 
-**[Drift / Parity Gate](models-bridge/system-models/drift-parity-gates.md).** Keep the map equal to the
-territory in both directions. A build-blocking parity predicate fails the moment the model or the reality
-drifts alone. *The scar:* a moved directory silently staled every tool's private inference of the tree.
-*Built as:* bidirectional parity lints wired into the build; divergence either way fails it.
-*Known uses (the same model-versus-reality relation over different source pairs):*
-[doc-hygiene lints](agent/governance-doc-controls/doc-hygiene-lints.md) (corpus versus its index) ·
-[coherence lints](product/validation-and-conformance/coherence-lints.md) (cross-source relational
-parity) ·
-[DDT pin-trailers](product/regression-tests/ddt-pin-trailers.md) (a test versus the source it cites).
+### [Drift / Parity Gate](models-bridge/system-models/drift-parity-gates.md) · principle P2
 
-**[Derived Traceability](models-bridge/system-models/symbol-anchored-traceability-graph.md).** Make every
-cross-layer join a typed edge re-proven against live reality at read time. A derived edge cannot drift; a
-stored one silently can. Liveness is a property of the representation — resolution *is* the read — not a
-sync job running beside a stored graph. *The scar:* a stored traceability edge went stale, claiming a join
-reality had already severed. *Built as:* symbol-anchored edges that redden at scan time when the anchor no
-longer resolves. This is the rung above a parity gate: remove the store, and drift has nowhere to live.
+**Intent.** Keep the map equal to the territory in both directions: a build-blocking parity predicate
+fails the moment the model or the reality drifts alone.
+
+**Vivid failure.** A moved directory silently staled every tool's private inference of the tree.
+
+**Solution.** Bidirectional parity lints wired into the build; divergence either way fails it.
+
+**Guarantee.** The model and the code it describes cannot diverge across a green build. The boundary: the
+gate holds only the source pair it names — an unwired relation drifts freely.
+
+**Forces &amp; limits.** A parity gate stores nothing, but it still runs a comparison each build; where the
+join can be *derived* instead of compared, [Derived Traceability](#cap-sync) is the stronger rung. A
+too-broad parity predicate flakes on benign churn and trains agents to suppress it.
+
+*Examples — each a different facet:*
+
+- **[doc-hygiene lints](agent/governance-doc-controls/doc-hygiene-lints.md) — corpus facet.** The parity
+  relation turned on a *document corpus* and its declared index: a doc that exists but is unlisted, or a
+  listed doc that no longer exists, fails the build. Same predicate, prose instead of code as the reality.
+- **[coherence lints](product/validation-and-conformance/coherence-lints.md) — cross-source facet.**
+  Relational parity between two live sources — a config field set must stay a subset of its sample — so the
+  scar it kills is a silently collapsed batch size that CLR-defaulted a missing field to zero.
+- **[DDT pin-trailers](product/regression-tests/ddt-pin-trailers.md) — derived-test-freshness facet.** A
+  test pinned to the source it cites carries a trailer that reddens when the source edits without the test
+  regenerating. Near-zero defect yield is the point: it holds a derived artifact fresh against its origin.
+
+*Related:* Counterpart — [Executable Source of Truth](#cap-know) (what it holds true) · Layer —
+[Derived Traceability](#cap-sync) (the rung that removes the store).
+
+### [Derived Traceability](models-bridge/system-models/symbol-anchored-traceability-graph.md) · principle P2
+
+**Intent.** Make every cross-layer join a typed edge re-proven against live reality at read time, so
+liveness is a property of the representation — resolution *is* the read, not a sync job beside a stored
+graph.
+
+**Vivid failure.** A stored traceability edge went stale, claiming a join reality had already severed.
+
+**Solution.** Symbol-anchored edges that redden at scan time when the anchor no longer resolves.
+
+**Guarantee.** A derived edge cannot drift; remove the store, and drift has nowhere to live. This is the
+rung above a parity gate — nothing to keep in sync because nothing is kept.
+
+**Forces &amp; limits.** Re-resolution costs a scan on every read, so a hot path pays for its own honesty;
+and the anchor must be stable enough that a benign rename does not read as a severed join. Where resolution
+is genuinely expensive, a parity gate over a stored edge is the affordable fallback.
+
+*Deep dive:* [the model-coherence stack](book/appendix-d-model-coherence-stack.html) (alt appendix) — its
+DERIVE member, the highest rung of the coherence ladder.
+*Related:* Generalization — [Drift / Parity Gate](#cap-sync) (the rung below) · Consumer —
+[Executable Source of Truth](#cap-know).
 
 <a id="cap-constrain"></a>
 ## CONSTRAIN · Constrain where and how agents act
