@@ -418,3 +418,57 @@ Each declared claim carries a **`reviewed_hash`** — the 12-hex SHA-256 of the 
 
 ### Live SHA
 `5eb21f1` — pushed to origin/main (deploy gate 28/28 passed, 0 failed); GitHub Actions building Pages (not blocked on per author directive). Deployed tip carries the sensors (`2136290`) + this record (`5eb21f1`); the published models-view reads the freshly-regenerated `argument-spine.json`. (This SHA-fill is a doc-only follow-up.)
+
+## LoC/VELOCITY REFRESH — ✅ DONE (repo-derived headline numbers, 2026-07-23 → 2026-08-03)
+
+Refreshed `book/data/metrics.json`'s repo-derived fields from FRESH runs of the sanctioned tools on the
+parent repo at HEAD `ce0bde110fbb` (2026-08-03): `tools/dev/run-cloc.py --json` (categorized LoC) +
+`talks-and-notes/history-mining/repo-activity-histogram.py --metric both` (commits/week). No measurement
+reinvented; AUTHORED figures (cost model, corpus, per-course, vendor, model/mechanism counts,
+missing-model pilot) untouched.
+
+### Old → new field table (tool-output field each maps to)
+
+| field | old (2026-07-23) | new (2026-08-03) | tool field |
+|---|---|---|---|
+| `prod_loc` | 490,231 | **501,094** | `purpose_rollup["Production Code"].code` |
+| `support_loc` | 1,420,335 | **1,505,737** | `ratio_table.support_apparatus.code` (= tests + lints + load-bearing docs + agent-infra + tools) |
+| `iac_loc` | 8,446 | **35,323** | `purpose_rollup["Infrastructure as Code"].code` ⚠️ see note |
+| `system_model_loc` | 7,380 | **28,507** | `purpose_rollup["System-model meta-files"].code` ⚠️ see note |
+| `total_loc` | 2,593,580 | **2,824,878** | `system_total_raw.SUM.code` (whole-tree RAW — verified: the old 2.59M is the raw figure; the tool's `system_total_semantic_code` (2,083,089, excludes snapshot docs) is a DIFFERENT definition, noted in provenance but not adopted) |
+| `support_ratio` | 2.9 | **3.0** | `ratio_table.support_apparatus.x_prod` |
+| `commits_total` | 22,024 | **23,215** | histogram total (20 full weeks) |
+| `study_weeks` | 19 | **20** | histogram window (2026-03-12 → 2026-07-23 week-starts, through 07-29) |
+| `study_window` | March–July 2026 | March–July 2026 (unchanged — last full week still ends in July) | — |
+| `commits_per_week` | 1,000 | 1,000 (kept — sustained-rate figure; fresh 20-wk mean 1,161/wk sits inside the stated ~1,000–1,400 band) | — |
+| `commits_per_day` | 200 | 200 (kept — sustained-rate figure, unchanged by fresh data) | — |
+| `peak_week_commits` | 3,329 | 3,329 (unchanged — same peak week, 2026-05-21) | — |
+
+**Sanity notes.** prod_loc +2.2% and commits_total +1,191 over ~11 days: plausible organic growth. The
+`iac_loc`/`system_model_loc` ~4× jumps are NOT organic: a category re-partition landed in `run-cloc.py`
+(commit `3070f2f0b6`, 2026-07-23 19:18, AFTER the baseline run) that carved previously-UNCOUNTED
+`deploy/**` production source + top-level `system-models/*.py` modules into those two categories — a
+coverage fix in the tool. Recorded in the refreshed `_loc_provenance` note. The old `_loc_provenance`
+gloss "support = everything except production" was inaccurate (raw−prod ≠ 1,420,335); corrected to the
+tool's actual rollup definition.
+
+**Provenance bumps.** `_loc_provenance` + `_commit_provenance` dates 2026-07-23 → 2026-08-03; embedded
+numbers refreshed; parent tree SHA `ce0bde110fbb` added to both.
+
+**data-claims.** No `holds` entry pins any refreshed number (`velocity` holds is empty) — no update needed.
+
+**Chart-regen disposition: ⚠️ FLAGGED — numbers-only refresh; `velocity-commits-per-week.svg` NOT regenerated.**
+The SVG landed as a one-off matplotlib export (`92c0130`, 2026-07-25) and was then post-processed twice
+(a11y `<title>/<desc>/role` in `eb21dd8`; palette re-token per the figure-fix wave). No committed
+generator reproduces the current style — the histogram tool's `--plot` emits differently-styled PDFs
+(`#4C72B0`, no a11y metadata, no book palette), so a regen from it would ship a restyled/mismatched
+figure. The chart now lags the data by one week (through 2026-07-16 vs 2026-07-23); "velocity regen" is
+already queued in the deferred figure-fix wave (HANDOFF-skill-agent-260731 NEXT-PUBLISH notes) — fold the
+data bump into that pass.
+
+**Gates.** `catalog.py validate` **0 issues** · parent `tools/lint/lint-metric-provenance-resolves.py`
+**0 findings** · `book/build_book_html.py` **exit 0** (127 chapter pages; token consumers 1.2 / 5.2 / 5.3
+re-rendered).
+
+### Live SHA
+(filled post-deploy below)
