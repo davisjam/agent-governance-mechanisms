@@ -323,122 +323,340 @@ DERIVE member, the highest rung of the coherence ladder.
 
 *Sanctioned mutation surfaces, closed action vocabularies, and enforced semantic policy.*
 
-**[One Door Enforced](product/canonical-models-and-seams/pdf-model.md).** Route all mutation of a
-hazardous resource through one typed surface that encodes its invariants, with the raw alternative
-structurally banned. The bug is made unrepresentable, not reviewed for. *The scar:* a raw library call
-bypassed a format's invariants and shipped a corrupt tag tree. *Built as:* a single sanctioned mutation
-model, with a ban-lint holding every call site off the raw library.
-*Known uses (the same one-door relation over different resources):*
-[Office models](product/canonical-models-and-seams/office-models.md) (a second object model, so a fix
-serves every format) ·
-[the raw-Redis seam](product/canonical-models-and-seams/raw-redis-seam.md) (shared state plus schema) ·
-[the typed service client](product/canonical-models-and-seams/service-client.md) (its signature is the
-enforcement) ·
-[canonical walkers](product/canonical-models-and-seams/canonical-walkers.md) (one traversal per tree).
+### [One Door Enforced](product/canonical-models-and-seams/pdf-model.md) · principle P3
 
-**[Closed Action Vocabulary](product/repair-vocabulary/remediation-verbs.md).** Make the actor's
-move-space a closed, named, typed set. Bounding the action space is what makes attribution, validation,
-and policy tractable at all; an absent action forces a deliberate addition to the vocabulary. *The scar:*
-an open-ended repair space made attribution and validation unanswerable, because anything could have
-happened. *Built as:* a closed, typed set of remediation verbs — every mutation is one named verb.
+**Intent.** Route all mutation of a hazardous resource through one typed surface that encodes its
+invariants, with the raw alternative structurally banned (our instance: a single PDF mutation model). The
+bug is made unrepresentable, not reviewed for.
+
+**Vivid failure.** A raw library call bypassed a format's invariants and shipped a corrupt tag tree.
+
+**Solution.** A single sanctioned mutation model, with a dedicated ban-lint holding every call site off the
+raw library. The model and its ban-lint are one mechanism — the construction and its enforcement bundled,
+because the enforcement is one-to-one with this seam.
+
+**Guarantee.** No code path mutates the resource except through the door, so an invariant the door encodes
+holds on every artifact. The boundary: the door guards its own resource; a second hazardous resource needs
+its own door.
+
+**Forces &amp; limits.** The door must cover the full mutation surface, or an unhandled operation tempts a
+raw-library escape. It is authored once but paid for forever in the ban-lint's coverage. Where the resource
+is trivial, a door is over-engineering — reserve it for a resource whose invariants a raw call can silently
+break.
+
+*Examples — each a different facet:*
+
+- **[Office models](product/canonical-models-and-seams/office-models.md) — replication facet.** The same
+  construction-plus-ban applied to a *second* object model, so a fix to the shared discipline serves every
+  format at once. Shows the mechanism's fix-once payoff: the value is not that this door is the best door,
+  but that there is exactly one per resource.
+- **[the typed service client](product/canonical-models-and-seams/service-client.md) — cross-service
+  facet.** Here the door is a *type signature*: a client whose file-argument is a binary stream, so the
+  file-path-over-the-wire bug cannot be expressed. The enforcement is the shape of the interface, not a
+  separate lint.
+- **[the raw-Redis seam](product/canonical-models-and-seams/raw-redis-seam.md) — shared-state facet.** The
+  door owns atomicity and a declared key schema for a shared datastore, so every writer goes through the
+  seam that keeps the multi-step mutation tearing-proof.
+
 *Known uses:*
-[typed categories](product/repair-vocabulary/typed-categories.md) (a closed enum with exhaustiveness as
-the checkable property) ·
-[role-typed dispatch](agent/context-and-dispatch/role-typed-dispatch.md) (the same move applied to
-authority) ·
-[codemod-first](product/repair-vocabulary/codemod-first.md) (an execution-mode vocabulary for bulk
-change).
+[canonical walkers](product/canonical-models-and-seams/canonical-walkers.md) (one traversal per tree — the
+door applied to reads, low enough novelty to fold as a row).
+
+*Deep dive:* [the model-coherence stack](book/appendix-d-model-coherence-stack.html) (alt appendix) — the
+PDF model is its SEAL member.
+*Related:* Sibling — [Closed Action Vocabulary](#cap-constrain) (bounds the verbs, as this bounds the
+surface) · Enabler — [Caused-By Provenance](#cap-provenance) (one door makes complete stamping feasible).
+
+### [Closed Action Vocabulary](product/repair-vocabulary/remediation-verbs.md) · principle P3
+
+**Intent.** Make the actor's move-space a closed, named, typed set (our instance: a fixed set of
+remediation verbs). Bounding the action space is what makes attribution, validation, and policy tractable
+at all; an absent action forces a deliberate addition to the vocabulary rather than an ad-hoc move.
+
+**Vivid failure.** An open-ended repair space made attribution and validation unanswerable — anything could
+have happened, so nothing could be checked.
+
+**Solution.** A closed, typed set of verbs; every mutation is one named verb, and the set is the surface a
+validator and an attribution system read.
+
+**Guarantee.** Every action taken is one of the named verbs, so the questions "what could have happened
+here?" and "is this action permitted?" are decidable. The boundary: the vocabulary bounds *which* verbs,
+not whether each verb's implementation is correct.
+
+**Forces &amp; limits.** A closed set trades expressiveness for checkability — a genuinely new capability is
+a deliberate addition, which is the cost and the point. Set the closure at the relation that matters
+(repair verbs, authority bundles); a vocabulary drawn too fine becomes noise.
+
+*Examples — each a different facet:*
+
+- **[typed categories](product/repair-vocabulary/typed-categories.md) — classification facet.** The closed
+  set applied to *classification* rather than action: a finite enum of violation categories whose
+  exhaustiveness is the checkable property, so an unclassifiable case is a named gap, not a silent
+  fall-through.
+- **[role-typed dispatch](agent/context-and-dispatch/role-typed-dispatch.md) — authority facet.** The same
+  closure over *authority*: a launched actor's capabilities are a closed bundle fixed at dispatch, so what
+  it may do is bounded before it runs rather than discovered from what it did.
+
+*Known uses:*
+[codemod-first](product/repair-vocabulary/codemod-first.md) (an execution-*mode* discipline for bulk
+mechanical change, built on a batch-size threshold; it bounds how a change runs, not the verb relation, so
+it folds as a row — online-only).
+
+*Deep dive:* [the safe-launch composition](#compositions) pairs this with Validated Dispatch (a well-formed
+order plus bounded authority).
+*Related:* Sibling — [One Door Enforced](#cap-constrain) · Consumer —
+[Caused-By Provenance](#cap-provenance) (a closed verb set is what makes stamp coverage decidable).
 
 <a id="m-semantic-policy"></a>
-**[Machine-Enforced Semantic Policy](product/validation-and-conformance/semantic-lints.md).** Encode every
-mechanically-detectable domain invariant as a blocking check with scoped, reason-bearing escapes. Audits
-become lints; policy moves out of reviewer memory and into durable machinery. The agentic force is sharp
-here: agents produce violations faster than a human can review them. *The scar:* a policy that lived in a
-reviewer's memory was violated the moment the reviewer became a fleet — and worse, one checker became the
-hazard, a runaway regex whose fix was deleting the surface, not linting the bug. *Built as:* a fleet of
-blocking semantic lints with scoped, reason-bearing suppressions.
+### [Machine-Enforced Semantic Policy](product/validation-and-conformance/semantic-lints.md) · principle P5
+
+**Intent.** Encode every mechanically-detectable domain invariant as a blocking check with scoped,
+reason-bearing escapes, so audits become lints and policy moves out of reviewer memory into durable
+machinery.
+
+**Vivid failure.** A policy that lived in a reviewer's memory was violated the moment the reviewer became a
+fleet — and worse, one checker became the hazard, a runaway regex whose fix was deleting the surface rather
+than linting the bug.
+
+**Solution.** A fleet of blocking semantic lints, each carrying scoped, reason-bearing suppressions so an
+escape is a documented decision, not a silent bypass.
+
+**Guarantee.** A detectable violation fails the build every time, on every agent, regardless of who is
+reviewing. The boundary: only *mechanically-detectable* invariants qualify — a semantic property gets a
+model or a judge, not a lint (the placement judgment of principle P8).
+
+**Forces &amp; limits.** The agentic force is sharp: agents produce violations faster than a human can
+review them, which is exactly why the memory must move into the substrate. A lint aimed at a property it
+cannot actually decide becomes the hazard — the fix belongs at the property's real semantic level, not in a
+cleverer regex.
+
+*Deep dive:* [the specification-and-verification stack](book/appendix-d-specification-verification-stack.html)
+(alt appendix) — its LINT member.
+*Related:* Generalization — principle P5 (convert recurring failures into enforced controls) · Counterpart —
+[Machine-Enforced Semantic Policy at the right level](agent/governance-doc-controls/semantic-level-enforcement.md)
+(P8, the placement judgment).
 
 <a id="cap-admit"></a>
 ## ADMIT · Admit or reject changes
 
 *Gate the work order, and gate the path to production.*
 
-**[Validated Dispatch](agent/context-and-dispatch/brief-linting.md).** Structurally validate the
-instruction packet that confers autonomy before granting it. A work order that launches an autonomous
-actor is checked deterministically at the point of no return, not by probabilistic review. *The scar:* a
-brief missing its isolation marker launched an agent that edited the mainline directly, and the failure
-surfaced downstream, not at authoring. *Built as:* a deterministic pre-dispatch lint over the brief, wired
-into the sole launch path; a failing check refuses the launch.
-*Known uses:*
-[the mandatory-snippet table](agent/governance-doc-controls/mandatory-snippet-table.md) (the registry the
-lint reads) ·
-[epic and design templates](agent/governance-doc-controls/epic-and-design-templates.md) (the same
-schema-on-the-artifact move applied to planning).
+### [Validated Dispatch](agent/context-and-dispatch/brief-linting.md) · principle P4
 
-**[Staged Admission Gates](agent/gates-and-merge-train/staged-deploy-gates.md).** Order verification
-cheap-to-expensive along the path to production, each rung independently re-checkable, so no user meets an
-unverified build and a predictably doomed run never starts. *The scar:* an unverified build reached users
-because the expensive check ran only after promotion. *Built as:* a canary-to-smoke-to-promote staircase
-on traffic-free surfaces.
-*Known uses (the rungs, each a distinct sub-idea):*
-[the pre-commit hook](agent/gates-and-merge-train/pre-commit-hook.md) (tree-sha markers make "checks ran
-green on this tree" replay-proof) ·
-[the sentinel first-commit](agent/gates-and-merge-train/sentinel-first-commit.md) (fail-fast at minute
-one) ·
-[merge-train MIS batching](agent/gates-and-merge-train/merge-train-mis-batching.md) (independence proved
-before integration) ·
-[the cron-alerts gate](agent/lifecycle-and-observability/cron-alerts-gate.md) (a health signal promoted to
-a barrier) ·
-[test-onion tiers](product/regression-tests/test-onion-tiers.md) (the cost stratification the rungs
-consume).
+**Intent.** Structurally validate the instruction packet that confers autonomy before granting it — check
+the work order deterministically at the point of no return, not by probabilistic review.
+
+**Vivid failure.** A brief missing its isolation marker launched an agent that edited the mainline
+directly, and the failure surfaced downstream, not at authoring.
+
+**Solution.** A deterministic pre-dispatch lint over the brief, wired into the sole launch path; a failing
+check refuses the launch.
+
+**Guarantee.** No autonomous actor launches from an ill-formed order. The boundary: the lint checks the
+order's *shape* — required markers, declared isolation, cited plan — not whether the plan is wise.
+
+**Forces &amp; limits.** The lint is only as strong as the sole-path wiring; a second launch route around it
+reopens the hole. A schema that demands sections without checking their content invites hollow filler — the
+limit the planning-template example below carries in its own Forces note.
+
+*Examples — each a different facet:*
+
+- **[epic and design templates](agent/governance-doc-controls/epic-and-design-templates.md) —
+  planning-artifact facet.** The same schema-on-the-artifact move applied to *planning* rather than
+  dispatch: a template lints a plan for its required sections. Its own limit is instructive — a present-but-
+  hollow section passes the structural check, so the schema bounds shape, never substance.
+
+*Flagship member (short):*
+
+- **[the mandatory-snippet table](agent/governance-doc-controls/mandatory-snippet-table.md) —
+  standing-boilerplate facet.** The registry the dispatch lint reads to know which snippets a brief owes;
+  it is both this pattern's check-source and a context-management member in its own right. Deep dive →
+  [the context-management stack](book/appendix-d-context-management-stack.html) (alt appendix).
+
+*Deep dive:* [the safe-launch composition](#compositions) pairs this with Closed Action Vocabulary — a
+well-formed order plus bounded authority.
+*Related:* Sibling — [Closed Action Vocabulary](#cap-constrain) · Consumer —
+[Governed Knowledge Base](#cap-govern) (the snippet table lives in the rule index).
+
+### [Staged Admission Gates](agent/gates-and-merge-train/staged-deploy-gates.md) · principle P4
+
+**Intent.** Order verification cheap-to-expensive along the path to production, each rung independently
+re-checkable, so no user meets an unverified build and a predictably doomed run never starts.
+
+**Vivid failure.** An unverified build reached users because the expensive check ran only after promotion.
+
+**Solution.** A canary-to-smoke-to-promote staircase on traffic-free surfaces; each rung re-derives its own
+verdict rather than trusting the rung below.
+
+**Guarantee.** A build reaches users only after every rung has passed on it, and a doomed run is killed at
+the cheapest rung it fails. The boundary: the staircase gates *admission*, not correctness of the change
+itself — a passing build is verified, not proven right.
+
+**Forces &amp; limits.** Rungs must be genuinely independent, or a shared assumption fails them together and
+the staircase collapses to one gate. Order by cost so the fast rung sheds the doomed run early; a slow rung
+placed first taxes every launch.
+
+*Examples — each a different facet:*
+
+- **[the pre-commit hook](agent/gates-and-merge-train/pre-commit-hook.md) — evidence-binding facet.**
+  Tree-sha markers make "the checks ran green on *this* tree" replay-proof, so a later rung can *check* the
+  claim instead of *trusting* it — the rung that turns a self-report into verifiable evidence.
+- **[the sentinel first-commit](agent/gates-and-merge-train/sentinel-first-commit.md) — t≈0 fail-fast
+  facet.** A first commit that runs the gate at minute one bounds the waste of unlandable work — the facet
+  of placing a rung as early as possible, before effort accrues against a doomed branch.
+- **[merge-train MIS batching](agent/gates-and-merge-train/merge-train-mis-batching.md) —
+  independence-before-integration facet.** Batches only non-conflicting work by computing a maximum
+  independent set, so conflict-freedom is proven by construction before integration rather than discovered
+  in a failed merge.
+
+*Flagship member (short):*
+
+- **[the cron-alerts gate](agent/lifecycle-and-observability/cron-alerts-gate.md) — signal-promoted-to-gate
+  facet.** A health signal promoted into a hard barrier: an unresolved critical alert refuses new
+  work-dispatch. Deep dive → [the observe → react stack](book/appendix-d-observe-react-stack.html) (alt
+  appendix).
+
+*Known uses:*
+[test-onion tiers](product/regression-tests/test-onion-tiers.md) (the cost stratification the rungs consume;
+its one-second-per-test discipline under fleet velocity survives as a Forces clause here — online-only).
+
+*Deep dive:* [the observe → react stack](book/appendix-d-observe-react-stack.html) (alt appendix) via the
+cron-alerts gate.
+*Related:* Bridge — [Re-Derived Definition of Done](#cap-complete) (the evidence staircase pairs cheap-early
+with full-late) · Sibling — [Validated Dispatch](#cap-admit) (gates the order; this gates the path).
 
 <a id="cap-complete"></a>
 ## COMPLETE · Establish completion on re-derived evidence
 
 *Recompute completion; derive the assurance obligation from the model.*
 
-**[Re-Derived Definition of Done](agent/governance-doc-controls/epic-definition-of-done.md).** Establish
-completion by independently re-derived evidence against the current state, never by a recorded assertion.
-Trust nothing written down before now. *The scar:* an effort marked itself done while its owned checks had
-rotted and its commits never actually landed. *Built as:* a close tool that re-runs every owned check and
-verifies commit ancestry against the substrate as it stands.
+### [Re-Derived Definition of Done](agent/governance-doc-controls/epic-definition-of-done.md) · principle P4
 
-**[Model-Derived Assurance Coverage](models-bridge/system-models/model-derived-test-obligation-census.md).**
-Derive the assurance obligation from the model itself — the surface that should be tested, the tier, the
-assertion strength, the verification method — and lint the gap, so an untested obligation is a named
-finding whose set regrows with every model change. *The scar:* a green coverage percentage hid an entire
-untested category of obligations. *Built as:* an obligation census that draws the owed-test denominator
-from the models and lints the shortfall.
-*Known uses (five distinct obligations, not one):*
-[coverage-to-model-node mapping](models-bridge/system-models/coverage-model-mapping.md) (per-node
-exercise) ·
-[journey-criticality test placement](models-bridge/system-models/journey-criticality-test-placement.md)
-(the tier) ·
-[journey task-closure](models-bridge/system-models/journey-task-closure.md) (the assertion strength) ·
-[formal invariant verification](models-bridge/system-models/formal-invariant-verification.md) (the
-verification method — see the [borderline fold](#folds) below).
+**Intent.** Establish completion by independently re-derived evidence against the current state, never by a
+recorded assertion. Trust nothing written down before now.
+
+**Vivid failure.** An effort marked itself done while its owned checks had rotted and its commits never
+actually landed.
+
+**Solution.** A close tool that re-runs every owned check and verifies commit ancestry against the
+substrate as it stands.
+
+**Guarantee.** A "done" mark means the evidence recomputes green *now*, not that someone once said so. The
+boundary: it re-derives the checks that exist — a missing check is a coverage gap the assurance census
+above must catch, not this gate.
+
+**Forces &amp; limits.** Re-derivation costs a full re-run at close, which is the price of not trusting the
+report. It defends against stale and dishonest self-reports; it cannot judge whether the owned checks were
+the *right* checks.
+
+*Deep dive:* [the evidence staircase](#compositions) pairs this with Staged Admission Gates — cheap
+evidence early, full re-derivation late.
+*Related:* Bridge — [Staged Admission Gates](#cap-admit) · Consumer —
+[Model-Derived Assurance Coverage](#cap-complete) (defines the checks it re-runs).
+
+### [Model-Derived Assurance Coverage](models-bridge/system-models/model-derived-test-obligation-census.md) · principle P4
+
+**Intent.** Derive the assurance obligation from the model itself — the surface that should be tested, the
+tier, the assertion strength, the verification method — and lint the gap, so an untested obligation is a
+named finding whose set regrows with every model change.
+
+**Vivid failure.** A green coverage percentage hid an entire untested category of obligations.
+
+**Solution.** An obligation census that draws the owed-test denominator from the models and lints the
+shortfall.
+
+**Guarantee.** The denominator of "what should be tested" comes from the model, not from what happens to
+have a test, so a whole untested category surfaces as a named finding. The boundary: it covers obligations
+the model expresses — an obligation living only in code is invisible until modeled.
+
+**Forces &amp; limits.** The census is only as complete as the model it reads; a coverage number derived
+from a partial model is a partial truth wearing a percentage. It names the gap, but closing it still costs
+a real test written at the right tier and strength.
+
+*Examples — each a different facet:*
+
+- **[journey-criticality test placement](models-bridge/system-models/journey-criticality-test-placement.md)
+  — placement/tier facet.** Which *tier* an obligation is owed at: a critical user journey must run locally
+  on every green, so local-green implies every major path exercised — the obligation is not just "tested"
+  but "tested where it will actually run."
+- **[journey task-closure](models-bridge/system-models/journey-task-closure.md) — assertion-strength
+  facet.** How *strongly* the test must assert: pinning one hop past the production break, so a test that
+  passes while the feature is broken is itself a named gap. The facet the tier does not carry — a test can
+  run in the right place and still assert too weakly.
+
+*Flagship members (short):*
+
+- **[coverage-to-model-node mapping](models-bridge/system-models/coverage-model-mapping.md) — granularity
+  facet.** Per-node "is *this* obligation exercised?", the finest grain of the census. Deep dive →
+  [the specification-and-verification stack](book/appendix-d-specification-verification-stack.html) (alt
+  appendix).
+- **[formal invariant verification](models-bridge/system-models/formal-invariant-verification.md) — method
+  facet.** Which *checker* an obligation is owed — routing each invariant by its temporal shape to a proof
+  over bounded interleavings or a counterexample. The proof pole to the census's exercise pole; a borderline
+  fold, see [the folds note](#folds). Deep dive →
+  [the specification-and-verification stack](book/appendix-d-specification-verification-stack.html) (alt
+  appendix).
+
+*Deep dive:* [the specification-and-verification stack](book/appendix-d-specification-verification-stack.html)
+(alt appendix) — its CENSUS member, fed by the Composed State-Machine Model as specification.
+*Related:* Consumer — [Composed State-Machine Model](#cap-know) (the spec it verifies against) · Bridge —
+[Re-Derived Definition of Done](#cap-complete).
 <!-- prior-art: LPP §5 verification / test-adequacy literature, populated by LPP-PROSE -->
 
-**[Generative Validation](product/regression-tests/fuzz-campaigns.md).** Falsify a specification with
-machine-generated inputs at two poles: invariant-shaped properties over tame inputs, and wild adversarial
-inputs fixed to the stable point in the spec. In its deepest form the structured model is the oracle,
-which collapses the usual tradeoff between a rich oracle and wild inputs. *The scar:* a fix aimed at a
-failing fuzz seed passed that seed and still broke every other spec-allowed input. *Built as:* fuzz
-campaigns with root-cause analysis to the stable spec point, plus property tests at the tame pole.
-*Merged in:* [property tests](product/regression-tests/property-tests.md) — the two entries self-framed as
-two sides of one coin, so they are one mechanism with two poles.
+### [Generative Validation](product/regression-tests/fuzz-campaigns.md) · principle P4
+
+**Intent.** Falsify a specification with machine-generated inputs at two poles: invariant-shaped properties
+over tame inputs, and wild adversarial inputs fixed to the stable point in the spec.
+
+**Vivid failure.** A fix aimed at a failing fuzz seed passed that seed and still broke every other
+spec-allowed input.
+
+**Solution.** Fuzz campaigns with root-cause analysis to the stable spec point, plus property tests at the
+tame pole. Its two entries — fuzz and property — self-framed as two sides of one coin, so they are one
+mechanism with two poles.
+
+**Guarantee.** A found failure is root-caused to the spec point it violates, so the fix passes every
+spec-allowed input, not just the failing seed. In its deepest form the structured model is the oracle,
+which collapses the usual tradeoff between a rich oracle and wild inputs.
+
+**Forces &amp; limits.** Generation finds violations; it cannot prove their absence, so it complements — not
+replaces — the census's obligation coverage. An oracle weaker than the spec lets wild inputs pass while
+still wrong.
+
+*Related:* Sibling — [Model-Derived Assurance Coverage](#cap-complete) (obligation coverage to this one's
+falsification) · Consumer — [typed contract surfaces](models-bridge/system-models/typed-contract-surfaces.md)
+(spec points that double as fuzz oracles).
 
 <a id="cap-preserve"></a>
 ## PRESERVE · Preserve product semantics
 
 *Guarantee the product's meaning survives mutation and conforms to spec.*
 
-**[Preservation Invariant](product/validation-and-conformance/content-validator.md).** Make semantic
-preservation a deterministic post-condition checked on every produced artifact: the input's content must
-survive as a subset of the output. A per-stage variant names the stage that lost it. *The scar:* a
-remediation pass silently dropped document content — it ran successfully and produced garbage. *Built as:*
-a validator that checks input-subset-output on every artifact, with a staging variant that localizes the
-offending pass. This is where damage done *through* the one sanctioned door is caught.
+### [Preservation Invariant](product/validation-and-conformance/content-validator.md) · principle P6
+
+**Intent.** Make semantic preservation a deterministic post-condition checked on every produced artifact:
+the input's content must survive as a subset of the output.
+
+**Vivid failure.** A remediation pass silently dropped document content — it ran successfully and produced
+garbage, the worst failure mode for a pipeline where "ran but produced nonsense" is invisible.
+
+**Solution.** A validator that checks input-subset-output on every artifact, with a staging variant that
+localizes the offending pass by name. This is where damage done *through* the one sanctioned door is
+caught.
+
+**Guarantee.** No produced artifact loses input content across a green run, and when it does, the stage
+that lost it is named. The boundary: it checks content *survival*, not that the remediation was the *right*
+one — preservation, not correctness of intent.
+
+**Forces &amp; limits.** Subset-preservation catches loss, not corruption that keeps the bytes but breaks
+the meaning; the per-stage variant costs a validation between every pass, so it runs in staging where the
+localization is worth the tax. It pairs with One Door Enforced: the door makes damage rare, this catches
+what still gets through.
+
+*Deep dive:* [the provenance-and-fidelity stack](book/appendix-d-provenance-fidelity-stack.html) (alt
+appendix) — its GATE member, the fidelity backstop to the provenance chain.
+*Related:* Counterpart — [One Door Enforced](#cap-constrain) (rarity vs. detection) · Consumer —
+[Caused-By Provenance](#cap-provenance) (a caught loss is traced to its stamped cause).
 
 *Moved to the product case study.* The **conformance-to-external-spec engine** — a deterministic predicate
 where every finding names the external-standard clause it closes, with the covered/gap/aspirational
@@ -601,6 +819,7 @@ inside its parent.
 
 ---
 
+<a id="compositions"></a>
 # The eight compositions
 
 Some mechanisms are strong together. A composition is not a bigger pattern nor six unrelated ones; it is a
