@@ -16,6 +16,8 @@ governed-doc commit's deploy-scope lints against the component-and-zone model.)
 | Enforcement | **Hard** (deterministic) · *blocking* — findings at or adjacent to the change block the commit; the gate runs one central grader over every finding |
 | Governs | `all-models` — severity graded by each finding's relation to a model |
 
+*Its place in the environment — a **variant / known-use** of **Read the Model, Don't Copy It**, under **KNOW · Maintain authoritative system knowledge**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-know) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 A whole-tree lint reports findings from all over the tree. Two ways to gate on it both fail, and both

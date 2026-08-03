@@ -14,6 +14,8 @@ the model it was copied from.
 | Enforcement | **Hard** (deterministic) · *blocking* — a forward-policing lint fails on embedded snapshots (verify the lint is built before relying on it as a live gate) |
 | Governs | `all-models` — every model is read at runtime, never snapshotted |
 
+*Its place in the environment — the **canonical mechanism** for **KNOW · Maintain authoritative system knowledge**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-know).*
+
 ## Motivation — the failure it kills
 
 The models are only a bridge if consumers *read* them. The moment a consumer **hardcodes a snapshot**

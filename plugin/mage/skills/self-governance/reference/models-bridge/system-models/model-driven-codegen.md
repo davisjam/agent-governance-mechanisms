@@ -14,6 +14,8 @@ the model *drives the system* (not merely describes it) and hand-edits are caugh
 | Enforcement | **Hard** (deterministic) — generated artifacts carry a re-emitted provenance marker + a freshness/drift lint |
 | Governs | `all-models` — real artifacts are generated from the models |
 
+*Its place in the environment — a **variant / known-use** of **Executable Source of Truth**, under **KNOW · Maintain authoritative system knowledge**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-know) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 If the models only *described* the system, they would be optional — nice docs, easy to ignore, quick to

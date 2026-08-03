@@ -18,6 +18,8 @@ evaluator checks against it).
 | Enforcement | **Hard** (deterministic) — the declared sinks and edges are reconciled against the real storage and transfer sites, and a policy evaluator checks properties (every sink erasable, no edge into an uncovered sink) over the graph |
 | Derivation | `model-from-code` — the sink-and-edge graph is reconciled against the real storage and transfer sites |
 
+*Its place in the environment — a **variant / known-use** of **Executable Source of Truth**, under **KNOW · Maintain authoritative system knowledge**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-know) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 Privacy and erasure obligations are about *where data goes*, and that knowledge is scattered across every

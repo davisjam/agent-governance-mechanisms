@@ -14,6 +14,8 @@ competitor set, the CLAUDE.md rule metadata), each the single source of truth fo
 | Enforcement | **Hard** (deterministic) — typed registries *held true* by their coverage/parity lints |
 | Derivation | `both` — some fields generated to code, others reconciled from it |
 
+*Its place in the environment — a **variant / known-use** of **Executable Source of Truth**, under **KNOW · Maintain authoritative system knowledge**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-know) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 Domain facts get restated in code, docs, and dashboards: "which four filetypes do we support," "which

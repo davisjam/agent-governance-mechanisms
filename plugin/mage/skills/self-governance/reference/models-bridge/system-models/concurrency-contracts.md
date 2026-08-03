@@ -14,6 +14,8 @@ run this, and how many at once" becomes declared and enforceable.
 | Enforcement | **Hard** (deterministic) — typed contracts *held true* by the mediator enforcers + a registry-coverage lint |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 
+*Its place in the environment — a **variant / known-use** of **Executable Source of Truth**, under **KNOW · Maintain authoritative system knowledge**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-know) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 Concurrent agent worktrees share a host and shared state. Two contract classes keep them from trampling
