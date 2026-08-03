@@ -15,6 +15,8 @@ is caught by construction, not at the moment they trip each other in production.
 | Enforcement | **Soft·Hard** — a soft-constraint model (the query surface an operator *chooses* to run) shipped with hard sensors: a consistency check that flags mechanically-decidable conflicts, and a drift lint that holds the graph equal to the wired mechanisms |
 | Derivation | `model-from-code` — induced from the code, reconciled at build |
 
+*Its place in the environment — the **canonical mechanism** for **GOVERN · Govern the control estate itself**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-govern).*
+
 ## Motivation — the failure it kills
 
 A governed fleet accumulates guardrails: turn-end hooks, pre-commit checks, dispatch gates, host-level

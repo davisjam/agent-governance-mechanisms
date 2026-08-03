@@ -14,6 +14,8 @@ recovery) get a consistent, pre-reasoned, incident-tested response.
 | Model | — |
 | Enforcement | **Soft** (probabilistic) — a playbook *aims* the response; it informs, it does not block. Its value is that the correct steps are written down and discoverable at the moment they're needed. |
 
+*Its place in the environment — the **canonical mechanism** for **GOVERN · Govern the control estate itself**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-govern).*
+
 ## Motivation — the failure it kills
 
 Operational situations recur: a deploy fails a known way, a cron loop can't self-recover, a worktree is
