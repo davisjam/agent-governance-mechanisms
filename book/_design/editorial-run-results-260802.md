@@ -659,3 +659,48 @@ to make* (Beat 2 draws only *which artifact is authoritative*).
   `[cite: key]` markers of mine survive).
 - **Not deployed** (batched at end of all waves per brief). Bibliography/book-index HTML changed as a
   build side effect of the +4 references.
+
+---
+
+## W-SDD — spec-driven development as a weak form of MAGE (3.1 companion passage) — 2026-08-03
+
+Author-authorized companion to W-GRAPHIFY, same file. Completes a **3-way related-work arc**:
+descriptive code-graph (recover the *is*) → normative-but-prose SDD (author the *ought*, unstructured)
+→ normative-typed-enforced MAGE model (author the ought, compiler/gates hold it).
+
+- **Location.** Woven as a **continuation of the "Extracted Code Graphs and Intent-Bearing Models"
+  subsection** (no new heading — one arc, per brief), immediately after the code-graphs shorthand close,
+  before Beat 3. **394 words** (target 300–500). Opens on a connective pivot ("The ought can also be
+  authored a simpler way: by writing it down.") that picks up "the ought" from the prior sentence, and
+  closes the arc with the three-ways landing ("A code knowledge graph recovers what the code *is*. A spec
+  writes down what it *should be* … A structured model states that same ought where a compiler and a gate
+  can hold it to the code."). Does not restate compression / drift-gate / map-territory (already
+  established). One `<!-- point: -->` marker (10-word claim, model-to-code + drift-gate terms).
+- **1 ref added** to `book/references.bib`: `sdd-abdurrahman-2026` — an `@online` **blog** entry
+  (author/title/year/date/publisher=Medium/url/urldate), matched to the hanlee/reganti web-cite idiom
+  (NOT arXiv). `date = {2026-07}` renders fine through the Typst chicago engine. Inline `[cite:
+  sdd-abdurrahman-2026]`.
+- **Verified content used (WebFetch, orchestrator-cached):** the ~**35,000-token** preload of which about
+  **6% was relevant**; degradation once the window passes half full; *"syntactically correct code that was
+  wrong"*; and the aphorism *"A stale spec is worse than no spec, because the agent trusts it."* Framing is
+  respectful/convergent (SDD is a real move toward authored intent whose reported scaling failure motivates
+  a compressed, enforced representation; its own remedies — living specs / router+index / CI drift-checks —
+  are the governed environment reinvented piecemeal). No claims-to-avoid tripped (SDD not called wrong /
+  obsolete; MAGE does not "replace" it).
+- **Cross-refs — TODO'd, NOT wired (W7 dependency).** §3.8 "Keeping the Models in Sync with the Code" and
+  the context-management flagship stack **do not exist yet** (grep confirms no 3.8 file, no
+  context-management anchor). Both forward refs are therefore made **by name/concept in prose** ("a
+  context-management layer"; "a drift gate and derived traceability"), with an HTML-comment
+  `<!-- TODO(W7): … wire … as hard links -->` at the end of the passage. No hard link created → no
+  link-integrity risk; the comment is stripped from reader HTML (verified). **The W7 wave should wire these
+  two forward links once its anchors land.**
+- **Spine — no edit.** `chapter_advances["3.1"]` already carries `modeling-thesis` + `alignment-thesis`
+  (from W-GRAPHIFY); the SDD passage advances the same two theses. Confirmed present; no regeneration.
+  No `definitions.json` entry.
+- **Gates (verbatim):** `render_citations.py` — "rendered=36 entries … bib_sha256=7ff1741b…" (+1;
+  `sdd-abdurrahman-2026` present, CITE-FRESH restamped) · `catalog.py validate` — "validated 82 entries …
+  — 0 issue(s)" · `build_book_html.py` — "built 128 chapter pages … (109 figures)" (page count +0) ·
+  `argument_spine_model.py verify` exit 0 · `chapter_shape_model.py verify` exit 0 (0 flags). Built 3.1
+  renders the SDD prose; the cite resolves (no raw `[cite:]` marker survives); the article appears in the
+  references section; the TODO comment does not leak to reader HTML.
+- **Not deployed** (batched).
