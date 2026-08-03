@@ -13,6 +13,8 @@ dispatched brief carries the safety and context boilerplate it needs.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking via brief-linting* — a brief missing a required snippet marker fails the pre-dispatch lint |
 
+*Its place in the environment — a **variant / known-use** of **Validated Dispatch**, under **ADMIT · Admit or reject changes**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-admit) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 Every dispatch needs certain boilerplate to be safe: the PATH export (or 65+ PDF tests fail for lack

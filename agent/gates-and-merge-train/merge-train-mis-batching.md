@@ -13,6 +13,8 @@ conflict-free pass instead of thrashing sequentially.
 | Model | — |
 | Enforcement | **Hard** (deterministic) — the batch is selected by a graph predicate, not by hope-and-retry |
 
+*Its place in the environment — a **variant / known-use** of **Staged Admission Gates**, under **ADMIT · Admit or reject changes**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-admit) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 With 6–8 agents committing concurrently, a naïve *sequential* merge serializes all of them and

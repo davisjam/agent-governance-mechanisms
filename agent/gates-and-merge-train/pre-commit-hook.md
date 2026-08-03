@@ -13,6 +13,8 @@ checks actually passed on *exactly this tree*.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — the hook fails the commit; `merge-check` rejects agent commits lacking valid markers · bypass prefixes (`sentinel:` / `tombstone:` / `chore(worktree):`) skip; `--no-verify` is **banned** for agents |
 
+*Its place in the environment — a **variant / known-use** of **Staged Admission Gates**, under **ADMIT · Admit or reject changes**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-admit) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 Agents commit fast and often. Without a cheap gate *at commit time*, a broken change flows downstream

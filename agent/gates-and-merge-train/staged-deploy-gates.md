@@ -13,6 +13,8 @@ users see it, not after.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — promotion is refused until the smoke stage passes |
 
+*Its place in the environment — the **canonical mechanism** for **ADMIT · Admit or reject changes**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-admit).*
+
 ## Motivation — the failure it kills
 
 Shipping a build straight to production means a regression lands on users; the failure *is* the

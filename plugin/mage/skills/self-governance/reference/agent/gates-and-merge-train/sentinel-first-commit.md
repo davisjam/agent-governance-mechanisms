@@ -13,6 +13,8 @@ that can never land.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — aborts the run on a failed substrate assertion |
 
+*Its place in the environment — a **variant / known-use** of **Staged Admission Gates**, under **ADMIT · Admit or reject changes**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-admit) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 An agent dispatched into a subtly broken worktree (a missing marker file, stale substrate, an empty
