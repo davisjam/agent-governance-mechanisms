@@ -101,7 +101,7 @@
       "obj": "whether a task needs the book's machinery at all, and read an agent as a loop that needs a model",
       "statement": "After Part 1, the reader can judge which tasks warrant governance machinery and which do not, and read an agent as a loop that needs a model of its world.",
       "provenance": "declared",
-      "anchor": "1.1 'Not every programming task needs the machinery this book describes' + 1.2 'an agent runs in a loop … give it a model of the world'."
+      "anchor": "1.1 'Not every programming task needs the machinery this book describes' + 1.3 'an agent runs in a loop … give it a model of the world'."
     },
     {
       "granularity": "part",
@@ -165,7 +165,16 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "1.2-loops-and-models",
+      "primary_unit": "1.2-mage-by-example",
+      "verb": "describe",
+      "obj": "the system the book's claims are grounded in — what it does, how its six parts fit, why it was built — and the failure-to-mechanism move on two real incidents",
+      "statement": "After this chapter, the reader can describe the grounding case — what DocAble does, how its six parts fit together, and why it was built — and recognize the convert-a-failure-into-a-mechanism move in its first two incidents.",
+      "provenance": "declared",
+      "anchor": "Section titles: 'two-birds-one-stone', 'the-shape-of-the-machine', 'two-scars', 'the-move-that-recurs'."
+    },
+    {
+      "granularity": "chapter",
+      "primary_unit": "1.3-loops-and-models",
       "verb": "explain",
       "obj": "why an agent is a loop and why it needs a model of its world",
       "statement": "After this chapter, the reader can explain the agent as a fixed-shape loop and why giving it a model of the world is the first act of governance.",

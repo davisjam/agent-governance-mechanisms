@@ -66,7 +66,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>30</b> chapters · <b>175</b> sections · <b>77</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>31</b> chapters · <b>186</b> sections · <b>78</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The program — what you'll be able to do after the whole book</h2>
 <div class="outcomes"><div class="oc-h">After the program — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -149,35 +149,75 @@
 </div>
 </div>
 <div class="chapter">
-<h3 id="ch-1-2-loops-and-models"><span class="tier-kick">Lesson</span><a href="../book/1.2-loops-and-models.html" class="ch-link">1.2-loops-and-models</a> <span class="ch-slug">1.2-loops-and-models</span></h3>
+<h3 id="ch-1-2-mage-by-example"><span class="tier-kick">Lesson</span><a href="../book/1.2-mage-by-example.html" class="ch-link">1.2-mage-by-example</a> <span class="ch-slug">1.2-mage-by-example</span></h3>
+<div class="outcomes"><div class="oc-h">After this lesson — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this chapter, the reader can describe the grounding case — what DocAble does, how its six parts fit together, and why it was built — and recognize the convert-a-failure-into-a-mechanism move in its first two incidents. <span class="prov">declared</span></span></li></ul></div>
+<div class="section s2" id="sec-1-2-mage-by-example--two-birds-one-stone">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">Two birds, one stone</a></div>
+<p class="topic">The explicit problem is a mountain of inaccessible university documents and a federal deadline for fixing them.</p>
+</div>
+<div class="section s2" id="sec-1-2-mage-by-example--what-the-user-sees">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">What the user sees</a></div>
+<p class="topic">A user uploads a document and receives a remediated, checked version back in minutes.</p>
+</div>
+<div class="section s2" id="sec-1-2-mage-by-example--the-shape-of-the-machine">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">The shape of the machine</a></div>
+<p class="topic">Six parts carry the upload: a front door, a dispatcher, a remediation core, a checker, a fidelity validator, and a provenance layer.</p>
+</div>
+<div class="section s2" id="sec-1-2-mage-by-example--one-human-a-fleet">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">One human, a fleet</a></div>
+<p class="topic">A fleet of coding agents wrote almost all of the code; I kept the seats that judge.</p>
+</div>
+<div class="section s2" id="sec-1-2-mage-by-example--two-scars">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">Two scars</a></div>
+<p class="topic">Two real failures show what the machinery is for: one architectural, one procedural.</p>
+</div>
+<div class="section s3" id="sec-1-2-mage-by-example--the-library-that-lied">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">The library that lied</a></div>
+<p class="topic">A convenient library silently stripped the very structure the product exists to add, and every check still passed.</p>
+</div>
+<div class="section s3" id="sec-1-2-mage-by-example--the-lever-that-lost-work">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">The lever that lost work</a></div>
+<p class="topic">Twice the orchestrating agent escaped a stuck merge by reaching for a destructive command that discarded committed work.</p>
+</div>
+<div class="section s2" id="sec-1-2-mage-by-example--the-move-that-recurs">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">The move that recurs</a></div>
+<p class="topic">Each failure was converted into a mechanism — a lint that bans the library, a rule that pairs the forbidden lever with the sanctioned one.</p>
+</div>
+<div class="section s2" id="sec-1-2-mage-by-example--where-the-map-leads">
+<div class="sec-h"><a href="../book/1.2-mage-by-example.html">Where the map leads</a></div>
+<p class="topic">Parts 2 through 4 explain the machinery; Part 5 reconstructs the full case.</p>
+</div>
+</div>
+<div class="chapter">
+<h3 id="ch-1-3-loops-and-models"><span class="tier-kick">Lesson</span><a href="../book/1.3-loops-and-models.html" class="ch-link">1.3-loops-and-models</a> <span class="ch-slug">1.3-loops-and-models</span></h3>
 <div class="outcomes"><div class="oc-h">After this lesson — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this chapter, the reader can explain the agent as a fixed-shape loop and why giving it a model of the world is the first act of governance. <span class="prov">declared</span></span></li></ul></div>
-<div class="section s2" id="sec-1-2-loops-and-models--everything-is-a-loop">
-<div class="sec-h"><a href="../book/1.2-loops-and-models.html">Everything is a loop</a></div>
+<div class="section s2" id="sec-1-3-loops-and-models--everything-is-a-loop">
+<div class="sec-h"><a href="../book/1.3-loops-and-models.html">Everything is a loop</a></div>
 <p class="topic">An agent runs in a loop, and the loop has a fixed shape.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can describe agent work as a fixed-shape loop — input, reasoning, output, fed around again — and see why engineering it starts with a measurable success metric. <span class="prov">derived</span></span></li></ul></div>
 </div>
-<div class="section s2" id="sec-1-2-loops-and-models--give-it-a-model-of-the-world">
-<div class="sec-h"><a href="../book/1.2-loops-and-models.html">Give it a model of the world</a></div>
+<div class="section s2" id="sec-1-3-loops-and-models--give-it-a-model-of-the-world">
+<div class="sec-h"><a href="../book/1.3-loops-and-models.html">Give it a model of the world</a></div>
 <p class="topic no-topic">(no topic sentence — opens on a non-paragraph block)</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain why handing the agent a model of its world conditions the probability distribution of its behavior — aiming its search and shrinking what it must hold. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After this section, the reader can construct a world-model an agent acts against — the first governance move. <span class="prov-gap">gap-recommended</span><span class="gap-note">O2 finding: this H2 opens on a non-paragraph block (no topic sentence), so the outcome its heading promises is not stated in prose as written. Recommend a lead paragraph that states the move.</span></span></li></ul></div>
 </div>
 </div>
 <div class="chapter">
-<h3 id="ch-1-3-the-engineers-seat"><span class="tier-kick">Lesson</span><a href="../book/1.3-the-engineers-seat.html" class="ch-link">1.3-the-engineers-seat</a> <span class="ch-slug">1.3-the-engineers-seat</span></h3>
-<div class="section s2" id="sec-1-3-the-engineers-seat--the-lifecycle-it-keeps">
-<div class="sec-h"><a href="../book/1.3-the-engineers-seat.html">The lifecycle it keeps</a></div>
+<h3 id="ch-1-4-the-engineers-seat"><span class="tier-kick">Lesson</span><a href="../book/1.4-the-engineers-seat.html" class="ch-link">1.4-the-engineers-seat</a> <span class="ch-slug">1.4-the-engineers-seat</span></h3>
+<div class="section s2" id="sec-1-4-the-engineers-seat--the-lifecycle-it-keeps">
+<div class="sec-h"><a href="../book/1.4-the-engineers-seat.html">The lifecycle it keeps</a></div>
 <p class="topic">Engineering ran on the same handful of activities long before software, and software inherits them whole: **requirements** (find out what the system must do, and for whom — usually the hard part, since the people who need it cannot state it), **specification** (say what it will do, precisely enough to check later), **design** (decide the parts, the seams, and how the whole meets its constraints), **implementation** (build it — for software, write the code), **validation** (show the built thing meets the spec), and **maintenance** (change it over the long life without breaking what already works).</p>
 </div>
-<div class="section s2" id="sec-1-3-the-engineers-seat--the-two-seats">
-<div class="sec-h"><a href="../book/1.3-the-engineers-seat.html">The two seats</a></div>
+<div class="section s2" id="sec-1-4-the-engineers-seat--the-two-seats">
+<div class="sec-h"><a href="../book/1.4-the-engineers-seat.html">The two seats</a></div>
 <p class="topic">Two words for two jobs, and this book keeps them apart.</p>
 </div>
-<div class="section s2" id="sec-1-3-the-engineers-seat--sdlc-to-selc">
-<div class="sec-h"><a href="../book/1.3-the-engineers-seat.html">SDLC to SELC</a></div>
+<div class="section s2" id="sec-1-4-the-engineers-seat--sdlc-to-selc">
+<div class="sec-h"><a href="../book/1.4-the-engineers-seat.html">SDLC to SELC</a></div>
 <p class="topic">The field&#x27;s own name for the lifecycle gives the old arrangement away: SDLC, the software *development* life cycle.</p>
 </div>
-<div class="section s2" id="sec-1-3-the-engineers-seat--a-different-seat-is-a-different-discipline">
-<div class="sec-h"><a href="../book/1.3-the-engineers-seat.html">A different seat is a different discipline</a></div>
+<div class="section s2" id="sec-1-4-the-engineers-seat--a-different-seat-is-a-different-discipline">
+<div class="sec-h"><a href="../book/1.4-the-engineers-seat.html">A different seat is a different discipline</a></div>
 <p class="topic">Same lifecycle, then; no new phases.</p>
 </div>
 </div>
@@ -341,6 +381,14 @@
 <div class="sec-h"><a href="../book/2.6-when-guardrails-collide.html">Drawing what lies between the controls</a></div>
 <p class="topic">The Governance Graph draws it.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-analyze">analyze</span><span class="oc-text">After this section, the reader can analyze the space between controls with a governance graph — mechanisms as nodes tagged by event and resource, conflicts as edges in a closed contradiction/contention/ordering/soft-versus-hard taxonomy joined by the shared resource — and route each edge to a lint or a human prompt by its type before the control ships. <span class="prov">derived</span></span></li></ul></div>
+</div>
+<div class="section s2" id="sec-2-6-when-guardrails-collide--the-other-question-a-list-can-t-answer">
+<div class="sec-h"><a href="../book/2.6-when-guardrails-collide.html">The other question a list can&#x27;t answer</a></div>
+<p class="topic">The graph settled one question a flat list could not: which two controls collide.</p>
+</div>
+<div class="section s2" id="sec-2-6-when-guardrails-collide--growing-controls-and-auditing-the-growth">
+<div class="sec-h"><a href="../book/2.6-when-guardrails-collide.html">Growing controls, and auditing the growth</a></div>
+<p class="topic">The census has a counterpart, and the two are true opposites over one graph.</p>
 </div>
 <div class="section s2" id="sec-2-6-when-guardrails-collide--when-the-hooks-aren-t-yours">
 <div class="sec-h"><a href="../book/2.6-when-guardrails-collide.html">When the hooks aren&#x27;t yours</a></div>
