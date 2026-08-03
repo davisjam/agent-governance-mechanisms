@@ -489,3 +489,47 @@ claims (spine 8, spine 11, `soft-to-hard-spectrum`, `mechanize-not-remember`) de
 unquantified as recorded accepted limitations. MBSE external-baseline row held PENDING the author's
 artifact. Remaining open items: churn path-set, re-touch N/exclusions, provenance-fraction coding
 rule, MBSE artifact, per-row status ceilings (§5 of the doc).
+
+## MODEL-SYNC SECTION (draft) — ✅ DONE (draft for author review; NOT deployed into a chapter)
+
+Standalone reviewable draft on model↔code drift-detection efficacy — the "keeping the model in sync
+with the code" evidence. Sources: the sync-thesis note + the two drift-audits (original N=36, refresh
+N=20, cumulative N=56) in the parent repo's field notes.
+
+- **Deliverables:** section prose `book/_design/model-sync-section-DRAFT-260803.md` (draft _design md,
+  skipped by the build) + new figure `book/assets/model-sync-two-layer-net.svg`. Two tables embedded in
+  the prose: (A) model-sync evidence — churn +8,970/−173 · 63 commits · 0 model-drift reopens · ~27
+  pre-floor audit findings · caught-by the derived floor; (B) doc-hygiene ASIDE — stale-header 11 /
+  doc-claim 9, explicitly labelled "documentation hygiene, not model sync."
+- **The narrow claim, kept honest:** three legs (drift is real + escaped → ~27 pre-floor findings at
+  S:N≈1.0 incl. the prod-blocking pointer-drift; mechanism = derived reconciliation / liveness-as-a-
+  property; held under load → the churn row, 0 model-drift reopens). Stated as PRELIMINARY, small
+  per-window genuine-drift N; the cumulative 23/23 is flagged as a COMBINED rate, not a model-sync
+  catch-rate.
+- **Two failure modes (load-bearing, per author):** (1) judgment miss — mechanically green, slips the
+  soft layer; (2) the unmodeled — no anchor, no net. Cross-linked to `control-coverage-census`
+  (measures the gap) and the self-governance / failures-become-machinery loop (converts it to a new
+  model). Scope-add worked examples folded in: the service-flow model gaining `/api/pdf-page-image`
+  (`6fd0b6d51a`, 08-01, held by `gen-web-api-entities --check`) and the user-journey model gaining 3
+  Journey entities (`01699c8c47`, 07-16 — honestly dated as pre-window, held by the two-way journey
+  endpoint-coverage drift lint).
+- **Figure:** two-layer net over the model↔code gap; soft DoD-reading layer (dashed, with a hole =
+  judgment miss) over the hard derived-floor (solid, ends before the unmodeled red zone = no net);
+  escape arrows for both failure modes; cross-ref arrows to coverage-census + self-governance. Caption
+  spine: "Derived defends, snapshotted drifts — and what isn't modeled can't drift-check." Hand-SVG
+  (non-graph zone geometry earns the escape hatch); house palette; FULLY CLEAN on figure-overflow
+  (blocking), design-token drift, svg text-fit + drawing-hygiene (audit-only).
+- **Metamodel footnote added** at the coverage-census cross-ref (object-model-drift vs metamodel-
+  coverage distinction; census + missing-model-metric are metamodels). **FLAG for author:** the
+  metamodel idea (systematic backstop for failure-mode-2 — "measure whether the right thing is modeled
+  at all") reads like a thread worth its own short development in the book, likely near 3.7 Scope of
+  Modeling or the CAP-SYNC / drift-parity material — surfaced here rather than expanded inline, per
+  directive.
+- **Recommended placement:** a dedicated data section in Part 3 adjacent to 3.7 "The Scope of
+  Modeling" (failure-mode-2 IS a scope-of-modeling question), cross-linked to the drift/parity-gates +
+  symbol-anchored-traceability appendix entries. Alternative: fold Table A/B into the drift-parity-gates
+  entry as a "measured efficacy" block (lighter; loses the failure-mode framing). Recommend the
+  dedicated section.
+- **Gates:** `catalog.py validate` 0 (82 entries) · `catalog_tests.py` 28/0/3 + 11 audit-only · figure-
+  overflow (blocking) exit 0 · `book/build_book_html.py` green (127 pages) · new SVG clean on all
+  figure lints. No deploy (draft only).
