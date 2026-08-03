@@ -10,8 +10,7 @@
   <title id="dmTitle">The build host produces the image; the runtime cluster deploys it</title>
   <desc id="dmDesc">A build host runs the test serializer and build semaphore and produces
     the image the runtime cluster deploys, where the web service enqueues onto a queue
-    drained by a worker. The model declares this placement; a parity lint holds it to the
-    real deploy tables.</desc>
+    drained by a worker. The model declares this placement.</desc>
 
   <defs>
     <marker id="dm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">

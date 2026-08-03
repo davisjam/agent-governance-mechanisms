@@ -57,8 +57,8 @@
     <rect x="66" y="712" width="630" height="112" rx="2.5" fill="#faf1e6" stroke="#9a3f12" stroke-width="0.7"/>
     <text x="82" y="740" font-size="18" font-weight="bold" fill="#1c1917" font-variant="small-caps">Tuesday, May 5</text>
     <text x="82" y="767" font-size="18" fill="#1c1917">Two accounts are saturated. The third needs a two-factor code.</text>
-    <text x="82" y="790" font-size="18" fill="#1c1917">Its owner is at a retreat, not watching the chat. My graduate</text>
-    <text x="82" y="813" font-size="18" fill="#1c1917" font-style="italic">is at the next table. She walks over and taps him in.</text>
+    <text x="82" y="790" font-size="18" fill="#1c1917">Its owner is at a retreat, not watching the chat.</text>
+    <text x="82" y="813" font-size="18" fill="#1c1917" font-style="italic">My graduate is at the next table. She walks over and taps him in.</text>
   </g>
 
   <!-- CARD 6 -->
