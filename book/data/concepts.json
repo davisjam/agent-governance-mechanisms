@@ -109,8 +109,8 @@
   "engineered-agent-loop": {
     "kind": "core-construct",
     "site_home": "N/A",
-    "status": "planned",
-    "note": "Core construct 1 of 6 (_hierarchy). The engineered agent loop: a feedback process in which the environment supplies a modeled state, constrains available actions, measures progress against an explicit criterion, and determines whether the result may advance. Four engineered levers — state exposed, action surface, success criterion, admission rule. Book home: the 1.3 loop section (index-def lands with the loop-refinement item of the core-concepts pass; status flips to book-only then). Sibling of the registered loop-engineering concept, which names the PRACTICE of shaping this loop."
+    "status": "book-only",
+    "note": "Core construct 1 of 6 (_hierarchy). The engineered agent loop: a feedback process in which the environment supplies a modeled state, constrains available actions, measures progress against an explicit criterion, and determines whether the result may advance. Four engineered levers — state exposed, action surface, success criterion, admission rule. Definitional text homed in definitions.json. Book index-def tagged at the 1.3 four-levers inset (the loop-engineering.svg figure marks the levers as the engineer's control points). Sibling of the registered loop-engineering concept, which names the PRACTICE of shaping this loop."
   },
   "model": {
     "kind": "core-construct",

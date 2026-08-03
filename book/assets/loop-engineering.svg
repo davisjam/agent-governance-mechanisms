@@ -1,36 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="group" aria-labelledby="loop-title loop-desc">
-  <title id="loop-title">Loop engineering</title>
-  <desc id="loop-desc">A single cycle running left to right. An Input paired with a success metric feeds Agent reasoning, which produces an Output, which feeds back around over the top into the Input. The whole loop is the unit of engineering. The success metric is emphasized in the accent color because defining it is the hard question.</desc>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): the ENGINEERED agent loop — not a generic control loop.
+     The cycle (modeled state → agent reasoning → output → admission → next turn) is ordinary;
+     the point of the figure is the FOUR ENGINEERED LEVERS marked as the engineer's control
+     points on it: (1) the state exposed (blue — the Modeling Thesis lever), (2) the action
+     surface, (3) the success criterion, (4) the admission rule (green — the Alignment Thesis
+     levers). Mermaid would draw the cycle but not the lever-callout composition, and the
+     pass/fail split at the admission gate wants bespoke placement. Palette: design-tokens
+     (ink/muted/panel, diagram-fleet #2f5169 + #e7edf3, diagram-governed #1f7a4d + #e3f0e7). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470"
+     role="group" aria-labelledby="loopTitle loopDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="loopTitle">The engineered agent loop and its four levers</title>
+  <desc id="loopDesc">One cycle, four control points. A modeled state feeds Agent reasoning, which
+    produces an Output — a candidate result, not yet accepted. The output flows up into an Admission
+    rule gate: if it passes, it advances and becomes the next turn's input, feeding back into the
+    modeled state; if it fails, a dashed arrow sends the agent around again. Four numbered levers mark
+    what the engineer controls: lever 1, the state exposed — a model, deliberately reduced, the
+    Modeling Thesis at work; lever 2, the action surface — tools and sanctioned seams, so the wrong
+    move is unavailable; lever 3, the success criterion — progress is measured, not felt; lever 4, the
+    admission rule — whether the result may advance. Levers 2, 3, and 4 are the Alignment Thesis
+    enforced in the loop.</desc>
 
   <defs>
-    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    <marker id="leArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
     </marker>
-    <marker id="ah-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
+    <marker id="leArrowGreen" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1f7a4d"/>
     </marker>
   </defs>
 
-  <!-- ===== The three boxes, left-to-right. box width=220, height=100, top y=170, vertical center y=220 ===== -->
+  <!-- ===== the admission gate on the feedback path (lever 4) ===== -->
+  <rect x="360" y="38" width="240" height="70" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <circle cx="392" cy="62" r="12" fill="#1f7a4d"/>
+  <text x="392" y="67" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">4</text>
+  <text x="492" y="68" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Admission rule</text>
+  <text x="480" y="94" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">may the result advance?</text>
 
-  <!-- Input + success metric -->
-  <rect x="20" y="170" width="220" height="100" rx="4" fill="#f6f4ef" stroke="#1c1917" stroke-width="1.5"/>
-  <text x="130" y="212" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Input</text>
-  <text x="130" y="238" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">+ success metric</text>
+  <!-- ===== feedback path: output → gate → next turn's input ===== -->
+  <path d="M 775 208 L 775 72 L 607 72" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#leArrow)"/>
+  <path d="M 360 72 L 185 72 L 185 202" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#leArrow)"/>
+  <text x="300" y="127" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the next turn's input</text>
+
+  <!-- fail branch: gate → reason again -->
+  <path d="M 480 108 L 480 202" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#leArrowGreen)"/>
+  <text x="494" y="160" font-size="15" font-style="italic" fill="#1f7a4d">fails — run again</text>
+
+  <!-- ===== the three stations ===== -->
+  <!-- Modeled state (lever 1, blue) -->
+  <rect x="60" y="210" width="250" height="105" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="185" y="262" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Modeled state</text>
+  <text x="185" y="292" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">what the agent sees</text>
 
   <!-- Agent reasoning -->
-  <rect x="300" y="170" width="220" height="100" rx="4" fill="#f6f4ef" stroke="#1c1917" stroke-width="1.5"/>
-  <text x="410" y="226" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agent reasoning</text>
+  <rect x="355" y="210" width="250" height="105" rx="10" fill="#f6f4ef" stroke="#1c1917" stroke-width="1.8"/>
+  <text x="480" y="262" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Agent reasoning</text>
+  <text x="480" y="292" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">then action</text>
 
   <!-- Output -->
-  <rect x="580" y="170" width="220" height="100" rx="4" fill="#f6f4ef" stroke="#1c1917" stroke-width="1.5"/>
-  <text x="690" y="226" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Output</text>
+  <rect x="650" y="210" width="250" height="105" rx="10" fill="#f6f4ef" stroke="#1c1917" stroke-width="1.8"/>
+  <text x="775" y="262" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Output</text>
+  <text x="775" y="292" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a candidate result</text>
 
-  <!-- ===== rightward arrows between boxes (centered y=220) ===== -->
-  <line x1="240" y1="220" x2="298" y2="220" stroke="#1c1917" stroke-width="2" marker-end="url(#ah)"/>
-  <line x1="520" y1="220" x2="578" y2="220" stroke="#1c1917" stroke-width="2" marker-end="url(#ah)"/>
+  <!-- forward arrows -->
+  <line x1="310" y1="262" x2="348" y2="262" stroke="#1c1917" stroke-width="2" marker-end="url(#leArrow)"/>
+  <line x1="605" y1="262" x2="643" y2="262" stroke="#1c1917" stroke-width="2" marker-end="url(#leArrow)"/>
 
-  <!-- ===== feedback arc: Output top edge, loop up and over the top, back down into Input top edge ===== -->
-  <path d="M 690 170 C 690 40, 130 40, 130 168" fill="none" stroke="#2f5169" stroke-width="2.5" marker-end="url(#ah-accent)"/>
-  <text x="410" y="42" text-anchor="middle" font-size="15" fill="#2f5169" font-style="italic">feeds around</text>
+  <!-- ===== the lever callouts ===== -->
+  <!-- lever 1 — the state exposed (Modeling Thesis) -->
+  <circle cx="86" cy="352" r="12" fill="#2f5169"/>
+  <text x="86" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">1</text>
+  <text x="196" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#2f5169">The state exposed</text>
+  <text x="185" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a model, deliberately reduced</text>
+  <text x="185" y="403" text-anchor="middle" font-size="16" font-style="italic" fill="#2f5169">— the Modeling Thesis lever</text>
+
+  <!-- lever 2 — the action surface -->
+  <circle cx="378" cy="352" r="12" fill="#1f7a4d"/>
+  <text x="378" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">2</text>
+  <text x="492" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#1f7a4d">The action surface</text>
+  <text x="480" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">tools and sanctioned seams —</text>
+  <text x="480" y="403" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the wrong move is unavailable</text>
+
+  <!-- lever 3 — the success criterion -->
+  <circle cx="662" cy="352" r="12" fill="#1f7a4d"/>
+  <text x="662" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">3</text>
+  <text x="793" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#1f7a4d">The success criterion</text>
+  <text x="775" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">progress is measured, not felt</text>
+
+  <!-- the theses split -->
+  <text x="480" y="446" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">Lever 1 is the Modeling Thesis at work; levers 2, 3, and 4 are the Alignment Thesis, enforced.</text>
 </svg>
