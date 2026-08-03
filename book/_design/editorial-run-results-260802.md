@@ -100,7 +100,7 @@ Opus prose-judgment follow-up to Phase 2. Brief [phase2c-brief-260803.md](phase2
 - **Gates:** `catalog.py validate` **0 issues** at every commit (82 entries) · `book/build_book_html.py` green (127 chapter pages, 108 figures) · `chapter_shape verify` in sync · `argument_spine verify` in sync. Pre-existing audit-only set unchanged (114 token-drift; the 9 outcomes-site landing-row findings — the removed landing strip, flagged for report-out since the core-concepts block; 5 def-* homes; 2 O2; 2 U3).
 - **Deploy + live SHA(s):** _(recorded on deploy below)_
 
-## Phase 3 — catalogue → "Constructing the Governed Engineering Environment" (GEE 4-level) — 3a DONE, 3b/3c queued
+## Phase 3 — catalogue → "Constructing the Governed Engineering Environment" (GEE 4-level) — 3a+3b DONE, 3c queued
 
 ## PHASE 3 · 3a — catalogue cards
 
@@ -124,6 +124,58 @@ Opus prose-judgment follow-up to Phase 2. Brief [phase2c-brief-260803.md](phase2
 - **`invariant-dag-execution-policy` + `control-substrate-dependency`** — same typed-edge-metadata reflex on different graphs; possible shared parent ("typed-edge semantics over modeled graphs").
 
 **First-pass family-guess distribution (rolled up from `_counts.likely_parent_family_distribution`):** Executable-model zoo (the 18 is-a-model genres, each kept semantically distinct per BEWARE FALSE MERGERS) 18 · Executable source of truth (canonical + harness + read face + generation face) 4 · Model-derived assurance coverage 5 · Drift/parity gate (+ variants: cross-source, doc-corpus, test↔source, derived-traceability) 5 · One Door Enforced 5 · Complete mutation provenance 4 · Governance-of-governance 4 · Mediated resource admission 4 · Closed action vocabulary 3 (+ codemod-first adjacent) · Point-of-action policy delivery 3 · Staged admission gates 3 · Validated dispatch 2 · Authoritative lifecycle state 2 · Encoded operational judgment 2 · Fleet observability surfaces 2 · Generative validation 2 · singletons: Preservation invariant · Re-derived definition of done · Read-the-model-don't-copy-it · Caused-by provenance · Machine-enforced semantic policy · Conformance-to-external-spec · Health-conditioned admission · Fail-fast environment validation · Model-computed enforcement policy · Typed-edge semantics · Schema-governed planning artifacts · Governed knowledge base · Cost-stratified regression body · Bounded change-execution · 1 L1-principle candidate. Rough shape: **~20–24 candidate families/patterns before 3b's merge rule is applied** — consistent with the directive's expectation that the ~82 concrete mechanisms reduce to a materially smaller canonical set.
+## PHASE 3 · 3b — cluster + classify — ✅ DONE (models-first, per-group commits; READ-ONLY wrt entries)
+
+**Artifact:** [`book-models/catalogue-classification.json`](../../book-models/catalogue-classification.json) — the GEE 4-level classification of the 82 cards. Hand-authored analysis (not a declared→generated model file); `catalog.py validate` stays **0 issues** (entries untouched — a book-models analysis artifact only). Landed across 5 per-group commits (skeleton → CAP-KNOW → CAP-SYNC/COMPLETE/GOVERN-models → product → agent+finalize) for recoverability. A self-consistency check passes: every disposition resolves to an existing L2/L1, every L2's `canonical_card`/`merged_cards` are real card ids, each L2 has exactly one `keep-as-L2`, and all 82 appear exactly once.
+
+**THE CLAIM (recorded):** the DocAble case produced **82** concrete governance mechanisms; comparative analysis by the card+cluster rule (merge iff the first six card fields substantially coincide and only known-uses differ; keep separate iff obligation OR guarantee differs even under identical impl tech) reduces them to **25 canonical pattern families** organized under **9 capabilities**, with the remainder retained as **56 variants / components / known-uses** and **1 lifted principle** — implementation count is not conceptual contribution.
+
+**Demotion tally: 82 → 25 L2 (keep) + 2 merged-in + 54 demoted-to-L3 + 1 lifted-to-L1.**
+
+**L1 principles (8) — the explanatory claims, not entries:** P1 Bind intent to structured models · P2 Reconcile models with reality · P3 Constrain action through sanctioned surfaces · P4 Re-derive evidence rather than trust reports · P5 Convert recurring failures into enforced controls · P6 Preserve provenance and accountability · P7 Model the governance environment itself · **P8 Enforce at the right semantic level** (the one entry LIFTED out of the pattern set — `semantic-level-enforcement` is a placement judgment that explains where every other mechanism sits, per 3a).
+
+**GEE capabilities (9) — these ORGANIZE the catalogue, they are not entries:** CAP-KNOW maintain authoritative system knowledge · CAP-SYNC keep representations = reality · CAP-CONSTRAIN constrain where/how agents act · CAP-ADMIT admit or reject changes · CAP-COMPLETE establish completion on re-derived evidence · CAP-PRESERVE preserve product semantics · CAP-PROVENANCE track provenance + trace causes · CAP-MANAGE manage work/state/resources · CAP-GOVERN govern the control estate itself.
+
+**L2 canonical patterns (25) discovered — name · rubric total · capability · override:**
+- Executable Source of Truth · 20 · CAP-KNOW · Foundational (holds the 18-model "zoo" as subject-variants)
+- Caused-By Provenance · 20 · CAP-PROVENANCE · Foundational + Awesome (5 components: mark/emit/cover/read + agent-side)
+- Model-Derived Assurance Coverage · 19 · CAP-COMPLETE · Awesome (5 distinct obligation-variants)
+- Derived Traceability · 19 · CAP-SYNC · Awesome (3a-elevated; the rung above parity — derive the edge so it can't drift)
+- One Door Enforced · 19 · CAP-CONSTRAIN · Foundational (5 known-uses: pdf/office/redis/service-client/walkers)
+- Drift / Parity Gate · 18 · CAP-SYNC · Foundational
+- Read the Model, Don't Copy It · 17 · CAP-KNOW · Foundational
+- Governance Graph · 17 · CAP-GOVERN · Coverage
+- Computed Control Blast Radius · 17 · CAP-GOVERN · Awesome
+- Re-Derived Definition of Done · 17 · CAP-COMPLETE · Foundational
+- Validated Dispatch · 17 · CAP-ADMIT · Foundational
+- Composed State-Machine Model · 16 · CAP-KNOW · Awesome
+- Closed Action Vocabulary · 16 · CAP-CONSTRAIN · Foundational
+- Machine-Enforced Semantic Policy · 16 · CAP-CONSTRAIN · Foundational (the operational face of P5)
+- Preservation Invariant · 16 · CAP-PRESERVE · Coverage/Case
+- Authoritative Lifecycle State · 16 · CAP-MANAGE · Foundational (the live-worktree-destruction scar)
+- Mediated Resource Admission · 15 · CAP-MANAGE · Foundational (crit-1 exemplar; 3 cardinality variants)
+- Staged Admission Gates · 14 · CAP-ADMIT · Foundational (5 rungs, incl. the evidence-bound commit gate)
+- Generative Validation · 14 · CAP-COMPLETE · Awesome facet (fuzz+property merged; model-as-oracle is the content)
+- Fleet Observability Surface · 14 · CAP-MANAGE · Coverage
+- Governed Knowledge Base · 13 · CAP-GOVERN · Foundational (claude-md + docs-hierarchy merged — two lenses, one artifact)
+- Conformance-to-External-Spec Engine · 12 · CAP-PRESERVE · Case/Coverage
+- Encoded Operational Judgment · 12 · CAP-GOVERN · Coverage
+- Adaptive Resource-Pressure Admission · 11 · CAP-MANAGE · Coverage (the split-out adaptive pole; sidebar-territory score, kept L2 for the family split)
+- Point-of-Action Policy Delivery · 11 · CAP-MANAGE · Historical/Case (durable core = interposition; feed-forward/feed-back variants partly transient per exclusion crit 3)
+
+Scores are diagnostic, not a cutoff: the 11–14 band (Adaptive Pressure, Point-of-Action, Encoded Operational Judgment, Conformance, Fleet Observability, Generative Validation, Staged Gates) are the print-if-breadth / sidebar candidates the overrides keep in for coverage or case value; 3c and the editor decide print-vs-online.
+
+**Compositions / strong stacks (8):** model-coherence (Executable Source of Truth + Drift-Parity + Read-the-Model) · provenance+fidelity (One Door + Caused-By Provenance + Preservation Invariant) · specification+verification (Composed SM Model + Model-Derived Assurance) · safe-launch (Validated Dispatch + Closed Action Vocabulary) · evidence-staircase (Staged Admission Gates + Re-Derived DoD) · observe→react loop (Fleet Observability + Encoded Operational Judgment + Staged Gates) · resource-mediation pair (Mediated + Adaptive Resource Admission) · governance-of-governance (Governance Graph + Computed Blast Radius + Governed Knowledge Base).
+
+**Hard calls / REFUSED false-mergers (the load-bearing guard):**
+- **All "lints" NOT one pattern.** Machine-Enforced Semantic Policy (implementation ⊨ semantic policy), Drift/Parity Gate (model ⟷ reality), Caused-By Provenance's wiring lint (every verb → provenance, a coverage relation), and the mediator ban-lints (every call → the authorized seam) share the lint TECHNOLOGY but enforce four DIFFERENT relations — kept as four separate patterns.
+- **All "models" NOT one executable model.** Executable Source of Truth holds the ~18 subject models as VARIANTS (each preserving its distinct relation in its disposition), but Composed State-Machine Model (temporal cross-machine legality), Governance Graph (control×control conflict), Computed Control Blast Radius (control→substrate), and Derived Traceability (join-web by derivation) were elevated to their own L2 because each expresses a distinct MECHANISM, not just a distinct subject.
+- **Mediator family SPLIT by forces+guarantees** (directive-mandated): fixed-capacity Mediated Resource Admission (gate on COUNT; N=1/M=8/whole-sweep as cardinality variants) vs Adaptive Resource-Pressure Admission (gate on live CONDITION + shed-during) — NOT merged as "both control compute."
+- **Model-Derived Assurance Coverage kept as ONE L2 with five DISTINCT obligation-variants** (denominator census / tier placement / assertion strength / per-node exercise / verification method) — the meta-move is shared; the obligations differ, so they are variants, not merges, and not five inventions.
+- **Two deliberate merges honored:** property-tests ⇒ Generative Validation (self-framed "two sides of one coin"); docs-hierarchy ⇒ Governed Knowledge Base (two lenses on one artifact). Both per 3a.
+- **Kept the vivid texture per "generalize the idea not the evidence":** every L2 record carries a `vivid_failure` + `concrete_impl` pointer (e.g. One Door ← the v172 tag-tree corruption ← PdfModel; Authoritative Lifecycle State ← the destroyed live worktree ← the agent registry) so 3c can preserve the scar + the DocAble implementation.
+- **merge-train MIS batching** demoted (directive's own "clever-but-distracts" exemplar) — the durable idea "independence proved before integration" folds under Staged Admission Gates, MIS as one implementation. **canonical-walkers** demoted to a component of One Door (self-declared low novelty). **codemod-first** placed as the execution-mode face of Closed Action Vocabulary (resolving its uneasy product-role placement).
+
 ## TASK 4 — durability modeling (obligation vs 2026-implementation) — CAPTURED for NEXT SESSION (directive Task 4); NOT acted this run.
 ## TASK 7 — harness / Agent-OS references (bibliography enrichment + VERIFY-FIRST) — CAPTURED post-deploy ([harness-references-capture-260802.md](harness-references-capture-260802.md)). 7 refs + cite the Gill LinkedIn pointer. Must confirm each arXiv ID/paper exists before citing (LinkedIn-sourced → hallucination risk); feeds Task 6 harness-derivation thread + §2.1. Do AFTER the run's final deploy.
 
