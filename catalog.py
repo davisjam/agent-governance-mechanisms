@@ -2298,7 +2298,9 @@ def build_views_page(entries: list[Entry]) -> str:
             '<code>renderForView(card)</code>; a view is just a grouping key + order, so <b>adding a mechanism or a '
             'view is data, not layout</b>. Click a card for its writeup; hover for its one-line summary. '
             '&nbsp;·&nbsp; <a href="catalogue-figure.html">the governance map</a> '
-            '&nbsp;·&nbsp; <a href="index.html">catalogue</a></p>\n'
+            '&nbsp;·&nbsp; <a href="book-models/models-view.html">the book models</a> '
+            '&nbsp;·&nbsp; <a href="development-workflow.html">the development process</a> '
+            '&nbsp;·&nbsp; <a href="index.html">home</a></p>\n'
             f'<div id="tabs">{tabs}</div>\n'
             '<section id="view-model" aria-label="By model">\n'
             f'<p class="blurb">{model_blurb}</p>\n'
@@ -2665,16 +2667,18 @@ def cmd_build(_args) -> int:
         written += 1
     # landing index.html = a projection of the Big-Ideas model (hero + six slots + the closing conclusion +
     # three ways-in buttons), then the census and the quiet vocabulary/definitions/outcomes reference strip
-    # as back-matter, then the end-of-body progressive-enhancement script. Every Big-Idea slot is rendered
-    # from book-models/landing-big-ideas.json; figures splice as bare responsive <svg> with their internal
-    # ids namespaced per slot (_ns_svg_ids) so no two figures collide (check_no_duplicate_ids). The census
-    # stays on the landing because the reachability gate derives every entry page's inbound link from it.
+    # then the end-of-body progressive-enhancement script. Every Big-Idea slot is rendered from
+    # book-models/landing-big-ideas.json; figures splice as bare responsive <svg> with their internal
+    # ids namespaced per slot (_ns_svg_ids) so no two figures collide (check_no_duplicate_ids).
+    # The landing ENDS at the closing CTA + the three ways-in cards — no on-landing census enumeration
+    # and no back-matter reference strip. The entries' inbound links (for the reachability gate) come from
+    # catalogue-views.html (the "Full catalogue" card target), which enumerates every entry.
     # The hero carries NO cover figure — the Big Idea 1 churn flowchart is the landing's lead visual now.
     landing_body = (NAV_GRID + "\n" + LANDING_INTRO.format(
         book_title_block=_book_title_block(),
         big_ideas=_landing_big_ideas(),
         closing=_landing_closing(),
-    ) + "\n" + build_census(entries) + "\n" + _landing_reference() + "\n" + EXPAND_JS)
+    ) + "\n" + EXPAND_JS)
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
                f"<title>Agent Governance Mechanisms</title>\n{FONTS_LINK}\n"
