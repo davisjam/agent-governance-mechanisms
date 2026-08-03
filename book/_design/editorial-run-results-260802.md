@@ -363,3 +363,58 @@ Mirrors the `claims`/`concepts`/`definitions` siblings; reads the generated `arg
 
 ### Live SHA
 `91f59bf` — pushed to origin/main; Deploy Pages CI **success**; touched pages + models-view all HTTP **200**; live content verified (3.1 "now pays cheaply", 1.1 "not, by reflex, as a fixed ceiling", landing Big-Idea "prevent first, sense the rest", published `argument-spine.json` carries `sync-cost-reduced` + the tuned alignment statement).
+
+---
+
+## CLAIM-HEALTH SENSORS — ✅ DONE (models-first, audit-only-first; overmapping audit = PROPOSALS for author sign-off)
+
+The spine↔book map was bidirectional (AS5 coverage + AS1 drift) but had no DYNAMIC sensors. Added three, all audit-only-first (0 structural findings at seed, mirroring AS1–AS7 / CS1–CS5). The depth + overmapping surfacing signals are REPORTS in the artifact `flags` block (never gate); AS8 freshness + AS9 exemptions are audit-only structural findings (a follow-up promotes after a clean session). No label changes or prose rewrites applied — the overmapping audit is PROPOSALS only.
+
+### Sensor 1 — UNDERmapping (claim-depth), report flags
+- **`thin_claim_gaps`**: a non-exempt claim advanced by **0 chapters** (a real gap). **None at seed.**
+- **`thin_claims_front_loaded`**: a non-exempt claim advanced **only within Part 0/1** (`body_depth == 0`) — stated up front, never re-advanced in the body.
+- **`claim_exemptions`** (closed enum `CLAIM_EXEMPT_REASONS = front-loaded-by-design | bridge`; validated by **AS9**) — the claim-side analogue of `chapter_exemptions`. Seeded with the two genuine premises the brief named: **`abundant-implementation`** + **`fault-lies-in-instructions`** → `front-loaded-by-design` (both actually span to Parts 4–6, so they don't currently flag; the exemption arms the mechanism + records intent).
+
+**THIN-CLAIMS list (for the author):** three claims are front-loaded (Part 0/1 only, body-depth 0):
+1. **`churn-is-the-limit`** (claim 4) — `0.1-preface, 1.1-the-printer`. The brief's known case.
+2. **`three-not-knowings-cause-churn`** (claim 5) — `0.1-preface, 1.3-loops-and-models`.
+3. **`theses-treat-the-causes`** (claim 9) — `0.1-preface, 1.3-loops-and-models`.
+
+All three are the churn-diagnosis / thesis-bridging steps: stated in the front-matter + the motivating Part-1 chapters, then assumed by the body rather than re-advanced. Author's call whether each is (a) genuinely front-loaded-by-design → add to `claim_exemptions`, or (b) a real thin spot that wants a body chapter to re-advance it. `theses-treat-the-causes` is a candidate for the `bridge` reason (it divides the not-knowings across the two theses rather than earning its own chapters).
+
+### Sensor 2 — OVERmapping flag + AUDIT (the load-bearing judgment)
+**Flag** (`overmapped_claims`, `OVERMAP_CAP = 10`; claim-side symmetry of the chapter >3 over-cap): flags **`modeling-thesis` (18)**, **`alignment-thesis` (13)**, **`govern-the-environment` (11)** — a clean gap to the next-broadest claim at 7. The flag never gates; it names the claims whose breadth is worth re-examining chapter by chapter.
+
+**AUDIT of `alignment-thesis`'s view chapters 3.2–3.6** (the brief's target), applying the author's discriminator — *introducing a representation → Modeling (claim 7); explaining how correspondence/policy is mechanically MAINTAINED → Alignment (claim 8); a chapter that presents a model and merely MENTIONS its drift gate advances Modeling, not Alignment.* A sharpening emerged: a model's **(d)-slot drift/parity lints keep the MODEL equal to the code** — that is Modeling's own drift-checking, NOT runtime Alignment. Alignment is a chapter whose teaching is holding the running SYSTEM to intent (constrain the action space / install divergence sensors).
+
+Key finding on the **Phase-2c thesis-clauses**: the brief asked whether the added clauses now OVER-claim Alignment. They do **not** — the clauses are honest. In **3.2** and **3.5** the Phase-2c clause itself says **Modeling** ("the Modeling Thesis at the grain of one view" / "…reaching the one view the others cannot see"); it is the **[modeling, alignment] LABEL** — applied uniformly to all five view chapters — that over-reaches. So the correction is to the label, not the prose.
+
+**Label-correction PROPOSALS (for author sign-off — NOT applied):**
+
+| Chapter | Label now | Phase-2c clause | Verdict | Proposal | Confidence |
+|---|---|---|---|---|---|
+| **3.2 Logical** | modeling + alignment | **Modeling** ("Modeling Thesis at the grain of one view") | Introduces the service-flow model + domain registries (representations); the (d)-slot parity lints keep the model↔code honest; the generated access policy is one line. Frame = "what the system **is**." | **Drop alignment → Modeling-only.** Prose clause already says Modeling; the label is the over-claim (no prose change needed). | HIGH |
+| **3.3 Process** | modeling + alignment | **Alignment** ("Alignment Thesis…at the grain of concurrency") | Core teaching **is** runtime enforcement — checkers hold the running system to invariants under interleaving (formal invariant verification, the deadlock ordering lint, single-writer coverage as a finding) — AND it introduces the state-machine + sync model. | **Keep both.** Clause matches; both theses genuinely carried. | — |
+| **3.4 Development** | modeling + alignment | *(no Phase-2c clause)* | Frame = "how the source is **organized**" (the map = Modeling). Checks = reverse-mapping (model↔reality drift = Modeling's own check) + boundary lint + rule-index freshness. The one alignment thread is boundary-soundness (a real constraint on what a file may touch). | **Drop alignment → Modeling-only** (Modeling-primary). Author may keep both for the boundary-lint constraint. | MEDIUM |
+| **3.5 Physical** | modeling + alignment | **Modeling** ("Modeling Thesis reaching the one view the others cannot see") | Introduces the deployment-topology + invariant-DAG + substrate-dependency models; checks = deploy parity (model↔code) + layer/load-edge lints (the model's own invariants). Frame = "where the parts **live**." | **Drop alignment → Modeling-only.** Prose clause already says Modeling; the label over-claims. | HIGH |
+| **3.6 Scenarios** | modeling + alignment | **Alignment** ("Alignment Thesis turned back on the views themselves") | Core teaching = validation / holding-the-views-honest (journey task-closure's teeth — a flow-only closure on a major journey is a build finding; the coverage-floor gate; call-site drift lints) — AND it introduces 5 models + the flagship join. | **Keep both.** Clause matches; both theses carried. | — |
+
+**Payoff if the author accepts 3.2 + 3.5 (+ optionally 3.4):** `alignment-thesis` advance count drops 13 → 11 (→ 10 with 3.4), which clears its own overmapping flag. `modeling-thesis` (18) and `govern-the-environment` (11) remain flagged for a future overmapping pass — noted, not audited here.
+
+### Sensor 3 — FRESHNESS (AS8, the CS5 analogue)
+Each declared claim carries a **`reviewed_hash`** — the 12-hex SHA-256 of the `statement` wording its chapter labels were reviewed against. **AS8** re-hashes the current statement and reddens a claim whose wording changed since review (its advancing-chapter labels may no longer hold); a re-review updates the hash (editing the declared file), and regenerating the artifact never refreshes it. **Seeded at the current post-sync state → 0 stale.** `argument_spine_model.py hashes` prints each claim's current hash for re-seeding.
+
+### Wiring
+- Model: `argument_spine_declared.json` (+`claim_exemptions`, per-claim `reviewed_hash`), `argument_spine_model.py` (constants `OVERMAP_CAP`/`FRONT_PARTS`/`CLAIM_EXEMPT_REASONS`; derived `body_depth`/`front_loaded`/`overmapped`/`fresh`/`statement_hash`; `flags()` claim-side keys; `structural_findings` AS8+AS9; `_counts`+`taxonomy`; CLI `hashes` + health in `spine`/`flags`). Regenerated `argument-spine.json`.
+- Tests: `tests/book_models.py check_argument_spine` docstring → AS2–AS9 (still `audit_only=True`).
+- `catalog.py spine` surfaces the per-claim health suffix (`[front-loaded]` / `[OVERMAPPED]` / `[exempt:…]` / `[STALE]`) + body-depth.
+
+### GATES (all green)
+`catalog.py validate` **0 issues** · `check_argument_spine` (AS1–AS9, 0 structural findings at seed; 3 front-loaded + 3 overmapped are report flags) **PASS** · `check_chapter_shape` (CS1–CS5) **PASS** · `check_concepts_hierarchy` **PASS** · `check_claims_model` (C1–C7) **PASS** · `book/build_book_html.py` **exit 0** (127 chapter pages).
+- **Coordination note:** `book-models/outline.json` + `reverse_index.json` show an **audit-only / non-gating** freshness finding owned by the prose-model pass (pre-existing on `main`); left un-regenerated per the brief. The published models-view reads the freshly-regenerated `argument-spine.json`.
+
+### Commits (per group)
+`2136290` SENSORS (declared + model + artifact + tests + catalog spine health).
+
+### Live SHA
+`__PENDING_DEPLOY__`
