@@ -138,6 +138,38 @@ def check_claims_model():
     return (FAIL if issues else PASS), issues
 
 
+def check_argument_spine():
+    """The argument-spine view's drift + structural check (audit-only first landing). Re-derives the spine
+    model from the hand-authored `argument_spine_declared.json` and reports: AS1-drift against the on-disk
+    artifact; AS2–AS7 the structural / schema invariants (spine size + order + word cap; every `reconciles`
+    link resolves against the claims + big-ideas siblings AND the reconciliation is complete both ways;
+    chapter labeling exhaustive over the outline's chapters; every advanced id resolves; exemption reasons
+    in the closed enum). The FOCUS flags (a non-exempt chapter advancing 0 or >3 spine claims) are the
+    artifact's `flags` block — editorial worklist, deliberately NOT findings here. Keyed off
+    `book-models/argument-spine.json` + `argument_spine_declared.json` + the outline + sibling models."""
+    import argument_spine_model as asm  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+
+    # AS1-drift — the stored artifact equals a fresh derivation.
+    fresh = asm.to_jsonable()
+    stored = asm.load_artifact()
+    if stored is None:
+        issues.append(f"{rel(asm._ARTIFACT)} missing — run "
+                      f"`python3 book-models/argument_spine_model.py regenerate`")
+    elif any(stored.get(k) != fresh[k] for k in ("spine", "chapters", "flags", "_counts")):
+        issues.append(f"DRIFT: {rel(asm._ARTIFACT)} disagrees with a fresh derivation — regenerate "
+                      f"with `python3 book-models/argument_spine_model.py regenerate`")
+
+    # AS2–AS7 — structural / schema invariants.
+    issues.extend(asm.structural_findings())
+
+    # Audit-only: same non-gating contract as the sibling first landings — surfaced as [audt], excluded
+    # from the fail tally. A follow-up promotes AS1–AS7 to blocking after a clean session (the claims
+    # model's own landing path); the focus flags never gate.
+    return (FAIL if issues else PASS), issues
+
+
 def check_reverse_index():
     """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
     forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each

@@ -40,6 +40,7 @@ from tests.book import (
     run_book_audit,
 )
 from tests.book_models import (
+    check_argument_spine,
     check_claims_model,
     check_outcomes_model,
     check_outline_model,
@@ -159,6 +160,16 @@ CHECKS = [
     # judgment-audit / audit-only forever (§4.2) — the watch-phrase lint surfaces candidates, never verdicts.
     Check("book-models: claims view drift + structure (claims.json)", 1,
           lambda strict: check_claims_model()),
+    # AUDIT-ONLY (rule #55 first landing): the ARGUMENT-SPINE view-model — the book's linear argument as an
+    # ordered run of claims reconciling the author's seed statements, the claims model, and the Big Ideas,
+    # plus the per-chapter labeling of which spine claims each chapter advances (editorial directive Phase 1).
+    # AS1-drift (argument-spine.json vs a fresh derivation) + AS2–AS7 structural/schema (order + word cap;
+    # reconciles links resolve AND cover every sibling claim/big-idea; chapter labels exhaustive over the
+    # outline; exemption reasons in the closed enum). The FOCUS flags (0-claim / over-cap chapters) are the
+    # artifact's `flags` block — editorial worklist, never findings. Promote to blocking after a clean
+    # session, the claims model's own landing path. See tests/book_models.py.
+    Check("book-models: argument-spine drift + structure (argument-spine.json)", 1,
+          lambda strict: check_argument_spine(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
