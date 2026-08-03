@@ -1,0 +1,149 @@
+{
+  "_note": "HAND-AUTHORED analysis cards for Phase 3 · 3a (see catalogue_cards_model.py docstring). One card per catalogue entry, keyed by entry id (role/family/mechanism). The 9 fields follow the directive's card+cluster method; semantic_level records the RELATION enforced/modeled, never the implementation technology; likely_parent_family is a first-pass guess for the 3b clustering; abstract_name is supplied where the entry title is implementation-biased.",
+  "cards": {
+    "agent/context-and-dispatch/brief-linting": {
+      "failure_class": "Silent structural malformation of a dispatch brief — a missing safety marker (worktree isolation, dispatch-id, mandatory snippet) fails not at authoring but silently and downstream (agent edits main, lifecycle can't track it, agent trips a sharp edge mid-run); recurs on every launch and compounds across a concurrent fleet.",
+      "engineering_obligation": "Verify the instruction packet that confers autonomy before granting it — any work order that launches an autonomous actor must be structurally validated at the point of no return, deterministically, not by probabilistic review.",
+      "solution_structure": "A deterministic pre-dispatch lint over the brief text (marker-presence battery; genre-gated content checks so precision checks fire only where the brief's declared genre requires them), wired into the canonical dispatch path as a required prepare step: exit 1 refuses the launch and rolls back dispatch state.",
+      "guarantee": "No agent launches from a structurally malformed brief. Boundary: well-formedness only — a fully-marked brief can still be mis-scoped; scoping judgment stays human. Human-only audited bypass exists.",
+      "semantic_level": "dispatch artifact ⊨ launch contract — the brief's declared marker/snippet set conforms to the schema of what makes a launch safe; the check governs the work order, not the work.",
+      "forces_tradeoffs": "Structure ≠ correctness (green lint buys marker coverage, not a good brief). Authoring tax unless a template pre-places markers by construction. Every new marker is a lint↔template drift edge. Content checks false-positive without genre gating — a lint tuned out is worse than one not written. The bypass env var is a real hole.",
+      "dependencies": "Mandatory-snippet registry (agent/governance-doc-controls/mandatory-snippet-table) as the enumerable check source; a dispatch wrapper as the sole launch path; a brief-template generator; complements dynamic-context-injection (content side) and role-typed-dispatch (policy side).",
+      "known_uses": "DocAble's agent_prompt_lint.py battery; the isolation:worktree marker as a BLOCKING check; the dispatch-id-token + on-disk marker-file joint check; the agent-brief starter template.",
+      "likely_parent_family": "Validated dispatch (admission gate on the work order itself — pre-authorization of autonomous work)",
+      "abstract_name": "Pre-dispatch work-order validation"
+    },
+    "agent/context-and-dispatch/docs-hierarchy": {
+      "failure_class": "Governing knowledge scattered across hundreds of docs: agents re-derive invariants badly or violate cross-file rules they never found; every doc added makes any single fact less findable; 'the docs say so' is unenforceable because no agreed place holds the rule.",
+      "engineering_obligation": "Maintain one bounded, canonical, authoritative map of the rules that govern the system, shared by every actor as boot context — canonicality (one home per rule) and boundedness (scannable size) mechanically held.",
+      "solution_structure": "A stable-numbered rule index loaded into every agent's boot context; each rule is a one-line statement cross-referencing exactly one canonical deep doc; a cap/bloat lint bounds size and a conformance lint holds the cross-reference discipline; a self-describing admission test keeps local rules out.",
+      "guarantee": "Every agent boots with the same minimal rule map; index size and cross-reference integrity are lint-held. Boundary: the index content is advisory to the agent (soft); semantic drift of a doc body under its summary is uncaught.",
+      "semantic_level": "rule → exactly-one canonical home (the index ⟷ doc-corpus canonicality relation), plus fleet-context ⊇ index (guaranteed shared availability of the map).",
+      "forces_tradeoffs": "Per-invocation context tax paid by every dispatch — bounded only because the cap lint exists. Keeping the index small pushes detail back into pull-model sub-docs (the regress dynamic-context-injection answers). Cross-refs rot semantically even when links hold. Admission is judgment-heavy; a lint bounds size, not worth.",
+      "dependencies": "Doc-hygiene lints (cap + coverage); stable-numbering convention; the canonical-deep-doc discipline; consumed by dynamic-context-injection as a registry; same artifact as claude-md-rule-index viewed from the dispatch-context lens.",
+      "known_uses": "DocAble's CLAUDE.md numbered rule index (booted into every agent); the repository documentation index with one-line summaries; the three-part earns-its-spot admission test.",
+      "likely_parent_family": "Governed knowledge base (documentation as enforced infrastructure)",
+      "abstract_name": "Bounded canonical rule index"
+    },
+    "agent/context-and-dispatch/dynamic-context-injection": {
+      "failure_class": "Constraint under-specification at dispatch: an agent lacking the tacit which-rules-apply-here mapping makes plausible edits that violate governing rules, then burns rounds discovering and repairing them downstream where authoring context is gone ('pinball'); multiplies across concurrent agents.",
+      "engineering_obligation": "Deliver the constraints that govern an action to the actor at the point and moment of action — convert policy from available (pull, optional) to binding (pushed into the mandatory task specification).",
+      "solution_structure": "A slicing operator over file-addressable, self-documenting constraint registries, run in two directions: forward (files → governing constraints, injected into the brief at authoring or pulled via CLI) and reverse (diff line-ranges → findings this change introduced, powering CI self-heal). One adapter per registry.",
+      "guarantee": "None hard in the forward direction — injection raises salience and shifts odds; downstream gates still guarantee. The reverse direction gives deterministic attribution of introduced findings (no snapshot cache, no staleness).",
+      "semantic_level": "change-target → governing-constraint — the relevance relation ('which of the hundreds of documented rules govern these files'), externalized from the engineer's head into a computable mapping.",
+      "forces_tradeoffs": "Garbage-in: value bounded by constraint declarations having scope tags and actionable fix-hints. Advisory — an agent can ignore an injected rule. The relevance operator has real precision/recall failure surface (over-injection floods and lowers salience; under-injection silently omits). Per-registry adapter maintenance.",
+      "dependencies": "File-addressable constraint registries (lint fleet scope tags, component-zone model, banned-API list, test corpus, doc index) read via meta-model-consumption; the brief-authoring injection point; counterpart: reflection-facet-substrate (feed-back twin over the same policy source).",
+      "known_uses": "DocAble's constraint-extraction tool (forward slicing); the diff-line-range attribution machinery behind CI self-heal; consumption of the component-zone model and lint scope tags as addressable registries.",
+      "likely_parent_family": "Point-of-action policy delivery (feed-forward constraint injection)",
+      "note": "Flagship entry; the generalization ('every meta-substrate becomes a just-in-time constraint registry once you add a slicing operator') reads as a canonical-pattern claim in its own right."
+    },
+    "agent/context-and-dispatch/role-typed-dispatch": {
+      "failure_class": "Correlated per-dispatch decisions (which LLM, worktree vs main, permission mode, applicable gates) drift apart when re-made ad hoc under load: wrong-tier output ships, a commit agent runs where its hook can't fire, a resource-hungry agent triggers the gate it should never touch; recurs on every dispatch, invisible until damage.",
+      "engineering_obligation": "Bind correlated authority and capability decisions into a single declared type, fixed once at dispatch and enforced at every gated operation — policy-by-type, not per-instance judgment.",
+      "solution_structure": "A small closed role enum, each role mapping to a policy tuple (LLM · isolation · permissions · gate set); a sole dispatch wrapper sets the role; downstream enforcers read the ambient role declaration and refuse operations that don't match it.",
+      "guarantee": "An agent's exercised capabilities mechanically match its declared role (gated ops refuse mismatches). Boundary: the role makes the choice legible and enforceable, not correct — a mis-routed task still ships wrong-tier work; audited human bypass exists.",
+      "semantic_level": "actor → authority profile — every gated operation ⊨ the dispatcher's declared role type; a closed vocabulary over bundles of authority.",
+      "forces_tradeoffs": "A closed enum is rigid: a task fitting no role forces a mis-fit or a new role. The role leaks as ambient environment state into subprocesses and needs special-casing (the build-pool exception). Declaring ≠ matching the work. Bypassable via the audited escape.",
+      "dependencies": "A role registry (closed enum + tuples); per-operation enforcers reading the role env var; the sole dispatch wrapper; consumers: pre-commit hook (commit-slave shaped so the hook fires), aggregate-compute-protection's role gate.",
+      "known_uses": "DocAble's four roles (sonnet-active / opus / lint-runner / commit-slave); the aggregate-lint runner's refusal of sonnet-active; commit-slave operating on main without isolation; the build-pool must-not-export-role edge.",
+      "likely_parent_family": "Closed action vocabulary (applied to agent authority: typed authority profiles)",
+      "abstract_name": "Role-typed authority binding"
+    },
+    "agent/gates-and-merge-train/pre-commit-hook": {
+      "failure_class": "Broken changes flowing past the cheap moment: without a commit-time gate a break surfaces at the expensive stairs (merge-train, deploy) where authoring context is gone and one unchecked commit can poison a whole merged batch; recurs on every commit, compounds with fleet size.",
+      "engineering_obligation": "Run the cheapest sufficient checks at the earliest boundary, and make their passing an independently verifiable fact bound to the exact artifact state — downstream stages must be able to check, not trust, that upstream gates fired.",
+      "solution_structure": "A three-stanza commit hook (changed-file-scoped lints → unit-tier tests → tree-sha-keyed marker write) plus a downstream merge-check verifier that refuses any agent commit lacking a valid marker for its tree; explicit audited bypass prefixes and a reasoned skip marker for codemod waves; --no-verify banned for agents.",
+      "guarantee": "No agent commit advances to merge unless the cheap checks passed on exactly this tree (tree-sha keying prevents a pass on one tree vouching for another). Boundary: bypass-prefix commits skip by design (auditable, honesty-dependent); only cheap-tier coverage.",
+      "semantic_level": "artifact state → verified evidence — 'checks ran green on THIS tree' as a deterministic, replay-proof fact rather than a trust assumption; the first rung of a cheap-before-expensive gate ordering.",
+      "forces_tradeoffs": "Per-commit latency is a direct incentive to bypass — a slow unit tier erodes cadence and pressures the escape hatches. Bypass prefixes are a real audited hole. The tree-sha marker logic is subtle: keying drift either blocks good commits or vouches for the wrong tree.",
+      "dependencies": "Fast changed-file-scoped lints; a seconds-fast unit tier (the 1-second-rule discipline); a marker store keyed to tree identity; the merge-check verifier (without it markers are advisory); role-typed dispatch (commit-slave shaped so the hook fires).",
+      "known_uses": "DocAble's 3-stanza .githooks pre-commit; the worktree merge-check marker verification; the pre-commit-skip:<reason> codemod marker; the Commit-of i/N trailer requirement.",
+      "likely_parent_family": "Staged admission gates (the path-to-production staircase) — the tree-keyed marker element is kin to re-derived-evidence patterns",
+      "abstract_name": "Evidence-bound commit gate"
+    },
+    "agent/gates-and-merge-train/sentinel-first-commit": {
+      "failure_class": "An agent dispatched into a subtly broken substrate (missing marker, wrong branch, empty submodule) works 30–60 minutes and then fails at commit or produces unlandable work — the failure is invisible until the end, so its cost is the entire dispatch budget; recurs whenever substrate drifts between dispatch and consumption.",
+      "engineering_obligation": "Verify environmental health at the earliest observable moment on the production path, so a doomed run is aborted at minute one instead of discovered at minute sixty — bound the waste of work that can never land.",
+      "solution_structure": "A health check hung on the agent's first commit: cheap total predicates over the substrate (worktree root matches, per-agent marker exists, branch is the expected one, CWD under worktree) with a clean abort path; a boot-time self-check sibling brackets the window; new checks land AUDIT-ONLY and are promoted to BLOCKING after clean sessions.",
+      "guarantee": "Enumerated substrate failures surface at t≈0 on the real dispatch path (not a pin-test in isolation). Boundary: it only catches what it asserts — a failure mode absent from the predicate list still slips to t=60.",
+      "semantic_level": "runtime environment ⊨ dispatch-time contract — the substrate the agent actually runs in matches what dispatch declared and the lifecycle substrate records.",
+      "forces_tradeoffs": "Hand-maintained predicate set. A false abort kills a healthy agent — hence the AUDIT-ONLY→BLOCKING confidence-buying migration. Small latency on every agent's first commit.",
+      "dependencies": "The agent-registry's checkable lifecycle facts (markers, branches); a detectable first-commit moment; a clean abort path; sibling: the boot-time dispatch self-check.",
+      "known_uses": "DocAble's sentinel first-commit check; the boot-time assert-agent-canonical-dispatch self-check; the audit-only-first landing discipline for new substrate checks.",
+      "likely_parent_family": "Fail-fast environment validation (early substrate-health gate; a stair of the staged admission staircase)",
+      "abstract_name": "Fail-fast substrate assertion"
+    },
+    "agent/gates-and-merge-train/merge-train-mis-batching": {
+      "failure_class": "Sequential integration of concurrent agent work serializes the fleet and thrashes on conflicts: each merge risks colliding with the last, throughput collapses toward one-at-a-time, and hot-spot files stall everything behind them; recurs every merge tick, worsens with fleet size.",
+      "engineering_obligation": "Integrate concurrent independent work at fleet throughput with conflict-freedom established by construction before landing, not discovered by retry.",
+      "solution_structure": "Per tick: build a conflict graph (worktrees as nodes, a shared file as an edge) from per-worktree file footprints; compute a (greedy) maximum independent set; land that set together, defer the rest. Upstream, dispatch discipline composes waves with disjoint footprints so the independent set is large. Landed commits verified by patch-id/ancestry reachability.",
+      "guarantee": "A landed batch is conflict-free by construction — no two members touch the same file. Boundary: the set is greedy, not provably maximum; a mis-declared footprint can admit a real conflict; hot-spot files cap the batch at 1 regardless of algorithm.",
+      "semantic_level": "change-set ⟂ change-set — pairwise independence (file-footprint disjointness) over concurrent work, proved before integration.",
+      "forces_tradeoffs": "Greedy approximation. Hot-spot files hard-cap throughput — the win depends entirely on dispatch-side footprint disjointness, so the mechanism moves complexity upstream into scheduling. Footprint declaration becomes a trusted input.",
+      "dependencies": "Known per-worktree footprints; the agent-registry (which worktrees are ready); disjoint-footprint dispatch planning; patch-id reachability checks.",
+      "known_uses": "DocAble's merge_train.py conflict-graph batcher; the disjoint-footprint wave-composition recipe; verify-cherrypick-reachability patch-id checks.",
+      "likely_parent_family": "Staged admission gates (integration tier) — conflict-aware integration scheduling",
+      "note": "The directive's exclusion list names MIS batching as the exemplar of 'clever but distracts' (admire-the-implementation risk); 3b should weigh whether the durable idea is 'independence proved before integration' with MIS as one implementation."
+    },
+    "agent/gates-and-merge-train/staged-deploy-gates": {
+      "failure_class": "An ungated deploy puts a regression directly in front of users — the failure is the incident; at agentic velocity deploys are frequent and agent-initiated, so every un-gated bad build multiplies exposure.",
+      "engineering_obligation": "Expose no user to an unverified build: verification escalates through progressively expensive stages on traffic-free surfaces before promotion, and a predictably doomed deploy is never even started.",
+      "solution_structure": "A pipeline of escalating gates: pre-launch predicate (lints green, no live flaky class, changed-since-main green) → build → canary revision taking no production traffic → smoke against the canary URL → promote on green → revision GC; heartbeats emit liveness through the long phases.",
+      "guarantee": "Promotion to production is refused until smoke passes on a traffic-free canary. Boundary: only as strong as the smoke suite; a drifted canary/smoke path gives false confidence.",
+      "semantic_level": "release candidate ⊨ observed-behavior contract before user exposure — verification precedes traffic, ordered cheap-to-expensive.",
+      "forces_tradeoffs": "Real build-minute cost (the pre-launch predicate exists to not spend it on doomed deploys). Smoke ≠ full coverage. The gate infrastructure itself can drift (don't validate via untested infra). Each stage adds deploy latency.",
+      "dependencies": "Canary capability (traffic-free revision); a meaningful smoke suite; promotion/rollback/GC primitives; pre-launch green signals; deploy-heartbeats for liveness.",
+      "known_uses": "DocAble's deploy driver (canary tag → smoke → promote → GC); the pre-deploy launch predicate; per-phase deploy heartbeats.",
+      "likely_parent_family": "Staged admission gates (deploy tier)",
+      "note": "Entry itself flags it as standard practice with thin novelty (defense-in-depth, amplified by agentic deploy frequency) — a demotion candidate per exclusion criterion 2."
+    },
+    "agent/mediators-and-resource-locks/test-serializer": {
+      "failure_class": "Concurrent test runs from multiple worktrees on one host contend destructively (ports, shared artifacts, I/O): tests flake or hang for reasons unrelated to the code, agents chase non-bugs, wall-clock blows up — recurs whenever two agents test at once, i.e. constantly under a fleet.",
+      "engineering_obligation": "Mediate mutually destructive use of a shared resource down to a single writer, with the raw unmediated path structurally impossible rather than conventionally discouraged.",
+      "solution_structure": "A host-level wrapper acquiring an exclusive flock (N=1) before invoking the tool, a fail-loud wait cap bounding a stuck lock, and — decisively — an in-assembly module-initializer enforcer that refuses the raw invocation from agent-worktree CWDs, making the mediated path the only path.",
+      "guarantee": "At most one test run per host, and agents cannot take the raw path. Boundary: single-host only; the audited human bypass reintroduces contention if misused.",
+      "semantic_level": "every invocation → the authorized mediated seam — resource access flows through a single-writer admission point (exclusive cardinality).",
+      "forces_tradeoffs": "Serialization is deliberate wall-clock cost: a long run queues every other worktree. A stuck lock stalls everyone (bounded by the fail-loud cap). The bypass is a hole. Coordinates one machine only.",
+      "dependencies": "A host-global lock file; an interception point inside the tool (module initializer) so the ban is structural; sibling build-serializer for the adjacent parallel-safe tools; the role/compute-class declarations upstream.",
+      "known_uses": "DocAble's test-serializer.py N=1 flock on dotnet test (+ auto coverage collection on fuzz filters); TestMediatorEnforcer [ModuleInitializer]; the audited bypass env var.",
+      "likely_parent_family": "Mediated resource admission (fixed-cardinality variant, N=1 exclusive)",
+      "abstract_name": "Single-writer resource mediation with structural ban"
+    },
+    "agent/mediators-and-resource-locks/build-serializer": {
+      "failure_class": "Heavy parallel-safe tools (build, type-check, code query) from N worktrees oversubscribe one host's CPU/memory and slow everyone — but over-serializing them (N=1) would idle cores and stall the fleet; the failure is both oversubscription and over-serialization.",
+      "engineering_obligation": "Ration parallel-safe-but-heavy shared compute at the host's capacity — choose the admission cardinality from the resource's contention profile (destructive ⇒ exclusive; parallel-safe-heavy ⇒ bounded M).",
+      "solution_structure": "A host-level counting semaphore (byte-range flock, M=8 slots) that the identified set of heavy tools acquire before running; a per-tool enforcer on each routed tool refuses the unmediated call; per-run timestamped logs.",
+      "guarantee": "At most M concurrent heavy-tool runs per host via the only available path. Boundary: coverage is only the routed tool set — an unrouted new heavy tool escapes the cap; M is a static guess.",
+      "semantic_level": "every invocation → a bounded admission slot at the mediated seam — same mediation relation as the exclusive lock, at bounded cardinality.",
+      "forces_tradeoffs": "M is fixed, not adaptive (too high melts a small host, too low wastes a big one). Each routed tool is an enforcer surface that can drift. Log proliferation. The cardinality choice itself is the design judgment.",
+      "dependencies": "A counting-semaphore primitive; the enumerated adjacent-tool set; per-tool enforcers; sibling test-serializer (N=1) and the aggregate-compute mutex above it.",
+      "known_uses": "DocAble's build-serializer.py M=8 byte-range semaphore over dotnet build / tsc / csharp-query / jedi lints / pyright, with five active enforcers.",
+      "likely_parent_family": "Mediated resource admission (fixed-cardinality variant, bounded M)",
+      "abstract_name": "Bounded-concurrency resource mediation"
+    },
+    "agent/mediators-and-resource-locks/aggregate-compute-protection": {
+      "failure_class": "An aggregate sweep job that internally fans out over the whole tree saturates the host on its own — two concurrent sweeps (or many agents each triggering one) melt the machine even though every individual invocation looks fine under per-call caps.",
+      "engineering_obligation": "Treat an aggregate job as an indivisible admission unit: at most one whole-sweep in flight per host, and at most one being dispatched per orchestrator — a coarser instrument than per-invocation slots.",
+      "solution_structure": "A whole-sweep singleton mutex (host flock at entry, hard-capped, fail-loud) plus an orchestrator-side in-flight declaration: every brief declares a compute-class and the orchestrator keeps only one aggregate-class brief in flight; a role gate refuses the sweep under the wrong role.",
+      "guarantee": "At most one aggregate sweep per host mechanically; at most one in flight per orchestrator by declared accounting. Boundary: the in-flight half rests on honest compute-class declaration; bypass and under-declaration slip past.",
+      "semantic_level": "sweep-as-unit → exclusive admission — the mediation relation applied at the granularity of the whole aggregate job, not its parts.",
+      "forces_tradeoffs": "Serializes the heaviest gate into a throughput chokepoint under a busy fleet — deliberately. Half the mechanism is orchestrator discipline, not machinery. Mis-declared compute-class is the soft underbelly.",
+      "dependencies": "Host mutex with hard timeout; compute-class declarations on briefs (via brief-linting); orchestrator in-flight accounting; the role gate from role-typed-dispatch.",
+      "known_uses": "DocAble's lint-all host instance-lock (1800s cap); the compute-class brief declaration + one-in-flight rule; the role-enforcement gate refusing sonnet-active.",
+      "likely_parent_family": "Mediated resource admission (whole-sweep singleton variant)",
+      "abstract_name": "Aggregate-job singleton admission"
+    },
+    "agent/mediators-and-resource-locks/resource-pressure-gating": {
+      "failure_class": "Cardinality caps bound how many heavy jobs run, not whether the host can bear them now: work gets dispatched into an already-saturated host and burns wall-clock polling at the mediators, and pressure that rises after admission leaves a too-heavy job running unchecked.",
+      "engineering_obligation": "Admit and continue heavy work only under bearable live conditions — one shared pressure signal consulted at both moments work is admitted and executed, so the two layers cannot disagree.",
+      "solution_structure": "A host monitor emitting a coarse pressure level (GREEN/YELLOW/RED) over the saturable resource, read by three consumers: a pre-dispatch admission gate that refuses/defers heavy briefs under RED; an execution-time shed at the compute mediators that stops heavy work pressure has overtaken; and a plain callable advisory read for operator judgment.",
+      "guarantee": "Heavy work is neither started into nor left running on a RED host (where wired). Boundary: coarse thresholds are a tuning surface; light work must be classed out or it gets starved; as-built the load-pressure admission gate is a flagged extension (shed + disk-floor gate wired).",
+      "semantic_level": "work admission/continuation ⊨ live resource condition — gating on the state of the environment, versus the cardinality mediators' gating on the count of admitted work.",
+      "forces_tradeoffs": "GREEN/YELLOW/RED is blunt: too-eager starves throughput, too-lax admits overload. Refusal must be deferral-with-wake, never silent drop, or sustained RED starves the queue. Split-brain risk if admission and shed read different signals/thresholds. The advisory read cannot enforce.",
+      "dependencies": "A cheap live pressure signal; a pre-dispatch gate seam beside existing admission checks (disk floor, quota); the compute mediators as the shed point; a heavy-vs-light work classification.",
+      "known_uses": "DocAble's GREEN/YELLOW/RED host-load monitor read by the compute mediators for refuse-and-shed; the free-disk-floor pre-dispatch gate (the load-pressure admission sibling is the flagged as-built gap); the callable monitor for YELLOW-aware dispatch judgment.",
+      "likely_parent_family": "Mediated resource admission — but the directive flags this family may SPLIT by forces/guarantees: fixed-capacity concurrency mediation vs adaptive pressure-based admission + shedding; this card is the adaptive pole.",
+      "abstract_name": "Pressure-conditioned admission and shedding"
+    }
+  }
+}
