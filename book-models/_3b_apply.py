@@ -119,6 +119,99 @@ def cap_know(d):
             "Canonical behavioral/temporal composition mechanism.")
 
 
+@group("cap-sync-assurance-govern-models")
+def cap_sync_assurance_govern_models(d):
+    add_l2(d, "Drift / Parity Gate", {
+        "abstract_name": "Drift / Parity Gate",
+        "intent": "Keep the map equal to the territory bidirectionally — a build-blocking parity predicate fails the moment the model or the reality drifts unilaterally.",
+        "capability": "CAP-SYNC",
+        "relation": "model ⟷ reality — bidirectional parity as a build-blocking invariant",
+        "score": {"novelty": 1, "agentic": 2, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 2, "evidence": 2, "tradeoffs": 2, "composition": 2, "wow": 1, "total": 18},
+        "override": "Foundational — the enforcement that makes Executable Source of Truth trustworthy (a model without a parity gate degrades to a snapshot).",
+        "canonical_card": "models-bridge/system-models/drift-parity-gates",
+        "vivid_failure": "a moved directory silently staled every tool's private inference of the tree",
+        "concrete_impl": "bidirectional parity lints wired into the build; divergence in either direction fails it",
+        "merged_cards": ["models-bridge/system-models/drift-parity-gates"],
+        "variants_note": "coherence-lints (cross-source relational parity), doc-hygiene-lints (corpus↔index parity), ddt-pin-trailers (test↔cited-source freshness) are known-use variants — same model⟷reality relation applied across different source pairs; each preserved distinctly."
+    })
+    add_l2(d, "Model-Derived Assurance Coverage", {
+        "abstract_name": "Model-Derived Assurance Coverage",
+        "intent": "Derive the assurance obligation from the model itself — the should-be-tested denominator, the test tier, the assertion strength, the verification method — and lint the gap, so an untested obligation is a named finding whose set regrows with every model change.",
+        "capability": "CAP-COMPLETE",
+        "relation": "model-declared surface → owed assurance (obligation / placement / strength / method), denominator drawn from the model not the code",
+        "score": {"novelty": 2, "agentic": 2, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 2, "evidence": 1, "tradeoffs": 2, "composition": 2, "wow": 2, "total": 19},
+        "override": "Awesome — test evidence ↔ modeled invariants; coverage measured over meanings, not lines.",
+        "canonical_card": "models-bridge/system-models/model-derived-test-obligation-census",
+        "vivid_failure": "a green coverage percentage hid an entire untested category of model obligations",
+        "concrete_impl": "the obligation census derives owed tests from the models and lints the gap; four distinct-obligation variants fold under it",
+        "merged_cards": ["models-bridge/system-models/model-derived-test-obligation-census"],
+        "variants_note": "Five DISTINCT obligations kept as variants (not merged): obligation-census (completeness denominator), journey-criticality-test-placement (tier), journey-task-closure (assertion strength), coverage-model-mapping (per-node exercise), formal-invariant-verification (verification METHOD by temporal shape — the model-checking pole, composes with Composed State-Machine Model)."
+    })
+    add_l2(d, "Governance Graph", {
+        "abstract_name": "Governance Graph",
+        "intent": "Model the control system itself — governance mechanisms as typed conflict edges over a closed shared-resource vocabulary — so a proposed control's collisions are checkable at authoring, not at the tripwire.",
+        "capability": "CAP-GOVERN",
+        "relation": "control × control → conflict over a shared resource (the interaction dual of the control census; join key is the typed resource, not the call)",
+        "score": {"novelty": 2, "agentic": 2, "durability": 2, "generality": 1, "thesis": 1, "arch_depth": 2, "evidence": 1, "tradeoffs": 2, "composition": 2, "wow": 2, "total": 17},
+        "override": "Coverage — the governance-of-governance class (once controls proliferate the control estate needs modeling); Awesome facet: detecting control collisions.",
+        "canonical_card": "models-bridge/system-models/governance-graph",
+        "vivid_failure": "two controls claimed the same slot with no ordering, colliding only when both fired in production",
+        "concrete_impl": "a typed interaction model; mechanically-decidable conflict classes (same-slot no-order, lock cycles) caught by construction",
+        "merged_cards": ["models-bridge/system-models/governance-graph"],
+        "variants_note": "control-coverage-census is the COVERAGE lens of the same governance-of-governance subject (control → governance target, portfolio completeness over a closed target taxonomy) — a distinct relation, folded here as the census variant."
+    })
+    add_l2(d, "Computed Control Blast Radius", {
+        "abstract_name": "Computed Control Blast Radius",
+        "intent": "Every control declares the substrate assumption it bakes in as a typed fact, so 'what breaks when I change this substrate' is a computed query before the change, not archaeology after it.",
+        "capability": "CAP-GOVERN",
+        "relation": "control → substrate assumption (the governance fleet's own dependency edges made typed and queryable)",
+        "score": {"novelty": 2, "agentic": 2, "durability": 2, "generality": 1, "thesis": 1, "arch_depth": 2, "evidence": 1, "tradeoffs": 2, "composition": 2, "wow": 2, "total": 17},
+        "override": "Awesome — the blast radius of an architectural migration across governance controls, computed not grepped.",
+        "canonical_card": "models-bridge/system-models/control-substrate-dependency",
+        "vivid_failure": "a substrate migration silently broke controls whose dependency on it lived only in someone's memory",
+        "concrete_impl": "each control declares its typed substrate stance; blast radius is a query over the declarations",
+        "merged_cards": ["models-bridge/system-models/control-substrate-dependency"]
+    })
+    add_l2(d, "Re-Derived Definition of Done", {
+        "abstract_name": "Re-Derived Definition of Done",
+        "intent": "Establish completion by independently re-derived evidence against the current state — never by recorded assertion; trust nothing written down before now.",
+        "capability": "CAP-COMPLETE",
+        "relation": "completion claim ⊨ re-derived evidence at current state — completion moves from assertion to recomputation",
+        "score": {"novelty": 2, "agentic": 2, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 1, "evidence": 2, "tradeoffs": 2, "composition": 1, "wow": 1, "total": 17},
+        "override": "Foundational — the Alignment-thesis completion flagship (replace self-report with recomputed evidence).",
+        "canonical_card": "agent/governance-doc-controls/epic-definition-of-done",
+        "vivid_failure": "an effort self-marked done while its owned checks had rotted and its commits never actually landed",
+        "concrete_impl": "the close tool re-runs every owned check + verifies commit ancestry against the substrate as it stands now",
+        "merged_cards": ["agent/governance-doc-controls/epic-definition-of-done"],
+        "composition": "pairs with the evidence-bound commit gate (tree-sha markers) — cheap replay-proof evidence at commit, full re-derivation at close"
+    })
+
+    # Drift/Parity variants (product coherence-lints handled in product group)
+    dispose(d, "models-bridge/system-models/drift-parity-gates", "keep-as-L2 Drift / Parity Gate", "Canonical CAP-SYNC mechanism.")
+    dispose(d, "models-bridge/system-models/doc-hygiene-lints", "demote-to-L3-under Drift / Parity Gate",
+            "Corpus-structure parity: doc corpus ⟷ its declared structure (index ⊇ docs; emitted file → declared emitter; pointer → resolvable target). Same parity relation applied to the documentation corpus; enforces the Governed Knowledge Base.")
+
+    # Model-Derived Assurance Coverage variants
+    dispose(d, "models-bridge/system-models/model-derived-test-obligation-census", "keep-as-L2 Model-Derived Assurance Coverage", "Canonical: derive the owed-test denominator, lint the gap.")
+    dispose(d, "models-bridge/system-models/journey-criticality-test-placement", "demote-to-L3-under Model-Derived Assurance Coverage",
+            "PLACEMENT obligation: derive the test tier as a pure function of a criticality trait, with a floor guaranteeing local-green ⟹ every major path ran. Distinct obligation from the denominator census.")
+    dispose(d, "models-bridge/system-models/journey-task-closure", "demote-to-L3-under Model-Derived Assurance Coverage",
+            "STRENGTH obligation: a major journey's terminal assertion provably has the shape of task closure, strength derived from the expression. Distinct obligation.")
+    dispose(d, "models-bridge/system-models/coverage-model-mapping", "demote-to-L3-under Model-Derived Assurance Coverage",
+            "GRANULARITY obligation: per model node (state/seam/invariant) 'is this tested?' is a queried fact a threshold cannot hide. Distinct obligation (exercise over meanings).")
+    dispose(d, "models-bridge/system-models/formal-invariant-verification", "demote-to-L3-under Model-Derived Assurance Coverage",
+            "METHOD obligation: route each invariant to the checker its temporal shape (safety/liveness) demands — the model-checking pole (proof across bounded interleavings, or a counterexample). Strongest/showpiece variant; composes with Composed State-Machine Model.")
+
+    # Governance-of-governance
+    dispose(d, "models-bridge/system-models/governance-graph", "keep-as-L2 Governance Graph", "Canonical control-interaction mechanism.")
+    dispose(d, "models-bridge/system-models/control-substrate-dependency", "keep-as-L2 Computed Control Blast Radius", "Canonical computed-blast-radius mechanism.")
+    dispose(d, "models-bridge/system-models/control-coverage-census", "demote-to-L3-under Governance Graph",
+            "The COVERAGE lens of governance-of-governance: control → governance target, portfolio completeness over a closed complementary-targets taxonomy, re-derived on every query. Distinct relation from control×control conflict; folded as the census variant of the same subject.")
+
+    # Re-Derived DoD
+    dispose(d, "agent/governance-doc-controls/epic-definition-of-done", "keep-as-L2 Re-Derived Definition of Done", "Canonical CAP-COMPLETE completion mechanism.")
+
+
 def main():
     g = sys.argv[1]
     d = load()
