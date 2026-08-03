@@ -17,33 +17,33 @@
   },
   "universal-language": {
     "kind": "thesis",
-    "site_home": "card-universal-language",
-    "status": "both",
-    "note": "The master thesis: models are the universal language the fleet reasons through. Site card exists (card-universal-language); registered in index-terms.md; book index-def tagged at the preface 'universal language of engineering' paragraph. Clean both-resolve."
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "The master thesis: models are the universal language the fleet reasons through. Book index-def tagged at the preface 'universal language of engineering' paragraph; registered in index-terms.md. Formerly previewed on the landing's back-matter vocabulary strip (card-universal-language); that strip was removed so the landing ends at the three nav cards, so this concept is now book-only by design (the book is its sole home)."
   },
   "constraint": {
     "kind": "mechanism-class",
-    "site_home": "card-constraint",
-    "status": "both",
-    "note": "Constraint (prevents drift). Book index-def present AND site card present — the clean both-resolve case."
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Constraint (prevents drift). Book index-def present. Formerly previewed on the landing's vocabulary strip (card-constraint); that strip was removed so the landing ends at the three nav cards — book-only by design now."
   },
   "sensor": {
     "kind": "mechanism-class",
-    "site_home": "card-sensor",
-    "status": "both",
-    "note": "Sensor (detects drift). Book index-def present AND site card present — clean both-resolve case."
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Sensor (detects drift). Book index-def present. Formerly previewed on the landing's vocabulary strip (card-sensor); that strip was removed so the landing ends at the three nav cards — book-only by design now."
   },
   "residual": {
     "kind": "mechanism-class",
-    "site_home": "card-residual",
-    "status": "both",
-    "note": "The residual: goals no constraint+sensor pair reaches — the gap that stays human. Book index-def present AND site card present."
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "The residual: goals no constraint+sensor pair reaches — the gap that stays human. Book index-def present. Formerly previewed on the landing's vocabulary strip (card-residual); that strip was removed so the landing ends at the three nav cards — book-only by design now."
   },
   "generative-validation": {
     "kind": "family",
-    "site_home": "card-generate-to-falsify",
-    "status": "both",
-    "note": "Ch 4.6 expands the generative-validation family; the site realizes it as card-generate-to-falsify, which does NOT follow the card-<slug> join convention. Resolved in Phase 2: site_home points at the real card explicitly, so L2/L3 join on the DECLARED id (not the naming convention) and L4 recognizes a card referenced by any concept's site_home. Registered in index-terms.md; book index-def tagged at 4.6's defining paragraph."
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Ch 4.6 expands the generative-validation family. Book index-def tagged at 4.6's defining paragraph; registered in index-terms.md. Formerly previewed on the landing's vocabulary strip (as card-generate-to-falsify); that strip was removed so the landing ends at the three nav cards — book-only by design now."
   },
   "mirror-vs-spec": {
     "kind": "caveat",
