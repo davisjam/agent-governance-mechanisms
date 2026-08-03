@@ -16,6 +16,8 @@ standard predicate library, from which a pure function derives `TASK_CLOSED` / `
 | Enforcement | **Soft·Hard** — the typed closure *aims* the terminal assertion (soft: it declares what DONE means, a human still writes the spec); a strength-derivation gate *holds* the floor (hard: a major journey deriving `FLOW_ONLY` fails) |
 | Governs | `user-journey-model` — a journey's terminal post-condition, typed |
 
+*Its place in the environment — a **variant / known-use** of **Model-Derived Assurance Coverage**, under **COMPLETE · Establish completion on re-derived evidence**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-complete) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 A journey test usually asserts that the **flow ran** — a page returned 200, a URL was reached, a card

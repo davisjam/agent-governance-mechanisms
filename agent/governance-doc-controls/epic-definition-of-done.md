@@ -13,6 +13,8 @@ close on stale or rotted assertions.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking close* — reachability/patch-id checks must pass, or a logged `--override` is required |
 
+*Its place in the environment — the **canonical mechanism** for **COMPLETE · Establish completion on re-derived evidence**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-complete).*
+
 ## Motivation — the failure it kills
 
 An Epic spanning many dispatches accumulates *claims* (phase markers, "lints pass," pin-test counts),

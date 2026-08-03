@@ -18,6 +18,8 @@ error-path models, then flag the ones with no test).
 | Enforcement | **Hard** (deterministic) — the obligation set is computed from the models and the gap to existing tests is a build finding |
 | Governs | `all-models` — derives obligations from whichever models declare a testable surface |
 
+*Its place in the environment — the **canonical mechanism** for **COMPLETE · Establish completion on re-derived evidence**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-complete).*
+
 ## Motivation — the failure it kills
 
 Line coverage measures the code you wrote *and* tested; it is blind to the code you should have written a
