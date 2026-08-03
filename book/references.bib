@@ -452,3 +452,157 @@
   note      = {Preprint arXiv:2510.14465},
   url       = {https://arxiv.org/abs/2510.14465},
 }
+
+% ---------------------------------------------------------------------------
+% Empirical-research-opportunities cluster — cited in the "Implications for
+% Software Engineering" back-matter chapter (6.0), the "Empirical research
+% opportunities" section. Fallible-oracle frontier (§9 lit-positioning) +
+% deep-single-case methodology and build reports (§11). Verified 2026-08-03.
+% ---------------------------------------------------------------------------
+
+% Automated-program-repair overfitting — the pre-LLM canonical result that a
+% suite used to drive repair overfits under optimization. ESEC/FSE 2015.
+@inproceedings{smith2015overfitting,
+  author    = {Smith, Edward K. and Barr, Earl T. and Le Goues, Claire and Brun, Yuriy},
+  title     = {Is the Cure Worse Than the Disease? Overfitting in Automated Program Repair},
+  booktitle = {Proceedings of the 2015 10th Joint Meeting on Foundations of Software Engineering (ESEC/FSE)},
+  pages     = {532--543},
+  year      = {2015},
+  doi       = {10.1145/2786805.2786825},
+}
+
+% OpenAI steward-retires-SWE-bench-Verified post (59.4% flawed test cases;
+% contamination). Blog; exact publication day not pinned (early 2026).
+@online{openai2026swebench,
+  author    = {{OpenAI}},
+  title     = {Why SWE-bench Verified No Longer Measures Frontier Coding Capabilities},
+  year      = {2026},
+  date      = {2026-02},
+  publisher = {OpenAI},
+  url       = {https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/},
+  urldate   = {2026-08-03},
+}
+
+% SWE-Bench Illusion — memorization signature (buggy paths from issue text alone).
+% ICSE-SEIP 2026.
+@inproceedings{liang2026swebenchillusion,
+  author    = {Liang, Shanchao and Garg, Spandan and Zilouchian Moghaddam, Roshanak},
+  title     = {The SWE-Bench Illusion: When State-of-the-Art LLMs Remember Instead of Reason},
+  booktitle = {Proceedings of the IEEE/ACM 48th International Conference on Software Engineering, Software Engineering in Practice (ICSE-SEIP)},
+  year      = {2026},
+  doi       = {10.1145/3786583.3786882},
+  url       = {https://arxiv.org/abs/2506.12286},
+}
+
+% Scale AI's SWE-Bench Pro — contamination-resistant; frontier scores ~23%.
+@misc{scaleai2025swebenchpro,
+  author       = {{Scale AI}},
+  title        = {SWE-Bench Pro: Can AI Agents Solve Long-Horizon Software Engineering Tasks?},
+  year         = {2025},
+  howpublished = {arXiv preprint arXiv:2509.16941},
+  url          = {https://arxiv.org/abs/2509.16941},
+}
+
+% SWE-bench Goes Live! — continuously-sourced fresh tasks (living benchmark).
+@misc{zhang2025swebenchlive,
+  author       = {Zhang, Linghao and He, Shilin and Zhang, Chaoyun and Kang, Yu and Li, Bowen and Xie, Chengxing and Wang, Junhao and Wang, Maoquan and Huang, Yufan and Fu, Shengyu and Nallipogu, Elsie and Lin, Qingwei and Dang, Yingnong and Rajmohan, Saravan and Zhang, Dongmei},
+  title        = {SWE-bench Goes Live!},
+  year         = {2025},
+  howpublished = {arXiv preprint arXiv:2505.23419},
+  url          = {https://arxiv.org/abs/2505.23419},
+}
+
+% SWE-rebench — automated decontaminated collection; flags contaminated instances.
+@misc{swerebench2025,
+  title        = {SWE-rebench: An Automated Pipeline for Task Collection and Decontaminated Evaluation of Software Engineering Agents},
+  year         = {2025},
+  howpublished = {arXiv preprint arXiv:2505.20411},
+  url          = {https://arxiv.org/abs/2505.20411},
+}
+
+% Over-mocked agent-authored tests — coding-agent commits mock at 36% vs 26%.
+@misc{hora2026overmocked,
+  author       = {Hora, Andre and Robbes, Romain},
+  title        = {Are Coding Agents Generating Over-Mocked Tests? An Empirical Study},
+  year         = {2026},
+  howpublished = {arXiv preprint arXiv:2602.00409},
+  url          = {https://arxiv.org/abs/2602.00409},
+}
+
+% LLM test oracles encode implemented (not specified) behavior — the oracle
+% ratifies the code's bugs.
+@misc{llmoracle2024,
+  title        = {Do LLMs Generate Test Oracles That Capture the Actual or the Expected Program Behaviour?},
+  year         = {2024},
+  howpublished = {arXiv preprint arXiv:2410.21136},
+  url          = {https://arxiv.org/abs/2410.21136},
+}
+
+% Cheap Code, Costly Judgment — the companion case-study account of the same
+% repository (deep single case at commit scale).
+@misc{davis2026cheapcode,
+  author       = {Davis, James C. and Amusuo, Paschal C. and Singla, Tanmay and {\c{C}}akar, Berk and Davis, Kirsten A.},
+  title        = {Cheap Code, Costly Judgment: A Case Study on Governable Agentic Software Engineering},
+  year         = {2026},
+  howpublished = {arXiv preprint arXiv:2607.01087},
+  url          = {https://arxiv.org/abs/2607.01087},
+}
+
+% Runeson & Höst — case-study guidelines for software engineering (reporting +
+% validity framework). EMSE 2009.
+@article{runeson2009guidelines,
+  author  = {Runeson, Per and H\"ost, Martin},
+  title   = {Guidelines for Conducting and Reporting Case Study Research in Software Engineering},
+  journal = {Empirical Software Engineering},
+  volume  = {14},
+  number  = {2},
+  pages   = {131--164},
+  year    = {2009},
+  doi     = {10.1007/s10664-008-9102-8},
+}
+
+% Beach & Pedersen — process-tracing; the developed articulation of analytic
+% (mechanism, not population) generalization from a single case.
+@book{beach2019processtracing,
+  author    = {Beach, Derek and Pedersen, Rasmus Brun},
+  title     = {Process-Tracing Methods: Foundations and Guidelines},
+  edition   = {2nd},
+  publisher = {University of Michigan Press},
+  year      = {2019},
+  isbn      = {9780472037353},
+}
+
+% Cloudflare vinext build report — rebuilt Next.js on Vite, ~1 week / 1 engineer.
+@online{faulkner2026vinext,
+  author    = {Faulkner, Steve},
+  title     = {How We Rebuilt Next.js with AI in One Week},
+  year      = {2026},
+  date      = {2026-02-24},
+  publisher = {Cloudflare},
+  url       = {https://blog.cloudflare.com/vinext/},
+  urldate   = {2026-08-03},
+}
+
+% Carlini — C compiler built with ~16 parallel Claude agents (~100K-line Rust
+% compiler that builds Linux 6.9). Coordination surface at scale.
+@online{carlini2026ccompiler,
+  author    = {Carlini, Nicholas},
+  title     = {Building a C Compiler with a Team of Parallel Claudes},
+  year      = {2026},
+  date      = {2026-02-05},
+  publisher = {Anthropic},
+  url       = {https://www.anthropic.com/engineering/building-c-compiler},
+  urldate   = {2026-08-03},
+}
+
+% Anthropic large-scale migration — million-line Bun toolchain Zig->Rust via
+% large dynamic agent workflows.
+@online{anthropic2026migration,
+  author    = {{Anthropic}},
+  title     = {How Anthropic Runs Large-Scale Code Migrations with Claude Code},
+  year      = {2026},
+  date      = {2026-07-16},
+  publisher = {Anthropic},
+  url       = {https://claude.com/blog/ai-code-migration},
+  urldate   = {2026-08-03},
+}
