@@ -958,6 +958,20 @@ def cmd_validate(_args) -> int:
         print(f"  [overflow] {lfo.summary_line(overflow)} — "
               f"run `python3 book-models/lint_figure_overflow.py`")
         n_issues += len(overflow)
+    # FLAGSHIP-STACK CONFORMANCE (FS1–FS5) — AUDIT-ONLY. The deep-dive TEMPLATE check over the flagship
+    # PACKAGE model (book-models/flagship-stack.json): join integrity, page shape, figure house-rules,
+    # freshness. Lands audit-only-first (repo blocking-lint discipline) while the model carries fewer than
+    # the full seven stacks — it PRINTS its findings + the deferred coverage note here (so a committer sees
+    # the worklist) but does NOT increment n_issues. A follow-up flips it blocking once the seven land and a
+    # clean session confirms the drain. See book-models/flagship_stack_model.py + tests/book_models.py.
+    import flagship_stack_model as fsm  # noqa: E402 — audit-only conformance model
+    fs_findings = fsm.structural_findings()
+    print(f"  [flagship] AUDIT-ONLY: {fsm.coverage_note()}")
+    if fs_findings:
+        print(f"  [flagship] AUDIT-ONLY: {len(fs_findings)} FS conformance finding(s) — "
+              f"run `python3 book-models/flagship_stack_model.py regenerate` (does not gate):")
+        for f in fs_findings:
+            print(f"             {f}")
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")

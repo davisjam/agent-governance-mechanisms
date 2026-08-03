@@ -43,6 +43,7 @@ from tests.book_models import (
     check_argument_spine,
     check_chapter_shape,
     check_claims_model,
+    check_flagship_stack,
     check_outcomes_model,
     check_outline_model,
     check_reverse_index,
@@ -184,6 +185,18 @@ CHECKS = [
     # clean session, the spine's own landing path. See tests/book_models.py.
     Check("book-models: chapter-shape drift + structure (chapter-shape.json)", 1,
           lambda strict: check_chapter_shape(), audit_only=True),
+    # AUDIT-ONLY (rule #55 first landing): the FLAGSHIP-STACK view-model — the alternative appendix's
+    # deep-dive PACKAGES (several catalogue entries that reinforce each other into one governed capability),
+    # declared->generated beside the argument-spine / chapter-shape. Makes the deep-dive TEMPLATE
+    # mechanically checkable: FS-drift (flagship-stack.json vs a fresh derivation) + FS1 join integrity
+    # (every part slug resolves to a catalogue entry) + FS2 page shape (goal + GEE capability + an
+    # overview_figure that EXISTS + ≥2 six-field parts) + FS3 figure house-rules (overflow sensor +
+    # design-token palette) + FS5 freshness (the page renders the model's part-set). FS4 coverage is a
+    # DEFERRED note until all seven stacks are populated. Lands audit-only with a single (Provenance +
+    # fidelity) record; promote to blocking once the seven land and a clean session confirms the drain — the
+    # spine / chapter-shape models' own landing path. See tests/book_models.py.
+    Check("book-models: flagship-stack drift + structure (flagship-stack.json)", 1,
+          lambda strict: check_flagship_stack(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.

@@ -208,6 +208,41 @@ def check_chapter_shape():
     return (FAIL if issues else PASS), issues
 
 
+def check_flagship_stack():
+    """The flagship-stack view's drift + structural check (audit-only first landing, rule-#55 discipline).
+    A flagship stack is a PACKAGE of catalogue entries the alternative appendix deep-dives; this model makes
+    the deep-dive TEMPLATE mechanically checkable. Re-derives the model from the hand-authored
+    `flagship_stack_declared.json` (joined against the catalogue entries on disk) and reports: FS-drift
+    against the on-disk artifact; FS1 join integrity (every `parts[].slug` resolves to a real catalogue
+    entry); FS2 page shape (non-empty goal + a GEE `capability` + an overview_figure that EXISTS + ≥ MIN_PARTS
+    parts, each with all six template fields non-empty; ids unique + kebab); FS3 figure house-rules (the
+    overview figure passes the overflow sensor + the design-token palette); FS5 freshness (the page source
+    renders the model's part-set — the figure and every part slug appear). FS4 coverage is a DEFERRED note
+    while the model carries fewer than the full seven stacks (surfaced by the model CLI, not a finding here).
+    Keyed off `book-models/flagship-stack.json` + `flagship_stack_declared.json` + the catalogue entries."""
+    import flagship_stack_model as fsm  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+
+    # FS-drift — the stored artifact equals a fresh derivation.
+    fresh = fsm.to_jsonable()
+    stored = fsm.load_artifact()
+    if stored is None:
+        issues.append(f"{rel(fsm._ARTIFACT)} missing — run "
+                      f"`python3 book-models/flagship_stack_model.py regenerate`")
+    elif any(stored.get(k) != fresh[k] for k in ("stacks", "_counts")):
+        issues.append(f"DRIFT: {rel(fsm._ARTIFACT)} disagrees with a fresh derivation — regenerate "
+                      f"with `python3 book-models/flagship_stack_model.py regenerate`")
+
+    # FS1–FS3 + FS5 — structural / schema invariants (join, page shape, figure house-rules, freshness).
+    issues.extend(fsm.structural_findings())
+
+    # Audit-only: same non-gating contract as the sibling first landings — surfaced as [audt], excluded
+    # from the fail tally. A follow-up promotes FS1–FS5 to blocking once all seven stacks are populated and
+    # a clean session confirms the drain (the claims / spine / chapter-shape models' landing path).
+    return (FAIL if issues else PASS), issues
+
+
 def check_reverse_index():
     """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
     forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each
