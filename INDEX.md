@@ -3,7 +3,7 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->81<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->82<!--/census--> entries are fully
 written (**✅**).
 
 **`Enf.` = soft/hard** (see README *Two independent axes: move and form*): **`Hard`** = deterministic
@@ -81,7 +81,7 @@ of soft/hard.
 
 ## 6. System models
 
-*One MBSE **method** (the trunk — <!--census:bridge_method:word-->fifteen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Eighteen<!--/census--> models split product-facing (service-flow, user-journey, domain-registries, composed-state-machine, process-view) · orchestration-facing (synchronization, agent-orch, governance-graph, lifecycle) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->fifteen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. These model entries are a **curated sample of the portable genres**, not the whole zoo: the real substrate carries on the order of sixty typed models, and these cover the ones that transfer. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — <!--census:bridge_method:word-->sixteen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Eighteen<!--/census--> models split product-facing (service-flow, user-journey, domain-registries, composed-state-machine, process-view) · orchestration-facing (synchronization, agent-orch, governance-graph, lifecycle) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->sixteen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. These model entries are a **curated sample of the portable genres**, not the whole zoo: the real substrate carries on the order of sixty typed models, and these cover the ones that transfer. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Move | Model | Enf. | Entry |
 |---|---|---|---|---|---|---|
@@ -100,6 +100,7 @@ of soft/hard.
 | ✅ | Symbol-anchored traceability graph (derived edges) — *trunk / method* | `typed-ir` | `package` | `is-a-model` | Hard | [symbol-anchored-traceability-graph.md](models-bridge/system-models/symbol-anchored-traceability-graph.md) |
 | ✅ | Model-graded finding severity (distance-graded gate) — *trunk / method* | `quality-gate` | `sensor` | `governs-a-model` | Hard | [model-graded-finding-severity.md](models-bridge/system-models/model-graded-finding-severity.md) |
 | ✅ | Model-derived test-obligation census (derive obligations, lint the gap) — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Hard | [model-derived-test-obligation-census.md](models-bridge/system-models/model-derived-test-obligation-census.md) |
+| ✅ | Control-coverage census (controls per governance target) — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Soft·Hard | [control-coverage-census.md](models-bridge/system-models/control-coverage-census.md) |
 | ✅ | Service-flow / API model — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [service-flow-model.md](models-bridge/system-models/service-flow-model.md) |
 | ✅ | User-journey model (product-goal → implementation) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
 | ✅ | Domain registries — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |
@@ -178,11 +179,11 @@ of soft/hard.
 
 ---
 
-**Three roles complete — 81 mechanisms across 11 families, all fully developed.**
+**Three roles complete — 82 mechanisms across 11 families, all fully developed.**
 **Agent (28):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
 Lifecycle & observability (8) · Governance-doc mechanisms (8, incl. the **CLAUDE.md rule index**
 meta-mechanism).
-**Models-bridge (33):** the MBSE **method** (<!--census:bridge_method-->15<!--/census--> subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, **journey-criticality → test-tier placement**, **journey task-closure**, **invariant-DAG execution policy**, **computed control↔substrate blast-radius**, + the **symbol-anchored traceability graph**) reified as a **Y** over <!--census:bridge_models-->18<!--/census--> models — product-facing 5 (service-flow · user-journey · domain-registries · composed-state-machine · process-view) · orchestration-facing 4 (synchronization · agent-orch · governance-graph · lifecycle) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
+**Models-bridge (34):** the MBSE **method** (<!--census:bridge_method-->16<!--/census--> subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, **journey-criticality → test-tier placement**, **journey task-closure**, **invariant-DAG execution policy**, **computed control↔substrate blast-radius**, the **per-target control-coverage census**, + the **symbol-anchored traceability graph**) reified as a **Y** over <!--census:bridge_models-->18<!--/census--> models — product-facing 5 (service-flow · user-journey · domain-registries · composed-state-machine · process-view) · orchestration-facing 4 (synchronization · agent-orch · governance-graph · lifecycle) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
 the MBSE substrate through which a bounded agent operates an unbounded codebase. These model entries are a **curated sample of the portable genres** — the substrate carries on the order of sixty typed models, and these cover the ones whose shape transfers.
 **Product (20):** Canonical models & seams (5) · Validation & conformance (4) · Regression tests (4) ·
 Provenance & attribution (4) · Repair vocabulary (3).
