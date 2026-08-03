@@ -1365,3 +1365,20 @@ green (no orphans) · `build_book_html.py` green (130 chapter pages) · lit-posi
 ### Author pin (non-blocking, carried from step 2)
 Whether the landing should eventually re-carry a vocab/outcomes preview (the dropped on-landing strip) —
 tracked for later discussion; not built.
+
+## W-COLOPHON — ✅ DONE + committed (`f293045`)
+- **Content:** NEW backmatter page `book/backmatter/6.4-colophon.md`, "Colophon" — 1,574 words, 8 `[gh:]`
+  markers, 6 `{{dt:}}` tokens, no FILL-IN, no stray comments beyond the mandatory part-title/chapter-title pair.
+  Drafted + verified by a prior agent that died on a transient API error at the last step; this recovery
+  agent only built, gated, and committed the already-finished, already-verified content — no rewrite.
+- **Build:** `catalog.py build` exit 0. Reachability gate green — no orphan; the new backmatter page is
+  linked from both `book/index.html` and `book/book-index.html` (backmatter auto-links). 131 chapter pages
+  rendered (up from 130); `book/6.4-colophon.html` written (53 KB). Word-count roll-up: Back Matter 12,593 ·
+  TOTAL 158,840.
+- **Validate:** `catalog.py validate` → **0 issue(s)** (83 entries: agent 29 · bridge 34 · product 20). The
+  LP3 backmatter-glob citation-target WARN lines (15 findings, pre-existing) and the design-token-drift /
+  flagship-coverage AUDIT-ONLY lines are non-gating, as expected — no NEW findings from this change.
+- **Commit `f293045`:** colophon `.md` + `.html` + the ~130 regenerated chapter pages (nav/pager churn from
+  adding a new backmatter page) — 135 files, 711 insertions / 5 deletions. Pre-commit hook re-ran
+  validate + build + its own AUDIT-ONLY views-audit (9 pre-existing findings, none new) and let the commit
+  through clean.
