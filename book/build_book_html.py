@@ -2222,6 +2222,10 @@ _STACKS: list[tuple[str, str]] = [
     ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
     ("canonical-seam-stack", "The canonical-seam stack"),
     ("observability-stack", "The observability stack"),
+    # DRAFT flagship deep-dive (exemplar of the richer per-part template — goal + overview figure + one
+    # six-field entry per member). Sits here until the author ratifies the template and decides whether the
+    # flagship deep-dives get their own appendix; see book/appendix-stacks/provenance-fidelity-stack.md.
+    ("provenance-fidelity-stack", "The provenance + fidelity stack (flagship draft)"),
 ]
 
 _APPENDIX_STACKS_OPENING_PROSE = """\
