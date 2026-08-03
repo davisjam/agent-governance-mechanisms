@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (label: churn-per-path). Per-path git churn (additions up,
+     deletions down) across the four study windows for web/ (Python service + worker,
+     fleet #2f5169) and backend/ (C# CLI + rule engine, churn #b23b3b). Mechanization is
+     the add-and-delete peak for both; backend/ deletions then collapse (-286K -> -3.8K)
+     as the later windows go net-additive. Palette: Umber Monograph tokens (fleet /
+     fleet-fill, churn / churn-fill, rule #e4e0d8 gridlines, ink #1c1917 text). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520"
+     role="img" aria-labelledby="chTitle chDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="chTitle">Path churn across four windows — web/ and backend/</title>
+  <desc id="chDesc">A diverging bar chart of git churn on two code paths across the four
+    study windows. For each window, additions rise above a zero baseline and deletions fall
+    below it, drawn as one bar per path: web/, the Python web service and worker, in blue,
+    and backend/, the C# command-line tool and rule engine, in red. Mechanization is the
+    add-and-delete peak for both paths — backend/ alone adds 941,120 lines and deletes
+    286,378 in that window. After mechanization the deletions collapse: backend/ falls to
+    just 3,767 deleted lines at hardening, and both paths go net-additive in the later
+    windows as the built environment stabilizes the code. Absolute counts include generated
+    and vendored files, so this is a churn signal, not a count of hand-authored source.</desc>
+
+  <!-- up-axis gridlines (250K / 500K / 750K additions) -->
+  <line x1="118" y1="236.9" x2="942" y2="236.9" stroke="#e4e0d8" stroke-width="1"/>
+  <line x1="118" y1="173.7" x2="942" y2="173.7" stroke="#e4e0d8" stroke-width="1"/>
+  <line x1="118" y1="110.5" x2="942" y2="110.5" stroke="#e4e0d8" stroke-width="1"/>
+  <!-- down-axis gridlines (100K / 200K / 300K deletions) -->
+  <line x1="118" y1="353.3" x2="942" y2="353.3" stroke="#e4e0d8" stroke-width="1"/>
+  <line x1="118" y1="406.7" x2="942" y2="406.7" stroke="#e4e0d8" stroke-width="1"/>
+  <line x1="118" y1="460"   x2="942" y2="460"   stroke="#e4e0d8" stroke-width="1"/>
+
+  <!-- tick labels -->
+  <text x="110" y="240.9" text-anchor="end" font-size="12" fill="#57534e">250K</text>
+  <text x="110" y="177.7" text-anchor="end" font-size="12" fill="#57534e">500K</text>
+  <text x="110" y="114.5" text-anchor="end" font-size="12" fill="#57534e">750K</text>
+  <text x="110" y="304"   text-anchor="end" font-size="12" fill="#57534e">0</text>
+  <text x="110" y="357.3" text-anchor="end" font-size="12" fill="#57534e">100K</text>
+  <text x="110" y="410.7" text-anchor="end" font-size="12" fill="#57534e">200K</text>
+  <text x="110" y="464"   text-anchor="end" font-size="12" fill="#57534e">300K</text>
+
+  <!-- axis-direction kickers -->
+  <text x="60" y="150" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e" transform="rotate(-90 60 150)">lines added ↑</text>
+  <text x="60" y="410" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e" transform="rotate(-90 60 410)">lines deleted ↓</text>
+
+  <!-- Window 1 — prototype -->
+  <rect x="170.5" y="294.3" width="44" height="5.7"  fill="#2f5169"/>
+  <rect x="170.5" y="300"   width="44" height="4.1"  fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <rect x="230.5" y="287.7" width="44" height="12.3" fill="#b23b3b"/>
+  <rect x="230.5" y="300"   width="44" height="5.4"  fill="#fbeaea" stroke="#b23b3b" stroke-width="1.5"/>
+
+  <!-- Window 2 — mechanization (the peak) -->
+  <rect x="375.5" y="206.1" width="44" height="93.9"  fill="#2f5169"/>
+  <rect x="375.5" y="300"   width="44" height="85.9"  fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <rect x="435.5" y="62.3"  width="44" height="237.7" fill="#b23b3b"/>
+  <rect x="435.5" y="300"   width="44" height="152.7" fill="#fbeaea" stroke="#b23b3b" stroke-width="1.5"/>
+
+  <!-- Window 3 — hardening (deletions collapse) -->
+  <rect x="580.5" y="254.6" width="44" height="45.4" fill="#2f5169"/>
+  <rect x="580.5" y="300"   width="44" height="18.1" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <rect x="640.5" y="272.4" width="44" height="27.6" fill="#b23b3b"/>
+  <rect x="640.5" y="300"   width="44" height="2.0"  fill="#fbeaea" stroke="#b23b3b" stroke-width="1.5"/>
+
+  <!-- Window 4 — loop-mgmt -->
+  <rect x="785.5" y="275.5" width="44" height="24.5" fill="#2f5169"/>
+  <rect x="785.5" y="300"   width="44" height="7.6"  fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <rect x="845.5" y="270.6" width="44" height="29.4" fill="#b23b3b"/>
+  <rect x="845.5" y="300"   width="44" height="5.2"  fill="#fbeaea" stroke="#b23b3b" stroke-width="1.5"/>
+
+  <!-- zero baseline (bold) -->
+  <line x1="118" y1="300" x2="942" y2="300" stroke="#1c1917" stroke-width="2"/>
+
+  <!-- peak annotation (free-floating, clear of the bar top) -->
+  <text x="457.5" y="52" text-anchor="middle" font-size="13" font-weight="700" fill="#b23b3b">backend/ +941,120 / −286,378</text>
+
+  <!-- window labels -->
+  <text x="222.5" y="487" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">prototype</text>
+  <text x="427.5" y="487" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">mechanization</text>
+  <text x="632.5" y="487" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">hardening</text>
+  <text x="837.5" y="487" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">loop-mgmt</text>
+
+  <!-- legend -->
+  <text x="118" y="510" text-anchor="start" font-size="13" fill="#57534e">bars rise with additions, fall with deletions</text>
+  <rect x="440" y="500" width="16" height="12" fill="#2f5169"/>
+  <text x="462" y="510" text-anchor="start" font-size="13" fill="#1c1917">web/ (Python service + worker)</text>
+  <rect x="720" y="500" width="16" height="12" fill="#b23b3b"/>
+  <text x="742" y="510" text-anchor="start" font-size="13" fill="#1c1917">backend/ (C# CLI + rule engine)</text>
+</svg>

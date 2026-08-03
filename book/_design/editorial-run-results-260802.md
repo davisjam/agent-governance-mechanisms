@@ -984,3 +984,24 @@ that baseline (26 passed / 2 pre-existing failed), never adding a new failure.
   gridline that clipped the 3.68× label) · book-float-ref green (both figure + LoC table introduced by
   `[ref:]`) · tier-1 gate 26/2 (baseline held). outline.json + reverse_index.json regenerated.
 - **Parked:** none for this metric (velocity chart regen stays deferred housekeeping, out of W4 scope).
+
+### Metric 2 — churn (web/ + backend/) → churn-is-the-limit · RENDERED
+- **Chart + table location:** new `## The shape of the churn {#churn}` in
+  `book/part5/5.2-the-timeline-and-the-work.md` (after the support-ratio section). Diverging bar chart
+  `book/assets/churn-per-path.svg` (additions up / deletions down, one bar per path per window, web/ in
+  fleet-blue and backend/ in churn-red) + the per-path add/del table + prose: mechanization is the
+  add-and-delete peak (backend/ +941,120 / −286,378), then deletions collapse (backend/ −3,767 at
+  hardening) and both paths go net-additive as the built environment stabilizes the code.
+- **Cross-ref marker:** `[data: churn]` added to the context-churn point in
+  `book/part1/1.3-loops-and-models.md` (mid-chapter; an earlier placement in the preface was reverted
+  because the DL4 marker scan only reads `book/part*/*.md`, and a first placement in 1.3's closing
+  paragraph was moved to avoid a CS5 chapter-shape closing-anchor re-assessment).
+- **Ledger filled:** `anchor: "churn"`; `holds: ["371,855","941,120","286,378","3,767"]` (all in the 5.2
+  table — DL4 green); `status: partial`.
+- **Substantiation:** `churn-is-the-limit` now shows `data: churn [partial]` under it.
+- **Gates:** `catalog.py validate` 0 issues · `build_book_html.py` green (117 figures) · figure-overflow
+  clean · stroke-through-glyph clean · design-token drift adds no churn finding · book-float-ref green
+  (figure + table both `[ref:]`-introduced) · CS5 clean · tier-1 gate 26/2 (baseline held).
+- **Parked (measurement pending, noted in prose):** a bundle/generated-file-excluding pathspec to
+  convert the churn signal toward true hand-authored edited lines — one-line note in the caveat
+  paragraph, no invented number.

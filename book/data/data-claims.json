@@ -81,8 +81,8 @@
   },
   "churn": {
     "source": "5.2-the-timeline-and-the-work",
-    "anchor": "",
-    "holds": [],
+    "anchor": "churn",
+    "holds": ["371,855", "941,120", "286,378", "3,767"],
     "status": "partial",
     "spine_claim": "churn-is-the-limit",
     "observable": "Per-path additions and deletions (web/ and backend/) across the four study windows; mechanization is the churn peak for both, then deletions collapse and later windows go net-additive (backend/ -286K deletions at mechanization -> -3.8K at hardening).",
