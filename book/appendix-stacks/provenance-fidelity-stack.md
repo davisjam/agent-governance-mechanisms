@@ -1,7 +1,6 @@
-*Draft flagship deep-dive — the exemplar for the deep-dive template. Where the other Appendix D pages
-list a stack's members in two tiers, a flagship deep-dive walks a stack part by part: a goal, an overview
-figure, and one six-field entry per member (role · failure · mechanism · seam · durability). This page
-sets that shape; the remaining flagship stacks follow it.*
+*A flagship deep-dive walks a stack part by part: a goal, an overview figure, and one six-field entry per
+member (role · failure · mechanism · seam · durability). Each seam names what the part before it hands
+over, so the page reads as one interlocking chain rather than a list of parts.*
 
 ## The goal
 

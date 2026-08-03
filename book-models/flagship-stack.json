@@ -25,7 +25,10 @@
       "id": "provenance-and-fidelity",
       "name": "The provenance + fidelity stack",
       "goal": "Reconstruct a remediated document's mutation history from the artifact itself, and catch any damage done through the sanctioned door — who and why for every change, and nothing silently lost.",
-      "capability": "Track provenance and trace causes",
+      "capabilities": [
+        "Track provenance and trace causes",
+        "Preserve product semantics"
+      ],
       "overview_figure": "book/assets/provenance-fidelity-stack.svg",
       "parts": [
         {

@@ -2216,16 +2216,16 @@ _APPENDIX_STACKS_OPENING_SLUG = "appendix-stacks"
 # Stack files in reading order → (page-slug stem, display title). Each becomes one D.N page; the opening
 # front-door page (D's chapter 0) precedes them. A file listed here but absent on disk is skipped.
 _STACKS: list[tuple[str, str]] = [
+    # The seven finalized flagship deep-dives (reframe 260803). Each walks its stack part by part — a goal,
+    # an overview figure, and one six-field entry per member (role · failure · mechanism · seam ·
+    # durability). The thin two-tier precursor pages were superseded and folded into these seven.
+    ("provenance-fidelity-stack", "The provenance + fidelity stack"),
     ("mbse-stack", "The MBSE stack"),
     ("self-operations-stack", "The self-operations stack"),
     ("semantic-lint-stack", "The semantic-lint stack"),
     ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
     ("canonical-seam-stack", "The canonical-seam stack"),
     ("observability-stack", "The observability stack"),
-    # DRAFT flagship deep-dive (exemplar of the richer per-part template — goal + overview figure + one
-    # six-field entry per member). Sits here until the author ratifies the template and decides whether the
-    # flagship deep-dives get their own appendix; see book/appendix-stacks/provenance-fidelity-stack.md.
-    ("provenance-fidelity-stack", "The provenance + fidelity stack (flagship draft)"),
 ]
 
 _APPENDIX_STACKS_OPENING_PROSE = """\

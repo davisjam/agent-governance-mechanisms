@@ -93,12 +93,15 @@ class Part:
 
 @dataclass
 class FlagshipStack:
-    """One flagship deep-dive: a package of catalogue entries serving one GEE capability. `overview_figure`
-    is the self-communicate SVG the page leads with; `parts` are the members in pipeline order."""
+    """One flagship deep-dive: a package of catalogue entries serving one or more GEE capabilities.
+    `capabilities` is a list of ≥1 GEE capability names — most stacks serve one, but a stack can span two
+    (the provenance + fidelity stack serves both *track provenance* and *preserve product semantics*).
+    `overview_figure` is the self-communicate SVG the page leads with; `parts` are the members in pipeline
+    order."""
     id: str
     name: str
     goal: str
-    capability: str
+    capabilities: list[str]
     overview_figure: str
     parts: list[Part]
     page_source: str = ""
@@ -164,7 +167,8 @@ def derive_model() -> FlagshipModel:
         ) for p in s.get("parts", [])]
         stacks.append(FlagshipStack(
             id=s["id"], name=s["name"], goal=s.get("goal", ""),
-            capability=s.get("capability", ""), overview_figure=s.get("overview_figure", ""),
+            capabilities=list(s.get("capabilities", [])),
+            overview_figure=s.get("overview_figure", ""),
             parts=parts, page_source=s.get("page_source", ""),
             cross_links=list(s.get("cross_links", [])),
         ))
@@ -241,8 +245,11 @@ def structural_findings(model: "FlagshipModel | None" = None) -> "list[str]":
             findings.append(f"FS2 stack id {s.id!r} is not kebab-case")
         if not s.goal.strip():
             findings.append(f"FS2 stack {s.id!r} has an empty goal line")
-        if caps and s.capability not in caps:
-            findings.append(f"FS2 stack {s.id!r} capability {s.capability!r} is not a GEE capability")
+        if not s.capabilities:
+            findings.append(f"FS2 stack {s.id!r} declares no capabilities (needs ≥ 1 GEE capability)")
+        for cap in s.capabilities:
+            if caps and cap not in caps:
+                findings.append(f"FS2 stack {s.id!r} capability {cap!r} is not a GEE capability")
         if not s.overview_figure:
             findings.append(f"FS2 stack {s.id!r} declares no overview_figure")
         elif not os.path.isfile(os.path.join(_ROOT, s.overview_figure)):
@@ -281,16 +288,72 @@ def structural_findings(model: "FlagshipModel | None" = None) -> "list[str]":
     return findings
 
 
+#: FS4 author's documented moves — strong-composition members that are covered OUTSIDE the flagship
+#: deep-dives, so their absence from any stack's parts is NOT a coverage gap. Keyed by the composition
+#: name in catalogue-classification.json. The evidence-staircase composition is treated in the Validation
+#: chapter, not a flagship stack; the worktree-lifecycle stack was retired (its mechanisms remain as
+#: catalogue entries). Fleet observability is covered live in the observe → react loop. Reframe 260803.
+_FS4_MOVED_COMPOSITIONS = frozenset({"The evidence staircase"})
+
+
+def _l2_name_to_slug() -> "dict[str, str]":
+    """Build the FS4 JOIN — L2-pattern NAME → catalogue entry SLUG — from the classification's
+    `canonical_card` path per pattern. The compositions key their members by L2-pattern NAME; a stack's
+    parts key by entry SLUG. This map is the join that lets FS4 compare the two (single source of truth:
+    the classification file, read at check time — no snapshot)."""
+    out: "dict[str, str]" = {}
+    if not os.path.isfile(_CLASSIFICATION):
+        return out
+    data = json.load(open(_CLASSIFICATION, encoding="utf-8"))
+    for name, rec in data.get("L2_patterns", {}).items():
+        card = rec.get("canonical_card", "") if isinstance(rec, dict) else ""
+        if card.endswith(".md"):
+            out[name] = os.path.basename(card)[:-3]
+    return out
+
+
+def _strong_composition_members() -> "list[tuple[str, str, str]]":
+    """FS4 coverage TARGET — every (composition-name, L2-pattern-name, entry-slug) triple across the
+    classification's strong compositions, resolved through the L2→slug join. A member whose composition is
+    in `_FS4_MOVED_COMPOSITIONS` is dropped (covered outside the flagship deep-dives)."""
+    if not os.path.isfile(_CLASSIFICATION):
+        return []
+    data = json.load(open(_CLASSIFICATION, encoding="utf-8"))
+    join = _l2_name_to_slug()
+    triples: "list[tuple[str, str, str]]" = []
+    for comp in data.get("compositions", []):
+        cname = comp.get("name", "")
+        if cname in _FS4_MOVED_COMPOSITIONS:
+            continue
+        for l2 in comp.get("joins", []):
+            triples.append((cname, l2, join.get(l2, "")))
+    return triples
+
+
 def coverage_note() -> str:
-    """FS4 as a human-readable line: how many stacks are in vs expected, and — once complete — which strong
-    composition members no stack yet covers. Informational; never a gate finding."""
+    """FS4 as a human-readable line. DEFERRED while the model carries fewer than EXPECTED_STACKS records;
+    once all seven land it becomes REAL: it joins the classification's strong-composition members (by
+    L2-pattern name) to catalogue slugs, subtracts the author's documented moves, and reports which members
+    no flagship stack's parts cover. Informational; never a gate finding (FS4 does not enter the fail
+    tally)."""
     model = derive_model()
     n = len(model.stacks)
     if n < EXPECTED_STACKS:
         return (f"FS4 coverage DEFERRED — {n}/{EXPECTED_STACKS} flagship stacks populated; the "
                 f"composition-coverage claim is checked once all seven land.")
     covered = {p.slug for s in model.stacks for p in s.parts}
-    return f"FS4 coverage — {n} stacks populated; {len(covered)} distinct member entries covered."
+    target = _strong_composition_members()
+    uncovered = [(c, l2, slug) for (c, l2, slug) in target if slug and slug not in covered]
+    unresolved = [(c, l2) for (c, l2, slug) in target if not slug]
+    parts = [f"FS4 coverage — {n} stacks populated; {len(covered)} distinct member entries; "
+             f"{len(target) - len(uncovered) - len(unresolved)}/{len(target)} strong-composition members "
+             f"(minus moved: {', '.join(sorted(_FS4_MOVED_COMPOSITIONS))}) land in a flagship stack."]
+    for c, l2, slug in uncovered:
+        parts.append(f"  · UNCOVERED — {l2!r} ({slug}) from {c!r} appears in no flagship stack's parts")
+    for c, l2 in unresolved:
+        parts.append(f"  · UNJOINED — {l2!r} from {c!r} resolves to no catalogue slug (classification "
+                     f"canonical_card missing)")
+    return "\n".join(parts)
 
 
 # ---- materialization --------------------------------------------------------------------------------
@@ -363,7 +426,8 @@ def _print_list() -> int:
     for s in model.stacks:
         print(f"  {s.id}: {s.name}")
         print(f"    goal: {s.goal}")
-        print(f"    capability: {s.capability}  ·  {len(s.parts)} parts  ·  figure {s.overview_figure}")
+        print(f"    capabilities: {' + '.join(s.capabilities)}  ·  {len(s.parts)} parts  "
+              f"·  figure {s.overview_figure}")
     print(f"  {coverage_note()}")
     return 0
 
@@ -376,7 +440,7 @@ def _print_flagship(target: str) -> int:
         return 1
     print(f"== {match.name} ({match.id}) ==")
     print(f"goal: {match.goal}")
-    print(f"capability: {match.capability}")
+    print(f"capabilities: {' + '.join(match.capabilities)}")
     print(f"figure: {match.overview_figure}")
     for i, p in enumerate(match.parts, 1):
         tag = "" if p.resolves else "  [UNRESOLVED slug]"

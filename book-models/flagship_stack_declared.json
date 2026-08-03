@@ -1,12 +1,12 @@
 {
   "_provenance": "HAND-AUTHORED source for the flagship-stack model. Edited by hand; the generated artifact book-models/flagship-stack.json is derived from this by book-models/flagship_stack_model.py. Add a stack = add a record here + its overview SVG + its appendix page, then `python3 book-models/flagship_stack_model.py regenerate`.",
-  "_note": "A flagship stack is a PACKAGE of catalogue entries that together make one governed capability — the alternative-appendix deep-dives. Each record carries the stack's goal, the GEE capability it serves, an overview figure, and one entry per PART with the six fields the deep-dive template renders: role, failure, mechanism, seam (the interlock with adjacent parts), and durability. This file holds ONLY the Provenance + fidelity exemplar for now; the other six stacks land in a later wave once the template is ratified.",
+  "_note": "A flagship stack is a PACKAGE of catalogue entries that together make one or more governed capabilities — the alternative-appendix deep-dives. Each record carries the stack's goal, the GEE capabilities it serves (a list of >= 1; most stacks serve one, some span two), an overview figure, and one entry per PART with the six fields the deep-dive template renders: role, failure, mechanism, seam (the interlock with adjacent parts), and durability. This file holds all seven finalized flagship stacks (reframe 260803).",
   "stacks": [
     {
       "id": "provenance-and-fidelity",
       "name": "The provenance + fidelity stack",
       "goal": "Reconstruct a remediated document's mutation history from the artifact itself, and catch any damage done through the sanctioned door — who and why for every change, and nothing silently lost.",
-      "capability": "Track provenance and trace causes",
+      "capabilities": ["Track provenance and trace causes", "Preserve product semantics"],
       "overview_figure": "book/assets/provenance-fidelity-stack.svg",
       "page_source": "book/appendix-stacks/provenance-fidelity-stack.md",
       "cross_links": ["model-coherence", "specification-and-verification"],
