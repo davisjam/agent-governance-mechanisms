@@ -10,10 +10,10 @@
     "reconciled_big_ideas": 6,
     "zero_claim_suspects": 0,
     "over_cap_unfocused": 0,
-    "max_statement_words": 26
+    "max_statement_words": 32
   },
   "taxonomy": {
-    "word_cap": 26,
+    "word_cap": 32,
     "focus_cap": 3,
     "spine_bounds": [
       10,
@@ -51,7 +51,7 @@
     {
       "id": "fault-lies-in-instructions",
       "order": 2,
-      "statement": "The agent is a printer, not a coder: a bad output indicts the instructions and the environment, not the worker.",
+      "statement": "Treat a bad output first as evidence about the instructions, representation, task boundary, or environment — not automatically as a fixed capability ceiling.",
       "seeds": [
         1
       ],
@@ -59,7 +59,7 @@
         "printer-not-coder"
       ],
       "reconciles_big_ideas": [],
-      "word_count": 20,
+      "word_count": 23,
       "advanced_by": [
         "0.1-preface",
         "1.1-the-printer",
@@ -87,7 +87,7 @@
     {
       "id": "churn-is-the-limit",
       "order": 4,
-      "statement": "Ungoverned, a large agentic project decays into churn when the work outgrows the fleet's context: re-deriving what exists, undoing its own fixes.",
+      "statement": "Ungoverned, the project decays into churn: an increasing share of effort goes to rediscovering context, undoing recent work, and reconciling inconsistencies rather than advancing the system.",
       "seeds": [
         3
       ],
@@ -97,7 +97,7 @@
       "reconciles_big_ideas": [
         "churn"
       ],
-      "word_count": 22,
+      "word_count": 26,
       "advanced_by": [
         "0.1-preface",
         "1.1-the-printer"
@@ -190,7 +190,7 @@
     {
       "id": "alignment-thesis",
       "order": 8,
-      "statement": "Each quality goal splits into a constraint that prevents and a sensor that detects; enforced mechanisms keep implementation aligned with intent.",
+      "statement": "Enforced mechanisms hold implementation to declared intent across later changes; where possible, constrain the action space so the wrong move is unavailable, and where prevention is incomplete, install sensors that detect divergence.",
       "seeds": [
         5
       ],
@@ -202,7 +202,7 @@
       "reconciles_big_ideas": [
         "alignment-thesis"
       ],
-      "word_count": 21,
+      "word_count": 32,
       "advanced_by": [
         "0.1-preface",
         "1.4-why-mage-follows-from-the-machine",
@@ -262,15 +262,15 @@
       ]
     },
     {
-      "id": "sync-cost-removed",
+      "id": "sync-cost-reduced",
       "order": 11,
-      "statement": "Agents change the economics of model synchronization: the maintenance that killed the modeling tradition now runs for cents.",
+      "statement": "The sync economics changed. Agents sharply reduce the recurring labor of keeping models and implementation reconciled.",
       "seeds": [
         8
       ],
       "reconciles_claims": [],
       "reconciles_big_ideas": [],
-      "word_count": 18,
+      "word_count": 16,
       "advanced_by": [
         "0.1-preface",
         "2.2-models-and-the-semantic-gap",
@@ -280,7 +280,7 @@
     {
       "id": "mage-becomes-practical",
       "order": 12,
-      "statement": "Model-based engineering therefore becomes practical in software, where it previously cost too much — models as engineering's universal language, finally affordable.",
+      "statement": "This makes serious model-based software engineering practical: models can become the working language through which agents reason and engineers specify, predict, and govern.",
       "seeds": [
         9
       ],
@@ -288,7 +288,7 @@
         "models-are-universal-language"
       ],
       "reconciles_big_ideas": [],
-      "word_count": 21,
+      "word_count": 23,
       "advanced_by": [
         "0.1-preface",
         "3.7-the-scope-of-modeling",
@@ -300,7 +300,7 @@
     {
       "id": "seat-moves",
       "order": 13,
-      "statement": "The lifecycle survives intact; only the developer's seat moves to the fleet, and the engineer rises to intent, design, and validation.",
+      "statement": "The engineering lifecycle remains; the allocation of work changes. Agents occupy much of implementation, while human effort concentrates on intent, architecture, model authorship, validation, and judgment.",
       "seeds": [],
       "reconciles_claims": [
         "seat-moves-not-lifecycle"
@@ -308,7 +308,7 @@
       "reconciles_big_ideas": [
         "seat-moves"
       ],
-      "word_count": 21,
+      "word_count": 26,
       "advanced_by": [
         "1.5-the-engineers-seat",
         "4.5-lessons-learned",
@@ -355,7 +355,7 @@
         "alignment-thesis",
         "theses-treat-the-causes",
         "failures-become-machinery",
-        "sync-cost-removed",
+        "sync-cost-reduced",
         "mage-becomes-practical",
         "grounded-in-one-case"
       ],
@@ -424,7 +424,7 @@
       "advances": [
         "modeling-thesis",
         "alignment-thesis",
-        "sync-cost-removed"
+        "sync-cost-reduced"
       ],
       "exempt": null
     },
@@ -464,7 +464,7 @@
       "slug": "3.1-the-executable-zoo",
       "advances": [
         "modeling-thesis",
-        "sync-cost-removed"
+        "sync-cost-reduced"
       ],
       "exempt": null
     },

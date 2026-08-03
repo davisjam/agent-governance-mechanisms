@@ -8,7 +8,7 @@
       {"level": "failure-mode", "order": 2, "statement": "Ungoverned, the abundance decays into churn — effort spent rediscovering, undoing, repairing, and reconciling rather than advancing.", "constructs": ["churn"], "spine_claims": ["churn-is-the-limit", "three-not-knowings-cause-churn"]},
       {"level": "theses", "order": 3, "statement": "Two theses divide churn's causes: the Modeling Thesis treats what-to-build and how-to-realize; the Alignment Thesis treats how-to-change-safely.", "constructs": [], "relations": ["thesis-modeling", "thesis-alignment"], "spine_claims": ["modeling-thesis", "alignment-thesis", "theses-treat-the-causes"]},
       {"level": "method", "order": 4, "statement": "The governance-conversion loop: velocity surfaces a failure; judgment converts each recurrence into a mechanism the environment enforces.", "constructs": ["failure-to-mechanism"], "spine_claims": ["failures-become-machinery"]},
-      {"level": "resulting-system", "order": 5, "statement": "The conversions accumulate into the governed engineering environment — quality as a property of the ground the agents stand on.", "constructs": ["governed-environment"], "spine_claims": ["govern-the-environment", "sync-cost-removed", "mage-becomes-practical"]},
+      {"level": "resulting-system", "order": 5, "statement": "The conversions accumulate into the governed engineering environment — quality as a property of the ground the agents stand on.", "constructs": ["governed-environment"], "spine_claims": ["govern-the-environment", "sync-cost-reduced", "mage-becomes-practical"]},
       {"level": "construction-repertoire", "order": 6, "statement": "The catalogue is the construction repertoire the environment is built from: models, mechanisms, compositions, and known uses.", "constructs": [], "spine_claims": ["seat-moves", "grounded-in-one-case"]}
     ],
     "core_constructs": {
@@ -41,7 +41,7 @@
         {"id": "models-compact-structured", "from": ["bounded-reconstructed-context"], "spine_claims": ["modeling-thesis"], "statement": "Bounded context forces the models to be compact and structured."},
         {"id": "deterministic-envelopes", "from": ["probabilistic-execution"], "spine_claims": ["alignment-thesis"], "statement": "Probabilistic behavior means action and admission need deterministic envelopes."},
         {"id": "enforced-at-authority-boundaries", "from": ["tool-mediated-action", "interposition"], "spine_claims": ["alignment-thesis"], "statement": "Tool mediation lets the envelopes be enforced at real authority boundaries."},
-        {"id": "continuous-maintenance", "from": ["cheap-repeated-cognition"], "spine_claims": ["sync-cost-removed"], "statement": "Cheap labor makes models, tests, projections, and drift checks continuously maintainable."},
+        {"id": "continuous-maintenance", "from": ["cheap-repeated-cognition"], "spine_claims": ["sync-cost-reduced"], "statement": "Cheap labor makes models, tests, projections, and drift checks continuously maintainable."},
         {"id": "oversight-saturates", "from": ["parallel-execution"], "spine_claims": ["oversight-does-not-scale"], "statement": "Parallel velocity saturates human per-change oversight."},
         {"id": "policy-in-environment", "from": ["bounded-reconstructed-context", "parallel-execution", "lifecycle-visibility"], "spine_claims": ["govern-the-environment"], "statement": "Cold task starts and machine-scale throughput put policy in the environment — not in remembered training or managerial expectation."},
         {"id": "locally-plausible-failure", "from": ["broad-semantic-reasoning", "probabilistic-execution", "bounded-reconstructed-context"], "spine_claims": ["alignment-thesis"], "statement": "The properties compose into a hazard: a change can look right while violating a global property the agent never saw — met with invariants, composed models, and end-to-end preservation checks."}
@@ -66,7 +66,7 @@
     "kind": "thesis",
     "site_home": "card-thesis-alignment",
     "status": "both",
-    "note": "Alignment Thesis (II of II): a quality goal splits into a constraint (prevents) and a sensor (catches). Site card exists; registered in index-terms.md; book index-def tagged at the preface 'two theses' blockquote. Clean both-resolve."
+    "note": "Alignment Thesis (II of II): enforced mechanisms hold implementation to declared intent across change. Constrain the action space first so the wrong move is unavailable; where prevention is incomplete, install a sensor that detects the divergence — hierarchical, not a mandatory constraint+sensor pair per goal. Site card exists; registered in index-terms.md; book index-def tagged at the preface 'two theses' blockquote. Clean both-resolve."
   },
   "universal-language": {
     "kind": "thesis",

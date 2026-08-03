@@ -61,7 +61,7 @@
         "alignment-thesis",
         "theses-treat-the-causes",
         "failures-become-machinery",
-        "sync-cost-removed",
+        "sync-cost-reduced",
         "mage-becomes-practical",
         "grounded-in-one-case"
       ]
@@ -226,7 +226,7 @@
       "spine_advances": [
         "modeling-thesis",
         "alignment-thesis",
-        "sync-cost-removed"
+        "sync-cost-reduced"
       ]
     },
     {
@@ -326,7 +326,7 @@
       "exempt": null,
       "spine_advances": [
         "modeling-thesis",
-        "sync-cost-removed"
+        "sync-cost-reduced"
       ]
     },
     {
