@@ -2220,11 +2220,10 @@ _STACKS: list[tuple[str, str]] = [
     # an overview figure, and one six-field entry per member (role · failure · mechanism · seam ·
     # durability). The thin two-tier precursor pages were superseded and folded into these seven.
     ("provenance-fidelity-stack", "The provenance + fidelity stack"),
-    ("mbse-stack", "The MBSE stack"),
+    ("model-coherence-stack", "The model-coherence stack"),
     ("self-operations-stack", "The self-operations stack"),
     ("semantic-lint-stack", "The semantic-lint stack"),
     ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
-    ("canonical-seam-stack", "The canonical-seam stack"),
     ("observability-stack", "The observability stack"),
 ]
 
