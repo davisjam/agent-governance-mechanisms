@@ -61,7 +61,7 @@
       "theses_resolve": [
         true
       ],
-      "landed_appears": false
+      "landed_appears": true
     },
     {
       "id": "harness-engineering",
@@ -496,7 +496,7 @@
       "theses_resolve": [
         true
       ],
-      "landed_appears": false
+      "landed_appears": true
     },
     {
       "id": "engineer-role-se-education",
@@ -630,7 +630,7 @@
         true,
         true
       ],
-      "landed_appears": false
+      "landed_appears": true
     },
     {
       "id": "automated-governance-dsl",
