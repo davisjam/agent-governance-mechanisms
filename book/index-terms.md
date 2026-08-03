@@ -438,6 +438,7 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: feasibility-probe | section
 - term: stage-sequence | section
 - term: velocity-curve | section
+- term: support-ratio | section
 - term: kinds-of-work | section
 - term: ada | local
 - term: reactive-compliance | local
