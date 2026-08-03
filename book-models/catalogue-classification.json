@@ -8,31 +8,251 @@
     "rubric": "10 dims 0/1/2: Novelty · Agentic-significance · Durability · Generality · Thesis-relevance · Architectural-depth · Evidence · Tradeoffs · Compositional-value · Wow-factor. 16-20 almost-certainly-print · 12-15 print-if-breadth/story · 8-11 sidebar/online · <8 local-doc. Overrides: Foundational / Awesome / Coverage / Case / Historical.",
     "levels": "L1 Principle (explanatory claim, not an entry) · L2 Canonical mechanism (reusable structure providing a capability) · Composition (mechanisms strong together) · L3 Variant/component/known-use (folds under an L2)."
   },
-
   "L1_principles": [
-    {"id": "P1", "name": "Bind intent to structured models", "claim": "The environment's authoritative knowledge lives in typed models the fleet reasons through, not in prose or scattered code — intent and structure are represented so a bounded-context agent can operate a context-exceeding system.", "expressed_by": ["models-bridge/system-models/executable-source-of-truth", "the whole CAP-KNOW capability"]},
-    {"id": "P2", "name": "Reconcile models with reality", "claim": "A model is only trustworthy while it equals the territory; every authoritative representation owes a mechanical check that it still matches the code/system it describes.", "expressed_by": ["models-bridge/system-models/drift-parity-gates", "the CAP-SYNC capability"]},
-    {"id": "P3", "name": "Constrain action through sanctioned surfaces", "claim": "Probabilistic actors are bounded by making the unsafe move structurally impossible — route mutation through one typed surface, express authority and repair as closed vocabularies, hold each with a ban-lint.", "expressed_by": ["product/canonical-models-and-seams/pdf-model", "product/repair-vocabulary/remediation-verbs", "the CAP-CONSTRAIN capability"]},
-    {"id": "P4", "name": "Re-derive evidence rather than trust reports", "claim": "Completion and correctness are established by recomputing evidence, never by trusting an actor's self-report — the gate re-runs the checks itself.", "expressed_by": ["agent/governance-doc-controls/epic-definition-of-done", "the CAP-COMPLETE capability"]},
-    {"id": "P5", "name": "Convert recurring failures into enforced controls", "claim": "A failure that recurs is converted, once, into a deterministic control that fires on every subsequent change — audit findings become lints; the memory moves from the reviewer into the substrate.", "expressed_by": ["the majority of catalogue entries qua controls", "product/validation-and-conformance/semantic-lints"]},
-    {"id": "P6", "name": "Preserve provenance and accountability", "claim": "Every inserted artifact and every consequential action carries a durable, machine-checkable trace back to its cause, so any change can be explained, audited, and reversed.", "expressed_by": ["product/provenance-and-attribution/mutator-stamps", "the CAP-PROVENANCE capability"]},
-    {"id": "P7", "name": "Model the governance environment itself", "claim": "Once controls proliferate, the control estate becomes a system in its own right and must itself be modeled, covered, and reasoned over — governance-of-governance.", "expressed_by": ["models-bridge/system-models/governance-graph", "the CAP-GOVERN capability"]},
-    {"id": "P8", "name": "Enforce at the right semantic level", "claim": "A control must fire at the level where the property actually lives (structural → deterministic check; semantic → model/judge) and be as legible as the failure it prevents — the placement judgment that explains WHERE every other mechanism sits.", "expressed_by": ["agent/governance-doc-controls/semantic-level-enforcement (this entry IS the principle, lifted out of the pattern set)"]}
+    {
+      "id": "P1",
+      "name": "Bind intent to structured models",
+      "claim": "The environment's authoritative knowledge lives in typed models the fleet reasons through, not in prose or scattered code — intent and structure are represented so a bounded-context agent can operate a context-exceeding system.",
+      "expressed_by": [
+        "models-bridge/system-models/executable-source-of-truth",
+        "the whole CAP-KNOW capability"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Reconcile models with reality",
+      "claim": "A model is only trustworthy while it equals the territory; every authoritative representation owes a mechanical check that it still matches the code/system it describes.",
+      "expressed_by": [
+        "models-bridge/system-models/drift-parity-gates",
+        "the CAP-SYNC capability"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Constrain action through sanctioned surfaces",
+      "claim": "Probabilistic actors are bounded by making the unsafe move structurally impossible — route mutation through one typed surface, express authority and repair as closed vocabularies, hold each with a ban-lint.",
+      "expressed_by": [
+        "product/canonical-models-and-seams/pdf-model",
+        "product/repair-vocabulary/remediation-verbs",
+        "the CAP-CONSTRAIN capability"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "Re-derive evidence rather than trust reports",
+      "claim": "Completion and correctness are established by recomputing evidence, never by trusting an actor's self-report — the gate re-runs the checks itself.",
+      "expressed_by": [
+        "agent/governance-doc-controls/epic-definition-of-done",
+        "the CAP-COMPLETE capability"
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "Convert recurring failures into enforced controls",
+      "claim": "A failure that recurs is converted, once, into a deterministic control that fires on every subsequent change — audit findings become lints; the memory moves from the reviewer into the substrate.",
+      "expressed_by": [
+        "the majority of catalogue entries qua controls",
+        "product/validation-and-conformance/semantic-lints"
+      ]
+    },
+    {
+      "id": "P6",
+      "name": "Preserve provenance and accountability",
+      "claim": "Every inserted artifact and every consequential action carries a durable, machine-checkable trace back to its cause, so any change can be explained, audited, and reversed.",
+      "expressed_by": [
+        "product/provenance-and-attribution/mutator-stamps",
+        "the CAP-PROVENANCE capability"
+      ]
+    },
+    {
+      "id": "P7",
+      "name": "Model the governance environment itself",
+      "claim": "Once controls proliferate, the control estate becomes a system in its own right and must itself be modeled, covered, and reasoned over — governance-of-governance.",
+      "expressed_by": [
+        "models-bridge/system-models/governance-graph",
+        "the CAP-GOVERN capability"
+      ]
+    },
+    {
+      "id": "P8",
+      "name": "Enforce at the right semantic level",
+      "claim": "A control must fire at the level where the property actually lives (structural → deterministic check; semantic → model/judge) and be as legible as the failure it prevents — the placement judgment that explains WHERE every other mechanism sits.",
+      "expressed_by": [
+        "agent/governance-doc-controls/semantic-level-enforcement (this entry IS the principle, lifted out of the pattern set)"
+      ]
+    }
   ],
-
   "gee_capabilities": [
-    {"id": "CAP-KNOW", "name": "Maintain authoritative system knowledge", "gloss": "Represent intent + structure in typed models the fleet reasons through.", "canonical_mechanisms": ["Executable Source of Truth", "Read the Model, Don't Copy It", "Composed State-Machine Model"]},
-    {"id": "CAP-SYNC", "name": "Keep representations equal to reality", "gloss": "Reconcile model ↔ code/system; catch drift mechanically.", "canonical_mechanisms": ["Drift / Parity Gate"]},
-    {"id": "CAP-CONSTRAIN", "name": "Constrain where and how agents act", "gloss": "Sanctioned mutation surfaces + closed action vocabularies + semantic policy.", "canonical_mechanisms": ["One Door Enforced", "Closed Action Vocabulary", "Machine-Enforced Semantic Policy"]},
-    {"id": "CAP-ADMIT", "name": "Admit or reject changes", "gloss": "Gate the work order and the path to production.", "canonical_mechanisms": ["Validated Dispatch", "Staged Admission Gates"]},
-    {"id": "CAP-COMPLETE", "name": "Establish completion on re-derived evidence", "gloss": "Recompute completion; derive assurance obligations from the model.", "canonical_mechanisms": ["Re-Derived Definition of Done", "Model-Derived Assurance Coverage", "Generative Validation"]},
-    {"id": "CAP-PRESERVE", "name": "Preserve product semantics", "gloss": "Guarantee the product's meaning survives mutation + conforms to spec.", "canonical_mechanisms": ["Preservation Invariant", "Conformance-to-External-Spec Engine"]},
-    {"id": "CAP-PROVENANCE", "name": "Track provenance and trace causes", "gloss": "Durable, complete, checkable attribution of every mutation and cause.", "canonical_mechanisms": ["Caused-By Provenance"]},
-    {"id": "CAP-MANAGE", "name": "Manage work, state, and resources", "gloss": "Lifecycle records, resource mediation, and fleet observation.", "canonical_mechanisms": ["Authoritative Lifecycle State", "Mediated Resource Admission", "Adaptive Resource-Pressure Admission", "Fleet Observability Surface", "Point-of-Action Policy Delivery"]},
-    {"id": "CAP-GOVERN", "name": "Govern the control estate itself", "gloss": "Model, cover, and encode the governance system as its own subject.", "canonical_mechanisms": ["Governance Graph", "Computed Control Blast Radius", "Governed Knowledge Base", "Encoded Operational Judgment"]}
+    {
+      "id": "CAP-KNOW",
+      "name": "Maintain authoritative system knowledge",
+      "gloss": "Represent intent + structure in typed models the fleet reasons through.",
+      "canonical_mechanisms": [
+        "Executable Source of Truth",
+        "Read the Model, Don't Copy It",
+        "Composed State-Machine Model"
+      ]
+    },
+    {
+      "id": "CAP-SYNC",
+      "name": "Keep representations equal to reality",
+      "gloss": "Reconcile model ↔ code/system; catch drift mechanically.",
+      "canonical_mechanisms": [
+        "Drift / Parity Gate"
+      ]
+    },
+    {
+      "id": "CAP-CONSTRAIN",
+      "name": "Constrain where and how agents act",
+      "gloss": "Sanctioned mutation surfaces + closed action vocabularies + semantic policy.",
+      "canonical_mechanisms": [
+        "One Door Enforced",
+        "Closed Action Vocabulary",
+        "Machine-Enforced Semantic Policy"
+      ]
+    },
+    {
+      "id": "CAP-ADMIT",
+      "name": "Admit or reject changes",
+      "gloss": "Gate the work order and the path to production.",
+      "canonical_mechanisms": [
+        "Validated Dispatch",
+        "Staged Admission Gates"
+      ]
+    },
+    {
+      "id": "CAP-COMPLETE",
+      "name": "Establish completion on re-derived evidence",
+      "gloss": "Recompute completion; derive assurance obligations from the model.",
+      "canonical_mechanisms": [
+        "Re-Derived Definition of Done",
+        "Model-Derived Assurance Coverage",
+        "Generative Validation"
+      ]
+    },
+    {
+      "id": "CAP-PRESERVE",
+      "name": "Preserve product semantics",
+      "gloss": "Guarantee the product's meaning survives mutation + conforms to spec.",
+      "canonical_mechanisms": [
+        "Preservation Invariant",
+        "Conformance-to-External-Spec Engine"
+      ]
+    },
+    {
+      "id": "CAP-PROVENANCE",
+      "name": "Track provenance and trace causes",
+      "gloss": "Durable, complete, checkable attribution of every mutation and cause.",
+      "canonical_mechanisms": [
+        "Caused-By Provenance"
+      ]
+    },
+    {
+      "id": "CAP-MANAGE",
+      "name": "Manage work, state, and resources",
+      "gloss": "Lifecycle records, resource mediation, and fleet observation.",
+      "canonical_mechanisms": [
+        "Authoritative Lifecycle State",
+        "Mediated Resource Admission",
+        "Adaptive Resource-Pressure Admission",
+        "Fleet Observability Surface",
+        "Point-of-Action Policy Delivery"
+      ]
+    },
+    {
+      "id": "CAP-GOVERN",
+      "name": "Govern the control estate itself",
+      "gloss": "Model, cover, and encode the governance system as its own subject.",
+      "canonical_mechanisms": [
+        "Governance Graph",
+        "Computed Control Blast Radius",
+        "Governed Knowledge Base",
+        "Encoded Operational Judgment"
+      ]
+    }
   ],
-
-  "L2_patterns": {},
+  "L2_patterns": {
+    "Executable Source of Truth": {
+      "abstract_name": "Executable Source of Truth",
+      "intent": "Maintain authoritative system knowledge as machine-readable typed data that is continuously consumed and mechanically held true — the interface through which a context-bounded agent operates a context-exceeding system.",
+      "capability": "CAP-KNOW",
+      "relation": "model ⟷ reality (the model is also the authoritative source that generates parts of the territory)",
+      "score": {
+        "novelty": 2,
+        "agentic": 2,
+        "durability": 2,
+        "generality": 2,
+        "thesis": 2,
+        "arch_depth": 2,
+        "evidence": 2,
+        "tradeoffs": 2,
+        "composition": 2,
+        "wow": 2,
+        "total": 20
+      },
+      "override": "Foundational — the flagship of the Modeling thesis; the whole model zoo hangs off it.",
+      "canonical_card": "models-bridge/system-models/executable-source-of-truth",
+      "vivid_failure": "a stale architecture paragraph that no longer matched the code, so agents reasoned from a lie",
+      "concrete_impl": "the typed system-models bridge (component/zone, service-flow, deployment, ...) projected data-not-code and held true by build-time gates",
+      "merged_cards": [
+        "models-bridge/system-models/executable-source-of-truth"
+      ],
+      "variants_note": "The subject-specific declared models below are VARIANTS/known-uses: each shares the six-field structure (declare authoritative typed data + build-time parity) and differs only in WHICH RELATION it models and its known-uses. Per BEWARE FALSE MERGERS each variant preserves its distinct relation (recorded in its disposition) — they are folded, not collapsed."
+    },
+    "Read the Model, Don't Copy It": {
+      "abstract_name": "Read the Model, Don't Copy It",
+      "intent": "Consumers derive answers from the live model at use time — a copied-out value is banned, so one authoritative answer holds and a model change updates every consumer at once.",
+      "capability": "CAP-KNOW",
+      "relation": "consumer value → live model query (the copy relation banned)",
+      "score": {
+        "novelty": 2,
+        "agentic": 2,
+        "durability": 2,
+        "generality": 2,
+        "thesis": 2,
+        "arch_depth": 1,
+        "evidence": 1,
+        "tradeoffs": 2,
+        "composition": 2,
+        "wow": 1,
+        "total": 17
+      },
+      "override": "Foundational — the consumption discipline that keeps a single source of truth actually single.",
+      "canonical_card": "models-bridge/system-models/meta-model-consumption",
+      "vivid_failure": "a value snapshotted out of the model drifted from it, silently disabling a check keyed on the stale copy",
+      "concrete_impl": "a ban-lint that flags copied-out model values on policed paths; consumers query the model at use time",
+      "merged_cards": [
+        "models-bridge/system-models/meta-model-consumption"
+      ]
+    },
+    "Composed State-Machine Model": {
+      "abstract_name": "Composed State-Machine Model",
+      "intent": "Author the concurrency composition as one checkable object — which lifecycles exist, how they compose, and the predicates that must hold ACROSS them — each predicate carrying a derived verification obligation.",
+      "capability": "CAP-KNOW",
+      "relation": "composed lifecycle legality + cross-machine predicates — what may happen over time, across machines (distinct from any single machine's transition graph)",
+      "score": {
+        "novelty": 2,
+        "agentic": 1,
+        "durability": 2,
+        "generality": 1,
+        "thesis": 2,
+        "arch_depth": 2,
+        "evidence": 1,
+        "tradeoffs": 1,
+        "composition": 2,
+        "wow": 2,
+        "total": 16
+      },
+      "override": "Awesome — composed lifecycle machines with cross-machine property checks (inclusion crit 12).",
+      "canonical_card": "models-bridge/system-models/composed-state-machine-model",
+      "vivid_failure": "two async lifecycles legal alone deadlocked when composed; no single-machine model could see it",
+      "concrete_impl": "typed lifecycle machines + cross-machine invariants, the specification a formal verifier runs against",
+      "merged_cards": [
+        "models-bridge/system-models/composed-state-machine-model"
+      ],
+      "composition": "pairs with formal-invariant-verification (Model-Derived Assurance Coverage) — spec + checker"
+    }
+  },
   "compositions": [],
   "dispositions": {
     "agent/context-and-dispatch/brief-linting": "PENDING",
@@ -63,40 +283,109 @@
     "agent/mediators-and-resource-locks/build-serializer": "PENDING",
     "agent/mediators-and-resource-locks/resource-pressure-gating": "PENDING",
     "agent/mediators-and-resource-locks/test-serializer": "PENDING",
-    "models-bridge/system-models/agent-first-mbse-harness": "PENDING",
-    "models-bridge/system-models/agent-orchestration-model": "PENDING",
-    "models-bridge/system-models/component-zone-model": "PENDING",
-    "models-bridge/system-models/composed-state-machine-model": "PENDING",
-    "models-bridge/system-models/concurrency-contracts": "PENDING",
+    "models-bridge/system-models/agent-first-mbse-harness": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: CONSTRUCTION-METHOD variant — frozen typed records, adopt the best genre's schema, skip its runtime; hand-roll and own the executable layer per view"
+    },
+    "models-bridge/system-models/agent-orchestration-model": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: the same MBSE method pointed at the FLEET substrate (developer-journey + operator-loop legality) — the production substrate made as checkable as the product [SHOWPIECE: second subject arm]"
+    },
+    "models-bridge/system-models/component-zone-model": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: structural ownership relation (file → component/zone/boundary); the fix-once registry every tool queries, held by bidirectional parity"
+    },
+    "models-bridge/system-models/composed-state-machine-model": {
+      "disposition": "keep-as-L2 Composed State-Machine Model",
+      "reason": "Canonical behavioral/temporal composition mechanism."
+    },
+    "models-bridge/system-models/concurrency-contracts": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: MODEL side of Mediated Resource Admission — 'who may run this, how many at once' declared as data so COVERAGE (not just seam-enforcement) is checkable; composes with the mediator pattern"
+    },
     "models-bridge/system-models/control-coverage-census": "PENDING",
     "models-bridge/system-models/control-substrate-dependency": "PENDING",
     "models-bridge/system-models/coverage-model-mapping": "PENDING",
-    "models-bridge/system-models/data-flow-model": "PENDING",
-    "models-bridge/system-models/deployment-topology-model": "PENDING",
-    "models-bridge/system-models/domain-registries": "PENDING",
+    "models-bridge/system-models/data-flow-model": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: governed-flow relation (data category → transitively-reachable sinks); compliance properties evaluated as graph walks — the transitive question no flat list answers"
+    },
+    "models-bridge/system-models/deployment-topology-model": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: physical-topology relation (service → tier/layer/host) plus layering constraints, parity-checked against deploy tables + import graph"
+    },
+    "models-bridge/system-models/domain-registries": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: fact canonicalization (domain fact → single typed home); coverage/parity-linted, docs generated from it"
+    },
     "models-bridge/system-models/drift-parity-gates": "PENDING",
-    "models-bridge/system-models/executable-source-of-truth": "PENDING",
+    "models-bridge/system-models/executable-source-of-truth": {
+      "disposition": "keep-as-L2 Executable Source of Truth",
+      "reason": "Canonical mechanism of CAP-KNOW."
+    },
     "models-bridge/system-models/formal-invariant-verification": "PENDING",
     "models-bridge/system-models/governance-graph": "PENDING",
-    "models-bridge/system-models/invariant-dag-execution-policy": "PENDING",
+    "models-bridge/system-models/invariant-dag-execution-policy": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: the correctness-check DAG as a declared model with a TYPED POLICY LAYER (correctness graph host-invariant; concurrency/budget a profile over it); composes with Mediated Resource Admission"
+    },
     "models-bridge/system-models/journey-criticality-test-placement": "PENDING",
     "models-bridge/system-models/journey-task-closure": "PENDING",
     "models-bridge/system-models/lifecycle-model": "PENDING",
-    "models-bridge/system-models/meta-model-consumption": "PENDING",
+    "models-bridge/system-models/meta-model-consumption": {
+      "disposition": "keep-as-L2 Read the Model, Don't Copy It",
+      "reason": "Canonical consumption discipline."
+    },
     "models-bridge/system-models/model-derived-test-obligation-census": "PENDING",
-    "models-bridge/system-models/model-driven-codegen": "PENDING",
-    "models-bridge/system-models/model-graded-finding-severity": "PENDING",
-    "models-bridge/system-models/process-view": "PENDING",
-    "models-bridge/system-models/query-surface": "PENDING",
-    "models-bridge/system-models/required-config-per-role-manifest": "PENDING",
-    "models-bridge/system-models/rule-metadata-registry": "PENDING",
-    "models-bridge/system-models/service-flow-model": "PENDING",
+    "models-bridge/system-models/model-driven-codegen": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: GENERATION face — artifact = f(model); real artifacts derived + provenance-marked so hand-edits and staleness fail the build"
+    },
+    "models-bridge/system-models/model-graded-finding-severity": {
+      "disposition": "demote-to-L3-under Read the Model, Don't Copy It",
+      "reason": "A model-CONSUMING gate: finding × change → severity via model distance, computed once against the live component model. Strong instance of reading-the-model to grade; no independent canonical status."
+    },
+    "models-bridge/system-models/process-view": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: simultaneity/collision relation (process ∥ process over a shared resource, each race joined to its guard) — deliberately distinct from single-machine transition legality"
+    },
+    "models-bridge/system-models/query-surface": {
+      "disposition": "demote-to-L3-under Read the Model, Don't Copy It",
+      "reason": "The canonical self-describing READ API (one documented dialect) that makes 'read the model' ergonomic; soft, not a lint-banned monopoly."
+    },
+    "models-bridge/system-models/required-config-per-role-manifest": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: completeness-as-admission (runtime env ⊇ role's declared required set); an incomplete environment refused at the door with the full gap [admission face; composes with Staged Admission]"
+    },
+    "models-bridge/system-models/rule-metadata-registry": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: governance rule → enforcement + scope metadata; policy prose made a queryable model, claims cross-checked against real enforcers (governance-of-governance lean)"
+    },
+    "models-bridge/system-models/service-flow-model": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: structural who-exists-and-how-wired relation of the architecture (service topology + API contracts ⟷ deployed reality); wiring generated from the model"
+    },
     "models-bridge/system-models/symbol-anchored-traceability-graph": "PENDING",
-    "models-bridge/system-models/synchronization-model": "PENDING",
-    "models-bridge/system-models/telemetry-collection-provenance": "PENDING",
-    "models-bridge/system-models/timeout-budget-ordering-model": "PENDING",
-    "models-bridge/system-models/typed-contract-surfaces": "PENDING",
-    "models-bridge/system-models/user-journey-model": "PENDING",
+    "models-bridge/system-models/synchronization-model": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: synchronization-contract relation (lock → guarded resource + acquisition order); undeclared lock / inverted acquisition fail at author time"
+    },
+    "models-bridge/system-models/telemetry-collection-provenance": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: observability-coverage relation (stream → origin/landing/per-env collection); distinguishes an absent stream from a true zero"
+    },
+    "models-bridge/system-models/timeout-budget-ordering-model": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: temporal containment ordering (inner budget < containing budget), proven for every declared pair — a latent prod hang converted to a build finding [SHOWPIECE known-use, Awesome]"
+    },
+    "models-bridge/system-models/typed-contract-surfaces": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: boundary-shape relation (producer ⟷ declared contract ⟷ consumer) plus typed boundary policy (visibility/auth/stability); both sides reconcile at build time"
+    },
+    "models-bridge/system-models/user-journey-model": {
+      "disposition": "demote-to-L3-under Executable Source of Truth",
+      "reason": "Subject/face variant of Executable Source of Truth — same declare-typed-data+parity structure, distinct relation preserved: product goal → implementation surface (behavioral traversal joined down to endpoints); declared deps ⟷ real call sites, unlocks journey-aware differential scale-up"
+    },
     "product/canonical-models-and-seams/canonical-walkers": "PENDING",
     "product/canonical-models-and-seams/office-models": "PENDING",
     "product/canonical-models-and-seams/pdf-model": "PENDING",
@@ -118,5 +407,70 @@
     "product/validation-and-conformance/semantic-lints": "PENDING",
     "product/validation-and-conformance/standards-rule-engine": "PENDING"
   },
-  "_coverage": {"total": 82, "pending": 82, "note": "skeleton — all dispositions PENDING; filled group-by-group in subsequent commits"}
+  "_coverage": {
+    "total": 82,
+    "pending": 59,
+    "resolved": 23,
+    "pending_keys": [
+      "agent/context-and-dispatch/brief-linting",
+      "agent/context-and-dispatch/docs-hierarchy",
+      "agent/context-and-dispatch/dynamic-context-injection",
+      "agent/context-and-dispatch/role-typed-dispatch",
+      "agent/gates-and-merge-train/merge-train-mis-batching",
+      "agent/gates-and-merge-train/pre-commit-hook",
+      "agent/gates-and-merge-train/sentinel-first-commit",
+      "agent/gates-and-merge-train/staged-deploy-gates",
+      "agent/governance-doc-controls/claude-md-rule-index",
+      "agent/governance-doc-controls/doc-hygiene-lints",
+      "agent/governance-doc-controls/epic-and-design-templates",
+      "agent/governance-doc-controls/epic-definition-of-done",
+      "agent/governance-doc-controls/mandatory-snippet-table",
+      "agent/governance-doc-controls/operational-playbooks",
+      "agent/governance-doc-controls/operator-runbook-skill",
+      "agent/governance-doc-controls/semantic-level-enforcement",
+      "agent/lifecycle-and-observability/agent-registry",
+      "agent/lifecycle-and-observability/caused-by-provenance",
+      "agent/lifecycle-and-observability/cron-alerts-gate",
+      "agent/lifecycle-and-observability/deploy-heartbeats",
+      "agent/lifecycle-and-observability/lifecycle-hooks",
+      "agent/lifecycle-and-observability/reflection-facet-substrate",
+      "agent/lifecycle-and-observability/tombstone-commits",
+      "agent/lifecycle-and-observability/typed-event-bus",
+      "agent/mediators-and-resource-locks/aggregate-compute-protection",
+      "agent/mediators-and-resource-locks/build-serializer",
+      "agent/mediators-and-resource-locks/resource-pressure-gating",
+      "agent/mediators-and-resource-locks/test-serializer",
+      "models-bridge/system-models/control-coverage-census",
+      "models-bridge/system-models/control-substrate-dependency",
+      "models-bridge/system-models/coverage-model-mapping",
+      "models-bridge/system-models/drift-parity-gates",
+      "models-bridge/system-models/formal-invariant-verification",
+      "models-bridge/system-models/governance-graph",
+      "models-bridge/system-models/journey-criticality-test-placement",
+      "models-bridge/system-models/journey-task-closure",
+      "models-bridge/system-models/lifecycle-model",
+      "models-bridge/system-models/model-derived-test-obligation-census",
+      "models-bridge/system-models/symbol-anchored-traceability-graph",
+      "product/canonical-models-and-seams/canonical-walkers",
+      "product/canonical-models-and-seams/office-models",
+      "product/canonical-models-and-seams/pdf-model",
+      "product/canonical-models-and-seams/raw-redis-seam",
+      "product/canonical-models-and-seams/service-client",
+      "product/provenance-and-attribution/a11y-prefix",
+      "product/provenance-and-attribution/derive-changelog",
+      "product/provenance-and-attribution/f10-wiring-lint",
+      "product/provenance-and-attribution/mutator-stamps",
+      "product/regression-tests/ddt-pin-trailers",
+      "product/regression-tests/fuzz-campaigns",
+      "product/regression-tests/property-tests",
+      "product/regression-tests/test-onion-tiers",
+      "product/repair-vocabulary/codemod-first",
+      "product/repair-vocabulary/remediation-verbs",
+      "product/repair-vocabulary/typed-categories",
+      "product/validation-and-conformance/coherence-lints",
+      "product/validation-and-conformance/content-validator",
+      "product/validation-and-conformance/semantic-lints",
+      "product/validation-and-conformance/standards-rule-engine"
+    ]
+  }
 }
