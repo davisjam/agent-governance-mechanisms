@@ -1022,14 +1022,17 @@ PDF_SVG = ('<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" '
            'v.8h.3c.2 0 .3-.1.3-.4s-.1-.4-.3-.4h-.3zm2 .0h.9c.6 0 1 .5 1 1.4s-.4 1.5-1 1.5h-.9V8.7zm.6.5v1.8h.2'
            'c.3 0 .5-.3.5-.9s-.2-.9-.5-.9h-.2zm2.3-.5h1.7v.5h-1.1v.6h1v.5h-1v1.2h-.6V8.7z"></path></svg>')
 
-SITE_FOOTER = (f'<footer class="site-foot">© <a href="{_SITE_URL}">James C. Davis</a>, '
-               f'2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue &nbsp;·&nbsp; '
-               f'<a class="gh" href="{_REPO_URL}">'
-               f'{GITHUB_SVG} {_REPO_NAME}</a>'
+# Three centered lines: (1) © + affiliation, (2) GitHub repo + read-the-book, (3) the NSF funding
+# acknowledgement. Each rides its own block-level `.foot-line`; the footer is `text-align:center`.
+SITE_FOOTER = (f'<footer class="site-foot">'
+               f'<span class="foot-line foot-copy">© <a href="{_SITE_URL}">James C. Davis</a>, '
+               f'2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue</span>'
+               f'<span class="foot-line foot-links">'
+               f'<a class="gh" href="{_REPO_URL}">{GITHUB_SVG} {_REPO_NAME}</a>'
                f'&nbsp;·&nbsp; <a class="book-foot" href="{{book_prefix}}book/index.html">'
-               f'Read the book →</a>'
-               f'<span class="foot-nsf">This work was supported by the U.S. National Science Foundation '
-               f'under grants #2541917 and #2452533.</span></footer>')
+               f'Read the book →</a></span>'
+               f'<span class="foot-line foot-nsf">This work was supported by the U.S. National Science '
+               f'Foundation under grants #2541917 and #2452533.</span></footer>')
 
 TOPNAV = (f'<div class="topnav"><a href="{_SITE_URL}">James C. Davis, Purdue University</a>'
           f'<a class="gh" href="{_REPO_URL}">'
@@ -1064,7 +1067,9 @@ FONT_CSS = (CSS_ROOT_BLOCK +
             ' font-size:var(--fs-micro); color:var(--muted); text-align:center; }\n'
             '  .site-foot a { color:var(--accent); text-decoration:underline; } .site-foot a:hover { text-decoration:none; }\n'
             '  .site-foot .gh { white-space:nowrap; }\n'
-            '  .site-foot .foot-nsf { display:block; margin-top:var(--space-1); color:var(--muted); }\n'
+            '  .site-foot .foot-line { display:block; }\n'
+            '  .site-foot .foot-line + .foot-line { margin-top:var(--space-1); }\n'
+            '  .site-foot .foot-nsf { color:var(--muted); }\n'
             '  .topnav { position:absolute; top:14px; right:20px; font-size:var(--fs-micro); display:flex; gap:var(--space-2); }\n'
             '  .topnav a { color:var(--muted); text-decoration:none; white-space:nowrap; } .topnav a:hover { color:var(--accent); }\n'
             '  @media (max-width:640px){ .topnav { position:static; justify-content:flex-end; margin:0 0 var(--space-1); } }\n')
