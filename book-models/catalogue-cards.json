@@ -3,37 +3,21 @@
   "_note": "Phase 3 · 3a card substrate for the 3b clustering (book/_design/phase3a-brief-260803.md; method: the editorial directive's 'card + cluster'). One card per catalogue entry: Failure class · Engineering obligation · Solution structure · Guarantee · Semantic level · Forces/tradeoffs · Dependencies · Known uses · Likely parent family, plus optional abstract_name (where the entry title is implementation-biased) and note (carding ambiguities, flagged for 3b). 3b merges entries whose first six fields substantially coincide (only known-uses differing) and keeps entries apart when obligation OR guarantee differs; semantic_level records the RELATION enforced/modeled, not the implementation technology. READ-ONLY wrt entries: this model analyzes the catalogue; it does not govern it.",
   "_counts": {
     "census_total": 82,
-    "carded": 28,
+    "carded": 44,
     "pending": [
-      "models-bridge/system-models/agent-first-mbse-harness",
       "models-bridge/system-models/agent-orchestration-model",
       "models-bridge/system-models/component-zone-model",
       "models-bridge/system-models/composed-state-machine-model",
       "models-bridge/system-models/concurrency-contracts",
-      "models-bridge/system-models/control-coverage-census",
-      "models-bridge/system-models/control-substrate-dependency",
-      "models-bridge/system-models/coverage-model-mapping",
       "models-bridge/system-models/data-flow-model",
       "models-bridge/system-models/deployment-topology-model",
       "models-bridge/system-models/domain-registries",
-      "models-bridge/system-models/drift-parity-gates",
-      "models-bridge/system-models/executable-source-of-truth",
-      "models-bridge/system-models/formal-invariant-verification",
       "models-bridge/system-models/governance-graph",
-      "models-bridge/system-models/invariant-dag-execution-policy",
-      "models-bridge/system-models/journey-criticality-test-placement",
-      "models-bridge/system-models/journey-task-closure",
       "models-bridge/system-models/lifecycle-model",
-      "models-bridge/system-models/meta-model-consumption",
-      "models-bridge/system-models/model-derived-test-obligation-census",
-      "models-bridge/system-models/model-driven-codegen",
-      "models-bridge/system-models/model-graded-finding-severity",
       "models-bridge/system-models/process-view",
-      "models-bridge/system-models/query-surface",
       "models-bridge/system-models/required-config-per-role-manifest",
       "models-bridge/system-models/rule-metadata-registry",
       "models-bridge/system-models/service-flow-model",
-      "models-bridge/system-models/symbol-anchored-traceability-graph",
       "models-bridge/system-models/synchronization-model",
       "models-bridge/system-models/telemetry-collection-provenance",
       "models-bridge/system-models/timeout-budget-ordering-model",
@@ -61,19 +45,29 @@
       "product/validation-and-conformance/standards-rule-engine"
     ],
     "carded_by_role": {
-      "agent": 28
+      "agent": 28,
+      "models-bridge": 16
     },
     "likely_parent_family_distribution": {
+      "Model-derived assurance coverage": 2,
       "Authoritative lifecycle state (disposition-bearing close record)": 1,
       "Authoritative lifecycle state (record-before-destructive-action)": 1,
       "Caused-by provenance (the agent-side member of the provenance stack)": 1,
       "Closed action vocabulary (applied to agent authority: typed authority profiles)": 1,
+      "Drift/parity gate (canonical pattern)": 1,
+      "Drift/parity gate (generalized: the derived traceability graph over the whole join web) — possibly its own canonical pattern": 1,
       "Drift/parity gates (applied to the documentation corpus rather than a typed model)": 1,
       "Encoded operational judgment (generated, lint-kept operator map over the runbooks)": 1,
       "Encoded operational judgment (runbooks/playbooks)": 1,
+      "Executable source of truth (canonical pattern — the bridge flagship)": 1,
+      "Executable source of truth (construction-method variant: the harness)": 1,
+      "Executable source of truth (the agent-facing read face)": 1,
+      "Executable source of truth (the generation face)": 1,
       "Fail-fast environment validation (early substrate-health gate; a stair of the staged admission staircase)": 1,
       "Fleet observability surfaces (progress-liveness variant)": 1,
       "Fleet observability surfaces (typed signal with owned response)": 1,
+      "Governance-of-governance (modeling the control estate; typed-edge kin of invariant-dag-execution-policy)": 1,
+      "Governance-of-governance (the coverage view of the control estate)": 1,
       "Governance-of-governance (the meta-mechanism: the enforced governance document)": 1,
       "Governed knowledge base (documentation as enforced infrastructure)": 1,
       "Health-conditioned admission (an observability signal promoted into a blocking gate)": 1,
@@ -81,15 +75,21 @@
       "Mediated resource admission (fixed-cardinality variant, bounded M)": 1,
       "Mediated resource admission (whole-sweep singleton variant)": 1,
       "Mediated resource admission — but the directive flags this family may SPLIT by forces/guarantees: fixed-capacity concurrency mediation vs adaptive pressure-based admission + shedding; this card is the adaptive pole.": 1,
+      "Model-computed enforcement policy (a model dogfooded to grade a gate) — near the drift/parity + meta-consumption cluster": 1,
+      "Model-derived assurance coverage (trait-derived test placement)": 1,
+      "Model-derived assurance coverage (trait-derived verification routing)": 1,
+      "Model-derived assurance coverage (typed post-condition with derived strength)": 1,
       "PRINCIPLE candidate (L1) — this is a placement judgment that explains where mechanisms sit, not a pattern entry at the same level as its neighbors; 3b should consider lifting it out of the pattern set.": 1,
       "Point-of-action policy delivery (feed-back aggregation over a shared tempo budget)": 1,
       "Point-of-action policy delivery (feed-forward constraint injection)": 1,
       "Point-of-action policy delivery (runtime-event interposition)": 1,
       "Re-derived definition of done (canonical pattern)": 1,
+      "Read the model, don't copy it (canonical pattern)": 1,
       "Schema-governed planning artifacts (typed artifact shape — kin to validated dispatch, one genre up)": 1,
       "Staged admission gates (deploy tier)": 1,
       "Staged admission gates (integration tier) — conflict-aware integration scheduling": 1,
       "Staged admission gates (the path-to-production staircase) — the tree-keyed marker element is kin to re-derived-evidence patterns": 1,
+      "Typed-edge semantics over modeled graphs (with control-substrate-dependency); secondarily a policy layer of the executable-source-of-truth family": 1,
       "Validated dispatch (admission gate on the work order itself — pre-authorization of autonomous work)": 1,
       "Validated dispatch (the enabling registry behind the work-order gate)": 1
     }
@@ -737,6 +737,360 @@
         "known_uses": "DocAble's test-serializer.py N=1 flock on dotnet test (+ auto coverage collection on fuzz filters); TestMediatorEnforcer [ModuleInitializer]; the audited bypass env var.",
         "likely_parent_family": "Mediated resource admission (fixed-cardinality variant, N=1 exclusive)",
         "abstract_name": "Single-writer resource mediation with structural ban"
+      }
+    },
+    "models-bridge/system-models/agent-first-mbse-harness": {
+      "title": "Agent-first MBSE harness (frozen records; adopt schema, skip runtime)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "governs-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "A modeling layer that either doesn't fit your invariants (a real tool's schema is fixed; project-specific derived fields don't map) or doesn't wire into your build (a solver checks the model against itself, never against the running code) — so the model drifts, and a drifted model is worse than none.",
+        "engineering_obligation": "The modeling substrate must express the project's own invariants AND reconcile against the code inside the build — adopt the best genre's vocabulary and schema per view, hand-roll and own the executable layer.",
+        "solution_structure": "A thin harness over plain frozen typed records with five recurring disciplines: (1) the look-up seam (model fields loaded/derived from the code at build, never hand-copied); (2) derive-don't-hand-type + a stored-equals-derived assertion lint; (3) an auto-discovery loader (no central manifest); (4) a per-view drift-lint contract (load model, load code, set-diff, re-run derivations, exit non-zero); (5) a generic record→JSON query projection. Shared harness packaged; per-view drift lints deliberately hand-rolled.",
+        "guarantee": "Per view, the model is unable to lie about the code (the drift lint is the counted sensor). Boundary: degrades to a snapshot the moment a view stops following the look-up/derive/drift disciplines.",
+        "semantic_level": "model field → projection of code (derivation reconciled at build time), plus model vocabulary ⟷ genre standard (schema adopted, runtime skipped — portability preserved).",
+        "forces_tradeoffs": "Five disciplines to actually hold per view. A drift lint per view is real, deliberately-unshared surface. Deciding what to model and in which genre's vocabulary is design work — model only where a failure lives.",
+        "dependencies": "executable-source-of-truth (this is its construction method); drift-parity-gates (discipline 4 IS those gates); model-driven-codegen and query-surface downstream; the genre vocabularies (SysML, Backstage, TLA+, C4) as adoptable schemas.",
+        "known_uses": "DocAble's system-models directory of frozen dataclasses with auto-discovery loader and generic JSON projection; the derived verification-tier field with its stored-equals-derived lint; the Backstage-dialect service-flow view; the portable 4+1-view starter-kit scaffolds shipped with the catalogue's skill.",
+        "likely_parent_family": "Executable source of truth (construction-method variant: the harness)"
+      }
+    },
+    "models-bridge/system-models/control-coverage-census": {
+      "title": "Control-coverage census (controls per governance target)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "validation",
+        "move": "sensor",
+        "model": "governs-a-model",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "A control portfolio that grows toward the last painful failure: effort piles onto the target that just hurt while another governance target accretes nothing, and the imbalance stays invisible — no artifact ever asks whether the control SET is balanced — until the unwatched target fails in a way a control would have caught.",
+        "engineering_obligation": "Audit the governance estate itself against a closed taxonomy of complementary control targets carrying a completeness claim — re-derived from the live control set on every query, never a hand-kept audit that rots.",
+        "solution_structure": "Each control's governance target is derived from its own code anchor by a rule (fail-loud on any control it cannot place — no silent default bucket); a read-only projection rolls the control node-set up per target with its soft/hard enforcement shape; an empty or all-soft target is a first-class finding naming the estate's blind spot; instrument-only — it aims the next control, never gates a commit.",
+        "guarantee": "The classification cannot silently mis-credit (the fail-loud classifier is the hard half); the coverage map re-derives on every query so gaps open and close automatically. Boundary: measures balance, not quality — a populated target counts covered even if its controls are weak.",
+        "semantic_level": "control → governance target — portfolio completeness over a closed complementary-targets taxonomy; reflexive (the control set audits itself).",
+        "forces_tradeoffs": "Honest partial coverage is the feature — a stated zero drives the next work. A target the taxonomy can't express forces a taxonomy change (the doctrine grew a dimension). Balance ≠ strength.",
+        "dependencies": "governance-graph (supplies the typed control node-set this rolls up); the closed targets taxonomy; stable per-control anchors; counterpart reflection-facet-substrate (the reactive supply whose failure-driven bias this proactive audit corrects).",
+        "known_uses": "DocAble's control-target axis over the agent/models-bridge/product node-set; the roll-up that read one target populated and two at zero, driving a fix-wave from zero to a dozen controls; the census's own anchor-drift guard (it censuses its own governor).",
+        "likely_parent_family": "Governance-of-governance (the coverage view of the control estate)"
+      }
+    },
+    "models-bridge/system-models/control-substrate-dependency": {
+      "title": "Control↔substrate dependency (computed blast-radius)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Substrate assumptions buried in control bodies: a substrate migration then misfires the fleet two silent ways at once — false FAILs (controls validating manifests that no longer exist, deploy-blocking on a no-baseline gate) and false PASSes (migrated services vanishing from every totality check) — and the blast radius is knowable only by grep-plus-read-every-body.",
+        "engineering_obligation": "Every control declares the substrate assumption it bakes in as a typed fact, so 'what breaks when I change this substrate' is a computed query before the change, not an archaeology after it.",
+        "solution_structure": "A closed stance enum added to each control's existing metadata block (assumes-plane-A-only / plane-B-only / branches-per-plane / agnostic); a query joins the declarations against the substrate model and emits the blast-radius table per target substrate; a declaration lint requires the stance on every substrate-reading control (audit-only → blocking); the deploy realization gate refuses to ship undeclared consumers.",
+        "guarantee": "The migration blast radius is computed from declarations, not hand-maintained or grepped. Boundary: only as expressive as the stance enum — a stance it can't express forces an enum change (the honest signal the substrate grew a dimension).",
+        "semantic_level": "control → substrate assumption — the governance fleet's own dependency edges made typed and queryable (the control estate becomes a modeled element).",
+        "forces_tradeoffs": "One declaration per substrate-reading control (the intended tax). Pays off only at a substrate change — a design-time-on-the-predictive-smell control, over-built if added to a substrate you'll never change.",
+        "dependencies": "deployment-topology-model (the substrate model joined against); the existing control-metadata convention (adopt the schema you already lint); query-surface; extends meta-model-consumption from values to dependency edges.",
+        "known_uses": "DocAble's typed plane-assumption on every topology-reading lint; the plane-deps query printing which lints a GKE↔Cloud-Run migration puts in scope; the declaration lint + deploy-gate fold-in.",
+        "likely_parent_family": "Governance-of-governance (modeling the control estate; typed-edge kin of invariant-dag-execution-policy)"
+      }
+    },
+    "models-bridge/system-models/coverage-model-mapping": {
+      "title": "Coverage → model-node mapping (which invariants are tested)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "validation",
+        "move": "sensor",
+        "model": "governs-a-model",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "False test adequacy: 90% line coverage while a critical race invariant has zero tests touching its states — coverage counts lines, not meanings, so the invariants that matter most hide inside a high aggregate number.",
+        "engineering_obligation": "Measure test adequacy against the system's meanings — per model node (state, seam, invariant), 'is this tested?' must be a queried fact, not a guess from a percentage.",
+        "solution_structure": "A mapping that projects the suite's coverage data onto the structured model's nodes (via a node→code join at function granularity), yielding a per-node fact: covered / uncovered / by-which-tests; used first as a backlog (the model becomes the test work-list), promotable to a gate for critical nodes.",
+        "guarantee": "Per-node coverage is a queryable fact that a threshold cannot hide. Boundary: a covered node is exercised, not proven (pair with formal verification); sharpness limited by coverage granularity and the fidelity of the node→code join.",
+        "semantic_level": "test coverage → model node — the exercise relation over meanings rather than lines.",
+        "forces_tradeoffs": "The node→code join is load-bearing (mis-mapped nodes get mis-attributed coverage). Function granularity can't split two invariants in one function. Gating everything starves throughput; gating nothing leaves criticals untested — criticality scoping is the tuning surface.",
+        "dependencies": "Structured model with addressable nodes (executable-source-of-truth); attributable coverage data; a criticality policy; counterpart formal-invariant-verification (proof vs exercise).",
+        "known_uses": "DocAble's coverage-reference mapping onto the cross-service state-machine model's nodes at function granularity; the uncovered-critical-nodes sweep as work-list.",
+        "likely_parent_family": "Model-derived assurance coverage"
+      }
+    },
+    "models-bridge/system-models/drift-parity-gates": {
+      "title": "Drift & parity gates (model↔reality)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "validation",
+        "move": "sensor",
+        "model": "governs-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Silent model drift: the model says one thing, the code does another, and everything downstream (dispatch, codegen, deploy) reasons from a lie — worse than absence because the model looks authoritative; recurs whenever either side changes without the other.",
+        "engineering_obligation": "Keep the map equal to the territory bidirectionally — neither the model nor the reality may drift unilaterally; one-way regeneration cannot express a model that also generates parts of the code.",
+        "solution_structure": "A family of parity checks, one (or a pair) per model, each reading the model at lint time and comparing against machine-readable reality in both directions (every model row ↔ a real thing on disk AND every real thing ↔ a model row), blocking the build on divergence.",
+        "guarantee": "Divergence in either direction fails the build. Boundary: only for the modeled relations, and only as good as the parity predicate — a wrong predicate yields false drift or false confidence.",
+        "semantic_level": "model ⟷ reality — bidirectional parity as a build-blocking invariant.",
+        "forces_tradeoffs": "A gate per model to author and maintain (real enforcement breadth). Bidirectionality is stricter — it fails on legitimate transitions, which is the point (both sides must move together).",
+        "dependencies": "A machine-readable model and reality to compare; blocking gate placement; the executable-source-of-truth substrate; generalized by symbol-anchored-traceability-graph; product-side sibling coherence-lints.",
+        "known_uses": "DocAble's service-flow parity lint (tree↔yaml both ways), public-API drift lint (handler↔spec), service-call-graph drift lint, deploy-phase-table parity, k8s parity lints, sync-coverage lint, model↔tree reverse-mapping tests.",
+        "likely_parent_family": "Drift/parity gate (canonical pattern)"
+      }
+    },
+    "models-bridge/system-models/executable-source-of-truth": {
+      "title": "Executable source-of-truth (data-not-code, can't drift)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "governs-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "No shared, authoritative, compact representation of the system: the codebase exceeds any agent's context window, so agents (and humans) re-derive the architecture badly and drift; prose architecture docs go stale because nothing forces them true.",
+        "engineering_obligation": "Maintain authoritative system knowledge as machine-readable typed data that is continuously consumed and mechanically held true — the interface through which a context-bounded actor operates a context-exceeding system.",
+        "solution_structure": "A catalog of structured models (typed data importing nothing) that tools, lints, and deploy scripts read on every run and generate real artifacts from; every model is pinned by a characterization test, held true by a drift/parity gate, and constantly exercised; consumption preference: a stable lint that reads the meta-file > codegen > a hand-rolled copy.",
+        "guarantee": "The build fails the moment a model diverges from the code (via the gates), so drift surfaces as a failed build, not a stale paragraph. Boundary: 'cannot drift' holds only while every model has a gate and stays continuously consumed.",
+        "semantic_level": "model ⟷ reality — the map held equal to the territory, with the model also authoritative source generating parts of the territory.",
+        "forces_tradeoffs": "Real upkeep tedium — exactly what stopped humans doing MBSE, and what agents dissolve. An authoritative-looking wrong model is worse than none (hence gates are not optional). What to model, and in which dialect, is up-front design work.",
+        "dependencies": "drift-parity-gates (the counterpart that makes 'cannot drift' true); agent-first-mbse-harness (the construction method); model-driven-codegen, query-surface, meta-model-consumption (the faces); every is-a-model entry rides on it.",
+        "known_uses": "DocAble's model catalog (~60 typed models; Backstage-dialect YAML for services, typed loaders for the rest); per-model doc-derived characterization pins; the lint-reads-meta-file preference order.",
+        "likely_parent_family": "Executable source of truth (canonical pattern — the bridge flagship)"
+      }
+    },
+    "models-bridge/system-models/formal-invariant-verification": {
+      "title": "Formal invariant verification (temporal form → model check)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "validation",
+        "move": "sensor",
+        "model": "governs-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Invariants believed true while a rare interleaving violates them: sampled tests miss the one adversarial schedule; the same invariant restated in prose/assertion/spec drifts apart; and a mis-declared liveness property routed to a safety checker is structurally blind to its violation, with zero signal.",
+        "engineering_obligation": "Verify each invariant by the method its property class demands — the temporal shape (safety vs liveness) is a required, consumed routing input that derives the checker, never a decorative annotation.",
+        "solution_structure": "A required temporal-form field on every model invariant ([]P / []<>P / P ~> Q); a derivation routes the invariant from its operator to the checker its shape demands (exhaustive state-space BFS for safety, a temporal model checker for liveness); a match lint asserts the routed checker fits the operator, making mis-routing a build error; reuse one mature formal engine rather than building parallel ones.",
+        "guarantee": "A routed invariant is proven across every interleaving of the bounded modeled state space, or yields a concrete counterexample trace. Boundary: exhaustive only within bounds and only as faithful as the model's abstraction of the real system.",
+        "semantic_level": "invariant's temporal shape → verification method — the property class ⊨ prover strength relation (safety/liveness made explicit and consumed).",
+        "forces_tradeoffs": "Heavier than unit tests — dev/CI cadence, not per-commit; the derived tier keeps cheap invariants on cheap checkers. A decorative unconsumed temporal string is worse than none: it looks verified and isn't (the match lint exists for this).",
+        "dependencies": "A structured invariant model (executable-source-of-truth); at least one exhaustive checker; the shape↔checker match lint; sibling journey-criticality-test-placement (same derive-a-tier-from-a-typed-trait move).",
+        "known_uses": "DocAble's temporal operators on the cross-service state model; the TLA+-family checker plus the bounded-BFS 'simworld'; the match lint; the state model named in SysML vocabulary (adopt the schema, skip the runtime).",
+        "likely_parent_family": "Model-derived assurance coverage (trait-derived verification routing)"
+      }
+    },
+    "models-bridge/system-models/invariant-dag-execution-policy": {
+      "title": "Invariant-DAG execution policy (typed Scheduler: correctness vs resource + cost)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "governs-a-model",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "A dependency graph that lies to its reader: resource rationing and cost gates spelled in the same needs= syntax as correctness edges, per-environment conditionals mutating the graph per host — so removing a stale wait takes multi-paragraph archaeology, a rationing edge ships to an elastic host, and an over-broad strip silently disables a real gate.",
+        "engineering_obligation": "Keep the correctness statement host-invariant and make every edge declare why it exists; environment-specific execution concerns (concurrency, budget) are a typed policy layer over the graph, never mutations of it.",
+        "solution_structure": "A closed edge-intent enum (CORRECTNESS / COST_GATE / LOAD): only the first two live in the graph, identical across hosts over the shared roster; LOAD migrates out to a typed Scheduler mapping a per-host (concurrency-ceiling, budget) profile to a ConcurrencyPlan of semaphores + per-COST_GATE honor decisions, emitting per-wave rationing records; two lints hold the separation (no LOAD edge in the graph, read from the Scheduler's own permitted-intent set; cross-host edge-set consistency).",
+        "guarantee": "The graph never changes shape per host; raising a ceiling or moving a stress test is a profile-row edit, never graph code. Boundary: the edge→semaphore migration is behavior-identical only at N=1 — the low-concurrency host needs a pinned serialization check or a silent concurrency regression ships.",
+        "semantic_level": "dependency edge → declared intent — correctness vs economy vs contention as typed edge semantics; execution plan ⊨ host profile.",
+        "forces_tradeoffs": "Every edge gains an intent annotation (the price of legibility). Two rationing layers may coexist (deploy Scheduler vs host mediators) until unified. The cross-host graph diff is expensive — deploy-scope, not per-commit.",
+        "dependencies": "deployment-topology-model (the host taxonomy the profile keys on); a step selector/roster; executable-source-of-truth + drift gates; sibling control-substrate-dependency (same typed-edge-metadata reflex on a different graph).",
+        "known_uses": "DocAble's EdgeIntent enum + frozen DAG_RESIDENT_INTENTS set on the deploy driver; the Scheduler with three host profiles (local permits-1, staging unbounded, production low-finite); the load-edge and host-superset lints (audit-only, zero findings by construction).",
+        "likely_parent_family": "Typed-edge semantics over modeled graphs (with control-substrate-dependency); secondarily a policy layer of the executable-source-of-truth family"
+      }
+    },
+    "models-bridge/system-models/journey-criticality-test-placement": {
+      "title": "Journey-criticality → test-tier placement (which host a test runs on)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "validation",
+        "move": "package",
+        "model": "governs-a-model",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "The local-green/staging-red surprise: which test runs in which environment tier is a hand-drawn line that drifts, so a major user path ends up staging-only — the fast local gate passes and is trusted to mean more than it covers, and the broken revenue-core flow surfaces late.",
+        "engineering_obligation": "Derive verification placement from a typed importance trait — the tier is a pure function of criticality, stored nowhere by hand — and hold a floor guaranteeing the cheap gate covers everything designated major.",
+        "solution_structure": "A typed criticality axis on journey parts; a total derivation criticality→tier computed at model load (moving a part off the fast tier requires a visible criticality reclassification, never a silent tier edit); a coverage-floor lint (every major part maps to a real test in a sanctioned local home); a per-context selector — a pure function from deploy context to the concrete test roster — that the deploy driver gates each phase on; host containment is a semilattice checked by property test + a live-model lint.",
+        "guarantee": "Local-green ⟹ every major path ran locally, as a checked property. Boundary: the floor closes absence, not quality — a hollow stub passes; that residual stays human (picked up by journey-task-closure).",
+        "semantic_level": "journey criticality → verification host tier — an importance trait deriving placement, plus a checked containment ordering over hosts.",
+        "forces_tradeoffs": "A join-key annotation cost on every journey. Reclassification friction is deliberate (over-marking major grows the local tier). A two-value cut may mis-fit larger products — extend the derivation, don't hand-place outliers.",
+        "dependencies": "user-journey-model (the carrier) and service-flow-model (the typed journey entities); executable-source-of-truth + drift gates; siblings formal-invariant-verification and journey-task-closure (the derive-from-a-trait family).",
+        "known_uses": "DocAble's MAJOR/MINOR journey-part derivation to local-depth vs staging-full; the coverage-floor lint (landed audit-only over a known gap); the per-context selector imported by the cluster-deploy driver in place of per-environment conditionals.",
+        "likely_parent_family": "Model-derived assurance coverage (trait-derived test placement)"
+      }
+    },
+    "models-bridge/system-models/journey-task-closure": {
+      "title": "Journey task-closure (typed terminal post-condition → derived strength)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "validation",
+        "move": "package",
+        "model": "governs-a-model",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "The flow-vs-task gap: a journey test greens on 'the URL loaded' while the artifact the user came for never paints — the terminal assertion sits one hop short of the goal, and 'what done means' lives in prose no check can compare against the spec's real assertion.",
+        "engineering_obligation": "The meaning of a journey's terminal assertion is typed data whose strength is derivable and gated — a major journey's test may not assert less than task closure.",
+        "solution_structure": "A typed closure block on the journey entity: a sealed boolean algebra (AND/OR/NOT, deliberately non-temporal) over a reviewed library of leaf predicates preferring accessibility observables; flow-only leaves (navigated, 2xx) exist but cannot constitute a closure alone; a pure total derivation yields TASK_CLOSED / FLOW_ONLY / DISABLED; a gate makes a major journey deriving FLOW_ONLY a finding; forward-policing lints; audit-only-first landing while the backlog drains.",
+        "guarantee": "A major journey's terminal assertion provably has the shape of task closure, and the same typed closure resolves through a second resolver (a headless canary probe) pre-promotion. Boundary: closes meaning, not robustness — deep-vs-shallow assertion stays human review.",
+        "semantic_level": "terminal assertion ⊨ task outcome — the test's meaning held equal to the user's goal, with strength derived from the expression's shape.",
+        "forces_tradeoffs": "The leaf library must extend by reviewed registry addition or it sprawls into bespoke predicates. A disabled closure must stay visible as DISABLED, not vanish into green. Audit-only-first is the honest landing for unmigrated journeys.",
+        "dependencies": "user-journey-model (the carrier); the criticality axis to scope the gate; observable resolvers (a11y roles, HTTP status, file magic); drift-parity thinking applied to the terminal assertion; sibling journey-criticality-test-placement (picks up where its floor stops).",
+        "known_uses": "DocAble's typed closure blocks on major journeys ('artifact rendered AND content inspectable AND no error-fallback' — the fixed form of a real one-hop-past production break); the strength gate; the canary closure-probe closing the configuration-only-break containment hole.",
+        "likely_parent_family": "Model-derived assurance coverage (typed post-condition with derived strength)"
+      }
+    },
+    "models-bridge/system-models/meta-model-consumption": {
+      "title": "Meta-model consumption (read, don't hardcode)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "constraint",
+        "model": "governs-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Substrate drift via hardcoded snapshots: a consumer pastes 'our packages are [A, B, C]' into a lint or test, the model changes, and the consumer keeps passing while reasoning about a stale world — the single most common drift recurrence vector, tempting at every consumer.",
+        "engineering_obligation": "Consumers derive answers from the live model at use time — a copied-out value is banned; one authoritative answer, every consumer derives it, a model change updates all of them at once.",
+        "solution_structure": "A consumption convention (read at run/lint-time, via the query surface for agents or direct import for tools) codified as a preference order (lint-reads-meta-file > codegen > hand-rolled copy), enforced by a forward-policing lint that fails a test embedding a snapshot of a queryable value, plus a rule that lints declare their scope against the component model rather than hardcoding it.",
+        "guarantee": "No private copies on the policed paths; the consumer's answer is the model's answer. Boundary: the ban-lint must recognize what counts as a queryable value; slight per-consumer ceremony and load-time coupling.",
+        "semantic_level": "consumer value → live model query — single source of truth; the copy relation banned.",
+        "forces_tradeoffs": "A query call instead of a literal (the intended trade). The consumer now depends on the model loading when it runs. The ban-lint's accuracy bounds the guarantee.",
+        "dependencies": "query-surface (the canonical read path); the models themselves; consumed by dynamic-context-injection, coherence-lints, doc-hygiene-lints, the reflection facets (policy by reference).",
+        "known_uses": "DocAble's component registry + repo-query read at runtime by the lint fleet and dispatch; the snapshot-ban lint; the lint-scope-declares-against-the-model rule.",
+        "likely_parent_family": "Read the model, don't copy it (canonical pattern)"
+      }
+    },
+    "models-bridge/system-models/model-derived-test-obligation-census": {
+      "title": "Model-derived test-obligation census (derive obligations, lint the gap)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "validation",
+        "move": "sensor",
+        "model": "governs-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Coverage blind to what should exist: whole categories of obligation (an unfuzzed external seam, a failure edge with no injection test, an invariant with no checker) sit at zero behind a rising line-coverage percentage, because coverage's denominator is what you built, not what you owe — and every new seam silently adds an obligation nothing counts.",
+        "engineering_obligation": "Derive the should-be-tested denominator from the models themselves and lint the gap to the tests that exist — an untested obligation is a named, listable finding whose set regrows with every model change.",
+        "solution_structure": "Walk the structured models that declare a testable surface (seam registry, failure-edge model, invariant list) to compute obligation sets; join each obligation against the test corpus (by convention, tag, or registry); an obligation with no matching test is a finding attributable to the model element that generated it; one census genre reused across obligation kinds.",
+        "guarantee": "An entire untested category is a listable finding set, and a newly-added surface reopens the gap until a test closes it. Boundary: measures obligation coverage, not test quality — a matched weak test counts as covered; the obligation↔test join must track naming/tagging or it reports false gaps or false safety.",
+        "semantic_level": "model-declared surface → owed test — the obligation relation, with the denominator drawn from the model rather than the code.",
+        "forces_tradeoffs": "The matching rule is load-bearing maintenance. Quality judgment is delegated to other mechanisms. The census is only as complete as the models that declare surfaces.",
+        "dependencies": "Models declaring testable surfaces (executable-source-of-truth); a matchable test corpus; a gate treating unmet obligations as findings; fuzz-campaigns discharge the fuzz obligations; generalizes coverage-model-mapping across obligation kinds; sibling journey-task-closure.",
+        "known_uses": "DocAble's fuzz-target census (should-be-fuzzed from the seam model); the error-path injection census (should-have-injection from the failure-edge model); the invariant-checker census.",
+        "likely_parent_family": "Model-derived assurance coverage"
+      }
+    },
+    "models-bridge/system-models/model-driven-codegen": {
+      "title": "Model-driven codegen",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "validation",
+        "move": "sensor",
+        "model": "governs-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "A model nothing depends on: if models only describe, nothing breaks when they're wrong, so nothing keeps them right; and separately, a hand-edit to a generated artifact is silently lost on the next regen.",
+        "engineering_obligation": "The model must drive the system, not describe it — real artifacts derived from the model, provenance-marked so hand-edits and staleness are mechanically caught.",
+        "solution_structure": "A family of generators reading the models and emitting real artifacts (network policy, service catalog, env wiring, API docs, wire-contract types, docker, human-readable diagrams), each output carrying a provenance header (emitter + regen path) re-emitted every run, enforced by a provenance lint plus a freshness/drift lint.",
+        "guarantee": "One authoritative source per generated artifact class: change the artifact by changing the model; a hand-edit or stale artifact fails the build. Boundary: only the generated classes — everything else needs parity gates instead.",
+        "semantic_level": "artifact = f(model) — the derivation relation, provenance-marked, with hand-edit detection.",
+        "forces_tradeoffs": "A generator per artifact class to author and keep current with the model schema. Generated files must never be hand-edited (a real constraint). Regen discipline on every model change (the freshness lint catches misses).",
+        "dependencies": "Models rich enough to generate from (service-flow, domain-registries, deployment-topology); the provenance-header lint (doc-hygiene kin); cross-target kin: product mutator-stamps ('the tool records what it produced').",
+        "known_uses": "DocAble's NetworkPolicy, service-catalog, env, web-API-entity, public-API-doc, competitor-catalog, wire-contract, and docker generators; the Mermaid model-visualization generator (even the picture a human reads can't drift).",
+        "likely_parent_family": "Executable source of truth (the generation face)"
+      }
+    },
+    "models-bridge/system-models/model-graded-finding-severity": {
+      "title": "Model-graded finding severity (distance-graded gate)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "quality-gate",
+        "move": "sensor",
+        "model": "governs-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Findings graded uniformly wrong: an all-or-nothing gate blocks a one-file commit on a pre-existing finding three subsystems away (agents learn to bypass, the gate stops protecting), or each lint re-implements its own relevance scoping and the logic drifts N ways.",
+        "engineering_obligation": "A finding's severity is a function of the finding AND the change, computed by one central authority against a structured model at check time — the relevance decision owned once, never re-implemented per lint.",
+        "solution_structure": "Lints emit structured findings (site, causing input, machine-readable kind, fix-guidance) and stop deciding relevance; the commit gate loads the component model live in-process and runs one grader over every finding: HARD (site or causing input in the changed set — block, with rendered fix-guidance), SOFT (same component — warn), SILENT (elsewhere — defer to the downstream no-baseline backstop); un-gradable findings fail closed to HARD; the grade is additive-restrictive (can relax, cannot fabricate a block).",
+        "guarantee": "One grading rule holds for every finding and every future lint that emits the contract, with a fail-safe worst case (a grader bug can let a finding slip to the backstop, never invent a spurious block). Boundary: SILENT means deferred, not unchecked — the backstop is required.",
+        "semantic_level": "finding × change → severity via model distance — enforcement relevance as a computed relation over the component model, read at check time.",
+        "forces_tradeoffs": "Centralizing the join gives one grader one blast radius (traded against N drifting private copies). SOFT debt accumulates until a hygiene pass. Whole-tree lint runs cost more per governed commit (a cost-threshold routes expensive lints to self-scoped paths). The structured-finding contract becomes load-bearing.",
+        "dependencies": "component-zone-model (read live at check time — the sharpest model-consumed-to-run-a-mechanism instance); the structured-finding emission contract (pre-existing in the instance); the pre-commit hook as host; meta-model-consumption; a downstream no-baseline gate.",
+        "known_uses": "DocAble's governed-doc pre-commit hook grading whole-tree doc-staleness and index-comprehensiveness findings against the component-and-zone model — fixing the recurring blocked-by-unrelated-stale-findings incident; HARD-by-causation for a commit adding an unindexed doc (site untouched, causing input in the change).",
+        "likely_parent_family": "Model-computed enforcement policy (a model dogfooded to grade a gate) — near the drift/parity + meta-consumption cluster",
+        "abstract_name": "Change-distance-graded enforcement"
+      }
+    },
+    "models-bridge/system-models/query-surface": {
+      "title": "Model query surface (`repo-query`)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "agent-output",
+        "move": "constraint",
+        "model": "governs-a-model",
+        "enf": "Soft"
+      },
+      "card": {
+        "failure_class": "Ad-hoc, error-prone model access: left to cat/grep the model files, agents and one-off tools re-implement loading and traversal, get the dialect subtly wrong, and produce brittle one-offs — defeating the queryable map's purpose.",
+        "engineering_obligation": "Provide one canonical, self-describing read API over the models so bounded agents consume structure, not prose, and the loading dialect is documented once.",
+        "solution_structure": "A CLI with ~15 deterministic subcommands and a stable --json contract, plus a self-describing models meta-command; co-located with the models so its loader is the canonical load example; atomic writes where relevant.",
+        "guarantee": "Deterministic structured output on the canonical path. Boundary: soft — the canonical convenience, not a lint-banned monopoly; direct import remains legitimate for Python tools.",
+        "semantic_level": "consumer → model read path — the access relation canonicalized (one documented dialect instead of N re-derivations).",
+        "forces_tradeoffs": "Not the sole path, by design. A subcommand surface that grows with every model added.",
+        "dependencies": "The models loading cleanly (executable-source-of-truth); meta-model-consumption as the discipline it serves; ridden by the traceability graph, the blast-radius query, and the coverage roll-ups.",
+        "known_uses": "DocAble's repo-query CLI (component / service-flow / frontend-flow / design / callers / xrefs / epic / task / web-api / config, --json); the repo-query orchestrator skill.",
+        "likely_parent_family": "Executable source of truth (the agent-facing read face)"
+      }
+    },
+    "models-bridge/system-models/symbol-anchored-traceability-graph": {
+      "title": "Symbol-anchored traceability graph (derived edges)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Silent traceability rot: the cross-references an agent walks between abstraction levels (model → enforcing lint → code root → proof → registry) go stale on every refactor — the model still looks authoritative while pointing at a ghost, and the blow-up lands days later in a downstream gate; plus the pointer-drift class (a built replacement never repointed-to, so the system defaults to the retired implementation).",
+        "engineering_obligation": "Every cross-layer join is a typed, derived edge re-provable against live reality — derived edges defend, snapshotted ones drift; liveness must be a property of the representation (resolution IS the read), not a sync process running beside a snapshot.",
+        "solution_structure": "A typed graph: TraceEdges over a closed kind vocabulary (governs / enforced-by / verified-by / derived-from / points-at) with a sanctioned kind-pair table and a non-optional derivation per edge, each terminating on a SymbolAnchor (path, symbol, resolver — never a line number; resolver chosen by file type, textual fallback only as a declared weak edge); a meta-lint re-derives every edge at DoD/audit cadence (cost-bound); an active-implementation registry + pointer-agreement lint for the points-at class; bidirectional traversal doubles as the agent's externalized mental model; an unresolvable anchor routes as an abstraction-completeness finding (the code lacks the seam), not an error.",
+        "guarantee": "A broken join reddens at scan time, and an anchor that resolves means both the model's claim is currently true and the agent's traversal is a current slice. Boundary: resolution catches deletion, not demotion (a symbol that exists but no longer plays the claimed role resolves green — the keyword companion covers role currency); cadence, not per-commit.",
+        "semantic_level": "model element ⟷ its enforcing/verifying/governed artifacts — the join web between abstraction levels, held by derivation rather than storage.",
+        "forces_tradeoffs": "Symbol resolution is expensive — the cadence follows the cost. Weak-prover fallbacks are standing flagged debt. The closed edge vocabulary must evolve honestly (no untyped string edges).",
+        "dependencies": "Existing static symbol resolvers (the graph composes them); structured models with addressable elements; in-situ anchor homes (typed fields, structured comment trailers); query-surface for bidirectional walks; generalizes drift-parity-gates beyond the single model↔code edge kind.",
+        "known_uses": "DocAble's trace graph: a twelve-model fan-out classifying ~600 anchors caught ~14 genuine drifts for which NO existing lint fired (near-1 signal-to-noise, zero false positives); the clean-vs-drifted split evidence (anchor-linted models drifted zero; unlinted registries carried the drift); the active-implementation registry seeded by a prod-blocking unwired-replacement incident; the proof-as-anchor trajectory (a verified-by edge targeting a checker run, enabling triggered re-verification).",
+        "likely_parent_family": "Drift/parity gate (generalized: the derived traceability graph over the whole join web) — possibly its own canonical pattern",
+        "note": "Strong canonical-pattern candidate in its own right ('Derived Traceability'); the entry's evidence discipline (designed from observed drift, validated on an independent drift set) is unusually strong."
       }
     }
   }
