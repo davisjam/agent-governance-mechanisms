@@ -170,6 +170,39 @@ def check_argument_spine():
     return (FAIL if issues else PASS), issues
 
 
+def check_chapter_shape():
+    """The chapter-shape view's drift + structural check (audit-only first landing, rule-#55 discipline).
+    Re-derives the shape model from the hand-authored `chapter_shape_declared.json` (joined against the
+    argument-spine's exemptions + advances and the outline's chapter tree) and reports: CS1-drift against
+    the on-disk artifact; CS2–CS5 the structural / schema invariants (assessment coverage exactly the
+    outline's chapters; presence / thesis-target / closing-kind enums; 'none' target coherent with an
+    absent thesis link; anchor freshness — a rewritten opening/closing invalidates its assessment). The
+    FLAG worklist (failing openings / failing closings / thesis-spine mismatches) is the artifact's
+    `flags` block — the Phase-2c refactor worklist, deliberately NOT findings here. Keyed off
+    `book-models/chapter-shape.json` + `chapter_shape_declared.json` + the spine + the book prose."""
+    import chapter_shape_model as csm  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+
+    # CS1-drift — the stored artifact equals a fresh derivation.
+    fresh = csm.to_jsonable()
+    stored = csm.load_artifact()
+    if stored is None:
+        issues.append(f"{rel(csm._ARTIFACT)} missing — run "
+                      f"`python3 book-models/chapter_shape_model.py regenerate`")
+    elif any(stored.get(k) != fresh[k] for k in ("chapters", "flags", "_counts")):
+        issues.append(f"DRIFT: {rel(csm._ARTIFACT)} disagrees with a fresh derivation — regenerate "
+                      f"with `python3 book-models/chapter_shape_model.py regenerate`")
+
+    # CS2–CS5 — structural / schema invariants (coverage, enums, coherence, anchor freshness).
+    issues.extend(csm.structural_findings())
+
+    # Audit-only: same non-gating contract as the sibling first landings — surfaced as [audt], excluded
+    # from the fail tally. A follow-up promotes CS1–CS5 to blocking after a clean session (the claims and
+    # spine models' landing path); the flag worklist never gates.
+    return (FAIL if issues else PASS), issues
+
+
 def check_reverse_index():
     """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
     forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each

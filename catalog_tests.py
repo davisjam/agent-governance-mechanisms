@@ -41,6 +41,7 @@ from tests.book import (
 )
 from tests.book_models import (
     check_argument_spine,
+    check_chapter_shape,
     check_claims_model,
     check_outcomes_model,
     check_outline_model,
@@ -171,6 +172,18 @@ CHECKS = [
     # session, the claims model's own landing path. See tests/book_models.py.
     Check("book-models: argument-spine drift + structure (argument-spine.json)", 1,
           lambda strict: check_argument_spine(), audit_only=True),
+    # AUDIT-ONLY (rule #55 first landing): the CHAPTER-SHAPE view-model — every chapter's opening/closing
+    # assessed against the editorial directive's Task-2 discipline (opening: failure/question + answer +
+    # thesis-link; closing: consequence | transition | synthesis, never a mere thesis re-announcement),
+    # declared->generated beside the argument-spine (editorial directive Phase 2). CS1-drift
+    # (chapter-shape.json vs a fresh derivation) + CS2–CS5 structural/schema (coverage exactly the
+    # outline's chapters; presence/target/kind enums; 'none' iff absent; anchor freshness — a rewritten
+    # opening/closing invalidates its assessment loudly, which is how the Phase-2c refactor is forced to
+    # re-assess). The FLAG worklist (failing openings/closings + thesis-spine mismatches) is the
+    # artifact's `flags` block — the 2c refactor worklist, never findings. Promote to blocking after a
+    # clean session, the spine's own landing path. See tests/book_models.py.
+    Check("book-models: chapter-shape drift + structure (chapter-shape.json)", 1,
+          lambda strict: check_chapter_shape(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
