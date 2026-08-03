@@ -13,6 +13,8 @@ call (our instance: the **WCAG 2.1 AA / Section 508 / PDF-UA** accessibility rul
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — a conformance predicate; the PDF runtime gate flags new findings per pass on a dedicated marker (staging) |
 
+*Its place in the environment — the **canonical mechanism** for **PRESERVE · Preserve product semantics**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-preserve).*
+
 ## Motivation — the failure it kills
 
 "Is this document accessible?" needs a *precise, standards-grounded* answer, not a fuzzy score. Without
