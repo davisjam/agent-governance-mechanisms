@@ -1302,3 +1302,66 @@ author's substrate backlog.
 - `book-float-ref` green · `figure-overflow` clean (control-growth not flagged) · design-token-drift:
   control-growth introduces **0** new findings (all 5 hexes in `svg_palette()`) · svg drawing-hygiene:
   control-growth clean. No deploy (batched).
+
+---
+
+## W6+W7 — model-prose RESOLVE + §3.8 integration + §6/§4 folds + the 2 tier-1 FAILs CLEARED (260803) — ✅ DONE
+
+Resume of a stream-silence-killed predecessor (steps 1-3 were already committed: metrics `01143f0`,
+landing-drop `0c3c45b`, §3.8 chapter `fcf5438`). This agent finished steps 4-9. **Publish gate GREEN:
+`catalog_tests.py` = 31 gate checks / 31 passed / 0 failed** (baseline was 26/2 — the two pre-existing
+3.1 FAILs are cleared).
+
+- **STEP 4 — §6 model-sync co-evolution fold (`8bc8c76`).** Completed the dead agent's partial 2.2 fold
+  (`## Why the models drifted`): the correspondence-maintenance lineage — model-transformation
+  (`czarnecki2006featurebased`), bidirectional transformation across model networks
+  (`stevens2020maintaining`), architecture-conformance/reflexion drift (`murphy1995reflexion`) — handing
+  off to §3.8 via a whole-chapter cross-link (not an external cite). 3 cites added to references.bib
+  (house style), `render_citations` resolves them, §6 lit-positioning record flipped planned→landed
+  (11 landed / 0 planned, 0 pending in bib). The two new point-comments are 10/10 words (cap 10).
+- **STEP 5 — §4 academic SDD strengthening (`14694f1`).** One-sentence corroboration in 3.1's
+  spec-driven passage: the industrial one-person-squad case (`vilasboas2026onedeveloper`) — spec quality
+  and institutional knowledge, not raw model capability, decided the outcome. Bib entry added; cite moved
+  from the §4 lit-positioning note into `citations[]` (relation `corroborates`, backs `modeling-thesis`).
+  Panda cite SKIPPED (conservative, per the wave ruling).
+- **STEP 6 — 3.1 forward-links + TODO delete → clears FAIL 1 (`6399a90`).** Both anchors now exist, so the
+  by-name concept refs became hard links: "a context-management layer" → `appendix-d-context-management-stack`;
+  "a CI check that flags a doc-against-code mismatch" (the sync-measurement idea) → `3.8-keeping-models-in-sync`.
+  Deleted the `<!-- TODO(W7) … -->` comment — clears the stray-comment tier-1 FAIL and removes the block-110
+  divergent content.
+- **STEP 7 — durable book_ir.py class fix → clears FAIL 2 (`9b0b28d`).** `render_html`'s lone-comment branch
+  returned the comment verbatim while `md_to_html` strips lone comments to `''`. Changed it to `return ''`
+  so the two paths agree by construction — the stray-comment / IR-byte-identity divergence class can no
+  longer re-fire (rule-#23: instance fixed in step 6, class fixed here). IR byte-identity check now `[ok]`.
+- **STEP 8 — hygiene drain (`deac1d3`).** CLAIM-TOO-LONG×2 reworded to 10 words (1.1 printer, 5.4 staircase);
+  §3.8 by-concept ref that W5 left in 6.0 ("keeping the map in sync by hand") wired as a whole-chapter link;
+  the three re-staled view models (outline / outcomes / reverse_index) regenerated. Views-audit dropped 10→5
+  findings (3 FRESHNESS + 2 CLAIM-TOO-LONG cleared).
+- **STEP 9 — limitations echo (`e6b0c6a`).** One prose sentence in 6.0's Limitations single-case paragraph
+  echoing the preface's "instrument of inquiry" argument (not a comment; kept to one sentence to avoid
+  self-canonizing overemphasis).
+
+### Gates (all green)
+`catalog_tests.py` 31/31 · both target checks `[ok]` (stray-book-comment, IR render-complete byte-identity) ·
+`render_citations` (64 entries, no mismatch) · `catalog.py validate` 0 issues · `catalog.py build` reachability
+green (no orphans) · `build_book_html.py` green (130 chapter pages) · lit-positioning 11/11 landed, 35 cites
+0 pending · substantiation intact.
+
+### Parked (all audit-only / non-gating)
+- **5.2/2.5 reverse back-refs into the research-opps §** — the book uses *zero* cross-chapter section-anchor
+  links (whole-chapter is its only cross-link convention) and the research-opps heading has no stable slug;
+  wiring these needs a section-anchor + interpretive placement decision. Anchors exist if wanted:
+  `5.2#velocity`, `5.2#churn`, `2.5#mmm-drain`.
+- **data-claims WARN `model-sync-efficacy`** — §3.8 presents the numbers (`+8,970 / −173` across 63 commits,
+  0 reopens across N=56 in the `[ref:model-sync-evidence]` table) but the manifest entry is a stub
+  (`anchor: ""`, `holds: []`). Draining it is a proper W4-style data-bind: place `[data: model-sync-efficacy]`
+  in §3.8, fill anchor→`model-sync-evidence` + holds (DL4 loose-match against the table's exact glyphs,
+  incl. the Unicode minus), and update `source` 2.2→3.8. Not a cheap cite-drain.
+- **data-claims WARN `mbse-nav-token`** — pre-existing bind gap (holds filled, but no `[data:]` marker in 3.1).
+- **O2×2** (1.3 `give-it-a-model-of-the-world`, 3.1 `two-decisions-that-make-the-graph-resist-rot`) — each opens
+  on a deliberate blockquote/list beat; adding a topic sentence is an editorial taste call, not mechanical.
+- **U3×3 pedagogy gaps** + **catalog.py dead-render-code deletion** — left per the brief.
+
+### Author pin (non-blocking, carried from step 2)
+Whether the landing should eventually re-carry a vocab/outcomes preview (the dropped on-landing strip) —
+tracked for later discussion; not built.
