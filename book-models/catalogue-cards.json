@@ -3,26 +3,8 @@
   "_note": "Phase 3 · 3a card substrate for the 3b clustering (book/_design/phase3a-brief-260803.md; method: the editorial directive's 'card + cluster'). One card per catalogue entry: Failure class · Engineering obligation · Solution structure · Guarantee · Semantic level · Forces/tradeoffs · Dependencies · Known uses · Likely parent family, plus optional abstract_name (where the entry title is implementation-biased) and note (carding ambiguities, flagged for 3b). 3b merges entries whose first six fields substantially coincide (only known-uses differing) and keeps entries apart when obligation OR guarantee differs; semantic_level records the RELATION enforced/modeled, not the implementation technology. READ-ONLY wrt entries: this model analyzes the catalogue; it does not govern it.",
   "_counts": {
     "census_total": 82,
-    "carded": 44,
+    "carded": 62,
     "pending": [
-      "models-bridge/system-models/agent-orchestration-model",
-      "models-bridge/system-models/component-zone-model",
-      "models-bridge/system-models/composed-state-machine-model",
-      "models-bridge/system-models/concurrency-contracts",
-      "models-bridge/system-models/data-flow-model",
-      "models-bridge/system-models/deployment-topology-model",
-      "models-bridge/system-models/domain-registries",
-      "models-bridge/system-models/governance-graph",
-      "models-bridge/system-models/lifecycle-model",
-      "models-bridge/system-models/process-view",
-      "models-bridge/system-models/required-config-per-role-manifest",
-      "models-bridge/system-models/rule-metadata-registry",
-      "models-bridge/system-models/service-flow-model",
-      "models-bridge/system-models/synchronization-model",
-      "models-bridge/system-models/telemetry-collection-provenance",
-      "models-bridge/system-models/timeout-budget-ordering-model",
-      "models-bridge/system-models/typed-contract-surfaces",
-      "models-bridge/system-models/user-journey-model",
       "product/canonical-models-and-seams/canonical-walkers",
       "product/canonical-models-and-seams/office-models",
       "product/canonical-models-and-seams/pdf-model",
@@ -46,7 +28,7 @@
     ],
     "carded_by_role": {
       "agent": 28,
-      "models-bridge": 16
+      "models-bridge": 34
     },
     "likely_parent_family_distribution": {
       "Model-derived assurance coverage": 2,
@@ -63,11 +45,29 @@
       "Executable source of truth (construction-method variant: the harness)": 1,
       "Executable source of truth (the agent-facing read face)": 1,
       "Executable source of truth (the generation face)": 1,
+      "Executable-model zoo — admission-completeness manifest": 1,
+      "Executable-model zoo — boundary contract surfaces": 1,
+      "Executable-model zoo — composed lifecycle machines (the specification side of formal verification)": 1,
+      "Executable-model zoo — concurrency contracts (the declaration side of mediated resource admission)": 1,
+      "Executable-model zoo — concurrency simultaneity view": 1,
+      "Executable-model zoo — domain-fact registries": 1,
+      "Executable-model zoo — fleet/orchestration lifecycle (the method's second subject arm)": 1,
+      "Executable-model zoo — goal-anchored behavioral journeys": 1,
+      "Executable-model zoo — governance-metadata registry (governance-of-governance leaning)": 1,
+      "Executable-model zoo — governed data-flow graph": 1,
+      "Executable-model zoo — observability-coverage provenance": 1,
+      "Executable-model zoo — operational lifecycle map (generated-runbook variant)": 1,
+      "Executable-model zoo — physical deployment topology": 1,
+      "Executable-model zoo — resource-ordering invariant surface": 1,
+      "Executable-model zoo — structural ownership map": 1,
+      "Executable-model zoo — structural service architecture (a flagship known-use of Executable Source of Truth)": 1,
+      "Executable-model zoo — synchronization contracts": 1,
       "Fail-fast environment validation (early substrate-health gate; a stair of the staged admission staircase)": 1,
       "Fleet observability surfaces (progress-liveness variant)": 1,
       "Fleet observability surfaces (typed signal with owned response)": 1,
       "Governance-of-governance (modeling the control estate; typed-edge kin of invariant-dag-execution-policy)": 1,
       "Governance-of-governance (the coverage view of the control estate)": 1,
+      "Governance-of-governance (the interaction view — the canonical Governance Graph pattern)": 1,
       "Governance-of-governance (the meta-mechanism: the enforced governance document)": 1,
       "Governed knowledge base (documentation as enforced infrastructure)": 1,
       "Health-conditioned admission (an observability signal promoted into a blocking gate)": 1,
@@ -761,6 +761,94 @@
         "likely_parent_family": "Executable source of truth (construction-method variant: the harness)"
       }
     },
+    "models-bridge/system-models/agent-orchestration-model": {
+      "title": "Agent-orchestration model (developer journeys)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "The fleet that builds the product goes unmodeled: its lifecycle and the orchestrator's own loop live implicitly across dispatch/registry/tombstone/worktree tools — an agent reaches a state no transition allows, the orchestrator rests with ratified work queued, fleet invariants (exactly-one-live-marker, upload-before-teardown) are asserted nowhere, and the reflection substrate drifts from anything modeled.",
+        "engineering_obligation": "Model the production substrate with the same method pointed at the product — the fleet becomes as checkable as the software it builds (the developer-journey subject of the same MBSE method).",
+        "solution_structure": "Two typed state machines (the agent lifecycle dispatch→…→tombstone→clean with the abandoned/recovered branch; the orchestrator's observe→land+DoD→refill→bank→rest loop); a closed typed seam set (hooks, registry, mediator pressure signal, status files, event bus, facet registry); fleet invariants with verification tiers DERIVED from temporal shape; the reflection-facet registry as first-class modeled nodes reconciled both ways against the live registry; the same drift/parity rails, audit-only → blocking.",
+        "guarantee": "Model = territory over the fleet substrate; hairy concurrency invariants are forced onto exhaustive checkers by derivation, not judgment. Boundary: inherits the product method's ceremony — worth it because the fleet runs hourly and its failures are expensive.",
+        "semantic_level": "fleet lifecycle + operator loop legality — the developer-journey behavioral relation; the trunk method reified toward the orchestration subject.",
+        "forces_tradeoffs": "Modeling the operator's own loop feels like navel-gazing until it catches a real dynamics-only failure (resting with work queued; a facet silently off-registry).",
+        "dependencies": "The trunk method reused wholesale (tier derivation, coordination/temporal types, drift machinery); the agent-registry and reflection-facet substrates as the reconciliation anchors; siblings service-flow/user-journey (same method, product subject).",
+        "known_uses": "DocAble's agent_orch model: the two machines, the closed seam set, derived-tier fleet invariants, and the facet nodes with two-way registry reconciliation.",
+        "likely_parent_family": "Executable-model zoo — fleet/orchestration lifecycle (the method's second subject arm)"
+      }
+    },
+    "models-bridge/system-models/component-zone-model": {
+      "title": "Component & zone model",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "'Which component owns this file, what zone, what boundaries and seams' answered ad hoc — a hardcoded path list here, a grep there — drifting the moment a directory moves, each tool passing while reasoning about a stale map; and agents lack the map that tells them where they are.",
+        "engineering_obligation": "Code ownership, zones, boundary kinds, and sanctioned seams are named once in a typed registry every consumer queries, held equal to the real tree by bidirectional parity.",
+        "solution_structure": "A typed component registry (leaf/group/meta kinds, focus-dirs, tags, docs, manifests) plus boundary/seam/read-surface classifiers; a reverse-mapping test asserting model ↔ tree parity in both directions; consumers (lint fleet, dispatch, context injection, the severity grader) read it rather than inferring from layout.",
+        "guarantee": "A moved directory fails the parity test instead of silently staling each tool's private inference; every tool reads the same answer. Boundary: centralization blast radius — a wrong zone misroutes every consumer at once (the cost of the fix-once affordance).",
+        "semantic_level": "file → owning component / zone / boundary — the structural ownership relation.",
+        "forces_tradeoffs": "Add-a-component upkeep (registry row + boundary classification or the test fails, deliberately). The zone's meaning (boundary kind, seams) is not in the layout at all — only a model can carry it.",
+        "dependencies": "drift-parity-gates (the reverse-mapping test); consumers: dynamic-context-injection, role-typed-dispatch, model-graded-finding-severity, the lint fleet; meta-model-consumption + query-surface as read paths.",
+        "known_uses": "DocAble's component registry read by the lint fleet, dispatch, and audit surfaces; the boundary/seam classifiers; the reverse-mapping parity test.",
+        "likely_parent_family": "Executable-model zoo — structural ownership map"
+      }
+    },
+    "models-bridge/system-models/composed-state-machine-model": {
+      "title": "Composed state-machine model (typed lifecycles + cross-machine invariants)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "The correctness properties of a distributed lifecycle span its machines but are asserted nowhere: scattered status flags mutated from many call sites; a rare interleaving double-completes a job, a crash strands a corrupt output as 'done', a requeue races a terminal write — per-machine tests green while the composition is broken.",
+        "engineering_obligation": "The concurrency composition is one authored, checkable object: which machines exist, how they compose, and the predicates that must hold ACROSS them — each predicate carrying a derived verification obligation.",
+        "solution_structure": "Each lifecycle a typed machine (state enum, transition table naming every legal edge, terminal-safe set — illegal transitions unrepresentable); the machines declared as a composed set with their hand-off seams; cross-machine invariants as first-class entities each with a required temporal form that routes it to its checker (safety → exhaustive state-space, liveness → temporal checker, linear → property test); a drift gate reconciles declared states against the live lifecycle vocabulary.",
+        "guarantee": "Legality is structural and the composition's predicates are proven within the modeled bounds — the specification the verifier runs against. Boundary: exhaustive only over the modeled interleavings; proof as strong as the model's fidelity.",
+        "semantic_level": "composed lifecycle legality + cross-machine predicates — what may happen over time, across machines (distinct from any single machine's graph).",
+        "forces_tradeoffs": "The value and the cost both concentrate in naming the cross-machine predicates — the part a single-machine view never forces. A new state or invariant is a model edit or the gate fails.",
+        "dependencies": "formal-invariant-verification (the proof engine this is the specification for); process-view (the other projection of the same concurrency); concurrency-contracts one layer beneath; executable-source-of-truth substrate.",
+        "known_uses": "DocAble's parent-job / per-chunk / fan-in completer machines declared together; a dozen-plus cross-service invariants (lease-or-free exclusivity, upload-before-terminal-write, exactly-one-completer, preemption re-entry order) each carrying a temporal form.",
+        "likely_parent_family": "Executable-model zoo — composed lifecycle machines (the specification side of formal verification)"
+      }
+    },
+    "models-bridge/system-models/concurrency-contracts": {
+      "title": "Mediator & single-writer contracts",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Undeclared mediation and single-writer contracts: an enforcer only sees the calls that reach it, so a newly-added subprocess or state mutator is simply not covered — a raw invocation slips the serializer, a second writer corrupts state, and the breakage is a race discovered late.",
+        "engineering_obligation": "'Who may run this, and how many at once' is declared as data, so COVERAGE can be checked against the code — the contract set complete, not just enforced at the seams that happen to be wired.",
+        "solution_structure": "Two typed registries: a mediator registry (subprocess → serializer, cap, bypass-env) and a single-writer registry (state-mutation function → monopoly contract); enforcers keyed on the registries refuse unmediated calls; coverage lints flag a mediated-class call or a mutator that isn't contracted.",
+        "guarantee": "An uncovered subprocess or mutator is a named finding rather than a latent race. Boundary: a declared-but-unenforced contract is documentation — the guarantee needs both the registry and the enforcer.",
+        "semantic_level": "invocation/mutation → declared concurrency contract — the coverage relation over the mediation regime.",
+        "forces_tradeoffs": "A registry entry per new mediated subprocess or contracted mutator. The contract is only as good as its enforcer.",
+        "dependencies": "The agent mediators-and-resource-locks family (the enforcement half); synchronization-model (the OS-lock layer beneath); drift-parity-gates (the coverage lints).",
+        "known_uses": "DocAble's mediator registry (test/build serializers, the lint mutex, the commit-slave serializer) and single-writer registry with their enforcers and coverage lints.",
+        "likely_parent_family": "Executable-model zoo — concurrency contracts (the declaration side of mediated resource admission)"
+      }
+    },
     "models-bridge/system-models/control-coverage-census": {
       "title": "Control-coverage census (controls per governance target)",
       "role": "models-bridge",
@@ -825,6 +913,72 @@
         "dependencies": "Structured model with addressable nodes (executable-source-of-truth); attributable coverage data; a criticality policy; counterpart formal-invariant-verification (proof vs exercise).",
         "known_uses": "DocAble's coverage-reference mapping onto the cross-service state-machine model's nodes at function granularity; the uncovered-critical-nodes sweep as work-list.",
         "likely_parent_family": "Model-derived assurance coverage"
+      }
+    },
+    "models-bridge/system-models/data-flow-model": {
+      "title": "Compliance data-flow model (typed sinks & edges for privacy)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Privacy and erasure answered by memory and grep: the erasure runs, reports success, and leaves data in the cache, log stream, or third-party sink nobody remembered — and information-flow violations are unenumerable because no one listed the sinks or the edges between them.",
+        "engineering_obligation": "Where a governed data kind can flow is a typed graph — sinks and transfer edges, typed by category — over which compliance properties are evaluated as walks, including the transitive question no flat list can answer.",
+        "solution_structure": "Typed sink nodes (tables, caches, blob stores, log streams, vendors) and transfer edges, typed by data category; a policy evaluator walks the graph for erasability ('every personal-data sink has a covering erasure path'), permitted-flow, and retention; the graph reconciled against the real write and transfer sites so an unmodeled store is a build finding.",
+        "guarantee": "A new sink or transfer without model coverage reddens the gate; policy questions are model walks. Boundary: the evaluator is confidently wrong wherever the graph diverges — reconciliation is what earns trust.",
+        "semantic_level": "data category → transitively-reachable sinks — the governed flow relation with obligations (erasure, permitted-flow) attached.",
+        "forces_tradeoffs": "Edges — especially third-party transfers — are where the real graph hides and where maintenance concentrates. Earns its cost only for a data kind carrying a real obligation.",
+        "dependencies": "A policy evaluator; drift-parity-gates (site reconciliation); formal-invariant-verification (flow predicates provable over the declared graph); deployment-topology-model (physical placement of the named sinks).",
+        "known_uses": "DocAble's typed sink-and-edge registry over personal-data flows, with erasure and information-flow policies evaluated over it.",
+        "likely_parent_family": "Executable-model zoo — governed data-flow graph"
+      }
+    },
+    "models-bridge/system-models/deployment-topology-model": {
+      "title": "Deployment & tier topology",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Deployment facts hardcoded in deploy scripts and import checks drift from the real topology: a service moves tier, a layer boundary is quietly crossed, and the deploy or an architectural invariant breaks — with no check until the break.",
+        "engineering_obligation": "Where things run and how they layer is declared once — topology, tier classes, layer boundaries — and parity-checked against the real deploy tables and import graph.",
+        "solution_structure": "A typed topology loader for the managed deployment, a service-tier registry, and layer-boundary contracts for the agent substrate; deploy scripts and layering lints read them; a deploy-phase-table parity lint and import-layer boundary checks gate on divergence.",
+        "guarantee": "A moved tier or crossed boundary fails a lint at author time. Boundary: declared boundaries block expedient cross-layer imports — a real, deliberate cost.",
+        "semantic_level": "service → tier / layer / host placement — the physical-topology relation plus layering constraints.",
+        "forces_tradeoffs": "Topology changes are model edits (or parity failures). Layering contracts constrain the code on purpose.",
+        "dependencies": "model-driven-codegen (deploy/env generation); consumers control-substrate-dependency (the substrate joined against) and invariant-dag-execution-policy (the host taxonomy); drift-parity-gates.",
+        "known_uses": "DocAble's deployment-topology loader, service-tier registry, and layer-boundary contracts; the deploy-phase-table parity and import-layer lints.",
+        "likely_parent_family": "Executable-model zoo — physical deployment topology"
+      }
+    },
+    "models-bridge/system-models/domain-registries": {
+      "title": "Domain registries",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Domain facts restated in code, docs, and dashboards drift: the supported-filetype list diverges across five sites, a rule's metadata goes stale, the competitor doc is out of date — small correctness and stale-doc failures multiplied across many slices.",
+        "engineering_obligation": "Each domain fact has exactly one typed home that tools read and docs are generated from — the fact canonicalized per slice, coverage/parity-linted.",
+        "solution_structure": "A set of small frozen typed registries (supported filetypes, WCAG coverage gaps, periodic-GC cron entries, UX write-authority, competitor set, rule metadata), each with consumers that read it, generators that emit its doc surfaces, and a coverage/parity lint plus a doc-derived pin.",
+        "guarantee": "A consumer that diverges fails the build; frozen sets make expedient edits deliberate model changes. Boundary: breadth, not depth — each registry is simple but each is a surface.",
+        "semantic_level": "domain fact → single typed source — fact canonicalization, one home per slice.",
+        "forces_tradeoffs": "Many small registries to maintain. Frozen-set friction is deliberate.",
+        "dependencies": "drift-parity-gates per registry; the rule-metadata registry feeds claude-md-rule-index; the WCAG-gap registry feeds the standards rule engine; model-driven-codegen for the doc generation.",
+        "known_uses": "DocAble's supported-filetypes, WCAG-gap, periodic-GC-cron, UX-write-authority, competitor, and rule-metadata registries with their generators and lints.",
+        "likely_parent_family": "Executable-model zoo — domain-fact registries"
       }
     },
     "models-bridge/system-models/drift-parity-gates": {
@@ -893,6 +1047,28 @@
         "likely_parent_family": "Model-derived assurance coverage (trait-derived verification routing)"
       }
     },
+    "models-bridge/system-models/governance-graph": {
+      "title": "Governance graph (mechanism-interaction model)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "Two guardrails placing contradictory or contending demands on one shared resource — a commit-set required to be squashed by one path and scope-checked by another, two turn-end hooks with no declared order each able to block — invisible in any single mechanism's code, found only when a real operation trips both; grows pairwise with every mechanism added.",
+        "engineering_obligation": "Model the control system itself: the interactions between governance mechanisms as typed conflict edges over a closed shared-resource vocabulary, so a proposed mechanism's collisions are checkable at authoring, not at the tripwire.",
+        "solution_structure": "Mechanism nodes typed by firing event, reads/writes/locks over a closed resource vocabulary (the turn-end slot and context budget are resources too), output power, and soft/hard; conflict edges in a closed four-value taxonomy (contradiction / contention / ordering / soft-vs-hard) each naming the resource and a resolution; each edge's deterministic-vs-judgment nature DERIVED from its conflict type (decidable edges route to a sensor, semantic ones to a human prompt); a check-new query runs the deterministic checks against a spec before wiring; a drift lint re-resolves node anchors against the wired reality.",
+        "guarantee": "Mechanically-decidable conflict classes (same-slot no-order, lock cycles) are caught by construction; judgment edges are surfaced, not decided. Boundary: a stale interaction graph is worse than none — the drift lint is mandatory; resource granularity is a real tuning surface.",
+        "semantic_level": "control × control → conflict over a shared resource — the interaction dual of the control census; the join key is the typed resource, not the call.",
+        "forces_tradeoffs": "Too-coarse resources drown real conflicts in false edges; too-fine is noise. The model describes rather than mandates — governance of governance risks the tower nobody wants, so it hardens only where a collision recurs.",
+        "dependencies": "synchronization-model (the ordering/deadlock analysis generalized beyond OS locks); the agent-family mechanisms as its nodes; symbol-anchored derivation discipline for the node↔code join; query-surface; control-coverage-census as the sibling coverage view of the same node-set.",
+        "known_uses": "DocAble's governance-graph model with the two canonical collision edges (the commit-set contradiction, the turn-end contention); the check-new pre-wiring consistency query; the anchor drift lint.",
+        "likely_parent_family": "Governance-of-governance (the interaction view — the canonical Governance Graph pattern)"
+      }
+    },
     "models-bridge/system-models/invariant-dag-execution-policy": {
       "title": "Invariant-DAG execution policy (typed Scheduler: correctness vs resource + cost)",
       "role": "models-bridge",
@@ -957,6 +1133,28 @@
         "dependencies": "user-journey-model (the carrier); the criticality axis to scope the gate; observable resolvers (a11y roles, HTTP status, file magic); drift-parity thinking applied to the terminal assertion; sibling journey-criticality-test-placement (picks up where its floor stops).",
         "known_uses": "DocAble's typed closure blocks on major journeys ('artifact rendered AND content inspectable AND no error-fallback' — the fixed form of a real one-hop-past production break); the strength gate; the canary closure-probe closing the configuration-only-break containment hole.",
         "likely_parent_family": "Model-derived assurance coverage (typed post-condition with derived strength)"
+      }
+    },
+    "models-bridge/system-models/lifecycle-model": {
+      "title": "Lifecycle model (typed operational map → generated runbook)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Operating knowledge living in one head plus stale docs: the operator diagnoses from memory (wrong precisely on the rare failure that matters), a memory-less agent re-derives the substrate from cold every time, and the runbook that would have helped rots silently because nothing ties the prose to the system.",
+        "engineering_obligation": "How the substrate works is a typed map — each operating lifecycle carries a machine-checkable healthy-state predicate, each symptom keys to its lifecycle, and the operator's runbook is GENERATED from the map so it cannot drift from the system it describes.",
+        "solution_structure": "Named lifecycle nodes (dispatch-and-reclaim, context banking, repo deployability, the deploy staircase, dev-env, the periodic plane, the orchestrator's hooks), each with a one-line mechanics summary and an executable healthy predicate; symptom→fix rows keyed to lifecycles; the runbook/skill projected from the model; the flat perimeter of small mechanisms grouped under the lifecycles they serve.",
+        "guarantee": "The runbook is a projection of the same map the health checks read — prose cannot disagree with the model. Boundary: a drifted healthy predicate gives false confidence; the generation gate surfaces out-of-date maps.",
+        "semantic_level": "operational subsystem → healthy-state predicate + symptom keying — the operations relation, with prose as a projection of the model.",
+        "forces_tradeoffs": "Models the operator's own work (navel-gazing until a fresh agent resolves an incident in seconds from a generated runbook keyed to a failing health check). Predicates must stay honest.",
+        "dependencies": "model-driven-codegen (the generation move applied to operator docs); operator-runbook-skill (the projected artifact); sibling agent-orchestration-model (transitions vs operations of the same substrate).",
+        "known_uses": "DocAble's typed operating map of the fleet substrate with per-lifecycle healthy predicates; the lifecycle-keyed symptom catalog; the generated operator skill (positive map first, troubleshooting as keyed fallback).",
+        "likely_parent_family": "Executable-model zoo — operational lifecycle map (generated-runbook variant)"
       }
     },
     "models-bridge/system-models/meta-model-consumption": {
@@ -1048,6 +1246,28 @@
         "abstract_name": "Change-distance-graded enforcement"
       }
     },
+    "models-bridge/system-models/process-view": {
+      "title": "Process view (concurrent processes, lanes, racing edges)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Concurrency folklore: nothing names the set of things that run simultaneously, so the pairs that can collide are unenumerated and unguarded — races invisible until they fire, rare enough to survive every test not looking for them; and when the operator is a memory-less agent, the folklore is simply gone.",
+        "engineering_obligation": "Simultaneity is an explicit, closed view: the concurrent processes, the lanes they run in, and every racing edge over shared state, each joined to the guard that serializes it.",
+        "solution_structure": "Enumerate the running things (not code paths); assign lanes (handler, worker, cron, orchestrator loop); declare racing edges as first-class elements (the two processes + the contended resource); check the edge↔guard join both ways (an unguarded edge and an orphan lock are each build findings); project the view from the machine model and the lock registry — derived, not re-authored.",
+        "guarantee": "Every declared race has a guard and every guard a declared race. Boundary: a projection inherits its sources' fidelity — wrong machine model or lock registry means confidently wrong in the same place.",
+        "semantic_level": "process ∥ process over a shared resource — the simultaneity/collision relation, deliberately distinct from transition legality.",
+        "forces_tradeoffs": "N processes admit up to N² shared-resource pairs — the combinatorial surface folklore was silently under-counting, surfaced. New concurrent processes force the which-can-I-collide-with question at design time.",
+        "dependencies": "composed-state-machine-model (the substrate projected over); synchronization-model (the lock registry read for guards); concurrency-contracts (what many edges resolve to).",
+        "known_uses": "DocAble's Kruchten-style process view: worker/handler/cron/orchestrator lanes; named racing edges (preemption requeue vs stale-sweep, two workers vs one queue entry, progress writer vs terminal archive) each joined to its lock or atomic step.",
+        "likely_parent_family": "Executable-model zoo — concurrency simultaneity view"
+      }
+    },
     "models-bridge/system-models/query-surface": {
       "title": "Model query surface (`repo-query`)",
       "role": "models-bridge",
@@ -1068,6 +1288,72 @@
         "dependencies": "The models loading cleanly (executable-source-of-truth); meta-model-consumption as the discipline it serves; ridden by the traceability graph, the blast-radius query, and the coverage roll-ups.",
         "known_uses": "DocAble's repo-query CLI (component / service-flow / frontend-flow / design / callers / xrefs / epic / task / web-api / config, --json); the repo-query orchestrator skill.",
         "likely_parent_family": "Executable source of truth (the agent-facing read face)"
+      }
+    },
+    "models-bridge/system-models/required-config-per-role-manifest": {
+      "title": "Required-config-per-role manifest (admission on complete env)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "An incomplete environment admitted: the process starts fine and fails only when it reaches the one code path that reads the missing secret — a 403 deep in a request, an inter-service auth failure, a silently-empty GenAI call — late, quiet, far from the cause, once per missing variable.",
+        "engineering_obligation": "Configuration completeness is an admission policy: the full required set per role and plane is declared and checked at the boundary before any work begins — fail loud and early with the whole gap, never late and quiet.",
+        "solution_structure": "A typed manifest keyed by role × plane listing the complete required configuration set; an admission check compares the environment at start-up and refuses to launch on any missing entry, reporting the entire gap at once; the declared set reconciled against what each role's code actually reads.",
+        "guarantee": "An incomplete environment is refused at the door with the full missing list. Boundary: presence, not validity — a wrong-but-set key passes admission and fails at use.",
+        "semantic_level": "runtime environment ⊇ role's declared required set — completeness as an admission relation, per role and plane.",
+        "forces_tradeoffs": "The manifest is another surface (the reconciliation gate forces code and manifest to agree). Only per-site reads can never assert completeness — that property exists only at the declared-set level.",
+        "dependencies": "role-typed-dispatch (the role the manifest keys by); an admission point (start-up hook, dispatch gate); drift-parity-gates (reconciliation against real reads); meta-model-consumption (the check reads the manifest).",
+        "known_uses": "DocAble's dispatch-role × plane required-env manifest with the start-up admission gate; the reconciliation against real getenv sites.",
+        "likely_parent_family": "Executable-model zoo — admission-completeness manifest"
+      }
+    },
+    "models-bridge/system-models/rule-metadata-registry": {
+      "title": "Rule-metadata registry (queryable governance metadata)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "A governance document opaque to programs: aggregate questions (which rules have automated enforcers? which govern this subtree? which are blocking?) are manual whole-document reads done from memory that rot with rule count — and a rule can claim an enforcing lint that no longer exists with nothing noticing.",
+        "engineering_obligation": "Governance rules carry machine-readable metadata, extracted into a typed queryable registry whose claims are cross-checked against the real enforcers — the policy corpus becomes a model.",
+        "solution_structure": "A structured metadata block inside each rule (stable id, scope, severity, enforcing check, canonical detail pointer), co-located with the prose; a build step extracts the blocks into a typed registry; cross-checks flag a rule citing a missing enforcer or a dangling detail pointer as build findings.",
+        "guarantee": "The document's enforcement claims stay reconciled with the enforcing system; aggregate questions are registry queries. Boundary: a stale block asserting a gone guarantee is worse than none — the cross-check exists for exactly this.",
+        "semantic_level": "governance rule → its enforcement + scope metadata — the rule's claim ⟷ the real enforcer; policy prose made queryable.",
+        "forces_tradeoffs": "Every rule owes a well-formed block (authoring cost, made mandatory by the reconciliation gate). The prose stays for humans; the block serves the tooling.",
+        "dependencies": "claude-md-rule-index (the document-side twin this extracts the model from); domain-registries sibling; query-surface exposes it; drift-parity-gates.",
+        "known_uses": "DocAble's inline rule-meta blocks on the numbered project rules; the extracted typed rule registry; the enforcer/pointer cross-checks.",
+        "likely_parent_family": "Executable-model zoo — governance-metadata registry (governance-of-governance leaning)"
+      }
+    },
+    "models-bridge/system-models/service-flow-model": {
+      "title": "Service-flow / API model",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "SOA facts (inter-service auth, URLs, NetworkPolicy, the deploy table, API contracts, frontend trees) restated across code + YAML + deploy scripts drift apart — an endpoint the NetworkPolicy doesn't allow, a handler diverged from its spec, a tree with no entity — each a production-shaped bug across many surfaces.",
+        "engineering_obligation": "One source of truth for the service architecture, from which the real wiring is generated and against which reality is bidirectionally parity-checked — nothing left to hand-sync.",
+        "solution_structure": "A Backstage-dialect entity model (Component/API/System with org annotations) plus OpenAPI, wire-contract, and config schemas; generators emit NetworkPolicy, service catalog, env wiring, and API docs from it; bidirectional drift lints (frontend tree ↔ entity both ways, handler ↔ spec, call-graph ↔ model).",
+        "guarantee": "Neither the model nor reality drifts unilaterally on the modeled surfaces; a new service/endpoint/tree is a model edit or a parity failure — deliberately.",
+        "semantic_level": "service topology + API contracts ⟷ deployed reality — the structural who-exists-and-how-wired relation of the architecture.",
+        "forces_tradeoffs": "Dialect lock-in (the deliberate adopt-the-canonical-schema trade). Generator and gate maintenance across several surfaces.",
+        "dependencies": "model-driven-codegen (its generation face); drift-parity-gates; query-surface; serves as the shared carrier the user-journey kind grafts onto.",
+        "known_uses": "DocAble's Backstage-dialect service YAML as the SOA source of truth; the NetworkPolicy/catalog/env/API-doc generation; the tree↔yaml and handler↔spec parity lints.",
+        "likely_parent_family": "Executable-model zoo — structural service architecture (a flagship known-use of Executable Source of Truth)"
       }
     },
     "models-bridge/system-models/symbol-anchored-traceability-graph": {
@@ -1091,6 +1377,116 @@
         "known_uses": "DocAble's trace graph: a twelve-model fan-out classifying ~600 anchors caught ~14 genuine drifts for which NO existing lint fired (near-1 signal-to-noise, zero false positives); the clean-vs-drifted split evidence (anchor-linted models drifted zero; unlinted registries carried the drift); the active-implementation registry seeded by a prod-blocking unwired-replacement incident; the proof-as-anchor trajectory (a verified-by edge targeting a checker run, enabling triggered re-verification).",
         "likely_parent_family": "Drift/parity gate (generalized: the derived traceability graph over the whole join web) — possibly its own canonical pattern",
         "note": "Strong canonical-pattern candidate in its own right ('Derived Traceability'); the entry's evidence discipline (designed from observed drift, validated on an independent drift set) is unusually strong."
+      }
+    },
+    "models-bridge/system-models/synchronization-model": {
+      "title": "Synchronization model (meta-sync)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Undeclared locks and inverted acquisition orders: nobody can answer which locks exist, what each guards, or in what order they must be taken — so a deadlock-inducing ordering can only be suffered at runtime, and the hazard recurs with every lock added.",
+        "engineering_obligation": "Every synchronization primitive, the resource it guards, and the required acquisition ordering is declared and checkable before the code runs — concurrency contracts as data, not tribal knowledge.",
+        "solution_structure": "Three typed records — SyncLock (path, cap, model, bypass-env, audit-log), LockAcquirer (each declared acquisition site, or none-with-rationale), LockOrdering (before/after with rationale); a coverage lint scans the real flock/lockf call sites and requires each declared or explicitly annotated; an ordering lint walks the declared orderings + call graph to catch inverted acquisition.",
+        "guarantee": "An undeclared lock and an inverted acquisition each fail at author time. Boundary: a missing ordering edge lets a real inversion through — the graph must be maintained.",
+        "semantic_level": "lock → guarded resource + acquisition order — the synchronization-contract relation.",
+        "forces_tradeoffs": "Every new lock is a registry entry (deliberate). The exempt-rationale set is a small carve-out surface.",
+        "dependencies": "The agent mediators acquire these locks (bridge to the mediators family); drift-parity-gates; process-view reads it to join racing edges to guards; the governance graph generalizes its ordering analysis to non-lock slots.",
+        "known_uses": "DocAble's synchronization registry over the dev-time locks (test-serializer flock, build semaphore, lint mutex, commit-slave serializer); the sync-coverage and ordering-constraint lints.",
+        "likely_parent_family": "Executable-model zoo — synchronization contracts"
+      }
+    },
+    "models-bridge/system-models/telemetry-collection-provenance": {
+      "title": "Telemetry-collection provenance (origin · landing · per-env coverage)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Absent telemetry misread as a present zero: a metric collected in production but never locally — the developer profiles a slow path, sees the metric flat, and concludes it's cheap; or the stream is collected everywhere except the plane an incident is unfolding in. Coverage gaps written down nowhere.",
+        "engineering_obligation": "Each observability stream's provenance — what emits it, where it lands, and in which environments it is actually collected — is a declared, reconciled fact, so an absent stream is distinguishable from a true zero.",
+        "solution_structure": "A per-stream typed record: origin (the emitting service/path), landing (the sink), and a per-environment coverage vector; reconciled against the real emit points and collector configuration so a stream emitted but uncollected in a declared-covered plane, or collected without a record, is a build finding.",
+        "guarantee": "Declared coverage matches real collection or the gate reddens; a flat metric is classifiable as genuinely zero vs never collected. Boundary: presence, not usefulness — a well-covered useless metric passes.",
+        "semantic_level": "telemetry stream → (origin, landing, per-environment collection) — the observability-coverage relation.",
+        "forces_tradeoffs": "Coverage vectors must track collector reconfiguration or they assert false confidence. Earns its keep only where collection genuinely varies by plane.",
+        "dependencies": "typed-event-bus (many tracked streams are its topics); drift-parity-gates; sibling caused-by-provenance (same provenance discipline, different subject).",
+        "known_uses": "DocAble's per-stream telemetry registry across local/staging/production planes; the emit-vs-collector reconciliation check; absent-vs-zero classification.",
+        "likely_parent_family": "Executable-model zoo — observability-coverage provenance"
+      }
+    },
+    "models-bridge/system-models/timeout-budget-ordering-model": {
+      "title": "Timeout-budget ordering model (nested wall-clock budgets, checked)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Independently-set wall-clock budgets invert: an inner timeout outlasting the operation that contains it — hangs, leaked locks, retry windows outliving their total budget — visible in no single constant, debugged by reconstructing the intended nesting from scattered numbers.",
+        "engineering_obligation": "The system's temporal budgets are one declared surface with their containment ordering stated and proven — inner strictly expires before outer, for every declared pair, for any future edit.",
+        "solution_structure": "One declared surface holding every budget (request timeouts, worker deadlines, lock waits, retry windows); the nesting relation declared per containing pair; a property test quantifying inner < outer over all pairs; the surface mirroring and reconciled against the authoritative constants the code enforces.",
+        "guarantee": "A budget raised past its container fails at the edit — a latent production hang converted to a build finding. Boundary: proves consistent nesting only, not that any budget is well chosen.",
+        "semantic_level": "inner budget < containing budget — the temporal containment ordering over nested operations.",
+        "forces_tradeoffs": "The nesting relation must be authored (which budget contains which); an unstated nesting is unchecked. Small surface, sharp payoff, deliberately narrow scope.",
+        "dependencies": "A property-test harness (the linear-ordering shape formal-invariant-verification routes to property tests); consumers sourcing budgets from the surface (meta-model-consumption); sibling synchronization-model (lock order vs timeout order).",
+        "known_uses": "DocAble's pipeline wall-clock-budget surface (per-stage deadlines, lock waits, retry windows) with the nesting-order property test.",
+        "likely_parent_family": "Executable-model zoo — resource-ordering invariant surface"
+      }
+    },
+    "models-bridge/system-models/typed-contract-surfaces": {
+      "title": "Typed contract surfaces (checked boundary, not a comment)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "A boundary contract living as a comment, an example payload, or nothing: one side changes shape, the other keeps parsing the old one, and the mismatch surfaces as a runtime error at the far end — an API drops a field, a cross-language status marker is renamed, a CLI's stdout JSON changes and every piping script breaks.",
+        "engineering_obligation": "The contract between two parties is one declared, typed surface that BOTH the real producer and the real consumer reconcile against at build time — and it carries the boundary's policy (visibility, auth, stability), not just its field names.",
+        "solution_structure": "Per boundary genre, an authored typed surface: a structured endpoint model with visibility/auth/billing extensions reconciled against handlers; a cross-language marker-and-JSON wire registry checked against both emit and parse sites; a per-subcommand CLI-output spec whose stable points double as fuzz oracles (an adversarial input fails to the declared spec point, not one run's formatting).",
+        "guarantee": "A breaking change reddens the gate at the edit, not in production at the far side. Boundary: a surface no check reconciles is worse than none — it looks authoritative and lies.",
+        "semantic_level": "producer shape ⟷ declared contract ⟷ consumer expectation — the boundary-shape relation, plus typed boundary policy.",
+        "forces_tradeoffs": "One more surface to keep true (the reconciliation gate is load-bearing). Three boundary genres share the pattern but stay distinct instances — folding them blurs checks that run at different times against different consumers.",
+        "dependencies": "drift-parity-gates (the reconciliation machinery); fuzz-campaigns (consumer of the CLI oracle); service-flow-model sibling (who talks vs in what language); semantic-level-enforcement (check at the boundary's own level, not a string match below).",
+        "known_uses": "DocAble's endpoint model with per-endpoint visibility/auth/billing; the cross-language wire-contract registry (C# worker markers ↔ Python coordinator); the per-subcommand stdout spec used as the fuzz oracle.",
+        "likely_parent_family": "Executable-model zoo — boundary contract surfaces"
+      }
+    },
+    "models-bridge/system-models/user-journey-model": {
+      "title": "User-journey model (product-goal → implementation)",
+      "role": "models-bridge",
+      "family": "System models",
+      "index_metadata": {
+        "form": "typed-ir",
+        "move": "package",
+        "model": "is-a-model",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "The path from product goal to code lives in heads — the journey is the one thing the code never names: journeys go untested unnoticed, endpoints accrete that no journey needs and no one dares delete, declared dependencies silently fall out of date with real call sites, capacity is sized to a blurred average.",
+        "engineering_obligation": "The traversal from what the product is for to what the code must provide is a queryable, reconciled model — behavioral, goal-anchored entities joined to the endpoints they cross, held fresh by parity.",
+        "solution_structure": "A Journey entity kind (actor · goal · ordered steps, each naming its endpoints, plus call-site anchors) grafted into the existing structural service dialect — distinct model, shared carrier (loader, query, lint machinery inherited); a call-site drift lint holds declared deps ↔ real call sites both directions; two coverage audits ride the model (undertested-journey, dead-endpoint); audit-only → fix-wave → blocking.",
+        "guarantee": "The journey→deps map is a checked cache of the call-site truth (O(1)-at-PR correction instead of O(N)-PRs silent drift). The runtime capability it unlocks (journey-aware differential scale-up) is gated on the drift lint being blocking — capability enabled by the model, made safe by the governance that keeps it true.",
+        "semantic_level": "product goal → implementation surface — a behavioral traversal joined down to structure; declared dependency ⟷ real call site.",
+        "forces_tradeoffs": "The semantic fields (actor, goal, steps) are human-authored — a linted document, not codegen. Journey granularity is an explicit modeling choice (too coarse = toothless audits, too fine = noise). Audit-only-first is the honest landing.",
+        "dependencies": "service-flow-model (the shared carrier); drift-parity machinery; consumed by journey-criticality-test-placement and journey-task-closure; executable-source-of-truth as the pattern instantiated.",
+        "known_uses": "DocAble's typed Journey entities; the two-way call-site drift lint; the dead-endpoint and undertested-journey audits; the journey-aware wake/scale capability; the migration completeness-critic sweep (walking journeys to find the threads a component-deep plan misses).",
+        "likely_parent_family": "Executable-model zoo — goal-anchored behavioral journeys"
       }
     }
   }
