@@ -5,7 +5,7 @@
     "chapters_assessed": 32,
     "chapters_exempt": 7,
     "openings_failing": 0,
-    "closings_failing": 2,
+    "closings_failing": 0,
     "thesis_spine_mismatches": 1,
     "openings_implicit_thesis": 10
   },
@@ -259,11 +259,11 @@
         "thesis_target": "argument-step"
       },
       "closing": {
-        "kind": "mid-taxonomy"
+        "kind": "synthesis"
       },
-      "note": "Opening solid: agent lacks operating context -> write lifecycles + runbooks (governed-environment role implicit). ENDING FAILS: the chapter stops inside the runbook taxonomy at the pre-canned brief + a Learn-more link; the final clause gestures at synthesis ('the whole business of this book, applied to delegation') but there is no chapter-level consequence/transition/synthesis re-collecting lifecycles->runbooks->split.",
+      "note": "Opening solid: agent lacks operating context -> write lifecycles + runbooks (governed-environment role implicit). Phase-2c added a chapter-level close: one instruction in three shapes (lifecycle -> runbook -> pre-canned brief), re-collecting the chapter, with the consequence that operating judgment stops living in your head and becomes something the environment holds — closing on the 2 a.m. callback to the opening.",
       "opening_anchor": "You know what to do when the disk fills up, when two",
-      "closing_anchor": "whole business of this book, applied to the act of delegation itself.",
+      "closing_anchor": "it stops depending on who happens to be awake at 2 a.m.",
       "exempt": null,
       "spine_advances": [
         "govern-the-environment"
@@ -318,11 +318,11 @@
         "thesis_target": "modeling"
       },
       "closing": {
-        "kind": "apparatus"
+        "kind": "transition"
       },
-      "note": "Opening cashes 2.2's promise, Part-level Modeling-Thesis frame explicit (incl. the Task-6 'Why models are newly central' section). ENDING FAILS: the chapter ends on inset apparatus (I1/I8/I9) + a navigation note about where the remaining insets appear — reference-matter tail, no chapter-level close.",
+      "note": "Opening cashes 2.2's promise, Part-level Modeling-Thesis frame explicit (incl. the Task-6 'Why models are newly central' section). Phase-2c added a chapter-level close after the boxed reference insets: 'That is the trunk; the rest of this Part is the branches' — re-collects the shared machinery (executable source of truth, drift gate, derived edges, admission test, template) and hands off to the five views, the Logical view first. The boxed insets remain trailing reference matter; the close is now the last prose.",
       "opening_anchor": "The previous chapter argued that a model is the sweet spot between",
-      "closing_anchor": "diagrams, safety versus liveness, protocols and TLA+, and coverage over model nodes.",
+      "closing_anchor": "holds them true. The Logical view is first: what the system is.",
       "exempt": null,
       "spine_advances": [
         "modeling-thesis",
@@ -701,18 +701,7 @@
   ],
   "flags": {
     "failing_openings": [],
-    "failing_closings": [
-      {
-        "chapter": "2.4-lifecycles-and-runbooks",
-        "kind": "mid-taxonomy",
-        "note": "Opening solid: agent lacks operating context -> write lifecycles + runbooks (governed-environment role implicit). ENDING FAILS: the chapter stops inside the runbook taxonomy at the pre-canned brief + a Learn-more link; the final clause gestures at synthesis ('the whole business of this book, applied to delegation') but there is no chapter-level consequence/transition/synthesis re-collecting lifecycles->runbooks->split."
-      },
-      {
-        "chapter": "3.1-the-executable-zoo",
-        "kind": "apparatus",
-        "note": "Opening cashes 2.2's promise, Part-level Modeling-Thesis frame explicit (incl. the Task-6 'Why models are newly central' section). ENDING FAILS: the chapter ends on inset apparatus (I1/I8/I9) + a navigation note about where the remaining insets appear — reference-matter tail, no chapter-level close."
-      }
-    ],
+    "failing_closings": [],
     "thesis_spine_mismatches": [
       {
         "chapter": "5.4-the-road-to-mage",
