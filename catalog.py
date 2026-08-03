@@ -2880,6 +2880,23 @@ def cmd_claims(args) -> int:
     return clm.consult(args.chapter)
 
 
+def _spine_health(s: dict) -> str:
+    """A compact per-claim health suffix for the spine listing — the depth + overmapping + freshness sensors
+    surfaced from the generated artifact's derived fields. Empty when the claim is healthy."""
+    tags = []
+    if s.get("exempt"):
+        tags.append(f"exempt:{s['exempt']}")
+    elif not s.get("advanced_by"):
+        tags.append("GAP")
+    elif s.get("front_loaded"):
+        tags.append("front-loaded")
+    if s.get("overmapped"):
+        tags.append("OVERMAPPED")
+    if s.get("fresh") is False:
+        tags.append("STALE")
+    return f"  [{'; '.join(tags)}]" if tags else ""
+
+
 def cmd_spine(args) -> int:
     """Query the argument-spine model (book-models/argument-spine.json) — the book's linear argument as an
     ordered run of claims, each labeled with the chapters that advance it. Three modes, mirroring the
@@ -2904,7 +2921,7 @@ def cmd_spine(args) -> int:
         print("== the argument spine (14 claims in order) ==")
         for s in sorted(spine, key=lambda s: s["order"]):
             n = len(s.get("advanced_by", []))
-            print(f"{s['order']:>3}. {s['id']:34} advanced by {n:>2} chapter(s)")
+            print(f"{s['order']:>3}. {s['id']:34} advanced by {n:>2} chapter(s){_spine_health(s)}")
             print(f"       {s['statement']}")
         return 0
 
@@ -2915,10 +2932,11 @@ def cmd_spine(args) -> int:
             print(json.dumps(s, ensure_ascii=False, indent=2))
             return 0
         seeds = f" [seeds {','.join(map(str, s.get('seeds', [])))}]" if s.get("seeds") else ""
-        print(f"claim {s['order']}. {s['id']}{seeds}")
+        print(f"claim {s['order']}. {s['id']}{seeds}{_spine_health(s)}")
         print(f"  {s['statement']}")
         adv = s.get("advanced_by", [])
-        print(f"  advanced by ({len(adv)}): {', '.join(adv) if adv else '— none'}")
+        print(f"  advanced by ({len(adv)}, body-depth {s.get('body_depth', 0)}): "
+              f"{', '.join(adv) if adv else '— none'}")
         return 0
 
     # Chapter slug — exact, or a unique number/slug prefix (3.1 -> 3.1-the-executable-zoo).

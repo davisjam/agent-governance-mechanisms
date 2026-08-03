@@ -141,12 +141,17 @@ def check_claims_model():
 def check_argument_spine():
     """The argument-spine view's drift + structural check (audit-only first landing). Re-derives the spine
     model from the hand-authored `argument_spine_declared.json` and reports: AS1-drift against the on-disk
-    artifact; AS2–AS7 the structural / schema invariants (spine size + order + word cap; every `reconciles`
+    artifact; AS2–AS9 the structural / schema invariants (spine size + order + word cap; every `reconciles`
     link resolves against the claims + big-ideas siblings AND the reconciliation is complete both ways;
-    chapter labeling exhaustive over the outline's chapters; every advanced id resolves; exemption reasons
-    in the closed enum). The FOCUS flags (a non-exempt chapter advancing 0 or >3 spine claims) are the
-    artifact's `flags` block — editorial worklist, deliberately NOT findings here. Keyed off
-    `book-models/argument-spine.json` + `argument_spine_declared.json` + the outline + sibling models."""
+    chapter labeling exhaustive over the outline's chapters; every advanced id resolves; chapter exemption
+    reasons in the closed enum (AS7); AS8 freshness — every claim's `reviewed_hash` equals its current
+    statement hash, so a statement edited without a re-review reddens (the CS5 analogue); AS9 claim
+    exemptions — reason in the closed CLAIM_EXEMPT_REASONS enum and key names a spine claim). The FLAG block
+    — chapter-side focus smells (a non-exempt chapter advancing 0 or >3 claims) AND claim-side health
+    sensors (a non-exempt claim advanced by 0 chapters = gap, only within Part 0/1 = front-loaded, or by
+    more than OVERMAP_CAP = an overmapping-audit surface) — is the artifact's `flags` block: editorial
+    worklist, deliberately NOT findings here. Keyed off `book-models/argument-spine.json` +
+    `argument_spine_declared.json` + the outline + sibling models."""
     import argument_spine_model as asm  # noqa: E402 — path set above; the book-model package
 
     issues: list[str] = []

@@ -1,105 +1,123 @@
 {
-  "_note": "HAND-AUTHORED source for the book's ARGUMENT-SPINE model — the book's linear argument as an ordered run of numbered claims, plus the per-chapter labeling of which spine claims each chapter advances. This file IS edited by hand; argument-spine.json is generated from it (`python3 book-models/argument_spine_model.py regenerate`). Mirrors claims_declared.json's declared-source→generated-artifact shape. WHY A NEW MODEL, NOT AN EXTENSION: the claims model holds unordered stances with a contradiction predicate; the Big-Ideas model holds six fixed landing slots. A spine claim is neither — it is an ordered STEP in the argument, and its distinctive fields (order, seed provenance, reconciliation links, chapter advancement) belong to no sibling. The spine does not restate the siblings as a second source: each spine claim RECONCILES into the sibling models via `reconciles` links (claim ids from claims_declared.json; big-idea slugs from landing-big-ideas.json) and cites the author's seed statements (`seeds`, the 10-statement draft in book/_design/book-editorial-discipline-directive-260802.md Part A Task 1). Each spine claim: {id, order, statement (<=32 words, split()-counted), seeds[], reconciles: {claims[], big_ideas[]}}. `chapter_advances` maps every outline chapter slug to the spine-claim ids it advances; `chapter_exemptions` marks the chapters whose breadth (or silence) is their job, with a reason from the closed enum in argument_spine_model.py. The FOCUS flags (a non-exempt chapter advancing 0 claims, or more than 3) are DERIVED by the generator, never authored — they are the editorial worklist, informational, and never gate.",
+  "_note": "HAND-AUTHORED source for the book's ARGUMENT-SPINE model — the book's linear argument as an ordered run of numbered claims, plus the per-chapter labeling of which spine claims each chapter advances. This file IS edited by hand; argument-spine.json is generated from it (`python3 book-models/argument_spine_model.py regenerate`). Mirrors claims_declared.json's declared-source→generated-artifact shape. WHY A NEW MODEL, NOT AN EXTENSION: the claims model holds unordered stances with a contradiction predicate; the Big-Ideas model holds six fixed landing slots. A spine claim is neither — it is an ordered STEP in the argument, and its distinctive fields (order, seed provenance, reconciliation links, chapter advancement) belong to no sibling. The spine does not restate the siblings as a second source: each spine claim RECONCILES into the sibling models via `reconciles` links (claim ids from claims_declared.json; big-idea slugs from landing-big-ideas.json) and cites the author's seed statements (`seeds`, the 10-statement draft in book/_design/book-editorial-discipline-directive-260802.md Part A Task 1). Each spine claim: {id, order, statement (<=32 words, split()-counted), seeds[], reconciles: {claims[], big_ideas[]}, reviewed_hash (AS8 freshness seed — the statement hash the chapter labels were reviewed against; a changed statement reddens its advancing chapters until re-reviewed)}. `chapter_advances` maps every outline chapter slug to the spine-claim ids it advances; `chapter_exemptions` marks the chapters whose breadth (or silence) is their job; `claim_exemptions` is the claim-side analogue — genuine premises marked `front-loaded-by-design` (or `bridge`) so they are NOT flagged thin — both with a reason from the closed enums in argument_spine_model.py. The FLAGS are DERIVED by the generator, never authored, informational, and never gate: chapter-side (a non-exempt chapter advancing 0 claims, or more than 3) AND claim-side (a non-exempt claim advanced by 0 chapters or only within Part 0/1 = thin; a claim advanced by more than OVERMAP_CAP chapters = an overmapping-audit surface).",
   "spine": [
     {
       "id": "abundant-implementation",
       "order": 1,
       "statement": "Coding agents make implementation abundant, fast, and cheap — and individually unreliable.",
       "seeds": [1],
-      "reconciles": {"claims": [], "big_ideas": []}
+      "reconciles": {"claims": [], "big_ideas": []},
+      "reviewed_hash": "36f4f3b40095"
     },
     {
       "id": "fault-lies-in-instructions",
       "order": 2,
       "statement": "Treat a bad output first as evidence about the instructions, representation, task boundary, or environment — not automatically as a fixed capability ceiling.",
       "seeds": [1],
-      "reconciles": {"claims": ["printer-not-coder"], "big_ideas": []}
+      "reconciles": {"claims": ["printer-not-coder"], "big_ideas": []},
+      "reviewed_hash": "36e742ea3f72"
     },
     {
       "id": "oversight-does-not-scale",
       "order": 3,
       "statement": "Human per-change oversight cannot scale with agent throughput; attention must be spent per class of failure, not per change.",
       "seeds": [2],
-      "reconciles": {"claims": [], "big_ideas": []}
+      "reconciles": {"claims": [], "big_ideas": []},
+      "reviewed_hash": "cf81b75e7fd6"
     },
     {
       "id": "churn-is-the-limit",
       "order": 4,
       "statement": "Ungoverned, the project decays into churn: an increasing share of effort goes to rediscovering context, undoing recent work, and reconciling inconsistencies rather than advancing the system.",
       "seeds": [3],
-      "reconciles": {"claims": ["fleet-scaling-bounds"], "big_ideas": ["churn"]}
+      "reconciles": {"claims": ["fleet-scaling-bounds"], "big_ideas": ["churn"]},
+      "reviewed_hash": "d1e8982b2cc0"
     },
     {
       "id": "three-not-knowings-cause-churn",
       "order": 5,
       "statement": "Churn is a symptom; its causes are exactly three not-knowings — what to build, how to realize it, how to change safely.",
       "seeds": [3],
-      "reconciles": {"claims": ["churn-is-symptom", "three-not-knowings"], "big_ideas": []}
+      "reconciles": {"claims": ["churn-is-symptom", "three-not-knowings"], "big_ideas": []},
+      "reviewed_hash": "0723642b2b10"
     },
     {
       "id": "govern-the-environment",
       "order": 6,
       "statement": "Build the environment first: encode each obligation as a mechanism the environment enforces — mechanized, not remembered — so quality is a property of the ground.",
       "seeds": [5],
-      "reconciles": {"claims": ["mechanize-not-remember", "governance-not-on-the-dial"], "big_ideas": ["governance-centric"]}
+      "reconciles": {"claims": ["mechanize-not-remember", "governance-not-on-the-dial"], "big_ideas": ["governance-centric"]},
+      "reviewed_hash": "78b391707b50"
     },
     {
       "id": "modeling-thesis",
       "order": 7,
       "statement": "Binding intent and structure into explicit, drift-checked models gives agents a compact representation to reason through, and engineers a surface to specify, analyze, and predict.",
       "seeds": [4],
-      "reconciles": {"claims": ["double-win", "ssot-not-snapshot", "direction-agnostic"], "big_ideas": ["modeling-thesis"]}
+      "reconciles": {"claims": ["double-win", "ssot-not-snapshot", "direction-agnostic"], "big_ideas": ["modeling-thesis"]},
+      "reviewed_hash": "dc44bf4796ad"
     },
     {
       "id": "alignment-thesis",
       "order": 8,
       "statement": "Enforced mechanisms hold implementation to declared intent across later changes; where possible, constrain the action space so the wrong move is unavailable, and where prevention is incomplete, install sensors that detect divergence.",
       "seeds": [5],
-      "reconciles": {"claims": ["constraint-prevents-sensor-detects", "soft-to-hard-spectrum", "model-not-mechanism-until-enforced"], "big_ideas": ["alignment-thesis"]}
+      "reconciles": {"claims": ["constraint-prevents-sensor-detects", "soft-to-hard-spectrum", "model-not-mechanism-until-enforced"], "big_ideas": ["alignment-thesis"]},
+      "reviewed_hash": "d4b36f18c7e9"
     },
     {
       "id": "theses-treat-the-causes",
       "order": 9,
       "statement": "The two theses divide the not-knowings: modeling treats what-to-build and how-to-realize; alignment treats how-to-change-safely.",
       "seeds": [4, 5],
-      "reconciles": {"claims": ["theses-divide-the-not-knowings"], "big_ideas": []}
+      "reconciles": {"claims": ["theses-divide-the-not-knowings"], "big_ideas": []},
+      "reviewed_hash": "7e245a8d064b"
     },
     {
       "id": "failures-become-machinery",
       "order": 10,
       "statement": "Velocity surfaces the unforeseeable failure; the engineer's recurring task converts each recurrence into durable machinery.",
       "seeds": [6, 7],
-      "reconciles": {"claims": ["convert-failures-to-controls"], "big_ideas": ["convert-failures"]}
+      "reconciles": {"claims": ["convert-failures-to-controls"], "big_ideas": ["convert-failures"]},
+      "reviewed_hash": "d05da605e04d"
     },
     {
       "id": "sync-cost-reduced",
       "order": 11,
       "statement": "The sync economics changed. Agents sharply reduce the recurring labor of keeping models and implementation reconciled.",
       "seeds": [8],
-      "reconciles": {"claims": [], "big_ideas": []}
+      "reconciles": {"claims": [], "big_ideas": []},
+      "reviewed_hash": "681d832a8c6d"
     },
     {
       "id": "mage-becomes-practical",
       "order": 12,
       "statement": "This makes serious model-based software engineering practical: models can become the working language through which agents reason and engineers specify, predict, and govern.",
       "seeds": [9],
-      "reconciles": {"claims": ["models-are-universal-language"], "big_ideas": []}
+      "reconciles": {"claims": ["models-are-universal-language"], "big_ideas": []},
+      "reviewed_hash": "09abeb08db9f"
     },
     {
       "id": "seat-moves",
       "order": 13,
       "statement": "The engineering lifecycle remains; the allocation of work changes. Agents occupy much of implementation, while human effort concentrates on intent, architecture, model authorship, validation, and judgment.",
       "seeds": [],
-      "reconciles": {"claims": ["seat-moves-not-lifecycle"], "big_ideas": ["seat-moves"]}
+      "reconciles": {"claims": ["seat-moves-not-lifecycle"], "big_ideas": ["seat-moves"]},
+      "reviewed_hash": "6e678662a007"
     },
     {
       "id": "grounded-in-one-case",
       "order": 14,
       "statement": "The DocAble case grounds the method and motivates hypotheses for broader use — a single-case field report, never a proof.",
       "seeds": [10],
-      "reconciles": {"claims": ["grounding-case-not-proof", "single-case-humility"], "big_ideas": []}
+      "reconciles": {"claims": ["grounding-case-not-proof", "single-case-humility"], "big_ideas": []},
+      "reviewed_hash": "d27760687c37"
     }
   ],
+  "claim_exemptions": {
+    "abundant-implementation": "front-loaded-by-design",
+    "fault-lies-in-instructions": "front-loaded-by-design"
+  },
   "chapter_exemptions": {
     "0.1-preface": "preface",
     "1.2-mage-by-example": "overview",

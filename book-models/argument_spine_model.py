@@ -22,18 +22,28 @@ per-chapter advancement judgment is argument-structural, so it homes here: `chap
 outline chapter slug to the spine ids it advances, and the generated artifact projects the reverse
 (`advanced_by`, per spine claim). Exhaustiveness over the outline's chapters is invariant AS5.
 
-FOCUS FLAGS ARE DERIVED, INFORMATIONAL, AND NEVER GATE.  The directive's two editorial smells — a chapter
-advancing 0 spine claims (suspect: why does it exist?) and a MIDDLE chapter advancing more than
-FOCUS_CAP (probably unfocused) — are computed by the generator into the artifact's `flags` block. Chapters
-whose breadth or silence is their job carry a `chapter_exemptions` reason from the closed EXEMPT_REASONS
-enum (preface / conclusion / discussion / end-of-part-synthesis / apparatus / overview). The flags are the
-orchestrator's refactor worklist (Phase 1c of the directive); they are surfaced, never a gate finding.
+FLAGS ARE DERIVED, INFORMATIONAL, AND NEVER GATE.  Two families of editorial smell are computed by the
+generator into the artifact's `flags` block, never authored. CHAPTER side (the directive's Phase-1c
+worklist): a non-exempt chapter advancing 0 spine claims (suspect: why does it exist?) or more than
+FOCUS_CAP (probably unfocused). CLAIM side (the depth/overmapping sensors): a non-exempt claim advanced by
+0 chapters (a real gap) or only within Part 0/1 (front-loaded/shallow); and a claim advanced by more than
+OVERMAP_CAP chapters (an overmapping-audit surface — its breadth is worth re-examining chapter by chapter).
+Chapters whose breadth or silence is their job carry a `chapter_exemptions` reason from the closed
+EXEMPT_REASONS enum; genuine premises carry a `claim_exemptions` reason from CLAIM_EXEMPT_REASONS so they do
+not surface as thin. All flags are surfaced, never a gate finding.
+
+FRESHNESS (AS8) — the CS5 analogue for the spine.  Each declared claim carries a `reviewed_hash`: the hash
+of the statement wording its chapter labels were reviewed against. AS8 re-hashes the current statement and
+reddens a claim whose wording has changed since review — the labels on its advancing chapters may no longer
+hold. A re-review updates the hash (editing the declared file); regenerating the artifact never refreshes it.
 
 Run `python3 book-models/argument_spine_model.py regenerate` to write the artifact; `... verify` to
-drift-check; `... spine` to print the argument; `... flags` to print the focus worklist.
+drift-check; `... spine` to print the argument; `... flags` to print the focus + health worklist; `...
+hashes` to print each claim's current statement hash (for re-seeding a reviewed_hash after a re-review).
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import sys
@@ -55,10 +65,14 @@ _MODEL_NOTE = (
     "The argument-spine model holds the book's linear argument as an ordered run of claims, each "
     "reconciling the author's seed statements, the claims model, and the Big-Ideas model into one step — "
     "plus the per-chapter labeling of which steps each chapter advances. The `flags` block is DERIVED "
-    "editorial signal (a non-exempt chapter advancing 0 steps is suspect; one advancing more than the "
-    "focus cap is probably unfocused); it is the refactor worklist for the directive's Phase 1c and never "
-    "gates. Exempt chapters (preface / conclusion / discussion / end-of-part synthesis / apparatus) are "
-    "the ones whose breadth or silence is their job.")
+    "editorial signal and never gates: CHAPTER-side (a non-exempt chapter advancing 0 steps is suspect; one "
+    "advancing more than the focus cap is probably unfocused — the directive's Phase-1c worklist) AND "
+    "CLAIM-side health (a non-exempt claim advanced by 0 chapters is a gap; one advanced only within "
+    "Part 0/1 is front-loaded/shallow; one advanced by more than the overmap cap is an overmapping-audit "
+    "surface). Per-claim `reviewed_hash` seeds the AS8 freshness sensor: a statement edited without a "
+    "re-review reddens its advancing chapters. Exempt chapters (preface / conclusion / discussion / "
+    "end-of-part synthesis / apparatus) and exempt claims (genuine front-loaded-by-design premises) are the "
+    "ones whose breadth, silence, or shallow reach is their job.")
 
 #: The `statement` word cap — a spine claim is one argument step, not a paragraph. Counted with
 #: `statement.split()`, mirroring the claims model's C6. Higher than the claims model's 18 because a spine
@@ -73,6 +87,23 @@ SPINE_MIN, SPINE_MAX = 10, 20
 #: A non-exempt chapter advancing more than this many spine claims is flagged probably-unfocused (the
 #: directive's editorial smell). Breadth beyond the cap is only appropriate for the exempt kinds.
 FOCUS_CAP = 3
+
+#: A spine claim advanced by MORE than this many chapters is flagged for an OVERMAPPING audit — the
+#: claim-side symmetry of the chapter over-cap flag. The two central theses (modeling ~18, alignment ~13)
+#: and the governance thesis (~11) sit above it; the next-broadest claim advances 7, a clean gap. The flag
+#: never gates — it names the claims whose breadth is worth re-examining chapter by chapter.
+OVERMAP_CAP = 10
+
+#: The Part prefixes that count as "front-loaded". A claim advanced only within Part 0 (front matter) and
+#: Part 1 (the motivating overview) is shallow: stated up front and never re-advanced in the body — the
+#: known case is `churn-is-the-limit`, advanced only by the preface and 1.1.
+FRONT_PARTS = ("0", "1")
+
+#: The CLOSED reasons a spine claim may be exempt from the claim-depth flags (AS9) — the claim-side analogue
+#: of EXEMPT_REASONS. `front-loaded-by-design` marks a genuine premise stated once, up front, and assumed
+#: thereafter (it needs no dedicated body chapter); `bridge` marks a structural step that divides or joins
+#: other claims rather than earning chapters of its own. A reason the orchestrator ratifies before use.
+CLAIM_EXEMPT_REASONS = ("front-loaded-by-design", "bridge")
 
 #: The CLOSED reasons a chapter may be exempt from the focus flags (AS7). `apparatus` covers
 #: non-argumentative front/back matter (acknowledgments); `overview` covers a deliberate whole-book
@@ -96,8 +127,15 @@ class SpineClaim:
     seeds: list[int]
     reconciles_claims: list[str]
     reconciles_big_ideas: list[str]
+    exempt: "str | None" = None                      # claim-depth exemption reason (front-loaded-by-design / bridge) or None
+    reviewed_hash: str = ""                          # AS8 seed: the statement hash the chapter labels were reviewed against
     word_count: int = 0                              # derived: statement.split() length
+    statement_hash: str = ""                         # derived: current hash of `statement`
     advanced_by: list[str] = field(default_factory=list)  # derived: chapter slugs that advance this step
+    body_depth: int = 0                              # derived: advancing chapters OUTSIDE Part 0/1
+    front_loaded: bool = False                       # derived: advanced only within Part 0/1 (thin)
+    overmapped: bool = False                         # derived: advanced by > OVERMAP_CAP chapters
+    fresh: bool = True                               # derived: reviewed_hash == statement_hash (AS8)
 
 
 @dataclass
@@ -114,15 +152,41 @@ class SpineModel:
     chapters: list[ChapterLabel]
 
     def flags(self) -> "dict[str, list[dict]]":
-        """The DERIVED focus flags — the directive's two editorial smells over the non-exempt chapters."""
+        """The DERIVED editorial flags — CHAPTER-side focus smells and CLAIM-side health smells; never gated.
+
+        Chapter side (the directive's Phase-1c worklist):
+        - zero_claim_suspects: a non-exempt chapter advancing 0 spine claims.
+        - over_cap_unfocused: a non-exempt chapter advancing more than FOCUS_CAP claims.
+
+        Claim side (the depth + overmapping sensors; claim-exempt premises are skipped):
+        - thin_claim_gaps: a claim advanced by 0 chapters — a real gap.
+        - thin_claims_front_loaded: a claim advanced only within Part 0/1 (body_depth 0) — front-loaded.
+        - overmapped_claims: a claim advanced by more than OVERMAP_CAP chapters — an overmapping-audit
+          surface (its breadth is worth re-examining chapter by chapter). NOT skipped for exemptions —
+          overmapping is orthogonal to depth-exemption."""
         zero = [{"chapter": c.slug, "advances": 0}
                 for c in self.chapters if not c.exempt and not c.advances]
         over = [{"chapter": c.slug, "advances": len(c.advances), "spine_ids": list(c.advances)}
                 for c in self.chapters if not c.exempt and len(c.advances) > FOCUS_CAP]
-        return {"zero_claim_suspects": zero, "over_cap_unfocused": over}
+        thin_gaps = [{"claim": s.id, "advanced_by": 0}
+                     for s in self.spine if not s.exempt and not s.advanced_by]
+        thin_front = [{"claim": s.id, "advanced_by": len(s.advanced_by), "body_depth": s.body_depth,
+                       "chapters": list(s.advanced_by)}
+                      for s in self.spine if not s.exempt and s.front_loaded]
+        overmapped = [{"claim": s.id, "advanced_by": len(s.advanced_by), "chapters": list(s.advanced_by)}
+                      for s in self.spine if s.overmapped]
+        return {"zero_claim_suspects": zero, "over_cap_unfocused": over,
+                "thin_claim_gaps": thin_gaps, "thin_claims_front_loaded": thin_front,
+                "overmapped_claims": overmapped}
 
 
 # ---- load + build -----------------------------------------------------------------------------------
+
+def _statement_hash(statement: str) -> str:
+    """The AS8 freshness key: a short, stable digest of a claim's statement wording. A changed statement
+    changes this hash, so any chapter reviewed against the old wording reddens until re-reviewed."""
+    return hashlib.sha256(statement.encode("utf-8")).hexdigest()[:12]
+
 
 def _load_declared() -> dict:
     with open(_DECLARED, encoding="utf-8") as fh:
@@ -134,12 +198,16 @@ def derive_model() -> SpineModel:
     drift check share. Spine order is the argument's own order; chapters follow the outline's order, so the
     artifact is deterministic."""
     decl = _load_declared()
+    claim_exempt: "dict[str, str]" = decl.get("claim_exemptions", {})
     spine = [SpineClaim(
         id=d["id"], order=d["order"], statement=d["statement"],
         seeds=list(d.get("seeds", [])),
         reconciles_claims=list(d.get("reconciles", {}).get("claims", [])),
         reconciles_big_ideas=list(d.get("reconciles", {}).get("big_ideas", [])),
+        exempt=claim_exempt.get(d["id"]),
+        reviewed_hash=d.get("reviewed_hash", ""),
         word_count=len(d["statement"].split()),
+        statement_hash=_statement_hash(d["statement"]),
     ) for d in decl["spine"]]
     spine.sort(key=lambda s: s.order)
 
@@ -163,6 +231,16 @@ def derive_model() -> SpineModel:
         for sid in ch.advances:
             if sid in by_id:
                 by_id[sid].advanced_by.append(ch.slug)
+    # Derive per-claim health from the reverse projection: depth (front-loaded / body-depth), overmapping,
+    # and freshness. `part_of` reads the leading number of a chapter slug (0.1-preface -> "0").
+    def _part_of(slug: str) -> str:
+        return slug.split(".", 1)[0]
+    for s in spine:
+        parts = {_part_of(slug) for slug in s.advanced_by}
+        s.body_depth = sum(1 for slug in s.advanced_by if _part_of(slug) not in FRONT_PARTS)
+        s.front_loaded = bool(s.advanced_by) and parts <= set(FRONT_PARTS)
+        s.overmapped = len(s.advanced_by) > OVERMAP_CAP
+        s.fresh = s.reviewed_hash == s.statement_hash
     return SpineModel(spine=spine, chapters=chapters)
 
 
@@ -199,10 +277,14 @@ def structural_findings(model: "SpineModel | None" = None) -> "list[str]":
     AS5 — `chapter_advances` keys are exactly the outline's chapter slugs (exhaustive labeling; a label
           keyed to a chapter the book no longer defines reddens too).
     AS6 — every advanced id names a spine claim; no duplicate ids within one chapter's label.
-    AS7 — every exemption reason ∈ EXEMPT_REASONS; every exemption key is a labeled chapter.
+    AS7 — every chapter exemption reason ∈ EXEMPT_REASONS; every exemption key is a labeled chapter.
+    AS8 — freshness (the CS5 analogue): every claim carries a `reviewed_hash` equal to its current statement
+          hash — a statement edited without a re-review reddens (its chapter labels may no longer hold).
+    AS9 — claim exemptions: every reason ∈ CLAIM_EXEMPT_REASONS; every exemption key names a spine claim.
 
     (AS1, drift — the artifact equals a fresh derivation — is walked by the tests/book_models.py check and
-    the `verify` CLI, mirroring the siblings.)"""
+    the `verify` CLI, mirroring the siblings. The DEPTH and OVERMAPPING sensors are DERIVED report flags in
+    the artifact's `flags` block — editorial signal, deliberately NOT structural findings here.)"""
     if model is None:
         model = derive_model()
     claim_ids, idea_slugs = _sibling_sets()
@@ -262,13 +344,31 @@ def structural_findings(model: "SpineModel | None" = None) -> "list[str]":
             if sid not in spine_ids:
                 findings.append(f"AS6 chapter {ch.slug!r} advances unknown spine id {sid!r}")
 
-    # AS7 — exemption enum + keys.
+    # AS7 — chapter exemption enum + keys.
     for slug, reason in decl.get("chapter_exemptions", {}).items():
         if reason not in EXEMPT_REASONS:
             findings.append(f"AS7 chapter {slug!r} exemption {reason!r} not in the closed enum "
                             f"({', '.join(EXEMPT_REASONS)})")
         if slug not in labeled:
             findings.append(f"AS7 exemption for {slug!r} — chapter carries no label row")
+
+    # AS8 — freshness: each claim's chapter labels were reviewed against the current statement wording.
+    for s in model.spine:
+        if not s.reviewed_hash:
+            findings.append(f"AS8 spine claim {s.id!r} has no reviewed_hash — seed it to the current "
+                            f"statement hash ({s.statement_hash}) once its labels are reviewed")
+        elif s.reviewed_hash != s.statement_hash:
+            findings.append(f"AS8 spine claim {s.id!r} statement changed since review — re-review its "
+                            f"{len(s.advanced_by)} advancing chapter(s), then update reviewed_hash "
+                            f"(declared {s.reviewed_hash!r} vs current {s.statement_hash!r})")
+
+    # AS9 — claim exemption enum + keys (the claim-side analogue of AS7).
+    for cid, reason in decl.get("claim_exemptions", {}).items():
+        if reason not in CLAIM_EXEMPT_REASONS:
+            findings.append(f"AS9 claim {cid!r} exemption {reason!r} not in the closed enum "
+                            f"({', '.join(CLAIM_EXEMPT_REASONS)})")
+        if cid not in spine_ids:
+            findings.append(f"AS9 claim exemption for {cid!r} — no such spine claim")
     return findings
 
 
@@ -290,11 +390,17 @@ def to_jsonable(model: "SpineModel | None" = None) -> dict:
             "reconciled_big_ideas": len({b for s in model.spine for b in s.reconciles_big_ideas}),
             "zero_claim_suspects": len(flags["zero_claim_suspects"]),
             "over_cap_unfocused": len(flags["over_cap_unfocused"]),
+            "thin_claim_gaps": len(flags["thin_claim_gaps"]),
+            "thin_claims_front_loaded": len(flags["thin_claims_front_loaded"]),
+            "overmapped_claims": len(flags["overmapped_claims"]),
+            "claims_exempt": sum(1 for s in model.spine if s.exempt),
+            "claims_stale": sum(1 for s in model.spine if not s.fresh),
             "max_statement_words": max((s.word_count for s in model.spine), default=0),
         },
-        "taxonomy": {"word_cap": WORD_CAP, "focus_cap": FOCUS_CAP,
-                     "spine_bounds": [SPINE_MIN, SPINE_MAX],
-                     "exempt_reasons": list(EXEMPT_REASONS)},
+        "taxonomy": {"word_cap": WORD_CAP, "focus_cap": FOCUS_CAP, "overmap_cap": OVERMAP_CAP,
+                     "spine_bounds": [SPINE_MIN, SPINE_MAX], "front_parts": list(FRONT_PARTS),
+                     "exempt_reasons": list(EXEMPT_REASONS),
+                     "claim_exempt_reasons": list(CLAIM_EXEMPT_REASONS)},
         "spine": [asdict(s) for s in model.spine],
         "chapters": [asdict(c) for c in model.chapters],
         "flags": flags,
@@ -309,8 +415,10 @@ def regenerate() -> int:
     c = payload["_counts"]
     print(f"wrote {os.path.relpath(_ARTIFACT)} — {c['spine_claims']} spine claims; "
           f"{c['chapters_labeled']} chapters labeled ({c['advancement_edges']} edges, "
-          f"{c['chapters_exempt']} exempt); flags: {c['zero_claim_suspects']} zero-claim, "
-          f"{c['over_cap_unfocused']} over-cap")
+          f"{c['chapters_exempt']} exempt); chapter flags: {c['zero_claim_suspects']} zero-claim, "
+          f"{c['over_cap_unfocused']} over-cap; claim flags: {c['thin_claim_gaps']} gap, "
+          f"{c['thin_claims_front_loaded']} front-loaded, {c['overmapped_claims']} overmapped "
+          f"({c['claims_exempt']} exempt, {c['claims_stale']} stale)")
     findings = structural_findings()
     if findings:
         print(f"  {len(findings)} structural finding(s) (audit-only — see tests/book_models.py):")
@@ -343,14 +451,31 @@ def verify() -> int:
 
 # ---- CLI --------------------------------------------------------------------------------------------
 
+def _health_tag(s: "SpineClaim") -> str:
+    """A one-glyph health suffix for the spine listing: depth + freshness signal at a glance."""
+    tags = []
+    if s.exempt:
+        tags.append(f"exempt:{s.exempt}")
+    elif not s.advanced_by:
+        tags.append("GAP")
+    elif s.front_loaded:
+        tags.append("front-loaded")
+    if s.overmapped:
+        tags.append(f"OVERMAPPED:{len(s.advanced_by)}")
+    if not s.fresh:
+        tags.append("STALE")
+    return f"  [{'; '.join(tags)}]" if tags else ""
+
+
 def _print_spine() -> int:
     model = derive_model()
     print("== the argument spine ==")
     for s in model.spine:
         seeds = f" [seeds {','.join(map(str, s.seeds))}]" if s.seeds else ""
-        print(f"{s.order:>3}. {s.id}{seeds}\n     {s.statement}")
+        print(f"{s.order:>3}. {s.id}{seeds}{_health_tag(s)}\n     {s.statement}")
         if s.advanced_by:
-            print(f"     advanced by: {', '.join(s.advanced_by)}")
+            print(f"     advanced by ({len(s.advanced_by)}, body-depth {s.body_depth}): "
+                  f"{', '.join(s.advanced_by)}")
     return 0
 
 
@@ -363,6 +488,24 @@ def _print_flags() -> int:
         print(f"  OVER-CAP ({f['advances']} > {FOCUS_CAP}): {f['chapter']} — {', '.join(f['spine_ids'])}")
     if not flags["zero_claim_suspects"] and not flags["over_cap_unfocused"]:
         print("  none — every non-exempt chapter advances 1..3 spine claims")
+    print("== claim-health flags (derived; the depth + overmapping sensors) ==")
+    for f in flags["thin_claim_gaps"]:
+        print(f"  GAP (advanced by 0 chapters): {f['claim']}")
+    for f in flags["thin_claims_front_loaded"]:
+        print(f"  FRONT-LOADED ({f['advanced_by']} chapters, body-depth {f['body_depth']}): "
+              f"{f['claim']} — {', '.join(f['chapters'])}")
+    for f in flags["overmapped_claims"]:
+        print(f"  OVERMAPPED ({f['advanced_by']} > {OVERMAP_CAP}): {f['claim']} — audit chapter by chapter")
+    if not (flags["thin_claim_gaps"] or flags["thin_claims_front_loaded"] or flags["overmapped_claims"]):
+        print("  none — every non-exempt claim reaches the body and no claim over-maps")
+    return 0
+
+
+def _print_hashes() -> int:
+    """Print each claim's CURRENT statement hash — the value a reviewed_hash is seeded/re-seeded to."""
+    for s in derive_model().spine:
+        marker = "" if s.fresh else "  (STALE — reviewed against " + (s.reviewed_hash or "<none>") + ")"
+        print(f"{s.statement_hash}  {s.id}{marker}")
     return 0
 
 
@@ -376,6 +519,8 @@ def main(argv: "list[str]") -> int:
         return _print_spine()
     if cmd == "flags":
         return _print_flags()
+    if cmd == "hashes":
+        return _print_hashes()
     print(__doc__)
     return 2
 
