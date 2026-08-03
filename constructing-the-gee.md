@@ -60,6 +60,7 @@ formal: each supplies a capability the environment requires.
 
 ---
 
+<a id="principles"></a>
 # The eight principles
 
 The principles are the deep claims that explain the catalogue. They are not entries you install; they are

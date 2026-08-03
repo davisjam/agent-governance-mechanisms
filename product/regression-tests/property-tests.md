@@ -12,6 +12,8 @@ machine-*generated* inputs, catching bugs in the input space that example-based 
 | Model | — |
 | Enforcement | **Hard** (deterministic) — a repeatable regression body; shrinks to a minimal counterexample |
 
+*Its place in the environment — **merged into Generative Validation** (the tame-oracle pole; two sides of one coin), under **COMPLETE · Establish completion on re-derived evidence**. See the [construction kit](../../constructing-the-gee.md#cap-complete).*
+
 ## Motivation — the failure it kills
 
 Example-based tests only check the cases you *thought of*. Invariants (read∘write = identity, a
