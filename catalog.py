@@ -1841,6 +1841,8 @@ def _landing_closing() -> str:
     after Big Idea 6; it replaces the old F1-gateway band, so the reader leaves on the conclusion and a
     choice of entry rather than a mid-page gateway."""
     ways = [
+        ("The construction kit", "constructing-the-gee.html",
+         "the architecture: 9 capabilities · 25 canonical mechanisms · 8 compositions"),
         ("Full catalogue", "catalogue-views.html", "every mechanism, by role · model · enforcement"),
         ("Book", "book/index.html", "the full treatment of the method"),
         ("Claude quickstart", "quick-start.html", "install the skills in your repo"),
@@ -1854,7 +1856,7 @@ def _landing_closing() -> str:
         '  <p class="close-lead">The code got cheap; the judgment got expensive. Govern the conditions '
         'under which fast code can be trusted — the machine can search faster than any of us, but it cannot '
         'tell us what is worth searching for. So start with one recurring failure your agents keep handing '
-        'you, and convert it: one type, one lint, one gate. The method grows from there; below are three '
+        'you, and convert it: one type, one lint, one gate. The method grows from there; below are four '
         'ways in.</p>\n'
         f'  <div class="close-ways">\n    {buttons}\n  </div>\n'
         '</section>')
