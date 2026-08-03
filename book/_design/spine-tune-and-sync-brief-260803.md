@@ -1,0 +1,42 @@
+# BRIEF — spine model tune + book sync (Opus, models-first)
+
+Model **opus**. run_in_background. Live tree, branch main, NO worktree, single writer. models-first-then-prose. COMMIT PER GROUP (batch-emit — reasoning+edit heavy). Deploy at end. Record to results-log.
+
+## Brief text (paste into Agent prompt)
+
+You are tuning the MAGE book's argument-spine model and syncing the book prose to match (LIVE checkout `/Users/davisjam/Projects/ada-tool/talks-and-notes/governance-catalog`, branch main — NO worktree, you are the only writer). The author tightened six spine claims that over-claim; apply them to the MODEL first, then propagate to the exact chapters the model says advance each claim. Work slow+correct, commit per group. NOT the parent ada-tool product — book workflow = edit → `catalog.py validate` → `book/build_book_html.py` → `catalog.py deploy github`.
+
+**THE MODEL:** `book-models/argument_spine_declared.json` is the DECLARED source (author edits here) → `book-models/argument_spine_model.py` regenerates `book-models/argument-spine.json` (adds `advanced_by` reverse edges, counts, flags). The declared file has `spine` (14 claims: id/order/statement/seeds/reconciles), `chapter_exemptions`, `chapter_advances` (chapter→claim-ids). The generated file's `spine[].advanced_by` is the claim→chapters map you use to scope the sync.
+
+### STEP 1 — TUNE THE SIX CLAIM STATEMENTS (models-first; declared file, then regen)
+Rewrite these `statement` fields in `argument_spine_declared.json` to EXACTLY (author's wording):
+- **`fault-lies-in-instructions`** → "Treat a bad output first as evidence about the instructions, representation, task boundary, or environment — not automatically as a fixed capability ceiling."
+- **`churn-is-the-limit`** → "Ungoverned, the project decays into churn: an increasing share of effort goes to rediscovering context, undoing recent work, and reconciling inconsistencies rather than advancing the system." (MUST stay consistent with the Churn definition in `book/data/definitions.json` — same shape.)
+- **`alignment-thesis`** → "Enforced mechanisms hold implementation to declared intent across later changes; where possible, constrain the action space so the wrong move is unavailable, and where prevention is incomplete, install sensors that detect divergence." (Keep consistent with the Alignment-Thesis + Governance-mechanism definitions in `book/data/concepts.json`/`definitions.json`: alignment is the THESIS; constrain/sense are its principal MOVES, hierarchical — NOT "every quality goal splits".)
+- **`sync-cost-removed`** → statement: "The sync economics changed. Agents sharply reduce the recurring labor of keeping models and implementation reconciled." AND **RENAME THE ID `sync-cost-removed` → `sync-cost-reduced`** (the author confirmed): update it in the declared `spine` entry AND in every `chapter_advances` reference AND anywhere else the id is a join key (grep the repo for `sync-cost-removed` — models, tests, prose data). Regen; verify `check_argument_spine` still resolves all references.
+- **`mage-becomes-practical`** → "This makes serious model-based software engineering practical: models can become the working language through which agents reason and engineers specify, predict, and govern." (Do NOT assert "models are engineering's universal language" as an established result — that stays a larger book claim, not this compact statement.)
+- **`seat-moves`** → "The engineering lifecycle remains; the allocation of work changes. Agents occupy much of implementation, while human effort concentrates on intent, architecture, model authorship, validation, and judgment."
+
+**Word-cap note:** if a statement word-cap lint (`lint_point_claim_word_cap` or the spine's own `max_statement_words`) rejects a longer statement, render the `statement` field to the essential clause that fits the cap FAITHFULLY (don't distort the meaning) — the fuller wording lives in the prose sync. If the cap would force real loss of meaning, RAISE the cap minimally + note it in the record rather than mangle the claim. Regen after every edit; keep `check_argument_spine` (AS1–AS7) green.
+
+### STEP 2 — ADD THE `spine` QUERY SUBCOMMAND (ergonomics; mirror the siblings)
+`catalog.py` has `claims`/`concepts`/`definitions`/`outcomes-site` subcommands but NO `spine`. Add `catalog.py spine [<claim-id> | <chapter-slug>]`, mirroring the existing sibling subcommand structure (find how `claims`/`concepts` are wired in `catalog.py` + their `*_model.py`): with a claim-id → print the claim statement + its `advanced_by` chapters; with a chapter-slug → print the chapter + its `advances`; with no arg → list the 14 claims in order with advance-counts. Read the generated `argument-spine.json`. Keep it stdlib-only. `catalog.py validate` stays 0.
+
+### STEP 3 — BOOK SYNC (surgical, per claim, via `advanced_by`)
+For EACH of the six tuned claims, read its `advanced_by` chapters (below) and tighten ONLY the prose that STATES or LEANS ON the old over-claimed wording, to match the new statement. This is a surgical sweep — do NOT rewrite chapters; fix the specific over-claims. Commit per claim-group.
+- **`fault-lies-in-instructions`** → 0.1-preface, 1.1-the-printer, 4.5-lessons-learned, 6.1-conclusion. Fix any "not the worker" / absolute-printer framing → "first evidence about instructions/representation/task-boundary/environment, not automatically a fixed capability ceiling." Keep the printer *metaphor* (it's the 1.1 chapter identity) but drop the absolutism that the model is never at fault.
+- **`churn-is-the-limit`** → 0.1-preface, 1.1-the-printer. Ensure churn is NOT framed as context-overflow-only; context is a MAJOR causal mechanism, not the definition. Align with the Churn definition.
+- **`alignment-thesis`** → 0.1-preface, 1.4, 2.2, 2.3, 2.5, 3.2, 3.3, 3.4, 3.5, 3.6, 4.3, 4.5, 4.6. Most are LIGHT (the 3.x views carry a one-sentence thesis-clause — just confirm it doesn't over-claim). Fix any "every quality goal splits into constraint+sensor" phrasing → the hierarchical form (alignment = thesis; constrain-first, sense-where-prevention-incomplete). The heavy sites are 2.3 (the governed environment) + 1.4.
+- **`sync-cost-reduced`** (renamed) → 0.1-preface, 2.2, 3.1. Fix any "sync cost is gone / eliminated / free" → "economics changed / sharply reduced"; acknowledge someone still authors the model, the reconciliation rule, the gate, the semantic mapping, the exceptions.
+- **`mage-becomes-practical`** → 0.1-preface, 3.7, 4.4, 6.0, 6.1. Fix any bullet/summary that states "models are the universal language" as a settled result → "makes serious MBSE practical; models as the working language agents reason through + engineers specify/predict/govern." (The book MAY still build the universal-language argument as its larger thesis in the discursive text — don't gut that; just don't state it as established in compact claim form.)
+- **`seat-moves`** → 1.5-the-engineers-seat, 4.5, 5.4, 6.0, 6.1. Fix opaque "the lifecycle survives / the seat moves" → name it: the ENGINEERING lifecycle remains; the ALLOCATION of work changes (agents do much of implementation; humans concentrate on intent/architecture/model-authorship/validation/judgment).
+
+**Reconcile, don't contradict:** the tuned claims must stay consistent with the concept-model (`book/data/concepts.json` `_hierarchy` + core-constructs), the definitions (`book/data/definitions.json`), and the two theses. If a tuned claim now conflicts with a definition/concept, fix the conflict (prefer the tighter, author-ratified wording) and note it.
+
+### GATES + DEPLOY
+`catalog.py validate` 0 · `check_argument_spine` + `check_chapter_shape` + `check_concepts_hierarchy` + claims C7 all green (re-assess `chapter-shape` anchors for any chapter whose prose you changed, so CS5 stays green) · `book/build_book_html.py` green · `catalog.py deploy github`; foreground-poll Deploy Pages CI to success; curl the spine-heavy touched pages + models-view for 200.
+
+### RECORD (do not relay)
+Append a `## SPINE-TUNE + SYNC` block to `book/_design/editorial-run-results-260802.md`: the 6 statement edits, the id rename + its reference updates, the new `spine` subcommand, per-claim sync sites touched, any word-cap decision, gates, live SHA.
+
+House style throughout (Hemingway; cut qualifiers; vary figures). Thorough over fast. Commit per group to stay alive. On ambiguity, defensible call + DOCUMENT + continue.

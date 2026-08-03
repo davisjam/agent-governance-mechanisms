@@ -954,3 +954,33 @@ census token auto-synced 82→83.
   the bulk of the "patterns-with-examples" editorial vision and is the main remaining W3 work.
 - Prior-art slot placeholders added on the clear LPP-mappers only; a complete pass over every
   literature-mapping pattern can follow when LPP-PROSE lands the actual `references.bib` keys.
+
+---
+
+## W4 — data-substantiation render (charts + tables + prose, claim-bound) · 260803
+
+Renders the 3 collected metrics into the book as hand-authored house SVGs + tables + prose, each bound
+to its argument-spine claim through the data-claims ledger; fills each ledger entry's `holds`/`source`/
+`anchor` so DL4 (holds-appear-in-source) goes green and `catalog.py substantiation` shows real
+`data_backing`. Baseline before W4: the tier-1 gate carried 2 pre-existing FAILs, BOTH in
+`3.1-the-executable-zoo` (a `<!-- TODO(W7) -->` stray comment at line 426; an IR render-complete
+byte-identity divergence at block 110) — W7 territory, unrelated to W4. Every W4 commit holds the gate at
+that baseline (26 passed / 2 pre-existing failed), never adding a new failure.
+
+### Metric 1 — support-ratio-curve → govern-the-environment · RENDERED
+- **Chart + table location:** new `## The support ratio: build the environment first {#support-ratio-curve}`
+  in `book/part5/5.2-the-timeline-and-the-work.md` (after the phased-timeline figure). Line chart
+  `book/assets/support-ratio-curve.svg` (0.85 → 2.48 → 3.68 → 3.06 with a parity reference at 1.0) +
+  the production/support LoC table + the "build-the-environment-first revealed preference" prose
+  (sub-parity → 3.68× peak → 3.06× as production growth resumes; final-dip = production +45% not support
+  falling, support still +21%). Coverage-gap=0 honesty note in the closing paragraph.
+- **Cross-ref marker:** `[data: support-ratio-curve]` added to the apparatus point in
+  `book/part1/1.2-mage-by-example.md` (clears the uncited WARN).
+- **Ledger filled:** `anchor: "support-ratio-curve"`; `holds: ["0.85","2.48","3.68","3.06","26,956","1,501,907"]`
+  (all appear in the 5.2 table — DL4 loose-match green); `status: final`.
+- **Substantiation:** `govern-the-environment` now shows `data: support-ratio-curve [final]` under it.
+- **Gates:** `catalog.py validate` 0 issues · `build_book_html.py` green (116 figures) · figure-overflow
+  clean · design-token drift adds no support-ratio finding · stroke-through-glyph clean (dropped the 4×
+  gridline that clipped the 3.68× label) · book-float-ref green (both figure + LoC table introduced by
+  `[ref:]`) · tier-1 gate 26/2 (baseline held). outline.json + reverse_index.json regenerated.
+- **Parked:** none for this metric (velocity chart regen stays deferred housekeeping, out of W4 scope).

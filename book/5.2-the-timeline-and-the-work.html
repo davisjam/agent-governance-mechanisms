@@ -1962,6 +1962,68 @@ z
     <text x="82" y="1413" font-size="18" fill="#1c1917" font-style="italic">The crew never noticed. The work continues.</text>
   </g>
 </svg><figcaption data-short="The messy timeline behind the clean stages"><span class="fig-label">Figure 5.2-2.</span> The messy timeline behind the clean stages. Nine dated moments from the seven-week build — a plan drawn afterward through the days it was actually made in.</figcaption></figure>
+<h2 id="support-ratio-curve">The support ratio: build the environment first</h2>
+<p>The apparatus outgrowing the product is not a one-time fact; it is a curve. Measure the support apparatus against the production code at four dated commits and the revealed preference of the whole build falls out in one line. <a class="xref" href="5.2-the-timeline-and-the-work.html#fig-5-2-3">Figure&nbsp;5.2-3</a> plots it.</p>
+<figure id="fig-5-2-3" class="book-figure" data-label="support-ratio-curve"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470"
+     role="img" aria-labelledby="srTitle srDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="srTitle">The support-ratio curve across four windows</title>
+  <desc id="srDesc">A line chart of the support ratio — support-apparatus lines of code
+    divided by production lines of code — at four dated windows of the build. It starts
+    below parity at 0.85 in the prototype, rises past production to 2.48 at mechanization,
+    peaks at 3.68 during hardening, then eases to 3.06 now as feature work resumes on the
+    built environment. A dashed reference line marks parity at 1.0; the support line sits
+    above it for every window after the prototype. The shape is a revealed preference:
+    governance investment led and kept pace with the fleet, crossing sub-parity to roughly
+    three times the size of the product while production itself grew about forty-seven-fold.</desc>
+
+  <!-- y gridlines + tick labels (ratio 1..4); baseline at ratio 0 -->
+  <line x1="130" y1="307.5" x2="920" y2="307.5" stroke="#e4e0d8" stroke-width="1"/>
+  <line x1="130" y1="235"   x2="920" y2="235"   stroke="#e4e0d8" stroke-width="1"/>
+  <line x1="130" y1="162.5" x2="920" y2="162.5" stroke="#e4e0d8" stroke-width="1"/>
+  <text x="118" y="311.5" text-anchor="end" font-size="12" fill="#57534e">1×</text>
+  <text x="118" y="239"   text-anchor="end" font-size="12" fill="#57534e">2×</text>
+  <text x="118" y="166.5" text-anchor="end" font-size="12" fill="#57534e">3×</text>
+
+  <!-- x axis baseline (ratio 0) -->
+  <line x1="130" y1="380" x2="920" y2="380" stroke="#1c1917" stroke-width="1.5"/>
+
+  <!-- parity reference at ratio 1.0 -->
+  <line x1="130" y1="307.5" x2="920" y2="307.5" stroke="#57534e" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="912" y="299" text-anchor="end" font-size="12" font-style="italic" fill="#57534e">parity — support = product</text>
+
+  <!-- the support-ratio line: 0.85 -> 2.48 -> 3.68 -> 3.06 -->
+  <polyline points="160,318.4 400,200.2 640,113.2 880,158.15"
+            fill="none" stroke="#9a3f12" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="160" cy="318.4"  r="5" fill="#9a3f12"/>
+  <circle cx="400" cy="200.2"  r="5" fill="#9a3f12"/>
+  <circle cx="640" cy="113.2"  r="5" fill="#9a3f12"/>
+  <circle cx="880" cy="158.15" r="5" fill="#9a3f12"/>
+
+  <!-- value labels above each point (free-floating) -->
+  <text x="160" y="302" text-anchor="middle" font-size="15" font-weight="700" fill="#9a3f12">0.85×</text>
+  <text x="400" y="184" text-anchor="middle" font-size="15" font-weight="700" fill="#9a3f12">2.48×</text>
+  <text x="640" y="97"  text-anchor="middle" font-size="15" font-weight="700" fill="#9a3f12">3.68×</text>
+  <text x="880" y="142" text-anchor="middle" font-size="15" font-weight="700" fill="#9a3f12">3.06×</text>
+
+  <!-- x window labels + dates -->
+  <text x="160" y="406" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">prototype</text>
+  <text x="160" y="426" text-anchor="middle" font-size="12" fill="#57534e">Apr 9</text>
+  <text x="400" y="406" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">mechanization</text>
+  <text x="400" y="426" text-anchor="middle" font-size="12" fill="#57534e">May 31</text>
+  <text x="640" y="406" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">hardening</text>
+  <text x="640" y="426" text-anchor="middle" font-size="12" fill="#57534e">Jun 30</text>
+  <text x="880" y="406" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">now</text>
+  <text x="880" y="426" text-anchor="middle" font-size="12" fill="#57534e">Aug 3</text>
+
+  <!-- axis caption -->
+  <text x="130" y="452" text-anchor="start" font-size="13" font-style="italic" fill="#57534e">support-apparatus LoC ÷ production LoC · coverage gap 0 at every window</text>
+</svg><figcaption data-short="The support ratio across four windows — support-apparatus lines of code…"><span class="fig-label">Figure 5.2-3.</span> The support ratio across four windows — support-apparatus lines of code divided by production lines of code. It starts below parity (0.85×), rises past production (2.48×) at mechanization, peaks at 3.68× during hardening, then eases to 3.06× as feature work resumes. The dashed line marks parity; the support line sits above it for every mature window. Governance investment led the fleet and kept pace with it.</figcaption></figure>
+<p><a class="xref" href="5.2-the-timeline-and-the-work.html#tbl-5-2-1">Table&nbsp;5.2-1</a> gives the lines behind the ratio — production and support apparatus at each of the four commits.</p>
+<table id="tbl-5-2-1" class="book-table" data-label="support-ratio-loc-table"><caption data-short="The support ratio across four windows"><span class="tbl-label">Table 5.2-1.</span> The support ratio across four windows — production and support-apparatus lines of code at four dated commits, and their ratio.</caption><thead><tr><th>Window</th><th class="num">Production LoC</th><th class="num">Support LoC</th><th class="num">Support ratio</th></tr></thead><tbody><tr><td>prototype — Apr 9</td><td class="num">26,956</td><td class="num">22,908</td><td class="num">0.85×</td></tr><tr><td>mechanization — May 31</td><td class="num">302,844</td><td class="num">751,050</td><td class="num">2.48×</td></tr><tr><td>hardening — Jun 30</td><td class="num">337,905</td><td class="num">1,244,194</td><td class="num">3.68×</td></tr><tr><td>now — Aug 3</td><td class="num">491,090</td><td class="num">1,501,907</td><td class="num">3.06×</td></tr></tbody></table>
+<p>Read the curve as a decision, not an accident. In the prototype the support apparatus was smaller than the product — 0.85×, below parity — because there was barely a product to govern. By mechanization the apparatus had crossed production and reached 2.48×, and by hardening it peaked at 3.68×: roughly three and a half times the code it guarded. The governance was built <em>first</em>, then the features leaned on it. That ordering is the whole argument of this book, drawn as a line.</p>
+<p>The final-window dip to 3.06× is not a retreat. Support did not fall — it grew another 21% in absolute terms. Production simply grew faster, up 45%, as feature work resumed on top of the finished environment. A falling ratio here signals a <em>stabilized</em> foundation being spent, not an abandoned one. Across the whole span the apparatus crossed from sub-parity to about three times the product while production itself grew roughly forty-seven-fold — the machinery led the fleet and never fell behind it.</p>
+<p>One honesty note keeps the number from overclaiming. The census fails loud over seven primary source roots, so the coverage gap is zero at every window — no file the tool was asked to count slipped past it. About a fifth of the raw tree sits outside the census by design (root configuration, assets, non-primary test corpora, this book itself), and that side-tree share is roughly flat across the mature windows, so the curve tracks a real shift in how effort was spent, not an artifact of the category map moving under it. Lines of code remain a coarse proxy for effort; the ratio is a revealed preference across one repository and one fleet, not a controlled comparison of governed against ungoverned work.</p>
 <h2>The kinds of work it required</h2>
 <p>Read this timeline as a catalog of the <em>kinds of work</em> agentic development turned out to need — a more useful reading than any feature list. The code was cheap. Everything around the code was where the judgment went, and the same handful of activities recurred at every stage:</p>
 <ul><li><strong>Framing the problem.</strong> Deciding what "accessible" even meant for a math-dense graduate deck, where the file alone underdetermines the answer, and which parts of the mandate the system should chase.</li><li><strong>Discovering abstractions.</strong> Recognizing that PDF was not "Office with a different extension" but a distinct problem needing a document model of its own — and building structured models so that structure was compiler-checked instead of passed as anonymous primitives.</li><li><strong>Deciding local versus structural.</strong> For each failure, judging whether it was a one-off bug to patch or the visible symptom of a missing mechanism — the single most repeated act in the whole record.</li><li><strong>Building the checks.</strong> Standards-grounded validation, content-preservation checks that assert the input survives into the output, hundreds of project-specific lints atop a maxed-out commodity floor, and a tiered regression suite from smoke tests to fuzz campaigns.</li></ul>

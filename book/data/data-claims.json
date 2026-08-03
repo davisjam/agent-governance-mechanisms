@@ -48,8 +48,8 @@
 
   "support-ratio-curve": {
     "source": "5.2-the-timeline-and-the-work",
-    "anchor": "",
-    "holds": [],
+    "anchor": "support-ratio-curve",
+    "holds": ["0.85", "2.48", "3.68", "3.06", "26,956", "1,501,907"],
     "status": "final",
     "spine_claim": "govern-the-environment",
     "observable": "Support-apparatus LoC divided by production LoC at four dated commits (prototype / mechanization / hardening / now): 0.85 -> 2.48 -> 3.68 -> 3.06.",
