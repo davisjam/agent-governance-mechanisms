@@ -507,20 +507,22 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-context-management-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 6. The governance-of-governance stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 6. The governance-of-governance stack</h1></header><p><em>A flagship deep-dive: the governance-of-governance stack, walked part by part. A fleet accumulates controls — lints, gates, mediators, registries — and the control estate itself becomes a system that can drift, collide, and rot. This stack turns the governance system into its own subject of governance.</em></p>
 <h2>The goal</h2>
-<p><strong>Govern the control estate as its own subject.</strong> Model the controls as a graph so two guardrails cannot silently collide; census which targets are covered and which are blind; compute the blast radius of a substrate change before making it; and hold the governing document itself as enforced, queryable infrastructure rather than prose that rots. Five parts make the estate legible to itself, questionable for its own blind spots and change-safety, and deliverable to every agent.</p>
+<p><strong>Govern the control estate as its own subject.</strong> Model the controls as a graph so two guardrails cannot silently collide; census which targets are covered and which are blind; compute the blast radius of a substrate change before making it; convert each recurring failure into a proportionate new control so the estate grows by design; and hold the governing document itself as enforced, queryable infrastructure rather than prose that rots. Six parts make the estate legible to itself, questionable for its own blind spots and change-safety, self-repairing when a failure recurs, and deliverable to every agent.</p>
 <figure id="fig-10-6-1" class="book-figure" data-label="governance-of-governance-stack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360"
      role="group" aria-labelledby="ggTitle ggDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="ggTitle">The governance-of-governance stack: model the controls, census the coverage, compute the blast radius, hold the rule doc</title>
-  <desc id="ggDesc">Five parts run left to right. Model the estate (violet): GRAPH represents each control
+  <title id="ggTitle">The governance-of-governance stack: model the controls, census the coverage, compute the blast radius, convert a recurring failure into a control, hold the rule doc</title>
+  <desc id="ggDesc">Six parts run left to right. Model the estate (violet): GRAPH represents each control
     as a node tagged by its trigger and resource footprint, with a conflict edge wherever two controls
     contend over one resource; REGISTRY attaches machine-readable metadata to each governance rule and
     extracts it into a typed registry. Query the estate (governed green): CENSUS classifies every control by
     the target it guards, so a target with zero controls is a re-derived coverage gap; RADIUS makes each
-    control declare its substrate assumption, so the blast radius of a change is a computed query. Deliver it
-    (accent umber): INDEX holds the top-level governance document as a numbered, enforced, capped rule index
-    loaded into every agent's boot context. The estate is modeled, queried for its blind spots and its
-    change-safety, and delivered as enforced infrastructure.</desc>
+    control declare its substrate assumption, so the blast radius of a change is a computed query. Grow the
+    estate (governed green): INTERPRET converts a recurring failure class into a proportionate new control,
+    fired on a cadence so the estate grows by design. Deliver it (accent umber): INDEX holds the top-level
+    governance document as a numbered, enforced, capped rule index loaded into every agent's boot context.
+    The estate is modeled, queried for its blind spots and its change-safety, grown when a failure recurs,
+    and delivered as enforced infrastructure.</desc>
 
   <defs>
     <marker id="ggArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
@@ -533,59 +535,65 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="44" y="36" font-size="15" font-weight="700" fill="#1c1917">The governance-of-governance stack — govern the control estate as its own subject</text>
 
   <!-- capability legend (free-floating swatches) -->
-  <rect x="90" y="104" width="15" height="15" rx="3" fill="#f2effb" stroke="#7c6bb0" stroke-width="1.5"/>
-  <text x="112" y="116" font-size="12.5" fill="#57534e">model the estate</text>
-  <rect x="430" y="104" width="15" height="15" rx="3" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
-  <text x="452" y="116" font-size="12.5" fill="#57534e">query the estate — coverage + blast radius</text>
-  <rect x="930" y="104" width="15" height="15" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="952" y="116" font-size="12.5" fill="#57534e">deliver it</text>
+  <rect x="82" y="104" width="15" height="15" rx="3" fill="#f2effb" stroke="#7c6bb0" stroke-width="1.5"/>
+  <text x="104" y="116" font-size="12.5" fill="#57534e">model the estate</text>
+  <rect x="340" y="104" width="15" height="15" rx="3" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
+  <text x="362" y="116" font-size="12.5" fill="#57534e">query + grow the estate — coverage, blast radius, new controls</text>
+  <rect x="957" y="104" width="15" height="15" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="979" y="116" font-size="12.5" fill="#57534e">deliver it</text>
 
-  <!-- ============ stage boxes ============ -->
+  <!-- ============ stage boxes (width 160, step 175) ============ -->
   <!-- 1 GRAPH -->
-  <rect x="90" y="150" width="180" height="78" rx="8" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="180" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">GRAPH</text>
-  <text x="180" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#7c6bb0">conflict graph</text>
+  <rect x="82" y="150" width="160" height="78" rx="8" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="162" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">GRAPH</text>
+  <text x="162" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#7c6bb0">conflict graph</text>
   <!-- 2 CENSUS -->
-  <rect x="300" y="150" width="180" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="390" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">CENSUS</text>
-  <text x="390" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#1f7a4d">coverage map</text>
+  <rect x="257" y="150" width="160" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="337" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">CENSUS</text>
+  <text x="337" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#1f7a4d">coverage map</text>
   <!-- 3 RADIUS -->
-  <rect x="510" y="150" width="180" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="600" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">RADIUS</text>
-  <text x="600" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#1f7a4d">blast radius</text>
-  <!-- 4 REGISTRY -->
-  <rect x="720" y="150" width="180" height="78" rx="8" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="810" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">REGISTRY</text>
-  <text x="810" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#7c6bb0">rule metadata</text>
-  <!-- 5 INDEX -->
-  <rect x="930" y="150" width="180" height="78" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
-  <text x="1020" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">INDEX</text>
-  <text x="1020" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#9a3f12">enforced doc</text>
+  <rect x="432" y="150" width="160" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="512" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">RADIUS</text>
+  <text x="512" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#1f7a4d">blast radius</text>
+  <!-- 4 INTERPRET -->
+  <rect x="607" y="150" width="160" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="687" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">INTERPRET</text>
+  <text x="687" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#1f7a4d">failure → control</text>
+  <!-- 5 REGISTRY -->
+  <rect x="782" y="150" width="160" height="78" rx="8" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="862" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">REGISTRY</text>
+  <text x="862" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#7c6bb0">rule metadata</text>
+  <!-- 6 INDEX -->
+  <rect x="957" y="150" width="160" height="78" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+  <text x="1037" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">INDEX</text>
+  <text x="1037" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#9a3f12">enforced doc</text>
 
   <!-- ============ per-part action row (free-floating) ============ -->
-  <g font-size="12" font-style="italic" fill="#57534e" text-anchor="middle">
-    <text x="180" y="252">who collides with whom</text>
-    <text x="390" y="252">which target is bare</text>
-    <text x="600" y="252">what a change breaks</text>
-    <text x="810" y="252">prose becomes a model</text>
-    <text x="1020" y="252">in every agent boot</text>
+  <g font-size="11" font-style="italic" fill="#57534e" text-anchor="middle">
+    <text x="162" y="252">who collides with whom</text>
+    <text x="337" y="252">which target is bare</text>
+    <text x="512" y="252">what a change breaks</text>
+    <text x="687" y="252">what recurs becomes a rule</text>
+    <text x="862" y="252">prose becomes a model</text>
+    <text x="1037" y="252">in every agent boot</text>
   </g>
 
   <!-- ============ arrows ============ -->
   <g fill="none" stroke="#1c1917" stroke-width="2.2" marker-end="url(#ggArrow)">
-    <path d="M60,189 L88,189"/>
-    <path d="M270,189 L298,189"/>
-    <path d="M480,189 L508,189"/>
-    <path d="M690,189 L718,189"/>
-    <path d="M900,189 L928,189"/>
+    <path d="M54,189 L80,189"/>
+    <path d="M244,189 L255,189"/>
+    <path d="M419,189 L430,189"/>
+    <path d="M594,189 L605,189"/>
+    <path d="M769,189 L780,189"/>
+    <path d="M944,189 L955,189"/>
   </g>
 
   <!-- synthesis caption -->
-  <text x="600" y="308" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">The control estate is modeled, queried for its blind spots and its change-safety,</text>
+  <text x="600" y="308" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">The control estate is modeled, queried for its blind spots and change-safety, grown when a failure recurs,</text>
   <text x="600" y="328" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">and delivered to every agent as enforced infrastructure.</text>
-</svg><figcaption data-short="The governance-of-governance stack in one picture"><span class="fig-label">Figure 10.6-1.</span> The governance-of-governance stack in one picture. Five parts run left to right. Model the estate (violet): GRAPH represents each control as a node tagged by trigger and resource footprint, with a conflict edge where two controls contend; REGISTRY attaches machine-readable metadata to each governance rule. Query the estate (green): CENSUS classifies each control by the target it guards, so a bare target is a re-derived gap; RADIUS makes each control declare its substrate assumption, so a change's blast radius is a computed query. Deliver it (accent): INDEX holds the governance document as a numbered, enforced, capped rule index in every agent's boot context.</figcaption></figure>
+</svg><figcaption data-short="The governance-of-governance stack in one picture"><span class="fig-label">Figure 10.6-1.</span> The governance-of-governance stack in one picture. Six parts run left to right. Model the estate (violet): GRAPH represents each control as a node tagged by trigger and resource footprint, with a conflict edge where two controls contend; REGISTRY attaches machine-readable metadata to each governance rule. Query the estate (green): CENSUS classifies each control by the target it guards, so a bare target is a re-derived gap; RADIUS makes each control declare its substrate assumption, so a change's blast radius is a computed query. Grow the estate (green): INTERPRET converts a recurring failure into a proportionate new control, fired on a cadence. Deliver it (accent): INDEX holds the governance document as a numbered, enforced, capped rule index in every agent's boot context.</figcaption></figure>
 <h2>How the parts interlock</h2>
-<p>The stack turns governance into a governed model. <strong>GRAPH</strong> maps the controls and derives a conflict edge wherever two contend over one resource — collisions caught at model time, not in production. <strong>CENSUS</strong> rolls those nodes up per target and surfaces the bare ones. <strong>RADIUS</strong> walks the graph's substrate edges to answer "what will my change break." <strong>REGISTRY</strong> makes the governing prose itself a queryable model. <strong>INDEX</strong> is the delivery surface: the governance the graph maps, the census covers, and the blast-radius query protects reaches every agent only because this enforced, capped index puts it in front of them. Read the parts in that order; each seam names what the part before it hands over.</p>
+<p>The stack turns governance into a governed model. <strong>GRAPH</strong> maps the controls and derives a conflict edge wherever two contend over one resource — collisions caught at model time, not in production. <strong>CENSUS</strong> rolls those nodes up per target and surfaces the bare ones. <strong>RADIUS</strong> walks the graph's substrate edges to answer "what will my change break." <strong>INTERPRET</strong> turns a recurring failure — or a gap the census surfaced — into a proportionate new control, fired on a cadence so the estate grows by design and not by memory. <strong>REGISTRY</strong> makes the governing prose itself a queryable model. <strong>INDEX</strong> is the delivery surface: the governance the graph maps, the census covers, and the blast-radius query protects reaches every agent only because this enforced, capped index puts it in front of them. Read the parts in that order; each seam names what the part before it hands over.</p>
 <h2>The parts</h2>
 <h3>1. GRAPH — the controls as a typed graph</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-b-governance-graph.html">Appendix B - 15. Governance graph (mechanism-interaction model)</a></li><li><strong>Role in the stack</strong> — Model the fleet's process-governance mechanisms as a typed graph: each mechanism a node tagged by the event it fires on and the resources it reads, writes, or locks; each edge a conflict over a shared resource.</li><li><strong>Failure it retires</strong> — Two guardrails contend over one resource — a lock, a file, a queue — and the collision is discovered only when they trip each other in production, because nothing modeled that they touch the same thing.</li><li><strong>Mechanism</strong> — Represent each control as a node carrying its trigger and its resource footprint, and derive a conflict edge wherever two nodes contend over one resource — so a collision is caught by construction, at model time.</li><li><strong>The seam</strong> — Opens the stack. It is the map of the estate the rest of the parts read: the census rolls its nodes up per target, the blast-radius query walks its substrate edges, and a new control is placed by where it lands in the graph.</li><li><strong>Limits / durability</strong> — Durable — a typed graph of the controls is model-independent and re-derives on every change. Its cost is tagging each control's trigger and footprint; it is only as complete as the controls that remember to register their nodes.</li></ul>
@@ -593,7 +601,9 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <ul><li><strong>Part</strong> — <a href="appendix-b-control-coverage-census.html">Appendix B - 6. Control-coverage census (controls per governance target)</a></li><li><strong>Role in the stack</strong> — Classify every control by which complementary control-target it guards — derived from the control's own code anchor, never hand-declared — and roll the set up per target.</li><li><strong>Failure it retires</strong> — The estate has blind spots no one can see: a target guarded only by soft aims and no hard hold, or by nothing at all, discovered the day it fails rather than the day the gap opened.</li><li><strong>Mechanism</strong> — Derive each control's target from its code anchor and aggregate per target, so a target with zero controls — or only soft ones — is a re-derived coverage gap surfaced as a queryable map.</li><li><strong>The seam</strong> — Reads the GRAPH's nodes and asks the coverage question of them: which targets are held, which are only aimed at, which are bare. It hands the estate a map of its own blind spots instead of a surprise.</li><li><strong>Limits / durability</strong> — Durable — a census derived from code anchors does not drift the way a hand-kept list would. Its cost is the classification rules; it is exactly as honest as the anchors, which move with the code they cite.</li></ul>
 <h3>3. RADIUS — the computed blast radius</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-b-control-substrate-dependency.html">Appendix B - 7. Control↔substrate dependency (computed blast-radius)</a></li><li><strong>Role in the stack</strong> — Make each control <em>declare</em> the substrate assumption it bakes in as typed metadata, so "which controls depend on this part of the substrate, and what breaks if I change it" is a computed query.</li><li><strong>Failure it retires</strong> — A cross-cutting substrate change lands blind; a control that silently assumed the old shape breaks, and the blast radius was a grep-and-read no one ran completely.</li><li><strong>Mechanism</strong> — Each control declares the substrate it reads as typed metadata; a static-analysis query then rolls up the dependents of any substrate, so the blast radius of a change is known up front.</li><li><strong>The seam</strong> — Sits over the GRAPH's substrate edges. Where the census answers "is this target covered," the blast radius answers "what will my change to this substrate break" — the estate reasoning about its own change safety before the change.</li><li><strong>Limits / durability</strong> — Durable — declared dependencies plus a static query are deterministic and model-independent. Its cost is the per-control declaration; it fails only where a control bakes in an undeclared assumption, which reads as a missing edge.</li></ul>
-<h3>4. REGISTRY — the governance prose as a queryable model</h3>
+<h3>4. INTERPRET — a recurring failure becomes a new control</h3>
+<ul><li><strong>Part</strong> — <a href="appendix-a-self-governance.html">Appendix A - 28. Self-governance (detect your own recurring issues; convert each into a tasteful control)</a></li><li><strong>Role in the stack</strong> — Convert a recurring failure <em>class</em> into a proportionate new control, and fire that conversion on a cadence so the estate grows by design rather than by whoever happens to remember.</li><li><strong>Failure it retires</strong> — The same failure is re-patched locally each time it recurs, so the class survives to bite the next agent; and even a team that believes in converting the class forgets to do it on a long autonomous run, because the trigger lives only in memory.</li><li><strong>Mechanism</strong> — A loop names the recurring failure class and adds the smallest durable guardrail that kills it — a constraint where one can be built, else a sensor — fired by a time-aware reflection hook (at most once per window) so the discipline runs deterministically, not on recall. The skill proposes and scaffolds the control; it does not install it.</li><li><strong>The seam</strong> — Sits over the CENSUS and the blast-radius query. Where the census surfaces a coverage gap and the radius bounds a change, INTERPRET turns a gap or a recurrence into an actual new control that lands in the REGISTRY and the INDEX below it — the estate not just measuring itself but repairing itself.</li><li><strong>Limits / durability</strong> — Durable — the recurrence trigger and the periodic hook are model-independent, and the preference for a preventive constraint over a detective sensor does not decay. Its soft half — the conversion judgment, the taste to keep the control proportionate — is aided but not replaced by a stronger model; the hard hook that guarantees the loop fires is deterministic.</li></ul>
+<h3>5. REGISTRY — the governance prose as a queryable model</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-b-rule-metadata-registry.html">Appendix B - 27. Rule-metadata registry (machine-readable metadata on governance rules)</a></li><li><strong>Role in the stack</strong> — Attach machine-readable metadata to each rule in the governing document — its id, scope, severity, enforcing check, canonical detail location — and extract those blocks into a typed registry.</li><li><strong>Failure it retires</strong> — A body of governance prose is an opaque wall a program can only grep; "which rules have an enforcing check, and which are honor-system" is a question no tool can answer.</li><li><strong>Mechanism</strong> — Embed a structured metadata block inside each rule and extract them into a typed registry, so the governance prose becomes a model the tooling can query — enforced rules, their checks, their severities.</li><li><strong>The seam</strong> — Turns the GRAPH's and CENSUS's implicit knowledge into an explicit, queryable rule model. It hands the index below it the machine-readable spine that lets the document be checked against its own rules.</li><li><strong>Limits / durability</strong> — Durable — structured metadata in the rule outlives any one tool. Its cost is the per-rule block; it fails only where a rule ships without its metadata, which a presence lint over the registry catches.</li></ul>
-<h3>5. INDEX — the governing document as enforced infrastructure</h3>
+<h3>6. INDEX — the governing document as enforced infrastructure</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li><li><strong>Role in the stack</strong> — Treat the top-level governance document as enforced infrastructure: a numbered, stable-numbered rule index loaded into every agent's boot context, held honest by its own enforcement counterpart.</li><li><strong>Failure it retires</strong> — The document that carries every other mechanism silently rots — a rule is renumbered, bloats past what fits in context, or drifts from the check it names — and every agent boots on a lie.</li><li><strong>Mechanism</strong> — A numbered, stable-numbered index loaded into every agent's boot context, held honest by a bloat/cap lint plus a rule-conformance lint, so the governing doc cannot silently decay.</li><li><strong>The seam</strong> — Closes the stack. It is the delivery surface for everything the registry models: the governance the graph maps, the census covers, and the blast-radius query protects is only acted on because this index puts it in front of every agent — enforced, capped, and conformance-checked.</li><li><strong>Limits / durability</strong> — Durable — an enforced, capped rule index is infrastructure, not a 2026 convenience. Its cost is the discipline of stable numbering and the cap; it fails where a rule is added without its enforcement counterpart, which the conformance lint refuses.</li></ul><div class="pager"><a class="prev" href="appendix-d-resource-mediation-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix D - 5. The resource-mediation stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-d-context-management-stack.html"><span class="dir">Next ›</span><span class="ttl">Appendix D - 7. The context-management stack</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-context-management-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

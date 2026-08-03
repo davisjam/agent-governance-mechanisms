@@ -4,9 +4,9 @@
   "_counts": {
     "stacks": 7,
     "expected_stacks": 7,
-    "parts_total": 36,
+    "parts_total": 37,
     "parts_unresolved": 0,
-    "distinct_members": 35
+    "distinct_members": 36
   },
   "taxonomy": {
     "part_fields": [
@@ -342,7 +342,7 @@
     {
       "id": "governance-of-governance",
       "name": "The governance-of-governance stack",
-      "goal": "Treat the governance system as its own subject of governance: model the controls as a graph so two guardrails cannot silently collide, census which targets are covered and which are blind, compute the blast radius of a substrate change before making it, and hold the governing document itself as enforced, queryable infrastructure rather than prose that rots.",
+      "goal": "Treat the governance system as its own subject of governance: model the controls as a graph so two guardrails cannot silently collide, census which targets are covered and which are blind, compute the blast radius of a substrate change before making it, convert each recurring failure into a proportionate new control so the estate grows by design, and hold the governing document itself as enforced, queryable infrastructure rather than prose that rots.",
       "capabilities": [
         "Govern the control estate itself"
       ],
@@ -373,6 +373,15 @@
           "mechanism": "Each control declares the substrate it reads as typed metadata; a static-analysis query then rolls up the dependents of any substrate, so the blast radius of a change is known up front.",
           "seam": "Sits over the GRAPH's substrate edges. Where the census answers 'is this target covered,' the blast radius answers 'what will my change to this substrate break' — the estate reasoning about its own change safety before the change.",
           "durability": "Durable — declared dependencies plus a static query are deterministic and model-independent. Its cost is the per-control declaration; it fails only where a control bakes in an undeclared assumption, which reads as a missing edge.",
+          "resolves": true
+        },
+        {
+          "slug": "self-governance",
+          "role": "INTERPRET — convert a recurring failure class into a proportionate new control, and fire that conversion on a cadence so the estate grows by design rather than by whoever remembers.",
+          "failure": "The same failure is re-patched locally each time it recurs, so the class survives to bite the next agent; and even a team that believes in converting the class forgets to do it on a long autonomous run, because the trigger lives only in memory.",
+          "mechanism": "A loop that names the recurring failure class and adds the smallest durable guardrail that kills it — a constraint where one can be built, else a sensor — fired by a time-aware reflection hook (at most once per window) so the discipline runs deterministically, not on recall. The skill proposes and scaffolds; it does not install.",
+          "seam": "Sits over the CENSUS and the blast-radius query. Where the census surfaces a coverage gap and the radius bounds a change, this turns a gap or a recurrence into an actual new control that lands in the REGISTRY and the INDEX below it — the estate not just measuring itself but repairing itself.",
+          "durability": "Durable — the recurrence trigger and the periodic hook are model-independent, and the preference for a preventive constraint over a detective sensor does not decay. Its soft half (the conversion judgment, the taste to keep the control proportionate) is aided but not replaced by a stronger model; the hard hook that guarantees the loop fires is deterministic.",
           "resolves": true
         },
         {
