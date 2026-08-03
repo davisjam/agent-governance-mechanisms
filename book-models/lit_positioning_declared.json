@@ -112,16 +112,16 @@
       "x": "Mature engineering converts failures into durable controls — resilience engineering, blameless postmortems, poka-yoke (Hollnagel/Woods/Leveson; Google SRE Ch.15; Shingo).",
       "y": "Agentic velocity surfaces novel, unforeseeable failures faster than any playbook anticipates.",
       "z": "MAGE names the promotion rule: ex-post failure -> human classification -> recurring obligation -> ex-ante environmental control.",
-      "target_locations": ["2.3-the-governed-environment", "4.2-the-skills"],
+      "target_locations": ["2.3-the-governed-environment"],
       "citations": [
-        {"key": "hollnagel2006resilience", "backs_claims": ["failures-become-machinery"], "relation": "situates"},
-        {"key": "beyer2016sre", "backs_claims": ["failures-become-machinery"], "relation": "situates"},
-        {"key": "shingo1986zqc", "backs_claims": ["failures-become-machinery"], "relation": "situates"}
+        {"key": "hollnagel2006resilience", "backs_claims": ["failures-become-machinery"], "relation": "situates", "illustrates_pattern": "self-governance"},
+        {"key": "beyer2016sre", "backs_claims": ["failures-become-machinery"], "relation": "situates", "illustrates_pattern": "self-governance"},
+        {"key": "shingo1986zqc", "backs_claims": ["failures-become-machinery"], "relation": "situates", "illustrates_pattern": "self-governance"}
       ],
       "advances_theses": ["failures-become-machinery"],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "SMALL standalone wave. Toyota/poka-yoke/jidoka/SRE already invoked in the manuscript — these anchor them to primary sources (Shingo for poka-yoke rather than a secondary summary). All three VERIFIED-ESTAB (ISBN-confirmed). Keys planned, not yet in the .bib."
+      "notes": "SMALL standalone wave — LANDED (LPP-PROSE) in 2.3-the-governed-environment, the ex-post failure-to-mechanism beat: a one-paragraph lineage (manufacturing / resilience engineering / SRE blameless postmortems / Shingo poka-yoke) placed between the failure-seen-twice sentence and the 'either way, a mechanism takes one of two forms' transition, then MAGE's promotion rule and the velocity ingredient. Anchors the manuscript's existing Toyota/poka-yoke/jidoka/SRE mentions to primary sources (Shingo for poka-yoke, not a secondary summary). All three VERIFIED-ESTAB (ISBN). target_locations trimmed to 2.3 (the actual landing). illustrates_pattern=self-governance on all three (§8 prior-art double-duty: convert-a-recurring-failure-into-a-control)."
     },
     {
       "id": "fallible-oracles-swebench",

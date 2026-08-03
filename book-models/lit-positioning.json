@@ -3,10 +3,10 @@
   "_note": "The literature-positioning model holds the book's Literature-Positioning Pass — each place the book situates itself against outside work, carrying the X (established lineage) -> Y (current frontier) -> Z (narrow MAGE move) frame and its citations as MODELED objects {key, backs_claims, relation} nested under the argument spine. It is the LITERATURE half of the substantiation aggregator (the data-claim ledger is the DATA half). The LP1-LP6 conformance check holds the frame mechanically: traceability + schema, thesis join, landing integrity, location join, coverage/burndown, citation join. It lands audit-only-first — a record that drops its X/Y/Z or (once landed) cites a key absent from the .bib reddens the audit but does not gate while the LPP prose waves are still landing. `status` planned|landed is the burndown signal; only §3 (graphify) and §4 (spec-driven development) are landed today.",
   "_counts": {
     "interventions": 10,
-    "landed": 5,
-    "planned": 5,
+    "landed": 6,
+    "planned": 4,
     "citations_total": 32,
-    "citations_pending_bib": 21,
+    "citations_pending_bib": 18,
     "distinct_theses": 9
   },
   "taxonomy": {
@@ -334,8 +334,7 @@
       "y": "Agentic velocity surfaces novel, unforeseeable failures faster than any playbook anticipates.",
       "z": "MAGE names the promotion rule: ex-post failure -> human classification -> recurring obligation -> ex-ante environmental control.",
       "target_locations": [
-        "2.3-the-governed-environment",
-        "4.2-the-skills"
+        "2.3-the-governed-environment"
       ],
       "citations": [
         {
@@ -344,8 +343,8 @@
             "failures-become-machinery"
           ],
           "relation": "situates",
-          "illustrates_pattern": "",
-          "resolves_bib": false,
+          "illustrates_pattern": "self-governance",
+          "resolves_bib": true,
           "backs_resolve": true
         },
         {
@@ -354,8 +353,8 @@
             "failures-become-machinery"
           ],
           "relation": "situates",
-          "illustrates_pattern": "",
-          "resolves_bib": false,
+          "illustrates_pattern": "self-governance",
+          "resolves_bib": true,
           "backs_resolve": true
         },
         {
@@ -364,25 +363,24 @@
             "failures-become-machinery"
           ],
           "relation": "situates",
-          "illustrates_pattern": "",
-          "resolves_bib": false,
+          "illustrates_pattern": "self-governance",
+          "resolves_bib": true,
           "backs_resolve": true
         }
       ],
       "advances_theses": [
         "failures-become-machinery"
       ],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "SMALL standalone wave. Toyota/poka-yoke/jidoka/SRE already invoked in the manuscript — these anchor them to primary sources (Shingo for poka-yoke rather than a secondary summary). All three VERIFIED-ESTAB (ISBN-confirmed). Keys planned, not yet in the .bib.",
+      "notes": "SMALL standalone wave — LANDED (LPP-PROSE) in 2.3-the-governed-environment, the ex-post failure-to-mechanism beat: a one-paragraph lineage (manufacturing / resilience engineering / SRE blameless postmortems / Shingo poka-yoke) placed between the failure-seen-twice sentence and the 'either way, a mechanism takes one of two forms' transition, then MAGE's promotion rule and the velocity ingredient. Anchors the manuscript's existing Toyota/poka-yoke/jidoka/SRE mentions to primary sources (Shingo for poka-yoke, not a secondary summary). All three VERIFIED-ESTAB (ISBN). target_locations trimmed to 2.3 (the actual landing). illustrates_pattern=self-governance on all three (§8 prior-art double-duty: convert-a-recurring-failure-into-a-control).",
       "locations_resolve": [
-        true,
         true
       ],
       "theses_resolve": [
         true
       ],
-      "landed_appears": false
+      "landed_appears": true
     },
     {
       "id": "fallible-oracles-swebench",
