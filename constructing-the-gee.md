@@ -1,4 +1,4 @@
-<!-- summary: The construction kit for a Governed Engineering Environment — 8 principles, 9 capabilities, 25 canonical mechanisms, 8 compositions, and the variants and known uses that fold under them. -->
+<!-- summary: The construction kit for a Governed Engineering Environment — 8 principles, 9 capabilities, 24 canonical mechanisms, 8 compositions, and the variants and known uses that fold under them. -->
 
 # Constructing the Governed Engineering Environment
 
@@ -22,17 +22,18 @@ build them. Every capability below serves one thesis or the other, and most serv
 ## The claim this catalogue makes
 
 The DocAble case produced <!--census:controls-->82<!--/census--> concrete governance mechanisms.
-Comparative analysis reduced them to **25 canonical mechanisms** under **9 capabilities**. The rest are
-retained, not discarded: **54 variants and known uses** fold under a parent mechanism, **2 pairs merge**
-into one, and **1 entry rises** to a principle that explains where the others sit. The reduction is the
-finding. Where several entries solve the same problem through the same structure, they are one idea worn
-several ways, and the catalogue says so instead of counting each dress as a concept.
+Comparative analysis reduced them to **24 canonical mechanisms** under **9 capabilities**. The rest are
+retained, not discarded: the **variants and known uses** fold under a parent mechanism, **two pairs merge**
+into one, **one entry rises** to a principle that explains where the others sit, and the **external-spec
+conformance engine** moves out to the product case study (it is the product, not a portable pattern). The
+reduction is the finding. Where several entries solve the same problem through the same structure, they are
+one idea worn several ways, and the catalogue says so instead of counting each dress as a concept.
 
 The merge rule was strict. Two mechanisms collapse only when they share the same failure, obligation,
 structure, guarantee, semantic level, and tradeoffs, differing only in where they were used. They stay
 distinct when the **relation** they model or enforce differs, even when both are "a lint" or both are "a
 model." All lints are not one pattern. All models are not one executable model. That guard is what keeps
-the 25 honest.
+the 24 honest.
 
 ## Four levels, not one
 
@@ -40,7 +41,7 @@ The entries do not sit at a single altitude, so the catalogue reads them at four
 
 - **Capabilities** — what the environment must accomplish. Nine of them. They **organize** the catalogue;
   they are not themselves entries.
-- **Canonical mechanisms** — the reusable structure that supplies a capability. Twenty-five. This is the
+- **Canonical mechanisms** — the reusable structure that supplies a capability. Twenty-four. This is the
   intellectual core: an executable source of truth, a drift gate, a sanctioned mutation surface, a
   re-derived completion gate.
 - **Compositions** — mechanisms that are stronger stacked than alone. Eight named stacks.
@@ -144,6 +145,7 @@ own relation):*
 [invariant-DAG execution policy](models-bridge/system-models/invariant-dag-execution-policy.md) ·
 [model-driven codegen](models-bridge/system-models/model-driven-codegen.md) ·
 [agent-first MBSE harness](models-bridge/system-models/agent-first-mbse-harness.md).
+<!-- prior-art: LPP §6 model-sync / drift-detection literature, populated by LPP-PROSE -->
 
 **[Read the Model, Don't Copy It](models-bridge/system-models/meta-model-consumption.md).** Consumers
 derive answers from the live model at use time; the copied-out value is banned. One authoritative answer
@@ -283,6 +285,7 @@ exercise) ·
 [journey task-closure](models-bridge/system-models/journey-task-closure.md) (the assertion strength) ·
 [formal invariant verification](models-bridge/system-models/formal-invariant-verification.md) (the
 verification method — see the [borderline fold](#folds) below).
+<!-- prior-art: LPP §5 verification / test-adequacy literature, populated by LPP-PROSE -->
 
 **[Generative Validation](product/regression-tests/fuzz-campaigns.md).** Falsify a specification with
 machine-generated inputs at two poles: invariant-shaped properties over tame inputs, and wild adversarial
@@ -305,12 +308,12 @@ remediation pass silently dropped document content — it ran successfully and p
 a validator that checks input-subset-output on every artifact, with a staging variant that localizes the
 offending pass. This is where damage done *through* the one sanctioned door is caught.
 
-**[Conformance-to-External-Spec Engine](product/validation-and-conformance/standards-rule-engine.md).**
-Make conformance a deterministic predicate in which every finding names the external-standard clause it
-closes, and keep the coverage claim honest — covered, gap, or aspirational — by a same-commit discipline.
-*The scar:* an opaque conformance score could not be defended clause by clause when a claim was
-challenged. *Built as:* a standards rule engine where each finding cites its clause and coverage is
-tracked explicitly.
+*Moved to the product case study.* The **conformance-to-external-spec engine** — a deterministic predicate
+where every finding names the external-standard clause it closes, with the covered/gap/aspirational
+coverage claim kept honest by a same-commit discipline — is the product itself, not a portable governance
+pattern. It is treated as a case section in the book proper (the built-system chapter of the product case)
+rather than as a catalogue mechanism. Its coherence/parity relatives stay under [Drift / Parity
+Gate](#cap-sync).
 
 <a id="cap-provenance"></a>
 ## PROVENANCE · Track provenance and trace causes
@@ -353,24 +356,28 @@ permitted seams declared in a model so a coverage lint detects every bypass. *Th
 ran the destructive test runner at once and corrupted each other's shared build state. *Built as:* an
 `N=1` host flock on the test runner, the raw path banned, coverage checked against a declared
 concurrency-contracts model.
-*Known uses (cardinality variants of one relation):*
+*Forces &amp; limits:* the mediated unit's granularity matters. A semaphore over the *pieces* of a job
+still lets two whole *sweeps* overlap; only a singleton mutex over the aggregate-as-one-indivisible-unit
+bounds compute at the whole-sweep granularity. Choose the unit the contention actually lives at, not the
+finest one available.
+*Known uses (variants of one mediation relation):*
 [the build-serializer](agent/mediators-and-resource-locks/build-serializer.md) (bounded `M=8`) ·
 [aggregate-compute protection](agent/mediators-and-resource-locks/aggregate-compute-protection.md) (a
-whole-sweep singleton).
-
-**[Adaptive Resource-Pressure Admission](agent/mediators-and-resource-locks/resource-pressure-gating.md).**
-Admit and continue heavy work only under bearable live conditions. One shared pressure signal is read both
-when work is admitted and while it runs, so a red host neither starts new heavy work nor is left running
-it. *The scar:* fixed concurrency slots still let heavy work pile onto a host already thrashing, because
-the count was fine but the machine was not. *Built as:* one shared pressure signal read at admit and
-during execution, shedding on red. This is the adaptive pole, split from the fixed-capacity mediator by
-its obligation and guarantee, not merged with it.
+whole-sweep singleton — the aggregate-vs-per-invocation unit; online-only) ·
+[adaptive resource-pressure admission](agent/mediators-and-resource-locks/resource-pressure-gating.md)
+(the adaptive-condition SHED: one shared pressure signal read at admit *and* during execution, shedding on
+a red host — it bounds by the host's live **condition** where the fixed mediators bound by declared
+**count**. Folded here as the condition-vs-count variant of the same admission relation).
+<!-- prior-art: LPP §? adjacent host-mediation / bulkhead literature, populated by LPP-PROSE -->
 
 **[Fleet Observability Surface](agent/lifecycle-and-observability/typed-event-bus.md).** Make operational
 health a queryable, typed, typo-proof signal surface, and bind every signal to a prescribed response.
 Emission alone is not observability; the loop is emit, interpret, react. *The scar:* operational failures
 scrolled past in free-form logs that carried neither their meaning nor a response. *Built as:* an
 orchestrator-as-reactor over a typed event bus, topics enumerable, each bound to a playbook.
+*Print placement:* this standalone pattern lives online; in print the [observe → react
+stack](book/appendix-d-observe-react-stack.html) carries the capability through its WATCH member
+(the typed event bus), so the depth is not double-placed.
 *Known uses:*
 [deploy heartbeats](agent/lifecycle-and-observability/deploy-heartbeats.md) (the progress-liveness
 variant: no heartbeat for N windows reads deterministically as stale).
@@ -386,6 +393,7 @@ firing and a payload that blocks or aims.
 variant: slice the meta-substrate to just the rules governing the change-target) ·
 [the reflection-facet substrate](agent/lifecycle-and-observability/reflection-facet-substrate.md) (the
 feed-back variant: soft nudges under one shared attention budget).
+<!-- prior-art: LPP §2/§3 context-management / knowledge-delivery literature, populated by LPP-PROSE -->
 
 <a id="cap-govern"></a>
 ## GOVERN · Govern the control estate itself
@@ -426,6 +434,23 @@ generated from the lifecycle model with every pointer ref-checked.
 *Known uses:*
 [the operator runbook skill](agent/governance-doc-controls/operator-runbook-skill.md) (the generated,
 symptom-indexed, positive-model-first variant).
+
+**[Self-governance](agent/governance-doc-controls/self-governance.md).** Give the system permission to
+detect its own recurring issues and introduce *tasteful* — proportionate, right-sized — constraints and
+controls that prevent their recurrence, rather than re-patching each instance. When a failure recurs,
+classify the failure **class** and add the smallest durable guardrail that kills it: a constraint that
+makes the wrong move unrepresentable where one can be built, else a sensor that detects and fails it — and
+fire that conversion on a cadence so the loop runs by design, not by memory. *The scar:* the same
+false-reject, the same mis-firing lint, the same manual step got re-patched locally each time, so the
+class survived to bite the next agent; and on a long autonomous run even a team that believes in
+converting the class forgets, because the trigger lives only in memory. *Built as:* a loadable
+failure-interpretation skill (the operationalization) invoked by a turn-end reflection hook that fires at
+most once per window — the soft conversion judgment carried on a hard, deterministic cadence. This is the
+generative engine the whole catalogue is an output of; it is the INTERPRET member of the
+[governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html).
+*Sibling:* [the operator runbook skill](agent/governance-doc-controls/operator-runbook-skill.md) executes
+*within* the estate; self-governance *grows* it.
+<!-- prior-art: LPP §2/§3 reflection + self-improvement literature, populated by LPP-PROSE -->
 
 <a id="folds"></a>
 ### Two borderline folds, kept as named variants
@@ -472,22 +497,25 @@ stack whose members reinforce each other.
 - **The evidence staircase** — [Staged Admission Gates](#cap-admit) + [Re-Derived Definition of
   Done](#cap-complete). The pre-commit gate binds cheap checks to an exact tree so a later stage can check
   rather than trust; the re-derived Definition of Done recomputes the full evidence at close. Cheap
-  evidence early, full re-derivation late, never a trusted self-report.
+  evidence early, full re-derivation late, never a trusted self-report. *(Its narrative is developed in the
+  book's validation chapter; both member patterns stay in the catalogue.)*
 
 - **The observe-then-react loop** — [Fleet Observability Surface](#cap-manage) + [Encoded Operational
   Judgment](#cap-govern) + [Staged Admission Gates](#cap-admit). A typed event bus emits and interprets; a
   playbook binds each signal to a response; the cron-alerts gate promotes a critical signal into a barrier.
   Emit, interpret, react, gate.
 
-- **The resource-mediation pair** — [Mediated Resource Admission](#cap-manage) + [Adaptive
-  Resource-Pressure Admission](#cap-manage). Fixed-capacity mediation bounds the *count* of admitted heavy
-  work; adaptive pressure gating bounds by the live *condition* of the host and sheds during. Split by
-  forces and guarantees, they bound compute on both axes.
+- **The resource-mediation stack** — [Mediated Resource Admission](#cap-manage), with its folded
+  adaptive-condition variant. Fixed-capacity mediation bounds the *count* of admitted heavy work; the
+  adaptive-pressure variant folded under it bounds by the live *condition* of the host and sheds during, so
+  one admission relation bounds compute on both axes.
 
 - **The governance-of-governance stack** — [Governance Graph](#cap-govern) + [Computed Control Blast
-  Radius](#cap-govern) + [Governed Knowledge Base](#cap-govern). Once controls proliferate they become a
-  system: the graph models their conflicts, the blast-radius model computes what a substrate change breaks
-  across them, and the governed knowledge base keeps the rule index that carries every control honest.
+  Radius](#cap-govern) + [Self-governance](#cap-govern) + [Governed Knowledge Base](#cap-govern). Once
+  controls proliferate they become a system: the graph models their conflicts, the blast-radius model
+  computes what a substrate change breaks across them, self-governance converts each recurring failure into
+  a proportionate new control so the estate grows by design, and the governed knowledge base keeps the rule
+  index that carries every control honest.
 
 ---
 

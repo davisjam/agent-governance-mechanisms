@@ -10,7 +10,7 @@ written (**✅**).
 architecture *behind* the list — what the environment must be able to do, and which mechanisms give it
 those capabilities — start at **[Constructing the Governed Engineering Environment](constructing-the-gee.md)**.
 The case produced <!--census:controls-->83<!--/census--> concrete mechanisms; comparative analysis reduced
-them to **25 canonical mechanisms under 9 capabilities**, with the remainder retained as variants and
+them to **24 canonical mechanisms under 9 capabilities**, with the remainder retained as variants and
 known uses. That page groups every entry under its capability and names the eight compositions that are
 strong together.
 
