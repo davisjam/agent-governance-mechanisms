@@ -314,3 +314,52 @@ Executed 260803 per [task7-brief-260803.md](task7-brief-260803.md). All 7 refs V
   concrete mechanisms into 25 canonical mechanisms under 9 capabilities via **2 merges + 54 demotions-to-
   variant + 1 lift-to-principle** — every entry preserved on disk and in the census (still 82). Details in
   the "PHASE 3 · 3c" block above.
+
+---
+
+## SPINE-TUNE + SYNC — ✅ DONE (pre-deploy; live SHA below)
+
+Brief: `book/_design/spine-tune-and-sync-brief-260803.md`. Models-first: tune 6 over-claiming spine statements → propagate to the exact `advanced_by` chapters. Commit-per-group.
+
+### STEP 1 — the 6 statement edits (`argument_spine_declared.json`, regen `argument-spine.json`)
+1. **`fault-lies-in-instructions`** → "Treat a bad output first as evidence about the instructions, representation, task boundary, or environment — not automatically as a fixed capability ceiling." (23 w)
+2. **`churn-is-the-limit`** → "Ungoverned, the project decays into churn: an increasing share of effort goes to rediscovering context, undoing recent work, and reconciling inconsistencies rather than advancing the system." (26 w — matches the Churn definition shape.)
+3. **`alignment-thesis`** → "Enforced mechanisms hold implementation to declared intent across later changes; where possible, constrain the action space so the wrong move is unavailable, and where prevention is incomplete, install sensors that detect divergence." (32 w — see word-cap decision.)
+4. **`sync-cost-reduced`** (RENAMED from `sync-cost-removed`) → "The sync economics changed. Agents sharply reduce the recurring labor of keeping models and implementation reconciled." (16 w)
+5. **`mage-becomes-practical`** → "This makes serious model-based software engineering practical: models can become the working language through which agents reason and engineers specify, predict, and govern." (23 w — universal-language NOT asserted as settled; it stays the larger discursive thesis.)
+6. **`seat-moves`** → "The engineering lifecycle remains; the allocation of work changes. Agents occupy much of implementation, while human effort concentrates on intent, architecture, model authorship, validation, and judgment." (26 w)
+
+### ID RENAME `sync-cost-removed` → `sync-cost-reduced` (author-confirmed) — every join-key updated
+- `argument_spine_declared.json`: spine entry id + `chapter_advances` (0.1-preface, 2.2, 3.1).
+- `book-models/chapter-shape.json` `spine_advances` (3 sites) — via `chapter_shape_model.py regenerate` (join-derived).
+- `book/data/concepts.json` `spine_claims` (2 sites: `_hierarchy` resulting-system row + `continuous-maintenance` construct).
+- `book-models/argument-spine.json` regenerated. Grep for old id across repo = 0 (excl. brief + this log).
+
+### WORD-CAP DECISION
+`argument_spine_model.py` `WORD_CAP` **26 → 32**. Only `alignment-thesis` (32 w) exceeded 26; its thesis-plus-two-hierarchical-moves (constrain-first; sense-where-prevention-incomplete) is the whole correction and does not survive compression. Per the brief's escape hatch, raised the cap minimally to hold the author-exact wording rather than mangle the claim; comment updated to note alignment-thesis sets the cap. All other 5 statements ≤ 26. (Also fixed a stale `<=24` in the declared `_note` → `<=32`.)
+
+### STEP 2 — `catalog.py spine [<claim-id>|<chapter-slug>]` subcommand
+Mirrors the `claims`/`concepts`/`definitions` siblings; reads the generated `argument-spine.json`; stdlib-only. No arg → the 14 claims in order with advance-counts; a claim-id → statement + its `advanced_by` chapters; a chapter-slug or number prefix (e.g. `2.3`) → the claims that chapter advances. `--json` for each. Subparser + dispatch wired. `validate` stays 0.
+
+### STEP 3 — surgical book-sync per claim (via `advanced_by`)
+- **A · fault-lies-in-instructions** (0.1, 1.1, 4.5, 6.1): dropped the printer *absolutism* — 1.1 opening frame ("not the worker") + whose-fault section ("every single time… my fault", "build essentially anything") and the preface through-line ("the fault is in the instructions, not the machine", "build essentially anything"). Now: a bad build is FIRST evidence about instructions/representation/task-boundary/environment, not by reflex a fixed ceiling; printer metaphor kept. **4.5 + 6.1: no fault-absolutism prose (grep clean; 6.1's printer lines are the metaphor identity — kept).** Model reconcile: claims-model `printer-not-coder` statement + `contradicted_by` softened to the same posture (regen `claims.json`).
+- **B · churn-is-the-limit** (0.1, 1.1): preface premise no longer collapses churn to context-window overflow — churn = decay into rework (per the Churn definition), context named the *sharpest driver*, not the definition. **1.1: no context-overflow-churn prose (nothing to tighten).**
+- **C · alignment-thesis** (0.1, 1.4, 2.2, 2.3, 2.5, 3.2–3.6, 4.3, 4.5, 4.6): **chapters already hierarchical** — 2.3 ("you do not reach for a sensor first" + the residual-as-remainder), preface thesis blockquote ("prevented, OR made visible"), 1.4 (mechanisms hold work to intent). No chapter edit. Over-claim lived on model surfaces: spine statement (STEP 1) + concepts.json `thesis-alignment` note (retuned off "a quality goal splits into constraint+sensor" → hierarchical) + **landing Big-Idea 4** (`landing-big-ideas.json`) retuned: title "A quality goal splits into a constraint and a sensor" → "Hold intent with a mechanism: prevent first, sense the rest"; claim/more to the hierarchical form (claim within the 26-w cap).
+- **D · sync-cost-reduced** (0.1, 2.2, 3.1): tightened "cost removed / for free": preface "Agents remove that cost" → "cut that recurring cost sharply" + added "someone still authors the model and the gate"; 2.2 "the thing agents just removed" → "just made cheap" and "Agents removed that cost" → "cut that recurring cost sharply"; 3.1 heading "the one a fleet pays for free" → "now pays cheaply" + added "someone still authors the model, the reconciliation rule, and the gate — what shrank is the standing maintenance, not the design."
+- **E · mage-becomes-practical** (0.1, 3.7, 4.4, 6.0, 6.1): **no chapter edit** — the universal-language claim is legitimately EARNED discursively (6.0 §"Models as the universal language", 6.1 scoped "thin evidence… I keep the claim scoped") and stated as thesis in the preface; the brief protects the discursive argument. Model reconcile: claims-model `models-are-universal-language` "software could not afford them until agents **removed** the sync cost" → "**cut the recurring** sync cost" (sync-cost consistency); the universal-language assertion itself kept as the larger book thesis (regen `claims.json`).
+- **F · seat-moves** (1.5, 4.5, 5.4, 6.0, 6.1): **no edit** — every site already NAMES the allocation: 1.5 (SDLC→SELC, "developer's seat reassigned to the fleet; engineer keeps requirements/spec/design/validation"), 5.4 (the staircase — co-coder→architect; agents take tactics, human keeps strategy), 6.0 §"The judgment moved, and it moved toward you" (framing/abstraction/architecture/governance), 4.5 + 6.1 ("judgment is the scarce resource / the part that stays yours"). Model surfaces (claims `seat-moves-not-lifecycle`, landing Big-Idea seat-moves) already the named SELC form. The opaque compact version lived only in the spine claim (fixed STEP 1).
+
+### RECONCILE ledger (tuned claims ↔ concept/definition model)
+- claim 4 ↔ **Churn def** (`definitions.json`): now same shape (increasing share of effort → rediscovering context / undoing / reconciling rather than advancing). ✅
+- claim 8 ↔ **Alignment-Thesis + Governance-mechanism defs**: concepts.json `thesis-alignment` note retuned to hierarchical; Governance-mechanism def (four classes, prevention/detection = the move axis) already consistent — untouched. ✅
+- claim (mage) ↔ **universal-language** master thesis: kept as the larger book claim; only the "removed sync cost" wording reconciled. ✅
+
+### GATES (pre-deploy, all green)
+`catalog.py validate` **0 issues** · `check_argument_spine` (AS1–AS7) **PASS** · `check_chapter_shape` (CS1–CS5, anchors fresh — edits all in chapter bodies, not the anchored lead/closing) **PASS** · `check_concepts_hierarchy` **PASS** · `check_claims_model` (C1–C7) **PASS** · `book/build_book_html.py` **exit 0** (127 chapter pages).
+- **Coordination note:** `book-models/outline.json` + `reverse_index.json` (book-prose-derived) left un-regenerated — their views-audit freshness finding is **audit-only / non-gating**, was already stale on `main` from the concurrent chapter-restructure work (new ch 1.4 + renumber), and is owned by the prose-model agent; regenerating would sweep nothing from worktrees but risks colliding with that agent's own regen commit. The published models-view reads `argument-spine.json` (freshly regenerated), so the tuned spine statements publish correctly.
+
+### Commits (per group)
+`2e6ab22` STEP 1 (6 statements + rename + cap) · `5c9fffa` STEP 2 (spine subcommand) · `1cd04f0` STEP 3 A+B (fault + churn prose + claims reconcile) · `0eaee21` STEP 3 C (landing alignment slot) · `7c9cfc9` STEP 3 D (sync-cost prose) · `fa296ad` STEP 3 E (universal-language claim reconcile).
+
+### Live SHA
+`__PENDING_DEPLOY__`
