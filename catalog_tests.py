@@ -61,6 +61,7 @@ from tests.html import (
     check_book_html_tracking,
     check_concepts_book_home,
     check_concepts_drift,
+    check_concepts_hierarchy,
     check_concepts_reverse_coverage,
     check_concepts_site_home,
     check_data_claims,
@@ -189,6 +190,8 @@ CHECKS = [
           lambda strict: check_concepts_drift(), audit_only=False),
     Check("concepts: L4 reverse coverage — landing card has a backing concept (warn)", 1,
           lambda strict: check_concepts_reverse_coverage(), audit_only=True),
+    Check("concepts: L5 hierarchy cross-refs resolve (constructs + spine claims)", 1,
+          lambda strict: check_concepts_hierarchy(), audit_only=True),
     # The SITE-AS-PROJECTION drift lints (book-models/SITE-VIEW.md) — the concept-model L1-L4 shape
     # extended to two more model surfaces the site projects: the four DEFINITIONS
     # (book/data/definitions.json ↔ the landing's `def-<slug>` cards) and the core learning-OUTCOMES view

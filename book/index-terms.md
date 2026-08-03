@@ -155,6 +155,7 @@ concept the book can annotate with an inline `<!-- index-def: <slug> -->` at its
 index entry (`definition of:` / `examples of:`) and suppresses the plain occurrence entry for the same
 display name. A tag whose slug is absent here fails the build. Display names are authored here once.
 
+- concept: churn | Churn
 - concept: printer-metaphor | The printer metaphor
 - concept: picture-vs-model | Picture vs. model
 - concept: whose-fault | Whose fault is a bad build
@@ -162,6 +163,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: lifecycle-phases | The lifecycle phases
 - concept: engineers-seat | The engineer's seat
 - concept: loop-engineering | Loop engineering
+- concept: engineered-agent-loop | The engineered agent loop
 - concept: success-metric | The success metric
 - concept: probabilistic-reasoning-machine | Probabilistic reasoning machine
 - concept: conditioning-the-search | Conditioning the search
@@ -195,6 +197,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: sensor | Sensor (detects drift)
 - concept: constraint | Constraint (prevents drift)
 - concept: governance-package | Governance package
+- concept: governance-mechanism | Governance mechanism
 - concept: specification-driven-development | Specification-driven development
 - concept: lifecycle | Lifecycle
 - concept: failure-mode-effects-analysis | Failure mode and effects analysis

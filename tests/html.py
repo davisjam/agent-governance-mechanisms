@@ -407,7 +407,7 @@ def check_summary_no_flow_content():
 # resolve AND agree. Modelled verbatim on `check_data_claims` (the manifest+check precedent above); land
 # AUDIT-ONLY (rule #55) — the seeding is SUPPOSED to surface gaps, which become the Phase-2 worklist.
 
-_CONCEPT_KINDS = frozenset({"thesis", "axis", "family", "mechanism-class", "caveat"})
+_CONCEPT_KINDS = frozenset({"thesis", "axis", "family", "mechanism-class", "caveat", "core-construct"})
 _CONCEPT_STATUSES = frozenset({"both", "book-only", "site-only", "book-expands-site-missing", "planned"})
 # `kind`s whose site card is EXPECTED (L3 drift catch applies). A `caveat` legitimately has no card, and a
 # `mechanism-class` may be book-deep/site-thin — both exempt from L3.
@@ -577,6 +577,54 @@ def check_concepts_reverse_coverage():
             f"(add a record, or allowlist it in _site_only_cards if it is a navigation/adoption card)")
     # L4 is a warn: report findings but never FAIL.
     return PASS, issues
+
+
+def check_concepts_hierarchy():
+    """L5 — the concept HIERARCHY's cross-refs resolve (audit-only). The `_hierarchy` meta block in
+    concepts.json is the SSOT for the book's conceptual structure (the core-concepts capstone): six
+    ordered levels, each naming construct slugs and the argument-spine claim ids it reconciles with, plus
+    the two theses as relations. This check joins it against its two substrates and asserts:
+      (a) every `constructs` / `relations` / `joins` / `core_constructs` slug resolves to a concept
+          record (or, for the thesis relations, a record of kind `thesis`);
+      (b) every `spine_claims` id resolves to a spine claim in book-models/argument-spine.json;
+      (c) the levels' `order` runs exactly 1..N.
+    A dangling slug means the hierarchy and its substrate models have drifted apart — the same failure
+    class AS3 catches for the spine's own links. AUDIT-ONLY (rule #55 landing discipline)."""
+    import json as _json
+    path = _concepts_path()
+    if not os.path.isfile(path):
+        return PASS, ["no book/data/concepts.json — nothing to check"]
+    raw = _json.load(open(path, encoding="utf-8"))
+    hierarchy = raw.get("_hierarchy")
+    if not hierarchy:
+        return PASS, ["no _hierarchy block — nothing to check"]
+    records = {k for k in raw if not k.startswith("_")}
+    spine_path = os.path.join(ROOT, "book-models", "argument-spine.json")
+    spine_ids: set[str] = set()
+    if os.path.isfile(spine_path):
+        spine = _json.load(open(spine_path, encoding="utf-8"))
+        spine_ids = {s.get("id") for s in spine.get("spine", [])}
+    issues: list[str] = []
+    orders: list[int] = []
+    for lvl in hierarchy.get("levels", []):
+        name = lvl.get("level", "?")
+        orders.append(lvl.get("order", 0))
+        for slug in list(lvl.get("constructs", [])) + list(lvl.get("relations", [])):
+            if slug not in records:
+                issues.append(f"concepts: L5 hierarchy level {name!r} names {slug!r} — no concept record")
+        for sid in lvl.get("spine_claims", []):
+            if spine_ids and sid not in spine_ids:
+                issues.append(f"concepts: L5 hierarchy level {name!r} cites spine claim {sid!r} — no such spine id")
+    for slug in (hierarchy.get("core_constructs") or {}):
+        if not slug.startswith("_") and slug not in records:
+            issues.append(f"concepts: L5 core_constructs names {slug!r} — no concept record")
+    for rel in hierarchy.get("relations", []):
+        for slug in [rel.get("thesis")] + list(rel.get("joins", [])):
+            if slug and slug not in records:
+                issues.append(f"concepts: L5 relation names {slug!r} — no concept record")
+    if orders != list(range(1, len(orders) + 1)):
+        issues.append("concepts: L5 hierarchy levels' `order` is not exactly 1..N contiguous")
+    return (FAIL if issues else PASS), issues
 
 
 # ─────────────────── Site-as-projection: definitions + outcomes drift lints ──────────────────────

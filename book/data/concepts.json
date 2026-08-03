@@ -1,5 +1,30 @@
 {
-  "_note": "Concept model — the SSOT for the book's core concepts and their site realization. Keyed by the SAME slug as the `- concept:` registry in index-terms.md (the join key). `book_home` is NOT stored here — it is DERIVED at check time from the index-def tags via build_book_html._harvest_concept_tags, so it cannot drift. `name` is likewise DERIVED from the registry, never stored. This file holds ONLY what the registry cannot: the concept's kind, its SITE realization, and its status. A slug here SHOULD be registered in index-terms.md; a slug that is not (or that has no index-def in prose) is a FINDING the four audit-only lints (L1-L4 in tests/html.py) report — the seeding is SUPPOSED to surface gaps, which become the Phase-2 drain worklist. `kind` in {thesis, axis, family, mechanism-class, caveat}; `status` in {both, book-only, site-only, book-expands-site-missing, planned}. Queryable via `catalog.py concepts`.",
+  "_note": "Concept model — the SSOT for the book's core concepts and their site realization. Keyed by the SAME slug as the `- concept:` registry in index-terms.md (the join key). `book_home` is NOT stored here — it is DERIVED at check time from the index-def tags via build_book_html._harvest_concept_tags, so it cannot drift. `name` is likewise DERIVED from the registry, never stored. This file holds ONLY what the registry cannot: the concept's kind, its SITE realization, and its status. A slug here SHOULD be registered in index-terms.md; a slug that is not (or that has no index-def in prose) is a FINDING the four audit-only lints (L1-L4 in tests/html.py) report — the seeding is SUPPOSED to surface gaps, which become the Phase-2 drain worklist. `kind` in {thesis, axis, family, mechanism-class, caveat, core-construct}; `status` in {both, book-only, site-only, book-expands-site-missing, planned}. `core-construct` marks the six foundational constructs the `_hierarchy` block orders (the CORE-CONCEPTS pass, directive 260802); a core-construct has no landing card by design (site_home N/A), so L2/L3 skip it and L1 alone holds its book home. Queryable via `catalog.py concepts`.",
+
+  "_hierarchy": {
+    "_note": "The book's CONCEPT HIERARCHY — the SSOT for how the core constructs fit together (the capstone of the CORE-CONCEPTS pass, directive 260802). Six levels, premise to repertoire; each names the construct slugs (records below / registry entries) it is made of and the argument-spine claim ids (book-models/argument-spine.json) it reconciles with. The spine and this hierarchy are the SAME object at two grains: the spine is the book's linear ARGUMENT (14 ordered claims, front to back); this is its conceptual CONTAINMENT (what kind of thing each construct is, and which relations join them). Orders therefore differ — the spine argues govern-the-environment (spine order 6) before the theses; the hierarchy places the governed engineering environment AFTER the method that produces it — and that is a difference of grain, not a contradiction. The two theses are the RELATIONS among the constructs, not constructs themselves. Cross-refs are held by the audit-only L5 check (check_concepts_hierarchy in tests/html.py): every construct slug resolves to a record here, every spine id to a spine claim.",
+    "levels": [
+      {"level": "premise", "order": 1, "statement": "Implementation is abundant; judgment remains scarce.", "constructs": [], "spine_claims": ["abundant-implementation", "fault-lies-in-instructions", "oversight-does-not-scale"]},
+      {"level": "failure-mode", "order": 2, "statement": "Ungoverned, the abundance decays into churn — effort spent rediscovering, undoing, repairing, and reconciling rather than advancing.", "constructs": ["churn"], "spine_claims": ["churn-is-the-limit", "three-not-knowings-cause-churn"]},
+      {"level": "theses", "order": 3, "statement": "Two theses divide churn's causes: the Modeling Thesis treats what-to-build and how-to-realize; the Alignment Thesis treats how-to-change-safely.", "constructs": [], "relations": ["thesis-modeling", "thesis-alignment"], "spine_claims": ["modeling-thesis", "alignment-thesis", "theses-treat-the-causes"]},
+      {"level": "method", "order": 4, "statement": "The governance-conversion loop: velocity surfaces a failure; judgment converts each recurrence into a mechanism the environment enforces.", "constructs": ["failure-to-mechanism"], "spine_claims": ["failures-become-machinery"]},
+      {"level": "resulting-system", "order": 5, "statement": "The conversions accumulate into the governed engineering environment — quality as a property of the ground the agents stand on.", "constructs": ["governed-environment"], "spine_claims": ["govern-the-environment", "sync-cost-removed", "mage-becomes-practical"]},
+      {"level": "construction-repertoire", "order": 6, "statement": "The catalogue is the construction repertoire the environment is built from: models, mechanisms, compositions, and known uses.", "constructs": [], "spine_claims": ["seat-moves", "grounded-in-one-case"]}
+    ],
+    "core_constructs": {
+      "_note": "The six foundational constructs (say 'core construct' / 'core concept', never 'primitive' — 'primitive' is RESERVED for implementation-level code operations, the dense-primitive-region sense). 'governance-conversion-loop' is the directive's name for the construct whose registered concept slug is failure-to-mechanism.",
+      "engineered-agent-loop": "The engineered agent loop — a feedback process whose four levers (state exposed, action surface, success criterion, admission rule) the engineer shapes. Defined in 1.3.",
+      "model": "A deliberately reduced, machine-readable representation of system intent, structure, behavior, policy, or evidence — the formal definition in definitions.json. Defined in 2.1.",
+      "governance-mechanism": "A repeatable environmental structure that encodes an engineering policy — prevention, detection, evidence, or admission. Defined in 2.3.",
+      "churn": "The failure mode: an increasing share of agent effort spent rediscovering, undoing, repairing, reconciling. Defined in the preface.",
+      "failure-to-mechanism": "The governance-conversion loop: the method by which the environment evolves — each recurring failure converted into a durable mechanism. Defined in 2.3.",
+      "governed-environment": "The governed engineering environment: the resulting system — the accumulated mechanisms the fleet works inside. Defined in 2.3."
+    },
+    "relations": [
+      {"thesis": "thesis-modeling", "joins": ["model", "engineered-agent-loop"], "statement": "The Modeling Thesis relates the model to the loop's first lever: the environment supplies a MODELED state, compact enough to reason through, analyzable enough to specify and predict with."},
+      {"thesis": "thesis-alignment", "joins": ["governance-mechanism", "engineered-agent-loop"], "statement": "The Alignment Thesis relates governance mechanisms to the loop's other three levers: the action surface constrained, progress measured against an explicit criterion, and the result admitted only when it passes."}
+    ]
+  },
 
   "_site_only_cards": ["card-quick-start", "card-references", "card-abstractions-glossary", "card-starter-claude-md", "card-agent-brief-template", "card-design-doc-template", "card-epic-template", "card-op-playbook-template", "card-governance-lint-example", "card-ways-note", "card-governed-environment-figure", "card-views-of-the-governance-catalogue", "card-skill-self-communicate", "card-skill-self-governance", "card-skill-self-operations", "card-skills-loop", "card-both-halves"],
 
@@ -80,5 +105,41 @@
     "site_home": "N/A",
     "status": "book-only",
     "note": "realized as the catalogue's three top-level role sections (agent/ models-bridge/ product/) + the catalogue-views grouping; discussed in the book; no standalone landing card. Governance target (c) — the shipped artifact the fleet PRODUCES. Book index-def tagged at the Appendix C role-blurb bullet."
+  },
+  "engineered-agent-loop": {
+    "kind": "core-construct",
+    "site_home": "N/A",
+    "status": "planned",
+    "note": "Core construct 1 of 6 (_hierarchy). The engineered agent loop: a feedback process in which the environment supplies a modeled state, constrains available actions, measures progress against an explicit criterion, and determines whether the result may advance. Four engineered levers — state exposed, action surface, success criterion, admission rule. Book home: the 1.3 loop section (index-def lands with the loop-refinement item of the core-concepts pass; status flips to book-only then). Sibling of the registered loop-engineering concept, which names the PRACTICE of shaping this loop."
+  },
+  "model": {
+    "kind": "core-construct",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Core construct 2 of 6 (_hierarchy). Definitional text is homed in definitions.json (the model record — formal definition + the approximation/blueprint intuition); this record places the construct in the hierarchy. Book index-def tagged at the 2.1 definition. No landing card by design: the definitions model owns the site realization (def-model)."
+  },
+  "governance-mechanism": {
+    "kind": "core-construct",
+    "site_home": "N/A",
+    "status": "planned",
+    "note": "Core construct 3 of 6 (_hierarchy). A repeatable environmental structure that encodes an engineering policy and either constrains an action, detects a violation, requires evidence, or controls admission — four classes: prevention, detection, evidence, admission. A model is NOT a governance mechanism until something reads or enforces it. Definitional text homed in definitions.json. Book home: 2.3 (index-def lands with the governance-mechanism item of the core-concepts pass; status flips to book-only then)."
+  },
+  "churn": {
+    "kind": "core-construct",
+    "site_home": "N/A",
+    "status": "planned",
+    "note": "Core construct 4 of 6 (_hierarchy). The failure mode the book opens on; churn stays the SYMPTOM (the three not-knowings are its causes — the churn-is-symptom claim). Definitional text homed in definitions.json. Book home: the preface churn inset (index-def lands with the churn item of the core-concepts pass; status flips to book-only then). The landing realizes it as the bi-churn Big-Idea slot, not a card- concept card."
+  },
+  "failure-to-mechanism": {
+    "kind": "core-construct",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Core construct 5 of 6 (_hierarchy) — the governance-conversion loop (the directive's construct name; the registered concept slug predates it and stays). The method level: velocity surfaces a failure, judgment converts each recurrence into a mechanism the environment enforces. Book index-def tagged at the 2.3 ex-post engine paragraph."
+  },
+  "governed-environment": {
+    "kind": "core-construct",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Core construct 6 of 6 (_hierarchy). The resulting system: the governed engineering environment the conversions accumulate into. Book index-def tagged at the 2.3 closing section. Also the book's Part-2 frame."
   }
 }
