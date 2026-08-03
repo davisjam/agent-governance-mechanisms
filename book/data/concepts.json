@@ -23,7 +23,34 @@
     "relations": [
       {"thesis": "thesis-modeling", "joins": ["model", "engineered-agent-loop"], "statement": "The Modeling Thesis relates the model to the loop's first lever: the environment supplies a MODELED state, compact enough to reason through, analyzable enough to specify and predict with."},
       {"thesis": "thesis-alignment", "joins": ["governance-mechanism", "engineered-agent-loop"], "statement": "The Alignment Thesis relates governance mechanisms to the loop's other three levers: the action surface constrained, progress measured against an explicit criterion, and the result admitted only when it passes."}
-    ]
+    ],
+    "substrate_derivation": {
+      "_note": "The technology derivation (directive 260802 Task 6): MAGE as true engineering of a NEW MATERIAL — foundation models + agentic harnesses — whose properties imply the method. Eight substrate properties (grouped foundation-model / harness), seven derived engineering consequences, and the derivation of the two theses + the governed engineering environment from them. This block supplies the WHY under the hierarchy's theses level: the theses the levels above STATE, this derivation SHOWS follow from the machine. Book home: Part 1's 'Why MAGE Follows from the Machine' chapter (1.4-why-mage-follows-from-the-machine); the property table there is this block projected to prose. Held by the audit-only L5 check (check_concepts_hierarchy): property ids unique + groups closed; every consequence `from` id resolves to a property; every derivation `target`/`combines` slug resolves to a concept record; every `spine_claims` id resolves to book-models/argument-spine.json.",
+      "properties": [
+        {"id": "broad-semantic-reasoning", "group": "foundation-model", "statement": "Broad semantic reasoning: the model interprets, synthesizes, searches, and builds across open-ended domains."},
+        {"id": "probabilistic-execution", "group": "foundation-model", "statement": "Probabilistic execution: the same input does not yield the same behavior, and confidence is not evidence."},
+        {"id": "bounded-reconstructed-context", "group": "foundation-model", "statement": "Bounded, reconstructed working state: no complete durable understanding of the system persists from task to task."},
+        {"id": "cheap-repeated-cognition", "group": "foundation-model", "statement": "Cheap repeated cognition and implementation: search, generation, repair, and reconciliation at formerly prohibitive scale."},
+        {"id": "tool-mediated-action", "group": "harness", "statement": "Tool-mediated action: the agent acts on the world only through identifiable interfaces."},
+        {"id": "interposition", "group": "harness", "statement": "Interposition: hooks and wrappers can inspect, constrain, redirect, or deny an action at the interface it crosses."},
+        {"id": "lifecycle-visibility", "group": "harness", "statement": "Lifecycle visibility: dispatch, tool calls, compaction, completion, merge, and deploy are machine-observable events."},
+        {"id": "parallel-execution", "group": "harness", "statement": "Parallel execution: many independent reasoning loops run at once."}
+      ],
+      "consequences": [
+        {"id": "agents-use-models", "from": ["broad-semantic-reasoning"], "spine_claims": ["modeling-thesis"], "statement": "Broad reasoning lets agents work from models, not rigid scripts."},
+        {"id": "models-compact-structured", "from": ["bounded-reconstructed-context"], "spine_claims": ["modeling-thesis"], "statement": "Bounded context forces the models to be compact and structured."},
+        {"id": "deterministic-envelopes", "from": ["probabilistic-execution"], "spine_claims": ["alignment-thesis"], "statement": "Probabilistic behavior means action and admission need deterministic envelopes."},
+        {"id": "enforced-at-authority-boundaries", "from": ["tool-mediated-action", "interposition"], "spine_claims": ["alignment-thesis"], "statement": "Tool mediation lets the envelopes be enforced at real authority boundaries."},
+        {"id": "continuous-maintenance", "from": ["cheap-repeated-cognition"], "spine_claims": ["sync-cost-removed"], "statement": "Cheap labor makes models, tests, projections, and drift checks continuously maintainable."},
+        {"id": "oversight-saturates", "from": ["parallel-execution"], "spine_claims": ["oversight-does-not-scale"], "statement": "Parallel velocity saturates human per-change oversight."},
+        {"id": "policy-in-environment", "from": ["bounded-reconstructed-context", "parallel-execution", "lifecycle-visibility"], "spine_claims": ["govern-the-environment"], "statement": "Cold task starts and machine-scale throughput put policy in the environment — not in remembered training or managerial expectation."}
+      ],
+      "derives": [
+        {"target": "thesis-modeling", "from_properties": ["broad-semantic-reasoning", "bounded-reconstructed-context", "cheap-repeated-cognition"], "spine_claims": ["modeling-thesis"], "statement": "The Modeling Thesis follows primarily from broad reasoning, bounded context, and cheap reconciliation."},
+        {"target": "thesis-alignment", "from_properties": ["probabilistic-execution", "tool-mediated-action", "parallel-execution"], "spine_claims": ["alignment-thesis"], "statement": "The Alignment Thesis follows from probabilistic behavior, tool-mediated action, and machine-scale throughput."},
+        {"target": "governed-environment", "from_properties": [], "combines": ["thesis-modeling", "thesis-alignment"], "spine_claims": ["govern-the-environment"], "statement": "The governed engineering environment is what the combination of the two derivations requires."}
+      ]
+    }
   },
 
   "_site_only_cards": ["card-quick-start", "card-references", "card-abstractions-glossary", "card-starter-claude-md", "card-agent-brief-template", "card-design-doc-template", "card-epic-template", "card-op-playbook-template", "card-governance-lint-example", "card-ways-note", "card-governed-environment-figure", "card-views-of-the-governance-catalogue", "card-skill-self-communicate", "card-skill-self-governance", "card-skill-self-operations", "card-skills-loop", "card-both-halves"],

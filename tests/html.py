@@ -624,6 +624,31 @@ def check_concepts_hierarchy():
                 issues.append(f"concepts: L5 relation names {slug!r} — no concept record")
     if orders != list(range(1, len(orders) + 1)):
         issues.append("concepts: L5 hierarchy levels' `order` is not exactly 1..N contiguous")
+    # (d) the substrate derivation (directive 260802 Task 6): properties → consequences → theses/GEE.
+    #     Same join discipline as (a)-(c): every id resolves against its substrate, so the derivation
+    #     cannot silently drift from the records or the spine it reconciles with.
+    sub = hierarchy.get("substrate_derivation") or {}
+    prop_ids: list[str] = []
+    for prop in sub.get("properties", []):
+        pid = prop.get("id", "?")
+        prop_ids.append(pid)
+        if prop.get("group") not in ("foundation-model", "harness"):
+            issues.append(f"concepts: L5 substrate property {pid!r} group {prop.get('group')!r} "
+                          "not in (foundation-model, harness)")
+    if len(prop_ids) != len(set(prop_ids)):
+        issues.append("concepts: L5 substrate property ids are not unique")
+    prop_set = set(prop_ids)
+    for row in list(sub.get("consequences", [])) + list(sub.get("derives", [])):
+        label = row.get("id") or row.get("target") or "?"
+        for pid in list(row.get("from", [])) + list(row.get("from_properties", [])):
+            if pid not in prop_set:
+                issues.append(f"concepts: L5 substrate row {label!r} cites {pid!r} — no such substrate property")
+        for slug in [row.get("target")] + list(row.get("combines", [])):
+            if slug and slug not in records:
+                issues.append(f"concepts: L5 substrate row {label!r} names {slug!r} — no concept record")
+        for sid in row.get("spine_claims", []):
+            if spine_ids and sid not in spine_ids:
+                issues.append(f"concepts: L5 substrate row {label!r} cites spine claim {sid!r} — no such spine id")
     return (FAIL if issues else PASS), issues
 
 

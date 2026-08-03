@@ -176,6 +176,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: agent-stack | The agent stack
 - concept: foundation-model | The foundation model
 - concept: agentic-harness | The agentic harness
+- concept: engineering-substrate | The engineering substrate
 - concept: context-window | The context window
 - concept: skill-soft-control | Skill (soft mechanism)
 - concept: hook-hard-control | Hook (hard mechanism)
