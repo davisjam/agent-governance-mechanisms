@@ -3,10 +3,10 @@
   "_note": "The literature-positioning model holds the book's Literature-Positioning Pass — each place the book situates itself against outside work, carrying the X (established lineage) -> Y (current frontier) -> Z (narrow MAGE move) frame and its citations as MODELED objects {key, backs_claims, relation} nested under the argument spine. It is the LITERATURE half of the substantiation aggregator (the data-claim ledger is the DATA half). The LP1-LP6 conformance check holds the frame mechanically: traceability + schema, thesis join, landing integrity, location join, coverage/burndown, citation join. It lands audit-only-first — a record that drops its X/Y/Z or (once landed) cites a key absent from the .bib reddens the audit but does not gate while the LPP prose waves are still landing. `status` planned|landed is the burndown signal; only §3 (graphify) and §4 (spec-driven development) are landed today.",
   "_counts": {
     "interventions": 10,
-    "landed": 6,
-    "planned": 4,
+    "landed": 7,
+    "planned": 3,
     "citations_total": 32,
-    "citations_pending_bib": 18,
+    "citations_pending_bib": 16,
     "distinct_theses": 9
   },
   "taxonomy": {
@@ -486,8 +486,7 @@
       "y": "Empirical study finds AI assistants recomposing developer work toward supervision (Vella & Blincoe: 82% report writing less code; they name it 'supervisory engineering work'), and education begins teaching critique and responsible GenAI use (Jackson/Liu/van der Hoek).",
       "z": "MAGE describes where the seat moves — human effort concentrates on intent, architecture, model authorship, validation, and judgment — not that coding is obsolete.",
       "target_locations": [
-        "1.5-the-engineers-seat",
-        "6.0-implications-for-se"
+        "1.5-the-engineers-seat"
       ],
       "citations": [
         {
@@ -497,7 +496,7 @@
           ],
           "relation": "substantiates",
           "illustrates_pattern": "",
-          "resolves_bib": false,
+          "resolves_bib": true,
           "backs_resolve": true
         },
         {
@@ -507,24 +506,23 @@
           ],
           "relation": "corroborates",
           "illustrates_pattern": "",
-          "resolves_bib": false,
+          "resolves_bib": true,
           "backs_resolve": true
         }
       ],
       "advances_theses": [
         "seat-moves"
       ],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "STANDALONE wave. Frame: 'the seat moves', NOT 'coding obsolete'. Vella & Blincoe = supervisory engineering work (empirical, longitudinal, N=158/95 completing both phases). Jackson et al. = SE-education centered on design, critique, responsible use. vella2026impact (2605.23135) + jackson2025genaidesign (2506.21703) planned, not yet in the .bib.",
+      "notes": "STANDALONE wave — LANDED (LPP-PROSE) in 1.5-the-engineers-seat, after the 'role shrinks nothing; judgment grows more consequential' beat. Frame held: 'the seat moves', NOT 'coding obsolete' and NOT 'every engineer becomes an architect' (both disclaimed in the prose). Vella & Blincoe = supervisory engineering work (empirical, longitudinal; flow + cognitive load erode even as output holds). Jackson et al. = SE-education on critiquing a model's design output before adopting. Both cites kept in 1.5 as the single primary insertion (draft-recommended over splitting Jackson to 6.0). target_locations trimmed to 1.5 (the actual landing). No illustrates_pattern — role/education framing, not an instance of a catalogue governance pattern.",
       "locations_resolve": [
-        true,
         true
       ],
       "theses_resolve": [
         true
       ],
-      "landed_appears": false
+      "landed_appears": true
     },
     {
       "id": "single-case-methodology",

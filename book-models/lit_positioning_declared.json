@@ -152,15 +152,15 @@
       "x": "Software engineering has always been more than typing code.",
       "y": "Empirical study finds AI assistants recomposing developer work toward supervision (Vella & Blincoe: 82% report writing less code; they name it 'supervisory engineering work'), and education begins teaching critique and responsible GenAI use (Jackson/Liu/van der Hoek).",
       "z": "MAGE describes where the seat moves — human effort concentrates on intent, architecture, model authorship, validation, and judgment — not that coding is obsolete.",
-      "target_locations": ["1.5-the-engineers-seat", "6.0-implications-for-se"],
+      "target_locations": ["1.5-the-engineers-seat"],
       "citations": [
         {"key": "vella2026impact", "backs_claims": ["seat-moves"], "relation": "substantiates"},
         {"key": "jackson2025genaidesign", "backs_claims": ["seat-moves"], "relation": "corroborates"}
       ],
       "advances_theses": ["seat-moves"],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "",
-      "notes": "STANDALONE wave. Frame: 'the seat moves', NOT 'coding obsolete'. Vella & Blincoe = supervisory engineering work (empirical, longitudinal, N=158/95 completing both phases). Jackson et al. = SE-education centered on design, critique, responsible use. vella2026impact (2605.23135) + jackson2025genaidesign (2506.21703) planned, not yet in the .bib."
+      "notes": "STANDALONE wave — LANDED (LPP-PROSE) in 1.5-the-engineers-seat, after the 'role shrinks nothing; judgment grows more consequential' beat. Frame held: 'the seat moves', NOT 'coding obsolete' and NOT 'every engineer becomes an architect' (both disclaimed in the prose). Vella & Blincoe = supervisory engineering work (empirical, longitudinal; flow + cognitive load erode even as output holds). Jackson et al. = SE-education on critiquing a model's design output before adopting. Both cites kept in 1.5 as the single primary insertion (draft-recommended over splitting Jackson to 6.0). target_locations trimmed to 1.5 (the actual landing). No illustrates_pattern — role/education framing, not an instance of a catalogue governance pattern."
     },
     {
       "id": "single-case-methodology",
