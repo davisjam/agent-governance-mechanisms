@@ -1,0 +1,485 @@
+{
+  "_note": "HAND-AUTHORED source for the book's CHAPTER-SHAPE model — the Phase-2a editorial assessment of every chapter's opening and closing against the discipline (directive book/_design/book-editorial-discipline-directive-260802.md Task 2 / Phase 2): an opening identifies the failure/question, the chapter's answer, and the thesis or argument step it advances; a closing is a consequence, a transition, or a synthesis — never a mere thesis re-announcement. This file IS edited by hand; chapter-shape.json is generated from it (`python3 book-models/chapter_shape_model.py regenerate`). Exemptions and per-chapter advances are JOINED from argument_spine_declared.json at derive time — never restated here. The anchors freeze the first/last prose words each assessment was made against (generated once at assessment time via `chapter_shape_model.py anchors`, then frozen): when the 2c refactor rewrites an opening or closing, the CS5 staleness check reddens that chapter until it is re-assessed here. Grades: `explicit` and `implicit` pass (implicit = carried by content, worth a one-clause sharpening in 2c); only `absent` flags. Flags are DERIVED by the generator, never authored.",
+  "assessments": [
+    {
+      "slug": "0.1-preface",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Exempt (preface). Lead states the shift and the book's subject; theses arrive later in the preface body. Closes on the map of the book + the one-move epigraph.",
+      "opening_anchor": "This is a book about engineering — specifically, about what engineering work",
+      "closing_anchor": "> Everything that follows is one move, repeated: convert judgment into infrastructure."
+    },
+    {
+      "slug": "0.2-acknowledgments",
+      "opening": {
+        "failure_question": "absent",
+        "answer": "absent",
+        "thesis_link": "absent",
+        "thesis_target": "none"
+      },
+      "closing": {
+        "kind": "apparatus"
+      },
+      "note": "Exempt (apparatus). Pure front-matter; no argumentative shape expected.",
+      "opening_anchor": "I thank K. Davis, H. Davis, W. Davis, N. Pond, N. Davis,",
+      "closing_anchor": "supported by the U.S. National Science Foundation under grants #2541917 and #2452533."
+    },
+    {
+      "slug": "1.1-the-printer",
+      "opening": {
+        "failure_question": "absent",
+        "answer": "implicit",
+        "thesis_link": "absent",
+        "thesis_target": "none"
+      },
+      "closing": {
+        "kind": "consequence"
+      },
+      "note": "No untitled lead at all — the chapter opens mid-taxonomy (one-shot vs supervised autonomy) without stating the chapter-level failure/question, its answer, or its argument role; the printer frame and fault-lies-in-instructions arrive only in the closing section. Closing is strong: the printer builds your mistake with the same fidelity (consequence) + hand-off to 1.2.",
+      "opening_anchor": "Of course, not every programming task needs the machinery this book describes.",
+      "closing_anchor": "system that shipped. The next chapter gives you a first concrete look."
+    },
+    {
+      "slug": "1.2-mage-by-example",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Exempt (overview). Opens on the promise + three questions; grounding-case role implicit. Closes mapping Parts 2-5 with the grounding-case-not-proof stance.",
+      "opening_anchor": "The last chapter closed on a promise: the running example of this",
+      "closing_anchor": "place every claim in the coming chapters can be traced back to."
+    },
+    {
+      "slug": "1.3-loops-and-models",
+      "opening": {
+        "failure_question": "implicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Failure implicit ('Get them wrong, it wanders'). Opening names the two ideas that carry the book — the theses' seedbed; graded argument-step (not 'both') because the spine deliberately labels 1.3 modeling-side only, alignment left to Part 2 (Phase-1 log). Closes on the four levers = theses in miniature + the not-knowings division of labor.",
+      "opening_anchor": "Two ideas carry the rest of this book, and everything else is",
+      "closing_anchor": "book runs on: modeling treats the first two not-knowings, alignment the third."
+    },
+    {
+      "slug": "1.4-why-mage-follows-from-the-machine",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "both"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Exemplary: question (theses chosen or derived?), answer (derived from substrate properties), both theses named. Closes collecting the derivation + re-run-the-derivation consequence + implication-not-proof.",
+      "opening_anchor": "Reinforced concrete carries a building because two materials split the work: concrete",
+      "closing_anchor": "back of the book supplies one system's worth — a grounding case."
+    },
+    {
+      "slug": "1.5-the-engineers-seat",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Failure: the engineer/technician split kept collapsing; answer: agents hold the seats apart; states 'the claim the rest of the book stands on' (seat-moves). Closes on the question the next part opens on — where do you reach in?",
+      "opening_anchor": "Older engineering fields draw a clean line between the engineer who designs",
+      "closing_anchor": "to do it? That is the question the next part opens on."
+    },
+    {
+      "slug": "2.1-the-agent-stack",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Opens on the interposition frame back-linked to the 1.4 derivation; question 'where do you reach in?' answered by the four-layer stack. Closing ties stack to both theses AND hands off to the two following chapters — transition, not mere re-announcement (borderline; 2c could sharpen the last paragraph's first sentence).",
+      "opening_anchor": "A language model alone gives probabilistic recommendations. A harness turns some of",
+      "closing_anchor": "the Alignment Thesis. The two chapters that follow take one thesis each."
+    },
+    {
+      "slug": "2.2-models-and-the-semantic-gap",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "modeling"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Trap named (enforcing at the wrong level), answer (model = sweet spot, check where checking makes sense); Modeling Thesis carried by content, not named. Closes on two promissory notes routed to 3.3 and Part 3.",
+      "opening_anchor": "The last chapter gave you four places to inject a mechanism. This",
+      "closing_anchor": "models matter; those chapters show you how to build and check one."
+    },
+    {
+      "slug": "2.3-the-governed-environment",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "alignment"
+      },
+      "closing": {
+        "kind": "consequence"
+      },
+      "note": "Question: what can you decide up front vs learn along the way; answer: the two halves + two forms of mechanism; Alignment Thesis implicit. Closes on the residual — a concrete consequence (your throughput ceiling) with a forward pointer to 6.0.",
+      "opening_anchor": "Everything so far assumes you know, in advance, what should be true",
+      "closing_anchor": "one level up — is the subject of the closing chapter (6.0)."
+    },
+    {
+      "slug": "2.4-lifecycles-and-runbooks",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "mid-taxonomy"
+      },
+      "note": "Opening solid: agent lacks operating context -> write lifecycles + runbooks (governed-environment role implicit). ENDING FAILS: the chapter stops inside the runbook taxonomy at the pre-canned brief + a Learn-more link; the final clause gestures at synthesis ('the whole business of this book, applied to delegation') but there is no chapter-level consequence/transition/synthesis re-collecting lifecycles->runbooks->split.",
+      "opening_anchor": "You know what to do when the disk fills up, when two",
+      "closing_anchor": "whole business of this book, applied to the act of delegation itself."
+    },
+    {
+      "slug": "2.5-metrics",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "alignment"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Failure: a loop that cannot sense cannot steer; answer: metrics that drive decisions; sensor role (Alignment side) implicit. Closes reading the compact-reference table back through the chapter criterion — synthesis grounded in the table, not a bare re-announcement.",
+      "opening_anchor": "Every agent runs a loop. It takes an input, reasons, acts, and",
+      "closing_anchor": "loop steering by a shallow number is a loop that cannot steer."
+    },
+    {
+      "slug": "2.6-when-guardrails-collide",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "modeling"
+      },
+      "closing": {
+        "kind": "consequence"
+      },
+      "note": "Failure vivid (two controls, incompatible demands, two real collisions); answer: model the space between controls; the modeling move implicit as thesis. Closes on descriptive-not-inventing limit — the governance-tower failure mode.",
+      "opening_anchor": "The stack gives you four layers to steer at, and a governed",
+      "closing_anchor": "nobody wants. This one confines itself to the collisions that actually happen."
+    },
+    {
+      "slug": "3.1-the-executable-zoo",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "modeling"
+      },
+      "closing": {
+        "kind": "apparatus"
+      },
+      "note": "Opening cashes 2.2's promise, Part-level Modeling-Thesis frame explicit (incl. the Task-6 'Why models are newly central' section). ENDING FAILS: the chapter ends on inset apparatus (I1/I8/I9) + a navigation note about where the remaining insets appear — reference-matter tail, no chapter-level close.",
+      "opening_anchor": "The previous chapter argued that a model is the sweet spot between",
+      "closing_anchor": "diagrams, safety versus liveness, protocols and TLA+, and coverage over model nodes."
+    },
+    {
+      "slug": "3.2-the-logical-view",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "absent",
+        "thesis_target": "none"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "View chapters class-flag: the designer's question + the view's answer are present, but the opening never says how the view advances a thesis (the reason-through/drift-gate content sits on the model pages; the thesis frame rides at Part level in 3.1). Ending exemplary: the ---kicker transition to the Process view.",
+      "opening_anchor": "The Logical view is the functional structure — the objects, the types,",
+      "closing_anchor": "stop being predicates over one state and become predicates over an interleaving."
+    },
+    {
+      "slug": "3.3-the-process-view",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "absent",
+        "thesis_target": "none"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Same class as 3.2: question (what happens when parts run at once?) + answer (states/locks/invariants lens) present; thesis-link absent from the opening. Ending: kicker transition to the Development view.",
+      "opening_anchor": "The Logical view named the parts. The Process view asks the question",
+      "closing_anchor": "how the code is packaged, layered, and owned — the Development view."
+    },
+    {
+      "slug": "3.4-the-development-view",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "modeling"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Question (where am I, what may this file touch) + answer (the map); 'the view the people and agents who build the system reason through' carries the Modeling-Thesis mechanism implicitly — the one view chapter that gestures at it. Ending: kicker transition to the Physical view.",
+      "opening_anchor": "The Process view held the running system consistent. The Development view steps",
+      "closing_anchor": "under what per-host cost and load policy. That is the Physical view."
+    },
+    {
+      "slug": "3.5-the-physical-view",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "absent",
+        "thesis_target": "none"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Same class as 3.2: failure (functionally correct yet mis-deployed) + answer (the placement lens) present; thesis-link absent. Ending: kicker transition to the +1 view.",
+      "opening_anchor": "The Development view mapped how the source is organized. The Physical view",
+      "closing_anchor": "validate that the other four actually hold up. That is the +1."
+    },
+    {
+      "slug": "3.6-the-scenarios-view",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "absent",
+        "thesis_target": "none"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Same class as 3.2: question (do the views hold up?) + answer (scenarios walk them) present; thesis-link absent. Ending: Part-closing synthesis — five views walked, why the upkeep is now affordable.",
+      "opening_anchor": "The four views so far are static portraits. The Logical view says",
+      "closing_anchor": "because there is no cheaper way to trust what a fleet ships."
+    },
+    {
+      "slug": "3.7-the-scope-of-modeling",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "modeling"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Exempt (end-of-part-synthesis). Doorway-out framing; map-equals-territory discipline implicit thesis. Through-line closing synthesis.",
+      "opening_anchor": "This book is an introduction. It gives you enough kinds of model",
+      "closing_anchor": "the day you feel that graduation — it is worth your time."
+    },
+    {
+      "slug": "4.1-brownfield",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "modeling"
+      },
+      "closing": {
+        "kind": "consequence"
+      },
+      "note": "Failure: most readers stare at brownfield + agent-worsened sprawl; answer: the recipe, step by step; 'model-based engineering environment' implicit thesis-link. Closes on the 300k->200k scar evidence — concrete consequence.",
+      "opening_anchor": "Everything so far has assumed a clean start. Greenfield is the easy",
+      "closing_anchor": "it, and enforcement holding all three together every time the code changes."
+    },
+    {
+      "slug": "4.2-the-skills",
+      "opening": {
+        "failure_question": "absent",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "OPENING FAILS on failure/question: pure inventory framing ('a book of method ought to ship with batteries') — no failure or question motivates the chapter; the packaged-methodology role is implicit. Ending passes as boundary-marking transition: names the unresolved team dimension explicitly and marks it out of scope.",
+      "opening_anchor": "A book of method ought to ship with batteries, and this one",
+      "closing_anchor": "practice, so I mark the boundary here rather than gesture past it."
+    },
+    {
+      "slug": "4.3-transformations",
+      "opening": {
+        "failure_question": "implicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Habit-of-mind framing: the failure (mis-sized transformations) is implicit in 'the skill is sizing each transformation'; the substrate link ('the shape of the machine underneath') implicit. Closes on the skills-as-transformations synthesis.",
+      "opening_anchor": "There is one more habit of mind that makes all of this",
+      "closing_anchor": "input-to-output steps — and you will find yourself a much happier engineer."
+    },
+    {
+      "slug": "4.4-training-data",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "implicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "consequence"
+      },
+      "note": "Question: how much of this book do you need? Answer: the training-data axis decides. Argument role (scopes the method's necessity) implicit. Closes on demoable-is-not-productizable — concrete consequence + the untrusted-agent boundary note.",
+      "opening_anchor": "There is one last property of a coding agent you must reason",
+      "closing_anchor": "belong together, in a treatment this field report > does not attempt."
+    },
+    {
+      "slug": "4.5-lessons-learned",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Exempt (discussion). Opens on the arc and what it taught; closes on authority-to-convert advice + N=1 humility + the locomotive lineage.",
+      "opening_anchor": "I spent three months building a real piece of software with a",
+      "closing_anchor": "it is the most fun I have had building software in years."
+    },
+    {
+      "slug": "4.6-generative-validation",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "both"
+      },
+      "closing": {
+        "kind": "consequence"
+      },
+      "note": "Exemplar opening: dot-test failure, the generate-and-falsify move, then BOTH theses named and mapped ('that move is the whole book worn as a test'). Closes on the when-to-reach-for-which decision aid — concrete consequence.",
+      "opening_anchor": "Most tests reproduce a dot. You pick an input, you write down",
+      "closing_anchor": "to trust the last green checkmark, and checking the model again, forever."
+    },
+    {
+      "slug": "5.1-the-ada-context",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "transition"
+      },
+      "note": "Question explicit (why is document accessibility hard and worth a professor's Spring Break?); answer: the problem context; grounding-case role stated up front. Closes handing off to the timeline chapter.",
+      "opening_anchor": "Every method in this book was learned building one real system, under",
+      "closing_anchor": "one-week undergraduate project became a production system built almost entirely by machines."
+    },
+    {
+      "slug": "5.2-the-timeline-and-the-work",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Opens on the arc + the one fact that is the book's engineering problem; every governance idea learned at a point on the arc (failures-become-machinery). Closes on the recurring move + the arc's numbers — synthesis.",
+      "opening_anchor": "The last chapter established the problem. This one tells what happened when",
+      "closing_anchor": "governed is the story the rest of this book has already told."
+    },
+    {
+      "slug": "5.3-the-built-system",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "argument-step"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Question: what got built (governance makes no sense without the governed thing); answer: the system's shape, the two halves joined. Closes on Same-song-second-verse — the wrapped-VLM pattern read back onto the agents themselves. Exemplar.",
+      "opening_anchor": "The timeline told what happened. This chapter tells what got built, because",
+      "closing_anchor": "rest of the book applied in the large. Same song, second verse."
+    },
+    {
+      "slug": "5.4-the-road-to-mage",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "modeling"
+      },
+      "closing": {
+        "kind": "synthesis"
+      },
+      "note": "Opening states how MAGE emerged + the staircase + 'each step induces one more model... models accrete' — an explicit Modeling-Thesis claim, but the spine labels 5.4 [oversight-does-not-scale, seat-moves, grounded-in-one-case] (at cap, no modeling-thesis) -> genuine thesis/spine mismatch, flagged for 2c: either the spine label or the opening's emphasis should move. Closes on the Missing-Model-Metric loop + MAGE-was-demanded synthesis.",
+      "opening_anchor": "The MAGE methodology emerged from months of work with coding agents. I",
+      "closing_anchor": "instruments back on the parts of itself it had not yet named."
+    },
+    {
+      "slug": "6.0-implications-for-se",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "both"
+      },
+      "closing": {
+        "kind": "consequence"
+      },
+      "note": "Exempt (discussion). Opens restating both theses as the through-line (its job as the implications chapter); closes on limitations + the come-tell-me invitation.",
+      "opening_anchor": "I built one system, alone, with a fleet of agents, and this",
+      "closing_anchor": "run the experiment and report back. Come tell me what you found."
+    },
+    {
+      "slug": "6.1-conclusion",
+      "opening": {
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "both"
+      },
+      "closing": {
+        "kind": "consequence"
+      },
+      "note": "Exempt (conclusion). Closes on the do-one-conversion concrete next step — a model conclusion ending.",
+      "opening_anchor": "> I applied mine heart to know, and to search, and to",
+      "closing_anchor": "MAGE method serves your work as well as it has served mine."
+    }
+  ]
+}
