@@ -447,7 +447,6 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 - term: semantic-artifact | local
 - term: infinite-midwit | local
 - term: fleet-scale | local
-- term: support-ratio | local
 - term: probabilistic-component | section
 - term: llm-as-function-call | section
 - term: trust-boundary | section
