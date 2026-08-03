@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): DocAble's six parts as one S-shaped pipeline — the
+     compressed architecture for the Part-1 grounding teaser (full treatment: Part 5, The
+     Built System). Two lanes: the working half (front door, dispatcher, remediation core,
+     fleet blue) and the trust half (checker, fidelity validator, provenance, governed
+     green) with a dashed band naming the takeaway. Mermaid can draw the flow but not keep
+     the two lanes in register with the band. Palette: Umber Monograph tokens (fleet
+     #2f5169/#e7edf3, governed #1f7a4d/#e3f0e7, ink #1c1917, muted #57534e). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 470" width="1060" height="470"
+     role="group" aria-labelledby="dpTitle dpDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="dpTitle">DocAble in one picture: six parts, and nothing ships unchecked</title>
+  <desc id="dpDesc">A document flows through six parts in an S shape. The working half, top
+    row: a front door takes the upload, identity, and quota; a dispatcher splits the document
+    into chunks of work; a remediation core repairs each chunk, applying rules where rules
+    suffice and bounded model calls where judgment is needed. The flow then descends into the
+    trust half, bottom row: a checker maps every remaining finding to a clause of the
+    standard; a fidelity validator asserts the meaning survived; a provenance layer stamps
+    every inserted artifact. The bottom row sits inside a dashed band labeled "the trust
+    half: nothing ships unchecked." The output is the remediated file with its evidence.</desc>
+
+  <defs>
+    <marker id="dpArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- input cap -->
+  <text x="58" y="72" text-anchor="middle" font-size="17" font-weight="700" fill="#57534e">a document</text>
+
+  <!-- ============ working half (top row) ============ -->
+  <g>
+    <rect x="130" y="60" width="180" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="220" y="98" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">front door</text>
+    <text x="220" y="146" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">upload, identity, quota</text>
+
+    <rect x="380" y="60" width="180" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="470" y="98" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">dispatcher</text>
+    <text x="470" y="146" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">splits it into chunks of work</text>
+
+    <rect x="630" y="60" width="220" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="740" y="98" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">remediation core</text>
+    <text x="740" y="146" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">rules where rules suffice,</text>
+    <text x="740" y="164" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">a bounded model call where judgment is needed</text>
+  </g>
+
+  <!-- ============ trust half (bottom row, banded) ============ -->
+  <rect x="110" y="230" width="770" height="180" rx="12" fill="none" stroke="#1f7a4d"
+        stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="860" y="256" text-anchor="end" font-size="15" font-weight="700" fill="#1f7a4d">the trust half — nothing ships unchecked</text>
+
+  <g>
+    <rect x="150" y="280" width="180" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="240" y="318" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">checker</text>
+    <text x="240" y="366" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">every finding mapped to</text>
+    <text x="240" y="384" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">a clause of the standard</text>
+
+    <rect x="400" y="280" width="180" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="490" y="310" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">fidelity</text>
+    <text x="490" y="330" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">validator</text>
+    <text x="490" y="366" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">asserts the meaning</text>
+    <text x="490" y="384" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">survived</text>
+
+    <rect x="650" y="280" width="180" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="740" y="310" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">provenance</text>
+    <text x="740" y="330" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">layer</text>
+    <text x="740" y="366" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">stamps every</text>
+    <text x="740" y="384" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">inserted artifact</text>
+  </g>
+
+  <!-- output cap -->
+  <text x="975" y="306" text-anchor="middle" font-size="17" font-weight="700" fill="#9a3f12">the file,</text>
+  <text x="975" y="326" text-anchor="middle" font-size="17" font-weight="700" fill="#9a3f12">remediated —</text>
+  <text x="975" y="346" text-anchor="middle" font-size="17" font-weight="700" fill="#9a3f12">with evidence</text>
+
+  <!-- arrows -->
+  <g fill="none" stroke="#1c1917" stroke-width="2.2" marker-end="url(#dpArrow)">
+    <path d="M58,82 L58,92 L128,92"/>
+    <path d="M310,92 L378,92"/>
+    <path d="M560,92 L628,92"/>
+    <!-- descent from the working half into the trust half -->
+    <path d="M740,180 L740,208 L240,208 L240,278"/>
+    <path d="M330,312 L398,312"/>
+    <path d="M580,312 L648,312"/>
+    <path d="M830,312 L905,312"/>
+  </g>
+</svg>
