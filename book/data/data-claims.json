@@ -70,8 +70,8 @@
   },
   "mmm-drain": {
     "source": "2.5-metrics",
-    "anchor": "",
-    "holds": [],
+    "anchor": "mmm-drain",
+    "holds": ["56%", "39%", "20.9%", "14.9%"],
     "status": "partial",
     "spine_claim": "modeling-thesis",
     "observable": "The Missing-Model-Metric orphan rate (share of tests whose exercised code reaches no model-anchored symbol) draining as subsystems get modeled: 56% -> 55% -> 52% -> 39% -> 32.2% -> 30.1% -> 20.9% -> 14.9%.",

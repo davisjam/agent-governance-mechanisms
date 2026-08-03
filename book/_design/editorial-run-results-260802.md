@@ -1005,3 +1005,36 @@ that baseline (26 passed / 2 pre-existing failed), never adding a new failure.
 - **Parked (measurement pending, noted in prose):** a bundle/generated-file-excluding pathspec to
   convert the churn signal toward true hand-authored edited lines — one-line note in the caveat
   paragraph, no invented number.
+
+### Metric 3 — mmm-drain → modeling-thesis · RENDERED
+- **Chart + table location:** new `## The dual: draining unmodelled code {#mmm-drain}` in
+  `book/part2/2.5-metrics.md` (after the flagship coverage section, before the soft-end section — it is
+  the code→model dual of the flagship's model→code coverage). Drain-curve `book/assets/mmm-drain-curve.svg`
+  (orphan rate 56% → 14.9% over eight tracer re-runs, ≤10% target reference) + the run-by-run table
+  (orphan rate + code-modelled complement 44% → 85.1%) + prose: model-discovery instrument, not a gate;
+  re-measure → model the biggest orphan cluster → re-run → orphan rate falls.
+- **Cross-ref marker:** `[data: mmm-drain]` added to the traceability "both directions" point in
+  `book/part3/3.1-the-executable-zoo.md` (the forward code→model direction the metric measures; mid-chapter).
+- **Ledger filled:** `anchor: "mmm-drain"`; `holds: ["56%","39%","20.9%","14.9%"]` (all in the 2.5 table —
+  DL4 green); `status: partial`.
+- **Substantiation:** `modeling-thesis` now shows `data: mmm-drain [partial]` (alongside mbse-nav-token).
+- **Gates:** `catalog.py validate` 0 issues · `build_book_html.py` green (118 figures) · figure-overflow
+  clean · stroke-through-glyph clean · design-token drift adds no mmm finding · book-float-ref green
+  (figure + table both `[ref:]`-introduced) · tier-1 gate 26/2 (baseline held).
+- **Parked (measurement pending, noted in prose):** a fixed-N reproducible replay (re-run the tracer at
+  each tagged commit over one frozen population) — the comparable-not-fixed-N caveat states the denominator
+  drift (144→148), the subsystem-scoped first point, and the un-enumerated cost-rollup interior point; the
+  fixed-N replay is called out as pending, no invented number.
+
+### W4 close — state after all three metrics
+- **Rendered:** support-ratio-curve, churn, mmm-drain (3 of 3 targeted). **Deferred/out of scope, untouched:**
+  model-sync-efficacy (W7 owns its §3.8 render), velocity chart (housekeeping), real-bug-yield (orchestrator
+  ruled it stays unbound).
+- **substantiation `data_backing` populated:** govern-the-environment ← support-ratio-curve; churn-is-the-limit
+  ← churn; modeling-thesis ← mmm-drain (+ mbse-nav-token). All three DL4 holds appear in their source chapters.
+- **DL4 uncited WARNs cleared for all three;** residual WARNs are mbse-nav-token (pre-existing) + model-sync-efficacy
+  (W7) — out of W4 scope. **DL3 UNDERQUANTIFIED unchanged** (oversight-does-not-scale, failures-become-machinery,
+  seat-moves — literature-only, as predicted).
+- **Gate baseline note:** the tier-1 suite carries 2 pre-existing FAILs at HEAD, both in `3.1-the-executable-zoo`
+  (a `<!-- TODO(W7) -->` stray comment; an IR render-complete byte-identity divergence at block 110) — W7
+  territory, present before W4 and untouched by it. Every W4 commit held the gate at 26 passed / 2 pre-existing failed.
