@@ -13,6 +13,8 @@ after the fact.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *audit record* — a reproducible reconstruction from the embedded stamps |
 
+*Its place in the environment — a **variant / known-use** of **Caused-By Provenance**, under **PROVENANCE · Track provenance and trace causes**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-provenance) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 The stamps are embedded in the artifact, but embedded data isn't *useful* until it can be read back into

@@ -13,6 +13,8 @@ validator can cover it by prefix (our instance: the `a11y_` prefix + `InsertedCo
 | Model | — |
 | Enforcement | **Hard** (deterministic) — the `InsertedContentValidator` covers every registered insert |
 
+*Its place in the environment — a **variant / known-use** of **Caused-By Provenance**, under **PROVENANCE · Track provenance and trace causes**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-provenance) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 The tool *inserts* content: alt text, tags, off-canvas scaffolding. Mixing tool-inserted content with
