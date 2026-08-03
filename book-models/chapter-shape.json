@@ -4,7 +4,7 @@
   "_counts": {
     "chapters_assessed": 32,
     "chapters_exempt": 7,
-    "openings_failing": 2,
+    "openings_failing": 0,
     "closings_failing": 2,
     "thesis_spine_mismatches": 1,
     "openings_implicit_thesis": 10
@@ -86,16 +86,16 @@
     {
       "slug": "1.1-the-printer",
       "opening": {
-        "failure_question": "absent",
-        "answer": "implicit",
-        "thesis_link": "absent",
-        "thesis_target": "none"
+        "failure_question": "explicit",
+        "answer": "explicit",
+        "thesis_link": "explicit",
+        "thesis_target": "argument-step"
       },
       "closing": {
         "kind": "consequence"
       },
-      "note": "No untitled lead at all — the chapter opens mid-taxonomy (one-shot vs supervised autonomy) without stating the chapter-level failure/question, its answer, or its argument role; the printer frame and fault-lies-in-instructions arrive only in the closing section. Closing is strong: the printer builds your mistake with the same fidelity (consequence) + hand-off to 1.2.",
-      "opening_anchor": "Of course, not every programming task needs the machinery this book describes.",
+      "note": "Phase-2c added a real untitled lead: failure (implementation abundant but unreliable), question (whose fault when the build is wrong?), answer (the agent is a printer, not a coder — a bad build indicts the instructions), argument role stated (the premise everything after rests on) = fault-lies-in-instructions / abundant-implementation. The body sections develop the metaphor the lead now frames. Closing is strong: the printer builds your mistake with the same fidelity (consequence) + hand-off to 1.2.",
+      "opening_anchor": "Coding agents have made writing software cheap. Describe what you want and",
       "closing_anchor": "system that shipped. The next chapter gives you a first concrete look.",
       "exempt": null,
       "spine_advances": [
@@ -473,7 +473,7 @@
     {
       "slug": "4.2-the-skills",
       "opening": {
-        "failure_question": "absent",
+        "failure_question": "explicit",
         "answer": "explicit",
         "thesis_link": "implicit",
         "thesis_target": "argument-step"
@@ -481,8 +481,8 @@
       "closing": {
         "kind": "transition"
       },
-      "note": "OPENING FAILS on failure/question: pure inventory framing ('a book of method ought to ship with batteries') — no failure or question motivates the chapter; the packaged-methodology role is implicit. Ending passes as boundary-marking transition: names the unresolved team dimension explicitly and marks it out of scope.",
-      "opening_anchor": "A book of method ought to ship with batteries, and this one",
+      "note": "Phase-2c added the motivating failure: a method left as prose must be re-taught to every fresh agent, and a discipline that lives in memory rather than the environment is the first thing velocity drops — the batteries (three installable skills) answer that. Packaged-methodology role implicit (govern-the-environment). Ending passes as boundary-marking transition: names the unresolved team dimension explicitly and marks it out of scope.",
+      "opening_anchor": "A method only helps while someone remembers to apply it. Left as",
       "closing_anchor": "practice, so I mark the boundary here rather than gesture past it.",
       "exempt": null,
       "spine_advances": [
@@ -700,23 +700,7 @@
     }
   ],
   "flags": {
-    "failing_openings": [
-      {
-        "chapter": "1.1-the-printer",
-        "missing": [
-          "failure/question",
-          "thesis-link"
-        ],
-        "note": "No untitled lead at all — the chapter opens mid-taxonomy (one-shot vs supervised autonomy) without stating the chapter-level failure/question, its answer, or its argument role; the printer frame and fault-lies-in-instructions arrive only in the closing section. Closing is strong: the printer builds your mistake with the same fidelity (consequence) + hand-off to 1.2."
-      },
-      {
-        "chapter": "4.2-the-skills",
-        "missing": [
-          "failure/question"
-        ],
-        "note": "OPENING FAILS on failure/question: pure inventory framing ('a book of method ought to ship with batteries') — no failure or question motivates the chapter; the packaged-methodology role is implicit. Ending passes as boundary-marking transition: names the unresolved team dimension explicitly and marks it out of scope."
-      }
-    ],
+    "failing_openings": [],
     "failing_closings": [
       {
         "chapter": "2.4-lifecycles-and-runbooks",
