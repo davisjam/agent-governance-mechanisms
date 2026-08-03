@@ -3,13 +3,13 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->82<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->83<!--/census--> entries are fully
 written (**✅**).
 
 **Read this as a construction kit.** The census below lists every mechanism by role and family. For the
 architecture *behind* the list — what the environment must be able to do, and which mechanisms give it
 those capabilities — start at **[Constructing the Governed Engineering Environment](constructing-the-gee.md)**.
-The case produced <!--census:controls-->82<!--/census--> concrete mechanisms; comparative analysis reduced
+The case produced <!--census:controls-->83<!--/census--> concrete mechanisms; comparative analysis reduced
 them to **25 canonical mechanisms under 9 capabilities**, with the remainder retained as variants and
 known uses. That page groups every entry under its capability and names the eight compositions that are
 strong together.
@@ -84,6 +84,7 @@ of soft/hard.
 | ✅ | Operator runbook skill (positive map + symptom index, ref-lint-kept) | `agent-output` | `package` | — | Soft·Hard | [operator-runbook-skill.md](agent/governance-doc-controls/operator-runbook-skill.md) |
 | ✅ | Epic & design-doc templates | `agent-output` | `package` | — | Soft·Hard | [epic-and-design-templates.md](agent/governance-doc-controls/epic-and-design-templates.md) |
 | ✅ | Enforce at the right semantic level | `agent-output` | `constraint` | `governs-a-model` | Soft | [semantic-level-enforcement.md](agent/governance-doc-controls/semantic-level-enforcement.md) |
+| ✅ | Self-governance (recurring failure → tasteful control, fired on a cadence) | `agent-output` | `package` | — | Soft·Hard | [self-governance.md](agent/governance-doc-controls/self-governance.md) |
 
 # Models-bridge
 
@@ -187,10 +188,10 @@ of soft/hard.
 
 ---
 
-**Three roles complete — 82 mechanisms across 11 families, all fully developed.**
-**Agent (28):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
-Lifecycle & observability (8) · Governance-doc mechanisms (8, incl. the **CLAUDE.md rule index**
-meta-mechanism).
+**Three roles complete — 83 mechanisms across 11 families, all fully developed.**
+**Agent (29):** Context & dispatch (4) · Gates & merge-train (4) · Mediators & resource locks (4) ·
+Lifecycle & observability (8) · Governance-doc mechanisms (9, incl. the **CLAUDE.md rule index**
+meta-mechanism and the **self-governance** conversion loop).
 **Models-bridge (34):** the MBSE **method** (<!--census:bridge_method-->16<!--/census--> subject-agnostic mechanisms, incl. **formal temporal-logic verification**, **coverage→model-node mapping**, **journey-criticality → test-tier placement**, **journey task-closure**, **invariant-DAG execution policy**, **computed control↔substrate blast-radius**, the **per-target control-coverage census**, + the **symbol-anchored traceability graph**) reified as a **Y** over <!--census:bridge_models-->18<!--/census--> models — product-facing 5 (service-flow · user-journey · domain-registries · composed-state-machine · process-view) · orchestration-facing 4 (synchronization · agent-orch · governance-graph · lifecycle) · shared-spine 3 (component-zone · concurrency · deployment, both faces);
 the MBSE substrate through which a bounded agent operates an unbounded codebase. These model entries are a **curated sample of the portable genres** — the substrate carries on the order of sixty typed models, and these cover the ones whose shape transfers.
 **Product (20):** Canonical models & seams (5) · Validation & conformance (4) · Regression tests (4) ·

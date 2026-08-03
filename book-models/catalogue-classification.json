@@ -983,6 +983,10 @@
       "disposition": "lift-to-L1 P8 (Enforce at the right semantic level)",
       "reason": "Not a peer pattern: a design-time PLACEMENT judgment (match a control's enforcement scope to the property's legibility scope) that EXPLAINS where every other mechanism sits. Lifted out of the pattern set to L1 per 3a."
     },
+    "agent/governance-doc-controls/self-governance": {
+      "disposition": "keep-as-L2 Self-governance",
+      "reason": "New pattern (24th) added W3: the generative engine that turns a recurring failure class into a tasteful, proportionate control and fires that conversion on a cadence. Named after the portable relation (self-detection → right-sized constraint/sensor); the loadable INTERPRET-FAILURE skill + turn-end reflection hook are its operationalization, not the pattern. Flagship: the gov-of-gov stack's INTERPRET part (stack expanded to 6, RADIUS kept)."
+    },
     "agent/lifecycle-and-observability/agent-registry": {
       "disposition": "keep-as-L2 Authoritative Lifecycle State",
       "reason": "Canonical record-before-destructive-action mechanism."
@@ -1024,8 +1028,8 @@
       "reason": "Bounded-M cardinality variant: parallel-safe-heavy compute rationed at M=8; cardinality chosen from the contention profile. Same mediation relation, different cardinality."
     },
     "agent/mediators-and-resource-locks/resource-pressure-gating": {
-      "disposition": "keep-as-L2 Adaptive Resource-Pressure Admission",
-      "reason": "Canonical adaptive pole (split from the fixed-capacity mediator family per the directive)."
+      "disposition": "demote-to-L3-under Mediated Resource Admission",
+      "reason": "Adaptive-condition SHED variant, folded into the mediation family per W3 ruling: it bounds heavy work by the host's live CONDITION (an admission gate before dispatch + an execution shed during), where the fixed mediators bound by declared COUNT. Same mediation relation, condition-vs-count axis. Stays the SHED member of the resource-mediation flagship stack."
     },
     "agent/mediators-and-resource-locks/test-serializer": {
       "disposition": "keep-as-L2 Mediated Resource Admission",
@@ -1244,8 +1248,8 @@
       "reason": "Canonical implementation⊨policy mechanism."
     },
     "product/validation-and-conformance/standards-rule-engine": {
-      "disposition": "keep-as-L2 Conformance-to-External-Spec Engine",
-      "reason": "Canonical external-spec-conformance mechanism."
+      "disposition": "move-to-book-case Conformance-to-External-Spec Engine",
+      "reason": "Departs the catalogue per W3 ruling C: it IS the product (an external-spec conformance engine), so it becomes a case section in the book proper (Part-5 product-case register), not a catalogue pattern. Its coherence/parity relatives (coherence-lints) stay under Drift/Parity Gate."
     }
   },
   "_coverage": {

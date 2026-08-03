@@ -173,7 +173,7 @@ MODEL_NODES = [
      "models": ["governance-graph"], "cross": [],
      "perim": ["claude-md-rule-index", "mandatory-snippet-table", "epic-definition-of-done",
                "doc-hygiene-lints", "operational-playbooks", "operator-runbook-skill",
-               "epic-and-design-templates"]},
+               "epic-and-design-templates", "self-governance"]},
     {"k": "logical", "spine": "product", "title": "Logical",
      "sub": "The system's functional decomposition — including the product's own document models, which "
             "carry the artifact-side mechanisms.",
