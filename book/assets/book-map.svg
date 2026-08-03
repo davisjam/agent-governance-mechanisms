@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Hand-authored SVG (ported from the chapter's mermaid fence, label: book-map).
      The map of the book: Part 1 sets the frame and forks into the two theses — Part 2 the
-     controls, Part 3 the models — which meet in Part 4's daily practice and are proved on
+     controls, Part 3 the models — which meet in Part 4's daily practice and are grounded in
      Part 5's case study. Palette: Umber Monograph tokens (governed #1f7a4d Part 2,
-     fleet #2f5169 Part 3, accent #9a3f12 the proof). -->
+     fleet #2f5169 Part 3, accent #9a3f12 the grounding case). -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 740" width="960" height="740"
      role="group" aria-labelledby="bmTitle bmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
@@ -52,10 +52,10 @@
 
   <line x1="480" y1="418" x2="480" y2="474" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
 
-  <!-- Part 5: the proof -->
+  <!-- Part 5: the grounding case -->
   <rect x="270" y="480" width="420" height="88" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
   <text x="480" y="516" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 5 · A MAGE Case Study</text>
-  <text x="480" y="546" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">DocAble, end to end: the proof</text>
+  <text x="480" y="546" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">DocAble, end to end: the grounding case</text>
 
   <line x1="480" y1="568" x2="480" y2="624" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
 
