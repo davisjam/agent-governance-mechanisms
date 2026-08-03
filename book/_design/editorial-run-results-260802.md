@@ -704,3 +704,90 @@ descriptive code-graph (recover the *is*) → normative-but-prose SDD (author th
   renders the SDD prose; the cite resolves (no raw `[cite:]` marker survives); the article appears in the
   references section; the TODO comment does not leak to reader HTML.
 - **Not deployed** (batched).
+
+---
+
+## W2b — the other six flagship stacks + supersede-migrate of Appendix D (2026-08-03)
+
+**Wave:** W2b (opus, single-live-tree writer). Completes the "appendix view-refactor into stacks of
+components": builds the six remaining flagship deep-dives to the W2a Provenance exemplar's richer template
+and executes the author-ratified supersede-migrate of Appendix D. Commit-no-deploy (batched). Commits
+`2746f5b` (schema+FS4+DRAFT) · `4e9c6fe` (model-coherence) · `022c102` (spec+verification) · `fb959d4`
+(observe→react) · `d49ab52` (resource-mediation) · `cbb1be0` (governance-of-governance) · `a28c6bd`
+(context-management + retire worktree-lifecycle + FS4-real). One stack per commit — resumable.
+
+- **Six stacks built (each: model record with capabilities[] + parts[] six fields · a self-communicate
+  overview SVG · a page · _STACKS registration · FS1–FS5 green):**
+  - **model-coherence** (6 parts: DATA · CONSUME · PARITY · DERIVE · EMIT · SEAL) — caps KNOW + SYNC.
+  - **specification-and-verification** (6: SPEC · CENSUS · PROVE · LINT · LEVEL · COVER) — caps COMPLETE +
+    CONSTRAIN.
+  - **observe-and-react** (5: WATCH · BEAT · RESPOND · BLOCK · OPERATE) — caps MANAGE + GOVERN.
+  - **resource-mediation** (4: DECLARE · SERIALIZE · SEMAPHORE · SHED) — cap MANAGE.
+  - **governance-of-governance** (5: GRAPH · CENSUS · RADIUS · REGISTRY · INDEX) — cap GOVERN.
+  - **context-management** (5: INJECT · SNIPPET · INDEX · HOOK · NUDGE) — cap MANAGE.
+- **capabilities[] schema migration (`2746f5b`):** the single `capability` field became a `capabilities[]`
+  list (≥1). Migrated the model dataclass, derive/regenerate, FS2 (validates each cap against the GEE set),
+  the CLI prints, and the Provenance exemplar record (now serves TWO caps: track-provenance +
+  preserve-semantics — the exemplar's schema rough edge W2a flagged). Most stacks serve one; two span two.
+- **Supersede-migrate (six precursors retired, DRAFT dropped):**
+  - MBSE → folded into **model-coherence** (its meta-sync contract carried into the PARITY part's mechanism).
+  - canonical-seam → folded into **model-coherence** as the **SEAL** part (`pdf-model`) — the author's
+    ruling that a typed-format seam is a model-coherence mechanism; placed in model-coherence (not
+    Provenance) because that stack is where the one-canonical-representation discipline lives.
+  - semantic-lint → folded into **spec+verification** as the deterministic verification tier (**LINT** +
+    **LEVEL**), beside the exhaustive PROVE tier.
+  - observability + self-operations → folded into **observe-and-react** (observability's signal side as
+    WATCH + BEAT; self-operations' self-operate component as OPERATE). Carried `deploy-heartbeats` in as a
+    fifth part (BEAT) to preserve the observability fold's signal-side member.
+  - worktree-lifecycle → **RETIRED, no fold** (author ruling); its mechanisms remain as catalogue entries.
+  - DRAFT banner dropped from the Provenance page intro and the `_STACKS` block; `_STACKS` now heads with
+    the seven-finalized note. All six precursor `.md` files deleted; reachability gate green (no orphan).
+- **FS4 promoted deferred → real (`a28c6bd`):** built the L2-pattern-name → entry-slug join from the
+  classification's `canonical_card` (bare basename; the card carries no `.md` suffix — the first cut's
+  `.endswith('.md')` guard returned an empty join, caught by the regenerate note and fixed). Added a
+  moved-member exemption so a member shared with a moved composition (Staged Admission Gates ∈ the moved
+  evidence-staircase, but also ∈ observe→react) is not spuriously flagged. **Result: 15/17
+  strong-composition members land in a flagship stack.** The 2 uncovered are an honest note, not a gate
+  finding.
+- **PARK / deviations / notes for the author:**
+  - **`self-governance skill` (governance-of-governance member) → PARKED:** it resolves to **no catalogue
+    entry** — it is a plugin skill, not a catalogued mechanism (unlike its self-operate sibling
+    `operator-runbook-skill`, which IS an entry). Built gov-of-gov with the four resolvable members
+    (`governance-graph`, `control-coverage-census`, `rule-metadata-registry`, `claude-md-rule-index`) plus
+    `control-substrate-dependency` — the last both a legitimate gov-of-gov member and the entry that closes
+    the composition's *Computed Control Blast Radius*. **Author call:** create a `self-governance` catalogue
+    entry (parallel to `operator-runbook-skill`) if it should appear as a flagship part.
+  - **FS4 residual (2 uncovered): the safe-launch composition** (`Validated Dispatch`→brief-linting,
+    `Closed Action Vocabulary`→remediation-verbs) has **no flagship deep-dive** among the finalized seven.
+    Reported honestly by FS4 (audit-only). **Author call:** whether safe-launch earns an eighth flagship
+    deep-dive, or is intentionally left to the catalogue's L2 view.
+  - **`deploy-heartbeats` added to observe→react** as a fifth part beyond the brief's four-member base list,
+    to carry the observability fold's signal side (BEAT). Noted as a fold-driven addition.
+  - **`control-substrate-dependency` added to governance-of-governance** beyond the brief's base list, to
+    cover the composition's *Computed Control Blast Radius* and stand in the RADIUS slot.
+  - **`claude-md-rule-index` appears in two stacks** (governance-of-governance as INDEX-of-the-estate;
+    context-management as the boot-context delivery surface) — a distinct stack-local role each time; FS1
+    permits cross-stack reuse. Noted with a cross-reference in each page.
+- **Context-management durable-vs-2026-transient (Task-4 tie-in):** each part's `durability` field marks it
+  **durable** (INDEX, HOOK — infrastructure regardless of model), **2026-transient** (INJECT, NUDGE —
+  crutches whose pressure eases as models strengthen), or **mixed** (SNIPPET — transient delivery, durable
+  enforcement). The page carries an explicit "Durable versus 2026-transient" section and the overview SVG is
+  colour-coded by durability.
+- **W7 forward-link anchor (for the §3.1 `TODO(W7)` cross-refs):** the context-management flagship stack now
+  exists. Stable anchor — stack id **`context-management`**; built page slug
+  **`appendix-d-context-management-stack`** (file `book/appendix-d-context-management-stack.html`). W7 can
+  wire the §3.1 "context-management layer" phrase to it.
+- **FS1–FS5 stay AUDIT-ONLY (rule #55 idiom).** All seven are now populated and FS1–FS5 are clean, but the
+  check remains audit-only. **[LINT] follow-up (controls domain):** a later wave promotes
+  `check_flagship_stack` (FS1–FS5) to BLOCKING once a clean session confirms the drain — do NOT promote in
+  this wave.
+- **Gates (final, verbatim):** `flagship_stack_model.py verify` — "flagship-stack.json is in sync (7
+  stack(s), 36 parts)" · FS1–FS5 clean; FS4 "15/17 strong-composition members … land in a flagship stack"
+  · `catalog.py validate` — "validated 82 entries … — 0 issue(s)" · `catalog.py build` — reachability green
+  (no orphan after six retirements) · `build_book_html.py` — "built 128 chapter pages … (115 figures)";
+  Appendix D 3,374 → 10,143 words · `check_argument_spine` / `check_chapter_shape` / `check_claims_model` /
+  `check_flagship_stack` all PASS (no chapter-shape spine_advances cascade). All seven stack figures pass
+  the figure-overflow sensor (no OVERFLOW/STRAIN) and the design-token palette. Pre-existing drift in
+  `outline.json` / `outcomes.json` / `reverse_index.json` (from the prior §3.1 book edits, confirmed
+  present before this wave) is untouched and out of scope.
+- **Not deployed** (batched).
