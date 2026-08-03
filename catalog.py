@@ -1233,6 +1233,8 @@ def render_md(md: str) -> str:
     i, n = 0, len(lines)
     while i < n:
         st = lines[i].strip()
+        if re.match(r'^<a id="[a-z0-9-]+"></a>$', st):
+            out.append(st); i += 1; continue  # bare in-page anchor target — pass through raw (not escaped)
         if st.startswith("```"):
             i += 1
             code: list[str] = []
