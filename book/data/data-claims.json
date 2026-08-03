@@ -1,10 +1,15 @@
 {
-  "_note": "Data-claim manifest — the single source of truth for the book's governed data cross-references. One entry per grounded datum. A `[data: <slug>]` marker in the prose resolves against this file to a footnote-style cross-ref into the chapter that reports the number (fail-loud on an unknown slug, like an unknown {{token}}). Fields: `source` = the chapter slug (a book/<slug>.html page) that reports the datum; `anchor` = the {#heading-id} on that chapter's reporting section; `holds` = the load-bearing numbers/units that MUST still appear in the source (the check_data_claims lint compares digit-sequences+units under a loose match, so a spelling change is fine but a real number change fails); `status` = final | preliminary | partial; `gloss` = a one-line description of the datum. Regenerate the anchors + this file together when a source section moves. Queryable via `catalog.py data-claims`.",
+  "_note": "Data-claim manifest — the single source of truth for the book's governed data cross-references. One entry per grounded datum. A `[data: <slug>]` marker in the prose resolves against this file to a footnote-style cross-ref into the chapter that reports the number (fail-loud on an unknown slug, like an unknown {{token}}). Fields: `source` = the chapter slug (a book/<slug>.html page) that reports the datum; `anchor` = the {#heading-id} on that chapter's reporting section (\"\" until the render lands); `holds` = the load-bearing numbers/units that MUST still appear in the source (the check_data_claims lint compares digit-sequences+units under a loose match; a number change fails, a spelling change is fine; [] until the render pins them); `status` = final | preliminary | partial (the strength signal); `gloss` = a one-line description of the datum. THE ARGUMENTATIVE CHAIN (W-LEDGER 260803): every datum also carries `spine_claim` (or `spine_claims: []` when it genuinely bears weight for more than one) = the argument-spine claim id this number bears weight for (joins to book-models/argument_spine_declared.json — DL1); `observable` = the real-world quantity actually observed; `data_source` = how/where measured, with provenance (tool + method + artifact/commit); `limitation` = what the datum CANNOT show / the honest caveat. A preliminary datum with a stated limitation is honest; an unbound number is not. The extended check (DL1 join-integrity, DL2 four-fields-present, DL3 underquantified report, DL4 holds-still-appear) runs audit-only. The substantiation aggregator (`catalog.py substantiation`) joins these data-claims + the lit-positioning citations under each spine claim to flag under-substantiated-or-situated reality-claims. Regenerate the anchors + this file together when a source section moves. Queryable via `catalog.py data-claims`.",
+
   "refactor-cost": {
     "source": "5.4-the-road-to-mage",
     "anchor": "refactor-cost",
     "holds": ["58 files", "5,000 lines", "5 hours"],
     "status": "final",
+    "spine_claim": "abundant-implementation",
+    "observable": "files touched + lines rewritten + wall-clock for one cross-format migration.",
+    "data_source": "An agent-run cross-format migration on the DocAble repo, measured from the landing commit's diffstat and the agent session's wall-clock log.",
+    "limitation": "One migration on one repo; wall-clock is agent time, not human-equivalent effort; not a controlled before/after against a hand-refactor baseline.",
     "gloss": "A cross-format migration touched fifty-eight files and rewrote five thousand lines in about five hours of agent time — refactoring became an afternoon's work."
   },
   "nearly-free": {
@@ -12,6 +17,10 @@
     "anchor": "nearly-free",
     "holds": [],
     "status": "final",
+    "spine_claim": "abundant-implementation",
+    "observable": "Per-document remediation cost across three sources: do-it-yourself professor time, external-vendor per-page quote, and the tool's per-deck processing cost.",
+    "data_source": "The DocAble cost model — measured per-deck processing cost (tokens + compute) set against published vendor per-page quotes and a DIY hours-per-document estimate (the book's canonical figures in metrics.json).",
+    "limitation": "Cost-model estimates, not audited invoices; per-deck cost excludes amortized development; quality-parity with vendor output is asserted, not independently graded.",
     "gloss": "The per-document remediation cost cascade — do-it-yourself professor cost vs. external-vendor quote vs. the tool's per-deck processing cost — showing high-quality remediation nearly for free."
   },
   "velocity": {
@@ -19,6 +28,10 @@
     "anchor": "velocity",
     "holds": [],
     "status": "final",
+    "spine_claim": "abundant-implementation",
+    "observable": "Commits per week across the project's history.",
+    "data_source": "A repo-activity histogram over the parent repo's git history (commits metric), 20 weeks from 2026-03-12 to 2026-07-29 (metrics.json _commit_provenance).",
+    "limitation": "Commit count is a coarse activity proxy, not delivered value; the count mixes agent, human, and generated commits; single project, single fleet.",
     "gloss": "The velocity curve: commits per week across the project's history, rising as the fleet acquired capability then dipping during hardening."
   },
   "mbse-nav-token": {
@@ -26,6 +39,55 @@
     "anchor": "mbse-nav-token",
     "holds": ["-20%", "-12%", "-82%", "-50%"],
     "status": "preliminary",
+    "spine_claim": "modeling-thesis",
+    "observable": "Tokens-to-answer with MBSE navigation guidance ON versus OFF, across four modeled tasks.",
+    "data_source": "A controlled A/B pilot (N=4 modeled tasks); tokens-to-answer measured per task with guidance toggled, accuracy graded per answer.",
+    "limitation": "N=4 pilot — not powered; single fleet; measures tokens, not accuracy (zero accuracy loss noted, but at small N); the system-level Garden-null reframe of the MBSE ablation is coming in W5.",
     "gloss": "A controlled A/B pilot of MBSE navigation guidance (N=4 modeled tasks): tokens-to-answer with guidance ON vs. OFF, saving -20% / -12% / -82% / -50%, median ~-35%, zero accuracy loss."
+  },
+
+  "support-ratio-curve": {
+    "source": "5.2-the-timeline-and-the-work",
+    "anchor": "",
+    "holds": [],
+    "status": "final",
+    "spine_claim": "govern-the-environment",
+    "observable": "Support-apparatus LoC divided by production LoC at four dated commits (prototype / mechanization / hardening / now): 0.85 -> 2.48 -> 3.68 -> 3.06.",
+    "data_source": "A categorized line-count tool (run-cloc) with today's category map applied to four historical worktrees via ADA_CLOC_SCAN_ROOT (contamination-free /tmp clone, tool files never inside the counted tree); SHAs c55f3637 (prototype 04-09), e0f10aea (mechanization 05-31), b1a4c1d4 (hardening 06-30), 07af718a (now 08-03).",
+    "limitation": "LoC is a coarse proxy for effort; ~20% by-design side-trees (root configs, assets, non-primary tests, the book itself) sit outside the census; single-repo, single-author-fleet — a revealed preference, not a controlled comparison of governed vs. ungoverned development. The final-window dip is production growing faster (+45%), not support falling (still +21%). Render location + holds pins land in W4.",
+    "gloss": "The support-ratio curve across four windows (0.85 -> 2.48 -> 3.68 -> 3.06): governance investment led and kept pace with the fleet, crossing from sub-parity to ~3x while production LoC grew ~47x — the build-the-environment-first revealed preference."
+  },
+  "model-sync-efficacy": {
+    "source": "2.2-models-and-the-semantic-gap",
+    "anchor": "",
+    "holds": [],
+    "status": "preliminary",
+    "spine_claims": ["alignment-thesis", "sync-cost-reduced"],
+    "observable": "The model-sync sensor's drift-detection readings and the reconciliation labor they drive: a derived-floor churn of +8,970 / -173 lines over 63 commits with 0 reopens, and a first before-data report of ~27 findings at a signal-to-noise near 1.0.",
+    "data_source": "The model-sync measurement (draft committed f6147fc); the §3.8 integration lands in W7. Figures from the sync report's churn ledger + the first drift-detection report's finding tally.",
+    "limitation": "A single subsystem's sync episode, before the drift-detector's signal-to-noise was tuned; the ~27-finding S:N~1.0 is a before-data snapshot, not a steady-state rate; not a controlled comparison against un-synced development. Primary binding is the drift-detection (alignment) claim; it also bears on the sync-cost-reduced (co-evolution economics) claim — see the parked-binding note in the results log.",
+    "gloss": "The model-sync measurement: a drift-detection sensor whose readings (derived-floor churn +8,970/-173 over 63 commits, 0 reopens; ~27 findings at S:N~1.0 before tuning) show reconciliation stays cheap and divergence is caught."
+  },
+  "mmm-drain": {
+    "source": "2.5-metrics",
+    "anchor": "",
+    "holds": [],
+    "status": "partial",
+    "spine_claim": "modeling-thesis",
+    "observable": "The Missing-Model-Metric orphan rate (share of tests whose exercised code reaches no model-anchored symbol) draining as subsystems get modeled: 56% -> 55% -> 52% -> 39% -> 32.2% -> 30.1% -> 20.9% -> 14.9%.",
+    "data_source": "A code->model tracer (the MMM pilot tracer, trace.py) re-run over the dispatch/orchestration test population (~144-148 tests) after each model-loop Epic modeled the biggest remaining orphan cluster; sources in the missing-model-metric Epic docs + STRATEGY.",
+    "limitation": "The population denominator drifts 144->148 across runs, and the first (56%) point was subsystem-scoped — comparable, not a fixed-N series; the cost-rollup cluster's exact landing point is not separately enumerated. A fixed-N reproducible replay is parked (see results log). Render + holds pins land in W4.",
+    "gloss": "The Missing-Model-Metric drain: orphan (code-unmodelled) rate falling from 56% to 14.9% as the model-loop modeled each biggest orphan cluster in turn — code-to-model coverage rising to ~85%."
+  },
+  "churn": {
+    "source": "5.2-the-timeline-and-the-work",
+    "anchor": "",
+    "holds": [],
+    "status": "partial",
+    "spine_claim": "churn-is-the-limit",
+    "observable": "Per-path additions and deletions (web/ and backend/) across the four study windows; mechanization is the churn peak for both, then deletions collapse and later windows go net-additive (backend/ -286K deletions at mechanization -> -3.8K at hardening).",
+    "data_source": "git log --numstat scoped per path over the parent repo (2026-03-12 -> 2026-08-03), split into the four study-v2 commit-date windows (re-runnable commands in the w4-data scratchpad).",
+    "limitation": "Add/delete counts include generated, bundle, and vendored files — a churn/velocity signal, not hand-authored SLOC, and not a clean measure of wasted rediscovery/undo/reconcile effort; a bundle-excluding pathspec would tighten it (parked). Series render + holds pins land in W4.",
+    "gloss": "Path churn (web/ + backend/) across four windows: mechanization is the add-and-delete peak; later windows go net-additive as the built environment stabilizes the code."
   }
 }

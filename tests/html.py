@@ -240,15 +240,25 @@ def _norm_num_unit(s: str) -> str:
 
 
 def check_data_claims():
-    """AUDIT-ONLY governed data-cross-reference lint, keyed off `book/data/data-claims.json` (the SSOT):
+    """AUDIT-ONLY governed data-cross-reference lint, keyed off `book/data/data-claims.json` (the SSOT).
+    The DL4 cross-reference half (unchanged):
       (a) every `[data: <slug>]` marker in a book chapter resolves to a manifest entry;
       (b) each entry's `source` chapter file exists AND still contains a heading carrying `{#<anchor>}`;
       (c) each `holds` string still appears in the source chapter under a LOOSE digit+unit match (a
           number change fails; a digit->word spelling change does not);
       (d) a manifest entry that nothing cites is WARNed (wiring may be partial — not a hard fail).
+    The W-LEDGER argumentative-chain half (DL1-DL3, delegated to the substantiation aggregator so the spine
+    join lives in one place):
+      DL1 — every datum's `spine_claim`/`spine_claims` resolves to a real argument-spine claim;
+      DL2 — every datum carries a non-empty observable + data_source + limitation;
+      DL3 — UNDERQUANTIFIED report: each quantifiable spine claim with zero bound data-claims (informational
+            — the author's future-collection worklist; prefixed 'DL3 report', not a defect).
     Modelled on the book's `{{token}}`->metrics.json fail-loud mechanism; the build already fails loud on an
     unknown slug, so (a) is a belt-and-suspenders backstop. Non-gating during wiring (rule #55 audit-first)."""
     import json
+    _bm = os.path.join(ROOT, "book-models")
+    if _bm not in _sys.path:
+        _sys.path.insert(0, _bm)
     manifest_path = os.path.join(ROOT, "book", "data", "data-claims.json")
     if not os.path.isfile(manifest_path):
         return PASS, ["no book/data/data-claims.json — nothing to check"]
@@ -284,6 +294,12 @@ def check_data_claims():
                               f"(number may have changed — re-check the source)")
     for slug in sorted(set(claims) - cited):  # (d) uncited entry → warn (not a hard fail)
         issues.append(f"data-claims: WARN {slug!r} is in the manifest but nothing cites [data: {slug}] yet")
+    # DL1 + DL2 — the argumentative chain (spine join + four-fields), delegated to the aggregator.
+    import substantiation as _sub  # noqa: E402 — book-model aggregator; spine join lives in one place
+    issues.extend(_sub.dl_findings())
+    # DL3 — UNDERQUANTIFIED report (informational; the author's future-collection worklist, not a defect).
+    for r in _sub.underquantified():
+        issues.append(f"DL3 report: quantifiable claim {r.id!r} is UNDERQUANTIFIED (no data-claim bound yet)")
     return (FAIL if issues else PASS), issues
 
 

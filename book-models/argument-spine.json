@@ -15,6 +15,8 @@
     "overmapped_claims": 3,
     "claims_exempt": 5,
     "claims_stale": 0,
+    "quantifiable_claims": 9,
+    "reality_claims": 9,
     "max_statement_words": 32
   },
   "taxonomy": {
@@ -54,6 +56,9 @@
       "reconciles_big_ideas": [],
       "exempt": "front-loaded-by-design",
       "reviewed_hash": "36f4f3b40095",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "throughput and cost per change — velocity, per-document cost, refactor wall-clock",
       "word_count": 12,
       "statement_hash": "36f4f3b40095",
       "advanced_by": [
@@ -82,6 +87,9 @@
       "reconciles_big_ideas": [],
       "exempt": "front-loaded-by-design",
       "reviewed_hash": "36e742ea3f72",
+      "quantifiable": false,
+      "reality_claim": false,
+      "measurand": "",
       "word_count": 23,
       "statement_hash": "36e742ea3f72",
       "advanced_by": [
@@ -106,6 +114,9 @@
       "reconciles_big_ideas": [],
       "exempt": null,
       "reviewed_hash": "cf81b75e7fd6",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "human review effort per change against agent throughput",
       "word_count": 19,
       "statement_hash": "cf81b75e7fd6",
       "advanced_by": [
@@ -134,6 +145,9 @@
       ],
       "exempt": "front-loaded-by-design",
       "reviewed_hash": "d1e8982b2cc0",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "share of effort on rediscovery, undo, and reconciliation versus advancing the system",
       "word_count": 26,
       "statement_hash": "d1e8982b2cc0",
       "advanced_by": [
@@ -159,6 +173,9 @@
       "reconciles_big_ideas": [],
       "exempt": "front-loaded-by-design",
       "reviewed_hash": "0723642b2b10",
+      "quantifiable": false,
+      "reality_claim": false,
+      "measurand": "",
       "word_count": 22,
       "statement_hash": "0723642b2b10",
       "advanced_by": [
@@ -186,6 +203,9 @@
       ],
       "exempt": null,
       "reviewed_hash": "78b391707b50",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "support-apparatus LoC against production LoC — the build-the-environment-first revealed preference",
       "word_count": 26,
       "statement_hash": "78b391707b50",
       "advanced_by": [
@@ -223,6 +243,9 @@
       ],
       "exempt": null,
       "reviewed_hash": "dc44bf4796ad",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "agent tokens-to-answer under model navigation; code-to-model coverage",
       "word_count": 25,
       "statement_hash": "dc44bf4796ad",
       "advanced_by": [
@@ -267,6 +290,9 @@
       ],
       "exempt": null,
       "reviewed_hash": "d4b36f18c7e9",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "drift-detection signal quality and reconciliation labor for models and implementation",
       "word_count": 32,
       "statement_hash": "d4b36f18c7e9",
       "advanced_by": [
@@ -301,6 +327,9 @@
       "reconciles_big_ideas": [],
       "exempt": "bridge",
       "reviewed_hash": "7e245a8d064b",
+      "quantifiable": false,
+      "reality_claim": false,
+      "measurand": "",
       "word_count": 14,
       "statement_hash": "7e245a8d064b",
       "advanced_by": [
@@ -328,6 +357,9 @@
       ],
       "exempt": null,
       "reviewed_hash": "d05da605e04d",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "recurrences converted to durable controls; real bugs caught by the model and lint loop",
       "word_count": 15,
       "statement_hash": "d05da605e04d",
       "advanced_by": [
@@ -354,6 +386,9 @@
       "reconciles_big_ideas": [],
       "exempt": null,
       "reviewed_hash": "681d832a8c6d",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "recurring reconciliation labor keeping models and implementation consistent",
       "word_count": 16,
       "statement_hash": "681d832a8c6d",
       "advanced_by": [
@@ -379,6 +414,9 @@
       "reconciles_big_ideas": [],
       "exempt": null,
       "reviewed_hash": "09abeb08db9f",
+      "quantifiable": false,
+      "reality_claim": false,
+      "measurand": "",
       "word_count": 23,
       "statement_hash": "09abeb08db9f",
       "advanced_by": [
@@ -406,6 +444,9 @@
       ],
       "exempt": null,
       "reviewed_hash": "6e678662a007",
+      "quantifiable": true,
+      "reality_claim": true,
+      "measurand": "allocation of implementation to agents versus human effort on intent, architecture, and validation",
       "word_count": 26,
       "statement_hash": "6e678662a007",
       "advanced_by": [
@@ -434,6 +475,9 @@
       "reconciles_big_ideas": [],
       "exempt": null,
       "reviewed_hash": "d27760687c37",
+      "quantifiable": false,
+      "reality_claim": false,
+      "measurand": "",
       "word_count": 20,
       "statement_hash": "d27760687c37",
       "advanced_by": [

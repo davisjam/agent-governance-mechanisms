@@ -791,3 +791,86 @@ and executes the author-ratified supersede-migrate of Appendix D. Commit-no-depl
   `outline.json` / `outcomes.json` / `reverse_index.json` (from the prior §3.1 book edits, confirmed
   present before this wave) is untouched and out of scope.
 - **Not deployed** (batched).
+
+---
+
+## Models-first foundation waves: LPP-MODEL + W-LEDGER + the substantiation aggregator (260803, opus)
+
+Two typed models built in dependency order (LPP-MODEL first; W-LEDGER reads it), commit-no-deploy, batched.
+
+### STEP 1 — LPP-MODEL (the literature-positioning model), commit `4a35900`
+- **Paths:** `book-models/lit_positioning_declared.json` (hand-authored source) →
+  `book-models/lit_positioning_model.py` → generated `book-models/lit-positioning.json`. Check
+  `check_lit_positioning` in `tests/book_models.py` (registered audit-only in `catalog_tests.py`); query
+  `catalog.py litpos`.
+- **Model shape:** one X→Y→Z intervention per LPP section; **citations are MODELED objects** `{key,
+  backs_claims[], relation}` nested UNDER the argument spine (a spine claim is reachable from its backing
+  literature). `relation` ∈ {substantiates, situates, corroborates, convergent-evidence} (verb discipline).
+- **The 10 records (id · section · status · cites → advances):**
+  | § | id | status | cites | advances |
+  |---|----|--------|-------|----------|
+  | §1 | human-oversight-saturation | planned | dhanorkar2026oversight | oversight-does-not-scale |
+  | §2 | harness-engineering | planned | zhong-zhu2026, lin2026agentic | govern-the-environment |
+  | §3 | persistent-context-code-graphs | **landed** | ouyang2024repograph, liu2024codexgraph, vogel2026codebasememory, shah2025ranger | modeling-thesis |
+  | §4 | spec-driven-agentic-development | **landed** | sdd-abdurrahman-2026 | modeling-thesis, alignment-thesis |
+  | §5 | deterministic-verification | planned | ringer2019qed, arxiv-2605-10712, tu2025agenticverification, fang2026trustworthy | alignment-thesis |
+  | §6 | model-sync-coevolution | planned (fold W7) | czarnecki2006featurebased, stevens2020maintaining, murphy1995reflexion | sync-cost-reduced |
+  | §8 | incident-learning-governance | planned | hollnagel2006resilience, beyer2016sre, shingo1986zqc | failures-become-machinery |
+  | §9 | fallible-oracles-swebench | planned (fold W5) | openai2026swebench, scaleai2025swebenchpro, liang2026swebenchillusion, zhang2025swebenchlive, smith2015overfitting, hora2026overmocked, llmoracle2024 | alignment-thesis |
+  | §10 | engineer-role-se-education | planned | vella2026impact, jackson2025genaidesign | seat-moves |
+  | §11 | single-case-methodology | planned (fold W5-Part5) | davis2026cheapcode, runeson2009guidelines, beach2019processtracing, faulkner2026vinext, carlini2026ccompiler, anthropic2026migration | grounded-in-one-case, abundant-implementation |
+  (§7 architecture-conformance deliberately skipped — author handles separately.)
+- **Landed records honestly pass LP3:** §3 (graphify `d4e3774`) + §4 (W-SDD `c2225e0`) cites all resolve in
+  `references.bib` AND appear in `3.1-the-executable-zoo`. `zhong-zhu2026` + `arxiv-2605-10712` (AutoSOUP)
+  reuse EXISTING bib keys (recon keys `zhong2026harness`/`amusuo2026autosoup` were reconciled to avoid a
+  duplicate). **26 planned citations are PENDING in `references.bib`** — the prose waves add them on insert.
+- **Corrections recorded in `notes`:** §2 Lin et al.=11 authors (Zhiheng Xi + Yu-Gang Jiang); §11 Carlini=16
+  agents / ~100K-line Rust C compiler / Linux 6.9; §9 SWE-Bench-Pro=Scale AI (distinct from OpenAI
+  withdrawal) + OpenAI-quote-recheck caveat (openai.com 403'd); §6 partial-DOI recheck-at-typeset trio; §6
+  recent-LLM beat → the book's OWN model-sync measurement (no external cite — CODESYNC is a non-fit).
+- **LP-check output:** LP1–LP6 clean; `LP5 LPP burndown — 2/10 landed (§3, §4), 8/10 planned (§1, §2, §5,
+  §6, §8, §9, §10, §11); planned citations: 26 PENDING in references.bib, 2 already present.`
+
+### STEP 2 — W-LEDGER + the unified substantiation aggregator (this commit)
+- **Paths:** extended `book/data/data-claims.json` (4-field argumentative chain per datum) + `book-models/
+  argument_spine_declared.json`/`argument_spine_model.py` (`quantifiable`+`reality_claim`+`measurand` per
+  claim) + the NEW aggregator `book-models/substantiation.py`. Check DL1–DL3 folded into
+  `check_data_claims` (`tests/html.py`, audit-only); queries `catalog.py data-claims` + `catalog.py
+  substantiation`.
+- **Spine claims flagged:** 9 quantifiable / 9 reality-claim of 14 (the 5 definitional/normative —
+  fault-lies-in-instructions, three-not-knowings-cause-churn, theses-treat-the-causes, mage-becomes-practical,
+  grounded-in-one-case — carry both false).
+- **Metric ledger bindings (claim → observable → source → limitation):**
+  - **support-ratio-curve** → `govern-the-environment` (the build-the-environment-first revealed preference;
+    0.85→2.48→3.68→3.06; final; holds pending W4 render).
+  - **model-sync-efficacy** → `alignment-thesis` + `sync-cost-reduced` (drift sensor; +8,970/−173 over 63
+    commits, 0 reopen; ~27-finding S:N≈1.0 before-data; preliminary).
+  - **mmm-drain** → `modeling-thesis` (orphan 56%→14.9%; partial; denominator-drift caveat).
+  - **churn** → `churn-is-the-limit` (web/+backend 4-window add/del; partial; includes generated files).
+  - **Retrofit 4 existing:** refactor-cost / nearly-free / velocity → `abundant-implementation`;
+    mbse-nav-token → `modeling-thesis` (N=4 limitation; Garden-null reframe coming W5).
+- **DL-check output:** DL1 (spine join) + DL2 (four-fields) **clean**; DL3 UNDERQUANTIFIED (quantifiable,
+  no data yet — seeds future collection): **oversight-does-not-scale, failures-become-machinery, seat-moves**
+  (all three carry LITERATURE backing from §1/§2+§8/§10, so none are under-substantiated).
+- **UNDER-SUBSTANTIATED-OR-SITUATED reality-claims: NONE** — every reality-claim has data or literature
+  behind it (the nest-under-the-spine net is complete). Seeds future work: the 3 UNDERQUANTIFIED claims want
+  DATA (not just literature); real-bug-yield is COLLECTED-but-unbound (Source A ~10 codemod-wave bugs) and
+  could later bind `failures-become-machinery`.
+
+### Parked (load-bearing binding ambiguities — for orchestrator ruling)
+- **model-sync-efficacy dual binding.** Bound to `alignment-thesis` (brief's explicit instruction, "the
+  §3.8 measurement's claim") AS PRIMARY, with `sync-cost-reduced` as a genuine second binding (the §3.8
+  measurement is also the recent-LLM-era co-evolution-economics instance per lit-positioning §6). Kept both
+  via `spine_claims:[]`. If the orchestrator wants a single load-bearing claim, alignment-thesis stands.
+- **model-sync-efficacy + support-ratio-curve + mmm-drain + churn render locations** are best-guess real
+  chapters (2.2 / 5.2 / 2.5 / 5.2) so DL4 stays green (source must be a real chapter); the ACTUAL render
+  home + `holds` pins + `anchor` land in W4/W7. `holds:[]` for now (pinning not-yet-rendered numbers would
+  false-fail DL4).
+- **Fixed-N MMM replay** and a **bundle-excluding churn pathspec** remain parked (need a new measurement pass).
+
+### Gates (both steps)
+`catalog.py validate` — "validated 82 entries … — 0 issue(s)" · `build_book_html.py` — "built 128 chapter
+pages … (115 figures)" · `argument_spine`/`flagship_stack`/`chapter_shape`/`lit_positioning` verify all "in
+sync" (no chapter-shape spine cascade — the W1 lesson held) · harness `check_argument_spine` /
+`check_chapter_shape` / `check_flagship_stack` / `check_lit_positioning` all PASS · `check_data_claims`
+audit-only (DL1/DL2 clean; DL3 + uncited-WARN informational). **Not deployed** (batched).

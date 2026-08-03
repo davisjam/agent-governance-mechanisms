@@ -129,6 +129,9 @@ class SpineClaim:
     reconciles_big_ideas: list[str]
     exempt: "str | None" = None                      # claim-depth exemption reason (front-loaded-by-design / bridge) or None
     reviewed_hash: str = ""                          # AS8 seed: the statement hash the chapter labels were reviewed against
+    quantifiable: bool = False                       # W-LEDGER: is this the kind of claim a metric could bear weight for?
+    reality_claim: bool = False                      # W-LEDGER: an empirical/positioned claim about reality (vs definitional/normative)
+    measurand: str = ""                              # W-LEDGER: the real-world quantity a metric would measure (optional)
     word_count: int = 0                              # derived: statement.split() length
     statement_hash: str = ""                         # derived: current hash of `statement`
     advanced_by: list[str] = field(default_factory=list)  # derived: chapter slugs that advance this step
@@ -206,6 +209,9 @@ def derive_model() -> SpineModel:
         reconciles_big_ideas=list(d.get("reconciles", {}).get("big_ideas", [])),
         exempt=claim_exempt.get(d["id"]),
         reviewed_hash=d.get("reviewed_hash", ""),
+        quantifiable=bool(d.get("quantifiable", False)),
+        reality_claim=bool(d.get("reality_claim", False)),
+        measurand=d.get("measurand", ""),
         word_count=len(d["statement"].split()),
         statement_hash=_statement_hash(d["statement"]),
     ) for d in decl["spine"]]
@@ -395,6 +401,8 @@ def to_jsonable(model: "SpineModel | None" = None) -> dict:
             "overmapped_claims": len(flags["overmapped_claims"]),
             "claims_exempt": sum(1 for s in model.spine if s.exempt),
             "claims_stale": sum(1 for s in model.spine if not s.fresh),
+            "quantifiable_claims": sum(1 for s in model.spine if s.quantifiable),
+            "reality_claims": sum(1 for s in model.spine if s.reality_claim),
             "max_statement_words": max((s.word_count for s in model.spine), default=0),
         },
         "taxonomy": {"word_cap": WORD_CAP, "focus_cap": FOCUS_CAP, "overmap_cap": OVERMAP_CAP,

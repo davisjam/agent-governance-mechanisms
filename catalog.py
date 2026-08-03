@@ -3047,6 +3047,20 @@ def cmd_litpos(args) -> int:
     return 0
 
 
+def cmd_substantiation(args) -> int:
+    """The UNIFIED SUBSTANTIATION query — data-claims + literature-positioning citations nested UNDER the
+    argument spine. Per spine claim: its statement, `data_backing` (metric->claim ledger), and
+    `literature_backing` (the citations whose backs_claims include it), then two reports: DL3
+    UNDERQUANTIFIED (a quantifiable claim with no data) and UNDER-SUBSTANTIATED-OR-SITUATED (a reality-claim
+    with neither data nor literature). Reads three meta-files at query time (argument spine + data-claims +
+    lit-positioning); robust to lit-positioning not yet existing. `--json` dumps the machine form."""
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in sys.path:
+        sys.path.insert(0, bm)
+    import substantiation as sub  # noqa: E402 — book-model aggregator, reads meta-files at query time
+    return sub.render(as_json=args.json)
+
+
 def _load_json_or_none(path: str):
     return json.load(open(path, encoding="utf-8")) if os.path.isfile(path) else None
 
@@ -3361,6 +3375,8 @@ def main() -> int:
     lp = sub.add_parser("litpos", help="query the literature-positioning model (book-models/lit-positioning.json): no arg lists the X→Y→Z interventions + the planned-vs-landed burndown; an INTERVENTION-ID or §N prints its X/Y/Z frame + citations nested under the spine")
     lp.add_argument("target", nargs="?", help="an intervention id (e.g. fallible-oracles-swebench) or a §N section (e.g. §9); omit to list them all")
     lp.add_argument("--json", action="store_true", help="dump the raw matched record(s)")
+    su = sub.add_parser("substantiation", help="the unified substantiation query: data-claims + lit-positioning citations nested under each argument-spine claim; flags UNDERQUANTIFIED (quantifiable, no data) + UNDER-SUBSTANTIATED-OR-SITUATED (reality-claim, no data AND no literature)")
+    su.add_argument("--json", action="store_true", help="dump the machine form")
     va = sub.add_parser("views-audit", help="book-models drift audit: structural (every view->md reference resolves) + freshness (each view artifact equals a fresh derivation). Fast pre-commit gate; AUDIT-ONLY (prints, exits 0) unless --strict")
     va.add_argument("--strict", action="store_true", help="exit 1 on any finding (the flip a follow-up wires into the hook once seed findings are drained)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
@@ -3376,6 +3392,7 @@ def main() -> int:
             "data-claims": cmd_data_claims, "concepts": cmd_concepts,
             "definitions": cmd_definitions, "outcomes-site": cmd_outcomes_site,
             "claims": cmd_claims, "spine": cmd_spine, "litpos": cmd_litpos,
+            "substantiation": cmd_substantiation,
             "views-audit": cmd_views_audit,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 

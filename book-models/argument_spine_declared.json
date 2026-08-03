@@ -7,7 +7,8 @@
       "statement": "Coding agents make implementation abundant, fast, and cheap — and individually unreliable.",
       "seeds": [1],
       "reconciles": {"claims": [], "big_ideas": []},
-      "reviewed_hash": "36f4f3b40095"
+      "reviewed_hash": "36f4f3b40095",
+      "quantifiable": true, "reality_claim": true, "measurand": "throughput and cost per change — velocity, per-document cost, refactor wall-clock"
     },
     {
       "id": "fault-lies-in-instructions",
@@ -15,7 +16,8 @@
       "statement": "Treat a bad output first as evidence about the instructions, representation, task boundary, or environment — not automatically as a fixed capability ceiling.",
       "seeds": [1],
       "reconciles": {"claims": ["printer-not-coder"], "big_ideas": []},
-      "reviewed_hash": "36e742ea3f72"
+      "reviewed_hash": "36e742ea3f72",
+      "quantifiable": false, "reality_claim": false
     },
     {
       "id": "oversight-does-not-scale",
@@ -23,7 +25,8 @@
       "statement": "Human per-change oversight cannot scale with agent throughput; attention must be spent per class of failure, not per change.",
       "seeds": [2],
       "reconciles": {"claims": [], "big_ideas": []},
-      "reviewed_hash": "cf81b75e7fd6"
+      "reviewed_hash": "cf81b75e7fd6",
+      "quantifiable": true, "reality_claim": true, "measurand": "human review effort per change against agent throughput"
     },
     {
       "id": "churn-is-the-limit",
@@ -31,7 +34,8 @@
       "statement": "Ungoverned, the project decays into churn: an increasing share of effort goes to rediscovering context, undoing recent work, and reconciling inconsistencies rather than advancing the system.",
       "seeds": [3],
       "reconciles": {"claims": ["fleet-scaling-bounds"], "big_ideas": ["churn"]},
-      "reviewed_hash": "d1e8982b2cc0"
+      "reviewed_hash": "d1e8982b2cc0",
+      "quantifiable": true, "reality_claim": true, "measurand": "share of effort on rediscovery, undo, and reconciliation versus advancing the system"
     },
     {
       "id": "three-not-knowings-cause-churn",
@@ -39,7 +43,8 @@
       "statement": "Churn is a symptom; its causes are exactly three not-knowings — what to build, how to realize it, how to change safely.",
       "seeds": [3],
       "reconciles": {"claims": ["churn-is-symptom", "three-not-knowings"], "big_ideas": []},
-      "reviewed_hash": "0723642b2b10"
+      "reviewed_hash": "0723642b2b10",
+      "quantifiable": false, "reality_claim": false
     },
     {
       "id": "govern-the-environment",
@@ -47,7 +52,8 @@
       "statement": "Build the environment first: encode each obligation as a mechanism the environment enforces — mechanized, not remembered — so quality is a property of the ground.",
       "seeds": [5],
       "reconciles": {"claims": ["mechanize-not-remember", "governance-not-on-the-dial"], "big_ideas": ["governance-centric"]},
-      "reviewed_hash": "78b391707b50"
+      "reviewed_hash": "78b391707b50",
+      "quantifiable": true, "reality_claim": true, "measurand": "support-apparatus LoC against production LoC — the build-the-environment-first revealed preference"
     },
     {
       "id": "modeling-thesis",
@@ -55,7 +61,8 @@
       "statement": "Binding intent and structure into explicit, drift-checked models gives agents a compact representation to reason through, and engineers a surface to specify, analyze, and predict.",
       "seeds": [4],
       "reconciles": {"claims": ["double-win", "ssot-not-snapshot", "direction-agnostic"], "big_ideas": ["modeling-thesis"]},
-      "reviewed_hash": "dc44bf4796ad"
+      "reviewed_hash": "dc44bf4796ad",
+      "quantifiable": true, "reality_claim": true, "measurand": "agent tokens-to-answer under model navigation; code-to-model coverage"
     },
     {
       "id": "alignment-thesis",
@@ -63,7 +70,8 @@
       "statement": "Enforced mechanisms hold implementation to declared intent across later changes; where possible, constrain the action space so the wrong move is unavailable, and where prevention is incomplete, install sensors that detect divergence.",
       "seeds": [5],
       "reconciles": {"claims": ["constraint-prevents-sensor-detects", "soft-to-hard-spectrum", "model-not-mechanism-until-enforced"], "big_ideas": ["alignment-thesis"]},
-      "reviewed_hash": "d4b36f18c7e9"
+      "reviewed_hash": "d4b36f18c7e9",
+      "quantifiable": true, "reality_claim": true, "measurand": "drift-detection signal quality and reconciliation labor for models and implementation"
     },
     {
       "id": "theses-treat-the-causes",
@@ -71,7 +79,8 @@
       "statement": "The two theses divide the not-knowings: modeling treats what-to-build and how-to-realize; alignment treats how-to-change-safely.",
       "seeds": [4, 5],
       "reconciles": {"claims": ["theses-divide-the-not-knowings"], "big_ideas": []},
-      "reviewed_hash": "7e245a8d064b"
+      "reviewed_hash": "7e245a8d064b",
+      "quantifiable": false, "reality_claim": false
     },
     {
       "id": "failures-become-machinery",
@@ -79,7 +88,8 @@
       "statement": "Velocity surfaces the unforeseeable failure; the engineer's recurring task converts each recurrence into durable machinery.",
       "seeds": [6, 7],
       "reconciles": {"claims": ["convert-failures-to-controls"], "big_ideas": ["convert-failures"]},
-      "reviewed_hash": "d05da605e04d"
+      "reviewed_hash": "d05da605e04d",
+      "quantifiable": true, "reality_claim": true, "measurand": "recurrences converted to durable controls; real bugs caught by the model and lint loop"
     },
     {
       "id": "sync-cost-reduced",
@@ -87,7 +97,8 @@
       "statement": "The sync economics changed. Agents sharply reduce the recurring labor of keeping models and implementation reconciled.",
       "seeds": [8],
       "reconciles": {"claims": [], "big_ideas": []},
-      "reviewed_hash": "681d832a8c6d"
+      "reviewed_hash": "681d832a8c6d",
+      "quantifiable": true, "reality_claim": true, "measurand": "recurring reconciliation labor keeping models and implementation consistent"
     },
     {
       "id": "mage-becomes-practical",
@@ -95,7 +106,8 @@
       "statement": "This makes serious model-based software engineering practical: models can become the working language through which agents reason and engineers specify, predict, and govern.",
       "seeds": [9],
       "reconciles": {"claims": ["models-are-universal-language"], "big_ideas": []},
-      "reviewed_hash": "09abeb08db9f"
+      "reviewed_hash": "09abeb08db9f",
+      "quantifiable": false, "reality_claim": false
     },
     {
       "id": "seat-moves",
@@ -103,7 +115,8 @@
       "statement": "The engineering lifecycle remains; the allocation of work changes. Agents occupy much of implementation, while human effort concentrates on intent, architecture, model authorship, validation, and judgment.",
       "seeds": [],
       "reconciles": {"claims": ["seat-moves-not-lifecycle"], "big_ideas": ["seat-moves"]},
-      "reviewed_hash": "6e678662a007"
+      "reviewed_hash": "6e678662a007",
+      "quantifiable": true, "reality_claim": true, "measurand": "allocation of implementation to agents versus human effort on intent, architecture, and validation"
     },
     {
       "id": "grounded-in-one-case",
@@ -111,7 +124,8 @@
       "statement": "The DocAble case grounds the method and motivates hypotheses for broader use — a single-case field report, never a proof.",
       "seeds": [10],
       "reconciles": {"claims": ["grounding-case-not-proof", "single-case-humility"], "big_ideas": []},
-      "reviewed_hash": "d27760687c37"
+      "reviewed_hash": "d27760687c37",
+      "quantifiable": false, "reality_claim": false
     }
   ],
   "claim_exemptions": {
