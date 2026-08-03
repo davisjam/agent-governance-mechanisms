@@ -353,6 +353,206 @@ def product_all(d):
             "Cost-stratified regression body: verification cost matched to the gated decision, with escalation rules. Standard practice (exclusion crit 2); the agentic delta is escalation + the 1-second discipline under fleet velocity. Sidebar/breadth — feeds the admission staircase.")
 
 
+@group("agent-remainder")
+def agent_remainder(d):
+    # New L2 under CAP-SYNC (3a-flagged strong standalone candidate)
+    add_l2(d, "Derived Traceability", {
+        "abstract_name": "Derived Traceability",
+        "intent": "Make every cross-layer join a typed, DERIVED edge re-proven against live reality at read time — derived edges defend, snapshotted ones drift; liveness is a property of the representation (resolution IS the read), not a sync process running beside a stored graph.",
+        "capability": "CAP-SYNC",
+        "relation": "model element ⟷ its enforcing/verifying/governed artifacts — the join web between abstraction levels, held by derivation rather than storage",
+        "score": {"novelty": 2, "agentic": 1, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 2, "evidence": 2, "tradeoffs": 2, "composition": 2, "wow": 2, "total": 19},
+        "override": "Awesome — unusually strong evidence discipline (designed from observed drift, validated on an independent drift set); the rung above a parity gate (derive the edge so it cannot drift).",
+        "canonical_card": "models-bridge/system-models/symbol-anchored-traceability-graph",
+        "vivid_failure": "a stored traceability edge went stale silently — the map claimed a join that reality had severed",
+        "concrete_impl": "symbol-anchored edges re-provable against live reality; a broken join reddens at scan time, a resolving anchor means the claim is currently true",
+        "merged_cards": ["models-bridge/system-models/symbol-anchored-traceability-graph"],
+        "composition": "the highest rung over Drift/Parity Gate — where parity CHECKS a stored model against reality, Derived Traceability removes the store so drift is unrepresentable"
+    })
+    # append to CAP-SYNC capability
+    for cap in d["gee_capabilities"]:
+        if cap["id"] == "CAP-SYNC" and "Derived Traceability" not in cap["canonical_mechanisms"]:
+            cap["canonical_mechanisms"].append("Derived Traceability")
+
+    add_l2(d, "Validated Dispatch", {
+        "abstract_name": "Validated Dispatch",
+        "intent": "Structurally validate the instruction packet that confers autonomy BEFORE granting it — a work order that launches an autonomous actor is deterministically checked at the point of no return, not by probabilistic review. (Pre-authorization of autonomous work.)",
+        "capability": "CAP-ADMIT",
+        "relation": "dispatch artifact ⊨ launch contract — the brief's declared marker/snippet set conforms to the schema of what makes a launch safe; governs the work order, not the work",
+        "score": {"novelty": 2, "agentic": 2, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 1, "evidence": 1, "tradeoffs": 2, "composition": 2, "wow": 1, "total": 17},
+        "override": "Foundational — distinctively agentic: admission on the WORK ORDER itself, pre-authorizing autonomy.",
+        "canonical_card": "agent/context-and-dispatch/brief-linting",
+        "vivid_failure": "a brief missing its worktree-isolation marker launched an agent that edited main directly — the failure surfaced downstream, not at authoring",
+        "concrete_impl": "a deterministic pre-dispatch lint over the brief (marker battery + genre-gated checks) wired into the sole launch path; exit 1 refuses the launch",
+        "merged_cards": ["agent/context-and-dispatch/brief-linting"],
+        "components_note": "mandatory-snippet-table (the enumerable registry the lint reads — the check SOURCE), epic-and-design-templates (the same schema-on-the-artifact move applied to PLANNING artifacts — a kin variant, distinct obligation: analytic-section completeness vs launch safety)."
+    })
+    add_l2(d, "Staged Admission Gates", {
+        "abstract_name": "Staged Admission Gates",
+        "intent": "Order verification cheap-to-expensive along the path to production, each rung independently re-checkable, so no user is exposed to an unverified build and a predictably doomed run is never started.",
+        "capability": "CAP-ADMIT",
+        "relation": "release candidate ⊨ ordered admission contract — verification precedes exposure, staged by cost; each rung's pass is a checkable fact, not a trusted one",
+        "score": {"novelty": 1, "agentic": 2, "durability": 2, "generality": 2, "thesis": 1, "arch_depth": 1, "evidence": 1, "tradeoffs": 1, "composition": 2, "wow": 1, "total": 14},
+        "override": "Foundational (for the staircase) — standard practice lifted by agentic deploy velocity; two rungs carry distinctive sub-ideas (evidence-bound tree-sha commit gate; independence-proved-before-integration).",
+        "canonical_card": "agent/gates-and-merge-train/staged-deploy-gates",
+        "vivid_failure": "an unverified build reached users because the expensive check ran only after promotion",
+        "concrete_impl": "canary → smoke → promote on traffic-free surfaces; a doomed deploy refused before it starts",
+        "merged_cards": ["agent/gates-and-merge-train/staged-deploy-gates"],
+        "variants_note": "The staircase's rungs, each a known-use: pre-commit-hook (evidence-bound commit gate — tree-sha markers make 'checks ran green on THIS tree' replay-proof; the strong sub-idea), sentinel-first-commit (t≈0 fail-fast substrate assertion), merge-train-mis-batching (integration rung — conflict-freedom proved BY CONSTRUCTION before landing; MIS is one implementation of 'independence before integration', the durable idea), cron-alerts-gate (health-conditioned admission — promote an observability signal into a blocking barrier), test-onion-tiers (the cost stratification the rungs consume)."
+    })
+    add_l2(d, "Authoritative Lifecycle State", {
+        "abstract_name": "Authoritative Lifecycle State",
+        "intent": "Make destructive lifecycle decisions consult an authoritative recorded fact of liveness and disposition — never an inference from side effects; the record precedes the reclaim.",
+        "capability": "CAP-MANAGE",
+        "relation": "destructive operation ⊨ recorded lifecycle state — authority over 'what is alive / accounted for' moves from inferred filesystem signals to an authoritative append-only record",
+        "score": {"novelty": 2, "agentic": 2, "durability": 2, "generality": 2, "thesis": 1, "arch_depth": 1, "evidence": 2, "tradeoffs": 2, "composition": 1, "wow": 1, "total": 16},
+        "override": "Foundational — the record-before-destructive-action principle, carried by a vivid scar.",
+        "canonical_card": "agent/lifecycle-and-observability/agent-registry",
+        "vivid_failure": "a cleanup heuristic inferred an agent was dead from filesystem signals and destroyed a LIVE worktree mid-run",
+        "concrete_impl": "an append-only agent-registry consulted before any reclaim; tools refuse to operate on an agent whose live marker exists",
+        "merged_cards": ["agent/lifecycle-and-observability/agent-registry"],
+        "variants_note": "tombstone-commits is the CLOSE-RECORD variant: an irreversible reclaim justified by a durable, machine-checkable close record carrying an explicit disposition — cleanup proves safety from the record instead of guessing intent off a branch. Same obligation, at the close moment."
+    })
+    add_l2(d, "Mediated Resource Admission", {
+        "abstract_name": "Mediated Resource Admission (fixed-capacity)",
+        "intent": "Mediate shared-resource use through a single admission point at a chosen cardinality (destructive ⇒ exclusive N=1; parallel-safe-heavy ⇒ bounded M), with the raw unmediated path structurally impossible rather than conventionally discouraged, and the permitted seams declared in a model so a coverage lint detects every bypass.",
+        "capability": "CAP-MANAGE",
+        "relation": "every invocation → the authorized mediated seam at a bounded cardinality (mediation on the COUNT of admitted work)",
+        "score": {"novelty": 1, "agentic": 2, "durability": 1, "generality": 2, "thesis": 1, "arch_depth": 1, "evidence": 2, "tradeoffs": 2, "composition": 2, "wow": 1, "total": 15},
+        "override": "Foundational — the directive's own exemplar of a good pattern (inclusion crit 1: mediator + single-writer contract declared in a model + coverage lint > 'use a wrapper'). Variants are local infra (exclusion crit 4).",
+        "canonical_card": "agent/mediators-and-resource-locks/test-serializer",
+        "vivid_failure": "concurrent agents ran the destructive test runner simultaneously and corrupted each other's shared build state",
+        "concrete_impl": "an N=1 host flock on the test runner, the raw path banned; coverage checked against the declared concurrency-contracts model",
+        "merged_cards": ["agent/mediators-and-resource-locks/test-serializer"],
+        "variants_note": "Cardinality variants of ONE relation: build-serializer (bounded M=8 for parallel-safe-heavy compute), aggregate-compute-protection (whole-sweep singleton — mediation at the granularity of the aggregate job). Its MODEL side is concurrency-contracts (declared coverage over the mediation regime)."
+    })
+    add_l2(d, "Adaptive Resource-Pressure Admission", {
+        "abstract_name": "Adaptive Resource-Pressure Admission",
+        "intent": "Admit AND continue heavy work only under bearable live conditions — one shared pressure signal consulted both when work is admitted and while it runs, so a RED host neither starts new heavy work nor is left running it (admit-before, shed-during).",
+        "capability": "CAP-MANAGE",
+        "relation": "work admission/continuation ⊨ live resource condition — gating on the STATE of the environment (vs the cardinality mediators' gating on the COUNT)",
+        "score": {"novelty": 1, "agentic": 1, "durability": 1, "generality": 2, "thesis": 0, "arch_depth": 1, "evidence": 1, "tradeoffs": 2, "composition": 1, "wow": 1, "total": 11},
+        "override": "Coverage — represents the ADAPTIVE pole the directive mandates splitting out of the mediator family (split by forces + guarantees, not 'both control compute').",
+        "canonical_card": "agent/mediators-and-resource-locks/resource-pressure-gating",
+        "vivid_failure": "fixed concurrency slots still let heavy work pile onto a host already thrashing, because the count was fine but the machine was not",
+        "concrete_impl": "one shared pressure signal read at admit + during execution; shed on RED (as-built: the load-pressure ADMISSION gate is a flagged extension; shed + disk-floor wired)",
+        "merged_cards": ["agent/mediators-and-resource-locks/resource-pressure-gating"],
+        "split_rationale": "SPLIT from Mediated Resource Admission per the directive: the obligation (gate on live condition + shed-during) and guarantee (bearable conditions, not a fixed count) differ, even though both 'control compute'."
+    })
+    add_l2(d, "Fleet Observability Surface", {
+        "abstract_name": "Fleet Observability Surface",
+        "intent": "Make operational health a queryable, self-documenting, typo-proof signal surface and bind every signal to a prescribed response — emission alone is not observability; the loop is emit → interpret → react.",
+        "capability": "CAP-MANAGE",
+        "relation": "substrate event → typed topic → prescribed response — each signal carries its own interpretation and reaction (vs free-form logs that carry neither)",
+        "score": {"novelty": 1, "agentic": 2, "durability": 2, "generality": 2, "thesis": 1, "arch_depth": 1, "evidence": 1, "tradeoffs": 1, "composition": 2, "wow": 1, "total": 14},
+        "override": "Coverage — the observability class; the agentic delta is typed topics + a bound response (the reactor loop), not raw logging.",
+        "canonical_card": "agent/lifecycle-and-observability/typed-event-bus",
+        "vivid_failure": "operational failures scrolled past in free-form logs that carried neither their meaning nor a prescribed response",
+        "concrete_impl": "an orchestrator-as-reactor over a typed event bus; topics enumerable, each bound to a playbook response",
+        "merged_cards": ["agent/lifecycle-and-observability/typed-event-bus"],
+        "variants_note": "deploy-heartbeats is the progress-liveness variant: a long operation emits periodic progress so 'no heartbeat for N windows' reads deterministically as stale (liveness ≠ correctness). cron-alerts-gate is the promote-signal-into-a-gate composition (see Staged Admission Gates)."
+    })
+    add_l2(d, "Point-of-Action Policy Delivery", {
+        "abstract_name": "Point-of-Action Policy Delivery",
+        "intent": "Deliver the constraint that governs an action to the actor at the point and moment of action — a runtime lifecycle event fires the check deterministically, converting policy from available (pull, optional) to binding (pushed into the mandatory task spec).",
+        "capability": "CAP-MANAGE",
+        "relation": "runtime lifecycle event / change-target → guaranteed delivery of the governing constraint at the decision point ('hard delivery of soft guidance')",
+        "score": {"novelty": 1, "agentic": 2, "durability": 1, "generality": 1, "thesis": 1, "arch_depth": 1, "evidence": 1, "tradeoffs": 2, "composition": 1, "wow": 1, "total": 11},
+        "override": "Historical/Case (partial) — the durable core is interposition (guaranteed firing at a runtime moment); two variants compensate for current-runtime limits (exclusion crit 3) and belong more online than in print.",
+        "canonical_card": "agent/lifecycle-and-observability/lifecycle-hooks",
+        "vivid_failure": "a step owed at a runtime moment depended on the actor remembering it, and was silently skipped",
+        "concrete_impl": "lifecycle hooks (turn-stop / compaction / session-start / pre-action) split into guaranteed firing + a payload that blocks (hard) or aims (soft)",
+        "merged_cards": ["agent/lifecycle-and-observability/lifecycle-hooks"],
+        "variants_note": "dynamic-context-injection is the flagship FEED-FORWARD variant (slice the meta-substrate to just the rules governing THESE files, push them into the task spec — durable idea: 'every meta-substrate becomes a JIT constraint registry once you add a slicing operator'; but its context-reinjection face is model-progress-vulnerable). reflection-facet-substrate is the FEED-BACK variant (soft nudges under one shared attention budget — transient)."
+    })
+    add_l2(d, "Governed Knowledge Base", {
+        "abstract_name": "Governed Knowledge Base",
+        "intent": "Govern the document that carries the governance: the boot-context map of the rules must itself be bounded, canonical (one home per rule), admission-gated, and mechanically enforced — the delivery vehicle for every converted failure is itself under mechanism.",
+        "capability": "CAP-GOVERN",
+        "relation": "governance corpus → bounded binding index (rule → exactly-one canonical home; fleet-context ⊇ index) — the record of the mechanisms is itself under mechanism",
+        "score": {"novelty": 1, "agentic": 2, "durability": 2, "generality": 2, "thesis": 1, "arch_depth": 1, "evidence": 1, "tradeoffs": 1, "composition": 1, "wow": 1, "total": 13},
+        "override": "Foundational — the rule index IS the fleet's shared boot context; without governing it, the whole failure→mechanism move rots at its root.",
+        "canonical_card": "agent/governance-doc-controls/claude-md-rule-index",
+        "vivid_failure": "the governance index grew unbounded and citations rotted, so agents booted from a map that no longer matched the rules",
+        "concrete_impl": "a size-capped, admission-gated rule index with stable citable numbering + cross-reference integrity lints",
+        "merged_cards": ["agent/governance-doc-controls/claude-md-rule-index", "agent/context-and-dispatch/docs-hierarchy"],
+        "merge_rationale": "claude-md-rule-index and docs-hierarchy are deliberately two LENSES on ONE artifact (the bounded canonical rule index — the enforcement lens + the boot-context lens); merged per 3a."
+    })
+    add_l2(d, "Encoded Operational Judgment", {
+        "abstract_name": "Encoded Operational Judgment",
+        "intent": "Pre-reason each recurring operational situation once, when nothing is burning — encode trigger, ordered steps, and reflexes-to-avoid — lead with the positive model of how the substrate works healthy, generate the runbook from a typed source of truth, and keep it honest by reference validation.",
+        "capability": "CAP-GOVERN",
+        "relation": "operational situation → prescribed response, over a substrate ⟷ positive-operational-model relation; encoded judgment keyed by the situation, not by the doc",
+        "score": {"novelty": 1, "agentic": 1, "durability": 2, "generality": 2, "thesis": 1, "arch_depth": 1, "evidence": 1, "tradeoffs": 1, "composition": 1, "wow": 1, "total": 12},
+        "override": "Coverage — the operations-knowledge class; the agentic delta over ordinary runbooks is generated-from-model + ref-lint-kept + positive-model-first.",
+        "canonical_card": "agent/governance-doc-controls/operational-playbooks",
+        "vivid_failure": "an operator improvised a recovery under fire and took a reflex the situation specifically punishes, because the judgment lived in no one's reach at the moment of need",
+        "concrete_impl": "situation-keyed playbooks; an operator runbook skill generated from the lifecycle model, every pointer ref-checked against disk",
+        "merged_cards": ["agent/governance-doc-controls/operational-playbooks"],
+        "variants_note": "operator-runbook-skill is the GENERATED + symptom-indexed + positive-model-first variant (leads with how the substrate works healthy, falls back to symptom routing; kept honest by a ref-check since a non-executable index earns trust from ref-validation, not tests). Its source model is lifecycle-model (under Executable Source of Truth)."
+    })
+
+    # -------- dispositions --------
+    dispose(d, "models-bridge/system-models/symbol-anchored-traceability-graph", "keep-as-L2 Derived Traceability", "Canonical CAP-SYNC derived-edge mechanism (3a-flagged standalone candidate).")
+    dispose(d, "models-bridge/system-models/lifecycle-model", "demote-to-L3-under Executable Source of Truth",
+            "Subject model: operational subsystem → healthy-state predicate + symptom keying, prose as a projection of the model. A declared system model; its runbook projection is the composition with Encoded Operational Judgment.")
+
+    # Validated Dispatch
+    dispose(d, "agent/context-and-dispatch/brief-linting", "keep-as-L2 Validated Dispatch", "Canonical work-order admission mechanism.")
+    dispose(d, "agent/governance-doc-controls/mandatory-snippet-table", "demote-to-L3-under Validated Dispatch",
+            "The enumerable registry of universal safety boilerplate that the dispatch lint reads — the check SOURCE (a checklist with no reader catches nothing). Component of Validated Dispatch.")
+    dispose(d, "agent/governance-doc-controls/epic-and-design-templates", "demote-to-L3-under Validated Dispatch",
+            "The same schema-on-the-artifact move applied to PLANNING artifacts (planning artifact ⊨ required-section schema). Kin variant, distinct obligation (analytic-section completeness vs launch safety); note the hollow-section limit — presence, not the thought in it.")
+
+    # Staged Admission Gates
+    dispose(d, "agent/gates-and-merge-train/staged-deploy-gates", "keep-as-L2 Staged Admission Gates", "Canonical path-to-production staircase.")
+    dispose(d, "agent/gates-and-merge-train/pre-commit-hook", "demote-to-L3-under Staged Admission Gates",
+            "The first, cheapest rung: an evidence-bound commit gate whose tree-sha markers make 'checks ran green on THIS tree' a replay-proof fact a later stage can CHECK not TRUST. Strong sub-idea; composes with Re-Derived Definition of Done.")
+    dispose(d, "agent/gates-and-merge-train/sentinel-first-commit", "demote-to-L3-under Staged Admission Gates",
+            "The t≈0 rung: assert environmental health at the earliest observable moment on the real dispatch path, so a doomed run aborts at minute one instead of minute sixty (bound the waste of unlandable work).")
+    dispose(d, "agent/gates-and-merge-train/merge-train-mis-batching", "demote-to-L3-under Staged Admission Gates",
+            "The integration rung: conflict-freedom established BY CONSTRUCTION before landing (no two members touch the same file). The directive's own exemplar of 'clever but distracts' — the durable idea is 'independence proved before integration'; MIS is one implementation, folded as a variant not a peer.")
+    dispose(d, "agent/lifecycle-and-observability/cron-alerts-gate", "demote-to-L3-under Staged Admission Gates",
+            "Health-conditioned admission: a surfaced critical alert becomes a blocking barrier on admitting NEW work (availability → binding, applied to alerts). The promote-a-sensor-into-a-gate move; composes with Fleet Observability Surface.")
+
+    # Authoritative Lifecycle State
+    dispose(d, "agent/lifecycle-and-observability/agent-registry", "keep-as-L2 Authoritative Lifecycle State", "Canonical record-before-destructive-action mechanism.")
+    dispose(d, "agent/lifecycle-and-observability/tombstone-commits", "demote-to-L3-under Authoritative Lifecycle State",
+            "Close-record variant: an irreversible reclaim justified by a durable close record with an explicit disposition — cleanup proves safety from the record instead of guessing intent off a branch.")
+
+    # Mediated Resource Admission (fixed) + adaptive
+    dispose(d, "agent/mediators-and-resource-locks/test-serializer", "keep-as-L2 Mediated Resource Admission", "Canonical single-writer (N=1) mediation with structural ban.")
+    dispose(d, "agent/mediators-and-resource-locks/build-serializer", "demote-to-L3-under Mediated Resource Admission",
+            "Bounded-M cardinality variant: parallel-safe-heavy compute rationed at M=8; cardinality chosen from the contention profile. Same mediation relation, different cardinality.")
+    dispose(d, "agent/mediators-and-resource-locks/aggregate-compute-protection", "demote-to-L3-under Mediated Resource Admission",
+            "Whole-sweep singleton variant: mediation at the granularity of the aggregate job (one whole-sweep in flight per host). Same mediation relation, coarser unit.")
+    dispose(d, "agent/mediators-and-resource-locks/resource-pressure-gating", "keep-as-L2 Adaptive Resource-Pressure Admission", "Canonical adaptive pole (split from the fixed-capacity mediator family per the directive).")
+
+    # Fleet Observability
+    dispose(d, "agent/lifecycle-and-observability/typed-event-bus", "keep-as-L2 Fleet Observability Surface", "Canonical emit→interpret→react mechanism.")
+    dispose(d, "agent/lifecycle-and-observability/deploy-heartbeats", "demote-to-L3-under Fleet Observability Surface",
+            "Progress-liveness variant: periodic progress evidence so staleness is decidable from signal absence (liveness ≠ correctness). Distinct signal, same observability surface.")
+
+    # Point-of-Action Policy Delivery
+    dispose(d, "agent/lifecycle-and-observability/lifecycle-hooks", "keep-as-L2 Point-of-Action Policy Delivery", "Canonical interposition mechanism (guaranteed firing at a runtime moment).")
+    dispose(d, "agent/context-and-dispatch/dynamic-context-injection", "demote-to-L3-under Point-of-Action Policy Delivery",
+            "Feed-forward variant (flagship): slice the meta-substrate to just the rules governing the change-target and push them into the mandatory task spec. Durable idea (JIT constraint registry via a slicing operator); its context-reinjection face is model-progress-vulnerable (exclusion crit 3).")
+    dispose(d, "agent/lifecycle-and-observability/reflection-facet-substrate", "demote-to-L3-under Point-of-Action Policy Delivery",
+            "Feed-back variant: soft policy nudges aggregated under one shared attention budget (cap the family's aggregate emission, not each member). Historically-contingent (transient runtime-limit compensation).")
+
+    # Governed Knowledge Base (merge two lenses) + Encoded Operational Judgment
+    dispose(d, "agent/governance-doc-controls/claude-md-rule-index", "keep-as-L2 Governed Knowledge Base", "Canonical (the enforcement lens of the bounded rule index).")
+    dispose(d, "agent/context-and-dispatch/docs-hierarchy", "merge-into Governed Knowledge Base",
+            "The boot-context lens of the SAME artifact (one bounded canonical rule map shared by every actor). Merged with claude-md-rule-index per 3a — two views, one mechanism.")
+    dispose(d, "agent/governance-doc-controls/operational-playbooks", "keep-as-L2 Encoded Operational Judgment", "Canonical situation-keyed operational-judgment mechanism.")
+    dispose(d, "agent/governance-doc-controls/operator-runbook-skill", "demote-to-L3-under Encoded Operational Judgment",
+            "Generated + symptom-indexed + positive-model-first variant, kept honest by reference validation. Same encode-operational-judgment relation, richer construction.")
+
+    # L1 lift
+    dispose(d, "agent/governance-doc-controls/semantic-level-enforcement", "lift-to-L1 P8 (Enforce at the right semantic level)",
+            "Not a peer pattern: a design-time PLACEMENT judgment (match a control's enforcement scope to the property's legibility scope) that EXPLAINS where every other mechanism sits. Lifted out of the pattern set to L1 per 3a.")
+
+
 def main():
     g = sys.argv[1]
     d = load()
