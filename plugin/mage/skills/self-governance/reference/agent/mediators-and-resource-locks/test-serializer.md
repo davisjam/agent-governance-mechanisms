@@ -13,6 +13,8 @@ each other's test runs.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — exclusive flock, N=1; the enforcer refuses a raw `dotnet test` from an agent-worktree CWD · bypass `ADA_TOOL_TEST_BYPASS_MEDIATOR=1` |
 
+*Its place in the environment — the **canonical mechanism** for **MANAGE · Manage work, state, and resources**. The variants and known uses that fold under it are gathered on the [construction-kit page](../../constructing-the-gee.md#cap-manage).*
+
 ## Motivation — the failure it kills
 
 Several worktrees each running `dotnet test` on one host saturate CPU and disk and interfere (port

@@ -13,6 +13,8 @@ parallelism up to the machine's capacity without oversubscribing it.
 | Model | — |
 | Enforcement | **Hard** (deterministic) · *blocking* — a byte-range semaphore caps concurrency at 8; five tool enforcers refuse the raw call |
 
+*Its place in the environment — a **variant / known-use** of **Mediated Resource Admission**, under **MANAGE · Manage work, state, and resources**. Preserved here for its technical texture; the [construction kit](../../constructing-the-gee.md#cap-manage) shows how it folds.*
+
 ## Motivation — the failure it kills
 
 The heavy build tools are the same shared-host hazard as `dotnet test`: N worktrees compiling,
