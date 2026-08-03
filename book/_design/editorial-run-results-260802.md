@@ -176,7 +176,7 @@ Scores are diagnostic, not a cutoff: the 11–14 band (Adaptive Pressure, Point-
 - **Kept the vivid texture per "generalize the idea not the evidence":** every L2 record carries a `vivid_failure` + `concrete_impl` pointer (e.g. One Door ← the v172 tag-tree corruption ← PdfModel; Authoritative Lifecycle State ← the destroyed live worktree ← the agent registry) so 3c can preserve the scar + the DocAble implementation.
 - **merge-train MIS batching** demoted (directive's own "clever-but-distracts" exemplar) — the durable idea "independence proved before integration" folds under Staged Admission Gates, MIS as one implementation. **canonical-walkers** demoted to a component of One Door (self-declared low novelty). **codemod-first** placed as the execution-mode face of Closed Action Vocabulary (resolving its uneasy product-role placement).
 
-## PHASE 3 · 3c — GEE restructure executed — ✅ DONE + LIVE (site SHA recorded below)
+## PHASE 3 · 3c — GEE restructure executed — ✅ DONE + LIVE (`5810375`)
 
 Opus flagship execution of the 3b classification. Internally staged, batch-emit, resumable. All commits
 kept `catalog.py validate` at 0 and `catalog.py build` + `book/build_book_html.py` green.
@@ -259,6 +259,16 @@ Delivery** (11) · **Encoded Operational Judgment** (12) · **Conformance-to-Ext
 **0** (127 chapter pages + appendix). Pre-existing AUDIT-ONLY set unchanged (114 token-drift; the 22 views-
 audit findings — outline/reverse_index freshness, 2 O2, 2 U3, 5 def-*, 9 outcomes-site, 2 CLAIM-TOO-LONG —
 the same set flagged since the core-concepts block; all non-gating).
+
+**DEPLOY + live SHA.** Pushed **`5810375`** → **Deploy Pages CI SUCCESS** (foreground-polled to
+completion; the deploy's own `catalog.py test` Tier-1 gate green 28/0, PDF content-integrity + size gate
+green, CI's Tier-2 `--full` html-validate + axe + plugin-validate green). Live-verified on the published
+site: landing · `constructing-the-gee.html` · `catalogue-views.html` · executable-source-of-truth ·
+pdf-model · office-models all **200**; content spot-checks all present — the GEE title + adapted opening
+passage + working `#cap-know` anchor + the "canonical mechanism for KNOW" L2 line + "The eight
+compositions" on the construction-kit page, "The construction kit" 4th way-in on the landing, pdf-model
+carrying its "canonical mechanism for CONSTRAIN" placement, and office-models carrying its "variant /
+known-use of One Door Enforced" reframe.
 
 **REMAINING — 3c follow-ups (deliberately scoped out; documented for a later deliberate pass):**
 1. **Fuller L2 prose rewrite.** Stage 2 gave every entry its GEE placement + the GEE page gives each L2 a
