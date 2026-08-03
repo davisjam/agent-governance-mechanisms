@@ -87,7 +87,7 @@
     "spine_claim": "churn-is-the-limit",
     "observable": "Per-path additions and deletions (web/ and backend/) across the four study windows; mechanization is the churn peak for both, then deletions collapse and later windows go net-additive (backend/ -286K deletions at mechanization -> -3.8K at hardening).",
     "data_source": "git log --numstat scoped per path over the parent repo (2026-03-12 -> 2026-08-03), split into the four study-v2 commit-date windows (re-runnable commands in the w4-data scratchpad).",
-    "limitation": "Add/delete counts include generated, bundle, and vendored files — a churn/velocity signal, not hand-authored SLOC, and not a clean measure of wasted rediscovery/undo/reconcile effort; a bundle-excluding pathspec would tighten it (parked). Series render + holds pins land in W4.",
+    "limitation": "Add/delete counts include generated, bundle, and vendored files — a churn/velocity signal, not hand-authored SLOC. A single-pass path partition now bounds that inflation: 0% on backend/, 14.6% of web/ additions (concentrated in the mechanization window at 24.5%, falling to 1-2% after the compiled output was git-ignored), 5.2% combined — so the curve is predominantly real source. Still a motion signal, not a clean measure of wasted rediscovery/undo/reconcile effort; single repo, single fleet.",
     "gloss": "Path churn (web/ + backend/) across four windows: mechanization is the add-and-delete peak; later windows go net-additive as the built environment stabilizes the code."
   },
   "control-growth": {
