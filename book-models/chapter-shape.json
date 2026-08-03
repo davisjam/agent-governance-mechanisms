@@ -6,7 +6,7 @@
     "chapters_exempt": 7,
     "openings_failing": 0,
     "closings_failing": 0,
-    "thesis_spine_mismatches": 1,
+    "thesis_spine_mismatches": 0,
     "openings_implicit_thesis": 10
   },
   "taxonomy": {
@@ -639,12 +639,12 @@
         "failure_question": "explicit",
         "answer": "explicit",
         "thesis_link": "explicit",
-        "thesis_target": "modeling"
+        "thesis_target": "argument-step"
       },
       "closing": {
         "kind": "synthesis"
       },
-      "note": "Opening states how MAGE emerged + the staircase + 'each step induces one more model... models accrete' — an explicit Modeling-Thesis claim, but the spine labels 5.4 [oversight-does-not-scale, seat-moves, grounded-in-one-case] (at cap, no modeling-thesis) -> genuine thesis/spine mismatch, flagged for 2c: either the spine label or the opening's emphasis should move. Closes on the Missing-Model-Metric loop + MAGE-was-demanded synthesis.",
+      "note": "Phase-2c reconciled the thesis/spine mismatch by REWEIGHTING the opening (option b), not relabeling the spine: the chapter's staircase thread now foregrounds the seat climbing (seat-moves) made safe by each step's model or control (oversight-does-not-scale), with the DocAble narrative grounding it (grounded-in-one-case) — the three claims the spine labels. The former headline 'the models accrete until the codebase can be reasoned about entirely through them' (a Modeling-Thesis over-claim; modeling is Part 3's job, advanced across 18 chapters) is demoted to a supporting observation. thesis_target modeling -> argument-step; spine labels unchanged, so check_argument_spine stays green. Closes on the Missing-Model-Metric loop + MAGE-was-demanded synthesis.",
       "opening_anchor": "The MAGE methodology emerged from months of work with coding agents. I",
       "closing_anchor": "instruments back on the parts of itself it had not yet named.",
       "exempt": null,
@@ -702,16 +702,6 @@
   "flags": {
     "failing_openings": [],
     "failing_closings": [],
-    "thesis_spine_mismatches": [
-      {
-        "chapter": "5.4-the-road-to-mage",
-        "claimed": "modeling",
-        "spine_advances": [
-          "oversight-does-not-scale",
-          "seat-moves",
-          "grounded-in-one-case"
-        ]
-      }
-    ]
+    "thesis_spine_mismatches": []
   }
 }
