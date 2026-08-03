@@ -608,3 +608,54 @@ deploy after all waves). Commits: `ea98c00` (model) · `eb3e697` (FS check) · `
   map before it can promote from a deferred note to a real check. (2) `capability` is singular in the
   schema, but the Provenance stack genuinely serves two GEE capabilities (track-provenance + preserve-
   semantics); a future stack may want `capabilities[]`. Neither blocks the exemplar.
+
+---
+
+## W-GRAPHIFY — "Extracted Code Graphs and Intent-Bearing Models" (Part-3 subsection) — 2026-08-03
+
+Author-authorized ("do the due diligence and bake it into the book"). Distinguishes artifact-derived
+code knowledge graphs (RepoGraph / CodexGraph / RANGER / Codebase-Memory) from intent-bearing MAGE
+models along the **descriptive-vs-normative** axis. Net-new = *what claims a representation is authorized
+to make* (Beat 2 draws only *which artifact is authoritative*).
+
+- **Location.** New `###` subsection in `book/part3/3.1-the-executable-zoo.md`, inserted **between Beat 2
+  ("name the direction of derivation") and Beat 3 ("every model traces to the code")** — the induced-model
+  seam. **715 words** (target was the ~800 end, not 1200; the chapter already carries induce/specify,
+  the token argument, map/territory, and the one-model-per-format thread, so the subsection extends rather
+  than restates). Written portably (lead with the pattern, name the PDF instance) because the "one
+  structured model under every format" thread lands later in the chapter (~line 443).
+- **4 refs added** to `book/references.bib` (matched the existing `@misc` arXiv idiom —
+  `author/title/year/howpublished = {arXiv preprint arXiv:…}/url`, NOT eprint/archivePrefix):
+  `ouyang2024repograph` (2410.14684) · `liu2024codexgraph` (2408.03910) · `shah2025ranger` (2509.25257) ·
+  `vogel2026codebasememory` (2603.27277). Footnotes ¹–⁴ converted to inline `[cite: key]` markers.
+  **CGM (2505.16901) HELD** — the compact prose does not discuss the external-tool-vs-integrated design
+  space, so no orphan bib entry was added.
+- **Codebase-Memory quality-loss caveat — KEPT (verified).** The abstract states *"83% answer quality
+  versus 92% for a file-exploration agent, at ten times fewer tokens and 2.1 times fewer tool calls"*
+  (WebFetch of arXiv:2603.27277, 2026-08-03). So the prose keeps the fair framing: *"roughly a tenfold
+  reduction in tokens and 2.1 times fewer tool calls against a file-exploration agent, at some cost in
+  answer quality (83 percent against 92)."* Exact figures used, not paraphrase; the savings carry a
+  stated cost.
+- **Spine edit** — `argument_spine_declared.json` `chapter_advances["3.1-the-executable-zoo"]`:
+  `["modeling-thesis","sync-cost-reduced"]` → **+`alignment-thesis`**. Justification (honest add, not the
+  W1 overmapping): the compose/gate close *explains how correspondence/policy is mechanically maintained*
+  (graph = the *is*, authored model = the *ought*, gate = alignment), which is a textbook Alignment-Thesis
+  advance — `check_chapter_shape` confirms **0 thesis mismatches** with the add, so the prose earns the
+  label. **Second-order note (surfaced for claim-health honesty):** `alignment-thesis` sat at exactly
+  `OVERMAP_CAP` (10 chapters) after W1; this add makes it 11, so it now joins the DERIVED, INFORMATIONAL
+  `overmapped_claims` audit surface (alongside `modeling-thesis` at 18 and `govern-the-environment` at 11).
+  This flag never gates — `argument_spine_model.py verify` and `chapter_shape_model.py verify` both exit 0.
+  Flagged to `main` so the overmap audit surface is a known, ratified consequence, not a silent regression.
+  Regenerated `argument-spine.json` (+ `chapter-shape.json`, the W1 cascade) from declared. **No
+  `definitions.json` entry** — descriptive/normative stays a prose center-of-gravity claim, per the task
+  spec's "no new taxonomy."
+- **Gates (verbatim):** `render_citations.py` — "rendered=35 entries … bib_sha256=26c55e2d…" (was 31, +4;
+  all 4 keys present, CITE-FRESH restamped) · `catalog.py validate` — "validated 82 entries … — 0 issue(s)"
+  · `build_book_html.py` — "built 128 chapter pages … figures.html (109 figures)" (page count +0; the
+  subsection is not a new page) · `argument_spine_model.py verify` = "in sync (14 spine claims, 86
+  advancement edges)" exit 0 · `chapter_shape_model.py verify` = "in sync (32 chapters, 0+0 flags)" exit 0.
+  Built `3.1-the-executable-zoo.html` renders the subsection heading; all 4 cites resolve (RepoGraph /
+  CodexGraph / RANGER / Codebase-Memory named in body + listed in the references section; no raw
+  `[cite: key]` markers of mine survive).
+- **Not deployed** (batched at end of all waves per brief). Bibliography/book-index HTML changed as a
+  build side effect of the +4 references.
