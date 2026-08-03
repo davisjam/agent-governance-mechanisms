@@ -243,6 +243,45 @@ def check_flagship_stack():
     return (FAIL if issues else PASS), issues
 
 
+def check_lit_positioning():
+    """The literature-positioning view's drift + structural check (audit-only first landing, rule-#55
+    discipline). The Literature-Positioning Pass models every place the book situates itself against outside
+    work as an X→Y→Z intervention whose citations nest under the argument spine. Re-derives the model from
+    the hand-authored `lit_positioning_declared.json` (joined against the argument spine, references.bib, and
+    the book chapters) and reports: LP-drift against the on-disk artifact; LP1 traceability + schema (every
+    intervention carries non-empty X/Y/Z; ids unique + kebab; §N section; status + citation relation in the
+    closed enums; every citation backs ≥1 spine claim); LP2 thesis join (every `advances_theses` id resolves
+    to a real spine claim); LP3 landing integrity (for status:landed records, every citation resolves in
+    references.bib AND appears in a target chapter — planned records' cites are PENDING, not a finding);
+    LP4 location join (every target_location is a real chapter slug); LP6 citation join (every citation's
+    `backs_claims` resolves to a real spine claim — the nest-under-the-spine integrity the substantiation
+    aggregator depends on). LP5 (planned-vs-landed burndown) is a DERIVED note surfaced by the model CLI, not
+    a finding here. Keyed off `book-models/lit-positioning.json` + `lit_positioning_declared.json` + the
+    argument spine + references.bib + the book chapters."""
+    import lit_positioning_model as lpm  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+
+    # LP-drift — the stored artifact equals a fresh derivation.
+    fresh = lpm.to_jsonable()
+    stored = lpm.load_artifact()
+    if stored is None:
+        issues.append(f"{rel(lpm._ARTIFACT)} missing — run "
+                      f"`python3 book-models/lit_positioning_model.py regenerate`")
+    elif any(stored.get(k) != fresh[k] for k in ("interventions", "_counts")):
+        issues.append(f"DRIFT: {rel(lpm._ARTIFACT)} disagrees with a fresh derivation — regenerate "
+                      f"with `python3 book-models/lit_positioning_model.py regenerate`")
+
+    # LP1–LP6 — structural / schema + join invariants (traceability, thesis join, landing integrity,
+    # location join, citation join). LP3 for planned records is PENDING, not a finding.
+    issues.extend(lpm.structural_findings())
+
+    # Audit-only: same non-gating contract as the sibling first landings — surfaced as [audt], excluded from
+    # the fail tally. A follow-up promotes LP1–LP6 to blocking once the LPP prose waves land and a clean
+    # session confirms the drain (the spine / chapter-shape / flagship models' landing path).
+    return (FAIL if issues else PASS), issues
+
+
 def check_reverse_index():
     """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
     forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each

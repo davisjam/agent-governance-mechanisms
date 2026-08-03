@@ -972,6 +972,22 @@ def cmd_validate(_args) -> int:
               f"run `python3 book-models/flagship_stack_model.py regenerate` (does not gate):")
         for f in fs_findings:
             print(f"             {f}")
+    # LITERATURE-POSITIONING CONFORMANCE (LP1–LP6) — AUDIT-ONLY. The Literature-Positioning Pass model
+    # (book-models/lit-positioning.json): every X→Y→Z intervention's frame is present, its citations nest
+    # under the argument spine (backs_claims resolve), landed records' cites resolve in references.bib AND
+    # appear in a target chapter, and the planned-vs-landed burndown is surfaced. Lands audit-only-first
+    # (repo blocking-lint discipline) while the LPP prose waves are still landing — it PRINTS its findings +
+    # the burndown here (so a committer sees the worklist) but does NOT increment n_issues. A follow-up flips
+    # it blocking once the waves land and a clean session confirms the drain. See book-models/
+    # lit_positioning_model.py + tests/book_models.py.
+    import lit_positioning_model as lpm  # noqa: E402 — audit-only conformance model
+    lp_findings = lpm.structural_findings()
+    print(f"  [litpos] AUDIT-ONLY: {lpm.coverage_note()}")
+    if lp_findings:
+        print(f"  [litpos] AUDIT-ONLY: {len(lp_findings)} LP conformance finding(s) — "
+              f"run `python3 book-models/lit_positioning_model.py regenerate` (does not gate):")
+        for f in lp_findings:
+            print(f"           {f}")
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")
@@ -2980,6 +2996,57 @@ def cmd_spine(args) -> int:
     return 1
 
 
+def cmd_litpos(args) -> int:
+    """Query the literature-positioning model (book-models/lit-positioning.json) — the Literature-Positioning
+    Pass as an ordered set of X→Y→Z interventions, each with its citations nested under the argument spine.
+    No arg lists the interventions + the planned-vs-landed burndown; an INTERVENTION-ID or §N prints that
+    intervention's X/Y/Z frame + its citations (key · relation · backed spine claims). Reads the GENERATED
+    artifact — run `python3 book-models/lit_positioning_model.py regenerate` if it is stale. `--json` dumps
+    the raw matched record(s)."""
+    art = _load_json_or_none(os.path.join(ROOT, "book-models", "lit-positioning.json"))
+    if art is None:
+        print("no book-models/lit-positioning.json — run "
+              "`python3 book-models/lit_positioning_model.py regenerate`")
+        return 0
+    ivs = art.get("interventions", [])
+    target = getattr(args, "target", None)
+    if not target:
+        if args.json:
+            print(json.dumps(ivs, ensure_ascii=False, indent=2))
+            return 0
+        landed = [iv for iv in ivs if iv.get("status") == "landed"]
+        print(f"== literature-positioning ({len(ivs)} interventions, {len(landed)} landed) ==")
+        for iv in ivs:
+            fold = f"; fold:{iv['fold_target']}" if iv.get("fold_target") else ""
+            pend = sum(1 for c in iv.get("citations", []) if not c.get("resolves_bib"))
+            print(f"{iv.get('section',''):4} {iv['id']:34} [{iv.get('status','?')}{fold}] "
+                  f"{len(iv.get('citations', []))} cite(s) ({pend} pending bib)")
+            print(f"       advances {', '.join(iv.get('advances_theses', []))}")
+        return 0
+    match = next((iv for iv in ivs if iv["id"] == target or iv.get("section") == target), None)
+    if match is None:
+        print(f"'{target}' is neither an intervention id nor a §N section. "
+              f"Run `python3 catalog.py litpos` to list them.")
+        return 1
+    if args.json:
+        print(json.dumps(match, ensure_ascii=False, indent=2))
+        return 0
+    fold = f"; fold:{match['fold_target']}" if match.get("fold_target") else ""
+    print(f"== {match.get('title','')} ({match['id']}, {match.get('section','')}) "
+          f"[{match.get('status','?')}{fold}] ==")
+    print(f"  X (lineage):   {match.get('x','')}")
+    print(f"  Y (frontier):  {match.get('y','')}")
+    print(f"  Z (MAGE move): {match.get('z','')}")
+    print(f"  advances theses: {', '.join(match.get('advances_theses', []))}")
+    print(f"  target locations: {', '.join(match.get('target_locations', []))}")
+    print("  citations (nested under the spine):")
+    for c in match.get("citations", []):
+        bibtag = "" if c.get("resolves_bib") else "  [PENDING in references.bib]"
+        print(f"    · {c['key']}  [{c.get('relation','?')}]{bibtag}")
+        print(f"        backs: {', '.join(c.get('backs_claims', []))}")
+    return 0
+
+
 def _load_json_or_none(path: str):
     return json.load(open(path, encoding="utf-8")) if os.path.isfile(path) else None
 
@@ -3291,6 +3358,9 @@ def main() -> int:
     sp = sub.add_parser("spine", help="query the argument-spine model (book-models/argument-spine.json): no arg lists the 14 claims in order with advance-counts; a CLAIM-ID prints its statement + advancing chapters; a CHAPTER-SLUG prints the claims that chapter advances")
     sp.add_argument("target", nargs="?", help="a spine claim id (e.g. alignment-thesis) or a chapter slug / number prefix (e.g. 2.3 or 2.3-the-governed-environment); omit to list the whole spine")
     sp.add_argument("--json", action="store_true", help="dump the raw matched record(s)")
+    lp = sub.add_parser("litpos", help="query the literature-positioning model (book-models/lit-positioning.json): no arg lists the X→Y→Z interventions + the planned-vs-landed burndown; an INTERVENTION-ID or §N prints its X/Y/Z frame + citations nested under the spine")
+    lp.add_argument("target", nargs="?", help="an intervention id (e.g. fallible-oracles-swebench) or a §N section (e.g. §9); omit to list them all")
+    lp.add_argument("--json", action="store_true", help="dump the raw matched record(s)")
     va = sub.add_parser("views-audit", help="book-models drift audit: structural (every view->md reference resolves) + freshness (each view artifact equals a fresh derivation). Fast pre-commit gate; AUDIT-ONLY (prints, exits 0) unless --strict")
     va.add_argument("--strict", action="store_true", help="exit 1 on any finding (the flip a follow-up wires into the hook once seed findings are drained)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
@@ -3305,7 +3375,7 @@ def main() -> int:
             "check-console": cmd_check_console,
             "data-claims": cmd_data_claims, "concepts": cmd_concepts,
             "definitions": cmd_definitions, "outcomes-site": cmd_outcomes_site,
-            "claims": cmd_claims, "spine": cmd_spine,
+            "claims": cmd_claims, "spine": cmd_spine, "litpos": cmd_litpos,
             "views-audit": cmd_views_audit,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 

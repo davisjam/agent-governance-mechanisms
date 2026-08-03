@@ -44,6 +44,7 @@ from tests.book_models import (
     check_chapter_shape,
     check_claims_model,
     check_flagship_stack,
+    check_lit_positioning,
     check_outcomes_model,
     check_outline_model,
     check_reverse_index,
@@ -197,6 +198,19 @@ CHECKS = [
     # spine / chapter-shape models' own landing path. See tests/book_models.py.
     Check("book-models: flagship-stack drift + structure (flagship-stack.json)", 1,
           lambda strict: check_flagship_stack(), audit_only=True),
+    # AUDIT-ONLY (rule #55 first landing): the LITERATURE-POSITIONING view-model — the Literature-Positioning
+    # Pass as a typed set of X→Y→Z interventions whose citations are MODELED objects {key, backs_claims,
+    # relation} nested under the argument spine, declared->generated beside the argument-spine / flagship
+    # models. LP-drift (lit-positioning.json vs a fresh derivation) + LP1 traceability/schema (X/Y/Z present;
+    # ids + §N + status + relation enums; every cite backs ≥1 claim) + LP2 thesis join + LP3 landing
+    # integrity (landed cites resolve in references.bib AND appear in a target chapter; planned cites PENDING,
+    # not a finding) + LP4 location join + LP6 citation join (backs_claims resolve — the nest-under-the-spine
+    # integrity the substantiation aggregator depends on). LP5 planned-vs-landed burndown is a derived note,
+    # not a finding. Lands audit-only with §3 (graphify) + §4 (spec-driven dev) landed, the rest planned;
+    # promote to blocking once the LPP prose waves land and a clean session confirms the drain — the spine /
+    # chapter-shape / flagship models' own landing path. See tests/book_models.py.
+    Check("book-models: literature-positioning drift + structure (lit-positioning.json)", 1,
+          lambda strict: check_lit_positioning(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
