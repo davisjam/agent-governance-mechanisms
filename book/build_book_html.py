@@ -2224,6 +2224,7 @@ _STACKS: list[tuple[str, str]] = [
     ("specification-verification-stack", "The specification + verification stack"),
     ("observe-react-stack", "The observe → react loop"),
     ("resource-mediation-stack", "The resource-mediation stack"),
+    ("governance-of-governance-stack", "The governance-of-governance stack"),
     ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
 ]
 
