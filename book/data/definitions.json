@@ -9,10 +9,10 @@
 
   "model": {
     "term": "Model",
-    "box": "A useful approximation of a phenomenon (simplified, but good enough to predict) — and, as this book uses it, a blueprint: a prescriptive description of a system to be built, which the built system is bound to realize.",
+    "box": "A deliberately reduced, machine-readable representation of system intent, structure, behavior, policy, or evidence that supports reasoning, derivation, or checking, and whose relationship to the implemented or observed system is mechanically maintained.",
     "aspects": [
-      {"lead": "The first sense — a useful approximation", "text": "A simplified description prized because it predicts, not because it is exact. All models are wrong, some are useful; fidelity trades against cost, and how much fidelity you need is in the eye of the application."},
-      {"lead": "The second sense — a blueprint", "text": "A prescriptive description of the system you intend to build. A system built to a model may elaborate on it but may not diverge from it — which is what lets a model serve as an agent's marching orders."},
+      {"lead": "The intuition the formal statement rests on", "text": "Two senses build toward it. A model is a useful approximation — simplified, but good enough to predict; all models are wrong, some are useful, and fidelity trades against cost. And, as this book uses it, a blueprint: a prescriptive description of a system to be built, which the built system is bound to realize. Prose is too vague to enforce, code too verbose to reason over; a model occupies the useful middle."},
+      {"lead": "The five load-bearing terms", "text": "Each does gatekeeping work. Deliberately reduced — not the whole codebase. Machine-readable — not ordinary prose. A representation of something named — intent, structure, behavior, policy, or evidence — so not everything structured is a model. Supports an operation — reasoning, derivation, prediction, or checking. Mechanically maintained — a drift gate holds it to the system, which is what separates a MAGE model from a stale diagram."},
       {"lead": "Constraint, blueprint, and knowledge base at once", "text": "A model handed to an agent is at once a constraint (bounding what may be built), a blueprint (saying what to build), and — because the agent reasons over it — the knowledge base for the artifact under construction."}
     ],
     "site_home": "def-model",
