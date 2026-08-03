@@ -7,7 +7,7 @@
     "derived_ids": 163,
     "missing_topic_sentence": 2,
     "sections_drained": 163,
-    "paragraph_points": 486
+    "paragraph_points": 488
   },
   "chapters": [
     {
@@ -324,6 +324,11 @@
               "slug": "evidence-travels-with-the-file",
               "text": "The result carries evidence of what changed.",
               "block_index": 14
+            },
+            {
+              "slug": "evidence-is-typed-not-prose",
+              "text": "The evidence is typed edits, not a prose summary.",
+              "block_index": 16
             }
           ]
         },
@@ -333,17 +338,22 @@
           "heading_text": "The shape of the machine",
           "topic_sentence": "Inside, six parts carry that upload, drawn in [ref:docable-pipeline].",
           "id_source": "derived",
-          "block_index": 16,
+          "block_index": 18,
           "points": [
             {
               "slug": "six-parts-carry-one-upload",
               "text": "Six parts carry the upload to a stamped result.",
-              "block_index": 19
+              "block_index": 21
             },
             {
               "slug": "model-calls-are-bounded-and-checked",
               "text": "Bounded model calls sit behind deterministic checks.",
-              "block_index": 22
+              "block_index": 24
+            },
+            {
+              "slug": "two-commitments-under-the-six",
+              "text": "Two commitments run under all six parts.",
+              "block_index": 26
             }
           ]
         },
@@ -353,17 +363,17 @@
           "heading_text": "One human, a fleet",
           "topic_sentence": "Now the part that makes this a book about engineering rather than accessibility: I did not write this system.",
           "id_source": "derived",
-          "block_index": 24,
+          "block_index": 28,
           "points": [
             {
               "slug": "fleet-wrote-the-code",
               "text": "The fleet wrote the code; the human judged.",
-              "block_index": 26
+              "block_index": 30
             },
             {
               "slug": "apparatus-larger-than-product",
               "text": "The governing apparatus outgrew the product.",
-              "block_index": 28
+              "block_index": 32
             }
           ]
         },
@@ -373,12 +383,12 @@
           "heading_text": "Two scars",
           "topic_sentence": "None of that machinery was designed in advance.",
           "id_source": "derived",
-          "block_index": 30,
+          "block_index": 34,
           "points": [
             {
               "slug": "two-failures-teach-the-method",
               "text": "Two real failures show what the machinery is for.",
-              "block_index": 32
+              "block_index": 36
             }
           ]
         },
@@ -388,12 +398,12 @@
           "heading_text": "The library that lied",
           "topic_sentence": "Early on, the codebase held two libraries that could touch a PDF: the sanctioned one, and a convenient second one an agent had adopted for quick page operations.",
           "id_source": "derived",
-          "block_index": 34,
+          "block_index": 38,
           "points": [
             {
               "slug": "convenient-library-stripped-the-structure",
               "text": "A convenient library silently stripped the structure.",
-              "block_index": 35
+              "block_index": 39
             }
           ]
         },
@@ -403,12 +413,12 @@
           "heading_text": "The lever that lost work",
           "topic_sentence": "The second failure came from the process that built the product.",
           "id_source": "derived",
-          "block_index": 37,
+          "block_index": 41,
           "points": [
             {
               "slug": "orchestrator-reached-for-the-destructive-lever",
               "text": "A destructive escape lever twice discarded committed work.",
-              "block_index": 38
+              "block_index": 42
             }
           ]
         },
@@ -418,17 +428,17 @@
           "heading_text": "The move that recurs",
           "topic_sentence": "Here is why those two failures belong in this chapter: neither fix stopped at the patch.",
           "id_source": "derived",
-          "block_index": 40,
+          "block_index": 44,
           "points": [
             {
               "slug": "failure-becomes-a-mechanism",
               "text": "Each failure became a mechanism retiring its class.",
-              "block_index": 42
+              "block_index": 46
             },
             {
               "slug": "attention-per-class-not-per-change",
               "text": "Attention moves from per-change to per-class.",
-              "block_index": 45
+              "block_index": 49
             }
           ]
         },
@@ -438,12 +448,12 @@
           "heading_text": "Where the map leads",
           "topic_sentence": "You now hold the object: a real system, built by a fleet, governed by machinery that grew scar by scar.",
           "id_source": "derived",
-          "block_index": 47,
+          "block_index": 51,
           "points": [
             {
               "slug": "parts-2-4-machinery-part-5-full-case",
               "text": "Parts 2–4 explain the machinery; Part 5 the case.",
-              "block_index": 49
+              "block_index": 53
             }
           ]
         }
