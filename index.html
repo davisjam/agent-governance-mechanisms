@@ -102,10 +102,12 @@
 
   /* ---- HERO band: a prose-led lead that flows straight into the Big Idea 1 churn flowchart ---- */
   .hero-band { margin:8px 0 6px; }
-  .hero-lead { max-width:860px; margin:0 auto; text-align:center; }
+  .hero-lead { max-width:1000px; margin:0 auto; text-align:center; }
   .hero-lead .book-h1 { margin-top:0; }
   .hero-lead .book-sub { margin-left:auto; margin-right:auto; }
-  .hero-lead .m-lead { max-width:70ch; margin-left:auto; margin-right:auto; }
+  /* A wider, larger lead paragraph — a comfortable reading measure that better matches the full-width
+     lead figure beneath it (author feedback: the intro read too narrow + too small on a wide display). */
+  .hero-lead .m-lead { max-width:82ch; font-size:20px; line-height:1.6; margin-left:auto; margin-right:auto; }
 
   /* ---- the Big-Ideas argument ---------------------------------------------------------------- */
   .big-ideas { margin:20px 0 4px; }
@@ -113,15 +115,15 @@
             color:var(--accent); margin:0 0 3px; }
   .s-title { font-family:var(--font-display); font-size:var(--fs-card-title); font-weight:var(--display-weight);
              letter-spacing:-.01em; line-height:1.22; margin:0 0 8px; border-top:none; padding-top:0; }
-  .s-claim { font-size:var(--fs-card-body); color:var(--muted); line-height:1.62; margin:0 0 10px; max-width:62ch; }
+  .s-claim { font-size:var(--fs-body); color:var(--muted); line-height:1.62; margin:0 0 10px; max-width:66ch; }
   .s-claim b, .s-claim .term { color:var(--ink); }
   .s-fig svg { display:block; width:100%; height:auto; }
 
   /* Big Idea 1 - the landing's lead visual: the churn flowchart full-width beneath the hero lead. */
   .idea-hero { margin:22px 0 0; }
   .idea-hero .ih-fig svg { display:block; width:100%; height:auto; max-width:1080px; margin:0 auto; }
-  .idea-hero .ih-words { max-width:74ch; margin:16px auto 0; text-align:center; }
-  .idea-hero .ih-words .s-claim { max-width:78ch; margin-left:auto; margin-right:auto; }
+  .idea-hero .ih-words { max-width:84ch; margin:16px auto 0; text-align:center; }
+  .idea-hero .ih-words .s-claim { max-width:84ch; margin-left:auto; margin-right:auto; }
 
   /* A Big-Idea band: figure beside words, sides alternate for rhythm. */
   .slot { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:16px 42px; align-items:center; }
