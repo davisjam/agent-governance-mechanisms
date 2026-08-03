@@ -2222,9 +2222,8 @@ _STACKS: list[tuple[str, str]] = [
     ("provenance-fidelity-stack", "The provenance + fidelity stack"),
     ("model-coherence-stack", "The model-coherence stack"),
     ("specification-verification-stack", "The specification + verification stack"),
-    ("self-operations-stack", "The self-operations stack"),
+    ("observe-react-stack", "The observe → react loop"),
     ("worktree-lifecycle-stack", "The worktree-lifecycle stack"),
-    ("observability-stack", "The observability stack"),
 ]
 
 _APPENDIX_STACKS_OPENING_PROSE = """\

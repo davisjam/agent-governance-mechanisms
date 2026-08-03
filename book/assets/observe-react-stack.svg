@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): the observe → react loop as a left-to-right pipeline of five parts.
+     Observe (fleet blue — WATCH the signal bus, BEAT the liveness channel), react (governed green — RESPOND
+     with a playbook), stop-the-pile-on (churn red — BLOCK on an unresolved alert), and self-operate (accent
+     umber — OPERATE from a positive map). Palette: Umber Monograph tokens only (fleet #2f5169/#e7edf3,
+     governed #1f7a4d/#e3f0e7, churn #b23b3b/#fbeaea, accent #9a3f12/#faf1e6, ink #1c1917, muted #57534e). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360"
+     role="group" aria-labelledby="orTitle orDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="orTitle">The observe → react loop: see the state, act on each bad one, stop the pile-on, operate from a map</title>
+  <desc id="orDesc">Five parts run left to right. Observe (fleet blue): WATCH is the typed event bus every
+    substrate emits its lifecycle and health facts onto; BEAT is the liveness channel — periodic heartbeats
+    plus a stale-worker sweep, so a hung process is distinguishable from a slow one. React (governed green):
+    RESPOND is a written playbook per signal, symptom to steps. Stop-the-pile-on (churn red): BLOCK refuses
+    new work-dispatch while a high-severity alert is unresolved. Self-operate (accent umber): OPERATE is a
+    loadable skill giving the operator the positive map of how the substrate works. The bus says what
+    happened; the playbook says what to do; the gate refuses to proceed until it is cleared; the map makes
+    the signals interpretable.</desc>
+
+  <defs>
+    <marker id="orArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- header -->
+  <text x="44" y="36" font-size="15" font-weight="700" fill="#1c1917">The observe → react loop — see the state, act on each bad one, stop the pile-on, operate from a map</text>
+
+  <!-- capability legend (free-floating swatches) -->
+  <rect x="90" y="104" width="15" height="15" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="112" y="116" font-size="12.5" fill="#57534e">observe — see the state</text>
+  <rect x="440" y="104" width="15" height="15" rx="3" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
+  <text x="462" y="116" font-size="12.5" fill="#57534e">react — act on it</text>
+  <rect x="690" y="104" width="15" height="15" rx="3" fill="#fbeaea" stroke="#b23b3b" stroke-width="1.5"/>
+  <text x="712" y="116" font-size="12.5" fill="#57534e">block — stop on an unresolved alert</text>
+  <rect x="1030" y="104" width="15" height="15" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="1052" y="116" font-size="12.5" fill="#57534e">self-operate</text>
+
+  <!-- ============ stage boxes ============ -->
+  <!-- 1 WATCH -->
+  <rect x="90" y="150" width="180" height="78" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="180" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">WATCH</text>
+  <text x="180" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#2f5169">typed event bus</text>
+  <!-- 2 BEAT -->
+  <rect x="300" y="150" width="180" height="78" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="390" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">BEAT</text>
+  <text x="390" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#2f5169">liveness beat</text>
+  <!-- 3 RESPOND -->
+  <rect x="510" y="150" width="180" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="600" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">RESPOND</text>
+  <text x="600" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#1f7a4d">symptom to steps</text>
+  <!-- 4 BLOCK -->
+  <rect x="720" y="150" width="180" height="78" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
+  <text x="810" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">BLOCK</text>
+  <text x="810" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#b23b3b">gate on alert</text>
+  <!-- 5 OPERATE -->
+  <rect x="930" y="150" width="180" height="78" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+  <text x="1020" y="186" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">OPERATE</text>
+  <text x="1020" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#9a3f12">positive map</text>
+
+  <!-- ============ per-part action row (free-floating) ============ -->
+  <g font-size="12" font-style="italic" fill="#57534e" text-anchor="middle">
+    <text x="180" y="252">one signal surface</text>
+    <text x="390" y="252">hung or just slow</text>
+    <text x="600" y="252">what to do</text>
+    <text x="810" y="252">stop the pile-on</text>
+    <text x="1020" y="252">operate from a map</text>
+  </g>
+
+  <!-- ============ arrows ============ -->
+  <g fill="none" stroke="#1c1917" stroke-width="2.2" marker-end="url(#orArrow)">
+    <path d="M60,189 L88,189"/>
+    <path d="M270,189 L298,189"/>
+    <path d="M480,189 L508,189"/>
+    <path d="M690,189 L718,189"/>
+    <path d="M900,189 L928,189"/>
+  </g>
+
+  <!-- synthesis caption -->
+  <text x="600" y="308" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">The bus says what happened; the playbook says what to do; the gate refuses to proceed —</text>
+  <text x="600" y="328" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">and the map makes every signal interpretable.</text>
+</svg>
