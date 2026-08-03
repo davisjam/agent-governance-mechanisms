@@ -670,79 +670,192 @@ Gate](#cap-sync).
 
 *Durable, complete, checkable attribution of every mutation and its cause.*
 
-**[Caused-By Provenance](product/provenance-and-attribution/mutator-stamps.md).** Attach durable
-attribution at the point of every mutation, and check that the wiring is complete over a closed verb set,
-so the artifact's mutation history — who changed what, and why — reconstructs on demand. *The scar:* an
-input-versus-output diff could say *what* changed but never *who* or *why*, so a remediation could not be
-explained or reversed. *Built as:* per-mutator stamps embedded at the mutation site, one sanctioned writer
-per format. This is a composed stack presented as one mechanism, with named components:
-[the `a11y_` prefix](product/provenance-and-attribution/a11y-prefix.md) marks the insertion and
-auto-registers it for validation ·
-[per-mutator stamps](product/provenance-and-attribution/mutator-stamps.md) emit at the site ·
-[the F10 wiring lint](product/provenance-and-attribution/f10-wiring-lint.md) covers every verb ·
+### [Caused-By Provenance](product/provenance-and-attribution/mutator-stamps.md) · principle P6
+
+**Intent.** Attach durable attribution at the point of every mutation, and check that the wiring is
+complete over a closed verb set, so the artifact's mutation history — who changed what, and why —
+reconstructs on demand.
+
+**Vivid failure.** An input-versus-output diff could say *what* changed but never *who* or *why*, so a
+remediation could not be explained or reversed.
+
+**Solution.** Per-mutator stamps embedded at the mutation site, one sanctioned writer per format. This is a
+composed stack presented as one mechanism; its named components are the machinery, not examples:
+[the `a11y_` prefix](product/provenance-and-attribution/a11y-prefix.md) marks each invisible insertion and
+auto-registers it for validation (the MARK) ·
+[per-mutator stamps](product/provenance-and-attribution/mutator-stamps.md) emit at the site (the EMIT) ·
+[the F10 wiring lint](product/provenance-and-attribution/f10-wiring-lint.md) covers every verb, so an
+unstamped mutator is a build finding (the COVER) ·
 [`derive-changelog`](product/provenance-and-attribution/derive-changelog.md) reads the attributed history
-back ·
-[caused-by provenance](agent/lifecycle-and-observability/caused-by-provenance.md) is the agent-side arm,
-every commit carrying a typed cause from a closed taxonomy.
+back (the READ).
+
+**Guarantee.** Every mutation carries a stamp and the wiring lint proves the coverage is total over the
+closed verb set, so the history reconstructs completely. The boundary: it attributes *sanctioned* verbs —
+a mutation outside the vocabulary is out of scope, which is why the closed verb set is a precondition.
+
+**Forces &amp; limits.** Complete provenance is feasible only because One Door Enforced routes mutation
+through one surface and Closed Action Vocabulary bounds the verbs; without those, the wiring lint has no
+finite set to prove coverage over. Stamps add bytes to every artifact — a cost paid for reversibility.
+
+*Examples — the one facet that is not a Solution component:*
+
+- **[caused-by provenance, agent-side](agent/lifecycle-and-observability/caused-by-provenance.md) —
+  subject-shift facet.** The same provenance obligation applied to *commits* rather than documents: every
+  commit carries a typed cause drawn from a closed taxonomy, so the fleet's own change history is as
+  reconstructable as the product's. Shows the pattern is about the *relation* (durable attribution over a
+  closed set), not the document domain it was first built in.
+
+*Deep dive:* [the provenance-and-fidelity stack](book/appendix-d-provenance-fidelity-stack.html) (alt
+appendix) — the MARK, EMIT, COVER, and READ components are its parts, deep-treated there.
+*Related:* Enabler — [One Door Enforced](#cap-constrain) + [Closed Action Vocabulary](#cap-constrain) (both
+preconditions) · Counterpart — [Preservation Invariant](#cap-preserve) (the fidelity backstop).
 
 <a id="cap-manage"></a>
 ## MANAGE · Manage work, state, and resources
 
 *Lifecycle records, resource mediation, and fleet observation.*
 
-**[Authoritative Lifecycle State](agent/lifecycle-and-observability/agent-registry.md).** Make destructive
-lifecycle decisions consult an authoritative recorded fact of liveness and disposition, never an inference
-from side effects. The record precedes the reclaim. *The scar:* a cleanup heuristic inferred an agent was
-dead from filesystem signals and destroyed a live worktree mid-run. *Built as:* an append-only registry
-consulted before any reclaim; tools refuse to operate on an agent whose live marker exists.
-*Known uses:*
-[tombstone commits](agent/lifecycle-and-observability/tombstone-commits.md) (the close-record variant: an
-irreversible reclaim justified by a durable close record with an explicit disposition).
+### [Authoritative Lifecycle State](agent/lifecycle-and-observability/agent-registry.md) · principle P6
 
-**[Mediated Resource Admission](agent/mediators-and-resource-locks/test-serializer.md).** Mediate
-shared-resource use through a single admission point at a chosen cardinality — exclusive for destructive
-work, bounded for parallel-safe-heavy work — with the raw unmediated path structurally impossible and the
-permitted seams declared in a model so a coverage lint detects every bypass. *The scar:* concurrent agents
-ran the destructive test runner at once and corrupted each other's shared build state. *Built as:* an
-`N=1` host flock on the test runner, the raw path banned, coverage checked against a declared
-concurrency-contracts model.
-*Forces &amp; limits:* the mediated unit's granularity matters. A semaphore over the *pieces* of a job
-still lets two whole *sweeps* overlap; only a singleton mutex over the aggregate-as-one-indivisible-unit
-bounds compute at the whole-sweep granularity. Choose the unit the contention actually lives at, not the
-finest one available.
-*Known uses (variants of one mediation relation):*
-[the build-serializer](agent/mediators-and-resource-locks/build-serializer.md) (bounded `M=8`) ·
+**Intent.** Make destructive lifecycle decisions consult an authoritative recorded fact of liveness and
+disposition, never an inference from side effects. The record precedes the reclaim.
+
+**Vivid failure.** A cleanup heuristic inferred an agent was dead from filesystem signals and destroyed a
+live worktree mid-run.
+
+**Solution.** An append-only registry consulted before any reclaim; tools refuse to operate on an agent
+whose live marker exists.
+
+**Guarantee.** No reclaim fires without a recorded fact authorizing it, so a live actor is never destroyed
+on a guess. The boundary: the record must be written truthfully at lifecycle transitions — a missing write
+leaves a live actor unrecorded, which the marker-refusal defends against conservatively.
+
+**Forces &amp; limits.** Consulting the record costs a read before every reclaim, and a stale record must
+fail *closed* (refuse) rather than open. The trade is a rare wrongful-refusal against a catastrophic
+wrongful-destruction — the right side to err on.
+
+*Examples — each a different facet:*
+
+- **[tombstone commits](agent/lifecycle-and-observability/tombstone-commits.md) — close-record facet.** An
+  irreversible reclaim justified by a durable close record with an explicit disposition, so the record that
+  authorizes destruction is the same one that explains it later. The facet: not just "is it live?" but "was
+  its closure recorded, with what disposition?"
+
+*Related:* Consumer — [Caused-By Provenance](#cap-provenance) (both make a decision consult a durable
+record) · Sibling — [Mediated Resource Admission](#cap-manage).
+
+### [Mediated Resource Admission](agent/mediators-and-resource-locks/test-serializer.md) · principle P3
+
+**Intent.** Mediate shared-resource use through a single admission point at a chosen cardinality —
+exclusive for destructive work, bounded for parallel-safe-heavy work — with the raw unmediated path
+structurally impossible and the permitted seams declared in a model so a coverage lint detects every
+bypass.
+
+**Vivid failure.** Concurrent agents ran the destructive test runner at once and corrupted each other's
+shared build state.
+
+**Solution.** An `N=1` host flock on the test runner (the SERIALIZE seam), the raw path banned, coverage
+checked against a declared concurrency-contracts model.
+
+**Guarantee.** No more than the chosen cardinality of admitted work touches the resource at once, and the
+coverage lint proves no bypass exists. The boundary: it bounds *admission*, not the work's own correctness
+once admitted.
+
+**Forces &amp; limits.** The mediated unit's granularity is the load-bearing choice. A semaphore over the
+*pieces* of a job still lets two whole *sweeps* overlap; only a singleton mutex over the
+aggregate-as-one-indivisible-unit bounds compute at the whole-sweep granularity. Choose the unit the
+contention actually lives at, not the finest one available — the aggregate-vs-per-invocation distinction,
+not merely the coarsest cardinality.
+
+*Flagship members (short):*
+
+- **[the build-serializer](agent/mediators-and-resource-locks/build-serializer.md) — bounded-M facet.** The
+  same admission point at cardinality `M=8` rather than one: parallel-safe-heavy compute admitted up to a
+  ceiling, so the seam bounds *count* without forcing serialization. Deep dive →
+  [the resource-mediation stack](book/appendix-d-resource-mediation-stack.html) (alt appendix).
+- **[adaptive resource-pressure admission](agent/mediators-and-resource-locks/resource-pressure-gating.md)
+  — condition-vs-count facet.** One shared pressure signal read at admit *and* during execution, shedding
+  on a red host — bounding by the host's live *condition* where the fixed mediators bound by declared
+  *count*. Deep dive → [the resource-mediation stack](book/appendix-d-resource-mediation-stack.html) (alt
+  appendix).
+
+*Known uses:*
 [aggregate-compute protection](agent/mediators-and-resource-locks/aggregate-compute-protection.md) (a
-whole-sweep singleton — the aggregate-vs-per-invocation unit; online-only) ·
-[adaptive resource-pressure admission](agent/mediators-and-resource-locks/resource-pressure-gating.md)
-(the adaptive-condition SHED: one shared pressure signal read at admit *and* during execution, shedding on
-a red host — it bounds by the host's live **condition** where the fixed mediators bound by declared
-**count**. Folded here as the condition-vs-count variant of the same admission relation).
+whole-sweep singleton — the aggregate-vs-per-invocation unit its Forces clause above names; online-only).
+
+*Deep dive:* [the resource-mediation stack](book/appendix-d-resource-mediation-stack.html) (alt appendix) —
+the test-serializer is its SERIALIZE member, concurrency-contracts its DECLARE model.
+*Related:* Consumer — [concurrency contracts](models-bridge/system-models/concurrency-contracts.md) (the
+declared-coverage model) · Sibling — [Authoritative Lifecycle State](#cap-manage).
 <!-- prior-art: LPP §? adjacent host-mediation / bulkhead literature, populated by LPP-PROSE -->
 
-**[Fleet Observability Surface](agent/lifecycle-and-observability/typed-event-bus.md).** Make operational
-health a queryable, typed, typo-proof signal surface, and bind every signal to a prescribed response.
-Emission alone is not observability; the loop is emit, interpret, react. *The scar:* operational failures
-scrolled past in free-form logs that carried neither their meaning nor a response. *Built as:* an
-orchestrator-as-reactor over a typed event bus, topics enumerable, each bound to a playbook.
-*Print placement:* this standalone pattern lives online; in print the [observe → react
-stack](book/appendix-d-observe-react-stack.html) carries the capability through its WATCH member
-(the typed event bus), so the depth is not double-placed.
-*Known uses:*
-[deploy heartbeats](agent/lifecycle-and-observability/deploy-heartbeats.md) (the progress-liveness
-variant: no heartbeat for N windows reads deterministically as stale).
+### [Fleet Observability Surface](agent/lifecycle-and-observability/typed-event-bus.md) · principle P7
 
-**[Point-of-Action Policy Delivery](agent/lifecycle-and-observability/lifecycle-hooks.md).** Deliver the
-constraint that governs an action to the actor at the moment of action. A runtime lifecycle event fires
-the check deterministically, converting policy from available-if-pulled to binding-because-pushed. *The
-scar:* a step owed at a runtime moment depended on the actor remembering it, and was silently skipped.
-*Built as:* lifecycle hooks — turn-stop, compaction, session-start, pre-action — split into guaranteed
-firing and a payload that blocks or aims.
-*Known uses:*
-[dynamic context injection](agent/context-and-dispatch/dynamic-context-injection.md) (the feed-forward
-variant: slice the meta-substrate to just the rules governing the change-target) ·
-[the reflection-facet substrate](agent/lifecycle-and-observability/reflection-facet-substrate.md) (the
-feed-back variant: soft nudges under one shared attention budget).
+**Intent.** Make operational health a queryable, typed, typo-proof signal surface, and bind every signal to
+a prescribed response — emission alone is not observability; the loop is emit, interpret, react.
+
+**Vivid failure.** Operational failures scrolled past in free-form logs that carried neither their meaning
+nor a response.
+
+**Solution.** An orchestrator-as-reactor over a typed event bus, topics enumerable, each bound to a
+playbook.
+
+**Guarantee.** Every emitted signal is typed (so a typo cannot silently disable a subscriber) and carries a
+bound response, so a failure is both legible and actionable. The boundary: the surface makes the signal
+reactable — whether the *response* is right is the playbook's job, not the bus's.
+
+**Forces &amp; limits.** A typed topic set must be maintained as the system grows, or emission outruns the
+enumeration. In print this standalone pattern is carried by the observe → react stack through its WATCH
+member (the typed event bus), so the depth is not double-placed; the full pattern lives online.
+
+*Flagship member (short):*
+
+- **[deploy heartbeats](agent/lifecycle-and-observability/deploy-heartbeats.md) — progress-liveness facet.**
+  A periodic beat whose *absence* for N windows reads deterministically as stale, so a silent hang becomes a
+  positive signal rather than an unbounded wait. Deep dive →
+  [the observe → react stack](book/appendix-d-observe-react-stack.html) (alt appendix).
+
+*Deep dive:* [the observe → react stack](book/appendix-d-observe-react-stack.html) (alt appendix) — its
+WATCH member.
+*Related:* Bridge — [Encoded Operational Judgment](#cap-govern) (the playbooks it binds to) · Consumer —
+[Staged Admission Gates](#cap-admit) (a signal promoted to a barrier).
+
+### [Point-of-Action Policy Delivery](agent/lifecycle-and-observability/lifecycle-hooks.md) · principle P5
+
+**Intent.** Deliver the constraint that governs an action to the actor at the moment of action, so a
+runtime lifecycle event fires the check deterministically — policy converted from available-if-pulled to
+binding-because-pushed.
+
+**Vivid failure.** A step owed at a runtime moment depended on the actor remembering it, and was silently
+skipped.
+
+**Solution.** Lifecycle hooks — turn-stop, compaction, session-start, pre-action — split into a guaranteed
+firing and a payload that either blocks or aims.
+
+**Guarantee.** The firing is deterministic: the hook runs whether or not the actor remembers, so a pushed
+policy binds where a pullable one was skipped. The boundary: the *firing* is hard; a payload that merely
+*aims* (a nudge) still depends on the actor heeding it.
+
+**Forces &amp; limits.** Hooks fire on a cadence, so a payload must respect an attention budget or the
+delivery becomes noise the actor learns to ignore. Split guaranteed-firing from blocks-or-aims so the hard
+part stays hard and the soft part stays honestly soft.
+
+*Flagship members (short):*
+
+- **[dynamic context injection](agent/context-and-dispatch/dynamic-context-injection.md) — feed-forward
+  facet.** Slice the meta-substrate to just the rules governing the change-target and push them forward at
+  the point of action, so the actor meets exactly the policy its edit implicates. Deep dive →
+  [the context-management stack](book/appendix-d-context-management-stack.html) (alt appendix).
+- **[the reflection-facet substrate](agent/lifecycle-and-observability/reflection-facet-substrate.md) —
+  feed-back facet.** Soft nudges fed back under one shared attention budget — kept deliberately as the
+  book's durable-versus-transient exemplar, a design whose *shape* outlasts the particular 2026 harness it
+  runs on. Deep dive → [the context-management stack](book/appendix-d-context-management-stack.html) (alt
+  appendix).
+
+*Deep dive:* [the context-management stack](book/appendix-d-context-management-stack.html) (alt appendix) —
+lifecycle hooks are its HOOK member.
+*Related:* Enabler — [Governed Knowledge Base](#cap-govern) (the substrate it slices) · Sibling —
+[Fleet Observability Surface](#cap-manage) (both hang off the runtime lifecycle).
 <!-- prior-art: LPP §2/§3 context-management / knowledge-delivery literature, populated by LPP-PROSE -->
 
 <a id="cap-govern"></a>
@@ -750,56 +863,148 @@ feed-back variant: soft nudges under one shared attention budget).
 
 *Model, cover, and encode the governance system as its own subject.*
 
-**[Governance Graph](models-bridge/system-models/governance-graph.md).** Model the control system itself —
-governance mechanisms as typed conflict edges over a closed shared-resource vocabulary — so a proposed
-control's collisions are checkable at authoring, not at the tripwire. *The scar:* two controls claimed the
-same slot with no ordering, colliding only when both fired in production. *Built as:* a typed interaction
-model in which mechanically-decidable conflict classes are caught by construction.
-*Known uses:*
-[the control-coverage census](models-bridge/system-models/control-coverage-census.md) (the coverage lens
-of the same governance-of-governance subject).
+### [Governance Graph](models-bridge/system-models/governance-graph.md) · principle P7
 
-**[Computed Control Blast Radius](models-bridge/system-models/control-substrate-dependency.md).** Every
-control declares the substrate assumption it bakes in as a typed fact, so "what breaks when I change this
-substrate" is a computed query before the change, not archaeology after. *The scar:* a substrate migration
-silently broke controls whose dependency on it lived only in someone's memory. *Built as:* per-control
-typed substrate declarations; blast radius is a query over them.
+**Intent.** Model the control system itself — governance mechanisms as typed conflict edges over a closed
+shared-resource vocabulary — so a proposed control's collisions are checkable at authoring, not at the
+tripwire.
 
-**[Governed Knowledge Base](agent/governance-doc-controls/claude-md-rule-index.md).** Govern the document
-that carries the governance. The boot-context map of the rules must itself be bounded, canonical — one
-home per rule — admission-gated, and mechanically enforced. The delivery vehicle for every converted
-failure is itself under mechanism. *The scar:* the governance index grew unbounded and its citations
-rotted, so agents booted from a map that no longer matched the rules. *Built as:* a size-capped,
-admission-gated rule index with stable citable numbering and cross-reference integrity lints.
-*Merged in:* [the docs hierarchy](agent/context-and-dispatch/docs-hierarchy.md) — the boot-context lens of
-the same bounded canonical index, two lenses on one artifact.
+**Vivid failure.** Two controls claimed the same slot with no ordering, colliding only when both fired in
+production.
 
-**[Encoded Operational Judgment](agent/governance-doc-controls/operational-playbooks.md).** Pre-reason each
-recurring operational situation once, when nothing is burning: encode the trigger, the ordered steps, and
-the reflexes to avoid. Lead with the positive model of how the substrate works healthy, generate the
-runbook from a typed source of truth, and keep it honest by reference validation. *The scar:* an operator
-improvised a recovery under fire and took a reflex the situation punishes, because the judgment lived in no
-one's reach at the moment of need. *Built as:* situation-keyed playbooks, plus an operator runbook
-generated from the lifecycle model with every pointer ref-checked.
-*Known uses:*
-[the operator runbook skill](agent/governance-doc-controls/operator-runbook-skill.md) (the generated,
-symptom-indexed, positive-model-first variant).
+**Solution.** A typed interaction model in which mechanically-decidable conflict classes are caught by
+construction.
 
-**[Self-governance](agent/governance-doc-controls/self-governance.md).** Give the system permission to
-detect its own recurring issues and introduce *tasteful* — proportionate, right-sized — constraints and
-controls that prevent their recurrence, rather than re-patching each instance. When a failure recurs,
-classify the failure **class** and add the smallest durable guardrail that kills it: a constraint that
-makes the wrong move unrepresentable where one can be built, else a sensor that detects and fails it — and
-fire that conversion on a cadence so the loop runs by design, not by memory. *The scar:* the same
-false-reject, the same mis-firing lint, the same manual step got re-patched locally each time, so the
-class survived to bite the next agent; and on a long autonomous run even a team that believes in
-converting the class forgets, because the trigger lives only in memory. *Built as:* a loadable
-failure-interpretation skill (the operationalization) invoked by a turn-end reflection hook that fires at
-most once per window — the soft conversion judgment carried on a hard, deterministic cadence. This is the
-generative engine the whole catalogue is an output of; it is the INTERPRET member of the
-[governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html).
-*Sibling:* [the operator runbook skill](agent/governance-doc-controls/operator-runbook-skill.md) executes
-*within* the estate; self-governance *grows* it.
+**Guarantee.** A collision in a decidable conflict class is caught when the control is authored, before it
+can fire against a sibling. The boundary: it decides the conflict classes the vocabulary expresses — a
+collision outside the modeled resource set is not seen.
+
+**Forces &amp; limits.** The shared-resource vocabulary must be closed and maintained, or a new resource
+type opens an unmodeled collision channel. Modeling the control estate is worth it only once controls
+proliferate — for a handful, the graph is ceremony.
+
+*Flagship member (short):*
+
+- **[the control-coverage census](models-bridge/system-models/control-coverage-census.md) — coverage-lens
+  facet.** The same governance-of-governance subject read for *coverage* rather than conflict: which
+  failure classes have a control and which sit uncovered. Deep dive →
+  [the governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html) (alt appendix).
+
+*Deep dive:* [the governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html) (alt
+appendix) — its GRAPH member.
+*Related:* Sibling — [Computed Control Blast Radius](#cap-govern) · Consumer —
+[Governed Knowledge Base](#cap-govern).
+
+### [Computed Control Blast Radius](models-bridge/system-models/control-substrate-dependency.md) · principle P7
+
+**Intent.** Have every control declare the substrate assumption it bakes in as a typed fact, so "what
+breaks when I change this substrate" is a computed query before the change, not archaeology after.
+
+**Vivid failure.** A substrate migration silently broke controls whose dependency on it lived only in
+someone's memory.
+
+**Solution.** Per-control typed substrate declarations; blast radius is a query over them.
+
+**Guarantee.** The set of controls a substrate change breaks is computable before the change. The boundary:
+it computes over *declared* dependencies — an undeclared assumption is invisible to the query, so the
+declaration discipline is the load-bearing part.
+
+**Forces &amp; limits.** A declaration that drifts from the control's real assumption computes a false
+radius, so the fact must be co-located with the control it describes. This is a strong standalone pattern;
+after the governance-of-governance stack's INTERPRET slot went to self-governance, blast-radius stays a
+catalogue pattern with a cross-link rather than a stack part.
+
+*Deep dive:* see also [the governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html)
+(alt appendix) — a neighbour of the estate-modeling subject, though not a stack part.
+*Related:* Sibling — [Governance Graph](#cap-govern) (conflict vs. dependency lens on the same estate).
+
+### [Governed Knowledge Base](agent/governance-doc-controls/claude-md-rule-index.md) · principle P7
+
+**Intent.** Govern the document that carries the governance: the boot-context map of the rules must itself
+be bounded, canonical — one home per rule — admission-gated, and mechanically enforced, because the
+delivery vehicle for every converted failure is itself a control.
+
+**Vivid failure.** The governance index grew unbounded and its citations rotted, so agents booted from a
+map that no longer matched the rules.
+
+**Solution.** A size-capped, admission-gated rule index with stable citable numbering and cross-reference
+integrity lints. Its two lenses — the boot-context [docs hierarchy](agent/context-and-dispatch/docs-hierarchy.md)
+and the rule index — are one artifact merged, not two mechanisms.
+
+**Guarantee.** The index stays bounded, every rule has exactly one home, and no citation dangles across a
+green build. The boundary: it governs the *index's* integrity, not whether each rule it carries is wise.
+
+**Forces &amp; limits.** A size cap forces the hard question — does this rule earn its per-boot context cost?
+— which is the point, but it means a genuinely new rule displaces an old one rather than accreting. The
+index is read on every agent boot, so its bloat taxes the whole fleet.
+
+*Deep dive:* the [governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html) (its
+INDEX member) and [the context-management stack](book/appendix-d-context-management-stack.html) (the same
+INDEX, its boot-context lens) — a deliberate two-facet dual placement (alt appendix).
+*Related:* Consumer — [Validated Dispatch](#cap-admit) + [Point-of-Action Policy Delivery](#cap-manage)
+(both read the substrate it governs) · Enabler — [Self-governance](#cap-govern) (where converted failures
+land).
+
+### [Encoded Operational Judgment](agent/governance-doc-controls/operational-playbooks.md) · principle P7
+
+**Intent.** Pre-reason each recurring operational situation once, when nothing is burning: encode the
+trigger, the ordered steps, and the reflexes to avoid, leading with the positive model of how the substrate
+runs healthy.
+
+**Vivid failure.** An operator improvised a recovery under fire and took a reflex the situation punishes,
+because the judgment lived in no one's reach at the moment of need.
+
+**Solution.** Situation-keyed playbooks, plus an operator runbook generated from the lifecycle model with
+every pointer reference-validated.
+
+**Guarantee.** A recurring situation meets pre-reasoned steps rather than improvisation, and the runbook
+cannot cite a stale pointer across a green build. The boundary: it encodes judgment for *known* situations —
+a novel recurring failure needs a *new* control, which is self-governance's job.
+
+**Forces &amp; limits.** A playbook rots if the substrate it describes drifts, which is why the runbook is
+*generated* from the lifecycle model rather than hand-kept. Pre-reasoning costs effort spent on situations
+that may not recur — a bet that the recurring ones are worth the up-front thought.
+
+*Flagship member (short):*
+
+- **[the operator runbook skill](agent/governance-doc-controls/operator-runbook-skill.md) —
+  generated-projection facet.** The runbook as `f(lifecycle-model)`: symptom-indexed, positive-model-first,
+  and regenerated so it cannot drift from the substrate it operates. Deep dive →
+  [the observe → react stack](book/appendix-d-observe-react-stack.html) (alt appendix).
+
+*Deep dive:* [the observe → react stack](book/appendix-d-observe-react-stack.html) (alt appendix) — its
+RESPOND member, bound to the Fleet Observability signals.
+*Related:* Bridge — [Fleet Observability Surface](#cap-manage) (the signals it responds to) · Sibling —
+[Self-governance](#cap-govern) (executes within the estate vs. grows it).
+
+### [Self-governance](agent/governance-doc-controls/self-governance.md) · principle P5
+
+**Intent.** Give the system permission to detect its own recurring issues and introduce *tasteful* —
+proportionate, right-sized — controls that prevent their recurrence, rather than re-patching each instance.
+When a failure recurs, classify the failure **class** and add the smallest durable guardrail that kills it.
+
+**Vivid failure.** The same false-reject, the same mis-firing lint, the same manual step got re-patched
+locally each time, so the class survived to bite the next agent — and on a long autonomous run even a team
+that believes in converting the class forgets, because the trigger lives only in memory.
+
+**Solution.** A loadable failure-interpretation skill (the conversion judgment) invoked by a turn-end
+reflection hook that fires at most once per window — the soft judgment carried on a hard, deterministic
+cadence. On a recurrence it names the class, then picks the durable control that kills it: a constraint
+that makes the wrong move unrepresentable where one can be built, else a sensor that detects and fails it.
+
+**Guarantee.** The conversion runs on a cadence, not on memory, so a recurring failure class reliably meets
+the question "should this become a control?" The boundary: the hook's *firing* is hard; the *conversion* is
+soft judgment — the skill proposes and scaffolds, it does not install the control.
+
+**Forces &amp; limits.** The trigger must be a genuine recurrence, or the loop manufactures controls for
+one-offs and the estate bloats — right-sizing is the taste the intent names. This is the generative engine
+the whole catalogue is an output of: every entry here is, in effect, one conversion's output.
+
+*Deep dive:* [the governance-of-governance stack](book/appendix-d-governance-of-governance-stack.html) (alt
+appendix) — its INTERPRET member, the beating heart of governing the control estate.
+*Related:* Sibling — [the operator runbook skill](agent/governance-doc-controls/operator-runbook-skill.md)
+(executes *within* the estate; self-governance *grows* it) · Enabler —
+[Governed Knowledge Base](#cap-govern) (where each converted control lands).
 <!-- prior-art: LPP §2/§3 reflection + self-improvement literature, populated by LPP-PROSE -->
 
 <a id="folds"></a>
