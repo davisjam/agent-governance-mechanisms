@@ -233,3 +233,5 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 
 - **[DECLARED]** (analyze) After this chapter, the reader can situate the book in the SE literature and identify the part of the work that stays human. — _anchor: Section titles 'fitting-this-book-into-the-software-engineering-literature' + 'the-part-that-stays-yours'._
 - _elaborates (owned by Module 6):_ (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.
+
+### Lesson 6.4-colophon

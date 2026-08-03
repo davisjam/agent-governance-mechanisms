@@ -30,10 +30,10 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 213,
+    "sections_total": 218,
     "sections_primary_of_an_outcome": 41,
     "modules": 6,
-    "lessons": 31
+    "lessons": 32
   },
   "taxonomy": {
     "know": [
@@ -434,6 +434,11 @@
             "own_outcomes": [
               "6.1-conclusion::situate-the-book-within-the-software-engineering"
             ],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "6.4-colophon",
+            "own_outcomes": [],
             "section_outcomes": []
           }
         ]
