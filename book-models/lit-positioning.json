@@ -3,10 +3,10 @@
   "_note": "The literature-positioning model holds the book's Literature-Positioning Pass — each place the book situates itself against outside work, carrying the X (established lineage) -> Y (current frontier) -> Z (narrow MAGE move) frame and its citations as MODELED objects {key, backs_claims, relation} nested under the argument spine. It is the LITERATURE half of the substantiation aggregator (the data-claim ledger is the DATA half). The LP1-LP6 conformance check holds the frame mechanically: traceability + schema, thesis join, landing integrity, location join, coverage/burndown, citation join. It lands audit-only-first — a record that drops its X/Y/Z or (once landed) cites a key absent from the .bib reddens the audit but does not gate while the LPP prose waves are still landing. `status` planned|landed is the burndown signal; only §3 (graphify) and §4 (spec-driven development) are landed today.",
   "_counts": {
     "interventions": 11,
-    "landed": 10,
-    "planned": 1,
+    "landed": 11,
+    "planned": 0,
     "citations_total": 34,
-    "citations_pending_bib": 3,
+    "citations_pending_bib": 0,
     "distinct_theses": 9
   },
   "taxonomy": {
@@ -288,7 +288,7 @@
           ],
           "relation": "situates",
           "illustrates_pattern": "",
-          "resolves_bib": false,
+          "resolves_bib": true,
           "backs_resolve": true
         },
         {
@@ -298,7 +298,7 @@
           ],
           "relation": "situates",
           "illustrates_pattern": "",
-          "resolves_bib": false,
+          "resolves_bib": true,
           "backs_resolve": true
         },
         {
@@ -308,14 +308,14 @@
           ],
           "relation": "situates",
           "illustrates_pattern": "",
-          "resolves_bib": false,
+          "resolves_bib": true,
           "backs_resolve": true
         }
       ],
       "advances_theses": [
         "sync-cost-reduced"
       ],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "W7",
       "notes": "FOLD into W7 (the model-sync deep-dive). PARTIAL-verification trio — recheck at typeset: czarnecki2006featurebased (DOI 10.1147/sj.453.0621, pp.621-645 via secondary listings); stevens2020maintaining (prefer the SoSyM-2020 DOI 10.1007/s10270-019-00736-x over the MODELS-2017 conference paper); murphy1995reflexion (FSE-3 1995 pp.18-28 confirmed via authors' page; re-confirm the exact ACM/IEEE DOI). The recent-LLM-era co-evolution beat points to the book's OWN model-sync measurement, NOT an external cite (CODESYNC is a tangential non-fit — do NOT cite). All three keys planned, not yet in the .bib.",
       "locations_resolve": [
@@ -324,7 +324,7 @@
       "theses_resolve": [
         true
       ],
-      "landed_appears": false
+      "landed_appears": true
     },
     {
       "id": "incident-learning-governance",

@@ -101,7 +101,7 @@
         {"key": "murphy1995reflexion", "backs_claims": ["alignment-thesis"], "relation": "situates"}
       ],
       "advances_theses": ["sync-cost-reduced"],
-      "status": "planned",
+      "status": "landed",
       "fold_target": "W7",
       "notes": "FOLD into W7 (the model-sync deep-dive). PARTIAL-verification trio — recheck at typeset: czarnecki2006featurebased (DOI 10.1147/sj.453.0621, pp.621-645 via secondary listings); stevens2020maintaining (prefer the SoSyM-2020 DOI 10.1007/s10270-019-00736-x over the MODELS-2017 conference paper); murphy1995reflexion (FSE-3 1995 pp.18-28 confirmed via authors' page; re-confirm the exact ACM/IEEE DOI). The recent-LLM-era co-evolution beat points to the book's OWN model-sync measurement, NOT an external cite (CODESYNC is a tangential non-fit — do NOT cite). All three keys planned, not yet in the .bib."
     },
