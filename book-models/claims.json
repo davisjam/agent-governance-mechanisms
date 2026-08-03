@@ -261,7 +261,7 @@
     {
       "id": "models-are-universal-language",
       "kind": "thesis",
-      "statement": "Models are engineering's universal language; software could not afford them until agents removed the sync cost.",
+      "statement": "Models are engineering's universal language; software could not afford them until agents cut the recurring sync cost.",
       "distinguishes": [],
       "home": "models-as-the-universal-language-of-engineering",
       "asserted_at": [
@@ -277,7 +277,7 @@
       ],
       "provenance": "stated",
       "anchor": "Preface universal-language touchstone + 6.0 'models as the universal language of engineering' + conclusion.",
-      "word_count": 16
+      "word_count": 17
     },
     {
       "id": "printer-not-coder",
