@@ -116,7 +116,10 @@
   ],
   "claim_exemptions": {
     "abundant-implementation": "front-loaded-by-design",
-    "fault-lies-in-instructions": "front-loaded-by-design"
+    "fault-lies-in-instructions": "front-loaded-by-design",
+    "churn-is-the-limit": "front-loaded-by-design",
+    "three-not-knowings-cause-churn": "front-loaded-by-design",
+    "theses-treat-the-causes": "bridge"
   },
   "chapter_exemptions": {
     "0.1-preface": "preface",
@@ -142,10 +145,10 @@
     "2.5-metrics": ["modeling-thesis", "alignment-thesis"],
     "2.6-when-guardrails-collide": ["govern-the-environment", "modeling-thesis"],
     "3.1-the-executable-zoo": ["modeling-thesis", "sync-cost-reduced"],
-    "3.2-the-logical-view": ["modeling-thesis", "alignment-thesis"],
+    "3.2-the-logical-view": ["modeling-thesis"],
     "3.3-the-process-view": ["modeling-thesis", "alignment-thesis"],
-    "3.4-the-development-view": ["modeling-thesis", "alignment-thesis"],
-    "3.5-the-physical-view": ["modeling-thesis", "alignment-thesis"],
+    "3.4-the-development-view": ["modeling-thesis"],
+    "3.5-the-physical-view": ["modeling-thesis"],
     "3.6-the-scenarios-view": ["modeling-thesis", "alignment-thesis"],
     "3.7-the-scope-of-modeling": ["modeling-thesis", "mage-becomes-practical"],
     "4.1-brownfield": ["govern-the-environment", "modeling-thesis", "failures-become-machinery"],

@@ -345,8 +345,7 @@
       "closing_anchor": "stop being predicates over one state and become predicates over an interleaving.",
       "exempt": null,
       "spine_advances": [
-        "modeling-thesis",
-        "alignment-thesis"
+        "modeling-thesis"
       ]
     },
     {
@@ -385,8 +384,7 @@
       "closing_anchor": "under what per-host cost and load policy. That is the Physical view.",
       "exempt": null,
       "spine_advances": [
-        "modeling-thesis",
-        "alignment-thesis"
+        "modeling-thesis"
       ]
     },
     {
@@ -405,8 +403,7 @@
       "closing_anchor": "validate that the other four actually hold up. That is the +1.",
       "exempt": null,
       "spine_advances": [
-        "modeling-thesis",
-        "alignment-thesis"
+        "modeling-thesis"
       ]
     },
     {

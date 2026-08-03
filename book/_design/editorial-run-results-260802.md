@@ -533,3 +533,26 @@ N=20, cumulative N=56) in the parent repo's field notes.
 - **Gates:** `catalog.py validate` 0 (82 entries) · `catalog_tests.py` 28/0/3 + 11 audit-only · figure-
   overflow (blocking) exit 0 · `book/build_book_html.py` green (127 pages) · new SVG clean on all
   figure lints. No deploy (draft only).
+
+## W1 — overmapping labels + thin-claim exemptions
+
+Author-ratified claim-health corrections (260803) applied to the argument-spine model, models-first.
+
+- **Overmapping label drops** in `book-models/argument_spine_declared.json` `chapter_advances`: dropped
+  `alignment-thesis` from `3.2-the-logical-view`, `3.4-the-development-view`, `3.5-the-physical-view`
+  (each Modeling-primary; their opening clauses already say Modeling). Kept both theses on
+  `3.3-the-process-view` and `3.6-the-scenarios-view` (their teaching genuinely IS runtime enforcement).
+- **Thin-claim exemptions** added to `claim_exemptions` (closed enum, AS9): `theses-treat-the-causes` →
+  `bridge`; `churn-is-the-limit` → `front-loaded-by-design`; `three-not-knowings-cause-churn` →
+  `front-loaded-by-design`.
+- **Cleared flags:** `alignment-thesis` OVERMAPPED cleared (advance count 13 → 10, at OVERMAP_CAP);
+  the 3 thin-claim flags cleared (now exempt — 5 exempt total). Remaining informational overmaps are
+  pre-existing and untouched: `modeling-thesis` (18) and `govern-the-environment` (11).
+- **Cascade:** regenerated `argument-spine.json` (85 edges, was 88) and `chapter-shape.json` (its
+  `spine_advances` join picks up the 3 label drops; anchors untouched, CS5 green). AS8 freshness
+  unaffected — no statement wording changed, 0 stale.
+- **Prose:** light verify of 3.2/3.4/3.5 openings — zero "Alignment" mentions in all three chapters;
+  no prose edit needed.
+- **Gates:** `check_argument_spine` (AS1–AS9) PASS · `check_chapter_shape` PASS · claims C7 PASS ·
+  `check_concepts_hierarchy` PASS · `catalog.py validate` 0 issues (82 entries) ·
+  `book/build_book_html.py` green (127 pages). Live SHA: (filled post-deploy)
