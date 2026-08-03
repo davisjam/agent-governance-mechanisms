@@ -100,7 +100,7 @@ Opus prose-judgment follow-up to Phase 2. Brief [phase2c-brief-260803.md](phase2
 - **Gates:** `catalog.py validate` **0 issues** at every commit (82 entries) · `book/build_book_html.py` green (127 chapter pages, 108 figures) · `chapter_shape verify` in sync · `argument_spine verify` in sync. Pre-existing audit-only set unchanged (114 token-drift; the 9 outcomes-site landing-row findings — the removed landing strip, flagged for report-out since the core-concepts block; 5 def-* homes; 2 O2; 2 U3).
 - **Deploy + live SHA(s):** _(recorded on deploy below)_
 
-## Phase 3 — catalogue → "Constructing the Governed Engineering Environment" (GEE 4-level) — 3a+3b DONE, 3c queued
+## Phase 3 — catalogue → "Constructing the Governed Engineering Environment" (GEE 4-level) — 3a+3b+3c ✅ DONE
 
 ## PHASE 3 · 3a — catalogue cards
 
@@ -176,8 +176,113 @@ Scores are diagnostic, not a cutoff: the 11–14 band (Adaptive Pressure, Point-
 - **Kept the vivid texture per "generalize the idea not the evidence":** every L2 record carries a `vivid_failure` + `concrete_impl` pointer (e.g. One Door ← the v172 tag-tree corruption ← PdfModel; Authoritative Lifecycle State ← the destroyed live worktree ← the agent registry) so 3c can preserve the scar + the DocAble implementation.
 - **merge-train MIS batching** demoted (directive's own "clever-but-distracts" exemplar) — the durable idea "independence proved before integration" folds under Staged Admission Gates, MIS as one implementation. **canonical-walkers** demoted to a component of One Door (self-declared low novelty). **codemod-first** placed as the execution-mode face of Closed Action Vocabulary (resolving its uneasy product-role placement).
 
+## PHASE 3 · 3c — GEE restructure executed — ✅ DONE + LIVE (site SHA recorded below)
+
+Opus flagship execution of the 3b classification. Internally staged, batch-emit, resumable. All commits
+kept `catalog.py validate` at 0 and `catalog.py build` + `book/build_book_html.py` green.
+
+**STAGE 1 — SCAFFOLD (`f99f65c`; anchor fix `59ef2ac`).** New root organizing page
+[`constructing-the-gee.md`](../../constructing-the-gee.md) — the catalogue reframed as the **construction
+kit for the Governed Engineering Environment**, titled *"Constructing the Governed Engineering
+Environment"* · subtitle *"A catalogue of models, controls, compositions, and known uses."* It carries: the
+SUPPLEMENT-2 opening passage adapted to house voice (Hemingway, capped em-dash density); the **reframed
+claim** (82 concrete mechanisms → 25 canonical mechanisms under 9 capabilities, remainder as variants/known
+uses); the **4-level ontology** explainer + the GoF contrast; the **8 L1 principles** (P1–P8, P8 =
+`semantic-level-enforcement` lifted); the **9 capabilities** (KNOW·SYNC·CONSTRAIN·ADMIT·COMPLETE·PRESERVE·
+PROVENANCE·MANAGE·GOVERN), each with its canonical L2 mechanism(s) written in compact pattern form (intent
+· vivid failure/scar · concrete DocAble impl) and the folded variants/known-uses linked beneath it; the
+**two borderline folds** as a named `#folds` sub-section; and the **8 compositions** (stacks) with joins +
+why. Linked from the landing (a **4th way-in** card, `catalog.py`), README, and INDEX so the reachability
+gate stays green. Entries left intact this stage.
+- *As-built decision:* the GEE page IS the capability-organized view of the whole catalogue (canonical-vs-
+  variant clearly marked, every entry grouped under its capability). INDEX.md keeps its role/family census
+  tables (the strict `parse_census` regex + `build_census` depend on the role→family headings; capabilities
+  cut across roles, so re-cutting the census by capability would be a high-risk rewrite for no gate gain).
+  INDEX gains a "Read this as a construction kit" callout + link at the top. Defensible per the brief's
+  explicit "choose the file-level approach that keeps validate 0 + reachability green."
+- *Fix folded in (`59ef2ac`):* `render_md` escaped bare `<a id="…"></a>` anchor lines to visible text,
+  which would have broken every intra-page `#cap-*` link (capability cross-links + compositions). Added a
+  surgical `render_md` branch passing a bare-anchor line through raw. No existing catalogue content uses
+  that line shape.
+
+**STAGE 2 — CONSOLIDATE (10 commits, per capability + a folds commit).** Every one of the 82 entries now
+carries a one-line **"Its place in the environment"** placement, inserted after its metadata card (schema-
+safe; renders as `<p><em>…</em></p>` with a live link to the construction kit). L2 canonical entries name
+themselves the canonical mechanism for their capability; L3 entries are reframed as a **variant / known-use
+of `<parent L2>`** under their capability, preserved, subordinated. Driven by a deterministic stdlib script
+carrying the full 3b disposition map (idempotent; `--check` audit).
+- Per-capability counts (canonical L2 · variants demoted): **KNOW** 3·21 (`551edb6`) · **SYNC** 2·3
+  (`d7cfcf8`) · **CONSTRAIN** 3·7 (`903f19a`) · **ADMIT** 2·7 (`a93822c`) · **COMPLETE** 3·4 (`0a6fde5`) ·
+  **PRESERVE** 2·0 (`dd660cc`) · **PROVENANCE** 1·4 (`43119e3`) · **MANAGE** 5·6 (`c6af573`) · **GOVERN**
+  4·2 (`9ef9962`). Totals: **25 L2 · 54 L3**.
+- **Folds commit (`4fc99d2`):** the 2 merges + 1 lift. `property-tests` → **merged into Generative
+  Validation** ("two sides of one coin"); `docs-hierarchy` → **merged into Governed Knowledge Base** ("two
+  lenses on one artifact"); `semantic-level-enforcement` → **lifted to principle P8**. All 82 entries verified
+  carrying the placement sentinel.
+
+**THE TWO BORDERLINE FOLDS — distinction preserved.** `formal-invariant-verification` folds under
+**Model-Derived Assurance Coverage** as the *proof* pole against the census's *exercise* pole (routes each
+invariant to the checker its temporal shape demands; composes with the Composed State-Machine Model).
+`model-graded-finding-severity` folds under **Read the Model, Don't Copy It** as a model-consuming gate
+(severity = f(finding, change), computed once against the live component model). Both surfaced as a named
+`#folds` sub-section on the construction-kit page, and each entry's placement line names its parent.
+
+**CENSUS / MODELS — decisions (all consistent, gates green).**
+- **Census marker unchanged at 82.** `catalog.py` derives `controls = len(entries)` and
+  `check_census_tokens` enforces it; the restructure PRESERVED all 82 entries (nothing deleted), so the
+  tree still holds 82 concrete mechanisms and the marker correctly reads 82. The "25 canonical / 9
+  capabilities" reduction is an analytical framing carried in prose (GEE page · INDEX callout · README), not
+  the entry count. Setting the marker to 25 would require deleting entries and would break the derived-count
+  check — the wrong move. The census counts what is in the tree.
+- **MODEL_NODES unchanged.** It organizes entries on the orthogonal governance-map axis (fleet/product/
+  trunk spines); no entry was renamed, moved between roles, or deleted, so every slug still resolves and
+  validate's model-map check ("every entry has a node home") stays green. No edit owed.
+- **catalogue-views / reachability / INDEX** all regenerate green: `catalogue-views.html` reads the intact
+  role/family census; the reachability gate passes (the new page is reached from the landing + README +
+  INDEX); `check_index` passes.
+
+**CUTS / MERGES RECORD.** This run **cut nothing** — it consolidated. Merge record: **2 merges** (property-
+tests → Generative Validation; docs-hierarchy → Governed Knowledge Base) · **54 demotions** to variant/
+known-use under a parent L2 · **1 lift** (semantic-level-enforcement → P8). All 82 entries preserved on
+disk and in the census; the consolidation is expressed as the 4-level GEE structure over them, not by
+deletion.
+
+**PRINT-VS-ONLINE (noted for the author's later pass, NOT cut here).** All 25 L2 remain in the printed
+catalogue. The rubric-11–14 band kept on Coverage/Case/Historical overrides — the print-vs-online refinement
+is the author's editorial call: **Adaptive Resource-Pressure Admission** (11) · **Point-of-Action Policy
+Delivery** (11) · **Encoded Operational Judgment** (12) · **Conformance-to-External-Spec Engine** (12) ·
+**Governed Knowledge Base** (13) · **Fleet Observability Surface** (14) · **Generative Validation** (14) ·
+**Staged Admission Gates** (14). These are the sidebar/online candidates a later pass may relegate.
+
+**GATES (every commit).** `catalog.py validate` **0 issues** (82 entries: agent 28 · bridge 34 · product
+20) · `catalog.py build` **0** (incl. the BLOCKING reachability/orphan gate) · `book/build_book_html.py`
+**0** (127 chapter pages + appendix). Pre-existing AUDIT-ONLY set unchanged (114 token-drift; the 22 views-
+audit findings — outline/reverse_index freshness, 2 O2, 2 U3, 5 def-*, 9 outcomes-site, 2 CLAIM-TOO-LONG —
+the same set flagged since the core-concepts block; all non-gating).
+
+**REMAINING — 3c follow-ups (deliberately scoped out; documented for a later deliberate pass):**
+1. **Fuller L2 prose rewrite.** Stage 2 gave every entry its GEE placement + the GEE page gives each L2 a
+   compact pattern statement (intent · vivid failure · concrete impl). The brief's richer per-L2 target —
+   *one diagram · one model/code fragment · ≥1 alternative · clear limits* inline in each L2 entry — was NOT
+   applied entry-by-entry (the entries were already written to good depth in prior phases; a full author-
+   grade rewrite of 25 long entries is a deliberate editorial task, and it interacts with the print-vs-
+   online cut above). The GEE page carries the vivid failure + concrete impl for each L2 today.
+2. **Book-appendix GEE reframe (site⊇book reconciliation).** The construction-kit framing is a NEW site
+   framing; the book (`book/`) already develops the GEE concept (2.3, the concept model, Part 3), but the
+   book's **appendix** (`appendix-a/b/c/d/e`) still renders the flat catalogue. For strict "book coverage ⊇
+   site framings," the appendix front-matter should adopt the same 4-level GEE ontology + capability
+   grouping. Book build stays green today; this is an additive follow-up, not a regression.
+3. **Promote the capability grouping into `catalogue-views.html`** (an optional second capability lens
+   beside the role/model/enforcement lenses) if the author wants it in the interactive view as well as the
+   GEE page.
+
 ## TASK 4 — durability modeling (obligation vs 2026-implementation) — CAPTURED for NEXT SESSION (directive Task 4); NOT acted this run.
 ## TASK 7 — harness / Agent-OS references (bibliography enrichment + VERIFY-FIRST) — CAPTURED post-deploy ([harness-references-capture-260802.md](harness-references-capture-260802.md)). 7 refs + cite the Gill LinkedIn pointer. Must confirm each arXiv ID/paper exists before citing (LinkedIn-sourced → hallucination risk); feeds Task 6 harness-derivation thread + §2.1. Do AFTER the run's final deploy.
 
 ## CUTS RECORD (all phases) — running
-_(none yet — Phases 1–3 may expose ~10% + catalogue merges; log summary + details here)_
+- **Phases 1, 2c, Task 6, core-concepts:** nothing cut — sharpening + additions only (see each block; one
+  DEMOTION, 5.4's model-accretion flourish moved from headline to supporting observation).
+- **Phase 3 · 3c (catalogue → GEE construction kit):** **nothing cut.** The restructure CONSOLIDATED 82
+  concrete mechanisms into 25 canonical mechanisms under 9 capabilities via **2 merges + 54 demotions-to-
+  variant + 1 lift-to-principle** — every entry preserved on disk and in the census (still 82). Details in
+  the "PHASE 3 · 3c" block above.
