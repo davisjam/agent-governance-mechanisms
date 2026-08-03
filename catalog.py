@@ -638,6 +638,26 @@ def check_abstractions(entries: list[Entry], abbrs: dict) -> list[str]:
     return problems
 
 
+# The [gh:] marker regex — kept in sync with book/build_book_html.py:_GH_MARKER_RE. Simple enough that a
+# 2nd copy is acceptable; importing build_book_html here would pull its heavier module-load (manifest reads).
+_GH_MARKER_RE = re.compile(r"\[gh:\s*([^\]|]+?)\s*(?:\|[^\]]*?)?\]")
+
+
+def check_gh_refs() -> list[str]:
+    """Every `[gh:<repo-relative-path>]` in the book prose must resolve to a real file in the working tree.
+    Deterministic + offline (no network) — a rotted source reference must fail the build, not ship a 404
+    'view the source' link. Path-exists twin of the build-time resolver in book/build_book_html.py."""
+    problems: list[str] = []
+    for md in sorted(glob.glob(os.path.join(ROOT, "book", "**", "*.md"), recursive=True)):
+        text = open(md, encoding="utf-8").read()
+        for path in _GH_MARKER_RE.findall(text):
+            path = path.strip()
+            if not os.path.exists(os.path.join(ROOT, os.path.normpath(path))):
+                rel = os.path.relpath(md, ROOT)
+                problems.append(f"{rel}: [gh:{path}] -> no such file in the working tree")
+    return problems
+
+
 FIGURE_FILE = "catalogue-figure.html"  # the hand-authored governance-map figure
 
 
@@ -900,6 +920,9 @@ def cmd_validate(_args) -> int:
         n_issues += 1
     for msg in check_figure(entries):
         print(f"  [figure] {msg}")
+        n_issues += 1
+    for msg in check_gh_refs():
+        print(f"  [gh]    {msg}")
         n_issues += 1
     for msg in check_big_ideas():
         print(f"  [bigidea] {msg}")

@@ -377,6 +377,50 @@ def _apply_part_refs(md: str) -> str:
     return re.sub(r"\{\{\s*part:(\d+)\s*\}\}", repl, md)
 
 
+# `{{dt:<key>}}` — derive a design-system NAME from the token SSOT so the colophon's prose (faces, accent)
+# follows book-models/design-tokens.json instead of hardcoding "Fraunces"/"burnt umber". Colon-namespaced
+# like {{part:N}}, so _apply_metrics (which matches [a-z0-9_]+ only, no colon) never touches it. Unknown
+# key fails loud — a mistyped face stops the build, never ships {{dt:typo}} to the reader.
+_DT_TOKEN_RE = re.compile(r"\{\{\s*dt:([a-z0-9_]+)\s*\}\}")
+
+
+def _apply_design_tokens(md: str) -> str:
+    resolvers = {
+        "font_display": lambda: _TOKENS.type["display"]["family"],
+        "font_body":    lambda: _TOKENS.type["body"]["family"],
+        "font_mono":    lambda: _TOKENS.type["mono"]["family"],
+        "accent_name":  lambda: _TOKENS.accent_name,
+    }
+
+    def repl(m: "re.Match[str]") -> str:
+        key = m.group(1)
+        if key not in resolvers:
+            raise SystemExit(f"design-token marker {{{{dt:{key}}}}} — unknown key "
+                             f"(known: {', '.join(sorted(resolvers))})")
+        return resolvers[key]()
+    return _DT_TOKEN_RE.sub(repl, md)
+
+
+# `[gh:<repo-relative-path>]` or `[gh:<path>|<label>]` → a link to the file on GitHub, deriving owner/repo/
+# branch from repo-metadata.json (the same SSOT catalog.py + the citation Scholar-meta read). Label defaults
+# to the path. Emits a markdown link string that inline() renders to <a>; the offline path-exists guarantee
+# is the check_gh_refs gate in catalog.py validate, so this stays a pure string transform (fail-loud on a
+# rotted path lives in ONE place — the gate — not duplicated here).
+_REPO_META = json.loads(
+    (ROOT / "book-models" / "repo-metadata.json").read_text(encoding="utf-8"))
+_GH_BLOB_BASE = (f"https://github.com/{_REPO_META['owner']}/{_REPO_META['repo']}"
+                 f"/blob/{_REPO_META.get('default_branch', 'main')}")
+_GH_MARKER_RE = re.compile(r"\[gh:\s*([^\]|]+?)\s*(?:\|\s*([^\]]*?)\s*)?\]")
+
+
+def _apply_gh_refs(md: str) -> str:
+    def repl(m: "re.Match[str]") -> str:
+        path = m.group(1)
+        label = (m.group(2) or path).strip()
+        return f"[{label}]({_GH_BLOB_BASE}/{path})"
+    return _GH_MARKER_RE.sub(repl, md)
+
+
 # ─────────────────────────── Bibliography & citations (references.bib → citations.json → two surfaces) ──
 # The bib is the single source of truth; Chicago is rendered ONCE by render_citations.py through Typst and
 # committed to book/data/citations.json, which BOTH surfaces consume so they cannot drift. Design:
@@ -619,7 +663,8 @@ def build_bibliography_page(chapters: list[dict], nav_first: str, nav_last: str)
 
 
 def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str, str]) -> dict:
-    text = _apply_part_refs(_apply_metrics(path.read_text(encoding="utf-8"), metrics))
+    text = _apply_gh_refs(_apply_design_tokens(
+        _apply_part_refs(_apply_metrics(path.read_text(encoding="utf-8"), metrics))))
     meta = {k: v for k, v in META_RE.findall(text)}
     body = META_RE.sub("", text).strip()
     # Drop the leading H1 (# Chapter …) — we render it from metadata in the header.

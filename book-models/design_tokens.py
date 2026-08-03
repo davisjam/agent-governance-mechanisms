@@ -58,6 +58,12 @@ class Tokens:
     def type(self) -> dict:
         return self.raw["type"]
 
+    @property
+    def accent_name(self) -> str:
+        """Human name of palette.accent (#9a3f12) — for prose that says the color as a word.
+        Prose-only; not a render token (never enters css_root_block / typst_preamble)."""
+        return self.raw["accent_name"]
+
     def hex_(self, role: str) -> str:
         return self.palette[role]
 
