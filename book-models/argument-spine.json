@@ -152,7 +152,7 @@
     {
       "id": "modeling-thesis",
       "order": 7,
-      "statement": "Structured, drift-checked models bind intent to implementation and compress what the agent must hold, so the work fits the window and quality holds.",
+      "statement": "Binding intent and structure into explicit, drift-checked models gives agents a compact representation to reason through, and engineers a surface to specify, analyze, and predict.",
       "seeds": [
         4
       ],
@@ -164,7 +164,7 @@
       "reconciles_big_ideas": [
         "modeling-thesis"
       ],
-      "word_count": 23,
+      "word_count": 25,
       "advanced_by": [
         "0.1-preface",
         "1.3-loops-and-models",
