@@ -3,24 +3,8 @@
   "_note": "Phase 3 · 3a card substrate for the 3b clustering (book/_design/phase3a-brief-260803.md; method: the editorial directive's 'card + cluster'). One card per catalogue entry: Failure class · Engineering obligation · Solution structure · Guarantee · Semantic level · Forces/tradeoffs · Dependencies · Known uses · Likely parent family, plus optional abstract_name (where the entry title is implementation-biased) and note (carding ambiguities, flagged for 3b). 3b merges entries whose first six fields substantially coincide (only known-uses differing) and keeps entries apart when obligation OR guarantee differs; semantic_level records the RELATION enforced/modeled, not the implementation technology. READ-ONLY wrt entries: this model analyzes the catalogue; it does not govern it.",
   "_counts": {
     "census_total": 82,
-    "carded": 12,
+    "carded": 28,
     "pending": [
-      "agent/governance-doc-controls/claude-md-rule-index",
-      "agent/governance-doc-controls/doc-hygiene-lints",
-      "agent/governance-doc-controls/epic-and-design-templates",
-      "agent/governance-doc-controls/epic-definition-of-done",
-      "agent/governance-doc-controls/mandatory-snippet-table",
-      "agent/governance-doc-controls/operational-playbooks",
-      "agent/governance-doc-controls/operator-runbook-skill",
-      "agent/governance-doc-controls/semantic-level-enforcement",
-      "agent/lifecycle-and-observability/agent-registry",
-      "agent/lifecycle-and-observability/caused-by-provenance",
-      "agent/lifecycle-and-observability/cron-alerts-gate",
-      "agent/lifecycle-and-observability/deploy-heartbeats",
-      "agent/lifecycle-and-observability/lifecycle-hooks",
-      "agent/lifecycle-and-observability/reflection-facet-substrate",
-      "agent/lifecycle-and-observability/tombstone-commits",
-      "agent/lifecycle-and-observability/typed-event-bus",
       "models-bridge/system-models/agent-first-mbse-harness",
       "models-bridge/system-models/agent-orchestration-model",
       "models-bridge/system-models/component-zone-model",
@@ -77,21 +61,37 @@
       "product/validation-and-conformance/standards-rule-engine"
     ],
     "carded_by_role": {
-      "agent": 12
+      "agent": 28
     },
     "likely_parent_family_distribution": {
+      "Authoritative lifecycle state (disposition-bearing close record)": 1,
+      "Authoritative lifecycle state (record-before-destructive-action)": 1,
+      "Caused-by provenance (the agent-side member of the provenance stack)": 1,
       "Closed action vocabulary (applied to agent authority: typed authority profiles)": 1,
+      "Drift/parity gates (applied to the documentation corpus rather than a typed model)": 1,
+      "Encoded operational judgment (generated, lint-kept operator map over the runbooks)": 1,
+      "Encoded operational judgment (runbooks/playbooks)": 1,
       "Fail-fast environment validation (early substrate-health gate; a stair of the staged admission staircase)": 1,
+      "Fleet observability surfaces (progress-liveness variant)": 1,
+      "Fleet observability surfaces (typed signal with owned response)": 1,
+      "Governance-of-governance (the meta-mechanism: the enforced governance document)": 1,
       "Governed knowledge base (documentation as enforced infrastructure)": 1,
+      "Health-conditioned admission (an observability signal promoted into a blocking gate)": 1,
       "Mediated resource admission (fixed-cardinality variant, N=1 exclusive)": 1,
       "Mediated resource admission (fixed-cardinality variant, bounded M)": 1,
       "Mediated resource admission (whole-sweep singleton variant)": 1,
       "Mediated resource admission — but the directive flags this family may SPLIT by forces/guarantees: fixed-capacity concurrency mediation vs adaptive pressure-based admission + shedding; this card is the adaptive pole.": 1,
+      "PRINCIPLE candidate (L1) — this is a placement judgment that explains where mechanisms sit, not a pattern entry at the same level as its neighbors; 3b should consider lifting it out of the pattern set.": 1,
+      "Point-of-action policy delivery (feed-back aggregation over a shared tempo budget)": 1,
       "Point-of-action policy delivery (feed-forward constraint injection)": 1,
+      "Point-of-action policy delivery (runtime-event interposition)": 1,
+      "Re-derived definition of done (canonical pattern)": 1,
+      "Schema-governed planning artifacts (typed artifact shape — kin to validated dispatch, one genre up)": 1,
       "Staged admission gates (deploy tier)": 1,
       "Staged admission gates (integration tier) — conflict-aware integration scheduling": 1,
       "Staged admission gates (the path-to-production staircase) — the tree-keyed marker element is kin to re-derived-evidence patterns": 1,
-      "Validated dispatch (admission gate on the work order itself — pre-authorization of autonomous work)": 1
+      "Validated dispatch (admission gate on the work order itself — pre-authorization of autonomous work)": 1,
+      "Validated dispatch (the enabling registry behind the work-order gate)": 1
     }
   },
   "entries": {
@@ -277,6 +277,374 @@
         "known_uses": "DocAble's deploy driver (canary tag → smoke → promote → GC); the pre-deploy launch predicate; per-phase deploy heartbeats.",
         "likely_parent_family": "Staged admission gates (deploy tier)",
         "note": "Entry itself flags it as standard practice with thin novelty (defense-in-depth, amplified by agentic deploy frequency) — a demotion candidate per exclusion criterion 2."
+      }
+    },
+    "agent/governance-doc-controls/claude-md-rule-index": {
+      "title": "CLAUDE.md rule index + cap lint",
+      "role": "agent",
+      "family": "Governance-doc mechanisms",
+      "index_metadata": {
+        "form": "validation",
+        "move": "package",
+        "model": "—",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "Governance that doesn't bind and doesn't last: conventions living in heads or stale wikis never reach a fresh agent, and a living rules document either bloats until nothing in it lands or drifts from the canonical docs it summarizes — both taxing or misleading every dispatch, continuously.",
+        "engineering_obligation": "Govern the document that carries the governance: the delivery vehicle for every converted failure must itself be budgeted, admission-gated, and mechanically enforced, or the whole failure→mechanism move rots at its root.",
+        "solution_structure": "A stable-numbered rule index loaded into every agent's boot context (binding by construction); a three-part earns-its-spot admission predicate plus a router that relocates failing rules to sub-docs/comments; a hard counterpart of two blocking lints — a cap/bloat lint on size and a rule-conformance lint on the one-canonical-doc cross-reference discipline.",
+        "guarantee": "The index's form is mechanically held: bounded size, intact cross-references, stable citable numbering. Boundary: presence ≠ obedience — the index can claim a discipline that has quietly rotted, which is exactly what the Epic DoD's re-run audits.",
+        "semantic_level": "governance corpus → bounded binding index — the meta-relation: the record of the mechanisms is itself under mechanism (governance-of-governance).",
+        "forces_tradeoffs": "A hard budget means perpetual triage — admitting a rule eventually evicts one, and the eviction call is judgment-heavy. Stable numbering accretes dead entries forever. The per-dispatch context tax is simultaneously the benefit (binding) and the price.",
+        "dependencies": "A boot-context loader; the cap + conformance lints (doc-hygiene family); the Epic DoD as the claims-audit counterpart; consumed by dynamic-context-injection as the corpus it slices; same artifact as docs-hierarchy under the dispatch-context lens.",
+        "known_uses": "DocAble's CLAUDE.md numbered rule index; the governance-doc bloat lint and rule-conformance lint; the 'what belongs in this file' self-governing meta-section; the CLAUDE-starter.md portable download.",
+        "likely_parent_family": "Governance-of-governance (the meta-mechanism: the enforced governance document)",
+        "note": "Deliberately double-listed with agent/context-and-dispatch/docs-hierarchy — two lenses on one artifact; 3b should treat them as one mechanism with two views."
+      }
+    },
+    "agent/governance-doc-controls/doc-hygiene-lints": {
+      "title": "Doc-hygiene lints (index coverage, autogen provenance)",
+      "role": "agent",
+      "family": "Governance-doc mechanisms",
+      "index_metadata": {
+        "form": "validation",
+        "move": "sensor",
+        "model": "—",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Docs drift in ways a diff doesn't show: a hand-edit to a generated file is silently overwritten, a new doc never enters the index and is unfindable, a cross-reference dangles after a move — and agents then trust the stale corpus as ground truth.",
+        "engineering_obligation": "The structural properties of a documentation corpus (indexed, provenance-declared, reference-intact) must be mechanically checked — review sees the words, not the wiring the words hang on.",
+        "solution_structure": "A lint family over the corpus: an index-coverage lint (every doc indexed), an autogen-provenance lint (every emitted tracked file carries its emitter + regen path in its first lines, targets registered, marker re-emitted every run), and cross-reference/link-resolution lints; new lints land AUDIT-ONLY and migrate to BLOCKING.",
+        "guarantee": "Docs are indexed, provenance-headed, and reference-resolvable, or the pipeline fails. Boundary: mechanical only — a well-formed, well-indexed, wrong document passes.",
+        "semantic_level": "doc corpus ⟷ its declared structure — index ⊇ docs; emitted file → declared emitter; pointer → resolvable target.",
+        "forces_tradeoffs": "Structure, never prose correctness. The autogen registry and header convention are upkeep surfaces. Legitimate exceptions need an escape hatch (a small hole). Flipping to BLOCKING before the corpus is clean wedges the pipeline.",
+        "dependencies": "A doc index; the autogen-targets registry + provenance convention; an exemption escape; flagship sibling claude-md-rule-index; the same read-at-lint-time move as meta-model-consumption.",
+        "known_uses": "DocAble's index-coverage lint; the autogen-provenance lint + _AUTOGEN_TARGETS registry; the cross-reference/link lints.",
+        "likely_parent_family": "Drift/parity gates (applied to the documentation corpus rather than a typed model)",
+        "abstract_name": "Corpus-structure parity lints"
+      }
+    },
+    "agent/governance-doc-controls/epic-and-design-templates": {
+      "title": "Epic & design-doc templates",
+      "role": "agent",
+      "family": "Governance-doc mechanisms",
+      "index_metadata": {
+        "form": "agent-output",
+        "move": "package",
+        "model": "—",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "Free-form planning artifacts omit exactly the incident-preventing sections: the design doc that skips second-order dynamics ships a substrate that deadlocks at T+100, the Epic without a DoD is 'done' by assertion, the topic-introducing design without an observability block leaves the substrate unmonitorable.",
+        "engineering_obligation": "The required analytic content of a planning artifact is a structural contract — the shape declared like a schema and materialized by scaffold, not remembered by the author under time pressure.",
+        "solution_structure": "Fixed section-templates for the two planning genres (Epics, design docs); a stub tool atomically materializes the sections and registers the effort; lints/gates assert the required sections (registration, DoD criteria, an observability block for topic-emitting designs, a second-order-dynamics block for concurrent substrates).",
+        "guarantee": "Section presence is enforced; an effort can't be framed without its required analytic slots. Boundary: the hollow-section hole — a presence check passes an empty 'second-order dynamics' heading; the template forces the section, not the thought in it.",
+        "semantic_level": "planning artifact ⊨ required-section schema — the plan's shape as a typed contract, with each required section earning its place from a named past incident.",
+        "forces_tradeoffs": "Hollow sections pass. Template + scaffold + lint must move together or drift yields false rejections. Over-templating trivial changes adds ceremony authors route around.",
+        "dependencies": "The stub/scaffold tool; section-presence lints; the Epic DoD as the closing counterpart that verifies the template was satisfied; feeds the dynamics and observability disciplines at design time.",
+        "known_uses": "DocAble's Epic template + epic_stub.py materializer; the observability-block rule for event-bus topics; the second-order-dynamics section rule; the EPIC-TEMPLATE and design-doc starter downloads.",
+        "likely_parent_family": "Schema-governed planning artifacts (typed artifact shape — kin to validated dispatch, one genre up)",
+        "abstract_name": "Section-contract planning templates"
+      }
+    },
+    "agent/governance-doc-controls/epic-definition-of-done": {
+      "title": "Epic Definition-of-Done (Final-Opus trust-nothing re-run)",
+      "role": "agent",
+      "family": "Governance-doc mechanisms",
+      "index_metadata": {
+        "form": "quality-gate",
+        "move": "package",
+        "model": "—",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Premature or false close of a multi-dispatch effort: accumulated claims (phase markers, 'lints pass', pin counts) rot as sibling work churns the substrate underneath, so an effort closes with defenses that no longer hold (empirically 7/7 self-marked-DONE Epics had gaps).",
+        "engineering_obligation": "Establish completion by independently re-derived evidence against the current state — never by recorded assertion; trust nothing that was written down before now.",
+        "solution_structure": "A close gate that (a) machine-checks every cited commit is reachable from main by ancestry or patch-id (logged override for exceptions), and (b) mandates a fresh reviewer re-run of every owned pin test and lint at HEAD, compared against the claims, plus a scan for dropped follow-ups and doc rot; on clean close, status fields rewrite atomically and the effort moves to the closed tree.",
+        "guarantee": "An effort cannot close unless its commits are verifiably landed and its owned checks re-verified against the substrate as it stands now. Boundary: an under-declared 'owned' set re-runs too little and can still close on a rotted-but-unlisted defense; the override is a logged hole.",
+        "semantic_level": "completion claim ⊨ re-derived evidence at current state — completion moves from assertion to recomputation.",
+        "forces_tradeoffs": "Deliberately expensive (a strong reviewer plus a full owned-check pass) because a false close costs more. The override exists for legitimately-unreachable commits but is a way past the check. Accuracy of the owned set is load-bearing.",
+        "dependencies": "A machine-checkable close tool; a per-effort registry of owned pins/lints; a follow-up routing mechanism; counterpart to claude-md-rule-index (form-lints vs claims-audit).",
+        "known_uses": "DocAble's epic_close.py close --commits/--override; the Epic template's multi-criterion DoD with the Final-Opus trust-nothing re-run; the close-time tag routing-audit.",
+        "likely_parent_family": "Re-derived definition of done (canonical pattern)",
+        "abstract_name": "Re-derived definition of done"
+      }
+    },
+    "agent/governance-doc-controls/mandatory-snippet-table": {
+      "title": "Mandatory snippet-table enforcement",
+      "role": "agent",
+      "family": "Governance-doc mechanisms",
+      "index_metadata": {
+        "form": "validation",
+        "move": "sensor",
+        "model": "—",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "Per-dispatch boilerplate omissions: an author who forgets the PATH export, commit-cadence, worktree-discovery, or submodule snippet ships an agent that trips exactly that sharp edge mid-run; which snippets are mandatory is tribal knowledge that drifts as snippets accrete.",
+        "engineering_obligation": "The universal safety preamble for delegated work must be a registry with a mechanical reader — a checklist with no reader catches nothing.",
+        "solution_structure": "An include-table registry (snippet → include-when condition → grep-able marker string) plus verbatim snippet bodies; the pre-dispatch brief lint greps for every required marker per the include-when spec and refuses dispatch on any absence.",
+        "guarantee": "No brief dispatches without the required snippet markers present. Boundary: the marker catches absence, not staleness — an updated registry body doesn't propagate into already-pasted briefs.",
+        "semantic_level": "work order ⊇ registry of universal obligations — the brief's content ⊨ the declared set of always/conditional safety boilerplate.",
+        "forces_tradeoffs": "Verbatim-include means propagation drift. Every new snippet is a registry row + lint marker + template thread that must move together. Over-inclusion bloats briefs into noise.",
+        "dependencies": "brief-linting as the consumer (this registry is its enabler); the snippet bodies directory; the brief-template generator that pre-places markers.",
+        "known_uses": "DocAble's agent-snippet include-table (61 snippet files with include-when conditions); always-include snippets (worktree-path, rebase-first) vs conditional ones.",
+        "likely_parent_family": "Validated dispatch (the enabling registry behind the work-order gate)",
+        "abstract_name": "Registry-backed mandatory preamble"
+      }
+    },
+    "agent/governance-doc-controls/operational-playbooks": {
+      "title": "Operational playbooks (situation-keyed devops procedures)",
+      "role": "agent",
+      "family": "Governance-doc mechanisms",
+      "index_metadata": {
+        "form": "agent-output",
+        "move": "constraint",
+        "model": "—",
+        "enf": "Soft"
+      },
+      "card": {
+        "failure_class": "Incident-time improvisation: under pressure an agent re-derives a response from first principles and gets the sharp edges wrong — a flailing reset destroys landed work, a naive restart re-enters the loop, a 'cleanup' removes a live worktree; the cost peaks exactly when time is shortest.",
+        "engineering_obligation": "Pre-reason each recurring operational situation once, when nothing is burning: encode the trigger, the ordered steps, and the reflexes to avoid, and make the procedure discoverable at the moment of need.",
+        "solution_structure": "A library of situation-keyed procedures, each naming its triggering situation, ordered response steps, and anti-pattern reflexes; cross-referenced from the terse rule index and from the substrate signal that triggers it, so the observability surface carries 'which playbook to open'.",
+        "guarantee": "None — soft: a playbook aims the response and cannot block; its leverage is discoverability plus habit.",
+        "semantic_level": "operational situation → prescribed response — encoded judgment keyed by the situation, not by the doc.",
+        "forces_tradeoffs": "Ignorable. Rots when the substrate changes — a stale playbook actively mis-directs, worse than none. Dead weight once a failure mode retires. Not a substitute for designing the recurrence out or gating it.",
+        "dependencies": "Event-bus signals as entry points (a playbook with no signal is never triggered); rule-index cross-references for discoverability; a human who reasoned the response once.",
+        "known_uses": "DocAble's event-bus observability playbook; the cron-recovery chicken-and-egg procedure; the cron-alerts-gate recovery playbook; deploy-failure symptom→cause tables; the op-playbook starter download.",
+        "likely_parent_family": "Encoded operational judgment (runbooks/playbooks)",
+        "abstract_name": "Situation-keyed response procedures"
+      }
+    },
+    "agent/governance-doc-controls/operator-runbook-skill": {
+      "title": "Operator runbook skill (positive map + symptom index, ref-lint-kept)",
+      "role": "agent",
+      "family": "Governance-doc mechanisms",
+      "index_metadata": {
+        "form": "agent-output",
+        "move": "package",
+        "model": "—",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "The operator re-derives the substrate's shape from scratch every session and re-derives recoveries badly mid-incident, while doc pointers silently rot and send the next operator on a chase — the 'pet' stance (chatting the fleet toward a goal) at a scale that demands cattle.",
+        "engineering_obligation": "Give the operator an operator-keyed map that leads with how the substrate works when healthy (the positive model) and falls back to symptom-keyed routing when it breaks — generated from a typed source of truth and kept honest by reference validation, since a non-executable index earns trust from a ref-check, not tests.",
+        "solution_structure": "A loadable skill in two halves: a portable operating stance (observability-first RCA, the standing freedom to propose governance improvements) and a project catalog generated from typed YAML — the positive lifecycle map, symptom→resolving-doc rows, and runbooks whose steps carry typed automatability kinds (runnable / carried-brief / surface-to-user); a reference-validity lint resolves every pointer's file AND heading anchor; a partner failure-interpretation skill routes recurrences to designed mechanisms, never inline fixes.",
+        "guarantee": "Every listed pointer resolves against disk (hard). Boundary: the skill routes, it cannot execute or block; symptom coverage is soft and rots unless incidents are appended.",
+        "semantic_level": "observed symptom → resolving procedure, over a substrate ⟷ positive-operational-model relation; each runbook step ⊨ its declared automatability type.",
+        "forces_tradeoffs": "Value depends on being loaded and heeded. The lint guarantees validity of listed pointers, not completeness of the listing. Anchor resolution catches more rot but fires on every heading rename. The YAML→markdown render adds a build step that can itself drift.",
+        "dependencies": "A typed YAML source of truth; the reference-validity lint (the drift-parity move applied to a doc-skill); operational-playbooks underneath as the failure half; semantic-level-enforcement for placing designed mechanisms.",
+        "known_uses": "DocAble's operate-ada-tool-repo skill (pointer catalog + runbook catalog YAML); typed step-kinds; the DoD drift-audit runbook whose runnable steps are driven off the system models; the file+anchor reference lint.",
+        "likely_parent_family": "Encoded operational judgment (generated, lint-kept operator map over the runbooks)",
+        "abstract_name": "Generated operator map with validated references"
+      }
+    },
+    "agent/governance-doc-controls/semantic-level-enforcement": {
+      "title": "Enforce at the right semantic level",
+      "role": "agent",
+      "family": "Governance-doc mechanisms",
+      "index_metadata": {
+        "form": "agent-output",
+        "move": "constraint",
+        "model": "governs-a-model",
+        "enf": "Soft"
+      },
+      "card": {
+        "failure_class": "A mechanism placed below its property's legibility scope silently never enforces: it either can't see the property (a leak is a call sequence, invisible one syscall at a time) or false-fires on legitimate partial state (per-commit model-parity rejects every mid-task commit) — and the mis-placement looks wired and runs green forever.",
+        "engineering_obligation": "Place each control at the smallest scope where its property is decidable — match the mechanism's enforcement window to the property's semantic window; convenience (cheapest, earliest hook) and legibility are different axes.",
+        "solution_structure": "A design-time placement procedure: state the property as a predicate sharp enough that 'where is this legible?' has an answer; find the smallest window containing the evidence; bind the mechanism to the lifecycle rung whose window matches, on an escalating ladder (syntactic diff-check → reasoning pass over the diff → whole-worktree final commit → agent-return review → effort-close intent review); prefer the lowest sound rung.",
+        "guarantee": "None — a soft design-time judgment; a mis-placed mechanism still ships. The tell of a skipped placement question is a mechanism that fires forever and never catches its class.",
+        "semantic_level": "property's legibility scope ⟷ control's enforcement scope — the meta-relation of placement itself (this entry governs where other mechanisms sit).",
+        "forces_tradeoffs": "The higher rung costs latency — the price of soundness, not a defect. Nothing forces the question to be asked. Over-placing a file-legible property up the ladder buys nothing and delays the catch.",
+        "dependencies": "A ladder of enforcement points at distinct scopes (commit hook, runtime events, agent-return, effort-close); a design-review or failure-interpretation path that forces the placement question; it places pre-commit-hook, lifecycle-hooks, and the Epic DoD as rung instances.",
+        "known_uses": "DocAble's model-drift check at agent-return rather than the commit hook; the data-exfiltration/semantic-gap example (sequence, not syscall); operator-loop omissions at runtime events; the banned-API counter-example that belongs at the bottom rung.",
+        "likely_parent_family": "PRINCIPLE candidate (L1) — this is a placement judgment that explains where mechanisms sit, not a pattern entry at the same level as its neighbors; 3b should consider lifting it out of the pattern set.",
+        "abstract_name": "Enforcement-scope/legibility matching"
+      }
+    },
+    "agent/lifecycle-and-observability/agent-registry": {
+      "title": "Agent-registry (`agent-registry.jsonl` + marker cache)",
+      "role": "agent",
+      "family": "Lifecycle & observability",
+      "index_metadata": {
+        "form": "observability",
+        "move": "sensor",
+        "model": "—",
+        "enf": "Hard (signal)"
+      },
+      "card": {
+        "failure_class": "Unsafe reclaim of live work: liveness inferred from filesystem timestamps races with running agents — an agent mid-work looks identical to a stale one and has its worktree destroyed under it; recurs on every cleanup pass.",
+        "engineering_obligation": "Destructive lifecycle decisions must consult an authoritative recorded fact of liveness and state, never an inference from side effects — the record precedes the reclaim.",
+        "solution_structure": "An append-only registry log plus a fast per-agent marker cache, dual-written by every lifecycle tool at every transition; destructive-op gates query a three-gate chain (registry → marker → git-lock) before removing anything; a declared winner (registry) on any divergence.",
+        "guarantee": "'Is this agent live?' is a lookup against a recorded fact, and tools refuse to operate on an agent whose live marker exists. Boundary: exactly as strong as the weakest writer — one side-door lifecycle mutation that skips the registry reintroduces the race.",
+        "semantic_level": "destructive operation ⊨ recorded lifecycle state — authority over 'what is alive' moves from inferred filesystem signals to an authoritative append-only record.",
+        "forces_tradeoffs": "Universal dual-write discipline is the fragile load-bearing assumption. Append-only growth needs rotation. Registry/cache divergence can briefly mislead a cache-trusting tool.",
+        "dependencies": "The dispatch wrapper's prepare step (the first writer); consumers: tombstone-commits (live guard), cleanup-stale, merge-train (readiness), sentinel-first-commit (substrate facts).",
+        "known_uses": "DocAble's agent-registry.jsonl + active-agents marker cache; the 3-gate cleanup-stale chain; the live-worktree guard and dedup-via-registry pattern; it concretely replaced the mtime heuristic that destroyed in-flight work.",
+        "likely_parent_family": "Authoritative lifecycle state (record-before-destructive-action)",
+        "abstract_name": "Authoritative lifecycle record"
+      }
+    },
+    "agent/lifecycle-and-observability/caused-by-provenance": {
+      "title": "Caused-by provenance (agent-side change traceability)",
+      "role": "agent",
+      "family": "Lifecycle & observability",
+      "index_metadata": {
+        "form": "audit-trail",
+        "move": "package",
+        "model": "—",
+        "enf": "Hard"
+      },
+      "card": {
+        "failure_class": "The un-warranted change: a landed diff whose reason survives only as tribal knowledge — behavioral RCA of 'why did the fleet do this?' becomes guesswork, and any causal claim about whether a mechanism changes behavior reduces to Goodhart-able co-occurrence.",
+        "engineering_obligation": "Every state-changing action must carry a trace to its cause, drawn from a closed taxonomy, minted at the cause and asserted at admission — causation wherever an artifact holds the cause, an honestly-labeled proxy where none can, and never a rate anyone optimizes.",
+        "solution_structure": "A closed caused-by taxonomy (scheduled effort / runtime reflection firing / ad-hoc); the commit gate asserts the typed field is present and names a taxonomy value; the cause-id travels with the dispatch so the field comes out for free rather than being reconstructed; a _proxy suffix labels inferred causes; a telemetry query reports the mix as a health signal that is read, never rewarded.",
+        "guarantee": "No agent commit lands without a typed cause naming a known value (presence is hard). Boundary: the choice among values is the agent's judgment (soft); proxy-labeled causes are honest inference, not causation.",
+        "semantic_level": "every repository change → its cause — agent-side change provenance; a continuously-emitted traceability matrix, one row per commit.",
+        "forces_tradeoffs": "Some causes are irreducibly proxy — heavier mechanism relocates rather than removes that uncertainty. The taxonomy is a coordination point (new causes need declared values). The moment the deterministic-vs-proxy ratio becomes a target, the field starts lying.",
+        "dependencies": "The pre-commit hook as the assertion gate; dispatch artifacts that carry the cause-id; the closed taxonomy; counterpart mutator-stamps (product-side provenance); specializes the measured-leash yield query from correlation to causation.",
+        "known_uses": "DocAble's caused-by: epic:<id> | reflection:<fire_id> | ad-hoc field asserted by the code-agent pre-commit hook; the caused-by-mix telemetry query read by a self-operations runbook.",
+        "likely_parent_family": "Caused-by provenance (the agent-side member of the provenance stack)",
+        "abstract_name": "Typed cause-to-change traceability"
+      }
+    },
+    "agent/lifecycle-and-observability/cron-alerts-gate": {
+      "title": "Cron-alerts gate",
+      "role": "agent",
+      "family": "Lifecycle & observability",
+      "index_metadata": {
+        "form": "observability",
+        "move": "sensor",
+        "model": "—",
+        "enf": "Hard (blocking)"
+      },
+      "card": {
+        "failure_class": "Dispatching new work onto a known-broken substrate: the orchestrator can see (or miss, or ignore) a high-severity alert and keep piling work into a system that cannot land it, compounding the mess.",
+        "engineering_obligation": "A surfaced critical health failure must compel a response before new work is admitted — promote the observability signal into a blocking admission barrier (availability → binding, applied to alerts).",
+        "solution_structure": "An append-only alert channel with a severity scale plus an ack log with terminal states; the dispatch-side tools (dispatch, worktree creation, merge-train run/stage/attest, brief creation) consult it and refuse while an unresolved HIGH exists; the canonical resolution is an alert-resolving dispatch that auto-acks and ships the fix; EXEMPT tools + the resolve path give designed-in deadlock freedom.",
+        "guarantee": "Once polled, no new work-dispatch proceeds past an unresolved HIGH alert. Boundary: inherits the alert producer's severity accuracy; the audited bypass ack can paper over a real break; seeing the alert depends on the session-start poll discipline.",
+        "semantic_level": "new-work admission ⊨ acknowledged substrate health — the health state of the environment becomes a precondition on admitting more work into it.",
+        "forces_tradeoffs": "A stuck or unackable alert can wedge the orchestrator (mitigated by EXEMPT paths + recovery playbook). Mis-tagged severity over- or under-blocks. The gate is only as good as the poll that surfaces it.",
+        "dependencies": "typed-event-bus (alerts are derived events); the ack log; dispatch tools wired to consult; a recovery playbook; the resolves-alert dispatch path.",
+        "known_uses": "DocAble's cron-alerts channel + acks log; the HIGH-alert dispatch block across dispatch/worktree/merge-train/brief tools; the --resolves-alert auto-ack dispatch.",
+        "likely_parent_family": "Health-conditioned admission (an observability signal promoted into a blocking gate)",
+        "abstract_name": "Alert-conditioned work admission"
+      }
+    },
+    "agent/lifecycle-and-observability/deploy-heartbeats": {
+      "title": "Deploy heartbeats + stale-worker detection",
+      "role": "agent",
+      "family": "Lifecycle & observability",
+      "index_metadata": {
+        "form": "observability",
+        "move": "sensor",
+        "model": "—",
+        "enf": "Hard (signal)"
+      },
+      "card": {
+        "failure_class": "A hung long-running operation is indistinguishable from a slow one: the orchestrator either kills a healthy-but-slow deploy or waits forever on a dead one; process-alive proves nothing (a deadlocked process is alive).",
+        "engineering_obligation": "Long-running operations must emit periodic progress evidence — liveness and phase advancement observable mid-flight, so staleness is decidable from signal absence.",
+        "solution_structure": "A phase-structured operation emits phase + elapsed on a fixed cadence (every 30 s) to a greppable log; a stale-worker sweep flags emitters that stopped; a blocking startup concurrency guard sits beside the signal.",
+        "guarantee": "Liveness and progress are observable at cadence granularity; 'no heartbeat for N windows' reads deterministically as stale. Boundary: liveness ≠ correctness — a deploy can heartbeat steadily while failing.",
+        "semantic_level": "running operation → periodic progress assertion — absence of the expected signal ⊨ staleness; the observed distinction is progressing vs existing.",
+        "forces_tradeoffs": "The consumer must know the cadence or the signal is noise. 30 s resolution misses short hangs. Heartbeat lines add log volume.",
+        "dependencies": "A phase loop with an emit point; a parseable format; a cadence-aware consumer; layers under staged-deploy-gates as its liveness signal.",
+        "known_uses": "DocAble's [heartbeat] phase=X elapsed=Ns deploy emissions; the overlapping-deploy startup guard; the stale-worker detection sweep.",
+        "likely_parent_family": "Fleet observability surfaces (progress-liveness variant)",
+        "abstract_name": "Progress heartbeat with staleness predicate"
+      }
+    },
+    "agent/lifecycle-and-observability/lifecycle-hooks": {
+      "title": "Lifecycle hooks (turn-stop / compaction / session-start / pre-action)",
+      "role": "agent",
+      "family": "Lifecycle & observability",
+      "index_metadata": {
+        "form": "quality-gate",
+        "move": "package",
+        "model": "—",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "Operator-loop omissions at predictable runtime moments (ending a turn with work queued, compacting without a hand-off, opening a session without reading alerts, editing outside the sanctioned worktree): no source artifact exists for a lint, and recall-based house-rules fail exactly when attention is thin.",
+        "engineering_obligation": "A step owed at a runtime moment must fire deterministically at that moment, independent of anyone's memory — split enforcement into guaranteed firing (hard) and a payload that either blocks or aims (hard block vs soft guidance).",
+        "solution_structure": "Scripts bound to named runtime lifecycle events (turn-stop, pre-compaction, session-start, before-a-tool-call); a blocking payload vetoes the action, a guidance payload re-injects text into the agent's context; checks kept cheap; guidance fails open, blocks fail closed; hook output is a typed contract validated against the runtime's actual schema at build time; every soft payload ships firing telemetry + a yield query on a measured leash with a written pull condition.",
+        "guarantee": "The firing is guaranteed by the runtime — impossible to forget. Boundary: a guidance payload aims deterministically but does not compel; only the blocking variant compels; a buggy hook's blast radius is the whole loop.",
+        "semantic_level": "runtime lifecycle event → guaranteed check at that moment — deterministic delivery of policy at the decision point ('hard delivery of soft guidance').",
+        "forces_tradeoffs": "Fires on every event occurrence, needed or not — must stay cheap or gets disabled. Nag/tune-out risk on misread state. The wired-but-dead failure (output shape silently dropped by the runtime) is the worst fail-open. Soft payloads are unmanageable without their own telemetry.",
+        "dependencies": "A runtime exposing lifecycle events + registration; the measured-leash telemetry discipline; semantic-level-enforcement picks this rung for operator-loop properties; generalizes into reflection-facet-substrate at the second reflection hook.",
+        "known_uses": "DocAble's turn-stop non-stop hook; the pre-compaction hand-off hook; the session-start alert-backlog ritual; the before-a-tool-call worktree guard; the build-time hook-output conformance check; the self-check hook whose telemetry closed the loop on its own yield.",
+        "likely_parent_family": "Point-of-action policy delivery (runtime-event interposition)",
+        "abstract_name": "Lifecycle-event interposition"
+      }
+    },
+    "agent/lifecycle-and-observability/reflection-facet-substrate": {
+      "title": "Reflection-facet substrate (tempo-gated policy nudges)",
+      "role": "agent",
+      "family": "Lifecycle & observability",
+      "index_metadata": {
+        "form": "quality-gate",
+        "move": "package",
+        "model": "—",
+        "enf": "Soft·Hard"
+      },
+      "card": {
+        "failure_class": "At the second policy-reflection nudge, N independent hooks destroy themselves: alarm fatigue kills the whole family together, each hook re-implements tempo/silence/telemetry machinery that drifts, and policy baked into payload strings rots when the canonical doc moves.",
+        "engineering_obligation": "Aggregate soft policy nudges under one shared attention budget with uniform machinery and policy held by reference — cap the family's aggregate emission, not each member's.",
+        "solution_structure": "A Template-Method facet base with a closed specialization surface (lint-enforced); a typed facet registry; a shared emitter bound to the lifecycle event that round-robins facets and emits at most one reflection per window; each facet declares a resolvable pointer into canonical policy material (pointer-resolve lint); follow-ups drawn from a closed vocabulary; per-firing telemetry + yield query (the measured leash).",
+        "guarantee": "The aggregate nudge rate is mechanically capped (≤1/window) and facet uniformity holds by construction; every policy pointer resolves. Boundary: the reflections themselves are soft — default-silent, never blocking; no facet is guaranteed to fire on every eligible event.",
+        "semantic_level": "policy dimension → paced operator reflection — an attention budget over a family of soft signals, with policy referenced (single-source) rather than copied.",
+        "forces_tradeoffs": "Facets compete for the window: per-facet promptness traded for aggregate calm. The closed surface makes the base a coordination point for new capabilities. Pure over-engineering at N=1 — earns its keep at the second facet.",
+        "dependencies": "lifecycle-hooks as the single-hook primitive; a canonical, referenceable policy corpus with a ref grammar; the measured-leash telemetry; meta-model-consumption (reference, don't copy).",
+        "known_uses": "DocAble's ReflectionFacet base + typed registry with four facets (failure→mechanism, knowledge-routing, structural-drift, operations); the turn-end round-robin emitter; the closed-surface and pointer-resolve lints; the portable stdlib copy-and-adapt library shipped with the catalogue's skill.",
+        "likely_parent_family": "Point-of-action policy delivery (feed-back aggregation over a shared tempo budget)",
+        "abstract_name": "Tempo-budgeted reflection registry"
+      }
+    },
+    "agent/lifecycle-and-observability/tombstone-commits": {
+      "title": "Tombstone commits (lifecycle close records)",
+      "role": "agent",
+      "family": "Lifecycle & observability",
+      "index_metadata": {
+        "form": "audit-trail",
+        "move": "sensor",
+        "model": "—",
+        "enf": "Hard (audit)"
+      },
+      "card": {
+        "failure_class": "The reclaim dilemma: without a durable close record, cleanup either deletes eagerly and destroys unlanded work or never deletes and leaks worktrees — 'done' is ambiguous between cherry-picked and deliberately abandoned; recurs at every agent completion.",
+        "engineering_obligation": "An irreversible reclaim must be justified by a durable, machine-checkable close record carrying an explicit disposition — cleanup proves safety from the record instead of guessing intent off a branch.",
+        "solution_structure": "A tombstone commit written at the worktree branch tip carrying a disposition from a small vocabulary (cherry-picked / declared-skipped); concurrent closers deduplicated via a registry event; a live-worktree guard refuses tombstoning any agent with a live marker; mass operations require explicit id-lists (runtime enumeration banned); cleanup verifies the predicate 'tombstone at tip AND every non-tombstone commit picked-or-skipped'.",
+        "guarantee": "Cleanup can prove a worktree is reclaimable before removing it. Boundary: the reclaim trusts the record's correctness — a disposition that mis-records 'skipped' for unlanded work greenlights an unsafe reclaim.",
+        "semantic_level": "lifecycle close → disposition record — the destructive operation ⊨ recorded proof that all work is accounted for.",
+        "forces_tradeoffs": "The tombstone: bypass prefix skips the commit gate by design (honesty-dependent). Dedup depends on the registry event. Manual id-lists are deliberate friction against runtime enumeration.",
+        "dependencies": "agent-registry (live markers + the dedup event); the commit substrate as the record store; cleanup-stale as the verifying consumer.",
+        "known_uses": "DocAble's tombstone_commit.py disposition records; the tombstoning_started dedup event (exit 78); the cleanup-stale safe-to-reclaim predicate; the --id-file mass-tombstone discipline.",
+        "likely_parent_family": "Authoritative lifecycle state (disposition-bearing close record)",
+        "abstract_name": "Disposition-bearing close record"
+      }
+    },
+    "agent/lifecycle-and-observability/typed-event-bus": {
+      "title": "Orchestrator-as-reactor over an event bus",
+      "role": "agent",
+      "family": "Lifecycle & observability",
+      "index_metadata": {
+        "form": "observability",
+        "move": "sensor",
+        "model": "—",
+        "enf": "Hard (signal)"
+      },
+      "card": {
+        "failure_class": "Silent substrate degradation under an un-reacting orchestrator: fleet health (cron, merge-train, tombstones) is invisible without a signal surface, so breakage accretes for hours while each dispatch still looks locally fine.",
+        "engineering_obligation": "Make operational health a queryable, self-documenting, typo-proof signal surface, and bind every signal to a prescribed response — emission alone is not observability; the loop is emit → interpret → react.",
+        "solution_structure": "A typed event bus whose topics form a closed const-string registry (lint-enforced, so a typo cannot create a dead topic); every topic carries a playbook entry (baseline-healthy · what-looks-wrong · response); a design-doc rule makes a topic without an observability block an incomplete design; the orchestrator polls on a defined cadence and reacts per playbook.",
+        "guarantee": "Emission is mechanical and topics enumerable; the bus itself never blocks (the derived alerts gate does). Boundary: acting on the signal is orchestrator discipline — a perfect signal can still be ignored.",
+        "semantic_level": "substrate event → typed topic → prescribed response — each signal carries its own interpretation and reaction, versus free-form logs that carry neither.",
+        "forces_tradeoffs": "Only as useful as playbook coverage (the common gap). Consumption rests on poll cadence discipline. Every new topic is a registry row + emit wiring + playbook entry kept in sync.",
+        "dependencies": "The const-string topic registry + its lint; operational-playbooks as the reaction half; cron-alerts-gate as the derived blocking consumer; sibling surfaces agent-registry and deploy-heartbeats.",
+        "known_uses": "DocAble's event bus + topic registry; the event-bus playbook and the observability-block requirement on topic-introducing design docs; the session-start + post-cherry-pick monitoring cadence.",
+        "likely_parent_family": "Fleet observability surfaces (typed signal with owned response)",
+        "abstract_name": "Reactor loop over a typed signal surface"
       }
     },
     "agent/mediators-and-resource-locks/aggregate-compute-protection": {
