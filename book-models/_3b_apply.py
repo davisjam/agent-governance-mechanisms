@@ -212,6 +212,147 @@ def cap_sync_assurance_govern_models(d):
     dispose(d, "agent/governance-doc-controls/epic-definition-of-done", "keep-as-L2 Re-Derived Definition of Done", "Canonical CAP-COMPLETE completion mechanism.")
 
 
+@group("product-all")
+def product_all(d):
+    add_l2(d, "One Door Enforced", {
+        "abstract_name": "One Door Enforced (sole sanctioned mutation surface)",
+        "intent": "Route all mutation of a hazardous resource through one typed surface that encodes its invariants, with the raw alternative structurally banned — the bug made unrepresentable, not reviewed for. (Our instance: PdfModel, held by a raw-iText ban-lint.)",
+        "capability": "CAP-CONSTRAIN",
+        "relation": "every mutation → the sanctioned typed seam (construction, held by a counted detection sensor)",
+        "score": {"novelty": 2, "agentic": 2, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 2, "evidence": 2, "tradeoffs": 2, "composition": 2, "wow": 1, "total": 19},
+        "override": "Foundational — the Alignment-thesis mutation-constraint flagship.",
+        "canonical_card": "product/canonical-models-and-seams/pdf-model",
+        "vivid_failure": "a raw library call bypassed the format's invariants and shipped a corrupt tag tree (the v172 corruption)",
+        "concrete_impl": "PdfModel is the sole PDF mutation surface; a ban-lint keeps every call site off raw iText",
+        "merged_cards": ["product/canonical-models-and-seams/pdf-model"],
+        "variants_note": "Same one-door RELATION over different resources, folded as known-uses (distinct resource, distinct guarantee-boundary preserved): office-models (defect-class consolidation on a 2nd object model), raw-redis-seam (shared-state + schema seam), service-client (typed cross-service seam — the signature is the enforcement), canonical-walkers (the traversal component: one walker per tree)."
+    })
+    add_l2(d, "Closed Action Vocabulary", {
+        "abstract_name": "Closed Action Vocabulary",
+        "intent": "Make the actor's move-space a closed, named, typed set — bounding the action space is what makes attribution, validation, and policy tractable at all; an absent action forces a deliberate vocabulary addition.",
+        "capability": "CAP-CONSTRAIN",
+        "relation": "every mutation ∈ the closed verb vocabulary (the bounded action space over the artifact)",
+        "score": {"novelty": 1, "agentic": 2, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 1, "evidence": 1, "tradeoffs": 2, "composition": 2, "wow": 1, "total": 16},
+        "override": "Foundational — bounding a probabilistic actor's move-space is what makes every downstream governance question finite.",
+        "canonical_card": "product/repair-vocabulary/remediation-verbs",
+        "vivid_failure": "an open-ended repair space made attribution and validation questions unanswerable — anything could have happened",
+        "concrete_impl": "a closed, typed remediation-verb set; every mutation is one named verb",
+        "merged_cards": ["product/repair-vocabulary/remediation-verbs"],
+        "variants_note": "typed-categories (closed typed enum with exhaustiveness as the checkable property — category variant), role-typed-dispatch (the same closed-vocabulary move applied to AUTHORITY: bundles of capability as a typed role, enforced at every gated op), codemod-first (an execution-MODE vocabulary — soft threshold rule bounding how bulk change executes)."
+    })
+    add_l2(d, "Machine-Enforced Semantic Policy", {
+        "abstract_name": "Machine-Enforced Semantic Policy",
+        "intent": "Encode every mechanically-detectable domain invariant as a blocking check with scoped, reason-bearing escapes — audits become lints; policy moves from reviewer memory into durable machinery. (The distinctively agentic force: agents produce violations too fast for human review.)",
+        "capability": "CAP-CONSTRAIN",
+        "relation": "implementation ⊨ semantic policy — per-source domain invariants over the tool's own code (a DISTINCT relation from parity, provenance-coverage, and seam-mediation, even though all use lint technology)",
+        "score": {"novelty": 1, "agentic": 2, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 1, "evidence": 2, "tradeoffs": 2, "composition": 1, "wow": 1, "total": 16},
+        "override": "Foundational — the operational form of P5 (convert recurring failures into enforced controls).",
+        "canonical_card": "product/validation-and-conformance/semantic-lints",
+        "vivid_failure": "a policy that lived in reviewer memory was silently violated once the reviewer was a fleet; worse, a checker became the hazard (a ReDoS regex — the fix was deleting the regex surface, not linting the bug)",
+        "concrete_impl": "the blocking-semantic-lint fleet with scoped reason-bearing suppressions",
+        "merged_cards": ["product/validation-and-conformance/semantic-lints"],
+        "false_merger_note": "NOT merged with Drift/Parity Gate, Caused-By Provenance's wiring lint, or the mediator ban-lints — all are 'lints' but enforce different relations."
+    })
+    add_l2(d, "Preservation Invariant", {
+        "abstract_name": "Preservation Invariant",
+        "intent": "Make semantic preservation a deterministic post-condition checked on every produced artifact — the input's content must survive as a subset of the output — with a per-stage variant that names the stage that lost it.",
+        "capability": "CAP-PRESERVE",
+        "relation": "input content ⊆ output content — the preservation invariant over the artifact",
+        "score": {"novelty": 2, "agentic": 1, "durability": 2, "generality": 2, "thesis": 1, "arch_depth": 1, "evidence": 2, "tradeoffs": 2, "composition": 2, "wow": 1, "total": 16},
+        "override": "Coverage/Case — the semantic-preservation class; indispensable to DocAble's correctness posture.",
+        "canonical_card": "product/validation-and-conformance/content-validator",
+        "vivid_failure": "a remediation pass silently dropped document content — 'ran successfully but produced garbage'",
+        "concrete_impl": "ContentValidator checks input ⊆ output on every artifact; a staging variant localizes the offending pass",
+        "merged_cards": ["product/validation-and-conformance/content-validator"],
+        "composition": "the payoff of the sanctioned seam + provenance stack — damage through the one door is caught here"
+    })
+    add_l2(d, "Conformance-to-External-Spec Engine", {
+        "abstract_name": "Conformance-to-External-Spec Engine",
+        "intent": "Make conformance a deterministic predicate in which every finding names the external-standard clause it closes, and keep the coverage claim honest (covered / gap / aspirational) by a same-commit discipline.",
+        "capability": "CAP-PRESERVE",
+        "relation": "finding → external-standard clause — the artifact ⊨ an external conformance specification, clause-grounded",
+        "score": {"novelty": 1, "agentic": 1, "durability": 2, "generality": 1, "thesis": 1, "arch_depth": 1, "evidence": 2, "tradeoffs": 1, "composition": 1, "wow": 1, "total": 12},
+        "override": "Case/Coverage — indispensable to understanding DocAble (the product IS a conformance tool) + represents the external-spec-conformance class.",
+        "canonical_card": "product/validation-and-conformance/standards-rule-engine",
+        "vivid_failure": "an opaque conformance score could not be defended clause by clause when a claim was challenged",
+        "concrete_impl": "the WCAG/standards rule engine; each finding cites its clause, coverage tracked covered/gap/aspirational",
+        "merged_cards": ["product/validation-and-conformance/standards-rule-engine"]
+    })
+    add_l2(d, "Caused-By Provenance", {
+        "abstract_name": "Caused-By Provenance (Complete Mutation Provenance)",
+        "intent": "Attach durable attribution at the point of every mutation and check that the wiring is COMPLETE over a closed verb set, so the artifact's mutation history — who changed what, and why — is reconstructable on demand. (Our instance: per-mutator stamps + a wiring lint + a derived changelog.)",
+        "capability": "CAP-PROVENANCE",
+        "relation": "every mutation site → embedded provenance; every mutation verb → wired emission (coverage-completeness); every change → its typed cause",
+        "score": {"novelty": 2, "agentic": 2, "durability": 2, "generality": 2, "thesis": 2, "arch_depth": 2, "evidence": 2, "tradeoffs": 2, "composition": 2, "wow": 2, "total": 20},
+        "override": "Foundational + Awesome — reconstruct a document's mutation history from embedded provenance; the strong composition (seam → stamps → wiring-lint → changelog) is the showcase.",
+        "canonical_card": "product/provenance-and-attribution/mutator-stamps",
+        "vivid_failure": "an input-vs-output diff could say WHAT changed but never WHO or WHY, so a remediation could not be explained or reversed",
+        "concrete_impl": "per-mutator stamps embedded at the mutation site, one sanctioned writer per format",
+        "merged_cards": ["product/provenance-and-attribution/mutator-stamps"],
+        "components_note": "A COMPOSED STACK, presented as one canonical pattern with named components (not merged-identical): a11y_-prefix (MARK the insertion + auto-register for validation), mutator-stamps (EMIT at the site), f10-wiring-lint (COVER: every verb wired, completeness legible + cheap), derive-changelog (READ: reconstruct the attributed history), caused-by-provenance (the AGENT-SIDE arm: every commit → typed cause from a closed taxonomy)."
+    })
+    add_l2(d, "Generative Validation", {
+        "abstract_name": "Generative Validation",
+        "intent": "Falsify a specification with machine-generated inputs at two poles — invariant-shaped properties over tame inputs (round-trip, idempotence, laws) and wild adversarial inputs fixed to the stable spec point — with the structured model as the declared oracle in the deepest form.",
+        "capability": "CAP-COMPLETE",
+        "relation": "generated input → declared specification (invariant / stable spec point); the model-as-oracle collapses the rich-oracle-vs-wild-input tradeoff",
+        "score": {"novelty": 1, "agentic": 1, "durability": 2, "generality": 2, "thesis": 1, "arch_depth": 1, "evidence": 2, "tradeoffs": 2, "composition": 1, "wow": 1, "total": 14},
+        "override": "Awesome (facet) — the model-as-oracle synthesis is the distinctive contribution; property/fuzz alone are standard practice (exclusion crit 2/9).",
+        "canonical_card": "product/regression-tests/fuzz-campaigns",
+        "vivid_failure": "a fix aimed at a failing fuzz SEED passed that seed and still broke every other spec-allowed input",
+        "concrete_impl": "fuzz campaigns with RCA to the stable spec point + coverage measurement; FsCheck property tests at the tame-input pole",
+        "merged_cards": ["product/regression-tests/fuzz-campaigns", "product/regression-tests/property-tests"],
+        "merge_rationale": "The two entries self-frame as 'two sides of one coin' — same obligation (falsify the spec over generated inputs), same guarantee shape (confidence by sampling, not proof), differing only in the oracle/input pole. Merged; property-tests is the tame-oracle pole, fuzz the wild-input pole."
+    })
+
+    # One Door variants/known-uses
+    dispose(d, "product/canonical-models-and-seams/pdf-model", "keep-as-L2 One Door Enforced", "Canonical sole-mutation-surface mechanism.")
+    dispose(d, "product/canonical-models-and-seams/office-models", "demote-to-L3-under One Door Enforced",
+            "Defect-class-consolidation known-use: the same construction+ban pattern on a 2nd object model (per-format), so a fix benefits every format at once. The entries themselves frame it as consolidation.")
+    dispose(d, "product/canonical-models-and-seams/raw-redis-seam", "demote-to-L3-under One Door Enforced",
+            "Shared-state-seam variant: the sole raw-Redis seam owns atomicity + the declared schema — 'no other place to write the bug'.")
+    dispose(d, "product/canonical-models-and-seams/service-client", "demote-to-L3-under One Door Enforced",
+            "Typed distributed variant: the ONE cross-service seam whose signature (bytes, not path) makes the type-confusion class unrepresentable.")
+    dispose(d, "product/canonical-models-and-seams/canonical-walkers", "demote-to-L3-under One Door Enforced",
+            "Traversal COMPONENT: one walker per tree centralizes traversal invariants. Entry self-declares low novelty — a component of the sanctioned-surface pattern, not a peer.")
+
+    # Closed Action Vocabulary variants
+    dispose(d, "product/repair-vocabulary/remediation-verbs", "keep-as-L2 Closed Action Vocabulary", "Canonical closed-action-vocabulary mechanism.")
+    dispose(d, "product/repair-vocabulary/typed-categories", "demote-to-L3-under Closed Action Vocabulary",
+            "Category variant: closed typed enum (ViolationCategory/FailureCategory) with exhaustiveness as the checkable property; external strings mapped in at a controlled boundary.")
+    dispose(d, "product/repair-vocabulary/codemod-first", "demote-to-L3-under Closed Action Vocabulary",
+            "Execution-mode variant: a soft threshold rule (N≳50 → one deterministic AST transform) bounding HOW bulk change executes. A process discipline, folded as the execution-mode face of a bounded action space.")
+
+    # Semantic policy / preservation / conformance
+    dispose(d, "product/validation-and-conformance/semantic-lints", "keep-as-L2 Machine-Enforced Semantic Policy", "Canonical implementation⊨policy mechanism.")
+    dispose(d, "product/validation-and-conformance/content-validator", "keep-as-L2 Preservation Invariant", "Canonical input⊆output preservation mechanism.")
+    dispose(d, "product/validation-and-conformance/standards-rule-engine", "keep-as-L2 Conformance-to-External-Spec Engine", "Canonical external-spec-conformance mechanism.")
+    dispose(d, "product/validation-and-conformance/coherence-lints", "demote-to-L3-under Drift / Parity Gate",
+            "Cross-source coherence: a declared relational invariant (subset/equality/one-to-one) between independent product sources — kin of model↔reality parity applied across sources. Distinct relation preserved.")
+
+    # Caused-By Provenance components
+    dispose(d, "product/provenance-and-attribution/mutator-stamps", "keep-as-L2 Caused-By Provenance", "Canonical: emit durable attribution at the mutation site.")
+    dispose(d, "product/provenance-and-attribution/a11y-prefix", "demote-to-L3-under Caused-By Provenance",
+            "MARK component: tool-inserted content made distinguishable by a checkable rule, every inserter auto-covered by validation via registration.")
+    dispose(d, "product/provenance-and-attribution/f10-wiring-lint", "demote-to-L3-under Caused-By Provenance",
+            "COVER component: completeness of provenance over the closed verb set, pitched at 'was the call made on the way out' — the level where completeness is legible AND cheap. Distinct coverage relation (not parity, not semantic policy) though the tech is a lint.")
+    dispose(d, "product/provenance-and-attribution/derive-changelog", "demote-to-L3-under Caused-By Provenance",
+            "READ component: provenance must have a consumer — reconstruct the attributed history from the artifact on demand (who + why, which a raw diff cannot answer).")
+    dispose(d, "agent/lifecycle-and-observability/caused-by-provenance", "demote-to-L3-under Caused-By Provenance",
+            "AGENT-SIDE arm: every repository change carries a typed cause from a closed taxonomy, minted at the cause and asserted at admission — a continuously-emitted traceability matrix, one row per commit. Same provenance capability, agent-side subject.")
+
+    # Generative Validation poles
+    dispose(d, "product/regression-tests/fuzz-campaigns", "keep-as-L2 Generative Validation", "Canonical (wild-input pole + model-as-oracle, the distinctive content).")
+    dispose(d, "product/regression-tests/property-tests", "merge-into Generative Validation",
+            "The tame-oracle / rich-invariant pole of the same generative-validation pattern; the entries self-frame as two sides of one coin.")
+
+    # Regression demotions to other L2s
+    dispose(d, "product/regression-tests/ddt-pin-trailers", "demote-to-L3-under Drift / Parity Gate",
+            "Test ⟷ cited-source freshness parity: editing a cited source obliges regenerating the pin's trailer in the same change. Parity applied to the tests-derived-from-docs join.")
+    dispose(d, "product/regression-tests/test-onion-tiers", "demote-to-L3-under Staged Admission Gates",
+            "Cost-stratified regression body: verification cost matched to the gated decision, with escalation rules. Standard practice (exclusion crit 2); the agentic delta is escalation + the 1-second discipline under fleet velocity. Sidebar/breadth — feeds the admission staircase.")
+
+
 def main():
     g = sys.argv[1]
     d = load()
