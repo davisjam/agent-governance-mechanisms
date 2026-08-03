@@ -555,4 +555,4 @@ Author-ratified claim-health corrections (260803) applied to the argument-spine 
   no prose edit needed.
 - **Gates:** `check_argument_spine` (AS1–AS9) PASS · `check_chapter_shape` PASS · claims C7 PASS ·
   `check_concepts_hierarchy` PASS · `catalog.py validate` 0 issues (82 entries) ·
-  `book/build_book_html.py` green (127 pages). Live SHA: (filled post-deploy)
+  `book/build_book_html.py` green (127 pages). Live SHA: 91463f9.
