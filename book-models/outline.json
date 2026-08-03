@@ -286,18 +286,18 @@
           "section_id": "two-birds-one-stone",
           "level": 2,
           "heading_text": "Two birds, one stone",
-          "topic_sentence": "The explicit problem is a mountain of inaccessible university documents and a federal deadline for fixing them.",
+          "topic_sentence": "The explicit problem is a mountain of inaccessible documents.",
           "id_source": "derived",
           "block_index": 2,
           "points": [
             {
               "slug": "explicit-problem-inaccessible-documents-at-scale",
-              "text": "The explicit problem: inaccessible university documents at scale, under a federal deadline.",
+              "text": "The explicit problem: inaccessible university documents at scale.",
               "block_index": 4
             },
             {
               "slug": "implicit-problem-agents-got-good",
-              "text": "The implicit problem: coding agents got good, and nobody had worked out what that means to teach.",
+              "text": "The implicit problem: coding agents suddenly got good.",
               "block_index": 6
             },
             {
@@ -311,18 +311,18 @@
           "section_id": "what-the-user-sees",
           "level": 2,
           "heading_text": "What the user sees",
-          "topic_sentence": "A user uploads a document and receives a remediated, checked version back in minutes.",
+          "topic_sentence": "From the outside the system is almost boring, which is the point.",
           "id_source": "derived",
           "block_index": 10,
           "points": [
             {
               "slug": "upload-in-remediated-file-out",
-              "text": "A user uploads a document and receives a remediated, checked file back.",
+              "text": "A user uploads a document; a checked file returns.",
               "block_index": 12
             },
             {
               "slug": "evidence-travels-with-the-file",
-              "text": "The result carries evidence: what changed, and against which clause of the standard.",
+              "text": "The result carries evidence of what changed.",
               "block_index": 14
             }
           ]
@@ -331,19 +331,19 @@
           "section_id": "the-shape-of-the-machine",
           "level": 2,
           "heading_text": "The shape of the machine",
-          "topic_sentence": "Six parts carry the upload: a front door, a dispatcher, a remediation core, a checker, a fidelity validator, and a provenance layer.",
+          "topic_sentence": "Inside, six parts carry that upload, drawn in [ref:docable-pipeline].",
           "id_source": "derived",
           "block_index": 16,
           "points": [
             {
               "slug": "six-parts-carry-one-upload",
-              "text": "Six parts carry the upload from front door to stamped result.",
-              "block_index": 18
+              "text": "Six parts carry the upload to a stamped result.",
+              "block_index": 19
             },
             {
               "slug": "model-calls-are-bounded-and-checked",
-              "text": "Where a step needs judgment, a bounded model call sits behind a deterministic check.",
-              "block_index": 20
+              "text": "Bounded model calls sit behind deterministic checks.",
+              "block_index": 22
             }
           ]
         },
@@ -351,19 +351,19 @@
           "section_id": "one-human-a-fleet",
           "level": 2,
           "heading_text": "One human, a fleet",
-          "topic_sentence": "A fleet of coding agents wrote almost all of the code; I kept the seats that judge.",
+          "topic_sentence": "Now the part that makes this a book about engineering rather than accessibility: I did not write this system.",
           "id_source": "derived",
-          "block_index": 22,
+          "block_index": 24,
           "points": [
             {
               "slug": "fleet-wrote-the-code",
-              "text": "A fleet of agents wrote almost all of the code; the human kept the judgment seats.",
-              "block_index": 24
+              "text": "The fleet wrote the code; the human judged.",
+              "block_index": 26
             },
             {
               "slug": "apparatus-larger-than-product",
-              "text": "The governing apparatus outgrew the product, because at this volume nobody reads the diffs.",
-              "block_index": 26
+              "text": "The governing apparatus outgrew the product.",
+              "block_index": 28
             }
           ]
         },
@@ -371,14 +371,14 @@
           "section_id": "two-scars",
           "level": 2,
           "heading_text": "Two scars",
-          "topic_sentence": "Two real failures show what the machinery is for: one architectural, one procedural.",
+          "topic_sentence": "None of that machinery was designed in advance.",
           "id_source": "derived",
-          "block_index": 28,
+          "block_index": 30,
           "points": [
             {
               "slug": "two-failures-teach-the-method",
-              "text": "Two real failures — one architectural, one procedural — show what the machinery is for.",
-              "block_index": 30
+              "text": "Two real failures show what the machinery is for.",
+              "block_index": 32
             }
           ]
         },
@@ -386,14 +386,14 @@
           "section_id": "the-library-that-lied",
           "level": 3,
           "heading_text": "The library that lied",
-          "topic_sentence": "A convenient library silently stripped the very structure the product exists to add, and every check still passed.",
+          "topic_sentence": "Early on, the codebase held two libraries that could touch a PDF: the sanctioned one, and a convenient second one an agent had adopted for quick page operations.",
           "id_source": "derived",
-          "block_index": 32,
+          "block_index": 34,
           "points": [
             {
               "slug": "convenient-library-stripped-the-structure",
-              "text": "A convenient library silently stripped the structure the product exists to add.",
-              "block_index": 33
+              "text": "A convenient library silently stripped the structure.",
+              "block_index": 35
             }
           ]
         },
@@ -401,14 +401,14 @@
           "section_id": "the-lever-that-lost-work",
           "level": 3,
           "heading_text": "The lever that lost work",
-          "topic_sentence": "Twice the orchestrating agent escaped a stuck merge by reaching for a destructive command that discarded committed work.",
+          "topic_sentence": "The second failure came from the process that built the product.",
           "id_source": "derived",
-          "block_index": 35,
+          "block_index": 37,
           "points": [
             {
               "slug": "orchestrator-reached-for-the-destructive-lever",
-              "text": "Twice the orchestrating agent escaped a stuck merge by discarding committed work.",
-              "block_index": 36
+              "text": "A destructive escape lever twice discarded committed work.",
+              "block_index": 38
             }
           ]
         },
@@ -416,19 +416,19 @@
           "section_id": "the-move-that-recurs",
           "level": 2,
           "heading_text": "The move that recurs",
-          "topic_sentence": "Each failure was converted into a mechanism — a lint that bans the library, a rule that pairs the forbidden lever with the sanctioned one.",
+          "topic_sentence": "Here is why those two failures belong in this chapter: neither fix stopped at the patch.",
           "id_source": "derived",
-          "block_index": 38,
+          "block_index": 40,
           "points": [
             {
               "slug": "failure-becomes-a-mechanism",
-              "text": "Each failure was converted into a mechanism that retires its class.",
-              "block_index": 40
+              "text": "Each failure became a mechanism retiring its class.",
+              "block_index": 42
             },
             {
               "slug": "attention-per-class-not-per-change",
-              "text": "The conversion trades attention per change for attention per class of failure.",
-              "block_index": 42
+              "text": "Attention moves from per-change to per-class.",
+              "block_index": 45
             }
           ]
         },
@@ -436,14 +436,14 @@
           "section_id": "where-the-map-leads",
           "level": 2,
           "heading_text": "Where the map leads",
-          "topic_sentence": "Parts 2 through 4 explain the machinery; Part 5 reconstructs the full case.",
+          "topic_sentence": "You now hold the object: a real system, built by a fleet, governed by machinery that grew scar by scar.",
           "id_source": "derived",
-          "block_index": 44,
+          "block_index": 47,
           "points": [
             {
               "slug": "parts-2-4-machinery-part-5-full-case",
-              "text": "Parts 2–4 explain the machinery; Part 5 reconstructs the full case.",
-              "block_index": 46
+              "text": "Parts 2–4 explain the machinery; Part 5 the case.",
+              "block_index": 49
             }
           ]
         }
@@ -451,7 +451,7 @@
       "preamble_points": [
         {
           "slug": "teaser-grounds-the-abstractions",
-          "text": "The coming abstractions need a concrete system to attach to.",
+          "text": "The abstractions need a real system to attach to.",
           "block_index": 0
         }
       ]

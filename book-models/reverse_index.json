@@ -14,8 +14,8 @@
     "universe": {
       "section_ids": 186,
       "concepts": 141,
-      "labels": 51,
-      "refs": 51,
+      "labels": 52,
+      "refs": 52,
       "chapters": 31,
       "parts": 7,
       "points": 486,
@@ -1264,7 +1264,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-26",
+          "element": "1.2-mage-by-example::block-28",
           "role": "paragraph-point"
         }
       ]
@@ -1304,7 +1304,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-42",
+          "element": "1.2-mage-by-example::block-45",
           "role": "paragraph-point"
         }
       ]
@@ -1634,7 +1634,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-33",
+          "element": "1.2-mage-by-example::block-35",
           "role": "paragraph-point"
         }
       ]
@@ -2154,7 +2154,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-40",
+          "element": "1.2-mage-by-example::block-42",
           "role": "paragraph-point"
         }
       ]
@@ -2184,7 +2184,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-24",
+          "element": "1.2-mage-by-example::block-26",
           "role": "paragraph-point"
         }
       ]
@@ -2834,7 +2834,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-20",
+          "element": "1.2-mage-by-example::block-22",
           "role": "paragraph-point"
         }
       ]
@@ -3234,7 +3234,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-36",
+          "element": "1.2-mage-by-example::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -3254,7 +3254,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-46",
+          "element": "1.2-mage-by-example::block-49",
           "role": "paragraph-point"
         }
       ]
@@ -3664,7 +3664,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-18",
+          "element": "1.2-mage-by-example::block-19",
           "role": "paragraph-point"
         }
       ]
@@ -5124,7 +5124,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-30",
+          "element": "1.2-mage-by-example::block-32",
           "role": "paragraph-point"
         }
       ]
@@ -7799,7 +7799,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-40",
+          "element": "1.2-mage-by-example::block-42",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8369,7 +8369,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-42",
+          "element": "1.2-mage-by-example::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -8404,7 +8404,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-39",
+          "element": "1.2-mage-by-example::block-41",
           "role": "section-term[tier-1]"
         },
         {
@@ -8509,7 +8509,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-23",
+          "element": "1.2-mage-by-example::block-25",
           "role": "section-term[tier-1]"
         },
         {
@@ -9609,7 +9609,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-40",
+          "element": "1.2-mage-by-example::block-42",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9664,12 +9664,12 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-29",
+          "element": "1.2-mage-by-example::block-31",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-39",
+          "element": "1.2-mage-by-example::block-41",
           "role": "section-term[tier-1]"
         },
         {
@@ -9749,7 +9749,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-24",
+          "element": "1.2-mage-by-example::block-26",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10189,7 +10189,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-23",
+          "element": "1.2-mage-by-example::block-25",
           "role": "section-term[tier-1]"
         },
         {
@@ -10224,7 +10224,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-18",
+          "element": "1.2-mage-by-example::block-19",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10244,7 +10244,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-17",
+          "element": "1.2-mage-by-example::block-18",
           "role": "section-term[tier-1]"
         },
         {
@@ -11014,7 +11014,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-20",
+          "element": "1.2-mage-by-example::block-22",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11049,7 +11049,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-17",
+          "element": "1.2-mage-by-example::block-18",
           "role": "section-term[tier-1]"
         },
         {
@@ -12399,7 +12399,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-36",
+          "element": "1.2-mage-by-example::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13409,7 +13409,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-33",
+          "element": "1.2-mage-by-example::block-35",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14139,7 +14139,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-26",
+          "element": "1.2-mage-by-example::block-28",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14369,7 +14369,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-46",
+          "element": "1.2-mage-by-example::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14409,7 +14409,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-45",
+          "element": "1.2-mage-by-example::block-48",
           "role": "section-term[tier-1]"
         },
         {
@@ -14429,7 +14429,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-46",
+          "element": "1.2-mage-by-example::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14494,7 +14494,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-45",
+          "element": "1.2-mage-by-example::block-48",
           "role": "section-term[tier-1]"
         },
         {
@@ -14784,7 +14784,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-20",
+          "element": "1.2-mage-by-example::block-22",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14914,12 +14914,12 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-30",
+          "element": "1.2-mage-by-example::block-32",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-33",
+          "element": "1.2-mage-by-example::block-35",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14944,7 +14944,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-29",
+          "element": "1.2-mage-by-example::block-31",
           "role": "section-term[tier-1]"
         },
         {

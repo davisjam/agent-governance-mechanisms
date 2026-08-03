@@ -153,39 +153,39 @@
 <div class="outcomes"><div class="oc-h">After this lesson — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this chapter, the reader can describe the grounding case — what DocAble does, how its six parts fit together, and why it was built — and recognize the convert-a-failure-into-a-mechanism move in its first two incidents. <span class="prov">declared</span></span></li></ul></div>
 <div class="section s2" id="sec-1-2-mage-by-example--two-birds-one-stone">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">Two birds, one stone</a></div>
-<p class="topic">The explicit problem is a mountain of inaccessible university documents and a federal deadline for fixing them.</p>
+<p class="topic">The explicit problem is a mountain of inaccessible documents.</p>
 </div>
 <div class="section s2" id="sec-1-2-mage-by-example--what-the-user-sees">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">What the user sees</a></div>
-<p class="topic">A user uploads a document and receives a remediated, checked version back in minutes.</p>
+<p class="topic">From the outside the system is almost boring, which is the point.</p>
 </div>
 <div class="section s2" id="sec-1-2-mage-by-example--the-shape-of-the-machine">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">The shape of the machine</a></div>
-<p class="topic">Six parts carry the upload: a front door, a dispatcher, a remediation core, a checker, a fidelity validator, and a provenance layer.</p>
+<p class="topic">Inside, six parts carry that upload, drawn in [ref:docable-pipeline].</p>
 </div>
 <div class="section s2" id="sec-1-2-mage-by-example--one-human-a-fleet">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">One human, a fleet</a></div>
-<p class="topic">A fleet of coding agents wrote almost all of the code; I kept the seats that judge.</p>
+<p class="topic">Now the part that makes this a book about engineering rather than accessibility: I did not write this system.</p>
 </div>
 <div class="section s2" id="sec-1-2-mage-by-example--two-scars">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">Two scars</a></div>
-<p class="topic">Two real failures show what the machinery is for: one architectural, one procedural.</p>
+<p class="topic">None of that machinery was designed in advance.</p>
 </div>
 <div class="section s3" id="sec-1-2-mage-by-example--the-library-that-lied">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">The library that lied</a></div>
-<p class="topic">A convenient library silently stripped the very structure the product exists to add, and every check still passed.</p>
+<p class="topic">Early on, the codebase held two libraries that could touch a PDF: the sanctioned one, and a convenient second one an agent had adopted for quick page operations.</p>
 </div>
 <div class="section s3" id="sec-1-2-mage-by-example--the-lever-that-lost-work">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">The lever that lost work</a></div>
-<p class="topic">Twice the orchestrating agent escaped a stuck merge by reaching for a destructive command that discarded committed work.</p>
+<p class="topic">The second failure came from the process that built the product.</p>
 </div>
 <div class="section s2" id="sec-1-2-mage-by-example--the-move-that-recurs">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">The move that recurs</a></div>
-<p class="topic">Each failure was converted into a mechanism — a lint that bans the library, a rule that pairs the forbidden lever with the sanctioned one.</p>
+<p class="topic">Here is why those two failures belong in this chapter: neither fix stopped at the patch.</p>
 </div>
 <div class="section s2" id="sec-1-2-mage-by-example--where-the-map-leads">
 <div class="sec-h"><a href="../book/1.2-mage-by-example.html">Where the map leads</a></div>
-<p class="topic">Parts 2 through 4 explain the machinery; Part 5 reconstructs the full case.</p>
+<p class="topic">You now hold the object: a real system, built by a fleet, governed by machinery that grew scar by scar.</p>
 </div>
 </div>
 <div class="chapter">

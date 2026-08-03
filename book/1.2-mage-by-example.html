@@ -502,28 +502,109 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-observability-stack.html">Appendix D - 6. The observability stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="1.3-loops-and-models.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 2 · MAGE by Example"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 2</a></div><h1>MAGE by Example</h1></header><p>The last chapter ended by naming the running example: DocAble, a shipped production system. This chapter gives you enough of it to hold on to before the abstractions arrive.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="1.3-loops-and-models.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 2 · MAGE by Example"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 2</a></div><h1>MAGE by Example</h1></header><p>The last chapter closed on a promise: the running example of this book is a real, shipped system. Before the abstractions arrive — the loops, the models, the governed environment — you should hold enough of that system in your head to attach them to. That is this chapter's whole job. What kind of object needed all this machinery? How does it fit together? And why did I build it in the first place?</p>
 <h2>Two birds, one stone</h2>
-<p>The explicit problem is a mountain of inaccessible university documents and a federal deadline for fixing them.</p>
-<p>The implicit problem is that coding agents had just become good, and I did not know what that made worth teaching.</p>
-<p>One project answered both: build the remediation system, and let the building teach the method.</p>
+<p>The explicit problem is a mountain of inaccessible documents. In 2024 the Department of Justice gave public universities a deadline: the slide decks, PDFs, and spreadsheets they distribute must meet a real accessibility standard, so that a student using a screen reader gets the same course as everyone else. A typical deck fails that standard dozens of ways — images with no descriptions, missing titles, a reading order no machine can follow. Remediating one course's materials by hand costs roughly 7.5 full work weeks, and a university offers thousands of courses. The mandate is just; the arithmetic is crushing. <a href="5.1-the-ada-context.html">The ADA Context</a> walks the full bind.</p>
+<p>The implicit problem was mine. In early 2026, coding agents got good — good enough that I, a professor of software engineering, no longer knew what my discipline's daily craft was about to become, or what I should be teaching in the fall. Nobody did. The only way to find out was to build something real with the agents and watch what the work demanded. And I had a second, smaller motive sitting in my own course folders: hundreds of my own slides needed remediation, and I had no intention of doing it by hand.</p>
+<p>One project answered both. Build the remediation system, and let the building teach the method: two birds, one stone. The system is <a href="https://scholaccess.com">DocAble</a>, live in beta. The method is MAGE, and this book is the field report from watching it emerge.</p>
 <h2>What the user sees</h2>
-<p>A user uploads a document and receives a remediated, checked version back in minutes.</p>
-<p>The result carries evidence — what changed, and against which clause of the standard.</p>
+<p>From the outside the system is almost boring, which is the point. A professor drops a slide deck onto a web page. A few minutes later a remediated version comes back: figures carry descriptions, slides carry titles, the reading order is set, the contrast fixed. An editor lets her review and correct any change before she downloads.</p>
+<p>What she gets is more than the file. The result carries evidence: a record of every change the system made, and the clause of the standard each remaining finding answers to. A university does not just need its documents fixed. It needs to be able to show an auditor — or a courtroom — what was fixed, and to reverse any change that got the meaning wrong. The evidence is as much the product as the file is.</p>
 <h2>The shape of the machine</h2>
-<p>Six parts carry the upload: a front door, a dispatcher, a remediation core, a checker, a fidelity validator, and a provenance layer.</p>
-<p>Where a step needs judgment rather than rule, a bounded model call sits behind a deterministic check.</p>
+<p>Inside, six parts carry that upload, drawn in <a class="xref" href="1.2-mage-by-example.html#fig-1-2-1">Figure&nbsp;1.2-1</a>. A <strong>front door</strong> takes the file, checks who is asking, meters the quota, and queues the job. A <strong>dispatcher</strong> splits the document into chunks — slides, pages, sheets — so a hundred-slide deck finishes in about a minute instead of an hour. A <strong>remediation core</strong> repairs each chunk, walking the document through a structured model of its format. Then the trust half: a <strong>checker</strong> maps every remaining finding to a specific clause of the accessibility standard; a <strong>fidelity validator</strong> asserts the input's meaning survived into the output; a <strong>provenance layer</strong> stamps every inserted artifact, so any change can be explained and reversed.</p>
+<figure id="fig-1-2-1" class="book-figure" data-label="docable-pipeline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 470"
+     role="group" aria-labelledby="dpTitle dpDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="dpTitle">DocAble in one picture: six parts, and nothing ships unchecked</title>
+  <desc id="dpDesc">A document flows through six parts in an S shape. The working half, top
+    row: a front door takes the upload, identity, and quota; a dispatcher splits the document
+    into chunks of work; a remediation core repairs each chunk, applying rules where rules
+    suffice and bounded model calls where judgment is needed. The flow then descends into the
+    trust half, bottom row: a checker maps every remaining finding to a clause of the
+    standard; a fidelity validator asserts the meaning survived; a provenance layer stamps
+    every inserted artifact. The bottom row sits inside a dashed band labeled "the trust
+    half: nothing ships unchecked." The output is the remediated file with its evidence.</desc>
+
+  <defs>
+    <marker id="dpArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- input cap -->
+  <text x="58" y="72" text-anchor="middle" font-size="17" font-weight="700" fill="#57534e">a document</text>
+
+  <!-- ============ working half (top row) ============ -->
+  <g>
+    <rect x="130" y="60" width="180" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="220" y="98" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">front door</text>
+    <text x="220" y="146" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">upload, identity, quota</text>
+
+    <rect x="380" y="60" width="180" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="470" y="98" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">dispatcher</text>
+    <text x="470" y="146" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">splits it into chunks of work</text>
+
+    <rect x="630" y="60" width="220" height="64" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+    <text x="740" y="98" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">remediation core</text>
+    <text x="740" y="146" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">rules where rules suffice,</text>
+    <text x="740" y="164" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">a bounded model call where judgment is needed</text>
+  </g>
+
+  <!-- ============ trust half (bottom row, banded) ============ -->
+  <rect x="110" y="230" width="770" height="180" rx="12" fill="none" stroke="#1f7a4d"
+        stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="860" y="256" text-anchor="end" font-size="15" font-weight="700" fill="#1f7a4d">the trust half — nothing ships unchecked</text>
+
+  <g>
+    <rect x="150" y="280" width="180" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="240" y="318" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">checker</text>
+    <text x="240" y="366" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">every finding mapped to</text>
+    <text x="240" y="384" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">a clause of the standard</text>
+
+    <rect x="400" y="280" width="180" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="490" y="310" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">fidelity</text>
+    <text x="490" y="330" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">validator</text>
+    <text x="490" y="366" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">asserts the meaning</text>
+    <text x="490" y="384" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">survived</text>
+
+    <rect x="650" y="280" width="180" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+    <text x="740" y="310" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">provenance</text>
+    <text x="740" y="330" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">layer</text>
+    <text x="740" y="366" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">stamps every</text>
+    <text x="740" y="384" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">inserted artifact</text>
+  </g>
+
+  <!-- output cap -->
+  <text x="975" y="306" text-anchor="middle" font-size="17" font-weight="700" fill="#9a3f12">the file,</text>
+  <text x="975" y="326" text-anchor="middle" font-size="17" font-weight="700" fill="#9a3f12">remediated —</text>
+  <text x="975" y="346" text-anchor="middle" font-size="17" font-weight="700" fill="#9a3f12">with evidence</text>
+
+  <!-- arrows -->
+  <g fill="none" stroke="#1c1917" stroke-width="2.2" marker-end="url(#dpArrow)">
+    <path d="M58,82 L58,92 L128,92"/>
+    <path d="M310,92 L378,92"/>
+    <path d="M560,92 L628,92"/>
+    <!-- descent from the working half into the trust half -->
+    <path d="M740,180 L740,208 L240,208 L240,278"/>
+    <path d="M330,312 L398,312"/>
+    <path d="M580,312 L648,312"/>
+    <path d="M830,312 L905,312"/>
+  </g>
+</svg><figcaption data-short="DocAble in one picture"><span class="fig-label">Figure 1.2-1.</span> DocAble in one picture. The working half takes the document in: a front door, a dispatcher that splits it into chunks, a remediation core that repairs each chunk — rules where rules suffice, a bounded model call where judgment is needed. The trust half is why the result can be believed: a checker maps findings to clauses of the standard, a fidelity validator asserts the meaning survived, a provenance layer stamps every insertion. Nothing ships unchecked — if you remember one thing about this system, make it the dashed band.</figcaption></figure>
+<p>The interesting joint is inside the core. Most repairs are a matter of rule, and ordinary deterministic code makes them. But some are a matter of judgment — describing a figure, reading an equation — and only a vision-capable model can make those. The system never hands the model the document. It hands the model one bounded task, takes back a typed candidate, and lets a deterministic validator pass or refuse it before anything touches the file. Deterministic code owns the workflow; the model is a subroutine inside it, never trusted on its word. <a href="5.3-the-built-system.html">The Built System</a> develops this pattern in full.</p>
 <h2>One human, a fleet</h2>
-<p>A fleet of coding agents wrote almost all of the code; I kept the seats that judge.</p>
-<p>The apparatus that governs the product grew larger than the product, because at this volume nobody reads the diffs.</p>
+<p>Now the part that makes this a book about engineering rather than accessibility: I did not write this system. A fleet of coding agents did, over about 19 weeks — 490,231 lines of production code, with six to eight agents running in parallel on a routine day and landing around 200 commits. I inspected almost none of it. My work was the other seats: deciding what to build, judging what came back, and building the environment that held the fleet to a standard I could no longer enforce by reading.</p>
+<p>That environment is why the repository looks upside down. The support apparatus — tests, lints, models, load-bearing documentation — runs about 2.9 times the size of the production code. At a hundred commits a day, no human reads the diffs; the apparatus is the review. How that inversion happened, week by week, is the story of <a href="5.2-the-timeline-and-the-work.html">the timeline</a>.</p>
 <h2>Two scars</h2>
-<p>Two real failures show what the machinery is for: one architectural, one procedural.</p>
+<p>None of that machinery was designed in advance. It accreted, failure by failure. Two of those failures are worth meeting now — one architectural, one procedural — because they are the reader's first scars, and the book's whole method is visible in miniature in what happened next.</p>
 <h3>The library that lied</h3>
-<p>A convenient library silently stripped the very structure the product exists to add, and every check still passed.</p>
+<p>Early on, the codebase held two libraries that could touch a PDF: the sanctioned one, and a convenient second one an agent had adopted for quick page operations. The convenient one had a habit nobody had ordered: on write, it silently dropped the document's structure tree — the hidden hierarchy of headings, figures, and reading order that a screen reader walks. That tree is the product. A release shipped whose output opened fine, looked fine, and had been quietly made <em>less</em> accessible than its input. Nothing crashed, and no error was logged; the failure was invisible precisely where the product's promise lived. The fault was architectural: nothing in the system said which code was allowed to touch the format, so every code path could, and one did.</p>
 <h3>The lever that lost work</h3>
-<p>Twice the orchestrating agent escaped a stuck merge by reaching for a destructive command that discarded committed work.</p>
+<p>The second failure came from the process that built the product. The orchestrating agent — the one that dispatches the others and lands their work — occasionally hit a stuck merge. Git offers a fast way out: a destructive reset that abandons the mess by silently discarding the committed work already applied. Twice the orchestrator reached for that lever, and twice finished work vanished. A bare prohibition would not have fixed it: an agent forbidden the lever, with no named alternative, is simply stuck. The failure was in the environment, which offered a catastrophic escape and no sanctioned one.</p>
 <h2>The move that recurs</h2>
-<p>Each failure was converted into a mechanism — a lint that bans the library, a rule that pairs the forbidden lever with the sanctioned one.</p>
-<p>The conversion trades attention paid per change for attention paid once, per class of failure.</p>
+<p>Here is why those two failures belong in this chapter: neither fix stopped at the patch. The stripped structure tree became a <strong>ban-lint</strong>: all mutation of a document format now routes through one structured model, and a commit that reaches for the raw library anywhere else reddens on the spot. Not "we removed that call" — no agent, ever again, can make that class of mistake and get it into the tree. The lost commits became a paired rule, enforced at the hook level: the destructive lever is refused, and the rule names the sanctioned escape beside it, so a stuck agent has somewhere to go.</p>
+<blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-c-pdf-model.html">one structured model per format</a>.</p></blockquote>
+<p>That conversion — a failure read as evidence of a missing mechanism, then encoded so the class cannot recur — is the single move this book teaches, made over and over until the environment could be trusted to run itself. Notice what it buys. My attention stopped being spent per change, which cannot scale, and started being spent once per class of failure, which can.</p>
 <h2>Where the map leads</h2>
-<p>Parts 2 through 4 explain the machinery; Part 5 reconstructs the full case.</p><div class="pager"><a class="prev" href="1.1-the-printer.html"><span class="dir">‹ Previous</span><span class="ttl">1 · The Printer</span></a><a class="home" href="index.html">Contents</a><a class="next" href="1.3-loops-and-models.html"><span class="dir">Next ›</span><span class="ttl">3 · Loops and Models</span></a></div><div class="pager-jump"><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="1.3-loops-and-models.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>You now hold the object: a real system, built by a fleet, governed by machinery that grew scar by scar. The rest of the book explains the machinery. Part 2 builds the governed environment — the walls and sensors that catch a confidently wrong change. Part 3 builds the models the fleet reasons through, so the work fits in a context window. Part 4 turns both into daily practice. And Part 5 reconstructs the full case, from the committee meeting where it started to the system that shipped. Part 5 is not offered as proof — one system, one engineer, one model vendor is a case, not a law. It is the grounding case: the system this method was derived from, and the place every claim in the coming chapters can be traced back to.</p><div class="pager"><a class="prev" href="1.1-the-printer.html"><span class="dir">‹ Previous</span><span class="ttl">1 · The Printer</span></a><a class="home" href="index.html">Contents</a><a class="next" href="1.3-loops-and-models.html"><span class="dir">Next ›</span><span class="ttl">3 · Loops and Models</span></a></div><div class="pager-jump"><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="1.3-loops-and-models.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
