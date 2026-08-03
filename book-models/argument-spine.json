@@ -4,12 +4,12 @@
   "_counts": {
     "spine_claims": 14,
     "chapters_labeled": 30,
-    "chapters_exempt": 6,
-    "advancement_edges": 84,
+    "chapters_exempt": 7,
+    "advancement_edges": 85,
     "reconciled_claims": 18,
     "reconciled_big_ideas": 6,
     "zero_claim_suspects": 0,
-    "over_cap_unfocused": 1,
+    "over_cap_unfocused": 0,
     "max_statement_words": 26
   },
   "taxonomy": {
@@ -100,8 +100,7 @@
       "word_count": 22,
       "advanced_by": [
         "0.1-preface",
-        "1.1-the-printer",
-        "1.3-loops-and-models"
+        "1.1-the-printer"
       ]
     },
     {
@@ -118,7 +117,8 @@
       "reconciles_big_ideas": [],
       "word_count": 22,
       "advanced_by": [
-        "0.1-preface"
+        "0.1-preface",
+        "1.3-loops-and-models"
       ]
     },
     {
@@ -230,7 +230,8 @@
       "reconciles_big_ideas": [],
       "word_count": 14,
       "advanced_by": [
-        "0.1-preface"
+        "0.1-preface",
+        "1.3-loops-and-models"
       ]
     },
     {
@@ -380,13 +381,14 @@
         "failures-become-machinery",
         "grounded-in-one-case"
       ],
-      "exempt": null
+      "exempt": "overview"
     },
     {
       "slug": "1.3-loops-and-models",
       "advances": [
-        "churn-is-the-limit",
-        "modeling-thesis"
+        "three-not-knowings-cause-churn",
+        "modeling-thesis",
+        "theses-treat-the-causes"
       ],
       "exempt": null
     },
@@ -610,18 +612,6 @@
   ],
   "flags": {
     "zero_claim_suspects": [],
-    "over_cap_unfocused": [
-      {
-        "chapter": "1.2-mage-by-example",
-        "advances": 5,
-        "spine_ids": [
-          "abundant-implementation",
-          "oversight-does-not-scale",
-          "govern-the-environment",
-          "failures-become-machinery",
-          "grounded-in-one-case"
-        ]
-      }
-    ]
+    "over_cap_unfocused": []
   }
 }

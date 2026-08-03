@@ -102,6 +102,7 @@
   ],
   "chapter_exemptions": {
     "0.1-preface": "preface",
+    "1.2-mage-by-example": "overview",
     "0.2-acknowledgments": "apparatus",
     "3.7-the-scope-of-modeling": "end-of-part-synthesis",
     "4.5-lessons-learned": "discussion",
@@ -113,7 +114,7 @@
     "0.2-acknowledgments": [],
     "1.1-the-printer": ["abundant-implementation", "fault-lies-in-instructions", "churn-is-the-limit"],
     "1.2-mage-by-example": ["abundant-implementation", "oversight-does-not-scale", "govern-the-environment", "failures-become-machinery", "grounded-in-one-case"],
-    "1.3-loops-and-models": ["churn-is-the-limit", "modeling-thesis"],
+    "1.3-loops-and-models": ["three-not-knowings-cause-churn", "modeling-thesis", "theses-treat-the-causes"],
     "1.4-the-engineers-seat": ["seat-moves"],
     "2.1-the-agent-stack": ["govern-the-environment", "modeling-thesis"],
     "2.2-models-and-the-semantic-gap": ["modeling-thesis", "alignment-thesis", "sync-cost-removed"],
