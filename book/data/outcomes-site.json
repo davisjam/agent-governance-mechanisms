@@ -1,10 +1,12 @@
 {
   "_note": "Outcomes-projection SELECTION — the SSOT for WHICH learning outcomes the site surfaces and how each is realized on the landing. This file is deliberately THIN: it does NOT copy outcome prose (that would drift). It declares only (a) the SELECTION policy — which outcomes from the book's outcomes view (book-models/outcomes.json) the site projects — and (b) the per-outcome SITE realization + book-home link, keyed by the outcome's `outcome_id`. The build reads outcomes.json, applies this selection, and renders each outcome's `statement` + `bloom` + `verb`/`obj` STRAIGHT FROM the model — so re-running the outcomes drain re-syncs the site automatically. The drift check (`check_outcomes_site_*` in tests/html.py) joins on `outcome_id` and asserts: (a) every selected id resolves to a real outcome in outcomes.json (no dangling selection), and (b) every book/Part outcome the policy WOULD select is either projected or explicitly excluded here (no silently-dropped core outcome). Lands AUDIT-ONLY-first. Queryable via `catalog.py outcomes-site`.",
 
+  "_note_landing_drop": "The landing dropped its on-landing outcomes strip (commit 727378a — 'end the landing at the nav cards; drop on-landing catalogue + vocabulary strip'). The site now projects NO outcomes: `granularity_in` is empty, so no outcome is policy-eligible; `projected` and `_excluded` are empty. `check_outcomes_site` then passes vacuously — no dangling projected id, nothing policy-eligible to demand projection, no rows to find on the landing. This file is retained as the book-models selection sidecar (the realization is the book's own outcomes render), not deleted, so the projection can be re-enabled if the landing ever re-adds a compact outcomes preview.",
+
   "_selection_policy": {
-    "granularity_in": ["book", "part"],
+    "granularity_in": [],
     "provenance_not_in": ["gap-recommended"],
-    "note": "The site surfaces the BOOK- and PART-level outcomes only (the 'what you'll be able to do' spine), and only the DERIVED/DECLARED ones — NOT the gap-recommended outcomes (those are the author's fill worklist, not yet a promise the site should make). Chapter/section outcomes are book-only detail. This policy is dogfooded by the drift check: any book/part non-gap-recommended outcome in outcomes.json that is neither projected nor listed in `_excluded` is a finding."
+    "note": "Landing outcomes strip dropped (727378a): `granularity_in` emptied so NO outcome is policy-eligible for site projection. The prior policy surfaced BOOK- and PART-level DERIVED/DECLARED outcomes; restore `[\"book\", \"part\"]` here (and repopulate `projected`) only if the landing re-adds an on-landing outcomes preview."
   },
 
   "_site_home_section": "outcomes-view",
@@ -23,15 +25,5 @@
 
   "_excluded": [],
 
-  "projected": [
-    "book::design-a-governed-environment-in-which-a-fleet",
-    "book::distinguish-a-constraint-from-a-sensor-and-a-soft-me",
-    "book::model-a-system-as-a-small-set-of-structured-dr",
-    "part-1::judge-whether-a-task-needs-the-book-s-machiner",
-    "part-2::construct-the-governed-environment-its-layers-its",
-    "part-3::model-a-system-through-kruchten-s-4-1-views-as",
-    "part-4::apply-the-method-to-a-real-codebase-inducing-m",
-    "part-5::trace-the-method-s-evolution-through-a-real-ac",
-    "part-6::evaluate-what-the-method-changes-for-how-software"
-  ]
+  "projected": []
 }

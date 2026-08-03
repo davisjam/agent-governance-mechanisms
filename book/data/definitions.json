@@ -3,9 +3,9 @@
 
   "_derivation": "Derived (not hand-copied) from book/transcripts/DEFINITIONS-DRAFT.md — the green-box + per-aspect-elaboration drafts. When that draft or its Part-2 landing changes, regenerate this record set and re-check.",
 
-  "_book_home_note": "The four CORE-TERM definitions (model, agent, engineering, software-engineering) are tagged with an index-def in §2.1 (The Agent Stack), so their `book_home_owed.status: landed` and each carries a resolved `book_home` (the `#idx-def-<slug>` anchor on the 2.1 page). The fifth record, `structured`, is the ADJECTIVE rider on the model definition — now also index-def-tagged in §2.1 (`book_home_owed.status: landed`, `book_home` → `#idx-def-structured`), rendering as the blue def-box in the web book + PDF; on the landing it reads as the rider on the four definitions, not a fifth peer (the 'four definitions' framing is preserved). The drift check still only requires a resolvable SITE home; the book home is the honest 'book coverage ⊇ site framings' realization.",
+  "_book_home_note": "The four CORE-TERM definitions (model, agent, engineering, software-engineering) are tagged with an index-def in §2.1 (The Agent Stack), so their `book_home_owed.status: landed` and each carries a resolved `book_home` (the `#idx-def-<slug>` anchor on the 2.1 page). The fifth record, `structured`, is the ADJECTIVE rider on the model definition — also index-def-tagged in §2.1 (`book_home_owed.status: landed`, `book_home` → `#idx-def-structured`), rendering as the blue def-box in the web book + PDF. The book home is the definitions' realization; the landing no longer projects them (see `_book_only_note`).",
 
-  "_book_only_note": "Records whose `site_home` is \"N/A\" are BOOK-ONLY definitions — the core-construct insets the CORE-CONCEPTS pass (directive 260802) formalized: churn, governance-mechanism, engineered-agent-loop. The site does NOT project them (the landing keeps its four-definitions + rider framing): `_landing_definitions` filters them out and `check_definitions_site` skips them in the model→site direction. Only the book home is owed, held by the concepts model's L1 (each is a core-construct record there, joined by the same slug where the slugs coincide). Their definitional text here is the SSOT the prose insets mirror.",
+  "_book_only_note": "Every record now carries `site_home` = \"N/A\": the landing dropped its on-landing definitions strip (commit 727378a — 'end the landing at the nav cards; drop on-landing catalogue + vocabulary strip'), so NO definition projects to the site. The landing's conceptual preview is carried by the big-ideas projection (`id=bi-*`) plus the nav cards; each definition's realization is its BOOK home (§2.1 for the core four + the structured rider; the preface, §2.3, and §1.3 for the three core-construct insets — churn, governance-mechanism, engineered-agent-loop). `check_definitions_site` skips N/A records in the model→site direction, and the site→model direction is vacuously satisfied (no `def-*` ids on the landing). The three core-construct records also carry the concepts model's L1 home (joined by slug); their definitional text here is the SSOT the prose insets mirror.",
 
   "_order": ["model", "agent", "engineering", "software-engineering", "structured", "churn", "governance-mechanism", "engineered-agent-loop"],
 
@@ -17,7 +17,7 @@
       {"lead": "The five load-bearing terms", "text": "Each does gatekeeping work. Deliberately reduced — not the whole codebase. Machine-readable — not ordinary prose. A representation of something named — intent, structure, behavior, policy, or evidence — so not everything structured is a model. Supports an operation — reasoning, derivation, prediction, or checking. Mechanically maintained — a drift gate holds it to the system, which is what separates a MAGE model from a stale diagram."},
       {"lead": "Constraint, blueprint, and knowledge base at once", "text": "A model handed to an agent is at once a constraint (bounding what may be built), a blueprint (saying what to build), and — because the agent reasons over it — the knowledge base for the artifact under construction."}
     ],
-    "site_home": "def-model",
+    "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Model",
     "book_home": "book/2.1-the-agent-stack.html#idx-def-model",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
@@ -34,7 +34,7 @@
       {"lead": "On \"independent reasoning.\"", "text": "It genuinely reasons in response to a query — not merely retrieving or pattern-matching stored answers."},
       {"lead": "On \"over a knowledge base.\"", "text": "The thing it reasons over. For this book, the models are that knowledge base — which is what ties the agent definition to the model definition."}
     ],
-    "site_home": "def-agent",
+    "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Agent",
     "book_home": "book/2.1-the-agent-stack.html#idx-def-agent",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
@@ -50,7 +50,7 @@
       {"lead": "On \"analytical assessment of competing means.\"", "text": "This is what separates the engineer from the technician: if you cannot articulate the trade-offs, you are not engineering. An engineer weighs competing architectures and designs against desired properties."},
       {"lead": "On \"predictive.\"", "text": "An engineer can model and predict the outcomes of the decisions they are about to make — from the architecture and design they propose — prior to building. Prediction-before-construction is the engineering move."}
     ],
-    "site_home": "def-engineering",
+    "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Engineering",
     "book_home": "book/2.1-the-agent-stack.html#idx-def-engineering",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
@@ -65,7 +65,7 @@
       {"lead": "Development vs. engineering.", "text": "Development asks \"does it function and meet requirements?\" Engineering asks \"of the artifacts that would function, which one should we build, given the properties we want?\" — and answers before building it."},
       {"lead": "Why the book is about software engineering.", "text": "Prediction-before-construction, applied to software: choosing the artifact whose properties best serve the goal, not merely one that runs."}
     ],
-    "site_home": "def-software-engineering",
+    "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Software-engineering",
     "book_home": "book/2.1-the-agent-stack.html#idx-def-software-engineering",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the definition is tagged with an index-def in §2.1 (The Agent Stack) and renders as the blue def-box in the web book + PDF."},
@@ -81,7 +81,7 @@
       {"lead": "On what the shape buys — analyzability.", "text": "A machine can do to a structured model what it cannot do to prose: read it, check it against the code and fail the build when they disagree, answer queries from it without re-deriving structure from the source, reason over it, and enforce it — refusing work that diverges. \"Structured\" was chosen over \"typed\" precisely because it names this whole span, not the type-check alone."},
       {"lead": "Why it is the load-bearing half of the Modeling Thesis.", "text": "Prose can be a model — simplified, predictive, even prescriptive. But only a structured model can sit at the apex of the documentation hierarchy, because only a machine-readable description can be the one the machine checks the others against. Every \"structured, drift-checked model\" in this book leans on the adjective: drop it and the drift gate has nothing to read."}
     ],
-    "site_home": "def-structured",
+    "site_home": "N/A",
     "derived_from": "book/transcripts/DEFINITIONS-DRAFT.md#Structured",
     "book_home": "book/2.1-the-agent-stack.html#idx-def-structured",
     "book_home_owed": {"section": "Part 2 — §2.1 The Agent Stack", "status": "landed", "note": "Landed: the adjective rider on the model definition in §2.1 is tagged with an index-def and renders as the blue def-box in the web book + PDF (the #idx-def-structured anchor). On the landing it reads as the rider on the four definitions, not a fifth peer."},
