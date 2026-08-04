@@ -1494,7 +1494,7 @@
           "section_id": "what-it-adds-up-to",
           "level": 3,
           "heading_text": "What it adds up to",
-          "topic_sentence": "You will place some of each up front, from what you know about the domain, and add more of both as you go.",
+          "topic_sentence": "Step back and this is what you are really doing: describing policies for how the engineering work should proceed, and letting those policies produce a **governed engineering environment** — the rules of the road the agents operate within.",
           "id_source": "derived",
           "block_index": 73,
           "points": [
