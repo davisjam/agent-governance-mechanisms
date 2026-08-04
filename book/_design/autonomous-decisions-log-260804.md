@@ -69,3 +69,21 @@ INDEPENDENT fresh-context Opus second opinion. Logged honestly as such.
   figures but omitted the required `[ref:]` intro, so the full-suite `check_float_ref_gate` went red
   (pre-commit runs validate+build only, not the full suite, so it wasn't caught at commit). Fixed in FAST-2b
   Group-0. STANDING FIX: run the full `catalog_tests.py` before every deploy, not just pre-commit.
+
+### STEP 2
+
+- **D15 · STEP-2 deploy agent stub-completed (armed-monitor trap) → re-dispatched SYNCHRONOUS.** The first
+  deploy agent (sonnet) ran the pre-deploy chore (`b35e70b`: regen views + track decisions-log/section-
+  numbering) but then "armed a Monitor and ended" before running `deploy github` — so NOTHING pushed
+  (origin/main stayed `5b4cf90`, local 54 ahead). Detected by verifying origin/main vs local (trust-nothing).
+  FIX: re-dispatched with strict "FOREGROUND-synchronous, no Monitor, don't end until the push is confirmed"
+  discipline. STANDING LESSON: book deploy agents must run `catalog_tests.py` + `catalog.py deploy github`
+  in the FOREGROUND and wait — never background+monitor for a deploy (the classic stub-completion class).
+
+- **D16 · Nav redesign (FAST-2a) introduced a `unique-landmark` a11y regression → fix = label the toc nav.**
+  The single-bar nav left two `<nav>` landmarks per page — `chapnav` (aria-labeled) + `nav.toc` (unlabeled);
+  html-validate's `unique-landmark` rule then failed on 135 pages (T2 deploy-scope gate, not in FAST-2a's
+  gate set — same pre-commit-vs-full-suite gap as D14). Caught by the synchronous full-suite-before-deploy
+  (D15's discipline working). FIX: add `aria-label="Table of contents"` to `nav.toc` in build_book_html.py
+  (distinct from chapnav's "Chapter navigation" → both landmarks uniquely named). Book-a11y is
+  self-consistent with the product's own accessibility thesis, so this is a correctness fix, not cosmetic.
