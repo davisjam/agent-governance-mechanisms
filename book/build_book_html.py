@@ -3355,6 +3355,42 @@ def _appendix_v2_role_subsections() -> list[tuple[str, str]]:
 
 _FLAGSHIP_STACK_PATH = ROOT / "book-models" / "flagship-stack.json"
 _BRICK_LAYOUT_PATH = ROOT / "book-models" / "brick-layout.json"
+# Authored compressed Appendix-B notes (restructure sub-wave 4a prototype). One `<slug>.md` per flagship that
+# has been compressed to a keep-together Flagship-Mechanism note; a flagship without one falls back to the full
+# GoF pattern page. Each authored note carries the `note-spread`/`note-fold` keep-together directives (§13.6).
+_APPENDIX_NOTES_DIR = ROOT / "book" / "appendix-notes"
+
+
+_NOTE_SPREAD_RE = re.compile(r"<!--\s*note-spread:\s*(\d+)\s*-->")
+
+
+def _appendix_b_note_md(rec: dict, stack_membership: "dict | None", for_print: bool) -> str:
+    """One Appendix-B Flagship-Mechanism note body. When an authored compressed note exists at
+    `book/appendix-notes/<slug>.md`, splice a provenance line + the authored Note-contract body — Intent
+    first, then problem · mechanism · engineering consequences · implementation seam · known limitations —
+    which carries the `note-spread` (and, for a two-page note, the `note-fold`) directive the Typst
+    keep-together wrapper reads (§13.6). A flagship with NO authored note falls back to the full GoF pattern
+    page, so the un-compressed flagships keep rendering until their notes are authored in the fan-out wave.
+
+    THE MEASURED LAYOUT RULE (sub-wave 4a page-budget prototype): the Structure figure (the fill's Mermaid)
+    leads the note ONLY on a two-page note (`note-spread: 2`). A one-page note is text-only — the figure plus
+    Intent plus the five contract sections overflows a single page (measured at 102–122% of the page budget),
+    so a 1pp note carries the prose and defers the picture to the mechanism's Appendix-C brick and its online
+    entry. Figure ⟺ spread:2: the figure sits in the fold's first panel, where a two-page note has the room."""
+    note_path = _APPENDIX_NOTES_DIR / f"{rec['slug']}.md"
+    if not note_path.is_file():
+        return _appendix_pattern_page_md(rec, stack_membership, for_print)
+    body = note_path.read_text(encoding="utf-8").strip()
+    m = _NOTE_SPREAD_RE.search(body)
+    spread = int(m.group(1)) if m else 1
+    fill = rec.get("fill") or {}
+    safe = rec["name"].replace('"', "'")
+    lead: list[str] = []
+    if spread >= 2 and fill.get("structure"):          # figure ⟺ spread:2 (measured: 1pp+figure overflows)
+        lead += [f"*The Structure of {safe} — its shape at a glance:*", "", fill["structure"], ""]
+    lead += [f'*Projected from the catalogue entry [{rec["family"]} / {rec["name"]}]'
+             f'({rec["catalogue_html"]}).*', ""]
+    return "\n".join(lead) + "\n" + body
 
 
 def _humanize_slug(slug: str) -> str:
@@ -3724,7 +3760,7 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
             "part_title": b_part_title,
             "chapter": num,                    # monotonic 1…29 — sorts after the opening's chapter 0
             "chapter_title": f"Appendix B - {num}. {rec['name']}",
-            "body_md": _appendix_pattern_page_md(rec, stack_membership, for_print),
+            "body_md": _appendix_b_note_md(rec, stack_membership, for_print),
             "is_appendix": True,
             "mermaid": True,
             "fig_prefix": f"B.{num}",          # D80: "Figure B.<num>-N", monotonic off the locator

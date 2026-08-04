@@ -1006,6 +1006,17 @@ def cmd_validate(_args) -> int:
     if minfont:
         print(f"  [minfont] AUDIT-ONLY: {lfmf.summary_line(minfont)} — "
               f"run `python3 book-models/lint_figure_min_font.py` (does not gate)")
+    # APPENDIX-B NOTE WORD-CAP — the EARLY sensor over the authored Flagship-Mechanism notes
+    # (`book/appendix-notes/*.md`): a note whose prose outgrows its declared `note-spread` budget. AUDIT-ONLY
+    # per the repo's blocking-lint discipline — it PRINTS its finding count (so an author sees a note that has
+    # bloated past its page) but does NOT increment n_issues. The REAL invariant is the keep-together renderer's
+    # rendered-height assertion in the PDF build; this word count is the cheap early warning. See
+    # book-models/lint_appendix_b_note_word_cap.py.
+    import lint_appendix_b_note_word_cap as labnw  # noqa: E402 — audit-only note word-cap sensor
+    note_over = labnw.findings()
+    if note_over:
+        print(f"  [bnote]  AUDIT-ONLY: {len(note_over)} Appendix-B note(s) over the spread word budget — "
+              f"run `python3 book-models/lint_appendix_b_note_word_cap.py` (does not gate)")
     # CAPTION LENGTH — every authored figure/table caption ≤3 sentences AND ≤50 words. HARD cap, NO noqa
     # escape (author instruction). A trim-wave drove the tree to 0, so it lands BLOCKING: an over-long
     # caption increments n_issues and reddens validate. See book-models/lint_caption_length.py.
