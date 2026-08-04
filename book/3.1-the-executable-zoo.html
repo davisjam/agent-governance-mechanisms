@@ -714,6 +714,65 @@ nav.toc details[open] { flex: 1 1 100%; }
 <p id="idx-def-per-model-template">Every model in this Part is rendered by filling the same five-field template. The uniformity is deliberate: a reader who has read one page can read any of them on reflex.</p>
 <ul><li><strong>(a) Quality property it helps assess.</strong> The property this model lets you <em>check</em> — stated as the question the model answers that the raw code cannot. Not "it models X" but "it lets you ask, and answer, <em>is Q true?</em>" A model with no quality property to assess is a diagram, not a model.</li><li><strong>(b) Constructs and relations.</strong> The typed elements the model is built from and how they relate — the record kinds, the fields that carry meaning, the edges between them. <sup class="note-ref" role="doc-noteref" aria-label="note 1">*</sup><span class="editorial-note"><span class="cn-mark">*</span> The modeling tradition calls this field the model's metamodel, and names the full layering M0–M3: running instance, model, metamodel, meta-metamodel, bottom to top. We keep the layer and skip the tower — a frozen record schema is metamodel enough, and the host language's type system stands in for M3. The MDSE text (Brambilla, Cabot, and Wimmer, ch. 2) draws the tower in full.</span> This is the reference content: what a reader consults to understand the model's shape.</li><li><strong>(c) Visual depiction.</strong> The diagram of the real model, matched to its natural type — a state machine gets a state diagram, a topology gets a deployment diagram, a registry of related records gets an ER diagram. Each carries an accessible description that states the content <em>and</em> the takeaway.</li><li><strong>(d) Invariants, and how they are checked.</strong> The predicates that must hold, each with the mechanism that holds it true — a drift lint, a coverage floor, a model check, a parity gate. Rendered as a table of invariant, its temporal shape, and how it is checked. A model whose invariants are prose with no checker is flagged UNTESTED.</li><li><strong>(e) Traceability and derivation direction.</strong> One line: which direction the model derives, and the join key from a model element back to the code.</li></ul>
 <p>The first four fields map onto the four questions a reader brings to a model: what is it for, what is it made of, what does it look like, how do I trust it. Field (e) answers the fifth this chapter raised: how does the model stay tied to the code. Each view chapter opens with the Kruchten view it embodies, then walks its models through this template.</p>
+<h2><span class="sec-num">3.1.7</span> The coherence triangle</h2>
+<p>Every model page in this Part draws the same shape. Fields (b) and (c) give the <strong>typed model</strong>: records, edges, state machines. Field (d) adds the <strong>invariants</strong>, the predicates that must hold, each named by a stable id. Its checker supplies the <strong>coherence-gate</strong>: the drift lint or model check that holds a predicate true at build time. Model, invariants, gate — the constraint-and-verify vocabulary the chapter already borrowed from SysML, where a constraint block wires to the check that satisfies it.</p>
+<p>The schema is not what earns the model its keep. The invariants that get checked are. A structure that names its parts but promises nothing you can test is a diagram, not a model; field (a) already drew that line, and field (d) stamps an unchecked invariant UNTESTED. Draw the schema and stop, and the model rots the first time the code moves past it. The gate keeps it honest.</p>
+<p>The invariants are not arbitrary. They come from the failures the system met. In the DocAble build, the gaps the models caught were violated-but-unstated invariants — a property the system had always needed and never written down, promoted to a checked predicate the moment it broke. Part 5 records the act behind each one: deciding, for every failure, whether it was a one-off to patch or the symptom of a missing mechanism. Promoting the property to a checked invariant is what makes the model the right abstraction, not merely a plausible one. <a class="xref" href="3.1-the-executable-zoo.html#fig-3-1-3">Figure&nbsp;3.1-3</a> draws the three nodes and the edge that closes them.</p>
+<figure id="fig-3-1-3" class="book-figure" data-label="coherence-triangle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660"
+     role="group" aria-labelledby="ctTitle ctDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="ctTitle">The coherence triangle — model, invariants, coherence-gate</title>
+  <desc id="ctDesc">Three nodes in a triangle. At the apex sit the invariants: predicates that
+    must hold, each named by a stable id, with the sample predicate “not(leased and free)”. At the
+    bottom left sits the typed model — records, edges, state machines, with the neutral example of a
+    job that is free, leased, or done. At the bottom right sits the coherence-gate — a drift lint or
+    model check that checks the predicates at build time. An arrow from the model to the invariants is
+    labelled “declares”; an arrow from the invariants to the gate is labelled “checked by”. A third,
+    accent-coloured arrow closes the triangle from the gate back to the model, carrying the failures
+    point: each gap the fleet found was a violated-but-unstated invariant. The model earns its keep
+    through the invariants it lets you check, not through its schema.</desc>
+
+  <defs>
+    <marker id="tri-muted" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
+    </marker>
+    <marker id="tri-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9a3f12"/>
+    </marker>
+  </defs>
+
+  <!-- ===== apex: the invariants ===== -->
+  <rect x="340" y="40" width="320" height="160" rx="10" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="500" y="86" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Invariants</text>
+  <text x="500" y="116" text-anchor="middle" font-size="18" fill="#57534e">predicates with stable ids</text>
+  <rect x="380" y="134" width="240" height="40" rx="6" fill="#f3efe7" stroke="#9a3f12" stroke-width="1"/>
+  <text x="500" y="160" text-anchor="middle" font-size="16" fill="#9a3f12">not(leased and free)</text>
+
+  <!-- ===== bottom-left: the typed model ===== -->
+  <rect x="60" y="450" width="320" height="150" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="220" y="498" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Typed model</text>
+  <text x="220" y="528" text-anchor="middle" font-size="18" fill="#57534e">records, edges, states</text>
+  <text x="220" y="556" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a job: free / leased / done</text>
+
+  <!-- ===== bottom-right: the coherence-gate ===== -->
+  <rect x="620" y="450" width="320" height="150" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="780" y="498" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Coherence-gate</text>
+  <text x="780" y="528" text-anchor="middle" font-size="18" fill="#57534e">checks them at build time</text>
+  <text x="780" y="556" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a drift lint or model check</text>
+
+  <!-- ===== edge: model -> invariants ===== -->
+  <path d="M228,450 C300,370 360,285 452,202" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#tri-muted)"/>
+  <text x="298" y="330" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">declares</text>
+
+  <!-- ===== edge: invariants -> gate ===== -->
+  <path d="M548,202 C640,285 700,370 772,450" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#tri-muted)"/>
+  <text x="712" y="330" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">checked by</text>
+
+  <!-- ===== closing edge: gate -> model, carrying the failures point ===== -->
+  <path d="M616,528 C540,578 460,578 384,528" fill="none" stroke="#9a3f12" stroke-width="2.5" marker-end="url(#tri-accent)"/>
+  <text x="500" y="612" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">each gap the fleet found was</text>
+  <text x="500" y="636" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">a violated-but-unstated invariant</text>
+</svg><figcaption data-short="A model earns its keep through its invariants, not its schema"><span class="fig-label">Figure 3.1-3.</span> A model earns its keep through its invariants, not its schema: the typed model declares predicates with stable ids, and a coherence-gate checks them at build time. The closing edge carries the proof — each invariant was earned from a failure the system never wrote down.</figcaption></figure>
 <p>---</p>
 <blockquote id="idx-def-invariant" class="concept-inset"><p class="inset-title" id="inset-invariant">What is an invariant, and how do you write one?</p>
 <p>An <strong>invariant</strong> is a statement that must be true in <em>every</em> state your system can reach — a property the system promises never to violate. You write one as a predicate over the model's state, then you ask the model whether any reachable state breaks it. Take a job that can be <code>free</code>, <code>leased</code>, or <code>done</code>. The invariant "a job is never both leased and free" is a predicate over one state: <code>not (leased and free)</code>. Because it concerns a single state, you check it by visiting every reachable state and evaluating the predicate there. If none breaks it, the invariant holds. The move that makes this more than a comment: the predicate is <em>checked</em>, exhaustively, by a tool, not eyeballed on a diagram. That is the step from "we believe this holds" to "we proved it holds."</p>

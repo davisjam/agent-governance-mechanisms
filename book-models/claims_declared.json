@@ -356,6 +356,30 @@
       "relates_to": [],
       "provenance": "stated",
       "anchor": "Preface caution: 'This is a single-case field report … read it as an observation from that case rather than a measured law.'"
+    },
+    {
+      "id": "model-earns-keep-via-invariants",
+      "kind": "distinction",
+      "statement": "A model earns its keep through the invariants it lets you check, not its schema.",
+      "distinguishes": [
+        "the invariants that get checked — what earns the model its keep",
+        "the schema itself — a diagram that rots unchecked"
+      ],
+      "home": "3.1-the-executable-zoo",
+      "asserted_at": [
+        "3.1-the-executable-zoo"
+      ],
+      "contradicted_by": "Prose treating a model's schema alone as its value — counting a structure with no checked invariant as a model rather than a diagram.",
+      "watch_phrases": [
+        "the schema is the model"
+      ],
+      "relates_to": [
+        "concept:thesis-modeling",
+        "concept:thesis-alignment",
+        "concept:governance-target-models-bridge"
+      ],
+      "provenance": "stated",
+      "anchor": "3.1 'The coherence triangle': the schema is not what earns the model its keep; the invariants that get checked are, and each was earned from a failure (Part 5's most-repeated act — deciding local vs structural)."
     }
   ]
 }

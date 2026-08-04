@@ -472,7 +472,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 85 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 86 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
      role="group" aria-labelledby="fig-0-1-1-mmTitle fig-0-1-1-mmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-0-1-1-mmTitle">The MAGE method at a glance</title>
@@ -2059,7 +2059,61 @@ nav.toc details[open] { flex: 1 1 100%; }
     <text x="883" y="354" text-anchor="middle" font-size="20" fill="#1c1917">privacy /</text>
     <text x="883" y="380" text-anchor="middle" font-size="20" fill="#1c1917">storage</text>
   </g>
-</svg><figcaption data-short="4+1 is one projection among siblings; a lens is a projection within one"><span class="fig-label">Figure 3.1-2.</span> 4+1 is one projection among siblings; a lens is a projection within one. Choosing a framework, or a slice within it, is a rendering decision over a single core — never a second model to maintain.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-2">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-2-1-fig-3-2-1" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 170"
+</svg><figcaption data-short="4+1 is one projection among siblings; a lens is a projection within one"><span class="fig-label">Figure 3.1-2.</span> 4+1 is one projection among siblings; a lens is a projection within one. Choosing a framework, or a slice within it, is a rendering decision over a single core — never a second model to maintain.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-2">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-1-3-fig-3-1-3" class="book-figure" data-label="coherence-triangle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660"
+     role="group" aria-labelledby="fig-3-1-3-ctTitle fig-3-1-3-ctDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-3-1-3-ctTitle">The coherence triangle — model, invariants, coherence-gate</title>
+  <desc id="fig-3-1-3-ctDesc">Three nodes in a triangle. At the apex sit the invariants: predicates that
+    must hold, each named by a stable id, with the sample predicate “not(leased and free)”. At the
+    bottom left sits the typed model — records, edges, state machines, with the neutral example of a
+    job that is free, leased, or done. At the bottom right sits the coherence-gate — a drift lint or
+    model check that checks the predicates at build time. An arrow from the model to the invariants is
+    labelled “declares”; an arrow from the invariants to the gate is labelled “checked by”. A third,
+    accent-coloured arrow closes the triangle from the gate back to the model, carrying the failures
+    point: each gap the fleet found was a violated-but-unstated invariant. The model earns its keep
+    through the invariants it lets you check, not through its schema.</desc>
+
+  <defs>
+    <marker id="fig-3-1-3-tri-muted" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
+    </marker>
+    <marker id="fig-3-1-3-tri-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9a3f12"/>
+    </marker>
+  </defs>
+
+  <!-- ===== apex: the invariants ===== -->
+  <rect x="340" y="40" width="320" height="160" rx="10" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="500" y="86" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Invariants</text>
+  <text x="500" y="116" text-anchor="middle" font-size="18" fill="#57534e">predicates with stable ids</text>
+  <rect x="380" y="134" width="240" height="40" rx="6" fill="#f3efe7" stroke="#9a3f12" stroke-width="1"/>
+  <text x="500" y="160" text-anchor="middle" font-size="16" fill="#9a3f12">not(leased and free)</text>
+
+  <!-- ===== bottom-left: the typed model ===== -->
+  <rect x="60" y="450" width="320" height="150" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="220" y="498" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Typed model</text>
+  <text x="220" y="528" text-anchor="middle" font-size="18" fill="#57534e">records, edges, states</text>
+  <text x="220" y="556" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a job: free / leased / done</text>
+
+  <!-- ===== bottom-right: the coherence-gate ===== -->
+  <rect x="620" y="450" width="320" height="150" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="780" y="498" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Coherence-gate</text>
+  <text x="780" y="528" text-anchor="middle" font-size="18" fill="#57534e">checks them at build time</text>
+  <text x="780" y="556" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a drift lint or model check</text>
+
+  <!-- ===== edge: model -> invariants ===== -->
+  <path d="M228,450 C300,370 360,285 452,202" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-3-1-3-tri-muted)"/>
+  <text x="298" y="330" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">declares</text>
+
+  <!-- ===== edge: invariants -> gate ===== -->
+  <path d="M548,202 C640,285 700,370 772,450" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-3-1-3-tri-muted)"/>
+  <text x="712" y="330" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">checked by</text>
+
+  <!-- ===== closing edge: gate -> model, carrying the failures point ===== -->
+  <path d="M616,528 C540,578 460,578 384,528" fill="none" stroke="#9a3f12" stroke-width="2.5" marker-end="url(#fig-3-1-3-tri-accent)"/>
+  <text x="500" y="612" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">each gap the fleet found was</text>
+  <text x="500" y="636" text-anchor="middle" font-size="17" font-style="italic" fill="#9a3f12">a violated-but-unstated invariant</text>
+</svg><figcaption data-short="A model earns its keep through its invariants, not its schema"><span class="fig-label">Figure 3.1-3.</span> A model earns its keep through its invariants, not its schema: the typed model declares predicates with stable ids, and a coherence-gate checks them at build time. The closing edge carries the proof — each invariant was earned from a failure the system never wrote down.</figcaption></figure><p class="gallery-source">From <a href="3.1-the-executable-zoo.html#fig-3-1-3">12 · The Executable Zoo</a></p></section><hr><section class="gallery-item"><figure id="fig-3-2-1-fig-3-2-1" class="book-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 170"
      role="group" aria-labelledby="fig-3-2-1-dfTitle fig-3-2-1-dfDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-3-2-1-dfTitle">A data-flow diagram: each edge names the data on the wire</title>
