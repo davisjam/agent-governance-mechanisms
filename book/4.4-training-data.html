@@ -81,6 +81,10 @@ header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; l
 header.chap .kicker a { color: inherit; text-decoration: none; }
 header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+/* `part.chapter` display number on a body/back-matter chapter title (build-derived from the file path,
+   not authored). Muted + tabular so it reads as a reference locator, not part of the title; display-only,
+   carries no id, so the chapter's anchors, cross-refs, and the index all still resolve. */
+header.chap h1 .chap-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 0.2em; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid var(--rule);
                   color: var(--muted); font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
@@ -105,7 +109,9 @@ h2 .sec-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabul
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
 h2 .role-kick { color: var(--accent); font-weight: 700; font-style: italic; font-size: 0.62em; letter-spacing: 0.07em;
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }
-h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+/* `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level than the bold H1/H2. Overrides the
+   shared `h1,h2,h3,h4` display-weight above (equal specificity, later rule wins); keeps the display face. */
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; font-weight: 400; font-style: italic; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: var(--ink); }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
@@ -294,6 +300,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
+/* D74 — the author portrait floats left at a capped width so the bio flows around it (a wrap figure). */
+figure.book-figure.portrait-wrap { float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
+                                    text-align: center; }
+figure.book-figure.portrait-wrap img { width: 100%; border-radius: 4px; }
+figure.book-figure.portrait-wrap figcaption { text-align: center; }
 .fig-label, .tbl-label { font-weight: 700; color: var(--ink); }
 table caption { caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }
@@ -472,7 +483,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 23 · Training Data and the Novelty Axis"><header class="chap"><div class="kicker"><a href="4.1-brownfield.html" aria-label="Beginning of Part 4 — Putting It to Work">Part 4 — Putting It to Work</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 23</a></div><h1>Training Data and the Novelty Axis</h1></header><span id="idx-def-conditioning-the-search"></span><span id="idx-ex-search-space-1"></span><p>There is one last property of a coding agent you must reason about, and it decides how much of this book you will actually need: its training data. Everything in these chapters is a way of conditioning a probability distribution — narrowing the agent's search space until the path you want is the path it takes. But that distribution did not start neutral. It was shaped by what the model was trained on, and that shape decides where the discipline is optional and where it is the only thing that will save you. The more your system resembles the training data, the less conditioning you owe; the less it resembles it, the more the conditioning is the work itself. This chapter walks that axis, from the common case to the hard one.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 23 · Training Data and the Novelty Axis"><header class="chap"><div class="kicker"><a href="4.1-brownfield.html" aria-label="Beginning of Part 4 — Putting It to Work">Part 4 — Putting It to Work</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 23</a></div><h1><span class="chap-num">4.4</span> Training Data and the Novelty Axis</h1></header><span id="idx-def-conditioning-the-search"></span><span id="idx-ex-search-space-1"></span><p>There is one last property of a coding agent you must reason about, and it decides how much of this book you will actually need: its training data. Everything in these chapters is a way of conditioning a probability distribution — narrowing the agent's search space until the path you want is the path it takes. But that distribution did not start neutral. It was shaped by what the model was trained on, and that shape decides where the discipline is optional and where it is the only thing that will save you. The more your system resembles the training data, the less conditioning you owe; the less it resembles it, the more the conditioning is the work itself. This chapter walks that axis, from the common case to the hard one.</p>
 <h2><span class="sec-num">4.4.1</span> The model is biased toward what it has seen</h2>
 <p id="idx-def-training-data-bias">Think of the training data as the whole internet and every book ever written, and think of the model as biased toward whatever it saw most. Read one book holding a position and a hundred holding the opposite, and it leans to the hundred. Except where the trainers worked hard to force a particular behavior, it simply weights the common over the rare. This has a moral dimension the labs fight with reinforcement learning from human feedback — you teach the model not to lie, and it lies anyway; not to steal, and it steals; not to break into other people's computers, and it will, given the chance. Training data has its limits. But the same bias carries an engineering consequence more useful to us: the kinds of systems the model has seen a great deal of, it can build a variation on almost effortlessly; the kinds it has never seen, it struggles with.</p>
 <p>That divides the world of software neatly. If you are building your own version of something standard, the model has read the documentation and watched the walkthroughs of a hundred competing products, and it can reproduce the class in its sleep. (One caution: building a competitor this way can infringe a <em>patent</em> even though you copied no <em>code</em>, because a patent covers the concept rather than the text — so tread carefully.) A to-do list, a recipe tracker, a fitness app — GitHub holds a million of each, and the agent knows them cold. Any "typical web application" — a form-driven UI, a backend storing to a database, a compute layer producing outputs over it — it builds without breaking a sweat, because you are asking it to regurgitate a class it has seen a thousand times and then specialize it. This is exactly why a lab can credibly claim it built a whole C compiler in a week, or ported one runtime to another language in three days: the training data is full of compilers, and in the porting case, full of the very code being ported. Impressive, and entirely unsurprising.</p>

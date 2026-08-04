@@ -81,6 +81,10 @@ header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; l
 header.chap .kicker a { color: inherit; text-decoration: none; }
 header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+/* `part.chapter` display number on a body/back-matter chapter title (build-derived from the file path,
+   not authored). Muted + tabular so it reads as a reference locator, not part of the title; display-only,
+   carries no id, so the chapter's anchors, cross-refs, and the index all still resolve. */
+header.chap h1 .chap-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 0.2em; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid var(--rule);
                   color: var(--muted); font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
@@ -105,7 +109,9 @@ h2 .sec-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabul
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
 h2 .role-kick { color: var(--accent); font-weight: 700; font-style: italic; font-size: 0.62em; letter-spacing: 0.07em;
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }
-h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+/* `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level than the bold H1/H2. Overrides the
+   shared `h1,h2,h3,h4` display-weight above (equal specificity, later rule wins); keeps the display face. */
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; font-weight: 400; font-style: italic; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: var(--ink); }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
@@ -294,6 +300,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
+/* D74 — the author portrait floats left at a capped width so the bio flows around it (a wrap figure). */
+figure.book-figure.portrait-wrap { float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
+                                    text-align: center; }
+figure.book-figure.portrait-wrap img { width: 100%; border-radius: 4px; }
+figure.book-figure.portrait-wrap figcaption { text-align: center; }
 .fig-label, .tbl-label { font-weight: 700; color: var(--ink); }
 table caption { caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }
@@ -472,7 +483,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Conclusion · Conclusion"><header class="chap"><div class="kicker"><a href="6.0-implications-for-se.html" aria-label="Beginning of Back Matter">Back Matter</a></div><h1>Conclusion</h1></header><blockquote class="aside-sidenote"><p>I applied mine heart to know, and to search, and to seek out wisdom, and the reason of things.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Conclusion · Conclusion"><header class="chap"><div class="kicker"><a href="6.0-implications-for-se.html" aria-label="Beginning of Back Matter">Back Matter</a></div><h1><span class="chap-num">6.1</span> Conclusion</h1></header><blockquote class="aside-sidenote"><p>I applied mine heart to know, and to search, and to seek out wisdom, and the reason of things.</p>
 <p>— King Solomon (Ecclesiastes 7:25)</p></blockquote>
 <p id="idx-def-judgment-is-the-scarce-resource">I set out to learn what engineering becomes when implementation is nearly free. Here is what I found: the code got cheap, and the judgment got expensive. That's the whole book in a sentence. The rest of it is me trying to say, concretely, what that expensive judgment <em>is</em> — and how you organize a system so a fast, unreliable machine can exercise the cheap part without wrecking the rest.</p>
 <p>The method reduces to one loop, repeated until the system holds. Velocity surfaces a failure. Judgment classifies it — a local bug to patch, or the symptom of a missing mechanism. The structural ones you convert into something durable: a type that makes the error unrepresentable, a lint that catches it at commit, a gate that blocks it before production, a model the next agent reasons through. Then you go again. Each conversion narrows the space the next agent can fail in — the more conversions you land, the more the governability compounds. The apparatus that results is large — in the system this book is drawn from, the tests and lints and tooling outweighed the product code — and it is not overhead: the apparatus is the review, as Part 5 (A MAGE Case Study) showed. It is what you buy the velocity with.</p>
@@ -484,12 +495,12 @@ nav.toc details[open] { flex: 1 1 100%; }
 <p>Strip the book to three moves and this is what remains.</p>
 <ol><li><strong>Architect deliberately:</strong> implementation is nearly free, so spend the saving on the shape — the structured model, the boundary, the abstraction the machine builds against — rather than on faster slop.</li><li><strong>Convert failure into machinery:</strong> when velocity surfaces a structural failure, do not just patch it; turn it into a type, a lint, a gate, a sensor that catches the whole class the next time.</li><li><strong>Keep judgment scarce and central:</strong> the machine searches; you decide what is worth searching for. Guard those decisions. Hand the mechanical work to the machinery. And spend yourself only where nothing else can. Three moves, one loop, run until the system holds.</li></ol>
 <p id="idx-def-governance-as-design-patterns">One last framing. Take the premise of <em>Software Engineering at Google</em> — mechanize the discipline — push it to a workforce that cannot remember, and you are forced to encode everything explicitly. Take the form of the Gang of Four — the design pattern — and you have the unit in which to encode it and pass it on. The <strong>governed engineering environment</strong> is what you get when you do both: a system where fast, forgetful, capable machines produce trustworthy software because the discipline lives in the environment, not in anyone's head, and it lives there as a catalogue of named, reusable patterns. And once keeping the map equal to the territory costs almost nothing, the map itself fights churn by steering the fleet: the Modeling Thesis supplies the map, the Alignment Thesis enforces it, and together they are the method this book set out to name — Model-Based Agentic Software Engineering, run until velocity holds.</p>
-<h2>The part that stays yours</h2>
+<h2><span class="sec-num">6.1.1</span> The part that stays yours</h2>
 <p>We opened by calling the agent a 3D printer, not a stapler. Let us revisit the metaphor in closing. A 3D printer builds almost anything you describe, and <em>only</em> what you describe. The theses are how you tame it. A model gives the machine the right thing to build against instead of a blank space to guess into; a constraint holds the part it prints inside the envelope you decided on. We cannot make our agents deterministic. We bound our probabilistic fabricators until what comes out is something we can trust.</p>
 <p>So do not fear the machine, and do not overtrust it either. It is the most capable tool most of us will ever hold: it gives a skilled engineer the throughput of a team, and it does that precisely because it will do anything you ask, without the friction that used to separate ideas from reality. The governed engineering environment is how you put the friction back where it belongs — on the failures, not on the human — so the throughput lands as a production system instead of a fast pile of slop.</p>
 <p>If there is a single instruction to carry out of this book, it is this. Govern the conditions under which fast code can be trusted, and know when to stop governing: put a guardrail on the smells that predict a real failure, but remember that guardrails tax future changes. The machine can search faster than any of us. It cannot tell us what is worth searching for. That part is still yours, and it is the part worth getting good at.</p>
 <p>Machines can help us search. They cannot give us judgment.</p>
-<h2>Where to go next</h2>
+<h2><span class="sec-num">6.1.2</span> Where to go next</h2>
 <p>You do not have to adopt all of this at once, and you should not. I suggest you pick one recurring failure your agents keep handing you, and convert it — one type, one lint, one gate. That single conversion is the loop in miniature, and the method grows from there.</p>
 <p>When you want more, the appendices are the working reference. Apply them to the one failure in front of you, reach for the catalogue when you hit the next, and watch your governed engineering environment grow.</p>
 <p>I hope the MAGE method serves your work as well as it has served mine.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="6.0-implications-for-se.html" aria-label="Beginning of Back Matter">« Beginning of part</a><a href="6.0-implications-for-se.html" aria-label="Previous chapter — Implications for Software Engineering">« Previous chapter</a></div><span class="chapnav-here" title="Conclusion">Conclusion</span><div class="chapnav-fwd"><a href="6.2-glossary.html" aria-label="Next chapter — Glossary">Next chapter »</a><a href="appendix-patterns.html" aria-label="Next part — Appendix A — Agent patterns">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

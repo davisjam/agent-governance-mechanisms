@@ -81,6 +81,10 @@ header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; l
 header.chap .kicker a { color: inherit; text-decoration: none; }
 header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+/* `part.chapter` display number on a body/back-matter chapter title (build-derived from the file path,
+   not authored). Muted + tabular so it reads as a reference locator, not part of the title; display-only,
+   carries no id, so the chapter's anchors, cross-refs, and the index all still resolve. */
+header.chap h1 .chap-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 0.2em; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid var(--rule);
                   color: var(--muted); font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
@@ -105,7 +109,9 @@ h2 .sec-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabul
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
 h2 .role-kick { color: var(--accent); font-weight: 700; font-style: italic; font-size: 0.62em; letter-spacing: 0.07em;
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }
-h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+/* `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level than the bold H1/H2. Overrides the
+   shared `h1,h2,h3,h4` display-weight above (equal specificity, later rule wins); keeps the display face. */
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; font-weight: 400; font-style: italic; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: var(--ink); }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
@@ -294,6 +300,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
+/* D74 — the author portrait floats left at a capped width so the bio flows around it (a wrap figure). */
+figure.book-figure.portrait-wrap { float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
+                                    text-align: center; }
+figure.book-figure.portrait-wrap img { width: 100%; border-radius: 4px; }
+figure.book-figure.portrait-wrap figcaption { text-align: center; }
 .fig-label, .tbl-label { font-weight: 700; color: var(--ink); }
 table caption { caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }
@@ -472,7 +483,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 7 · Models and the Semantic Gap"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 7</a></div><h1>Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject a mechanism. This one is about the most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. A model is the sweet spot between prose too vague to bind and code too verbose to reason over. But a model only helps if you check it where checking makes sense.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 7 · Models and the Semantic Gap"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 7</a></div><h1><span class="chap-num">2.2</span> Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject a mechanism. This one is about the most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. A model is the sweet spot between prose too vague to bind and code too verbose to reason over. But a model only helps if you check it where checking makes sense.</p>
 <h2><span class="sec-num">2.2.1</span> Words are soft, code is verbose, a model is the sweet spot</h2>
 <p id="idx-ex-injection-point-1">Your first governance mechanism is the prompt, because the agent is a language model and words are how you talk to it. But words are soft. They are ambiguous, and the more ambiguity you leave in, the less happy you will be. You can push the ambiguity down by writing documentation — describing the environment, the product, its goals, its policies — and if you were briefing a <em>human</em> team, that would be enough. Humans are not dumb; they remember, they know what matters, they know where to look things up, and they know they will be fired if they misbehave. Agents are different: brilliant reasoners who must be told exactly what to reason over, and for whom a loose document is simply not precise enough.</p>
 <p id="idx-def-model-as-map">Code is the opposite failure. Code is perfectly precise — it is exactly what will happen — but it is far too verbose to reason over in bulk. What you want sits between the two: something accurate and unambiguous, yet compact. The word for that thing is a <strong>model</strong>.</p>

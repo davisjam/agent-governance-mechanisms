@@ -177,9 +177,14 @@ def _fence_body(block: str) -> tuple[str, str]:
 
 # ── Block-kind renderers — a `render_typst(block)` sibling to `Block.render_html()` ─────────────────
 
-def _render_heading(raw: str) -> str:
+def _render_heading(raw: str, section_no: str | None = None) -> str:
     """`#`..`####` → Typst `=`..`====`. A trailing `{#slug}` id-anchor and an `## [role: X]` kicker are
-    folded into the heading text (the kicker as an emphasised lead)."""
+    folded into the heading text (the kicker as an emphasised lead).
+
+    `section_no` (e.g. "1.1.3") is the DISPLAY-ONLY `part.chapter.section` locator the driving walk stamps
+    on a `## ` (level-2) section heading — the Typst twin of the web build's `sec-num` span. Muted so it
+    reads as a reference number, not part of the title; it never touches the `{#slug}` anchor (peeled first),
+    so `@ref`/index queries still resolve. Passed only for numbered body/back-matter chapters."""
     stripped = raw.strip()
     level = len(stripped) - len(stripped.lstrip("#"))
     text = stripped[level:].strip()
@@ -191,7 +196,8 @@ def _render_heading(raw: str) -> str:
             m = re.search(r">([^<]+)</span>", kick)
             if m:
                 kicker = f"#emph[{_esc(m.group(1).strip())}] "
-    return "=" * level + " " + kicker + inline_typst(text)
+    num = f"#text(fill: dt.muted)[{section_no}] " if (level == 2 and section_no) else ""
+    return "=" * level + " " + num + kicker + inline_typst(text)
 
 
 def _render_paragraph(raw: str) -> str:
@@ -326,8 +332,10 @@ def _render_table(block: Block_t) -> str:
     return f"#figure(\n  {tbl},\n  kind: table,{caption}\n){label}"
 
 
-def _render_figure(block: Block_t) -> str:
-    """A `<!-- figure: path | caption -->` → `#figure(image(path), caption: […])`, numbered + labelled."""
+def _render_figure(block: Block_t, width: str = "85%") -> str:
+    """A `<!-- figure: path | caption -->` → `#figure(image(path), caption: […])`, numbered + labelled.
+    `width` sizes the image (default 85% of the measure; the wrapped author portrait passes a small width so
+    it sits beside the bio, see `render_chapter`)."""
     spec = block.raw[len("<!--"):-len("-->")].strip()[len("figure:"):].strip()
     rel = spec.split("|", 1)[0].strip()
     asset = HERE / rel
@@ -335,7 +343,7 @@ def _render_figure(block: Block_t) -> str:
         raise SystemExit(f"figure directive: asset not found: {asset}")
     caption = _caption_block(block.caption)
     label = f" <{block.label}>" if block.label else ""
-    img = f'image("{_root_rel(asset, _EmitCtx.root)}", width: 85%)'
+    img = f'image("{_root_rel(asset, _EmitCtx.root)}", width: {width})'
     return f"#figure(\n  {img},{caption}\n){label}"
 
 
@@ -433,15 +441,17 @@ _INDEX_EXAMPLE_RE = bb.INDEX_EXAMPLE_RE
 _POINT_RE = re.compile(r"^<!--\s*point:\s*(?P<slug>[a-z0-9-]+)\s*\|\s*(?P<text>.+?)\s*-->$")
 
 
-def render_typst(block: Block_t, caption_md: str | None = None, is_def: bool = False) -> str:
+def render_typst(block: Block_t, caption_md: str | None = None, is_def: bool = False,
+                 section_no: str | None = None) -> str:
     """Render ONE IR block to Typst markup — the sibling to `Block.render_html()`, reusing the SAME
     `book_ir.BlockKind` taxonomy and `classify_render_block` classification (the blocks arrive already
     classified from the IR parse). `caption_md` is the folded mermaid caption when the driving walk detects a
-    following italic paragraph (the HTML renderer's mermaid caption-fold)."""
+    following italic paragraph (the HTML renderer's mermaid caption-fold). `section_no` is the
+    `part.chapter.section` locator stamped on a level-2 heading (see `_render_heading`)."""
     k = block.kind
     K = ir.BlockKind
     if k is K.HEADING:
-        return _render_heading(block.raw)
+        return _render_heading(block.raw, section_no)
     if k is K.PARA:
         return _render_paragraph(block.raw)
     if k is K.LIST:
@@ -544,14 +554,26 @@ def _frame_apparatus_typst(body: str, breakable: bool = False) -> str:
     )
 
 
+# The float block kinds a preceding intro paragraph binds to (D71a keep-with-next).
+_FLOAT_KINDS = frozenset({ir.BlockKind.FIGURE, ir.BlockKind.TABLE, ir.BlockKind.MERMAID})
+
+
 def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     """Walk one IR chapter → its Typst body. The IR already parsed labels/captions onto floats and classified
     every block; here we (a) peel index-def/point markers off the RAW source into #metadata (the IR records
     them as DIRECTIVE, so we re-read the raw slice for the slug), (b) fold a mermaid's following italic
     caption, and (c) emit each block."""
-    out: list[str] = [f"= {inline_typst(chapter.title)}", ""]
+    # `part.chapter` chapter number + `part.chapter.N` section numbers — the print twin of the web build's
+    # `chap-num`/`sec-num` (D67a). Body chapters (Parts 1-5) + back-matter body are numbered; front matter
+    # (part 0) and the appendix (its own A/B/C locators) are not. Numbers are display-only — they never touch
+    # a heading anchor, so `@ref`/metadata queries keep resolving.
+    numbered = chapter.part != 0 and not chapter.slug.startswith("appendix")
+    chap_num = f"{chapter.part}.{chapter.chapter}" if numbered else None
+    title_num = f"#text(fill: dt.muted)[{chap_num}] " if chap_num else ""
+    out: list[str] = [f"= {title_num}{inline_typst(chapter.title)}", ""]
     blocks = chapter.blocks
     skip: set[int] = set()
+    section_no = 0                     # per-chapter `## ` counter (advanced only when the chapter is numbered)
     _title_norm = chapter.title.strip().lower()
     for i, b in enumerate(blocks):
         if i in skip:
@@ -570,6 +592,36 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
             if frag:
                 out.append(frag)
             continue
+        # D74 — the author portrait wraps: render it SMALL in the left column of a two-column grid with the
+        # following bio paragraphs beside it, instead of a full-measure figure. Consumes the rest of the
+        # chapter's content blocks into the text column (the about-the-author chapter is portrait + bio only).
+        if b.kind is ir.BlockKind.FIGURE and "author-headshot" in b.raw:
+            left = _render_figure(b, width="100%")
+            bio: list[str] = []
+            for j in range(i + 1, len(blocks)):
+                if j in skip:
+                    continue
+                skip.add(j)
+                bj = blocks[j]
+                if bj.kind is ir.BlockKind.DIRECTIVE:
+                    mf = _peel_metadata_marker(bj.raw.strip(), ctx)
+                    if mf:
+                        bio.append(mf)
+                    continue
+                bf = render_typst(bj)
+                if bf:
+                    bio.append(bf)
+            bio_body = "\n\n".join(bio)
+            out.append(
+                "#grid(\n"
+                "  columns: (1.5in, 1fr),\n"
+                "  column-gutter: 18pt,\n"
+                "  align: (left + top, left + top),\n"
+                f"  [{left}],\n"
+                f"  [\n{_indent(bio_body)}\n  ],\n"
+                ")"
+            )
+            continue
         caption_md = None
         if b.kind is ir.BlockKind.MERMAID and i + 1 < len(blocks):
             nb = blocks[i + 1]
@@ -582,7 +634,19 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         # this content block. Capture and clear so it applies to exactly the next content block.
         is_def = bool(ctx.pending_def)
         ctx.pending_def.clear()
-        frag = render_typst(b, caption_md, is_def=is_def)
+        # A top-level `## ` section heading advances the per-chapter counter → `part.chapter.N` (mirrors the
+        # web build's `section_no`; `###`/`####` subsections do not advance it). Only when the chapter is numbered.
+        sec = None
+        if chap_num and b.kind is ir.BlockKind.HEADING and b.raw.strip().startswith("## "):
+            section_no += 1
+            sec = f"{chap_num}.{section_no}"
+        frag = render_typst(b, caption_md, is_def=is_def, section_no=sec)
+        # D71(a) keep-with-next: a paragraph that immediately introduces a figure/table/diagram sticks to it,
+        # so the introducing sentence ("… in Table 4.2-1.", "… shown below.") is never split from its float
+        # across a page break. Systematic — every paragraph that directly precedes a float, not one-off.
+        if (frag and b.kind is ir.BlockKind.PARA and i + 1 < len(blocks)
+                and (i + 1) not in skip and blocks[i + 1].kind in _FLOAT_KINDS):
+            frag = f"#block(sticky: true)[{frag}]"
         if frag:
             out.append(frag)
     # CHAPTER-RELATIVE float numbering (mirrors the web `_number_floats` scheme): figures/tables read
@@ -618,8 +682,14 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 #show heading: set text(font: dt.font-display, weight: "bold")
 #show heading.where(level: 1): set text(size: 1.5em)
 #show heading.where(level: 2): set text(size: 1.2em)
+// `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level (D67b). Overrides the general
+// bold above (later same-target show rule wins); keeps the display face at body size.
+#show heading.where(level: 3): set text(weight: "regular", style: "italic")
 #show heading: set block(above: 1.4em, below: 0.7em)
 #set figure(gap: 0.6em)
+// D71(b) — more air between body text and a figure/table than the 0.9em paragraph spacing, so a float
+// reads as set apart from the prose above and below it (systematic, every figure/table).
+#show figure: set block(above: 1.5em, below: 1.5em)
 #show figure.caption: set text(size: 0.9em, style: "italic", fill: dt.muted)
 #show figure.where(kind: table): set figure.caption(position: top)
 // Booktabs table style (matches the HTML book's Tufte/booktabs tables): a heavy top rule, a light rule

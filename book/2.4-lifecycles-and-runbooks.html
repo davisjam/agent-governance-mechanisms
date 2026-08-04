@@ -81,6 +81,10 @@ header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; l
 header.chap .kicker a { color: inherit; text-decoration: none; }
 header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+/* `part.chapter` display number on a body/back-matter chapter title (build-derived from the file path,
+   not authored). Muted + tabular so it reads as a reference locator, not part of the title; display-only,
+   carries no id, so the chapter's anchors, cross-refs, and the index all still resolve. */
+header.chap h1 .chap-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 0.2em; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid var(--rule);
                   color: var(--muted); font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
@@ -105,7 +109,9 @@ h2 .sec-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabul
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
 h2 .role-kick { color: var(--accent); font-weight: 700; font-style: italic; font-size: 0.62em; letter-spacing: 0.07em;
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }
-h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+/* `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level than the bold H1/H2. Overrides the
+   shared `h1,h2,h3,h4` display-weight above (equal specificity, later rule wins); keeps the display face. */
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; font-weight: 400; font-style: italic; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: var(--ink); }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
@@ -294,6 +300,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
+/* D74 — the author portrait floats left at a capped width so the bio flows around it (a wrap figure). */
+figure.book-figure.portrait-wrap { float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
+                                    text-align: center; }
+figure.book-figure.portrait-wrap img { width: 100%; border-radius: 4px; }
+figure.book-figure.portrait-wrap figcaption { text-align: center; }
 .fig-label, .tbl-label { font-weight: 700; color: var(--ink); }
 table caption { caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }
@@ -472,7 +483,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 9 · Lifecycles and Runbooks"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 9</a></div><h1>Lifecycles and Runbooks</h1></header><p>You know what to do when the disk fills up, when two branches conflict, when an incident pages you at 2 a.m. You know it so well you barely notice you know it. The agent knows none of it. Out of the box it knows how to commit to Git, of course; what it does not know is the life cycle of <em>your</em> engineered environment. The disk fills, and here is what to do when the disk fills — that instruction will never be in the agent's context unless you put it there. It has no operating context, no sense of "how we do things around here," and the more of that judgment your operation runs on unwritten, the more helpless the agent is the moment the healthy path ends. So a governed environment for real work writes the knowledge down — as lifecycles, and as the runbooks that ride on top of them. This chapter is about capturing the operational judgment you carry in your head so an agent can act on it.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 9 · Lifecycles and Runbooks"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 9</a></div><h1><span class="chap-num">2.4</span> Lifecycles and Runbooks</h1></header><p>You know what to do when the disk fills up, when two branches conflict, when an incident pages you at 2 a.m. You know it so well you barely notice you know it. The agent knows none of it. Out of the box it knows how to commit to Git, of course; what it does not know is the life cycle of <em>your</em> engineered environment. The disk fills, and here is what to do when the disk fills — that instruction will never be in the agent's context unless you put it there. It has no operating context, no sense of "how we do things around here," and the more of that judgment your operation runs on unwritten, the more helpless the agent is the moment the healthy path ends. So a governed environment for real work writes the knowledge down — as lifecycles, and as the runbooks that ride on top of them. This chapter is about capturing the operational judgment you carry in your head so an agent can act on it.</p>
 <h2><span class="sec-num">2.4.1</span> Lifecycles first, then the failure map</h2>
 <p id="idx-def-lifecycle">Start with the lifecycles, because everything else hangs off them. A lifecycle is the correct operation of one recurring activity: how a bug report moves from filed to fixed, how a feature moves from design to shipped. Write the healthy path first. Then, from each node on that path, map the failure states — the ways this step can go wrong — and for each failure, the action to take. Think of it as a grid: every node crossed with every symptom, and in each cell, what to do.</p>
 <p id="idx-def-failure-mode-effects-analysis">The formal name for building that grid is <strong>failure mode and effects analysis</strong>. You enumerate what can go wrong, then the consequence of each, and then — the part people skip — how to get <em>out</em> of it again. You know how to get out. If two branches conflict, you read both sides, work out what each was trying to accomplish, and reconcile them. If the disk fills, you find the fat part of the system — the cache, usually — and wipe it. The agent knows none of this. It does not know where to find each commit's intent during a merge conflict, and it does not know where your system's fat points are — and it may, just maybe, decide the fix for a full disk is <code>rm -rf /</code>. You think I am joking. Read Twitter; agents do it all the time. So you coach it: where the hot points are, and, in every failure path, what is <em>not allowed</em>. Encode the prohibition as a mechanism at the right level where you can — a Git hook, an agent hook — and where you cannot, at least tell the agent plainly.</p>

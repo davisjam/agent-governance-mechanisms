@@ -81,6 +81,10 @@ header.chap .kicker { color: var(--accent); font-weight: 700; font-size: 13px; l
 header.chap .kicker a { color: inherit; text-decoration: none; }
 header.chap .kicker a:hover, header.chap .kicker a:focus { text-decoration: underline; }
 header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
+/* `part.chapter` display number on a body/back-matter chapter title (build-derived from the file path,
+   not authored). Muted + tabular so it reads as a reference locator, not part of the title; display-only,
+   carries no id, so the chapter's anchors, cross-refs, and the index all still resolve. */
+header.chap h1 .chap-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 0.2em; }
 .part-epigraph { margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid var(--rule);
                   color: var(--muted); font-style: italic; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
@@ -105,7 +109,9 @@ h2 .sec-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabul
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
 h2 .role-kick { color: var(--accent); font-weight: 700; font-style: italic; font-size: 0.62em; letter-spacing: 0.07em;
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }
-h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
+/* `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level than the bold H1/H2. Overrides the
+   shared `h1,h2,h3,h4` display-weight above (equal specificity, later rule wins); keeps the display face. */
+h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; font-weight: 400; font-style: italic; }
 h4 { font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: var(--ink); }
 p { margin: 0 0 1rem; }
 ul { margin: 0 0 1rem; padding-left: 1.3rem; }
@@ -294,6 +300,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
+/* D74 — the author portrait floats left at a capped width so the bio flows around it (a wrap figure). */
+figure.book-figure.portrait-wrap { float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
+                                    text-align: center; }
+figure.book-figure.portrait-wrap img { width: 100%; border-radius: 4px; }
+figure.book-figure.portrait-wrap figcaption { text-align: center; }
 .fig-label, .tbl-label { font-weight: 700; color: var(--ink); }
 table caption { caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }
@@ -472,7 +483,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 16 · The Physical View"><header class="chap"><div class="kicker"><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 16</a></div><h1>The Physical View</h1></header><p id="idx-def-physical-view">The Development view mapped how the source is organized. The Physical view — Kruchten's deployment view — maps where the built software actually runs: which process lands on which host, across which network boundaries, under what per-host cost and load policy. It is the placement lens, and it earns its keep on a failure the other views cannot see: a system that is functionally correct can still be mis-deployed. Only a view that names <em>where things run</em> catches it. Written down as a placement model the fleet can read, that <em>where</em> becomes something an agent reasons over before it deploys, not a fact discovered after — the Modeling Thesis reaching the one view the others cannot see.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 16 · The Physical View"><header class="chap"><div class="kicker"><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 16</a></div><h1><span class="chap-num">3.5</span> The Physical View</h1></header><p id="idx-def-physical-view">The Development view mapped how the source is organized. The Physical view — Kruchten's deployment view — maps where the built software actually runs: which process lands on which host, across which network boundaries, under what per-host cost and load policy. It is the placement lens, and it earns its keep on a failure the other views cannot see: a system that is functionally correct can still be mis-deployed. Only a view that names <em>where things run</em> catches it. Written down as a placement model the fleet can read, that <em>where</em> becomes something an agent reasons over before it deploys, not a fact discovered after — the Modeling Thesis reaching the one view the others cannot see.</p>
 <p id="idx-def-performance-cost-model">One general type anchors the view, and it is the honest exception in this zoo. A <strong>performance and cost model</strong> models the computation itself — what it costs to run, what it costs to move data, whether to compute locally or remotely, whether to cache or recompute. The next section takes that gap head-on: the framework supports the cost view, and one real model <em>embodies</em> the load-and-cost half of it, but the pure-latency slice has no dedicated instance, because no failure had justified building one until one arrived. Three real models carry the view: the invariant-DAG execution policy (the idea this chapter turns on — per-host cost and load rationing), the deployment and tier topology model (placement parity, worked in full below), and the substrate-dependency model (a computed migration blast radius).</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="../models-bridge/system-models/deployment-topology-model.html">deployment and tier topology model</a>.</p></blockquote>
 <h2><span class="sec-num">3.5.1</span> The performance/cost view: mostly embodied, one honest gap</h2>

@@ -878,6 +878,9 @@ def _figure_block(comment: str) -> str:
     if not asset.is_file():
         raise SystemExit(f"figure directive: asset not found: {asset}")
     cap_html = _caption_el("figcaption", caption) if caption else ""
+    # D74 — the author portrait floats so the bio flows around it (a capped-width `portrait-wrap` figure).
+    # The extra class rides alongside `book-figure`, so the float-numbering pass still matches this figure.
+    extra_cls = " portrait-wrap" if "author-headshot" in rel else ""
     if asset.suffix.lower() == ".svg":
         svg = asset.read_text(encoding="utf-8")
         # Strip an XML prolog / leading comment so only the <svg>…</svg> is spliced inline.
@@ -887,10 +890,10 @@ def _figure_block(comment: str) -> str:
         # Neutralize the intrinsic width/height so the viewBox drives responsive scaling; CSS caps it.
         svg = re.sub(r'(<svg\b[^>]*?)\swidth="[^"]*"', r"\1", svg, count=1)
         svg = re.sub(r'(<svg\b[^>]*?)\sheight="[^"]*"', r"\1", svg, count=1)
-        return f'<figure class="book-figure">{svg}{cap_html}</figure>'
+        return f'<figure class="book-figure{extra_cls}">{svg}{cap_html}</figure>'
     alt = html.escape((_split_caption_md(caption)[0] if caption else "") or asset.stem, quote=True)
     src = html.escape(rel, quote=True)
-    return f'<figure class="book-figure"><img src="{src}" alt="{alt}">{cap_html}</figure>'
+    return f'<figure class="book-figure{extra_cls}"><img src="{src}" alt="{alt}">{cap_html}</figure>'
 
 
 def _figure_iframe_block(comment: str) -> str:
@@ -1514,6 +1517,10 @@ header.chap .kicker {{ color: var(--accent); font-weight: 700; font-size: 13px; 
 header.chap .kicker a {{ color: inherit; text-decoration: none; }}
 header.chap .kicker a:hover, header.chap .kicker a:focus {{ text-decoration: underline; }}
 header.chap h1 {{ font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }}
+/* `part.chapter` display number on a body/back-matter chapter title (build-derived from the file path,
+   not authored). Muted + tabular so it reads as a reference locator, not part of the title; display-only,
+   carries no id, so the chapter's anchors, cross-refs, and the index all still resolve. */
+header.chap h1 .chap-num {{ color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 0.2em; }}
 .part-epigraph {{ margin: 1.6rem 0 0; padding: 0.8rem 0 0.2rem 1.1rem; border-left: 3px solid var(--rule);
                   color: var(--muted); font-style: italic; }}
 .part-epigraph .attr {{ display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
@@ -1538,7 +1545,9 @@ h2 .sec-num {{ color: var(--muted); font-weight: 600; font-variant-numeric: tabu
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
 h2 .role-kick {{ color: var(--accent); font-weight: 700; font-style: italic; font-size: 0.62em; letter-spacing: 0.07em;
                  text-transform: uppercase; margin-right: 0.5em; vertical-align: 0.12em; }}
-h3 {{ font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }}
+/* `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level than the bold H1/H2. Overrides the
+   shared `h1,h2,h3,h4` display-weight above (equal specificity, later rule wins); keeps the display face. */
+h3 {{ font-size: 1.08rem; margin: 1.6rem 0 0.4rem; font-weight: 400; font-style: italic; }}
 h4 {{ font-size: 0.98rem; margin: 1.15rem 0 0.3rem; color: var(--ink); }}
 p {{ margin: 0 0 1rem; }}
 ul {{ margin: 0 0 1rem; padding-left: 1.3rem; }}
@@ -1727,6 +1736,11 @@ figure.book-figure img {{ max-width: 100%; height: auto; }}
 figure.book-figure figcaption {{ font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }}
 figure.book-figure figcaption.fig-label-only {{ text-align: center; }}
+/* D74 — the author portrait floats left at a capped width so the bio flows around it (a wrap figure). */
+figure.book-figure.portrait-wrap {{ float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
+                                    text-align: center; }}
+figure.book-figure.portrait-wrap img {{ width: 100%; border-radius: 4px; }}
+figure.book-figure.portrait-wrap figcaption {{ text-align: center; }}
 .fig-label, .tbl-label {{ font-weight: 700; color: var(--ink); }}
 table caption {{ caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }}
@@ -4398,9 +4412,16 @@ def build() -> int:
         else:
             num_label = f'Chapter {c["seq"]}'
         kicker = _kicker_html(chapters, i, num_label)
+        # `part.chapter` heading number — body chapters (Parts 1-5) + back-matter body get it; front-matter
+        # apparatus (part 0) and the appendix (its own A/B/C locators) stay unnumbered. Display-only: it
+        # prefixes the chapter H1 here and, as `section_prefix` below, each `## ` section — and never touches
+        # a heading's `{#slug}` id anchor, so cross-refs, index-defs, and glossary pointers keep resolving.
+        chap_num = (None if c["part"] == 0 or c.get("is_appendix")
+                    else f'{c["part"]}.{c["chapter"]}')
+        chap_num_html = f'<span class="chap-num">{html.escape(chap_num)}</span> ' if chap_num else ""
         header = (
             f'<header class="chap"><div class="kicker">{kicker}</div>'
-            f'<h1>{html.escape(c["chapter_title"])}</h1>'
+            f'<h1>{chap_num_html}{html.escape(c["chapter_title"])}</h1>'
             + (_epigraph_html(c["part"]) if c.get("show_epigraph") else "")
             + '</header>'
         )
@@ -4408,10 +4429,9 @@ def build() -> int:
         # `[cite:]` superscripts and the Works Cited list below both read the one ordering (BIB-4 mirror).
         _number_citations(c["slug"], c["body_md"])
         cited_keys = list(_CITE_STATE["order"])
-        # `part.chapter` section-numbering prefix — body chapters (Parts 1-5) only. Front/back matter and
-        # the appendix (which carries its own A-1/B-2 locators) stay unnumbered → `section_prefix=None`.
-        section_prefix = (None if c.get("is_matter") or c.get("is_appendix")
-                          else f'{c["part"]}.{c["chapter"]}')
+        # `## ` sections carry a `part.chapter.N` display prefix wherever the chapter H1 is numbered (body
+        # Parts 1-5 + back-matter); front-matter apparatus and the appendix stay unnumbered (`chap_num` None).
+        section_prefix = chap_num
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]),
                           section_prefix=section_prefix)
         body, _fig_n, _tbl_n = _number_floats(body, _chapter_id(c), 1, 1)
