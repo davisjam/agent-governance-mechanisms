@@ -472,7 +472,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="The MAGE Method at a Glance · The MAGE Method at a Glance"><header class="chap"><div class="kicker"><a href="0.1-the-mage-method-at-a-glance.html" aria-label="Beginning of Front Matter">Front Matter</a></div><h1>The MAGE Method at a Glance</h1></header><p>MAGE is one method with two theses and a conversion that grows an environment around them. Before the argument unfolds, here is the whole of it on a single page, drawn in <a class="xref" href="0.1-the-mage-method-at-a-glance.html#fig-0-1-1">Figure&nbsp;0.1-1</a> — the vocabulary this book builds, laid out in the order the method runs.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="The MAGE Method at a Glance · The MAGE Method at a Glance"><header class="chap"><div class="kicker"><a href="0.1-the-mage-method-at-a-glance.html" aria-label="Beginning of Front Matter">Front Matter</a></div><h1>The MAGE Method at a Glance</h1></header><p>MAGE is one method with two theses and a conversion that grows an environment around them. To help you understand the full argument, <a class="xref" href="0.1-the-mage-method-at-a-glance.html#fig-0-1-1">Figure&nbsp;0.1-1</a> shows the whole of it on a single page and how the parts relate to each other — the vocabulary this book builds, laid out in the order the method runs.</p>
 <figure id="fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
      role="group" aria-labelledby="mmTitle mmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
@@ -481,8 +481,10 @@ nav.toc details[open] { flex: 1 1 100%; }
     printer — generates code through an agent fleet. The fleet branches into the book's two theses: the Modeling Thesis,
     which produces models (the Model Zoo), and the Alignment Thesis, which produces mechanisms
     (constraints, sensors, validators, gates). The two converge into the Governed Engineering
-    Environment. Governance conversion grows that environment — turning each recurring failure
-    into a mechanism — and the result is trustworthy software.</desc>
+    Environment. A separate incoming arrow from the left feeds that environment from the start:
+    the known constraints you already have are converted into governance up front, bootstrapping
+    the environment before the loop runs. Then governance conversion grows that environment — turning
+    each recurring failure into a mechanism — and the result is trustworthy software.</desc>
 
   <defs>
     <marker id="mm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -527,6 +529,15 @@ nav.toc details[open] { flex: 1 1 100%; }
   <path d="M175,398 L175,424 M545,398 L545,424 M175,424 L545,424 M360,424 L360,448"
         fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#mm-ah)"/>
 
+  <!-- ex-ante governance CREATION: bootstrap the environment from known constraints. Distinct from the
+       governance-conversion flow below (which GROWS the environment from failures): a one-time inflow,
+       drawn DASHED and entering the environment from the SIDE, not the solid vertical growth arrow. -->
+  <text x="64" y="440" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">bootstrap</text>
+  <rect x="12" y="452" width="104" height="50" rx="8" fill="#f4efe9" stroke="#57534e" stroke-width="2"/>
+  <text x="64" y="473" text-anchor="middle" font-size="13" font-weight="700" fill="#57534e">Known</text>
+  <text x="64" y="491" text-anchor="middle" font-size="13" font-weight="700" fill="#57534e">constraints</text>
+  <path d="M116,477 L148,477" fill="none" stroke="#57534e" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#mm-ah)"/>
+
   <!-- 4. Governed Engineering Environment -->
   <rect x="150" y="450" width="420" height="54" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
   <text x="360" y="483" text-anchor="middle" font-size="19" font-weight="700" fill="#1f7a4d">The Governed Engineering Environment</text>
@@ -540,4 +551,4 @@ nav.toc details[open] { flex: 1 1 100%; }
   <!-- 5. Trustworthy software -->
   <rect x="222" y="626" width="276" height="50" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
   <text x="360" y="658" text-anchor="middle" font-size="19" font-weight="700" fill="#9a3f12">Trustworthy software</text>
-</svg><figcaption data-short="The whole method on one page"><span class="fig-label">Figure 0.1-1.</span> The whole method on one page: a coding agent — a reasoning engine paired with a printer — generates code through a fleet; the two theses fill a governed environment that governance conversion grows into trustworthy software.</figcaption></figure><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a></div><span class="chapnav-here" title="The MAGE Method at a Glance">The MAGE Method at a Glance</span><div class="chapnav-fwd"><a href="0.2-the-books-language.html" aria-label="Next chapter — The Book&#x27;s Language">Next chapter »</a><a href="1.1-the-printer.html" aria-label="Next part — Part 1 — The Mindset">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+</svg><figcaption data-short="The whole method on one page"><span class="fig-label">Figure 0.1-1.</span> The whole method on one page: a coding agent — a reasoning engine paired with a printer — generates code through a fleet; the two theses fill a governed environment. A dashed side inflow bootstraps that environment from known constraints up front (ex-ante governance creation), and governance conversion then grows it into trustworthy software.</figcaption></figure><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a></div><span class="chapnav-here" title="The MAGE Method at a Glance">The MAGE Method at a Glance</span><div class="chapnav-fwd"><a href="0.2-the-books-language.html" aria-label="Next chapter — The Book&#x27;s Language">Next chapter »</a><a href="1.1-the-printer.html" aria-label="Next part — Part 1 — The Mindset">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

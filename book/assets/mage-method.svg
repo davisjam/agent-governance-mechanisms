@@ -2,8 +2,9 @@
 <!-- Hand-authored SVG (label: mage-method). The MAGE method at a glance, organizing the
      book's core vocabulary into one flow: a coding agent — a reasoning engine paired with a
      printer — generates code through an agent fleet; the two theses (Modeling → models;
-     Alignment → mechanisms) fill a Governed Engineering Environment; governance conversion
-     grows that environment into trustworthy software. A frontispiece for the glossary.
+     Alignment → mechanisms) fill a Governed Engineering Environment; a dashed side inflow
+     bootstraps that environment from known constraints (ex-ante governance creation), and
+     governance conversion then grows it into trustworthy software. A frontispiece for the glossary.
      Palette: Umber Monograph tokens (accent #9a3f12 the coding-agent source + the outcome,
      thesis-green #15803d the two theses, fleet #2f5169 the fleet, governed #1f7a4d the
      environment, muted #57534e connectors + gloss). -->
@@ -15,8 +16,10 @@
     printer — generates code through an agent fleet. The fleet branches into the book's two theses: the Modeling Thesis,
     which produces models (the Model Zoo), and the Alignment Thesis, which produces mechanisms
     (constraints, sensors, validators, gates). The two converge into the Governed Engineering
-    Environment. Governance conversion grows that environment — turning each recurring failure
-    into a mechanism — and the result is trustworthy software.</desc>
+    Environment. A separate incoming arrow from the left feeds that environment from the start:
+    the known constraints you already have are converted into governance up front, bootstrapping
+    the environment before the loop runs. Then governance conversion grows that environment — turning
+    each recurring failure into a mechanism — and the result is trustworthy software.</desc>
 
   <defs>
     <marker id="mm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -60,6 +63,15 @@
   <!-- converge: both columns -> GEE -->
   <path d="M175,398 L175,424 M545,398 L545,424 M175,424 L545,424 M360,424 L360,448"
         fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#mm-ah)"/>
+
+  <!-- ex-ante governance CREATION: bootstrap the environment from known constraints. Distinct from the
+       governance-conversion flow below (which GROWS the environment from failures): a one-time inflow,
+       drawn DASHED and entering the environment from the SIDE, not the solid vertical growth arrow. -->
+  <text x="64" y="440" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">bootstrap</text>
+  <rect x="12" y="452" width="104" height="50" rx="8" fill="#f4efe9" stroke="#57534e" stroke-width="2"/>
+  <text x="64" y="473" text-anchor="middle" font-size="13" font-weight="700" fill="#57534e">Known</text>
+  <text x="64" y="491" text-anchor="middle" font-size="13" font-weight="700" fill="#57534e">constraints</text>
+  <path d="M116,477 L148,477" fill="none" stroke="#57534e" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#mm-ah)"/>
 
   <!-- 4. Governed Engineering Environment -->
   <rect x="150" y="450" width="420" height="54" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>

@@ -3565,17 +3565,17 @@
           "heading_text": "Size the leap to the model and the guarantee",
           "topic_sentence": "Give a model an input and either examples of a transformation or a precise description of it, and it will apply that transformation to something new — as long as the new thing is close enough to the examples, or the rule is precise enough.",
           "id_source": "derived",
-          "block_index": 4,
+          "block_index": 5,
           "points": [
             {
               "slug": "tune-abstraction-and-leap-size-to-model-and-guarantee",
               "text": "Tune abstraction and leap to model and guarantee.",
-              "block_index": 6
+              "block_index": 7
             },
             {
               "slug": "keep-leaps-short-because-failure-probability-compounds",
               "text": "Keep leaps short because failure probability compounds.",
-              "block_index": 8
+              "block_index": 9
             }
           ]
         },
@@ -3585,17 +3585,17 @@
           "heading_text": "The right-sized leap, and the wrong-shaped one",
           "topic_sentence": "Two transformations from this book show the lens at work — one sized right, one shaped wrong.",
           "id_source": "derived",
-          "block_index": 11,
+          "block_index": 12,
           "points": [
             {
               "slug": "sizing-the-leap-down-buys-cheap-auditable-typed-edits",
               "text": "Sizing the leap down buys cheap, auditable edits.",
-              "block_index": 14
+              "block_index": 15
             },
             {
               "slug": "a-well-sized-transformation-of-the-wrong-shape-still-fails",
               "text": "A well-sized transformation of wrong shape still fails.",
-              "block_index": 17
+              "block_index": 18
             }
           ]
         },
@@ -3605,17 +3605,17 @@
           "heading_text": "The skills are transformations all the way down",
           "topic_sentence": "[ref:transformations-pipeline] shows the shared skeleton — each skill carrying an input to an output through a sequence of sized transformations.",
           "id_source": "derived",
-          "block_index": 19,
+          "block_index": 20,
           "points": [
             {
               "slug": "each-skill-names-the-transformation-steps-you-supply-the-breakdown",
               "text": "Each skill names steps; you supply the breakdown.",
-              "block_index": 24
+              "block_index": 25
             },
             {
               "slug": "the-catalogue-reads-like-a-symptom-to-mechanism-lookup",
               "text": "The catalogue reads as symptom-to-mechanism lookup.",
-              "block_index": 27
+              "block_index": 28
             }
           ]
         }
