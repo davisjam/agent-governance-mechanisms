@@ -104,6 +104,22 @@ that don't.
 
 The [`audit.md`](audit.md) procedure flags a fluffy adjective as a Pass-3 house-style finding.
 
+## Engineering textbook, not conference keynote
+
+**Write like an engineering textbook, not like a conference keynote.** A textbook states the result and
+moves on; a keynote warms the room first and restates the point for effect. Lead with the definition or
+the result; cut the warm-up and cut the recap.
+
+- **Cut the warm-up.** The keynote signals that a good part is coming before delivering it — "Here is the
+  interesting part…", "It turns out…", "Now for the fun bit." The textbook just states the thing. Delete
+  the throat-clearing and open on the result.
+- **Cut the recap.** The keynote restates its point after making it, for effect. The textbook trusts the
+  reader to have read the sentence. This is the self-commentary curl one level up — a whole restated
+  point, not just a trailing rating clause — and the fix is the same: keep the point, drop the echo.
+- **Definition first, motivation second.** Open with the result, the definition, the claim; let a
+  sentence of motivation follow only where it earns its place. This is the principle behind the glossary's
+  definition-first entries and the warm-up-deletion pass across the prose.
+
 ## Progressive density — let the book's language do more work over time
 
 The economy rule above works per sentence: strip the word that carries no idea. Progressive density is the
