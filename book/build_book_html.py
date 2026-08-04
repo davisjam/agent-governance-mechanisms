@@ -2210,6 +2210,82 @@ def _flagship_slugs() -> set[str]:
     return (keep_as_l2 | promotions) - exclude
 
 
+def _catalogue_web_url() -> str:
+    """The published web catalogue's base URL, from repo-metadata.json's governed `pages_url` (the same
+    identity `_recipe_web_url` reads). Falls back to a bare relative reference if the metadata is absent, so
+    a checkout without it still builds. Used by the appendix web-index header to name where the full
+    83-mechanism catalogue lives online."""
+    meta_path = ROOT / "book-models" / "repo-metadata.json"
+    if meta_path.is_file():
+        pages_url = (json.loads(meta_path.read_text(encoding="utf-8")).get("pages_url") or "").rstrip("/")
+        if pages_url:
+            return pages_url
+    return "index.html"
+
+
+def _appendix_intro_extras_md() -> str:
+    """The two DERIVED intro sections that sit between the opening frame and the stack summary: the
+    lifted-to-L1 placement principle (the manifest's `intro_l1_principles`, resolved through each slug's
+    disposition to its L1 principle claim in catalogue-classification.json) and the nine-capability map
+    (`gee_capabilities`, name + gloss). Both are projected from the classification model, not hand-copied, so
+    they cannot drift from the curation signal the rest of the projection reads. Fail-loud if the model is
+    missing (same contract as `_load_classification`)."""
+    if not _CLASSIFICATION_PATH.is_file():
+        raise SystemExit(f"appendix intro needs {_CLASSIFICATION_PATH} — it is missing")
+    data = json.loads(_CLASSIFICATION_PATH.read_text(encoding="utf-8"))
+    dispositions = data.get("dispositions", {})
+    principles = {p.get("id"): p for p in data.get("L1_principles", [])}
+    capabilities = data.get("gee_capabilities", [])
+    manifest = _load_print_manifest()
+
+    parts: list[str] = []
+
+    # ── The lifted placement principle. Each `intro_l1_principles` slug names an entry LIFTED out of the
+    #    pattern set to an L1 principle; resolve slug → its disposition string → the `P<n>` token → the
+    #    principle record, and render its claim. (Default manifest lifts one: semantic-level-enforcement → P8.)
+    lifted: list[dict] = []
+    for slug in manifest.get("intro_l1_principles", []):
+        full = next((fs for fs in dispositions if fs.rsplit("/", 1)[-1] == slug), None)
+        if full is None:
+            continue
+        m = re.search(r"\bP\d+\b", dispositions[full].get("disposition", ""))
+        pid = m.group(0) if m else None
+        if pid and pid in principles:
+            lifted.append(principles[pid])
+    if lifted:
+        parts += ["## Where every mechanism sits", ""]
+        for p in lifted:
+            parts += [
+                f"One idea sits *above* the pattern set rather than beside it: **{p['name'].lower()}**. "
+                f"{p['claim']}",
+                "",
+                "It earns that place because it is a choice, not a pattern you reach for. Aim a check one "
+                "level too low and it passes the violation it should catch while firing on the legal case it "
+                "should allow — present, but wrong. Read the pages that follow with this lens: each pattern "
+                "is as much a decision about *level* as about shape.",
+                "",
+            ]
+
+    # ── The nine-capability map. The `gee_capabilities` groups the whole catalogue under nine jobs a
+    #    governed environment must do; the patterns below are the shapes that do them.
+    if capabilities:
+        parts += [
+            "## The nine capabilities",
+            "",
+            "The mechanisms answer to nine capabilities a governed engineering environment needs. Each names "
+            "a job the fleet must do; the patterns grouped under it are the shapes that do it. The stacks "
+            "below and the reference that closes this appendix both sort into these nine.",
+            "",
+        ]
+        for cap in capabilities:
+            name = cap.get("name", "").strip()
+            gloss = cap.get("gloss", "").strip()
+            parts.append(f"- **{name}.** {gloss}")
+        parts.append("")
+
+    return "\n".join(parts).strip()
+
+
 # Authored chapter links to an appendix pattern page: `](appendix-<a|b|c>-<slug>.html[#frag])`. The main
 # narrative cross-references mechanisms by their in-book page; when a mechanism is non-flagship (its page is
 # dropped from the print projection), the link is redirected to the live WEB catalogue entry — the SAME
@@ -2465,9 +2541,10 @@ _APPENDIX_STACKS_OPENING_SLUG = "appendix-stacks"
 # Stack files in reading order → (page-slug stem, display title). Each becomes one D.N page; the opening
 # front-door page (D's chapter 0) precedes them. A file listed here but absent on disk is skipped.
 _STACKS: list[tuple[str, str]] = [
-    # The seven finalized flagship deep-dives (reframe 260803). Each walks its stack part by part — a goal,
-    # an overview figure, and one six-field entry per member (role · failure · mechanism · seam ·
-    # durability). The thin two-tier precursor pages were superseded and folded into these seven.
+    # The seven flagship stacks, each authored as a two-page synthesis (AC-2 260804): capability created ·
+    # failure classes covered · composition diagram (the overview_figure SVG) · constituent patterns
+    # (role:<slug> tokens) · one worked example · tradeoffs + adoption order · web links. Grounded in
+    # book-models/flagship_stack_declared.json; the earlier part-by-part six-field deep-dive was folded in.
     ("provenance-fidelity-stack", "The provenance + fidelity stack"),
     ("model-coherence-stack", "The model-coherence stack"),
     ("specification-verification-stack", "The specification + verification stack"),
@@ -2825,7 +2902,18 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
     entries bundle their own sensors without leaving the list; a standalone atom carries no marker (absence
     reads as 'stands alone', which is correct)."""
     cls = _load_classification()
-    parts: list[str] = ["## Reference: every mechanism", ""]
+    parts: list[str] = [
+        "## Reference: every mechanism",
+        "",
+        # The split header (§4): the print appendix prints the 29 flagship patterns in full; all 83 live on
+        # the web. A flagship row links to its page in this appendix; a web-only row links to its live
+        # catalogue entry, marked (online). The URL is the governed Pages identity, so it cannot drift.
+        f"**The {len([r for r in ordered if 'appendix_num' in r])} flagship patterns are printed in full "
+        f"below; all {len(ordered)} mechanisms — including these — are online in the web catalogue at "
+        f"[{_catalogue_web_url()}]({_catalogue_web_url()}/).** A flagship row links to its page in this "
+        "appendix; a web-only mechanism links to its live catalogue entry, marked *(online)*.",
+        "",
+    ]
     last_group: str | None = None
     last_family: str | None = None
     for rec in ordered:
@@ -2920,6 +3008,11 @@ def build_appendix_chapters(next_part: int, for_print: bool = False) -> list[dic
     # first navigable choice; the census map is 'every mechanism'; the reference list is the atomic lookup.
     opening_body = [
         _apply_appendix_counts(_APPENDIX_OPENING_PROSE, counts),
+        "",
+        # The lifted placement principle + the nine-capability map — both projected from the classification
+        # model, sitting between the opening frame and the stack summary (frame → lens → capabilities →
+        # stacks → map → reference).
+        _appendix_intro_extras_md(),
         "",
         _appendix_stacks_summary_md(),
         "",
