@@ -995,6 +995,26 @@ def cmd_validate(_args) -> int:
         print(f"  [overflow] {lfo.summary_line(overflow)} — "
               f"run `python3 book-models/lint_figure_overflow.py`")
         n_issues += len(overflow)
+    # FIGURE MIN-FONT — the figure-text-not-smaller-than-body sensor over book/assets/*.svg (the legibility
+    # complement to the overflow sensor above). AUDIT-ONLY: a strict body-size floor surfaces every figure
+    # whose labels normalize below body, which the design system's small label roles do corpus-wide — so it
+    # PRINTS that backlog (a committer sees the enlarge worklist) but does NOT increment n_issues. The two
+    # author-named figures are enlarged now; a follow-up flips it blocking once a re-layout wave drains the
+    # rest (audit->lint, fix-then-flip). See book-models/lint_figure_min_font.py.
+    import lint_figure_min_font as lfmf  # noqa: E402 — audit-only legibility sensor
+    minfont = lfmf.findings()
+    if minfont:
+        print(f"  [minfont] AUDIT-ONLY: {lfmf.summary_line(minfont)} — "
+              f"run `python3 book-models/lint_figure_min_font.py` (does not gate)")
+    # CAPTION LENGTH — every authored figure/table caption ≤3 sentences AND ≤50 words. HARD cap, NO noqa
+    # escape (author instruction). A trim-wave drove the tree to 0, so it lands BLOCKING: an over-long
+    # caption increments n_issues and reddens validate. See book-models/lint_caption_length.py.
+    import lint_caption_length as lcl  # noqa: E402 — blocking caption-length cap (hard, no dispensation)
+    long_caps = lcl.findings()
+    if long_caps:
+        print(f"  [caption] {lcl.summary_line(long_caps)} — "
+              f"run `python3 book-models/lint_caption_length.py`")
+        n_issues += len(long_caps)
     # FLAGSHIP-STACK CONFORMANCE (FS1–FS5) — AUDIT-ONLY. The deep-dive TEMPLATE check over the flagship
     # PACKAGE model (book-models/flagship-stack.json): join integrity, page shape, figure house-rules,
     # freshness. Lands audit-only-first (repo blocking-lint discipline) while the model carries fewer than
