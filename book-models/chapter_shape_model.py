@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from dataclasses import asdict, dataclass, field
 
@@ -85,6 +86,20 @@ CLOSING_GOOD = ("consequence", "transition", "synthesis")
 CLOSING_BAD = ("apparatus", "mid-taxonomy", "re-announcement")
 CLOSING_KINDS = CLOSING_GOOD + CLOSING_BAD
 
+#: The CLOSED artifact-type vocabulary for the `delivers` block — the operational forms a chapter can hand
+#: the reader. The original eight typed forms plus `framework`/`table` (the model-zoo, agent-stack, and
+#: by-construction tables are the book's most common artifact) and `worked-example` (Part 5's traced real
+#: case delivers via neither a concept nor a decision-tree). A `delivers.artifacts[].type` outside this set
+#: is a DV1 finding. Keep it closed — an open set rebuilds the box-ticking filler pressure the
+#: concept-OR-artifact framing exists to prevent.
+ARTIFACT_TYPES = ("decision-tree", "checklist", "pattern", "commandment", "litmus-test",
+                  "anti-pattern", "smell", "review-question", "framework", "table", "worked-example")
+
+#: Harvests a chapter's canonical concept sites — the `<!-- index-def: <slug> -->` tags in its prose. The
+#: `delivers.concepts` list is DERIVED from these (never hand re-keyed), so the join is the source of truth
+#: and cannot drift into a second copy (the pilot's single most important constraint).
+_INDEX_DEF_RE = re.compile(r"index-def:\s*([a-z0-9-]+)")
+
 #: Words per anchor — enough to pin a paragraph identity, short enough to review at a glance.
 ANCHOR_WORDS = 12
 
@@ -117,6 +132,27 @@ class ClosingShape:
 
 
 @dataclass
+class Artifact:
+    """One operational artifact a chapter hands the reader. `type` ∈ ARTIFACT_TYPES (DV1); `anchor`, when
+    set, points at a live `<!-- label: … -->` float in the chapter (DV3 freshness, mirroring CS5)."""
+    type: str
+    name: str
+    anchor: "str | None" = None
+
+
+@dataclass
+class Delivers:
+    """WHAT the chapter hands over. `concepts` is DERIVED from the chapter's own `index-def` tags — never
+    hand re-keyed, so the join is the source of truth and cannot drift into a second copy. `artifacts` is
+    hand-authored ({type, name, anchor?}). `artifact_would_help` is an AUTHORED editorial judgment (the
+    `all_prose_would_benefit` flag) — NEVER derived from an empty `artifacts` list; inverting that would
+    rebuild the filler pressure the concept-OR-artifact framing exists to prevent."""
+    concepts: list[str] = field(default_factory=list)
+    artifacts: list[Artifact] = field(default_factory=list)
+    artifact_would_help: bool = False
+
+
+@dataclass
 class ChapterShape:
     slug: str
     opening: OpeningShape
@@ -124,6 +160,7 @@ class ChapterShape:
     note: str
     opening_anchor: str
     closing_anchor: str
+    delivers: Delivers = field(default_factory=Delivers)   # concepts DERIVED; artifacts + flag authored
     exempt: "str | None" = None                       # joined from the argument-spine's declared source
     spine_advances: list[str] = field(default_factory=list)  # joined; the thesis-mismatch join input
 
@@ -136,9 +173,22 @@ class ShapeModel:
         """The DERIVED refactor worklist (never authored; exempt chapters never flag).
         - failing_openings: a required element graded `absent`.
         - failing_closings: kind ∈ CLOSING_BAD.
-        - thesis_spine_mismatches: the opening claims a thesis the chapter's spine labels do not carry."""
+        - thesis_spine_mismatches: the opening claims a thesis the chapter's spine labels do not carry.
+        - delivers_neither: a non-exempt chapter with EMPTY concepts AND EMPTY artifacts — the real gap
+          alarm (fully derived: empty ∧ empty ∧ non-exempt).
+        - all_prose_would_benefit: a chapter the AUTHOR flagged `artifact_would_help` — an operational
+          chapter that describes its artifact in prose instead of showing it. Surfaced from the authored
+          flag, NOT manufactured from an empty artifacts list (the anti-filler constraint)."""
         openings, closings, mismatches = [], [], []
+        neither, would_benefit = [], []
         for c in self.chapters:
+            # The delivers worklist: `all_prose_would_benefit` is surfaced from the AUTHORED flag on every
+            # chapter (a concept-only chapter can still carry it); `delivers_neither` never fires on an
+            # exempt chapter (apparatus is expected to hand over nothing).
+            if c.delivers.artifact_would_help:
+                would_benefit.append({"chapter": c.slug, "note": c.note})
+            if not c.exempt and not c.delivers.concepts and not c.delivers.artifacts:
+                neither.append({"chapter": c.slug, "note": c.note})
             if c.exempt:
                 continue
             missing = [name for name, grade in (("failure/question", c.opening.failure_question),
@@ -154,7 +204,8 @@ class ShapeModel:
                 mismatches.append({"chapter": c.slug, "claimed": c.opening.thesis_target,
                                    "spine_advances": list(c.spine_advances)})
         return {"failing_openings": openings, "failing_closings": closings,
-                "thesis_spine_mismatches": mismatches}
+                "thesis_spine_mismatches": mismatches,
+                "delivers_neither": neither, "all_prose_would_benefit": would_benefit}
 
 
 # ---- prose extraction (the anchor substrate) --------------------------------------------------------
@@ -207,6 +258,33 @@ def current_anchors() -> "dict[str, tuple[str, str]]":
     return {ch.slug: chapter_prose_anchors(ch) for ch in doc.chapters}
 
 
+# ---- delivers harvest (the concept-join + anchor substrate) -----------------------------------------
+
+def chapter_index_defs() -> "dict[str, list[str]]":
+    """slug -> the `index-def` concept slugs in the chapter's CURRENT prose, in document order. The
+    `delivers.concepts` derivation source — the same `index-def` tags `concepts.json` treats as the
+    canonical-site SSOT, so the two views agree by construction."""
+    doc = book_ir.parse_book()
+    out: "dict[str, list[str]]" = {}
+    for ch in doc.chapters:
+        defs: "list[str]" = []
+        for b in ch.blocks:
+            if b.kind == book_ir.BlockKind.DIRECTIVE and getattr(b, "directive", None) == "index-def":
+                m = _INDEX_DEF_RE.search(b.raw)
+                if m:
+                    defs.append(m.group(1))
+        out[ch.slug] = defs
+    return out
+
+
+def chapter_labels() -> "dict[str, set[str]]":
+    """slug -> the set of live `<!-- label: … -->` float labels in the chapter. The DV3 anchor-resolution
+    substrate — an `artifacts[].anchor` must resolve to one of these (a renamed/deleted figure reddens,
+    the same staleness discipline CS5 applies to the opening/closing prose)."""
+    doc = book_ir.parse_book()
+    return {ch.slug: {b.label for b in ch.floats() if b.label} for ch in doc.chapters}
+
+
 # ---- load + build -----------------------------------------------------------------------------------
 
 def _load_json(path: str) -> "dict | None":
@@ -231,9 +309,15 @@ def derive_model() -> ShapeModel:
     decl = _load_declared()
     by_slug = {a["slug"]: a for a in decl.get("assessments", [])}
     exemptions, advances = _spine_joins()
+    index_defs = chapter_index_defs()  # the DERIVED concept-join source (harvested once)
 
     def _build(slug: str) -> ChapterShape:
         a = by_slug[slug]
+        d = a.get("delivers", {}) or {}
+        # concepts are DERIVED from the chapter's index-def tags (never authored); artifacts + the
+        # would-help flag are hand-authored in the declared file.
+        artifacts = [Artifact(type=x["type"], name=x["name"], anchor=x.get("anchor"))
+                     for x in d.get("artifacts", [])]
         return ChapterShape(
             slug=slug,
             opening=OpeningShape(failure_question=a["opening"]["failure_question"],
@@ -244,6 +328,8 @@ def derive_model() -> ShapeModel:
             note=a.get("note", ""),
             opening_anchor=a.get("opening_anchor", ""),
             closing_anchor=a.get("closing_anchor", ""),
+            delivers=Delivers(concepts=list(index_defs.get(slug, [])), artifacts=artifacts,
+                              artifact_would_help=bool(d.get("artifact_would_help", False))),
             exempt=exemptions.get(slug),
             spine_advances=list(advances.get(slug, [])),
         )
@@ -256,7 +342,43 @@ def derive_model() -> ShapeModel:
     return ShapeModel(chapters=chapters)
 
 
-# ---- invariants (CS1–CS5; walked by the drift check in tests/book_models.py) -------------------------
+# ---- invariants (CS1–CS5 + DV1–DV4; walked by the drift check in tests/book_models.py) ---------------
+
+def delivers_findings(model: "ShapeModel | None" = None) -> "list[str]":
+    """The DELIVERS structural invariants (DV1–DV4) — the deterministic coverage-lens checks the
+    `views-audit` surface folds in (audit-only-first, rule #55).
+
+    DV1 — enum: every `artifacts[].type ∈ ARTIFACT_TYPES`.
+    DV2 — concept join-integrity: every `delivers.concepts` slug is a live `index-def` site in THAT
+          chapter's current prose (the derivation source), so the concept list is never a drifted copy.
+    DV3 — artifact-anchor freshness: every `artifacts[].anchor` resolves to a live `<!-- label: … -->`
+          float in the chapter — a renamed/deleted figure reddens (mirrors CS5 for the opening/closing).
+    DV4 — coverage: every non-exempt chapter carries a `delivers` block that hands over SOMETHING
+          (a concept or an artifact) — the exhaustive coverage lens (the `delivers_neither` alarm's
+          structural twin)."""
+    if model is None:
+        model = derive_model()
+    findings: "list[str]" = []
+    index_defs = chapter_index_defs()
+    labels = chapter_labels()
+    for c in model.chapters:
+        have_defs = set(index_defs.get(c.slug, []))
+        have_labels = labels.get(c.slug, set())
+        for art in c.delivers.artifacts:
+            if art.type not in ARTIFACT_TYPES:
+                findings.append(f"DV1 {c.slug!r} artifact {art.name!r} type {art.type!r} not in {ARTIFACT_TYPES}")
+            if art.anchor and art.anchor not in have_labels:
+                findings.append(f"DV3 {c.slug!r} artifact {art.name!r} anchor {art.anchor!r} resolves to no "
+                                f"live <!-- label: … --> in the chapter (renamed/deleted figure — re-anchor)")
+        for slug in c.delivers.concepts:
+            if slug not in have_defs:
+                findings.append(f"DV2 {c.slug!r} delivers.concept {slug!r} is not an index-def site in that "
+                                f"chapter (the concept join drifted — regenerate)")
+        if not c.exempt and not c.delivers.concepts and not c.delivers.artifacts:
+            findings.append(f"DV4 {c.slug!r} delivers neither a concept nor an artifact (non-exempt "
+                            f"chapter must hand over something)")
+    return findings
+
 
 def structural_findings(model: "ShapeModel | None" = None) -> "list[str]":
     """The STRUCTURAL / SCHEMA invariants. Deterministic; the flag worklist is NOT findings (it is the
@@ -315,6 +437,10 @@ def structural_findings(model: "ShapeModel | None" = None) -> "list[str]":
         if c.closing_anchor != pair[1]:
             findings.append(f"CS5 {c.slug!r} closing prose changed since assessment — re-assess "
                             f"(declared anchor {c.closing_anchor!r} vs current {pair[1]!r})")
+
+    # DV1–DV4 — the delivers block's structural invariants (enum / concept-join / anchor-freshness /
+    # coverage). Same audit-only-first contract as CS2–CS5.
+    findings.extend(delivers_findings(model))
     return findings
 
 
@@ -335,10 +461,15 @@ def to_jsonable(model: "ShapeModel | None" = None) -> dict:
             "closings_failing": len(flags["failing_closings"]),
             "thesis_spine_mismatches": len(flags["thesis_spine_mismatches"]),
             "openings_implicit_thesis": sum(1 for c in non_exempt if c.opening.thesis_link == "implicit"),
+            "chapters_with_artifact": sum(1 for c in model.chapters if c.delivers.artifacts),
+            "chapters_concept_only": sum(1 for c in non_exempt
+                                         if c.delivers.concepts and not c.delivers.artifacts),
+            "delivers_neither": len(flags["delivers_neither"]),
+            "all_prose_would_benefit": len(flags["all_prose_would_benefit"]),
         },
         "taxonomy": {"presence": list(PRESENCE), "thesis_targets": list(THESIS_TARGETS),
                      "closing_good": list(CLOSING_GOOD), "closing_bad": list(CLOSING_BAD),
-                     "anchor_words": ANCHOR_WORDS},
+                     "artifact_types": list(ARTIFACT_TYPES), "anchor_words": ANCHOR_WORDS},
         "chapters": [asdict(c) for c in model.chapters],
         "flags": flags,
     }
@@ -395,6 +526,10 @@ def _print_flags() -> int:
     for f in flags["thesis_spine_mismatches"]:
         print(f"  THESIS-MISMATCH {f['chapter']}: opening claims {f['claimed']!r}, "
               f"spine advances {f['spine_advances']}")
+    for f in flags["delivers_neither"]:
+        print(f"  DELIVERS-NEITHER {f['chapter']}: no concept and no artifact")
+    for f in flags["all_prose_would_benefit"]:
+        print(f"  ALL-PROSE-WOULD-BENEFIT {f['chapter']}: author flagged an artifact would sharpen it")
     if not any(flags.values()):
         print("  none — every non-exempt chapter opens and closes to the discipline")
     return 0

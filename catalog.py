@@ -3084,6 +3084,54 @@ def cmd_substantiation(args) -> int:
     return sub.render(as_json=args.json)
 
 
+def cmd_delivers(args) -> int:
+    """The DELIVERS coverage map — what each chapter HANDS THE READER: its concept(s) (DERIVED from the
+    chapter's own `index-def` tags, never re-keyed) and its operational artifact(s) (hand-authored,
+    typed ∈ ARTIFACT_TYPES). Prints one row per chapter (concepts · artifact types · verdict), then the two
+    reports: DELIVERS-NEITHER (derived: a non-exempt chapter with no concept AND no artifact — the real gap
+    alarm) and ALL-PROSE-WOULD-BENEFIT (the AUTHORED `artifact_would_help` flag — an operational chapter that
+    describes an artifact in prose instead of showing it, never manufactured from an empty artifacts list).
+    Reads the chapter-shape model at query time (rule-#33 stable form). `--json` dumps the machine map."""
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in sys.path:
+        sys.path.insert(0, bm)
+    import chapter_shape_model as csm  # noqa: E402 — the per-chapter deliverable view-model
+
+    model = csm.derive_model()
+    flags = model.flags()
+
+    def _verdict(c) -> str:
+        if c.exempt:
+            return f"exempt ({c.exempt})"
+        if c.delivers.artifacts:
+            return "A (artifact)" + ("  ⚠ all-prose-would-benefit" if c.delivers.artifact_would_help else "")
+        if c.delivers.concepts:
+            return "C (concept-only)" + ("  ⚠ all-prose-would-benefit" if c.delivers.artifact_would_help else "")
+        return "N ⚠ DELIVERS-NEITHER"
+
+    if args.json:
+        print(json.dumps(csm.to_jsonable(model), ensure_ascii=False, indent=2))
+        return 0
+
+    print("== delivers — the per-chapter deliverable coverage map (concept OR artifact) ==")
+    for c in model.chapters:
+        types = ", ".join(a.type for a in c.delivers.artifacts) or "—"
+        print(f"{c.slug:34} concepts:{len(c.delivers.concepts):<2} artifacts[{types}]")
+        print(f"{'':34} {_verdict(c)}")
+    print("\n== DELIVERS-NEITHER (derived: non-exempt, no concept AND no artifact — the real gap alarm) ==")
+    print("  " + (", ".join(f["chapter"] for f in flags["delivers_neither"]) if flags["delivers_neither"]
+                  else "none — every non-exempt chapter hands over a concept or an artifact"))
+    print("== ALL-PROSE-WOULD-BENEFIT (authored flag: an artifact would sharpen an operational chapter) ==")
+    print("  " + (", ".join(f["chapter"] for f in flags["all_prose_would_benefit"])
+                  if flags["all_prose_would_benefit"]
+                  else "none — no chapter is flagged as prose that an artifact would sharpen"))
+    c = csm.to_jsonable(model)["_counts"]
+    print(f"\n— {c['chapters_assessed']} chapters ({c['chapters_exempt']} exempt); "
+          f"{c['chapters_with_artifact']} with an artifact, {c['chapters_concept_only']} concept-only; "
+          f"{c['delivers_neither']} deliver-neither, {c['all_prose_would_benefit']} all-prose-would-benefit")
+    return 0
+
+
 def _load_json_or_none(path: str):
     return json.load(open(path, encoding="utf-8")) if os.path.isfile(path) else None
 
@@ -3172,6 +3220,12 @@ def cmd_views_audit(args) -> int:
     # is the ONE place a committer sees every mechanical view finding. These are audit-only too.
     findings.extend(om.invariant_findings(om.derive_outline()))
     findings.extend(ocm.coverage_findings(ocm.derive_model()))
+
+    # --- The DELIVERS coverage lens (DV1-DV4): the per-chapter deliverable model's structural findings
+    # (artifact-type enum, concept-join integrity, artifact-anchor freshness, coverage). Folded here so a
+    # committer sees delivers-drift in the one place they already look. AUDIT-ONLY-first (rule #55).
+    import chapter_shape_model as csm  # noqa: E402 — the per-chapter deliverable view-model
+    findings.extend(csm.delivers_findings())
 
     # --- The drain's NEW point-form lints (AUDIT-ONLY, landed here before the reform drains them). The
     # word-cap reports every point whose claim exceeds 10 words (~175 today — the whole old verbose corpus,
@@ -3400,6 +3454,8 @@ def main() -> int:
     lp.add_argument("--json", action="store_true", help="dump the raw matched record(s)")
     su = sub.add_parser("substantiation", help="the unified substantiation query: data-claims + lit-positioning citations nested under each argument-spine claim; flags UNDERQUANTIFIED (quantifiable, no data) + UNDER-SUBSTANTIATED-OR-SITUATED (reality-claim, no data AND no literature)")
     su.add_argument("--json", action="store_true", help="dump the machine form")
+    dv = sub.add_parser("delivers", help="the per-chapter deliverable coverage map (concept OR artifact): one row per chapter (concepts DERIVED from index-def tags · authored artifact types · verdict), then DELIVERS-NEITHER (derived gap alarm) + ALL-PROSE-WOULD-BENEFIT (authored flag)")
+    dv.add_argument("--json", action="store_true", help="dump the machine map (the chapter-shape model)")
     va = sub.add_parser("views-audit", help="book-models drift audit: structural (every view->md reference resolves) + freshness (each view artifact equals a fresh derivation). Fast pre-commit gate; AUDIT-ONLY (prints, exits 0) unless --strict")
     va.add_argument("--strict", action="store_true", help="exit 1 on any finding (the flip a follow-up wires into the hook once seed findings are drained)")
     sub.add_parser("install-hooks", help="git config core.hooksPath hooks (auto-regen on commit)")
@@ -3416,6 +3472,7 @@ def main() -> int:
             "definitions": cmd_definitions, "outcomes-site": cmd_outcomes_site,
             "claims": cmd_claims, "spine": cmd_spine, "litpos": cmd_litpos,
             "substantiation": cmd_substantiation,
+            "delivers": cmd_delivers,
             "views-audit": cmd_views_audit,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)
 

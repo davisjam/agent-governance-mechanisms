@@ -12,6 +12,10 @@
       "closing": {
         "kind": "transition"
       },
+      "delivers": {
+        "artifacts": [],
+        "artifact_would_help": false
+      },
       "note": "Exempt (preface). Lead states the shift and the book's subject; theses arrive later in the preface body. Closes on the map of the book + the one-move epigraph.",
       "opening_anchor": "This is a book about engineering — specifically, about what engineering work",
       "closing_anchor": "> Everything that follows is one move, repeated: convert judgment into infrastructure."
@@ -26,6 +30,10 @@
       },
       "closing": {
         "kind": "apparatus"
+      },
+      "delivers": {
+        "artifacts": [],
+        "artifact_would_help": false
       },
       "note": "Exempt (apparatus). Front-of-book glossary — the book's vocabulary gathered in one place so later chapters reference rather than re-explain; no argumentative shape expected.",
       "opening_anchor": "This book earns its own vocabulary. A handful of terms recur —",
@@ -42,6 +50,10 @@
       "closing": {
         "kind": "apparatus"
       },
+      "delivers": {
+        "artifacts": [],
+        "artifact_would_help": false
+      },
       "note": "Exempt (apparatus). Pure front-matter; no argumentative shape expected.",
       "opening_anchor": "I thank K. Davis, H. Davis, W. Davis, N. Pond, N. Davis,",
       "closing_anchor": "supported by the U.S. National Science Foundation under grants #2541917 and #2452533."
@@ -56,6 +68,10 @@
       },
       "closing": {
         "kind": "consequence"
+      },
+      "delivers": {
+        "artifacts": [],
+        "artifact_would_help": false
       },
       "note": "Phase-2c added a real untitled lead: failure (implementation abundant but unreliable), question (whose fault when the build is wrong?), answer (the agent is a printer, not a coder — a bad build indicts the instructions), argument role stated (the premise everything after rests on) = fault-lies-in-instructions / abundant-implementation. The body sections develop the metaphor the lead now frames. Closing is strong: the printer builds your mistake with the same fidelity (consequence) + hand-off to 1.2.",
       "opening_anchor": "Coding agents have made writing software cheap. Describe what you want and",
@@ -72,6 +88,16 @@
       "closing": {
         "kind": "transition"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "worked-example",
+            "name": "the running DocAble example",
+            "anchor": "docable-pipeline"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Exempt (overview). Opens on the promise + three questions; grounding-case role implicit. Closes mapping Parts 2-5 with the grounding-case-not-proof stance.",
       "opening_anchor": "The last chapter closed on a promise: the running example of this",
       "closing_anchor": "place every claim in the coming chapters can be traced back to."
@@ -86,6 +112,16 @@
       },
       "closing": {
         "kind": "synthesis"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the loop-engineering figure (four levers)",
+            "anchor": "the-loop"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Failure implicit ('Get them wrong, it wanders'). Opening names the two ideas that carry the book — the theses' seedbed; graded argument-step (not 'both') because the spine deliberately labels 1.3 modeling-side only, alignment left to Part 2 (Phase-1 log). Closes on the four levers = theses in miniature + the not-knowings division of labor.",
       "opening_anchor": "Two ideas carry the rest of this book, and everything else is",
@@ -102,6 +138,16 @@
       "closing": {
         "kind": "synthesis"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the substrate-derivation table (eight properties, seven consequences)",
+            "anchor": "substrate-table"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Exemplary: question (theses chosen or derived?), answer (derived from substrate properties), both theses named. Closes collecting the derivation + re-run-the-derivation consequence + implication-not-proof.",
       "opening_anchor": "Reinforced concrete carries a building because two materials split the work: concrete",
       "closing_anchor": "back of the book supplies one system's worth — a grounding case."
@@ -116,6 +162,16 @@
       },
       "closing": {
         "kind": "transition"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the SDLC-to-SELC phase map",
+            "anchor": "sdlc-to-selc"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Failure: the engineer/technician split kept collapsing; answer: agents hold the seats apart; states 'the claim the rest of the book stands on' (seat-moves). Closes on the question the next part opens on — where do you reach in?",
       "opening_anchor": "Older engineering fields draw a clean line between the engineer who designs",
@@ -132,6 +188,16 @@
       "closing": {
         "kind": "transition"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the agent-stack layers figure (four-layer injection model)",
+            "anchor": "stack-layers"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Opens on the interposition frame back-linked to the 1.4 derivation; question 'where do you reach in?' answered by the four-layer stack. Closing ties stack to both theses AND hands off to the two following chapters — transition, not mere re-announcement (borderline; 2c could sharpen the last paragraph's first sentence).",
       "opening_anchor": "A language model alone gives probabilistic recommendations. A harness turns some of",
       "closing_anchor": "the Alignment Thesis. The two chapters that follow take one thesis each."
@@ -146,6 +212,16 @@
       },
       "closing": {
         "kind": "transition"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the documentation-hierarchy and semantic-gap figures",
+            "anchor": "semantic-gap"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Trap named (enforcing at the wrong level), answer (model = sweet spot, check where checking makes sense); Modeling Thesis carried by content, not named. Closes on two promissory notes routed to 3.3 and Part 3.",
       "opening_anchor": "The last chapter gave you four places to inject a mechanism. This",
@@ -162,6 +238,16 @@
       "closing": {
         "kind": "consequence"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the constraint-vs-sensor figure and control-substrate table",
+            "anchor": "constraint-vs-sensor"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Question: what can you decide up front vs learn along the way; answer: the two halves + two forms of mechanism; Alignment Thesis implicit. Closes on the residual — a concrete consequence (your throughput ceiling) with a forward pointer to 6.0.",
       "opening_anchor": "Everything so far assumes you know, in advance, what should be true",
       "closing_anchor": "one level up — is the subject of the closing chapter (6.0)."
@@ -176,6 +262,16 @@
       },
       "closing": {
         "kind": "synthesis"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the config-optimization runbook figure",
+            "anchor": "runbook-split"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Opening solid: agent lacks operating context -> write lifecycles + runbooks (governed-environment role implicit). Phase-2c added a chapter-level close: one instruction in three shapes (lifecycle -> runbook -> pre-canned brief), re-collecting the chapter, with the consequence that operating judgment stops living in your head and becomes something the environment holds — closing on the 2 a.m. callback to the opening.",
       "opening_anchor": "You know what to do when the disk fills up, when two",
@@ -192,6 +288,16 @@
       "closing": {
         "kind": "synthesis"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "table",
+            "name": "the governance metrics at a glance (metric, decision, axis)",
+            "anchor": "metrics-table"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Failure: a loop that cannot sense cannot steer; answer: metrics that drive decisions; sensor role (Alignment side) implicit. Closes reading the compact-reference table back through the chapter criterion — synthesis grounded in the table, not a bare re-announcement.",
       "opening_anchor": "Every agent runs a loop. It takes an input, reasons, acts, and",
       "closing_anchor": "loop steering by a shallow number is a loop that cannot steer."
@@ -206,6 +312,16 @@
       },
       "closing": {
         "kind": "consequence"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the collision-edge figure and four-value collision taxonomy",
+            "anchor": "collision-edge"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Failure vivid (two controls, incompatible demands, two real collisions); answer: model the space between controls; the modeling move implicit as thesis. Closes on descriptive-not-inventing limit — the governance-tower failure mode.",
       "opening_anchor": "The stack gives you four layers to steer at, and a governed",
@@ -222,6 +338,16 @@
       "closing": {
         "kind": "transition"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the 4+1 executable-view framework and per-model template",
+            "anchor": "trunk-and-views"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Opening cashes 2.2's promise, Part-level Modeling-Thesis frame explicit (incl. the Task-6 'Why models are newly central' section). Phase-2c added a chapter-level close after the boxed reference insets: 'That is the trunk; the rest of this Part is the branches' — re-collects the shared machinery (executable source of truth, drift gate, derived edges, admission test, template) and hands off to the five views, the Logical view first. The boxed insets remain trailing reference matter; the close is now the last prose.",
       "opening_anchor": "The previous chapter argued that a model is the sweet spot between",
       "closing_anchor": "holds them true. The Logical view is first: what the system is."
@@ -236,6 +362,16 @@
       },
       "closing": {
         "kind": "transition"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the data-flow figures and structure table",
+            "anchor": "service-model-structure"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Question (what is this system, as concepts?) + answer (the functional structure) present; Phase-2c added the thesis clause — held as a drift-checked model, the view is the representation the fleet reasons through, the Modeling Thesis at the grain of one view. Ending exemplary: the ---kicker transition to the Process view.",
       "opening_anchor": "The Logical view is the functional structure — the objects, the types,",
@@ -252,6 +388,16 @@
       "closing": {
         "kind": "transition"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the process figure and verification-tier table",
+            "anchor": "process-invariants"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Question (what happens when parts run at once?) + answer (states/locks/invariants lens) present; Phase-2c added the thesis clause — the invariants are not comments, a checker holds the running system to them, the Alignment Thesis at the grain of concurrency. Ending: kicker transition to the Development view.",
       "opening_anchor": "The Logical view named the parts. The Process view asks the question",
       "closing_anchor": "how the code is packaged, layered, and owned — the Development view."
@@ -266,6 +412,16 @@
       },
       "closing": {
         "kind": "transition"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the component-model figure and bill-of-materials table",
+            "anchor": "component-model-structure"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Question (where am I, what may this file touch) + answer (the map); 'the view the people and agents who build the system reason through' carries the Modeling-Thesis mechanism implicitly — the one view chapter that gestures at it. Ending: kicker transition to the Physical view.",
       "opening_anchor": "The Process view held the running system consistent. The Development view steps",
@@ -282,6 +438,16 @@
       "closing": {
         "kind": "transition"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the deployment and DAG-policy figures with their tables",
+            "anchor": "deployment-model-structure"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Failure (functionally correct yet mis-deployed) + answer (the placement lens) present; Phase-2c added the thesis clause — written down as a placement model the fleet reads, the where is something an agent reasons over before it deploys, the Modeling Thesis reaching the one view the others cannot see. Ending: kicker transition to the +1 view.",
       "opening_anchor": "The Development view mapped how the source is organized. The Physical view",
       "closing_anchor": "validate that the other four actually hold up. That is the +1."
@@ -296,6 +462,16 @@
       },
       "closing": {
         "kind": "synthesis"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the user-journey figure and coverage-mapping table",
+            "anchor": "scenarios-invariants"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Question (do the views hold up?) + answer (scenarios walk them) present; Phase-2c added the thesis clause — the walk re-checks the other four against a real goal, so the scenario is where the models are held honest, the Alignment Thesis turned back on the views themselves. Ending: Part-closing synthesis — five views walked, why the upkeep is now affordable.",
       "opening_anchor": "The four views so far are static portraits. The Logical view says",
@@ -312,6 +488,10 @@
       "closing": {
         "kind": "synthesis"
       },
+      "delivers": {
+        "artifacts": [],
+        "artifact_would_help": false
+      },
       "note": "Exempt (end-of-part-synthesis). Doorway-out framing; map-equals-territory discipline implicit thesis. Through-line closing synthesis.",
       "opening_anchor": "This book is an introduction. It gives you enough kinds of model",
       "closing_anchor": "the day you feel that graduation — it is worth your time."
@@ -326,6 +506,20 @@
       },
       "closing": {
         "kind": "synthesis"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the two-layer-net figure and sync-evidence tables",
+            "anchor": "model-sync-two-layer-net"
+          },
+          {
+            "type": "commandment",
+            "name": "derived defends, snapshotted drifts"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "The measurement chapter. Opening states the failure (map must equal the territory, or the bridge lies) and the modeling-thesis link outright; answer is the two-layer net + liveness-as-a-property. 'The honest reading' closes by bounding the claim — a synthesis, not a re-announcement.",
       "opening_anchor": "A context-bounded fleet governs a context-exceeding codebase *through* typed models. The models",
@@ -342,6 +536,16 @@
       "closing": {
         "kind": "consequence"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "pattern",
+            "name": "the squash-zero-promote sequence",
+            "anchor": "squash-zero-promote"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Failure: most readers stare at brownfield + agent-worsened sprawl; answer: the recipe, step by step; 'model-based engineering environment' implicit thesis-link. Closes on the 300k->200k scar evidence — concrete consequence.",
       "opening_anchor": "Everything so far has assumed a clean start. Greenfield is the easy",
       "closing_anchor": "it, and enforcement holding all three together every time the code changes."
@@ -356,6 +560,16 @@
       },
       "closing": {
         "kind": "transition"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the three-skills and recipe figures with the by-construction-layer tables",
+            "anchor": "three-skills"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Phase-2c added the motivating failure: a method left as prose must be re-taught to every fresh agent, and a discipline that lives in memory rather than the environment is the first thing velocity drops — the batteries (three installable skills) answer that. Packaged-methodology role implicit (govern-the-environment). Ending passes as boundary-marking transition: names the unresolved team dimension explicitly and marks it out of scope.",
       "opening_anchor": "A method only helps while someone remembers to apply it. Left as",
@@ -372,6 +586,10 @@
       "closing": {
         "kind": "synthesis"
       },
+      "delivers": {
+        "artifacts": [],
+        "artifact_would_help": false
+      },
       "note": "Habit-of-mind framing: the failure (mis-sized transformations) is implicit in 'the skill is sizing each transformation'; the substrate link ('the shape of the machine underneath') implicit. Closes on the skills-as-transformations synthesis.",
       "opening_anchor": "There is one more habit of mind that makes all of this",
       "closing_anchor": "input-to-output steps — and you will find yourself a much happier engineer."
@@ -386,6 +604,16 @@
       },
       "closing": {
         "kind": "consequence"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "decision-tree",
+            "name": "the novelty-axis figure (three-knob decision aid)",
+            "anchor": "novelty-axis"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Question: how much of this book do you need? Answer: the training-data axis decides. Argument role (scopes the method's necessity) implicit. Closes on demoable-is-not-productizable — concrete consequence + the untrusted-agent boundary note.",
       "opening_anchor": "There is one last property of a coding agent you must reason",
@@ -402,6 +630,16 @@
       "closing": {
         "kind": "synthesis"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "commandment",
+            "name": "the lessons as quotable lines with the move each demands",
+            "anchor": "lessons-quotable-strip"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Exempt (discussion). Opens on the arc and what it taught; closes on authority-to-convert advice + N=1 humility + the locomotive lineage.",
       "opening_anchor": "I spent three months building a real piece of software with a",
       "closing_anchor": "it is the most fun I have had building software in years."
@@ -416,6 +654,16 @@
       },
       "closing": {
         "kind": "consequence"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "decision-tree",
+            "name": "the when-to-reach-for-which decision aid",
+            "anchor": "example-vs-generative"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Exemplar opening: dot-test failure, the generate-and-falsify move, then BOTH theses named and mapped ('that move is the whole book worn as a test'). Closes on the when-to-reach-for-which decision aid — concrete consequence.",
       "opening_anchor": "Most tests reproduce a dot. You pick an input, you write down",
@@ -432,6 +680,16 @@
       "closing": {
         "kind": "transition"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "worked-example",
+            "name": "the ADA problem-context table",
+            "anchor": "the-burden-shift"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Question explicit (why is document accessibility hard and worth a professor's Spring Break?); answer: the problem context; grounding-case role stated up front. Closes handing off to the timeline chapter.",
       "opening_anchor": "Every method in this book was learned building one real system, under",
       "closing_anchor": "one-week undergraduate project became a production system built almost entirely by machines."
@@ -446,6 +704,16 @@
       },
       "closing": {
         "kind": "synthesis"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "worked-example",
+            "name": "the phased-timeline, velocity, and churn-per-path figures",
+            "anchor": "phased-timeline"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Opens on the arc + the one fact that is the book's engineering problem; every governance idea learned at a point on the arc (failures-become-machinery). Closes on the recurring move + the arc's numbers — synthesis.",
       "opening_anchor": "The last chapter established the problem. This one tells what happened when",
@@ -462,6 +730,16 @@
       "closing": {
         "kind": "synthesis"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "worked-example",
+            "name": "the frontend-MVC, DSL-remediation, and reactive-services figures",
+            "anchor": "editor-mvc"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Question: what got built (governance makes no sense without the governed thing); answer: the system's shape, the two halves joined. Closes on Same-song-second-verse — the wrapped-VLM pattern read back onto the agents themselves. Exemplar.",
       "opening_anchor": "The timeline told what happened. This chapter tells what got built, because",
       "closing_anchor": "rest of the book applied in the large. Same song, second verse."
@@ -476,6 +754,16 @@
       },
       "closing": {
         "kind": "synthesis"
+      },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "worked-example",
+            "name": "the MAGE-staircase figure",
+            "anchor": "mage-staircase"
+          }
+        ],
+        "artifact_would_help": false
       },
       "note": "Phase-2c reconciled the thesis/spine mismatch by REWEIGHTING the opening (option b), not relabeling the spine: the chapter's staircase thread now foregrounds the seat climbing (seat-moves) made safe by each step's model or control (oversight-does-not-scale), with the DocAble narrative grounding it (grounded-in-one-case) — the three claims the spine labels. The former headline 'the models accrete until the codebase can be reasoned about entirely through them' (a Modeling-Thesis over-claim; modeling is Part 3's job, advanced across 18 chapters) is demoted to a supporting observation. thesis_target modeling -> argument-step; spine labels unchanged, so check_argument_spine stays green. Closes on the Missing-Model-Metric loop + MAGE-was-demanded synthesis.",
       "opening_anchor": "The MAGE methodology emerged from months of work with coding agents. I",
@@ -492,6 +780,16 @@
       "closing": {
         "kind": "consequence"
       },
+      "delivers": {
+        "artifacts": [
+          {
+            "type": "framework",
+            "name": "the soft-hard spectrum figure and the evidence-forms table",
+            "anchor": "soft-hard-spectrum"
+          }
+        ],
+        "artifact_would_help": false
+      },
       "note": "Exempt (discussion). Opens restating both theses as the through-line (its job as the implications chapter); closes on limitations + the come-tell-me invitation.",
       "opening_anchor": "I built one system, alone, with a fleet of agents, and this",
       "closing_anchor": "run the experiment and report back. Come tell me what you found."
@@ -506,6 +804,10 @@
       },
       "closing": {
         "kind": "consequence"
+      },
+      "delivers": {
+        "artifacts": [],
+        "artifact_would_help": false
       },
       "note": "Exempt (conclusion). Closes on the do-one-conversion concrete next step — a model conclusion ending.",
       "opening_anchor": "> I applied mine heart to know, and to search, and to",
