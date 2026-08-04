@@ -4549,7 +4549,7 @@
           "section_id": "llm-as-function-call",
           "level": 2,
           "heading_text": "Designing with a probabilistic component: the LLM as a function call",
-          "topic_sentence": "Here is the central problem of building on a model.",
+          "topic_sentence": "A model is a **probabilistic component**.",
           "id_source": "explicit",
           "block_index": 24,
           "points": [
