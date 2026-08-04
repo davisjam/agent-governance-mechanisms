@@ -1015,13 +1015,20 @@ def _book_ir():
     return _BOOK_IR_MOD
 
 
-def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = None) -> str:
+def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = None,
+               section_prefix: str | None = None) -> str:
     """Convert the markdown subset the chapters use into HTML.
 
     `anchor_map` (optional) maps `(concept-slug, "def"|"ex", occurrence-on-this-page)` → the anchor id the
     curated index links to. When a `<!-- index-def: … -->` / `<!-- index-example: … -->` tag is met, its
     anchor is attached to the FOLLOWING rendered block (per book/AGENTS.md §6). Occurrences are counted
-    per (slug, kind) in reading order to match `_harvest_concept_tags`."""
+    per (slug, kind) in reading order to match `_harvest_concept_tags`.
+
+    `section_prefix` (optional, e.g. "1.1") is the body chapter's `part.chapter` id. When set, each `## `
+    (section) heading's visible text is stamped with a DISPLAY-ONLY `part.chapter.N` number (N = the
+    section's 1-based order within the chapter). `None` (the default) leaves headings unnumbered — the
+    blockquote recursion, floats pass, and word-count all call unprefixed, so only the per-chapter body
+    build numbers. The number never alters a heading's `{#slug}` id anchor (see `_render_heading`)."""
     _ir = _book_ir()                        # the typed IR — the single classifier for the content dispatch
     out: list[str] = []
     blocks = _split_blocks(md)
@@ -1146,6 +1153,7 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
         return False
 
     skip_blocks: set[int] = set()   # blocks already consumed as a figure caption (folded into the <figure>)
+    section_no = 0                   # per-chapter `## ` section counter (only used when section_prefix is set)
     for _bi, block in enumerate(blocks):
         if _bi in skip_blocks:
             continue
@@ -1229,7 +1237,14 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             if not stripped:
                 continue
         if kind is _ir.BlockKind.HEADING:
-            _emit(_render_heading(block))
+            # Section-level (`## `) headings in a body chapter carry a `part.chapter.N` display prefix.
+            # N counts `## ` headings in reading order; `###`/`####` subsections stay unnumbered (3-level
+            # scheme). Deeper levels don't advance the counter, so the section number is stable.
+            heading_no = None
+            if section_prefix is not None and block.strip().startswith("## "):
+                section_no += 1
+                heading_no = f"{section_prefix}.{section_no}"
+            _emit(_render_heading(block, heading_no))
             continue
         if kind is _ir.BlockKind.TABLE:
             tbl = _render_pipe_table(block)
@@ -1374,9 +1389,15 @@ def _render_gap_marker(block: str) -> str:
             f'<span class="marker-tag">{label}</span> {inline(inner)}</div>')
 
 
-def _render_heading(block: str) -> str:
+def _render_heading(block: str, section_no: str | None = None) -> str:
     """A `#`..`####` heading → the matching <hN>. A trailing `{#slug}` sets the id anchor (stripped from the
-    visible text); an `## ` may carry a leading `[role: Name]` kicker."""
+    visible text); an `## ` may carry a leading `[role: Name]` kicker.
+
+    `section_no` (e.g. "1.1.3") is a DISPLAY-ONLY `part.chapter.section` prefix stamped on a `## ` (section)
+    heading's visible text for in-chapter reference. It is prose, not structure: it never touches the `{#slug}`
+    id anchor (the anchor is peeled off first by `_heading_anchor`), so every cross-ref, index-def, and
+    glossary pointer keeps resolving. Passed only for body chapters (Parts 1-5) by the per-chapter build;
+    `None` (the default) — front/back-matter, appendix, blockquotes, floats, word-count — renders unnumbered."""
     stripped = block.strip()
     if stripped.startswith("#### "):
         txt, anc = _heading_anchor(stripped[5:])
@@ -1387,7 +1408,8 @@ def _render_heading(block: str) -> str:
     if stripped.startswith("## "):
         txt, anc = _heading_anchor(stripped[3:])
         kick, txt = _role_kicker(txt)
-        return f"<h2{anc}>{kick}{inline(txt)}</h2>"
+        num = f'<span class="sec-num">{html.escape(section_no)}</span> ' if section_no else ""
+        return f"<h2{anc}>{num}{kick}{inline(txt)}</h2>"
     txt, anc = _heading_anchor(stripped[2:])
     return f"<h1{anc}>{inline(txt)}</h1>"
 
@@ -1483,6 +1505,10 @@ header.chap h1 {{ font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }}
 .part-epigraph .attr {{ display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
                         color: var(--muted); }}
 h2 {{ font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }}
+/* `part.chapter.section` display number stamped on a body-chapter section heading (build-derived, not
+   authored). Muted + tabular so it reads as a reference locator, not part of the title; it is display-only
+   and carries no id, so the heading's own anchor, cross-refs, and the index all still resolve. */
+h2 .sec-num {{ color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 0.15em; }}
 /* Role kicker on a step heading (`## [role: Architect] …`) — the engineer's climbing title, rendered in
    the same small-caps accent register as the chapter kicker (`header.chap .kicker`) but inline before the
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
@@ -4086,7 +4112,12 @@ def build() -> int:
         # `[cite:]` superscripts and the Works Cited list below both read the one ordering (BIB-4 mirror).
         _number_citations(c["slug"], c["body_md"])
         cited_keys = list(_CITE_STATE["order"])
-        body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
+        # `part.chapter` section-numbering prefix — body chapters (Parts 1-5) only. Front/back matter and
+        # the appendix (which carries its own A-1/B-2 locators) stay unnumbered → `section_prefix=None`.
+        section_prefix = (None if c.get("is_matter") or c.get("is_appendix")
+                          else f'{c["part"]}.{c["chapter"]}')
+        body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]),
+                          section_prefix=section_prefix)
         body, _fig_n, _tbl_n = _number_floats(body, _chapter_id(c), 1, 1)
         body = _resolve_xrefs(body, ref_map, for_print=False)
         if c["slug"] == GLOSSARY_CHAPTER_SLUG:

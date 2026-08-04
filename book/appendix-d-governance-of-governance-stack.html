@@ -86,6 +86,10 @@ header.chap h1 { font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }
 .part-epigraph .attr { display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
                         color: var(--muted); }
 h2 { font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }
+/* `part.chapter.section` display number stamped on a body-chapter section heading (build-derived, not
+   authored). Muted + tabular so it reads as a reference locator, not part of the title; it is display-only
+   and carries no id, so the heading's own anchor, cross-refs, and the index all still resolve. */
+h2 .sec-num { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 0.15em; }
 /* Role kicker on a step heading (`## [role: Architect] …`) — the engineer's climbing title, rendered in
    the same small-caps accent register as the chapter kicker (`header.chap .kicker`) but inline before the
    heading text. It rides the accent colour so the ladder reads at a glance down the chapter. */
