@@ -37,7 +37,7 @@
   "mbse-nav-token": {
     "source": "3.1-the-executable-zoo",
     "anchor": "mbse-nav-token",
-    "holds": ["-20%", "-12%", "-82%", "-50%"],
+    "holds": ["−20%", "−12%", "−82%", "−50%"],
     "status": "preliminary",
     "spine_claim": "modeling-thesis",
     "observable": "Tokens-to-answer with MBSE navigation guidance ON versus OFF, across four modeled tasks.",
