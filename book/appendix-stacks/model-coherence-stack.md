@@ -35,27 +35,122 @@ The stack has two lanes. Three parts make the map authoritative — model it as 
 from it. Two parts hold it equal to reality — a parity gate and derived edges. One part seals the same
 discipline onto a shipped product format.
 
-## The constituent patterns
+## The constituent parts
 
-- **DATA — role:executable-source-of-truth.** Model the system as typed data the tools import and execute on
-  every run, not prose that narrates a diagram. It hands every part below it a typed object to stand on.
-- **CONSUME — role:meta-model-consumption.** Read the model by querying it at runtime; never embed a
-  hardcoded snapshot of what it says. This is what makes "source of truth" true in practice — one
-  authoritative value, no second copy to age.
-- **PARITY — role:drift-parity-gates.** Fail the build when a model and the reality it mirrors disagree, in
-  either direction. The keystone: it converts "the model is probably right" into "the model is right or the
-  gate is red."
-- **DERIVE — role:symbol-anchored-traceability-graph.** Link every model to its lint, its code entry-point,
-  its proof, and its related models as a typed graph whose every edge terminates on a resolvable symbol a
-  lint re-checks. A derived edge cannot drift — moving the code either keeps the symbol resolvable or reddens
-  the scan.
-- **EMIT — role:model-driven-codegen.** Generate real artifacts from the model — policy, wiring, catalogs,
-  contract types — each carrying a provenance header, so the model *produces* the territory rather than
-  merely describing it and a hand-edit is caught on regen.
-- **SEAL — role:pdf-model.** Route all reads and writes of a complex file format through one structured
-  model, with raw library access ban-linted away (our instance: a typed model over the canonical PDF
-  library). Model-coherence applied to a shipped artifact — one canonical representation, so a fix to an
-  invariant holds everywhere at once.
+Six parts build the guarantee in rungs: model the system as executable data, read that data live instead of
+copying it, hold it equal to reality with a parity gate, raise parity to a derived graph, generate real
+artifacts from the model, and apply the same discipline to a shipped file format.
+
+### DATA — model the system as executable data {#a-2-executable-source-of-truth}
+
+**DATA opens the stack.** It models the system as typed data the tools import and run on, not a diagram
+prose narrates — so a program can read the structure and catch it the moment it moves.
+
+**Receives** — the system's own structure: its components, its state machines, its service topology, its
+registries. Nothing precedes it; this is the ground the rest stand on.
+
+**Guarantees** — a machine-readable model a tool loads on every run and generates real artifacts from. A
+query returns the live fact where a stale sentence cannot. The structure lives as data, so a program can
+check it, not merely a reader who happens to look.
+
+**Hands to CONSUME** — a typed object every part below stands on. The consumer queries it, the parity gate
+checks it against reality, the generator emits from it, the traceability graph anchors its edges to it. The
+data is authoritative in name only until the parity gate three rungs down holds it equal to the code; on its
+own it is just well-typed documentation.
+
+→ **Deeper treatment:** role:executable-source-of-truth.
+
+### CONSUME — read the model, don't copy it {#a-2-meta-model-consumption}
+
+**CONSUME keeps the source of truth true.** Each consumer resolves the fact it needs by querying the live
+model, never by baking a snapshot of it into its own code.
+
+**Receives** — the typed model DATA published, and a consumer that needs one of its facts: a queue name, a
+component boundary, a policy value.
+
+**Guarantees** — one authoritative value and no second copy to fall out of date. The consumer reads the
+model in place, so the fact it acts on is the fact the model holds now. A copy-detecting lint catches the
+one consumer that smuggles a constant back in.
+
+**Hands to PARITY** — a single value to check, not a scatter of copies to reconcile. Because every consumer
+reads live, "source of truth" becomes true in practice rather than in aspiration, and the parity gate
+downstream has one authoritative value to hold against reality instead of a dozen drifting snapshots. This
+is the discipline that makes the DATA above it worth trusting.
+
+→ **Deeper treatment:** role:meta-model-consumption.
+
+### PARITY — fail the build when the map and territory disagree {#a-2-drift-parity-gates}
+
+**PARITY is the keystone.** A fleet of deterministic lints fails the build whenever a model and the reality
+it mirrors disagree, in either direction.
+
+**Receives** — the executable model and the reality it claims to mirror: the code, the artifacts, the things
+on disk it names.
+
+**Guarantees** — bidirectional parity or a red gate. Every model row resolves to a real thing, and every
+real thing carries its row; a meta-sync contract names, per model, what reality it mirrors and when it must
+be re-derived. So the map cannot quietly lie while the fleet reasons through it.
+
+**Hands to DERIVE** — trusted data the rest of the stack can build on. The gate converts "the model is
+probably right" into "the model is right or the build is red," so the executable data, its live consumers,
+and the emitted artifacts can all be trusted at once. Drop it and every part around it degrades into
+optimistic documentation.
+
+→ **Deeper treatment:** role:drift-parity-gates.
+
+### DERIVE — anchor every model-to-code edge to a symbol {#a-2-symbol-anchored-traceability-graph}
+
+**DERIVE raises parity to its highest rung.** It links every model to its lint, its code entry-point, its
+proof, and its related models as a typed graph whose every edge a lint re-checks.
+
+**Receives** — the parity-held models and the code symbols they connect to: the functions, the classes, the
+checks that give each edge a real endpoint.
+
+**Guarantees** — edges that cannot drift. Each terminates on a resolvable symbol, never a line number, and
+is a derived obligation a lint re-checks at scan time. Move the code and the symbol either stays resolvable
+or the scan reddens; the broken link turns mechanically visible instead of rotting in someone's head.
+
+**Hands to EMIT** — a graph of trustworthy connections to generate from. Where PARITY asserts a model
+matches reality, DERIVE computes the join, so those edges need no hand-authored parity rule at all — the
+higher rung. It leaves the generator standing on links that a refactor cannot silently break.
+
+→ **Deeper treatment:** role:symbol-anchored-traceability-graph.
+
+### EMIT — generate real artifacts from the model {#a-2-model-driven-codegen}
+
+**EMIT turns the model from something read into something that produces.** A generator emits real artifacts
+from the model — policy, wiring, catalogs, contract types — each carrying a provenance header.
+
+**Receives** — the parity-held, traceable model, consumed the way a compiler consumes a source file.
+
+**Guarantees** — generated artifacts that cannot silently drift from the model. Each is emitted from the
+model, so the model drives the system rather than merely describing it. A provenance header names the
+emitter and the regen path, so a hand-edit to a generated file is caught on the next run and reverted.
+
+**Hands to SEAL** — a model that now writes the territory, not just maps it. Because the artifact is
+derived, the parity gate treats it as generated output, not a second source to reconcile. What remains is to
+apply the same one-model discipline to a shipped file format, which the last part does on the product side.
+
+→ **Deeper treatment:** role:model-driven-codegen.
+
+### SEAL — route a file format through one model {#a-2-pdf-model}
+
+**SEAL closes the stack on the product side.** It routes every read and write of a complex file format
+through one structured model, with raw library access ban-linted away (our instance: a PDF model over the
+canonical PDF library).
+
+**Receives** — every mutation a remediation pass wants to make to the file format, plus the raw library
+calls that would otherwise scatter across a hundred sites.
+
+**Guarantees** — a single, compiler-checked mutation surface. One typed model is the sole door; a ban-lint
+forbids the raw library, so every change passes through code that encodes the format's invariants. A
+malformed write can no longer land from just anywhere, and a fix to an invariant holds everywhere at once.
+
+**Hands off** — the stack's guarantee, applied to a shipped artifact. This is model-coherence turned on the
+product: one canonical representation, held sole by a ban-lint. It is also the single door the provenance
+stack's stamp-writer needs to cover, so the two stacks meet at exactly this seam.
+
+→ **Deeper treatment:** role:pdf-model.
 
 ## A DocAble example, end to end
 

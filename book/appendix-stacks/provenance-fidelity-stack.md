@@ -32,25 +32,107 @@ lose.
 The five parts run as a chain: mark every insertion, stamp every mutation, prove the stamping complete, read
 the history back, gate what leaves against what came in. Each part hands the next a stronger guarantee.
 
-## The constituent patterns
+## The constituent parts
 
-- **MARK — role:a11y-prefix.** Name every insertion so it is distinguishable from authored content and
-  registry-covered by construction: an invisible insert takes a reserved prefix, a user-visible one keeps an
-  ordinary name, a spec-mandated name keeps its spec name — every inserter records into one registry. Opens
-  the chain with a closed, complete population of insertions to attribute.
-- **EMIT — role:mutator-stamps.** Every sanctioned mutation embeds an attribution stamp — its pass, its
-  visibility — into the artifact itself, written through one stamp-writer per format with the raw mutation
-  ban-linted away. Each change becomes embedded evidence.
-- **COVER — role:f10-wiring-lint.** A blocking lint scans every mutator verb and fails on any that skips the
-  stamp wiring, so completeness is a guarantee, not an aspiration. It reads the same closed verb set the
-  writer serves and proves the writer is called across all of it.
-- **READ — role:derive-changelog.** A command reconstructs a human-legible changelog from the embedded stamp
-  registry, each entry a mutation attributed to its pass — history projected from the artifact, never a
-  trusted external log.
-- **GATE — role:content-validator.** The fidelity gate extracts the input's content, asserts input is a
-  subset of output, and fails the job when meaning was dropped; a per-pass staging variant names which pass
-  dropped it. Where the first four attribute what the tool *added*, this catches what a pass silently
-  *removed*.
+Five parts run as a chain, each handing the next a stronger guarantee: mark every insertion, stamp every
+mutation, prove the stamping complete, read the history back, and gate what leaves against what came in.
+
+### MARK — the reserved-prefix naming convention {#a-1-a11y-prefix}
+
+**MARK opens the chain.** It names every insertion the tool makes, so authored content and tool-added
+content stay distinguishable — and so a validator can cover an insert by its name alone. A validator cannot
+cover what it cannot name.
+
+**Receives** — the raw insertions a remediation pass wants to write: alt text, tags, off-canvas scaffolding.
+Nothing precedes it; this is where the chain starts.
+
+**Guarantees** — a closed, registry-covered population of insertions. A three-way naming rule carries it: an
+invisible insert takes a reserved prefix, a user-visible one keeps an ordinary name, a spec-mandated name
+keeps its spec name. Every inserter records itself into one registry as it writes, so nothing enters the
+artifact unmarked.
+
+**Hands to EMIT** — a complete set to attribute. Because the population is closed and named, the
+stamp-writer downstream has no blind spot: every insert it must stamp is already on the register. The naming
+is by rule, not by taste, which is what makes the coverage mechanical rather than a habit that quietly
+drifts the first time an inserter forgets to append.
+
+→ **Deeper treatment:** role:a11y-prefix.
+
+### EMIT — per-mutator attribution stamps {#a-1-mutator-stamps}
+
+**EMIT turns every sanctioned change into evidence.** Each remediation verb that mutates the document embeds
+an attribution stamp — its pass, its visibility — into the artifact itself, at the mutation site.
+
+**Receives** — the marked, registry-covered inserts from MARK, plus every other sanctioned mutation a pass
+performs.
+
+**Guarantees** — embedded, attributable evidence, not a promise in a log. One sanctioned stamp-writer per
+format carries every stamp, and the raw stamp mutation is ban-linted away, so the writer is the sole surface.
+A visibility model keeps it honest for delivery: stamps default to Debug and are stripped before the file
+ships; user-visible passes opt into Preserved. The evidence lives in the document, not a side log, so it
+survives copy, download, and re-open.
+
+**Hands to COVER and READ** — two things at once: a closed verb set for the wiring lint to prove complete,
+and an embedded stamp registry for the changelog to read back.
+
+→ **Deeper treatment:** role:mutator-stamps.
+
+### COVER — the mutator-stamp-wiring lint {#a-1-f10-wiring-lint}
+
+**COVER makes the stamping complete rather than hopeful.** A blocking lint scans every mutator verb in the
+document models' write layer and fails the build on any verb that skips the stamp wiring.
+
+**Receives** — the same closed verb set EMIT's stamp-writer serves; the lint reads the write layer where the
+mutators live.
+
+**Guarantees** — zero open attribution gaps. The check asserts one property: every path that performs a
+guarded mutation calls the stamp routine on its way out. So a new verb cannot land producing unattributable
+mutations. It sees the absence a code reviewer's eye slides past — a missing call shouts nothing in a diff,
+but a completeness scan over all verbs catches it. The lint stays cheap because it checks so little: not what
+a mutator does, only whether the stamp call was made on the way out.
+
+**Hands to READ** — a stamped population the changelog can trust. Because COVER proves the writer is called
+across the whole verb set, READ downstream reads the embedded stamps as complete, not a sample.
+
+→ **Deeper treatment:** role:f10-wiring-lint.
+
+### READ — reconstruct the changelog {#a-1-derive-changelog}
+
+**READ gives the provenance a reader.** A command reconstructs the document's mutation history from the
+embedded stamp registry, each entry a change attributed to the pass that made it.
+
+**Receives** — the stamps EMIT wrote and COVER proved complete, read straight from the produced artifact. It
+runs after remediation, against the delivered file, so the history it assembles is the one that shipped.
+
+**Guarantees** — an attributed, human-legible ChangeLog: pass → change, each entry carrying its visibility. It
+reconstructs the history from the artifact itself, never a trusted external log, so the account is
+reproducible from any conformant file. A diff would show what changed; this shows who changed it and why —
+the questions RCA and user transparency actually ask. The account is only as complete as the stamps behind
+it, which is exactly what COVER upstream holds at zero gaps.
+
+**Hands off** — nothing further in the chain. READ is the consumer that makes emitting the stamps worthwhile:
+no reader, no reason to stamp.
+
+→ **Deeper treatment:** role:derive-changelog.
+
+### GATE — the input ⊆ output fidelity gate {#a-1-content-validator}
+
+**GATE closes the chain from the other side.** Where MARK, EMIT, COVER, and READ attribute what the tool
+*added*, the fidelity gate catches what a sanctioned pass silently *removed* — damage done through the same
+door provenance covers.
+
+**Receives** — the input document and the remediated output; it extracts the content of each for comparison.
+
+**Guarantees** — a deterministic post-condition: the input's content is a subset of the output's, or the job
+fails. It runs in production on every job, so a dropped paragraph, a mangled table, a lost caption cannot ship
+unseen — the worst outcome for a fidelity-critical tool, because the output looks fine and quietly isn't what
+the author wrote. A staging-only per-pass variant adds localization: a dedicated marker and a nonzero exit
+code name which pass dropped the content, turning "content was lost somewhere" into "pass N lost it."
+
+**Hands off** — the chain's final guarantee. The gate refuses to let damaged output leave, so what ships is
+both fully attributed and provably whole.
+
+→ **Deeper treatment:** role:content-validator.
 
 ## A DocAble example, end to end
 

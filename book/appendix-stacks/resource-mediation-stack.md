@@ -31,21 +31,94 @@ run at all.
 One part declares the contracts; two enforce them at fixed cardinality — a strict monopoly and a bounded
 pool; one adds a live signal over both.
 
-## The constituent patterns
+## The constituent parts
 
-- **DECLARE — role:concurrency-contracts.** Typed registries of the system's concurrency contracts: which
-  subprocess invocations are serialized, which state-mutating functions are single-writer. It is the model
-  side the mediators enforce — "how many at once" becomes declared data a check can hold, not a convention.
-- **SERIALIZE — role:test-serializer.** A host-level wrapper that serializes the heaviest tool to a single
-  writer via an exclusive flock (N=1); the second caller waits. An OS flock is a deterministic correctness
-  net regardless of agent count.
-- **SEMAPHORE — role:build-serializer.** A host-level counting semaphore (M=8) over the adjacent
-  heavy-compute tools, so worktrees get parallelism up to the machine's capacity without oversubscribing it.
-  Same registry as the serializer, different cardinality.
-- **SHED — role:resource-pressure-gating.** Govern a saturable host resource with a live pressure signal read
-  at two layers: an admission gate that refuses heavy work before dispatch, and an execution shed that stops
-  running work when pressure spikes. Where the mediators bound *how many* run, this bounds *whether they
-  should run at all* given the host's live state.
+Four parts run as a chain: a typed registry names the contracts, a serializer enforces the strictest of them,
+a semaphore enforces the bounded-sharing ones, and a pressure gate bounds whether any of them should run at
+all, given the host's live state. Declared cardinality holds the count; the live signal holds the condition.
+
+### DECLARE — the concurrency-contract registry {#a-5-concurrency-contracts}
+
+**DECLARE opens the stack.** A typed registry names each of the system's concurrency contracts — which
+subprocess invocations are serialized by a mediator, and which state-mutating functions are single-writer —
+so "how many at once" becomes declared data a check can enforce.
+
+**Receives** — the system's contended operations: the heavy test runner, the build tools, the state mutators
+several worktrees might touch at once. Undeclared, who-may-run-what lives as folklore in scattered wrapper
+scripts.
+
+**Guarantees** — a declared, coverage-checked contract set. Each entry names its mediator and its
+cardinality, so a newly-added subprocess or mutator that should be contracted but isn't becomes a
+coverage-lint failure, not a race discovered late. The declaration is the model side the enforcers act
+against — an enforcer only ever sees the calls that reach it.
+
+**Hands to SERIALIZE and SEMAPHORE** — the cardinalities the mediators read. The serializer looks up the
+single-writer contracts, the semaphore the bounded-sharing ones; both take their degree from this one
+registry rather than from a convention a new call site can quietly miss.
+
+→ **Deeper treatment:** role:concurrency-contracts.
+
+### SERIALIZE — the single-writer test lock {#a-5-test-serializer}
+
+**SERIALIZE enforces the strictest contract.** A host-level wrapper serializes the heaviest,
+mutually-destructive tool to a single writer through an exclusive flock, so concurrent worktrees queue
+instead of colliding.
+
+**Receives** — the single-writer contracts from DECLARE, and every attempt to run the heavy tool. The
+canonical case is a test runner: several worktrees running it at once saturate CPU, disk, and ports.
+
+**Guarantees** — one run at a time on the contended resource. An exclusive flock admits a single caller; the
+second waits. Decisively, an enforcer inside the tool makes the un-mediated path impossible — a raw
+invocation from an agent worktree is refused, so the serialization is real rather than a convention agents
+forget under pressure. A wait cap fails loud, so a stuck lock surfaces instead of hanging forever.
+
+**Hands to SEMAPHORE** — the sibling case. The resource that cannot share takes this flock; the resources
+that can share take the counting lock beside it — same registry, different cardinality, chosen by the
+resource's contention profile.
+
+→ **Deeper treatment:** role:test-serializer.
+
+### SEMAPHORE — the bounded build semaphore {#a-5-build-serializer}
+
+**SEMAPHORE enforces the contracts that permit bounded sharing.** A host-level counting semaphore admits up
+to a fixed number of concurrent runs of the adjacent heavy-compute tools, so worktrees get parallelism up to
+the machine's capacity without oversubscribing it.
+
+**Receives** — the bounded-sharing contracts from DECLARE, and every call to the heavy but parallel-safe
+tools: the compiler, the type-checker, the code-query and lint tools.
+
+**Guarantees** — parallelism that rises to capacity and stops there. These tools are numerous and mostly
+parallel-safe, so single-writer would waste cores while all-at-once would thrash the host; a counting
+semaphore admits its bound and makes the next caller wait. A per-tool enforcer on each keeps the mediated
+path the only path. The bound is a tuned guess per machine — too low wastes a big host, too high thrashes a
+small one.
+
+**Hands to SHED** — a fixed ceiling a live signal can override. The semaphore bounds how many run; the
+pressure gate downstream bounds whether they should run at all, and catches the thrash a static bound cannot
+foresee.
+
+→ **Deeper treatment:** role:build-serializer.
+
+### SHED — the live-pressure gate {#a-5-resource-pressure-gating}
+
+**SHED closes the stack.** A live pressure signal governs a saturable host resource at two layers — an
+admission gate that refuses or defers heavy work before dispatch, and an execution shed that stops heavy
+work already running when pressure spikes.
+
+**Receives** — the host's live pressure over the saturable resource (load, memory), plus the heavy work the
+fixed-cardinality mediators would otherwise admit regardless of the machine's current state.
+
+**Guarantees** — heavy work neither started into an overloaded host nor left running on one. A cardinality
+cap bounds how many jobs run, not whether the host can bear them right now. One coarse signal drives both
+layers: admission refuses before the cost of starting doomed work is paid, and shedding catches pressure
+that rose after a job was admitted. One shared signal keeps the two from disagreeing; the same reading is
+callable, so the operator can consult it for dispatch judgment too.
+
+**Hands off** — the stack's final bound. Where DECLARE, SERIALIZE, and SEMAPHORE fix how many may run, this
+decides whether they should run at all — the admission-and-shedding layer over the fixed-cardinality
+mediators beneath it.
+
+→ **Deeper treatment:** role:resource-pressure-gating.
 
 ## A DocAble example, end to end
 

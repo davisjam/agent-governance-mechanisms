@@ -35,26 +35,125 @@ back onto the model, so a verified-in-principle invariant with no live test is a
 Two parts build and read the spec; three discharge the obligations at graded rigor; one maps coverage back.
 The spec is the single source every later part reads.
 
-## The constituent patterns
+## The constituent parts
 
-- **SPEC — role:composed-state-machine-model.** Model a concurrent lifecycle as a set of typed state machines
-  running at once, and name the predicates that must hold *across* them as first-class invariants. The spec
-  every later part discharges.
-- **CENSUS — role:model-derived-test-obligation-census.** Derive from the models what *should* be tested —
-  every external seam to fuzz, every failure edge to inject, every invariant to check — and lint the gap
-  between that derived set and the tests that exist.
-- **PROVE — role:formal-invariant-verification.** Give each invariant a temporal form — safety (always) or
-  liveness (eventually) — and let the form route which exhaustive checker verifies it. The heavy-rigor tier
-  for the hairy invariants.
-- **LINT — role:semantic-lints.** A fleet of blocking structural checks over the tool's own source rejects
-  the linear-invariant violation at commit, moving a recurring judgment out of review into a deterministic
-  gate.
-- **LEVEL — role:semantic-level-enforcement.** Place each check at the granularity where its property first
-  becomes legible, not at the cheapest or earliest point — what makes the deterministic tier *correct* rather
-  than merely present. (This member is a design-time placement principle, so it lives online, not as a
-  print page.)
-- **COVER — role:coverage-model-mapping.** Project test coverage onto the model's own nodes — states, seams,
-  invariants — so "is this invariant tested?" is a queried fact, not a guess from a line-coverage percentage.
+The spec is the anchor every later part reads: name the invariants, derive the tests owed, discharge each at
+the rigor its shape demands — an exhaustive proof for a hairy predicate, a deterministic lint for a linear
+one — place each check where its property is legible, then project coverage back onto the model's own nodes.
+
+### SPEC — model the concurrent lifecycle and name its invariants {#a-3-composed-state-machine-model}
+
+**SPEC opens the stack.** It models a concurrent lifecycle as a set of typed state machines that run at once,
+and names the predicates that must hold across them as first-class invariants.
+
+**Receives** — the system's concurrent behavior: the job lifecycles, the worker and coordinator states, the
+transitions that today live as scattered ad-hoc guards. Nothing precedes it.
+
+**Guarantees** — a named, checkable definition of "correct." Each cross-machine predicate becomes an
+invariant, and each invariant's shape assigns its verification obligation: a safety predicate earns an
+exhaustive state-space check, a liveness one a temporal check, a linear one a property test. Concurrency
+correctness is stated, no longer assumed.
+
+**Hands to CENSUS** — the invariants and seams every later part reads. The census turns its invariants into
+an obligation set, the prover reads their temporal form to pick a checker, the coverage map projects tests
+back onto these same nodes. The spec is only as honest as the parity gate that keeps it equal to the running
+code, so it leans on the model-coherence stack beneath it.
+
+→ **Deeper treatment:** role:composed-state-machine-model.
+
+### CENSUS — derive what should be tested, lint the gap {#a-3-model-derived-test-obligation-census}
+
+**CENSUS turns the spec into a work-list.** It derives from the models the set of things that should be
+tested — every external seam to fuzz, every failure edge to inject, every invariant to check — then lints
+the gap.
+
+**Receives** — the SPEC's invariants and seams, walked as typed data rather than recalled from memory.
+
+**Guarantees** — a named backlog of test obligations, and a lint on the distance between it and the tests
+that exist. Coverage stops being a percentage over the lines someone happened to test. An untested seam or
+unguarded failure edge is no longer invisible; the model knows it was owed a test, and the gap reddens.
+
+**Hands to PROVE and LINT** — an explicit obligation set for the two rigor tiers to discharge. "What still
+needs verifying" becomes a query over the model, not a memory. It hands the prover the hairy invariants and
+the lints the linear ones, so each tier works against a named backlog instead of whatever the author
+remembered to write.
+
+→ **Deeper treatment:** role:model-derived-test-obligation-census.
+
+### PROVE — let temporal form route the exhaustive checker {#a-3-formal-invariant-verification}
+
+**PROVE is the heavy-rigor tier.** It gives each invariant a temporal form — safety (`□P`, always) or
+liveness (`P ↝ Q`, eventually) — and lets that form route which exhaustive checker verifies it.
+
+**Receives** — the SPEC's invariants and the CENSUS's obligation set, filtered to the ones whose shape is
+hairy enough to demand a proof.
+
+**Guarantees** — an invariant proven by the method its shape demands, not by a sample. A safety predicate is
+discharged by an exhaustive state-space model-check; a liveness one by a temporal checker. The one violating
+interleaving a sampled unit test would never walk is either found or ruled out, so a concurrency bug cannot
+ship proven-absent.
+
+**Hands to LINT** — the linear invariants it does not claim. PROVE takes the hairy predicates and verifies
+them exhaustively, leaving the linear ones for the deterministic checks beside it. Its reach is bounded by
+how faithfully the SPEC mirrors the code — abstract away the detail that carried the bug and the proof
+proves the wrong thing.
+
+→ **Deeper treatment:** role:formal-invariant-verification.
+
+### LINT — reject the recurring violation at commit {#a-3-semantic-lints}
+
+**LINT is the linear-rigor tier.** A fleet of blocking semantic checks reads the tool's own source — banned
+APIs, silent-catch bans, typed-seam violations — and fails the build on the invariant violations the
+compiler and review miss.
+
+**Receives** — the CENSUS's linear obligations and the tool's source structure, read as a parse tree rather
+than a regex over surface text.
+
+**Guarantees** — a recurring class of mistake rejected at commit time, not re-caught in review. A convention
+decays under a fleet; a blocking structural check does not. It moves a recurring judgment out of the
+reviewer's eye and into a deterministic gate that fires on every commit.
+
+**Hands to LEVEL** — checks whose correctness now turns on where they fire. Between PROVE and LINT the
+obligation set is covered, each invariant at the rigor its shape demands. But a deterministic check is only
+as good as the granularity it targets, so its trustworthiness passes to the next part to secure.
+
+→ **Deeper treatment:** role:semantic-lints.
+
+### LEVEL — fire each check where its property is legible {#a-3-semantic-level-enforcement}
+
+**LEVEL makes the deterministic tier correct, not merely present.** It places each check at the granularity
+where the property it guards first becomes legible, not at the cheapest or earliest point.
+
+**Receives** — the checks LINT defines, each needing a scope at which its invariant is actually observable.
+
+**Guarantees** — a check that fires where its property lives. Aim a lint one level too low and it passes on a
+spec-legal variation it should catch and fires on a legal one it should allow — present but wrong. Aim it
+right — check model-to-code drift when an agent returns from a multi-commit task, never at a per-commit hook
+where the model is legitimately mid-flight — and the check earns trust.
+
+**Hands to COVER** — checks placed where they can be believed. Only once each fires at its invariant's level
+is the deterministic tier worth mapping. A check placed a level off fails silently, reading as a false pass
+rather than a red gate — the most expensive failure to notice, and the one this part exists to prevent.
+
+→ **Deeper treatment:** role:semantic-level-enforcement.
+
+### COVER — project coverage onto the model's nodes {#a-3-coverage-model-mapping}
+
+**COVER closes the stack.** It projects test coverage onto the model's own nodes — its states, seams, and
+invariants — so "is this invariant tested?" is a queried fact, not a guess from a line-coverage percentage.
+
+**Receives** — the SPEC's nodes and the tests the census owed and the two tiers discharged, mapped
+test-by-test to the model nodes each exercises.
+
+**Guarantees** — every invariant's test status as a query. Line coverage reads 80% and everyone relaxes
+while a critical invariant sits at zero covering tests, averaged into invisibility. The map turns the model
+into a work-list: an invariant node with no covering test is a visible gap that drives the next test.
+
+**Hands off** — the stack's final guarantee. Of everything the CENSUS owed and PROVE and LINT discharged,
+COVER asks which is actually exercised, so a verified-in-principle invariant with no live test becomes a
+named gap. It is exactly as complete as the SPEC's node set, which the census keeps honest.
+
+→ **Deeper treatment:** role:coverage-model-mapping.
 
 ## A DocAble example, end to end
 

@@ -31,24 +31,108 @@ map makes every signal interpretable. The operator reacts to structure, not to s
 Two parts observe, two react, one gives the operator the standing map. The bus is the single surface the
 rest of the loop reads.
 
-## The constituent patterns
+## The constituent parts
 
-- **WATCH — role:typed-event-bus.** A typed event bus with a closed topic registry that every substrate
-  emits its lifecycle and health facts onto, so health is read from a queryable, self-documenting surface and
-  each event dispatches on structure, not scraped text. Opens the loop; everything downstream reacts to what
-  it says.
-- **BEAT — role:deploy-heartbeats.** Periodic liveness emissions from long-running work, plus a stale-worker
-  sweep, so a hung process is distinguishable from a merely slow one. Silence becomes a signal, not an
-  ambiguity.
-- **RESPOND — role:operational-playbooks.** A written decision procedure per situation the signals surface:
-  symptom → steps in order. The counterpart to WATCH — the bus says *what happened*, the playbook says *what
-  to do*.
-- **BLOCK — role:cron-alerts-gate.** While an unresolved high-severity alert stands, refuse new orchestrator
-  work-dispatch until it is acknowledged or resolved. It raises the cost of ignoring a signal from zero to
-  blocking, and is designed deadlock-free so a broken substrate can always be cleared.
-- **OPERATE — role:operator-runbook-skill.** A loadable skill that leads with the substrate's lifecycles and
-  healthy baselines — the *positive* map — and falls back to a symptom → doc catalog, its pointers held
-  honest by a reference-validity lint. It makes the signals interpretable.
+Five parts run as a loop: a typed bus carries every substrate's health onto one queryable surface, heartbeats
+sharpen it so a hung process reads differently from a slow one, a playbook says what to do when a signal
+fires, a gate raises the cost of ignoring a serious one, and an operator skill supplies the standing map.
+
+### WATCH — the typed event bus {#a-4-typed-event-bus}
+
+**WATCH opens the loop.** It gives every substrate one typed surface to announce its lifecycle and health
+on, turning the orchestrator from a passive log-reader into a reactor over a single signal stream.
+
+**Receives** — lifecycle and health facts from across the fleet: is cron running, is the merge-train
+yielding, are tombstones stuck. Nothing precedes it; this is where the loop starts.
+
+**Guarantees** — a queryable, self-documenting signal surface. Every event carries a topic drawn from a
+closed const-string registry, so a typo cannot silently create a dead topic that disables a signal. Health
+is read from structure, not scraped from a dozen logs in different shapes — and read on a defined cadence,
+not by chance.
+
+**Hands to BEAT and RESPOND** — the one surface the rest of the loop reads. The heartbeat rides it as a
+liveness channel, the playbook is keyed to its topics, and the blocking gate downstream watches it for
+high-severity events. Everything after reacts to what the bus says.
+
+→ **Deeper treatment:** role:typed-event-bus.
+
+### BEAT — periodic liveness heartbeats {#a-4-deploy-heartbeats}
+
+**BEAT sharpens the observed picture.** A long-running process emits a periodic beat carrying its phase and
+elapsed time, and a sweep flags a worker that has stopped beating — so a hung process is distinguishable
+from a merely slow one.
+
+**Receives** — the runtime state of long operations: a deploy that runs many minutes, a worker grinding
+through a slow phase. It rides the WATCH bus as that bus's liveness channel.
+
+**Guarantees** — liveness turned into a signal instead of an ambiguity. The beat proves the process is
+*moving*, not just alive; a deadlocked process is alive too, but it stops advancing its phase. Silence past
+the known cadence reads as stale. The signal proves motion, not correctness — a deploy can beat steadily and
+still fail.
+
+**Hands to RESPOND** — the difference between "still working" and "wedged." That distinction is exactly what
+tells the operator whether to wait or to act, which is the first thing the playbook downstream needs to know.
+
+→ **Deeper treatment:** role:deploy-heartbeats.
+
+### RESPOND — situation-keyed operational playbooks {#a-4-operational-playbooks}
+
+**RESPOND is the loop's active half.** For each situation the signals surface, a written decision procedure
+names the trigger, the ordered steps, and the reflexes to avoid — so an operator under incident pressure
+follows a pre-reasoned response instead of re-deriving one badly.
+
+**Receives** — a fired signal from WATCH: a broken deploy, a wedged cron, a worktree destroyed mid-flight,
+an alert gate that deadlocked. The bus says what happened; the playbook takes it from there.
+
+**Guarantees** — a consistent, incident-tested response, reasoned once when no incident was burning. Each
+procedure gives the steps in order and the sharp edges to avoid — the flailing reset that destroys landed
+work, the naive cron restart that re-enters the same loop. The value is that the correct steps are written
+down and discoverable at the moment they are needed.
+
+**Hands to BLOCK** — the response half of a matched pair. A signal keyed to no playbook is unactioned noise;
+the gate downstream leans on the playbook to say how a blocking alert gets cleared.
+
+→ **Deeper treatment:** role:operational-playbooks.
+
+### BLOCK — the high-severity alerts gate {#a-4-cron-alerts-gate}
+
+**BLOCK raises the cost of ignoring a signal from zero to blocking.** While an unresolved high-severity
+alert stands, the gate refuses new orchestrator work-dispatch until the alert is acknowledged or resolved.
+
+**Receives** — the unresolved high-severity alerts on the WATCH bus, read at session start against what was
+last seen.
+
+**Guarantees** — no piling new work onto a known-broken substrate. Surfacing a signal is not enforcing a
+response; an orchestrator can see, miss, or ignore a red state and keep dispatching. This gate makes the
+response mandatory — an unresolved alert refuses the dispatch, worktree-create, and merge tools outright. It
+is designed deadlock-free: exempt tools plus an alert-resolving dispatch mean the gate can always be cleared,
+never wedged shut.
+
+**Hands to OPERATE** — a fleet held still until the problem is addressed. The alert names it, the playbook
+says how to clear it, and this gate refuses to proceed until one or the other is done — leaving the operator
+skill to supply the standing map that makes the whole loop interpretable.
+
+→ **Deeper treatment:** role:cron-alerts-gate.
+
+### OPERATE — the operator runbook skill {#a-4-operator-runbook-skill}
+
+**OPERATE closes the loop.** A loadable skill gives an operating agent the positive map of how the substrate
+works — its lifecycles and healthy baselines — first, and a symptom-to-resolving-doc catalog as the fallback
+when something breaks.
+
+**Receives** — an operator, human or agent, who must know two things: how the substrate runs when healthy,
+and what to do when it breaks. Where WATCH and BEAT show state and RESPOND and BLOCK handle each bad one,
+this supplies the standing map those four are read through.
+
+**Guarantees** — self-operation from a model of the substrate, not from memory. The skill leads with normal
+so a fault is spottable against a baseline, is keyed to what the operator *observes* rather than the doc they
+would have to already know, and is generated from a typed source so a reference-validity lint resolves every
+pointer's file and heading anchor — a moved doc becomes a build error, not a dangling chase.
+
+**Hands off** — nothing further in the loop. It is the standing map the other four parts are interpreted
+through; without it, the signals still fire but the operator reads them from recall.
+
+→ **Deeper treatment:** role:operator-runbook-skill.
 
 ## A DocAble example, end to end
 

@@ -34,27 +34,137 @@ self-repairing fact.
 Two parts model the estate, two query it, one grows it, one delivers it. The graph and the registry are the
 map the rest of the stack reads.
 
-## The constituent patterns
+## The constituent parts
 
-- **GRAPH — role:governance-graph.** Model the fleet's process-governance mechanisms as a typed graph: each
-  control a node tagged by its trigger and its resource footprint, each edge a conflict where two contend
-  over one resource — so a collision is caught by construction, at model time.
-- **CENSUS — role:control-coverage-census.** Classify every control by which control-target it guards —
-  derived from the control's own code anchor, never hand-declared — and roll up per target, so a target with
-  zero controls, or only soft ones, is a re-derived coverage gap.
-- **RADIUS — role:control-substrate-dependency.** Make each control declare, as typed metadata, the substrate
-  assumption it bakes in, so "which controls depend on this part of the substrate, and what breaks if I
-  change it" is a computed query run before the change.
-- **INTERPRET — role:self-governance.** Convert a recurring failure class into the smallest durable guardrail
-  that kills it — a constraint where one can be built, else a sensor — fired by a time-aware hook (at most
-  once per window) so the estate grows by design, not by whoever remembers. The skill proposes and scaffolds;
-  it does not install.
-- **REGISTRY — role:rule-metadata-registry.** Attach machine-readable metadata to each rule in the governing
-  document — id, scope, severity, enforcing check, canonical detail location — and extract those blocks into
-  a typed registry, so the prose becomes a model the tooling can query.
-- **INDEX — role:claude-md-rule-index.** Treat the top-level governance document as enforced infrastructure:
-  a numbered, stable-numbered rule index loaded into every agent's boot context, held honest by a bloat/cap
-  lint and a rule-conformance lint. The delivery surface for everything the registry models.
+Six parts answer as a set: map the controls as a graph so a collision is caught at model time, census which
+targets are held and which are bare, compute what a substrate change will break before you make it, convert
+each recurring failure into a proportionate new control, extract the governing rules into a queryable model,
+and hold the top-level document itself as enforced, capped infrastructure.
+
+### GRAPH — the control-interaction graph {#a-6-governance-graph}
+
+**GRAPH opens the stack.** It models the fleet's governance mechanisms as a typed graph: each control a node
+tagged by the event it fires on and the resources it reads, writes, or locks; each edge a conflict where two
+controls contend over one shared resource.
+
+**Receives** — the fleet's existing guardrails: turn-end hooks, pre-commit checks, dispatch gates,
+host-level lock mediators. Nothing precedes it; this is the map the rest of the stack reads.
+
+**Guarantees** — collisions caught at model time, not in production. Two controls can place contradictory
+demands on one commit-set, or contend for one turn-end slot, and neither one's own code shows it — the
+failure lives in the interaction. A conflict edge over a typed, closed resource vocabulary makes that
+interaction visible, and a consistency check decides the mechanically-decidable conflicts before a new
+control is even wired.
+
+**Hands to CENSUS and RADIUS** — one map, two queries. Because every control is a node with a typed
+footprint, the census can roll the nodes up per target and the blast-radius query can walk the substrate
+edges. Both read this graph rather than re-deriving the estate from scratch.
+
+→ **Deeper treatment:** role:governance-graph.
+
+### CENSUS — the per-target coverage census {#a-6-control-coverage-census}
+
+**CENSUS asks the coverage question of the map.** It classifies every control by which governance target it
+guards — derived from the control's own code anchor, never hand-declared — and rolls the set up per target.
+
+**Receives** — the graph's control nodes. It reads the same typed node-set GRAPH drew, now asking not how
+two controls collide but how many guard each target.
+
+**Guarantees** — a re-derived map of the estate's own blind spots. A control portfolio grows toward the last
+painful failure, so effort piles onto the target that just hurt while another accretes nothing, and the
+imbalance stays invisible because no artifact ever asks whether coverage is balanced. Here a target with
+zero controls, or with only soft aims and no hard hold, is a first-class finding. A fail-loud classifier
+refuses any control it cannot place, so the map can never silently mis-credit a control to the wrong target.
+
+**Hands to INTERPRET** — a named gap to fill. Where the census surfaces an under-watched target, the
+conversion loop downstream turns that gap into an actual new control rather than a noted absence.
+
+→ **Deeper treatment:** role:control-coverage-census.
+
+### RADIUS — the computed substrate blast-radius {#a-6-control-substrate-dependency}
+
+**RADIUS computes what a change will break before you make it.** Each control declares the substrate
+assumption it bakes in as typed metadata, so "which controls depend on this part of the substrate, and what
+breaks if I change it" becomes a query, not a grep-and-read.
+
+**Receives** — the same controls the graph holds as nodes, now read through their substrate edges. It reads
+each control's declared stance toward the substrate it checks against.
+
+**Guarantees** — a computed blast radius. A control usually buries an assumption about its substrate (a
+service is a deployment under this directory; the manifest carries this field), invisible until a migration
+lands and the fleet fails two silent ways: a false FAIL that blocks every release, or a false PASS where a
+migrated thing drops out of every check. Lifting the assumption into a typed declaration makes the importer
+and its stance one joinable fact, and a declaration lint refuses any substrate-reading control that leaves it
+undeclared.
+
+**Hands to INTERPRET** — bounded change safety. Where the census answers whether a target is covered, the
+radius answers what a substrate change will break, so the estate reasons about its own change before
+committing to it.
+
+→ **Deeper treatment:** role:control-substrate-dependency.
+
+### INTERPRET — the failure-to-control conversion loop {#a-6-self-governance}
+
+**INTERPRET makes the estate grow by design.** When a failure recurs, it names the failure class and adds
+the smallest durable guardrail that kills it (a constraint where one can be built, a sensor otherwise),
+firing that conversion on a cadence, not on whoever remembers.
+
+**Receives** — a coverage gap from CENSUS or a bounded risk from RADIUS, plus any failure that recurred this
+session. It keys on the recurrence signal: the second occurrence, never the first.
+
+**Guarantees** — a class converted once, proportionately. Re-patching an instance leaves the class alive to
+bite the next agent; this closes the class, preferring a constraint that makes the wrong move unrepresentable
+over a sensor that merely detects it. Two halves carry it. The conversion judgment is soft: it proposes and
+scaffolds, it does not install. A time-aware reflection hook is hard, firing the loop at most once per window
+so it aims without decaying into fatigue.
+
+**Hands to REGISTRY and INDEX** — a new control that needs a home. A converted failure becomes a rule or a
+check; it must land in the enforced, bounded document below, or the estate grows unindexed and the next
+conversion cannot see what exists.
+
+→ **Deeper treatment:** role:self-governance.
+
+### REGISTRY — the queryable rule-metadata registry {#a-6-rule-metadata-registry}
+
+**REGISTRY turns the governing prose into a model.** It attaches a machine-readable block to each rule in
+the governance document (identifier, scope, severity, enforcing check, canonical detail location) and
+extracts those blocks into a typed registry the tooling can query.
+
+**Receives** — the knowledge the graph and census hold only implicitly, plus every rule the conversion loop
+lands. A rule is human prose until its block makes it extractable.
+
+**Guarantees** — governance you can query instead of grep. As long as the rules are only paragraphs, every
+aggregate question — which rules have an automated enforcer, which govern this subtree, which are blocking —
+is a manual read that rots as the document grows. The metadata block is the bridge: once extracted, a rule
+citing an enforcer that no longer exists, or a detail pointer that dangles, is a build finding, so the
+document's claims stay reconciled with the system that enforces them.
+
+**Hands to INDEX** — a machine-readable spine. The registry gives the index below it the queryable model
+that lets the governing document be checked against its own rules, not merely read by a human.
+
+→ **Deeper treatment:** role:rule-metadata-registry.
+
+### INDEX — the enforced rule index {#a-6-claude-md-rule-index}
+
+**INDEX closes the stack.** It treats the top-level governance document as enforced infrastructure: a
+numbered, stable-numbered rule index loaded into every agent's boot context, held honest by its own
+enforcement counterpart.
+
+**Receives** — everything the registry models and the conversion loop produces: the rules the estate has
+learned, each now a short boot-context statement cross-referenced to the canonical doc that carries it in
+full.
+
+**Guarantees** — a governing document that cannot silently rot. The document that carries every other
+mechanism fails two ways: it bloats until nothing in it is read, or its rules drift from the canonical docs
+they summarize, and both tax every agent, because every agent boots it. A cap lint fails the build when the
+index outgrows its scannable budget; a conformance lint fails when a rule stops citing its canonical doc;
+and an admission test governs what may enter, so the cap stays satisfiable without evicting real rules.
+
+**Hands off** — the estate's delivery surface. This is why the whole stack matters in practice: the
+governance the graph maps, the census covers, and the radius protects is acted on only because the index
+puts it in front of every agent — enforced, capped, and conformance-checked.
+
+→ **Deeper treatment:** role:claude-md-rule-index.
 
 ## A DocAble example, end to end
 

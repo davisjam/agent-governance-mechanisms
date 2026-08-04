@@ -2696,7 +2696,40 @@ but the stack stands without them.
 Each member links to its own pattern page in the earlier appendices. Read a stack to see which \
 mechanisms you must adopt as a set, and which you can add later."""
 
+# The vendor-agnostic note (§2.4). Rendered on the value-ordered Appendix A opening (via `opening_extras_md`),
+# after the capability map. It reads the whole appendix as concept-first: every "Claude Code does X" is one
+# realization of a portable MAGE idea. Prose lives here (a Python constant, out of the prose-lint scope), not
+# in a stack file, so it heads the appendix once rather than repeating per stack.
+_APPENDIX_A_VENDOR_NOTE_MD = """\
+## A note on vendor features
+
+The mechanisms in this book are described against one concrete substrate — a coding agent and its harness — \
+because a real system is what makes them legible. The mechanism is never the vendor feature, though; the \
+vendor feature is one *instance* of it. A harness's lifecycle hooks, for example, realize a general idea: \
+**enforcement points** on the agent's runtime lifecycle, where a deterministic step fires whether or not the \
+agent cooperates. Your framework may expose that idea differently — a middleware layer, a git hook, a CI \
+stage, a wrapper process — and the concept carries across intact.
+
+Read every "the agent does X" in these appendices as *here is one way to realize the MAGE concept X*. The \
+concept is the portable part, and it is what you are meant to take with you."""
+
 _STACK_MEMBER_RE = re.compile(r"\brole:([a-z0-9-]+)\b")
+
+# Cross-stack prose links name a sibling stack page by stem (`appendix-<letter>-<stem>.html`). The stack pages
+# render under `D` in the legacy projection and `A` in the value-ordered one, so a hand-authored letter would
+# rot in one projection. This rewrites the letter of any link whose stem is a KNOWN stack stem to the letter
+# the current build renders stacks under — one authored form, correct in both projections.
+_STACK_STEMS = frozenset(stem for stem, _t in _STACKS)
+_CROSS_STACK_LINK_RE = re.compile(r"appendix-[ad]-([a-z0-9-]+)\.html")
+
+
+def _normalize_cross_stack_links(md: str, low: str) -> str:
+    """Rewrite `appendix-[ad]-<stem>.html` → `appendix-<low>-<stem>.html` for every KNOWN stack stem, so a
+    cross-stack reference resolves whether the stacks render under `d` (legacy) or `a` (value-ordered)."""
+    def repl(m: "re.Match[str]") -> str:
+        stem = m.group(1)
+        return f"appendix-{low}-{stem}.html" if stem in _STACK_STEMS else m.group(0)
+    return _CROSS_STACK_LINK_RE.sub(repl, md)
 
 
 def _stack_membership_index(page_letter: str = "d") -> dict[str, list[tuple[str, str]]]:
@@ -2755,7 +2788,8 @@ def _resolve_stack_members(md: str, page_by_slug: dict[str, dict]) -> str:
 
 def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
                          letter: str = "D", part_name: str = "Mechanism Stacks",
-                         locator_figs: bool = False, inline_legend: bool = False) -> list[dict]:
+                         locator_figs: bool = False, inline_legend: bool = False,
+                         opening_extras_md: str = "") -> list[dict]:
     """Build the Mechanism-Stacks chapter records: one opening front-door page (chapter 0), then one page per
     stack (D.1, D.2, …). Mirrors the role-appendix page shape — same Part, pager chain, and index locator
     machinery — so the book's TOC/pager/index render it with no special-casing. `page_by_slug` resolves each
@@ -2776,14 +2810,19 @@ def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
     chapters: list[dict] = []
     part_title = f"Appendix {letter} — {part_name}"
 
-    # OPENING FRONT-DOOR PAGE — heads the stacks Part (chapter 0, sorts before every stack).
+    # OPENING FRONT-DOOR PAGE — heads the stacks Part (chapter 0, sorts before every stack). `opening_extras_md`
+    # (v2 only) carries the DERIVED nine-capability map + lifted L1 principle + the vendor-agnostic note, so the
+    # value-ordered Appendix A opens with the whole capability lens (§2.1); the legacy projection leaves it "".
+    opening_body = _APPENDIX_STACKS_OPENING_PROSE.strip()
+    if opening_extras_md.strip():
+        opening_body = opening_body + "\n\n" + opening_extras_md.strip()
     opening: dict = {
         "slug": _APPENDIX_STACKS_OPENING_SLUG,
         "part": part,
         "part_title": part_title,
         "chapter": 0,
         "chapter_title": part_title,
-        "body_md": _APPENDIX_STACKS_OPENING_PROSE.strip(),
+        "body_md": opening_body,
         "is_appendix": True,
         "mermaid": False,
     }
@@ -2795,6 +2834,7 @@ def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
     for i, (stem, title) in enumerate(stack_files, start=1):
         raw = (_STACKS_DIR / f"{stem}.md").read_text(encoding="utf-8")
         body = _resolve_stack_members(_fold_wrapped_bullets(raw.strip()), page_by_slug)
+        body = _normalize_cross_stack_links(body, low)   # cross-stack refs follow the current letter (d/a)
         if inline_legend:
             # Restructure sub-wave 2: splice the linked legend under the overview figure + append the anchored
             # inline-part subsections the legend targets (stub treatments; authored in a later sub-wave).
@@ -3297,57 +3337,6 @@ build. This wave establishes the section structure and the complete reference in
 next."""
 
 
-# ── Keep-together demonstrator pages (§13.6; flag-ON scaffold, removed when the real notes land) ────────
-# Each is sized to fit its page budget so the Typst height assertion PASSES; they prove the note-block render
-# paths (spread:1 one indivisible block; spread:2 two named panels + a fold) build in the PDF end to end.
-_KEEP_TOGETHER_DEMO_1_BODY = """\
-<!-- note-spread: 1 -->
-
-**A one-page note — the `spread: 1` keep-together unit.**
-
-This page is a build scaffold. It demonstrates the keep-together render path introduced in the appendix \
-restructure: an Engineering Note declared `spread: 1` renders as a single indivisible block. In the print \
-edition the whole block moves to the next page rather than splitting across a page break, so a reader on an \
-open book takes in the note without flipping.
-
-The guarantee is enforced, not hoped for. The print projection wraps the block in a non-breaking frame and \
-measures its rendered height against one page's budget; a block that overflows fails the build outright, \
-before a bad break can ship. The word count is only an early sensor — figures, headings, and lists distort \
-a word estimate, so the rendered height is the real invariant.
-
-When the real Appendix-B notes are compressed to their one- or two-page units, each will carry its own \
-`spread` declaration and this scaffold page comes out."""
-
-_KEEP_TOGETHER_DEMO_2_BODY = """\
-<!-- note-spread: 2 -->
-
-**A two-page note — the `spread: 2` keep-together unit, panel one.**
-
-A longer note is authored as two explicitly named panels with an author-chosen fold, not as one block the \
-layout engine splits where it likes. This first panel states the problem and the mechanism; it is itself an \
-indivisible unit that must fit within its own page budget.
-
-Each panel is measured independently. If either panel's rendered height exceeds one page, the build fails \
-and names the panel — so the fold is always a deliberate authoring choice, never an accident of pagination.
-
-<!-- note-fold -->
-
-**Panel two — consequences and the seam.**
-
-The second panel carries the engineering consequences and the implementation seam. It, too, is a single \
-non-breaking block held to one page's budget, so the two-page note reads as two clean facing units.
-
-This scaffold exercises the fold and the per-panel assertion end to end. The real two-page notes replace it \
-in a later assembly sub-wave."""
-
-_KEEP_TOGETHER_DEMOS: list[tuple[str, str, str]] = [
-    ("appendix-b-keep-together-demo-1",
-     "Appendix B - keep-together demonstration (spread 1)", _KEEP_TOGETHER_DEMO_1_BODY),
-    ("appendix-b-keep-together-demo-2",
-     "Appendix B - keep-together demonstration (spread 2)", _KEEP_TOGETHER_DEMO_2_BODY),
-]
-
-
 def _appendix_v2_role_subsections() -> list[tuple[str, str]]:
     """The (letter-suffix, role-group) pairs for Appendix C's three brick sections (C.1 Agent · C.2
     Models-bridge · C.3 Product), in the canonical role order `_APPENDIX_ROLES` declares."""
@@ -3474,10 +3463,15 @@ def _stack_constituent_stub_md(stem: str, letter: str, idx: int) -> str:
 
 def _inject_stack_legend(body_md: str, stem: str, letter: str, idx: int) -> str:
     """Splice the linked legend directive in immediately AFTER the stack's overview-figure directive (the
-    `<!-- figure: assets/<stem>.svg … -->` line in the `## Composition` section), then append the anchored
-    constituent-part subsections. The legend sits under the figure (§2.1 shape: figure → legend → parts); the
-    anchored subsections give the legend links their targets. If the overview figure line is not found, the
-    legend is appended before the parts so it still renders."""
+    `<!-- figure: assets/<stem>.svg … -->` line in the `## Composition` section). The legend sits under the
+    figure (§2.1 shape: figure → legend → parts) and links to the `{#a-<idx>-<slug>}` anchors the stack file's
+    own constituent subsections carry. If the overview figure line is not found, the legend is appended so it
+    still renders.
+
+    When the stack file has NOT yet been restructured to carry authored constituent subsections (no
+    `{#a-<idx>-` anchor present), fall back to appending the build-generated stub subsections so the legend
+    links still resolve — the sub-wave-2 scaffold. Once a stack file authors its own anchored subsections (the
+    assembled compositional form), those stubs are suppressed to avoid duplicate anchors."""
     directive = f"<!-- stack-legend: {stem} | {letter} | {idx} -->"
     lines = body_md.splitlines()
     fig_i = next((i for i, ln in enumerate(lines)
@@ -3487,6 +3481,8 @@ def _inject_stack_legend(body_md: str, stem: str, letter: str, idx: int) -> str:
         body_md = "\n".join(lines)
     else:
         body_md = body_md.rstrip() + "\n\n" + directive
+    if f"{{#a-{idx}-" in body_md:      # authored subsections present — the stack file owns the anchors
+        return body_md.rstrip()
     stubs = _stack_constituent_stub_md(stem, letter, idx)
     return body_md.rstrip() + ("\n\n" + stubs if stubs else "")
 
@@ -3689,7 +3685,10 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     #    as a whole stack. The opening front-door + one page per stack, figures numbered A.<i>-N.
     chapters += build_stack_chapters(
         part=next_part, page_by_slug=page_by_slug,
-        letter="A", part_name="MAGE Engineering Stacks", locator_figs=True, inline_legend=True)
+        letter="A", part_name="MAGE Engineering Stacks", locator_figs=True, inline_legend=True,
+        # A's opening carries the whole capability lens: the nine-capability map + lifted L1 principle (DERIVED
+        # from the classification model) then the vendor-agnostic note (§2.1, §2.4).
+        opening_extras_md=_appendix_intro_extras_md() + "\n\n" + _APPENDIX_A_VENDOR_NOTE_MD)
 
     # ── APPENDIX B — Flagship Mechanisms. ONE Part; role SUBSECTIONS (Agent → Models-bridge → Product); the
     #    29 notes numbered straight through B.1…B.29. Opening frame carries the nine-capability lens + a
@@ -3699,8 +3698,8 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     b_opening_body = [
         _APPENDIX_V2_B_OPENING_PROSE,
         "",
-        _appendix_intro_extras_md(),           # nine-capability map + lifted L1 principle (from the model)
-        "",
+        # The nine-capability map + lifted L1 principle moved to the Appendix A opening (§13, the capability
+        # lens fronts the stacks). B keeps the 'adopt by capability' summary that links into those stacks.
         _appendix_stacks_summary_md(stem_letter="a"),   # 'adopt by capability' → links into Appendix A
     ]
     chapters.append({
@@ -3730,26 +3729,6 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
             "mermaid": True,
             "fig_prefix": f"B.{num}",          # D80: "Figure B.<num>-N", monotonic off the locator
             "role_group": rec["group"],        # for the later role-subsection grouping in the TOC
-        })
-
-    # ── KEEP-TOGETHER DEMONSTRATORS (restructure sub-wave 2 scaffold; flag-ON only) — two short pages that
-    #    exercise the note-block render paths end to end so the mechanism is provable before the real notes
-    #    are compressed (sub-wave 4): a `spread: 1` one-page indivisible note and a `spread: 2` two-panel note
-    #    with an author-chosen fold. In the Typst/PDF projection each panel is a `#block(breakable: false)`
-    #    under a rendered-height assertion that FAILS the build if a panel exceeds its page budget (§13.6). In
-    #    HTML the keep-together is best-effort CSS. REMOVE these two pages when the real Appendix-B notes land.
-    for demo_n, (demo_slug, demo_title, demo_body) in enumerate(_KEEP_TOGETHER_DEMOS, start=b_counter + 1):
-        chapters.append({
-            "slug": demo_slug,
-            "part": b_part,
-            "part_title": b_part_title,
-            "chapter": demo_n,
-            "chapter_title": demo_title,
-            "body_md": demo_body,
-            "is_appendix": True,
-            "mermaid": False,
-            "fig_prefix": f"B.{demo_n}",
-            "role_group": _APPENDIX_ROLES[-1][1],   # sort with the last zone, after the real notes
         })
 
     # ── APPENDIX C — Mechanism Catalog. Opening carries the complete reference index (every mechanism:
