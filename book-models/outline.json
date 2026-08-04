@@ -3,8 +3,8 @@
   "_counts": {
     "chapters": 34,
     "sections": 218,
-    "explicit_ids": 27,
-    "derived_ids": 191,
+    "explicit_ids": 28,
+    "derived_ids": 190,
     "missing_topic_sentence": 2,
     "sections_drained": 173,
     "paragraph_points": 529
@@ -3053,11 +3053,11 @@
           "points": []
         },
         {
-          "section_id": "the-derived-floor-under-load",
+          "section_id": "model-sync-efficacy",
           "level": 3,
           "heading_text": "The derived floor under load",
           "topic_sentence": "Documentation drift is excluded here by construction; this table is model↔code sync only.",
-          "id_source": "derived",
+          "id_source": "explicit",
           "block_index": 18,
           "points": []
         },

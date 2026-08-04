@@ -6694,6 +6694,16 @@
         }
       ]
     },
+    "section-id:model-sync-efficacy": {
+      "kind": "section-id",
+      "dependents": [
+        {
+          "view": "outline",
+          "element": "3.8-keeping-models-in-sync::model-sync-efficacy",
+          "role": "section-anchor"
+        }
+      ]
+    },
     "section-id:models-as-the-universal-language-of-engineering": {
       "kind": "section-id",
       "dependents": [
@@ -7080,16 +7090,6 @@
         {
           "view": "outline",
           "element": "4.5-lessons-learned::the-cost-estimator-is-broken-and-scope-creep-is-guaranteed",
-          "role": "section-anchor"
-        }
-      ]
-    },
-    "section-id:the-derived-floor-under-load": {
-      "kind": "section-id",
-      "dependents": [
-        {
-          "view": "outline",
-          "element": "3.8-keeping-models-in-sync::the-derived-floor-under-load",
           "role": "section-anchor"
         }
       ]
