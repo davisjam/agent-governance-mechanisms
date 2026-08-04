@@ -2269,7 +2269,7 @@
             },
             {
               "slug": "spec-driven-development-authors-intent-as-prose-not-a-typed-model",
-              "text": "Spec-driven development authors intent as prose, not a typed model.",
+              "text": "Spec-driven development authors intent as prose, not a structured model.",
               "block_index": 106
             }
           ]
@@ -2408,8 +2408,8 @@
               "block_index": 156
             },
             {
-              "slug": "the-invariants-earn-the-keep-not-the-schema",
-              "text": "The invariants earn the keep, not the schema.",
+              "slug": "the-invariants-and-gate-complete-the-models-value",
+              "text": "A model's value is both its schema and checked invariants.",
               "block_index": 158
             },
             {
@@ -3108,7 +3108,7 @@
           "section_id": "the-question-the-map-must-equal-the-territory-or-the-bridge-lies",
           "level": 2,
           "heading_text": "The question: the map must equal the territory, or the bridge lies",
-          "topic_sentence": "A context-bounded fleet governs a context-exceeding codebase *through* typed models.",
+          "topic_sentence": "A context-bounded fleet governs a context-exceeding codebase *through* structured models.",
           "id_source": "derived",
           "block_index": 0,
           "points": []

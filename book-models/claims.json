@@ -239,18 +239,19 @@
     {
       "id": "model-earns-keep-via-invariants",
       "kind": "distinction",
-      "statement": "A model earns its keep through the invariants it lets you check, not its schema.",
+      "statement": "A model's value is both its structure and the invariants it lets you enforce.",
       "distinguishes": [
-        "the invariants that get checked — what earns the model its keep",
-        "the schema itself — a diagram that rots unchecked"
+        "the structure — records, edges, state machines — that names the parts and gives tools something to read",
+        "the checked invariants — the predicates a gate holds true, which complete the model's value rather than replace the schema"
       ],
       "home": "3.1-the-executable-zoo",
       "asserted_at": [
         "3.1-the-executable-zoo"
       ],
-      "contradicted_by": "Prose treating a model's schema alone as its value — counting a structure with no checked invariant as a model rather than a diagram.",
+      "contradicted_by": "Prose that treats a model's schema ALONE as its whole value — counting an unchecked structure as a finished model — OR that dismisses the schema as worthless, denying that the structure carries value the invariants complete.",
       "watch_phrases": [
-        "the schema is the model"
+        "schema is worthless",
+        "not its schema"
       ],
       "relates_to": [
         "concept:thesis-modeling",
@@ -258,8 +259,8 @@
         "concept:governance-target-models-bridge"
       ],
       "provenance": "stated",
-      "anchor": "3.1 'The coherence triangle': the schema is not what earns the model its keep; the invariants that get checked are, and each was earned from a failure (Part 5's most-repeated act — deciding local vs structural).",
-      "word_count": 15
+      "anchor": "3.1 'The coherence triangle': the model provides two kinds of value — the schema names the parts, and the checked invariants (each earned from a failure) complete it; the invariants and gate complete the schema's value rather than replacing it.",
+      "word_count": 14
     },
     {
       "id": "model-not-mechanism-until-enforced",

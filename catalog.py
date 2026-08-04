@@ -936,6 +936,17 @@ def cmd_validate(_args) -> int:
     for msg in check_banned_terms():
         print(f"  [banned] {msg}")
         n_issues += 1
+    # CANONICAL-VOCABULARY — BLOCKING. The book's house term for its central artifact is a "structured
+    # model" (structured data), not a "typed model" (typed data). This lint holds the settled term in the
+    # narrative body chapters via a DEPRECATED->CANONICAL map. A fix-wave drove the tree to 0 before the
+    # flip, so it lands BLOCKING (repo blocking-lint discipline). See book-models/lint_canonical_vocab.py.
+    bm_vocab = os.path.join(ROOT, "book-models")
+    if bm_vocab not in sys.path:
+        sys.path.insert(0, bm_vocab)
+    import lint_canonical_vocab as lcv  # noqa: E402 — blocking canonical-vocabulary lint
+    for msg in lcv.findings():
+        print(f"  [vocab] {msg}")
+        n_issues += 1
     for msg in check_summary_counts(entries):
         print(f"  [census] {msg}")
         n_issues += 1
