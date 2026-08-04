@@ -87,3 +87,111 @@ INDEPENDENT fresh-context Opus second opinion. Logged honestly as such.
   (D15's discipline working). FIX: add `aria-label="Table of contents"` to `nav.toc` in build_book_html.py
   (distinct from chapnav's "Chapter navigation" → both landmarks uniquely named). Book-a11y is
   self-consistent with the product's own accessibility thesis, so this is a correctness fix, not cosmetic.
+
+### STEP 3
+
+- **D17 · Density pass → PILOT on Part 3 before committing to the full 6-wave per-Part pass.** Rationale
+  (A.3 hyper-experimentation, pilot-before-sweep): the book is already tight (local-repetition + naming-
+  compression both found little), so before spending ~6 sequential opus waves I measure the REAL yield of
+  the thesis-reconnection lever on the highest-gain Part (Part 3 — the reader's flagship "why models matter"
+  re-derivation example, large established-vocabulary per the manifest). If Part 3 compresses meaningfully →
+  run the full per-Part pass; if it too is near-floor → lighter touch, accept the honest word count. The
+  pilot's yield verdict is the decision input; I'll log the outcome.
+- **D-plan · Section numbering (S1, b6d0d42) shipped clean** — build-derived `1.1.x` on body `<h2>` only,
+  display-prefix (never the slug), 1207 anchor links 0 broken, TOC unchanged, front/back-matter/appendix
+  skipped, full suite 32/32. No fragile-anchor case (so no Fable consult needed). `###` left unnumbered per
+  the 3-level decision (3.1/3.6 flagged as the only 4-level candidates, not actioned).
+
+- **D18 · SELF-GOVERNANCE: pre-commit-vs-full-suite gap recurred 2× → durable control (book-repo, not Epic).**
+  Class: a wave passes its per-wave gates (validate+build+tier-1) but leaves a DEPLOY-SCOPE-ONLY full-suite
+  gate RED, caught only at deploy → a follow-up fix wave. Instances: D14 (float-ref, after FAST-1 figures) +
+  D16 (html-validate unique-landmark, after FAST-2a nav). RIGHT-SIZED CONTROL (A.22, smallest that closes
+  the class): (a) extend the book `hooks/pre-commit` to run the CHEAP deterministic deploy-scope checks
+  (float-ref — fast Python; the derived-view FRESHNESS regen too) so figure/model-touching waves catch them
+  at commit; (b) the SLOW external checks (html-validate/axe T2) stay deploy-time, protected by the standing
+  "full `catalog_tests.py` before every deploy" discipline (D15); (c) brief convention added to upcoming
+  build/figure/HTML-touching waves: run the relevant full-suite check before the final commit. FOLDED into
+  the queued auto-regen-views control wave (same hook). Book-repo control — NOT ada-tool pointers.yaml/Epic.
+
+- **D19 · Density-pass pilot (Part 3) verdict → ~0 yield; book already dense on this lever. One more probe
+  (4.5, narrative) before deciding.** The Part-3 pilot (f096195) removed **~0 words**: the view chapters are
+  already authored in the invoke-don't-re-explain style (one-clause thesis-invocations, grep-confirmed); the
+  sole real re-derivation (3.1 flagship) compressed rhetorically (bullets→clauses) but shed no words (the 3
+  legs are load-bearing ideas — "never remove an idea" + departure-a keeps the maintenance forward-pointer).
+  This CONFIRMS the accumulating evidence (local-repetition ~60-130w/part, naming-compression ~30-90w, now
+  density ~0 on model-pages): **the book is at its honest floor; the 87-89K target is not reachable via any
+  editing lever without content-rewrites the author prohibited.** DECISION: do NOT run the full 6-wave sweep
+  on model-page Parts. Run ONE cheap probe on a NARRATIVE-register chapter (4.5-lessons-learned, 126
+  established) — the pilot's hypothesis that prose re-explanation, if it survives anywhere, is in narrative
+  not template chapters. If 4.5 also ~0 → ABANDON the density sweep, accept honest tightness, the
+  density-principle style rule (voice.md/directive) governs FUTURE writing only; pivot to the ADDITIVE
+  STEP-3 value (operational-density, appendix curation, part-synthesis) which improve the book regardless of
+  word count. If 4.5 yields real paragraphs → target only the narrative chapters that have it.
+
+- **D20 · 4.5 narrative probe → ALSO ~0 (0 words). Running the FINAL probe (5.3 retrospective) then closing
+  the density sweep.** 4.5-lessons-learned (the strongest hypothesis candidate: 126 established, pure
+  narrative) removed 0 words — structural reason: a Lessons-Learned chapter is a DEFINITION site (14 own
+  index-defs), its aphorisms ARE the canonical intros; backward refs already one-clause invocations
+  (churn/gov-conversion/Modeling-Thesis all dense, grep-verified); forward refs are clean hand-offs. Two
+  registers now ~0 (model-page + lessons-narrative). Per the probe's recommendation, running ONE final
+  probe on 5.3-the-built-system (the RETROSPECTIVE register, 0 new defs — the one distinct untested shape
+  that could re-narrate/re-explain a built mechanism). This is the LAST probe — after it the density-sweep
+  question closes regardless (2-3 ~0 probes + structural reasoning = the book is already progressive-density
+  by construction; abandon the multi-Part sweep; the style rule governs future writing). Then pivot to the
+  ADDITIVE high-value STEP-3 work (operational-density, appendix curation, part-synthesis).
+
+- **D21 · Density sweep CLOSED — abandoned after 3 convergent ~0 probes + structural verification.** 5.3
+  (retrospective re-walk, the last distinct register) → 0 words: its two heaviest expositions are its OWN
+  first developments (1.2/4.3 explicitly defer to it), and every earlier-canonical back-reference is already
+  a one-sentence invocation with a back-link. All 3 structurally-distinct registers (model-page / lessons-
+  narrative / retrospective) return ~0. CONCLUSION: the book is ALREADY written in progressive-density
+  style; there is no body to compress. The full per-Part sweep is NOT run (would yield ~0). This is a
+  VALIDATION of the book's editorial quality, not a shortfall — and it means the 87-89K word target is
+  unreachable via any editing lever short of content-rewrites the author excluded; the book sits at its
+  honest floor (~95K narrative body). The density-principle style rule (voice.md + directive) governs FUTURE
+  writing. Pivoting all remaining STEP-3 effort to ADDITIVE value: operational-density, appendix curation,
+  part-synthesis, the D18 control. Density-pilot artifacts (f096195 Part-3 rhetorical tidy) kept; the 3 probe
+  chapters (4.5, 5.3) unedited.
+
+- **D22 · 2.4 gap-fill adapted FMEA→typed-step runbook table (fidelity win).** The pilot proposed a generic
+  FMEA grid + `- [ ]` checklist for 2.4; the fill wave correctly ADAPTED to the real ada-tool practice
+  (`.claude/skills/operate-ada-tool-repo/runbooks.yaml` typed-step grammar RUNNABLE/JUDGMENT_AUTOMATABLE/
+  JUDGMENT_IRREDUCIBLE + pointers.yaml symptom→doc-class routing) — no invented FMEA — AND because the book
+  renderer has no task-list-checkbox support. Every row traces to a real repo artifact. This is the author's
+  "don't make stuff up" directive working as intended (real practice wins over the pilot's book-only draft).
+  4.1 → A.22 cost×frequency matrix + stop-litmus, all 4 axes grounded. `delivers` field: concepts DERIVED
+  from index-def (join-SSOT, 0-drift by construction), artifacts hand-authored, `all_prose_would_benefit`
+  authored-not-derived (anti-filler wired into the model). audit-only-first (rule #55).
+- **D23 · Additive-work order: control wave BEFORE appendix curation.** Doing the D18 pre-commit hardening +
+  auto-regen-views + clearing the accumulated outline/reverse_index FRESHNESS FIRST, so the build-heavy
+  appendix-curation waves (which rewire figures) inherit the float-ref catch + can't accrue view staleness.
+
+- **D24 · Appendix AC-1 (47fb746/8b3c1f7): projection mechanism, 29 flagship, PDF 450→335pp.** Judgment calls
+  the wave made (all sound): (1) my brief's "add claude-md-rule-index to appendix_exclude" contradicted the
+  design §1b default 29 — the wave kept the **29 default** (claude-md-rule-index stays flagship; the 28 dial
+  documented but not pulled), following the design + all gates; correct. (2) design §1c had ~100-line drift
+  (mapped by name) + omitted 3 build-breaking integration points the wave ADDED: 54 narrative cross-refs to
+  dropped pages → build-time redirect, stale tracked HTML git-rm, `for_print` threading through IR/Typst/verify.
+  Faithful completion of an incomplete design. Structural win banked: 29 flagship + all-83 web-index + 0 orphans.
+
+- **D25 · Appendix compression RIGHT-SIZED — skip the aggressive flagship prose rewrite; do stacks + intro +
+  print-sample-code-drop.** Measurement: the catalogue entries average ~981 words (terse Hemingway house
+  style), NOT the ~1900 the design §6 assumed. So AC-1's structural win (83→29 flagship, PDF 450→335pp) IS
+  the lever; the design's "compress each flagship 1900→740" premise doesn't hold (they're already ~half
+  that). Aggressively rewriting 29 well-written GoF pattern entries to 740w would risk losing pattern nuance
+  for a marginal, print/web-DIVERGING gain — declined (consistent with the density-sweep finding: the book's
+  prose is already tight). INSTEAD (A.22 right-size): AC-2 stack pages → the 2-page 7-section synthesis
+  (real FORMAT value, scannable), AC-4 appendix intro (L1 principle + 9-capability map) + AppE pointer, and
+  a LOW-RISK flagship compression = drop the Sample Code blocks from PRINT only (via the `for_print` path
+  AC-1 threaded; kept full on web) — the least-useful print content, no prose-nuance loss. The 29 flagship
+  PATTERN PROSE ships at full (good) length in print. Net: a curated, scannable print appendix without
+  gutting well-written entries. Surface at STEP 4 for author ratification of the skip.
+
+- **D26 · STEP 3 COMPLETE.** Landed: section-numbering (b6d0d42) · density sweep CLOSED (piloted 3 registers,
+  ~0, book at honest floor — D19-D21) · operational-density (delivers field+view + 2.4/4.1 grounded gap-fills
+  — D22) · D18 control (pre-commit float-ref-blocks + view auto-regen, verified) · appendix curation (AC-1
+  47fb746 29-flagship projection + AC-completion cbfc52c/ff61a24/383c0cd stacks+intro+AppE+print-sample-drop;
+  PDF ~450→315pp; D24/D25) · part-synthesis (227f7b0/e957b40/180cb49; Parts 1&5 left, 2-4 voice-matched
+  closes). Open editorial (audit-only, non-gating, for author): CS5 chapter-shape re-assess flags on 3.8/4.1/
+  4.6 (the rewritten open/closings) — a human may want to re-grade those anchors in chapter_shape_declared.
+  Pre-existing SVG stroke-through-glyph advisories on cover/model-map/provenance-fidelity-stack (not mine).
