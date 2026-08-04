@@ -5,14 +5,14 @@
     "spine_claims": 14,
     "chapters_labeled": 32,
     "chapters_exempt": 7,
-    "advancement_edges": 88,
+    "advancement_edges": 86,
     "reconciled_claims": 18,
     "reconciled_big_ideas": 6,
-    "zero_claim_suspects": 0,
+    "zero_claim_suspects": 1,
     "over_cap_unfocused": 0,
     "thin_claim_gaps": 0,
     "thin_claims_front_loaded": 0,
-    "overmapped_claims": 3,
+    "overmapped_claims": 2,
     "claims_exempt": 5,
     "claims_stale": 0,
     "quantifiable_claims": 9,
@@ -303,15 +303,13 @@
         "2.3-the-governed-environment",
         "2.5-metrics",
         "3.1-the-executable-zoo",
-        "3.3-the-process-view",
-        "3.6-the-scenarios-view",
         "4.3-transformations",
         "4.5-lessons-learned",
         "4.6-generative-validation"
       ],
-      "body_depth": 9,
+      "body_depth": 7,
       "front_loaded": false,
-      "overmapped": true,
+      "overmapped": false,
       "fresh": true
     },
     {
@@ -635,8 +633,7 @@
     {
       "slug": "3.3-the-process-view",
       "advances": [
-        "modeling-thesis",
-        "alignment-thesis"
+        "modeling-thesis"
       ],
       "exempt": null
     },
@@ -657,8 +654,7 @@
     {
       "slug": "3.6-the-scenarios-view",
       "advances": [
-        "modeling-thesis",
-        "alignment-thesis"
+        "modeling-thesis"
       ],
       "exempt": null
     },
@@ -782,10 +778,20 @@
         "seat-moves"
       ],
       "exempt": "conclusion"
+    },
+    {
+      "slug": "6.4-colophon",
+      "advances": [],
+      "exempt": null
     }
   ],
   "flags": {
-    "zero_claim_suspects": [],
+    "zero_claim_suspects": [
+      {
+        "chapter": "6.4-colophon",
+        "advances": 0
+      }
+    ],
     "over_cap_unfocused": [],
     "thin_claim_gaps": [],
     "thin_claims_front_loaded": [],
@@ -830,23 +836,6 @@
           "4.3-transformations",
           "4.6-generative-validation",
           "5.3-the-built-system"
-        ]
-      },
-      {
-        "claim": "alignment-thesis",
-        "advanced_by": 11,
-        "chapters": [
-          "0.1-preface",
-          "1.4-why-mage-follows-from-the-machine",
-          "2.2-models-and-the-semantic-gap",
-          "2.3-the-governed-environment",
-          "2.5-metrics",
-          "3.1-the-executable-zoo",
-          "3.3-the-process-view",
-          "3.6-the-scenarios-view",
-          "4.3-transformations",
-          "4.5-lessons-learned",
-          "4.6-generative-validation"
         ]
       }
     ]
