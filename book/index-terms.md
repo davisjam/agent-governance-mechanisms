@@ -286,6 +286,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: three-ways-to-run-an-agent | Three ways to run an agent
 - concept: governance-centric | Governance-centric
 - concept: velocity-exposes-the-danger | Velocity exposes the danger
+- concept: support-ratio | The support ratio
 - concept: optionality-is-poison | Optionality is poison
 - concept: refactoring-is-free | Refactoring is free
 - concept: done-is-a-claim | "Done" is a claim

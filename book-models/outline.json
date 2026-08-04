@@ -56,7 +56,7 @@
           "heading_text": "DocAble specifics",
           "topic_sentence": "Two mechanisms from the book's running example, DocAble.",
           "id_source": "derived",
-          "block_index": 42,
+          "block_index": 43,
           "points": []
         }
       ],
@@ -1459,57 +1459,57 @@
           "heading_text": "Constraints and sensors",
           "topic_sentence": "A mechanism is one of two moves — prevent the mistake, or catch it — and [ref:constraint-vs-sensor] draws the split.",
           "id_source": "derived",
-          "block_index": 30,
+          "block_index": 31,
           "points": [
             {
               "slug": "a-mechanism-is-one-of-two-moves-prevent-or-catch",
               "text": "A mechanism is one of two moves: prevent, or catch.",
-              "block_index": 32
+              "block_index": 33
             },
             {
               "slug": "words-alone-are-a-probability-flip-so-determinize-them-into-a-gate",
               "text": "Words are a probability flip; determinize them into a gate.",
-              "block_index": 35
+              "block_index": 36
             },
             {
               "slug": "a-sensor-detects-drift-after-the-fact-and-costs-iterations",
               "text": "A sensor detects drift after the fact and costs iterations.",
-              "block_index": 38
+              "block_index": 39
             },
             {
               "slug": "a-sensor-is-only-as-good-as-its-observability",
               "text": "A sensor is only as good as its observability.",
-              "block_index": 42
+              "block_index": 43
             },
             {
               "slug": "a-constraint-prevents-drift-within-the-iteration-and-costs-no-iteration",
               "text": "A constraint prevents drift within the iteration, costing none.",
-              "block_index": 45
+              "block_index": 46
             },
             {
               "slug": "constraint-and-sensor-are-control-engineerings-working-terms",
               "text": "Constraint and sensor come from control engineering.",
-              "block_index": 49
+              "block_index": 50
             },
             {
               "slug": "form-and-move-are-two-independent-axes",
               "text": "Form and move are two independent axes.",
-              "block_index": 51
+              "block_index": 52
             },
             {
               "slug": "most-real-mechanisms-are-a-package-so-tag-the-primary-move",
               "text": "Most mechanisms are a package; tag the primary move.",
-              "block_index": 58
+              "block_index": 59
             },
             {
               "slug": "a-purely-organizational-answer-is-all-sensors-and-never-removes-a-failure-class",
               "text": "A purely organizational answer is all sensors, removing no class.",
-              "block_index": 60
+              "block_index": 61
             },
             {
               "slug": "the-constraint-is-poka-yoke-the-sensors-stop-is-jidoka",
               "text": "The constraint is poka-yoke; the sensor's stop is jidoka.",
-              "block_index": 62
+              "block_index": 63
             }
           ]
         },
@@ -1519,22 +1519,22 @@
           "heading_text": "Four classes, one bounded term",
           "topic_sentence": "One boundary before moving on, because without it the word swells.",
           "id_source": "derived",
-          "block_index": 64,
+          "block_index": 65,
           "points": [
             {
               "slug": "governance-mechanism-needs-a-boundary",
               "text": "Without a boundary, the word mechanism swells.",
-              "block_index": 66
+              "block_index": 67
             },
             {
               "slug": "four-classes-prevention-detection-evidence-admission",
               "text": "Four classes: prevention, detection, evidence, admission.",
-              "block_index": 70
+              "block_index": 71
             },
             {
               "slug": "a-model-is-not-a-mechanism-until-something-enforces-it",
               "text": "A model joins governance only when something enforces it.",
-              "block_index": 74
+              "block_index": 75
             }
           ]
         },
@@ -1544,12 +1544,12 @@
           "heading_text": "What it adds up to",
           "topic_sentence": "Step back and this is what you are really doing: describing policies for how the engineering work should proceed, and letting those policies produce a **governed engineering environment** — the rules of the road the agents operate within.",
           "id_source": "derived",
-          "block_index": 76,
+          "block_index": 77,
           "points": [
             {
               "slug": "the-governed-environment-is-determinize-what-you-can-then-convert-every-surprise-into-a-constraint-or-sensor",
               "text": "Determinize what you can; convert every surprise into a mechanism.",
-              "block_index": 77
+              "block_index": 78
             }
           ]
         },
@@ -1559,32 +1559,32 @@
           "heading_text": "The residual: goals no mechanism reaches",
           "topic_sentence": "That closing line reads as if it settles everything.",
           "id_source": "derived",
-          "block_index": 80,
+          "block_index": 81,
           "points": [
             {
               "slug": "some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified",
               "text": "Some goals split into neither, being an absence nobody specified.",
-              "block_index": 82
+              "block_index": 83
             },
             {
               "slug": "the-residual-is-a-human-job-that-sets-the-throughput-ceiling",
               "text": "The residual is a human job setting the throughput ceiling.",
-              "block_index": 85
+              "block_index": 86
             },
             {
               "slug": "the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis",
               "text": "The residual is the complement of both moves, not soft.",
-              "block_index": 87
+              "block_index": 88
             },
             {
               "slug": "naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible",
               "text": "Naming the residual is the honest edge that earns trust.",
-              "block_index": 89
+              "block_index": 90
             },
             {
               "slug": "the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out",
               "text": "The residual is not fixed; authoring the spec shrinks it.",
-              "block_index": 91
+              "block_index": 92
             }
           ]
         }
@@ -4427,7 +4427,7 @@
           "heading_text": "The shape of the churn",
           "topic_sentence": "Under the ratio sits the raw motion of the code: lines added and lines deleted, week over week, on the two paths that carry the product — `web/`, the Python service and worker, and `backend/`, the C# tool and rule engine.",
           "id_source": "explicit",
-          "block_index": 44,
+          "block_index": 45,
           "points": []
         },
         {
@@ -4436,22 +4436,22 @@
           "heading_text": "The kinds of work it required",
           "topic_sentence": "Read this timeline as a catalog of the *kinds of work* agentic development turned out to need — a more useful reading than any feature list.",
           "id_source": "derived",
-          "block_index": 52,
+          "block_index": 53,
           "points": [
             {
               "slug": "read-it-as-a-catalog-of-work-kinds",
               "text": "The timeline is a catalog of work agentic development needs.",
-              "block_index": 54
+              "block_index": 55
             },
             {
               "slug": "the-recurring-move-classify-then-convert",
               "text": "Velocity surfaces failure; judgment converts structural ones to mechanism.",
-              "block_index": 62
+              "block_index": 63
             },
             {
               "slug": "the-system-reached-production-for-a-few-dollars-a-deck",
               "text": "By the end the system remediated a deck for dollars.",
-              "block_index": 64
+              "block_index": 65
             }
           ]
         }
