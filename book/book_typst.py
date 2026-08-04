@@ -143,6 +143,74 @@ def _typst_str(s: str) -> str:
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
+# The constituent-part anchor family the Appendix-A legend links target (`a-<idx>-<slug>`) — the only heading
+# anchors promoted to a Typst label (see `_render_heading`), and the labels the legend `#link`s resolve to.
+_LEGEND_ANCHOR_RE = re.compile(r"^a-\d+-")
+
+
+# ── Appendix v2 render-mechanism Typst twins (flag ON; restructure sub-wave 2) ──────────────────────
+# Each mirrors an `build_book_html` HTML render path, CALLING that module for its data (the one source of the
+# legend rows / packed brick rows), so the two projections cannot disagree on membership, order, or labels.
+
+def _render_stack_legend(directive_line: str) -> str:
+    """`<!-- stack-legend: <stem> | <letter> | <idx> -->` → the Typst linked legend beneath a stack's overview
+    figure (§13.5). One enumerated row per constituent part: the role label, then a `#link(<a-idx-slug>)` whose
+    text is the mechanism name + its generated locator (`Mutator Stamps (§A.1.2)`). The label resolves to the
+    part's inline subsection heading (see `_render_heading`); the SVG's own internals are untouched."""
+    arg = directive_line[len("<!--"):-len("-->")].strip()[len("stack-legend:"):].strip()
+    stem, letter, idx = [p.strip() for p in arg.split("|")]
+    rows = bb._stack_legend_rows(stem, letter, int(idx))
+    if not rows:
+        return ""
+    lines = []
+    for label, name, loc, anchor in rows:
+        role = f"#strong[{_esc(label)}] " if label else ""
+        link = f"#link(<{anchor}>)[{_esc(name)} (§{_esc(loc)})]"
+        lines.append(f"+ {role}{link}")
+    body = "\n".join(lines)
+    return ("#block(width: 100%, inset: (x: 10pt, y: 8pt), radius: 6pt, "
+            "stroke: (left: 2pt + dt.accent, rest: 0.5pt + dt.rule), fill: dt.panel)[\n"
+            + _indent(body) + "\n]")
+
+
+def _render_brick_grid(directive_line: str) -> str:
+    """`<!-- brick-grid: <group> -->` → the packed Typst brick grid for one Appendix-C zone (§14). The packer
+    (`build_book_html._brick_pack`) resolves the rows and per-brick spans; here each row becomes a `#grid` of
+    two columns whose cells use `grid.cell(colspan: …)` for a wide brick. Each cell is a bordered block —
+    a thumbnail slot, the linked name, a stub summary, the metadata footer. Thumbnails are UNNUMBERED (§5.4):
+    plain cells, never a `#figure`, so no brick enters the PDF's figure stream."""
+    group = directive_line[len("<!--"):-len("-->")].strip()[len("brick-grid:"):].strip()
+    ncols = bb._BRICK_NCOLS
+    flagship = bb._flagship_slugs()
+    cells = bb._brick_cells(group, flagship, ncols)
+    if not cells:
+        return ""
+    out: list[str] = []
+    for row in bb._brick_pack(cells, ncols):
+        typst_cells = []
+        for c in row:
+            span = c["span"]
+            online = " (online)" if not c["is_flagship"] else ""
+            summary = _esc(c["summary"]) if c["summary"] else \
+                "#emph[Three-sentence summary authored in a later sub-wave.]"
+            meta = _esc(bb._brick_meta_line(c))
+            cell_body = (
+                "#block(width: 100%, height: 3.2em, radius: 4pt, stroke: (paint: dt.rule, dash: \"dashed\"), "
+                "fill: dt.panel, inset: 6pt)[#align(center + horizon)[#text(size: 8pt, fill: dt.muted)[STRUCTURE DIAGRAM]]]\n"
+                f"#link({_typst_str(c['catalogue_html'])})[#strong[{_esc(c['name'])}]]{_esc(online)}\n\n"
+                f"#text(size: 9.5pt)[{summary}]\n\n"
+                f"#text(size: 8.5pt, fill: dt.muted)[{meta}]"
+            )
+            cell = ("#block(width: 100%, radius: 8pt, stroke: 0.5pt + dt.rule, inset: 9pt, breakable: false)[\n"
+                    + _indent(cell_body) + "\n]")
+            colspan = f"grid.cell(colspan: {span})[{cell}]" if span > 1 else f"[{cell}]"
+            typst_cells.append(colspan)
+        out.append(
+            f"#grid(\n  columns: {ncols}, gutter: 10pt,\n  "
+            + ",\n  ".join(typst_cells) + "\n)")
+    return "\n\n".join(out)
+
+
 # ── Asset resolution — mermaid SVG cache + figure directives ───────────────────────────────────────
 
 def _mermaid_svg_path(source: str) -> pathlib.Path:
@@ -188,7 +256,15 @@ def _render_heading(raw: str, section_no: str | None = None) -> str:
     stripped = raw.strip()
     level = len(stripped) - len(stripped.lstrip("#"))
     text = stripped[level:].strip()
-    text, _anchor = bb._heading_anchor(text)
+    text, anchor_attr = bb._heading_anchor(text)
+    # A constituent-part anchor (`{#a-<idx>-<slug>}`, the Appendix-A legend targets) becomes a Typst label on
+    # the heading, so the legend's `#link(<a-idx-slug>)` resolves as an intra-document jump in the PDF (the
+    # HTML twin is the heading's `id`). Scoped to this anchor family so no other heading grows a label (which
+    # could collide document-wide); these ids are unique by (stack idx, slug).
+    label = ""
+    am = re.search(r'id="([^"]+)"', anchor_attr)
+    if am and _LEGEND_ANCHOR_RE.match(am.group(1)):
+        label = f" <{am.group(1)}>"
     kicker = ""
     if level == 2:
         kick, text = bb._role_kicker(text)
@@ -197,7 +273,7 @@ def _render_heading(raw: str, section_no: str | None = None) -> str:
             if m:
                 kicker = f"#emph[{_esc(m.group(1).strip())}] "
     num = f"#text(fill: dt.muted)[{section_no}] " if (level == 2 and section_no) else ""
-    return "=" * level + " " + num + kicker + inline_typst(text)
+    return "=" * level + " " + num + kicker + inline_typst(text) + label
 
 
 def _render_paragraph(raw: str) -> str:
@@ -473,6 +549,12 @@ def render_typst(block: Block_t, caption_md: str | None = None, is_def: bool = F
     if k is K.EQ:
         return _render_eq(block.raw)
     if k in (K.DIRECTIVE, K.OTHER):
+        # The two build-generated appendix-v2 directives render a block; every other marker (index / iframe /
+        # keep-together wrapper) is inert in the flat block stream (the note wrapper is applied in render_chapter).
+        if block.directive == "stack-legend":
+            return _render_stack_legend(block.raw.strip())
+        if block.directive == "brick-grid":
+            return _render_brick_grid(block.raw.strip())
         return ""                                        # inert markers / catalogue iframe — no print output
     return _render_paragraph(block.raw)                  # defensive fall-through
 
@@ -558,6 +640,37 @@ def _frame_apparatus_typst(body: str, breakable: bool = False) -> str:
 _FLOAT_KINDS = frozenset({ir.BlockKind.FIGURE, ir.BlockKind.TABLE, ir.BlockKind.MERMAID})
 
 
+def _note_spread_info(blocks: "list[Block_t]") -> "tuple[int | None, int | None]":
+    """Scan a note's blocks for the keep-together declaration. Returns `(spread, fold_index)`: `spread` is the
+    `note-spread: N` value (1 or 2) or None when the chapter is not a keep-together note; `fold_index` is the
+    block index of the `note-fold` divider (spread:2's author-chosen fold) or None."""
+    spread: "int | None" = None
+    fold_i: "int | None" = None
+    for i, b in enumerate(blocks):
+        if b.kind is ir.BlockKind.DIRECTIVE and b.directive == "note-spread":
+            m = re.search(r"note-spread:\s*(\d+)", b.raw)
+            spread = int(m.group(1)) if m else 1
+        elif b.kind is ir.BlockKind.DIRECTIVE and b.directive == "note-fold":
+            fold_i = i
+    return spread, fold_i
+
+
+def _render_note_spread(blocks: "list[Block_t]", spread_n: int, fold_i: "int | None") -> str:
+    """Render a keep-together note's body (§13.6). `spread:1` → the whole body inside `#keep-together[…]` (one
+    indivisible page block); `spread:2` → the blocks before/after the `note-fold` divider inside
+    `#note-spread2([panel-a], [panel-b])` (two named panels, each held to one page). The preamble helpers carry
+    the rendered-height assertion, so an overflowing panel fails the compile."""
+    def render_range(bs: "list[Block_t]") -> str:
+        frags = [render_typst(b) for b in bs if b.kind is not ir.BlockKind.DIRECTIVE]
+        return "\n\n".join(f for f in frags if f)
+
+    if spread_n >= 2 and fold_i is not None:
+        panel_a = render_range(blocks[:fold_i])
+        panel_b = render_range(blocks[fold_i + 1:])
+        return (f"#note-spread2([\n{_indent(panel_a)}\n], [\n{_indent(panel_b)}\n])")
+    return f"#keep-together([\n{_indent(render_range(blocks))}\n])"
+
+
 def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     """Walk one IR chapter → its Typst body. The IR already parsed labels/captions onto floats and classified
     every block; here we (a) peel index-def/point markers off the RAW source into #metadata (the IR records
@@ -572,6 +685,16 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     title_num = f"#text(fill: dt.muted)[{chap_num}] " if chap_num else ""
     out: list[str] = [f"= {title_num}{inline_typst(chapter.title)}", ""]
     blocks = chapter.blocks
+    # Keep-together note (appendix v2, §13.6): a note declaring `note-spread` wraps its body in a non-breaking
+    # block (spread:1) or two folded panels (spread:2), each held to one page's budget by the preamble
+    # helpers. Handled here (a whole-chapter concern) before the per-block walk; other chapters fall through.
+    spread_n, fold_i = _note_spread_info(blocks)
+    if spread_n:
+        chap_id = f"{chapter.part}.{chapter.chapter}"
+        num_setup = (f"#set figure(numbering: (n) => [{chap_id}-#n])\n"
+                     "#counter(figure.where(kind: image)).update(0)\n"
+                     "#counter(figure.where(kind: table)).update(0)\n")
+        return num_setup + "\n" + out[0] + "\n\n" + _render_note_spread(blocks, spread_n, fold_i)
     skip: set[int] = set()
     section_no = 0                     # per-chapter `## ` counter (advanced only when the chapter is numbered)
     _title_norm = chapter.title.strip().lower()
@@ -699,6 +822,27 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 #show raw.where(block: true): set block(fill: dt.code-bg, inset: 8pt, radius: 3pt, width: 100%)
 #show raw: set text(font: dt.font-mono)
 #set raw(tab-size: 2)
+// ── Keep-together note blocks (appendix-restructure v2, §13.6). A note declared `spread: 1` renders as ONE
+//    indivisible block; `spread: 2` as two named panels with an author-chosen fold. Each panel is measured
+//    against one page's text budget; a panel that overflows makes `assert` PANIC — the compile fails, so a
+//    bad mid-note break can never ship. The authored word cap is only an early sensor; rendered height is the
+//    real invariant (figures/headings/lists distort a word estimate). `layout` reports the page text region,
+//    the budget a `breakable:false` block must fit within.
+#let _keep-together-panel(name, body) = context {
+  layout(size => {
+    let h = measure(box(width: size.width, body)).height
+    assert(h <= size.height,
+      message: "keep-together overflow: note panel '" + name + "' rendered " + repr(h)
+        + " > one-page budget " + repr(size.height) + " — split it or shorten it (appendix section 13.6).")
+    block(breakable: false, width: 100%, body)
+  })
+}
+#let keep-together(body) = _keep-together-panel("spread-1", body)
+#let note-spread2(panel-a, panel-b) = {
+  _keep-together-panel("spread-2 panel 1", panel-a)
+  pagebreak(weak: true)
+  _keep-together-panel("spread-2 panel 2", panel-b)
+}
 """
 
 

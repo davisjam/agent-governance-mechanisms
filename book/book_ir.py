@@ -64,7 +64,11 @@ _MARKER_LINE = re.compile(r"^<!--\s*([a-z0-9-]+)\s*(?::\s*(.*?))?\s*-->$", re.I)
 #: `section-terms` is the tier-1 sibling — `<!-- section-terms: <t1>, <t2> -->` — an inert DIRECTIVE placed
 #: under an H2/H3 that names the 1–3 major concepts the section develops; `_parse_chapter` fills `section_terms`.
 _ARMS = {"label", "table"}                       # arm state consumed by the next float
-_EMITS = {"figure": BlockKind.FIGURE, "figure-iframe": BlockKind.OTHER, "eq": BlockKind.EQ}
+# `stack-legend` / `brick-grid` (appendix-restructure v2, flag ON) emit a build-generated block — the linked
+# constituent legend / the packed brick grid. They carry BlockKind.OTHER + a `directive` tag; the render
+# twins (`book_typst.render_typst` OTHER branch, `build_book_html._consume_leading_marker`) key off the tag.
+_EMITS = {"figure": BlockKind.FIGURE, "figure-iframe": BlockKind.OTHER, "eq": BlockKind.EQ,
+          "stack-legend": BlockKind.OTHER, "brick-grid": BlockKind.OTHER}
 
 #: The optional 3rd point segment (`terms: <t1>, <t2>`) — a `terms:` prefix then a comma list. The leading
 #: `terms:` keyword is matched case-insensitively; the captured group is the raw comma-separated slug list.

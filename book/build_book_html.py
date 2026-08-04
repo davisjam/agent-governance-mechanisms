@@ -28,6 +28,7 @@ substituted at build time so the headline numbers live in one place.
 """
 from __future__ import annotations
 
+import functools
 import hashlib
 import html
 import json
@@ -286,6 +287,11 @@ MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
     "inset", "data", "label", "table", "point", "section-terms", "web-only",
+    # ── Appendix-restructure v2 render directives (flag ON only; §13/§14). All four are consumed + stripped
+    #    from reader-visible output the same as the rest of the vocabulary, so the notation-leak gate covers
+    #    them by construction. `stack-legend` / `brick-grid` EMIT a build-generated block (a linked legend /
+    #    a packed brick grid); `note-spread` / `note-fold` are Typst-only keep-together wrappers, inert in HTML.
+    "stack-legend", "brick-grid", "note-spread", "note-fold",
 )
 # `<!-- web-only: <inline markdown> -->` — a line that belongs in the WEB book but NOT the print PDF (e.g.
 # a "download the PDF" call-to-action, which would be absurd inside the PDF itself). The HTML build renders
@@ -1135,6 +1141,23 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
             if inner.startswith("figure:"):
                 _emit(_with_label(_figure_block(s)))
                 return True
+            if inner.startswith("stack-legend:"):
+                # The build-generated linked constituent legend (Appendix A, §13.5): `<!-- stack-legend:
+                # <stem> | <letter> | <idx> -->` → a <nav> of links to each part's on-page subsection.
+                arg = s[len("<!--"):-len("-->")].strip()[len("stack-legend:"):].strip()
+                stem, letter, idx = [p.strip() for p in arg.split("|")]
+                _emit(_stack_legend_html(stem, letter, int(idx)))
+                return True
+            if inner.startswith("brick-grid:"):
+                # The packed brick grid for one Appendix-C zone (§14): `<!-- brick-grid: <group> -->` → a CSS
+                # grid of brick cells, spans computed by the packer.
+                _emit(_brick_grid_html(s[len("<!--"):-len("-->")].strip()[len("brick-grid:"):].strip()))
+                return True
+            if inner.startswith("note-spread") or inner.startswith("note-fold"):
+                # Keep-together wrappers (§13.6) are a PRINT/Typst guarantee — inert in HTML (the note prose
+                # renders normally; HTML keep-together is best-effort CSS on the section wrapper). Consume so
+                # the marker never leaks into the reader-visible page.
+                return True
             if inner.startswith("label:"):
                 # A cross-ref key for the NEXT float: `<!-- label: <key> -->`. Armed here, consumed by
                 # `_with_label` when the figure/mermaid/table emits, which stamps it as `data-label`.
@@ -1829,6 +1852,45 @@ nav.toc details {{ flex: 0 0 auto; }}
 nav.toc details[open] {{ flex: 1 1 100%; }}
 """
 
+# ── Appendix-restructure v2 render-mechanism CSS (flag ON only). Kept OUT of the shared `CSS` constant and
+#    appended to the page `<style>` only when `_appendix_v2_enabled()`, so the default (flag-OFF) build stays
+#    byte-identical to HEAD (the safety invariant). The linked constituent legend, the keep-together note
+#    wrapper (HTML best-effort; the hard guarantee is the PDF path), and the packed brick grid. Tokens only,
+#    so both themes and the print CSS inherit. Escapes match the `CSS` f-string ({{ }}).
+_APPENDIX_V2_CSS = """
+/* 1. Linked constituent legend — beneath a stack's overview figure; role-labelled links to each part's
+      inline subsection on the same page. */
+nav.stack-legend { margin: 0.6rem auto 1.8rem; padding: 0.8rem 1rem; max-width: 46rem; text-align: left;
+                   border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 6px;
+                   background: var(--panel); }
+nav.stack-legend ol { margin: 0; padding-left: 1.4rem; }
+nav.stack-legend li { margin: 0.3rem 0; line-height: 1.5; }
+nav.stack-legend .legend-role { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.05em;
+                                color: var(--paper); background: var(--accent); padding: 1px 6px; border-radius: 3px;
+                                margin-right: 0.5rem; vertical-align: 1px; }
+nav.stack-legend a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+nav.stack-legend a:hover, nav.stack-legend a:focus { border-bottom-color: var(--accent); }
+nav.stack-legend .legend-loc { color: var(--muted); font-variant-numeric: tabular-nums; }
+/* 2. Keep-together note (HTML best-effort — the hard guarantee is the PDF path). */
+section.eng-note, section.eng-note-panel { break-inside: avoid; }
+/* 3. Packed brick grid — a CSS grid whose bricks span 1..N columns as the packer computed; each brick a
+      bordered card (thumbnail slot, linked name, summary, metadata footer). */
+.brick-grid { display: grid; grid-template-columns: repeat(var(--brick-cols, 2), minmax(0, 1fr));
+              gap: 1rem; margin: 1.4rem 0 2rem; }
+.brick { border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); padding: 0.85rem 0.95rem;
+         display: flex; flex-direction: column; gap: 0.45rem; min-width: 0; }
+.brick-fig { display: flex; align-items: center; justify-content: center; height: 5.5rem; border-radius: 5px;
+             border: 1px dashed var(--rule); background: var(--panel); color: var(--muted); font-size: 12px;
+             letter-spacing: 0.04em; text-transform: uppercase; }
+.brick-name { margin: 0; font-weight: 700; line-height: 1.25; }
+.brick-name a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); }
+.brick-name a:hover, .brick-name a:focus { color: var(--accent); }
+.brick-sum { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.brick-meta { margin: 0.1rem 0 0; font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
+@media (max-width: 40rem) { .brick-grid { grid-template-columns: 1fr; }
+                            .brick { grid-column: span 1 !important; } }
+"""
+
 
 def _chap_ref(c: dict) -> str:
     """The 'N.M' reference for a numbered chapter, or '' for front/back matter."""
@@ -1996,11 +2058,14 @@ def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str
     # tracked markdown (the markdown source itself is the record — see book/AGENTS.md), so this stays "" by
     # default; a page with NO markdown source of its own (an assembled projection like the figures gallery)
     # passes one so a reader who opens the raw HTML still finds the regen path.
+    # The v2 render-mechanism CSS ships ONLY when the flag is on, so the default build's `<style>` is
+    # byte-identical to HEAD (the safety invariant); flag-ON pages get the legend / brick-grid / note styles.
+    css = CSS + (_APPENDIX_V2_CSS if _appendix_v2_enabled() else "")
     return (
         f'<!DOCTYPE html>\n<html lang="en">{provenance}<head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
         f'{head_meta}'
-        f"<title>{html.escape(title)}</title>{FONTS_LINK}<style>{CSS}</style></head><body>"
+        f"<title>{html.escape(title)}</title>{FONTS_LINK}<style>{css}</style></head><body>"
         f'{toc}<main class="wrap" aria-label="{label}">{main}</main>{runtime}</body></html>\n'
     )
 
@@ -2088,6 +2153,17 @@ def _entry_move(text: str) -> str | None:
         return None
     token = re.search(r"`([a-z-]+)`", m.group(1))
     return token.group(1) if token else None
+
+
+def _entry_enforcement(text: str) -> str | None:
+    """The Enforcement value (`Soft`/`Hard`) parsed from the entry's metadata card `| Enforcement | … |`
+    row — the bold `**Hard**` / `**Soft**` lead token. Feeds the Appendix-C brick metadata footer
+    (role · family · Soft/Hard). Returns None when the row or the bold token is absent."""
+    m = re.search(r"^\|\s*Enf(?:orcement)?\.?\s*\|(.+)$", text, re.M | re.I)
+    if not m:
+        return None
+    token = re.search(r"\*\*(Hard|Soft)\*\*", m.group(1), re.I)
+    return token.group(1).lower() if token else None
 
 
 def _fold_wrapped_bullets(md: str) -> str:
@@ -2178,6 +2254,7 @@ def _appendix_entries() -> list[dict]:
                 "name": _entry_title(text, p.stem),
                 "intent": _rewrite_entry_links(_entry_intent(text), p.parent),
                 "move": _entry_move(text),      # constraint | sensor | package | None — for the package marker
+                "enforcement": _entry_enforcement(text),  # soft | hard | None — for the Appendix-C brick footer
                 "sections": sections,
                 "fill": _load_fill(role_dir, slug),
             })
@@ -2678,7 +2755,7 @@ def _resolve_stack_members(md: str, page_by_slug: dict[str, dict]) -> str:
 
 def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
                          letter: str = "D", part_name: str = "Mechanism Stacks",
-                         locator_figs: bool = False) -> list[dict]:
+                         locator_figs: bool = False, inline_legend: bool = False) -> list[dict]:
     """Build the Mechanism-Stacks chapter records: one opening front-door page (chapter 0), then one page per
     stack (D.1, D.2, …). Mirrors the role-appendix page shape — same Part, pager chain, and index locator
     machinery — so the book's TOC/pager/index render it with no special-casing. `page_by_slug` resolves each
@@ -2718,6 +2795,10 @@ def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
     for i, (stem, title) in enumerate(stack_files, start=1):
         raw = (_STACKS_DIR / f"{stem}.md").read_text(encoding="utf-8")
         body = _resolve_stack_members(_fold_wrapped_bullets(raw.strip()), page_by_slug)
+        if inline_legend:
+            # Restructure sub-wave 2: splice the linked legend under the overview figure + append the anchored
+            # inline-part subsections the legend targets (stub treatments; authored in a later sub-wave).
+            body = _inject_stack_legend(body, stem, letter, i)
         rec: dict = {
             "slug": f"appendix-{low}-{stem}",
             "part": part,
@@ -3216,10 +3297,339 @@ build. This wave establishes the section structure and the complete reference in
 next."""
 
 
+# ── Keep-together demonstrator pages (§13.6; flag-ON scaffold, removed when the real notes land) ────────
+# Each is sized to fit its page budget so the Typst height assertion PASSES; they prove the note-block render
+# paths (spread:1 one indivisible block; spread:2 two named panels + a fold) build in the PDF end to end.
+_KEEP_TOGETHER_DEMO_1_BODY = """\
+<!-- note-spread: 1 -->
+
+**A one-page note — the `spread: 1` keep-together unit.**
+
+This page is a build scaffold. It demonstrates the keep-together render path introduced in the appendix \
+restructure: an Engineering Note declared `spread: 1` renders as a single indivisible block. In the print \
+edition the whole block moves to the next page rather than splitting across a page break, so a reader on an \
+open book takes in the note without flipping.
+
+The guarantee is enforced, not hoped for. The print projection wraps the block in a non-breaking frame and \
+measures its rendered height against one page's budget; a block that overflows fails the build outright, \
+before a bad break can ship. The word count is only an early sensor — figures, headings, and lists distort \
+a word estimate, so the rendered height is the real invariant.
+
+When the real Appendix-B notes are compressed to their one- or two-page units, each will carry its own \
+`spread` declaration and this scaffold page comes out."""
+
+_KEEP_TOGETHER_DEMO_2_BODY = """\
+<!-- note-spread: 2 -->
+
+**A two-page note — the `spread: 2` keep-together unit, panel one.**
+
+A longer note is authored as two explicitly named panels with an author-chosen fold, not as one block the \
+layout engine splits where it likes. This first panel states the problem and the mechanism; it is itself an \
+indivisible unit that must fit within its own page budget.
+
+Each panel is measured independently. If either panel's rendered height exceeds one page, the build fails \
+and names the panel — so the fold is always a deliberate authoring choice, never an accident of pagination.
+
+<!-- note-fold -->
+
+**Panel two — consequences and the seam.**
+
+The second panel carries the engineering consequences and the implementation seam. It, too, is a single \
+non-breaking block held to one page's budget, so the two-page note reads as two clean facing units.
+
+This scaffold exercises the fold and the per-panel assertion end to end. The real two-page notes replace it \
+in a later assembly sub-wave."""
+
+_KEEP_TOGETHER_DEMOS: list[tuple[str, str, str]] = [
+    ("appendix-b-keep-together-demo-1",
+     "Appendix B - keep-together demonstration (spread 1)", _KEEP_TOGETHER_DEMO_1_BODY),
+    ("appendix-b-keep-together-demo-2",
+     "Appendix B - keep-together demonstration (spread 2)", _KEEP_TOGETHER_DEMO_2_BODY),
+]
+
+
 def _appendix_v2_role_subsections() -> list[tuple[str, str]]:
     """The (letter-suffix, role-group) pairs for Appendix C's three brick sections (C.1 Agent · C.2
     Models-bridge · C.3 Product), in the canonical role order `_APPENDIX_ROLES` declares."""
     return [(str(i + 1), group) for i, (_r, group) in enumerate(_APPENDIX_ROLES)]
+
+
+# ═══════════════════════ Appendix v2 render mechanisms (flag ON; restructure sub-wave 2) ════════════════
+# Three build-generated render paths land here, each behind the flag and each with an HTML + a Typst
+# projection (the Typst twins live in book_typst.py and CALL these helpers for their data):
+#   1. the linked constituent LEGEND under a stack's overview figure (Appendix A, §13.5);
+#   2. the keep-together NOTE block wrapper (Appendix B, §13.6 — a Typst-only guarantee, inert in HTML);
+#   3. the constraint-driven BRICK GRID packer (Appendix C, §14).
+# The prose the mechanisms frame (A constituent treatments, B note bodies, C three-sentence summaries) is
+# authored in the later assembly sub-waves; this wave renders honest stub/placeholder content so a flag-ON
+# build succeeds with no orphans.
+
+_FLAGSHIP_STACK_PATH = ROOT / "book-models" / "flagship-stack.json"
+_BRICK_LAYOUT_PATH = ROOT / "book-models" / "brick-layout.json"
+
+
+def _humanize_slug(slug: str) -> str:
+    """A slug → a Title-ish display string (`a11y-prefix` → `A11y Prefix`) — the last-resort label when a
+    part slug resolves to no catalogue name."""
+    return " ".join(w.capitalize() for w in slug.replace("_", "-").split("-"))
+
+
+@functools.lru_cache(maxsize=1)
+def _slug_name_map() -> dict[str, str]:
+    """{entry-slug: catalogue name} across all 83 entries — the source for a legend/brick label. Cached (the
+    entry files do not change within one build)."""
+    return {e["slug"]: e["name"] for e in _appendix_entries()}
+
+
+@functools.lru_cache(maxsize=1)
+def _load_flagship_stack_parts() -> dict[str, list[dict]]:
+    """`{stack-stem: ordered parts[]}` from the flagship-stack model, keyed by each record's `page_source`
+    stem (the `_STACKS` stem the stack pages render under). Empty dict when the model is absent (the legend
+    then renders nothing — a soft degrade, never a build failure)."""
+    if not _FLAGSHIP_STACK_PATH.is_file():
+        return {}
+    data = json.loads(_FLAGSHIP_STACK_PATH.read_text(encoding="utf-8"))
+    out: dict[str, list[dict]] = {}
+    for rec in data.get("stacks", []):
+        stem = pathlib.Path(rec.get("page_source", "")).stem
+        if stem:
+            out[stem] = rec.get("parts", [])
+    return out
+
+
+def _split_part_role(role: str) -> tuple[str, str]:
+    """A model part's `role` string (`"MARK — name every insertion…"`) → (role-label, description). The label
+    is the token before the em-dash (`MARK`); the description is the sentence after it. A role with no
+    em-dash falls back to (first word, whole string)."""
+    if "—" in role:
+        label, _, rest = role.partition("—")
+        return label.strip(), rest.strip()
+    label = role.strip().split(" ", 1)[0] if role.strip() else ""
+    return label, role.strip()
+
+
+def _stack_legend_rows(stem: str, letter: str, idx: int) -> list[tuple[str, str, str, str]]:
+    """The legend rows for stack `stem` at appendix locator `<letter>.<idx>` — one per constituent part in
+    model order: `(role-label, mechanism-name, locator, anchor-id)`. The locator is `<letter>.<idx>.<n>`
+    (e.g. `A.1.2`); the anchor is `a-<idx>-<slug>`, the id the part's inline subsection carries on the same
+    page. Both the legend and the subsection anchors derive from the one ordered `parts[]`, so they cannot
+    drift (the single-source discipline the stack-membership index uses)."""
+    names = _slug_name_map()
+    rows: list[tuple[str, str, str, str]] = []
+    for n, part in enumerate(_load_flagship_stack_parts().get(stem, []), start=1):
+        slug = part["slug"]
+        label, _desc = _split_part_role(part.get("role", ""))
+        name = names.get(slug) or _humanize_slug(slug)
+        rows.append((label, name, f"{letter}.{idx}.{n}", f"a-{idx}-{slug}"))
+    return rows
+
+
+def _stack_legend_html(stem: str, letter: str, idx: int) -> str:
+    """The build-generated linked legend rendered beneath a stack's overview figure (§13.5). Each row is the
+    role label plus a link whose TEXT is the mechanism name and its generated locator — `Mutator Stamps
+    (§A.1.2)` — pointing at the part's inline subsection anchor on the same page. Name + locator, never colour
+    or the role abbreviation alone. The overview SVG's own internals are untouched; this legend is the
+    clickable index beside it."""
+    rows = _stack_legend_rows(stem, letter, idx)
+    if not rows:
+        return ""
+    items = []
+    for label, name, loc, anchor in rows:
+        role_html = f'<span class="legend-role">{html.escape(label)}</span> ' if label else ""
+        link = (f'<a href="#{html.escape(anchor, quote=True)}">'
+                f'{html.escape(name)} <span class="legend-loc">(§{html.escape(loc)})</span></a>')
+        items.append(f"<li>{role_html}{link}</li>")
+    return ('<nav class="stack-legend" aria-label="Constituent parts of this stack, each linked to its '
+            'section on this page"><ol>' + "".join(items) + "</ol></nav>")
+
+
+def _stack_constituent_stub_md(stem: str, letter: str, idx: int) -> str:
+    """The anchored inline-part subsections the legend links INTO — one `###` subsection per constituent, each
+    carrying the `{#a-<idx>-<slug>}` anchor and a stub treatment (the model's role sentence + a pointer to the
+    deeper Appendix-B note). This sub-wave emits the STRUCTURE (headings + anchors + locators) so the legend
+    resolves; the 150–250-word role/receives/emits/→B treatment (§13.2) is authored in a later sub-wave. A
+    stack absent from the model yields no section (the legend is likewise empty)."""
+    parts = _load_flagship_stack_parts().get(stem, [])
+    if not parts:
+        return ""
+    names = _slug_name_map()
+    out = [f"## The constituent parts, in depth {{#a-{idx}-parts}}", ""]
+    for n, part in enumerate(parts, start=1):
+        slug = part["slug"]
+        label, desc = _split_part_role(part.get("role", ""))
+        name = names.get(slug) or _humanize_slug(slug)
+        head = f"### {label} — {name}" if label else f"### {name}"
+        out += [
+            f"{head} {{#a-{idx}-{slug}}}",
+            "",
+            f"*{letter}.{idx}.{n} · role in the stack.* {desc}",
+            "",
+            "*The full constituent treatment — the role it plays, what it receives, what it emits or "
+            "guarantees, and a pointer into its deeper Appendix B note — is authored in a later assembly "
+            "sub-wave.*",
+            "",
+        ]
+    return "\n".join(out).strip()
+
+
+def _inject_stack_legend(body_md: str, stem: str, letter: str, idx: int) -> str:
+    """Splice the linked legend directive in immediately AFTER the stack's overview-figure directive (the
+    `<!-- figure: assets/<stem>.svg … -->` line in the `## Composition` section), then append the anchored
+    constituent-part subsections. The legend sits under the figure (§2.1 shape: figure → legend → parts); the
+    anchored subsections give the legend links their targets. If the overview figure line is not found, the
+    legend is appended before the parts so it still renders."""
+    directive = f"<!-- stack-legend: {stem} | {letter} | {idx} -->"
+    lines = body_md.splitlines()
+    fig_i = next((i for i, ln in enumerate(lines)
+                  if ln.strip().startswith("<!-- figure:") and f"assets/{stem}.svg" in ln), None)
+    if fig_i is not None:
+        lines[fig_i + 1:fig_i + 1] = ["", directive]
+        body_md = "\n".join(lines)
+    else:
+        body_md = body_md.rstrip() + "\n\n" + directive
+    stubs = _stack_constituent_stub_md(stem, letter, idx)
+    return body_md.rstrip() + ("\n\n" + stubs if stubs else "")
+
+
+# ── Appendix C — the constraint-driven brick packer (§14) ────────────────────────────────────────────
+# A build-time shelf/row packer over variable-width bricks. Each brick declares a `span` (1-col / 2-col /
+# full) and optional `pair_with` / `near` adjacency hints (the declared-constraint model below). The packer
+# arranges the bricks per section into rows — 1-col, 2-col, or mixed as the pack resolves — deterministically
+# (catalogue order + the hints; no Date/random), whitespace-minimising against a fixed column count.
+
+@functools.lru_cache(maxsize=1)
+def _load_brick_layout() -> dict[str, dict]:
+    """`{slug: {span, pair_with, near}}` — the declared brick-layout constraints (§14). Absent file → `{}`
+    (every brick then defaults to a 1-col span and the packer lays a uniform grid). The spans + adjacency
+    hints are SEEDED minimally now and tuned in the C assembly sub-wave, after the real grid is rendered and
+    each diagram's legibility at print size is assessed (the fallback-first, refine-after discipline)."""
+    if not _BRICK_LAYOUT_PATH.is_file():
+        return {}
+    data = json.loads(_BRICK_LAYOUT_PATH.read_text(encoding="utf-8"))
+    return data.get("bricks", {})
+
+
+def _brick_span(slug: str, ncols: int) -> int:
+    """The column span for a brick: the declared `span` (`1`/`2`/`"full"`), clamped to `[1, ncols]`. A wide
+    diagram declares `2` or `full`; the default is a 1-col brick. `full` maps to the whole row."""
+    raw = _load_brick_layout().get(slug, {}).get("span", 1)
+    if isinstance(raw, str) and raw.strip().lower() == "full":
+        return ncols
+    try:
+        n = int(raw)
+    except (TypeError, ValueError):
+        n = 1
+    return max(1, min(n, ncols))
+
+
+def _brick_order(bricks: list[dict]) -> list[dict]:
+    """Reorder bricks so declared adjacency hints are honoured before packing: after each brick, pull in its
+    `pair_with` sibling (place side by side) then its `near` sibling (keep sequentially close), if present in
+    the same section and not already placed. Deterministic — a stable walk of the catalogue order with the
+    hint pulls applied in a fixed (`pair_with` then `near`) order."""
+    layout = _load_brick_layout()
+    by_slug = {b["slug"]: b for b in bricks}
+    placed: list[dict] = []
+    used: set[str] = set()
+    for b in bricks:
+        if b["slug"] in used:
+            continue
+        placed.append(b)
+        used.add(b["slug"])
+        for hint in ("pair_with", "near"):
+            tgt = layout.get(b["slug"], {}).get(hint)
+            if tgt and tgt in by_slug and tgt not in used:
+                placed.append(by_slug[tgt])
+                used.add(tgt)
+    return placed
+
+
+def _brick_pack(bricks: list[dict], ncols: int = 2) -> list[list[dict]]:
+    """Shelf/row-pack the bricks into rows that each sum to ≤ `ncols` columns (§14). Walks the
+    adjacency-ordered bricks; a brick whose span would overflow the current row starts a new row; a full-width
+    brick takes its own row. Deterministic: the same bricks + layout yield the same grid every build."""
+    rows: list[list[dict]] = []
+    row: list[dict] = []
+    used = 0
+    for b in _brick_order(bricks):
+        span = b["span"]
+        if used + span > ncols and row:
+            rows.append(row)
+            row, used = [], 0
+        row.append(b)
+        used += span
+        if used >= ncols:
+            rows.append(row)
+            row, used = [], 0
+    if row:
+        rows.append(row)
+    return rows
+
+
+def _brick_cells(group: str, flagship: set[str], ncols: int) -> list[dict]:
+    """The ordered brick-cell records for one role zone — every catalogue entry in `group`, in the census
+    hierarchy (family census number, then within-family slug), each carrying the fields the cell template
+    renders: name, catalogue link, family, enforcement, computed span, flagship flag, and a stub summary
+    (the entry's Intent — the §5.3 fallback; the curated three-sentence `### Brick` summary lands in the C
+    assembly sub-wave). The figure thumbnail is a placeholder slot this wave."""
+    family_order = _family_order_from_index()
+    entries = [e for e in _appendix_entries() if e["group"] == group]
+    entries.sort(key=lambda e: (family_order.get(e["family"], 999), e["family"], e["slug"]))
+    cells: list[dict] = []
+    for e in entries:
+        intent = (e.get("intent") or "").strip()
+        cells.append({
+            "slug": e["slug"],
+            "name": e["name"],
+            "catalogue_html": e["catalogue_html"],
+            "group": e["group"],
+            "family": e["family"],
+            "enforcement": e.get("enforcement"),
+            "span": _brick_span(e["slug"], ncols),
+            "is_flagship": e["slug"] in flagship,
+            "summary": intent,
+        })
+    return cells
+
+
+def _brick_meta_line(cell: dict) -> str:
+    """The brick metadata footer text: `<zone> · <family> · <Soft|Hard>` (§5.2)."""
+    enf = (cell.get("enforcement") or "").capitalize() or "—"
+    fam = _humanize_slug(cell["family"])
+    return f"{cell['group']} · {fam} · {enf}"
+
+
+_BRICK_NCOLS = 2  # §13.4 / §"Recommended final architecture": TWO print columns (three forces diagrams too small).
+
+
+def _brick_grid_html(group: str) -> str:
+    """The packed brick grid for one Appendix-C role zone (§14). A CSS grid whose columns each brick spans by
+    its computed width; every cell is a bordered card — a figure thumbnail slot, the mechanism name (linked to
+    its full catalogue entry online), a stub three-sentence summary, and the metadata footer. Thumbnails are
+    UNNUMBERED by construction (§5.4): bare cells, no `<figure>`/caption, so 83 thumbnails never enter the
+    figure-numbering stream. Responsive + theme-aware via the design tokens the page template imports."""
+    flagship = _flagship_slugs()
+    cells = _brick_cells(group, flagship, _BRICK_NCOLS)
+    if not cells:
+        return ""
+    rendered: list[str] = []
+    for row in _brick_pack(cells, _BRICK_NCOLS):
+        for c in row:
+            span = c["span"]
+            online = " (online)" if not c["is_flagship"] else ""
+            summary = html.escape(c["summary"]) if c["summary"] else \
+                "<em>Three-sentence summary authored in a later sub-wave.</em>"
+            rendered.append(
+                f'<div class="brick" style="grid-column: span {span};">'
+                '<div class="brick-fig" aria-hidden="true"><span>Structure diagram</span></div>'
+                f'<p class="brick-name"><a href="{html.escape(c["catalogue_html"], quote=True)}">'
+                f'{html.escape(c["name"])}</a>{online}</p>'
+                f'<p class="brick-sum">{summary}</p>'
+                f'<p class="brick-meta">{html.escape(_brick_meta_line(c))}</p>'
+                "</div>"
+            )
+    return (f'<div class="brick-grid" style="--brick-cols: {_BRICK_NCOLS};">'
+            + "".join(rendered) + "</div>")
 
 
 def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list[dict]:
@@ -3279,7 +3689,7 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     #    as a whole stack. The opening front-door + one page per stack, figures numbered A.<i>-N.
     chapters += build_stack_chapters(
         part=next_part, page_by_slug=page_by_slug,
-        letter="A", part_name="MAGE Engineering Stacks", locator_figs=True)
+        letter="A", part_name="MAGE Engineering Stacks", locator_figs=True, inline_legend=True)
 
     # ── APPENDIX B — Flagship Mechanisms. ONE Part; role SUBSECTIONS (Agent → Models-bridge → Product); the
     #    29 notes numbered straight through B.1…B.29. Opening frame carries the nine-capability lens + a
@@ -3322,10 +3732,31 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
             "role_group": rec["group"],        # for the later role-subsection grouping in the TOC
         })
 
-    # ── APPENDIX C — Mechanism Catalog (STUB). Opening carries the complete reference index (every mechanism:
-    #    flagship → its B page, the rest → online) + the rewired clickable map. The C.1/C.2/C.3 role sections
-    #    are placeholder headings this sub-wave; the packed brick grid assembles next. Brick thumbnails are
-    #    UNNUMBERED by construction — this wave emits no brick figures, so none enter the float stream.
+    # ── KEEP-TOGETHER DEMONSTRATORS (restructure sub-wave 2 scaffold; flag-ON only) — two short pages that
+    #    exercise the note-block render paths end to end so the mechanism is provable before the real notes
+    #    are compressed (sub-wave 4): a `spread: 1` one-page indivisible note and a `spread: 2` two-panel note
+    #    with an author-chosen fold. In the Typst/PDF projection each panel is a `#block(breakable: false)`
+    #    under a rendered-height assertion that FAILS the build if a panel exceeds its page budget (§13.6). In
+    #    HTML the keep-together is best-effort CSS. REMOVE these two pages when the real Appendix-B notes land.
+    for demo_n, (demo_slug, demo_title, demo_body) in enumerate(_KEEP_TOGETHER_DEMOS, start=b_counter + 1):
+        chapters.append({
+            "slug": demo_slug,
+            "part": b_part,
+            "part_title": b_part_title,
+            "chapter": demo_n,
+            "chapter_title": demo_title,
+            "body_md": demo_body,
+            "is_appendix": True,
+            "mermaid": False,
+            "fig_prefix": f"B.{demo_n}",
+            "role_group": _APPENDIX_ROLES[-1][1],   # sort with the last zone, after the real notes
+        })
+
+    # ── APPENDIX C — Mechanism Catalog. Opening carries the complete reference index (every mechanism:
+    #    flagship → its B page, the rest → online) + the rewired clickable map, then the C.1/C.2/C.3 role
+    #    sections each render as a PACKED BRICK GRID (§14) over that zone's entries. Brick thumbnails are
+    #    UNNUMBERED by construction (§5.4) — the cells are bare cards, no <figure>/caption, so none enter the
+    #    float stream. The three-sentence summaries + real thumbnails fill in the C assembly sub-wave.
     c_part = next_part + 2
     c_part_title = "Appendix C — Mechanism Catalog"
     c_body = [
@@ -3337,13 +3768,17 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
         "its online entry. | The governance mechanism map: click any mechanism to open its treatment. -->",
         "",
     ]
-    # C.1 / C.2 / C.3 placeholder section headings (the brick grids land in the C assembly sub-wave).
+    # C.1 / C.2 / C.3 — each a packed brick grid over the zone's entries (the `brick-grid` directive renders
+    # the CSS-grid / #grid; the packer runs at render time from the one `_appendix_entries` read).
     for suffix, group in _appendix_v2_role_subsections():
         n_in_role = sum(1 for r in ordered if r["group"] == group)
         c_body += [
             f"### C.{suffix} {group}",
             "",
-            f"*{n_in_role} mechanisms. The packed brick grid for this zone assembles in a later build.*",
+            f"*{n_in_role} mechanisms. Each brick links to its full Gang-of-Four entry in the online "
+            "catalogue; a flagship also carries a deep-dive note in Appendix B.*",
+            "",
+            f"<!-- brick-grid: {group} -->",
             "",
         ]
     c_body += [_appendix_contents_md(ordered)]  # the complete all-83 reference index (flagship + online)
