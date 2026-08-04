@@ -104,6 +104,30 @@ that don't.
 
 The [`audit.md`](audit.md) procedure flags a fluffy adjective as a Pass-3 house-style finding.
 
+## Progressive density — let the book's language do more work over time
+
+The economy rule above works per sentence: strip the word that carries no idea. Progressive density is the
+same instinct one level up, across a long work. **Make the explanations shorter, not the ideas.** Two axes
+get conflated here; hold them apart.
+
+- **Abstraction stays high.** Don't dumb the material down as the work goes on. The ideas keep their full
+  altitude, so a later section reads denser, not simpler.
+- **Exposition shrinks as the reader learns the vocabulary.** Spend the full space the first time a concept
+  appears. Later the reader holds it, so re-deriving it from scratch is waste. Compress the re-explanation
+  to a one-sentence invocation that assumes the term is internalized, and keep the freed space for the new
+  argument the passage makes with it.
+- **Exploit the reader's accumulated knowledge.** *Design Patterns* is the model: early on Gamma et al.
+  explain what a pattern is; by the later chapters they write "use Strategy here" and move on. Lean on the
+  terminology already introduced instead of re-explaining it. The discourse grows more abstract over time
+  precisely because it assumes internalized concepts.
+- **This is pacing, not word-cutting.** The gain is not a smaller word count. It is the language doing more
+  work the further in the reader is. A first introduction earns two pages; the tenth invocation of the same
+  term earns one dense sentence.
+
+The failure it catches: a late chapter that reopens a settled concept with a fresh from-first-principles
+meditation. State the dense invocation and move on. Trusting the reader to hold the concept is itself the
+more abstract move, and the right one.
+
 ## Drift tells to avoid — the discursive register's failure modes
 
 The discursive register is the one that drifts. When machine prose imitates the author's essays it reaches

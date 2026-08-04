@@ -240,3 +240,28 @@ Recall the technology derivation — the THREE-WAY ECONOMIC argument: (1) agents
 > The two theses follow. Because the reasoner is context-bounded, give it a compact structured model of the system: the Modeling Thesis. Because its behavior is probabilistic but its actions cross controllable boundaries, hold those actions and outputs to mechanically enforced intent: the Alignment Thesis. Because the resulting workforce operates faster than human attention can follow, convert recurring failures into durable properties of the environment. That combination is MAGE.
 
 **Execution (MODELS-FIRST, in this run, AFTER the first deploy):** deeply entangled with the CORE-CONCEPTS PASS (it DERIVES the two theses + the GEE from the substrate properties) — do AS PART OF / right after the core-concepts pass. Model the substrate-properties → consequences → thesis-derivation FIRST (in the concept model, or a new `substrate-properties` model), then write 6.1 (Part-1 section + 6.4 table + 6.5 opening) · 6.2 (Part-3 opening) · 6.3 (Part-2 opening). Record in the results-log. Keep the posture: proceed from PROPERTIES + MECHANISMS, no "fallible teammate" analogies, N=1 humility intact.
+
+---
+
+## PUNCH-LIST ITEM — progressive density: shrink the exposition, not the ideas (author 260804) — the book operationalization
+
+The general principle now lives in the prose SSOT ([`writing/voice.md`](../../plugin/mage/skills/self-communicate/writing/voice.md) §"Progressive density"): **make the explanations shorter, not the ideas.** Abstraction stays high; exposition shrinks as the reader learns the vocabulary; later Parts read *denser*, not simpler, because they assume internalized concepts. This section is the book-specific operationalization — how that principle applies to THIS manuscript.
+
+**The take-for-granted-5.** After Part 1, these are established and held by the reader; do NOT re-derive them:
+1. **The Modeling Thesis** — intent + structure bound into a compact model the agent reasons through.
+2. **The Alignment Thesis** — the environment mechanically holds implementation to those models.
+3. **The Printer** — the agent as a printer: suspect the instructions before the model. (The book's term is **the Printer**, capital P — no "Principle" coinage, per the author's earlier ruling.)
+4. **Churn** — agent effort spent rediscovering context / undoing / repairing / reconciling instead of advancing.
+5. **Governance Conversion** — turning a recurring failure into a durable control.
+
+**Reconnect in ONE sentence, not three paragraphs.** When a post-Part-1 chapter reopens one of these, invoke it with the shared term and move: *"the Printer tells us to suspect the instructions before the model"*, then apply it. Never re-run the two-page first-introduction meditation. The dense invocation is the *more* abstract move — it trusts the reader to hold the concept. Keep the new APPLICATION or argument the chapter makes with the concept; compress only the re-derivation.
+
+**The pedagogical middle path (my departures hold).** High abstraction, not research-paper density. The reader must **NOT** need to flip to the glossary — a one-sentence invocation works only because the term is genuinely internalized (front glossary front-loads the core terms; Part 1 does the full introductions). If the invocation would send the reader to the glossary, it is too compressed; give it one more clause.
+
+**No vocabulary proliferation.** No new coinages. The vocabulary is the ~5 core constructs above plus the existing `<!-- index-def: slug -->` set — nothing more. A new term earns its place only through a real first-introduction with an index-def, never as a throwaway label mid-argument.
+
+**Execution — the per-chapter "what came before" method (derived from the models, not guessed).** For chapter N in reading order, the *established-before* set = every concept whose `index-def` canonical site sits in a chapter BEFORE N, PLUS the front glossary, PLUS the take-for-granted-5 (assumed after Part 1). Precompute a `chapter → [concepts already introduced]` manifest as a read-only pass over the index-def ordering (run AFTER the glossary wave lands, so the canon is final). Each per-chapter review agent gets its chapter + its established-before set + the front glossary + the density principle, then, for each concept the chapter explains:
+- **First introduction** (index-def is HERE) → keep the full exposition; altitude high.
+- **Re-explanation** (index-def is elsewhere-earlier) → compress to a one-sentence dense invocation; preserve every idea, incident, number, citation, and the new argument. When unsure, check the index-def: canonical site earlier ⇒ re-explanation ⇒ compress.
+
+Run in reading order (front-matter → Part 1 → … → back-matter), because "what came before" only accumulates forward. Part 1 changes least (it DOES the first introductions); density gains concentrate in Parts 3–5, where the reader holds the most. Full plan: [`density-pass-plan-260804.md`](density-pass-plan-260804.md).
