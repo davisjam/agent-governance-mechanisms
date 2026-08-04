@@ -2920,7 +2920,7 @@
           "section_id": "the-invariants-the-join-spans",
           "level": 3,
           "heading_text": "The invariants the join spans",
-          "topic_sentence": "The join's invariants span all four models, collected in [ref:scenarios-invariants]; two are the trunk derive-the-checker discipline.",
+          "topic_sentence": "The join's invariants span all four models, collected in [ref:scenarios-invariants].",
           "id_source": "derived",
           "block_index": 63,
           "points": []

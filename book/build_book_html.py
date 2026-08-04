@@ -1432,6 +1432,11 @@ def _render_blockquote(block: str, is_def: bool = False) -> str:
     inner_md = "\n".join(_strip_blockquote_prefix(ln) for ln in block.splitlines())
     inner_html = md_to_html(inner_md)
     inner_html = re.sub(r"<h[1-6]([^>]*)>(.*?)</h[1-6]>", r'<p class="inset-title"\1>\2</p>', inner_html, flags=re.S)
+    # A concept-inset heading is authored as `### Inset I<N> — <Title>` so the source carries a stable
+    # number for editing; the DISPLAYED label shows the TITLE ONLY. Strip the `Inset I<N> —` prefix from
+    # the rendered label (the id/anchor on the <p> is untouched, so intra-book links still resolve). This
+    # also moots any "insets out of numeric order" reading — the reader never sees a number.
+    inner_html = re.sub(r'(<p class="inset-title"[^>]*>)\s*Inset\s+I\d+\s*—\s*', r'\1', inner_html)
     if 'class="inset-title"' in inner_html:
         klass = "concept-inset"
     elif _IS_THESIS_LEAD_RE.search(inner_html):
