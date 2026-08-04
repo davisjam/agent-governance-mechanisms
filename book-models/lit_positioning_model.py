@@ -67,7 +67,7 @@ _MODEL_NOTE = (
     "schema, thesis join, landing integrity, location join, coverage/burndown, citation join. It lands "
     "audit-only-first — a record that drops its X/Y/Z or (once landed) cites a key absent from the .bib "
     "reddens the audit but does not gate while the LPP prose waves are still landing. `status` planned|"
-    "landed is the burndown signal; only §3 (graphify) and §4 (spec-driven development) are landed today. "
+    "landed is the burndown signal; all 11 interventions (§1-§6, §8-§12) are landed today. "
     "The section run is §1-§6, §8-§12 — §7 (architecture conformance) is deliberately absent, handled by "
     "the author separately rather than as a modeled LPP intervention (see lit_positioning_declared.json's "
     "`_note`).")
