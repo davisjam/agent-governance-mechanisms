@@ -20,7 +20,7 @@
     "spine_claim": "abundant-implementation",
     "observable": "Per-document remediation cost across three sources: do-it-yourself professor time, external-vendor per-page quote, and the tool's per-deck processing cost.",
     "data_source": "The DocAble cost model — measured per-deck processing cost (tokens + compute) set against published vendor per-page quotes and a DIY hours-per-document estimate (the book's canonical figures in metrics.json).",
-    "limitation": "Cost-model estimates, not audited invoices; per-deck cost excludes amortized development; quality-parity with vendor output is asserted, not independently graded.",
+    "limitation": "Cost-model estimates, not audited invoices; per-deck cost excludes amortized development; quality-parity with vendor output is asserted, not independently graded. `holds` stays empty by design: every figure in the reporting section is `{{token}}`-rendered from metrics.json (deck_issue_count, documents_per_course, hours_per_document, hours_per_course, workweeks_per_course, diy_cost_per_course, vendor_cost_per_page, vendor_cost_per_course_low/high) — the raw chapter source never carries a literal digit for the digit+unit pin to match, so pinning is delegated to the token registry (metrics.json) rather than to this ledger.",
     "gloss": "The per-document remediation cost cascade — do-it-yourself professor cost vs. external-vendor quote vs. the tool's per-deck processing cost — showing high-quality remediation nearly for free."
   },
   "velocity": {
@@ -31,7 +31,7 @@
     "spine_claim": "abundant-implementation",
     "observable": "Commits per week across the project's history.",
     "data_source": "A repo-activity histogram over the parent repo's git history (commits metric), 20 weeks from 2026-03-12 to 2026-07-29 (metrics.json _commit_provenance).",
-    "limitation": "Commit count is a coarse activity proxy, not delivered value; the count mixes agent, human, and generated commits; single project, single fleet.",
+    "limitation": "Commit count is a coarse activity proxy, not delivered value; the count mixes agent, human, and generated commits; single project, single fleet. `holds` stays empty by design: the reporting section is a bare figure ([ref:velocity-curve]) with no digit-bearing prose sentence or caption in the chapter source, so there is no literal text for the digit+unit pin to match; the figure asset's own embedded description (\"seven-week build\") additionally reads as stale against the 20-week / commits_total=23,215 figures the token registry (metrics.json _commit_provenance) now carries, an asset-freshness gap outside this ledger's fix. Pinning would require either a chapter-text edit stating the axis-anchor values or a figure regeneration reconciling the two — an editorial call, not made here.",
     "gloss": "The velocity curve: commits per week across the project's history, rising as the fleet acquired capability then dipping during hardening."
   },
   "mbse-nav-token": {
