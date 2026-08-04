@@ -2622,12 +2622,16 @@ mechanisms you must adopt as a set, and which you can add later."""
 _STACK_MEMBER_RE = re.compile(r"\brole:([a-z0-9-]+)\b")
 
 
-def _stack_membership_index() -> dict[str, list[tuple[str, str]]]:
+def _stack_membership_index(page_letter: str = "d") -> dict[str, list[tuple[str, str]]]:
     """Invert the stack membership relation: `{member-slug: [(stack-title, stack-page-slug), …]}`. Derived
     from the same `role:<slug>` tokens `_resolve_stack_members` resolves — the ONE source of stack
     membership — so the forward links (stack→member) and these back-links (member→stack) can never disagree.
     Only stack files present on disk contribute; a member appearing in no stack simply gets no entry (the
-    caller then emits no 'Part of these stacks' line, which reads as 'stands alone')."""
+    caller then emits no 'Part of these stacks' line, which reads as 'stands alone').
+
+    `page_letter` is the appendix letter the stack pages render under — `d` in the legacy projection
+    (`appendix-d-<stem>`), `a` in the value-ordered v2 projection (`appendix-a-<stem>`). Default keeps the
+    legacy slug scheme."""
     index: dict[str, list[tuple[str, str]]] = {}
     for stem, title in _STACKS:
         path = _STACKS_DIR / f"{stem}.md"
@@ -2640,7 +2644,7 @@ def _stack_membership_index() -> dict[str, list[tuple[str, str]]]:
             if slug in seen:               # a member listed twice in one stack counts once for that stack
                 continue
             seen.add(slug)
-            index.setdefault(slug, []).append((title, f"appendix-d-{stem}"))
+            index.setdefault(slug, []).append((title, f"appendix-{page_letter}-{stem}"))
     return index
 
 
@@ -2672,45 +2676,61 @@ def _resolve_stack_members(md: str, page_by_slug: dict[str, dict]) -> str:
     return _STACK_MEMBER_RE.sub(repl, md)
 
 
-def build_stack_chapters(part: int, page_by_slug: dict[str, dict]) -> list[dict]:
-    """Build the Appendix D chapter records: one opening front-door page (chapter 0), then one page per
+def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
+                         letter: str = "D", part_name: str = "Mechanism Stacks",
+                         locator_figs: bool = False) -> list[dict]:
+    """Build the Mechanism-Stacks chapter records: one opening front-door page (chapter 0), then one page per
     stack (D.1, D.2, …). Mirrors the role-appendix page shape — same Part, pager chain, and index locator
     machinery — so the book's TOC/pager/index render it with no special-casing. `page_by_slug` resolves each
-    stack's `role:<slug>` member tokens to links into the role-appendix pages. Returns [] if no stack files
-    are present."""
+    stack's `role:<slug>` member tokens to links into the flagship pattern pages. Returns [] if no stack
+    files are present.
+
+    `letter`/`part_name` letter the appendix: `D`/`Mechanism Stacks` in the legacy projection, `A`/`MAGE
+    Engineering Stacks` in the value-ordered v2 projection (where the stacks lead the appendix). The stack
+    page slug follows the letter (`appendix-<letter>-<stem>`). `locator_figs` (v2 only) stamps each page a
+    `fig_prefix` (`<letter>.<i>`) so its figures number monotonically off the reader-facing locator (D80),
+    not the `<part>.<chapter>` sort key. The legacy path leaves `fig_prefix` unset — its figures keep the
+    `<part>.<chapter>` numbering unchanged, so the default projection stays byte-identical."""
     stack_files = [(stem, title) for stem, title in _STACKS if (_STACKS_DIR / f"{stem}.md").is_file()]
     if not stack_files:
         return []
 
+    low = letter.lower()
     chapters: list[dict] = []
-    part_title = "Appendix D — Mechanism Stacks"
+    part_title = f"Appendix {letter} — {part_name}"
 
-    # OPENING FRONT-DOOR PAGE — heads Appendix D (chapter 0, sorts before every stack).
-    chapters.append({
+    # OPENING FRONT-DOOR PAGE — heads the stacks Part (chapter 0, sorts before every stack).
+    opening: dict = {
         "slug": _APPENDIX_STACKS_OPENING_SLUG,
         "part": part,
         "part_title": part_title,
         "chapter": 0,
-        "chapter_title": "Appendix D — Mechanism Stacks",
+        "chapter_title": part_title,
         "body_md": _APPENDIX_STACKS_OPENING_PROSE.strip(),
         "is_appendix": True,
         "mermaid": False,
-    })
+    }
+    if locator_figs:
+        opening["fig_prefix"] = letter
+    chapters.append(opening)
 
-    # ONE PAGE PER STACK — D.1, D.2, … in the authored order.
+    # ONE PAGE PER STACK — <letter>.1, <letter>.2, … in the authored order.
     for i, (stem, title) in enumerate(stack_files, start=1):
         raw = (_STACKS_DIR / f"{stem}.md").read_text(encoding="utf-8")
         body = _resolve_stack_members(_fold_wrapped_bullets(raw.strip()), page_by_slug)
-        chapters.append({
-            "slug": f"appendix-d-{stem}",
+        rec: dict = {
+            "slug": f"appendix-{low}-{stem}",
             "part": part,
             "part_title": part_title,
             "chapter": i,                       # sorts after the opening page's chapter 0
-            "chapter_title": f"Appendix D - {i}. {title}",
+            "chapter_title": f"Appendix {letter} - {i}. {title}",
             "body_md": body,
             "is_appendix": True,
             "mermaid": False,
-        })
+        }
+        if locator_figs:
+            rec["fig_prefix"] = f"{letter}.{i}"  # D80: figures number "Figure <letter>.<i>-N", monotonic
+        chapters.append(rec)
     return chapters
 
 
@@ -2746,13 +2766,15 @@ you already met. Read the [Skills chapter](4.2-the-skills.html) for what those s
 for how they were *built*."""
 
 
-def _recipe_web_url() -> str:
+def _recipe_web_url(letter: str = "e") -> str:
     """The absolute web URL of the full recipe page in the published web edition — for the print pointer.
     Built from repo-metadata.json's `pages_url` (the governed Pages identity); falls back to a bare page
-    reference if the metadata is absent."""
+    reference if the metadata is absent. `letter` is the appendix letter the recipe renders under — `e`
+    legacy, `d` in the value-ordered v2 projection — so the pointer targets the page the build actually
+    emits (`appendix-<letter>-<stem>.html`)."""
     meta_path = ROOT / "book-models" / "repo-metadata.json"
     stem = _SKILL_RECIPE_PAGES[0][0] if _SKILL_RECIPE_PAGES else "the-recipe"
-    page_ref = f"appendix-e-{stem}.html"
+    page_ref = f"appendix-{letter}-{stem}.html"
     if meta_path.is_file():
         pages_url = (json.loads(meta_path.read_text(encoding="utf-8")).get("pages_url") or "").rstrip("/")
         if pages_url:
@@ -2760,15 +2782,22 @@ def _recipe_web_url() -> str:
     return page_ref
 
 
-def build_skill_recipe_chapters(part: int, for_print: bool = False) -> list[dict]:
-    """Build the Appendix E chapter records: one front-door page (chapter 0) whose prose is authored inline,
-    then one page per authored content file under `appendix-skill-recipe/` (E.1, …). Mirrors the stacks Part
-    (Appendix D): a hand-authored appendix Part, rendered by the existing pager/TOC/index machinery with no
+def build_skill_recipe_chapters(part: int, for_print: bool = False,
+                                letter: str = "E", locator_figs: bool = False) -> list[dict]:
+    """Build the How-to-Write-a-Skill chapter records: one front-door page (chapter 0) whose prose is authored
+    inline, then one page per authored content file under `appendix-skill-recipe/` (E.1, …). Mirrors the
+    stacks Part: a hand-authored appendix Part, rendered by the existing pager/TOC/index machinery with no
     catalogue projection. Every record carries `is_appendix: True`, so it renders with no special-casing.
     Returns [] if no content files are present (the front-door alone is not emitted without its content).
 
+    `letter` is the appendix letter — `E` legacy, `D` in the value-ordered v2 projection (where the recipe
+    trails the brick catalog). The front-door slug stays `appendix-skill-recipe` (the stable target of
+    narrative `[appendix: appendix-skill-recipe]` cross-references) regardless of letter; only the content
+    page slug follows the letter (`appendix-<letter>-<stem>`). `locator_figs` (v2) stamps `fig_prefix` for
+    D80 monotonic figure numbering; legacy leaves it unset (byte-identical figure numbers).
+
     When the print manifest sets `appendix_e == "pointer"` AND this is the print/PDF projection
-    (`for_print=True`), Appendix E collapses to the front-door alone plus a one-paragraph pointer to the full
+    (`for_print=True`), the recipe collapses to the front-door alone plus a one-paragraph pointer to the full
     recipe online — the content page is dropped from print. The WEB build (`for_print=False`) always keeps
     the full recipe, so the pointer's target stays live."""
     pages = [(stem, title) for stem, title in _SKILL_RECIPE_PAGES
@@ -2776,47 +2805,54 @@ def build_skill_recipe_chapters(part: int, for_print: bool = False) -> list[dict
     if not pages:
         return []
 
+    low = letter.lower()
     pointer_mode = for_print and _load_print_manifest().get("appendix_e") == "pointer"
 
     chapters: list[dict] = []
-    part_title = "Appendix E — How to Write a Skill"
+    part_title = f"Appendix {letter} — How to Write a Skill"
 
-    # FRONT-DOOR PAGE — heads Appendix E (chapter 0, sorts before the recipe). In pointer mode it carries the
-    # one-paragraph online pointer (the content page below is dropped from print).
+    # FRONT-DOOR PAGE — heads the recipe Part (chapter 0, sorts before the recipe). In pointer mode it carries
+    # the one-paragraph online pointer (the content page below is dropped from print).
     front_body = _APPENDIX_SKILL_RECIPE_OPENING_PROSE.strip()
     if pointer_mode:
         front_body += (
             "\n\n**The full recipe — its three steps grounded in the three self-\\* skills — lives in the "
-            f"web edition of this book:** [{pages[0][1]}]({_recipe_web_url()}). Open it there to read each "
+            f"web edition of this book:** [{pages[0][1]}]({_recipe_web_url(low)}). Open it there to read each "
             "step worked through in full."
         )
-    chapters.append({
+    front: dict = {
         "slug": _APPENDIX_SKILL_RECIPE_OPENING_SLUG,
         "part": part,
         "part_title": part_title,
         "chapter": 0,
-        "chapter_title": "Appendix E — How to Write a Skill",
+        "chapter_title": part_title,
         "body_md": front_body,
         "is_appendix": True,
         "mermaid": False,
-    })
+    }
+    if locator_figs:
+        front["fig_prefix"] = letter
+    chapters.append(front)
 
     if pointer_mode:
         return chapters  # print stops at the front-door + pointer; web keeps the full recipe below
 
-    # ONE PAGE PER AUTHORED FILE — E.1, E.2, … in listed order.
+    # ONE PAGE PER AUTHORED FILE — <letter>.1, <letter>.2, … in listed order.
     for i, (stem, title) in enumerate(pages, start=1):
         raw = (_SKILL_RECIPE_DIR / f"{stem}.md").read_text(encoding="utf-8")
-        chapters.append({
-            "slug": f"appendix-e-{stem}",
+        rec: dict = {
+            "slug": f"appendix-{low}-{stem}",
             "part": part,
             "part_title": part_title,
             "chapter": i,                       # sorts after the front-door's chapter 0
-            "chapter_title": f"Appendix E - {i}. {title}",
+            "chapter_title": f"Appendix {letter} - {i}. {title}",
             "body_md": _fold_wrapped_bullets(raw.strip()),
             "is_appendix": True,
             "mermaid": False,
-        })
+        }
+        if locator_figs:
+            rec["fig_prefix"] = f"{letter}.{i}"
+        chapters.append(rec)
     return chapters
 
 
@@ -2903,18 +2939,21 @@ def _stack_concept_first_sentence(stem: str) -> str:
     return sentence.strip()
 
 
-def _appendix_stacks_summary_md() -> str:
+def _appendix_stacks_summary_md(stem_letter: str = "d") -> str:
     """The front-door 'Adopt by capability' block: one bullet per stack — its capability one-liner (the
-    first sentence of the stack file's `## Concept`) plus a link to its Appendix-D page. Derived entirely
+    first sentence of the stack file's `## Concept`) plus a link to its stack page. Derived entirely
     from `_STACKS` (the single source for stack order) and the stack files themselves; no hand-maintained
-    second list. Only stack files present on disk appear, matching what Appendix D renders."""
+    second list. Only stack files present on disk appear, matching what the stacks Part renders.
+
+    `stem_letter` is the appendix letter the stack pages render under — `d` legacy (`appendix-d-<stem>`),
+    `a` in the value-ordered v2 projection (`appendix-a-<stem>`). Default keeps the legacy target."""
     bullets: list[str] = []
     for stem, title in _STACKS:
         if not (_STACKS_DIR / f"{stem}.md").is_file():
             continue
         concept = _stack_concept_first_sentence(stem)
         tail = f" — {concept}" if concept else ""
-        bullets.append(f"- **[{title}](appendix-d-{stem}.html)**{tail}")
+        bullets.append(f"- **[{title}](appendix-{stem_letter}-{stem}.html)**{tail}")
     if not bullets:
         return ""
     head = [
@@ -2982,7 +3021,39 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
     return "\n".join(parts).strip()
 
 
+# ─────────────────────────── Appendix projection: v1 (role-ordered) vs v2 (value-ordered) ───────────────
+# The appendix has two projections behind a build flag, so the value-ordered restructure lands ALONGSIDE the
+# current one and nothing switches until the flag flips (the reviewer's incremental migration, steps 2–3):
+#   v1 (DEFAULT, flag OFF) — the current role-ordered set: Appendix A Agent · B Models-bridge · C Product
+#       (flagship GoF pages) · D Mechanism Stacks · E How to Write a Skill. Renders byte-identically to before.
+#   v2 (flag ON) — the value-ordered set: A MAGE Engineering Stacks · B Flagship Mechanisms
+#       (one Part, role subsections) · C Mechanism Catalog (C.1/C.2/C.3 brick grid, STUBBED this wave) ·
+#       D How to Write a Skill (relettered E→D). Figure numbers derive monotonically off the A.X/B.N locator.
+# The flag is the module constant APPENDIX_V2, overridable at runtime by env ADA_APPENDIX_V2 (any non-empty
+# value that is not "0"/"false"/"no" turns it on). Default OFF keeps the published build unchanged.
+APPENDIX_V2 = False
+
+
+def _appendix_v2_enabled() -> bool:
+    """True when the NEW value-ordered A/B/C/D appendix projection is selected. Default OFF — the legacy
+    role-ordered projection renders, byte-identical to before. Enable by setting env `ADA_APPENDIX_V2=1`
+    (any non-empty value other than `0`/`false`/`no`), or by flipping the `APPENDIX_V2` module constant."""
+    env = os.environ.get("ADA_APPENDIX_V2")
+    if env is not None:
+        return env.strip().lower() not in ("", "0", "false", "no", "off")
+    return APPENDIX_V2
+
+
 def build_appendix_chapters(next_part: int, for_print: bool = False) -> list[dict]:
+    """Dispatch to the selected appendix projection (see `_appendix_v2_enabled`). Every caller — the web
+    build, the print/PDF build, and `expected_page_slugs` — routes through here, so the flag governs the whole
+    appendix in one place and the two projections can never partially mix within one build."""
+    if _appendix_v2_enabled():
+        return _build_appendix_chapters_v2(next_part, for_print)
+    return _build_appendix_chapters_v1(next_part, for_print)
+
+
+def _build_appendix_chapters_v1(next_part: int, for_print: bool = False) -> list[dict]:
     """Build appendix 'chapter' records — ONE PER FLAGSHIP PATTERN plus one opening front-door page — each
     mirroring the chapter dict shape so the existing pager/TOC/index machinery renders it. Ordering follows
     the census-map hierarchy: Environment → target (Agent A / Models-bridge B / Product C) → family (census
@@ -3108,6 +3179,190 @@ def build_appendix_chapters(next_part: int, for_print: bool = False) -> list[dic
     # the recipe page), rendered the same way — no catalogue projection, no role/family machinery. In the
     # print/PDF projection with `appendix_e == "pointer"` it collapses to the front-door + an online pointer.
     chapters += build_skill_recipe_chapters(part=stacks_part + 1, for_print=for_print)
+    return chapters
+
+
+# ─────────────────────────── Appendix v2 — the value-ordered A/B/C/D projection (flag ON) ───────────────
+# The stub content the C.1/C.2/C.3 brick grid and the compressed A constituents / B notes REPLACE in later
+# assembly sub-waves. This wave builds the STRUCTURE only: the A/B/C/D letters + order, the derived monotonic
+# locators, the D80 figure-prefix fields, and buildable (orphan-free) pages. The A constituent prose, the B
+# compression, and the C bricks land when those sub-waves assemble the drafts under `book/_design/drafts/`.
+_APPENDIX_V2_B_OPENING_SLUG = "appendix-b-flagship-mechanisms"
+_APPENDIX_V2_C_OPENING_SLUG = "appendix-c-mechanism-catalog"
+
+_APPENDIX_V2_B_OPENING_PROSE = """\
+**Flagship Mechanisms — the deep dives**
+
+The stacks in Appendix A adopt whole capabilities. This appendix goes the other way: it takes the \
+mechanisms that carry the most weight and treats each one on its own — the problem it kills, the shape \
+that kills it, the engineering consequences, and the seam where you wire it in. Read a stack to compose; \
+read a Flagship Mechanism to understand one piece in depth.
+
+The notes are grouped by target zone — Agent, Models-bridge, Product — and numbered straight through, so \
+a cross-reference names a stable locator (§B.1 … §B.29) regardless of which zone it falls in. Every \
+mechanism here also appears as a brick in the Mechanism Catalog (Appendix C), and in full in the online \
+catalogue."""
+
+_APPENDIX_V2_C_OPENING_PROSE = """\
+**Mechanism Catalog — the complete map**
+
+This is the whole catalogue at a glance: every mechanism, grouped by target zone, each as a compact brick \
+— a figure, a three-sentence summary, and its metadata. Use it to scan the full vocabulary and jump to \
+the deeper treatment: a flagship links to its Flagship Mechanism (Appendix B); every mechanism links to \
+its complete Gang-of-Four entry in the online catalogue.
+
+The three sections below — Agent, Models-bridge, Product — will render as packed brick grids in a later \
+build. This wave establishes the section structure and the complete reference index; the bricks assemble \
+next."""
+
+
+def _appendix_v2_role_subsections() -> list[tuple[str, str]]:
+    """The (letter-suffix, role-group) pairs for Appendix C's three brick sections (C.1 Agent · C.2
+    Models-bridge · C.3 Product), in the canonical role order `_APPENDIX_ROLES` declares."""
+    return [(str(i + 1), group) for i, (_r, group) in enumerate(_APPENDIX_ROLES)]
+
+
+def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list[dict]:
+    """The value-ordered appendix (build flag ON): **A** MAGE Engineering Stacks · **B** Flagship Mechanisms
+    (one Part, role subsections, monotonic B.N) · **C** Mechanism Catalog (C.1/C.2/C.3 brick grid — STUBBED
+    this sub-wave) · **D** How to Write a Skill (relettered from legacy E). Figure numbers derive
+    monotonically off each page's A.X / B.N locator (`fig_prefix`), killing the legacy 8.608 sort-key garbage
+    (D80). Reads all 83 entries (`_appendix_entries`); the 29 flagships (`_flagship_slugs`) each get a B page
+    and a monotonic B.N; every entry appears in the C reference index (flagship → its B page, the rest →
+    online). The `[appendix: <slug>]` markers resolve to the NEW letters automatically — the letter map reads
+    each page's `part_title`, which now says 'Appendix A/B/C/D'."""
+    entries = _appendix_entries()
+    if not entries:
+        return []
+    flagship = _flagship_slugs()
+
+    family_order = _family_order_from_index()
+    role_index = {group: i for i, (_r, group) in enumerate(_APPENDIX_ROLES)}
+
+    # Role → family census number → within-family slug: the census-map hierarchy, same as legacy.
+    def _sort_key(rec: dict) -> tuple:
+        return (
+            role_index.get(rec["group"], 99),
+            family_order.get(rec["family"], 999),
+            rec["family"],
+            rec["slug"],
+        )
+    ordered = sorted(entries, key=_sort_key)
+
+    # APPENDIX B locators — a single MONOTONIC run B.1…B.29 across every flagship in role→family→slug order
+    # (Agent, then Models-bridge, then Product), so a locator is stable regardless of zone. All flagships sit
+    # in Appendix B, so the record's letter is "B" for all 29; `page_slug`/`appendix_letter`/`appendix_num`
+    # drive the stack-member links, the anchor map, and the reference index — the same fields the legacy path
+    # set, only with one shared letter. A non-flagship carries none of them (absence = the flagship signal).
+    b_counter = 0
+    for rec in ordered:
+        if rec["slug"] not in flagship:
+            continue
+        b_counter += 1
+        rec["page_slug"] = f"appendix-b-{rec['slug']}"
+        rec["appendix_letter"] = "B"
+        rec["appendix_num"] = b_counter
+
+    # The rewired mechanism-map figure: flagship chip → its Appendix-B page, non-flagship chip → its web
+    # entry (via the anchor map, from the `page_slug` fields just set). Embedded on the Appendix-C opening.
+    anchor_map = _appendix_anchor_map(ordered)
+    _emit_rewired_figure(anchor_map)
+
+    counts = _appendix_counts(ordered)
+    # Stacks now live in Appendix A, so the member→stack back-links point at `appendix-a-<stem>` pages.
+    stack_membership = _stack_membership_index(page_letter="a")
+    page_by_slug = {rec["slug"]: rec for rec in ordered}
+
+    chapters: list[dict] = []
+
+    # ── APPENDIX A — MAGE Engineering Stacks (was legacy Appendix D). Leads the appendix: adopt a capability
+    #    as a whole stack. The opening front-door + one page per stack, figures numbered A.<i>-N.
+    chapters += build_stack_chapters(
+        part=next_part, page_by_slug=page_by_slug,
+        letter="A", part_name="MAGE Engineering Stacks", locator_figs=True)
+
+    # ── APPENDIX B — Flagship Mechanisms. ONE Part; role SUBSECTIONS (Agent → Models-bridge → Product); the
+    #    29 notes numbered straight through B.1…B.29. Opening frame carries the nine-capability lens + a
+    #    pointer to the stacks in Appendix A.
+    b_part = next_part + 1
+    b_part_title = "Appendix B — Flagship Mechanisms"
+    b_opening_body = [
+        _APPENDIX_V2_B_OPENING_PROSE,
+        "",
+        _appendix_intro_extras_md(),           # nine-capability map + lifted L1 principle (from the model)
+        "",
+        _appendix_stacks_summary_md(stem_letter="a"),   # 'adopt by capability' → links into Appendix A
+    ]
+    chapters.append({
+        "slug": _APPENDIX_V2_B_OPENING_SLUG,
+        "part": b_part,
+        "part_title": b_part_title,
+        "chapter": 0,                          # sorts before every note
+        "chapter_title": b_part_title,
+        "body_md": "\n".join(b_opening_body).strip(),
+        "is_appendix": True,
+        "mermaid": False,
+        "fig_prefix": "B",
+    })
+    # ONE PAGE PER FLAGSHIP — role order preserved by `ordered`, monotonic B.N as the chapter sort key, so the
+    # pager walks B.1…B.29 after the opening. The note body reuses the GoF pattern-page render (full this
+    # sub-wave; the ≤1pp/≤2pp compression is a later assembly wave).
+    for rec in (r for r in ordered if r["slug"] in flagship):
+        num = rec["appendix_num"]
+        chapters.append({
+            "slug": rec["page_slug"],
+            "part": b_part,
+            "part_title": b_part_title,
+            "chapter": num,                    # monotonic 1…29 — sorts after the opening's chapter 0
+            "chapter_title": f"Appendix B - {num}. {rec['name']}",
+            "body_md": _appendix_pattern_page_md(rec, stack_membership, for_print),
+            "is_appendix": True,
+            "mermaid": True,
+            "fig_prefix": f"B.{num}",          # D80: "Figure B.<num>-N", monotonic off the locator
+            "role_group": rec["group"],        # for the later role-subsection grouping in the TOC
+        })
+
+    # ── APPENDIX C — Mechanism Catalog (STUB). Opening carries the complete reference index (every mechanism:
+    #    flagship → its B page, the rest → online) + the rewired clickable map. The C.1/C.2/C.3 role sections
+    #    are placeholder headings this sub-wave; the packed brick grid assembles next. Brick thumbnails are
+    #    UNNUMBERED by construction — this wave emits no brick figures, so none enter the float stream.
+    c_part = next_part + 2
+    c_part_title = "Appendix C — Mechanism Catalog"
+    c_body = [
+        _APPENDIX_V2_C_OPENING_PROSE,
+        "",
+        # The clickable map — every mechanism chip routed to its Appendix-B page or its web entry.
+        f"<!-- figure-iframe: {_BOOK_FIGURE_NAME} | The governance mechanism map — every mechanism in the "
+        "catalogue, organized by target zone and family. Click a mechanism to open its flagship deep dive or "
+        "its online entry. | The governance mechanism map: click any mechanism to open its treatment. -->",
+        "",
+    ]
+    # C.1 / C.2 / C.3 placeholder section headings (the brick grids land in the C assembly sub-wave).
+    for suffix, group in _appendix_v2_role_subsections():
+        n_in_role = sum(1 for r in ordered if r["group"] == group)
+        c_body += [
+            f"### C.{suffix} {group}",
+            "",
+            f"*{n_in_role} mechanisms. The packed brick grid for this zone assembles in a later build.*",
+            "",
+        ]
+    c_body += [_appendix_contents_md(ordered)]  # the complete all-83 reference index (flagship + online)
+    chapters.append({
+        "slug": _APPENDIX_V2_C_OPENING_SLUG,
+        "part": c_part,
+        "part_title": c_part_title,
+        "chapter": 0,
+        "chapter_title": c_part_title,
+        "body_md": "\n".join(c_body).strip(),
+        "is_appendix": True,
+        "mermaid": False,                      # the map is an <iframe>, not an inline mermaid block
+        "fig_prefix": "C",
+    })
+
+    # ── APPENDIX D — How to Write a Skill (was legacy Appendix E). Full content retained (design §13.7).
+    d_part = next_part + 3
+    chapters += build_skill_recipe_chapters(
+        part=d_part, for_print=for_print, letter="D", locator_figs=True)
     return chapters
 
 
@@ -3687,11 +3942,20 @@ def _caption_el(tag: str, caption_md: str, extra_class: str = "") -> str:
 
 
 def _chapter_id(c: "dict") -> str:
-    """The chapter's `<part>.<chapter>` identifier (e.g. "1.3") — the reader-facing locator floats number
-    against. Chapter-relative float numbers reset per chapter and carry this prefix, so a figure reads
-    "Figure 1.3-1"; the id it derives (`fig-1-3-1`, dots→dashes for a selector-safe id) is unique within the
-    chapter's page and, because the (part, chapter) pair is unique per chapter, across a single-document
-    build too."""
+    """The chapter's reader-facing locator that floats number against. Body chapters use `<part>.<chapter>`
+    (e.g. "1.3"), so a figure reads "Figure 1.3-1"; the id it derives (`fig-1-3-1`, dots→dashes for a
+    selector-safe id) is unique within the page and, because the (part, chapter) pair is unique per chapter,
+    across a single-document build too.
+
+    An appendix chapter may carry an explicit `fig_prefix` — its reader-facing appendix locator ("A.3",
+    "B.11") — which takes precedence over `<part>.<chapter>`. This is the D80 fix: the legacy appendix set a
+    `chapter` sort key of `family_n*100 + i + 1` purely for ordering, which then leaked into figure locators
+    as garbage like "8.608-1". Routing appendix figures off the DERIVED, monotonic `fig_prefix` yields
+    "Figure A.3-1" / "Figure B.11-1" instead. Chapters without `fig_prefix` (every body chapter, and the
+    legacy appendix) fall back to `<part>.<chapter>` unchanged, so this cannot alter their numbering."""
+    fig_prefix = c.get("fig_prefix")
+    if fig_prefix:
+        return fig_prefix
     return f'{c["part"]}.{c["chapter"]}'
 
 
