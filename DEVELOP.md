@@ -110,8 +110,12 @@ and never blocks a fresh clone.
 ## Deploy & serving
 
 The site is GitHub Pages, built in CI from the `.md` on every push (the "executable, can't-drift" build).
-The tracked `hooks/pre-commit` keeps the committed HTML + skill bundle in sync locally
-(`python3 catalog.py install-hooks` to enable). Never hand-edit `.html` — it's regenerated and overwritten.
+The tracked `hooks/pre-commit` keeps three things in sync locally on every commit
+(`python3 catalog.py install-hooks` to enable): the committed HTML + skill bundle, the derived-view model
+JSONs (`outline.json` / `outcomes.json` / `reverse_index.json`, regenerated + staged so they never go
+stale), and a BLOCKING `book-float-ref` gate (a numbered float without its introducing `[ref:]` cross-ref
+fails at commit, not at deploy). The slower external checks (html-validate, axe, plugin-validate) stay
+deploy-time. Never hand-edit `.html` — it's regenerated and overwritten.
 
 ## Security analysis
 
