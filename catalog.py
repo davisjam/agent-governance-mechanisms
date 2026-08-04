@@ -1479,7 +1479,7 @@ LANDING_CSS = """
   /* ---- shared chrome: title, nav pills, lead prose, dividers -------------------------------- */
   .book-h1 { margin:6px 0 2px; }
   .book-sub { color:var(--accent); font-weight:700; font-size:var(--fs-body); letter-spacing:.01em; margin:0 0 12px; }
-  .nav-grid { display:flex; flex-wrap:wrap; gap:9px; margin:0 0 22px; }
+  .nav-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin:0 0 22px; }
   .nav-grid .ng-cell { display:flex; flex-direction:column; justify-content:center; gap:1px;
               border:1.6px solid var(--rule); border-radius:10px; padding:7px 13px; background:var(--paper);
               text-decoration:none; color:var(--ink); transition:border-color .12s, background .12s; }
@@ -1530,6 +1530,17 @@ LANDING_CSS = """
   .slot.figright .s-fig { order:2; }
   .slot .s-words { min-width:0; }
 
+  /* Big Ideas 5 & 6 — enlarged figures (author feedback: too small to read beside the words). Reuse the
+     idea-hero full-width idiom: the figure spans the content column, the words center beneath it, so a
+     wide diagram is legible without zooming. */
+  .slot.slot-bigfig { display:block; }
+  .slot.slot-bigfig .s-fig { margin:0 0 18px; }
+  .slot.slot-bigfig .s-fig svg { max-width:1080px; margin:0 auto; }
+  .slot.slot-bigfig .s-words { max-width:80ch; margin:0 auto; text-align:center; }
+  .slot.slot-bigfig .s-claim { max-width:74ch; margin-left:auto; margin-right:auto; }
+  .slot.slot-bigfig .s-more-text { margin-left:auto; margin-right:auto; }
+  .slot.slot-bigfig button.s-expand { margin-left:auto; margin-right:auto; text-align:center; }
+
   /* The matched thesis PAIR - two half-width cells, figure above words. */
   .pair { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
   .pair .p-cell { border-top:3px solid var(--box-thesis-rule); padding-top:14px; scroll-margin-top:16px; }
@@ -1551,12 +1562,15 @@ LANDING_CSS = """
             text-decoration:none; }
   .s-read:hover { text-decoration:underline; }
 
-  /* ---- the closing: conclusion + three ways in ---------------------------------------------- */
-  .closing { max-width:840px; margin:8px auto 8px; text-align:center; }
-  .close-lead { font-size:var(--fs-body); line-height:var(--lh-body); color:var(--ink); margin:0 auto 20px; max-width:70ch; }
-  .close-ways { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  /* ---- the closing: conclusion + four ways in ----------------------------------------------- */
+  /* A wide, fluid footer block (author feedback: the closing read too narrow on a wide display). It uses
+     the top-text measure and flows to more of the page; the four ways-in buttons ride a 1×4 grid on wide
+     screens and collapse to 2-up then a single stacked column as the viewport narrows. */
+  .closing { max-width:1200px; margin:8px auto 8px; text-align:center; }
+  .close-lead { font-size:var(--fs-body); line-height:var(--lh-body); color:var(--ink); margin:0 auto 20px; max-width:82ch; }
+  .close-ways { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; align-items:stretch; }
   .close-btn { display:block; border:1.6px solid var(--rule); border-top:4px solid var(--accent); border-radius:12px;
-               background:var(--paper); padding:14px 20px; text-decoration:none; color:var(--ink); min-width:200px;
+               background:var(--paper); padding:14px 20px; text-decoration:none; color:var(--ink); min-width:0;
                transition:border-color .12s, background .12s; }
   .close-btn:hover { border-color:var(--accent); background:var(--accent-tint); }
   .close-btn .cb-t { display:block; font-family:var(--font-display); font-size:var(--fs-card-title); font-weight:600; }
@@ -1611,10 +1625,11 @@ LANDING_CSS = """
     .slot.figright .s-fig { order:0; }
     .slot .s-fig { max-width:640px; margin:0 auto; }
     .pair { grid-template-columns:1fr; gap:22px; }
-    .close-btn { min-width:0; flex:1 1 100%; }
+    .close-ways { grid-template-columns:1fr 1fr; }
   }
   @media (max-width:640px){
     ul.oc-list li.oc-row { grid-template-columns:1fr; gap:3px; }
+    .close-ways { grid-template-columns:1fr; }
   }
 """
 
@@ -1855,10 +1870,12 @@ def _idea_figure(rec: dict) -> str:
     return _ns_svg_ids(svg, "bi-" + rec.get("_slug", rec.get("id", "x")))
 
 
-def _big_idea_band(rec: dict, figright: bool = False) -> str:
+def _big_idea_band(rec: dict, figright: bool = False, bigfig: bool = False) -> str:
     """One Big Idea as a full-width band: figure beside words (sides alternate for rhythm), one clean
-    block — no card, no thumbnail, no peek. Divider handled by the caller."""
-    cls = "slot figright" if figright else "slot"
+    block — no card, no thumbnail, no peek. Divider handled by the caller. `bigfig` renders the band
+    stacked full-width (figure above centred words) for ideas whose figure needs the whole column to
+    stay legible; it supersedes `figright` (side is moot when the figure spans the column)."""
+    cls = "slot slot-bigfig" if bigfig else ("slot figright" if figright else "slot")
     return (
         f'<div class="{cls}" id="{_attr(rec.get("id", ""))}">\n'
         f'  <figure class="s-fig">{_idea_figure(rec)}</figure>\n'
@@ -1918,10 +1935,10 @@ def _landing_big_ideas() -> str:
         + _thesis_cell(by_slug["alignment-thesis"], "card-thesis-alignment") + "\n"
         + '</div>')
     parts.append('<hr class="i-sep" />')
-    # Ideas 5 & 6 — practice, then seat — alternating bands.
-    parts.append(_big_idea_band(by_slug["convert-failures"], figright=False))
+    # Ideas 5 & 6 — practice, then seat — enlarged full-width figures (legible without zooming).
+    parts.append(_big_idea_band(by_slug["convert-failures"], bigfig=True))
     parts.append('<hr class="i-sep" />')
-    parts.append(_big_idea_band(by_slug["seat-moves"], figright=True))
+    parts.append(_big_idea_band(by_slug["seat-moves"], bigfig=True))
     return "\n\n  ".join(parts)
 
 
@@ -2049,11 +2066,11 @@ LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 ==============
       <p class="m-lead">Generative AI is shifting software engineering from a practice built around scarce
       implementation toward one built around abundant, low-cost code. The hard part stops being writing
       code and becomes <span class="term">governing the conditions under which fast code can be
-      trusted</span>. This site serves a method for doing that — <span class="term">Model-Based Agentic
-      Software Engineering</span> (MAGE) — as six big ideas; the book carries the full treatment of every
-      one.</p>
-      <p class="m-lead"><a class="hero-cta" href="quick-start.html"><em>Quick start — install the skills
-      for Claude →</em></a></p>
+      trusted</span>. This site describes a method for doing that. The method is called <span class="term">Model-Based
+      Agentic Software Engineering (MAGE)</span>. MAGE has six big ideas described below. To learn more,
+      <a class="hero-cta" href="book/index.html"><strong>the book provides the full treatment.</strong></a></p>
+      <p class="m-lead"><a class="hero-cta" href="quick-start.html"><strong>QuickStart: Bootstrap MAGE in
+      your own project by installing the Skills for Claude.</strong></a></p>
     </div>
   </div>
 
