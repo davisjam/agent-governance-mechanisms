@@ -92,6 +92,30 @@
     "status": "book-only",
     "note": "The residual: goals no constraint+sensor pair reaches — the gap that stays human. Book index-def present. Formerly previewed on the landing's vocabulary strip (card-residual); that strip was removed so the landing ends at the three nav cards — book-only by design now."
   },
+  "validator": {
+    "kind": "mechanism-class",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Validator (evidence / admission class). Checks a candidate result against a standard — a type, a preservation property, a specification — before the result may advance. Book index-def tagged at the 2.3 four-classes paragraph (evidence + admission). Registered in index-terms.md; front-glossary vocabulary term. Book-only by design (no landing card); sibling of constraint/sensor."
+  },
+  "gate": {
+    "kind": "mechanism-class",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Gate. A check placed across a pipeline step (commit, deploy) that refuses to let the step through until its condition is met — the soft instruction determinized into a hard check. Book index-def tagged at the 2.3 'determinize them into a gate' paragraph. Registered in index-terms.md; front-glossary vocabulary term. Book-only by design (no landing card)."
+  },
+  "fidelity-validator": {
+    "kind": "mechanism-class",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Fidelity Validator (DocAble specific). Asserts a remediated document's meaning survived the remediation, catching the file that became more accessible and less true to the original. Book index-def tagged at the 1.2 DocAble trust-half paragraph. Registered in index-terms.md; front-glossary vocabulary term. Book-only by design (no landing card)."
+  },
+  "provenance-layer": {
+    "kind": "mechanism-class",
+    "site_home": "N/A",
+    "status": "book-only",
+    "note": "Provenance Layer (DocAble specific). Stamps every artifact the system inserts, so a document's remediation history can be reconstructed and any single change explained or reversed. Book index-def tagged at the 1.2 DocAble trust-half paragraph. Registered in index-terms.md; front-glossary vocabulary term. Book-only by design (no landing card)."
+  },
   "generative-validation": {
     "kind": "family",
     "site_home": "N/A",

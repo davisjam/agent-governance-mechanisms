@@ -156,9 +156,14 @@ index entry (`definition of:` / `examples of:`) and suppresses the plain occurre
 display name. A tag whose slug is absent here fails the build. Display names are authored here once.
 
 - concept: churn | Churn
+- concept: fleet | The fleet
 - concept: printer-metaphor | The printer metaphor
 - concept: picture-vs-model | Picture vs. model
 - concept: whose-fault | Whose fault is a bad build
+- concept: one-shot-scripting | One-shot scripting
+- concept: supervised-autonomy | Supervised autonomy
+- concept: fidelity-validator | The fidelity validator
+- concept: provenance-layer | The provenance layer
 - concept: selc | SELC — the software engineering life cycle
 - concept: lifecycle-phases | The lifecycle phases
 - concept: engineers-seat | The engineer's seat
@@ -197,6 +202,8 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: residual | The residual (goals no mechanism reaches; stays-human)
 - concept: sensor | Sensor (detects drift)
 - concept: constraint | Constraint (prevents drift)
+- concept: validator | The validator
+- concept: gate | The gate
 - concept: governance-package | Governance package
 - concept: governance-mechanism | Governance mechanism
 - concept: specification-driven-development | Specification-driven development
@@ -293,6 +300,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: autonomy-amplifier | The autonomy amplifier
 - concept: judgment-into-infrastructure | Judgment into infrastructure
 - concept: governance-as-design-patterns | Governance as design patterns
+- concept: pattern | The design-pattern form
 - concept: thesis-modeling | The Modeling Thesis
 - concept: thesis-alignment | The Alignment Thesis
 - concept: universal-language | Models are the universal language
