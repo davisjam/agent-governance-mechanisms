@@ -557,7 +557,7 @@ def iter_cite_keys(text: str) -> list[str]:
 
 def _cite_ns(slug: str) -> str:
     """A slug → a citation id namespace (`wc-<ns>-N`), sanitised to the `[a-z0-9-]` an HTML id / CSS
-    selector accepts (the chapter slug carries dots: `0.1-preface` → `0-1-preface`)."""
+    selector accepts (the chapter slug carries dots: `0.3-preface` → `0-3-preface`)."""
     return re.sub(r"[^a-z0-9]+", "-", slug.lower()).strip("-")
 
 

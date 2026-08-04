@@ -53,7 +53,29 @@
   },
   "chapters": [
     {
-      "slug": "0.1-preface",
+      "slug": "0.2-the-books-language",
+      "opening": {
+        "failure_question": "absent",
+        "answer": "absent",
+        "thesis_link": "absent",
+        "thesis_target": "none"
+      },
+      "closing": {
+        "kind": "apparatus"
+      },
+      "note": "Exempt (apparatus). Front-of-book glossary — the book's vocabulary gathered in one place so later chapters reference rather than re-explain; no argumentative shape expected.",
+      "opening_anchor": "This book earns its own vocabulary. A handful of terms recur —",
+      "closing_anchor": "provenance layer — as against the working half that does the repair.",
+      "delivers": {
+        "concepts": [],
+        "artifacts": [],
+        "artifact_would_help": false
+      },
+      "exempt": "apparatus",
+      "spine_advances": []
+    },
+    {
+      "slug": "0.3-preface",
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",
@@ -63,7 +85,7 @@
       "closing": {
         "kind": "transition"
       },
-      "note": "Exempt (preface). Lead states the shift and the book's subject; theses arrive later in the preface body. Closes on the map of the book + the one-move epigraph.",
+      "note": "Exempt (preface). Lead states the shift and the book's subject; theses arrive later in the preface body. Closes thematically on the one-move epigraph (the map of the book now lives in the How to read this book page).",
       "opening_anchor": "This is a book about engineering — specifically, about what engineering work",
       "closing_anchor": "> Everything that follows is one move, repeated: convert judgment into infrastructure.",
       "delivers": {
@@ -96,29 +118,7 @@
       ]
     },
     {
-      "slug": "0.2-the-books-language",
-      "opening": {
-        "failure_question": "absent",
-        "answer": "absent",
-        "thesis_link": "absent",
-        "thesis_target": "none"
-      },
-      "closing": {
-        "kind": "apparatus"
-      },
-      "note": "Exempt (apparatus). Front-of-book glossary — the book's vocabulary gathered in one place so later chapters reference rather than re-explain; no argumentative shape expected.",
-      "opening_anchor": "This book earns its own vocabulary. A handful of terms recur —",
-      "closing_anchor": "provenance layer — as against the working half that does the repair.",
-      "delivers": {
-        "concepts": [],
-        "artifacts": [],
-        "artifact_would_help": false
-      },
-      "exempt": "apparatus",
-      "spine_advances": []
-    },
-    {
-      "slug": "0.3-acknowledgments",
+      "slug": "0.5-acknowledgments",
       "opening": {
         "failure_question": "absent",
         "answer": "absent",

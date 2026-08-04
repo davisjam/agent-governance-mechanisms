@@ -2,7 +2,7 @@
   "_note": "HAND-AUTHORED source for the book's CHAPTER-SHAPE model — the Phase-2a editorial assessment of every chapter's opening and closing against the discipline (directive book/_design/book-editorial-discipline-directive-260802.md Task 2 / Phase 2): an opening identifies the failure/question, the chapter's answer, and the thesis or argument step it advances; a closing is a consequence, a transition, or a synthesis — never a mere thesis re-announcement. This file IS edited by hand; chapter-shape.json is generated from it (`python3 book-models/chapter_shape_model.py regenerate`). Exemptions and per-chapter advances are JOINED from argument_spine_declared.json at derive time — never restated here. The anchors freeze the first/last prose words each assessment was made against (generated once at assessment time via `chapter_shape_model.py anchors`, then frozen): when the 2c refactor rewrites an opening or closing, the CS5 staleness check reddens that chapter until it is re-assessed here. Grades: `explicit` and `implicit` pass (implicit = carried by content, worth a one-clause sharpening in 2c); only `absent` flags. Flags are DERIVED by the generator, never authored.",
   "assessments": [
     {
-      "slug": "0.1-preface",
+      "slug": "0.3-preface",
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",
@@ -16,7 +16,7 @@
         "artifacts": [],
         "artifact_would_help": false
       },
-      "note": "Exempt (preface). Lead states the shift and the book's subject; theses arrive later in the preface body. Closes on the map of the book + the one-move epigraph.",
+      "note": "Exempt (preface). Lead states the shift and the book's subject; theses arrive later in the preface body. Closes thematically on the one-move epigraph (the map of the book now lives in the How to read this book page).",
       "opening_anchor": "This is a book about engineering — specifically, about what engineering work",
       "closing_anchor": "> Everything that follows is one move, repeated: convert judgment into infrastructure."
     },
@@ -40,7 +40,7 @@
       "closing_anchor": "provenance layer — as against the working half that does the repair."
     },
     {
-      "slug": "0.3-acknowledgments",
+      "slug": "0.5-acknowledgments",
       "opening": {
         "failure_question": "absent",
         "answer": "absent",

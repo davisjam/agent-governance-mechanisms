@@ -344,10 +344,9 @@
       "kind": "stance",
       "statement": "Part 5 is the grounding case the method was derived from, never its proof.",
       "distinguishes": [],
-      "home": "a-map-of-the-book",
+      "home": "why-build-a-system-to-study-a-method",
       "asserted_at": [
-        "a-map-of-the-book",
-        "where-the-map-leads"
+        "why-build-a-system-to-study-a-method"
       ],
       "contradicted_by": "Prose presenting Part 5 or DocAble as proof of the method or its theses — 'the proof', 'proves the method' — rather than as the grounding case / worked case / evidence base.",
       "watch_phrases": [
