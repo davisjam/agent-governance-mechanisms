@@ -3781,6 +3781,51 @@ def _resolve_xrefs(body: str, ref_map: "dict[str, dict]", for_print: bool) -> st
     return _XREF_RE.sub(_repl, body)
 
 
+# `[appendix: <slug>]` — a SYMBOLIC cross-reference to an appendix. The prose names the appendix by its
+# STABLE PAGE SLUG (`appendix-skill-recipe`), never by its LETTER; the letter is resolved at build from the
+# target page's own `part_title` ("Appendix E — …" → "E"). So re-lettering the appendices (the E→D shift a
+# restructure makes) updates every reference with no prose edit — the letter lives nowhere in the narrative
+# source. Joins the inline bracket family (`[ref:]`, `[data:]`, `[cite:]`), but unlike `[ref:]` (a float
+# reference Typst resolves via its own `@label` machinery) it rewrites to a plain markdown link BEFORE the
+# inline pass, so the HTML and Typst projections then treat it as an ordinary link — one resolution, two
+# surfaces. The slug matches the same `[a-z0-9-]` shape a page slug uses.
+_APPENDIX_REF_RE = re.compile(r"\[appendix:\s*([a-z0-9][a-z0-9-]*)\]")
+
+
+def _appendix_letter_map(chapters: "list[dict]") -> "dict[str, str]":
+    """`{appendix-page-slug: letter}` for every appendix page, the letter DERIVED at build from the page's
+    `part_title` ("Appendix E — How to Write a Skill" → "E"). Built AFTER the appendix pages are assembled,
+    so it reflects the appendices' current lettering; a `[appendix: <slug>]` reference reads its letter here
+    rather than hardcoding it in prose. A page whose `part_title` carries no "Appendix <L>" is skipped (it
+    contributes no resolvable target)."""
+    amap: dict[str, str] = {}
+    for c in chapters:
+        if not c.get("is_appendix"):
+            continue
+        m = re.search(r"Appendix\s+([A-Z])", c.get("part_title", ""))
+        if m:
+            amap[c["slug"]] = m.group(1)
+    return amap
+
+
+def _resolve_appendix_refs_md(md: str, amap: "dict[str, str]") -> str:
+    """Rewrite every `[appendix: <slug>]` marker to a plain markdown link `[Appendix <letter>](<slug>.html)`,
+    the letter looked up in `amap`. Runs on the markdown source once the appendix letters are known and
+    BEFORE the inline renderer, so both the HTML build (`inline` → `<a>`) and the Typst build (`inline_typst`
+    → `#link`) then render it through their ordinary link path — the reference cannot diverge between
+    surfaces. Fails loud on a slug that names no appendix page: a rotted symbolic reference must stop the
+    build, exactly as a dangling `[ref:]` does, never ship as literal `[appendix:foo]` text."""
+    def repl(m: "re.Match[str]") -> str:
+        slug = m.group(1)
+        letter = amap.get(slug)
+        if letter is None:
+            known = ", ".join(sorted(amap)) or "(no appendix pages in this build)"
+            raise SystemExit(
+                f"[appendix: {slug}] names no appendix page — known appendix slugs: {known}")
+        return f"[Appendix {letter}]({slug}.html)"
+    return _APPENDIX_REF_RE.sub(repl, md)
+
+
 def _collect_floats(chapters: list[dict], page_anchor_maps: dict) -> "tuple[list[dict], dict[str, dict]]":
     """Render every chapter once (mermaid SVG is cached) and number its floats in reading order, returning
     (ordered captioned floats for the list of figures/tables, label→{kind,num,slug} map for [ref:] xrefs).
@@ -4380,6 +4425,14 @@ def build() -> int:
     max_part = max(c["part"] for c in chapters)
     appendix = build_appendix_chapters(next_part=max_part + 1)
     chapters = chapters + appendix
+
+    # Resolve symbolic appendix cross-references (`[appendix: <slug>]` → "Appendix <letter>" link) now that
+    # every appendix page exists and its letter is known. Rewriting the marker to a plain markdown link here
+    # — before the harvest/glossary/float passes below and the per-chapter render — keeps ONE resolution
+    # point feeding every downstream consumer (see `_resolve_appendix_refs_md`).
+    _appendix_refs = _appendix_letter_map(chapters)
+    for c in chapters:
+        c["body_md"] = _resolve_appendix_refs_md(c["body_md"], _appendix_refs)
 
     # The first chapter of each Part opens with an epigraph (numbered Parts only).
     seen_parts: set[int] = set()

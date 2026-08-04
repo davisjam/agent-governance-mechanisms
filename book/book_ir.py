@@ -365,4 +365,13 @@ def parse_book(include_appendices: bool = False, for_print: bool = False) -> Doc
     if include_appendices:
         chapters = chapters + bb.build_appendix_chapters(
             next_part=max(c["part"] for c in chapters) + 1, for_print=for_print)
+        # Resolve symbolic appendix cross-references BEFORE parsing each chapter into the IR, using the same
+        # build-time letter derivation the HTML build uses (bb._appendix_letter_map /
+        # bb._resolve_appendix_refs_md) — so the print projection's `[appendix: <slug>]` markers become the
+        # SAME "Appendix <letter>" links the web book carries. Only meaningful when the appendix pages are in
+        # this parse (their letters are what a reference resolves against); the structure-only views that
+        # parse the narrative WITHOUT appendices never render these markers, so they leave them untouched.
+        amap = bb._appendix_letter_map(chapters)
+        for c in chapters:
+            c["body_md"] = bb._resolve_appendix_refs_md(c["body_md"], amap)
     return Document([_parse_chapter(c) for c in chapters])

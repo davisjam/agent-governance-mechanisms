@@ -1015,6 +1015,18 @@ def cmd_validate(_args) -> int:
         print(f"  [caption] {lcl.summary_line(long_caps)} — "
               f"run `python3 book-models/lint_caption_length.py`")
         n_issues += len(long_caps)
+    # NO-HARDCODED-REF — a cross-reference in the narrative prose names its target by a SYMBOLIC marker
+    # (`{{part:N}}` / `[ref:<label>]` / `[appendix:<slug>]`), never a literal letter/number typed into the
+    # sentence. The three "Appendix E" literals were converted to `[appendix: …]`, driving the tree to 0, so
+    # it lands BLOCKING: a hardcoded reference increments n_issues. See book-models/lint_no_hardcoded_ref.py.
+    import lint_no_hardcoded_ref as lnhr  # noqa: E402 — blocking symbolic-cross-reference lint
+    hard_refs = lnhr.findings()
+    if hard_refs:
+        print(f"  [xref]  {lnhr.summary_line(hard_refs)} — "
+              f"run `python3 book-models/lint_no_hardcoded_ref.py`")
+        for f in hard_refs:
+            print(f"          {f.file}:{f.line}: [{f.kind}] literal {f.text!r} — {f.remedy}")
+        n_issues += len(hard_refs)
     # FLAGSHIP-STACK CONFORMANCE (FS1–FS5) — AUDIT-ONLY. The deep-dive TEMPLATE check over the flagship
     # PACKAGE model (book-models/flagship-stack.json): join integrity, page shape, figure house-rules,
     # freshness. Lands audit-only-first (repo blocking-lint discipline) while the model carries fewer than
