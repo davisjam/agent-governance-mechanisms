@@ -3520,7 +3520,7 @@
           "section_id": "the-construction-recipe-is-a-pattern-of-its-own",
           "level": 2,
           "heading_text": "The construction recipe is a pattern of its own",
-          "topic_sentence": "Here is what makes the three feel of a piece: they were all built the same way.",
+          "topic_sentence": "The three feel of a piece because they were all built the same way.",
           "id_source": "derived",
           "block_index": 55,
           "points": [
@@ -3764,7 +3764,7 @@
           "section_id": "claude-is-the-fastest-road-to-hell",
           "level": 2,
           "heading_text": "Claude is the fastest road to hell",
-          "topic_sentence": "The single most useful sentence I can hand you is this: coding agents accelerate *within the frame you give them* — even when the frame is wrong.",
+          "topic_sentence": "Coding agents accelerate *within the frame you give them* — even when the frame is wrong.",
           "id_source": "derived",
           "block_index": 14,
           "points": [
@@ -3907,7 +3907,7 @@
           "section_id": "vibe-coding-treats-the-program-as-an-i-o-device-engineering-treats-it-as-a-system",
           "level": 3,
           "heading_text": "Vibe coding treats the program as an I/O device; engineering treats it as a system",
-          "topic_sentence": "Here is the distinction the whole method turns on.",
+          "topic_sentence": "When you vibe-code, you ask the agent to produce something that appears to satisfy the requested behavior, and the evidence you use is all external: does the demo run, does the output look right?",
           "id_source": "derived",
           "block_index": 62,
           "points": [
