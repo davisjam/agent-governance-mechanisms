@@ -17,7 +17,22 @@
       "closing_anchor": "> Everything that follows is one move, repeated: convert judgment into infrastructure."
     },
     {
-      "slug": "0.2-acknowledgments",
+      "slug": "0.2-the-books-language",
+      "opening": {
+        "failure_question": "absent",
+        "answer": "absent",
+        "thesis_link": "absent",
+        "thesis_target": "none"
+      },
+      "closing": {
+        "kind": "apparatus"
+      },
+      "note": "Exempt (apparatus). Front-of-book glossary — the book's vocabulary gathered in one place so later chapters reference rather than re-explain; no argumentative shape expected.",
+      "opening_anchor": "This book earns its own vocabulary. A handful of terms recur —",
+      "closing_anchor": "provenance layer — as against the working half that does the repair."
+    },
+    {
+      "slug": "0.3-acknowledgments",
       "opening": {
         "failure_question": "absent",
         "answer": "absent",

@@ -4,7 +4,7 @@
   "_counts": {
     "spine_claims": 14,
     "chapters_labeled": 32,
-    "chapters_exempt": 7,
+    "chapters_exempt": 8,
     "advancement_edges": 86,
     "reconciled_claims": 18,
     "reconciled_big_ideas": 6,
@@ -516,7 +516,12 @@
       "exempt": "preface"
     },
     {
-      "slug": "0.2-acknowledgments",
+      "slug": "0.2-the-books-language",
+      "advances": [],
+      "exempt": "apparatus"
+    },
+    {
+      "slug": "0.3-acknowledgments",
       "advances": [],
       "exempt": "apparatus"
     },
