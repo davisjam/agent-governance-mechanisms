@@ -213,12 +213,13 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 # never index-def-tagged, stays un-linked (no fabricated target). WEB-ONLY: `_link_glossary_sites` runs on the
 # rendered glossary HTML in `build()`, never on `body_md`, so the print/Typst projection is untouched.
 GLOSSARY_CHAPTER_SLUG = "0.2-the-books-language"
-# Apparatus one-pagers — front-matter pages that are a self-contained *reference apparatus* (not running
-# prose), meant to read as ONE bordered, offset item rather than bleeding visually from the preceding
-# chapter. "How to read this book" (its short prose + the whole-book map figure) is the founding member.
-# The renderer frames these in a `.apparatus-page` box (HTML) / a `#block` frame (Typst) — see the CSS
-# `.apparatus-page` swap-point block and `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
-_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book"}
+# Apparatus one-pagers — pages that are a self-contained *reference apparatus* (not running prose), meant
+# to read as ONE bordered, offset item rather than bleeding visually from the preceding chapter. "How to
+# read this book" (its short prose + the whole-book map figure) is the founding member; the back-matter
+# Operator's Dashboard (its metric table) is the second. The renderer frames these in a `.apparatus-page`
+# box (HTML) / a `#block` frame (Typst) — see the CSS `.apparatus-page` swap-point block and
+# `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
+_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book", "6.5-the-operators-dashboard"}
 _GLOSS_TERM_SLUGS = {
     "Model": "model",
     "Map and territory": "map-and-territory",

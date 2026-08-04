@@ -1,25 +1,28 @@
-"""The METRICS-DASHBOARD view — a typed model of the metrics the book steers by, carrying the author's
-INCLUSION CRITERION so a future metric is testable against it, not sorted by taste. A sibling of the other
-declared -> generated book models (claims / outline / flagship-stack): the hand-authored source of truth is
-`book-models/metrics-dashboard.json`; this module projects the QUALIFYING subset into the back-matter page
-"The Operator's Dashboard" and holds that page's table equal to the model with a parity check.
+"""The METRICS-DASHBOARD view — a typed model of the metrics the book steers by or certifies with, carrying
+the author's INCLUSION CRITERION so a future metric is testable against it, not sorted by taste. A sibling of
+the other declared -> generated book models (claims / outline / flagship-stack): the hand-authored source of
+truth is `book-models/metrics-dashboard.json`; this module projects ALL nine metrics into the back-matter
+page "The Operator's Dashboard", grouped by MODE, and holds that page's table equal to the model with a
+parity check.
 
-WHY A MODEL, NOT A HAND-BUILT TABLE.  The book measures many numbers; only some are metrics you STEER BY.
-The inclusion criterion draws that line once, in one place, so every row on the dashboard passes the same
-test and every exclusion is recorded WITH its reason instead of silently dropped. The criterion (verbatim
-from the author): a metric belongs iff it is a useful agent-loop metric OR an org-level target for
-engineering with MAGE — not merely a number the book measures. Diagnostics and payoff-measurements you
-don't steer by are out.
+FORMATIVE vs SUMMATIVE.  Every metric the book names is on the dashboard now — an engineering reference wants
+the whole set — but each carries a MODE that says WHEN you read it. A `formative` metric is measured DURING
+the work and feeds back to steer the next step. A `summative` metric is measured at MATURITY and delivers a
+verdict on what was achieved. A `both` metric is a trajectory: watched formatively as it forms, reported
+summatively at maturity. The criterion (verbatim from the author): a metric belongs iff it is one you STEER
+BY while the work is in flight (formative) or one you CERTIFY THE RESULT with at maturity (summative) —
+measured to guide or to judge engineering with MAGE, not merely reported.
 
 TWO PROJECTIONS, ONE SOURCE.
-  * `render_table_md()` — the markdown table the back-matter page shows (qualifying rows only). Author it
-    into the page from `... table`; the page and the model cannot then diverge without the parity check
-    reddening.
+  * `render_table_md()` — the markdown table the back-matter page shows: all nine metrics in two mode bands
+    (a Formative band, a divider/band-label row, then a Summative band that carries the summative + both
+    metrics). Author it into the page from `... table`; the page and the model cannot then diverge without
+    the parity check reddening.
   * `structural_findings()` / `parity_findings()` — the invariants (schema + defined-in resolution + the
-    ratified qualifying count) and the page-parity check. Wired into `catalog.py validate`.
+    ratified mode counts) and the page-parity check. Wired into `catalog.py validate`.
 
 Run `python3 book-models/metrics_dashboard_model.py verify` to drift-check (structural + parity);
-`... table` to print the markdown table for the page; `... show` to list every metric and its verdict.
+`... table` to print the markdown table for the page; `... show` to list every metric and its mode.
 """
 from __future__ import annotations
 
@@ -36,48 +39,60 @@ _DECLARED = os.path.join(_HERE, "metrics-dashboard.json")
 _ROOT = os.path.dirname(_HERE)  # the governance-catalog repo root (book-models/ is one level down)
 _BOOK = os.path.join(_ROOT, "book")
 
-#: The back-matter page the qualifying table is authored into (parity target).
+#: The back-matter page the mode-banded table is authored into (parity target).
 _PAGE_REL = os.path.join("backmatter", "6.5-the-operators-dashboard.md")
 
-#: The ratified verdict counts — encode the author's set so a silent add/drop reddens (C5).
-EXPECT_QUALIFY = 5
-EXPECT_EXCLUDE = 4
+#: The valid MODE values — the formative/summative axis, plus `both` for a trajectory metric.
+_VALID_MODES = ("formative", "summative", "both")
 
-#: The table header the projection emits and the page carries (parity is exact).
-_TABLE_HEADER = "| Metric | What it counts | The call it informs (when to watch) | Healthy direction | Defined in |"
-_TABLE_RULE = "|---|---|---|---|---|"
+#: The ratified mode split — encode the author's set so a silent add/drop/reclassify reddens (C5).
+EXPECT_TOTAL = 9
+EXPECT_FORMATIVE = 6
+EXPECT_SUMMATIVE = 1
+EXPECT_BOTH = 2
 
-_REQUIRED_FIELDS = ("name", "slug", "counts", "informs", "healthy_direction", "defined_in", "qualifies", "rationale")
+#: The dashboard columns (the header the projection emits and the page carries; parity is exact).
+_COLUMNS = ("Metric", "Mode", "What it counts", "When to watch", "Healthy direction", "Defined in")
+_TABLE_HEADER = "| " + " | ".join(_COLUMNS) + " |"
+_TABLE_RULE = "|" + "---|" * len(_COLUMNS)
+
+_REQUIRED_FIELDS = ("name", "slug", "counts", "informs", "healthy_direction", "defined_in", "mode", "rationale")
 
 
 # ---- typed model ------------------------------------------------------------------------------------
 
 @dataclass
 class Metric:
-    """One metric the book names. `qualifies` is the verdict against the inclusion criterion; `rationale`
-    records WHY it passes or fails (so an exclusion is auditable, not silent). `defined_in` cites the
-    chapter and heading anchor where the metric lives — the load-bearing 'reference index' column."""
+    """One metric the book names. `mode` is the formative/summative verdict against the inclusion criterion;
+    `rationale` records WHY it lands in that band (so the call is auditable, not silent). `defined_in` cites
+    the chapter and heading anchor where the metric lives — the load-bearing 'reference index' column."""
     name: str
     slug: str
     counts: str
     informs: str
     healthy_direction: str
     defined_in: dict
-    qualifies: bool
+    mode: str
     rationale: str
 
 
 @dataclass
 class DashboardModel:
     inclusion_criterion: str
+    mode_bands: dict
     metrics: "list[Metric]"
 
-    def qualifying(self) -> "list[Metric]":
-        """The dashboard rows — metrics that pass the inclusion criterion, in declared order."""
-        return [m for m in self.metrics if m.qualifies]
+    def formative(self) -> "list[Metric]":
+        """The formative band — metrics you steer by while the work is in flight, in declared order."""
+        return [m for m in self.metrics if m.mode == "formative"]
 
-    def excluded(self) -> "list[Metric]":
-        return [m for m in self.metrics if not m.qualifies]
+    def summative_band(self) -> "list[Metric]":
+        """The summative band — the summative verdict metric plus the `both` trajectory metrics (whose
+        reference number is the mature verdict), in declared order."""
+        return [m for m in self.metrics if m.mode in ("summative", "both")]
+
+    def by_mode(self, mode: str) -> "list[Metric]":
+        return [m for m in self.metrics if m.mode == mode]
 
 
 # ---- load + build -----------------------------------------------------------------------------------
@@ -95,11 +110,15 @@ def derive_model() -> DashboardModel:
         Metric(
             name=m["name"], slug=m["slug"], counts=m["counts"], informs=m["informs"],
             healthy_direction=m["healthy_direction"], defined_in=m["defined_in"],
-            qualifies=bool(m["qualifies"]), rationale=m["rationale"],
+            mode=str(m["mode"]), rationale=m["rationale"],
         )
         for m in raw["metrics"]
     ]
-    return DashboardModel(inclusion_criterion=raw["inclusion_criterion"], metrics=metrics)
+    return DashboardModel(
+        inclusion_criterion=raw["inclusion_criterion"],
+        mode_bands=raw.get("_mode_bands", {}),
+        metrics=metrics,
+    )
 
 
 # ---- book-chapter resolution ------------------------------------------------------------------------
@@ -114,9 +133,9 @@ def structural_findings(model: "DashboardModel | None" = None) -> "list[str]":
 
     C1 — a non-empty inclusion criterion (the model without its rule is just a list).
     C2 — every metric carries all required fields, non-empty (defined_in is a dict with chapter+page_slug).
-    C3 — slugs are unique and kebab-case; `qualifies` is a real bool.
+    C3 — slugs are unique and kebab-case; `mode` is one of the valid formative/summative/both values.
     C4 — every `defined_in.page_slug` resolves to a real book chapter page.
-    C5 — the verdict split matches the ratified set (EXPECT_QUALIFY qualify, EXPECT_EXCLUDE do not).
+    C5 — the mode split matches the ratified set (all nine present; 6 formative, 1 summative, 2 both).
     """
     if model is None:
         model = derive_model()
@@ -133,31 +152,36 @@ def structural_findings(model: "DashboardModel | None" = None) -> "list[str]":
         for f in _REQUIRED_FIELDS:
             if f not in rawm:
                 findings.append(f"C2 metric {m.slug!r} is missing field {f!r}")
-            elif f not in ("qualifies", "defined_in") and not str(rawm[f]).strip():
+            elif f != "defined_in" and not str(rawm[f]).strip():
                 findings.append(f"C2 metric {m.slug!r} has empty field {f!r}")
         if not isinstance(m.defined_in, dict) or not m.defined_in.get("chapter") or not m.defined_in.get("page_slug"):
             findings.append(f"C2 metric {m.slug!r} defined_in lacks chapter/page_slug")
 
-        # C3 — slug shape + uniqueness + real bool.
+        # C3 — slug shape + uniqueness + valid mode.
         if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", m.slug):
             findings.append(f"C3 metric {m.slug!r} slug is not kebab-case")
         if m.slug in seen:
             findings.append(f"C3 duplicate metric slug {m.slug!r}")
         seen.add(m.slug)
-        if not isinstance(rawm.get("qualifies"), bool):
-            findings.append(f"C3 metric {m.slug!r} qualifies is not a JSON bool")
+        if m.mode not in _VALID_MODES:
+            findings.append(f"C3 metric {m.slug!r} mode {m.mode!r} is not one of {_VALID_MODES}")
 
         # C4 — defined_in resolves to a real chapter page.
         page = (m.defined_in or {}).get("page_slug", "")
         if page and page not in page_slugs:
             findings.append(f"C4 metric {m.slug!r} defined_in page {page!r} resolves to no book chapter")
 
-    # C5 — the ratified verdict split.
-    nq, nx = len(model.qualifying()), len(model.excluded())
-    if nq != EXPECT_QUALIFY:
-        findings.append(f"C5 {nq} metrics qualify, expected {EXPECT_QUALIFY} (a metric was added or reclassified)")
-    if nx != EXPECT_EXCLUDE:
-        findings.append(f"C5 {nx} metrics excluded, expected {EXPECT_EXCLUDE} (a metric was added or reclassified)")
+    # C5 — the ratified mode split (all nine present; the mode-classified counts).
+    total = len(model.metrics)
+    if total != EXPECT_TOTAL:
+        findings.append(f"C5 {total} metrics, expected {EXPECT_TOTAL} (a metric was added or removed)")
+    nf, ns, nb = len(model.by_mode("formative")), len(model.by_mode("summative")), len(model.by_mode("both"))
+    if nf != EXPECT_FORMATIVE:
+        findings.append(f"C5 {nf} formative metrics, expected {EXPECT_FORMATIVE} (a metric was reclassified)")
+    if ns != EXPECT_SUMMATIVE:
+        findings.append(f"C5 {ns} summative metrics, expected {EXPECT_SUMMATIVE} (a metric was reclassified)")
+    if nb != EXPECT_BOTH:
+        findings.append(f"C5 {nb} both-mode metrics, expected {EXPECT_BOTH} (a metric was reclassified)")
 
     return findings
 
@@ -171,20 +195,35 @@ def _defined_in_cell(d: dict) -> str:
     return f"[{chapter}]({href})"
 
 
+def _metric_row(m: Metric) -> str:
+    """One metric as a markdown table row — the six columns in header order."""
+    return (
+        f"| **{m.name}** | {m.mode} | {m.counts} | {m.informs} | "
+        f"{m.healthy_direction} | {_defined_in_cell(m.defined_in)} |"
+    )
+
+
+def _band_row(label: str) -> str:
+    """A band-label row — the midrule/divider between the formative and summative groups. The label sits in
+    the first cell; the remaining cells are empty, so it reads as a labeled divider that renders cleanly in
+    BOTH projections (an ordinary pipe-table row in HTML and Typst alike)."""
+    return f"| **{label}** |" + " |" * (len(_COLUMNS) - 1)
+
+
 def render_table_rows(model: "DashboardModel | None" = None) -> "list[str]":
-    """The qualifying rows as markdown table lines (no header) — the page carries exactly these."""
+    """All nine metrics as markdown table lines (no header), in two mode bands separated by a band-label
+    divider — the page carries exactly these."""
     if model is None:
         model = derive_model()
-    rows: "list[str]" = []
-    for m in model.qualifying():
-        rows.append(
-            f"| **{m.name}** | {m.counts} | {m.informs} | {m.healthy_direction} | {_defined_in_cell(m.defined_in)} |"
-        )
+    rows: "list[str]" = [_band_row(model.mode_bands["formative"])]
+    rows += [_metric_row(m) for m in model.formative()]
+    rows.append(_band_row(model.mode_bands["summative"]))
+    rows += [_metric_row(m) for m in model.summative_band()]
     return rows
 
 
 def render_table_md(model: "DashboardModel | None" = None) -> str:
-    """The full markdown table (header + rule + qualifying rows) the back-matter page shows."""
+    """The full markdown table (header + rule + the two mode bands) the back-matter page shows."""
     return "\n".join([_TABLE_HEADER, _TABLE_RULE, *render_table_rows(model)])
 
 
@@ -192,7 +231,8 @@ def render_table_md(model: "DashboardModel | None" = None) -> str:
 
 def _page_table_lines(page_md: str) -> "list[str]":
     """Extract the dashboard table from the page — the contiguous run of `|`-rows that starts at the model's
-    exact header line. Returns [] if the header is not found."""
+    exact header line. The band-label divider rows also begin with `|`, so the whole grouped table is one
+    contiguous run. Returns [] if the header is not found."""
     lines = [ln.rstrip() for ln in page_md.splitlines()]
     try:
         start = lines.index(_TABLE_HEADER)
@@ -253,10 +293,10 @@ def _cmd_show() -> int:
     model = derive_model()
     print(f"inclusion criterion:\n  {model.inclusion_criterion}\n")
     for m in model.metrics:
-        verdict = "DASHBOARD" if m.qualifies else "excluded "
-        print(f"[{verdict}] {m.name}  (defined in {m.defined_in['chapter']})")
+        print(f"[{m.mode:>10}] {m.name}  (defined in {m.defined_in['chapter']})")
         print(f"             {m.rationale}")
-    print(f"\n{len(model.qualifying())} qualify · {len(model.excluded())} excluded")
+    nf, ns, nb = len(model.by_mode("formative")), len(model.by_mode("summative")), len(model.by_mode("both"))
+    print(f"\n{len(model.metrics)} metrics · {nf} formative · {ns} summative · {nb} both")
     return 0
 
 
@@ -268,8 +308,9 @@ def _cmd_verify() -> int:
         for f in findings:
             print(f"  {f}")
         return 1
-    print(f"metrics-dashboard is in sync ({len(model.qualifying())} dashboard rows, "
-          f"{len(model.excluded())} excluded; page table matches the model)")
+    nf, ns, nb = len(model.by_mode("formative")), len(model.by_mode("summative")), len(model.by_mode("both"))
+    print(f"metrics-dashboard is in sync ({len(model.metrics)} metrics: {nf} formative, {ns} summative, "
+          f"{nb} both; page table matches the model)")
     return 0
 
 

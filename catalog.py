@@ -1013,9 +1013,9 @@ def cmd_validate(_args) -> int:
             print(f"           {f}")
     # METRICS-DASHBOARD CONFORMANCE — BLOCKING. The back-matter "Operator's Dashboard" page is a projection
     # of a declared model (book-models/metrics-dashboard.json): the model carries the author's inclusion
-    # criterion + every metric's qualify/exclude verdict, and metrics_dashboard_model.py holds the page's
-    # table equal to the qualifying subset. Green from birth (the table is authored from the projection), so
-    # it lands BLOCKING: a schema break, a broken defined-in cite, a changed qualify count, or page-vs-model
+    # criterion + every metric's formative/summative mode, and metrics_dashboard_model.py holds the page's
+    # two-band table equal to that projection. Green from birth (the table is authored from the projection),
+    # so it lands BLOCKING: a schema break, a broken defined-in cite, a changed mode count, or page-vs-model
     # drift reddens validate. See book-models/metrics_dashboard_model.py.
     import metrics_dashboard_model as mdm  # noqa: E402 — blocking dashboard-parity model
     md_findings = mdm.all_findings()

@@ -1,103 +1,108 @@
 {
-  "_provenance": "AUTHORED source of truth for the Operator's Dashboard — the program-level metrics the book steers by. book-models/metrics_dashboard_model.py projects the qualifying subset into the back-matter page's table and holds the page equal to this model with a parity check (run `python3 book-models/metrics_dashboard_model.py verify`). Edit a metric HERE, then regenerate the page table with `... table`. The book's own declared -> generated idiom, applied to its metrics.",
+  "_provenance": "AUTHORED source of truth for the Operator's Dashboard — the metrics the book steers by or certifies with. book-models/metrics_dashboard_model.py projects ALL nine metrics into the back-matter page's table, grouped by MODE (formative / summative), and holds the page equal to this model with a parity check (run `python3 book-models/metrics_dashboard_model.py verify`). Edit a metric HERE, then regenerate the page table with `... table`. The book's own declared -> generated idiom, applied to its metrics.",
 
-  "inclusion_criterion": "A metric belongs in the dashboard iff it is a useful agent-loop metric OR an org-level target for engineering with MAGE — not merely a number the book measures. Diagnostics and payoff-measurements you don't steer by are out.",
+  "inclusion_criterion": "A metric belongs iff it is one you STEER BY while the work is in flight (formative) or one you CERTIFY THE RESULT with at maturity (summative) — measured to guide or to judge engineering with MAGE, not merely reported.",
 
   "_page": {
     "slug": "6.5-the-operators-dashboard",
     "companion_to": { "chapter": "2.5", "page_slug": "2.5-metrics", "anchor": "" }
   },
 
+  "_mode_bands": {
+    "formative": "Formative — measured during the work, to steer the next step",
+    "summative": "Summative — measured at maturity, a verdict on the result"
+  },
+
   "metrics": [
-    {
-      "name": "Support ratio",
-      "slug": "support-ratio",
-      "counts": "Support-apparatus lines of code (tests, lints, load-bearing docs, agent infrastructure, tooling) divided by production lines of code.",
-      "informs": "Whether to invest in the environment before the product. Watch that the apparatus keeps leading as feature work resumes.",
-      "healthy_direction": "Leads production; settles around 3x it at maturity.",
-      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "support-ratio-curve" },
-      "qualifies": true,
-      "rationale": "An org-level target: build the environment first, expect ~3x at maturity. The whole book's ordering argument, drawn as a line."
-    },
     {
       "name": "Missing-Model Metric",
       "slug": "missing-model-metric",
-      "counts": "The fraction of tests whose exercised code traces to no model claim — the unmodelled surface — plus its drain curve run over run.",
-      "informs": "Which code to model next. Run the tracer after each model-loop Epic and watch the biggest orphan cluster shrink.",
-      "healthy_direction": "Drains toward the 10%-or-under target (56% to 7.89% over nine re-runs).",
+      "counts": "Fraction of tests whose exercised code traces to no model claim — the unmodelled surface — plus its drain curve.",
+      "informs": "After each model-loop Epic; steer the next at the biggest orphan cluster.",
+      "healthy_direction": "Drains toward 10%-or-under (56% to 7.89% over nine re-runs).",
       "defined_in": { "chapter": "2.5", "page_slug": "2.5-metrics", "anchor": "mmm-drain" },
-      "qualifies": true,
-      "rationale": "A loop target with a stated goal: drain the orphan rate toward 10% or under. You steer the model-loop by it."
+      "mode": "formative",
+      "rationale": "Formative: you run the tracer after each model-loop Epic and aim the next Epic at the orphan cluster it surfaces. Feedback that shapes the next step, not a verdict."
     },
     {
       "name": "Velocity",
       "slug": "velocity",
       "counts": "Commits per week.",
-      "informs": "Whether throughput is healthy or being spent on trustworthiness. Watch the dip where velocity buys hardening.",
-      "healthy_direction": "Sustains a roughly linear productivity rate; a hardening dip is expected, not alarming.",
+      "informs": "Watch the dip where velocity buys hardening.",
+      "healthy_direction": "Roughly linear; a hardening dip is expected, not alarming.",
       "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "velocity" },
-      "qualifies": true,
-      "rationale": "An org-level target: sustain linear productivity as the fleet scales. A raw loop signal you steer capacity by."
-    },
-    {
-      "name": "Control growth",
-      "slug": "control-growth",
-      "counts": "Project-specific lint files and gate scripts, counted per window.",
-      "informs": "Whether the environment is still accreting controls — one failure class at a time.",
-      "healthy_direction": "Climbs steadily (lints 0 to 336 to 595 to 747; gates 0 to 20 to 76 to 102).",
-      "defined_in": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "control-growth" },
-      "qualifies": true,
-      "rationale": "A trajectory target: keep accreting controls as failure classes surface. The governance apparatus, measured as it grows."
+      "mode": "formative",
+      "rationale": "Formative: commits-per-week reads out throughput week to week, so you steer capacity and read the hardening dip while it happens."
     },
     {
       "name": "Churn",
       "slug": "churn",
       "counts": "Lines added and deleted per week per path.",
-      "informs": "Which phase the build is in. A churn peak marks mechanization; its collapse marks a stabilizing environment.",
+      "informs": "Reads which build phase you are in.",
       "healthy_direction": "Peaks at mechanization, then collapses as the environment stabilizes.",
       "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "churn" },
-      "qualifies": true,
-      "rationale": "A useful loop signal: reads out the build phase you are in, so you know whether to expect rewrite or stability."
-    },
-    {
-      "name": "MBSE navigation token-savings",
-      "slug": "mbse-nav-token-savings",
-      "counts": "Tokens spent to reach an answer, with the model on versus off.",
-      "informs": "The model's payoff in context budget.",
-      "healthy_direction": "Lower with the model on.",
-      "defined_in": { "chapter": "3.1", "page_slug": "3.1-the-executable-zoo", "anchor": "" },
-      "qualifies": false,
-      "rationale": "A model-payoff diagnostic, not a target. You measure it to justify the model, but you do not steer the build by it."
+      "mode": "formative",
+      "rationale": "Formative: the add/delete curve tells you which build phase you are in right now, so you know whether to expect rewrite or stability next."
     },
     {
       "name": "Model-sync efficacy",
       "slug": "model-sync-efficacy",
       "counts": "Whether the drift and parity gates keep model equal to code.",
-      "informs": "Whether map-equals-territory is actually holding.",
+      "informs": "Watch that map-equals-territory holds.",
       "healthy_direction": "Gates stay green.",
       "defined_in": { "chapter": "3.8", "page_slug": "3.8-keeping-models-in-sync", "anchor": "" },
-      "qualifies": false,
-      "rationale": "A gate and invariant health-check, not a steering target. A binary you keep green, not a number you drive toward a goal."
+      "mode": "formative",
+      "rationale": "Formative: the drift and parity gates fire during the work; a red gate steers you to the divergence before it lands. Feedback in the loop, not an end-state score."
     },
     {
       "name": "Grammar coverage",
       "slug": "grammar-coverage",
       "counts": "Whether the generator exercised every production of the input grammar.",
-      "informs": "Corpus richness — a hole no line-coverage number reveals.",
+      "informs": "Watch for corpus holes no line-coverage number reveals.",
       "healthy_direction": "Rises toward full grammar exercise.",
       "defined_in": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "" },
-      "qualifies": false,
-      "rationale": "A technique-local generative-validation oracle in the coverage family, not an org-level target for the whole program."
+      "mode": "formative",
+      "rationale": "Formative: a generative-validation oracle you watch while building the corpus — an unexercised production steers the next generator tweak."
     },
     {
       "name": "Model-claim coverage",
       "slug": "model-claim-coverage",
-      "counts": "Whether generated inputs drove the invariants, transitions, and edges the model declares.",
+      "counts": "Whether generated inputs drove every declared invariant, transition, and edge.",
       "informs": "The saturation oracle for generative validation.",
       "healthy_direction": "Rises toward full claim exercise.",
       "defined_in": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "" },
-      "qualifies": false,
-      "rationale": "A technique-local saturation oracle for generative validation, not an org-level target you steer the program by."
+      "mode": "formative",
+      "rationale": "Formative: the saturation oracle you steer generative validation by — an unexercised claim tells you which input to generate next."
+    },
+    {
+      "name": "MBSE navigation token-savings",
+      "slug": "mbse-nav-token-savings",
+      "counts": "Tokens spent to reach an answer, model on versus off.",
+      "informs": "Certify the model earned its context budget.",
+      "healthy_direction": "Lower with the model on.",
+      "defined_in": { "chapter": "3.1", "page_slug": "3.1-the-executable-zoo", "anchor": "" },
+      "mode": "summative",
+      "rationale": "Summative: a payoff verdict measured with the model mature. You certify the model earned its context budget; you do not steer the daily loop by it."
+    },
+    {
+      "name": "Support ratio",
+      "slug": "support-ratio",
+      "counts": "Support-apparatus LoC (tests, lints, docs, infra, tooling) over production LoC.",
+      "informs": "Watch the apparatus keeps leading as feature work resumes.",
+      "healthy_direction": "Leads production; settles around 3x it at maturity.",
+      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "support-ratio-curve" },
+      "mode": "both",
+      "rationale": "Both: watched formatively as the apparatus forms (is it still leading?), reported summatively at maturity as the ~3x verdict. Seated in the summative band because its reference number is the mature ratio."
+    },
+    {
+      "name": "Control growth",
+      "slug": "control-growth",
+      "counts": "Project-specific lint files and gate scripts, per window.",
+      "informs": "Watch the environment still accrete controls.",
+      "healthy_direction": "Climbs steadily (lints 0 to 747; gates 0 to 102).",
+      "defined_in": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "control-growth" },
+      "mode": "both",
+      "rationale": "Both: watched formatively as controls accrete one failure class at a time, reported summatively at maturity as the final control count. A trajectory metric — steered by while forming, certified at the end."
     }
   ]
 }

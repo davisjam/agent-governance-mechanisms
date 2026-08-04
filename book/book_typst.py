@@ -516,22 +516,30 @@ def _peel_metadata_marker(line: str, ctx: _EmitCtx) -> "str | None":
     return None
 
 
-# Apparatus one-pagers — front-matter reference apparatus (not running prose) framed as ONE distinct,
-# non-breaking page item in the print projection, mirroring the web book's `.apparatus-page` box. Matched
-# by TITLE (like the relocated acknowledgments) so the source slug can change without silently un-framing
-# it. "How to read this book" (its short prose + the whole-book map) is the founding member.
-_APPARATUS_ONEPAGER_TITLES = {"how to read this book"}
+# Apparatus one-pagers — reference apparatus (not running prose) framed as ONE distinct page item in the
+# print projection, mirroring the web book's `.apparatus-page` box. Matched by TITLE (like the relocated
+# acknowledgments) so the source slug can change without silently un-framing it. "How to read this book"
+# (its short prose + the whole-book map) is the founding member; the back-matter Operator's Dashboard is
+# the second.
+_APPARATUS_ONEPAGER_TITLES = {"how to read this book", "the operator's dashboard"}
+
+# A subset of the apparatus one-pagers that carry a WIDE table: typeset on a single LANDSCAPE page so a
+# 6-column reference fits without cramping. The frame is made BREAKABLE for these (a tall reference may run
+# past one page rather than clip), unlike the tiny how-to-read frame which stays non-breaking.
+_APPARATUS_LANDSCAPE_TITLES = {"the operator's dashboard"}
 
 
-def _frame_apparatus_typst(body: str) -> str:
-    """Wrap a rendered apparatus chapter in a bordered, non-breaking `#block` — a hairline box on the panel
-    tint with an accent top-rule, mirroring the web `.apparatus-page`. `breakable: false` keeps the whole
-    apparatus (prose + figure) on the single page the pagebreak-before hands it. Surfaces are design tokens,
-    so the frame follows the token palette exactly as the semantic boxes do."""
+def _frame_apparatus_typst(body: str, breakable: bool = False) -> str:
+    """Wrap a rendered apparatus chapter in a bordered `#block` — a hairline box on the panel tint with an
+    accent top-rule, mirroring the web `.apparatus-page`. `breakable: false` (the default) keeps the whole
+    apparatus on the single page the pagebreak-before hands it; a wide/tall reference passes `breakable:
+    True` so it flows rather than clips. Surfaces are design tokens, so the frame follows the token palette
+    exactly as the semantic boxes do."""
+    breakable_lit = "true" if breakable else "false"
     return (
         "#block(fill: dt.panel, "
         "stroke: (top: dt.border-accent-bar + dt.accent, rest: dt.border-hairline + dt.rule), "
-        "radius: 8pt, inset: (x: 14pt, top: 10pt, bottom: 12pt), width: 100%, breakable: false)[\n"
+        f"radius: 8pt, inset: (x: 14pt, top: 10pt, bottom: 12pt), width: 100%, breakable: {breakable_lit})[\n"
         f"{body}\n]"
     )
 
@@ -796,18 +804,33 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
         ch = by_slug[slug]
         if with_frontmatter and ack_chapter is not None and ch.slug == ack_chapter.slug:
             continue  # acknowledgments were relocated to the copyright page — do not also render the chapter
+        _title_norm = ch.title.strip().lower()
+        # A landscape apparatus is wrapped in `#page(flipped: true)[…]`, which starts its own fresh page, so
+        # the usual preceding `#pagebreak()` would strand a blank portrait page — suppress it for that case.
+        is_landscape = _title_norm in _APPARATUS_LANDSCAPE_TITLES
         if with_frontmatter and ch.part not in seen_parts:
             seen_parts.add(ch.part)
             divider = _part_divider_typst(ch.part, ch)
             if divider:
                 parts.append(divider)
-            elif n:
+            elif n and not is_landscape:
                 parts.append("#pagebreak()")
-        elif n:
+        elif n and not is_landscape:
             parts.append("#pagebreak()")
         rendered = render_chapter(ch, ctx)
-        if ch.title.strip().lower() in _APPARATUS_ONEPAGER_TITLES:
-            rendered = _frame_apparatus_typst(rendered)
+        if _title_norm in _APPARATUS_ONEPAGER_TITLES:
+            rendered = _frame_apparatus_typst(rendered, breakable=is_landscape)
+        if is_landscape:
+            # A flipped/landscape page so the wide 6-column reference gets full landscape width without
+            # cramping; tighter margins than the body pages widen the measure further. The table can run a
+            # little past one page, so a scoped show-rule makes the table figure BREAKABLE (its header row
+            # repeats by default) — the overflow rows flow onto a second landscape page instead of clipping
+            # off the bottom, and the breakable apparatus frame flows with them.
+            rendered = (
+                "#page(flipped: true, margin: (x: 0.6in, y: 0.7in))[\n"
+                "#show figure.where(kind: table): set block(breakable: true)\n"
+                + rendered + "\n]"
+            )
         parts.append(rendered)
     # End-of-book Bibliography — Chicago notes, rendered by Typst from the SAME references.bib that
     # generated citations.json, so the PDF's reference strings equal the web book's by construction
