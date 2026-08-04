@@ -956,6 +956,9 @@ def cmd_validate(_args) -> int:
     for msg in check_census_tokens(entries):
         print(f"  [census] {msg}")
         n_issues += 1
+    for msg in check_leaked_markers():
+        print(f"  [marker] {msg}")
+        n_issues += 1
     for msg in check_adoption_sequence():
         print(f"  [adopt] {msg}")
         n_issues += 1
@@ -1327,6 +1330,17 @@ def render_md(md: str) -> str:
     # which is legitimate visible content elsewhere in the catalogue.
     md = re.sub(r"<!--adoption-source.*?-->", "", md, flags=re.DOTALL)
     md = re.sub(r"<!--/?adoption-(?:auto|interactive)-->", "", md)
+    # Consume the remaining build-time markdown directives BEFORE block parsing, so a stray `<!-- … -->`
+    # never reaches the paragraph path (which would ESCAPE it into visible text — the `constructing-the-gee`
+    # `--census` / `-- summary` leak the browser showed). ALL served pages funnel through here, so the
+    # standalone prose pages (constructing-the-gee, the role READMEs, README) now get the same consumption
+    # the census/summary machinery always assumed: unwrap `<!--census:KEY-->V<!--/census-->` to its
+    # build-filled value V (kept visible), and strip the invisible `<!-- summary: … -->` metadata line and
+    # the `<!-- prior-art: … -->` provenance notes outright. Keyed to each named directive (not a blanket
+    # comment-strip) so a comment inside a code span stays intact.
+    md = _CENSUS_TOKEN.sub(lambda m: m.group(4), md)
+    md = re.sub(r"<!--\s*summary:.*?-->", "", md, flags=re.DOTALL)
+    md = re.sub(r"<!--\s*prior-art:.*?-->", "", md, flags=re.DOTALL)
     lines = md.split("\n")
     out: list[str] = []
     i, n = 0, len(lines)
@@ -2519,7 +2533,8 @@ def _sync_figure_census(entries: list[Entry]) -> None:
 # A hand-typed count in README/INDEX/CLAUDE/models-bridge drifts on every add (the '53 mechanisms' rot).
 # A token `<!--census:KEY-->VALUE<!--/census-->` (an HTML comment, invisible on GitHub) is filled from
 # `_stats` by the build precompiler, so the count is DERIVED, not maintained. `:word` fills the number-word.
-_MD_CENSUS_FILES = ("README.md", "INDEX.md", "CLAUDE.md", os.path.join("models-bridge", "README.md"))
+_MD_CENSUS_FILES = ("README.md", "INDEX.md", "CLAUDE.md", os.path.join("models-bridge", "README.md"),
+                    "constructing-the-gee.md")
 _CENSUS_TOKEN = re.compile(r"(<!--census:([a-z_]+)(:word|:Word)?-->)(.*?)(<!--/census-->)", re.DOTALL)
 _NUM_WORDS = ("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
               "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
@@ -2587,6 +2602,48 @@ def check_census_tokens(entries: list[Entry]) -> list[str]:
         if m and m.group(1) != counts["controls"]:
             problems.append(f"README.md: summary count {m.group(1)} != census {counts['controls']} — update the summary")
     return problems
+
+
+# CLOSED, monotonically-growing tuple of build-time markdown-directive fragments that must NEVER survive
+# into a served page. `render_md` consumes each — it strips the `<!-- summary: … -->` metadata line and the
+# `<!-- prior-art: … -->` provenance notes, unwraps `<!--census:KEY-->V<!--/census-->` to its value V, and
+# drops the adoption sentinels — so a served page carries none of them. Both the raw `<!--x` and the
+# HTML-escaped `&lt;!--x` forms are listed because a stray comment that reaches block parsing is ESCAPED into
+# visible text, not passed through (the `constructing-the-gee.html` `--census` / `--summary` leak this gate
+# exists to make impossible). GROW this tuple whenever a new build-time directive is added; never shrink it.
+_LEAKED_MARKER_FRAGMENTS: tuple[str, ...] = (
+    "<!--census", "&lt;!--census",
+    "<!--/census", "&lt;!--/census",
+    "<!-- summary:", "&lt;!-- summary:",
+    "<!-- prior-art:", "&lt;!-- prior-art:",
+    "<!--adoption-source", "&lt;!--adoption-source",
+    "<!--adoption-auto", "&lt;!--adoption-auto",
+    "<!--adoption-interactive", "&lt;!--adoption-interactive",
+)
+
+
+def check_leaked_markers() -> list[str]:
+    """Served-page post-condition sensor: no build-time markdown directive may survive into a built page.
+    Walk every served `.html` (catalogue entries, the standalone prose pages, and the book) and flag any
+    fragment from the closed `_LEAKED_MARKER_FRAGMENTS` tuple. `render_md` consumes each directive, so a hit
+    means one leaked un-rendered — the `constructing-the-gee.html` `--census` / `--summary` class. Twin of
+    `check_census_tokens`, which guards the source counts; this guards the rendered output. Rule-#17 shape:
+    a served-page invariant asserted as a mechanical closed-tuple check, not re-inspected by eye."""
+    prune = site_prune_dirs()
+    problems: list[str] = []
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if d not in prune]
+        for fn in sorted(filenames):
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dirpath, fn)
+            rel = os.path.relpath(path, ROOT)
+            txt = open(path, encoding="utf-8").read()
+            for frag in _LEAKED_MARKER_FRAGMENTS:
+                if frag in txt:
+                    problems.append(f"{rel}: un-rendered marker {frag!r} leaked into the served page "
+                                    f"— render_md must consume it (run `catalog.py build`)")
+    return sorted(problems)
 
 
 # --- Adoption sequence: ONE source, TWO emitted forms (the quick-start dual-emit). ---
@@ -2835,6 +2892,18 @@ def cmd_build(_args) -> int:
         for o in orphans:
             print(f"  - {o}", file=sys.stderr)
         print("  Fix: link the page from the site, or add its `.md` to NOSERVE and `git rm` the `.html`.",
+              file=sys.stderr)
+        return 1
+    # Un-rendered-marker gate (BLOCKING): a build-time directive that survived into a served page (the
+    # `constructing-the-gee.html` `--census` / `--summary` leak). Scans the freshly-written HTML (catalogue +
+    # book), so it can't drift. Twin of the source-side check_census_tokens; wired here AND in validate.
+    leaked = check_leaked_markers()
+    if leaked:
+        print(f"LEAKED MARKERS ({len(leaked)}) — a build-time directive survived into a served page:",
+              file=sys.stderr)
+        for m in leaked:
+            print(f"  - {m}", file=sys.stderr)
+        print("  Fix: ensure render_md consumes the directive (strip/unwrap it before block parsing).",
               file=sys.stderr)
         return 1
     return 0
