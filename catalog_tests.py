@@ -47,6 +47,7 @@ from tests.book_models import (
     check_lit_positioning,
     check_outcomes_model,
     check_outline_model,
+    check_print_appendix_projection,
     check_reverse_index,
 )
 from tests.citations import (
@@ -199,6 +200,13 @@ CHECKS = [
     # spine / chapter-shape models' own landing path. See tests/book_models.py.
     Check("book-models: flagship-stack drift + structure (flagship-stack.json)", 1,
           lambda strict: check_flagship_stack(), audit_only=True),
+    # AUDIT-ONLY (rule #55 first landing): the PRINT-APPENDIX PROJECTION guard — the print appendix emits a
+    # page only for the ~29 flagship mechanisms, the web catalogue keeps all 83; this keeps that split from
+    # drifting from catalogue-classification.json. Asserts flagship ⊆ real entries, every keep-as-L2 is a
+    # print flagship OR a declared web-only exclude, and no promotion is already canonical. Lands audit-only
+    # (0 findings today); promote to blocking after a clean session. See tests/book_models.py.
+    Check("book-models: print-appendix projection split (print-appendix-manifest.json)", 1,
+          lambda strict: check_print_appendix_projection(), audit_only=True),
     # AUDIT-ONLY (rule #55 first landing): the LITERATURE-POSITIONING view-model — the Literature-Positioning
     # Pass as a typed set of X→Y→Z interventions whose citations are MODELED objects {key, backs_claims,
     # relation} nested under the argument spine, declared->generated beside the argument-spine / flagship

@@ -313,3 +313,43 @@ def check_reverse_index():
 
     # Audit-only: same non-gating contract as the sibling view checks — surfaced as [audt].
     return (FAIL if issues else PASS), issues
+
+
+def check_print_appendix_projection():
+    """Guards the print/web appendix split against silent drift from catalogue-classification.json
+    (audit-only first landing, rule-#55). The PRINT appendix emits a page only for the flagship subset; the
+    WEB catalogue keeps all entries. This re-derives the flagship set from the classification + the print
+    manifest and asserts: (1) every flagship slug names a real catalogue entry (no phantom print page);
+    (2) every keep-as-L2 (canonical) entry is either emitted as a print flagship OR explicitly listed in the
+    manifest's `appendix_exclude` — a canonical mechanism cannot silently vanish from print without being
+    declared web-only; (3) every `print_promotion` names a NON-canonical (demoted / lifted / merged) entry,
+    since promoting an already-canonical mechanism is redundant. Keyed off
+    `book-models/catalogue-classification.json` + `book-models/print-appendix-manifest.json`."""
+    book_dir = os.path.join(ROOT, "book")
+    if book_dir not in sys.path:
+        sys.path.insert(0, book_dir)
+    import build_book_html as bb  # noqa: E402 — path set above; the book renderer
+
+    issues: list[str] = []
+    cls = bb._load_classification()                 # {slug: {"head", "parent"}} — also validates the manifest
+    manifest = bb._load_print_manifest(cls)
+    flagship = bb._flagship_slugs()
+    entries = {rec["slug"] for rec in bb._appendix_entries()}
+    keep_as_l2 = {s for s, r in cls.items() if r["head"] == "keep-as-L2"}
+    exclude = set(manifest.get("appendix_exclude", []))
+    promotions = set(manifest.get("print_promotions", []))
+
+    # (1) flagship ⊆ real catalogue entries — no phantom print page.
+    for s in sorted(flagship - entries):
+        issues.append(f"flagship slug {s!r} names no catalogue entry under agent/ · models-bridge/ · "
+                      f"product/ (phantom print page)")
+    # (2) every keep-as-L2 is a print flagship OR a declared web-only exclude — no silent vanishing.
+    for s in sorted(keep_as_l2 - flagship - exclude):
+        issues.append(f"keep-as-L2 {s!r} is neither a print flagship nor in the manifest's appendix_exclude "
+                      f"— a canonical mechanism left print without being declared web-only")
+    # (3) a promotion must not already be canonical (keep-as-L2) — that would be a redundant promotion.
+    for s in sorted(promotions & keep_as_l2):
+        issues.append(f"print_promotion {s!r} is already keep-as-L2 — redundant (promotions are for "
+                      f"demoted / lifted entries)")
+
+    return (FAIL if issues else PASS), issues
