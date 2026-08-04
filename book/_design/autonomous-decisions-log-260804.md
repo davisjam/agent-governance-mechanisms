@@ -233,3 +233,250 @@ INDEPENDENT fresh-context Opus second opinion. Logged honestly as such.
   22 in preface + 9 in 1.1 + a few elsewhere. Vary with "MAGE …" / "The MAGE methodology …" / "MAGE teaches"
   where repetitive. Batched with D30 (Printer Commandments) into one prose-polish wave to avoid the preface
   write-conflict with the running front-matter wave.
+
+## Part-4 hierarchy + naming round (author, 260804) — D45–D47 → PART-4 ponder then apply
+
+**D45 — Part 4 needs hierarchy: cluster the lessons into a few named groups.** The Part-4
+lessons currently read as a flat list; group them under headings. Author's example (Fable
+may improve): "Engineering with abundance" {refactoring is free · cost estimation is broken
+· scope creep is inevitable}; "Engineering with unreliable workers" {done is a claim ·
+explicitness is essential · tests must survive agent failure}; "Engineering with leverage"
+{governance spectrum · AI is an autonomy amplifier · who owns governance conversion}. →
+Fable ponder proposes cluster names + membership grounded in the REAL part4 chapters, then
+apply wave adds the section hierarchy.
+
+**D46 — rename the "Generative Validation" (4.6) pattern more articulately.** The pattern is
+"turning generators into adversaries." Author: can it be named more articulately? → ponder
+proposes a sharper name + rationale; author/I pick. (Interacts with the naming wave's 4.6-2
+"The Coin Is the Model" figure name — keep chapter-name vs figure-name distinct.)
+
+**D47 — elevate + name the SUPPORT-RATIO heuristic ("Timeline and the work" chapter).** The
+support-ratio concept is a reusable management heuristic but arrives as a single observation.
+Give it a NAME and make it more prominent; at minimum connect it to the Governed Engineering
+Environment concept. → ponder proposes name + prominence treatment (no chapter expansion).
+
+**D48 — add a named "Putting it into practice" METRICS table (author, 260804).** Capture
+and NAME all the metrics a practitioner can use for their loops, in one consolidated table
+somewhere (likely Part 4 "method in practice", or a back-matter reference). Inventory every
+metric the book already names/uses — support ratio (D47), the missing-model metric/drain,
+velocity, churn, control-growth — name any unnamed ones, and give each a one-line "what it
+tells you / when to watch it." Grounded in metrics the book ACTUALLY uses (don't invent
+metrics). → folded into the PART-4 ponder (scope + home + shape), then apply wave builds
+the table.
+
+## D49 — orchestration mishap + lesson (260804): premature commit of a still-live agent's work
+
+**What happened.** I mis-diagnosed the front-matter agent (afbd3e7d) as dead — proc-grep by
+agentId showed nothing and its edits sat in the working tree, so I concluded it had died in its
+final gate step, committed its work myself as baad0e1, and dispatched the naming wave (ae91987b).
+The agent was in fact STILL ALIVE; it completed later and reported it had (correctly) declined to
+commit into a contested tree. Net: a brief single-live-writer violation (I committed a live agent's
+work + started a 2nd writer over it).
+
+**Consequences (contained).** The restructure landed correctly (agent confirmed HEAD is right). But
+my commit ran only the FAST gate (`catalog.py validate`, 0 issues) — which does NOT include the
+claims/spine/chapter-shape drift checks — so it shipped a BLOCKING full-suite regression: claim
+`grounding-case-not-proof` still homed at the now-removed `a-map-of-the-book` outline unit
+(C1 claims-drift FAIL under `catalog_tests.py`). The naming wave then defensively isolated its 47
+files and RESTORED the front-matter agent's known-good reconcile fix into the working tree.
+
+**Two lessons (both recurrences of prior classes):**
+1. **Agent liveness: trust the completion NOTIFICATION, never proc-grep / working-tree inference.**
+   Same misdiagnosis class as D27 (STEP-4 deploy agent judged not-pushed via a fetch timing race).
+   ≥2× now. Discipline: an agent is done ONLY when its task-notification fires; do not commit its
+   work or start a successor before then.
+2. **Book restructure/model changes must be verified by the FULL suite (`catalog_tests.py`), not
+   `catalog.py validate`.** The model-drift gates (claims/spine/chapter-shape) live only in the full
+   suite — the D14/D16/D18 fast-gate-vs-full-suite gap, recurring. For book-models-touching commits,
+   run the full suite (orchestrator detached bg bash) before committing.
+
+**Not founding an Epic:** the fixes are discipline corrections (wait-for-notification; full-suite for
+model changes), not lint-able substrate in this stdlib-only book repo. Captured here for STEP-4. If a
+3rd liveness-misdiagnosis or fast-gate-miss occurs, revisit as a control.
+
+## Part-4 apply decisions (author-steered + my judgment, 260804) — D50–D52
+
+**D50 — metrics table (D48 resolved): inclusion RULE + the 5 rows + encode-in-model.** Author's
+inclusion rule (260804): "a metric belongs iff it is a useful AGENT-LOOP metric or an ORG-level
+TARGET for engineering with MAGE" — not every number the book measures. Author: "encode it in the
+model associated with the table, use your judgment." Applied:
+- IN (5): support ratio (org target — build env first, ~3x), Missing-Model Metric + drain (loop
+  target — drain to <=10%), velocity (org target — sustain linear productivity), control growth
+  (trajectory target — accrete controls), churn (useful loop signal — phase indicator; the
+  borderline one, flagged to author as first-to-pull if targets-only).
+- OUT (4): MBSE navigation token-savings (author's explicit example — model-payoff diagnostic, not a
+  target), model-sync efficacy (gate/invariant health-check), grammar coverage + model-claim coverage
+  (technique-local generative-validation oracles → belong with the coverage family at 2.5).
+- HOME: back-matter reference **"The Operator's Dashboard"** (ponder rec; program-level twin of 2.5's
+  in-loop table). Columns: Metric | What it counts | The call it informs (when to watch) | Healthy
+  direction | Defined in.
+- ENCODE THE RULE IN THE MODEL: new declared book-models SSOT (e.g. metrics-dashboard.json) carrying
+  the inclusion CRITERION text + every candidate with qualifies:true/false + rationale + cite; the
+  back-matter table is GENERATED/validated from it (declared→generated idiom). So a future metric is
+  testable against the rule, and the excluded ones are recorded with WHY (not silently dropped).
+
+**D51 — Part-4 lesson clusters (D45 resolved, my judgment per ponder).** Group the 12 `##` lessons
+INSIDE 4.5-lessons-learned.md under a new `##` cluster layer (lessons demote to `###`), causal spine
+cheap→unreliable→govern: **Engineering with abundance** · **Engineering with an unreliable workforce**
+· **Engineering as governance** (framing sections — three-ways + fastest-road-to-hell — stay outside
+the clusters). Chose "as governance" over the author's original "leverage" for the third (names the
+actual content). Membership per the ponder's mapping. Reversible; surfaced to author for veto.
+
+**D52 — rename 4.6 (D46 resolved, my judgment per ponder): "Generative Validation" → "Generative
+Falsification."** The chapter subtitle is already "Generate to Falsify"; the move is Popperian
+(generate to BREAK a spec). Sharper + truer than "Validation." Rename the chapter title + chase all
+refs/links + the index term (ponder flagged the index-term rename cost). Reversible; surfaced to
+author for veto.
+
+**CORRECTION (author, 260804):** D48 HOME confirmed = back-matter "The Operator's Dashboard"
+(author: "back-matter or the Brownfield part" — chose back-matter as the reference home; Brownfield/4.1
+is topical method, not a lookup surface). D45 (clusters) and D46 (4.6 rename) — author RECLAIMED these
+as their own calls ("surface for my judgment"). So D51/D52 above are now my RECOMMENDATIONS pending the
+author's decision, NOT decided — the Part-4-chapter wave (4.5 clusters + 4.6 rename) is HELD until the
+author rules. D50 metrics (rule + 5 rows + back-matter + encode-in-model) proceeds now — independent of
+D45/D46.
+
+## D53 — Part-4-chapter decisions FINALIZED (author, 260804) + PUBLISH authorized
+
+**D45 FINAL (author chose option C, tweaked):** cluster the 12 `##` lessons in 4.5-lessons-learned.md
+under three `##` headings (lessons → `###`), framing sections (three-ways, fastest-road-to-hell) stay
+OUTSIDE the clusters:
+- **The new economics** — refactoring-is-free, cost-estimator-broken
+- **The failure modes** — done-is-a-claim, tests-survive-agent-failure, vibe-coding, explicitness,
+  optionality-is-poison
+- **The MAGE discipline** — soft/hard, autonomy-amplifier, what-this-means, who-converts
+(Applying agent VERIFIES the real 12 headings and maps them; ponder membership is the guide.)
+
+**D46 FINAL (author rejected "Generative Falsification" as too nominalization-y):** rename chapter 4.6
+title "Generative Validation" → **"Validation with Agents"** (author's suggestion — plain, verb-friendly,
+agentic frame). KEEP the subtitle **"Generate to Falsify"** so the Popperian generate-to-break essence
+stays. Chase all refs/links + the index term for the title change.
+
+**PUBLISH AUTHORIZED** (author: "publish when all is done"): after D48 (metrics dashboard) + the
+Part-4-chapter wave (D45+D46) land and full-suite-verify, do ONE clean `catalog.py deploy github` via
+orchestrator detached bg + re-bump the ada-tool submodule locally (do NOT push parent). No further
+gate needed from the author.
+
+## Part-5 reinforcement round (author, 260804) — D54–D56 → PART-5 wave (before publish)
+
+Overall author intent: do NOT shorten Part 5; instead continuously remind the reader WHICH MAGE idea each
+chapter demonstrates, so the case study reads as "here is MAGE, under stress" (evidence for the method),
+not merely chronological.
+
+**D54 — per-chapter "This chapter illustrates" box.** At the START of every Part-5 chapter (5.1–5.4), add a
+tiny box: "This chapter illustrates ✓ Modeling Thesis / ✓ Alignment Thesis / ✓ Governance Conversion" (and/or
+the Printer, the Governed Engineering Environment) — whichever GENUINELY apply to that chapter (agent reads
+each chapter and judges; do NOT reflexively check all). Purpose: constant reinforcement that this is evidence
+for the method. Reuse the book's existing box/concept-inset mechanism; keep it tiny + consistent across the
+four chapters.
+
+**D55 — FORESHADOW the support ratio before Part 5 (do NOT move it).** The support ratio is an engineering
+heuristic, not just a project stat. Add an earlier foreshadow that POSES it as a question — e.g. "What is a
+suitable ratio of code to governed environment? Conventional wisdom is ~1:1 tests to production… later we'll
+see" — WITHOUT spoiling the ~3× answer. RECONCILE with the D47 forward-ref already in 2.3 (which currently
+gives the ~3× answer): make the earlier hook the question-poser and adjust/relocate so the two don't collide
+(agent picks the cleanest placement — likely the question earlier where tests:prod / the environment is first
+discussed, and 2.3's pointer stays as the "measured in Part 5" ref, de-spoiled if needed). Frames it as a
+reusable heuristic.
+
+**D56 — the ending: revisit the "MAGE Method at a Glance" frontispiece one final time.** At the END of Part 5
+(end of 5.4, the last case-study chapter), conclude by walking the reader back through the page-3 frontispiece
+figure (`mage-method.svg`), checking off each box now instantiated in the real DocAble system: the Printer ✓,
+Modeling Thesis ✓, Alignment Thesis ✓, Governed Engineering Environment ✓, Governance Conversion ✓,
+Trustworthy software ✓. Closure: the reader has now seen every box in the opening diagram instantiated in a
+real system. Cross-ref the frontispiece (0.1) in the book's link style. Keep it a tight closing beat, house
+voice — not a re-explanation of each box, a checklist-walk that lands the "evidence" frame.
+
+ENDGAME now: D48 (metrics) → Part-4-chapter (D45+D46) → PART-5 wave (D54+D55+D56) → full-suite verify →
+PUBLISH (authorized). Each wave serial on book main; each full-suite-verified before the next.
+
+**D57 — colophon-ordering judgment (autonomous, 260804).** D48 placed the Operator's Dashboard at
+back-matter 6.5, AFTER the colophon (6.4), which self-describes as "traditionally the last page… before
+the reader closed the cover" — a self-contradiction. Options: (a) renumber dashboard before colophon
+(ripples into outline/argument-spine/outcomes/reverse-index declared models + the D48 parity validator's
+page path — blast-radius for a cosmetic ordering nicety); (b) keep 6.5 + soften the colophon's "last page"
+line (1-line prose edit, zero structural ripple). CHOSE (b) per A.22 (smallest sound change that closes the
+contradiction). Folded into the Part-4-chapter wave. Strict colophon-last would want (a) — deferred as
+low-value/high-ripple; noted for author.
+
+**D58 — vibe coding → "jugaad" framing (author draft, 260804).** Where the book discusses vibe coding
+(4.5-lessons-learned, the vibe-coding lesson), add the author's jugaad connection: vibe coding produces
+*jugaad* (Hindi — an ingenious improvised solution from whatever's available) — NOT trash, but not
+engineering; "MAGE begins where jugaad ends: by converting successful improvisations into durable
+engineering mechanisms." Author supplied draft prose + a footnote defining jugaad (जुगाड़). Adapt lightly to
+the exact 4.5 context + house voice; keep the author's core sentences. Use the book's footnote mechanism if
+one exists, else an inline aside/parenthetical for the jugaad definition (agent checks). FOLDED into the
+Part-4-chapter wave (already editing 4.5). Ties vibe-coding→governance-conversion.
+
+## D59 — metaphor-discipline audit + tracking model (author, 260804)
+
+Author rule: "Never introduce a second metaphor until the first has paid off." The book's strong metaphors:
+the Printer, churn, maps-vs-territory, cattle-vs-pets, the zoo (+ others: the staircase, the coin, the
+engineer's seat…). Author wants a MODEL that tracks each metaphor's span (begin → pays-off/end) so OVERLAP
+is measurable, and overlap should be EXCEPTIONAL. Deliverable: (1) a declared metaphor-tracking model
+(book-models idiom, like metrics-dashboard.json) that records each metaphor's introduced-at / pays-off-at
+span; (2) a checker that MEASURES overlap (a 2nd metaphor introduced before the 1st pays off) and flags
+non-exceptional cases; (3) an AUDIT of the current book's overlaps. KEY MODELING SUBTLETY: distinguish
+CORE recurring book-vocabulary metaphors (Printer/churn/zoo — always "live," never end) from LOCAL section
+metaphors (introduced to make a point, must pay off before the next) — the overlap rule bites on LOCAL
+metaphors piling up, not the core vocabulary. Approach: dispatch a READ-ONLY Opus design+audit ponder NOW
+(concurrent with the Part-5 wave — writes only _design), then build the model+checker + fix flagged overlaps
+as a follow-up wave. NOT gating the current publish unless the audit surfaces quick pre-publish overlap fixes.
+
+## D60 — delete conversational warm-ups (author, 260804) — whole-book MICRO pass
+
+Author flagged repeatedly: delete conversational lead-in phrases whose next sentence already states the
+point — "Here is the interesting part…", "Notice something…", "It turns out…", "The important thing is…",
+and kin. Delete the lead-in, keep the substance. MICRO-level (not modeling), whole-book, "a big pass, a few
+agents." SEQUENCING: run as ~3 SEQUENTIAL part-grouped waves (P1-2, P3-4, P5-6) AFTER the Part-5 content
+wave (so it also cleans the new Part-5 boxes/closing) — sequential because the book's global html+model regen
+on commit makes parallel book-writers collide on generated artifacts (the reason single-live-writer holds).
+Each wave: delete the warm-up lead-ins in its parts, preserve the substance sentence, house voice; fast-gate;
+I full-suite-verify between waves. Part of the pre-publish batch (autonomous; "publish when all is done").
+
+## D61 — shorten glossary entries + add the governing voice rule (author, 260804)
+
+Author: glossary entries are currently Definition → Commentary → Motivation; shorten to **Definition (1
+sentence) + optional 2nd sentence (why it matters).** Example — "Governance Conversion. The method by which
+the environment evolves. Rising velocity surfaces a structural failure; judgment converts each recurrence
+into a durable mechanism…" BECOMES "Governance Conversion. Converting a recurring failure into a durable
+engineering mechanism that permanently retires that failure class." AND add the editorial RULE to the book
+VOICE FILE (plugin/mage/skills/self-communicate/writing/voice.md): **"Write like an engineering textbook,
+not like a conference keynote."** This rule is the UNIFYING principle behind D60 (delete conversational
+warm-ups) + D61 (tighten glossary) — land it in voice.md FIRST (in the D61 wave), then the D60 waves cite it.
+Scope: voice.md (add rule) + 0.2-the-books-language.md (shorten every entry to def + optional why). Keep the
+term's real definition; cut commentary/motivation to at most one why-it-matters sentence.
+
+## Endgame sequence (autonomous, all before ONE publish):
+Part-5 wave (D54-56) [writer] + D59 metaphor ponder [read-only, concurrent] → D61 voice-rule+glossary
+[writer] → D60 warm-ups ~3 sequential part-grouped waves [writer] → D59 model+checker build + overlap fixes
+→ full-suite-verify each → ONE publish + submodule bump → post-publish STEP-4 report (D1-D61).
+
+**Architecture note (for the D59 model BUILD wave):** metrics_dashboard_model.py (D48) is the FIRST
+"declared book-models JSON + typed validator/projector wired into catalog.py validate" instance; the D59
+metaphor model will be the SECOND. Per A.10 (extract on the second site, not the third), the D59 build MUST
+read metrics_dashboard_model.py and EXTRACT the shared validator scaffolding (JSON load, structural/parity
+findings shape, catalog.py cmd_validate wire-in) into a small shared helper rather than copy-paste a second
+bespoke validator — OR justify why the two are too different to share. Don't leave two parallel hand-rolled
+model-validators.
+
+## D59 ponder OUTCOME + my judgments (260804) — audit = 0 overlaps
+
+Ponder (book/_design/metaphor-tracking-260804.md): 6 CORE metaphors (Printer, churn, map/territory, Model
+Zoo, loop, engineer's seat — overlap-exempt) + 9 LOCAL (search-space 1.3, poka-yoke 1.5, raven/pebbles 2.1,
+evidence-staircase 2.3, diffusion 4.4, jugaad 4.5, the coin 4.6, MAGE-staircase 5.4, DOJ-ramp 5.1). AUDIT
+HEADLINE: **0 overlaps** — the author already obeys "no 2nd metaphor before the 1st pays off." So D59 = pure
+forward-policing infrastructure; NO content overlap-fixes.
+
+My judgments (autonomous):
+- **BUILD the model** metaphor-spans.json + metaphor_spans_model.py (reuse metrics_dashboard_model.py
+  scaffolding per A.10) + wire AUDIT-ONLY-FIRST into catalog.py validate (rule #55 landing discipline). Use
+  ANCHORS not line numbers (prose drifts). Encode kind:core|local; core has no pays_off_at; overlap measured
+  over locals within a stretch; overlap_ok+rationale records deliberate overlaps.
+- **cattle-vs-pets: DROP** (fidelity — author listed it but it is NOT in the manuscript; only a stray
+  "cattle" writing-origins line at 1.1:134). Do NOT invent a cattle-vs-pets passage. Flagged to author to add
+  deliberately if wanted.
+- **staircase collision (evidence-staircase 2.3 vs MAGE-staircase 5.4): DEFER** the rename — legal, only
+  dilutive, chapters far apart; not worth endgame churn. Reported.
+- engineers-seat core-vs-local: keep as CORE (recurs as the SDLC→SELC frame). 
+SEQUENCING: D59 model BUILD runs LAST among content waves (after Part-5 + D61 + D60) so its anchors are final.
