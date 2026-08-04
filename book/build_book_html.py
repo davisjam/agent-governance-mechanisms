@@ -2280,23 +2280,29 @@ def _element_label(el: str) -> str:
     return _ELEMENT_DISPLAY.get(el, el)
 
 
-def _pattern_elements_present(rec: dict) -> list[str]:
-    """Which of the eight GoF elements this pattern page renders. Intent, Structure, and Sample Code are
-    always present (Structure/Sample Code fall back to a visible TODO); the five catalogue-sourced slots
-    appear only when the entry carries that section."""
+def _pattern_elements_present(rec: dict, for_print: bool = False) -> list[str]:
+    """Which of the eight GoF elements this pattern page renders. Intent and Structure are always present
+    (Structure falls back to a visible TODO); the five catalogue-sourced slots appear only when the entry
+    carries that section. Sample Code is always shown on the WEB, but DROPPED in the print/PDF projection
+    (`for_print=True`) — code blocks are the least-useful printed-reference content, so the print appendix
+    compresses by omitting them while the pattern prose ships in full (the web build keeps them)."""
     present: list[str] = []
     for el in _GOF_ELEMENTS:
         if el == "Intent":
             if rec["intent"]:
                 present.append(el)
-        elif el in ("Structure", "Sample Code"):
-            present.append(el)  # always shown (diagram/code fill or a TODO fallback)
+        elif el == "Structure":
+            present.append(el)  # always shown (diagram fill or a TODO fallback)
+        elif el == "Sample Code":
+            if not for_print:
+                present.append(el)  # web keeps it; print drops it (compression, D25)
         elif rec["sections"].get(el):
             present.append(el)
     return present
 
 
-def _appendix_pattern_page_md(rec: dict, stack_membership: dict[str, list[tuple[str, str]]] | None = None) -> str:
+def _appendix_pattern_page_md(rec: dict, stack_membership: dict[str, list[tuple[str, str]]] | None = None,
+                              for_print: bool = False) -> str:
     """One pattern rendered as a WHOLE PAGE of GoF-layout markdown. The pattern NAME is the page `<h1>`
     (from the chapter dict's `chapter_title`), so this body emits no leading `#`/`##` name heading — it
     leads with the Structure diagram (visual first), then an in-page table of contents of the elements
@@ -2309,7 +2315,7 @@ def _appendix_pattern_page_md(rec: dict, stack_membership: dict[str, list[tuple[
     same `role:<slug>` tokens as the forward links). A mechanism in no stack gets no such line."""
     fill = rec.get("fill") or {}
     safe = rec["name"].replace('"', "'")
-    present = _pattern_elements_present(rec)
+    present = _pattern_elements_present(rec, for_print)
     parts: list[str] = []
 
     # 1. VISUAL FIRST — the Structure diagram (or its TODO fallback) leads the page, under the header. The
@@ -2958,7 +2964,7 @@ def build_appendix_chapters(next_part: int, for_print: bool = False) -> list[dic
             # every pattern above the opening page's chapter 0 in Appendix A.
             "chapter": fam_n * 100 + within_family_index + 1,
             "chapter_title": f"Appendix {letter} - {rec['appendix_num']}. {rec['name']}",
-            "body_md": _appendix_pattern_page_md(rec, stack_membership),
+            "body_md": _appendix_pattern_page_md(rec, stack_membership, for_print),
             "is_appendix": True,
             "mermaid": True,
         })
