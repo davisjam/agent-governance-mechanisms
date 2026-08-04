@@ -195,3 +195,41 @@ INDEPENDENT fresh-context Opus second opinion. Logged honestly as such.
   closes). Open editorial (audit-only, non-gating, for author): CS5 chapter-shape re-assess flags on 3.8/4.1/
   4.6 (the rewritten open/closings) — a human may want to re-grade those anchors in chapter_shape_declared.
   Pre-existing SVG stroke-through-glyph advisories on cover/model-map/provenance-fidelity-stack (not mine).
+
+### STEP 4
+
+- **D27 · STEP-4 deploy agent (aced728a) full-suite PASSED but did NOT push — likely stream-silence-killed
+  during the silent `deploy github`.** The agent verified 31/0 green then ran `catalog.py deploy github`; the
+  process ended with origin still at 720dc1c (STEP-3 unpushed) and no agent completion — the deploy runs
+  mostly-silently for minutes, tripping the 600s stream-silence watchdog. HEAD stayed at the track-docs
+  commit (no partial deploy commit) → re-run is clean. FIX (memory feedback_agents_die_on_stream_silence):
+  run the long silent deploy in the ORCHESTRATOR's detached background Bash (no watchdog, notifies on exit),
+  not a sub-agent. Taking over now.
+
+- **D27-CORRECTION · FALSE ALARM — the deploy agent DID complete + push successfully.** My "not pushed"
+  reads were a timing race (fetched just before the push completed / before the completion notification).
+  Actual: `720dc1c..cd7c4b2 main -> main`, origin==local confirmed, PDF 315pp/3.6MB, full suite 31/0. No
+  takeover was launched (only the intent was logged). STEP 4 deploy SUCCEEDED at cd7c4b2. Standing lesson
+  still holds (long silent deploy → orchestrator bg bash), but it wasn't needed here.
+
+### Post-publish editorial (author, 260804 — after cd7c4b2)
+
+- **D28 · Front-matter restructure (afbd3e7d, running).** New order per author: cover → copyright → "The MAGE
+  Method at a Glance" (NEW figure page, mage-method.svg authored+fit-clean) → glossary → preface (trim
+  anticipatory refs to ~2; extract "How to read this book" to its own ≤1-page section so the preface ends
+  thematically) → acknowledgments → Part 1. Delicate (renumber front-matter; core concepts index-def'd in
+  preface — drift-proof glossary pointer-wiring auto-follows; exhaustive cross-ref verify required).
+- **D29 · Figure/table snappy-NAMES — Fable (indep-Opus) ponder dispatched (a1a2f48, read-only).** Author
+  wants "Figure X: The Task Classification Heuristic. <desc>" — a memorable name prefix where it sharpens.
+  Ponder proposes per figure/table (NAME vs LEAVE, conservative) → I review → apply wave. → book/_design/
+  figure-table-names-ponder-260804.md.
+- **D30 · "Printer Commandments" boxed capstone — PONDERED (mine), verdict YES.** A boxed 5-rule operational
+  artifact at the END of Part 1 (after 1.5): suspect-instructions / one-shot-simple / supervise-reasoning /
+  recurring-failures→opportunities / judgment→infrastructure = Part 1's method distilled. It's a named
+  operational artifact (not a stock takeaways box → consistent with the no-generic-boxes stance), memorable,
+  earns its place. Keep terse imperatives so "Commandments" reads self-aware not preachy; fallback name "The
+  Printer, in five rules" if too cute in context. GROUND the 5 rules in Part 1's actual content, don't invent.
+- **D31 · "This book…" repetition — QUEUED for a prose-polish wave (after front-matter wave frees the preface).**
+  22 in preface + 9 in 1.1 + a few elsewhere. Vary with "MAGE …" / "The MAGE methodology …" / "MAGE teaches"
+  where repetitive. Batched with D30 (Printer Commandments) into one prose-polish wave to avoid the preface
+  write-conflict with the running front-matter wave.

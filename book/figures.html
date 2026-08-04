@@ -371,10 +371,12 @@ nav.toc details { flex: 0 0 auto; }
    full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
 </style></head><body><nav class="toc" aria-label="Table of contents"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
-<li><a class="" href="0.1-preface.html">Preface</a></li>
-<li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
+<li><a class="" href="0.1-the-mage-method-at-a-glance.html">The MAGE Method at a Glance</a></li>
 <li><a class="" href="0.2-the-books-language.html">The Book&#x27;s Language</a></li>
-<li><a class="" href="0.3-acknowledgments.html">Acknowledgments</a></li>
+<li><a class="" href="0.3-preface.html">Preface</a></li>
+<li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
+<li><a class="" href="0.4-how-to-read-this-book.html">How to read this book</a></li>
+<li><a class="" href="0.5-acknowledgments.html">Acknowledgments</a></li>
 <li class="part">Part 1 — The Mindset</li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
 <li><a class="" href="1.2-mage-by-example.html">2&nbsp; MAGE by Example</a></li>
@@ -459,17 +461,83 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 84 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-overview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" role="group" aria-labelledby="fig-0-1-1-mg-title fig-0-1-1-mg-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-0-1-1-mg-title">The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
-  <desc id="fig-0-1-1-mg-desc">A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 85 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
+     role="group" aria-labelledby="fig-0-1-1-mmTitle fig-0-1-1-mmDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-0-1-1-mmTitle">The MAGE method at a glance</title>
+  <desc id="fig-0-1-1-mmDesc">A single vertical flow. The Printer — a coding agent — generates code
+    through an agent fleet. The fleet branches into the book's two theses: the Modeling Thesis,
+    which produces models (the Model Zoo), and the Alignment Thesis, which produces mechanisms
+    (constraints, sensors, validators, gates). The two converge into the Governed Engineering
+    Environment. Governance conversion grows that environment — turning each recurring failure
+    into a mechanism — and the result is trustworthy software.</desc>
+
   <defs>
-    <marker id="fig-0-1-1-mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+    <marker id="fig-0-1-1-mm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
+    </marker>
+  </defs>
+
+  <!-- 1. the Printer -->
+  <rect x="280" y="34" width="160" height="54" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="360" y="67" text-anchor="middle" font-size="21" font-weight="700" fill="#9a3f12">The Printer</text>
+
+  <path d="M360,88 L360,130" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-0-1-1-mm-ah)"/>
+  <text x="372" y="114" text-anchor="start" font-size="15" font-style="italic" fill="#57534e">generates code</text>
+
+  <!-- 2. the agent fleet -->
+  <rect x="255" y="138" width="210" height="46" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="360" y="167" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">The agent fleet</text>
+
+  <!-- branch: fleet -> two theses -->
+  <path d="M360,184 L360,208 M175,208 L545,208 M175,208 L175,236 M545,208 L545,236"
+        fill="none" stroke="#57534e" stroke-width="2"/>
+  <path d="M175,236 L175,242" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-0-1-1-mm-ah)"/>
+  <path d="M545,236 L545,242" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-0-1-1-mm-ah)"/>
+
+  <!-- 3a. Modeling Thesis -->
+  <rect x="88" y="244" width="174" height="46" rx="8" fill="#eef7ee" stroke="#15803d" stroke-width="2"/>
+  <text x="175" y="273" text-anchor="middle" font-size="18" font-weight="700" fill="#15803d">Modeling Thesis</text>
+  <path d="M175,290 L175,320" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-0-1-1-mm-ah)"/>
+  <text x="175" y="342" text-anchor="middle" font-size="18" font-weight="600" fill="#1c1917">Models</text>
+  <text x="175" y="366" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the Model Zoo</text>
+
+  <!-- 3b. Alignment Thesis -->
+  <rect x="458" y="244" width="174" height="46" rx="8" fill="#eef7ee" stroke="#15803d" stroke-width="2"/>
+  <text x="545" y="273" text-anchor="middle" font-size="18" font-weight="700" fill="#15803d">Alignment Thesis</text>
+  <path d="M545,290 L545,320" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-0-1-1-mm-ah)"/>
+  <text x="545" y="342" text-anchor="middle" font-size="18" font-weight="600" fill="#1c1917">Mechanisms</text>
+  <text x="545" y="366" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">constraints · sensors</text>
+  <text x="545" y="388" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">validators · gates</text>
+
+  <!-- converge: both columns -> GEE -->
+  <path d="M175,398 L175,424 M545,398 L545,424 M175,424 L545,424 M360,424 L360,448"
+        fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-0-1-1-mm-ah)"/>
+
+  <!-- 4. Governed Engineering Environment -->
+  <rect x="150" y="450" width="420" height="54" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="360" y="483" text-anchor="middle" font-size="19" font-weight="700" fill="#1f7a4d">The Governed Engineering Environment</text>
+
+  <path d="M360,504 L360,532" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-0-1-1-mm-ah)"/>
+  <text x="360" y="554" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">Governance conversion</text>
+  <text x="360" y="578" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">grows the environment</text>
+
+  <path d="M360,592 L360,620" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#fig-0-1-1-mm-ah)"/>
+
+  <!-- 5. Trustworthy software -->
+  <rect x="222" y="626" width="276" height="50" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="360" y="658" text-anchor="middle" font-size="19" font-weight="700" fill="#9a3f12">Trustworthy software</text>
+</svg><figcaption data-short="The whole method on one page"><span class="fig-label">Figure 0.1-1.</span> The whole method on one page: the Printer generates code through a fleet; the two theses fill a governed environment that governance conversion grows into trustworthy software.</figcaption></figure><p class="gallery-source">From <a href="0.1-the-mage-method-at-a-glance.html#fig-0-1-1">The MAGE Method at a Glance</a></p></section><hr><section class="gallery-item"><figure id="fig-0-3-1-fig-0-3-1" class="book-figure" data-label="mage-overview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 1080 422" role="group" aria-labelledby="fig-0-3-1-mg-title fig-0-3-1-mg-desc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-0-3-1-mg-title">The MAGE method: the two theses that hold off churn and earn trustworthy software</title>
+  <desc id="fig-0-3-1-mg-desc">A cheap agent fleet is one input with two fates. Left ungoverned, it drifts into churn as its work outgrows the context window: drift, confidently-wrong. Run through the governed environment — which holds the Modeling Thesis (a typed model the fleet reasons through) and the Alignment Thesis (a mechanism that keeps output aligned with intent) — it converges on software that is high quality (correct), auditable (every change traces back to the models, so a result can be explained and reversed), and delivered at velocity. Model-Based Agentic Software Engineering is the governed path.</desc>
+  <defs>
+    <marker id="fig-0-3-1-mg-ah-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
       <path d="M0 0 L10 5 L0 10 z" fill="#b23b3b"/>
     </marker>
-    <marker id="fig-0-1-1-mg-ah-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <marker id="fig-0-3-1-mg-ah-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M0 0 L10 5 L0 10 z" fill="#1f7a4d"/>
     </marker>
-    <marker id="fig-0-1-1-mg-ah-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+    <marker id="fig-0-3-1-mg-ah-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
       <path d="M0 0 L10 5 L0 10 z" fill="#2f5169"/>
     </marker>
   </defs>
@@ -490,7 +558,7 @@ nav.toc details[open] { flex: 1 1 100%; }
         fill="none" stroke="#b23b3b" stroke-width="3" stroke-linejoin="round" opacity="0.95"/>
   <path d="M174 236 L150 224 L166 214 L158 204"
         fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"
-        marker-end="url(#fig-0-1-1-mg-ah-red)" opacity="0.9"/>
+        marker-end="url(#fig-0-3-1-mg-ah-red)" opacity="0.9"/>
   <text x="238" y="258" text-anchor="middle" font-size="15.5" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
 
   <!-- ============ THE FLEET: single origin, centered on the spine (y=344) ============ -->
@@ -501,7 +569,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 
   <!-- ============ SPINE: fleet -> governed env -> trustworthy (all straight, y=344) ============ -->
   <!-- tail on the fleet's right edge (x=242), head on the container's left edge (x=308) -->
-  <path d="M242 344 L306 344" fill="none" stroke="#2f5169" stroke-width="3" marker-end="url(#fig-0-1-1-mg-ah-navy)"/>
+  <path d="M242 344 L306 344" fill="none" stroke="#2f5169" stroke-width="3" marker-end="url(#fig-0-3-1-mg-ah-navy)"/>
 
   <!-- The governed environment: the HERO container (center y=344) -->
   <rect x="308" y="216" width="452" height="256" rx="16" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
@@ -517,7 +585,7 @@ nav.toc details[open] { flex: 1 1 100%; }
   <text x="534" y="427" text-anchor="middle" font-size="15.5" fill="#2f5169">keeps output aligned with intent</text>
 
   <!-- straight output arrow, rightward on the spine: tail on container edge (x=760), head on Trustworthy edge (x=846) -->
-  <path d="M760 344 L844 344" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#fig-0-1-1-mg-ah-green)"/>
+  <path d="M760 344 L844 344" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#fig-0-3-1-mg-ah-green)"/>
 
   <!-- Trustworthy software: the reward, on the spine — three earned attributes -->
   <rect x="846" y="274" width="204" height="140" rx="12" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
@@ -532,11 +600,11 @@ nav.toc details[open] { flex: 1 1 100%; }
 
   <!-- takeaway caption -->
   <text x="540" y="497" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
-</svg><figcaption data-short="The MAGE method in one picture"><span class="fig-label">Figure 0.1-1.</span> The MAGE method in one picture. A cheap agent fleet, left ungoverned, drifts into churn as its work outgrows the context window. Governed through the Modeling Thesis — a structured model the fleet reasons through, which shrinks what must fit in-window — and the Alignment Thesis — a mechanism that keeps output aligned with intent — it converges on trustworthy software at velocity. Model-Based Agentic Software Engineering is the governed path.</figcaption></figure><p class="gallery-source">From <a href="0.1-preface.html#fig-0-1-1">Preface</a></p></section><hr><section class="gallery-item"><figure id="fig-0-1-2-fig-0-1-2" class="book-figure" data-label="oversight-modes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
-     role="group" aria-labelledby="fig-0-1-2-omTitle fig-0-1-2-omDesc"
+</svg><figcaption data-short="The MAGE method in one picture"><span class="fig-label">Figure 0.3-1.</span> The MAGE method in one picture. A cheap agent fleet, left ungoverned, drifts into churn as its work outgrows the context window. Governed through the Modeling Thesis — a structured model the fleet reasons through, which shrinks what must fit in-window — and the Alignment Thesis — a mechanism that keeps output aligned with intent — it converges on trustworthy software at velocity. Model-Based Agentic Software Engineering is the governed path.</figcaption></figure><p class="gallery-source">From <a href="0.3-preface.html#fig-0-3-1">Preface</a></p></section><hr><section class="gallery-item"><figure id="fig-0-3-2-fig-0-3-2" class="book-figure" data-label="oversight-modes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
+     role="group" aria-labelledby="fig-0-3-2-omTitle fig-0-3-2-omDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-0-1-2-omTitle">Three process models for agentic software engineering</title>
-  <desc id="fig-0-1-2-omDesc">Three panels arranged as a triangle. The two poles sit on top:
+  <title id="fig-0-3-2-omTitle">Three process models for agentic software engineering</title>
+  <desc id="fig-0-3-2-omDesc">Three panels arranged as a triangle. The two poles sit on top:
     velocity-centric at top-left — a human sets a goal, then a ring of role-labeled agents —
     planner, developer, tester, reviewer, security, deploy — passes work around a cycle, with
     insufficient quality control; and oversight-centric at top-right — a human and a single
@@ -546,7 +614,7 @@ nav.toc details[open] { flex: 1 1 100%; }
     obligations become controls before the agent works. The book takes the third stance.</desc>
 
   <defs>
-    <marker id="fig-0-1-2-omArrow" markerWidth="8" markerHeight="8" refX="6.5" refY="3"
+    <marker id="fig-0-3-2-omArrow" markerWidth="8" markerHeight="8" refX="6.5" refY="3"
             orient="auto" markerUnits="userSpaceOnUse">
       <path d="M0,0 L7,3 L0,6 Z" fill="#1c1917"/>
     </marker>
@@ -573,7 +641,7 @@ nav.toc details[open] { flex: 1 1 100%; }
     <text x="179" y="256">Deploy</text>
 
     <!-- cycle arrows (clockwise) -->
-    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#fig-0-1-2-omArrow)">
+    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#fig-0-3-2-omArrow)">
       <path d="M345,202 C383,214 403,232 406,236"/>
       <path d="M431,276 C437,296 437,306 435,311"/>
       <path d="M413,350 C403,366 383,384 359,391"/>
@@ -591,7 +659,7 @@ nav.toc details[open] { flex: 1 1 100%; }
     <text x="1017" y="258" text-anchor="middle">Agent:</text>
     <text x="1017" y="290" text-anchor="middle" font-size="22" fill="#57534e">bounded work</text>
 
-    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#fig-0-1-2-omArrow)">
+    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#fig-0-3-2-omArrow)">
       <path d="M811,240 C871,206 899,206 959,240"/>
       <path d="M959,282 C899,316 871,316 811,282"/>
     </g>
@@ -612,17 +680,17 @@ nav.toc details[open] { flex: 1 1 100%; }
     <rect x="584" y="726" width="140" height="46" rx="4" fill="none" stroke="#1c1917" stroke-width="1.4"/>
     <text x="654" y="756" text-anchor="middle" font-size="24">Agent</text>
 
-    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#fig-0-1-2-omArrow)">
+    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#fig-0-3-2-omArrow)">
       <path d="M452,686 L452,738 L512,738"/>
     </g>
     <text x="460" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
   </g>
   <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#2f5169">Known policies become controls</text>
-</svg><figcaption data-short="Three process models for agentic software engineering"><span class="fig-label">Figure 0.1-2.</span> Three process models for agentic software engineering. The two poles sit on top. Velocity-centric: agents in a ring of job titles (planner, developer, tester, reviewer) hand work around, and the quality mechanism stays implicit. Oversight-centric: a human straddles the implementation loop, reading and prompting each bounded piece — honest about the failure mode, but the human's attention does not scale with the agents. Governance-centric sits beneath them as the synthesis: the agents work inside a containing environment of enforced mechanisms (types, lints, gates) the human sets up in advance. The three differ in where reliability comes from. Only the governance-centric model puts it somewhere that scales — in mechanisms set up once, not in attention spent per piece. That is the model this book builds toward.</figcaption></figure><p class="gallery-source">From <a href="0.1-preface.html#fig-0-1-2">Preface</a></p></section><hr><section class="gallery-item"><figure id="fig-0-1-3-fig-0-1-3" class="book-figure" data-label="book-map"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 740"
-     role="group" aria-labelledby="fig-0-1-3-bmTitle fig-0-1-3-bmDesc"
+</svg><figcaption data-short="Three process models for agentic software engineering"><span class="fig-label">Figure 0.3-2.</span> Three process models for agentic software engineering. The two poles sit on top. Velocity-centric: agents in a ring of job titles (planner, developer, tester, reviewer) hand work around, and the quality mechanism stays implicit. Oversight-centric: a human straddles the implementation loop, reading and prompting each bounded piece — honest about the failure mode, but the human's attention does not scale with the agents. Governance-centric sits beneath them as the synthesis: the agents work inside a containing environment of enforced mechanisms (types, lints, gates) the human sets up in advance. The three differ in where reliability comes from. Only the governance-centric model puts it somewhere that scales — in mechanisms set up once, not in attention spent per piece. That is the model this book builds toward.</figcaption></figure><p class="gallery-source">From <a href="0.3-preface.html#fig-0-3-2">Preface</a></p></section><hr><section class="gallery-item"><figure id="fig-0-4-1-fig-0-4-1" class="book-figure" data-label="book-map"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 740"
+     role="group" aria-labelledby="fig-0-4-1-bmTitle fig-0-4-1-bmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-0-1-3-bmTitle">A map of the book — the parts and how they compose</title>
-  <desc id="fig-0-1-3-bmDesc">Part 1, The Mindset, sits at the top and introduces the two theses. It
+  <title id="fig-0-4-1-bmTitle">A map of the book — the parts and how they compose</title>
+  <desc id="fig-0-4-1-bmDesc">Part 1, The Mindset, sits at the top and introduces the two theses. It
     branches to two parts that work each thesis out: Part 2, The Governed Environment,
     develops the Alignment Thesis as the controls that govern the fleet; Part 3, The Model
     Zoo, develops the Modeling Thesis as the models the fleet reasons through. Both feed
@@ -631,7 +699,7 @@ nav.toc details[open] { flex: 1 1 100%; }
     implications for software engineering and the patterns appendix used as a reference.</desc>
 
   <defs>
-    <marker id="fig-0-1-3-bm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="fig-0-4-1-bm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
     </marker>
   </defs>
@@ -642,8 +710,8 @@ nav.toc details[open] { flex: 1 1 100%; }
   <text x="480" y="96" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">the frame, and the two theses</text>
 
   <!-- the fork: one thesis each -->
-  <path d="M370,118 C320,140 280,155 250,174" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-1-3-bm-ah)"/>
-  <path d="M590,118 C640,140 680,155 710,174" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-1-3-bm-ah)"/>
+  <path d="M370,118 C320,140 280,155 250,174" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-4-1-bm-ah)"/>
+  <path d="M590,118 C640,140 680,155 710,174" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-4-1-bm-ah)"/>
 
   <!-- Part 2: the Alignment Thesis -->
   <rect x="20" y="180" width="440" height="88" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
@@ -656,28 +724,28 @@ nav.toc details[open] { flex: 1 1 100%; }
   <text x="720" y="246" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">Modeling Thesis: models the fleet reasons through</text>
 
   <!-- both theses meet in practice -->
-  <path d="M250,268 C290,290 330,305 372,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-1-3-bm-ah)"/>
-  <path d="M710,268 C670,290 630,305 588,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-1-3-bm-ah)"/>
+  <path d="M250,268 C290,290 330,305 372,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-4-1-bm-ah)"/>
+  <path d="M710,268 C670,290 630,305 588,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-4-1-bm-ah)"/>
 
   <!-- Part 4: the practice -->
   <rect x="270" y="330" width="420" height="88" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
   <text x="480" y="366" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 4 · Putting It to Work</text>
   <text x="480" y="396" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">the method in daily practice</text>
 
-  <line x1="480" y1="418" x2="480" y2="474" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-1-3-bm-ah)"/>
+  <line x1="480" y1="418" x2="480" y2="474" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-4-1-bm-ah)"/>
 
   <!-- Part 5: the grounding case -->
   <rect x="270" y="480" width="420" height="88" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
   <text x="480" y="516" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 5 · A MAGE Case Study</text>
   <text x="480" y="546" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">DocAble, end to end: the grounding case</text>
 
-  <line x1="480" y1="568" x2="480" y2="624" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-1-3-bm-ah)"/>
+  <line x1="480" y1="568" x2="480" y2="624" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-0-4-1-bm-ah)"/>
 
   <!-- Back matter -->
   <rect x="270" y="630" width="420" height="88" rx="8" fill="#fdfcf9" stroke="#57534e" stroke-width="2"/>
   <text x="480" y="666" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Back matter · Implications for SE</text>
   <text x="480" y="696" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">+ the patterns appendix, a reference</text>
-</svg><figcaption data-short="The book in one map"><span class="fig-label">Figure 0.1-3.</span> The book in one map. Part 1 sets the frame and the two theses, then branches: Part 2 works out the Alignment Thesis as the controls that govern the fleet, and Part 3 works out the Modeling Thesis as the models the fleet reasons through. Both feed Part 4, the method in daily practice, which leads to Part 5, the DocAble case study the claims rest on, and then to the closing implications and the patterns appendix.</figcaption></figure><p class="gallery-source">From <a href="0.1-preface.html#fig-0-1-3">Preface</a></p></section><hr><section class="gallery-item"><figure id="fig-1-1-1-fig-1-1-1" class="book-figure" data-label="task-mode-decision"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 660" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="group" aria-labelledby="fig-1-1-1-csp-title fig-1-1-1-csp-desc">
+</svg><figcaption data-short="The book in one map"><span class="fig-label">Figure 0.4-1.</span> The book in one map. Part 1 sets the frame and the two theses, then branches: Part 2 works out the Alignment Thesis as the controls that govern the fleet, and Part 3 works out the Modeling Thesis as the models the fleet reasons through. Both feed Part 4, the method in daily practice, which leads to Part 5, the DocAble case study the claims rest on, and then to the closing implications and the patterns appendix.</figcaption></figure><p class="gallery-source">From <a href="0.4-how-to-read-this-book.html#fig-0-4-1">How to read this book</a></p></section><hr><section class="gallery-item"><figure id="fig-1-1-1-fig-1-1-1" class="book-figure" data-label="task-mode-decision"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 660" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif" role="group" aria-labelledby="fig-1-1-1-csp-title fig-1-1-1-csp-desc">
   <title id="fig-1-1-1-csp-title">One-shot scripting versus supervised autonomy</title>
   <desc id="fig-1-1-1-csp-desc">A decision path for a computational coding task. Starting from "What kind of task", you specify the input/output behavior, then split by task size and difficulty. A simple task under a few thousand lines with no reasoning goes to one-shot scripting: describe the process and the agent produces it in a single pass. A hard task, especially one that includes reasoning, goes to supervised autonomy, where you supply four things: correctness conditions and proposed sub-tasks that shape the system, and tools that determinize recurring processes plus monitoring and intervention that shape the development process.</desc>
 

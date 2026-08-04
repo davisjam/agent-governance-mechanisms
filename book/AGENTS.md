@@ -42,7 +42,7 @@ from the path, and reads the title metadata from each file.
 
 ```
 book/
-  frontmatter/    0.1-preface.md, 0.2-the-books-language.md, 0.3-acknowledgments.md   (Part 0 — Front Matter)
+  frontmatter/    0.1-the-mage-method-at-a-glance.md, 0.2-the-books-language.md, 0.3-preface.md, 0.4-how-to-read-this-book.md, 0.5-acknowledgments.md   (Part 0 — Front Matter)
   part1/          1.1-…, 1.2-…                              (Part 1 — The Context)
   part2/          2.1-…, 2.2-…                              (Part 2 — The Mindset)
   part3/          3.1-… … 3.4-…                             (Part 3 — The Governed Engineering Environment)

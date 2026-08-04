@@ -7,7 +7,7 @@ the .html (re-run `python3 build_book_html.py` to regenerate). Stdlib-only.
 The book source is a Part/Chapter filesystem hierarchy — the directory tree encodes
 the ordering so PART.CHAPTER is explicit in the path:
 
-    book/frontmatter/0.1-preface.md            -> Front matter, order 0.1
+    book/frontmatter/0.3-preface.md            -> Front matter, order 0.3
     book/part1/1.1-the-ada-context.md          -> Part 1, Chapter 1
     book/part1/1.2-the-timeline-and-the-work.md-> Part 1, Chapter 2
     book/part2/2.1-the-printer.md              -> Part 2, Chapter 1
