@@ -47,7 +47,7 @@
           "heading_text": "The grammar: patterns, and two theses",
           "topic_sentence": "The second is the **Gang of Four's** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994) [cite: gof1994], the catalogue that gave object-oriented design its shared vocabulary of reusable solutions, whose lasting contribution was less any single pattern than the *form* — name, recurring problem, solution shape, consequences, known uses — written so an engineer could reach for a vetted answer instead of re-deriving one.",
           "id_source": "derived",
-          "block_index": 24,
+          "block_index": 25,
           "points": []
         },
         {
@@ -56,7 +56,7 @@
           "heading_text": "The lineage: the modeling tradition",
           "topic_sentence": "The third is **Model-Driven Software Engineering in Practice** (Brambilla, Cabot, and Wimmer, 2017) [cite: brambilla2017], the standard concise statement of the modeling tradition: treat models as first-class engineering artifacts, structured representations with defined semantics a tool can check, not pictures pinned beside the code.",
           "id_source": "derived",
-          "block_index": 37,
+          "block_index": 39,
           "points": []
         },
         {
@@ -65,7 +65,7 @@
           "heading_text": "Three ways to run a fleet",
           "topic_sentence": "The hard problem of building software with agents is simple to state: the tools are fast and the tools are unreliable.",
           "id_source": "derived",
-          "block_index": 41,
+          "block_index": 43,
           "points": []
         },
         {
@@ -74,7 +74,7 @@
           "heading_text": "The through-line, and who it is for",
           "topic_sentence": "The through-line is a single idea; hold every chapter against it.",
           "id_source": "derived",
-          "block_index": 52,
+          "block_index": 54,
           "points": []
         },
         {
@@ -83,7 +83,7 @@
           "heading_text": "A map of the book",
           "topic_sentence": "Five parts, and they compose in a particular order.",
           "id_source": "derived",
-          "block_index": 55,
+          "block_index": 57,
           "points": []
         }
       ],
@@ -106,7 +106,7 @@
           "section_id": "the-core-ideas",
           "level": 2,
           "heading_text": "The core ideas",
-          "topic_sentence": "The four ideas the whole argument turns on.",
+          "topic_sentence": "The ideas the whole argument turns on — the two theses, the conversion that grows the environment, the governing metaphor, and the vocabulary of models underneath them.",
           "id_source": "derived",
           "block_index": 4,
           "points": []
@@ -117,7 +117,7 @@
           "heading_text": "How coding agents work (and fail)",
           "topic_sentence": "What a fleet of coding agents is, and the ways it comes apart.",
           "id_source": "derived",
-          "block_index": 10,
+          "block_index": 12,
           "points": []
         },
         {
@@ -126,16 +126,16 @@
           "heading_text": "The Governed Engineering Environment",
           "topic_sentence": "The environment that holds the fleet to a standard, and the mechanisms it is built from.",
           "id_source": "derived",
-          "block_index": 17,
+          "block_index": 24,
           "points": []
         },
         {
           "section_id": "docable-specifics",
           "level": 2,
           "heading_text": "DocAble specifics",
-          "topic_sentence": "Two mechanisms and a framing from the book's running example, DocAble.",
+          "topic_sentence": "Two mechanisms from the book's running example, DocAble.",
           "id_source": "derived",
-          "block_index": 31,
+          "block_index": 42,
           "points": []
         }
       ],
@@ -197,12 +197,12 @@
             {
               "slug": "supervised-autonomy-supplies-four-things",
               "text": "Supervised autonomy supplies four things in two groups.",
-              "block_index": 15
+              "block_index": 16
             },
             {
               "slug": "book-structure-fills-the-four",
               "text": "Each later part develops one of the four elements.",
-              "block_index": 20
+              "block_index": 22
             }
           ]
         },
@@ -212,27 +212,27 @@
           "heading_text": "Where the emphasis falls",
           "topic_sentence": "This book is about both modes.",
           "id_source": "derived",
-          "block_index": 22,
+          "block_index": 24,
           "points": [
             {
               "slug": "mode-misjudgment-is-costly-both-ways",
               "text": "Misjudging the mode either way is expensive.",
-              "block_index": 24
+              "block_index": 26
             },
             {
               "slug": "leash-length-from-data-density-and-capability",
               "text": "Leash length follows training-data density and model capability.",
-              "block_index": 26
+              "block_index": 28
             },
             {
               "slug": "books-weight-is-supervised-autonomy",
               "text": "The book's weight falls on supervised autonomy.",
-              "block_index": 28
+              "block_index": 30
             },
             {
               "slug": "code-is-cheap-now-productionize-it",
               "text": "Code is cheap; turn the fabricator into a production line.",
-              "block_index": 30
+              "block_index": 32
             }
           ]
         },
@@ -242,12 +242,12 @@
           "heading_text": "The printer",
           "topic_sentence": "Think of a 3D printer.",
           "id_source": "derived",
-          "block_index": 32,
+          "block_index": 34,
           "points": [
             {
               "slug": "printer-is-the-governing-metaphor",
               "text": "The 3D printer is the book's governing metaphor.",
-              "block_index": 34
+              "block_index": 36
             }
           ]
         },
@@ -257,22 +257,22 @@
           "heading_text": "An open-ended technology",
           "topic_sentence": "A 3D printer belongs to a rare class of technology — the *open-ended* kind — alongside the invention of writing and the printing press.",
           "id_source": "derived",
-          "block_index": 37,
+          "block_index": 39,
           "points": [
             {
               "slug": "open-ended-technology-mints-genres",
               "text": "An open-ended technology arrives with no list; people invent genres.",
-              "block_index": 39
+              "block_index": 41
             },
             {
               "slug": "genai-is-open-ended-book-takes-one-genre",
               "text": "Generative AI is open-ended; this book takes one genre.",
-              "block_index": 41
+              "block_index": 43
             },
             {
               "slug": "quality-floor-was-always-the-price-now-cheap",
               "text": "The quality floor was the price; agents make it cheap.",
-              "block_index": 44
+              "block_index": 46
             }
           ]
         },
@@ -282,22 +282,22 @@
           "heading_text": "A picture is not enough",
           "topic_sentence": "Everyone can sketch a piece of software.",
           "id_source": "derived",
-          "block_index": 46,
+          "block_index": 48,
           "points": [
             {
               "slug": "everyone-can-sketch-software-but-a-picture-wont-print",
               "text": "Anyone can picture software, but a picture will not print.",
-              "block_index": 48
+              "block_index": 50
             },
             {
               "slug": "printer-needs-a-model-not-a-photo",
               "text": "A printer needs a structural model plus print notes.",
-              "block_index": 50
+              "block_index": 52
             },
             {
               "slug": "agents-need-the-instructions-not-just-the-picture",
               "text": "Agents need the build instructions, not just the picture.",
-              "block_index": 53
+              "block_index": 55
             }
           ]
         },
@@ -307,32 +307,32 @@
           "heading_text": "Whose fault is it?",
           "topic_sentence": "Here is the shift in posture the whole book turns on.",
           "id_source": "derived",
-          "block_index": 56,
+          "block_index": 58,
           "points": [
             {
               "slug": "agent-is-a-printer-not-a-stapler-so-suspect-the-instructions",
               "text": "An agent is a printer, not a stapler; suspect instructions.",
-              "block_index": 58
+              "block_index": 60
             },
             {
               "slug": "models-can-build-anything-you-can-explain",
               "text": "Models build anything you can explain; explaining is the discipline.",
-              "block_index": 61
+              "block_index": 63
             },
             {
               "slug": "the-promise-is-also-the-danger",
               "text": "Building anything you describe is both promise and danger.",
-              "block_index": 64
+              "block_index": 66
             },
             {
               "slug": "speed-exposes-the-danger-not-causes-it",
               "text": "Speed does not cause the danger; it exposes it.",
-              "block_index": 67
+              "block_index": 69
             },
             {
               "slug": "running-example-is-a-real-shipped-system",
               "text": "The running example is a shipped system, not a toy.",
-              "block_index": 69
+              "block_index": 71
             }
           ]
         }
@@ -420,12 +420,12 @@
             {
               "slug": "model-calls-are-bounded-and-checked",
               "text": "Bounded model calls sit behind deterministic checks.",
-              "block_index": 24
+              "block_index": 26
             },
             {
               "slug": "two-commitments-under-the-six",
               "text": "Two commitments run under all six parts.",
-              "block_index": 26
+              "block_index": 28
             }
           ]
         },
@@ -435,17 +435,17 @@
           "heading_text": "One human, a fleet",
           "topic_sentence": "Now the part that makes this a book about engineering rather than accessibility: I did not write this system.",
           "id_source": "derived",
-          "block_index": 28,
+          "block_index": 30,
           "points": [
             {
               "slug": "fleet-wrote-the-code",
               "text": "The fleet wrote the code; the human judged.",
-              "block_index": 30
+              "block_index": 32
             },
             {
               "slug": "apparatus-larger-than-product",
               "text": "The governing apparatus outgrew the product.",
-              "block_index": 32
+              "block_index": 34
             }
           ]
         },
@@ -455,12 +455,12 @@
           "heading_text": "Two scars",
           "topic_sentence": "None of that machinery was designed in advance.",
           "id_source": "derived",
-          "block_index": 34,
+          "block_index": 36,
           "points": [
             {
               "slug": "two-failures-teach-the-method",
               "text": "Two real failures show what the machinery is for.",
-              "block_index": 36
+              "block_index": 38
             }
           ]
         },
@@ -470,12 +470,12 @@
           "heading_text": "The library that lied",
           "topic_sentence": "Early on, the codebase held two libraries that could touch a PDF: the sanctioned one, and a convenient second one an agent had adopted for quick page operations.",
           "id_source": "derived",
-          "block_index": 38,
+          "block_index": 40,
           "points": [
             {
               "slug": "convenient-library-stripped-the-structure",
               "text": "A convenient library silently stripped the structure.",
-              "block_index": 39
+              "block_index": 41
             }
           ]
         },
@@ -485,12 +485,12 @@
           "heading_text": "The lever that lost work",
           "topic_sentence": "The second failure came from the process that built the product.",
           "id_source": "derived",
-          "block_index": 41,
+          "block_index": 43,
           "points": [
             {
               "slug": "orchestrator-reached-for-the-destructive-lever",
               "text": "A destructive escape lever twice discarded committed work.",
-              "block_index": 42
+              "block_index": 44
             }
           ]
         },
@@ -500,17 +500,17 @@
           "heading_text": "The move that recurs",
           "topic_sentence": "Here is why those two failures belong in this chapter: neither fix stopped at the patch.",
           "id_source": "derived",
-          "block_index": 44,
+          "block_index": 46,
           "points": [
             {
               "slug": "failure-becomes-a-mechanism",
               "text": "Each failure became a mechanism retiring its class.",
-              "block_index": 46
+              "block_index": 48
             },
             {
               "slug": "attention-per-class-not-per-change",
               "text": "Attention moves from per-change to per-class.",
-              "block_index": 49
+              "block_index": 51
             }
           ]
         },
@@ -520,12 +520,12 @@
           "heading_text": "Where the map leads",
           "topic_sentence": "You now hold the object: a real system, built by a fleet, governed by machinery that grew scar by scar.",
           "id_source": "derived",
-          "block_index": 51,
+          "block_index": 53,
           "points": [
             {
               "slug": "parts-2-4-machinery-part-5-full-case",
               "text": "Parts 2–4 explain the machinery; Part 5 the case.",
-              "block_index": 53
+              "block_index": 55
             }
           ]
         }
@@ -558,12 +558,12 @@
             {
               "slug": "loop-starts-with-a-measurable-metric",
               "text": "Engineering a loop starts with a measurable metric.",
-              "block_index": 7
+              "block_index": 9
             },
             {
               "slug": "orchestrator-is-a-worked-loop-written-as-a-model",
               "text": "The orchestrator is a worked loop written as a model.",
-              "block_index": 10
+              "block_index": 12
             }
           ]
         },
@@ -573,47 +573,47 @@
           "heading_text": "Give it a model of the world",
           "topic_sentence": null,
           "id_source": "derived",
-          "block_index": 16,
+          "block_index": 18,
           "points": [
             {
               "slug": "vibe-coding-io-device-vs-engineering-system",
               "text": "Vibe coding sees an I/O device; engineering, a system.",
-              "block_index": 18
+              "block_index": 20
             },
             {
               "slug": "io-vs-system-is-what-counts-as-proof",
               "text": "The split is what counts as proof a change works.",
-              "block_index": 20
+              "block_index": 22
             },
             {
               "slug": "model-of-the-world-is-the-input-agent-reasons-over",
               "text": "The world-model is the input the agent reasons over.",
-              "block_index": 22
+              "block_index": 24
             },
             {
               "slug": "model-is-a-probabilistic-reasoning-machine",
               "text": "A foundation model is a probabilistic reasoning machine.",
-              "block_index": 24
+              "block_index": 26
             },
             {
               "slug": "agent-behavior-is-a-search-over-a-vast-space",
               "text": "Agent behavior is a search over a vast space.",
-              "block_index": 27
+              "block_index": 29
             },
             {
               "slug": "structuring-loop-and-model-conditions-the-distribution",
               "text": "Loop and model condition the agent's probability distribution.",
-              "block_index": 30
+              "block_index": 32
             },
             {
               "slug": "a-model-aims-the-search-and-shrinks-what-is-held",
               "text": "A model aims the search and shrinks what is held.",
-              "block_index": 32
+              "block_index": 34
             },
             {
               "slug": "the-printers-seam-is-determinism-vs-probability",
               "text": "The printer metaphor breaks at determinism versus probability.",
-              "block_index": 34
+              "block_index": 36
             }
           ]
         },
@@ -623,27 +623,27 @@
           "heading_text": "The four levers of an engineered loop",
           "topic_sentence": "Now put the two ideas back together, because they are one machine.",
           "id_source": "derived",
-          "block_index": 36,
+          "block_index": 38,
           "points": [
             {
               "slug": "loop-and-model-meet-in-four-engineered-levers",
               "text": "Loop and model meet in four engineered levers.",
-              "block_index": 39
+              "block_index": 41
             },
             {
               "slug": "four-levers-state-actions-criterion-admission",
               "text": "Four levers: state, action surface, criterion, admission.",
-              "block_index": 43
+              "block_index": 45
             },
             {
               "slug": "levers-divide-between-the-two-theses",
               "text": "The levers divide between the book's two theses.",
-              "block_index": 47
+              "block_index": 49
             },
             {
               "slug": "levers-treat-churns-three-not-knowings",
               "text": "The levers treat churn's three not-knowing causes.",
-              "block_index": 49
+              "block_index": 51
             }
           ]
         }
@@ -1448,12 +1448,12 @@
           "heading_text": "The controls accumulate",
           "topic_sentence": "Run the promotion rule for a season and the environment fills with controls.",
           "id_source": "explicit",
-          "block_index": 21,
+          "block_index": 22,
           "points": [
             {
               "slug": "the-control-substrate-grew-from-zero",
               "text": "The control substrate grew from zero.",
-              "block_index": 23
+              "block_index": 24
             }
           ]
         },
@@ -1463,57 +1463,57 @@
           "heading_text": "Constraints and sensors",
           "topic_sentence": "A mechanism is one of two moves — prevent the mistake, or catch it — and [ref:constraint-vs-sensor] draws the split.",
           "id_source": "derived",
-          "block_index": 29,
+          "block_index": 30,
           "points": [
             {
               "slug": "a-mechanism-is-one-of-two-moves-prevent-or-catch",
               "text": "A mechanism is one of two moves: prevent, or catch.",
-              "block_index": 31
+              "block_index": 32
             },
             {
               "slug": "words-alone-are-a-probability-flip-so-determinize-them-into-a-gate",
               "text": "Words are a probability flip; determinize them into a gate.",
-              "block_index": 34
+              "block_index": 35
             },
             {
               "slug": "a-sensor-detects-drift-after-the-fact-and-costs-iterations",
               "text": "A sensor detects drift after the fact and costs iterations.",
-              "block_index": 36
+              "block_index": 38
             },
             {
               "slug": "a-sensor-is-only-as-good-as-its-observability",
               "text": "A sensor is only as good as its observability.",
-              "block_index": 40
+              "block_index": 42
             },
             {
               "slug": "a-constraint-prevents-drift-within-the-iteration-and-costs-no-iteration",
               "text": "A constraint prevents drift within the iteration, costing none.",
-              "block_index": 43
+              "block_index": 45
             },
             {
               "slug": "constraint-and-sensor-are-control-engineerings-working-terms",
               "text": "Constraint and sensor come from control engineering.",
-              "block_index": 47
+              "block_index": 49
             },
             {
               "slug": "form-and-move-are-two-independent-axes",
               "text": "Form and move are two independent axes.",
-              "block_index": 49
+              "block_index": 51
             },
             {
               "slug": "most-real-mechanisms-are-a-package-so-tag-the-primary-move",
               "text": "Most mechanisms are a package; tag the primary move.",
-              "block_index": 56
+              "block_index": 58
             },
             {
               "slug": "a-purely-organizational-answer-is-all-sensors-and-never-removes-a-failure-class",
               "text": "A purely organizational answer is all sensors, removing no class.",
-              "block_index": 58
+              "block_index": 60
             },
             {
               "slug": "the-constraint-is-poka-yoke-the-sensors-stop-is-jidoka",
               "text": "The constraint is poka-yoke; the sensor's stop is jidoka.",
-              "block_index": 60
+              "block_index": 62
             }
           ]
         },
@@ -1523,22 +1523,22 @@
           "heading_text": "Four classes, one bounded term",
           "topic_sentence": "One boundary before moving on, because without it the word swells.",
           "id_source": "derived",
-          "block_index": 62,
+          "block_index": 64,
           "points": [
             {
               "slug": "governance-mechanism-needs-a-boundary",
               "text": "Without a boundary, the word mechanism swells.",
-              "block_index": 64
+              "block_index": 66
             },
             {
               "slug": "four-classes-prevention-detection-evidence-admission",
               "text": "Four classes: prevention, detection, evidence, admission.",
-              "block_index": 68
+              "block_index": 70
             },
             {
               "slug": "a-model-is-not-a-mechanism-until-something-enforces-it",
               "text": "A model joins governance only when something enforces it.",
-              "block_index": 71
+              "block_index": 74
             }
           ]
         },
@@ -1548,12 +1548,12 @@
           "heading_text": "What it adds up to",
           "topic_sentence": "Step back and this is what you are really doing: describing policies for how the engineering work should proceed, and letting those policies produce a **governed engineering environment** — the rules of the road the agents operate within.",
           "id_source": "derived",
-          "block_index": 73,
+          "block_index": 76,
           "points": [
             {
               "slug": "the-governed-environment-is-determinize-what-you-can-then-convert-every-surprise-into-a-constraint-or-sensor",
               "text": "Determinize what you can; convert every surprise into a mechanism.",
-              "block_index": 74
+              "block_index": 77
             }
           ]
         },
@@ -1563,32 +1563,32 @@
           "heading_text": "The residual: goals no mechanism reaches",
           "topic_sentence": "That closing line reads as if it settles everything.",
           "id_source": "derived",
-          "block_index": 77,
+          "block_index": 80,
           "points": [
             {
               "slug": "some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified",
               "text": "Some goals split into neither, being an absence nobody specified.",
-              "block_index": 79
+              "block_index": 82
             },
             {
               "slug": "the-residual-is-a-human-job-that-sets-the-throughput-ceiling",
               "text": "The residual is a human job setting the throughput ceiling.",
-              "block_index": 82
+              "block_index": 85
             },
             {
               "slug": "the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis",
               "text": "The residual is the complement of both moves, not soft.",
-              "block_index": 84
+              "block_index": 87
             },
             {
               "slug": "naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible",
               "text": "Naming the residual is the honest edge that earns trust.",
-              "block_index": 86
+              "block_index": 89
             },
             {
               "slug": "the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out",
               "text": "The residual is not fixed; authoring the spec shrinks it.",
-              "block_index": 88
+              "block_index": 91
             }
           ]
         }
