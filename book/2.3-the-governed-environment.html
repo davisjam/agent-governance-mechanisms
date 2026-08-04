@@ -516,10 +516,72 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p id="idx-def-ex-post-governance">But you will not know everything, and pretending otherwise is the mistake. You will discover that performance is a problem and you have no performance model. You will discover that a particular model version has a tic — every LLM's fondness for the em-dash is the running joke — and that the tics move when you upgrade. So you will build governance <em>ex-post</em>: after the fact, iteratively, strapping on new mechanisms as the failures reveal themselves and as the software's real properties emerge. You define what you can up front, and you stay willing to discover the rest. The rest is the mistakes you are making, the mistakes the model is making, the gap between what you thought the customer wanted and what they did, and the gap between how you thought the code would perform and how it did.</p>
 <p>The honest version of the loop is less tidy than the ex-ante story makes it sound. You set up the governance you can imagine in advance, you launch the work, and then you <strong>watch it burn and then try to fix it.</strong> The failures you did not foresee are the ones that teach you which mechanism to build next. Ex-post governance is not a fallback for a weak plan; it is where most of the real mechanisms come from, because most of the real failures are the ones no specification predicted.</p>
 <span id="idx-def-governance-conversion"></span><span id="idx-def-constraints-and-sensors"></span><p>The engine of the whole discipline is what you do to hold a quality goal: <strong>you set up a mechanism that keeps it.</strong> This is the organizing move of the companion catalogue. You place some mechanisms up front, from what you know about the domain, and you add more in response to a failure seen twice — a mistake caught in yesterday's manual audit becomes today's automatic check, enforced on every agent thereafter instead of re-caught by inspection.</p>
+<figure id="fig-2-3-1" class="book-figure" data-label="governance-conversion-loop"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 430"
+     role="group" aria-labelledby="gcTitle gcDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="gcTitle">Governance conversion — the loop that hardens the environment</title>
+  <desc id="gcDesc">A five-step loop drawn left to right. Velocity rises as the fleet
+    accelerates. A failure recurs — the same wall hit twice. Judgment diagnoses the class,
+    naming the class rather than the instance. A mechanism is encoded — a type, a lint, a
+    gate, or a sensor. The class then cannot recur; it is prevented by construction. A dashed
+    return path runs back from prevention to rising velocity, labeled: the environment is now
+    harder to break, and velocity climbs again. This is the same loop shape as the printer
+    loop, escalated — it fires when the printer loop keeps hitting one wall.</desc>
+
+  <defs>
+    <marker id="gc-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+    <marker id="gc-ah-mut" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
+    </marker>
+  </defs>
+
+  <!-- 1. velocity rises (center 135) -->
+  <rect x="30" y="70" width="210" height="104" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="135" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Velocity rises</text>
+  <text x="135" y="142" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the fleet accelerates</text>
+
+  <!-- 2. a failure recurs (center 380) -->
+  <rect x="275" y="70" width="210" height="104" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
+  <text x="380" y="116" text-anchor="middle" font-size="19" font-weight="700" fill="#b23b3b">A failure recurs</text>
+  <text x="380" y="142" text-anchor="middle" font-size="15" font-style="italic" fill="#b23b3b">the same wall, twice</text>
+
+  <!-- 3. diagnose the class (center 625) -->
+  <rect x="520" y="70" width="210" height="104" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="625" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Diagnose</text>
+  <text x="625" y="134" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the class, not</text>
+  <text x="625" y="154" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the instance</text>
+
+  <!-- 4. encode a mechanism (center 870) -->
+  <rect x="765" y="70" width="210" height="104" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="870" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Encode a</text>
+  <text x="870" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">mechanism</text>
+  <text x="870" y="158" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">type · lint · gate · sensor</text>
+
+  <!-- 5. the class cannot recur (center 1115) -->
+  <rect x="1010" y="70" width="210" height="104" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="1115" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">The class</text>
+  <text x="1115" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">can't recur</text>
+  <text x="1115" y="158" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">prevented by construction</text>
+
+  <!-- forward arrows -->
+  <g stroke="#1c1917" stroke-width="2" fill="none">
+    <path d="M240,122 L271,122" marker-end="url(#gc-ah)"/>
+    <path d="M485,122 L516,122" marker-end="url(#gc-ah)"/>
+    <path d="M730,122 L761,122" marker-end="url(#gc-ah)"/>
+    <path d="M975,122 L1006,122" marker-end="url(#gc-ah)"/>
+  </g>
+
+  <!-- dashed return path: prevention -> velocity -->
+  <path d="M1115,174 C1115,300 640,330 135,300 L135,178"
+        fill="none" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#gc-ah-mut)"/>
+  <text x="625" y="345" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the environment is now harder to break — and velocity climbs again</text>
+</svg><figcaption data-short="Governance conversion"><span class="fig-label">Figure 2.3-1.</span> Governance conversion: the loop that hardens the environment. When the printer loop keeps hitting one wall, judgment converts the failure class into a durable mechanism — the same loop shape as the printer loop, escalated.</figcaption></figure>
 <p>None of this is new as an instinct. Manufacturing stops the line at a defect and reshapes the work so the defect cannot recur; resilience engineering treats an incident as a signal about the system, not a verdict on the operator <sup class="cite-ref"><a href="#wc-2-3-the-governed-environment-2" aria-label="citation 2">2</a></sup><span class="cite-note"><span class="cn-mark">2.</span> E. Hollnagel et al., <em>Resilience Engineering: Concepts and Precepts</em> (Ashgate, 2006).</span>; site reliability practice turns each outage into a blameless postmortem whose action items become durable reliability work <sup class="cite-ref"><a href="#wc-2-3-the-governed-environment-3" aria-label="citation 3">3</a></sup><span class="cite-note"><span class="cn-mark">3.</span> B. Beyer et al., <em>Site Reliability Engineering: How Google Runs Production Systems</em> (O'Reilly Media, 2016).</span>; Shingo built mistake-proofing into the fixture itself <sup class="cite-ref"><a href="#wc-2-3-the-governed-environment-4" aria-label="citation 4">4</a></sup><span class="cite-note"><span class="cn-mark">4.</span> Shigeo Shingo, <em>Zero Quality Control: Source Inspection and the Poka-Yoke System</em>, trans. Andrew P. Dillon (Productivity Press, 1986).</span>. MAGE inherits that family and states its promotion rule for a fleet: an ex-post failure becomes an ex-ante control when judgment classifies the recurrence and encodes it in the environment. The changed ingredient is velocity: the fleet surfaces structural gaps fast enough that the environment can accumulate reliability one failure class at a time.</p>
 <h2 id="control-growth">The controls accumulate</h2>
-<p>Run the promotion rule for a season and the environment fills with controls. The case project shows the shape. <a class="xref" href="2.3-the-governed-environment.html#fig-2-3-1">Figure&nbsp;2.3-1</a> counts its two hardest control surfaces — project-specific lint files and gate scripts — at the same four windows the build passed through; <a class="xref" href="2.3-the-governed-environment.html#tbl-2-3-1">Table&nbsp;2.3-1</a> gives the numbers behind the lines.</p>
-<figure id="fig-2-3-1" class="book-figure" data-label="control-growth-curve"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470"
+<p>Run the promotion rule for a season and the environment fills with controls. The case project shows the shape. <a class="xref" href="2.3-the-governed-environment.html#fig-2-3-2">Figure&nbsp;2.3-2</a> counts its two hardest control surfaces — project-specific lint files and gate scripts — at the same four windows the build passed through; <a class="xref" href="2.3-the-governed-environment.html#tbl-2-3-1">Table&nbsp;2.3-1</a> gives the numbers behind the lines.</p>
+<figure id="fig-2-3-2" class="book-figure" data-label="control-growth-curve"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470"
      role="img" aria-labelledby="cgTitle cgDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="cgTitle">The controls accumulate across four windows</title>
@@ -586,13 +648,13 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 
   <!-- axis caption -->
   <text x="130" y="452" text-anchor="start" font-size="13" font-style="italic" fill="#57534e">count of governance controls in the tree · lint files and gate scripts · 993 registered lint specs at the final window</text>
-</svg><figcaption data-short="The controls accumulate across four windows — project-specific lint files (0…"><span class="fig-label">Figure 2.3-1.</span> The controls accumulate across four windows — project-specific lint files (0 to 336 to 595 to 747) and gate scripts (0 to 20 to 76 to 102), counted at the four dated commits. Both start at literal zero: the entire lint-and-gate substrate is post-prototype. The climb is steepest through mechanization, where the fleet built the machinery, and keeps rising through hardening and loop-management. The environment accumulates controls one failure class at a time.</figcaption></figure>
+</svg><figcaption data-short="The controls accumulate across four windows — project-specific lint files (0…"><span class="fig-label">Figure 2.3-2.</span> The controls accumulate across four windows — project-specific lint files (0 to 336 to 595 to 747) and gate scripts (0 to 20 to 76 to 102), counted at the four dated commits. Both start at literal zero: the entire lint-and-gate substrate is post-prototype. The climb is steepest through mechanization, where the fleet built the machinery, and keeps rising through hardening and loop-management. The environment accumulates controls one failure class at a time.</figcaption></figure>
 <table id="tbl-2-3-1" class="book-table" data-label="control-growth-table"><caption data-short="Control growth across the four windows"><span class="tbl-label">Table 2.3-1.</span> The control substrate across the four study windows — project-specific lint files and gate scripts counted from a tree scan at each dated commit.</caption><thead><tr><th>Window</th><th class="num">lint files</th><th class="num">gate scripts</th></tr></thead><tbody><tr><td>prototype</td><td class="num">0</td><td class="num">0</td></tr><tr><td>mechanization</td><td class="num">336</td><td class="num">20</td></tr><tr><td>hardening</td><td class="num">595</td><td class="num">76</td></tr><tr><td>now</td><td class="num">747</td><td class="num">102</td></tr></tbody></table>
 <p>The curve is the accumulation, not its cause. Those lint files carry 993 registered lint specs at the final window, and each spec is a policy the environment now enforces on every agent. What the count cannot separate is which controls a failure drove and which the domain suggested up front — the two modes interleave by design, and no commit trail cleanly splits them. But the discipline that converts a failure is itself documented and named. A paired fix-and-lint tag marks the commits that ship a code fix beside the check that forbids its recurrence, and it appears in 208 commits; 27 lints name a specific dated incident in their own text, spot-checked as genuine after-the-failure conversions. Read the curve as a documented, growing discipline, then — not a measured causal rate. For the data, see <a href="2.3-the-governed-environment.html#control-growth">The Governed Environment: Ex-Ante and Ex-Post →</a></p>
 <p>Either way you arrive there, a mechanism takes one of two forms, and the difference between them is the difference between a firewall and a smoke detector.</p>
 <h2>Constraints and sensors</h2>
-<p>A mechanism is one of two moves — prevent the mistake, or catch it — and <a class="xref" href="2.3-the-governed-environment.html#fig-2-3-2">Figure&nbsp;2.3-2</a> draws the split.</p>
-<figure id="fig-2-3-2" class="book-figure" data-label="constraint-vs-sensor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440"
+<p>A mechanism is one of two moves — prevent the mistake, or catch it — and <a class="xref" href="2.3-the-governed-environment.html#fig-2-3-3">Figure&nbsp;2.3-3</a> draws the split.</p>
+<figure id="fig-2-3-3" class="book-figure" data-label="constraint-vs-sensor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440"
      role="group" aria-labelledby="caTitle caDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="caTitle">Two forms a quality goal splits into: a constraint or a sensor</title>
@@ -651,7 +713,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="710" y="312" text-anchor="middle" font-size="20" fill="#1c1917">Lets the mistake happen,</text>
   <text x="710" y="337" text-anchor="middle" font-size="20" fill="#1c1917">detects it before it ships.</text>
   <text x="710" y="372" text-anchor="middle" font-size="19" font-style="italic" fill="#57534e">test suite in CI · smoke detector</text>
-</svg><figcaption data-short="The two moves a quality goal you want to hold splits into — prevent the…"><span class="fig-label">Figure 2.3-2.</span> The two moves a quality goal you want to hold splits into — prevent the mistake, or catch it — however you arrived at the goal, up front from the domain or in response to a failure. A constraint scopes the agent's action space so the whole class of mistake is impossible, and no iteration is wasted (a typed enumeration over free-form strings, a firewall). A sensor lets the mistake happen but detects it in time to stop the damage, and fails the loop iteration so the agent runs again to fix it (a test suite in CI, a smoke detector). The constraint forbids the bug; the sensor watches for it.</figcaption></figure>
+</svg><figcaption data-short="The two moves a quality goal you want to hold splits into — prevent the…"><span class="fig-label">Figure 2.3-3.</span> The two moves a quality goal you want to hold splits into — prevent the mistake, or catch it — however you arrived at the goal, up front from the domain or in response to a failure. A constraint scopes the agent's action space so the whole class of mistake is impossible, and no iteration is wasted (a typed enumeration over free-form strings, a firewall). A sensor lets the mistake happen but detects it in time to stop the damage, and fails the loop iteration so the agent runs again to fix it (a test suite in CI, a smoke detector). The constraint forbids the bug; the sensor watches for it.</figcaption></figure>
 <p>Before the two forms, the argument for reaching for a mechanism at all. Words alone do not hold. Tell the agent "make sure the briefs always follow this template" and it will say, <em>"Sure, boss"</em> — and then it will not reliably do it, not all the time, because it is a probability flip. A prompt raises the odds; it does not settle them. But you can <em>determinize that</em>. Instead of hoping, you check: before the agent launches, confirm every required part of the template is present, and refuse the launch when it is not. The soft instruction becomes a hard gate. That move — from a probability you nudge to a condition you enforce — is the reason the rest of this chapter exists, and it splits into the two forms below.</p>
 <span id="idx-def-sensor"></span><span id="idx-ex-observability-1"></span><p><strong>A sensor detects drift.</strong> It lets the mistake happen and catches it after the fact — and because it fires after, it fails the loop iteration: the agent has to run again to fix what the sensor caught. Your test suite in CI is a sensor, and so are your lints. It would be better if the model never wrote the bug; but if it does, the sensor catches it before the code ships. The cost of a sensor is iterations — detect, fail, re-iterate — and that cost is the reason you do not reach for one first.</p>
 <p id="idx-def-observability">A sensor is only as good as the signal it can read. <strong>Observability</strong> is the property that a running system exposes enough signal to explain what it did and to catch what went wrong. It is the wiring under every sensor: the event a gate fires on, the log a checker reads, the trace that turns "the build failed" into "the build failed <em>here, for this reason.</em>" Build the observability first and the sensor has something to watch; skip it and it stares at a blank wall.</p>
