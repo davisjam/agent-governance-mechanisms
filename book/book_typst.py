@@ -756,7 +756,7 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
     (defaults to the repo dir, the parent of book/)."""
     root = root or HERE.parent
     ctx = _EmitCtx(root)
-    doc = ir.parse_book(include_appendices=True)
+    doc = ir.parse_book(include_appendices=True, for_print=True)
     by_slug = {c.slug: c for c in doc.chapters}
     parts: list[str] = [_PREAMBLE]
     # The front-matter acknowledgments chapter — relocated onto the copyright page in the PRINT projection

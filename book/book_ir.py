@@ -356,11 +356,13 @@ def _parse_chapter(rec: dict) -> Chapter:
                    chapter=rec.get("chapter", 0))
 
 
-def parse_book(include_appendices: bool = False) -> Document:
+def parse_book(include_appendices: bool = False, for_print: bool = False) -> Document:
     """Parse the main-narrative chapters (front / parts 1–5 / back) into the typed IR. Appendices are
-    reference entries with their own float conventions; opt in with `include_appendices=True`."""
+    reference entries with their own float conventions; opt in with `include_appendices=True`. `for_print`
+    selects the print/PDF projection of the appendix (e.g. Appendix E collapses to an online pointer)."""
     metrics = bb._load_metrics()
     chapters = bb._discover_chapters(metrics)
     if include_appendices:
-        chapters = chapters + bb.build_appendix_chapters(next_part=max(c["part"] for c in chapters) + 1)
+        chapters = chapters + bb.build_appendix_chapters(
+            next_part=max(c["part"] for c in chapters) + 1, for_print=for_print)
     return Document([_parse_chapter(c) for c in chapters])

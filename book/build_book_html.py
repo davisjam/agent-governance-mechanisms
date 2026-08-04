@@ -744,7 +744,9 @@ def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str
         "part_title": meta.get("part-title", _PART_TITLES.get(part, "")),
         "chapter": chapter,
         "chapter_title": meta.get("chapter-title", path.stem),
-        "body_md": "\n".join(lines).strip(),
+        # Redirect any authored link to a now-dropped (non-flagship) appendix page to the live web entry, so
+        # a main-narrative cross-reference to a mechanism the print appendix omits stays resolvable.
+        "body_md": _redirect_dropped_appendix_links("\n".join(lines).strip()),
         "is_matter": part in (0, 6),  # front / back matter — no "Chapter N" kicker
         # Pull the Mermaid runtime onto this page only if the chapter carries a ```mermaid fence
         # (the Model Zoo chapters reuse the appendix Structure diagrams; other chapters do not).
@@ -2146,6 +2148,102 @@ def _appendix_entries() -> list[dict]:
     return out
 
 
+# ─────────────────────────── Print-appendix projection: the flagship subset ───────────────────────────
+# The PRINT appendix projects only the ~29 FLAGSHIP mechanisms; the WEB catalogue keeps all 83. The flagship
+# set is DERIVED at build time from the curation signal already in the repo — catalogue-classification.json's
+# `dispositions` (the keep-as-L2 canonical set) — plus a thin manifest that declares the deviations (a few
+# print promotions, the entries represented in the intro/Part-5 instead of as pages). Nothing is deleted:
+# every omitted pattern stays live on the web and reachable from the appendix's complete web-index.
+_CLASSIFICATION_PATH = ROOT / "book-models" / "catalogue-classification.json"
+_PRINT_MANIFEST_PATH = ROOT / "book-models" / "print-appendix-manifest.json"
+
+
+def _load_classification() -> dict[str, dict[str, str]]:
+    """Read catalogue-classification.json's `dispositions` → `{bare-slug: {"head": <token>, "parent": <name>}}`.
+    `head` is the leading disposition token (`keep-as-L2` / `demote-to-L3-under` / `merge-into` / `lift-to-L1`
+    / `move-to-book-case`); `parent` is the canonical pattern name the rest of the disposition names (the L2 a
+    demoted/merged entry folds under — used for the web-index '· under <Canonical>' tag). Keyed by the bare
+    entry slug (the path's last segment), the same key `build_appendix_chapters` filters on. Fail-loud if the
+    file is missing (a projection with no curation signal is a bug, not a soft degrade — same contract as
+    `_resolve_stack_members`)."""
+    if not _CLASSIFICATION_PATH.is_file():
+        raise SystemExit(f"print-appendix projection needs {_CLASSIFICATION_PATH} — it is missing")
+    data = json.loads(_CLASSIFICATION_PATH.read_text(encoding="utf-8"))
+    out: dict[str, dict[str, str]] = {}
+    for full_slug, rec in data.get("dispositions", {}).items():
+        disposition = (rec.get("disposition") or "").strip()
+        head, _, rest = disposition.partition(" ")
+        bare = full_slug.rsplit("/", 1)[-1]
+        out[bare] = {"head": head, "parent": rest.strip()}
+    return out
+
+
+def _load_print_manifest(cls: dict[str, dict[str, str]] | None = None) -> dict:
+    """Read print-appendix-manifest.json → the declared print-projection deviations (`print_promotions`,
+    `intro_l1_principles`, `appendix_exclude`, `appendix_e`, `stack_compression`). Validate every slug it
+    lists names a real catalogue entry, so a typo fails the build loud rather than silently dropping or
+    inventing a flagship. Fail-loud if the file is missing."""
+    if not _PRINT_MANIFEST_PATH.is_file():
+        raise SystemExit(f"print-appendix projection needs {_PRINT_MANIFEST_PATH} — it is missing")
+    if cls is None:
+        cls = _load_classification()
+    data = json.loads(_PRINT_MANIFEST_PATH.read_text(encoding="utf-8"))
+    for field in ("print_promotions", "intro_l1_principles", "appendix_exclude"):
+        for slug in data.get(field, []):
+            if slug not in cls:
+                raise SystemExit(
+                    f"print-appendix-manifest.json {field!r} lists {slug!r} — it matches no catalogue entry "
+                    f"under agent/ · models-bridge/ · product/ (typo, or the entry was renamed)")
+    return data
+
+
+def _flagship_slugs() -> set[str]:
+    """The bare slugs the PRINT appendix emits a page for: the keep-as-L2 canonical set (from the
+    classification) UNION the manifest's `print_promotions`, MINUS its `appendix_exclude`. The default
+    manifest yields 24 keep-as-L2 + 5 promotions = 29 (the excludes name entries already outside keep-as-L2,
+    so they subtract nothing — they are a drift guard, not a reduction)."""
+    cls = _load_classification()
+    manifest = _load_print_manifest(cls)
+    keep_as_l2 = {slug for slug, rec in cls.items() if rec["head"] == "keep-as-L2"}
+    promotions = set(manifest.get("print_promotions", []))
+    exclude = set(manifest.get("appendix_exclude", []))
+    return (keep_as_l2 | promotions) - exclude
+
+
+# Authored chapter links to an appendix pattern page: `](appendix-<a|b|c>-<slug>.html[#frag])`. The main
+# narrative cross-references mechanisms by their in-book page; when a mechanism is non-flagship (its page is
+# dropped from the print projection), the link is redirected to the live WEB catalogue entry — the SAME
+# flagship→in-book / non-flagship→web rule the stack links and the web-index follow (uniformity, not a
+# special case). A flagship target is left untouched.
+_APPENDIX_BODY_LINK_RE = re.compile(r"\(appendix-[abc]-([a-z0-9-]+)\.html(?:#[^)]*)?\)")
+_WEB_REDIRECT_CACHE: dict[str, str] | None = None
+
+
+def _web_redirect_map() -> dict[str, str]:
+    """`{slug: web-catalogue-URL}` for every NON-FLAGSHIP mechanism (the ones the print appendix omits).
+    Computed once from the entry records + the flagship set, then cached — the redirect below consults it per
+    authored link."""
+    global _WEB_REDIRECT_CACHE
+    if _WEB_REDIRECT_CACHE is None:
+        flag = _flagship_slugs()
+        _WEB_REDIRECT_CACHE = {rec["slug"]: rec["catalogue_html"]
+                               for rec in _appendix_entries() if rec["slug"] not in flag}
+    return _WEB_REDIRECT_CACHE
+
+
+def _redirect_dropped_appendix_links(md: str) -> str:
+    """Rewrite an authored `](appendix-<letter>-<slug>.html)` cross-reference to the WEB catalogue entry when
+    `<slug>` is a non-flagship mechanism the print appendix no longer emits a page for; a flagship link (its
+    page still exists) is left as-is. Any `#fragment` is dropped — the web entry carries its own anchors —
+    so a chapter's 'learn more about this mechanism' link stays live after the print projection dropped the
+    in-book page, instead of dangling as a missing target."""
+    redirect = _web_redirect_map()
+    def repl(m: "re.Match[str]") -> str:
+        web = redirect.get(m.group(1))
+        return f"({web})" if web is not None else m.group(0)
+    return _APPENDIX_BODY_LINK_RE.sub(repl, md)
+
+
 # The eight GoF pattern elements, in canonical reading order. Structure's diagram leads the page (visual
 # first); its `## Structure` heading still appears in canonical position, linking up to the diagram. The
 # element TOC lists only the elements actually present on a given page.
@@ -2428,11 +2526,18 @@ def _stack_membership_index() -> dict[str, list[tuple[str, str]]]:
 
 
 def _resolve_stack_members(md: str, page_by_slug: dict[str, dict]) -> str:
-    """Replace each `role:<entry-slug>` token in a stack file with a live link into that mechanism's
-    Appendix A/B/C pattern page, prefixed by its numbered locator — e.g. `role:pdf-model` →
-    `[Appendix C - 3. PdfModel](appendix-c-pdf-model.html)`. An unknown slug is a build-loud error (catches
-    a typo before it silently ships a bare `role:foo` string). `page_by_slug` maps entry slug → the ordered
-    pattern record (carrying `page_slug`, `appendix_letter`, `appendix_num`, `name`)."""
+    """Replace each `role:<entry-slug>` token in a stack file with a live link to that mechanism. A stack
+    still names ALL of its members; the link's DESTINATION follows the print/web split:
+
+    - **A FLAGSHIP member** (a mechanism with a page in this print appendix) links IN-BOOK, prefixed by its
+      numbered locator — `role:pdf-model` → `[Appendix C - 3. PdfModel](appendix-c-pdf-model.html)`.
+    - **A NON-FLAGSHIP member** (a valid entry the print appendix omits) links to its WEB catalogue page,
+      marked `(online)` — `role:office-models` → `[Office Models (online)](../product/…/office-models.html)`.
+
+    An unknown slug (matching NO catalogue entry) stays a build-loud error — it catches a typo before it
+    ships a bare `role:foo` string. `page_by_slug` maps entry slug → the ordered pattern record for ALL 83
+    entries; a flagship record carries `page_slug` / `appendix_letter` / `appendix_num`, a non-flagship one
+    carries only `name` / `catalogue_html`, so the record's shape IS the flagship signal."""
     def repl(m: "re.Match[str]") -> str:
         slug = m.group(1)
         rec = page_by_slug.get(slug)
@@ -2440,8 +2545,11 @@ def _resolve_stack_members(md: str, page_by_slug: dict[str, dict]) -> str:
             raise SystemExit(
                 f"appendix stack references unknown mechanism slug 'role:{slug}' — it matches no "
                 f"catalogue entry under agent/ · models-bridge/ · product/")
-        label = f"Appendix {rec['appendix_letter']} - {rec['appendix_num']}. {rec['name']}"
-        return f"[{label}]({rec['page_slug']}.html)"
+        if "appendix_num" in rec:  # flagship — an in-book pattern page exists
+            label = f"Appendix {rec['appendix_letter']} - {rec['appendix_num']}. {rec['name']}"
+            return f"[{label}]({rec['page_slug']}.html)"
+        # non-flagship but valid — link to the live web catalogue entry, marked (online)
+        return f"[{rec['name']} (online)]({rec['catalogue_html']})"
     return _STACK_MEMBER_RE.sub(repl, md)
 
 
@@ -2519,31 +2627,63 @@ you already met. Read the [Skills chapter](4.2-the-skills.html) for what those s
 for how they were *built*."""
 
 
-def build_skill_recipe_chapters(part: int) -> list[dict]:
+def _recipe_web_url() -> str:
+    """The absolute web URL of the full recipe page in the published web edition — for the print pointer.
+    Built from repo-metadata.json's `pages_url` (the governed Pages identity); falls back to a bare page
+    reference if the metadata is absent."""
+    meta_path = ROOT / "book-models" / "repo-metadata.json"
+    stem = _SKILL_RECIPE_PAGES[0][0] if _SKILL_RECIPE_PAGES else "the-recipe"
+    page_ref = f"appendix-e-{stem}.html"
+    if meta_path.is_file():
+        pages_url = (json.loads(meta_path.read_text(encoding="utf-8")).get("pages_url") or "").rstrip("/")
+        if pages_url:
+            return f"{pages_url}/book/{page_ref}"
+    return page_ref
+
+
+def build_skill_recipe_chapters(part: int, for_print: bool = False) -> list[dict]:
     """Build the Appendix E chapter records: one front-door page (chapter 0) whose prose is authored inline,
     then one page per authored content file under `appendix-skill-recipe/` (E.1, …). Mirrors the stacks Part
     (Appendix D): a hand-authored appendix Part, rendered by the existing pager/TOC/index machinery with no
     catalogue projection. Every record carries `is_appendix: True`, so it renders with no special-casing.
-    Returns [] if no content files are present (the front-door alone is not emitted without its content)."""
+    Returns [] if no content files are present (the front-door alone is not emitted without its content).
+
+    When the print manifest sets `appendix_e == "pointer"` AND this is the print/PDF projection
+    (`for_print=True`), Appendix E collapses to the front-door alone plus a one-paragraph pointer to the full
+    recipe online — the content page is dropped from print. The WEB build (`for_print=False`) always keeps
+    the full recipe, so the pointer's target stays live."""
     pages = [(stem, title) for stem, title in _SKILL_RECIPE_PAGES
              if (_SKILL_RECIPE_DIR / f"{stem}.md").is_file()]
     if not pages:
         return []
 
+    pointer_mode = for_print and _load_print_manifest().get("appendix_e") == "pointer"
+
     chapters: list[dict] = []
     part_title = "Appendix E — How to Write a Skill"
 
-    # FRONT-DOOR PAGE — heads Appendix E (chapter 0, sorts before the recipe).
+    # FRONT-DOOR PAGE — heads Appendix E (chapter 0, sorts before the recipe). In pointer mode it carries the
+    # one-paragraph online pointer (the content page below is dropped from print).
+    front_body = _APPENDIX_SKILL_RECIPE_OPENING_PROSE.strip()
+    if pointer_mode:
+        front_body += (
+            "\n\n**The full recipe — its three steps grounded in the three self-\\* skills — lives in the "
+            f"web edition of this book:** [{pages[0][1]}]({_recipe_web_url()}). Open it there to read each "
+            "step worked through in full."
+        )
     chapters.append({
         "slug": _APPENDIX_SKILL_RECIPE_OPENING_SLUG,
         "part": part,
         "part_title": part_title,
         "chapter": 0,
         "chapter_title": "Appendix E — How to Write a Skill",
-        "body_md": _APPENDIX_SKILL_RECIPE_OPENING_PROSE.strip(),
+        "body_md": front_body,
         "is_appendix": True,
         "mermaid": False,
     })
+
+    if pointer_mode:
+        return chapters  # print stops at the front-door + pointer; web keeps the full recipe below
 
     # ONE PAGE PER AUTHORED FILE — E.1, E.2, … in listed order.
     for i, (stem, title) in enumerate(pages, start=1):
@@ -2599,9 +2739,16 @@ def _appendix_counts(ordered: list[dict]) -> dict[str, int]:
     `stack_count`: the length of `_STACKS`. Only stack files present on disk are counted (mirrors what the
     stacks Part actually renders)."""
     present_stacks = sum(1 for stem, _t in _STACKS if (_STACKS_DIR / f"{stem}.md").is_file())
+    # `flagship_count`: entries that carry an in-book pattern page (the ~29 the print appendix projects,
+    # marked by `appendix_num` set in build_appendix_chapters); `web_only_count`: the census remainder that
+    # stays online-only. `mechanism_count` remains the full census (a catalogue fact, not a print fact) so
+    # the front-door's 'in print / online' framing can cite all three.
+    flagship_count = sum(1 for rec in ordered if "appendix_num" in rec)
     return {
         "package_count": sum(1 for rec in ordered if rec.get("move") == "package"),
         "mechanism_count": len(ordered),
+        "flagship_count": flagship_count,
+        "web_only_count": len(ordered) - flagship_count,
         "stack_count": present_stacks,
     }
 
@@ -2671,6 +2818,7 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
     mechanism whose Move is `package` carries a small inline `package` marker, so a reader sees which
     entries bundle their own sensors without leaving the list; a standalone atom carries no marker (absence
     reads as 'stands alone', which is correct)."""
+    cls = _load_classification()
     parts: list[str] = ["## Reference: every mechanism", ""]
     last_group: str | None = None
     last_family: str | None = None
@@ -2690,21 +2838,35 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
                 parts += [""]
             parts += [f"#### {_family_display(rec['family'])}", ""]
             last_family = rec["family"]
-        locator = f"Appendix {rec['appendix_letter']} - {rec['appendix_num']}."
         marker = " `package`" if rec.get("move") == "package" else ""
-        parts += [f"- {locator} [{rec['name']}]({rec['page_slug']}.html){marker}"]
+        if "appendix_num" in rec:
+            # FLAGSHIP — an in-book pattern page; link there, prefixed by its A-N locator.
+            locator = f"Appendix {rec['appendix_letter']} - {rec['appendix_num']}."
+            parts += [f"- {locator} [{rec['name']}]({rec['page_slug']}.html){marker}"]
+        else:
+            # NON-FLAGSHIP — omitted from print, live on the web; link to the catalogue entry, mark (online),
+            # and (when known) tag the canonical L2 it folds under so the reader keeps the map's hierarchy.
+            parent = cls.get(rec["slug"], {}).get("parent", "")
+            under = f" · under {parent}" if parent else ""
+            parts += [f"- [{rec['name']} (online)]({rec['catalogue_html']}){marker}{under}"]
     return "\n".join(parts).strip()
 
 
-def build_appendix_chapters(next_part: int) -> list[dict]:
-    """Build appendix 'chapter' records — ONE PER PATTERN plus one opening front-door page — each mirroring
-    the chapter dict shape so the existing pager/TOC/index machinery renders it. Ordering follows the
-    census-map hierarchy: Environment → target (Agent A / Models-bridge B / Product C) → family (census
-    order) → mechanism. The opening page frames the appendix GoF-style, embeds the rewired mechanism-map
-    figure, and lists the whole catalogue. Returns [] if no entries are found."""
+def build_appendix_chapters(next_part: int, for_print: bool = False) -> list[dict]:
+    """Build appendix 'chapter' records — ONE PER FLAGSHIP PATTERN plus one opening front-door page — each
+    mirroring the chapter dict shape so the existing pager/TOC/index machinery renders it. Ordering follows
+    the census-map hierarchy: Environment → target (Agent A / Models-bridge B / Product C) → family (census
+    order) → mechanism.
+
+    The appendix is a PROJECTION: it emits a page only for the ~29 FLAGSHIP mechanisms (`_flagship_slugs()`),
+    but it READS all 83 catalogue entries — the complete web-index on the opening page links every entry
+    (flagship → in-book, non-flagship → web), the stacks name every member, and the mechanism-map figure
+    routes every chip. Nothing is deleted; the omitted patterns stay live on the web. Returns [] if no
+    entries are found. `for_print` is threaded to Appendix E (the pointer collapse is print-only)."""
     entries = _appendix_entries()
     if not entries:
         return []
+    flagship = _flagship_slugs()
 
     family_order = _family_order_from_index()
     role_index = {group: i for i, (_r, group) in enumerate(_APPENDIX_ROLES)}
@@ -2720,9 +2882,14 @@ def build_appendix_chapters(next_part: int) -> list[dict]:
         )
     ordered = sorted(entries, key=_sort_key)
     # Per-appendix-letter running number (A-1, A-2, …, B-1, …) — the locator shown in the TOC, on each
-    # pattern page's title, and in the book index. Assigned in reading order within each role letter.
+    # pattern page's title, and in the book index. Assigned in reading order within each role letter, over
+    # FLAGSHIP entries ONLY, so the locators are GAP-FREE (A-1…A-12, B-1…B-11, C-1…C-6) with no holes where a
+    # non-flagship entry was skipped. A non-flagship record gets NO `page_slug` / `appendix_num`: the absence
+    # is the flagship signal every downstream consumer (stack links, anchor map, web-index) reads.
     appendix_counter: dict[str, int] = {}
     for rec in ordered:
+        if rec["slug"] not in flagship:
+            continue
         letter = role_letter[rec["group"]]
         rec["page_slug"] = f"appendix-{letter.lower()}-{rec['slug']}"
         appendix_counter[letter] = appendix_counter.get(letter, 0) + 1
@@ -2769,11 +2936,12 @@ def build_appendix_chapters(next_part: int) -> list[dict]:
         "mermaid": False,                      # the map is an <iframe>, not an inline mermaid block
     })
 
-    # ONE PAGE PER PATTERN — in census-map order; part = role's appendix Part, chapter sorts within it by
-    # (family census number, within-family index) so the pager walks A→B→C family-by-family.
+    # ONE PAGE PER FLAGSHIP PATTERN — in census-map order; part = role's appendix Part, chapter sorts within
+    # it by (family census number, within-family index) so the pager walks A→B→C family-by-family. Only
+    # flagship records carry a `page_slug` / `appendix_num`, so the emission iterates the flagship subset.
     within_family_index = 0
     prev_family: str | None = None
-    for rec in ordered:
+    for rec in (r for r in ordered if r["slug"] in flagship):
         group = rec["group"]
         letter = role_letter[group]
         fam_n = family_order.get(rec["family"], 999)
@@ -2802,8 +2970,9 @@ def build_appendix_chapters(next_part: int) -> list[dict]:
     chapters += build_stack_chapters(part=stacks_part, page_by_slug=page_by_slug)
 
     # APPENDIX E — How to Write a Skill. A hand-authored Part after the stacks (its own front-door page +
-    # the recipe page), rendered the same way — no catalogue projection, no role/family machinery.
-    chapters += build_skill_recipe_chapters(part=stacks_part + 1)
+    # the recipe page), rendered the same way — no catalogue projection, no role/family machinery. In the
+    # print/PDF projection with `appendix_e == "pointer"` it collapses to the front-door + an online pointer.
+    chapters += build_skill_recipe_chapters(part=stacks_part + 1, for_print=for_print)
     return chapters
 
 
@@ -2850,11 +3019,13 @@ def _emit_rewired_figure(anchor_map: dict[str, str]) -> None:
 
 
 def _appendix_anchor_map(entries: list[dict]) -> dict[str, str]:
-    """Map each catalogue entry slug → the BARE book pattern-page URL that renders it
-    (`appendix-<letter>-<slug>.html`, no fragment — one page per pattern now). The rewired mechanism-map
-    figure uses this to point each chip at the pattern's own page. `entries` must carry `page_slug`
-    (set by build_appendix_chapters)."""
-    return {e["slug"]: f"{e['page_slug']}.html" for e in entries}
+    """Map each catalogue entry slug → the URL the mechanism-map figure's chip should point at, following the
+    print/web split. A FLAGSHIP entry (carrying `page_slug`, set by build_appendix_chapters) points at its
+    in-book pattern page (`appendix-<letter>-<slug>.html`); a NON-FLAGSHIP entry points at its live WEB
+    catalogue page (`../<role>/<family>/<slug>.html`, its `catalogue_html`). So the clickable map sends
+    flagship chips into the print appendix and the rest to the web — nothing dangles."""
+    return {e["slug"]: (f"{e['page_slug']}.html" if "page_slug" in e else e["catalogue_html"])
+            for e in entries}
 
 
 # ─────────────────────────── Curated concept index — index-def / index-example tags ───────────────────────────
@@ -3817,10 +3988,12 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
     if _BOOK_TITLE not in text:
         problems.append(f"cover title {_BOOK_TITLE!r} not found (cover did not render)")
 
-    # Source of truth: the discovered chapters + the projected appendix, in reading order.
+    # Source of truth: the discovered chapters + the projected appendix, in reading order. The PDF gate must
+    # build the appendix in the SAME print projection the render used (`for_print=True`), so the expected
+    # titles match what actually renders (e.g. Appendix E's dropped recipe page is not expected in the PDF).
     metrics = _load_metrics()
     chapters = _discover_chapters(metrics)
-    appendix = build_appendix_chapters(next_part=max(c["part"] for c in chapters) + 1)
+    appendix = build_appendix_chapters(next_part=max(c["part"] for c in chapters) + 1, for_print=True)
     full = chapters + appendix
 
     # Normalize for matching so a markup / typographic difference cannot false-fail on intact content:
@@ -3979,8 +4152,10 @@ def build_pdf() -> int:
     typ_src = typ_dir / "mage-book.typ"
 
     # Emit the WHOLE book (front matter → parts → back matter → appendices) as one Typst document from the
-    # typed IR — the same IR the web build walks, so the print edition cannot diverge from the web book.
-    doc = book_ir.parse_book(include_appendices=True)
+    # typed IR — the same IR the web build walks, so the print edition cannot diverge from the web book. This
+    # is the PRINT projection (`for_print=True`), so the slug list matches what emit_document renders (e.g.
+    # Appendix E collapses to its front-door pointer, dropping the recipe content page from the PDF).
+    doc = book_ir.parse_book(include_appendices=True, for_print=True)
     slugs = [c.slug for c in doc.chapters]
     typ = book_typst.emit_document(slugs, root=ROOT, with_frontmatter=True)
     typ_src.write_text(typ, encoding="utf-8")

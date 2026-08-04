@@ -187,7 +187,10 @@ def check_cite_parity():
         return PASS, ["no [cite:] markers — parity holds vacuously"]
     try:
         import book_typst  # noqa: PLC0415 — heavy import; only needed when the corpus cites
-        doc = book_typst.ir.parse_book(include_appendices=True)
+        # PRINT projection (for_print=True) — the slug list must match what emit_document renders internally
+        # (also the print projection), so an appendix page the print edition drops (e.g. the Appendix E
+        # recipe under the pointer collapse) is not requested as an unknown chapter.
+        doc = book_typst.ir.parse_book(include_appendices=True, for_print=True)
         typ = book_typst.emit_document([c.slug for c in doc.chapters], with_frontmatter=True)
     except Exception as e:  # noqa: BLE001 — a Typst-emit failure is itself a parity finding
         return FAIL, [f"could not emit the Typst projection to check parity: {e}"]
