@@ -15,10 +15,10 @@
       "part": 0,
       "sections": [
         {
-          "section_id": "the-book-s-language",
+          "section_id": "glossary",
           "level": 1,
-          "heading_text": "The Book's Language",
-          "topic_sentence": "This book earns its own vocabulary.",
+          "heading_text": "Glossary",
+          "topic_sentence": "Agentic software engineering is a fast-evolving topic, and it seems that many concepts have been given overlapping or contradictory names.",
           "id_source": "derived",
           "block_index": 2,
           "points": []

@@ -6499,6 +6499,16 @@
         }
       ]
     },
+    "section-id:glossary": {
+      "kind": "section-id",
+      "dependents": [
+        {
+          "view": "outline",
+          "element": "0.2-the-books-language::glossary",
+          "role": "section-anchor"
+        }
+      ]
+    },
     "section-id:governance-is-a-spectrum-from-soft-to-hard": {
       "kind": "section-id",
       "dependents": [
@@ -7165,16 +7175,6 @@
         {
           "view": "outline",
           "element": "6.0-implications-for-se::the-beautiful-garden-why-per-task-ablation-cannot-price-a-governed-environment",
-          "role": "section-anchor"
-        }
-      ]
-    },
-    "section-id:the-book-s-language": {
-      "kind": "section-id",
-      "dependents": [
-        {
-          "view": "outline",
-          "element": "0.2-the-books-language::the-book-s-language",
           "role": "section-anchor"
         }
       ]
