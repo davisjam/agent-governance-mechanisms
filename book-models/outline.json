@@ -7,7 +7,7 @@
     "derived_ids": 194,
     "missing_topic_sentence": 2,
     "sections_drained": 174,
-    "paragraph_points": 537
+    "paragraph_points": 538
   },
   "chapters": [
     {
@@ -201,7 +201,7 @@
           "section_id": "where-the-emphasis-falls",
           "level": 3,
           "heading_text": "Where the emphasis falls",
-          "topic_sentence": "This book is about both modes.",
+          "topic_sentence": "This book covers both modes.",
           "id_source": "derived",
           "block_index": 24,
           "points": [
@@ -881,6 +881,11 @@
               "slug": "rest-of-book-equips-the-engineers-seat",
               "text": "The rest of the book equips the engineer's seat.",
               "block_index": 49
+            },
+            {
+              "slug": "part-1-in-five-rules",
+              "text": "Part 1 distilled into five rules for the engineer's seat.",
+              "block_index": 51
             }
           ]
         }
