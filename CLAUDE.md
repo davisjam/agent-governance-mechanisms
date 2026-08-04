@@ -58,6 +58,28 @@ governing rule for all content here:
 The test: *could a Claude that has only this repo read an entry and understand the mechanism well enough
 to adapt it?* If it depends on a file, path, or rule number it can't see, the entry fails this rule.
 
+## Working on this repo with a fleet (single-live-writer + parallel drafting)
+
+Large changes are made by dispatched agents. Two facts shape how to parallelize them safely — **I keep
+re-deriving these, so they live here:**
+
+- **One writer at a time on `main`.** The `pre-commit` hook rebuilds the site and **force-stages** the
+  regenerated `.html` + `book-models/*` on every commit, so two agents committing concurrently collide on
+  those generated files. Keep exactly ONE agent editing/committing `main` at a time; run the full suite
+  (`catalog_tests.py`) between writers. To isolate a second agent's change from a concurrent one (e.g. a live
+  hand-edit), commit in TWO steps (the isolated change first) or `git stash` the second agent's own files
+  across the first commit — never `git commit --no-verify` (banned; it skips the hook).
+- **Drafting parallelizes; infrastructure serializes.** Split a big job into (a) SEQUENTIAL INFRASTRUCTURE —
+  `catalog.py` / `book/build_book_html.py` / `book/book_typst.py` renderers, packers, migrations (shared
+  files, one writer) — and (b) PARALLEL CONTENT DRAFTING — prose, blurbs, notes — that writes to DRAFT files
+  under `book/_design/drafts/` (NOT `main`, not committed, not built). Draft files are independent, so MANY
+  drafting agents run concurrently, with each other and with the `main` drain; an infrastructure wave
+  assembles the drafts later. This is how to author a large appendix/section without serializing on the
+  single-writer tree.
+- **Gate discipline:** verify each `main` commit on the full suite BEFORE stacking the next writer; NEVER
+  `git add -A` (it sweeps `book/_design/`); briefs read this file (the submodule ROOT `CLAUDE.md` — there is
+  no `book/CLAUDE.md`).
+
 ## Writing style
 
 An entry is read by a busy engineer and a coding agent. Write for both: plain, direct, no padding. Aim
