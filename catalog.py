@@ -1011,6 +1011,20 @@ def cmd_validate(_args) -> int:
               f"run `python3 book-models/lit_positioning_model.py regenerate` (does not gate):")
         for f in lp_findings:
             print(f"           {f}")
+    # METRICS-DASHBOARD CONFORMANCE — BLOCKING. The back-matter "Operator's Dashboard" page is a projection
+    # of a declared model (book-models/metrics-dashboard.json): the model carries the author's inclusion
+    # criterion + every metric's qualify/exclude verdict, and metrics_dashboard_model.py holds the page's
+    # table equal to the qualifying subset. Green from birth (the table is authored from the projection), so
+    # it lands BLOCKING: a schema break, a broken defined-in cite, a changed qualify count, or page-vs-model
+    # drift reddens validate. See book-models/metrics_dashboard_model.py.
+    import metrics_dashboard_model as mdm  # noqa: E402 — blocking dashboard-parity model
+    md_findings = mdm.all_findings()
+    if md_findings:
+        print(f"  [dashboard] {len(md_findings)} metrics-dashboard finding(s) — "
+              f"run `python3 book-models/metrics_dashboard_model.py verify`:")
+        for f in md_findings:
+            print(f"              {f}")
+        n_issues += len(md_findings)
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")

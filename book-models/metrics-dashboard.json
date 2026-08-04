@@ -1,0 +1,103 @@
+{
+  "_provenance": "AUTHORED source of truth for the Operator's Dashboard — the program-level metrics the book steers by. book-models/metrics_dashboard_model.py projects the qualifying subset into the back-matter page's table and holds the page equal to this model with a parity check (run `python3 book-models/metrics_dashboard_model.py verify`). Edit a metric HERE, then regenerate the page table with `... table`. The book's own declared -> generated idiom, applied to its metrics.",
+
+  "inclusion_criterion": "A metric belongs in the dashboard iff it is a useful agent-loop metric OR an org-level target for engineering with MAGE — not merely a number the book measures. Diagnostics and payoff-measurements you don't steer by are out.",
+
+  "_page": {
+    "slug": "6.5-the-operators-dashboard",
+    "companion_to": { "chapter": "2.5", "page_slug": "2.5-metrics", "anchor": "" }
+  },
+
+  "metrics": [
+    {
+      "name": "Support ratio",
+      "slug": "support-ratio",
+      "counts": "Support-apparatus lines of code (tests, lints, load-bearing docs, agent infrastructure, tooling) divided by production lines of code.",
+      "informs": "Whether to invest in the environment before the product. Watch that the apparatus keeps leading as feature work resumes.",
+      "healthy_direction": "Leads production; settles around 3x it at maturity.",
+      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "support-ratio-curve" },
+      "qualifies": true,
+      "rationale": "An org-level target: build the environment first, expect ~3x at maturity. The whole book's ordering argument, drawn as a line."
+    },
+    {
+      "name": "Missing-Model Metric",
+      "slug": "missing-model-metric",
+      "counts": "The fraction of tests whose exercised code traces to no model claim — the unmodelled surface — plus its drain curve run over run.",
+      "informs": "Which code to model next. Run the tracer after each model-loop Epic and watch the biggest orphan cluster shrink.",
+      "healthy_direction": "Drains toward the 10%-or-under target (56% to 7.89% over nine re-runs).",
+      "defined_in": { "chapter": "2.5", "page_slug": "2.5-metrics", "anchor": "mmm-drain" },
+      "qualifies": true,
+      "rationale": "A loop target with a stated goal: drain the orphan rate toward 10% or under. You steer the model-loop by it."
+    },
+    {
+      "name": "Velocity",
+      "slug": "velocity",
+      "counts": "Commits per week.",
+      "informs": "Whether throughput is healthy or being spent on trustworthiness. Watch the dip where velocity buys hardening.",
+      "healthy_direction": "Sustains a roughly linear productivity rate; a hardening dip is expected, not alarming.",
+      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "velocity" },
+      "qualifies": true,
+      "rationale": "An org-level target: sustain linear productivity as the fleet scales. A raw loop signal you steer capacity by."
+    },
+    {
+      "name": "Control growth",
+      "slug": "control-growth",
+      "counts": "Project-specific lint files and gate scripts, counted per window.",
+      "informs": "Whether the environment is still accreting controls — one failure class at a time.",
+      "healthy_direction": "Climbs steadily (lints 0 to 336 to 595 to 747; gates 0 to 20 to 76 to 102).",
+      "defined_in": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "control-growth" },
+      "qualifies": true,
+      "rationale": "A trajectory target: keep accreting controls as failure classes surface. The governance apparatus, measured as it grows."
+    },
+    {
+      "name": "Churn",
+      "slug": "churn",
+      "counts": "Lines added and deleted per week per path.",
+      "informs": "Which phase the build is in. A churn peak marks mechanization; its collapse marks a stabilizing environment.",
+      "healthy_direction": "Peaks at mechanization, then collapses as the environment stabilizes.",
+      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "churn" },
+      "qualifies": true,
+      "rationale": "A useful loop signal: reads out the build phase you are in, so you know whether to expect rewrite or stability."
+    },
+    {
+      "name": "MBSE navigation token-savings",
+      "slug": "mbse-nav-token-savings",
+      "counts": "Tokens spent to reach an answer, with the model on versus off.",
+      "informs": "The model's payoff in context budget.",
+      "healthy_direction": "Lower with the model on.",
+      "defined_in": { "chapter": "3.1", "page_slug": "3.1-the-executable-zoo", "anchor": "" },
+      "qualifies": false,
+      "rationale": "A model-payoff diagnostic, not a target. You measure it to justify the model, but you do not steer the build by it."
+    },
+    {
+      "name": "Model-sync efficacy",
+      "slug": "model-sync-efficacy",
+      "counts": "Whether the drift and parity gates keep model equal to code.",
+      "informs": "Whether map-equals-territory is actually holding.",
+      "healthy_direction": "Gates stay green.",
+      "defined_in": { "chapter": "3.8", "page_slug": "3.8-keeping-models-in-sync", "anchor": "" },
+      "qualifies": false,
+      "rationale": "A gate and invariant health-check, not a steering target. A binary you keep green, not a number you drive toward a goal."
+    },
+    {
+      "name": "Grammar coverage",
+      "slug": "grammar-coverage",
+      "counts": "Whether the generator exercised every production of the input grammar.",
+      "informs": "Corpus richness — a hole no line-coverage number reveals.",
+      "healthy_direction": "Rises toward full grammar exercise.",
+      "defined_in": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "" },
+      "qualifies": false,
+      "rationale": "A technique-local generative-validation oracle in the coverage family, not an org-level target for the whole program."
+    },
+    {
+      "name": "Model-claim coverage",
+      "slug": "model-claim-coverage",
+      "counts": "Whether generated inputs drove the invariants, transitions, and edges the model declares.",
+      "informs": "The saturation oracle for generative validation.",
+      "healthy_direction": "Rises toward full claim exercise.",
+      "defined_in": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "" },
+      "qualifies": false,
+      "rationale": "A technique-local saturation oracle for generative validation, not an org-level target you steer the program by."
+    }
+  ]
+}
