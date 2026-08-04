@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Hand-authored SVG (label: mage-method). The MAGE method at a glance, organizing the
-     book's core vocabulary into one flow: the Printer generates code through an agent fleet;
-     the two theses (Modeling → models; Alignment → mechanisms) fill a Governed Engineering
-     Environment; governance conversion grows that environment into trustworthy software.
-     A frontispiece for the glossary. Palette: Umber Monograph tokens (accent #9a3f12 the
-     Printer + the outcome, thesis-green #15803d the two theses, fleet #2f5169 the fleet,
-     governed #1f7a4d the environment, muted #57534e connectors + gloss). -->
+     book's core vocabulary into one flow: a coding agent — a reasoning engine paired with a
+     printer — generates code through an agent fleet; the two theses (Modeling → models;
+     Alignment → mechanisms) fill a Governed Engineering Environment; governance conversion
+     grows that environment into trustworthy software. A frontispiece for the glossary.
+     Palette: Umber Monograph tokens (accent #9a3f12 the coding-agent source + the outcome,
+     thesis-green #15803d the two theses, fleet #2f5169 the fleet, governed #1f7a4d the
+     environment, muted #57534e connectors + gloss). -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" width="720" height="720"
      role="group" aria-labelledby="mmTitle mmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="mmTitle">The MAGE method at a glance</title>
-  <desc id="mmDesc">A single vertical flow. The Printer — a coding agent — generates code
-    through an agent fleet. The fleet branches into the book's two theses: the Modeling Thesis,
+  <desc id="mmDesc">A single vertical flow. A coding agent — a reasoning engine paired with a
+    printer — generates code through an agent fleet. The fleet branches into the book's two theses: the Modeling Thesis,
     which produces models (the Model Zoo), and the Alignment Thesis, which produces mechanisms
     (constraints, sensors, validators, gates). The two converge into the Governed Engineering
     Environment. Governance conversion grows that environment — turning each recurring failure
@@ -23,9 +24,10 @@
     </marker>
   </defs>
 
-  <!-- 1. the Printer -->
-  <rect x="280" y="34" width="160" height="54" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
-  <text x="360" y="67" text-anchor="middle" font-size="21" font-weight="700" fill="#9a3f12">The Printer</text>
+  <!-- 1. the coding agent (a reasoning engine + a printer) -->
+  <rect x="255" y="20" width="210" height="68" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="360" y="50" text-anchor="middle" font-size="20" font-weight="700" fill="#9a3f12">Coding agent</text>
+  <text x="360" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#9a3f12">reasoning engine + printer</text>
 
   <path d="M360,88 L360,130" fill="none" stroke="#57534e" stroke-width="2" marker-end="url(#mm-ah)"/>
   <text x="372" y="114" text-anchor="start" font-size="15" font-style="italic" fill="#57534e">generates code</text>

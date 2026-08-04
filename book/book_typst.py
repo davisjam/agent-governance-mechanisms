@@ -822,12 +822,18 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
             rendered = _frame_apparatus_typst(rendered, breakable=is_landscape)
         if is_landscape:
             # A flipped/landscape page so the wide 6-column reference gets full landscape width without
-            # cramping; tighter margins than the body pages widen the measure further. The table can run a
-            # little past one page, so a scoped show-rule makes the table figure BREAKABLE (its header row
-            # repeats by default) — the overflow rows flow onto a second landscape page instead of clipping
-            # off the bottom, and the breakable apparatus frame flows with them.
+            # cramping; tighter margins than the body pages widen the measure further. The whole apparatus
+            # (opener prose + both mode bands + midrule + all rows + the bordered frame) is sized DOWN from
+            # the 11pt body to a print-native small step so it fits on ONE landscape page rather than
+            # spilling onto a second — a page-scoped `#set text(size:)` plus a tighter table inset, applied
+            # only inside this flipped page (the body size and the portrait apparatus pages are untouched).
+            # The table figure stays breakable as a safety valve (its header row repeats), so an accidental
+            # overflow flows rather than clips, but at this size the dashboard lands on the single page.
             rendered = (
                 "#page(flipped: true, margin: (x: 0.6in, y: 0.7in))[\n"
+                "#set text(size: 8.5pt)\n"
+                "#show table.cell: set text(size: 8.5pt)\n"
+                "#set table(inset: (x: 6pt, y: 3pt))\n"
                 "#show figure.where(kind: table): set block(breakable: true)\n"
                 + rendered + "\n]"
             )
