@@ -122,7 +122,7 @@
       "advances_theses": ["failures-become-machinery"],
       "status": "landed",
       "fold_target": "",
-      "notes": "SMALL standalone wave — LANDED (LPP-PROSE) in 2.3-the-governed-environment, the ex-post failure-to-mechanism beat: a one-paragraph lineage (manufacturing / resilience engineering / SRE blameless postmortems / Shingo poka-yoke) placed between the failure-seen-twice sentence and the 'either way, a mechanism takes one of two forms' transition, then MAGE's promotion rule and the velocity ingredient. Anchors the manuscript's existing Toyota/poka-yoke/jidoka/SRE mentions to primary sources (Shingo for poka-yoke, not a secondary summary). All three VERIFIED-ESTAB (ISBN). target_locations trimmed to 2.3 (the actual landing). illustrates_pattern=self-governance on all three (§8 prior-art double-duty: convert-a-recurring-failure-into-a-control)."
+      "notes": "SMALL standalone wave — LANDED (LPP-PROSE) in 2.3-the-governed-environment, the ex-post governance-conversion beat: a one-paragraph lineage (manufacturing / resilience engineering / SRE blameless postmortems / Shingo poka-yoke) placed between the failure-seen-twice sentence and the 'either way, a mechanism takes one of two forms' transition, then MAGE's promotion rule and the velocity ingredient. Anchors the manuscript's existing Toyota/poka-yoke/jidoka/SRE mentions to primary sources (Shingo for poka-yoke, not a secondary summary). All three VERIFIED-ESTAB (ISBN). target_locations trimmed to 2.3 (the actual landing). illustrates_pattern=self-governance on all three (§8 prior-art double-duty: convert-a-recurring-failure-into-a-control)."
     },
     {
       "id": "fallible-oracles-swebench",

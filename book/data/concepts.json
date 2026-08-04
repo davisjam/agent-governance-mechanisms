@@ -7,17 +7,17 @@
       {"level": "premise", "order": 1, "statement": "Implementation is abundant; judgment remains scarce.", "constructs": [], "spine_claims": ["abundant-implementation", "fault-lies-in-instructions", "oversight-does-not-scale"]},
       {"level": "failure-mode", "order": 2, "statement": "Ungoverned, the abundance decays into churn — effort spent rediscovering, undoing, repairing, and reconciling rather than advancing.", "constructs": ["churn"], "spine_claims": ["churn-is-the-limit", "three-not-knowings-cause-churn"]},
       {"level": "theses", "order": 3, "statement": "Two theses divide churn's causes: the Modeling Thesis treats what-to-build and how-to-realize; the Alignment Thesis treats how-to-change-safely.", "constructs": [], "relations": ["thesis-modeling", "thesis-alignment"], "spine_claims": ["modeling-thesis", "alignment-thesis", "theses-treat-the-causes"]},
-      {"level": "method", "order": 4, "statement": "The governance-conversion loop: velocity surfaces a failure; judgment converts each recurrence into a mechanism the environment enforces.", "constructs": ["failure-to-mechanism"], "spine_claims": ["failures-become-machinery"]},
+      {"level": "method", "order": 4, "statement": "The governance-conversion loop: velocity surfaces a failure; judgment converts each recurrence into a mechanism the environment enforces.", "constructs": ["governance-conversion"], "spine_claims": ["failures-become-machinery"]},
       {"level": "resulting-system", "order": 5, "statement": "The conversions accumulate into the governed engineering environment — quality as a property of the ground the agents stand on.", "constructs": ["governed-environment"], "spine_claims": ["govern-the-environment", "sync-cost-reduced", "mage-becomes-practical"]},
       {"level": "construction-repertoire", "order": 6, "statement": "The catalogue is the construction repertoire the environment is built from: models, mechanisms, compositions, and known uses.", "constructs": [], "spine_claims": ["seat-moves", "grounded-in-one-case"]}
     ],
     "core_constructs": {
-      "_note": "The six foundational constructs (say 'core construct' / 'core concept', never 'primitive' — 'primitive' is RESERVED for implementation-level code operations, the dense-primitive-region sense). 'governance-conversion-loop' is the directive's name for the construct whose registered concept slug is failure-to-mechanism.",
+      "_note": "The six foundational constructs (say 'core construct' / 'core concept', never 'primitive' — 'primitive' is RESERVED for implementation-level code operations, the dense-primitive-region sense). The construct is the governance-conversion loop; its registered concept slug is `governance-conversion` (renamed 260804 from the earlier `failure-to-mechanism` so the slug matches the display name the prose uses).",
       "engineered-agent-loop": "The engineered agent loop — a feedback process whose four levers (state exposed, action surface, success criterion, admission rule) the engineer shapes. Defined in 1.3.",
       "model": "A deliberately reduced, machine-readable representation of system intent, structure, behavior, policy, or evidence — the formal definition in definitions.json. Defined in 2.1.",
       "governance-mechanism": "A repeatable environmental structure that encodes an engineering policy — prevention, detection, evidence, or admission. Defined in 2.3.",
       "churn": "The failure mode: an increasing share of agent effort spent rediscovering, undoing, repairing, reconciling. Defined in the preface.",
-      "failure-to-mechanism": "The governance-conversion loop: the method by which the environment evolves — each recurring failure converted into a durable mechanism. Defined in 2.3.",
+      "governance-conversion": "The governance-conversion loop: the method by which the environment evolves — each recurring failure converted into a durable mechanism. Defined in 2.3.",
       "governed-environment": "The governed engineering environment: the resulting system — the accumulated mechanisms the fleet works inside. Defined in 2.3."
     },
     "relations": [
@@ -158,11 +158,11 @@
     "status": "book-only",
     "note": "Core construct 4 of 6 (_hierarchy). The failure mode the book opens on; churn stays the SYMPTOM (the three not-knowings are its causes — the churn-is-symptom claim). Definitional text homed in definitions.json (the churn record — canonical box, directive 260802 phrasing). Book index-def tagged at the preface churn inset. The landing realizes it as the bi-churn Big-Idea slot, not a card- concept card."
   },
-  "failure-to-mechanism": {
+  "governance-conversion": {
     "kind": "core-construct",
     "site_home": "N/A",
     "status": "book-only",
-    "note": "Core construct 5 of 6 (_hierarchy) — the governance-conversion loop (the directive's construct name; the registered concept slug predates it and stays). The method level: velocity surfaces a failure, judgment converts each recurrence into a mechanism the environment enforces. Book index-def tagged at the 2.3 ex-post engine paragraph."
+    "note": "Core construct 5 of 6 (_hierarchy) — the governance-conversion loop. The registered concept slug is `governance-conversion` (renamed 260804 from `failure-to-mechanism` so the slug matches the display name the prose uses). The method level: velocity surfaces a failure, judgment converts each recurrence into a mechanism the environment enforces. Book index-def tagged at the 2.3 ex-post engine paragraph."
   },
   "governed-environment": {
     "kind": "core-construct",

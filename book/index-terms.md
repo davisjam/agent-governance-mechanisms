@@ -192,7 +192,7 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: governed-environment | The governed environment
 - concept: ex-ante-governance | Ex-ante governance
 - concept: ex-post-governance | Ex-post governance
-- concept: failure-to-mechanism | Failure to mechanism
+- concept: governance-conversion | Governance conversion
 - concept: constraints-and-sensors | Constraints and sensors
 - concept: residual | The residual (goals no mechanism reaches; stays-human)
 - concept: sensor | Sensor (detects drift)

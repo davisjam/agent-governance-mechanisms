@@ -10674,101 +10674,6 @@
         }
       ]
     },
-    "term:failure-to-mechanism": {
-      "kind": "term",
-      "dependents": [
-        {
-          "view": "outline",
-          "element": "1.2-mage-by-example::block-46",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-14",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-16",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-23",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.2-the-skills::block-27",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-11",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-78",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-96",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-0",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-62",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "5.4-the-road-to-mage::block-0",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "5.4-the-road-to-mage::block-84",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.2-mage-by-example::block-35",
-          "role": "section-term[tier-1]"
-        },
-        {
-          "view": "outline",
-          "element": "1.2-mage-by-example::block-45",
-          "role": "section-term[tier-1]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-10",
-          "role": "section-term[tier-1]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-22",
-          "role": "section-term[tier-1]"
-        },
-        {
-          "view": "outline",
-          "element": "4.5-lessons-learned::block-95",
-          "role": "section-term[tier-1]"
-        },
-        {
-          "view": "outline",
-          "element": "5.2-the-timeline-and-the-work::block-53",
-          "role": "section-term[tier-1]"
-        }
-      ]
-    },
     "term:feasibility-probe": {
       "kind": "term",
       "dependents": [
@@ -11130,6 +11035,101 @@
         {
           "view": "outline",
           "element": "4.5-lessons-learned::block-6",
+          "role": "section-term[tier-1]"
+        }
+      ]
+    },
+    "term:governance-conversion": {
+      "kind": "term",
+      "dependents": [
+        {
+          "view": "outline",
+          "element": "1.2-mage-by-example::block-46",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-14",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-16",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-23",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.2-the-skills::block-27",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-11",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-78",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-96",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "5.2-the-timeline-and-the-work::block-0",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "5.2-the-timeline-and-the-work::block-62",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "5.4-the-road-to-mage::block-0",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "5.4-the-road-to-mage::block-84",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.2-mage-by-example::block-35",
+          "role": "section-term[tier-1]"
+        },
+        {
+          "view": "outline",
+          "element": "1.2-mage-by-example::block-45",
+          "role": "section-term[tier-1]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-10",
+          "role": "section-term[tier-1]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-22",
+          "role": "section-term[tier-1]"
+        },
+        {
+          "view": "outline",
+          "element": "4.5-lessons-learned::block-95",
+          "role": "section-term[tier-1]"
+        },
+        {
+          "view": "outline",
+          "element": "5.2-the-timeline-and-the-work::block-53",
           "role": "section-term[tier-1]"
         }
       ]
