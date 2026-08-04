@@ -880,6 +880,16 @@
             "type": "pattern",
             "name": "the squash-zero-promote sequence",
             "anchor": "squash-zero-promote"
+          },
+          {
+            "type": "decision-tree",
+            "name": "the governance-sizing matrix (failure cost x frequency -> proportionate move)",
+            "anchor": "governance-sizing-matrix"
+          },
+          {
+            "type": "litmus-test",
+            "name": "the stop-adding-governance litmus (price a control's upkeep before building it)",
+            "anchor": null
           }
         ],
         "artifact_would_help": false
