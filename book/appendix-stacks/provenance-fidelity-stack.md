@@ -1,105 +1,91 @@
-*A flagship deep-dive walks a stack part by part: a goal, an overview figure, and one six-field entry per
-member (role · failure · mechanism · seam · durability). Each seam names what the part before it hands
-over, so the page reads as one interlocking chain rather than a list of parts.*
+*A two-page synthesis of the provenance + fidelity stack. Five patterns make one guarantee: reconstruct a
+remediated document's mutation history from the artifact itself, and catch any damage done through the
+sanctioned door. Who and why for every change, and nothing silently lost.*
 
-## The goal
+## The capability
 
-**Reconstruct a remediated document's mutation history from the artifact itself, and catch any damage done
-through the sanctioned door.** Two promises in one: *provenance* — who changed what, and why, for every
-change; and *fidelity* — nothing the author wrote goes silently missing. A remediation tool earns trust
-only when both hold, and neither holds from a single mechanism. This stack is how five parts make them
-hold together.
+**Reconstruct the full mutation history of a shipped artifact from the artifact alone — and prove nothing
+the author wrote was dropped on the way out.** The stack builds two capabilities: *track provenance and
+trace causes*, and *preserve product semantics*. It assumes every change already flows through one
+sanctioned door; on that door it builds attribution you can read back and a fidelity check you cannot skip.
+The evidence lives inside the file, so it survives copy, download, and re-open — no side log to trust or
+lose.
+
+## Failure classes it covers
+
+- **The unattributable change.** A pass mutates a document but leaves no durable trace of who changed it or
+  why; once the file leaves the pipeline the history is gone.
+- **The indistinguishable insert.** A tool-inserted artifact looks exactly like authored content, so nothing
+  can tell what the tool added — and a validator cannot cover what it cannot name.
+- **The silent hole.** A new mutator lands without attribution wiring; "we record every change" quietly stops
+  being true, one commit at a time.
+- **The unread evidence.** Stamps sit in the artifact with no consumer, so "auditable" is a claim no one can
+  exercise.
+- **The silent loss.** A pass drops a table, a note, a paragraph; the file looks fixed but shipped damaged,
+  and no one sees the hole until a reader hits it.
+
+## Composition
 
 <!-- label: provenance-fidelity-stack -->
 <!-- figure: assets/provenance-fidelity-stack.svg | The provenance + fidelity stack in one picture. A document flows left to right through two lanes. The sanctioned door (fleet blue): MARK names every insertion so it is registry-covered; EMIT writes an attribution stamp for every mutation into the artifact. The guarantee (governed green): COVER's wiring lint holds the closed verb set at zero gaps; READ reconstructs the history from the embedded stamps; GATE asserts the input's content survives the output and names the pass that dropped it otherwise. Below the row, the artifact strip carries the stamps EMIT drops and READ and GATE read back. Mark it, cover the marking, read it back, and gate what leaves — provenance you can reconstruct from the artifact itself. -->
 
-## How the parts interlock
+The five parts run as a chain: mark every insertion, stamp every mutation, prove the stamping complete, read
+the history back, gate what leaves against what came in. Each part hands the next a stronger guarantee.
 
-Each part is weak alone; the guarantee emerges only from the chain. **MARK** makes every insertion
-registry-covered by construction. **EMIT** stamps each sanctioned mutation into the file. **COVER** — the
-wiring lint — turns "we attribute mutations" from an aspiration into a checked property over a closed set
-of mutator verbs. **READ** reconstructs a legible history from the embedded stamps, so the provenance has a
-consumer. **GATE** catches damage done *through* the sanctioned door: when a pass drops content, "something
-was lost" becomes "pass N lost it." Read the parts in that order; each seam names what the part before it
-hands over.
+## The constituent patterns
 
-## The parts
+- **MARK — role:a11y-prefix.** Name every insertion so it is distinguishable from authored content and
+  registry-covered by construction: an invisible insert takes a reserved prefix, a user-visible one keeps an
+  ordinary name, a spec-mandated name keeps its spec name — every inserter records into one registry. Opens
+  the chain with a closed, complete population of insertions to attribute.
+- **EMIT — role:mutator-stamps.** Every sanctioned mutation embeds an attribution stamp — its pass, its
+  visibility — into the artifact itself, written through one stamp-writer per format with the raw mutation
+  ban-linted away. Each change becomes embedded evidence.
+- **COVER — role:f10-wiring-lint.** A blocking lint scans every mutator verb and fails on any that skips the
+  stamp wiring, so completeness is a guarantee, not an aspiration. It reads the same closed verb set the
+  writer serves and proves the writer is called across all of it.
+- **READ — role:derive-changelog.** A command reconstructs a human-legible changelog from the embedded stamp
+  registry, each entry a mutation attributed to its pass — history projected from the artifact, never a
+  trusted external log.
+- **GATE — role:content-validator.** The fidelity gate extracts the input's content, asserts input is a
+  subset of output, and fails the job when meaning was dropped; a per-pass staging variant names which pass
+  dropped it. Where the first four attribute what the tool *added*, this catches what a pass silently
+  *removed*.
 
-### 1. MARK — the reserved-prefix naming rule
+## A DocAble example, end to end
 
-- **Part** — role:a11y-prefix
-- **Role in the stack** — Name every insertion so it is distinguishable from authored content and
-  registry-covered by construction.
-- **Failure it retires** — An inserted artifact is indistinguishable from what the author wrote, so nothing
-  can tell what the tool added — and a validator cannot cover what it cannot name.
-- **Mechanism** — A three-way naming rule: an invisible insert takes a reserved prefix, a user-visible
-  insert keeps an ordinary name, a spec-mandated name keeps its spec name. Every inserter records into one
-  registry.
-- **The seam** — Opens the chain. It hands the next part a closed, registry-covered population of
-  insertions to attribute; nothing enters the artifact unmarked, so the stamp-writer downstream has a
-  complete set to stamp.
-- **Limits / durability** — Durable and model-independent — a naming convention costs nothing at runtime
-  and leans on no 2026 model capability. It fails only if an inserter bypasses the registry, which the
-  fidelity gate then catches.
+DocAble remediates a slide deck for accessibility. A pass writes alt text onto an untagged image. **MARK**
+gives that description a reserved prefix and records it in the insertion registry, so it reads as tool-added,
+not author-written. **EMIT** stamps the mutation into the file — this pass, invisible insertion — through
+the one sanctioned stamp-writer for the format. **COVER** has already proven, at build time, that the
+alt-text verb wires that stamp; a version of the verb that forgot to would have reddened the gate before it
+shipped. Weeks later a customer asks what the tool changed: **READ** reconstructs the changelog straight
+from the deck's embedded stamps, no pipeline access needed. And when a different pass quietly drops a
+speaker-notes paragraph, **GATE** catches it — input content is not a subset of output — fails the job, and
+names the pass that lost it, instead of shipping a deck that looks fixed but is not.
 
-### 2. EMIT — one stamp-writer per format
+## Tradeoffs and adoption order
 
-- **Part** — role:mutator-stamps
-- **Role in the stack** — Embed an attribution stamp — its pass and its visibility — into the artifact for
-  every sanctioned mutation.
-- **Failure it retires** — A change is made but leaves no durable trace of who made it or why; once the
-  file leaves the pipeline the mutation history is unrecoverable.
-- **Mechanism** — One sanctioned stamp-writer per format, with the raw stamp mutation ban-linted away, so
-  every mutator verb writes its stamp through a single surface.
-- **The seam** — Takes the marked, registry-covered inserts from MARK and turns each sanctioned mutation
-  into embedded evidence. It hands the wiring lint a closed verb set to prove complete, and the changelog
-  an embedded registry to read back.
-- **Limits / durability** — Durable — evidence embedded in the artifact, not a side log, survives copy,
-  download, and re-open. Cost is one stamp per mutation; it fails only where a mutation skips the
-  sanctioned writer, which the next part forbids.
+Adopt in chain order, because each part presumes the one before it.
 
-### 3. COVER — the wiring lint over the verb set
+1. **MARK first.** Until insertions are named and registered, nothing downstream has a complete population to
+   attribute. A naming convention costs nothing at runtime.
+2. **EMIT, then COVER.** Stamp through one writer, then add the wiring lint that holds the closed verb set at
+   zero gaps. The stamps cost one write per mutation; the lint is deterministic and does not decay.
+3. **READ** is a read-only projection — cheap, and it makes the stored provenance finally usable.
+4. **GATE** last, and independently valuable: a set-containment check over extracted content, run in
+   production. Its per-pass diagnostic variant stays staging-only to keep the production path fast.
 
-- **Part** — role:f10-wiring-lint
-- **Role in the stack** — Assert every mutator verb wires the stamp, so completeness is a guarantee, not an
-  aspiration.
-- **Failure it retires** — A new mutator lands without stamp wiring; provenance quietly develops a hole and
-  "we attribute every change" silently stops being true.
-- **Mechanism** — A build-time lint scans every mutator verb in the model primitives and fails on any
-  unwired one — the closed verb set held at zero open gaps.
-- **The seam** — Sits over EMIT. It reads the same closed verb set the stamp-writer serves and proves the
-  writer is called across all of it, so the READ downstream can trust the stamped population is complete.
-- **Limits / durability** — Durable — a deterministic lint over a closed set does not decay. Its guarantee
-  is only as strong as the one door it presumes: mutations must route through the sanctioned primitives,
-  held by a separate ban-lint.
+The chain's guarantee is only as strong as the one door it presumes — every mutation must route through the
+sanctioned surface, held by a separate ban-lint. Extraction that under-reads a format weakens the gate;
+bound it to the canonical reader.
 
-### 4. READ — reconstruct the changelog
+## The full treatment
 
-- **Part** — role:derive-changelog
-- **Role in the stack** — Reconstruct a human-legible ChangeLog from the embedded stamp registry, each
-  entry a mutation attributed to its pass.
-- **Failure it retires** — The provenance is present but unusable — stamps sit in the artifact with no
-  consumer, so "auditable" is a claim no one can exercise.
-- **Mechanism** — A command reads the embedded stamps and projects them into an attributed history — the
-  mutation record reconstructed from the artifact itself, never a trusted external log.
-- **The seam** — Consumes what EMIT wrote and COVER proved complete. It turns the embedded evidence into
-  the reconstructable history the goal promises — provenance that finally has a reader.
-- **Limits / durability** — Durable — a read-only projection of embedded data, with no runtime dependency.
-  It reconstructs history from any conformant artifact and is exactly as complete as the stamps the wiring
-  lint guarantees.
-
-### 5. GATE — the fidelity check at the exit
-
-- **Part** — role:content-validator
-- **Role in the stack** — Extract the input's content, assert input is a subset of output, and fail the job
-  when meaning was dropped.
-- **Failure it retires** — A remediation pass silently drops the user's content — the file looks fixed but
-  lost a table, a note, a paragraph — and the damage ships invisibly.
-- **Mechanism** — A deterministic gate extracts input content and asserts it survives into the output,
-  failing the job in production; a per-pass staging variant names which pass dropped it.
-- **The seam** — Closes the chain. Where MARK, EMIT, COVER, and READ attribute what the tool *added*, the
-  validator catches what a sanctioned pass silently *removed* — damage done through the same door
-  provenance covers. "Content was lost somewhere" becomes "pass N lost it."
-- **Limits / durability** — Durable and model-independent — a set-containment assertion over extracted
-  content. Cost is one extract-and-compare per job; the per-pass variant is staging-only. It weakens only
-  if extraction under-reads the format, bounded by the canonical reader.
+Every constituent above links to its full Gang-of-Four pattern — in this appendix for the flagship members,
+online for the rest. The stack composes with the
+[model-coherence stack](appendix-d-model-coherence-stack.html) — the sanctioned door it stamps is that
+stack's typed seam — and the
+[specification + verification stack](appendix-d-specification-verification-stack.html). The complete
+83-mechanism catalogue, each pattern with its Motivation, Applicability, and Known uses, is online in the
+web edition.
