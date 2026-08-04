@@ -269,6 +269,11 @@
             "type": "framework",
             "name": "the config-optimization runbook figure",
             "anchor": "runbook-split"
+          },
+          {
+            "type": "framework",
+            "name": "the typed-step runbook taxonomy table (runnable / judgment-automatable / judgment-irreducible)",
+            "anchor": "runbook-step-kinds"
           }
         ],
         "artifact_would_help": false
