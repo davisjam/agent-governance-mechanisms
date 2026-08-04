@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="current" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-skill-recipe.html">⇐ Beginning of this part</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix E - 1. The recipe — three steps"><header class="chap"><div class="kicker"><a href="appendix-skill-recipe.html" aria-label="Beginning of Appendix E — How to Write a Skill">Appendix E — How to Write a Skill</a></div><h1>Appendix E - 1. The recipe — three steps</h1></header><h2>The recipe</h2>
+<li><a class="current" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Appendix · Appendix E - 1. The recipe — three steps"><header class="chap"><div class="kicker"><a href="appendix-skill-recipe.html" aria-label="Beginning of Appendix E — How to Write a Skill">Appendix E — How to Write a Skill</a></div><h1>Appendix E - 1. The recipe — three steps</h1></header><h2>The recipe</h2>
 <p>This is the recipe for a <strong>mastery-skill</strong> — a skill that installs a knowledge-base and the judgment for doing a whole task well, as distinct from a <em>tool-skill</em>, which merely teaches the interface to one tool. The distinction is drawn in <a href="4.2-the-skills.html">The Skills</a>; this appendix is the how-to behind it. The book's three featured skills — self-operate, self-governance, self-communicate — are the worked examples throughout, so each step below shows the recipe applied three times.</p>
 <p>Three steps build a mastery-skill. Each names one thing, and the order matters: you cannot layer facets onto a model you have not found, and you cannot write the tying principles before the facets exist. I suggest you work top to bottom.</p>
 <h3>Step 1 — Identify the domain's fundamental model</h3>
@@ -528,4 +525,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <table id="tbl-11-1-1" class="book-table"><caption data-short="The skill construction recipe, step by step"><span class="tbl-label">Table 11.1-1.</span> The construction recipe across the three worked skills — each step (fundamental model, orthogonal facets, tying principle) answered for self-communicate, self-governance, and self-operations.</caption><thead><tr><th>Step</th><th>self-communicate</th><th>self-governance</th><th>self-operations</th></tr></thead><tbody><tr><td><strong>1 · Fundamental model</strong></td><td>Rhetoric — prose is a craft with named parts</td><td>Two kinds of governance — architecture vs sensor</td><td>The engineering lifecycles — agents, context, repo, deploy, machine</td></tr><tr><td><strong>2 · Orthogonal facets</strong></td><td>Register (Diátaxis), lexicon, voice, audit, diagrams</td><td>The mechanism census, soft/hard enforcement, ambient principles</td><td>Symptom→doc catalog, typed runbooks, the hook library</td></tr><tr><td><strong>3 · Tying principle</strong></td><td>Less is more — name genre, draft in voice, name concepts, draw the shape, audit</td><td>Convert failures to guardrails; guidance aims, machinery holds</td><td>Orient positive first; route a break to its class</td></tr></tbody></table>
 <h2>What the recipe buys you</h2>
 <p>A skill built this way gains two properties for free, both second-order — they come from the shape, not from any one resource.</p>
-<ul><li><strong>It composes.</strong> Because each skill turns on a clean fundamental model, another skill can cite it by that model instead of duplicating its content. The three self-* skills do exactly this: the prose skill owns the writing that the other two produce, governance mints the mechanism that operations surfaces, and operations runs the machinery governance designs. Three skills, one system, cross-cited — no copy drifts because each names the others rather than mirroring them.</li><li><strong>It adopts in layers.</strong> A reader can take the fundamental model alone and get most of the value, then add facets as the need arises. The more of the stack you take on, the more it returns — and yet the recipe degrades gracefully: the model without its facets still teaches a way of seeing, and a facet without the tying principle still solves its slice. You do not have to swallow a skill whole to start using it.</li></ul><div class="pager"><a class="prev" href="appendix-skill-recipe.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix E — How to Write a Skill</span></a><a class="home" href="index.html">Contents</a><span class="next disabled" aria-hidden="true"></span></div><div class="pager-jump"><div class="jump"><a href="appendix-skill-recipe.html">⇐ Beginning of this part</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<ul><li><strong>It composes.</strong> Because each skill turns on a clean fundamental model, another skill can cite it by that model instead of duplicating its content. The three self-* skills do exactly this: the prose skill owns the writing that the other two produce, governance mints the mechanism that operations surfaces, and operations runs the machinery governance designs. Three skills, one system, cross-cited — no copy drifts because each names the others rather than mirroring them.</li><li><strong>It adopts in layers.</strong> A reader can take the fundamental model alone and get most of the value, then add facets as the need arises. The more of the stack you take on, the more it returns — and yet the recipe degrades gracefully: the model without its facets still teaches a way of seeing, and a facet without the tying principle still solves its slice. You do not have to swallow a skill whole to start using it.</li></ul><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendix-skill-recipe.html" aria-label="Beginning of Appendix E — How to Write a Skill">« Beginning of part</a><a href="appendix-skill-recipe.html" aria-label="Previous chapter — Appendix E — How to Write a Skill">« Previous chapter</a></div><span class="chapnav-here" title="Appendix E - 1. The recipe — three steps">Appendix E - 1. The recipe — three steps</span><div class="chapnav-fwd"><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

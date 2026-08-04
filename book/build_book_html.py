@@ -630,7 +630,7 @@ def _bib_sort_key(key: str) -> tuple[str, str]:
     return (fam, csl.get("title", "").lower())
 
 
-def build_bibliography_page(chapters: list[dict], nav_first: str, nav_last: str) -> str:
+def build_bibliography_page(chapters: list[dict], nav_last: str) -> str:
     """The end-of-book Bibliography — the alphabetical union (by author surname) of every work cited across
     all chapters, deduplicated, rendered from the same citations.json strings as the per-chapter Works
     Cited; ordering is the only difference (§5). Also emits one `citation_reference` per entry so Scholar
@@ -650,14 +650,13 @@ def build_bibliography_page(chapters: list[dict], nav_first: str, nav_last: str)
               '<h1>Bibliography</h1></header>')
     intro = ('<p>Every work cited in this book, in one alphabetical list. Each chapter also carries its own '
              'numbered <em>Works Cited</em>; this is their union.</p>')
-    pager = (f'<div class="pager"><a class="prev" href="{nav_last}.html">'
-             f'<span class="dir">‹ Previous</span><span class="ttl">Back matter</span></a>'
-             f'<a class="home" href="index.html">Contents</a>'
-             f'<span class="next disabled" aria-hidden="true"></span></div>')
+    nav_bar = _static_nav_html(
+        "Bibliography",
+        back_extra=[("« Previous chapter", f"{nav_last}.html", "Previous chapter — back matter")],
+    )
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
-    main = header + intro + f'<section class="bibliography" aria-label="Bibliography">{body}</section>' + pager + foot
-    toc = (f'<div class="topnav"><a href="index.html">Contents</a>'
-           f'<a href="{nav_first}.html">Start ⇤</a></div>')
+    main = header + intro + f'<section class="bibliography" aria-label="Bibliography">{body}</section>' + nav_bar + foot
+    toc = toc_html(chapters, None)
     return page("Bibliography · Model-Based Agentic Software Engineering", toc, main,
                 provenance=provenance, head_meta=head_meta)
 
@@ -1634,16 +1633,25 @@ ul.list-of-floats-links li {{ margin: 0.15rem 0; }}
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }}
 .marker-fill .marker-tag {{ background: var(--accent); color: var(--paper); }}
 .marker-more .marker-tag {{ background: var(--box-def-rule); color: var(--paper); }}
-.pager {{ display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }}
-.pager a, .pager .disabled {{ text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }}
-.pager a:hover {{ border-color: var(--accent); }}
-.pager .dir {{ display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }}
-.pager .ttl {{ color: var(--accent); font-weight: 600; }}
-.pager .next {{ text-align: right; }}
-.pager .disabled {{ visibility: hidden; }}
-.pager .home {{ flex: 0 0 auto; align-self: center; }}
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav {{ display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }}
+.chapnav-back, .chapnav-fwd {{ display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }}
+.chapnav-here {{ text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }}
+.chapnav a {{ font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }}
+.chapnav a:hover {{ border-color: var(--accent); background: var(--panel); }}
+@media (min-width: 60rem) {{
+  .chapnav {{ flex-direction: row; align-items: center; }}
+  .chapnav-back {{ flex: 1; justify-content: flex-end; }}
+  .chapnav-fwd {{ flex: 1; justify-content: flex-start; }}
+  .chapnav a {{ white-space: nowrap; }}
+  .chapnav-here {{ flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }}
+}}
 .book-foot {{ margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }}
 /* index page */
@@ -1678,25 +1686,13 @@ ul.list-of-floats-links li {{ margin: 0.15rem 0; }}
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe {{ width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }}
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump {{ display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }}
-.jump a {{ display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }}
-.jump a:hover {{ border-color: var(--accent); background: var(--panel); }}
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }}
 nav.toc details {{ flex: 0 0 auto; }}
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] {{ flex: 1 1 100%; }}
-nav.toc .jump {{ margin-top: 0; margin-left: auto; }}
-.pager-jump {{ margin-top: 1.4rem; }}
-.pager-jump .jump {{ justify-content: center; gap: 0.7rem; margin-top: 0; }}
 """
 
 
@@ -1721,79 +1717,87 @@ _FIGURES_GALLERY_SLUG = "figures"  # the autogenerated figures-only page (see bu
 _BIBLIOGRAPHY_SLUG = "bibliography"  # the end-of-book alphabetical bibliography (see build_bibliography_page)
 
 
-def _jump_targets(chapters: list[dict], idx: int) -> list[tuple[str, str]]:
-    """The jump-control targets for the chapter at position `idx`: a position-aware BACKWARD part control,
-    next PART, next CHAPTER, BEGINNING, END, INDEX. Returns an ordered list of (label, href) pairs; a target
-    with no destination (e.g. next-part from the last part, or BEGINNING when already on the first page) is
-    dropped, so a control appears only when it can go somewhere.
+def _chapter_nav(chapters: list[dict], idx: int) -> dict:
+    """The per-page navigation for the chapter at `idx`, as a single left→right sequence:
 
-    BEGINNING and END frame the book: ⇤ jumps to the FIRST page (the preface, chapter 0 in reading order),
-    ⇥ to the LAST. They sit together so the pair reads Beginning ⇤ … ⇥ End.
+        Table of contents « Beginning of part « Previous chapter │ THIS CHAPTER │ Next chapter » Next part » Index
 
-    The backward part control adapts to where the reader sits inside the current Part:
-      - FIRST chapter of its Part → jump to the PREVIOUS Part's first chapter, labelled "Previous part".
-      - MID-Part (not the first chapter) → jump back to the FIRST chapter of the CURRENT Part, labelled
-        "Beginning of this part." — so a deep reader can return to the Part's opening without leaving it.
+    Backward controls fill the left zone, forward controls the right, the current chapter names the centre
+    (a non-link). An unavailable target is OMITTED, not disabled — Table of contents and Index anchor the
+    zone edges and never drop, so the skeleton stays stable while the inner pills (Beginning-of-part,
+    Prev/Next-chapter, Next-part) come and go. Every page carries a real part number, so the same code path
+    covers front-matter, body, back-matter, and appendices with no special-casing.
+
+    Returns `{"back": [(label, href, aria)], "name": str, "fwd": [(label, href, aria)]}`.
     """
     cur = chapters[idx]
-    out: list[tuple[str, str]] = []
-    # BACKWARD part control — position-aware (see docstring). `first_of_part` is the earliest chapter in
-    # reading order sharing the current part number; the reader is at the Part's start iff it is `cur`.
     first_of_part = next((c for c in chapters if c["part"] == cur["part"]), cur)
-    if first_of_part["slug"] == cur["slug"]:
-        # At the Part's opening — the backward control leaves for the previous Part (its first chapter).
-        prev_part_first = next(
-            (c for c in chapters if c["part"] == cur["part"] - 1), None)
-        # Fall back to scanning for the nearest lower part number (parts are contiguous, but be robust).
-        if prev_part_first is None:
-            earlier = [c for c in chapters[:idx] if c["part"] != cur["part"]]
-            if earlier:
-                prev_part = earlier[-1]["part"]
-                prev_part_first = next((c for c in chapters if c["part"] == prev_part), None)
-        if prev_part_first:
-            out.append(("⇐ Previous part", f'{prev_part_first["slug"]}.html'))
-    else:
-        # Mid-Part — the backward control returns to the Part's own first chapter, without leaving the Part.
-        out.append(("⇐ Beginning of this part", f'{first_of_part["slug"]}.html'))
-    # Next PART — the first chapter whose part number differs from the current part.
+    back: list[tuple[str, str, str]] = []
+    fwd: list[tuple[str, str, str]] = []
+    # 1. Table of contents — always (the structural chapter-list landing).
+    back.append(("« Table of contents", "index.html", "Table of contents"))
+    # 2. Beginning of part — only when not already on the part's first page (else it would self-link).
+    if first_of_part["slug"] != cur["slug"]:
+        back.append(("« Beginning of part", f'{first_of_part["slug"]}.html',
+                     f'Beginning of {_part_label(cur)}'))
+    # 3. Previous chapter — the strict reading-order predecessor (may cross a part boundary).
+    if idx > 0:
+        back.append(("« Previous chapter", f'{chapters[idx - 1]["slug"]}.html',
+                     f'Previous chapter — {_pager_label(chapters[idx - 1])}'))
+    # 5. Next chapter — the strict reading-order successor (may cross a part boundary).
+    if idx + 1 < len(chapters):
+        fwd.append(("Next chapter »", f'{chapters[idx + 1]["slug"]}.html',
+                    f'Next chapter — {_pager_label(chapters[idx + 1])}'))
+    # 6. Next part — the first later chapter whose part number differs.
     nxt_part = next((c for c in chapters[idx + 1:] if c["part"] != cur["part"]), None)
     if nxt_part:
-        out.append(("Next part ⇒", f'{nxt_part["slug"]}.html'))
-    # Next CHAPTER — the immediately following chapter, when it exists and isn't already the next-part jump.
-    if idx + 1 < len(chapters):
-        nxt = chapters[idx + 1]
-        if not nxt_part or nxt["slug"] != nxt_part["slug"]:
-            out.append(("Next chapter ›", f'{nxt["slug"]}.html'))
-    # BEGINNING — the first chapter (the preface), unless we are already on it. Pairs with END below.
-    if idx != 0:
-        out.append(("⇤ Beginning", f'{chapters[0]["slug"]}.html'))
-    # END — the last chapter, unless we are already on it.
-    if idx != len(chapters) - 1:
-        out.append(("End ⇥", f'{chapters[-1]["slug"]}.html'))
-    # INDEX — always available (the term index sits after the appendix).
-    out.append(("Index", f"{BOOK_INDEX_SLUG}.html"))
-    return out
+        fwd.append(("Next part »", f'{nxt_part["slug"]}.html',
+                    f'Next part — {_part_label(nxt_part)}'))
+    # 7. Index — always (the alphabetised term index sits after the appendix).
+    fwd.append(("Index »", f"{BOOK_INDEX_SLUG}.html", "Index of terms"))
+    return {"back": back, "name": _pager_label(cur), "fwd": fwd}
 
 
-# Screen-reader labels for jump pills whose visible text leans on a directional glyph. The glyph reads
-# poorly aloud, so give the pill an explicit destination-naming aria-label.
-_JUMP_ARIA = {
-    "⇤ Beginning": "Beginning of book",
-    "End ⇥": "End of book",
-}
+def _render_chapnav(back: list[tuple[str, str, str]], name: str,
+                    fwd: list[tuple[str, str, str]]) -> str:
+    """Render one chapter-nav bar: a backward zone, the centred current-page name (a non-link `<span>`, so
+    no empty-anchor html-validate risk), a forward zone. Shared by the in-order chapter pages and the
+    generated pages (term index, figures gallery, bibliography). Each pill carries an explicit aria-label
+    because the `«`/`»` glyphs read poorly aloud."""
+    def pill(label: str, href: str, aria: str) -> str:
+        return (f'<a href="{html.escape(href, quote=True)}" '
+                f'aria-label="{html.escape(aria, quote=True)}">{html.escape(label)}</a>')
+    back_html = "".join(pill(*t) for t in back)
+    fwd_html = "".join(pill(*t) for t in fwd)
+    name_html = (f'<span class="chapnav-here" title="{html.escape(name, quote=True)}">'
+                 f'{html.escape(name)}</span>')
+    return (f'<nav class="chapnav" aria-label="Chapter navigation">'
+            f'<div class="chapnav-back">{back_html}</div>{name_html}'
+            f'<div class="chapnav-fwd">{fwd_html}</div></nav>')
 
 
-def _jump_html(chapters: list[dict], idx: int) -> str:
-    """Render the jump controls as a small row of links, for the top nav and the bottom pager alike."""
-    def _link(label: str, href: str) -> str:
-        aria = _JUMP_ARIA.get(label)
-        aria_attr = f' aria-label="{html.escape(aria, quote=True)}"' if aria else ""
-        return f'<a href="{html.escape(href, quote=True)}"{aria_attr}>{html.escape(label)}</a>'
-    links = "".join(_link(label, href) for label, href in _jump_targets(chapters, idx))
-    return f'<div class="jump">{links}</div>'
+def _chapter_nav_html(chapters: list[dict], idx: int) -> str:
+    nav = _chapter_nav(chapters, idx)
+    return _render_chapnav(nav["back"], nav["name"], nav["fwd"])
 
 
-def toc_html(chapters: list[dict], current_slug: str | None, jump: str = "") -> str:
+def _static_nav_html(name: str, back_extra: list[tuple[str, str, str]] | None = None,
+                     fwd_extra: list[tuple[str, str, str]] | None = None) -> str:
+    """A fixed chapter-nav bar for the generated pages that sit outside the chapter reading order (term
+    index, figures gallery, bibliography). Table of contents anchors the left, the page name centres, Index
+    anchors the right; callers pass any page-specific extra pills."""
+    back: list[tuple[str, str, str]] = [("« Table of contents", "index.html", "Table of contents")]
+    back += back_extra or []
+    fwd: list[tuple[str, str, str]] = list(fwd_extra or [])
+    fwd.append(("Index »", f"{BOOK_INDEX_SLUG}.html", "Index of terms"))
+    return _render_chapnav(back, name, fwd)
+
+
+def toc_html(chapters: list[dict], current_slug: str | None) -> str:
+    """The top-of-page navigation: a `☰ Contents` disclosure listing every chapter (current highlighted).
+    This disclosure is the sole quick-jump at the top; the left→right sequence bar (`_chapter_nav_html`)
+    renders bottom-only, killing the old top/bottom duplication. The `<ol>` links every chapter, which is
+    what keeps the reachability gate green."""
     rows = []
     last_part = None
     for c in chapters:
@@ -1809,7 +1813,7 @@ def toc_html(chapters: list[dict], current_slug: str | None, jump: str = "") -> 
     return (
         '<nav class="toc"><div class="toc-inner"><details>'
         "<summary>☰&nbsp; Contents</summary>"
-        f'<ol>{inner}</ol></details>{jump}</div></nav>'
+        f'<ol>{inner}</ol></details></div></nav>'
     )
 
 
@@ -3119,17 +3123,16 @@ def build_index_page(chapters: list[dict], concept_registry: dict[str, dict] | N
     # the stdout tool-report; it is deliberately not rendered here.
     body = header + intro + '<div class="idx idx-terms">' + "\n".join(rows) + "</div>"
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
-    # The index gets the whole-book TOC and its own jump row (Contents + first/last chapter + itself).
-    jump = (
-        '<div class="jump">'
-        f'<a href="{chapters[0]["slug"]}.html">Start ⇤</a>'
-        f'<a href="{chapters[-1]["slug"]}.html">End ⇥</a>'
-        '<a href="index.html">Contents</a>'
-        "</div>"
+    # The term index gets the whole-book TOC disclosure at the top and a chapter-nav bar at the bottom.
+    # It IS the Index, so no self-linking Index pill — forward to its back-matter siblings instead.
+    toc = toc_html(chapters, None)
+    nav_bar = _render_chapnav(
+        [("« Table of contents", "index.html", "Table of contents")],
+        "Index",
+        [(f"{_FIGURES_GALLERY_SLUG.capitalize()} »", f"{_FIGURES_GALLERY_SLUG}.html", "Figures gallery"),
+         ("Bibliography »", f"{_BIBLIOGRAPHY_SLUG}.html", "Bibliography")],
     )
-    toc = toc_html(chapters, None, jump=jump)
-    pager_jump = f'<div class="pager-jump">{jump}</div>'
-    main = body + pager_jump + foot
+    main = body + nav_bar + foot
     return page("Index · Model-Based Agentic Software Engineering", toc, main)
 
 
@@ -3527,17 +3530,13 @@ def build_figures_page(chapters: list[dict], entries: list[dict]) -> str:
                  appendix_figs)
     )
     foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
-    jump = (
-        '<div class="jump">'
-        f'<a href="{chapters[0]["slug"]}.html">Start ⇤</a>'
-        f'<a href="{chapters[-1]["slug"]}.html">End ⇥</a>'
-        '<a href="index.html">Contents</a>'
-        f'<a href="{_GENERATED_PAGE_SLUGS[0]}.html">List of Figures and Tables</a>'
-        "</div>"
+    toc = toc_html(chapters, None)
+    nav_bar = _static_nav_html(
+        "Figures Gallery",
+        fwd_extra=[("List of Figures and Tables »", f"{_GENERATED_PAGE_SLUGS[0]}.html",
+                    "List of Figures and Tables")],
     )
-    toc = toc_html(chapters, None, jump=jump)
-    pager_jump = f'<div class="pager-jump">{jump}</div>'
-    main = body + pager_jump + foot
+    main = body + nav_bar + foot
     provenance = (
         "<!-- GENERATED by book/build_book_html.py (build_figures_page) — DO NOT EDIT. Regenerate via "
         "python3 book/build_book_html.py or python3 catalog.py build. -->"
@@ -3994,8 +3993,6 @@ def build() -> int:
     # Per-chapter pages. Float numbers are CHAPTER-RELATIVE ("Figure 1.3-1"): the counters reset to 1 at
     # each chapter, keyed to the chapter's <part>.<chapter> id, matching the label map _collect_floats built.
     for i, c in enumerate(chapters):
-        prev_c = chapters[i - 1] if i > 0 else None
-        next_c = chapters[i + 1] if i < len(chapters) - 1 else None
         if c.get("is_appendix"):
             num_label = "Appendix"
         elif c.get("is_matter"):
@@ -4017,30 +4014,11 @@ def build() -> int:
         body, _fig_n, _tbl_n = _number_floats(body, _chapter_id(c), 1, 1)
         body = _resolve_xrefs(body, ref_map, for_print=False)
         body += works_cited_section()  # per-chapter numbered Works Cited (empty when nothing is cited)
-        if prev_c:
-            prev_html = (
-                f'<a class="prev" href="{prev_c["slug"]}.html"><span class="dir">‹ Previous</span>'
-                f'<span class="ttl">{html.escape(_pager_label(prev_c))}</span></a>'
-            )
-        else:
-            # A disabled pager is not a link — render an empty <span> (an empty <a href="#"> trips
-            # html-validate's wcag/h30 "anchor must have text" rule).
-            prev_html = '<span class="prev disabled" aria-hidden="true"></span>'
-        home_html = '<a class="home" href="index.html">Contents</a>'
-        if next_c:
-            next_html = (
-                f'<a class="next" href="{next_c["slug"]}.html"><span class="dir">Next ›</span>'
-                f'<span class="ttl">{html.escape(_pager_label(next_c))}</span></a>'
-            )
-        else:
-            next_html = '<span class="next disabled" aria-hidden="true"></span>'
-        pager = f'<div class="pager">{prev_html}{home_html}{next_html}</div>'
-        # Jump controls (next PART / next CHAPTER / BEGINNING / END / INDEX) in BOTH top nav and bottom pager.
-        jump = _jump_html(chapters, i)
-        pager_jump = f'<div class="pager-jump">{jump}</div>'
+        # The single left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … » Index), bottom-only.
+        nav_bar = _chapter_nav_html(chapters, i)
         foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
-        main = header + body + pager + pager_jump + foot
-        toc = toc_html(chapters, c["slug"], jump=jump)
+        main = header + body + nav_bar + foot
+        toc = toc_html(chapters, c["slug"])
         out = HERE / f'{c["slug"]}.html'
         out.write_text(
             page(f'{num_label} · {c["chapter_title"]}', toc, main, mermaid=c.get("mermaid", False),
@@ -4120,7 +4098,7 @@ def build() -> int:
     # End-of-book Bibliography — the alphabetical union of every cited work (always written so the
     # tracked-HTML gate's expected set stays stable). Its pager points back to the last chapter.
     (HERE / f"{_BIBLIOGRAPHY_SLUG}.html").write_text(
-        build_bibliography_page(chapters, chapters[0]["slug"], chapters[-1]["slug"]), encoding="utf-8")
+        build_bibliography_page(chapters, chapters[-1]["slug"]), encoding="utf-8")
     fig_count = sum(1 for e in float_entries if e["kind"] == "fig")
 
     print(f"built {len(chapters)} chapter pages + index.html + {BOOK_INDEX_SLUG}.html + "

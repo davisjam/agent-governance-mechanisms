@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="1.3-loops-and-models.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 2 · MAGE by Example"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 2</a></div><h1>MAGE by Example</h1></header><p>The last chapter closed on a promise: the running example of this book is a real, shipped system. Before the abstractions arrive — the loops, the models, the governed environment — you should hold enough of that system in your head to attach them to. That is this chapter's whole job. What kind of object needed all this machinery? How does it fit together? And why did I build it in the first place?</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 2 · MAGE by Example"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 2</a></div><h1>MAGE by Example</h1></header><p>The last chapter closed on a promise: the running example of this book is a real, shipped system. Before the abstractions arrive — the loops, the models, the governed environment — you should hold enough of that system in your head to attach them to. That is this chapter's whole job. What kind of object needed all this machinery? How does it fit together? And why did I build it in the first place?</p>
 <h2>Two birds, one stone</h2>
 <p>The explicit problem is a mountain of inaccessible documents. In 2024 the Department of Justice gave public universities a deadline: the slide decks, PDFs, and spreadsheets they distribute must meet a real accessibility standard, so that a student using a screen reader gets the same course as everyone else. A typical deck fails that standard dozens of ways — images with no descriptions, missing titles, a reading order no machine can follow. Remediating one course's materials by hand costs roughly 7.5 full work weeks, and a university offers thousands of courses. The mandate is just; the arithmetic is crushing. <a href="5.1-the-ada-context.html">The ADA Context</a> walks the full bind.</p>
 <p>The implicit problem was mine. In early 2026, coding agents got good — good enough that I, a professor of software engineering, no longer knew what my discipline's daily craft was about to become, or what I should be teaching in the fall. Nobody did. The only way to find out was to build something real with the agents and watch what the work demanded. And I had a second, smaller motive sitting in my own course folders: hundreds of my own slides needed remediation, and I had no intention of doing it by hand.</p>
@@ -615,4 +612,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-c-pdf-model.html">one structured model per format</a>.</p></blockquote>
 <p>That conversion — a failure read as evidence of a missing mechanism, then encoded so the class cannot recur — is the single move this book teaches, made over and over until the environment could be trusted to run itself. Notice what it buys. My attention stopped being spent per change, which cannot scale, and started being spent once per class of failure, which can.</p>
 <h2>Where the map leads</h2>
-<p>You now hold the object: a real system, built by a fleet, governed by machinery that grew scar by scar. The rest of the book explains that machinery — the environment in Part 2, the models in Part 3, both as daily practice in Part 4 — and Part 5 reconstructs the full case, from the committee meeting where it started to the system that shipped. Part 5 is not offered as proof — one system, one engineer, one model vendor is a case, not a law. It is the grounding case: the system this method was derived from, and the place every claim in the coming chapters can be traced back to.</p><div class="pager"><a class="prev" href="1.1-the-printer.html"><span class="dir">‹ Previous</span><span class="ttl">1 · The Printer</span></a><a class="home" href="index.html">Contents</a><a class="next" href="1.3-loops-and-models.html"><span class="dir">Next ›</span><span class="ttl">3 · Loops and Models</span></a></div><div class="pager-jump"><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="1.3-loops-and-models.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>You now hold the object: a real system, built by a fleet, governed by machinery that grew scar by scar. The rest of the book explains that machinery — the environment in Part 2, the models in Part 3, both as daily practice in Part 4 — and Part 5 reconstructs the full case, from the committee meeting where it started to the system that shipped. Part 5 is not offered as proof — one system, one engineer, one model vendor is a case, not a law. It is the grounding case: the system this method was derived from, and the place every claim in the coming chapters can be traced back to.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">« Beginning of part</a><a href="1.1-the-printer.html" aria-label="Previous chapter — 1 · The Printer">« Previous chapter</a></div><span class="chapnav-here" title="2 · MAGE by Example">2 · MAGE by Example</span><div class="chapnav-fwd"><a href="1.3-loops-and-models.html" aria-label="Next chapter — 3 · Loops and Models">Next chapter »</a><a href="2.1-the-agent-stack.html" aria-label="Next part — Part 2 — The Governed Engineering Environment">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

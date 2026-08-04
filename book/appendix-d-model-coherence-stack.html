@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-specification-verification-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 2. The model-coherence stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 2. The model-coherence stack</h1></header><p><em>A flagship deep-dive: the model-based-engineering stack, walked part by part. A context-bounded agent cannot read a whole codebase, so it reasons through a typed map of the system. The map earns that trust only while it stays equal to the territory — so the models and the machinery that pins them to reality travel as one package. This page folds in what used to be the separate MBSE and canonical-seam stacks.</em></p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 2. The model-coherence stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 2. The model-coherence stack</h1></header><p><em>A flagship deep-dive: the model-based-engineering stack, walked part by part. A context-bounded agent cannot read a whole codebase, so it reasons through a typed map of the system. The map earns that trust only while it stays equal to the territory — so the models and the machinery that pins them to reality travel as one package. This page folds in what used to be the separate MBSE and canonical-seam stacks.</em></p>
 <h2>The goal</h2>
 <p><strong>Let an agent reason through a typed map of the system instead of the whole territory — and keep the map equal to the territory, so what the agent queries is what is true.</strong> Adopt the models without the drift control and you ship a map the fleet will trust while it quietly lies. Six parts make the map executable, read live, held equal to the code, derived where a derived edge cannot drift, generated back into the system, and — on the product side — the single sanctioned door through which a shipped format is mutated.</p>
 <figure id="fig-10-2-1" class="book-figure" data-label="model-coherence-stack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360"
@@ -606,4 +603,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h3>5. EMIT — the model drives the system</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-b-model-driven-codegen.html">Appendix B - 22. Model-driven codegen</a></li><li><strong>Role in the stack</strong> — Generate real artifacts from the model — policy, wiring, catalogs, contract types — each carrying a provenance header.</li><li><strong>Failure it retires</strong> — The boilerplate the model implies is written by hand beside the model; the two fall out of step, and the generated-looking file is silently stale or hand-edited.</li><li><strong>Mechanism</strong> — A generator emits each artifact <em>from</em> the model with a provenance header declaring its emitter, so the model drives the system rather than merely describing it and a hand-edit is caught on regen.</li><li><strong>The seam</strong> — Consumes the DATA the way a compiler consumes a source file. It turns the model from a thing that is read into a thing that <em>produces</em> the territory, which is what lets the parity gate treat the generated artifact as derived, not as a second source to reconcile.</li><li><strong>Limits / durability</strong> — Durable — codegen from a typed model is standard practice; its cost is the generator plus the provenance-header discipline. It fails where an emitted file is hand-edited, which the header's regen lint reverts.</li></ul>
 <h3>6. SEAL — one typed door for the product (folded from the canonical-seam stack)</h3>
-<ul><li><strong>Part</strong> — <a href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li><li><strong>Role in the stack</strong> — Route all reads and writes of a complex file format through one structured model, with raw library access ban-linted away.</li><li><strong>Failure it retires</strong> — Mutation of a format happens through many raw library calls; there is no single place to encode the format's invariants, so a malformed write can land from any of a hundred sites.</li><li><strong>Mechanism</strong> — One typed model is the sole mutation surface for the format and a ban-lint forbids the raw library, so the structure is compiler-checked and every change passes a surface that encodes the format's invariants (our instance: a PDF model over the canonical PDF library).</li><li><strong>The seam</strong> — Closes the stack on the product side. It is model-coherence applied to a shipped artifact: one canonical typed representation, held sole by a ban-lint, so a fix to an invariant holds everywhere at once — and it is the single door the provenance stack's stamp-writer needs to cover.</li><li><strong>Limits / durability</strong> — Durable and model-independent — a typed seam plus a ban-lint is deterministic infrastructure. Its cost is building the model and migrating every call site; it weakens only where a raw call escapes the ban, which the lint is there to catch.</li></ul><div class="pager"><a class="prev" href="appendix-d-provenance-fidelity-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix D - 1. The provenance + fidelity stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-d-specification-verification-stack.html"><span class="dir">Next ›</span><span class="ttl">Appendix D - 3. The specification + verification stack</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-specification-verification-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<ul><li><strong>Part</strong> — <a href="appendix-c-pdf-model.html">Appendix C - 3. PdfModel (sole PDF mutation surface)</a></li><li><strong>Role in the stack</strong> — Route all reads and writes of a complex file format through one structured model, with raw library access ban-linted away.</li><li><strong>Failure it retires</strong> — Mutation of a format happens through many raw library calls; there is no single place to encode the format's invariants, so a malformed write can land from any of a hundred sites.</li><li><strong>Mechanism</strong> — One typed model is the sole mutation surface for the format and a ban-lint forbids the raw library, so the structure is compiler-checked and every change passes a surface that encodes the format's invariants (our instance: a PDF model over the canonical PDF library).</li><li><strong>The seam</strong> — Closes the stack on the product side. It is model-coherence applied to a shipped artifact: one canonical typed representation, held sole by a ban-lint, so a fix to an invariant holds everywhere at once — and it is the single door the provenance stack's stamp-writer needs to cover.</li><li><strong>Limits / durability</strong> — Durable and model-independent — a typed seam plus a ban-lint is deterministic infrastructure. Its cost is building the model and migrating every call site; it weakens only where a raw call escapes the ban, which the lint is there to catch.</li></ul><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">« Beginning of part</a><a href="appendix-d-provenance-fidelity-stack.html" aria-label="Previous chapter — Appendix D - 1. The provenance + fidelity stack">« Previous chapter</a></div><span class="chapnav-here" title="Appendix D - 2. The model-coherence stack">Appendix D - 2. The model-coherence stack</span><div class="chapnav-fwd"><a href="appendix-d-specification-verification-stack.html" aria-label="Next chapter — Appendix D - 3. The specification + verification stack">Next chapter »</a><a href="appendix-skill-recipe.html" aria-label="Next part — Appendix E — How to Write a Skill">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

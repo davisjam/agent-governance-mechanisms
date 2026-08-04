@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="5.1-the-ada-context.html">⇐ Beginning of this part</a><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.3-the-built-system.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 27 · The Timeline and the Work"><header class="chap"><div class="kicker"><a href="5.1-the-ada-context.html" aria-label="Beginning of Part 5 — The Context">Part 5 — The Context</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 27</a></div><h1>The Timeline and the Work</h1></header><p>The last chapter established the problem. This one tells what happened when I tried to solve it — the concrete arc from a five-minute experiment in the back of a committee meeting to a production system that, by the end, was writing almost all of its own code. The story matters because every governance idea in this book was learned at a specific point on this arc, in response to a specific failure. The methods are not a theory that came first. They are the sediment left by the work.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 27 · The Timeline and the Work"><header class="chap"><div class="kicker"><a href="5.1-the-ada-context.html" aria-label="Beginning of Part 5 — The Context">Part 5 — The Context</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 27</a></div><h1>The Timeline and the Work</h1></header><p>The last chapter established the problem. This one tells what happened when I tried to solve it — the concrete arc from a five-minute experiment in the back of a committee meeting to a production system that, by the end, was writing almost all of its own code. The story matters because every governance idea in this book was learned at a specific point on this arc, in response to a specific failure. The methods are not a theory that came first. They are the sediment left by the work.</p>
 <p>The scale is easy to state and hard to believe. Over about 20 weeks of focused effort, a fleet of AI coding agents and I produced a repository of 501,094 lines of production code, 1,505,737 lines of support apparatus, 35,323 lines of infrastructure-as-code, and 28,507 lines of system models bridging the two. On a routine day, six to eight agents ran in parallel and landed on the order of 200 commits — about 1,000 a week, sustained, against the hundred a week a fast unaided human might manage. I inspected almost none of the code. That one fact is the engineering problem this book exists to answer: how a fleet producing more code than any human can read stays trustworthy.</p>
 <h2>It started in a meeting</h2>
 <p>The project began, fittingly, in a committee meeting about the very deadline described in the last chapter. In early 2026 an accreditation committee was discussing the ADA compliance date. Most of the faculty in the room did not know a mandate existed; those who did had made little progress against it. While the meeting droned on, I did what an engineering professor does when bored by a conundrum: I ran a small experiment. I opened a chat model, fed it screenshots from one of my own slide decks, and asked it to transcribe what it saw. It worked. The model looked at a rendered slide and recovered real semantic content from the image — the core technical problem of document accessibility, solved well enough to build on.</p>
@@ -2121,4 +2118,4 @@ z
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-a-agent-registry.html">agent registry</a>.</p></blockquote>
 <ul><li><strong>Operating and deploying.</strong> Cloud deployment with staged gates, quota and cost controls, observability channels, audit trails that let a finished document's history be reconstructed, and runbooks for the failures that recur.</li></ul>
 <p>Read as a list, those are the chapters of this book. Every one of them answers a failure this timeline produced, and the recurring move that produced them all is the same: <em>velocity surfaces a failure; judgment classifies it as local or structural; the structural ones get converted into a durable mechanism that narrows the next agent's room to fail.</em> That move, applied over and over, is what the rest of this book laid out, told slowly enough that you can do it too.</p>
-<p>By the end of the study period the system could process Office and PDF files to pass or substantially improve their accessibility scores — a graduate slide deck in about a minute, for about a dollar — and it was patent-pending and being readied for institutional deployment as <a href="https://scholaccess.com">DocAble</a>. The direct development cost was about sixty thousand dollars, most of it my salary, with a few thousand each in model inference, cloud hosting, and subscriptions. That is the arc. How it was governed is the story the rest of this book has already told.</p><div class="pager"><a class="prev" href="5.1-the-ada-context.html"><span class="dir">‹ Previous</span><span class="ttl">26 · The ADA Context</span></a><a class="home" href="index.html">Contents</a><a class="next" href="5.3-the-built-system.html"><span class="dir">Next ›</span><span class="ttl">28 · The Built System</span></a></div><div class="pager-jump"><div class="jump"><a href="5.1-the-ada-context.html">⇐ Beginning of this part</a><a href="6.0-implications-for-se.html">Next part ⇒</a><a href="5.3-the-built-system.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>By the end of the study period the system could process Office and PDF files to pass or substantially improve their accessibility scores — a graduate slide deck in about a minute, for about a dollar — and it was patent-pending and being readied for institutional deployment as <a href="https://scholaccess.com">DocAble</a>. The direct development cost was about sixty thousand dollars, most of it my salary, with a few thousand each in model inference, cloud hosting, and subscriptions. That is the arc. How it was governed is the story the rest of this book has already told.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="5.1-the-ada-context.html" aria-label="Beginning of Part 5 — The Context">« Beginning of part</a><a href="5.1-the-ada-context.html" aria-label="Previous chapter — 26 · The ADA Context">« Previous chapter</a></div><span class="chapnav-here" title="27 · The Timeline and the Work">27 · The Timeline and the Work</span><div class="chapnav-fwd"><a href="5.3-the-built-system.html" aria-label="Next chapter — 28 · The Built System">Next chapter »</a><a href="6.0-implications-for-se.html" aria-label="Next part — Back Matter">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

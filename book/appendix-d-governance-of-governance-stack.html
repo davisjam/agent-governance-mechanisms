@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-context-management-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 6. The governance-of-governance stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 6. The governance-of-governance stack</h1></header><p><em>A flagship deep-dive: the governance-of-governance stack, walked part by part. A fleet accumulates controls — lints, gates, mediators, registries — and the control estate itself becomes a system that can drift, collide, and rot. This stack turns the governance system into its own subject of governance.</em></p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 6. The governance-of-governance stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 6. The governance-of-governance stack</h1></header><p><em>A flagship deep-dive: the governance-of-governance stack, walked part by part. A fleet accumulates controls — lints, gates, mediators, registries — and the control estate itself becomes a system that can drift, collide, and rot. This stack turns the governance system into its own subject of governance.</em></p>
 <h2>The goal</h2>
 <p><strong>Govern the control estate as its own subject.</strong> Model the controls as a graph so two guardrails cannot silently collide; census which targets are covered and which are blind; compute the blast radius of a substrate change before making it; convert each recurring failure into a proportionate new control so the estate grows by design; and hold the governing document itself as enforced, queryable infrastructure rather than prose that rots. Six parts make the estate legible to itself, questionable for its own blind spots and change-safety, self-repairing when a failure recurs, and deliverable to every agent.</p>
 <figure id="fig-10-6-1" class="book-figure" data-label="governance-of-governance-stack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360"
@@ -609,4 +606,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h3>5. REGISTRY — the governance prose as a queryable model</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-b-rule-metadata-registry.html">Appendix B - 27. Rule-metadata registry (machine-readable metadata on governance rules)</a></li><li><strong>Role in the stack</strong> — Attach machine-readable metadata to each rule in the governing document — its id, scope, severity, enforcing check, canonical detail location — and extract those blocks into a typed registry.</li><li><strong>Failure it retires</strong> — A body of governance prose is an opaque wall a program can only grep; "which rules have an enforcing check, and which are honor-system" is a question no tool can answer.</li><li><strong>Mechanism</strong> — Embed a structured metadata block inside each rule and extract them into a typed registry, so the governance prose becomes a model the tooling can query — enforced rules, their checks, their severities.</li><li><strong>The seam</strong> — Turns the GRAPH's and CENSUS's implicit knowledge into an explicit, queryable rule model. It hands the index below it the machine-readable spine that lets the document be checked against its own rules.</li><li><strong>Limits / durability</strong> — Durable — structured metadata in the rule outlives any one tool. Its cost is the per-rule block; it fails only where a rule ships without its metadata, which a presence lint over the registry catches.</li></ul>
 <h3>6. INDEX — the governing document as enforced infrastructure</h3>
-<ul><li><strong>Part</strong> — <a href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li><li><strong>Role in the stack</strong> — Treat the top-level governance document as enforced infrastructure: a numbered, stable-numbered rule index loaded into every agent's boot context, held honest by its own enforcement counterpart.</li><li><strong>Failure it retires</strong> — The document that carries every other mechanism silently rots — a rule is renumbered, bloats past what fits in context, or drifts from the check it names — and every agent boots on a lie.</li><li><strong>Mechanism</strong> — A numbered, stable-numbered index loaded into every agent's boot context, held honest by a bloat/cap lint plus a rule-conformance lint, so the governing doc cannot silently decay.</li><li><strong>The seam</strong> — Closes the stack. It is the delivery surface for everything the registry models: the governance the graph maps, the census covers, and the blast-radius query protects is only acted on because this index puts it in front of every agent — enforced, capped, and conformance-checked.</li><li><strong>Limits / durability</strong> — Durable — an enforced, capped rule index is infrastructure, not a 2026 convenience. Its cost is the discipline of stable numbering and the cap; it fails where a rule is added without its enforcement counterpart, which the conformance lint refuses.</li></ul><div class="pager"><a class="prev" href="appendix-d-resource-mediation-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix D - 5. The resource-mediation stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-d-context-management-stack.html"><span class="dir">Next ›</span><span class="ttl">Appendix D - 7. The context-management stack</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-context-management-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<ul><li><strong>Part</strong> — <a href="appendix-a-claude-md-rule-index.html">Appendix A - 21. CLAUDE.md rule index (the governance document as a mechanism)</a></li><li><strong>Role in the stack</strong> — Treat the top-level governance document as enforced infrastructure: a numbered, stable-numbered rule index loaded into every agent's boot context, held honest by its own enforcement counterpart.</li><li><strong>Failure it retires</strong> — The document that carries every other mechanism silently rots — a rule is renumbered, bloats past what fits in context, or drifts from the check it names — and every agent boots on a lie.</li><li><strong>Mechanism</strong> — A numbered, stable-numbered index loaded into every agent's boot context, held honest by a bloat/cap lint plus a rule-conformance lint, so the governing doc cannot silently decay.</li><li><strong>The seam</strong> — Closes the stack. It is the delivery surface for everything the registry models: the governance the graph maps, the census covers, and the blast-radius query protects is only acted on because this index puts it in front of every agent — enforced, capped, and conformance-checked.</li><li><strong>Limits / durability</strong> — Durable — an enforced, capped rule index is infrastructure, not a 2026 convenience. Its cost is the discipline of stable numbering and the cap; it fails where a rule is added without its enforcement counterpart, which the conformance lint refuses.</li></ul><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">« Beginning of part</a><a href="appendix-d-resource-mediation-stack.html" aria-label="Previous chapter — Appendix D - 5. The resource-mediation stack">« Previous chapter</a></div><span class="chapnav-here" title="Appendix D - 6. The governance-of-governance stack">Appendix D - 6. The governance-of-governance stack</span><div class="chapnav-fwd"><a href="appendix-d-context-management-stack.html" aria-label="Next chapter — Appendix D - 7. The context-management stack">Next chapter »</a><a href="appendix-skill-recipe.html" aria-label="Next part — Appendix E — How to Write a Skill">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

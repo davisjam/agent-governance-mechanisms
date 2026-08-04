@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="1.5-the-engineers-seat.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 4 · Why MAGE Follows from the Machine"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 4</a></div><h1>Why MAGE Follows from the Machine</h1></header><p>Reinforced concrete carries a building because two materials split the work: concrete takes the compression, steel takes the tension, and the method — where the bars run, how the loads route — follows from those properties. Every engineering discipline is read off its material this way. MAGE is not classical software engineering with agents substituted for programmers; its shape follows from the machinery.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 4 · Why MAGE Follows from the Machine"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 4</a></div><h1>Why MAGE Follows from the Machine</h1></header><p>Reinforced concrete carries a building because two materials split the work: concrete takes the compression, steel takes the tension, and the method — where the bars run, how the loads route — follows from those properties. Every engineering discipline is read off its material this way. MAGE is not classical software engineering with agents substituted for programmers; its shape follows from the machinery.</p>
 <p id="idx-def-engineering-substrate">The machinery is itself a pairing. A foundation model is a broad but probabilistic reasoner: it can interpret abstractions and search open-ended spaces, yet it works through a bounded context, rebuilds its picture of your system afresh each task, and cannot certify its own output. An agentic harness gives that reasoner tools, a lifecycle, and points where action can be observed or blocked. Together they form a new <strong>engineering substrate</strong> — capable enough to reason through explicit models, cheap enough to maintain those models continuously, and controllable enough that policy can live in the environment rather than in the agent's promises.</p>
 <p>The last chapter ended with the two theses stated. This chapter shows they are not chosen; they are derived. First the reasoner's properties, then the harness's, then the engineering each one forces.</p>
 <h2>The reasoner's properties</h2>
@@ -595,4 +592,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
   <text x="480" y="502" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3f12">The governed engineering environment</text>
   <text x="480" y="528" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">what the combination requires</text>
 </svg><figcaption data-short="The derivation, end to end"><span class="fig-label">Figure 1.4-1.</span> The derivation, end to end. Four foundation-model properties and four harness properties feed the two theses: broad reasoning, bounded context, and cheap upkeep yield the Modeling Thesis; probabilistic execution, tool mediation, and parallel throughput yield the Alignment Thesis. Their combination requires the governed engineering environment. Read the arrows as "therefore": change a property and you must re-derive what it feeds.</figcaption></figure>
-<p>Nothing above leaned on an analogy to a human organization. The derivation runs from properties of a machine to the method they force, the way reinforced concrete's method runs from compression and tension. When the substrate's properties shift, with longer windows or new interposition points, the derivation is what you re-run. And what it yields is an implication, not a proof: whether the implied method holds up under a real system is a question for evidence, and the case study at the back of the book supplies one system's worth — a grounding case.</p><section class="works-cited" aria-labelledby="wc-1-4-why-mage-follows-from-the-machine-h"><h2 id="wc-1-4-why-mage-follows-from-the-machine-h" class="wc-h">Works Cited</h2><ol class="wc-list"><li id="wc-1-4-why-mage-follows-from-the-machine-1">Zhong, Hailin, and Shengxin Zhu. “AI Harness Engineering: A Runtime Substrate for Foundation-Model Software Agents.” 2026. <a href="https://arxiv.org/abs/2605.13357">https://arxiv.org/abs/2605.13357</a>.</li><li id="wc-1-4-why-mage-follows-from-the-machine-2">Lee, Yoonho, Roshen Nair, Qizheng Zhang, Kangwook Lee, Omar Khattab, and Chelsea Finn. “Meta-Harness: End-to-End Optimization of Model Harnesses.” 2026. <a href="https://arxiv.org/abs/2603.28052">https://arxiv.org/abs/2603.28052</a>.</li><li id="wc-1-4-why-mage-follows-from-the-machine-3">Young, Justin. “Effective Harnesses for Long-Running Agents.” Anthropic, November 26, 2025. <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a>.</li><li id="wc-1-4-why-mage-follows-from-the-machine-4">Tan, Garry. “Thin Harness, Fat Skills.” April 9, 2026. <a href="https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md">https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md</a>.</li><li id="wc-1-4-why-mage-follows-from-the-machine-5">Lin, Jiahang, Shichun Liu, Chengjun Pan, et al. “Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses.” 2026. <a href="https://arxiv.org/abs/2604.25850">https://arxiv.org/abs/2604.25850</a>.</li></ol></section><div class="pager"><a class="prev" href="1.3-loops-and-models.html"><span class="dir">‹ Previous</span><span class="ttl">3 · Loops and Models</span></a><a class="home" href="index.html">Contents</a><a class="next" href="1.5-the-engineers-seat.html"><span class="dir">Next ›</span><span class="ttl">5 · The Engineer&#x27;s Seat</span></a></div><div class="pager-jump"><div class="jump"><a href="1.1-the-printer.html">⇐ Beginning of this part</a><a href="2.1-the-agent-stack.html">Next part ⇒</a><a href="1.5-the-engineers-seat.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>Nothing above leaned on an analogy to a human organization. The derivation runs from properties of a machine to the method they force, the way reinforced concrete's method runs from compression and tension. When the substrate's properties shift, with longer windows or new interposition points, the derivation is what you re-run. And what it yields is an implication, not a proof: whether the implied method holds up under a real system is a question for evidence, and the case study at the back of the book supplies one system's worth — a grounding case.</p><section class="works-cited" aria-labelledby="wc-1-4-why-mage-follows-from-the-machine-h"><h2 id="wc-1-4-why-mage-follows-from-the-machine-h" class="wc-h">Works Cited</h2><ol class="wc-list"><li id="wc-1-4-why-mage-follows-from-the-machine-1">Zhong, Hailin, and Shengxin Zhu. “AI Harness Engineering: A Runtime Substrate for Foundation-Model Software Agents.” 2026. <a href="https://arxiv.org/abs/2605.13357">https://arxiv.org/abs/2605.13357</a>.</li><li id="wc-1-4-why-mage-follows-from-the-machine-2">Lee, Yoonho, Roshen Nair, Qizheng Zhang, Kangwook Lee, Omar Khattab, and Chelsea Finn. “Meta-Harness: End-to-End Optimization of Model Harnesses.” 2026. <a href="https://arxiv.org/abs/2603.28052">https://arxiv.org/abs/2603.28052</a>.</li><li id="wc-1-4-why-mage-follows-from-the-machine-3">Young, Justin. “Effective Harnesses for Long-Running Agents.” Anthropic, November 26, 2025. <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a>.</li><li id="wc-1-4-why-mage-follows-from-the-machine-4">Tan, Garry. “Thin Harness, Fat Skills.” April 9, 2026. <a href="https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md">https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md</a>.</li><li id="wc-1-4-why-mage-follows-from-the-machine-5">Lin, Jiahang, Shichun Liu, Chengjun Pan, et al. “Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses.” 2026. <a href="https://arxiv.org/abs/2604.25850">https://arxiv.org/abs/2604.25850</a>.</li></ol></section><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">« Beginning of part</a><a href="1.3-loops-and-models.html" aria-label="Previous chapter — 3 · Loops and Models">« Previous chapter</a></div><span class="chapnav-here" title="4 · Why MAGE Follows from the Machine">4 · Why MAGE Follows from the Machine</span><div class="chapnav-fwd"><a href="1.5-the-engineers-seat.html" aria-label="Next chapter — 5 · The Engineer&#x27;s Seat">Next chapter »</a><a href="2.1-the-agent-stack.html" aria-label="Next part — Part 2 — The Governed Engineering Environment">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

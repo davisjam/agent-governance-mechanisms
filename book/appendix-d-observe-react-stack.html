@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-resource-mediation-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 4. The observe → react loop"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 4. The observe → react loop</h1></header><p><em>A flagship deep-dive: the observe → react loop, walked part by part. The worst failure mode of an agent fleet is a pipeline that runs but produces garbage — invisible until much later. This stack makes live state legible and every bad state actionable, so an operator drives from typed signals plus written responses rather than from scraped logs and memory. This page folds in what used to be the separate observability and self-operations stacks — the signal side and the self-operate component.</em></p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 4. The observe → react loop"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 4. The observe → react loop</h1></header><p><em>A flagship deep-dive: the observe → react loop, walked part by part. The worst failure mode of an agent fleet is a pipeline that runs but produces garbage — invisible until much later. This stack makes live state legible and every bad state actionable, so an operator drives from typed signals plus written responses rather than from scraped logs and memory. This page folds in what used to be the separate observability and self-operations stacks — the signal side and the self-operate component.</em></p>
 <h2>The goal</h2>
 <p><strong>Make the fleet's live state legible and every bad state actionable.</strong> Emitting signals is only half of it: a signal nobody knows how to answer is noise, and a procedure with no signal to trigger it never runs. So the loop pairs a typed signal surface with a liveness channel, a written response per signal, a gate that stops new work while a serious signal is unresolved, and a positive map of the substrate that makes the signals interpretable. An operator — human or agent — then reacts to structure, not to text.</p>
 <figure id="fig-10-4-1" class="book-figure" data-label="observe-react-stack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360"
@@ -600,4 +597,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h3>4. BLOCK — the alerts gate</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-a-cron-alerts-gate.html">Appendix A - 15. Cron-alerts gate</a></li><li><strong>Role in the stack</strong> — While an unresolved HIGH-severity alert stands, refuse new orchestrator work-dispatch until it is acknowledged or resolved.</li><li><strong>Failure it retires</strong> — A high-severity alert fires and the operator keeps piling new work onto a possibly-broken substrate, compounding the failure it should have stopped to fix.</li><li><strong>Mechanism</strong> — A gate reads the bus's unresolved high-severity alerts and blocks the dispatch, worktree-create, and merge tools until the alert carries a matching ack or resolve.</li><li><strong>The seam</strong> — Raises the cost of ignoring a WATCH signal from zero to blocking. It sits over the bus and the playbook: the alert names the problem, the playbook says how to clear it, and the gate refuses to let the fleet proceed until one or the other is done.</li><li><strong>Limits / durability</strong> — Durable — a deterministic gate over unresolved alerts does not decay. Its cost is the discipline of ack-or-resolve; it is designed deadlock-free so a broken substrate can always be cleared, and it degrades to noise only if alerts are acked without being fixed.</li></ul>
 <h3>5. OPERATE — the positive substrate map (folded from the self-operations stack)</h3>
-<ul><li><strong>Part</strong> — <a href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li><li><strong>Role in the stack</strong> — A loadable skill giving an operating agent the <em>positive</em> map of how the substrate works first, and a symptom → resolving-doc catalog as the fallback.</li><li><strong>Failure it retires</strong> — An operating agent knows the symptom index but not how the substrate is <em>supposed</em> to work, so it treats symptoms without a model and mis-operates the fleet it is meant to run.</li><li><strong>Mechanism</strong> — A skill that leads with the substrate's lifecycles and healthy baselines and falls back to a symptom → doc catalog, generated from a typed source-of-truth so a reference-validity lint keeps every pointer honest.</li><li><strong>The seam</strong> — Closes the loop. Where WATCH and BEAT show state and RESPOND and BLOCK handle each bad one, this gives the operator the standing map that makes the signals <em>interpretable</em> — self-operation from a model of the substrate, not from memory.</li><li><strong>Limits / durability</strong> — Durable — a positive operating map is model-independent and its pointers are lint-checked against the source of truth. Its cost is generating and maintaining the skill; it speeds recovery, but the react-and-follow loop still functions without it.</li></ul><div class="pager"><a class="prev" href="appendix-d-specification-verification-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix D - 3. The specification + verification stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-d-resource-mediation-stack.html"><span class="dir">Next ›</span><span class="ttl">Appendix D - 5. The resource-mediation stack</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-resource-mediation-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<ul><li><strong>Part</strong> — <a href="appendix-a-operator-runbook-skill.html">Appendix A - 27. Operator runbook skill (positive map first, symptom index fallback)</a></li><li><strong>Role in the stack</strong> — A loadable skill giving an operating agent the <em>positive</em> map of how the substrate works first, and a symptom → resolving-doc catalog as the fallback.</li><li><strong>Failure it retires</strong> — An operating agent knows the symptom index but not how the substrate is <em>supposed</em> to work, so it treats symptoms without a model and mis-operates the fleet it is meant to run.</li><li><strong>Mechanism</strong> — A skill that leads with the substrate's lifecycles and healthy baselines and falls back to a symptom → doc catalog, generated from a typed source-of-truth so a reference-validity lint keeps every pointer honest.</li><li><strong>The seam</strong> — Closes the loop. Where WATCH and BEAT show state and RESPOND and BLOCK handle each bad one, this gives the operator the standing map that makes the signals <em>interpretable</em> — self-operation from a model of the substrate, not from memory.</li><li><strong>Limits / durability</strong> — Durable — a positive operating map is model-independent and its pointers are lint-checked against the source of truth. Its cost is generating and maintaining the skill; it speeds recovery, but the react-and-follow loop still functions without it.</li></ul><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">« Beginning of part</a><a href="appendix-d-specification-verification-stack.html" aria-label="Previous chapter — Appendix D - 3. The specification + verification stack">« Previous chapter</a></div><span class="chapnav-here" title="Appendix D - 4. The observe → react loop">Appendix D - 4. The observe → react loop</span><div class="chapnav-fwd"><a href="appendix-d-resource-mediation-stack.html" aria-label="Next chapter — Appendix D - 5. The resource-mediation stack">Next chapter »</a><a href="appendix-skill-recipe.html" aria-label="Next part — Appendix E — How to Write a Skill">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

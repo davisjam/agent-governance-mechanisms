@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-observe-react-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 3. The specification + verification stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 3. The specification + verification stack</h1></header><p><em>A flagship deep-dive: the specification + verification stack, walked part by part. A concurrent system is correct only against a spec you can name and check. This stack writes the spec as composed state machines, derives every obligation from it, and discharges each at graduated rigor — an exhaustive proof where the invariant is hairy, a deterministic lint where it is linear. This page folds in what used to be the separate semantic-lint stack, as the deterministic-verification tier.</em></p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 3. The specification + verification stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 3. The specification + verification stack</h1></header><p><em>A flagship deep-dive: the specification + verification stack, walked part by part. A concurrent system is correct only against a spec you can name and check. This stack writes the spec as composed state machines, derives every obligation from it, and discharges each at graduated rigor — an exhaustive proof where the invariant is hairy, a deterministic lint where it is linear. This page folds in what used to be the separate semantic-lint stack, as the deterministic-verification tier.</em></p>
 <h2>The goal</h2>
 <p><strong>Turn a concurrent behavioral spec into checked assurance.</strong> Model the lifecycle as composed state machines, derive from it every test obligation, discharge each obligation at the rigor its shape demands, then map coverage back onto the model so an unexercised invariant is a visible gap, not a guess. Two rigor tiers do the discharging: an exhaustive proof for a safety or liveness invariant, a deterministic lint for a linear one — and a discipline that keeps each check aimed at the level its property actually lives at.</p>
 <figure id="fig-10-3-1" class="book-figure" data-label="specification-verification-stack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360"
@@ -608,4 +605,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h3>5. LEVEL — enforce at the level the invariant lives at (folded from the semantic-lint stack)</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-a-semantic-level-enforcement.html">Appendix A - 29. Enforce at the right semantic level</a></li><li><strong>Role in the stack</strong> — Place each check at the granularity where the property it guards first becomes legible, not at the cheapest or earliest point.</li><li><strong>Failure it retires</strong> — A lint aimed one level too low passes on a spec-legal variation it should have caught and fires on a legal one it should have allowed — the check is present but wrong.</li><li><strong>Mechanism</strong> — Choose the scope where the invariant is actually observable — for instance, check model-to-code drift when an agent <em>returns</em> from a multi-commit task, never at a per-commit hook where the model is legitimately mid-flight.</li><li><strong>The seam</strong> — Sits over LINT. It is what makes the deterministic tier <em>correct</em> rather than merely present: the check the CENSUS demanded is only trustworthy once it fires at the level its invariant lives at.</li><li><strong>Limits / durability</strong> — Durable — a level, once chosen right, does not decay. Its cost is the judgment of choosing it; it fails silently when a check is placed a level off, which reads as a false pass rather than a red gate — the most expensive failure mode to notice.</li></ul>
 <h3>6. COVER — coverage projected onto the model</h3>
-<ul><li><strong>Part</strong> — <a href="appendix-b-coverage-model-mapping.html">Appendix B - 8. Coverage → model-node mapping (which invariants are actually tested)</a></li><li><strong>Role in the stack</strong> — Project test coverage onto the model's own nodes — its states, seams, and invariants — so "is this invariant tested?" is a queried fact, not a guess from a line-coverage percentage.</li><li><strong>Failure it retires</strong> — Line coverage says 80% and everyone relaxes; a critical invariant node sits at zero covering tests, invisible because the percentage averages it away.</li><li><strong>Mechanism</strong> — Map each test to the model nodes it exercises, turning the model into a work-list: an invariant node with no covering test is a visible gap that drives the next test.</li><li><strong>The seam</strong> — Closes the stack. It reads the SPEC's nodes and asks, of everything the CENSUS owed and PROVE and LINT discharged, which is actually <em>exercised</em> — so a verified-in-principle invariant with no live test becomes a named gap, not a comfortable average.</li><li><strong>Limits / durability</strong> — Durable — a projection of coverage onto model nodes is a query, not a runtime dependency. Its cost is maintaining the test-to-node map; it is exactly as complete as the SPEC's node set, which the census keeps honest.</li></ul><div class="pager"><a class="prev" href="appendix-d-model-coherence-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix D - 2. The model-coherence stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-d-observe-react-stack.html"><span class="dir">Next ›</span><span class="ttl">Appendix D - 4. The observe → react loop</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="appendix-d-observe-react-stack.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<ul><li><strong>Part</strong> — <a href="appendix-b-coverage-model-mapping.html">Appendix B - 8. Coverage → model-node mapping (which invariants are actually tested)</a></li><li><strong>Role in the stack</strong> — Project test coverage onto the model's own nodes — its states, seams, and invariants — so "is this invariant tested?" is a queried fact, not a guess from a line-coverage percentage.</li><li><strong>Failure it retires</strong> — Line coverage says 80% and everyone relaxes; a critical invariant node sits at zero covering tests, invisible because the percentage averages it away.</li><li><strong>Mechanism</strong> — Map each test to the model nodes it exercises, turning the model into a work-list: an invariant node with no covering test is a visible gap that drives the next test.</li><li><strong>The seam</strong> — Closes the stack. It reads the SPEC's nodes and asks, of everything the CENSUS owed and PROVE and LINT discharged, which is actually <em>exercised</em> — so a verified-in-principle invariant with no live test becomes a named gap, not a comfortable average.</li><li><strong>Limits / durability</strong> — Durable — a projection of coverage onto model nodes is a query, not a runtime dependency. Its cost is maintaining the test-to-node map; it is exactly as complete as the SPEC's node set, which the census keeps honest.</li></ul><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">« Beginning of part</a><a href="appendix-d-model-coherence-stack.html" aria-label="Previous chapter — Appendix D - 2. The model-coherence stack">« Previous chapter</a></div><span class="chapnav-here" title="Appendix D - 3. The specification + verification stack">Appendix D - 3. The specification + verification stack</span><div class="chapnav-fwd"><a href="appendix-d-observe-react-stack.html" aria-label="Next chapter — Appendix D - 4. The observe → react loop">Next chapter »</a><a href="appendix-skill-recipe.html" aria-label="Next part — Appendix E — How to Write a Skill">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

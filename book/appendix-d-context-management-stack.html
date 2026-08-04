@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="current" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 7. The context-management stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 7. The context-management stack</h1></header><p><em>A flagship deep-dive: the context-management stack, walked part by part. A context-bounded agent cannot hold the whole corpus, so the substrate delivers the right slice at the right moment — the task's constraints into the brief, the standing policy into the boot, the omitted step off the runtime lifecycle, a soft discipline as a rate-limited nudge. This is the book's explicit durable-versus-transient exemplar: each part is marked for whether it is infrastructure that endures or a crutch a stronger model eases.</em></p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Appendix · Appendix D - 7. The context-management stack"><header class="chap"><div class="kicker"><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">Appendix D — Mechanism Stacks</a></div><h1>Appendix D - 7. The context-management stack</h1></header><p><em>A flagship deep-dive: the context-management stack, walked part by part. A context-bounded agent cannot hold the whole corpus, so the substrate delivers the right slice at the right moment — the task's constraints into the brief, the standing policy into the boot, the omitted step off the runtime lifecycle, a soft discipline as a rate-limited nudge. This is the book's explicit durable-versus-transient exemplar: each part is marked for whether it is infrastructure that endures or a crutch a stronger model eases.</em></p>
 <h2>The goal</h2>
 <p><strong>Get the right policy and context to an agent at the moment a decision is due — so it acts on the relevant slice, not the whole corpus and not its memory.</strong> Five delivery surfaces, at four grains: the task-specific constraints injected into the brief, the mandatory boilerplate pasted at dispatch, the standing rule index loaded at boot, an action fired off the runtime lifecycle, and a soft reminder nudged at a gated cadence. Read against the years, they split: some are infrastructure a larger context window and a stronger model do not retire, and some are 2026-era crutches whose pressure eases as models improve.</p>
 <figure id="fig-10-7-1" class="book-figure" data-label="context-management-stack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360"
@@ -601,4 +598,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h3>4. HOOK — an action off the runtime lifecycle</h3>
 <ul><li><strong>Part</strong> — <a href="appendix-a-lifecycle-hooks.html">Appendix A - 17. Lifecycle hooks (interpose on the agent runtime's events)</a></li><li><strong>Role in the stack</strong> — Bind a script to the agent runtime's lifecycle events — turn-stop, pre-compaction, session-start, before-a-tool-call — so a step the operator keeps omitting fires deterministically.</li><li><strong>Failure it retires</strong> — A step that must happen at a specific moment — a checkpoint before compaction, a check before a tool call — depends on someone remembering it, and the moment it is forgotten the state it protected is lost.</li><li><strong>Mechanism</strong> — Register a script against the runtime lifecycle event, so the step fires whether or not anyone remembered — deterministic delivery of an <em>action</em> at the moment it is due, not a reminder to take it.</li><li><strong>The seam</strong> — The runtime-event face of context delivery. Where INJECT, SNIPPET, and INDEX deliver <em>policy</em> into a brief or a boot, the hook delivers an <em>action</em> at a lifecycle moment — the same just-in-time principle applied to the runtime rather than the context.</li><li><strong>Limits / durability</strong> — <strong>Durable</strong> and model-independent — a deterministic lifecycle binding does not depend on model capability; a step that must fire regardless of memory is infrastructure, not a 2026 crutch. It fails only where the runtime exposes no hook for the moment that matters.</li></ul>
 <h3>5. NUDGE — the rate-limited reflection</h3>
-<ul><li><strong>Part</strong> — <a href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li><li><strong>Role in the stack</strong> — Tempo-gated policy nudges: a registry of reflection facets, each reflecting the running context against one policy dimension, the whole family emitting at most one reflection per window.</li><li><strong>Failure it retires</strong> — Several soft reminders each fire on their own cadence; together they become a wall of nudges the operator learns to ignore, and the alarm fatigue kills all of them at once.</li><li><strong>Mechanism</strong> — Consolidate the nudges into one tempo-gated substrate — each facet references a policy dimension rather than copying it, and the family emits at most one reflection per window — so soft reflections cannot compound into fatigue.</li><li><strong>The seam</strong> — Closes the stack. It is the lowest-pressure delivery: where INJECT, SNIPPET, INDEX, and HOOK deliver required policy and actions, the nudge delivers a <em>soft</em> reminder of a standing discipline, rate-limited so it aims without overwhelming.</li><li><strong>Limits / durability</strong> — <strong>2026-transient</strong> — tempo-gated nudges compensate for a model losing track of a standing discipline over a long run; a model that reliably held its disciplines would need fewer, though the at-most-one-per-window substrate that prevents alarm fatigue is durable.</li></ul><div class="pager"><a class="prev" href="appendix-d-governance-of-governance-stack.html"><span class="dir">‹ Previous</span><span class="ttl">Appendix D - 6. The governance-of-governance stack</span></a><a class="home" href="index.html">Contents</a><a class="next" href="appendix-skill-recipe.html"><span class="dir">Next ›</span><span class="ttl">Appendix E — How to Write a Skill</span></a></div><div class="pager-jump"><div class="jump"><a href="appendix-stacks.html">⇐ Beginning of this part</a><a href="appendix-skill-recipe.html">Next part ⇒</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<ul><li><strong>Part</strong> — <a href="appendix-a-reflection-facet-substrate.html">Appendix A - 18. Reflection-facet substrate (tempo-gated policy nudges)</a></li><li><strong>Role in the stack</strong> — Tempo-gated policy nudges: a registry of reflection facets, each reflecting the running context against one policy dimension, the whole family emitting at most one reflection per window.</li><li><strong>Failure it retires</strong> — Several soft reminders each fire on their own cadence; together they become a wall of nudges the operator learns to ignore, and the alarm fatigue kills all of them at once.</li><li><strong>Mechanism</strong> — Consolidate the nudges into one tempo-gated substrate — each facet references a policy dimension rather than copying it, and the family emits at most one reflection per window — so soft reflections cannot compound into fatigue.</li><li><strong>The seam</strong> — Closes the stack. It is the lowest-pressure delivery: where INJECT, SNIPPET, INDEX, and HOOK deliver required policy and actions, the nudge delivers a <em>soft</em> reminder of a standing discipline, rate-limited so it aims without overwhelming.</li><li><strong>Limits / durability</strong> — <strong>2026-transient</strong> — tempo-gated nudges compensate for a model losing track of a standing discipline over a long run; a model that reliably held its disciplines would need fewer, though the at-most-one-per-window substrate that prevents alarm fatigue is durable.</li></ul><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="appendix-stacks.html" aria-label="Beginning of Appendix D — Mechanism Stacks">« Beginning of part</a><a href="appendix-d-governance-of-governance-stack.html" aria-label="Previous chapter — Appendix D - 6. The governance-of-governance stack">« Previous chapter</a></div><span class="chapnav-here" title="Appendix D - 7. The context-management stack">Appendix D - 7. The context-management stack</span><div class="chapnav-fwd"><a href="appendix-skill-recipe.html" aria-label="Next chapter — Appendix E — How to Write a Skill">Next chapter »</a><a href="appendix-skill-recipe.html" aria-label="Next part — Appendix E — How to Write a Skill">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

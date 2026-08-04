@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="2.1-the-agent-stack.html">⇐ Beginning of this part</a><a href="3.1-the-executable-zoo.html">Next part ⇒</a><a href="2.5-metrics.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 9 · Lifecycles and Runbooks"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 9</a></div><h1>Lifecycles and Runbooks</h1></header><p>You know what to do when the disk fills up, when two branches conflict, when an incident pages you at 2 a.m. You know it so well you barely notice you know it. The agent knows none of it. Out of the box it knows how to commit to Git, of course; what it does not know is the life cycle of <em>your</em> engineered environment. The disk fills, and here is what to do when the disk fills — that instruction will never be in the agent's context unless you put it there. It has no operating context, no sense of "how we do things around here," and the more of that judgment your operation runs on unwritten, the more helpless the agent is the moment the healthy path ends. So a governed environment for real work writes the knowledge down — as lifecycles, and as the runbooks that ride on top of them. This chapter is about capturing the operational judgment you carry in your head so an agent can act on it.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 9 · Lifecycles and Runbooks"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 9</a></div><h1>Lifecycles and Runbooks</h1></header><p>You know what to do when the disk fills up, when two branches conflict, when an incident pages you at 2 a.m. You know it so well you barely notice you know it. The agent knows none of it. Out of the box it knows how to commit to Git, of course; what it does not know is the life cycle of <em>your</em> engineered environment. The disk fills, and here is what to do when the disk fills — that instruction will never be in the agent's context unless you put it there. It has no operating context, no sense of "how we do things around here," and the more of that judgment your operation runs on unwritten, the more helpless the agent is the moment the healthy path ends. So a governed environment for real work writes the knowledge down — as lifecycles, and as the runbooks that ride on top of them. This chapter is about capturing the operational judgment you carry in your head so an agent can act on it.</p>
 <h2>Lifecycles first, then the failure map</h2>
 <p id="idx-def-lifecycle">Start with the lifecycles, because everything else hangs off them. A lifecycle is the correct operation of one recurring activity: how a bug report moves from filed to fixed, how a feature moves from design to shipped. Write the healthy path first. Then, from each node on that path, map the failure states — the ways this step can go wrong — and for each failure, the action to take. Think of it as a grid: every node crossed with every symptom, and in each cell, what to do.</p>
 <p id="idx-def-failure-mode-effects-analysis">The formal name for building that grid is <strong>failure mode and effects analysis</strong>. You enumerate what can go wrong, then the consequence of each, and then — the part people skip — how to get <em>out</em> of it again. You know how to get out. If two branches conflict, you read both sides, work out what each was trying to accomplish, and reconcile them. If the disk fills, you find the fat part of the system — the cache, usually — and wipe it. The agent knows none of this. It does not know where to find each commit's intent during a merge conflict, and it does not know where your system's fat points are — and it may, just maybe, decide the fix for a full disk is <code>rm -rf /</code>. You think I am joking. Read Twitter; agents do it all the time. So you coach it: where the hot points are, and, in every failure path, what is <em>not allowed</em>. Encode the prohibition as a mechanism at the right level where you can — a Git hook, an agent hook — and where you cannot, at least tell the agent plainly.</p>
@@ -598,4 +595,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <p id="idx-def-pre-canned-brief">The strongest form of this is the <strong>pre-canned brief</strong>. When an orchestrator agent has to hand work to a sub-agent, you do not want it inventing, each time, how to explain the task. You want a template it adapts — the work already articulated in writing. The companion repository leans on exactly this: every dispatch is composed from a template that pre-places the required instructions, and a brief-linter checks the template is intact before the agent launches. Templates constrain how work is described to agents, which is the whole business of this book, applied to the act of delegation itself.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-a-brief-linting.html">brief-linting</a>.</p></blockquote>
 <p>Step back from the taxonomy and the chapter is one instruction wearing three shapes. A lifecycle writes down the healthy path and the way out of each failure. A runbook rides on top and splits every step in two: the deterministic part earns a tool, the judgment-laden part earns the roughest algorithm that still fits. The pre-canned brief hands that split to the next agent intact. What used to live only in your head — how the work is done here, and what must never be done — becomes something the environment holds and can enforce. Delegate the operation, not just the code, and it stops depending on who happens to be awake at 2 a.m.</p>
-<blockquote class="aside-sidenote def-inset"><p><strong>Brief.</strong> The written instructions handed to an agent for a task: what to do, where, and how "done" is judged; the artifact the pre-canned template produces.</p></blockquote><div class="pager"><a class="prev" href="2.3-the-governed-environment.html"><span class="dir">‹ Previous</span><span class="ttl">8 · The Governed Environment: Ex-Ante and Ex-Post</span></a><a class="home" href="index.html">Contents</a><a class="next" href="2.5-metrics.html"><span class="dir">Next ›</span><span class="ttl">10 · Metrics</span></a></div><div class="pager-jump"><div class="jump"><a href="2.1-the-agent-stack.html">⇐ Beginning of this part</a><a href="3.1-the-executable-zoo.html">Next part ⇒</a><a href="2.5-metrics.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<blockquote class="aside-sidenote def-inset"><p><strong>Brief.</strong> The written instructions handed to an agent for a task: what to do, where, and how "done" is judged; the artifact the pre-canned template produces.</p></blockquote><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">« Beginning of part</a><a href="2.3-the-governed-environment.html" aria-label="Previous chapter — 8 · The Governed Environment: Ex-Ante and Ex-Post">« Previous chapter</a></div><span class="chapnav-here" title="9 · Lifecycles and Runbooks">9 · Lifecycles and Runbooks</span><div class="chapnav-fwd"><a href="2.5-metrics.html" aria-label="Next chapter — 10 · Metrics">Next chapter »</a><a href="3.1-the-executable-zoo.html" aria-label="Next part — Part 3 — The Model Zoo">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

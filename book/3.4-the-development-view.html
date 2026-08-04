@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="3.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.5-the-physical-view.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 15 · The Development View"><header class="chap"><div class="kicker"><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 15</a></div><h1>The Development View</h1></header><p id="idx-def-development-view">The Process view held the running system consistent. The Development view steps off the runtime entirely and looks at the source: how the code is packaged into modules, which layer may depend on which, and who owns each piece. It is the view the people and agents who <em>build</em> the system reason through. Before an agent changes a line it must answer two questions — where am I in this codebase, and what may this file touch? — and this view is the map that answers them.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 15 · The Development View"><header class="chap"><div class="kicker"><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 15</a></div><h1>The Development View</h1></header><p id="idx-def-development-view">The Process view held the running system consistent. The Development view steps off the runtime entirely and looks at the source: how the code is packaged into modules, which layer may depend on which, and who owns each piece. It is the view the people and agents who <em>build</em> the system reason through. Before an agent changes a line it must answer two questions — where am I in this codebase, and what may this file touch? — and this view is the map that answers them.</p>
 <p>One general type anchors the view. A <strong>bill of materials</strong> captures a project's dependencies, direct and transitive — the software supply chain a build rests on. Two real models embody the view on live code. The first is the component and zone model, the ownership and boundary map. The second is the rule-metadata registry, the slice of the domain registries that models the governance rules themselves — the same typed rule index this book's own catalogue is generated from, so the book itself is partly governed by a model it describes.</p>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-component-zone-model.html">component and zone model</a>.</p></blockquote>
 <blockquote class="aside-sidenote"><p>Learn more about this governance mechanism: <a href="appendix-b-domain-registries.html">domain registries</a>.</p></blockquote>
@@ -590,4 +587,4 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <h2 id="rule-metadata-registry">The rule-metadata registry</h2>
 <p id="idx-def-rule-metadata-registry">The rule-metadata registry is the self-referential slice of the domain registries: the governance rules' own metadata, and so the model the governance machinery — and this book — are partly governed by. It assesses <strong>rule-index consistency</strong>, whether the published rule index matches the rules declared in the code. The distinctive move: the metadata is <em>extracted from inline blocks at each rule's own site</em>, then generated into the index. The description of a rule lives next to the rule it governs, so it cannot rot into a separate document nobody updates. Two gates hold the round-trip — a completeness lint fails a rule that omits a required field, and a freshness lint fails a committed index that differs from a regeneration. The result is a registry that can round-trip from a published rule straight to the code site that declares it, checked on every build. The appendix walks its schema and both gates in full; the component &amp; zone model above is the worked example this view teaches through.</p>
 <p>---</p>
-<p>The Development view maps how the source is organized for the people and agents who build it. The next chapter maps where the built parts actually run — across which hosts and network boundaries, under what per-host cost and load policy. That is the Physical view.</p><div class="pager"><a class="prev" href="3.3-the-process-view.html"><span class="dir">‹ Previous</span><span class="ttl">14 · The Process View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.5-the-physical-view.html"><span class="dir">Next ›</span><span class="ttl">16 · The Physical View</span></a></div><div class="pager-jump"><div class="jump"><a href="3.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.5-the-physical-view.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>The Development view maps how the source is organized for the people and agents who build it. The next chapter maps where the built parts actually run — across which hosts and network boundaries, under what per-host cost and load policy. That is the Physical view.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">« Beginning of part</a><a href="3.3-the-process-view.html" aria-label="Previous chapter — 14 · The Process View">« Previous chapter</a></div><span class="chapnav-here" title="15 · The Development View">15 · The Development View</span><div class="chapnav-fwd"><a href="3.5-the-physical-view.html" aria-label="Next chapter — 16 · The Physical View">Next chapter »</a><a href="4.1-brownfield.html" aria-label="Next part — Part 4 — Putting It to Work">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

@@ -302,16 +302,25 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
                padding: 1px 6px; border-radius: 3px; margin-right: 0.5rem; vertical-align: 1px; }
 .marker-fill .marker-tag { background: var(--accent); color: var(--paper); }
 .marker-more .marker-tag { background: var(--box-def-rule); color: var(--paper); }
-.pager { display: flex; justify-content: space-between; align-items: stretch; gap: 1rem;
-          margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
-.pager a, .pager .disabled { text-decoration: none; color: var(--ink); flex: 1; padding: 0.7rem 0.9rem;
-            border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.pager a:hover { border-color: var(--accent); }
-.pager .dir { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.pager .ttl { color: var(--accent); font-weight: 600; }
-.pager .next { text-align: right; }
-.pager .disabled { visibility: hidden; }
-.pager .home { flex: 0 0 auto; align-self: center; }
+/* Per-page chapter navigation — one left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … »
+   Index), bottom-only. Mobile-first: stacked column (backward pills → centred name → forward pills);
+   enhanced to a three-zone row at >=60rem so the name stays dead-centre. Tokens only. */
+.chapnav { display: flex; flex-direction: column; gap: 0.8rem; align-items: stretch;
+            margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.chapnav-back, .chapnav-fwd { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.chapnav-here { text-align: center; font-weight: 600; color: var(--accent); font-size: 18px; padding: 0.2rem 0; }
+.chapnav a { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.chapnav a:hover { border-color: var(--accent); background: var(--panel); }
+@media (min-width: 60rem) {
+  .chapnav { flex-direction: row; align-items: center; }
+  .chapnav-back { flex: 1; justify-content: flex-end; }
+  .chapnav-fwd { flex: 1; justify-content: flex-start; }
+  .chapnav a { white-space: nowrap; }
+  .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+                   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */
@@ -346,25 +355,13 @@ ul.list-of-floats-links li { margin: 0.15rem 0; }
 /* iframe figure embed (the rewired mechanism map) */
 figure.book-figure.catalogue-embed iframe { width: 100%; height: 600px; border: 1px solid var(--rule);
                                              border-radius: 6px; background: var(--paper); }
-/* jump controls — top nav + bottom pager: next PART / next CHAPTER / BEGINNING / END / INDEX (Beginning ⇤
-   and End ⇥ frame the book). The secondary pills are given roomy padding + larger hit targets + generous gap
-   so they read calm beside the primary pager cards rather than cramped. */
-.jump { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
-.jump a { display: inline-block; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase;
-           font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem;
-           line-height: 1.1; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
-.jump a:hover { border-color: var(--accent); background: var(--panel); }
-/* TOP nav bar — let it breathe. Lay the ☰ Contents disclosure and the jump pills out on one row with space
-   between, wrapping the pills below on a narrow screen, so nothing is crushed into the top-left corner. */
+/* TOP nav bar — the ☰ Contents disclosure only (the per-page sequence bar lives at the bottom now). */
 nav.toc .toc-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
                       gap: 0.7rem 1.4rem; }
 nav.toc details { flex: 0 0 auto; }
-/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at full
-   width under the summary instead of being pinched into a narrow column beside the jump pills. */
+/* When the reader opens the Contents disclosure, let it claim the full row so the chapter list flows at
+   full width under the summary. */
 nav.toc details[open] { flex: 1 1 100%; }
-nav.toc .jump { margin-top: 0; margin-left: auto; }
-.pager-jump { margin-top: 1.4rem; }
-.pager-jump .jump { justify-content: center; gap: 0.7rem; margin-top: 0; }
 </style></head><body><nav class="toc"><div class="toc-inner"><details><summary>☰&nbsp; Contents</summary><ol><li class="part">Front Matter</li>
 <li><a class="" href="0.1-preface.html">Preface</a></li>
 <li><a class="" href="list-of-figures.html">List of Figures and Tables</a></li>
@@ -508,7 +505,7 @@ nav.toc .jump { margin-top: 0; margin-left: auto; }
 <li><a class="" href="appendix-d-context-management-stack.html">Appendix D - 7. The context-management stack</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details><div class="jump"><a href="3.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.7-the-scope-of-modeling.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div></nav><main class="wrap" aria-label="Chapter 17 · The Scenarios View"><header class="chap"><div class="kicker"><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 17</a></div><h1>The Scenarios View</h1></header><p id="idx-def-scenarios-view">The four views so far are static portraits. The Logical view says what the system is, the Process view what it does at once, the Development view how it is packaged, the Physical view where it runs. The +1 view sets them in motion. A <strong>scenario</strong> — a use case, a journey — walks a real goal end to end, and in walking it exercises the other four and validates that they hold up. Kruchten made scenarios the +1 for exactly this reason: a view is validated by walking it, and the scenario is the walk. Because the walk re-checks the other four against a real goal, the scenario is where the models are held honest — the Alignment Thesis turned back on the views themselves.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 17 · The Scenarios View"><header class="chap"><div class="kicker"><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 17</a></div><h1>The Scenarios View</h1></header><p id="idx-def-scenarios-view">The four views so far are static portraits. The Logical view says what the system is, the Process view what it does at once, the Development view how it is packaged, the Physical view where it runs. The +1 view sets them in motion. A <strong>scenario</strong> — a use case, a journey — walks a real goal end to end, and in walking it exercises the other four and validates that they hold up. Kruchten made scenarios the +1 for exactly this reason: a view is validated by walking it, and the scenario is the walk. Because the walk re-checks the other four against a real goal, the scenario is where the models are held honest — the Alignment Thesis turned back on the views themselves.</p>
 <p>One general type anchors the view. A <strong>user journey</strong> names the interfaces a user moves through and the actions they take to accomplish something of value. Four real models embody the view: the user-journey model (the product-goal-to-code bridge), the agent-orchestration model (the <em>developer</em>-journey counterpart, the scenarios view pointed at the fleet rather than the user), journey-criticality-to-test-placement, and coverage-to-model-node mapping. A fifth, journey task-closure, sits alongside them: it types what the journey's terminal assertion must <em>mean</em>, a concern the join's four do not touch. The chapter closes with the zoo's flagship demonstration — four models joined so a product goal reaches all the way to how the deploy rations its tests.</p>
 <p>Two insets a reader needs for this view's model pages:</p>
 <blockquote id="idx-def-node-coverage" class="concept-inset"><p class="inset-title" id="inset-node-coverage">Inset I10 — Coverage over model nodes vs line coverage</p>
@@ -711,4 +708,4 @@ PROFILES = {
 <p><em>Model-from-code, joined.</em> Every leg derives from the code: the journey's deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7). Nothing is hand-stored — a stored tier or a <code>LOAD</code> edge is banned outright. The join keys chain: the <strong>endpoint</strong> ties M13 to M5, the <strong>criticality</strong> ties M13 to M6, the <strong>derived tier</strong> ties M6 to M7's roster, and the <strong>host profile</strong> ties the roster to the plan. A reader round-trips from "this journey is major" to "these tests serialize on the local box" by following those four keys, and the drift lints mechanize each hop.</p>
 <p><em>Also seen in:</em> Physical (the Scheduler half). This join is why the Physical and Scenarios chapters cross-reference each other most; it is rendered in full here.</p>
 <p>---</p>
-<p>Five views, walked on real code, each with its invariants and the checker that holds them true. The zoo has twenty-nine named models, and the number makes Kruchten's point for him: no single view is ever the whole picture. What the safety-critical world did because lives were at stake — keep the models honest, trace every requirement to the code that realizes it — the rest of us now do too. We do it because an agent will pay the upkeep, and because there is no cheaper way to trust what a fleet ships.</p><div class="pager"><a class="prev" href="3.5-the-physical-view.html"><span class="dir">‹ Previous</span><span class="ttl">16 · The Physical View</span></a><a class="home" href="index.html">Contents</a><a class="next" href="3.7-the-scope-of-modeling.html"><span class="dir">Next ›</span><span class="ttl">18 · The Scope of Modeling</span></a></div><div class="pager-jump"><div class="jump"><a href="3.1-the-executable-zoo.html">⇐ Beginning of this part</a><a href="4.1-brownfield.html">Next part ⇒</a><a href="3.7-the-scope-of-modeling.html">Next chapter ›</a><a href="0.1-preface.html" aria-label="Beginning of book">⇤ Beginning</a><a href="appendix-e-the-recipe.html" aria-label="End of book">End ⇥</a><a href="book-index.html">Index</a></div></div><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>Five views, walked on real code, each with its invariants and the checker that holds them true. The zoo has twenty-nine named models, and the number makes Kruchten's point for him: no single view is ever the whole picture. What the safety-critical world did because lives were at stake — keep the models honest, trace every requirement to the code that realizes it — the rest of us now do too. We do it because an agent will pay the upkeep, and because there is no cheaper way to trust what a fleet ships.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">« Beginning of part</a><a href="3.5-the-physical-view.html" aria-label="Previous chapter — 16 · The Physical View">« Previous chapter</a></div><span class="chapnav-here" title="17 · The Scenarios View">17 · The Scenarios View</span><div class="chapnav-fwd"><a href="3.7-the-scope-of-modeling.html" aria-label="Next chapter — 18 · The Scope of Modeling">Next chapter »</a><a href="4.1-brownfield.html" aria-label="Next part — Part 4 — Putting It to Work">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
