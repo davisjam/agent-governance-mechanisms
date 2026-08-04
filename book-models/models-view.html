@@ -66,7 +66,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>35</b> chapters · <b>222</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>35</b> chapters · <b>225</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The program — what you'll be able to do after the whole book</h2>
 <div class="outcomes"><div class="oc-h">After the program — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -839,50 +839,62 @@
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">Claude is the fastest road to hell</a></div>
 <p class="topic">The single most useful sentence I can hand you is this: coding agents accelerate *within the frame you give them* — even when the frame is wrong.</p>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--optionality-is-poison">
-<div class="sec-h"><a href="../book/4.5-lessons-learned.html">Optionality is poison</a></div>
-<p class="topic">AI reduces friction, of course; but what it chiefly manufactures is optionality — an endless stream of choices, some architecturally critical, some product-relevant, and some stupid things the agent should have sorted for itself.</p>
+<div class="section s2" id="sec-4-5-lessons-learned--the-new-economics">
+<div class="sec-h"><a href="../book/4.5-lessons-learned.html">The new economics</a></div>
+<p class="topic no-topic">(no topic sentence — opens on a non-paragraph block)</p>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--refactoring-used-to-be-too-costly-now-it-s-free">
+<div class="section s3" id="sec-4-5-lessons-learned--refactoring-used-to-be-too-costly-now-it-s-free">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">Refactoring used to be too costly; now it&#x27;s free</a></div>
 <p class="topic">For my whole career, refactoring was something you rationed.</p>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--done-is-a-claim-not-a-fact">
-<div class="sec-h"><a href="../book/4.5-lessons-learned.html">&quot;Done&quot; is a claim, not a fact</a></div>
-<p class="topic">A failure mode appeared again and again: Claude reported a task complete, and my review agents later found the half-done implementations, the missing integration points, and the tests that never actually exercised the behavior.</p>
-</div>
-<div class="section s2" id="sec-4-5-lessons-learned--the-cost-estimator-is-broken-and-scope-creep-is-guaranteed">
+<div class="section s3" id="sec-4-5-lessons-learned--the-cost-estimator-is-broken-and-scope-creep-is-guaranteed">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">The cost estimator is broken, and scope creep is guaranteed</a></div>
 <p class="topic">Two consequences follow from cheap implementation, and both caught me off guard.</p>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--your-tests-must-survive-agent-shaped-failure-modes">
+<div class="section s2" id="sec-4-5-lessons-learned--the-failure-modes">
+<div class="sec-h"><a href="../book/4.5-lessons-learned.html">The failure modes</a></div>
+<p class="topic no-topic">(no topic sentence — opens on a non-paragraph block)</p>
+</div>
+<div class="section s3" id="sec-4-5-lessons-learned--optionality-is-poison">
+<div class="sec-h"><a href="../book/4.5-lessons-learned.html">Optionality is poison</a></div>
+<p class="topic">AI reduces friction, of course; but what it chiefly manufactures is optionality — an endless stream of choices, some architecturally critical, some product-relevant, and some stupid things the agent should have sorted for itself.</p>
+</div>
+<div class="section s3" id="sec-4-5-lessons-learned--done-is-a-claim-not-a-fact">
+<div class="sec-h"><a href="../book/4.5-lessons-learned.html">&quot;Done&quot; is a claim, not a fact</a></div>
+<p class="topic">A failure mode appeared again and again: Claude reported a task complete, and my review agents later found the half-done implementations, the missing integration points, and the tests that never actually exercised the behavior.</p>
+</div>
+<div class="section s3" id="sec-4-5-lessons-learned--your-tests-must-survive-agent-shaped-failure-modes">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">Your tests must survive agent-shaped failure modes</a></div>
 <p class="topic">An agent fails differently than a person does.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-know">know</span><span class="oc-text">After this section, the reader can recognize the agent-shaped failure modes and write tests that survive them. <span class="prov">derived</span></span></li></ul></div>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--vibe-coding-treats-the-program-as-an-i-o-device-engineering-treats-it-as-a-system">
+<div class="section s3" id="sec-4-5-lessons-learned--vibe-coding-treats-the-program-as-an-i-o-device-engineering-treats-it-as-a-system">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">Vibe coding treats the program as an I/O device; engineering treats it as a system</a></div>
 <p class="topic">Here is the distinction the whole method turns on.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can distinguish vibe coding from engineering by whether the program is treated as an I/O device or a system. <span class="prov">derived</span></span></li></ul></div>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--explicitness-is-essential">
+<div class="section s3" id="sec-4-5-lessons-learned--explicitness-is-essential">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">Explicitness is essential</a></div>
 <p class="topic">A normal codebase keeps most of its conceptual structure in human memory.</p>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--governance-is-a-spectrum-from-soft-to-hard">
+<div class="section s2" id="sec-4-5-lessons-learned--the-mage-discipline">
+<div class="sec-h"><a href="../book/4.5-lessons-learned.html">The MAGE discipline</a></div>
+<p class="topic no-topic">(no topic sentence — opens on a non-paragraph block)</p>
+</div>
+<div class="section s3" id="sec-4-5-lessons-learned--governance-is-a-spectrum-from-soft-to-hard">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">Governance is a spectrum from soft to hard</a></div>
 <p class="topic">The mechanisms I ended up with were not all the same kind of thing, and the axis that sorted them was soft versus hard.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-analyze">analyze</span><span class="oc-text">After this section, the reader can classify a governance mechanism on the soft-to-hard spectrum — guidance that aims versus machinery that holds. <span class="prov">derived</span></span></li></ul></div>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--ai-is-an-autonomy-amplifier">
+<div class="section s3" id="sec-4-5-lessons-learned--ai-is-an-autonomy-amplifier">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">AI is an autonomy amplifier</a></div>
 <p class="topic">The thing agents amplify is your autonomy — your capacity to turn intent into a working system without waiting on anyone.</p>
 </div>
-<div class="section s2" id="sec-4-5-lessons-learned--what-this-means-for-the-job">
+<div class="section s3" id="sec-4-5-lessons-learned--what-this-means-for-the-job">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">What this means for the job</a></div>
 <p class="topic">Watching my own experience of software engineering get compressed, I expected to feel the role shrinking.</p>
 </div>
-<div class="section s3" id="sec-4-5-lessons-learned--who-holds-the-authority-to-convert-a-lesson">
+<div class="section s4" id="sec-4-5-lessons-learned--who-holds-the-authority-to-convert-a-lesson">
 <div class="sec-h"><a href="../book/4.5-lessons-learned.html">Who holds the authority to convert a lesson</a></div>
 <p class="topic">This is where I think companies may have trouble.</p>
 </div>

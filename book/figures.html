@@ -415,7 +415,7 @@ nav.toc details[open] { flex: 1 1 100%; }
 <li><a class="" href="4.3-transformations.html">22&nbsp; Everything Is a Transformation</a></li>
 <li><a class="" href="4.4-training-data.html">23&nbsp; Training Data and the Novelty Axis</a></li>
 <li><a class="" href="4.5-lessons-learned.html">24&nbsp; Lessons Learned</a></li>
-<li><a class="" href="4.6-generative-validation.html">25&nbsp; Generative Validation</a></li>
+<li><a class="" href="4.6-generative-validation.html">25&nbsp; Validation with Agents</a></li>
 <li class="part">Part 5 — The Context</li>
 <li><a class="" href="5.1-the-ada-context.html">26&nbsp; The ADA Context</a></li>
 <li><a class="" href="5.2-the-timeline-and-the-work.html">27&nbsp; The Timeline and the Work</a></li>
@@ -3026,7 +3026,7 @@ nav.toc details[open] { flex: 1 1 100%; }
   <text x="797" y="370" text-anchor="middle" font-size="17" fill="#b23b3b">shrink / RCA to the</text>
   <text x="797" y="394" text-anchor="middle" font-size="17" fill="#b23b3b">minimal or spec-point</text>
   <text x="797" y="418" text-anchor="middle" font-size="17" fill="#b23b3b">cause</text>
-</svg><figcaption data-short="A Point vs a Space"><span class="fig-label">Figure 4.6-1.</span> <em>A Point vs a Space.</em> The example pins a point; the generative test models the space. One reproduces a dot the author already knew; the other states the law every dot obeys and lets a generator find where the code breaks it.</figcaption></figure><p class="gallery-source">From <a href="4.6-generative-validation.html#fig-4-6-1">25 · Generative Validation</a></p></section><hr><section class="gallery-item"><figure id="fig-4-6-2-fig-4-6-2" class="book-figure" data-label="generative-loop"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 670"
+</svg><figcaption data-short="A Point vs a Space"><span class="fig-label">Figure 4.6-1.</span> <em>A Point vs a Space.</em> The example pins a point; the generative test models the space. One reproduces a dot the author already knew; the other states the law every dot obeys and lets a generator find where the code breaks it.</figcaption></figure><p class="gallery-source">From <a href="4.6-generative-validation.html#fig-4-6-1">25 · Validation with Agents</a></p></section><hr><section class="gallery-item"><figure id="fig-4-6-2-fig-4-6-2" class="book-figure" data-label="generative-loop"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 670"
      role="group" aria-labelledby="fig-4-6-2-glTitle fig-4-6-2-glDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-4-6-2-glTitle">One generator, three oracles, one shared model — and a coverage loop</title>
@@ -3113,7 +3113,7 @@ nav.toc details[open] { flex: 1 1 100%; }
   <!-- ... and model-claim coverage joins back to the model -->
   <path d="M806,540 C500,650 140,625 60,440 C 35,320 90,215 148,186" fill="none" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#fig-4-6-2-gl-ah-mut)"/>
   <text x="430" y="652" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">model-claim coverage — the metrics chapter owns it</text>
-</svg><figcaption data-short="The Coin Is the Model"><span class="fig-label">Figure 4.6-2.</span> <em>The Coin Is the Model.</em> Fuzzing and property testing are two sides of one coin: both draw their oracle from the same shared specification, and coverage asks whether the generator ever reached the claims the model makes.</figcaption></figure><p class="gallery-source">From <a href="4.6-generative-validation.html#fig-4-6-2">25 · Generative Validation</a></p></section><hr><section class="gallery-item"><figure id="fig-5-2-1-fig-5-2-1" class="book-figure" data-label="velocity-curve"><svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 763.2225 403.345625" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="fig-5-2-1-vel-title fig-5-2-1-vel-desc">
+</svg><figcaption data-short="The Coin Is the Model"><span class="fig-label">Figure 4.6-2.</span> <em>The Coin Is the Model.</em> Fuzzing and property testing are two sides of one coin: both draw their oracle from the same shared specification, and coverage asks whether the generator ever reached the claims the model makes.</figcaption></figure><p class="gallery-source">From <a href="4.6-generative-validation.html#fig-4-6-2">25 · Validation with Agents</a></p></section><hr><section class="gallery-item"><figure id="fig-5-2-1-fig-5-2-1" class="book-figure" data-label="velocity-curve"><svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 763.2225 403.345625" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="fig-5-2-1-vel-title fig-5-2-1-vel-desc">
  <title id="fig-5-2-1-vel-title">Commits per week across the project’s history — the velocity curve</title>
  <desc id="fig-5-2-1-vel-desc">A bar chart of commits per week over the 20-week build. Each bar is one week. The curve rises steeply as the agent fleet acquired capability, peaking through May, then dips during a hardening stretch. An inset panel reports commit size in lines of code. The shape is the argument in miniature: raw velocity is easy to buy, and the dip is where that velocity is spent making the output trustworthy rather than merely fast.</desc>
  <metadata>
