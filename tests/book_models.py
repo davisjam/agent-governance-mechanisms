@@ -282,6 +282,36 @@ def check_lit_positioning():
     return (FAIL if issues else PASS), issues
 
 
+def check_metaphor_spans():
+    """The metaphor-spans view's structural + overlap check (audit-only first landing, rule-#55 discipline).
+    The model (`book-models/metaphor-spans.json`) records every sustained metaphor's span — introduced ->
+    pays off — plus its kind (core = always live, exempt / local = must pay off before the next local), so
+    the author's rule 'never introduce a second metaphor until the first has paid off' is measurable. This
+    re-derives the model and reports: the C1-C7 STRUCTURAL invariants (well-formedness, page + anchor
+    resolution, local-has-payoff / core-does-not, the ratified core/local split); and that the computed
+    OVERLAP set equals the ratified set (0 today). The vehicle-collision check is a derived secondary note,
+    surfaced by the model CLI, not asserted here. Keyed off `book-models/metaphor-spans.json` + the book
+    chapters (for anchor resolution)."""
+    import metaphor_spans_model as msm  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+
+    # C1-C7 — structural / schema + resolution invariants (blocking half in catalog.py validate).
+    issues.extend(msm.structural_findings())
+
+    # The editorial metric — the computed overlap set must equal the ratified set (0 today).
+    overlaps = msm.overlap_findings()
+    if len(overlaps) != msm.EXPECT_OVERLAPS:
+        issues.append(f"overlap count {len(overlaps)} != ratified {msm.EXPECT_OVERLAPS} — "
+                      f"a new local overlaps an unpaid-off local; ratify (overlap_ok) or fix the span")
+        issues.extend(overlaps)
+
+    # Audit-only: same non-gating contract as the sibling first landings — the structural half is BLOCKING in
+    # catalog.py validate, but the overlap half lands audit-only until a clean session promotes it. A follow-up
+    # flips the overlap metric blocking (the spine / chapter-shape / flagship models' landing path).
+    return (FAIL if issues else PASS), issues
+
+
 def check_reverse_index():
     """The reverse index's two-kind drift check (audit-only). The reverse index inverts every built view's
     forward references into `{md symbol -> [dependent view elements]}`; it re-derives from the views each

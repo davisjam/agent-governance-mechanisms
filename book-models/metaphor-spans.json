@@ -1,0 +1,194 @@
+{
+  "_provenance": "AUTHORED source of truth for the book's metaphor spans — where each metaphor is introduced and where it pays off — so the editorial rule 'never introduce a second metaphor until the first has paid off' is MEASURABLE. book-models/metaphor_spans_model.py projects the inventory and computes overlaps, wired into `catalog.py validate` (structural BLOCKING; overlap AUDIT-ONLY-first). Edit a span HERE. Anchors are heading/index-def/point slugs (stable across prose edits), NOT line numbers; re-resolve an anchor with `python3 book-models/metaphor_spans_model.py anchors`.",
+
+  "overlap_rule": "A LOCAL metaphor must pay off before the next LOCAL metaphor is introduced within the same stretch. CORE vocabulary (the Printer, churn, map-and-territory, the Model Zoo, the loop, the engineer's seat) is always live and exempt. Overlap = two locals in one stretch whose [introduced_at, pays_off_at] spans intersect. Any real overlap must be ratified (overlap_ok:true + a rationale on either party) or it is a finding.",
+
+  "ratified_counts": { "core": 6, "local": 9, "overlaps": 0 },
+
+  "metaphors": [
+    {
+      "name": "The Printer",
+      "slug": "printer",
+      "kind": "core",
+      "vehicle": "a 3D printer, not a coder or a stapler",
+      "introduced_at": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "printer-metaphor" },
+      "payoff": "A bad build indicts the instructions, not the machine.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "The governing metaphor. Boundary named in 1.3 (loops-and-models); revisited at the close in 6.1-conclusion. Sub-images (stapler, CAD/slicing, the open-ended-technology siblings) belong to this cluster, not separate rows."
+    },
+    {
+      "name": "Churn",
+      "slug": "churn",
+      "kind": "core",
+      "vehicle": "velocity decayed into rework",
+      "introduced_at": { "chapter": "0.2", "page_slug": "0.2-the-books-language", "anchor": "" },
+      "payoff": "The wall a fleet hits; the governed environment pushes it back.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Named as recurring vocabulary on the glossary page (ground truth for core). Cashed as an empirical curve in 5.2-the-timeline-and-the-work (anchor churn): peaks at mechanization, then collapses."
+    },
+    {
+      "name": "Map and territory",
+      "slug": "map-and-territory",
+      "kind": "core",
+      "vehicle": "a map drops detail and is not the land",
+      "introduced_at": { "chapter": "0.2", "page_slug": "0.2-the-books-language", "anchor": "" },
+      "payoff": "Justifies the drift and parity gates that keep map equal to territory.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Named on the glossary page (ground truth for core). Does real work in 2.2-models-and-the-semantic-gap (anchor map-and-territory): model is the map, code the territory, hand-sync drifts."
+    },
+    {
+      "name": "The Model Zoo",
+      "slug": "model-zoo",
+      "kind": "core",
+      "vehicle": "a zoo of executable models on tour",
+      "introduced_at": { "chapter": "0.2", "page_slug": "0.2-the-books-language", "anchor": "" },
+      "payoff": "The 4+1 views, each walked as a drift-gated model over real code.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Named on the glossary page (ground truth for core). Opens and carries all of Part 3, from 3.1-the-executable-zoo (anchor model-zoo) onward."
+    },
+    {
+      "name": "The loop",
+      "slug": "the-loop",
+      "kind": "core",
+      "vehicle": "a generate-check-correct feedback loop",
+      "introduced_at": { "chapter": "1.3", "page_slug": "1.3-loops-and-models", "anchor": "loop-engineering" },
+      "payoff": "Agent work is a loop you engineer at four control points.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "\"Nearly everything in this book is an instance of it.\" The four levers land in 1.3; recurs book-wide."
+    },
+    {
+      "name": "The engineer's seat",
+      "slug": "engineers-seat",
+      "kind": "core",
+      "vehicle": "two seats — the engineer's and the developer's",
+      "introduced_at": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "engineers-seat" },
+      "payoff": "The developer's seat moves to the fleet; humans keep the engineering seats.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Classed core (medium confidence): anchors chapter 1.5 and is cashed in the back matter (6.0-implications-for-se). If read as a chapter-local frame, reclassify local — it is then the sole local in 1.5 (still no overlap)."
+    },
+
+    {
+      "name": "The search space",
+      "slug": "search-space",
+      "kind": "local",
+      "vehicle": "agent behavior as a search over a vast space",
+      "introduced_at": { "chapter": "1.3", "page_slug": "1.3-loops-and-models", "anchor": "search-space" },
+      "pays_off_at": { "chapter": "1.3", "page_slug": "1.3-loops-and-models", "anchor": "structuring-loop-and-model-conditions-the-distribution" },
+      "stretch": "1.3-loops-and-models",
+      "payoff": "A model aims the search and shrinks what must be held.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Sole local in 1.3; co-occurs only with the core loop (exempt)."
+    },
+    {
+      "name": "Poka-yoke / the fixture",
+      "slug": "poka-yoke-fixture",
+      "kind": "local",
+      "vehicle": "a jig that will not seat a bad part",
+      "introduced_at": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "improving-the-process-is-engineering-too-toyota-named-the-moves" },
+      "pays_off_at": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "improving-the-process-is-engineering-too-toyota-named-the-moves" },
+      "stretch": "1.5-the-engineers-seat",
+      "payoff": "Mistake-proofing: shape the work so the defect cannot happen.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Pays off in place, in the paragraph that raises it."
+    },
+    {
+      "name": "The raven and the pebbles",
+      "slug": "raven-pebbles",
+      "kind": "local",
+      "vehicle": "Aesop's raven raising water to reach it",
+      "introduced_at": { "chapter": "2.1", "page_slug": "2.1-the-agent-stack", "anchor": "intelligence-devises-means-within-constraints" },
+      "pays_off_at": { "chapter": "2.1", "page_slug": "2.1-the-agent-stack", "anchor": "intelligence-devises-means-within-constraints" },
+      "stretch": "2.1-the-agent-stack",
+      "payoff": "A goal-directed agent takes indirect steps toward a target.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Pays off in the paragraph that defines the agent."
+    },
+    {
+      "name": "The evidence staircase",
+      "slug": "evidence-staircase",
+      "kind": "local",
+      "vehicle": "staged steps, cheap to expensive",
+      "introduced_at": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "four-classes-prevention-detection-evidence-admission" },
+      "pays_off_at": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "four-classes-prevention-detection-evidence-admission" },
+      "stretch": "2.3-the-governed-environment",
+      "payoff": "Cheap checks early bind an exact tree; later stages check the binding instead of trusting a self-report.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Vehicle word 'staircase' is reused by mage-staircase (5.4) — see the vehicle-collision check. Renaming this to 'the evidence ladder/ratchet' (a DEFERRED editorial call, no content edit here) would free 'staircase' for the load-bearing 5.4 close."
+    },
+    {
+      "name": "The diffusion analogy",
+      "slug": "diffusion-analogy",
+      "kind": "local",
+      "vehicle": "an image-diffusion model",
+      "introduced_at": { "chapter": "4.4", "page_slug": "4.4-training-data", "anchor": "diffusion-analogy" },
+      "pays_off_at": { "chapter": "4.4", "page_slug": "4.4-training-data", "anchor": "diffusion-analogy" },
+      "stretch": "4.4-training-data",
+      "payoff": "On novel code the average pull is against you; impose the bias yourself.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Pays off in the section that raises it."
+    },
+    {
+      "name": "Jugaad",
+      "slug": "jugaad",
+      "kind": "local",
+      "vehicle": "Hindi — a resourceful improvisation",
+      "introduced_at": { "chapter": "4.5", "page_slug": "4.5-lessons-learned", "anchor": "the-difference-is-what-counts-as-proof" },
+      "pays_off_at": { "chapter": "4.5", "page_slug": "4.5-lessons-learned", "anchor": "the-difference-is-what-counts-as-proof" },
+      "stretch": "4.5-lessons-learned",
+      "payoff": "Engineering converts a successful improvisation into a durable mechanism.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "\"MAGE begins where jugaad ends.\" Pays off in the same passage."
+    },
+    {
+      "name": "The coin",
+      "slug": "coin",
+      "kind": "local",
+      "vehicle": "two sides of one coin",
+      "introduced_at": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "model-claim-coverage-is-the-saturation-oracle" },
+      "pays_off_at": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "model-claim-coverage-is-the-saturation-oracle" },
+      "stretch": "4.6-generative-validation",
+      "payoff": "Fuzzing and property testing draw one oracle from one spec.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Carried by the figure 'The Coin Is the Model' in the same section."
+    },
+    {
+      "name": "The DOJ ramp",
+      "slug": "doj-ramp",
+      "kind": "local",
+      "vehicle": "call-ahead-for-a-ramp versus the ramp is simply there",
+      "introduced_at": { "chapter": "5.1", "page_slug": "5.1-the-ada-context", "anchor": "doj-rule-made-access-part-of-service" },
+      "pays_off_at": { "chapter": "5.1", "page_slug": "5.1-the-ada-context", "anchor": "doj-rule-made-access-part-of-service" },
+      "stretch": "5.1-the-ada-context",
+      "payoff": "Accessibility as a property present by default, not requested on demand.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "The DOJ's own analogy, carried in the burden-shift table."
+    },
+    {
+      "name": "The MAGE staircase",
+      "slug": "mage-staircase",
+      "kind": "local",
+      "vehicle": "a five-rung climb of delegated jobs",
+      "introduced_at": { "chapter": "5.4", "page_slug": "5.4-the-road-to-mage", "anchor": "staircase-of-delegated-jobs" },
+      "pays_off_at": { "chapter": "5.4", "page_slug": "5.4-the-road-to-mage", "anchor": "the-graph-equals-map-to-territory" },
+      "stretch": "5.4-the-road-to-mage",
+      "payoff": "Each rung fixes what broke the rung below; the climb ends at MAGE.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "The book's structural climb; shares the vehicle word 'staircase' with evidence-staircase (2.3), a different Part."
+    }
+  ]
+}

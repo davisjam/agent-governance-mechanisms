@@ -1025,6 +1025,27 @@ def cmd_validate(_args) -> int:
         for f in md_findings:
             print(f"              {f}")
         n_issues += len(md_findings)
+    # METAPHOR-SPANS CONFORMANCE — STRUCTURAL BLOCKING + OVERLAP AUDIT-ONLY. The book's sustained metaphors
+    # are a declared model (book-models/metaphor-spans.json): each metaphor's span (introduced -> pays off)
+    # plus its kind (core = always live / local = must pay off before the next local), so the author's rule
+    # "never introduce a second metaphor until the first has paid off" is MEASURABLE. Two halves, two
+    # landings: (1) the STRUCTURAL / schema invariants (C1-C7 — well-formedness, page + anchor resolution,
+    # local-has-payoff, the ratified core/local split) land BLOCKING (green from birth; a malformed row
+    # reddens validate); (2) the OVERLAP metric + the softer vehicle-collision check land AUDIT-ONLY-first
+    # (repo blocking-lint discipline) — they PRINT here so a committer sees them, but do NOT increment
+    # n_issues. Today's overlap count is 0, so the audit-only phase catches a newly-authored overlap before a
+    # follow-up flips it blocking. See book-models/metaphor_spans_model.py + tests/book_models.py.
+    import metaphor_spans_model as msm  # noqa: E402 — structural-blocking + overlap-audit-only model
+    mp_structural = msm.structural_findings()
+    if mp_structural:
+        print(f"  [metaphor] {len(mp_structural)} STRUCTURAL finding(s) — "
+              f"run `python3 book-models/metaphor_spans_model.py verify`:")
+        for f in mp_structural:
+            print(f"             {f}")
+        n_issues += len(mp_structural)
+    print(f"  [metaphor] AUDIT-ONLY: {msm.coverage_note()}")
+    for f in msm.overlap_findings() + msm.vehicle_collision_findings():
+        print(f"  [metaphor] AUDIT-ONLY: {f}")
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")

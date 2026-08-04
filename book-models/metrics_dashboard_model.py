@@ -29,6 +29,8 @@ import re
 import sys
 from dataclasses import dataclass
 
+from _book_pages import book_page_slugs as _book_page_slugs  # shared page-slug resolver (extract-on-2nd-site)
+
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _DECLARED = os.path.join(_HERE, "metrics-dashboard.json")
 _ROOT = os.path.dirname(_HERE)  # the governance-catalog repo root (book-models/ is one level down)
@@ -101,19 +103,8 @@ def derive_model() -> DashboardModel:
 
 
 # ---- book-chapter resolution ------------------------------------------------------------------------
-
-def _book_page_slugs() -> "set[str]":
-    """Every chapter page slug the book currently defines (part dirs + front/back matter) — the resolve set
-    for each metric's `defined_in.page_slug` (C4)."""
-    slugs: "set[str]" = set()
-    for sub in ("frontmatter", "part1", "part2", "part3", "part4", "part5", "backmatter"):
-        d = os.path.join(_BOOK, sub)
-        if not os.path.isdir(d):
-            continue
-        for fn in os.listdir(d):
-            if fn.endswith(".md") and re.match(r"\d+\.\d+-", fn):
-                slugs.add(fn[:-3])
-    return slugs
+# The page-slug resolve set for each metric's `defined_in.page_slug` (C4) is the shared `_book_pages`
+# derivation (imported as `_book_page_slugs` above), so a chapter add/rename updates every model at once.
 
 
 # ---- invariants (C1-C5; the structural checks catalog.py validate walks) ----------------------------

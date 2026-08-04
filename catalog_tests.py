@@ -45,6 +45,7 @@ from tests.book_models import (
     check_claims_model,
     check_flagship_stack,
     check_lit_positioning,
+    check_metaphor_spans,
     check_outcomes_model,
     check_outline_model,
     check_print_appendix_projection,
@@ -220,6 +221,16 @@ CHECKS = [
     # chapter-shape / flagship models' own landing path. See tests/book_models.py.
     Check("book-models: literature-positioning drift + structure (lit-positioning.json)", 1,
           lambda strict: check_lit_positioning(), audit_only=True),
+    # AUDIT-ONLY (rule #55 first landing): the METAPHOR-SPANS view-model — every sustained metaphor's span
+    # (introduced -> pays off) + kind (core = always live, exempt / local = must pay off before the next
+    # local), so the author's rule 'never introduce a second metaphor until the first has paid off' is
+    # measurable. Asserts the C1-C7 structural invariants (well-formedness, page + anchor resolution,
+    # local-has-payoff / core-does-not, the ratified 6-core/9-local split) AND that the computed overlap set
+    # equals the ratified set (0 today). The structural half is BLOCKING in catalog.py validate; this test
+    # lands audit-only while the overlap half is audit-only-first — promote once a clean session confirms the
+    # overlap metric (the spine / chapter-shape / flagship models' landing path). See tests/book_models.py.
+    Check("book-models: metaphor-spans structure + overlap metric (metaphor-spans.json)", 1,
+          lambda strict: check_metaphor_spans(), audit_only=True),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.
