@@ -77,6 +77,7 @@ from tests.html import (
     check_summary_no_flow_content,
 )
 from tests.markdown import check_markdown_anchors, check_markdown_schema, check_render_safety
+from tests.mermaid_lint import check_mermaid_edge_labels
 from tests.skill import check_bundle_links, check_skill_drift, check_skill_structure
 from tests.svg_fit import check_svg_drawing_hygiene, check_svg_text_fit
 
@@ -263,6 +264,10 @@ CHECKS = [
     # through a <text> glyph box. Promoted from audit-only after the backlog hit 0 (audit->lint; fix-then-flip).
     Check("svg: drawing hygiene (marker +x / stitched arrowhead / stroke-through-glyph)", 1,
           lambda strict: check_svg_drawing_hygiene()),
+    # BLOCKING: a mermaid edge-label pipe (`A -->|label| B`) carrying `[`, `]`, or `~>` breaks the parser
+    # at render time with a cryptic message. Lands as a real gate check — the tree is at 0 findings.
+    Check("book: mermaid edge-label footguns ([ ] / ~> inside |label|)", 1,
+          lambda strict: check_mermaid_edge_labels()),
 ]
 
 REAL_CHECKS = [c for c in CHECKS if not c.audit_only]  # the gate — the count the summary reports
