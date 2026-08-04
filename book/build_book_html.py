@@ -1881,7 +1881,7 @@ def toc_html(chapters: list[dict], current_slug: str | None) -> str:
         )
     inner = "\n".join(rows)
     return (
-        '<nav class="toc"><div class="toc-inner"><details>'
+        '<nav class="toc" aria-label="Table of contents"><div class="toc-inner"><details>'
         "<summary>☰&nbsp; Contents</summary>"
         f'<ol>{inner}</ol></details></div></nav>'
     )
