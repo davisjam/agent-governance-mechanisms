@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
-"""pre-commit: regenerate the HTML site from the .md sources and stage it.
+"""pre-commit: keep the generated site + derived-view models in sync, and block the cheap deploy-scope gates.
 
-The site is served via GitHub Pages deploy-from-branch, so the committed .html must
-stay in sync with the .md it is rendered from. Regen is cheap, so we run it on every
-commit and stage the result. Install once with `python3 catalog.py install-hooks`
-(sets core.hooksPath=hooks). No shell — pure Python, per the repo's tooling posture.
+Three jobs, all cheap enough to run on every commit:
+  1. Regenerate the HTML site from the .md sources and stage it (GitHub Pages serves the committed .html,
+     so it must stay in sync with the .md it is rendered from).
+  2. Regenerate + stage the book's DERIVED-VIEW model JSONs (outline / outcomes / reverse_index) — pure
+     projections of the book source that otherwise go STALE silently and are caught only at deploy.
+  3. BLOCK on the cheap, deterministic deploy-scope check (book-float-ref) so a figure without its intro
+     cross-ref fails at commit, not at deploy. The SLOW external checks stay deploy-time (see the note at
+     that step).
+
+Install once with `python3 catalog.py install-hooks` (sets core.hooksPath=hooks). No shell — pure Python,
+per the repo's tooling posture.
 """
 import os
 import subprocess
@@ -22,6 +29,25 @@ def _catalog(*args: str) -> None:
 _catalog("validate")   # refuse to build/commit an invalid schema
 _catalog("build")      # render .md -> .html + regenerate the landing census + the skill bundle
 
+
+def _regen(script: str, artifact: str) -> None:
+    """Regenerate a derived-view model artifact from the book source and stage it. Fails the commit if
+    the generator errors."""
+    r = subprocess.run([sys.executable, os.path.join("book-models", script), "regenerate"], cwd=ROOT)
+    if r.returncode:
+        sys.exit(r.returncode)
+    subprocess.run(["git", "add", "--", os.path.join("book-models", artifact)], cwd=ROOT)
+
+
+# book-models DERIVED VIEWS: these JSONs are pure projections of the book source (outline structure,
+# learning-outcome tiers, symbol reverse-index). Editing the book without regenerating them leaves the
+# committed artifact STALE — a recurring class caught only later by the deploy-scope views-audit. Regen
+# is sub-second, so run + stage it on every commit: the staleness is made impossible, not merely detected.
+# These MUST regen before the reading-view render below, which projects outline.json + outcomes.json.
+_regen("outline_model.py", "outline.json")
+_regen("outcomes_model.py", "outcomes.json")
+_regen("reverse_index.py", "reverse_index.json")
+
 # book-models READING VIEW: re-render the browsable HTML view of the book models (outline + outcomes)
 # and stage it, exactly like the site build stays fresh. The page is a PROJECTION of the models, so a
 # model regeneration must re-flow the view; running it on every commit means the committed HTML can
@@ -34,6 +60,25 @@ subprocess.run(["git", "add", "--", "book-models/models-view.html"], cwd=ROOT)
 
 subprocess.run(["git", "add", "--", "*.html"], cwd=ROOT)
 subprocess.run(["git", "add", "--", "plugin"], cwd=ROOT)  # stage the regenerated skill bundle (plugin/**/*.html is gitignored)
+
+# book-float-ref BLOCKING GATE: every numbered float (figure/table) must be introduced by a `[ref:]`
+# cross-ref in the prose. This is a CHEAP, deterministic, deploy-scope check that twice went red only at
+# deploy after a figure-wiring wave (a wave passes its own gates but leaves this full-suite gate red).
+# It runs sub-second here, so we pull it forward to commit-time and BLOCK — a figure added without its
+# intro fails now, not at deploy. Only the cheap deterministic deploy-scope checks belong here; the SLOW
+# external checks (html-validate, axe a11y, `claude plugin validate` — seconds-to-a-minute of browser /
+# tool startup) stay deploy-time, protected by the standing "full catalog_tests.py before every deploy"
+# discipline. Keep this hook fast; do not add those here.
+sys.path.insert(0, ROOT)
+from tests.book import check_float_ref_gate  # noqa: E402 — stdlib-only book check, imported after ROOT is on the path
+
+_status, _floats = check_float_ref_gate()
+if _status == "FAIL":
+    print("pre-commit: book-float-ref BLOCKED — a numbered float lacks its introducing `[ref:]` cross-ref:")
+    for _msg in _floats:
+        print(f"    {_msg}")
+    print("  Add the `[ref:<label>]` intro in the prose (or an inline `<!-- noqa: book-float-ref — <reason> -->`).")
+    sys.exit(1)
 
 # book-models DRIFT AUDIT (AUDIT-ONLY): report structural + freshness drift over the typed view-models,
 # but do NOT block the commit yet (no --strict). Sub-second. A follow-up promotes it to blocking (adds
