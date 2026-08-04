@@ -204,6 +204,72 @@ _GLOSS_RE = re.compile(r"^<!--\s*gloss:\s*(?P<term>.+?)\s*\|\s*(?P<def>.+?)\s*--
 _GLOSS_ONLY_RE = re.compile(r"^<!--\s*gloss-only:\s*(?P<term>.+?)\s*\|\s*(?P<def>.+?)\s*-->$")
 _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_glossary before the render loop
 
+# Front-glossary → expansion-site wiring. The glossary page (frontmatter/0.2) is hand-authored `**Term.**`
+# prose; this joins each bold term to the concept slug whose canonical `<!-- index-def: -->` anchor the build
+# harvested, so the term renders as a link to where the book defines it in full. The (page, anchor) TARGET is
+# taken from the harvested concept registry — never hand-written — so it CANNOT drift when a definition site
+# moves; only this term→slug join is authored (the glossary's display names differ from the concept slugs,
+# e.g. "The Printer"→printer-metaphor, "Skill"→skill-soft-control). A term absent here, or whose slug the book
+# never index-def-tagged, stays un-linked (no fabricated target). WEB-ONLY: `_link_glossary_sites` runs on the
+# rendered glossary HTML in `build()`, never on `body_md`, so the print/Typst projection is untouched.
+GLOSSARY_CHAPTER_SLUG = "0.2-the-books-language"
+_GLOSS_TERM_SLUGS = {
+    "Model": "model",
+    "Map and territory": "map-and-territory",
+    "Modeling Thesis": "thesis-modeling",
+    "Alignment Thesis": "thesis-alignment",
+    "Governance Conversion": "governance-conversion",
+    "The Printer": "printer-metaphor",
+    "Churn": "churn",
+    "Context Window": "context-window",
+    "Foundation model": "foundation-model",
+    "Agentic harness": "agentic-harness",
+    "Skill": "skill-soft-control",
+    "Tool": "tool-deterministic-action",
+    "Fleet": "fleet",
+    "One-shot Scripting": "one-shot-scripting",
+    "Supervised Autonomy": "supervised-autonomy",
+    "Loop engineering": "loop-engineering",
+    "Governed Engineering Environment": "governed-environment",
+    "Governance Mechanism": "governance-mechanism",
+    "Constraint": "constraint",
+    "Sensor": "sensor",
+    "Validator": "validator",
+    "Gate": "gate",
+    "Lint": "lint",
+    "Hook": "hook-hard-control",
+    "Invariant": "invariant",
+    "Model drift": "model-drift",
+    "Drift Gate": "drift-gate",
+    "Structured (model)": "structured",
+    "Executable source-of-truth": "executable-source-of-truth",
+    "Traceability": "traceability",
+    "Pattern": "pattern",
+    "The Model Zoo": "model-zoo",
+    "Fidelity Validator": "fidelity-validator",
+    "Provenance Layer": "provenance-layer",
+}
+# A rendered glossary entry: `<p><strong>Term.</strong> …`. Capture the bold lead (term text + its trailing
+# period) so the whole label becomes the link, leaving `<strong>` outside the `<a>`.
+_GLOSS_ENTRY_RE = re.compile(r"(<p><strong>)([^<]+?)(\.)(</strong>)")
+
+
+def _link_glossary_sites(body_html: str, gloss_link_map: "dict[str, tuple[str, str]]") -> str:
+    """Wrap each front-glossary bold term in a link to its canonical `index-def` anchor. `gloss_link_map` is
+    {slug: (page_slug, anchor_id)} harvested from the book's `index-def` tags (never authored → drift-proof).
+    A term with no map entry (unregistered slug, or no `index-def` in prose) is left un-linked. WEB-ONLY."""
+    def _wrap(m: "re.Match[str]") -> str:
+        term = m.group(2).strip()
+        slug = _GLOSS_TERM_SLUGS.get(term)
+        site = gloss_link_map.get(slug) if slug else None
+        if site is None:
+            return m.group(0)  # no registered expansion site — never fabricate a target
+        page_slug, anchor = site
+        href = html.escape(f"{page_slug}.html#{anchor}", quote=True)
+        return (f'{m.group(1)}<a class="gloss-site" href="{href}">'
+                f'{m.group(2)}{m.group(3)}</a>{m.group(4)}')
+    return _GLOSS_ENTRY_RE.sub(_wrap, body_html)
+
 # SINGLE SOURCE OF TRUTH for the build-time notation vocabulary — every marker-comment keyword the build
 # consumes and MUST strip from the reader-visible output. The consuming regexes above/below key their
 # keyword off this tuple, AND the notation-leak gate (tests/html.py: check_no_notation_leak) reads it so a
@@ -1616,6 +1682,10 @@ table caption {{ caption-side: top; text-align: left; font-size: 14px; color: va
                  margin-bottom: 0.45rem; line-height: 1.5; }}
 ul.list-of-floats-links {{ list-style: none; padding-left: 0; }}
 ul.list-of-floats-links li {{ margin: 0.15rem 0; }}
+/* Front-glossary term linked to its canonical definition site (idx-def anchor). Keeps the bold term's ink
+   colour; a dotted underline marks it as a jump-to-definition without the heavy accent of an inline link. */
+a.gloss-site {{ color: inherit; text-decoration: none; border-bottom: 1px dotted var(--muted); }}
+a.gloss-site:hover, a.gloss-site:focus {{ color: var(--accent); border-bottom-color: var(--accent); }}
 /* Figures Gallery (figures.html) — every figure verbatim (same rendered fragment the chapters ship),
    `<hr>`-separated, each followed by a small "from <chapter>" back-link. */
 .gallery-item {{ margin: 0; }}
@@ -3985,6 +4055,12 @@ def build() -> int:
     # order (fails loud on a duplicate def, an unregistered slug, or an example with no def). The per-page
     # anchor maps feed the renderer so each tagged block carries the anchor the index links to.
     concept_registry, page_anchor_maps = _harvest_concept_tags(chapters)
+    # {slug: (page_slug, idx-def anchor)} for every concept the book gave a canonical definition site — the
+    # drift-proof target set the front glossary links its terms to (see `_link_glossary_sites`).
+    gloss_link_map = {
+        slug: (slot["def"][0]["slug"], slot["def"][1])
+        for slug, slot in concept_registry.items() if slot.get("def")
+    }
     # Harvest the glossary annotations (single source of truth for the inline glosses + the back-Glossary).
     _collect_glossary(chapters)
 
@@ -4013,6 +4089,8 @@ def build() -> int:
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]))
         body, _fig_n, _tbl_n = _number_floats(body, _chapter_id(c), 1, 1)
         body = _resolve_xrefs(body, ref_map, for_print=False)
+        if c["slug"] == GLOSSARY_CHAPTER_SLUG:
+            body = _link_glossary_sites(body, gloss_link_map)
         body += works_cited_section()  # per-chapter numbered Works Cited (empty when nothing is cited)
         # The single left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … » Index), bottom-only.
         nav_bar = _chapter_nav_html(chapters, i)

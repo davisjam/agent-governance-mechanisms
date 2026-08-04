@@ -285,6 +285,10 @@ table caption { caption-side: top; text-align: left; font-size: 14px; color: var
                  margin-bottom: 0.45rem; line-height: 1.5; }
 ul.list-of-floats-links { list-style: none; padding-left: 0; }
 ul.list-of-floats-links li { margin: 0.15rem 0; }
+/* Front-glossary term linked to its canonical definition site (idx-def anchor). Keeps the bold term's ink
+   colour; a dotted underline marks it as a jump-to-definition without the heavy accent of an inline link. */
+a.gloss-site { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--muted); }
+a.gloss-site:hover, a.gloss-site:focus { color: var(--accent); border-bottom-color: var(--accent); }
 /* Figures Gallery (figures.html) — every figure verbatim (same rendered fragment the chapters ship),
    `<hr>`-separated, each followed by a small "from <chapter>" back-link. */
 .gallery-item { margin: 0; }
