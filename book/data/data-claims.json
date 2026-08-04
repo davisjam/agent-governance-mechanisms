@@ -58,15 +58,15 @@
     "gloss": "The support-ratio curve across four windows (0.85 -> 2.48 -> 3.68 -> 3.06): governance investment led and kept pace with the fleet, crossing from sub-parity to ~3x while production LoC grew ~47x — the build-the-environment-first revealed preference."
   },
   "model-sync-efficacy": {
-    "source": "2.2-models-and-the-semantic-gap",
-    "anchor": "",
-    "holds": [],
+    "source": "3.8-keeping-models-in-sync",
+    "anchor": "model-sync-efficacy",
+    "holds": ["+8,970", "−173 lines", "63 commits", "0", "56 closes", "27 genuine"],
     "status": "preliminary",
     "spine_claims": ["alignment-thesis", "sync-cost-reduced"],
-    "observable": "The model-sync sensor's drift-detection readings and the reconciliation labor they drive: a derived-floor churn of +8,970 / -173 lines over 63 commits with 0 reopens, and a first before-data report of ~27 findings at a signal-to-noise near 1.0.",
-    "data_source": "The model-sync measurement (draft committed f6147fc); the §3.8 integration lands in W7. Figures from the sync report's churn ledger + the first drift-detection report's finding tally.",
+    "observable": "The model-sync sensor's drift-detection readings and the reconciliation labor they drive: a derived-floor churn of +8,970 / -173 lines across 63 commits; 0 model-drift reopens across a separate, cumulative N=56 closes; and a first before-data report of ~27 findings at a signal-to-noise near 1.0.",
+    "data_source": "The §3.8 model-sync measurement (draft committed f6147fc; the reporting section landed in W7). Figures from the sync report's churn ledger (63-commit refresh window) + the cumulative close ledger (N=56 closes, 0 reopens) + the first drift-detection report's finding tally.",
     "limitation": "A single subsystem's sync episode, before the drift-detector's signal-to-noise was tuned; the ~27-finding S:N~1.0 is a before-data snapshot, not a steady-state rate; not a controlled comparison against un-synced development. Primary binding is the drift-detection (alignment) claim; it also bears on the sync-cost-reduced (co-evolution economics) claim — see the parked-binding note in the results log.",
-    "gloss": "The model-sync measurement: a drift-detection sensor whose readings (derived-floor churn +8,970/-173 over 63 commits, 0 reopens; ~27 findings at S:N~1.0 before tuning) show reconciliation stays cheap and divergence is caught."
+    "gloss": "The model-sync measurement: a drift-detection sensor whose readings (derived-floor churn +8,970/-173 lines across 63 commits; 0 model-drift reopens across a separate N=56 closes; ~27 pre-floor findings at S:N~1.0 before tuning) show reconciliation stays cheap and divergence is caught."
   },
   "mmm-drain": {
     "source": "2.5-metrics",
