@@ -213,6 +213,12 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 # never index-def-tagged, stays un-linked (no fabricated target). WEB-ONLY: `_link_glossary_sites` runs on the
 # rendered glossary HTML in `build()`, never on `body_md`, so the print/Typst projection is untouched.
 GLOSSARY_CHAPTER_SLUG = "0.2-the-books-language"
+# Apparatus one-pagers — front-matter pages that are a self-contained *reference apparatus* (not running
+# prose), meant to read as ONE bordered, offset item rather than bleeding visually from the preceding
+# chapter. "How to read this book" (its short prose + the whole-book map figure) is the founding member.
+# The renderer frames these in a `.apparatus-page` box (HTML) / a `#block` frame (Typst) — see the CSS
+# `.apparatus-page` swap-point block and `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
+_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book"}
 _GLOSS_TERM_SLUGS = {
     "Model": "model",
     "Map and territory": "map-and-territory",
@@ -1506,6 +1512,16 @@ header.chap h1 {{ font-size: 2rem; line-height: 1.15; margin: 0.35rem 0 0; }}
                   color: var(--muted); font-style: italic; }}
 .part-epigraph .attr {{ display: block; margin-top: 0.5rem; font-style: normal; font-size: 14px;
                         color: var(--muted); }}
+/* APPARATUS ONE-PAGER — a front-matter reference apparatus (how-to-read) framed as one distinct, offset
+   item so it does not read as a continuation of the preceding chapter. A hairline box on a tinted panel
+   with an accent top-rule (the "this is an apparatus, not running prose" marker) and a top/bottom margin
+   that lifts it off the surrounding flow. Header padding is trimmed inside the frame (the box supplies the
+   set-apart, so the header's usual generous top pad is redundant here) and the header's border-bottom rule
+   is dropped in favour of the frame. Every surface knob is a design token, so a print/dark re-skin follows
+   from the token swap-point (see the concept-inset SWAP POINT note) with no rule change here. */
+.apparatus-page {{ background: var(--panel); border: 1px solid var(--rule); border-top: 3px solid var(--accent);
+                   border-radius: 8px; padding: 1.4rem 1.9rem 1.9rem; margin: 2.2rem 0; }}
+.apparatus-page header.chap {{ padding: 0.4rem 0 1rem; margin-bottom: 1.3rem; }}
 h2 {{ font-size: 1.32rem; margin: 2.2rem 0 0.6rem; }}
 /* `part.chapter.section` display number stamped on a body-chapter section heading (build-derived, not
    authored). Muted + tabular so it reads as a reference locator, not part of the title; it is display-only
@@ -4400,7 +4416,12 @@ def build() -> int:
         # The single left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … » Index), bottom-only.
         nav_bar = _chapter_nav_html(chapters, i)
         foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
-        main = header + body + nav_bar + foot
+        # An apparatus one-pager (how-to-read) frames its header + body in a bordered, offset box so it reads
+        # as one distinct reference item, not a continuation of the preceding chapter. The nav bar and footer
+        # stay OUTSIDE the frame (they are page chrome, not part of the apparatus item).
+        content = (f'<div class="apparatus-page">{header}{body}</div>'
+                   if c["slug"] in _APPARATUS_ONEPAGER_SLUGS else header + body)
+        main = content + nav_bar + foot
         toc = toc_html(chapters, c["slug"])
         out = HERE / f'{c["slug"]}.html'
         out.write_text(

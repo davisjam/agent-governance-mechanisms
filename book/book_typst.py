@@ -516,6 +516,26 @@ def _peel_metadata_marker(line: str, ctx: _EmitCtx) -> "str | None":
     return None
 
 
+# Apparatus one-pagers — front-matter reference apparatus (not running prose) framed as ONE distinct,
+# non-breaking page item in the print projection, mirroring the web book's `.apparatus-page` box. Matched
+# by TITLE (like the relocated acknowledgments) so the source slug can change without silently un-framing
+# it. "How to read this book" (its short prose + the whole-book map) is the founding member.
+_APPARATUS_ONEPAGER_TITLES = {"how to read this book"}
+
+
+def _frame_apparatus_typst(body: str) -> str:
+    """Wrap a rendered apparatus chapter in a bordered, non-breaking `#block` — a hairline box on the panel
+    tint with an accent top-rule, mirroring the web `.apparatus-page`. `breakable: false` keeps the whole
+    apparatus (prose + figure) on the single page the pagebreak-before hands it. Surfaces are design tokens,
+    so the frame follows the token palette exactly as the semantic boxes do."""
+    return (
+        "#block(fill: dt.panel, "
+        "stroke: (top: dt.border-accent-bar + dt.accent, rest: dt.border-hairline + dt.rule), "
+        "radius: 8pt, inset: (x: 14pt, top: 10pt, bottom: 12pt), width: 100%, breakable: false)[\n"
+        f"{body}\n]"
+    )
+
+
 def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     """Walk one IR chapter → its Typst body. The IR already parsed labels/captions onto floats and classified
     every block; here we (a) peel index-def/point markers off the RAW source into #metadata (the IR records
@@ -785,7 +805,10 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
                 parts.append("#pagebreak()")
         elif n:
             parts.append("#pagebreak()")
-        parts.append(render_chapter(ch, ctx))
+        rendered = render_chapter(ch, ctx)
+        if ch.title.strip().lower() in _APPARATUS_ONEPAGER_TITLES:
+            rendered = _frame_apparatus_typst(rendered)
+        parts.append(rendered)
     # End-of-book Bibliography — Chicago notes, rendered by Typst from the SAME references.bib that
     # generated citations.json, so the PDF's reference strings equal the web book's by construction
     # (CITE-PARITY / BIB-5). Emitted only when the book actually cites something (an empty #bibliography is
