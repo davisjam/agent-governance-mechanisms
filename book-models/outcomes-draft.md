@@ -85,7 +85,7 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
   - **[DERIVED]** (understand) After this section, the reader can distinguish a constraint (prevent, costs no iteration) from a sensor (catch, costs iterations), place both on the independent soft-versus-hard axis, and tag most real mechanisms as a package by their primary move. _(primary: constraints-and-sensors · elaborated by: governance-is-a-spectrum-from-soft-to-hard, 2.6)_ — _anchor: point: a-mechanism-is-one-of-two-moves-prevent-or-catch / a-sensor-detects-drift-after-the-fact-and-costs-iterations / a-constraint-prevents-drift-within-the-iteration-and-costs-no-iteration / form-and-move-are-two-independent-axes / most-real-mechanisms-are-a-package-so-tag-the-primary-move_
   - _elaborates (owned by the program):_ (understand) After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for.
   - _elaborates (owned by governance-is-a-spectrum-from-soft-to-hard):_ (analyze) After this section, the reader can classify a governance mechanism on the soft-to-hard spectrum — guidance that aims versus machinery that holds.
-  - **[DERIVED]** (know) After this section, the reader can identify the residual — goals that are neither preventable nor detectable because the failure is an absence nobody specified — explain why it sets the throughput ceiling and is the complement of the two moves rather than a third axis value, and see how authoring the missing spec pulls a goal out of it. _(primary: the-residual-goals-no-mechanism-reaches · elaborated by: 6.0)_ — _anchor: point: some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified / the-residual-is-a-human-job-that-sets-the-throughput-ceiling / the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis / naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible / the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out_
+  - **[DERIVED]** (know) After this section, the reader can identify the residual — goals that are neither preventable nor detectable because the failure is an absence nobody specified — explain why it sets the throughput ceiling and is the complement of the two moves rather than a third axis value, and see how authoring the missing spec pulls a goal out of it. _(primary: the-residual-goals-no-mechanism-reaches · elaborated by: 6.1)_ — _anchor: point: some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified / the-residual-is-a-human-job-that-sets-the-throughput-ceiling / the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis / naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible / the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out_
 
 ### Lesson 2.4-lifecycles-and-runbooks
 
@@ -224,13 +224,13 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 
 - **[DECLARED]** (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering. _(primary: Module 6 · elaborated by: 6.2)_ — _anchor: 6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours._
 
-### Lesson 6.0-implications-for-se
+### Lesson 6.0-toward-a-theory-of-mage
+
+
+### Lesson 6.1-implications-for-se
 
 - **[DECLARED]** (evaluate) After this chapter, the reader can evaluate the discipline-level implications: where judgment moved, what saturates, and why models are the universal language of engineering. — _anchor: Section titles 'the-judgment-moved-and-it-moved-toward-you', 'what-this-changes-for-how-we-measure-staff-and-teach', 'models-are-the-universal-language-of-engineering'._
 - _elaborates (owned by the-residual-goals-no-mechanism-reaches):_ (know) After this section, the reader can identify the residual — goals that are neither preventable nor detectable because the failure is an absence nobody specified — explain why it sets the throughput ceiling and is the complement of the two moves rather than a third axis value, and see how authoring the missing spec pulls a goal out of it.
-
-### Lesson 6.1-toward-a-theory-of-mage
-
 
 ### Lesson 6.2-conclusion
 

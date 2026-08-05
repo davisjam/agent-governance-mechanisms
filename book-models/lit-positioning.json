@@ -400,7 +400,7 @@
       "y": "The frontier now governs the oracle itself — OpenAI retiring SWE-Bench Verified (59.4% flawed test cases), decontaminated and live successors (Scale AI's SWE-Bench Pro at ~23%; the SWE-Bench Illusion 76%->53% memorization signature; SWE-bench-Live), and evidence that agent-authored tests are over-mocked or implementation-coupled (Hora & Robbes; the oracle study).",
       "z": "MAGE treats the suite as a fallible model that must be governed: completion is re-derived from the artifact and multiple evidence sources, not read off a green bar.",
       "target_locations": [
-        "6.0-implications-for-se"
+        "6.1-implications-for-se"
       ],
       "citations": [
         {
@@ -489,7 +489,7 @@
       ],
       "status": "landed",
       "fold_target": "W5",
-      "notes": "W5 — LANDED (research-opportunities section of 6.0-implications-for-se, the 'Governing the oracle' subsection). SWE-Bench Pro = Scale AI (arXiv 2509.16941), NOT OpenAI — the OpenAI withdrawal and Scale's Pro cited as DISTINCT sources. The OpenAI withdrawal post fetched indirectly (openai.com returned 403); the two quotes (59.4% flawed; 'reflect how much the model was exposed to the benchmark at training time') recovered via HN corroboration and the date left approximate ('early 2026') with no invented day. GUARDRAIL held: fallible-but-governable, NOT 'testing is useless'. SWE-rebench (swerebench2025, 2505.20411) taken as the second decontamination cite. llmoracle2024 keys arXiv 2410.21136 (no single named author). All 8 keys now in references.bib. NOTE: 6.0-implications-for-se is a backmatter chapter, so LP3's _chapter_text (globs book/part*/ only) cannot read it — LP3 reports these landed cites as not-appearing-in-a-target-chapter (audit-only, non-gating), the same structural limitation as the 0.3-preface precedent. The cites ARE present in book/backmatter/6.0-implications-for-se.md.",
+      "notes": "W5 — LANDED (research-opportunities section of 6.1-implications-for-se, the 'Governing the oracle' subsection). SWE-Bench Pro = Scale AI (arXiv 2509.16941), NOT OpenAI — the OpenAI withdrawal and Scale's Pro cited as DISTINCT sources. The OpenAI withdrawal post fetched indirectly (openai.com returned 403); the two quotes (59.4% flawed; 'reflect how much the model was exposed to the benchmark at training time') recovered via HN corroboration and the date left approximate ('early 2026') with no invented day. GUARDRAIL held: fallible-but-governable, NOT 'testing is useless'. SWE-rebench (swerebench2025, 2505.20411) taken as the second decontamination cite. llmoracle2024 keys arXiv 2410.21136 (no single named author). All 8 keys now in references.bib. NOTE: 6.1-implications-for-se is a backmatter chapter, so LP3's _chapter_text (globs book/part*/ only) cannot read it — LP3 reports these landed cites as not-appearing-in-a-target-chapter (audit-only, non-gating), the same structural limitation as the 0.3-preface precedent. The cites ARE present in book/backmatter/6.1-implications-for-se.md.",
       "locations_resolve": [
         true
       ],
@@ -552,7 +552,7 @@
       "y": "Practitioner build-reports now document large agentic builds (Cloudflare vinext, ~1 week / 1 engineer / ~$1,100; Anthropic's C compiler — 16 agents, a ~100K-line Rust compiler building Linux 6.9 on x86/ARM/RISC-V; Anthropic/Bun's million-line Zig->Rust migration) and a governable-agentic case study (Davis et al., Cheap Code, Costly Judgment).",
       "z": "MAGE grounds its method in one deep case (DocAble), motivating hypotheses for broader use — a field report, never a proof.",
       "target_locations": [
-        "6.0-implications-for-se"
+        "6.1-implications-for-se"
       ],
       "citations": [
         {
@@ -622,7 +622,7 @@
       ],
       "status": "landed",
       "fold_target": "W5-Part5",
-      "notes": "W5 — LANDED (research-opportunities section of 6.0-implications-for-se: the 'methodology of deep single-case evidence' subsection, with a build-reports table + a skippable academic-methodology inset). Carlini = 16 agents / ~100K-line Rust C compiler / Linux 6.9 (carlini2026ccompiler); Cloudflare vinext ~1 week / 1 engineer (faulkner2026vinext); Anthropic/Bun million-line Zig->Rust (anthropic2026migration) — practitioner build-reports are convergent-evidence, NOT 'establish' (verb discipline). davis2026cheapcode is the author's own paper (2607.01087), cited in prose. Runeson/Höst + Beach/Pedersen anchor the skippable inset; Merton name-dropped only (no cite). All 6 keys now in references.bib. NOTE: 6.0 is a backmatter chapter (LP3's _chapter_text globs book/part*/ only), so LP3 reports these landed cites as not-appearing-in-a-target-chapter (audit-only, non-gating) — the 0.3-preface precedent. The cites ARE present in book/backmatter/6.0-implications-for-se.md.",
+      "notes": "W5 — LANDED (research-opportunities section of 6.1-implications-for-se: the 'methodology of deep single-case evidence' subsection, with a build-reports table + a skippable academic-methodology inset). Carlini = 16 agents / ~100K-line Rust C compiler / Linux 6.9 (carlini2026ccompiler); Cloudflare vinext ~1 week / 1 engineer (faulkner2026vinext); Anthropic/Bun million-line Zig->Rust (anthropic2026migration) — practitioner build-reports are convergent-evidence, NOT 'establish' (verb discipline). davis2026cheapcode is the author's own paper (2607.01087), cited in prose. Runeson/Höst + Beach/Pedersen anchor the skippable inset; Merton name-dropped only (no cite). All 6 keys now in references.bib. NOTE: 6.0 is a backmatter chapter (LP3's _chapter_text globs book/part*/ only), so LP3 reports these landed cites as not-appearing-in-a-target-chapter (audit-only, non-gating) — the 0.3-preface precedent. The cites ARE present in book/backmatter/6.1-implications-for-se.md.",
       "locations_resolve": [
         true
       ],

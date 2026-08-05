@@ -30,7 +30,7 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 246,
+    "sections_total": 248,
     "sections_primary_of_an_outcome": 41,
     "modules": 6,
     "lessons": 33
@@ -423,15 +423,15 @@
         ],
         "lessons": [
           {
-            "lesson": "6.0-implications-for-se",
-            "own_outcomes": [
-              "6.0-implications-for-se::evaluate-what-the-method-changes-for-how-software"
-            ],
+            "lesson": "6.0-toward-a-theory-of-mage",
+            "own_outcomes": [],
             "section_outcomes": []
           },
           {
-            "lesson": "6.1-toward-a-theory-of-mage",
-            "own_outcomes": [],
+            "lesson": "6.1-implications-for-se",
+            "own_outcomes": [
+              "6.1-implications-for-se::evaluate-what-the-method-changes-for-how-software"
+            ],
             "section_outcomes": []
           },
           {
@@ -932,9 +932,9 @@
       "gap_note": null
     },
     {
-      "outcome_id": "6.0-implications-for-se::evaluate-what-the-method-changes-for-how-software",
+      "outcome_id": "6.1-implications-for-se::evaluate-what-the-method-changes-for-how-software",
       "granularity": "chapter",
-      "primary_unit": "6.0-implications-for-se",
+      "primary_unit": "6.1-implications-for-se",
       "secondary_units": [],
       "verb": "evaluate",
       "obj": "what the method changes for how software engineering is measured, staffed, and taught",
@@ -1358,7 +1358,7 @@
       "granularity": "section",
       "primary_unit": "the-residual-goals-no-mechanism-reaches",
       "secondary_units": [
-        "6.0-implications-for-se"
+        "6.1-implications-for-se"
       ],
       "verb": "identify",
       "obj": "the residual goals no mechanism reaches, why they stay human judgment, and how authoring a spec pulls one out",

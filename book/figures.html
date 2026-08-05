@@ -495,8 +495,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="5.3-the-built-system.html">28&nbsp; The Built System</a></li>
 <li><a class="" href="5.4-the-road-to-mage.html">29&nbsp; The Road to MAGE</a></li>
 <li class="part">Back Matter</li>
-<li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
-<li><a class="" href="6.1-toward-a-theory-of-mage.html">Toward a Theory of MAGE</a></li>
+<li><a class="" href="6.0-toward-a-theory-of-mage.html">Toward a Theory of MAGE</a></li>
+<li><a class="" href="6.1-implications-for-se.html">Implications for Software Engineering</a></li>
 <li><a class="" href="6.2-conclusion.html">Conclusion</a></li>
 <li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
 <li><a class="" href="6.4-colophon.html">Colophon</a></li>
@@ -5214,43 +5214,11 @@ z
   <text x="1048" y="132" text-anchor="middle" font-size="15.5" fill="#57534e">honest by a traceability</text>
   <text x="1048" y="154" text-anchor="middle" font-size="15.5" fill="#57534e">substrate</text>
   <text x="1048" y="182" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">together they are MAGE</text>
-</svg><figcaption data-short="The MAGE Staircase"><span class="fig-label">Figure 5.4-1.</span> <em>The MAGE Staircase.</em> Each rung fixes the shortcoming that broke the one below; the ladder ends where the system is committed to explicit models held honest by a traceability substrate — MAGE.</figcaption></figure><p class="gallery-source">From <a href="5.4-the-road-to-mage.html#fig-5-4-1">29 · The Road to MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-0-1-fig-6-0-1" class="book-figure" data-label="soft-hard-spectrum"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" role="group" aria-labelledby="fig-6-0-1-frbTitle fig-6-0-1-frbDesc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-6-0-1-frbTitle">Governance runs soft to hard: a compact spectrum of mechanism classes.</title>
-  <desc id="fig-6-0-1-frbDesc">A horizontal spectrum runs from soft governance on the left to hard governance on the right. Soft, probabilistic mechanisms that aim an agent sit on the left: conventions, briefs, templates, prose conventions, and a reviewing agent. Judgment-laden doc-derived tests sit in the middle. Deterministic mechanisms that hold the line sit on the right: lints, types, schemas, and quality, drift, or deploy gates, together with a marker file the tool reads. Soft aims the agent; hard holds the line; a mature environment uses both.</desc>
-  <defs>
-    <linearGradient id="fig-6-0-1-frbGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#f6f4ef"/>
-      <stop offset="0.5" stop-color="#faf1e6"/>
-      <stop offset="1" stop-color="#9a3f12"/>
-    </linearGradient>
-  </defs>
-  <rect x="0" y="0" width="1000" height="340" fill="#fdfcf9"/>
-  <text x="500" y="46" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Governance runs soft to hard</text>
-  <text x="500" y="72" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">Soft aims the agent; hard holds the line. A mature environment uses both.</text>
-  <text x="150" y="112" text-anchor="middle" font-size="13.5" fill="#57534e">probabilistic · aims an agent</text>
-  <text x="850" y="112" text-anchor="middle" font-size="13.5" fill="#9a3f12">deterministic · holds the line</text>
-  <rect x="70" y="126" width="860" height="46" rx="12" fill="url(#fig-6-0-1-frbGrad)" stroke="#e4e0d8" stroke-width="1.5"/>
-  <text x="150" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">SOFT</text>
-  <text x="850" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#fdfcf9">HARD</text>
-  <line x1="150" y1="172" x2="150" y2="196" stroke="#e4e0d8" stroke-width="1.5"/>
-  <text x="150" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">convention · brief</text>
-  <text x="150" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">template · prose</text>
-  <line x1="330" y1="172" x2="330" y2="196" stroke="#2f5169" stroke-width="1.5"/>
-  <text x="330" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">reviewing agent</text>
-  <line x1="500" y1="172" x2="500" y2="196" stroke="#2f5169" stroke-width="1.5"/>
-  <text x="500" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">doc-derived test</text>
-  <line x1="680" y1="172" x2="680" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="680" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">lint · type · schema</text>
-  <line x1="850" y1="172" x2="850" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="850" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">quality / drift / deploy gate ·</text>
-  <text x="850" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">marker file the tool reads</text>
-  <text x="500" y="288" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
-  <text x="500" y="314" text-anchor="middle" font-size="13" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
-</svg><figcaption data-short="The Soft–Hard Spectrum"><span class="fig-label">Figure 6.0-1.</span> <em>The Soft–Hard Spectrum.</em> Probabilistic mechanisms that aim an agent sit on the left; deterministic mechanisms that hold the line sit on the right. A mature environment uses both, and the skill is knowing which a given failure warrants.</figcaption></figure><p class="gallery-source">From <a href="6.0-implications-for-se.html#fig-6-0-1">Implications for Software Engineering</a></p></section><hr><section class="gallery-item"><figure id="fig-6-1-1-fig-6-1-1" class="book-figure" data-label="mage-dynamic-model"><svg id="fig-6-1-1-mageDM" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1200"
-     role="img" aria-labelledby="fig-6-1-1-mageDM-dmTitle fig-6-1-1-mageDM-dmDesc"
+</svg><figcaption data-short="The MAGE Staircase"><span class="fig-label">Figure 5.4-1.</span> <em>The MAGE Staircase.</em> Each rung fixes the shortcoming that broke the one below; the ladder ends where the system is committed to explicit models held honest by a traceability substrate — MAGE.</figcaption></figure><p class="gallery-source">From <a href="5.4-the-road-to-mage.html#fig-5-4-1">29 · The Road to MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-0-1-fig-6-0-1" class="book-figure" data-label="mage-dynamic-model"><svg id="fig-6-0-1-mageDM" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1200"
+     role="img" aria-labelledby="fig-6-0-1-mageDM-dmTitle fig-6-0-1-mageDM-dmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-6-1-1-mageDM-dmTitle">The MAGE Dynamic Model — one system, four feedback loops</title>
-  <desc id="fig-6-1-1-mageDM-dmDesc">A single system diagram of eight constructs with four numbered feedback
+  <title id="fig-6-0-1-mageDM-dmTitle">The MAGE Dynamic Model — one system, four feedback loops</title>
+  <desc id="fig-6-0-1-mageDM-dmDesc">A single system diagram of eight constructs with four numbered feedback
     loops overlaid, read as a clockwise cycle. Prior engineering knowledge — standards,
     requirements, brownfield assets, and prior lessons — sits at the top and feeds the
     governed environment E through loop 1, the blue bootstrap loop. Agentic capacity, on the
@@ -5276,25 +5244,25 @@ z
     raises ambition, which reopens the frontier — a self-amplifying cycle. Loop 1 is a bootstrap
     input, not a feedback loop. The model is directional and middle-range, not a fitted law.</desc>
 
-  <style id="fig-6-1-1-mageDM-loopstyle">
+  <style id="fig-6-0-1-mageDM-loopstyle">
   /* master view: all four loops shown at full strength */
-  #fig-6-1-1-mageDM .loop { opacity: 1; }
+  #fig-6-0-1-mageDM .loop { opacity: 1; }
   </style>
 
   <defs>
-    <marker id="fig-6-1-1-mageDM-dm-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+    <marker id="fig-6-0-1-mageDM-dm-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
     </marker>
-    <marker id="fig-6-1-1-mageDM-dm-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="fig-6-0-1-mageDM-dm-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
     </marker>
-    <marker id="fig-6-1-1-mageDM-dm-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="fig-6-0-1-mageDM-dm-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
     </marker>
-    <marker id="fig-6-1-1-mageDM-dm-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="fig-6-0-1-mageDM-dm-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
     </marker>
-    <marker id="fig-6-1-1-mageDM-dm-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="fig-6-0-1-mageDM-dm-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#7c6bb0"/>
     </marker>
   </defs>
@@ -5302,7 +5270,7 @@ z
   <rect x="0" y="0" width="880" height="1200" fill="#fdfcf9"/>
 
   <!-- ============ visible title banner (swapped per crop variant) ============ -->
-  <text id="fig-6-1-1-mageDM-activebanner" x="150" y="70" text-anchor="middle" fill="#1c1917">
+  <text id="fig-6-0-1-mageDM-activebanner" x="150" y="70" text-anchor="middle" fill="#1c1917">
     <tspan x="150" y="70" font-size="18" font-weight="700">The MAGE</tspan>
     <tspan x="150" y="94" font-size="18" font-weight="700">Dynamic Model</tspan>
     <tspan x="150" y="120" font-size="13" font-style="italic" fill="#57534e">one system,</tspan>
@@ -5312,7 +5280,7 @@ z
   <!-- ============ [4] PURPLE capability-amplification loop (drawn first, behind boxes) ==== -->
   <g class="loop loop4">
     <path d="M600,236 C500,182 322,178 186,246" fill="none" stroke="#7c6bb0" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#fig-6-1-1-mageDM-dm-purple)"/>
+          stroke-linecap="round" marker-end="url(#fig-6-0-1-mageDM-dm-purple)"/>
     <circle cx="400" cy="176" r="16" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.5"/>
     <text x="400" y="182" text-anchor="middle" font-size="18" font-weight="700" fill="#7c6bb0">4</text>
     <text x="400" y="208" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#7c6bb0">Capability amplification</text>
@@ -5322,19 +5290,19 @@ z
   <!-- ============ [3] GREEN governance-adaptation return (behind boxes) ============ -->
   <g class="loop loop3">
     <path d="M670,972 L846,972 L846,338 L814,338" fill="none" stroke="#1f7a4d" stroke-width="2.6"
-          stroke-linejoin="round" marker-end="url(#fig-6-1-1-mageDM-dm-green)"/>
+          stroke-linejoin="round" marker-end="url(#fig-6-0-1-mageDM-dm-green)"/>
     <text x="862" y="655" text-anchor="middle" font-size="13" font-style="italic" fill="#1f7a4d"
           transform="rotate(-90 862 655)">adapts &#8594; a better E</text>
   </g>
 
   <!-- ============ NEUTRAL SPINE (shared system plumbing) ============ -->
   <g stroke="#1c1917" stroke-width="2" fill="none">
-    <path d="M305,298 L556,290" marker-end="url(#fig-6-1-1-mageDM-dm-ink)"/>   <!-- capacity -> E -->
-    <path d="M180,365 L180,466" marker-end="url(#fig-6-1-1-mageDM-dm-ink)"/>   <!-- capacity -> work -->
-    <path d="M305,525 L556,525" marker-end="url(#fig-6-1-1-mageDM-dm-ink)"/>   <!-- work -> performance -->
-    <path d="M685,415 L685,466" marker-end="url(#fig-6-1-1-mageDM-dm-ink)"/>   <!-- E -> performance -->
-    <path d="M628,595 L512,662" marker-end="url(#fig-6-1-1-mageDM-dm-ink)"/>   <!-- performance -> pressure -->
-    <path d="M205,580 L320,662" marker-end="url(#fig-6-1-1-mageDM-dm-ink)"/>   <!-- work -> pressure (mismatch) -->
+    <path d="M305,298 L556,290" marker-end="url(#fig-6-0-1-mageDM-dm-ink)"/>   <!-- capacity -> E -->
+    <path d="M180,365 L180,466" marker-end="url(#fig-6-0-1-mageDM-dm-ink)"/>   <!-- capacity -> work -->
+    <path d="M305,525 L556,525" marker-end="url(#fig-6-0-1-mageDM-dm-ink)"/>   <!-- work -> performance -->
+    <path d="M685,415 L685,466" marker-end="url(#fig-6-0-1-mageDM-dm-ink)"/>   <!-- E -> performance -->
+    <path d="M628,595 L512,662" marker-end="url(#fig-6-0-1-mageDM-dm-ink)"/>   <!-- performance -> pressure -->
+    <path d="M205,580 L320,662" marker-end="url(#fig-6-0-1-mageDM-dm-ink)"/>   <!-- work -> pressure (mismatch) -->
   </g>
   <text x="430" y="283" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">exercises</text>
   <text x="702" y="448" text-anchor="start" font-size="14" font-style="italic" fill="#57534e">shapes</text>
@@ -5343,7 +5311,7 @@ z
   <!-- ============ [1] BLUE bootstrap loop ============ -->
   <g class="loop loop1">
     <path d="M518,135 C556,172 596,200 634,232" fill="none" stroke="#2f5169" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#fig-6-1-1-mageDM-dm-blue)"/>
+          stroke-linecap="round" marker-end="url(#fig-6-0-1-mageDM-dm-blue)"/>
     <circle cx="585" cy="182" r="16" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.5"/>
     <text x="585" y="188" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">1</text>
     <text x="560" y="214" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#2f5169">Bootstrap</text>
@@ -5351,7 +5319,7 @@ z
 
   <!-- ============ [2] RED churn / discovery loop ============ -->
   <g class="loop loop2">
-    <path d="M410,765 L410,801" fill="none" stroke="#b23b3b" stroke-width="3" marker-end="url(#fig-6-1-1-mageDM-dm-red)"/>
+    <path d="M410,765 L410,801" fill="none" stroke="#b23b3b" stroke-width="3" marker-end="url(#fig-6-0-1-mageDM-dm-red)"/>
     <circle cx="452" cy="784" r="15" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.5"/>
     <text x="452" y="790" text-anchor="middle" font-size="17" font-weight="700" fill="#b23b3b">2</text>
     <text x="486" y="789" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#b23b3b">Churn / discovery</text>
@@ -5359,7 +5327,7 @@ z
 
   <!-- ============ [3] GREEN governance-adaptation edge ============ -->
   <g class="loop loop3">
-    <path d="M410,885 L410,921" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#fig-6-1-1-mageDM-dm-green)"/>
+    <path d="M410,885 L410,921" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#fig-6-0-1-mageDM-dm-green)"/>
     <circle cx="452" cy="904" r="15" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.5"/>
     <text x="452" y="910" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a4d">3</text>
     <text x="486" y="909" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#1f7a4d">Governance adaptation</text>
@@ -5461,18 +5429,18 @@ z
   <text x="488.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7c6bb0">R</text>
   <text x="504" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">reinforcing</tspan> — loop [4] reopens the frontier.</text>
   <text x="56" y="1179" text-anchor="start" font-size="12.5" font-style="italic" fill="#57534e">Loop [1] bootstrap is an input, not a feedback loop.</text>
-</svg><figcaption data-short="The MAGE Dynamic Model"><span class="fig-label">Figure 6.1-1.</span> <em>The MAGE Dynamic Model.</em> Eight constructs, read clockwise: capacity exercises environment E and drives work; work and E yield realized performance; the gap becomes governance pressure, then structural diagnosis, then adaptation, which reshapes E. Four numbered dynamics overlay it, legible in grayscale.</figcaption></figure><p class="gallery-source">From <a href="6.1-toward-a-theory-of-mage.html#fig-6-1-1">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-1-2-fig-6-1-2" class="book-figure" data-label="mage-loop-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 330"
-     role="img" aria-labelledby="fig-6-1-2-l1Title fig-6-1-2-l1Desc"
+</svg><figcaption data-short="The MAGE Dynamic Model"><span class="fig-label">Figure 6.0-1.</span> <em>The MAGE Dynamic Model.</em> Eight constructs, read clockwise: capacity exercises environment E and drives work; work and E yield realized performance; the gap becomes governance pressure, then structural diagnosis, then adaptation, which reshapes E. Four numbered dynamics overlay it, legible in grayscale.</figcaption></figure><p class="gallery-source">From <a href="6.0-toward-a-theory-of-mage.html#fig-6-0-1">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-0-2-fig-6-0-2" class="book-figure" data-label="mage-loop-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 330"
+     role="img" aria-labelledby="fig-6-0-2-l1Title fig-6-0-2-l1Desc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-6-1-2-l1Title">Loop 1 — the bootstrap path</title>
-  <desc id="fig-6-1-2-l1Desc">A simplified three-step path drawn as a downward chain. Prior engineering
+  <title id="fig-6-0-2-l1Title">Loop 1 — the bootstrap path</title>
+  <desc id="fig-6-0-2-l1Desc">A simplified three-step path drawn as a downward chain. Prior engineering
     knowledge — standards, requirements, and prior lessons — feeds into bootstrap governance,
     which establishes the initial governed environment E of zero. Loop 1, in fleet blue and
     marked as an input, is not a feedback loop: it sets the initial condition before the fleet
     meets any project-specific failure.</desc>
 
   <defs>
-    <marker id="fig-6-1-2-l1-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="fig-6-0-2-l1-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
     </marker>
   </defs>
@@ -5493,24 +5461,24 @@ z
   <text x="190" y="119" text-anchor="middle" font-size="11.5" font-style="italic" fill="#57534e">standards &#183; requirements &#183; prior lessons</text>
 
   <!-- arrow 1 -->
-  <path d="M190,132 L190,162" fill="none" stroke="#2f5169" stroke-width="2.4" marker-end="url(#fig-6-1-2-l1-arrow)"/>
+  <path d="M190,132 L190,162" fill="none" stroke="#2f5169" stroke-width="2.4" marker-end="url(#fig-6-0-2-l1-arrow)"/>
 
   <!-- Box 2: Bootstrap governance -->
   <rect x="40" y="164" width="300" height="52" rx="8" fill="#fdfcf9" stroke="#2f5169" stroke-width="2"/>
   <text x="190" y="196" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Bootstrap governance</text>
 
   <!-- arrow 2 -->
-  <path d="M190,216 L190,246" fill="none" stroke="#2f5169" stroke-width="2.4" marker-end="url(#fig-6-1-2-l1-arrow)"/>
+  <path d="M190,216 L190,246" fill="none" stroke="#2f5169" stroke-width="2.4" marker-end="url(#fig-6-0-2-l1-arrow)"/>
 
   <!-- Box 3: Governed environment E(0) (initial state, emphasised) -->
   <rect x="40" y="248" width="300" height="58" rx="8" fill="#f6f4ef" stroke="#2f5169" stroke-width="2.6"/>
   <text x="190" y="274" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1c1917">Governed environment</text>
   <text x="190" y="295" text-anchor="middle" font-size="15" font-weight="700" fill="#2f5169">E(0)</text>
-</svg><figcaption data-short="Bootstrap path"><span class="fig-label">Figure 6.1-2.</span> <em>Bootstrap path.</em> Inherited and anticipated knowledge establishes the initial governed environment before the fleet encounters project-specific failures.</figcaption></figure><p class="gallery-source">From <a href="6.1-toward-a-theory-of-mage.html#fig-6-1-2">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-1-3-fig-6-1-3" class="book-figure" data-label="mage-loop-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 330"
-     role="img" aria-labelledby="fig-6-1-3-l2Title fig-6-1-3-l2Desc"
+</svg><figcaption data-short="Bootstrap path"><span class="fig-label">Figure 6.0-2.</span> <em>Bootstrap path.</em> Inherited and anticipated knowledge establishes the initial governed environment before the fleet encounters project-specific failures.</figcaption></figure><p class="gallery-source">From <a href="6.0-toward-a-theory-of-mage.html#fig-6-0-2">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-0-3-fig-6-0-3" class="book-figure" data-label="mage-loop-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 330"
+     role="img" aria-labelledby="fig-6-0-3-l2Title fig-6-0-3-l2Desc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-6-1-3-l2Title">Loop 2 — the churn / discovery loop</title>
-  <desc id="fig-6-1-3-l2Desc">A simplified three-step path drawn as a downward chain. Agentic work against a
+  <title id="fig-6-0-3-l2Title">Loop 2 — the churn / discovery loop</title>
+  <desc id="fig-6-0-3-l2Desc">A simplified three-step path drawn as a downward chain. Agentic work against a
     weak environment E produces governance pressure — churn, escaped defects, repeated
     intervention — which is then read at structural diagnosis, asking whether the failure is a
     local defect or evidence of missing structure. Loop 2, in churn red and marked as a balancing
@@ -5518,7 +5486,7 @@ z
     class.</desc>
 
   <defs>
-    <marker id="fig-6-1-3-l2-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="fig-6-0-3-l2-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
     </marker>
   </defs>
@@ -5538,7 +5506,7 @@ z
   <text x="190" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Agentic work + weak E</text>
 
   <!-- arrow 1 -->
-  <path d="M190,126 L190,156" fill="none" stroke="#b23b3b" stroke-width="2.4" marker-end="url(#fig-6-1-3-l2-arrow)"/>
+  <path d="M190,126 L190,156" fill="none" stroke="#b23b3b" stroke-width="2.4" marker-end="url(#fig-6-0-3-l2-arrow)"/>
 
   <!-- Box 2: Governance pressure -->
   <rect x="40" y="158" width="300" height="58" rx="8" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2"/>
@@ -5546,17 +5514,17 @@ z
   <text x="190" y="203" text-anchor="middle" font-size="11.5" font-style="italic" fill="#57534e">churn &#183; escape &#183; intervention</text>
 
   <!-- arrow 2 -->
-  <path d="M190,216 L190,246" fill="none" stroke="#b23b3b" stroke-width="2.4" marker-end="url(#fig-6-1-3-l2-arrow)"/>
+  <path d="M190,216 L190,246" fill="none" stroke="#b23b3b" stroke-width="2.4" marker-end="url(#fig-6-0-3-l2-arrow)"/>
 
   <!-- Box 3: Structural diagnosis (the scarce act, emphasised) -->
   <rect x="40" y="248" width="300" height="58" rx="8" fill="#f6f4ef" stroke="#b23b3b" stroke-width="2.6"/>
   <text x="190" y="274" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1c1917">Structural diagnosis</text>
   <text x="190" y="293" text-anchor="middle" font-size="11.5" font-style="italic" fill="#57534e">local defect, or missing structure?</text>
-</svg><figcaption data-short="Churn/discovery loop"><span class="fig-label">Figure 6.1-3.</span> <em>Churn/discovery loop.</em> Work outruns the environment; the resulting pressure becomes useful only when judgment recognizes a structural failure class.</figcaption></figure><p class="gallery-source">From <a href="6.1-toward-a-theory-of-mage.html#fig-6-1-3">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-1-4-fig-6-1-4" class="book-figure" data-label="mage-loop-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 330"
-     role="img" aria-labelledby="fig-6-1-4-l3Title fig-6-1-4-l3Desc"
+</svg><figcaption data-short="Churn/discovery loop"><span class="fig-label">Figure 6.0-3.</span> <em>Churn/discovery loop.</em> Work outruns the environment; the resulting pressure becomes useful only when judgment recognizes a structural failure class.</figcaption></figure><p class="gallery-source">From <a href="6.0-toward-a-theory-of-mage.html#fig-6-0-3">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-0-4-fig-6-0-4" class="book-figure" data-label="mage-loop-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 330"
+     role="img" aria-labelledby="fig-6-0-4-l3Title fig-6-0-4-l3Desc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-6-1-4-l3Title">Loop 3 — the governance-adaptation loop</title>
-  <desc id="fig-6-1-4-l3Desc">A simplified three-step path drawn as a downward chain that returns on itself.
+  <title id="fig-6-0-4-l3Title">Loop 3 — the governance-adaptation loop</title>
+  <desc id="fig-6-0-4-l3Desc">A simplified three-step path drawn as a downward chain that returns on itself.
     A structural diagnosis triggers governance adaptation — model, convert, strengthen, reconcile,
     retire — which reshapes the environment into a better-shaped E of t plus one. A return arrow
     on the right closes the loop back to diagnosis, labelled "reduces future pressure". Loop 3, in
@@ -5564,7 +5532,7 @@ z
     constrained action space.</desc>
 
   <defs>
-    <marker id="fig-6-1-4-l3-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="fig-6-0-4-l3-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
     </marker>
   </defs>
@@ -5581,7 +5549,7 @@ z
 
   <!-- return arrow (drawn first, behind boxes): E(t+1) right -> up -> back to diagnosis -->
   <path d="M330,277 L400,277 L400,100 L332,100" fill="none" stroke="#1f7a4d" stroke-width="2"
-        stroke-linejoin="round" marker-end="url(#fig-6-1-4-l3-arrow)"/>
+        stroke-linejoin="round" marker-end="url(#fig-6-0-4-l3-arrow)"/>
   <text x="414" y="190" text-anchor="middle" font-size="11.5" font-style="italic" fill="#1f7a4d"
         transform="rotate(-90 414 190)">reduces future pressure</text>
 
@@ -5590,7 +5558,7 @@ z
   <text x="180" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Structural diagnosis</text>
 
   <!-- arrow 1 -->
-  <path d="M180,126 L180,156" fill="none" stroke="#1f7a4d" stroke-width="2.4" marker-end="url(#fig-6-1-4-l3-arrow)"/>
+  <path d="M180,126 L180,156" fill="none" stroke="#1f7a4d" stroke-width="2.4" marker-end="url(#fig-6-0-4-l3-arrow)"/>
 
   <!-- Box 2: Governance adaptation -->
   <rect x="30" y="158" width="300" height="58" rx="8" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2"/>
@@ -5598,24 +5566,24 @@ z
   <text x="180" y="203" text-anchor="middle" font-size="11" font-style="italic" fill="#57534e">model &#183; convert &#183; strengthen &#183; reconcile &#183; retire</text>
 
   <!-- arrow 2 -->
-  <path d="M180,216 L180,246" fill="none" stroke="#1f7a4d" stroke-width="2.4" marker-end="url(#fig-6-1-4-l3-arrow)"/>
+  <path d="M180,216 L180,246" fill="none" stroke="#1f7a4d" stroke-width="2.4" marker-end="url(#fig-6-0-4-l3-arrow)"/>
 
   <!-- Box 3: Better-shaped environment E(t+1) (emphasised) -->
   <rect x="30" y="248" width="300" height="58" rx="8" fill="#f6f4ef" stroke="#1f7a4d" stroke-width="2.6"/>
   <text x="180" y="274" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">Better-shaped environment</text>
   <text x="180" y="295" text-anchor="middle" font-size="15" font-weight="700" fill="#1f7a4d">E(t+1)</text>
-</svg><figcaption data-short="Governance-adaptation loop"><span class="fig-label">Figure 6.1-4.</span> <em>Governance-adaptation loop.</em> Diagnosis changes the environment so that later agents inherit a more legible and constrained action space.</figcaption></figure><p class="gallery-source">From <a href="6.1-toward-a-theory-of-mage.html#fig-6-1-4">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-1-5-fig-6-1-5" class="book-figure" data-label="mage-loop-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 384"
-     role="img" aria-labelledby="fig-6-1-5-l4Title fig-6-1-5-l4Desc"
+</svg><figcaption data-short="Governance-adaptation loop"><span class="fig-label">Figure 6.0-4.</span> <em>Governance-adaptation loop.</em> Diagnosis changes the environment so that later agents inherit a more legible and constrained action space.</figcaption></figure><p class="gallery-source">From <a href="6.0-toward-a-theory-of-mage.html#fig-6-0-4">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-0-5-fig-6-0-5" class="book-figure" data-label="mage-loop-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 384"
+     role="img" aria-labelledby="fig-6-0-5-l4Title fig-6-0-5-l4Desc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-6-1-5-l4Title">Loop 4 — the capability-amplification loop</title>
-  <desc id="fig-6-1-5-l4Desc">A simplified four-step path drawn as a downward chain. A stronger environment
+  <title id="fig-6-0-5-l4Title">Loop 4 — the capability-amplification loop</title>
+  <desc id="fig-6-0-5-l4Desc">A simplified four-step path drawn as a downward chain. A stronger environment
     enables larger tasks and more concurrency, which pushes out an expanded task frontier, which
     in turn raises new governance pressure. Loop 4, in inset purple and marked as a reinforcing
     loop, shows how successful governance enables more ambitious work that exposes the next
     unguided surface, so MAGE does not terminate.</desc>
 
   <defs>
-    <marker id="fig-6-1-5-l4-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="fig-6-0-5-l4-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#7c6bb0"/>
     </marker>
   </defs>
@@ -5635,30 +5603,30 @@ z
   <text x="190" y="104" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Stronger environment</text>
 
   <!-- arrow 1 -->
-  <path d="M190,124 L190,150" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#fig-6-1-5-l4-arrow)"/>
+  <path d="M190,124 L190,150" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#fig-6-0-5-l4-arrow)"/>
 
   <!-- Box 2: Larger tasks / more concurrency -->
   <rect x="40" y="152" width="300" height="50" rx="8" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
   <text x="190" y="182" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Larger tasks &#183; more concurrency</text>
 
   <!-- arrow 2 -->
-  <path d="M190,202 L190,228" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#fig-6-1-5-l4-arrow)"/>
+  <path d="M190,202 L190,228" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#fig-6-0-5-l4-arrow)"/>
 
   <!-- Box 3: Expanded task frontier -->
   <rect x="40" y="230" width="300" height="50" rx="8" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
   <text x="190" y="260" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Expanded task frontier</text>
 
   <!-- arrow 3 -->
-  <path d="M190,280 L190,306" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#fig-6-1-5-l4-arrow)"/>
+  <path d="M190,280 L190,306" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#fig-6-0-5-l4-arrow)"/>
 
   <!-- Box 4: New governance pressure (reopens the cycle, emphasised) -->
   <rect x="40" y="308" width="300" height="52" rx="8" fill="#f6f4ef" stroke="#7c6bb0" stroke-width="2.6"/>
   <text x="190" y="340" text-anchor="middle" font-size="15" font-weight="700" fill="#7c6bb0">New governance pressure</text>
-</svg><figcaption data-short="Capability-amplification loop"><span class="fig-label">Figure 6.1-5.</span> <em>Capability-amplification loop.</em> Successful governance enables more ambitious work, which exposes the next unguided surface.</figcaption></figure><p class="gallery-source">From <a href="6.1-toward-a-theory-of-mage.html#fig-6-1-5">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-1-6-fig-6-1-6" class="book-figure" data-label="churn-curve"><svg id="fig-6-1-6-mageChurn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
-     role="img" aria-labelledby="fig-6-1-6-mageChurn-ccTitle fig-6-1-6-mageChurn-ccDesc"
+</svg><figcaption data-short="Capability-amplification loop"><span class="fig-label">Figure 6.0-5.</span> <em>Capability-amplification loop.</em> Successful governance enables more ambitious work, which exposes the next unguided surface.</figcaption></figure><p class="gallery-source">From <a href="6.0-toward-a-theory-of-mage.html#fig-6-0-5">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-0-6-fig-6-0-6" class="book-figure" data-label="churn-curve"><svg id="fig-6-0-6-mageChurn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="img" aria-labelledby="fig-6-0-6-mageChurn-ccTitle fig-6-0-6-mageChurn-ccDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-6-1-6-mageChurn-ccTitle">Churn is non-monotonic in governance apparatus</title>
-  <desc id="fig-6-1-6-mageChurn-ccDesc">A line chart. The horizontal axis is governance apparatus, increasing to
+  <title id="fig-6-0-6-mageChurn-ccTitle">Churn is non-monotonic in governance apparatus</title>
+  <desc id="fig-6-0-6-mageChurn-ccDesc">A line chart. The horizontal axis is governance apparatus, increasing to
     the right; the vertical axis is churn or friction, increasing upward. A single U-shaped
     curve is high on the left, falls to a minimum in the middle, and rises again on the right.
     Three regions divide the horizontal axis. On the left, under-governed: churn is high
@@ -5671,7 +5639,7 @@ z
     exact curve is illustrative, not fitted.</desc>
 
   <defs>
-    <marker id="fig-6-1-6-mageChurn-cc-axis" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+    <marker id="fig-6-0-6-mageChurn-cc-axis" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="9" markerHeight="9" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
     </marker>
   </defs>
@@ -5686,8 +5654,8 @@ z
   <line x1="650" y1="100" x2="650" y2="470" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="5 5"/>
 
   <!-- axes -->
-  <line x1="110" y1="470" x2="952" y2="470" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-6-1-6-mageChurn-cc-axis)"/>
-  <line x1="110" y1="470" x2="110" y2="98"  stroke="#1c1917" stroke-width="2" marker-end="url(#fig-6-1-6-mageChurn-cc-axis)"/>
+  <line x1="110" y1="470" x2="952" y2="470" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-6-0-6-mageChurn-cc-axis)"/>
+  <line x1="110" y1="470" x2="110" y2="98"  stroke="#1c1917" stroke-width="2" marker-end="url(#fig-6-0-6-mageChurn-cc-axis)"/>
 
   <!-- axis titles -->
   <text x="530" y="540" text-anchor="middle" font-size="17" font-weight="600" fill="#1c1917">governance apparatus &#8594;</text>
@@ -5714,7 +5682,39 @@ z
   <text x="866" y="150" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">friction rises —</text>
   <text x="866" y="168" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">collision, latency,</text>
   <text x="866" y="186" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">false positives</text>
-</svg><figcaption data-short="Churn is non-monotonic in governance"><span class="fig-label">Figure 6.1-6.</span> <em>Churn is non-monotonic in governance.</em> Churn runs high when the environment is under-governed, reaches its lowest where the apparatus fits the risk, and rises again in the tower/collision region as controls duplicate and collide. Apparatus quantity is not effective environment quality; the curve is illustrative, not fitted.</figcaption></figure><p class="gallery-source">From <a href="6.1-toward-a-theory-of-mage.html#fig-6-1-6">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-3-1-fig-6-3-1" class="book-figure portrait-wrap"><img src="assets/author-headshot.jpg" alt="James C. Davis."><figcaption data-short="James C"><span class="fig-label">Figure 6.3-1.</span> James C. Davis.</figcaption></figure><p class="gallery-source">From <a href="6.3-about-the-author.html#fig-6-3-1">About the Author</a></p></section></div></section><section class="gallery-group"><h2>Appendix schematics</h2><p class="gallery-group-note">Diagrams from the pattern-catalogue appendix, drawn in a lighter reference style.</p><div class="gallery"><section class="gallery-item"><figure id="fig-A-1-1-fig-A-1-1" class="book-figure" data-label="provenance-fidelity-stack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470"
+</svg><figcaption data-short="Churn is non-monotonic in governance"><span class="fig-label">Figure 6.0-6.</span> <em>Churn is non-monotonic in governance.</em> Churn runs high when the environment is under-governed, reaches its lowest where the apparatus fits the risk, and rises again in the tower/collision region as controls duplicate and collide. Apparatus quantity is not effective environment quality; the curve is illustrative, not fitted.</figcaption></figure><p class="gallery-source">From <a href="6.0-toward-a-theory-of-mage.html#fig-6-0-6">Toward a Theory of MAGE</a></p></section><hr><section class="gallery-item"><figure id="fig-6-1-1-fig-6-1-1" class="book-figure" data-label="soft-hard-spectrum"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" role="group" aria-labelledby="fig-6-1-1-frbTitle fig-6-1-1-frbDesc" font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-6-1-1-frbTitle">Governance runs soft to hard: a compact spectrum of mechanism classes.</title>
+  <desc id="fig-6-1-1-frbDesc">A horizontal spectrum runs from soft governance on the left to hard governance on the right. Soft, probabilistic mechanisms that aim an agent sit on the left: conventions, briefs, templates, prose conventions, and a reviewing agent. Judgment-laden doc-derived tests sit in the middle. Deterministic mechanisms that hold the line sit on the right: lints, types, schemas, and quality, drift, or deploy gates, together with a marker file the tool reads. Soft aims the agent; hard holds the line; a mature environment uses both.</desc>
+  <defs>
+    <linearGradient id="fig-6-1-1-frbGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f6f4ef"/>
+      <stop offset="0.5" stop-color="#faf1e6"/>
+      <stop offset="1" stop-color="#9a3f12"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1000" height="340" fill="#fdfcf9"/>
+  <text x="500" y="46" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Governance runs soft to hard</text>
+  <text x="500" y="72" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">Soft aims the agent; hard holds the line. A mature environment uses both.</text>
+  <text x="150" y="112" text-anchor="middle" font-size="13.5" fill="#57534e">probabilistic · aims an agent</text>
+  <text x="850" y="112" text-anchor="middle" font-size="13.5" fill="#9a3f12">deterministic · holds the line</text>
+  <rect x="70" y="126" width="860" height="46" rx="12" fill="url(#fig-6-1-1-frbGrad)" stroke="#e4e0d8" stroke-width="1.5"/>
+  <text x="150" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">SOFT</text>
+  <text x="850" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#fdfcf9">HARD</text>
+  <line x1="150" y1="172" x2="150" y2="196" stroke="#e4e0d8" stroke-width="1.5"/>
+  <text x="150" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">convention · brief</text>
+  <text x="150" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">template · prose</text>
+  <line x1="330" y1="172" x2="330" y2="196" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="330" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">reviewing agent</text>
+  <line x1="500" y1="172" x2="500" y2="196" stroke="#2f5169" stroke-width="1.5"/>
+  <text x="500" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">doc-derived test</text>
+  <line x1="680" y1="172" x2="680" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="680" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">lint · type · schema</text>
+  <line x1="850" y1="172" x2="850" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
+  <text x="850" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">quality / drift / deploy gate ·</text>
+  <text x="850" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">marker file the tool reads</text>
+  <text x="500" y="288" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
+  <text x="500" y="314" text-anchor="middle" font-size="13" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
+</svg><figcaption data-short="The Soft–Hard Spectrum"><span class="fig-label">Figure 6.1-1.</span> <em>The Soft–Hard Spectrum.</em> Probabilistic mechanisms that aim an agent sit on the left; deterministic mechanisms that hold the line sit on the right. A mature environment uses both, and the skill is knowing which a given failure warrants.</figcaption></figure><p class="gallery-source">From <a href="6.1-implications-for-se.html#fig-6-1-1">Implications for Software Engineering</a></p></section><hr><section class="gallery-item"><figure id="fig-6-3-1-fig-6-3-1" class="book-figure portrait-wrap"><img src="assets/author-headshot.jpg" alt="James C. Davis."><figcaption data-short="James C"><span class="fig-label">Figure 6.3-1.</span> James C. Davis.</figcaption></figure><p class="gallery-source">From <a href="6.3-about-the-author.html#fig-6-3-1">About the Author</a></p></section></div></section><section class="gallery-group"><h2>Appendix schematics</h2><p class="gallery-group-note">Diagrams from the pattern-catalogue appendix, drawn in a lighter reference style.</p><div class="gallery"><section class="gallery-item"><figure id="fig-A-1-1-fig-A-1-1" class="book-figure" data-label="provenance-fidelity-stack"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470"
      role="group" aria-labelledby="fig-A-1-1-pfTitle fig-A-1-1-pfDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-A-1-1-pfTitle">The provenance + fidelity stack: mark it, cover the marking, read it back, gate what leaves</title>
