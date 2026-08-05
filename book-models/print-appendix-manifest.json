@@ -15,7 +15,9 @@
   "appendix_exclude": [
     "standards-rule-engine"
   ],
-  "appendix_e": "pointer",
+  "_appendix_render_modes": "skill_recipe: print-render mode for the How-to-Write-a-Skill appendix (v2 Appendix D, legacy Appendix E) — 'pointer' collapses the print/PDF projection to the front-door + an online pointer, the web edition keeps the full recipe (consumed by build_book_html.py:build_skill_recipe_chapters). appendix_e: render mode for the 'A Theory of MAGE' appendix (v2 Appendix E) — 'full' renders both chapters (causal model + capability-vs-maturity); consumed by build_book_html.py:build_theory_of_mage_chapters. Both appendix E letters are v2-only (ADA_APPENDIX_V2=1).",
+  "skill_recipe": "pointer",
+  "appendix_e": "full",
   "stack_compression": {
     "target_words": 1250,
     "sections": [

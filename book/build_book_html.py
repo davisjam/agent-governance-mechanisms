@@ -2926,17 +2926,19 @@ def build_skill_recipe_chapters(part: int, for_print: bool = False,
     page slug follows the letter (`appendix-<letter>-<stem>`). `locator_figs` (v2) stamps `fig_prefix` for
     D80 monotonic figure numbering; legacy leaves it unset (byte-identical figure numbers).
 
-    When the print manifest sets `appendix_e == "pointer"` AND this is the print/PDF projection
+    When the print manifest sets `skill_recipe == "pointer"` AND this is the print/PDF projection
     (`for_print=True`), the recipe collapses to the front-door alone plus a one-paragraph pointer to the full
     recipe online — the content page is dropped from print. The WEB build (`for_print=False`) always keeps
-    the full recipe, so the pointer's target stays live."""
+    the full recipe, so the pointer's target stays live. (The manifest key was renamed from the legacy
+    `appendix_e` when the real Appendix E — A Theory of MAGE — claimed that letter; see
+    `build_theory_of_mage_chapters`.)"""
     pages = [(stem, title) for stem, title in _SKILL_RECIPE_PAGES
              if (_SKILL_RECIPE_DIR / f"{stem}.md").is_file()]
     if not pages:
         return []
 
     low = letter.lower()
-    pointer_mode = for_print and _load_print_manifest().get("appendix_e") == "pointer"
+    pointer_mode = for_print and _load_print_manifest().get("skill_recipe") == "pointer"
 
     chapters: list[dict] = []
     part_title = f"Appendix {letter} — How to Write a Skill"
@@ -2977,6 +2979,94 @@ def build_skill_recipe_chapters(part: int, for_print: bool = False,
             "chapter": i,                       # sorts after the front-door's chapter 0
             "chapter_title": f"Appendix {letter} - {i}. {title}",
             "body_md": _fold_wrapped_bullets(raw.strip()),
+            "is_appendix": True,
+            "mermaid": False,
+        }
+        if locator_figs:
+            rec["fig_prefix"] = f"{letter}.{i}"
+        chapters.append(rec)
+    return chapters
+
+
+# ─────────────────────────── Appendix E — A Theory of MAGE ───────────────────────────
+# Hand-authored, like the stacks Part and the skill-recipe Part: two authored markdown chapters under
+# `appendix-theory-of-mage/` — the causal model (front-door, carrying the two figures) + the
+# capability-vs-maturity chapter (E.1). No catalogue projection; the theory is prose the author wrote, not a
+# mechanism map. Value-ordered (v2) projection only; landed behind the manifest `appendix_e` render mode.
+_THEORY_DIR = HERE / "appendix-theory-of-mage"
+
+# The front-door slug — the stable target of `[appendix: appendix-theory-of-mage]` cross-references,
+# independent of the appendix letter (mirrors `appendix-stacks` / `appendix-skill-recipe`).
+_APPENDIX_THEORY_OPENING_SLUG = "appendix-theory-of-mage"
+
+# The authored chapters in reading order → (page-slug stem, display title). The FIRST is the front-door
+# (chapter 0, titled by the Part); the rest are numbered content pages (E.1, …). Titles mirror each file's
+# `<!-- chapter-title: … -->` marker (kept in the source for provenance; stripped from the rendered body).
+_THEORY_PAGES: list[tuple[str, str]] = [
+    ("theory-of-mage", "A Theory of MAGE"),
+    ("capability-model", "A Capability Model, Not a Maturity Model"),
+]
+
+
+def build_theory_of_mage_chapters(part: int, for_print: bool = False,
+                                  letter: str = "E", locator_figs: bool = False) -> list[dict]:
+    """Build the A-Theory-of-MAGE chapter records: one front-door page (chapter 0, the causal-model chapter)
+    then one page per remaining authored file (E.1, the capability-vs-maturity chapter). Mirrors the stacks /
+    skill-recipe Parts — a hand-authored appendix Part rendered by the existing pager/TOC/index/float
+    machinery with no catalogue projection. Every record carries `is_appendix: True`.
+
+    The authored files keep their `<!-- part-title: … -->` / `<!-- chapter-title: … -->` markers for
+    provenance; this builder STRIPS them from the rendered body (the page header comes from the record's
+    `chapter_title`, set here) and letters the titles. `letter` letters the Part ("E" in the value-ordered v2
+    projection, where the theory trails the skill recipe). `locator_figs` (v2) stamps a `fig_prefix` so the
+    two figures number monotonically off the reader-facing E locator (D80): "Figure E-1" (causal model) /
+    "Figure E-2" (trajectories). Returns [] when the render mode is off or no content files are present.
+
+    Render mode reads the print manifest's `appendix_e`: `"full"` (the default this wave) renders both
+    chapters; `"off"` drops the appendix. This is the value-ordered-appendix analogue of the skill recipe's
+    `skill_recipe` mode."""
+    if _load_print_manifest().get("appendix_e", "full") == "off":
+        return []
+    pages = [(stem, title) for stem, title in _THEORY_PAGES
+             if (_THEORY_DIR / f"{stem}.md").is_file()]
+    if not pages:
+        return []
+
+    low = letter.lower()
+    part_title = f"Appendix {letter} — A Theory of MAGE"
+    chapters: list[dict] = []
+
+    def _body(stem: str) -> str:
+        raw = (_THEORY_DIR / f"{stem}.md").read_text(encoding="utf-8")
+        raw = META_RE.sub("", raw)  # strip the provenance part-title/chapter-title markers (set on the record)
+        return _fold_wrapped_bullets(raw.strip())
+
+    # FRONT-DOOR PAGE — the causal-model chapter heads the Part (chapter 0, sorts before E.1). Its title is
+    # the Part title, matching the stacks / skill-recipe front-doors; the two figures live here.
+    front_stem = pages[0][0]
+    front: dict = {
+        "slug": _APPENDIX_THEORY_OPENING_SLUG,
+        "part": part,
+        "part_title": part_title,
+        "chapter": 0,
+        "chapter_title": part_title,
+        "body_md": _body(front_stem),
+        "is_appendix": True,
+        "mermaid": False,
+    }
+    if locator_figs:
+        front["fig_prefix"] = letter
+    chapters.append(front)
+
+    # ONE PAGE PER REMAINING FILE — E.1, E.2, … in listed order.
+    for i, (stem, title) in enumerate(pages[1:], start=1):
+        rec: dict = {
+            "slug": f"appendix-{low}-{stem}",
+            "part": part,
+            "part_title": part_title,
+            "chapter": i,                       # sorts after the front-door's chapter 0
+            "chapter_title": f"Appendix {letter} - {i}. {title}",
+            "body_md": _body(stem),
             "is_appendix": True,
             "mermaid": False,
         }
@@ -3910,6 +4000,12 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     d_part = next_part + 3
     chapters += build_skill_recipe_chapters(
         part=d_part, for_print=for_print, letter="D", locator_figs=True)
+
+    # ── APPENDIX E — A Theory of MAGE. Two hand-authored chapters (causal model + capability-vs-maturity),
+    #    registered exactly as D is: a hand-authored builder appended here, gated by the manifest render mode.
+    e_part = next_part + 4
+    chapters += build_theory_of_mage_chapters(
+        part=e_part, for_print=for_print, letter="E", locator_figs=True)
     return chapters
 
 
