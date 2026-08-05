@@ -19,6 +19,7 @@ import os
 import re
 import subprocess
 import sys
+from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -2699,6 +2700,78 @@ def check_leaked_markers() -> list[str]:
     return sorted(problems)
 
 
+# ── Leaked-inline-markdown sensor ────────────────────────────────────────────────────────────────────
+# A render path that emits authored text WITHOUT its inline-markdown pass (the book's `inline` / Typst's
+# `inline_typst`) ships the raw `*em*` / `**strong**` / `` `code` `` / `[t](url)` syntax as literal glyphs
+# in reader-visible text — the "why are there asterisks on my page" leak. The 260804 instance was the
+# Appendix-C brick summaries + the code-span-in-title contexts (page `<h1>`, nav TOC, stack legend). The
+# rendered inline pass turns each form into an element, so its DELIMITERS vanish from the text nodes; a
+# surviving delimiter in a reader-visible text node means the pass was skipped for that render path.
+#
+# Elements whose text is NOT prose (so a bare `*`/backtick there is legitimate, not a leak) are skipped:
+# a `<code>`/`<pre>` holds literal source, an `<svg>` holds diagram internals, `<script>`/`<style>` hold
+# code, and `<title>`/`<head>` hold the tab/meta text the renderer PLAIN-strips (no markup allowed there).
+_LEAK_SKIP_TAGS = frozenset({"code", "pre", "script", "style", "svg", "title", "head", "noscript"})
+
+# The four inline forms, detected with the SAME shape the book's `inline` converts — a match in already-
+# rendered text is syntax the pass would have consumed, so it leaked. The italic pattern keeps `inline`'s
+# word-boundary guards so a lone `*` or an `a * b` arithmetic run is NOT flagged (no false positive).
+_LEAK_MD_PATTERNS: tuple[tuple[str, "re.Pattern[str]"], ...] = (
+    ("strong (**…**)", re.compile(r"\*\*(?=\S).+?(?<=\S)\*\*")),
+    ("code (`…`)", re.compile(r"`[^`]+`")),
+    ("link ([text](url))", re.compile(r"\[[^\]]+\]\([^)]+\)")),
+    ("emphasis (*…*)", re.compile(r"(?<![\w*])\*(?!\s)[^*]+?(?<!\s)\*(?![\w*])")),
+)
+
+
+class _VisibleProseExtractor(HTMLParser):
+    """Collect the reader-visible PROSE text of an HTML page — every text node NOT inside a
+    `_LEAK_SKIP_TAGS` element. A single depth counter suppresses text while any skip element is open
+    (nesting-safe: it counts every skip-tag open/close, so a `<title>` inside an `<svg>` still balances)."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self._skip_depth = 0
+        self.chunks: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: object) -> None:
+        if tag in _LEAK_SKIP_TAGS:
+            self._skip_depth += 1
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in _LEAK_SKIP_TAGS and self._skip_depth:
+            self._skip_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if self._skip_depth == 0 and data.strip():
+            self.chunks.append(data)
+
+
+def check_leaked_inline_markdown() -> list[str]:
+    """Served-page post-condition sensor (book surface): no inline-markdown syntax may survive un-rendered
+    into reader-visible prose. Parse every built `book/*.html`, extract the prose text nodes (skipping code /
+    diagram / head contexts), and flag any `*em*` / `**strong**` / `` `code` `` / `[t](url)` the inline pass
+    should have consumed. A hit means a render path emitted authored text without `inline` / `inline_typst`
+    (the 260804 brick-summary + code-span-title class). Twin of `check_leaked_markers` (build-directive leaks)
+    — this guards inline-markup leaks. Returns one problem string per (file, form, snippet)."""
+    problems: list[str] = []
+    for path in sorted(glob.glob(os.path.join(ROOT, "book", "*.html"))):
+        rel = os.path.relpath(path, ROOT)
+        parser = _VisibleProseExtractor()
+        parser.feed(open(path, encoding="utf-8").read())
+        seen: set[tuple[str, str]] = set()
+        for chunk in parser.chunks:
+            for form, pat in _LEAK_MD_PATTERNS:
+                m = pat.search(chunk)
+                if m and (form, m.group(0)) not in seen:
+                    seen.add((form, m.group(0)))
+                    snippet = " ".join(chunk.split())[:80]
+                    problems.append(f"{rel}: un-rendered {form} in reader-visible prose "
+                                    f"{m.group(0)!r} — route this text through `inline` / `inline_typst` "
+                                    f"(context: {snippet!r})")
+    return sorted(problems)
+
+
 # --- Adoption sequence: ONE source, TWO emitted forms (the quick-start dual-emit). ---
 # The quick-start walks a reader through adopting the catalogue via paste-ready prompts. The prompt
 # sequence is authored ONCE inside a `<!--adoption-source ... -->` block in `quick-start.md`; the build
@@ -2958,6 +3031,18 @@ def cmd_build(_args) -> int:
             print(f"  - {m}", file=sys.stderr)
         print("  Fix: ensure render_md consumes the directive (strip/unwrap it before block parsing).",
               file=sys.stderr)
+        return 1
+    # Leaked-inline-markdown gate (BLOCKING): a render path that emitted authored text without its inline
+    # pass ships literal `*em*` / `` `code` `` / `[t](url)` into reader-visible book prose (the 260804
+    # brick-summary + code-span-title class). Scans the freshly-built book HTML, so it can't drift.
+    leaked_md = check_leaked_inline_markdown()
+    if leaked_md:
+        print(f"LEAKED INLINE MARKDOWN ({len(leaked_md)}) — authored text reached a page without its "
+              f"inline pass:", file=sys.stderr)
+        for m in leaked_md:
+            print(f"  - {m}", file=sys.stderr)
+        print("  Fix: route the offending render path's text through `inline` (HTML) / `inline_typst` "
+              "(PDF), or `_plain` for a `<title>`/aria attribute.", file=sys.stderr)
         return 1
     return 0
 

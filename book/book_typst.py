@@ -187,7 +187,7 @@ def _render_stack_legend(directive_line: str) -> str:
     lines = []
     for label, name, loc, anchor in rows:
         role = f"#strong[{_esc(label)}] " if label else ""
-        link = f"#link(<{anchor}>)[{_esc(name)} (§{_esc(loc)})]"
+        link = f"#link(<{anchor}>)[{inline_typst(name)} (§{_esc(loc)})]"
         lines.append(f"+ {role}{link}")
     body = "\n".join(lines)
     return ("#block(width: 100%, inset: (x: 10pt, y: 8pt), radius: 6pt, "
@@ -213,7 +213,7 @@ def _render_brick_grid(directive_line: str) -> str:
         for c in row:
             span = c["span"]
             online = " (online)" if not c["is_flagship"] else ""
-            summary = _esc(c["summary"]) if c["summary"] else \
+            summary = inline_typst(c["summary"]) if c["summary"] else \
                 "#emph[Three-sentence summary authored in a later sub-wave.]"
             meta = _esc(bb._brick_meta_line(c))
             thumb = bb._brick_thumb_svg_path(c)
@@ -231,7 +231,7 @@ def _render_brick_grid(directive_line: str) -> str:
                 )
             cell_body = (
                 fig_block + "\n"
-                f"#link({_typst_str(c['catalogue_html'])})[#strong[{_esc(c['name'])}]]{_esc(online)}\n\n"
+                f"#link({_typst_str(c['catalogue_html'])})[#strong[{inline_typst(c['name'])}]]{_esc(online)}\n\n"
                 f"#text(size: 9.5pt)[{summary}]\n\n"
                 f"#text(size: 8.5pt, fill: dt.muted)[{meta}]"
             )
@@ -436,7 +436,10 @@ def _render_table(block: Block_t) -> str:
     tbl = f"table(\n    columns: {ncol},{align_arg}\n    " + ",\n    ".join(cells) + "\n  )"
     caption = _caption_block(block.caption)
     label = f" <{block.label}>" if block.label else ""
-    return f"#figure(\n  {tbl},\n  kind: table,{caption}\n){label}"
+    # Route the table through `fit-table` (preamble): a table too wide to wrap under the measure is scaled
+    # down uniformly so it never overflows the text block; a wrappable one is untouched. The caption sits
+    # OUTSIDE the fit wrapper so it always renders at body size (only the grid scales).
+    return f"#figure(\n  fit-table({tbl}),\n  kind: table,{caption}\n){label}"
 
 
 def _render_figure(block: Block_t, width: str = "85%") -> str:
@@ -900,6 +903,31 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
   _keep-together-panel(name + " panel 1", panel-a)
   pagebreak(weak: true)
   _keep-together-panel(name + " panel 2", panel-b)
+}
+// ── General table auto-fit (260804). A pipe table renders with `auto` columns; Typst WRAPS their prose to
+//    the text measure, so almost every table fits at full size. The exception is a grid of short, UNBREAKABLE
+//    cells (a code-token matrix) that cannot wrap under the measure — it would overflow the right margin.
+//    `fit-table` measures the table: within the measure → rendered untouched; wider but WRAPPABLE (constraining
+//    to the measure grows its height) → rendered at full size (legible, never crushed); wider and UNwrappable
+//    (height unchanged) → scaled down UNIFORMLY to the measure. `layout` makes it region-aware, so it fits the
+//    body pages and the wider landscape apparatus alike. General rule — no per-table size. The post-compile
+//    margin-bleed sensor (verify_pdf) is the belt to this suspenders: it fails the build on any residual
+//    text that still bleeds past the text box (e.g. one unbreakable token among wrapping cells).
+#let fit-table(body) = context {
+  layout(size => {
+    let nat = measure(body).width
+    if nat <= size.width {
+      body
+    } else {
+      let wrapped = measure(box(width: size.width, body)).height
+      let natural = measure(box(width: nat, body)).height
+      if wrapped > natural + 0.5pt {
+        body
+      } else {
+        scale(x: size.width / nat * 100%, y: size.width / nat * 100%, reflow: true, body)
+      }
+    }
+  })
 }
 """
 
