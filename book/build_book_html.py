@@ -3122,6 +3122,7 @@ _APPENDIX_OPERATORS_REFERENCE_OPENING_SLUG = "appendix-operators-reference"
 # is the first (D.1); absent-on-disk files are skipped, so the front-door alone still renders without them.
 _OPERATORS_REFERENCE_PAGES: list[tuple[str, str]] = [
     ("operators-dashboard", "The Operator's Dashboard"),
+    ("from-drifted-wiki-to-trusted-model", "From Drifted Wiki to Trusted Model"),
 ]
 
 _APPENDIX_OPERATORS_REFERENCE_OPENING_PROSE = """\
@@ -3133,9 +3134,11 @@ and move on — you come back to them mid-build, the way you keep a wiring diagr
 
 Each entry answers a standing operational question with a single surface you can scan. The first is the \
 **Operator's Dashboard**: the metrics you steer by while the work is in flight and certify the result with \
-at maturity, on one page.
+at maturity, on one page. The second is **From Drifted Wiki to Trusted Model**: the brownfield migration \
+drill that joins a legacy wiki to the code and walks it from drifted documentation to a governed model, \
+projected from Chapter 4.1 onto a single tear-out card.
 
-The appendix is built to grow. The dashboard is the first reference card, not the last; future editions add \
+The appendix is built to grow. These are the first reference cards, not the last; future editions add \
 the operational surfaces a practitioner reaches for often enough to want them collected:
 
 - **MAGE lifecycle summary** — the stages a governed build passes through, and what each one owes the next.
