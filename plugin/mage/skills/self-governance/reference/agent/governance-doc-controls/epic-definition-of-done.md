@@ -56,6 +56,17 @@ follow-up.
   past the reachability check.
 - **"Owned" must be accurate.** An Epic that under-declares what it owns re-runs too little and can
   still close on a rotted-but-unlisted defense.
+- **Measured, and the split is the lesson: derived defends, snapshotted drifts.** The re-run's catch has
+  been measured across the corpus of closed units of work, sorted under a fixed set of drift kinds. The
+  pattern is clean and worth stating. What the audit reliably catches is the *snapshotted* fact — a status
+  line copied by hand and never refreshed, a phase note that lags the phase, a test pinning yesterday's
+  behavior, a broken trace link, a doc claim the code outgrew. What it cannot catch is the class with
+  nothing to compare against: a surface that was never described, so there is no stale description to flag.
+  The rule follows directly. Hold a fact as a *projection* of the artifacts that already record the truth
+  and the audit — and often the gate before it — defends it for free; hold the same fact as a hand-kept
+  *snapshot* and the audit is your last line before it drifts into a close. The measured efficacy is real,
+  but it is bounded by that one blind spot, and the design response is to derive the fact rather than lean
+  on the catch.
 
 ## Known uses
 

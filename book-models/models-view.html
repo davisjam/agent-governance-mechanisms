@@ -66,7 +66,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>37</b> chapters · <b>254</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>37</b> chapters · <b>259</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The program — what you'll be able to do after the whole book</h2>
 <div class="outcomes"><div class="oc-h">After the program — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -331,10 +331,18 @@
 <p class="topic">Step back from drift for a moment and look at what you actually hand an agent to work from.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain why the apex of the documentation hierarchy is a structured model — the one description a machine can read and check the others against, binding docs, code, and tests where structured English stops one rung short. <span class="prov">derived</span></span></li></ul></div>
 </div>
+<div class="section s3" id="sec-2-2-models-and-the-semantic-gap--modeling-the-surface-turned-up-real-bugs">
+<div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">Modeling the surface turned up real bugs</a></div>
+<p class="topic">The argument so far is that a structured model earns its keep by binding intent to implementation and letting a checker prove things about it.</p>
+</div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--a-drift-check-proves-agreement-not-correctness">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">A drift check proves agreement, not correctness</a></div>
 <p class="topic">The claim I just made hides a trap, and the book&#x27;s enthusiasm for drift gates can be misread into a dangerous half-truth.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After this section, the reader can explain the precise guarantee a drift check gives — agreement, not correctness — and why only a model authored from intent, not derived from code, catches a wrong &quot;is&quot;. <span class="prov">derived</span></span></li></ul></div>
+</div>
+<div class="section s3" id="sec-2-2-models-and-the-semantic-gap--a-model-is-a-convenience-not-a-second-copy-of-the-truth">
+<div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">A model is a convenience, not a second copy of the truth</a></div>
+<p class="topic">There is an over-reach on the other side of the mirror, and it is worth naming before the enthusiasm for models runs away.</p>
 </div>
 <div class="section s2" id="sec-2-2-models-and-the-semantic-gap--just-execute-the-model-a-short-history-of-case-and-mda">
 <div class="sec-h"><a href="../book/2.2-models-and-the-semantic-gap.html">Just execute the model? A short history of CASE and MDA</a></div>
@@ -442,10 +450,18 @@
 <div class="sec-h"><a href="../book/2.5-metrics.html">The dual: draining unmodelled code</a></div>
 <p class="topic">The flagship walks from a model claim *to* the code and asks whether a test exercises it.</p>
 </div>
+<div class="section s3" id="sec-2-5-metrics--the-same-graph-read-backward-a-lens-on-accidental-complexity">
+<div class="sec-h"><a href="../book/2.5-metrics.html">The same graph, read backward: a lens on accidental complexity</a></div>
+<p class="topic">The link graph that drain walks has a second use, and it comes for free.</p>
+</div>
 <div class="section s2" id="sec-2-5-metrics--the-soft-end-doc-derived-tests">
 <div class="sec-h"><a href="../book/2.5-metrics.html">The soft end: doc-derived tests</a></div>
 <p class="topic">Slide to the far end of the spectrum, where the metric stops being a number a threshold can act on and becomes a judgment a human has to make.</p>
 <div class="outcomes"><div class="oc-h">After this section — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-analyze">analyze</span><span class="oc-text">After this section, the reader can classify a soft metric — a doc-derived test&#x27;s coverage-of-doc-claims — as one that aims a reader rather than deciding, recognize why its softness is inseparable from a readiness judgment about the seam, and see why wiring it to a blocking gate manufactures hollow tests. <span class="prov">derived</span></span></li></ul></div>
+</div>
+<div class="section s3" id="sec-2-5-metrics--a-null-result-means-nothing-until-the-benchmark-can-discriminate">
+<div class="sec-h"><a href="../book/2.5-metrics.html">A null result means nothing until the benchmark can discriminate</a></div>
+<p class="topic">The most useful honesty in measurement is the one that catches you before you publish a comfortable non-result.</p>
 </div>
 <div class="section s2" id="sec-2-5-metrics--the-model-runs-the-machinery">
 <div class="sec-h"><a href="../book/2.5-metrics.html">The model runs the machinery</a></div>
@@ -1006,6 +1022,10 @@
 <div class="section s2" id="sec-5-2-the-timeline-and-the-work--churn">
 <div class="sec-h"><a href="../book/5.2-the-timeline-and-the-work.html">The shape of the churn</a></div>
 <p class="topic">Under the ratio sits the raw motion of the code: lines added and lines deleted, week over week, on the two paths that carry the product — `web/`, the Python service and worker, and `backend/`, the C# tool and rule engine.</p>
+</div>
+<div class="section s3" id="sec-5-2-the-timeline-and-the-work--the-deploy-saga-the-surprises-the-tests-could-not-see">
+<div class="sec-h"><a href="../book/5.2-the-timeline-and-the-work.html">The deploy saga: the surprises the tests could not see</a></div>
+<p class="topic">For a stretch of the build, nearly every unwelcome surprise came from deployment, and they shared a shape.</p>
 </div>
 <div class="section s2" id="sec-5-2-the-timeline-and-the-work--the-kinds-of-work-it-required">
 <div class="sec-h"><a href="../book/5.2-the-timeline-and-the-work.html">The kinds of work it required</a></div>

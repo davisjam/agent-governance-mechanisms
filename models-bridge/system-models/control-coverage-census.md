@@ -93,6 +93,20 @@ Each neighbour handles a real slice and stays green right up to the blind spot t
 - **It measures balance, not quality.** A populated target counts as covered even if its controls are weak;
   the census closes the "no control at all" gap and leans on other mechanisms to judge whether the controls
   that exist are strong.
+- **A gap usually means un-modeled, not un-watched.** Read an empty or thin cell twice before you sound an
+  alarm. In a mature estate almost nothing is truly un-watched — some control already fires on that code —
+  but a great deal is un-modeled, so the census has not yet learned what watches there. The common case is a
+  modeling backlog, not a live hole. Conflate the two and every run reads as a five-alarm fire, and a real
+  blind spot drowns in false ones. Treat a fresh gap as a question first: what already guards this, and does
+  the map know it? Only a cell that survives that question is an absence.
+- **The finishing line is a sparse residual, not full coverage.** The census maps the slice of the estate
+  where a coverage question is worth asking, not every line; it is sparse by design, and pointed at
+  everything it will always find something un-modeled. So "done" is not a control on every conceivable
+  target. It is the point where what remains uncovered is all below-granularity glue: re-export shims, thin
+  facades, configuration that reaches production only through something already governed. Name that
+  done-condition. Skip it and the roll-up becomes a completeness chase — adding a node to shave a percentage
+  that buys nothing, crying wolf over glue no control should spend itself on. A node earns its place when a
+  real question needs it, not to drive the last cell to zero.
 
 ## Known uses
 
@@ -124,5 +138,3 @@ Each neighbour handles a real slice and stays green right up to the blind spot t
 - *See also* — [query-surface](query-surface.md): the read-only path the coverage roll-up rides on.
 - *See also* — [drift-parity-gates](drift-parity-gates.md): the model↔reality honesty family the fail-loud
   anchor classifier joins.
-</content>
-</invoke>

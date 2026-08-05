@@ -51,6 +51,7 @@ Two halves, one soft and one hard, packaged together.
 - **Cadence tuning is a real cost.** Fire the reflection too often and it becomes the alarm fatigue it was built to avoid; too rarely and a recurrence ages past the moment it was cheapest to convert. The at-most-one-per-window gate is the knob, and it needs a sensible window.
 - **Taste does not automate.** "Proportionate" is a judgment. The loop can enumerate the control menu and prompt the choice, but choosing the right-sized guardrail — and resisting the over-control reflex — stays human.
 - **It can manufacture noise.** A conversion that adds a low-value check on every recurrence grows a thicket of guardrails that themselves need governing. The discipline is to convert a *class*, once, at the second occurrence — not to reflexively lint every instance.
+- **The conversion is a design act, not a patch.** Naming the recurring failure class is cheap, and it can happen inline, in the middle of the incident that provoked it. Building the control it calls for cannot. A guardrail scaffolded and installed in the heat of that incident is compromised architecture of the exact kind the method exists to avoid: a mis-scoped lint, a gate set at the wrong level, a check that soon needs governing itself — the thing built to stop failures becoming a new source of them. So the loop proposes the control and hands it off; something deliberate then designs it, under the same rigor any load-bearing change earns. Classify fast, design slow.
 
 ## Known uses
 
