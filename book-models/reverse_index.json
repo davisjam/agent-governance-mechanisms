@@ -1019,7 +1019,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-113",
+          "element": "2.2-models-and-the-semantic-gap::block-115",
           "role": "paragraph-point"
         }
       ]
@@ -1569,7 +1569,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-71",
+          "element": "2.2-models-and-the-semantic-gap::block-73",
           "role": "paragraph-point"
         }
       ]
@@ -1679,7 +1679,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-100",
+          "element": "2.2-models-and-the-semantic-gap::block-102",
           "role": "paragraph-point"
         }
       ]
@@ -2029,7 +2029,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-90",
+          "element": "2.2-models-and-the-semantic-gap::block-92",
           "role": "paragraph-point"
         }
       ]
@@ -2039,7 +2039,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-81",
+          "element": "2.2-models-and-the-semantic-gap::block-83",
           "role": "paragraph-point"
         }
       ]
@@ -2259,7 +2259,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-73",
+          "element": "2.2-models-and-the-semantic-gap::block-75",
           "role": "paragraph-point"
         }
       ]
@@ -2279,7 +2279,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-69",
+          "element": "2.2-models-and-the-semantic-gap::block-71",
           "role": "paragraph-point"
         }
       ]
@@ -2749,7 +2749,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-75",
+          "element": "2.2-models-and-the-semantic-gap::block-77",
           "role": "paragraph-point"
         }
       ]
@@ -3219,7 +3219,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-84",
+          "element": "2.2-models-and-the-semantic-gap::block-86",
           "role": "paragraph-point"
         }
       ]
@@ -4519,7 +4519,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-77",
+          "element": "2.2-models-and-the-semantic-gap::block-79",
           "role": "paragraph-point"
         }
       ]
@@ -4839,7 +4839,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-105",
+          "element": "2.2-models-and-the-semantic-gap::block-107",
           "role": "paragraph-point"
         }
       ]
@@ -5239,7 +5239,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-121",
+          "element": "2.2-models-and-the-semantic-gap::block-123",
           "role": "paragraph-point"
         }
       ]
@@ -5389,7 +5389,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-86",
+          "element": "2.2-models-and-the-semantic-gap::block-88",
           "role": "paragraph-point"
         }
       ]
@@ -5719,7 +5719,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-123",
+          "element": "2.2-models-and-the-semantic-gap::block-125",
           "role": "paragraph-point"
         }
       ]
@@ -10209,12 +10209,12 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-100",
+          "element": "2.2-models-and-the-semantic-gap::block-102",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-121",
+          "element": "2.2-models-and-the-semantic-gap::block-123",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10259,7 +10259,7 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-98",
+          "element": "2.2-models-and-the-semantic-gap::block-100",
           "role": "section-term[tier-1]"
         },
         {
@@ -10949,7 +10949,7 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-77",
+          "element": "2.2-models-and-the-semantic-gap::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11379,12 +11379,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-71",
+          "element": "2.2-models-and-the-semantic-gap::block-73",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-75",
+          "element": "2.2-models-and-the-semantic-gap::block-77",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11459,7 +11459,7 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-68",
+          "element": "2.2-models-and-the-semantic-gap::block-70",
           "role": "section-term[tier-1]"
         },
         {
@@ -12509,22 +12509,22 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-105",
+          "element": "2.2-models-and-the-semantic-gap::block-107",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-113",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-121",
+          "element": "2.2-models-and-the-semantic-gap::block-115",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "2.2-models-and-the-semantic-gap::block-123",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.2-models-and-the-semantic-gap::block-125",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12539,17 +12539,17 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-104",
+          "element": "2.2-models-and-the-semantic-gap::block-106",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-111",
+          "element": "2.2-models-and-the-semantic-gap::block-113",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-119",
+          "element": "2.2-models-and-the-semantic-gap::block-121",
           "role": "section-term[tier-1]"
         }
       ]
@@ -13969,12 +13969,12 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-84",
+          "element": "2.2-models-and-the-semantic-gap::block-86",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-86",
+          "element": "2.2-models-and-the-semantic-gap::block-88",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14039,7 +14039,7 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-80",
+          "element": "2.2-models-and-the-semantic-gap::block-82",
           "role": "section-term[tier-1]"
         },
         {
@@ -14164,11 +14164,6 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-69",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "2.2-models-and-the-semantic-gap::block-71",
           "role": "paragraph-term[tier-2]"
         },
@@ -14185,6 +14180,11 @@
         {
           "view": "outline",
           "element": "2.2-models-and-the-semantic-gap::block-77",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.2-models-and-the-semantic-gap::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14209,7 +14209,7 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-68",
+          "element": "2.2-models-and-the-semantic-gap::block-70",
           "role": "section-term[tier-1]"
         },
         {
@@ -14569,7 +14569,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-113",
+          "element": "2.2-models-and-the-semantic-gap::block-115",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15384,22 +15384,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-105",
+          "element": "2.2-models-and-the-semantic-gap::block-107",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-123",
+          "element": "2.2-models-and-the-semantic-gap::block-125",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-81",
+          "element": "2.2-models-and-the-semantic-gap::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-90",
+          "element": "2.2-models-and-the-semantic-gap::block-92",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15429,22 +15429,22 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-104",
+          "element": "2.2-models-and-the-semantic-gap::block-100",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-119",
+          "element": "2.2-models-and-the-semantic-gap::block-106",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-80",
+          "element": "2.2-models-and-the-semantic-gap::block-121",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-98",
+          "element": "2.2-models-and-the-semantic-gap::block-82",
           "role": "section-term[tier-1]"
         },
         {
@@ -15904,17 +15904,12 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-100",
+          "element": "2.2-models-and-the-semantic-gap::block-102",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-81",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-84",
+          "element": "2.2-models-and-the-semantic-gap::block-83",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15924,7 +15919,12 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-90",
+          "element": "2.2-models-and-the-semantic-gap::block-88",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.2-models-and-the-semantic-gap::block-92",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15949,12 +15949,12 @@
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-80",
+          "element": "2.2-models-and-the-semantic-gap::block-100",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.2-models-and-the-semantic-gap::block-98",
+          "element": "2.2-models-and-the-semantic-gap::block-82",
           "role": "section-term[tier-1]"
         },
         {
