@@ -782,8 +782,11 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     # true back matter (part 7 — apparatus), and the appendix (its own A/B/C locators) do not. This keeps
     # the PDF in step with the web build's `is_matter = part in (0, 7)`. Numbers are display-only — they
     # never touch a heading anchor, so `@ref`/metadata queries keep resolving.
-    numbered = chapter.part not in (0, 7) and not chapter.slug.startswith("appendix")
     is_appendix = chapter.slug.startswith("appendix")
+    is_part_page = _is_part_page(chapter)
+    # A Part landing page (chapter-0 synthetic record) is unnumbered — like front/back matter and the appendix,
+    # it never prints an `N.0`. Suppressing on `is_part_page` keeps the number off the Part opener.
+    numbered = chapter.part not in (0, 7) and not is_appendix and not is_part_page
     chap_num = f"{chapter.part}.{chapter.chapter}" if numbered else None
     title_num = f"#text(fill: dt.muted)[{chap_num}] " if chap_num else ""
     title_body = f"{title_num}{inline_typst(chapter.title)}"
@@ -791,7 +794,10 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     # body chapters keep the 1.5em H1 from the show rule.
     title_line = (f"= #text(size: {_APPENDIX_HEADING_SIZE})[{title_body}]" if is_appendix
                   else f"= {title_body}")
-    out: list[str] = [title_line, ""]
+    # The Part landing page renders NO H1: the part-divider page ahead of it already carries the Part title
+    # (and the `<part-N>` nav-target label), so a heading here would duplicate it. The page contributes the
+    # intro paragraph + the Part-nav strip only.
+    out: list[str] = [] if is_part_page else [title_line, ""]
     blocks = chapter.blocks
     # Keep-together note (appendix v2, §13.6): a note declaring `note-spread` renders as an indivisible
     # one-page card — but ONLY in print mode, where a page boundary is a hard reading seam. On a SCREEN PDF
@@ -1108,6 +1114,13 @@ def _copyright_page_typst(ack_chapter: ir.Chapter, default_mod: str) -> str:
         f"  {ack_body}\n"
         "]"
     )
+
+
+def _is_part_page(ch: "ir.Chapter") -> bool:
+    """A numbered Part's landing page — the chapter-0 synthetic record `_parse_part_intro` builds (slug
+    `part-<N>-intro`). The web twin is the record's `is_part_page` flag; the IR carries no flags, so match the
+    slug the build minted."""
+    return ch.slug == f"part-{ch.part}-intro"
 
 
 def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":

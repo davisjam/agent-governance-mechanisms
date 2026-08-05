@@ -464,12 +464,14 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="0.5-acknowledgments.html">Acknowledgments</a></li>
 <li><a class="" href="0.15-what-this-book-argues.html">What This Book Argues</a></li>
 <li class="part">Part 1 — The Mindset</li>
+<li><a class="" href="part-1-intro.html">The Mindset</a></li>
 <li><a class="" href="1.1-the-printer.html">1&nbsp; The Printer</a></li>
 <li><a class="" href="1.2-mage-by-example.html">2&nbsp; MAGE by Example</a></li>
 <li><a class="" href="1.3-loops-and-models.html">3&nbsp; Loops and Models</a></li>
 <li><a class="" href="1.4-why-mage-follows-from-the-machine.html">4&nbsp; Why MAGE Follows from the Machine</a></li>
 <li><a class="" href="1.5-the-engineers-seat.html">5&nbsp; The Engineer's Seat</a></li>
 <li class="part">Part 2 — The Governed Engineering Environment</li>
+<li><a class="" href="part-2-intro.html">The Governed Engineering Environment</a></li>
 <li><a class="" href="2.1-the-agent-stack.html">6&nbsp; The Agent Stack</a></li>
 <li><a class="" href="2.2-models-and-the-semantic-gap.html">7&nbsp; Models and the Semantic Gap</a></li>
 <li><a class="" href="2.3-the-governed-environment.html">8&nbsp; The Governed Environment: Ex-Ante and Ex-Post</a></li>
@@ -477,6 +479,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="2.5-metrics.html">10&nbsp; Metrics</a></li>
 <li><a class="" href="2.6-when-guardrails-collide.html">11&nbsp; When Guardrails Collide</a></li>
 <li class="part">Part 3 — The Model Zoo</li>
+<li><a class="" href="part-3-intro.html">The Model Zoo</a></li>
 <li><a class="" href="3.1-the-executable-zoo.html">12&nbsp; The Executable Zoo</a></li>
 <li><a class="" href="3.2-the-logical-view.html">13&nbsp; The Logical View</a></li>
 <li><a class="current" href="3.3-the-process-view.html">14&nbsp; The Process View</a></li>
@@ -486,18 +489,21 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="3.7-the-scope-of-modeling.html">18&nbsp; The Scope of Modeling</a></li>
 <li><a class="" href="3.8-keeping-models-in-sync.html">19&nbsp; Keeping the Models in Sync with the Code — A Measurement</a></li>
 <li class="part">Part 4 — Putting It to Work</li>
+<li><a class="" href="part-4-intro.html">Putting It to Work</a></li>
 <li><a class="" href="4.1-brownfield.html">20&nbsp; Brownfield</a></li>
 <li><a class="" href="4.2-the-skills.html">21&nbsp; The Skills</a></li>
 <li><a class="" href="4.3-transformations.html">22&nbsp; Everything Is a Transformation</a></li>
 <li><a class="" href="4.4-training-data.html">23&nbsp; Training Data and the Novelty Axis</a></li>
 <li><a class="" href="4.5-lessons-learned.html">24&nbsp; Lessons Learned</a></li>
 <li><a class="" href="4.6-generative-validation.html">25&nbsp; Validation with Agents</a></li>
-<li class="part">Part 5 — The Context</li>
+<li class="part">Part 5 — A MAGE Case Study</li>
+<li><a class="" href="part-5-intro.html">A MAGE Case Study</a></li>
 <li><a class="" href="5.1-the-ada-context.html">26&nbsp; The ADA Context</a></li>
 <li><a class="" href="5.2-the-timeline-and-the-work.html">27&nbsp; The Timeline and the Work</a></li>
 <li><a class="" href="5.3-the-built-system.html">28&nbsp; The Built System</a></li>
 <li><a class="" href="5.4-the-road-to-mage.html">29&nbsp; The Road to MAGE</a></li>
-<li class="part">Part 6 — Back Matter</li>
+<li class="part">Part 6 — Reflections</li>
+<li><a class="" href="part-6-intro.html">Reflections</a></li>
 <li><a class="" href="6.1-toward-a-theory-of-mage.html">30&nbsp; Toward a Theory of MAGE</a></li>
 <li><a class="" href="6.2-implications-for-se.html">31&nbsp; Implications for Software Engineering</a></li>
 <li><a class="" href="6.3-conclusion.html">32&nbsp; Conclusion</a></li>
@@ -552,7 +558,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-d-from-drifted-wiki-to-trusted-model.html">Appendix D - 2. From Drifted Wiki to Trusted Model</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 14 · The Process View"><header class="chap"><div class="kicker"><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 14</a></div><h1><span class="chap-num">3.3</span> The Process View</h1></header><p id="idx-def-process-view">The Logical view named the parts. The Process view asks the question the logical view cannot: what happens when many parts run at the same time? Concurrency turns a correct-in-isolation design into a source of races, deadlocks, and torn writes, and the more parts run at once, the more interleavings the design must survive. The Process view is the lens for that — the states a system moves through, the locks it takes, and the invariants that must hold across every one of those interleavings. Those invariants are not comments: a checker holds the running system to them, so a race cannot reach production unseen — the Alignment Thesis, read at the grain of concurrency.</p>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 14 · The Process View"><header class="chap"><div class="kicker"><a href="part-3-intro.html" aria-label="Beginning of Part 3 — The Model Zoo">Part 3 — The Model Zoo</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 14</a></div><h1><span class="chap-num">3.3</span> The Process View</h1></header><p id="idx-def-process-view">The Logical view named the parts. The Process view asks the question the logical view cannot: what happens when many parts run at the same time? Concurrency turns a correct-in-isolation design into a source of races, deadlocks, and torn writes, and the more parts run at once, the more interleavings the design must survive. The Process view is the lens for that — the states a system moves through, the locks it takes, and the invariants that must hold across every one of those interleavings. Those invariants are not comments: a checker holds the running system to them, so a race cannot reach production unseen — the Alignment Thesis, read at the grain of concurrency.</p>
 <p>This is the chapter where invariants stop being predicates over one state and become predicates over an <em>order of events</em>. That step-up pulls in a cluster of ideas: what an automaton is, safety versus liveness, bounded model checking, and the temporal-logic step from a state assertion to a sequence assertion. This chapter defines each as it is first needed, and <a href="0.2-the-books-language.html">The Book's Language</a> collects them for quick reference. Two general types live here — the <strong>state machine</strong> and the <strong>automaton / formal invariant</strong> — and four real models embody the view: formal invariant verification as the verification backbone, the synchronization model, and the mediator and single-writer registries.</p>
 <blockquote id="idx-def-state-machine" class="concept-inset"><p class="inset-title" id="inset-automaton">What is an automaton / state machine?</p>
 <p>An <strong>automaton</strong>, or <strong>state machine</strong>, is a finite set of states and the labeled transitions between them. It models computation as "which state am I in, and which moves are legal from here." A microwave is <em>idle</em>, <em>cooking</em>, or <em>door-open</em>; pressing start moves idle to cooking, opening the door moves cooking to door-open. The value of drawing it: the illegal states and the missing transitions become visible. If a path leads back to <em>cooking</em> while the door is open, the diagram shows you the way to cook yourself. A state machine is the logical spine the Process view's invariants attach to — the invariant is a predicate over the states, and the checker walks the transitions.</p></blockquote>
@@ -684,4 +690,4 @@ if __name__ == "__main__":
 <h3 id="single-writer-registry">The single-writer registry</h3>
 <p id="idx-def-single-writer-registry">The single-writer registry is the <em>exactly-one</em> half, and its failure mode is what makes it a separate model. A mediator caps how many may run; a single-writer contract says one function, and only one, may write a given piece of shared state. The failure it guards against is a <em>torn or interleaved write</em> — two writers corrupting the same state — which a concurrency cap of two would happily permit, because two mediated processes racing on the same record is still within cap. Its quality property is <strong>single-writer coverage</strong>: every mutator of shared state has a declared monopoly, and a second discovered writer of that state is a finding. The mediator bounds contention, the single-writer registry bounds <em>ownership</em>, and only naming both keeps a corruption bug from hiding inside a load limit. This one cost me a day of chasing a corrupted registry file before I saw that two "safely rationed" writers were the whole problem: the semaphore was doing its job and guarding nothing that mattered. Its full construct-and-invariant treatment is in the appendix.</p>
 <p>---</p>
-<p>The Process view holds the system consistent under interleaving. Next, the Development view: how the code is packaged, layered, and owned.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="3.1-the-executable-zoo.html" aria-label="Beginning of Part 3 — The Model Zoo">« Beginning of part</a><a href="3.2-the-logical-view.html" aria-label="Previous chapter — 13 · The Logical View">« Previous chapter</a></div><span class="chapnav-here" title="14 · The Process View">14 · The Process View</span><div class="chapnav-fwd"><a href="3.4-the-development-view.html" aria-label="Next chapter — 15 · The Development View">Next chapter »</a><a href="4.1-brownfield.html" aria-label="Next part — Part 4 — Putting It to Work">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>
+<p>The Process view holds the system consistent under interleaving. Next, the Development view: how the code is packaged, layered, and owned.</p><nav class="chapnav" aria-label="Chapter navigation"><div class="chapnav-back"><a href="index.html" aria-label="Table of contents">« Table of contents</a><a href="part-3-intro.html" aria-label="Beginning of Part 3 — The Model Zoo">« Beginning of part</a><a href="3.2-the-logical-view.html" aria-label="Previous chapter — 13 · The Logical View">« Previous chapter</a></div><span class="chapnav-here" title="14 · The Process View">14 · The Process View</span><div class="chapnav-fwd"><a href="3.4-the-development-view.html" aria-label="Next chapter — 15 · The Development View">Next chapter »</a><a href="part-4-intro.html" aria-label="Next part — Part 4 — Putting It to Work">Next part »</a><a href="book-index.html" aria-label="Index of terms">Index »</a></div></nav><div class="book-foot">© James C. Davis, 2026–present</div></main></body></html>

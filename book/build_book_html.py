@@ -402,6 +402,11 @@ _PART_EPIGRAPHS: dict[int, tuple[str, str]] = {}
 
 _PART_CHAP_RE = re.compile(r"^(\d+)\.(\d+)-")
 
+# The stem of a numbered Part's landing-page source (`part<N>/00-part-intro.md`) — the Part title + a
+# one-paragraph "what you'll learn". It does NOT match `_PART_CHAP_RE`, so `_discover_chapters` special-cases
+# it into a synthetic chapter-0 record (the same shape the appendix front-door uses).
+_PART_INTRO_STEM = "00-part-intro"
+
 
 def _load_metrics() -> dict[str, str]:
     """Read `data/metrics.json` (the single source for the book's headline numbers). Keys prefixed
@@ -785,6 +790,22 @@ def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str
     }
 
 
+def _parse_part_intro(path: pathlib.Path, part: int, metrics: dict[str, str]) -> dict:
+    """A numbered Part's landing page — a synthetic chapter-0 record built from `part<N>/00-part-intro.md`.
+    Reuses `parse_chapter` for the token / design-token / metrics passes, then overrides three things: a UNIQUE
+    slug (`part-<N>-intro`; the `00-part-intro` stem is identical across Parts, so `path.stem` would collide),
+    `chapter: 0` so it sorts ahead of the Part's real chapters, and `is_part_page` so every number-suppression
+    site (the `seq` counter, `_chap_ref`, the H1 `part.chapter` prefix, and the PDF twin) skips it — the Part
+    opener shows no `N.0`, mirroring the appendix front-door's chapter-0 page. The title comes from `_PART_TITLES`
+    (the single source of a Part's name), so the H1 can never drift from the Part it heads."""
+    rec = parse_chapter(path, part, 0, metrics)
+    rec["slug"] = f"part-{part}-intro"
+    rec["chapter_title"] = _PART_TITLES.get(part, rec["chapter_title"])
+    rec["part_title"] = _PART_TITLES.get(part, "")
+    rec["is_part_page"] = True
+    return rec
+
+
 def _discover_chapters(metrics: dict[str, str]) -> list[dict]:
     """Walk the Part/Chapter filesystem hierarchy → an ordered list of chapter records. Part number
     and chapter number come from the PATH (the `part<N>/` dir and the `<N>.<M>-slug.md` name); the
@@ -795,6 +816,12 @@ def _discover_chapters(metrics: dict[str, str]) -> list[dict]:
         if not d.is_dir():
             continue
         for p in sorted(d.glob("*.md")):
+            if p.stem == _PART_INTRO_STEM:
+                # A numbered Part's landing page. Front matter (0) and true back matter (7 — apparatus) are
+                # not numbered Parts, so they carry no landing page even if a stray intro file appears.
+                if part not in (0, 7):
+                    found.append(_parse_part_intro(p, part, metrics))
+                continue
             m = _PART_CHAP_RE.match(p.name)
             if not m:
                 continue  # not a chapter file (e.g. a stray README)
@@ -811,7 +838,7 @@ def _discover_chapters(metrics: dict[str, str]) -> list[dict]:
     # drift again: renumbering is just moving a file.
     seq = 0
     for c in found:
-        if not c.get("is_matter"):
+        if not c.get("is_matter") and not c.get("is_part_page"):
             seq += 1
             c["seq"] = seq
     # Resolve `[data: <slug>]` cross-ref markers now that every chapter's title is known — the link text
@@ -1965,8 +1992,9 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
 
 def _chap_ref(c: dict) -> str:
-    """The 'N.M' reference for a numbered chapter, or '' for front/back matter."""
-    return "" if c.get("is_matter") or c.get("is_appendix") else str(c["seq"])
+    """The 'N.M' reference for a numbered chapter, or '' for front/back matter, the appendix, and a Part
+    landing page (the Part opener carries no chapter number)."""
+    return "" if c.get("is_matter") or c.get("is_appendix") or c.get("is_part_page") else str(c["seq"])
 
 
 def _toc_prefix(c: dict) -> str:
@@ -2101,6 +2129,11 @@ def _kicker_html(chapters: list[dict], idx: int, num_label: str) -> str:
     Contents. The links keep the kicker's understated small-caps look (accent colour, underline on hover
     only — see the `.kicker a` CSS). Front/back matter and appendix pages carry only the part half."""
     c = chapters[idx]
+    # A Part landing page IS the Part opener; its kicker names the Part and links to the whole-book Contents
+    # (there is no earlier page in the Part to jump to). The H1 below already carries the Part title.
+    if c.get("is_part_page"):
+        return (f'<a href="index.html" aria-label="Book contents — jump to the chapter list">'
+                f'Part {c["part"]}</a>')
     part_first = next((p for p in chapters if p["part"] == c["part"]), c)
     part_text = html.escape(_part_label(c))
     part_link = (
@@ -4864,6 +4897,8 @@ def _index_ref_label(pg: dict) -> str:
         if "—" in title:
             return title.split("—")[0].strip()
         return title
+    if pg.get("is_part_page"):
+        return f'Part {pg["part"]}'
     if pg.get("is_matter"):
         return pg["chapter_title"]
     return f'Ch. {pg["seq"]}'
@@ -6061,7 +6096,8 @@ def build() -> int:
     # The first chapter of each Part opens with an epigraph (numbered Parts only).
     seen_parts: set[int] = set()
     for c in chapters:
-        c["show_epigraph"] = c["part"] not in seen_parts and not c.get("is_appendix")
+        c["show_epigraph"] = (c["part"] not in seen_parts and not c.get("is_appendix")
+                              and not c.get("is_part_page"))
         seen_parts.add(c["part"])
 
     # Curated concept index — harvest the index-def / index-example tags across all pages in reading
@@ -6082,7 +6118,9 @@ def build() -> int:
     # Per-chapter pages. Float numbers are CHAPTER-RELATIVE ("Figure 1.3-1"): the counters reset to 1 at
     # each chapter, keyed to the chapter's <part>.<chapter> id, matching the label map _collect_floats built.
     for i, c in enumerate(chapters):
-        if c.get("is_appendix"):
+        if c.get("is_part_page"):
+            num_label = f'Part {c["part"]}'
+        elif c.get("is_appendix"):
             num_label = "Appendix"
         elif c.get("is_matter"):
             num_label = c["chapter_title"]  # "Preface" / "Conclusion"
@@ -6094,7 +6132,7 @@ def build() -> int:
         # (its own A/B/C locators) stay unnumbered. Display-only: it prefixes the chapter H1 here and, as
         # `section_prefix` below, each `## ` section — and never touches a heading's `{#slug}` id anchor,
         # so cross-refs, index-defs, and glossary pointers keep resolving.
-        chap_num = (None if c.get("is_matter") or c.get("is_appendix")
+        chap_num = (None if c.get("is_matter") or c.get("is_appendix") or c.get("is_part_page")
                     else f'{c["part"]}.{c["chapter"]}')
         chap_num_html = f'<span class="chap-num">{html.escape(chap_num)}</span> ' if chap_num else ""
         header = (
