@@ -649,13 +649,17 @@ def _render_note_marker(escaped_text: str) -> str:
     carries an aria-label so a screen reader announces "note N", not a bare symbol (decision #3)."""
     i = _CITE_STATE["note_i"]
     _CITE_STATE["note_i"] = i + 1
+    ns = _CITE_STATE["ns"]
     glyph = html.escape(_note_glyph(i))
     label = html.escape(f"note {i + 1}", quote=True)
-    # role="doc-noteref" (DPUB-ARIA: a mark referencing a note) — a bare <sup> is generic, and
-    # html-validate rejects aria-label on a generic element (aria-label-misuse); the role both
-    # legitimizes the name AND says what the mark is.
-    return (f'<sup class="note-ref" role="doc-noteref" aria-label="{label}">{glyph}</sup>'
-            f'<span class="editorial-note"><span class="cn-mark">{glyph}</span> {escaped_text}</span>')
+    note_id = f"note-{ns}-{i + 1}"
+    # role="doc-noteref" (DPUB-ARIA: a mark referencing a note) and aria-label both belong on the
+    # <a>, not the <sup>: axe's aria-allowed-role rejects the link-derived doc-noteref on a generic
+    # <sup>, and html-validate rejects aria-label on a generic element (aria-label-misuse). Mirror
+    # the citation marker (link the mark to its note) so the role legitimizes the name AND the mark
+    # is a real navigable reference to the editorial note it names.
+    return (f'<sup class="note-ref"><a href="#{note_id}" role="doc-noteref" aria-label="{label}">{glyph}</a></sup>'
+            f'<span class="editorial-note" id="{note_id}"><span class="cn-mark">{glyph}</span> {escaped_text}</span>')
 
 
 def works_cited_section() -> str:
@@ -1628,7 +1632,9 @@ blockquote.aside-sidenote {{ background: transparent; }}
 sup.cite-ref, sup.note-ref {{ line-height: 0; font-size: 0.72em; }}
 sup.cite-ref a {{ color: var(--accent); font-weight: 600; text-decoration: none; }}
 sup.cite-ref a:hover {{ text-decoration: underline; }}
-sup.note-ref {{ color: var(--muted); font-weight: 600; padding-left: 0.05em; }}
+sup.note-ref {{ padding-left: 0.05em; }}
+sup.note-ref a {{ color: var(--muted); font-weight: 600; text-decoration: none; }}
+sup.note-ref a:hover {{ text-decoration: underline; }}
 .cite-note, .editorial-note {{
   display: block; margin: 0.3rem 0 1rem; padding: 0 0 0 0.9rem;
   border-left: 2px solid var(--box-inset-rule); font-size: 14px; line-height: 1.5;
