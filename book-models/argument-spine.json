@@ -8,7 +8,7 @@
     "advancement_edges": 86,
     "reconciled_claims": 18,
     "reconciled_big_ideas": 6,
-    "zero_claim_suspects": 2,
+    "zero_claim_suspects": 3,
     "over_cap_unfocused": 0,
     "thin_claim_gaps": 0,
     "thin_claims_front_loaded": 0,
@@ -521,6 +521,11 @@
       "exempt": "preface"
     },
     {
+      "slug": "0.4-how-to-read-this-book",
+      "advances": [],
+      "exempt": null
+    },
+    {
       "slug": "0.5-acknowledgments",
       "advances": [],
       "exempt": "apparatus"
@@ -797,6 +802,10 @@
   ],
   "flags": {
     "zero_claim_suspects": [
+      {
+        "chapter": "0.4-how-to-read-this-book",
+        "advances": 0
+      },
       {
         "chapter": "6.0-toward-a-theory-of-mage",
         "advances": 0
