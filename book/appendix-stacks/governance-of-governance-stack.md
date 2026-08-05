@@ -6,11 +6,29 @@ governing document itself as enforced, queryable infrastructure.*
 ## The capability
 
 **Govern the control estate the way you govern the product — model it, measure its coverage, bound its
-changes, and grow it by design.** The stack makes one capability: *govern the control estate itself*. A
+changes, and grow it by design.** One capability defines it: *govern the control estate itself*. A
 fleet accumulates lints, gates, mediators, and registries until the estate is a system in its own right,
 with its own failure modes: controls that collide, targets no one guards, substrate changes with unknown
 blast radius, and a governing document that rots. The stack turns each of those into a modeled, queryable,
 self-repairing fact.
+
+### When to adopt this stack
+
+Use this stack when:
+
+- the control estate has grown large enough to be a system in its own right, with its own failure modes
+- two guardrails collide over one shared resource and the clash surfaces only in production
+- a target is guarded by soft aims or by nothing, and no artifact ever asks whether coverage is balanced
+- a cross-cutting substrate change lands blind because its blast radius was a grep no one ran completely
+- the same failure is re-patched locally each time it recurs instead of the class being closed once
+- the governing document itself rots — renumbered, bloated past what fits in context, or drifted from the checks it names
+
+Typical domains:
+
+- agent-collaborative codebases
+- large lint, gate, and mediator portfolios
+- platform and developer-tooling teams
+- long-lived, governance-heavy repositories
 
 ## Failure classes it covers
 
@@ -43,9 +61,9 @@ and hold the top-level document itself as enforced, capped infrastructure.
 
 ### GRAPH — the control-interaction graph {#a-6-governance-graph}
 
-**GRAPH opens the stack.** It models the fleet's governance mechanisms as a typed graph: each control a node
-tagged by the event it fires on and the resources it reads, writes, or locks; each edge a conflict where two
-controls contend over one shared resource.
+**Catch colliding guardrails at model time.** Model the fleet's governance mechanisms as a typed graph: each
+control a node tagged by the event it fires on and the resources it reads, writes, or locks; each edge a
+conflict where two controls contend over one shared resource. (GRAPH.)
 
 **Receives** — the fleet's existing guardrails: turn-end hooks, pre-commit checks, dispatch gates,
 host-level lock mediators. Nothing precedes it; this is the map the rest of the stack reads.
@@ -64,8 +82,8 @@ edges. Both read this graph rather than re-deriving the estate from scratch.
 
 ### CENSUS — the per-target coverage census {#a-6-control-coverage-census}
 
-**CENSUS asks the coverage question of the map.** It classifies every control by which governance target it
-guards — derived from the control's own code anchor, never hand-declared — and rolls the set up per target.
+**Find the estate's blind spots.** Classify each control by the target it guards — derived from its own code
+anchor, never hand-declared — and roll the set up per target, so a bare target is a first-class finding. (CENSUS.)
 
 **Receives** — the graph's control nodes. It reads the same typed node-set GRAPH drew, now asking not how
 two controls collide but how many guard each target.
@@ -83,9 +101,9 @@ conversion loop downstream turns that gap into an actual new control rather than
 
 ### RADIUS — the computed substrate blast-radius {#a-6-control-substrate-dependency}
 
-**RADIUS computes what a change will break before you make it.** Each control declares the substrate
-assumption it bakes in as typed metadata, so "which controls depend on this part of the substrate, and what
-breaks if I change it" becomes a query, not a grep-and-read.
+**Compute a change's blast radius first.** Each control declares the substrate assumption it bakes in as
+typed metadata, so "which controls depend on this part of the substrate, and what breaks if I change it"
+becomes a query, not a grep-and-read. (RADIUS.)
 
 **Receives** — the same controls the graph holds as nodes, now read through their substrate edges. It reads
 each control's declared stance toward the substrate it checks against.
@@ -105,30 +123,30 @@ committing to it.
 
 ### INTERPRET — the failure-to-control conversion loop {#a-6-self-governance}
 
-**INTERPRET makes the estate grow by design.** When a failure recurs, it names the failure class and adds
-the smallest durable guardrail that kills it (a constraint where one can be built, a sensor otherwise),
-firing that conversion on a cadence, not on whoever remembers.
+**Convert each recurring failure into a control.** When a failure recurs, name the class and add the
+smallest durable guardrail that kills it, fired on a cadence rather than on whoever remembers. (INTERPRET.)
 
-**Receives** — a coverage gap from CENSUS or a bounded risk from RADIUS, plus any failure that recurred this
-session. It keys on the recurrence signal: the second occurrence, never the first.
+**Problem** — a re-patched instance leaves the class alive to bite the next agent, and even a team that
+means to convert it forgets on a long autonomous run. The estate stops growing where it most needs to.
 
-**Guarantees** — a class converted once, proportionately. Re-patching an instance leaves the class alive to
-bite the next agent; this closes the class, preferring a constraint that makes the wrong move unrepresentable
-over a sensor that merely detects it. Two halves carry it. The conversion judgment is soft: it proposes and
-scaffolds, it does not install. A time-aware reflection hook is hard, firing the loop at most once per window
-so it aims without decaying into fatigue.
+**Solution** — key on the recurrence signal — the second occurrence, never the first — then add the smallest
+durable guardrail that kills the class: a constraint where one can be built, a sensor otherwise, preferring
+the constraint that makes the wrong move unrepresentable. Two halves carry it: the conversion judgment is
+soft, proposing and scaffolding rather than installing; a time-aware reflection hook is hard, firing the loop
+at most once per window so it aims without decaying into fatigue. Its input is a coverage gap from CENSUS or
+a bounded risk from RADIUS, plus any failure that recurred this session.
 
-**Hands to REGISTRY and INDEX** — a new control that needs a home. A converted failure becomes a rule or a
-check; it must land in the enforced, bounded document below, or the estate grows unindexed and the next
-conversion cannot see what exists.
+**Output** — a new control that needs a home. A converted failure becomes a rule or a check, which must land
+in the enforced, bounded document below, or the estate grows unindexed and the next conversion cannot see
+what exists.
 
 → **Deeper treatment:** role:self-governance.
 
 ### REGISTRY — the queryable rule-metadata registry {#a-6-rule-metadata-registry}
 
-**REGISTRY turns the governing prose into a model.** It attaches a machine-readable block to each rule in
-the governance document (identifier, scope, severity, enforcing check, canonical detail location) and
-extracts those blocks into a typed registry the tooling can query.
+**Make the governing prose queryable.** Attach a machine-readable block to each rule in the governance
+document — identifier, scope, severity, enforcing check, canonical detail location — and extract those blocks
+into a typed registry the tooling can query. (REGISTRY.)
 
 **Receives** — the knowledge the graph and census hold only implicitly, plus every rule the conversion loop
 lands. A rule is human prose until its block makes it extractable.
@@ -146,9 +164,9 @@ that lets the governing document be checked against its own rules, not merely re
 
 ### INDEX — the enforced rule index {#a-6-claude-md-rule-index}
 
-**INDEX closes the stack.** It treats the top-level governance document as enforced infrastructure: a
-numbered, stable-numbered rule index loaded into every agent's boot context, held honest by its own
-enforcement counterpart.
+**Keep the governing document from rotting.** Hold the top-level rule index as capped,
+conformance-checked infrastructure — a numbered, stable-numbered index loaded into every agent's boot
+context, held honest by its own enforcement counterpart. (INDEX.)
 
 **Receives** — everything the registry models and the conversion loop produces: the rules the estate has
 learned, each now a short boot-context statement cross-referenced to the canonical doc that carries it in

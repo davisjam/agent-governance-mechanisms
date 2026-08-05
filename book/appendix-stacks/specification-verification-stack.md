@@ -6,11 +6,28 @@ invariant is a visible gap, not a guess.*
 ## The capability
 
 **Say what "correct" means for a concurrent system, derive every check that correctness owes, and prove each
-one at the right rigor.** The stack makes two capabilities: *establish completion on re-derived evidence*,
+one at the right rigor.** Two capabilities run through it: *establish completion on re-derived evidence*
 and *constrain where and how agents act*. It models the lifecycle as state machines running at once, names
 the predicates that must hold across them, and routes each to a checker by its shape — an exhaustive proof
 for a hairy safety or liveness invariant, a deterministic lint for a linear one. Then it projects coverage
 back onto the model, so a verified-in-principle invariant with no live test is a named hole.
+
+### When to adopt this stack
+
+Use this stack when:
+
+- correctness spans concurrent components and "correct" is nowhere written down
+- concurrency invariants are "tested" by a handful of sampled interleavings, so the violating one ships proven-absent
+- coverage is a line percentage that averages a critical invariant's zero down to invisibility
+- a recurring mistake keeps re-entering through review because a convention decays under a fleet
+- you need each correctness obligation discharged at the rigor its shape demands — a proof for the hairy ones, a lint for the linear ones
+
+Typical domains:
+
+- concurrent job pipelines
+- distributed systems with safety and liveness invariants
+- workflow and state-machine engines
+- safety-critical concurrent software
 
 ## Failure classes it covers
 
@@ -43,8 +60,8 @@ one — place each check where its property is legible, then project coverage ba
 
 ### SPEC — model the concurrent lifecycle and name its invariants {#a-3-composed-state-machine-model}
 
-**SPEC opens the stack.** It models a concurrent lifecycle as a set of typed state machines that run at once,
-and names the predicates that must hold across them as first-class invariants.
+**Say what "correct" means.** Model the concurrent lifecycle as state machines that run at once, and name
+the predicates that must hold across them as first-class invariants. (SPEC.)
 
 **Receives** — the system's concurrent behavior: the job lifecycles, the worker and coordinator states, the
 transitions that today live as scattered ad-hoc guards. Nothing precedes it.
@@ -63,9 +80,8 @@ code, so it leans on the model-coherence stack beneath it.
 
 ### CENSUS — derive what should be tested, lint the gap {#a-3-model-derived-test-obligation-census}
 
-**CENSUS turns the spec into a work-list.** It derives from the models the set of things that should be
-tested — every external seam to fuzz, every failure edge to inject, every invariant to check — then lints
-the gap.
+**Derive every check you owe.** From the model, derive the set of things that should be tested — every
+external seam to fuzz, every failure edge to inject, every invariant to check — then lint the gap. (CENSUS.)
 
 **Receives** — the SPEC's invariants and seams, walked as typed data rather than recalled from memory.
 
@@ -82,8 +98,9 @@ remembered to write.
 
 ### PROVE — let temporal form route the exhaustive checker {#a-3-formal-invariant-verification}
 
-**PROVE is the heavy-rigor tier.** It gives each invariant a temporal form — safety (`□P`, always) or
-liveness (`P ↝ Q`, eventually) — and lets that form route which exhaustive checker verifies it.
+**Prove the hairy invariants exhaustively.** Give each invariant a temporal form — safety (`□P`, always) or
+liveness (`P ↝ Q`, eventually) — and let that form route the exhaustive checker that verifies it, so the one
+violating interleaving is found or ruled out, never sampled past. (PROVE.)
 
 **Receives** — the SPEC's invariants and the CENSUS's obligation set, filtered to the ones whose shape is
 hairy enough to demand a proof.
@@ -102,9 +119,9 @@ proves the wrong thing.
 
 ### LINT — reject the recurring violation at commit {#a-3-semantic-lints}
 
-**LINT is the linear-rigor tier.** A fleet of blocking semantic checks reads the tool's own source — banned
-APIs, silent-catch bans, typed-seam violations — and fails the build on the invariant violations the
-compiler and review miss.
+**Reject the recurring violation at commit.** A fleet of blocking semantic checks reads the tool's own
+source — banned APIs, silent-catch bans, typed-seam violations — and fails the build on the invariant
+violations the compiler and review miss. (LINT.)
 
 **Receives** — the CENSUS's linear obligations and the tool's source structure, read as a parse tree rather
 than a regex over surface text.
@@ -121,8 +138,8 @@ as good as the granularity it targets, so its trustworthiness passes to the next
 
 ### LEVEL — fire each check where its property is legible {#a-3-semantic-level-enforcement}
 
-**LEVEL makes the deterministic tier correct, not merely present.** It places each check at the granularity
-where the property it guards first becomes legible, not at the cheapest or earliest point.
+**Check each property where it's legible.** Place each check at the granularity where its invariant first
+becomes observable, not at the cheapest or earliest point. (LEVEL.)
 
 **Receives** — the checks LINT defines, each needing a scope at which its invariant is actually observable.
 
@@ -139,8 +156,8 @@ rather than a red gate — the most expensive failure to notice, and the one thi
 
 ### COVER — project coverage onto the model's nodes {#a-3-coverage-model-mapping}
 
-**COVER closes the stack.** It projects test coverage onto the model's own nodes — its states, seams, and
-invariants — so "is this invariant tested?" is a queried fact, not a guess from a line-coverage percentage.
+**Make "is this tested?" a query.** Project coverage onto the model's own nodes — its states, seams, and
+invariants — so an invariant with no covering test is a visible gap, not a guess from a line percentage. (COVER.)
 
 **Receives** — the SPEC's nodes and the tests the census owed and the two tiers discharged, mapped
 test-by-test to the model nodes each exercises.

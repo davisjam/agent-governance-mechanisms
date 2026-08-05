@@ -5,11 +5,28 @@ the agent queries is what is true.*
 ## The capability
 
 **Give a bounded-context agent a typed map it can reason through, and hold that map equal to the code so the
-map never lies.** The stack makes two capabilities: *maintain authoritative system knowledge*, and *keep
-representations equal to reality*. The models are executable data, not prose — read live, checked against
+map never lies.** It answers two of the nine capabilities at once — *maintain authoritative system
+knowledge* and *keep representations equal to reality*. The models are executable data, not prose — read live, checked against
 reality by a gate, derived where a derived edge cannot drift, and generated back into the system. An agent
 that cannot hold the whole codebase queries the map instead, and the map is trustworthy because machinery,
 not hope, keeps it current.
+
+### When to adopt this stack
+
+Use this stack when:
+
+- an agent cannot hold the whole system in context and must reason through a map of it instead
+- structure lives in diagrams and prose a program cannot read, so it drifts the moment the code moves
+- consumers copy facts out of a model into their own code and the copies diverge silently
+- a complex file format is mutated from a hundred raw call sites with nowhere to encode its invariants
+- you need a map the fleet can trust because machinery, not habit, keeps it equal to the code
+
+Typical domains:
+
+- large agent-collaborative codebases
+- model-driven and MBSE engineering
+- multi-service system topologies
+- tools built over a complex shipped file format
 
 ## Failure classes it covers
 
@@ -43,8 +60,8 @@ artifacts from the model, and apply the same discipline to a shipped file format
 
 ### DATA — model the system as executable data {#a-2-executable-source-of-truth}
 
-**DATA opens the stack.** It models the system as typed data the tools import and run on, not a diagram
-prose narrates — so a program can read the structure and catch it the moment it moves.
+**Make the system machine-readable.** Model the system as executable data the tools import and run on, so a
+program reads the structure and catches it the moment it moves. (DATA.)
 
 **Receives** — the system's own structure: its components, its state machines, its service topology, its
 registries. Nothing precedes it; this is the ground the rest stand on.
@@ -62,8 +79,8 @@ own it is just well-typed documentation.
 
 ### CONSUME — read the model, don't copy it {#a-2-meta-model-consumption}
 
-**CONSUME keeps the source of truth true.** Each consumer resolves the fact it needs by querying the live
-model, never by baking a snapshot of it into its own code.
+**Read the fact, never a copy of it.** Each consumer resolves the fact it needs by querying the live model,
+so no second copy exists to fall out of date. (CONSUME.)
 
 **Receives** — the typed model DATA published, and a consumer that needs one of its facts: a queue name, a
 component boundary, a policy value.
@@ -81,8 +98,8 @@ is the discipline that makes the DATA above it worth trusting.
 
 ### PARITY — fail the build when the map and territory disagree {#a-2-drift-parity-gates}
 
-**PARITY is the keystone.** A fleet of deterministic lints fails the build whenever a model and the reality
-it mirrors disagree, in either direction.
+**Catch drift mechanically.** A fleet of deterministic lints fails the build whenever a model and the
+reality it mirrors disagree, in either direction. (PARITY.)
 
 **Receives** — the executable model and the reality it claims to mirror: the code, the artifacts, the things
 on disk it names.
@@ -100,8 +117,8 @@ optimistic documentation.
 
 ### DERIVE — anchor every model-to-code edge to a symbol {#a-2-symbol-anchored-traceability-graph}
 
-**DERIVE raises parity to its highest rung.** It links every model to its lint, its code entry-point, its
-proof, and its related models as a typed graph whose every edge a lint re-checks.
+**Make every join refactor-proof.** Anchor each model-to-code edge on a resolvable symbol a lint re-checks,
+so moving the code reddens the scan instead of silently breaking the link. (DERIVE.)
 
 **Receives** — the parity-held models and the code symbols they connect to: the functions, the classes, the
 checks that give each edge a real endpoint.
@@ -118,8 +135,8 @@ higher rung. It leaves the generator standing on links that a refactor cannot si
 
 ### EMIT — generate real artifacts from the model {#a-2-model-driven-codegen}
 
-**EMIT turns the model from something read into something that produces.** A generator emits real artifacts
-from the model — policy, wiring, catalogs, contract types — each carrying a provenance header.
+**Generate from the model, don't restate it.** A generator emits real artifacts from the model — policy,
+wiring, catalogs, contract types — each carrying a provenance header. (EMIT.)
 
 **Receives** — the parity-held, traceable model, consumed the way a compiler consumes a source file.
 
@@ -135,19 +152,18 @@ apply the same one-model discipline to a shipped file format, which the last par
 
 ### SEAL — route a file format through one model {#a-2-pdf-model}
 
-**SEAL closes the stack on the product side.** It routes every read and write of a complex file format
-through one structured model, with raw library access ban-linted away (our instance: a PDF model over the
-canonical PDF library).
+**Give the format one mutation surface.** Route every read and write of a complex file format through one
+structured model, with raw library access banned (our instance: a PDF model over the canonical PDF library). (SEAL.)
 
-**Receives** — every mutation a remediation pass wants to make to the file format, plus the raw library
-calls that would otherwise scatter across a hundred sites.
+**Purpose** — apply the same one-model discipline to a shipped file format, where mutation would otherwise
+scatter across a hundred raw library calls with nowhere to encode the format's invariants.
 
-**Guarantees** — a single, compiler-checked mutation surface. One typed model is the sole door; a ban-lint
-forbids the raw library, so every change passes through code that encodes the format's invariants. A
-malformed write can no longer land from just anywhere, and a fix to an invariant holds everywhere at once.
+**Mechanism** — one typed model is the sole door; a ban-lint forbids the raw library, so every change passes
+through code that encodes the format's invariants. Every mutation a remediation pass wants to make routes
+here rather than through a raw call site.
 
-**Hands off** — the stack's guarantee, applied to a shipped artifact. This is model-coherence turned on the
-product: one canonical representation, held sole by a ban-lint. It is also the single door the provenance
+**Guarantee** — a single, compiler-checked mutation surface. A malformed write can no longer land from just
+anywhere, and a fix to an invariant holds everywhere at once. This is also the single door the provenance
 stack's stamp-writer needs to cover, so the two stacks meet at exactly this seam.
 
 → **Deeper treatment:** role:pdf-model.

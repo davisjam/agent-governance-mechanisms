@@ -2383,6 +2383,7 @@ def _appendix_intro_extras_md() -> str:
     dispositions = data.get("dispositions", {})
     principles = {p.get("id"): p for p in data.get("L1_principles", [])}
     capabilities = data.get("gee_capabilities", [])
+    cap_groups = data.get("gee_capability_groups", [])
     manifest = _load_print_manifest()
 
     parts: list[str] = []
@@ -2414,21 +2415,47 @@ def _appendix_intro_extras_md() -> str:
             ]
 
     # ── The nine-capability map. The `gee_capabilities` groups the whole catalogue under nine jobs a
-    #    governed environment must do; the patterns below are the shapes that do them.
+    #    governed environment must do; the patterns below are the shapes that do them. The nine are rendered
+    #    under the book's own agent / models-bridge / product triad (`gee_capability_groups`) — three retained
+    #    chunks (2 / 4 / 3) beat nine flat peers for memorability, and the grouping is the frame the rest of
+    #    the book already teaches rather than a fourth taxonomy.
     if capabilities:
         parts += [
             "## The nine capabilities",
             "",
             "The mechanisms answer to nine capabilities a governed engineering environment needs. Each names "
-            "a job the fleet must do; the patterns grouped under it are the shapes that do it. The stacks "
-            "below and the reference that closes this appendix both sort into these nine.",
+            "a job the fleet must do; the patterns grouped under it are the shapes that do it. Nine peers are "
+            "hard to hold, so they hang on the book's own triad of what governance acts on — the "
+            "**models-bridge** the fleet reasons through, the **product** it ships, and the **agent** fleet "
+            "that does the work. The stacks below and the reference that closes this appendix both sort into "
+            "these nine.",
             "",
         ]
-        for cap in capabilities:
-            name = cap.get("name", "").strip()
-            gloss = cap.get("gloss", "").strip()
-            parts.append(f"- **{name}.** {gloss}")
-        parts.append("")
+        if cap_groups:
+            # Group order + labels come from the model; each capability carries its `group` id. Fail-loud on a
+            # capability whose group is unknown, so a model edit cannot silently drop one from the map.
+            known = {g.get("id") for g in cap_groups}
+            ungrouped = [c.get("id") for c in capabilities if c.get("group") not in known]
+            if ungrouped:
+                raise SystemExit(f"nine-capability map: capabilities with no known group: {ungrouped}")
+            for grp in cap_groups:
+                gid = grp.get("id")
+                label = grp.get("label", "").strip()
+                subtitle = grp.get("subtitle", "").strip()
+                parts += [f"**{label} — {subtitle}.**", ""]
+                for cap in capabilities:
+                    if cap.get("group") != gid:
+                        continue
+                    name = cap.get("name", "").strip()
+                    gloss = cap.get("gloss", "").strip()
+                    parts.append(f"- **{name}.** {gloss}")
+                parts.append("")
+        else:
+            for cap in capabilities:
+                name = cap.get("name", "").strip()
+                gloss = cap.get("gloss", "").strip()
+                parts.append(f"- **{name}.** {gloss}")
+            parts.append("")
 
     return "\n".join(parts).strip()
 

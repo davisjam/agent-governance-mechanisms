@@ -7,11 +7,28 @@ it is infrastructure that endures or a crutch a stronger model eases.*
 
 **Deliver the policy an agent needs at the grain and moment it needs it — the task's constraints into the
 brief, the standing rules into the boot, an omitted step off the runtime lifecycle, a soft discipline as a
-rate-limited nudge.** The stack makes one capability: *manage work, state, and resources*, on its context
-face. Five delivery surfaces at four grains, so a bounded-context agent acts on the slice that matters
+rate-limited nudge.** It meets one capability on its context face: *manage work, state, and resources*.
+Five delivery surfaces at four grains, so a bounded-context agent acts on the slice that matters
 rather than re-reading a whole rulebook or trusting its memory. Read against the years the parts split: some
 are infrastructure a larger window does not retire, some are 2026-era crutches whose pressure eases as
 models improve.
+
+### When to adopt this stack
+
+Use this stack when:
+
+- a bounded-context agent must act on the relevant policy slice, not a whole rulebook or its own memory
+- agents read the wrong part of a rulebook and burn rounds repairing violations they would have honored had the rule been in front of them
+- briefs ship missing a piece of safety boilerplate and the agent trips exactly that sharp edge downstream
+- a step that must happen at a precise moment depends on someone remembering it
+- several soft reminders each fire on their own cadence and compound into noise the operator learns to ignore
+
+Typical domains:
+
+- LLM-agent orchestration
+- autonomous coding fleets
+- brief and prompt delivery pipelines
+- agent-collaborative codebases
 
 ## Failure classes it covers
 
@@ -44,9 +61,9 @@ runtime lifecycle event, and nudge a standing discipline at a paced cadence.
 
 ### INJECT — file-scoped constraint injection {#a-7-dynamic-context-injection}
 
-**INJECT opens the stack with just-in-time delivery.** It maps the files an agent is about to touch to the
-exact constraints that govern them — lints, conventions, boundaries, tests — and injects that slice into the
-brief before the agent writes code.
+**Deliver the constraints this task invokes.** Map the files an agent is about to touch to the exact
+constraints that govern them — lints, conventions, boundaries, tests — and inject that slice into the brief
+before the agent writes code. (INJECT.)
 
 **Receives** — the task's target files and the fleet's addressable constraint registries. Nothing precedes
 it; this is where policy first meets the specific task.
@@ -66,9 +83,9 @@ both land in the same brief at dispatch.
 
 ### SNIPPET — the mandatory brief-snippet table {#a-7-mandatory-snippet-table}
 
-**SNIPPET asserts the standing boilerplate is present.** A registry names the mandatory brief snippets —
-PATH export, commit cadence, worktree discovery, submodule check — and a dispatch-time lint asserts each
-required one appears in the brief.
+**Guarantee the safety boilerplate is present.** A registry names the mandatory brief snippets — PATH
+export, commit cadence, worktree discovery, submodule check — and a dispatch-time lint refuses any brief
+missing a required one. (SNIPPET.)
 
 **Receives** — the brief INJECT is filling, plus the registry of what every brief of this shape must carry.
 
@@ -87,8 +104,8 @@ shares, whatever the task.
 
 ### INDEX — the boot-context rule index {#a-7-claude-md-rule-index}
 
-**INDEX delivers the always-on baseline.** The numbered, stable-numbered rule index loads into every agent's
-boot context — standing policy present by construction at the start of every run, not fetched on demand.
+**Boot every agent on the same policy.** Load the numbered rule index into every agent's boot context, so
+standing policy is present by construction at the start of every run rather than fetched on demand. (INDEX.)
 
 **Receives** — the standing rules themselves, each a short boot-context statement cross-referenced to the
 canonical doc that carries it in full. It sits beneath INJECT and SNIPPET as the layer neither specializes.
@@ -107,9 +124,9 @@ principle, applied to the lifecycle rather than the context.
 
 ### HOOK — the runtime lifecycle hook {#a-7-lifecycle-hooks}
 
-**HOOK delivers an action at a runtime moment.** It binds a script to the agent runtime's lifecycle events —
-turn-stop, pre-compaction, session-start, before-a-tool-call — so a step the operator keeps omitting fires
-deterministically.
+**Fire the omitted step deterministically.** Bind a script to the agent runtime's lifecycle events —
+turn-stop, pre-compaction, session-start, before-a-tool-call — so a step someone keeps forgetting happens
+whether or not anyone remembered. (HOOK.)
 
 **Receives** — the runtime's named lifecycle events and a step that must happen at one of them. Where the
 layers above deliver policy into context, this one reads the runtime itself.
@@ -129,23 +146,21 @@ second soft nudge starts the fatigue the tempo-gated substrate below resolves.
 
 ### NUDGE — the tempo-gated reflection substrate {#a-7-reflection-facet-substrate}
 
-**NUDGE closes the stack at the lowest pressure.** It consolidates the operator's reflection nudges into one
-tempo-gated substrate: a registry of facets, each reflecting the context against one policy dimension it
-references, not copies, the whole family emitting at most one reflection per window.
+**Nudge without alarm fatigue.** This is the stack's softest delivery — a rate-limited soft reminder of a
+standing discipline, at the gentle end of the delivery spectrum. (NUDGE.)
 
-**Receives** — the single-hook primitive from HOOK, plus more than one discipline worth nudging. It earns
-its keep at the second facet, not the first.
+**Purpose** — reflect the running work against a standing discipline without becoming noise. Fire several
+nudges, each on its own cadence, and together they become a wall the operator tunes out, killing them all at
+once.
 
-**Guarantees** — soft reminders that cannot compound into fatigue. Fire several nudges, each on its own
-cadence, and together they become a wall the operator tunes out, killing them all at once. One shared tempo
-budget caps the aggregate: a class's facets round-robin for a single window's reflection. A closed surface
-stops a facet re-implementing shared machinery; each facet points at its canonical policy, so a moved doc
-trips a lint rather than rotting in a payload string; per-firing telemetry puts the family on a measured
-leash, pulled on over-fire or near-zero yield.
+**Mechanism** — one tempo-gated substrate consolidates the reflection nudges: a registry of facets, each
+reflecting the context against one policy dimension it references rather than copies, the whole family
+emitting at most one reflection per window. It earns its keep at the second facet, not the first.
 
-**Hands off** — the stack's softest delivery. Where the other four deliver required policy and actions, the
-nudge delivers a rate-limited soft reminder of a standing discipline, so it aims without overwhelming: the
-gentle end of this stack's delivery spectrum.
+**Guarantee** — soft reminders that cannot compound into fatigue. One shared tempo budget caps the
+aggregate, so a class's facets round-robin for a single window's reflection. Each facet points at its
+canonical policy, so a moved doc trips a lint rather than rotting in a payload string; per-firing telemetry
+puts the family on a measured leash, pulled on over-fire or near-zero yield.
 
 → **Deeper treatment:** role:reflection-facet-substrate.
 

@@ -5,10 +5,27 @@ responses instead of scraping logs and reasoning from memory.*
 ## The capability
 
 **Turn a running-but-wrong pipeline — the worst failure because it is invisible — into a named signal and a
-procedure that answers it.** The stack makes two capabilities: *manage work, state, and resources*, and
+procedure that answers it.** It discharges two capabilities: *manage work, state, and resources*, and
 *govern the control estate itself*. Every substrate emits its health onto one typed surface; a written
 procedure answers each signal; a gate refuses new work while a serious one stands unresolved; and a standing
 map makes every signal interpretable. The operator reacts to structure, not to scraped text.
+
+### When to adopt this stack
+
+Use this stack when:
+
+- fleet health is scattered across a dozen logs in different shapes and learned late, by reading
+- a long-running process goes silent and nothing tells a wedged one from a slow one
+- a red signal fires but says nothing about what to do, so each response is re-reasoned under incident pressure
+- operators keep piling work onto a known-broken substrate because ignoring a signal costs nothing
+- an operating agent knows the symptom but not how the substrate is supposed to work, so it mis-operates the fleet
+
+Typical domains:
+
+- autonomous agent-fleet operations
+- long-running deploy and CI pipelines
+- distributed job systems
+- on-call and SRE estates
 
 ## Failure classes it covers
 
@@ -39,8 +56,8 @@ fires, a gate raises the cost of ignoring a serious one, and an operator skill s
 
 ### WATCH — the typed event bus {#a-4-typed-event-bus}
 
-**WATCH opens the loop.** It gives every substrate one typed surface to announce its lifecycle and health
-on, turning the orchestrator from a passive log-reader into a reactor over a single signal stream.
+**Make fleet health legible.** Give every substrate one typed surface to announce its lifecycle and health
+on, so the operator reacts to a single signal stream instead of scraping logs. (WATCH.)
 
 **Receives** — lifecycle and health facts from across the fleet: is cron running, is the merge-train
 yielding, are tombstones stuck. Nothing precedes it; this is where the loop starts.
@@ -58,9 +75,8 @@ high-severity events. Everything after reacts to what the bus says.
 
 ### BEAT — periodic liveness heartbeats {#a-4-deploy-heartbeats}
 
-**BEAT sharpens the observed picture.** A long-running process emits a periodic beat carrying its phase and
-elapsed time, and a sweep flags a worker that has stopped beating — so a hung process is distinguishable
-from a merely slow one.
+**Tell a hung process from a slow one.** A long-running process emits a periodic beat carrying its phase and
+elapsed time, and a sweep flags a worker that has stopped beating; silence past the cadence reads as stale. (BEAT.)
 
 **Receives** — the runtime state of long operations: a deploy that runs many minutes, a worker grinding
 through a slow phase. It rides the WATCH bus as that bus's liveness channel.
@@ -77,9 +93,9 @@ tells the operator whether to wait or to act, which is the first thing the playb
 
 ### RESPOND — situation-keyed operational playbooks {#a-4-operational-playbooks}
 
-**RESPOND is the loop's active half.** For each situation the signals surface, a written decision procedure
-names the trigger, the ordered steps, and the reflexes to avoid — so an operator under incident pressure
-follows a pre-reasoned response instead of re-deriving one badly.
+**Answer every signal with a written procedure.** For each situation the signals surface, a decision
+procedure names the trigger, the ordered steps, and the reflexes to avoid — so an operator under incident
+pressure follows a pre-reasoned response instead of re-deriving one badly. (RESPOND.)
 
 **Receives** — a fired signal from WATCH: a broken deploy, a wedged cron, a worktree destroyed mid-flight,
 an alert gate that deadlocked. The bus says what happened; the playbook takes it from there.
@@ -96,29 +112,29 @@ the gate downstream leans on the playbook to say how a blocking alert gets clear
 
 ### BLOCK — the high-severity alerts gate {#a-4-cron-alerts-gate}
 
-**BLOCK raises the cost of ignoring a signal from zero to blocking.** While an unresolved high-severity
-alert stands, the gate refuses new orchestrator work-dispatch until the alert is acknowledged or resolved.
+**Make ignoring a serious signal costly.** While an unresolved high-severity alert stands, the gate refuses
+new work-dispatch until it is acknowledged or resolved. (BLOCK.)
 
-**Receives** — the unresolved high-severity alerts on the WATCH bus, read at session start against what was
-last seen.
+**Problem** — surfacing a signal is not enforcing a response. An orchestrator can see, miss, or ignore a red
+state and keep piling new work onto a possibly-broken substrate, compounding the failure it should have
+stopped to fix.
 
-**Guarantees** — no piling new work onto a known-broken substrate. Surfacing a signal is not enforcing a
-response; an orchestrator can see, miss, or ignore a red state and keep dispatching. This gate makes the
-response mandatory — an unresolved alert refuses the dispatch, worktree-create, and merge tools outright. It
-is designed deadlock-free: exempt tools plus an alert-resolving dispatch mean the gate can always be cleared,
-never wedged shut.
+**Solution** — read the unresolved high-severity alerts on the WATCH bus at session start, against what was
+last seen, and make the response mandatory: an unresolved alert refuses the dispatch, worktree-create, and
+merge tools outright. It is designed deadlock-free — exempt tools plus an alert-resolving dispatch mean the
+gate can always be cleared, never wedged shut.
 
-**Hands to OPERATE** — a fleet held still until the problem is addressed. The alert names it, the playbook
-says how to clear it, and this gate refuses to proceed until one or the other is done — leaving the operator
-skill to supply the standing map that makes the whole loop interpretable.
+**Output** — a fleet held still until the problem is addressed. The alert names it, the playbook says how to
+clear it, and this gate refuses to proceed until one or the other is done, leaving the operator skill to
+supply the standing map that makes the whole loop interpretable.
 
 → **Deeper treatment:** role:cron-alerts-gate.
 
 ### OPERATE — the operator runbook skill {#a-4-operator-runbook-skill}
 
-**OPERATE closes the loop.** A loadable skill gives an operating agent the positive map of how the substrate
-works — its lifecycles and healthy baselines — first, and a symptom-to-resolving-doc catalog as the fallback
-when something breaks.
+**Operate from a model, not from memory.** A loadable skill gives an operating agent the positive map of how
+the substrate works — its lifecycles and healthy baselines — first, and a symptom-to-resolving-doc catalog as
+the fallback when something breaks. (OPERATE.)
 
 **Receives** — an operator, human or agent, who must know two things: how the substrate runs when healthy,
 and what to do when it breaks. Where WATCH and BEAT show state and RESPOND and BLOCK handle each bad one,

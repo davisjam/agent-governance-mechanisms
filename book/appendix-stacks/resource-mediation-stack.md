@@ -6,11 +6,29 @@ signal.*
 ## The capability
 
 **Run dozens of agent worktrees on one box at the right degree of parallelism — no collisions, no thrash, no
-swap.** The stack makes one capability: *manage work, state, and resources*. It declares which work must be
+swap.** It serves a single capability — *manage work, state, and resources* — on the resource face. It
+declares which work must be
 serialized and which may run in parallel, holds each declaration with a host-level lock, and puts a live
 pressure signal over the whole that refuses new heavy work before it starts and sheds running work when the
 host spikes. The contract says how many; the mediators hold that many; the pressure gate decides whether they
 run at all.
+
+### When to adopt this stack
+
+Use this stack when:
+
+- many agents or jobs share one machine and trample each other's heavy work
+- who may run what, and how many at once, lives as folklore in scattered wrapper scripts
+- heavy tools run either one-at-a-time, wasting a capable host, or all-at-once, thrashing it
+- a correctly-serialized fleet still drives the host into swap under its own admitted load
+- you need parallelism that rises to the machine's capacity and stops there
+
+Typical domains:
+
+- shared build and CI hosts
+- multi-agent worktree fleets
+- self-hosted runners
+- resource-contended shared development environments
 
 ## Failure classes it covers
 
@@ -39,9 +57,9 @@ all, given the host's live state. Declared cardinality holds the count; the live
 
 ### DECLARE — the concurrency-contract registry {#a-5-concurrency-contracts}
 
-**DECLARE opens the stack.** A typed registry names each of the system's concurrency contracts — which
-subprocess invocations are serialized by a mediator, and which state-mutating functions are single-writer —
-so "how many at once" becomes declared data a check can enforce.
+**Declare what must be serialized.** A typed registry names each of the system's concurrency contracts —
+which subprocess invocations are serialized by a mediator, and which state-mutating functions are
+single-writer — so "how many at once" becomes data a check enforces. (DECLARE.)
 
 **Receives** — the system's contended operations: the heavy test runner, the build tools, the state mutators
 several worktrees might touch at once. Undeclared, who-may-run-what lives as folklore in scattered wrapper
@@ -60,9 +78,8 @@ registry rather than from a convention a new call site can quietly miss.
 
 ### SERIALIZE — the single-writer test lock {#a-5-test-serializer}
 
-**SERIALIZE enforces the strictest contract.** A host-level wrapper serializes the heaviest,
-mutually-destructive tool to a single writer through an exclusive flock, so concurrent worktrees queue
-instead of colliding.
+**Hold the strictest contract to one writer.** A host-level flock admits a single run of the heaviest,
+mutually-destructive tool, so concurrent worktrees queue instead of colliding. (SERIALIZE.)
 
 **Receives** — the single-writer contracts from DECLARE, and every attempt to run the heavy tool. The
 canonical case is a test runner: several worktrees running it at once saturate CPU, disk, and ports.
@@ -80,9 +97,9 @@ resource's contention profile.
 
 ### SEMAPHORE — the bounded build semaphore {#a-5-build-serializer}
 
-**SEMAPHORE enforces the contracts that permit bounded sharing.** A host-level counting semaphore admits up
-to a fixed number of concurrent runs of the adjacent heavy-compute tools, so worktrees get parallelism up to
-the machine's capacity without oversubscribing it.
+**Share up to capacity, then wait.** A host-level counting semaphore admits a fixed number of concurrent
+runs of the adjacent heavy-compute tools, so worktrees get parallelism up to the machine's capacity without
+oversubscribing it. (SEMAPHORE.)
 
 **Receives** — the bounded-sharing contracts from DECLARE, and every call to the heavy but parallel-safe
 tools: the compiler, the type-checker, the code-query and lint tools.
@@ -101,9 +118,9 @@ foresee.
 
 ### SHED — the live-pressure gate {#a-5-resource-pressure-gating}
 
-**SHED closes the stack.** A live pressure signal governs a saturable host resource at two layers — an
-admission gate that refuses or defers heavy work before dispatch, and an execution shed that stops heavy
-work already running when pressure spikes.
+**Refuse and shed heavy work under pressure.** A live pressure signal governs a saturable host resource at
+two layers — an admission gate that refuses or defers heavy work before dispatch, and an execution shed that
+stops heavy work already running when pressure spikes. (SHED.)
 
 **Receives** — the host's live pressure over the saturable resource (load, memory), plus the heavy work the
 fixed-cardinality mediators would otherwise admit regardless of the machine's current state.

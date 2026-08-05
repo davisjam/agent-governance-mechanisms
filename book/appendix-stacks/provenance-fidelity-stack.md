@@ -5,11 +5,29 @@ sanctioned door. Who and why for every change, and nothing silently lost.*
 ## The capability
 
 **Reconstruct the full mutation history of a shipped artifact from the artifact alone — and prove nothing
-the author wrote was dropped on the way out.** The stack builds two capabilities: *track provenance and
+the author wrote was dropped on the way out.** Two capabilities converge here: *track provenance and
 trace causes*, and *preserve product semantics*. It assumes every change already flows through one
 sanctioned door; on that door it builds attribution you can read back and a fidelity check you cannot skip.
 The evidence lives inside the file, so it survives copy, download, and re-open — no side log to trust or
 lose.
+
+### When to adopt this stack
+
+Use this stack when:
+
+- you must reconstruct what a tool changed, and why, from the shipped artifact alone — with no side log to trust
+- failures show up as lost history or unexplained changes that leave no durable trace
+- auditors or downstream consumers require traceable, reversible attribution of every change
+- tool-inserted content must stay distinguishable from what the author actually wrote
+- a pass can silently drop content and the damaged output still looks fine until a reader hits the hole
+
+Typical domains:
+
+- regulated software
+- document processing and remediation
+- medical systems
+- financial systems
+- any auditable transformation pipeline
 
 ## Failure classes it covers
 
@@ -39,9 +57,8 @@ mutation, prove the stamping complete, read the history back, and gate what leav
 
 ### MARK — the reserved-prefix naming convention {#a-1-a11y-prefix}
 
-**MARK opens the chain.** It names every insertion the tool makes, so authored content and tool-added
-content stay distinguishable — and so a validator can cover an insert by its name alone. A validator cannot
-cover what it cannot name.
+**Name every insertion.** Every artifact the tool inserts gets a name marking it tool-added, so authored
+and inserted content stay distinguishable and a validator can cover an insert by its name alone. (MARK.)
 
 **Receives** — the raw insertions a remediation pass wants to write: alt text, tags, off-canvas scaffolding.
 Nothing precedes it; this is where the chain starts.
@@ -60,8 +77,8 @@ drifts the first time an inserter forgets to append.
 
 ### EMIT — per-mutator attribution stamps {#a-1-mutator-stamps}
 
-**EMIT turns every sanctioned change into evidence.** Each remediation verb that mutates the document embeds
-an attribution stamp — its pass, its visibility — into the artifact itself, at the mutation site.
+**Record every mutation.** Each sanctioned change embeds its own attribution — its pass, its visibility —
+into the artifact at the mutation site, so the evidence travels with the file. (EMIT.)
 
 **Receives** — the marked, registry-covered inserts from MARK, plus every other sanctioned mutation a pass
 performs.
@@ -79,8 +96,8 @@ and an embedded stamp registry for the changelog to read back.
 
 ### COVER — the mutator-stamp-wiring lint {#a-1-f10-wiring-lint}
 
-**COVER makes the stamping complete rather than hopeful.** A blocking lint scans every mutator verb in the
-document models' write layer and fails the build on any verb that skips the stamp wiring.
+**Prove the record complete.** A blocking lint scans every mutator verb in the document models' write layer
+and fails the build on any verb that skips the stamp wiring, so attribution has no silent gap. (COVER.)
 
 **Receives** — the same closed verb set EMIT's stamp-writer serves; the lint reads the write layer where the
 mutators live.
@@ -98,8 +115,8 @@ across the whole verb set, READ downstream reads the embedded stamps as complete
 
 ### READ — reconstruct the changelog {#a-1-derive-changelog}
 
-**READ gives the provenance a reader.** A command reconstructs the document's mutation history from the
-embedded stamp registry, each entry a change attributed to the pass that made it.
+**Reconstruct the history.** A command rebuilds the document's mutation history from its embedded stamps,
+each entry a change attributed to the pass that made it. (READ.)
 
 **Receives** — the stamps EMIT wrote and COVER proved complete, read straight from the produced artifact. It
 runs after remediation, against the delivered file, so the history it assembles is the one that shipped.
@@ -117,20 +134,20 @@ no reader, no reason to stamp.
 
 ### GATE — the input ⊆ output fidelity gate {#a-1-content-validator}
 
-**GATE closes the chain from the other side.** Where MARK, EMIT, COVER, and READ attribute what the tool
-*added*, the fidelity gate catches what a sanctioned pass silently *removed* — damage done through the same
-door provenance covers.
+**Prove nothing was lost.** Where MARK, EMIT, COVER, and READ attribute what the tool *added*, this gate
+catches what a sanctioned pass silently *removed* — damage done through the same door provenance covers. (GATE.)
 
-**Receives** — the input document and the remediated output; it extracts the content of each for comparison.
+**Purpose** — close the chain from the other side. Attribution accounts for every change the tool made; it
+says nothing about content the tool dropped. The gate covers that blind side.
 
-**Guarantees** — a deterministic post-condition: the input's content is a subset of the output's, or the job
-fails. It runs in production on every job, so a dropped paragraph, a mangled table, a lost caption cannot ship
-unseen — the worst outcome for a fidelity-critical tool, because the output looks fine and quietly isn't what
-the author wrote. A staging-only per-pass variant adds localization: a dedicated marker and a nonzero exit
-code name which pass dropped the content, turning "content was lost somewhere" into "pass N lost it."
+**Mechanism** — a deterministic post-condition. It extracts the content of input and output and fails the job
+unless the input's content is a subset of the output's, and it runs in production on every job. A staging-only
+per-pass variant adds localization: a dedicated marker and a nonzero exit code name which pass dropped the
+content, turning "content was lost somewhere" into "pass N lost it."
 
-**Hands off** — the chain's final guarantee. The gate refuses to let damaged output leave, so what ships is
-both fully attributed and provably whole.
+**Guarantee** — no damaged output leaves. A dropped paragraph, a mangled table, a lost caption cannot ship
+unseen, the worst outcome for a fidelity-critical tool, because the output looks fine and quietly isn't what
+the author wrote. What ships is both fully attributed and provably whole.
 
 → **Deeper treatment:** role:content-validator.
 
