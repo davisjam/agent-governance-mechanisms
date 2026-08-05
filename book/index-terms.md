@@ -160,6 +160,8 @@ display name. A tag whose slug is absent here fails the build. Display names are
 - concept: printer-metaphor | The printer metaphor
 - concept: picture-vs-model | Picture vs. model
 - concept: whose-fault | Whose fault is a bad build
+- concept: reasoning-horizon | Reasoning horizon
+- concept: long-horizon-task | Long-horizon task
 - concept: one-shot-scripting | One-shot scripting
 - concept: supervised-autonomy | Supervised autonomy
 - concept: fidelity-validator | The fidelity validator
@@ -335,6 +337,8 @@ concept registry, `concepts.json`, and the book's `index-def` tags all join on.
 <!-- term-tier registry: `- term: <slug> | <tier>`; tier ∈ {section, local}. Concept slugs default to
      section-tier, so only deviations + new local terms are listed. -->
 - term: task-mode-decision | section
+- term: reasoning-horizon | section
+- term: long-horizon-task | section
 - term: one-shot-scripting | section
 - term: supervised-autonomy | section
 - term: open-ended-technology | section

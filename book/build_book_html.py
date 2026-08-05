@@ -243,6 +243,8 @@ _GLOSS_TERM_SLUGS = {
     "Skill": "skill-soft-control",
     "Tool": "tool-deterministic-action",
     "Fleet": "fleet",
+    "Reasoning horizon": "reasoning-horizon",
+    "Long-horizon task": "long-horizon-task",
     "One-shot Scripting": "one-shot-scripting",
     "Supervised Autonomy": "supervised-autonomy",
     "Loop engineering": "loop-engineering",

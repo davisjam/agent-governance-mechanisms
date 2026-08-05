@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (not Mermaid): a two-column contrast under one spine. The spine shows reasoning
+     state growing with task length; the fork contrasts what happens to that state under compaction with
+     and without models. Mermaid's flowchart would draw the fork but not the growing-wedge spine or the
+     fidelity-under-compaction contrast that is the whole point. Accent #9a3f12 (MAGE branch),
+     churn #b23b3b (the no-models branch). Grayscale-survivable: every branch and outcome is labelled,
+     left=without / right=with is a position cue, no meaning rides on hue alone. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560"
+     role="group" aria-labelledby="rhTitle rhDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="rhTitle">The reasoning horizon, and what models do to it</title>
+  <desc id="rhDesc">A human and a foundation model work a task. The reasoning state the task requires grows
+    with the task's length, shown as a wedge widening from left to right. When that state outgrows the
+    working memory available to hold it, it must be compacted and reconstructed, and the path forks.
+    Without models, on the left, the fleet reasons over raw implementation-level state; compaction is lossy,
+    rebuilds are frequent, and the result is churn. With MAGE models, on the right, the fleet reasons over
+    executable abstractions that already discarded the irrelevant detail; compaction loses far less, coherent
+    reasoning runs longer, and the result is productive progress. The contrast axis is fidelity under
+    compaction, not size: models are a better compression domain because they abstract, they do not merely
+    shrink.</desc>
+
+  <defs>
+    <marker id="rhArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- ================= SPINE — reasoning state grows with task length ================= -->
+  <text x="500" y="42" text-anchor="middle" font-size="19" fill="#57534e">A human and a foundation model work a task.</text>
+  <!-- growing wedge: thin at the short-horizon end, thick at the long-horizon end -->
+  <polygon points="120,96 880,74 880,128 120,104" fill="#faf1e6" stroke="#57534e" stroke-width="1.5"/>
+  <text x="500" y="106" text-anchor="middle" font-size="19" font-style="italic" fill="#1c1917">Reasoning state grows with the length of the task</text>
+  <text x="150" y="150" text-anchor="middle" font-size="18" fill="#57534e">short horizon</text>
+  <text x="850" y="150" text-anchor="middle" font-size="18" fill="#57534e">long horizon</text>
+
+  <!-- the pinch: state outgrows working memory, so it must be compacted -->
+  <text x="500" y="184" text-anchor="middle" font-size="19" fill="#1c1917">The state outgrows working memory, so it must be compacted and rebuilt.</text>
+
+  <!-- fork edges from the spine down into the two columns -->
+  <g fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#rhArrow)">
+    <path d="M430,196 C360,214 300,214 265,236"/>
+    <path d="M570,196 C640,214 700,214 735,236"/>
+  </g>
+
+  <!-- ================= LEFT — without models ================= -->
+  <rect x="60" y="242" width="410" height="292" rx="10" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="265" y="280" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Without models</text>
+
+  <text x="265" y="322" text-anchor="middle" font-size="19" fill="#1c1917">Reason over raw</text>
+  <text x="265" y="346" text-anchor="middle" font-size="19" fill="#1c1917">implementation-level state</text>
+
+  <line x1="265" y1="360" x2="265" y2="392" stroke="#57534e" stroke-width="2" marker-end="url(#rhArrow)"/>
+
+  <text x="265" y="414" text-anchor="middle" font-size="19" fill="#1c1917">Lossy compaction,</text>
+  <text x="265" y="438" text-anchor="middle" font-size="19" fill="#1c1917">frequent reconstruction</text>
+
+  <line x1="265" y1="452" x2="265" y2="474" stroke="#57534e" stroke-width="2" marker-end="url(#rhArrow)"/>
+
+  <rect x="105" y="484" width="320" height="40" rx="10" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
+  <text x="265" y="510" text-anchor="middle" font-size="22" font-weight="700" fill="#b23b3b">Churn</text>
+
+  <!-- ================= RIGHT — with MAGE models ================= -->
+  <rect x="530" y="242" width="410" height="292" rx="10" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+  <text x="735" y="280" text-anchor="middle" font-size="24" font-weight="700" fill="#9a3f12">With MAGE models</text>
+
+  <text x="735" y="322" text-anchor="middle" font-size="19" fill="#1c1917">Reason over executable</text>
+  <text x="735" y="346" text-anchor="middle" font-size="19" fill="#1c1917">abstractions</text>
+
+  <line x1="735" y1="360" x2="735" y2="392" stroke="#57534e" stroke-width="2" marker-end="url(#rhArrow)"/>
+
+  <text x="735" y="414" text-anchor="middle" font-size="19" fill="#1c1917">Less-lossy compaction,</text>
+  <text x="735" y="438" text-anchor="middle" font-size="19" fill="#1c1917">longer coherent reasoning</text>
+
+  <line x1="735" y1="452" x2="735" y2="474" stroke="#57534e" stroke-width="2" marker-end="url(#rhArrow)"/>
+
+  <rect x="575" y="484" width="320" height="40" rx="10" fill="#fdfcf9" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="735" y="510" text-anchor="middle" font-size="22" font-weight="700" fill="#9a3f12">Productive progress</text>
+</svg>
