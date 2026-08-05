@@ -1,10 +1,10 @@
 {
-  "_provenance": "AUTHORED source of truth for the Operator's Dashboard — the metrics the book steers by or certifies with. book-models/metrics_dashboard_model.py projects ALL nine metrics into the back-matter page's table, grouped by MODE (formative / summative), and holds the page equal to this model with a parity check (run `python3 book-models/metrics_dashboard_model.py verify`). Edit a metric HERE, then regenerate the page table with `... table`. The book's own declared -> generated idiom, applied to its metrics.",
+  "_provenance": "AUTHORED source of truth for the Operator's Dashboard — the metrics the book steers by or certifies with. book-models/metrics_dashboard_model.py projects ALL nine metrics into the Operator's Dashboard page's table (Appendix D.1, Operator's Reference), grouped by MODE (formative / summative), and holds the page equal to this model with a parity check (run `python3 book-models/metrics_dashboard_model.py verify`). Edit a metric HERE, then regenerate the page table with `... table`. The book's own declared -> generated idiom, applied to its metrics.",
 
   "inclusion_criterion": "A metric belongs iff it is one you STEER BY while the work is in flight (formative) or one you CERTIFY THE RESULT with at maturity (summative) — measured to guide or to judge engineering with MAGE, not merely reported.",
 
   "_page": {
-    "slug": "6.5-the-operators-dashboard",
+    "slug": "appendix-d-operators-dashboard",
     "companion_to": { "chapter": "2.5", "page_slug": "2.5-metrics", "anchor": "" }
   },
 

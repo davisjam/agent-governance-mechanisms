@@ -500,7 +500,6 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="6.2-conclusion.html">Conclusion</a></li>
 <li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
 <li><a class="" href="6.4-colophon.html">Colophon</a></li>
-<li><a class="" href="6.5-the-operators-dashboard.html">The Operator's Dashboard</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
 <li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
@@ -543,9 +542,12 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-b-remediation-verbs.html">Appendix B - 29. Closed remediation-verb sets</a></li>
 <li class="part">Appendix C — Mechanism Catalog</li>
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
-<li class="part">Appendix D — How to Write a Skill</li>
-<li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 3 · Loops and Models"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 3</a></div><h1><span class="chap-num">1.3</span> Loops and Models</h1></header><p>Two ideas carry the rest of this book, and everything else is a consequence of them. The first is that all agent work is a <em>loop</em>. The second is that an agent steers that loop well only when you hand it a <em>model</em> of the world it is working in. This is what makes the MAGE method work: Model-Based Agentic Software Engineering means engineering that loop and handing the agent that model, deliberately, every time. Get these two right and the agent finds your answer fast. Get them wrong, it wanders.</p>
+<li class="part">Appendix D — Operator&#x27;s Reference</li>
+<li><a class="" href="appendix-operators-reference.html">Appendix D — Operator's Reference</a></li>
+<li><a class="" href="appendix-d-operators-dashboard.html">Appendix D - 1. The Operator's Dashboard</a></li>
+<li class="part">Appendix E — How to Write a Skill</li>
+<li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 3 · Loops and Models"><header class="chap"><div class="kicker"><a href="1.1-the-printer.html" aria-label="Beginning of Part 1 — The Mindset">Part 1 — The Mindset</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 3</a></div><h1><span class="chap-num">1.3</span> Loops and Models</h1></header><p>Two ideas carry the rest of this book, and everything else is a consequence of them. The first is that all agent work is a <em>loop</em>. The second is that an agent steers that loop well only when you hand it a <em>model</em> of the world it is working in. This is what makes the MAGE method work: Model-Based Agentic Software Engineering means engineering that loop and handing the agent that model, deliberately, every time. Get these two right and the agent finds your answer fast. Get them wrong, it wanders.</p>
 <h2><span class="sec-num">1.3.1</span> Everything is a loop</h2>
 <p id="idx-def-loop-engineering">An agent runs in a loop, and the loop has a fixed shape. It takes an input: the current problem, plus some notion of what success looks like. It reasons, and it acts in its operating environment. It produces a result. And that result folds back into the input for the next turn. Input, reasoning, output, fed around again. Shaping that loop is <strong>commonly called loop engineering</strong>, and nearly everything in this book is an instance of it. The close of this chapter draws the loop with the engineer's control points marked (<a class="xref" href="1.3-loops-and-models.html#fig-1-3-2">Figure&nbsp;1.3-2</a>).</p>
 <p>The loop that <em>produces</em> has this shape (<a class="xref" href="1.3-loops-and-models.html#fig-1-3-1">Figure&nbsp;1.3-1</a>): a goal becomes a model, the agent builds, evidence meets judgment, and the model sharpens each pass.</p>

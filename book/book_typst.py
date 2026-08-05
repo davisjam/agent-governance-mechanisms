@@ -686,15 +686,26 @@ def _peel_metadata_marker(line: str, ctx: _EmitCtx) -> "str | None":
 
 # Apparatus one-pagers — reference apparatus (not running prose) framed as ONE distinct page item in the
 # print projection, mirroring the web book's `.apparatus-page` box. Matched by TITLE (like the relocated
-# acknowledgments) so the source slug can change without silently un-framing it. "How to read this book"
-# (its short prose + the whole-book map) is the founding member; the back-matter Operator's Dashboard is
-# the second.
+# acknowledgments) so the source slug can change without silently un-framing it; the match tolerates an
+# appendix locator prefix (see `_matches_apparatus_title`), so the Operator's Dashboard keeps its frame after
+# moving to an appendix card whose title reads "Appendix D - 1. The Operator's Dashboard". "How to read this
+# book" (its short prose + the whole-book map) is the founding member; the Operator's Dashboard (now Appendix
+# D.1) is the second.
 _APPARATUS_ONEPAGER_TITLES = {"how to read this book", "the operator's dashboard"}
 
 # A subset of the apparatus one-pagers that carry a WIDE table: typeset on a single LANDSCAPE page so a
 # 6-column reference fits without cramping. The frame is made BREAKABLE for these (a tall reference may run
 # past one page rather than clip), unlike the tiny how-to-read frame which stays non-breaking.
 _APPARATUS_LANDSCAPE_TITLES = {"the operator's dashboard"}
+
+
+def _matches_apparatus_title(title_norm: str, titles: "set[str]") -> bool:
+    """Whether a normalized chapter title names one of the apparatus one-pagers. Matches the exact title OR a
+    title carrying an appendix locator prefix ("appendix d - 1. the operator's dashboard" → "the operator's
+    dashboard"), so the Operator's Dashboard keeps its landscape/frame treatment after it moved from a
+    back-matter chapter (bare title) to an appendix card (locator-prefixed title). The founding how-to-read
+    page has no prefix and still matches exactly."""
+    return any(title_norm == t or title_norm.endswith(t) for t in titles)
 
 
 def _frame_apparatus_typst(body: str, breakable: bool = False) -> str:
@@ -1156,7 +1167,7 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
         _title_norm = ch.title.strip().lower()
         # A landscape apparatus is wrapped in `#page(flipped: true)[…]`, which starts its own fresh page, so
         # the usual preceding `#pagebreak()` would strand a blank portrait page — suppress it for that case.
-        is_landscape = _title_norm in _APPARATUS_LANDSCAPE_TITLES
+        is_landscape = _matches_apparatus_title(_title_norm, _APPARATUS_LANDSCAPE_TITLES)
         if with_frontmatter and ch.part not in seen_parts:
             seen_parts.add(ch.part)
             divider = _part_divider_typst(ch.part, ch)
@@ -1167,7 +1178,7 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
         elif n and not is_landscape:
             parts.append("#pagebreak()")
         rendered = render_chapter(ch, ctx)
-        if _title_norm in _APPARATUS_ONEPAGER_TITLES:
+        if _matches_apparatus_title(_title_norm, _APPARATUS_ONEPAGER_TITLES):
             rendered = _frame_apparatus_typst(rendered, breakable=is_landscape)
         if is_landscape:
             # A flipped/landscape page so the wide 6-column reference gets full landscape width without

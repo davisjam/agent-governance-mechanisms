@@ -1,18 +1,11 @@
-<!-- part-title: Back Matter -->
-<!-- chapter-title: The Operator's Dashboard -->
+The dashboard collects the primary metrics used to operate a Governed Engineering Environment. Formative
+metrics steer work while it is in progress. Summative metrics certify the finished system. Some metrics
+serve both purposes.
 
-# The Operator's Dashboard
-
-This page collects the numbers you act on, sorted by *when* you read each one. A **formative** metric is
-measured during the work and feeds back to steer the next step; a **summative** metric is measured at
-maturity and delivers a verdict on the result; a few are *both* — a trajectory you watch as it forms and
-certify at the end. A metric earns a place here when you steer by it in flight or certify the result with
-it, not merely report it. The [2.5](2.5-metrics.html) reference is the companion one level down: read it to
-steer a single loop iteration, read this to steer or grade the whole program.
-
-[ref:operators-dashboard] gives each metric in two bands — the formative metrics you steer by above the
-divider, the summative verdicts below. Some rows also appear in 2.5's in-loop table; the overlap is
-deliberate, since a reference repeats what you need where you need it.
+[ref:operators-dashboard] gives each metric in two bands — the formative metrics above the divider, the
+summative verdicts below — with what each one counts, when to read it, and its healthy direction. Scan the
+band you need. The [2.5](2.5-metrics.html) reference is the companion one level down: read it to steer a
+single loop iteration, read this to steer or grade the whole program.
 
 <!-- label: operators-dashboard -->
 <!-- table: The Operator's Dashboard — every metric the build acts on, in two mode bands: the formative metrics you steer by while the work is in flight, then the summative verdicts you certify the result with at maturity. [short: The Operator's Dashboard — formative and summative metrics] -->

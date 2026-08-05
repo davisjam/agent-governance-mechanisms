@@ -1,9 +1,9 @@
 """The METRICS-DASHBOARD view — a typed model of the metrics the book steers by or certifies with, carrying
 the author's INCLUSION CRITERION so a future metric is testable against it, not sorted by taste. A sibling of
 the other declared -> generated book models (claims / outline / flagship-stack): the hand-authored source of
-truth is `book-models/metrics-dashboard.json`; this module projects ALL nine metrics into the back-matter
-page "The Operator's Dashboard", grouped by MODE, and holds that page's table equal to the model with a
-parity check.
+truth is `book-models/metrics-dashboard.json`; this module projects ALL nine metrics into the Operator's
+Dashboard page (Appendix D.1, Operator's Reference), grouped by MODE, and holds that page's table equal to
+the model with a parity check.
 
 FORMATIVE vs SUMMATIVE.  Every metric the book names is on the dashboard now — an engineering reference wants
 the whole set — but each carries a MODE that says WHEN you read it. A `formative` metric is measured DURING
@@ -14,7 +14,7 @@ BY while the work is in flight (formative) or one you CERTIFY THE RESULT with at
 measured to guide or to judge engineering with MAGE, not merely reported.
 
 TWO PROJECTIONS, ONE SOURCE.
-  * `render_table_md()` — the markdown table the back-matter page shows: all nine metrics in two mode bands
+  * `render_table_md()` — the markdown table the Operator's Dashboard page shows: all nine metrics in two mode bands
     (a Formative band, a divider/band-label row, then a Summative band that carries the summative + both
     metrics). Author it into the page from `... table`; the page and the model cannot then diverge without
     the parity check reddening.
@@ -39,8 +39,10 @@ _DECLARED = os.path.join(_HERE, "metrics-dashboard.json")
 _ROOT = os.path.dirname(_HERE)  # the governance-catalog repo root (book-models/ is one level down)
 _BOOK = os.path.join(_ROOT, "book")
 
-#: The back-matter page the mode-banded table is authored into (parity target).
-_PAGE_REL = os.path.join("backmatter", "6.5-the-operators-dashboard.md")
+#: The page the mode-banded table is authored into (parity target). The Operator's Dashboard moved from a
+#: back-matter chapter to Appendix D.1 (Operator's Reference); the model projects into and holds equal its new
+#: appendix-card home.
+_PAGE_REL = os.path.join("appendix-operators-reference", "operators-dashboard.md")
 
 #: The valid MODE values — the formative/summative axis, plus `both` for a trajectory metric.
 _VALID_MODES = ("formative", "summative", "both")
@@ -223,7 +225,7 @@ def render_table_rows(model: "DashboardModel | None" = None) -> "list[str]":
 
 
 def render_table_md(model: "DashboardModel | None" = None) -> str:
-    """The full markdown table (header + rule + the two mode bands) the back-matter page shows."""
+    """The full markdown table (header + rule + the two mode bands) the Operator's Dashboard page shows."""
     return "\n".join([_TABLE_HEADER, _TABLE_RULE, *render_table_rows(model)])
 
 
@@ -254,7 +256,7 @@ def parity_findings(model: "DashboardModel | None" = None) -> "list[str]":
         model = derive_model()
     page_path = os.path.join(_BOOK, _PAGE_REL)
     if not os.path.isfile(page_path):
-        return [f"parity: back-matter page {_PAGE_REL} does not exist"]
+        return [f"parity: Operator's Dashboard page {_PAGE_REL} does not exist"]
     page_md = open(page_path, encoding="utf-8").read()
     got = _page_table_lines(page_md)
     want = render_table_md(model).splitlines()

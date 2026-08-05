@@ -223,11 +223,11 @@ _GLOSSARY: dict[str, str] = {}  # term -> short def; populated by _collect_gloss
 GLOSSARY_CHAPTER_SLUG = "0.2-the-books-language"
 # Apparatus one-pagers — pages that are a self-contained *reference apparatus* (not running prose), meant
 # to read as ONE bordered, offset item rather than bleeding visually from the preceding chapter. "How to
-# read this book" (its short prose + the whole-book map figure) is the founding member; the back-matter
-# Operator's Dashboard (its metric table) is the second. The renderer frames these in a `.apparatus-page`
-# box (HTML) / a `#block` frame (Typst) — see the CSS `.apparatus-page` swap-point block and
-# `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
-_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book", "6.5-the-operators-dashboard"}
+# read this book" (its short prose + the whole-book map figure) is the founding member; the Operator's
+# Dashboard (its metric table, now Appendix D.1 — `appendix-d-operators-dashboard`) is the second. The
+# renderer frames these in a `.apparatus-page` box (HTML) / a `#block` frame (Typst) — see the CSS
+# `.apparatus-page` swap-point block and `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
+_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book", "appendix-d-operators-dashboard"}
 _GLOSS_TERM_SLUGS = {
     "Model": "model",
     "Map and territory": "map-and-territory",
@@ -3087,6 +3087,102 @@ def build_skill_recipe_chapters(part: int, for_print: bool = False,
     return chapters
 
 
+# APPENDIX D — Operator's Reference. Hand-authored, like the stacks Part and the skill recipe: a front-door
+# page whose opening prose lives here, then one authored markdown page per operational reference card under
+# `appendix-operators-reference/`. No catalogue projection — these are reference surfaces the author keeps at
+# the bench, not a mechanism map. Built to grow: the Operator's Dashboard is the first card (D.1); later
+# editions add lifecycle / conversion / decision-heuristic cards as further pages in `_OPERATORS_REFERENCE_PAGES`.
+_OPERATORS_REFERENCE_DIR = HERE / "appendix-operators-reference"
+
+# The slug that heads Appendix D — the reference front-door page. Letter-independent (the stable target of
+# narrative `[appendix: appendix-operators-reference]` cross-references), mirroring `appendix-skill-recipe`.
+_APPENDIX_OPERATORS_REFERENCE_OPENING_SLUG = "appendix-operators-reference"
+
+# The authored content pages under the front-door → (page-slug stem, display title). The Operator's Dashboard
+# is the first (D.1); absent-on-disk files are skipped, so the front-door alone still renders without them.
+_OPERATORS_REFERENCE_PAGES: list[tuple[str, str]] = [
+    ("operators-dashboard", "The Operator's Dashboard"),
+]
+
+_APPENDIX_OPERATORS_REFERENCE_OPENING_PROSE = """\
+**Operational reference for running a Governed Engineering Environment**
+
+This appendix collects operational reference material used while running a Governed Engineering \
+Environment. The chapters teach the method; these pages support *practicing* it. You do not read them once \
+and move on — you come back to them mid-build, the way you keep a wiring diagram at the bench.
+
+Each entry answers a standing operational question with a single surface you can scan. The first is the \
+**Operator's Dashboard**: the metrics you steer by while the work is in flight and certify the result with \
+at maturity, on one page.
+
+The appendix is built to grow. The dashboard is the first reference card, not the last; future editions add \
+the operational surfaces a practitioner reaches for often enough to want them collected:
+
+- **MAGE lifecycle summary** — the stages a governed build passes through, and what each one owes the next.
+- **Governance-conversion quick reference** — turning a recurring failure into a durable control, at a glance.
+- **Operational decision heuristics** — the calls you make while operating a fleet, with the signal that \
+should drive each one.
+
+Together these make the laminated reference card for running the environment: the pages you consult while \
+operating, kept apart from the narrative that explains why they read the way they do."""
+
+
+def build_operators_reference_chapters(part: int, for_print: bool = False,
+                                       letter: str = "D", locator_figs: bool = False) -> list[dict]:
+    """Build the Operator's-Reference chapter records: one front-door page (chapter 0) whose prose is authored
+    inline, then one page per authored content card under `appendix-operators-reference/` (D.1, …). Mirrors
+    `build_skill_recipe_chapters`: a hand-authored appendix Part rendered by the existing pager/TOC/index
+    machinery with no catalogue projection. Every record carries `is_appendix: True`. Returns [] if no content
+    cards are present (the front-door alone is not emitted without content).
+
+    `letter` is the appendix letter — `D` in the value-ordered v2 projection (the Operator's Reference sits
+    before the skill recipe). The front-door slug stays `appendix-operators-reference` (the stable target of
+    `[appendix: appendix-operators-reference]` cross-references) regardless of letter; the content-card slug
+    follows the letter (`appendix-<letter>-<stem>`). `locator_figs` (v2) stamps `fig_prefix` for D80 monotonic
+    figure numbering (`D`, then `D.1`)."""
+    pages = [(stem, title) for stem, title in _OPERATORS_REFERENCE_PAGES
+             if (_OPERATORS_REFERENCE_DIR / f"{stem}.md").is_file()]
+    if not pages:
+        return []
+
+    low = letter.lower()
+    chapters: list[dict] = []
+    part_title = f"Appendix {letter} — Operator's Reference"
+
+    # FRONT-DOOR PAGE — heads the reference Part (chapter 0, sorts before the cards).
+    front: dict = {
+        "slug": _APPENDIX_OPERATORS_REFERENCE_OPENING_SLUG,
+        "part": part,
+        "part_title": part_title,
+        "chapter": 0,
+        "chapter_title": part_title,
+        "body_md": _APPENDIX_OPERATORS_REFERENCE_OPENING_PROSE.strip(),
+        "is_appendix": True,
+        "mermaid": False,
+    }
+    if locator_figs:
+        front["fig_prefix"] = letter
+    chapters.append(front)
+
+    # ONE PAGE PER AUTHORED CARD — <letter>.1, <letter>.2, … in listed order.
+    for i, (stem, title) in enumerate(pages, start=1):
+        raw = (_OPERATORS_REFERENCE_DIR / f"{stem}.md").read_text(encoding="utf-8")
+        rec: dict = {
+            "slug": f"appendix-{low}-{stem}",
+            "part": part,
+            "part_title": part_title,
+            "chapter": i,                       # sorts after the front-door's chapter 0
+            "chapter_title": f"Appendix {letter} - {i}. {title}",
+            "body_md": _fold_wrapped_bullets(raw.strip()),
+            "is_appendix": True,
+            "mermaid": False,
+        }
+        if locator_figs:
+            rec["fig_prefix"] = f"{letter}.{i}"
+        chapters.append(rec)
+    return chapters
+
+
 def _family_order_from_index() -> dict[str, int]:
     """Read the family ordering from the census (`INDEX.md`) at build time, so the appendix order can't
     drift from it. Parses each `## <N>. <name>` census heading, then the `[family folder](<role>/<dir>/)`
@@ -4316,8 +4412,9 @@ def _brick_grid_html(group: str) -> str:
 def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list[dict]:
     """The value-ordered appendix (build flag ON): **A** MAGE Engineering Stacks · **B** Flagship Mechanisms
     (one Part, role subsections, monotonic B.N) · **C** Mechanism Catalog (C.1/C.2/C.3 brick grid — STUBBED
-    this sub-wave) · **D** How to Write a Skill (relettered from legacy E). Figure numbers derive
-    monotonically off each page's A.X / B.N locator (`fig_prefix`), killing the legacy 8.608 sort-key garbage
+    this sub-wave) · **D** Operator's Reference (hand-authored operational cards; the Operator's Dashboard is
+    D.1) · **E** How to Write a Skill (relettered D → E when the Operator's Reference took D). Figure numbers
+    derive monotonically off each page's A.X / B.N locator (`fig_prefix`), killing the legacy 8.608 sort-key garbage
     (D80). Reads all 83 entries (`_appendix_entries`); the 29 flagships (`_flagship_slugs`) each get a B page
     and a monotonic B.N; every entry appears in the C reference index (flagship → its B page, the rest →
     online). The `[appendix: <slug>]` markers resolve to the NEW letters automatically — the letter map reads
@@ -4465,13 +4562,20 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
         "fig_prefix": "C",
     })
 
-    # ── APPENDIX D — How to Write a Skill (was legacy Appendix E). Full content retained (design §13.7).
-    #    The appendices end at D: "A Theory of MAGE" was relocated out of the appendices to a numbered
-    #    main-text chapter (backmatter, after "Implications for Software Engineering"), so there is no
-    #    Appendix E.
+    # ── APPENDIX D — Operator's Reference. Hand-authored operational reference cards (the Operator's Dashboard
+    #    is D.1, the relocated back-matter dashboard). Sits BEFORE the skill recipe so the reference the
+    #    operator reaches for mid-build leads the two hand-authored tail appendices.
     d_part = next_part + 3
-    chapters += build_skill_recipe_chapters(
+    chapters += build_operators_reference_chapters(
         part=d_part, for_print=for_print, letter="D", locator_figs=True)
+
+    # ── APPENDIX E — How to Write a Skill (was Appendix D this restructure; legacy Appendix E before the
+    #    value-ordered cutover). Full content retained (design §13.7). The appendices end at E; "A Theory of
+    #    MAGE" was relocated out of the appendices to a numbered main-text chapter (backmatter, after
+    #    "Implications for Software Engineering").
+    e_part = next_part + 4
+    chapters += build_skill_recipe_chapters(
+        part=e_part, for_print=for_print, letter="E", locator_figs=True)
     return chapters
 
 
