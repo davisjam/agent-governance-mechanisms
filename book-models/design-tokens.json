@@ -67,6 +67,7 @@
     },
     "font": {
       "role_px":  { "figure_title": 24, "box_title": 18, "label": 14, "sub_label": 12, "caption": 14 },
+      "band_px":  { "floor": 16, "ceiling": 28 },
       "min_px":   12,
       "weight":   { "title": 700, "emphasis": 600, "body": 400 },
       "anchor":   { "box_label": "middle", "kicker": "start", "caption": "middle" }

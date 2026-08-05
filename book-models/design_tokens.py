@@ -108,6 +108,14 @@ class Tokens:
         """Font-size in px for a figure text ROLE (`figure_title`, `box_title`, `label`, …)."""
         return self.figure_styles["font"]["role_px"][role]
 
+    def figure_band_px(self) -> tuple[int, int]:
+        """The (floor, ceiling) px band figure text must render within at the figure reference width.
+        Floor survives print shrinkage (a below-16 label is ~<8px in the PDF); ceiling is the type
+        scale's section/H2 step, so figure text never out-shouts a heading. The one SSOT the band
+        sensor imports so its thresholds are never hardcoded."""
+        band = self.figure_styles["font"]["band_px"]
+        return int(band["floor"]), int(band["ceiling"])
+
 
 def load(path: pathlib.Path = TOKENS_JSON) -> Tokens:
     with open(path, encoding="utf-8") as fh:

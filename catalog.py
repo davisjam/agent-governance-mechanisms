@@ -1034,17 +1034,19 @@ def cmd_validate(_args) -> int:
         print(f"  [overflow] {lfo.summary_line(overflow)} — "
               f"run `python3 book-models/lint_figure_overflow.py`")
         n_issues += len(overflow)
-    # FIGURE MIN-FONT — the figure-text-not-smaller-than-body sensor over book/assets/*.svg (the legibility
-    # complement to the overflow sensor above). AUDIT-ONLY: a strict body-size floor surfaces every figure
-    # whose labels normalize below body, which the design system's small label roles do corpus-wide — so it
-    # PRINTS that backlog (a committer sees the enlarge worklist) but does NOT increment n_issues. The two
-    # author-named figures are enlarged now; a follow-up flips it blocking once a re-layout wave drains the
-    # rest (audit->lint, fix-then-flip). See book-models/lint_figure_min_font.py.
-    import lint_figure_min_font as lfmf  # noqa: E402 — audit-only legibility sensor
-    minfont = lfmf.findings()
-    if minfont:
-        print(f"  [minfont] AUDIT-ONLY: {lfmf.summary_line(minfont)} — "
-              f"run `python3 book-models/lint_figure_min_font.py` (does not gate)")
+    # FIGURE FONT-BAND — the figure-text-inside-a-legibility-band sensor over book/assets/*.svg (the
+    # legibility complement to the overflow sensor above). It flags BOTH ends of one scale-inconsistency
+    # defect: text below the band floor (too small to read against body) AND text above the ceiling (a
+    # figure label louder than a section heading), the root cause being font-sizes authored in absolute
+    # user units against viewBoxes spanning ~3.4×. AUDIT-ONLY: the corpus predates the shared band, so it
+    # PRINTS that backlog (a committer sees the re-scale worklist, each end labelled) but does NOT increment
+    # n_issues; a re-scale wave (tools/rescale_figure_fonts.py) drains it and a follow-up flips it blocking
+    # (audit->lint, fix-then-flip). See book-models/lint_figure_font_band.py.
+    import lint_figure_font_band as lffb  # noqa: E402 — audit-only legibility-band sensor
+    outofband = lffb.findings()
+    if outofband:
+        print(f"  [fontband] AUDIT-ONLY: {lffb.summary_line(outofband)} — "
+              f"run `python3 book-models/lint_figure_font_band.py` (does not gate)")
     # BRICK FITNESS — the Appendix-C §13.4 sensor: a brick whose Structure diagram scores SIMPLIFY/GLYPH under
     # the thumbnail-fitness rubric but carries NO verdict in book-models/brick-fitness.json (the model the grid
     # renderer reads to pick diagram-vs-glyph). AUDIT-ONLY-first per the repo's blocking-lint discipline: all 83
