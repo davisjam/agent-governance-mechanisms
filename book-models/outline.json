@@ -72,7 +72,7 @@
           "heading_text": "Why Build a System to Study a Method?",
           "topic_sentence": "Building DocAble was not only a way to ship a product.",
           "id_source": "derived",
-          "block_index": 6,
+          "block_index": 8,
           "points": []
         },
         {
@@ -81,7 +81,7 @@
           "heading_text": "Where this book sits on the shelf",
           "topic_sentence": "Three books frame what this one attempts.",
           "id_source": "derived",
-          "block_index": 11,
+          "block_index": 13,
           "points": []
         },
         {
@@ -90,7 +90,7 @@
           "heading_text": "The premise: mechanize discipline",
           "topic_sentence": "The first is **Software Engineering at Google** (Winters, Manshreck, and Wright, 2020) [cite: winters2020] — three Google engineers' account of how the company sustains software engineering across tens of thousands of people and one vast codebase over decades — whose premise this book shares: engineering discipline should be *mechanized, not remembered* — pushed into review, testing, tooling, and culture so that correctness does not depend on any one engineer keeping a rule in their head.",
           "id_source": "derived",
-          "block_index": 13,
+          "block_index": 15,
           "points": []
         },
         {
@@ -99,7 +99,7 @@
           "heading_text": "The grammar: patterns, and two theses",
           "topic_sentence": "The second is the **Gang of Four's** *Design Patterns* (Gamma, Helm, Johnson, and Vlissides, 1994) [cite: gof1994], the catalogue that gave object-oriented design its shared vocabulary of reusable solutions, whose lasting contribution was less any single pattern than the *form* — name, recurring problem, solution shape, consequences, known uses — written so an engineer could reach for a vetted answer instead of re-deriving one.",
           "id_source": "derived",
-          "block_index": 25,
+          "block_index": 27,
           "points": []
         },
         {
@@ -108,7 +108,7 @@
           "heading_text": "The lineage: the modeling tradition",
           "topic_sentence": "The third is **Model-Driven Software Engineering in Practice** (Brambilla, Cabot, and Wimmer, 2017) [cite: brambilla2017], the standard concise statement of the modeling tradition: treat models as first-class engineering artifacts, structured representations with defined semantics a tool can check, not pictures pinned beside the code.",
           "id_source": "derived",
-          "block_index": 38,
+          "block_index": 40,
           "points": []
         },
         {
@@ -117,7 +117,7 @@
           "heading_text": "Three ways to run a fleet",
           "topic_sentence": "The hard problem of building software with agents is simple to state: the tools are fast and the tools are unreliable.",
           "id_source": "derived",
-          "block_index": 42,
+          "block_index": 44,
           "points": []
         },
         {
@@ -126,7 +126,7 @@
           "heading_text": "The through-line, and who it is for",
           "topic_sentence": "The through-line is a single idea; hold every chapter against it.",
           "id_source": "derived",
-          "block_index": 53,
+          "block_index": 55,
           "points": []
         }
       ],
