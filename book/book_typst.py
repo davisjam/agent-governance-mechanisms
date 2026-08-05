@@ -694,9 +694,15 @@ def _peel_metadata_marker(line: str, ctx: _EmitCtx) -> "str | None":
 _APPARATUS_ONEPAGER_TITLES = {"how to read this book", "the operator's dashboard"}
 
 # A subset of the apparatus one-pagers that carry a WIDE table: typeset on a single LANDSCAPE page so a
-# 6-column reference fits without cramping. The frame is made BREAKABLE for these (a tall reference may run
-# past one page rather than clip), unlike the tiny how-to-read frame which stays non-breaking.
+# 6-column reference fits without cramping.
 _APPARATUS_LANDSCAPE_TITLES = {"the operator's dashboard"}
+
+# Apparatus one-pagers whose framed body EXCEEDS one portrait page, so the frame is made BREAKABLE — it
+# flows across pages rather than clipping. The landscape dashboard (a tall 6-column reference) qualifies, as
+# does the how-to-read chapter: its two reading modes, the five-appendix reference map, and the resource
+# table outgrew the single page the tiny founding card once fit on. A genuinely short one-pager keeps the
+# non-breaking default so it stays intact on one page.
+_APPARATUS_BREAKABLE_TITLES = {"how to read this book", "the operator's dashboard"}
 
 
 def _matches_apparatus_title(title_norm: str, titles: "set[str]") -> bool:
@@ -1179,7 +1185,8 @@ def emit_document(slugs: list[str], root: pathlib.Path | None = None, *, with_fr
             parts.append("#pagebreak()")
         rendered = render_chapter(ch, ctx)
         if _matches_apparatus_title(_title_norm, _APPARATUS_ONEPAGER_TITLES):
-            rendered = _frame_apparatus_typst(rendered, breakable=is_landscape)
+            breakable = _matches_apparatus_title(_title_norm, _APPARATUS_BREAKABLE_TITLES)
+            rendered = _frame_apparatus_typst(rendered, breakable=breakable)
         if is_landscape:
             # A flipped/landscape page so the wide 6-column reference gets full landscape width without
             # cramping; tighter margins than the body pages widen the measure further. The whole apparatus
