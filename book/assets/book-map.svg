@@ -4,7 +4,7 @@
      controls, Part 3 the models — which meet in Part 4's daily practice and are grounded in
      Part 5's case study. Palette: Umber Monograph tokens (governed #1f7a4d Part 2,
      fleet #2f5169 Part 3, accent #9a3f12 the grounding case). -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 740" width="960" height="740"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 890" width="960" height="890"
      role="group" aria-labelledby="bmTitle bmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="bmTitle">A map of the book — the parts and how they compose</title>
@@ -13,8 +13,9 @@
     develops the Alignment Thesis as the controls that govern the fleet; Part 3, The Model
     Zoo, develops the Modeling Thesis as the models the fleet reasons through. Both feed
     Part 4, Putting It to Work, the method in daily practice, which leads to Part 5, a MAGE
-    case study of DocAble that the book's claims rest on, and then to the closing
-    implications for software engineering and the patterns appendix used as a reference.</desc>
+    case study of DocAble that the book's claims rest on, and then to Part 6, Reflections —
+    the theory, implications for software engineering, and conclusion. Below it sits the back
+    matter (Part 7: about the author and colophon) and the patterns appendix used as a reference.</desc>
 
   <defs>
     <marker id="bm-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -59,8 +60,15 @@
 
   <line x1="480" y1="568" x2="480" y2="624" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
 
-  <!-- Back matter -->
-  <rect x="270" y="630" width="420" height="88" rx="8" fill="#fdfcf9" stroke="#57534e" stroke-width="2"/>
-  <text x="480" y="666" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Back matter · Implications for SE</text>
-  <text x="480" y="696" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">+ the patterns appendix, a reference</text>
+  <!-- Part 6: reflections (a numbered Part, peer to 1-5) -->
+  <rect x="270" y="630" width="420" height="88" rx="8" fill="#efeaf4" stroke="#5b4a72" stroke-width="2"/>
+  <text x="480" y="666" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 6 · Reflections</text>
+  <text x="480" y="696" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">theory, implications, conclusion</text>
+
+  <line x1="480" y1="718" x2="480" y2="774" stroke="#1c1917" stroke-width="2" marker-end="url(#bm-ah)"/>
+
+  <!-- Part 7: back matter (apparatus — muted, not a numbered Part) -->
+  <rect x="270" y="780" width="420" height="88" rx="8" fill="#fdfcf9" stroke="#57534e" stroke-width="2"/>
+  <text x="480" y="816" text-anchor="middle" font-size="23" font-weight="700" fill="#1c1917">Part 7 · Back matter</text>
+  <text x="480" y="846" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">about the author, colophon, appendix</text>
 </svg>
