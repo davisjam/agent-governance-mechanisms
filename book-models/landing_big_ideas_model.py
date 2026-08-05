@@ -171,7 +171,8 @@ def _placeholder_svg(figure: str, ns: str) -> str:
 def _card_body(model: ConceptModel, c: Concept, svg_render) -> str:
     """The Concept Card body — the six rendered sections (examples omitted; Applications waits for Phase 3).
     The canonical claim rides in the page subtitle (catalog.py `_page`), so the body opens on the tinted
-    Concepts band, then the figure, engineering intuition, relationships, mechanisms, and read-more."""
+    Concepts band, then the concept title as the page's single top-level `<h1>` (the section headings stay
+    `<h2>`), then the figure, engineering intuition, relationships, mechanisms, and read-more."""
     title_of = {x.slug: x.title for x in model.concepts}
     entry_href = catalogue_entry_paths()
 
@@ -202,6 +203,7 @@ def _card_body(model: ConceptModel, c: Concept, svg_render) -> str:
         f'<span class="concept-chip">{_CONCEPT_ICON}Concept</span>'
         f'<span class="concept-kicker">{_esc(c.kicker)}</span>'
         f'</div>\n'
+        f'<h1 class="cc-title">{_esc(c.title)}</h1>\n'
         f'{fig}\n'
         f'<section class="cc-intuition"><h2>Engineering intuition</h2><p>{_esc(c.intuition)}</p></section>\n'
         f'{rel_block}\n'
