@@ -21,7 +21,7 @@ build them. Every capability below serves one thesis or the other, and most serv
 
 ## The claim this catalogue makes
 
-The DocAble case produced <!--census:controls-->83<!--/census--> concrete governance mechanisms.
+The DocAble case produced <!--census:controls-->84<!--/census--> concrete governance mechanisms.
 Comparative analysis reduced them to **24 canonical mechanisms** under **9 capabilities**. The rest are
 retained, not discarded: the **variants and known uses** fold under a parent mechanism, **two pairs merge**
 into one, **one entry rises** to a principle that explains where the others sit, and the **external-spec
@@ -470,6 +470,12 @@ limit the planning-template example below carries in its own Forces note.
   planning-artifact facet.** The same schema-on-the-artifact move applied to *planning* rather than
   dispatch: a template lints a plan for its required sections. Its own limit is instructive — a present-but-
   hollow section passes the structural check, so the schema bounds shape, never substance.
+- **[independent pre-implementation design review](agent/governance-doc-controls/independent-design-review.md)
+  — admit-the-design facet.** Admission moved from the work order to the *design* it will implement: a fresh
+  reviewer who did not author the design re-derives it from the code, rules on its open forks, and gates
+  implementation on the ratified result. Where the template checks the plan *has* its sections, this checks
+  the design *holds* — the pre-implementation bookend to the close-time [Re-Derived Definition of
+  Done](#cap-complete).
 
 *Flagship member (short):*
 

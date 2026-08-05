@@ -99,6 +99,7 @@
     "drift-parity-gates": "Synchronization",
     "dynamic-context-injection": "Context",
     "epic-and-design-templates": "Admission",
+    "independent-design-review": "Admission",
     "epic-definition-of-done": "Validation",
     "executable-source-of-truth": "Modeling",
     "f10-wiring-lint": "Provenance",

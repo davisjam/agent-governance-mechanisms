@@ -129,6 +129,10 @@
       "applicability": "essential",
       "why": "fixed planning-artifact templates structure work in any effort"
     },
+    "independent-design-review": {
+      "applicability": "specialized",
+      "why": "an independent second design review before implementation is a heavyweight maturity practice, scoped to founding designs and needing a second reviewer of comparable strength"
+    },
     "epic-definition-of-done": {
       "applicability": "essential",
       "why": "a trust-nothing completion gate is a universal close discipline"
