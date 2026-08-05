@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Hand-authored SVG (label: mage-dynamic-model). The MAGE Dynamic Model: one shared
-     system of eight constructs, with four numbered, colour-coded feedback loops overlaid.
+     system of eight constructs, with four numbered, colour-coded dynamics overlaid.
      Read the cycle clockwise: agentic capacity exercises the governed environment E and
      drives agentic work; work plus E produce realized performance; the performance gap
      surfaces as governance pressure; pressure is diagnosed as local or structural; a
      structural diagnosis triggers governance adaptation; adaptation reshapes E; a stronger
      E amplifies capacity and reopens the loop. Prior engineering knowledge bootstraps E
-     before any failure. The four loops: [1] bootstrap (blue), [2] churn/discovery (red),
+     before any failure. The four dynamics: [1] bootstrap (blue, an input), [2] churn/discovery (red),
      [3] governance-adaptation (green), [4] capability-amplification (purple). Colour is
      redundant: each loop carries a numbered badge, a name, and a legend row, so the figure
      reads in grayscale. Palette: fleet blue #2f5169, churn red #b23b3b, governed green
@@ -15,11 +15,11 @@
 <svg id="mageDM" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1200"
      role="img" aria-labelledby="mageDM-dmTitle mageDM-dmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="mageDM-dmTitle">The MAGE Dynamic Model — one system, four feedback loops</title>
-  <desc id="mageDM-dmDesc">A single system diagram of eight constructs with four numbered feedback
-    loops overlaid, read as a clockwise cycle. Prior engineering knowledge — standards,
+  <title id="mageDM-dmTitle">The MAGE Dynamic Model — one system, four dynamics</title>
+  <desc id="mageDM-dmDesc">A single system diagram of eight constructs with four numbered dynamics
+    overlaid, read as a clockwise cycle. Prior engineering knowledge — standards,
     requirements, brownfield assets, and prior lessons — sits at the top and feeds the
-    governed environment E through loop 1, the blue bootstrap loop. Agentic capacity, on the
+    governed environment E through item 1, the blue bootstrap input. Agentic capacity, on the
     left, exercises the governed environment E, the green hub on the right whose quality is
     representation quality, enforcement coverage, coherence, and economy. Agentic capacity
     also drives agentic work; the environment E shapes realized performance; agentic work
@@ -35,8 +35,8 @@
     capability-amplification loop, runs from the improved environment back up to agentic
     capacity: a stronger environment enables bigger tasks and more concurrency, which reopens
     the whole cycle and exposes new pressure. The neutral black arrows are the shared system
-    plumbing; the four coloured, numbered arrows are the feedback loops the chapter walks. A
-    legend at the bottom names all four loops. Loops 2 and 3 together form a balancing loop,
+    plumbing; the four coloured, numbered arrows are the dynamics the chapter walks. A
+    legend at the bottom names all four dynamics. Loops 2 and 3 together form a balancing loop,
     marked B: churn drives diagnosis and adaptation, which reduce churn — a goal-seeking,
     self-damping cycle toward fit. Loop 4 is a reinforcing loop, marked R: a better environment
     raises ambition, which reopens the frontier — a self-amplifying cycle. Loop 1 is a bootstrap
@@ -72,7 +72,7 @@
     <tspan x="150" y="70" font-size="18" font-weight="700">The MAGE</tspan>
     <tspan x="150" y="94" font-size="18" font-weight="700">Dynamic Model</tspan>
     <tspan x="150" y="120" font-size="13" font-style="italic" fill="#57534e">one system,</tspan>
-    <tspan x="150" y="138" font-size="13" font-style="italic" fill="#57534e">four feedback loops</tspan>
+    <tspan x="150" y="138" font-size="13" font-style="italic" fill="#57534e">four dynamics</tspan>
   </text>
 
   <!-- ============ [4] PURPLE capability-amplification loop (drawn first, behind boxes) ==== -->
@@ -106,13 +106,13 @@
   <text x="702" y="448" text-anchor="start" font-size="14" font-style="italic" fill="#57534e">shapes</text>
   <text x="238" y="632" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">mismatch</text>
 
-  <!-- ============ [1] BLUE bootstrap loop ============ -->
+  <!-- ============ [1] BLUE bootstrap input (not a feedback loop) ============ -->
   <g class="loop loop1">
     <path d="M518,135 C556,172 596,200 634,232" fill="none" stroke="#2f5169" stroke-width="3"
           stroke-linecap="round" marker-end="url(#mageDM-dm-blue)"/>
     <circle cx="585" cy="182" r="16" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.5"/>
     <text x="585" y="188" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">1</text>
-    <text x="560" y="214" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#2f5169">Bootstrap</text>
+    <text x="560" y="214" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#2f5169">Bootstrap (input)</text>
   </g>
 
   <!-- ============ [2] RED churn / discovery loop ============ -->
@@ -191,12 +191,12 @@
   <rect x="837" y="470" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.2"/>
   <text x="846.5" y="484" text-anchor="middle" font-size="14" font-weight="700" fill="#1f7a4d">B</text>
 
-  <!-- ============ LEGEND: the four loops (grayscale key — numbers carry meaning) ============ -->
+  <!-- ============ LEGEND: the four dynamics (grayscale key — numbers carry meaning) ============ -->
   <rect x="40" y="1048" width="800" height="140" rx="8" fill="#f6f4ef" stroke="#e4e0d8" stroke-width="1.5"/>
 
   <circle cx="70" cy="1078" r="14" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.4"/>
   <text x="70" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">1</text>
-  <text x="92" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Bootstrap loop</text>
+  <text x="92" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Bootstrap (input)</text>
   <text x="92" y="1096" text-anchor="start" font-size="12" fill="#57534e">prior knowledge</text>
   <text x="92" y="1113" text-anchor="start" font-size="12" fill="#57534e">seeds the environment</text>
 
