@@ -3,7 +3,7 @@
 
   "overlap_rule": "A LOCAL metaphor must pay off before the next LOCAL metaphor is introduced within the same stretch. CORE vocabulary (the Printer, churn, map-and-territory, the Model Zoo, the loop, the engineer's seat) is always live and exempt. Overlap = two locals in one stretch whose [introduced_at, pays_off_at] spans intersect. Any real overlap must be ratified (overlap_ok:true + a rationale on either party) or it is a finding.",
 
-  "ratified_counts": { "core": 6, "local": 9, "overlaps": 0 },
+  "ratified_counts": { "core": 7, "local": 9, "overlaps": 0 },
 
   "metaphors": [
     {
@@ -71,6 +71,17 @@
       "overlap_ok": false,
       "overlap_rationale": "",
       "notes": "Classed core (medium confidence): anchors chapter 1.5 and is cashed in the back matter (6.1-implications-for-se). If read as a chapter-local frame, reclassify local — it is then the sole local in 1.5 (still no overlap)."
+    },
+    {
+      "name": "The reasoning horizon",
+      "slug": "reasoning-horizon",
+      "kind": "core",
+      "vehicle": "a horizon bounding how much reasoning state a task can hold at once",
+      "introduced_at": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "reasoning-horizon" },
+      "payoff": "Models extend the horizon; MAGE moves the wall, it does not remove it.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "Core vocabulary from 1.1 onward: the reasoning-horizon reframe of the Modeling Thesis recurs across the preface, 1.4, 2.3, 3.1/3.7, and the theory chapter's Reasoning-Horizon Proposition (6.0). Sub-images 'reasoning state' and 'working memory' belong to this cluster, not separate rows. Spatial vehicle named once, then used plainly (the define-once discipline)."
     },
 
     {

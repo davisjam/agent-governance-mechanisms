@@ -209,10 +209,82 @@ def count_guard_findings(model: "TheoryModel | None" = None) -> "list[str]":
 
 
 def all_findings(model: "TheoryModel | None" = None) -> "list[str]":
-    """Structural + parity + count guard — the full check `catalog.py validate` runs (audit-only)."""
+    """Structural + parity + count guard — the BLOCKING check `catalog.py validate`'s [theory] band runs.
+    Deliberately EXCLUDES `proposition_findings()`: the named-proposition node landed AUDIT-ONLY-first (the
+    repo's blocking-lint landing discipline), so it must not contribute to this gating set on first landing."""
     if model is None:
         model = derive_model()
     return structural_findings(model) + parity_findings(model) + count_guard_findings(model)
+
+
+# ---- named theory PROPOSITIONS (AUDIT-ONLY — kept out of all_findings) -------------------------------
+
+#: The honest-frame vocabulary a proposition may carry (mirrors substantiation.py's frame set). A theory
+#: reality-claim owes an honest frame; a `reality`/empty frame would soapbox once registered, so it is a
+#: (non-gating) finding here — an early warning ahead of the substantiation soapbox gate.
+_PROPOSITION_FRAMES = ("reality", "offered-for-replication", "single-case", "possibility", "conjecture")
+
+
+@dataclass
+class Proposition:
+    """A named theory PROPOSITION — the quotable theory STATEMENT a hypothesis encodes (the Reasoning-Horizon
+    Proposition is H4's). NOT a hypothesis (it stays out of the ratified count guard), but a first-class
+    queryable node: id + name + statement + falsifier + honest frame, cross-referencing the hypothesis that
+    formalizes it."""
+    id: str
+    name: str
+    statement: str
+    falsifier: str
+    frame: str
+    formalized_by: str
+
+
+def derive_propositions(raw: "dict | None" = None) -> "list[Proposition]":
+    """The declared named propositions as a typed list (empty when the key is absent)."""
+    if raw is None:
+        raw = _load_declared()
+    props: "list[Proposition]" = []
+    for p in raw.get("propositions", []) or []:
+        if not isinstance(p, dict):
+            continue
+        props.append(Proposition(
+            id=str(p.get("id", "")), name=str(p.get("name", "")),
+            statement=str(p.get("statement", "")), falsifier=str(p.get("falsifier", "")),
+            frame=str(p.get("frame", "")), formalized_by=str(p.get("formalized_by", "")),
+        ))
+    return props
+
+
+def proposition_findings(raw: "dict | None" = None) -> "list[str]":
+    """AUDIT-ONLY structural check on the named theory PROPOSITIONS (rule-#55 audit-only-first landing — a new
+    node type is REPORTED, never gated, on first landing). Each proposition must carry a non-empty, unique id
+    plus a non-empty name / statement / falsifier, an honest speculative frame (a theory reality-claim owes
+    one), and a `formalized_by` that resolves to a real hypothesis id. NOT part of `all_findings()`, so it
+    never contributes to the BLOCKING [theory] band."""
+    if raw is None:
+        raw = _load_declared()
+    hyp_ids = {str(h.get("id", "")) for h in raw.get("hypotheses", []) if isinstance(h, dict) and h.get("id")}
+    findings: "list[str]" = []
+    seen: "set[str]" = set()
+    for i, p in enumerate(derive_propositions(raw)):
+        label = p.id or f"#{i}"
+        if not p.id:
+            findings.append(f"PR1 proposition {label!r} has an empty `id`")
+        elif p.id in seen:
+            findings.append(f"PR1 duplicate proposition id {p.id!r}")
+        seen.add(p.id)
+        for f_name, val in (("name", p.name), ("statement", p.statement), ("falsifier", p.falsifier)):
+            if not val.strip():
+                findings.append(f"PR1 proposition {label!r} has an empty `{f_name}`")
+        if not p.frame.strip():
+            findings.append(f"PR2 proposition {label!r} has an empty `frame` (a theory reality-claim owes an honest frame)")
+        elif p.frame not in _PROPOSITION_FRAMES:
+            findings.append(f"PR2 proposition {label!r} frame {p.frame!r} is not one of {_PROPOSITION_FRAMES}")
+        elif p.frame == "reality":
+            findings.append(f"PR2 proposition {label!r} is framed `reality` (unhedged) — a theory proposition should be offered-for-replication, not asserted")
+        if p.formalized_by and p.formalized_by not in hyp_ids:
+            findings.append(f"PR3 proposition {label!r} formalized_by {p.formalized_by!r} resolves to no hypothesis id")
+    return findings
 
 
 # ---- CLI --------------------------------------------------------------------------------------------
@@ -233,6 +305,19 @@ def _cmd_show() -> int:
     return 0
 
 
+def _print_proposition_audit() -> None:
+    """AUDIT-ONLY: the named-proposition structural check (rule-#55 first landing — reported, never gating)."""
+    props = derive_propositions()
+    prop_findings = proposition_findings()
+    if prop_findings:
+        print(f"  proposition check (AUDIT-ONLY): {len(prop_findings)} finding(s):")
+        for f in prop_findings:
+            print(f"    {f}")
+    else:
+        print(f"  proposition check (AUDIT-ONLY): {len(props)} named proposition(s) well-formed "
+              f"(non-gating on first landing)")
+
+
 def _cmd_verify() -> int:
     model = derive_model()
     findings = all_findings(model)
@@ -241,9 +326,11 @@ def _cmd_verify() -> int:
               f"`... hypotheses-table` (BLOCKING):")
         for f in findings:
             print(f"  {f}")
+        _print_proposition_audit()
         return 1  # BLOCKING: a chapter<->model drift gates
     print(f"theory-of-mage is in sync ({len(model.hypotheses)} hypotheses, {model.sub_count()} "
           f"sub-hypotheses; structural clean; page table matches the model)")
+    _print_proposition_audit()
     return 0
 
 

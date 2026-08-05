@@ -1161,6 +1161,18 @@ def cmd_validate(_args) -> int:
     else:
         print("  [theory] chapter Seven-Hypotheses table matches the declared model "
               "(7 hypotheses, 2 sub-hypotheses; structural clean)")
+    # NAMED-PROPOSITION check — AUDIT-ONLY. The theory model also declares named PROPOSITIONS (the quotable
+    # theory statement a hypothesis encodes; the Reasoning-Horizon Proposition is H4's). Kept OUT of the
+    # gating tmm.all_findings() and surfaced here non-gating (repo blocking-lint discipline: a new node type
+    # lands audit-only-first). Structural well-formedness only — non-empty id/name/statement/falsifier, an
+    # honest frame, and formalized_by resolving to a real hypothesis.
+    tm_props = tmm.proposition_findings()
+    if tm_props:
+        print(f"  [theory] AUDIT-ONLY: {len(tm_props)} named-proposition finding(s) (does not gate):")
+        for f in tm_props:
+            print(f"           {f}")
+    else:
+        print(f"  [theory] AUDIT-ONLY: {len(tmm.derive_propositions())} named proposition(s) well-formed")
     # SOAPBOX GATE — BLOCKING. The substantiation aggregator (book-models/substantiation.py) nests the three
     # evidence legs (data / literature / field-note) under the claim universe (spine + theory + discussion).
     # SOAPBOX is its sharp report: a reality-claim asserted with NO backing of any kind AND no honest

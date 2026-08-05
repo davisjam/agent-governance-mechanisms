@@ -155,14 +155,14 @@
     {
       "id": "H4-representation-leverage",
       "name": "Representation leverage",
-      "statement": "Task-relevant structured models cut context cost and churn without lowering task quality, and synchronized models carry predictive information beyond conventional code-coverage measures.",
-      "falsifier": "Model use at matched recall yields no efficiency gain, lowers quality, or adds no predictive power over coverage.",
+      "statement": "Task-relevant structured models extend the effective reasoning horizon — cutting context cost and churn without lowering task quality by replacing implementation-level state with abstractions that survive compaction with less loss — and synchronized models carry predictive information beyond conventional code-coverage measures.",
+      "falsifier": "Model use at matched recall yields no efficiency gain, lowers quality, adds no predictive power over coverage, or shows no advantage that widens as the required reasoning state grows.",
       "sub_hypotheses": [
         {
           "id": "H4a-representation-efficiency",
           "name": "Representation efficiency",
-          "statement": "Task-relevant structured models reduce context cost and churn without lowering task quality.",
-          "falsifier": "Model use at matched recall yields no efficiency gain or lowers task quality."
+          "statement": "Task-relevant structured models extend the effective reasoning horizon: they replace implementation-level state with semantically richer abstractions that survive repeated compaction with less loss, reducing context cost and churn without lowering task quality.",
+          "falsifier": "Model use at matched recall yields no efficiency gain, lowers task quality, or shows no advantage that widens as the required reasoning state grows."
         },
         {
           "id": "H4b-synchronization-signal",
@@ -194,6 +194,19 @@
       "falsifier": "Split-authority or low-fit settings convert at the same rate and durability as high-fit, effective-authority ones.",
       "moderated_by": ["capability-fit", "authority"],
       "loops": ["L3-governance-adaptation"]
+    }
+  ],
+
+  "propositions": [
+    {
+      "id": "reasoning-horizon-proposition",
+      "name": "Reasoning-Horizon Proposition",
+      "statement": "Software engineering is a long-horizon reasoning task. Productivity degrades once the working reasoning state a task requires exceeds the effective reasoning horizon of the human-agent system. Executable models extend that horizon by replacing implementation-level state with semantically richer abstractions whose properties preserve more information under repeated compaction.",
+      "falsifier": "Holding task and recall fixed, reasoning over a task-relevant model yields no reduction in reconstruction cost or churn versus reasoning over the implementation, and no gain that widens as the required reasoning state grows.",
+      "frame": "offered-for-replication",
+      "bounded_claim": "MAGE moves the scalability wall; it does not remove it. Models raise the level at which reasoning occurs, delaying the point at which working memory becomes the bottleneck; beyond it, further decomposition and modularity become unavoidable.",
+      "formalized_by": "H4-representation-leverage",
+      "reading": "The named theory STATEMENT that H4 encodes as a falsifiable HYPOTHESIS. The proposition names the mechanism — a finite reasoning horizon that models extend by acting as better compression domains — and states the limit MAGE draws from it. H4 supplies the testable prediction; the proposition supplies the mechanism and its bound. Registered offered-for-replication (the chapter's global hedge), so it is honestly situated, not asserted."
     }
   ],
 

@@ -160,10 +160,11 @@ def _spine_claims() -> "list[dict]":
 
 def _theory_claims() -> "list[dict]":
     """The theory chapter's reality-asserting nodes as claim dicts, in a stable order: the seven hypotheses
-    (each followed by its sub-hypotheses), the corollaries, then the research-agenda proposals. Each is a
-    reality-claim; each defaults to frame=offered-for-replication (the chapter's global hedge) unless the
-    node carries its own `frame`. Hypotheses use their JSON id; corollaries + agenda points carry no id, so a
-    stable slug is synthesized. Robust to the theory file's absence (returns [])."""
+    (each followed by its sub-hypotheses), the named propositions, the corollaries, then the research-agenda
+    proposals. Each is a reality-claim; each defaults to frame=offered-for-replication (the chapter's global
+    hedge) unless the node carries its own `frame`. Hypotheses + propositions use their JSON id; corollaries +
+    agenda points carry no id, so a stable slug is synthesized. Robust to the theory file's absence
+    (returns [])."""
     m = _load(_THEORY_DECLARED)
     if m is None:
         return []
@@ -180,6 +181,9 @@ def _theory_claims() -> "list[dict]":
         for sh in h.get("sub_hypotheses", []) or []:
             if isinstance(sh, dict) and sh.get("id"):
                 out.append(_node(sh["id"], sh.get("statement", ""), sh.get("frame", _THEORY_DEFAULT_FRAME)))
+    for p in m.get("propositions", []):
+        if isinstance(p, dict) and p.get("id"):
+            out.append(_node(p["id"], p.get("statement", ""), p.get("frame", _THEORY_DEFAULT_FRAME)))
     for c in m.get("corollaries", []):
         if isinstance(c, dict) and c.get("claim"):
             out.append(_node(f"corollary-{_slug(c['claim'])}", c["claim"],
