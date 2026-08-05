@@ -5,9 +5,13 @@ loops, path-specific moderators, three outcomes, seven falsifiable hypotheses, c
 directional relations. It carries NO *_model.py projector and nothing else walks it, so this check is the
 one thing that holds the model to its own internal contract.
 
-It verifies six completeness invariants, each REPORTED never GATED (audit-only, matching substantiation.py):
+It verifies seven completeness invariants, each REPORTED never GATED (audit-only, matching substantiation.py):
   - TM1 HYPOTHESIS-BODY — every hypothesis carries a non-empty `statement` AND a non-empty `falsifier`
     (a hypothesis with no falsifier is not falsifiable, so it is not yet a hypothesis).
+  - TM7 SUB-HYPOTHESIS-BODY — every `sub_hypotheses` entry (a named hypothesis a parent decomposes into,
+    e.g. H4a/H4b under H4) carries a non-empty, unique `id` AND a non-empty `statement` AND a non-empty
+    `falsifier`. Without this, a decomposition adds structure the completeness check cannot see — the exact
+    drift this check exists to close.
   - TM2 HYPOTHESIS-LOOPS — every `loops` ref on a hypothesis resolves to a real loop `id` or `number`.
   - TM3 COROLLARY-STATUS — every corollary carries a non-empty `status` (which hypothesis it specializes).
   - TM4 MODERATOR-ENDPOINTS — every `operates_on` endpoint ("X -> Y") resolves to a real node: a construct
@@ -102,13 +106,28 @@ def check(m: "dict | None" = None) -> "list[Finding]":
     moderator_endpoints = construct_ids | outcome_ids | loop_refs | aggregate
     tie_universe = construct_ids | loop_refs | outcome_ids | hypothesis_ids
 
-    # TM1 + TM2 — hypotheses.
+    # TM1 + TM2 + TM7 — hypotheses (and the sub-hypotheses a parent decomposes into).
+    seen_ids: "set[str]" = _hypothesis_ids(m)  # sub-hypothesis ids must not collide with a top-level id
     for h in m.get("hypotheses", []):
         hid = h.get("id", "<no-id>")
         if not str(h.get("statement", "")).strip():
             findings.append(Finding("TM1", f"hypothesis {hid!r} has an empty `statement`"))
         if not str(h.get("falsifier", "")).strip():
             findings.append(Finding("TM1", f"hypothesis {hid!r} has an empty `falsifier` (not falsifiable)"))
+        # TM7 — every declared sub-hypothesis is itself a well-formed, resolvable hypothesis.
+        for sh in h.get("sub_hypotheses", []) or []:
+            sid = str(sh.get("id", "")).strip()
+            slabel = sid or f"<sub of {hid}>"
+            if not sid:
+                findings.append(Finding("TM7", f"sub-hypothesis of {hid!r} has an empty `id`"))
+            elif sid in seen_ids:
+                findings.append(Finding("TM7", f"sub-hypothesis id {sid!r} (under {hid!r}) collides with another hypothesis id"))
+            else:
+                seen_ids.add(sid)
+            if not str(sh.get("statement", "")).strip():
+                findings.append(Finding("TM7", f"sub-hypothesis {slabel!r} (under {hid!r}) has an empty `statement`"))
+            if not str(sh.get("falsifier", "")).strip():
+                findings.append(Finding("TM7", f"sub-hypothesis {slabel!r} (under {hid!r}) has an empty `falsifier` (not falsifiable)"))
         loops = h.get("loops", [])
         if not loops:
             findings.append(Finding("TM2", f"hypothesis {hid!r} names no `loops`"))
@@ -169,6 +188,7 @@ def _shape(m: dict) -> dict:
     return {
         "hypotheses": len(m.get("hypotheses", [])),
         "hypothesis_ids": [h.get("id") for h in m.get("hypotheses", [])],
+        "sub_hypotheses": sum(len(h.get("sub_hypotheses", []) or []) for h in m.get("hypotheses", [])),
         "loops": len(m.get("loops", [])),
         "constructs": len(m.get("constructs", [])),
         "moderators": len(m.get("moderators", [])),
@@ -195,6 +215,7 @@ def render(as_json: bool = False) -> int:
         return 0
     print("== theory-model completeness — theory_of_mage_declared.json ==")
     print(f"  shape: {shape['hypotheses']} hypotheses ({', '.join(str(x) for x in shape['hypothesis_ids'])}), "
+          f"{shape['sub_hypotheses']} sub-hypotheses, "
           f"{shape['loops']} loops, {shape['constructs']} constructs, {shape['moderators']} moderators, "
           f"{shape['outcomes']} outcomes, {shape['corollaries']} corollaries, {shape['relations']} relations")
     if findings:

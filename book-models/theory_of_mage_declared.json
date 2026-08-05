@@ -157,6 +157,20 @@
       "name": "Representation leverage",
       "statement": "Task-relevant structured models cut context cost and churn without lowering task quality, and synchronized models carry predictive information beyond conventional code-coverage measures.",
       "falsifier": "Model use at matched recall yields no efficiency gain, lowers quality, or adds no predictive power over coverage.",
+      "sub_hypotheses": [
+        {
+          "id": "H4a-representation-efficiency",
+          "name": "Representation efficiency",
+          "statement": "Task-relevant structured models reduce context cost and churn without lowering task quality.",
+          "falsifier": "Model use at matched recall yields no efficiency gain or lowers task quality."
+        },
+        {
+          "id": "H4b-synchronization-signal",
+          "name": "Synchronization signal",
+          "statement": "Model-synchronization measures provide predictive information about later churn or defect escape beyond conventional code-coverage measures.",
+          "falsifier": "Synchronization measures add no predictive power over conventional code-coverage measures."
+        }
+      ],
       "loops": ["L3-governance-adaptation"]
     },
     {
