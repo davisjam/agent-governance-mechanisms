@@ -235,6 +235,22 @@
       "status": "landed",
       "fold_target": "",
       "notes": "Registers + backs the S3 CMM box-ticking claim (6.0:229) per the author's CITE ruling. Bollinger & McGowan, 'A Critical Look at Software Capability Evaluations', IEEE Software 8(4):25-41, 1991 (DOI 10.1109/52.300034; IEEE Software 25th-anniversary Top Pick) documents the process-conformance-over-outcomes + box-ticking failure mode — relation=substantiates. backs_claims binds the DISCUSSION claim maturity-model-box-ticking (registered in discussion-claims.json). The cite marker [cite: bollinger1991critical] is in 6.0 prose at the box-ticking sentence. NOTE: 6.0 is a backmatter chapter (LP3's _chapter_text globs book/part*/ only), so LP3 reports this landed cite as not-appearing-in-a-target-chapter (audit-only, non-gating) — the single-case-methodology precedent."
+    },
+    {
+      "id": "agile-accidental-complexity",
+      "section": "§15",
+      "title": "Agile as an accidental-complexity concession",
+      "x": "Agile's founding statement chose velocity over ceremony — it valued working software over comprehensive documentation and responding to change over following a plan, deprioritizing the up-front models and maintained plans that heavier methodologies demanded.",
+      "y": "This book reads that observable choice as an accidental-complexity concession: teams shipped fast and kept models thin because holding quality and a current model honest by hand was too expensive to afford at pace — an owned causal-historical interpretation, not an established finding.",
+      "z": "MAGE changes that arithmetic: agents absorb the accidental work — they type the code, keep the map in sync, and hold the line for cents — so the essential properties a model names and a gate checks can finally get the attention Agile had to spend elsewhere.",
+      "target_locations": ["6.1-implications-for-se"],
+      "citations": [
+        {"key": "agile-manifesto2001", "backs_claims": ["agile-accidental-complexity-origin"], "relation": "situates"}
+      ],
+      "advances_theses": ["agile-accidental-complexity-origin"],
+      "status": "landed",
+      "fold_target": "",
+      "notes": "Registers the S1 Agile-origin claim (6.1:365-368) per the author's HYBRID ruling. The Agile Manifesto (agile-manifesto2001; Beck et al., 'Manifesto for Agile Software Development', 2001, agilemanifesto.org) grounds the OBSERVABLE half — Agile's 'working software over comprehensive documentation' + 'responding to change over following a plan' values ARE the documentation/model concession the passage describes — relation=situates (it documents the choice, it does not establish the author's causal reading). The CAUSAL half (arose BECAUSE hand-maintenance was too expensive at pace) is the author's owned interpretation, registered in discussion-claims.json with frame=conjecture and kept loud in prose (no softening). backs_claims + advances_theses bind the DISCUSSION claim agile-accidental-complexity-origin. The cite marker [cite: agile-manifesto2001] sits on the observable clause ('kept models thin') in 6.1 prose, leaving the 'because' causal clause uncited as the conjecture. NOTE: 6.1 is a backmatter chapter (LP3's _chapter_text globs book/part*/ only), so LP3 reports this landed cite as not-appearing-in-a-target-chapter (audit-only, non-gating) — the single-case-methodology / empirical-measurement-regime precedent."
     }
   ]
 }
