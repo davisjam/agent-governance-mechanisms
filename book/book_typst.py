@@ -424,6 +424,19 @@ def _render_table(block: Block_t) -> str:
     if any(a for a in aligns):                           # a `---:` column right-aligns (numeric), else left
         cols = ", ".join("right" if (i < len(aligns) and aligns[i]) else "left" for i in range(ncol))
         align_arg = f"\n    align: ({cols}),"
+    # A pipe table with an entirely empty header row is the catalogue's "metadata card" idiom (`| | |`) — a
+    # key/value reference box, NOT a numbered content float. Render it as a bare `fit-table` grid (no
+    # `#figure` wrapper, so no "Table N" number, no caption, no list-of-floats entry), matching the HTML
+    # `.meta-card` twin. Real tables keep the header + booktabs rules + numbering below.
+    meta_card = all(not c.strip() for c in header)
+    if meta_card:
+        cells = ["table.hline(stroke: 1pt)"]
+        for row in body_rows:
+            row = (row + [""] * ncol)[:ncol]
+            cells.append(", ".join(f"[{inline_typst(c)}]" for c in row))
+        cells.append("table.hline(stroke: 1pt)")
+        tbl = f"table(\n    columns: {ncol},{align_arg}\n    " + ",\n    ".join(cells) + "\n  )"
+        return f"#fit-table({tbl})"
     # Booktabs rules: heavy top, light under-header, heavy bottom — the three-rule Tufte style.
     cells = ["table.hline(stroke: 1pt)",
              "table.header(" + ", ".join(f"[{inline_typst(c)}]" for c in header) + ")",

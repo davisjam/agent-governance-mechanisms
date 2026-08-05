@@ -177,6 +177,15 @@ table.book-table th, table.book-table td { border: none; padding: 0.6rem 0.7rem;
 table.book-table thead th { background: transparent; font-weight: 600;
                              border-bottom: 1px solid var(--muted); }
 table.book-table th.num, table.book-table td.num { text-align: right; }
+/* Metadata card (`.meta-card`, the Appendix-B per-note summary box): an UNnumbered key/value reference box.
+   A quiet framed panel, narrower than the text measure, tight rows, the field name in the muted small-caps
+   label style — orientation before the prose, not a content table. */
+table.book-table.meta-card { width: auto; max-width: 34rem; margin: 0.9rem 0 1.1rem; font-size: 13.5px;
+                              border: 1px solid var(--muted); border-radius: 6px; background: var(--code-bg); }
+table.book-table.meta-card td { padding: 0.32rem 0.7rem; line-height: 1.4; }
+table.book-table.meta-card td:first-child { font-weight: 600; color: var(--muted);
+                                             white-space: nowrap; width: 1%; }
+table.book-table.meta-card tr + tr td { border-top: 1px solid var(--rule, rgba(120,113,108,0.22)); }
 blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
@@ -522,7 +531,9 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 15. Coverage → model-node mapping (which invariants are actually tested)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 15. Coverage → model-node mapping (which invariants are actually tested)</h1></header><p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/coverage-model-mapping.html">system-models / Coverage → model-node mapping (which invariants are actually tested)</a>.</em></p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 15. Coverage → model-node mapping (which invariants are actually tested)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 15. Coverage → model-node mapping (which invariants are actually tested)</h1></header><p><strong>The judgment</strong> — Measure coverage against invariants, not lines; the aggregate hides the gap.</p>
+<table class="book-table meta-card"><tbody><tr><td><strong>Role</strong></td><td>Models-bridge</td></tr><tr><td><strong>Family</strong></td><td>System models</td></tr><tr><td><strong>Used in stacks</strong></td><td>The specification + verification stack</td></tr><tr><td><strong>Enforcement</strong></td><td>Soft·Hard</td></tr><tr><td><strong>Related mechanisms</strong></td><td><em>Counterpart:</em> <a href="../models-bridge/system-models/formal-invariant-verification.html">Formal invariant verification (temporal form → model checking)</a>; <em>Enabler:</em> <a href="../models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth models</a>; <em>See also:</em> <a href="../models-bridge/system-models/drift-parity-gates.html">Drift &amp; parity gates</a></td></tr></tbody></table>
+<p><em>Full description → <a href="../models-bridge/system-models/coverage-model-mapping.html">Coverage → model-node mapping (which invariants are actually tested)</a>.</em></p>
 <p><strong>Intent</strong> — Project test coverage onto the <em>model's nodes</em> — its states, seams, and invariants — so "is this invariant tested?" becomes a queried fact instead of a guess from a line-coverage percentage. The map turns the model into a test work-list: an invariant node with no covering test is a visible gap that drives the next test.</p>
 <h2>Problem</h2>
 <p>Line and branch coverage tell you what fraction of the code ran under test, not which of the system's invariants are actually exercised. A model can show 90% line coverage while a critical race invariant has zero tests touching its states, because coverage counts lines, not meanings. So the invariants you most need verified hide inside a high aggregate number, and "are we testing the thing that matters?" is unanswerable from the coverage report. The failure is a false sense of test adequacy: a green coverage number sitting over an untested critical invariant.</p>

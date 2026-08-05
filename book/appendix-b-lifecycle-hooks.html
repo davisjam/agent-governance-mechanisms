@@ -177,6 +177,15 @@ table.book-table th, table.book-table td { border: none; padding: 0.6rem 0.7rem;
 table.book-table thead th { background: transparent; font-weight: 600;
                              border-bottom: 1px solid var(--muted); }
 table.book-table th.num, table.book-table td.num { text-align: right; }
+/* Metadata card (`.meta-card`, the Appendix-B per-note summary box): an UNnumbered key/value reference box.
+   A quiet framed panel, narrower than the text measure, tight rows, the field name in the muted small-caps
+   label style — orientation before the prose, not a content table. */
+table.book-table.meta-card { width: auto; max-width: 34rem; margin: 0.9rem 0 1.1rem; font-size: 13.5px;
+                              border: 1px solid var(--muted); border-radius: 6px; background: var(--code-bg); }
+table.book-table.meta-card td { padding: 0.32rem 0.7rem; line-height: 1.4; }
+table.book-table.meta-card td:first-child { font-weight: 600; color: var(--muted);
+                                             white-space: nowrap; width: 1%; }
+table.book-table.meta-card tr + tr td { border-top: 1px solid var(--rule, rgba(120,113,108,0.22)); }
 blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
@@ -522,7 +531,9 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 7. Lifecycle hooks (interpose on the agent runtime&#x27;s events)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 7. Lifecycle hooks (interpose on the agent runtime's events)</h1></header><p><em>Projected from the catalogue entry <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">lifecycle-and-observability / Lifecycle hooks (interpose on the agent runtime's events)</a>.</em></p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 7. Lifecycle hooks (interpose on the agent runtime&#x27;s events)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 7. Lifecycle hooks (interpose on the agent runtime's events)</h1></header><p><strong>The judgment</strong> — Bind the step to a lifecycle event; the firing is hard, the payload can be soft.</p>
+<table class="book-table meta-card"><tbody><tr><td><strong>Role</strong></td><td>Agent</td></tr><tr><td><strong>Family</strong></td><td>Lifecycle &amp; observability</td></tr><tr><td><strong>Used in stacks</strong></td><td>The context-management stack</td></tr><tr><td><strong>Enforcement</strong></td><td>Soft·Hard</td></tr><tr><td><strong>Related mechanisms</strong></td><td><em>Counterpart:</em> <a href="../agent/gates-and-merge-train/pre-commit-hook.html">Pre-commit hook (3-stanza, tree-sha markers)</a>; <em>See also:</em> <a href="../agent/lifecycle-and-observability/cron-alerts-gate.html">Cron-alerts gate</a>; <em>Generalization:</em> <a href="../agent/lifecycle-and-observability/reflection-facet-substrate.html">Reflection-facet substrate (tempo-gated policy nudges)</a>; <em>See also:</em> <a href="../agent/context-and-dispatch/dynamic-context-injection.html">Dynamic context injection</a></td></tr></tbody></table>
+<p><em>Full description → <a href="../agent/lifecycle-and-observability/lifecycle-hooks.html">Lifecycle hooks (interpose on the agent runtime's events)</a>.</em></p>
 <p><strong>Intent</strong> — Bind a script to the agent runtime's lifecycle events — turn-stop, pre-compaction, session-start, before-a-tool-call — so a step the operator keeps omitting at runtime fires deterministically, whether or not anyone remembered it.</p>
 <h2>Problem</h2>
 <p>Some recurring failures live not in the code an agent writes but in the loop that drives it: the operator skipping a step at a predictable moment. Ending a turn with ratified work still queued. Compacting context without first writing a hand-off. Opening a session without reading the alert backlog. Editing outside the sanctioned worktree. A lint cannot reach these — there is no source artifact to analyze, and the omission happens at runtime. A house-rule only aims a probabilistic operator, and it rots, because the step gets skipped exactly when attention is thin.</p>

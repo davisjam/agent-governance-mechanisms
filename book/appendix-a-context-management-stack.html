@@ -177,6 +177,15 @@ table.book-table th, table.book-table td { border: none; padding: 0.6rem 0.7rem;
 table.book-table thead th { background: transparent; font-weight: 600;
                              border-bottom: 1px solid var(--muted); }
 table.book-table th.num, table.book-table td.num { text-align: right; }
+/* Metadata card (`.meta-card`, the Appendix-B per-note summary box): an UNnumbered key/value reference box.
+   A quiet framed panel, narrower than the text measure, tight rows, the field name in the muted small-caps
+   label style — orientation before the prose, not a content table. */
+table.book-table.meta-card { width: auto; max-width: 34rem; margin: 0.9rem 0 1.1rem; font-size: 13.5px;
+                              border: 1px solid var(--muted); border-radius: 6px; background: var(--code-bg); }
+table.book-table.meta-card td { padding: 0.32rem 0.7rem; line-height: 1.4; }
+table.book-table.meta-card td:first-child { font-weight: 600; color: var(--muted);
+                                             white-space: nowrap; width: 1%; }
+table.book-table.meta-card tr + tr td { border-top: 1px solid var(--rule, rgba(120,113,108,0.22)); }
 blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }

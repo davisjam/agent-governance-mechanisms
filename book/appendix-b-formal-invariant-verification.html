@@ -177,6 +177,15 @@ table.book-table th, table.book-table td { border: none; padding: 0.6rem 0.7rem;
 table.book-table thead th { background: transparent; font-weight: 600;
                              border-bottom: 1px solid var(--muted); }
 table.book-table th.num, table.book-table td.num { text-align: right; }
+/* Metadata card (`.meta-card`, the Appendix-B per-note summary box): an UNnumbered key/value reference box.
+   A quiet framed panel, narrower than the text measure, tight rows, the field name in the muted small-caps
+   label style — orientation before the prose, not a content table. */
+table.book-table.meta-card { width: auto; max-width: 34rem; margin: 0.9rem 0 1.1rem; font-size: 13.5px;
+                              border: 1px solid var(--muted); border-radius: 6px; background: var(--code-bg); }
+table.book-table.meta-card td { padding: 0.32rem 0.7rem; line-height: 1.4; }
+table.book-table.meta-card td:first-child { font-weight: 600; color: var(--muted);
+                                             white-space: nowrap; width: 1%; }
+table.book-table.meta-card tr + tr td { border-top: 1px solid var(--rule, rgba(120,113,108,0.22)); }
 blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
@@ -522,7 +531,9 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 18. Formal invariant verification (temporal form → model checking)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 18. Formal invariant verification (temporal form → model checking)</h1></header><p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/formal-invariant-verification.html">system-models / Formal invariant verification (temporal form → model checking)</a>.</em></p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 18. Formal invariant verification (temporal form → model checking)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 18. Formal invariant verification (temporal form → model checking)</h1></header><p><strong>The judgment</strong> — Prove an invariant by the exhaustive search its shape demands; sampling misses the race.</p>
+<table class="book-table meta-card"><tbody><tr><td><strong>Role</strong></td><td>Models-bridge</td></tr><tr><td><strong>Family</strong></td><td>System models</td></tr><tr><td><strong>Used in stacks</strong></td><td>The specification + verification stack</td></tr><tr><td><strong>Enforcement</strong></td><td>Hard</td></tr><tr><td><strong>Related mechanisms</strong></td><td><em>Counterpart:</em> <a href="../models-bridge/system-models/drift-parity-gates.html">Drift &amp; parity gates</a>; <em>Enabler:</em> <a href="../models-bridge/system-models/executable-source-of-truth.html">Executable source-of-truth models</a></td></tr></tbody></table>
+<p><em>Full description → <a href="../models-bridge/system-models/formal-invariant-verification.html">Formal invariant verification (temporal form → model checking)</a>.</em></p>
 <p><strong>Intent</strong> — Give every model invariant a temporal form — a temporal-logic operator saying whether it is <em>safety</em> (always holds) or <em>liveness</em> (eventually leads to) — and make that form the routing input that derives which exhaustive checker verifies it. An invariant is then proven by the method its shape demands, a state-space model-check rather than a sampled test, and it cannot be silently mis-verified.</p>
 <h2>Problem</h2>
 <p>Some invariants concern a single reachable state: "a job is never both leased and free." Others concern interleavings over time: "a preempted job eventually re-runs." Stated in prose, or pinned by one example test, either kind can be believed true while a rare interleaving violates it. A property test <em>samples</em> the input space and sails past the one adversarial schedule; a distributed race has failure traces no hand-picked example hits. Worse, a mis-declared liveness invariant gets routed to a safety runtime that structurally cannot see its violation, and reports nothing.</p>

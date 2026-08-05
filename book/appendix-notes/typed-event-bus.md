@@ -1,4 +1,4 @@
-<!-- note-spread: 1 -->
+<!-- note-spread: 2 -->
 
 **Intent** — A structured event bus with a closed, const-string topic registry and a companion playbook,
 over which the substrate emits lifecycle and health events. The bus turns the orchestrator into a reactor
@@ -14,6 +14,8 @@ without a reaction loop the orchestrator is a passive observer that can only ste
 what the substrate reports. The failure is silent substrate degradation paired with an un-reacting
 orchestrator, and it recurs continuously across a long session while each individual dispatch still looks
 locally fine.
+
+<!-- note-fold -->
 
 ## Mechanism
 

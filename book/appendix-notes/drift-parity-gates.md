@@ -1,4 +1,4 @@
-<!-- note-spread: 1 -->
+<!-- note-spread: 2 -->
 
 **Intent** — A fleet of lints and tests enforces *bidirectional parity between each model and reality* —
 every model row maps to a real thing on disk, and every real thing maps to a model row — so a model cannot
@@ -10,6 +10,8 @@ An executable model is only trustworthy while it stays true. The failure this ki
 model says one thing, the code does another, and everything downstream — dispatch, code generation, deploy —
 reasons from a lie. Because the model *looks* authoritative, drift is worse than a missing model. It recurs
 whenever code changes without the model, or the model changes without the code.
+
+<!-- note-fold -->
 
 ## Mechanism
 

@@ -177,6 +177,15 @@ table.book-table th, table.book-table td { border: none; padding: 0.6rem 0.7rem;
 table.book-table thead th { background: transparent; font-weight: 600;
                              border-bottom: 1px solid var(--muted); }
 table.book-table th.num, table.book-table td.num { text-align: right; }
+/* Metadata card (`.meta-card`, the Appendix-B per-note summary box): an UNnumbered key/value reference box.
+   A quiet framed panel, narrower than the text measure, tight rows, the field name in the muted small-caps
+   label style — orientation before the prose, not a content table. */
+table.book-table.meta-card { width: auto; max-width: 34rem; margin: 0.9rem 0 1.1rem; font-size: 13.5px;
+                              border: 1px solid var(--muted); border-radius: 6px; background: var(--code-bg); }
+table.book-table.meta-card td { padding: 0.32rem 0.7rem; line-height: 1.4; }
+table.book-table.meta-card td:first-child { font-weight: 600; color: var(--muted);
+                                             white-space: nowrap; width: 1%; }
+table.book-table.meta-card tr + tr td { border-top: 1px solid var(--rule, rgba(120,113,108,0.22)); }
 blockquote table.book-table { background: transparent; }
 blockquote .inset-title { font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }
 blockquote pre.mermaid { font-style: normal; }
@@ -522,7 +531,9 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 10. Epic Definition-of-Done (Final-Opus trust-nothing re-run)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 10. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</h1></header><p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/epic-definition-of-done.html">governance-doc-controls / Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a>.</em></p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 10. Epic Definition-of-Done (Final-Opus trust-nothing re-run)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 10. Epic Definition-of-Done (Final-Opus trust-nothing re-run)</h1></header><p><strong>The judgment</strong> — Re-verify at the boundary; recorded claims rot.</p>
+<table class="book-table meta-card"><tbody><tr><td><strong>Role</strong></td><td>Agent</td></tr><tr><td><strong>Family</strong></td><td>Governance-doc mechanisms</td></tr><tr><td><strong>Used in stacks</strong></td><td>—</td></tr><tr><td><strong>Enforcement</strong></td><td>Hard</td></tr><tr><td><strong>Related mechanisms</strong></td><td><em>Counterpart:</em> <a href="../agent/governance-doc-controls/claude-md-rule-index.html">CLAUDE.md rule index (the governance document as a mechanism)</a></td></tr></tbody></table>
+<p><em>Full description → <a href="../agent/governance-doc-controls/epic-definition-of-done.html">Epic Definition-of-Done (Final-Opus trust-nothing re-run)</a>.</em></p>
 <p><strong>Intent</strong> — An Epic-close gate mandating a "trust nothing" final review that re-runs every owned pin test and lint at HEAD, rather than trusting phase markers or prior claims, so an Epic cannot close on stale or rotted assertions.</p>
 <h2>Problem</h2>
 <p>An Epic spanning many dispatches accumulates claims — phase markers, "lints pass," pin-test counts — and those claims rot as sibling Epic sweeps churn the substrate underneath them. Close on the stale claims and you ship an Epic whose defenses no longer hold; across one back-catalogue review, 7 of 7 Epics self-marked done carried quality-of-defense gaps. The failure is a premature or false close, and it recurs at every Epic boundary.</p>

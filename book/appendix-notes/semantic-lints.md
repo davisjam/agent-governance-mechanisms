@@ -1,4 +1,4 @@
-<!-- note-spread: 1 -->
+<!-- note-spread: 2 -->
 
 **Intent** — A fleet of blocking semantic lints over the tool's own source — banned APIs, silent-catch
 bans, diagnostic-console bans, structured-seam violations — that fail the build on domain-invariant
@@ -11,6 +11,8 @@ cross-boundary call through its seam. Review cannot hold hundreds of invariants 
 the compiler enforces none of them — a silent catch, a banned API, a raw diagnostic-console call all
 compile fine. The failure is structural drift that quietly reintroduces a defect class, and it recurs
 continuously as code is written.
+
+<!-- note-fold -->
 
 ## Mechanism
 

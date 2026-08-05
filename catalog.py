@@ -948,6 +948,22 @@ def cmd_validate(_args) -> int:
     for msg in lcv.findings():
         print(f"  [vocab] {msg}")
         n_issues += 1
+    # NOTE-JUDGMENTS — the R7 invariant over book-models/note-judgments.json: every Appendix-B flagship note
+    # teaches one distinct engineering judgment. Completeness (every note has a well-formed judgment record)
+    # + curated distinct_from SHAPE are BLOCKING — deterministic, cannot false-positive on well-formed data;
+    # the model ships clean, so they gate. The lexical-overlap SUGGESTion + foundational-ceiling warning are
+    # AUDIT-ONLY (heuristics over prose + editorial weight) — they PRINT but do NOT increment n_issues. See
+    # book-models/lint_note_judgments.py.
+    import lint_note_judgments as lnj  # noqa: E402 — blocking (completeness + curation shape)
+    for msg in lnj.blocking_findings():
+        print(f"  [judgment] {msg}")
+        n_issues += 1
+    nj_audit = lnj.audit_findings()
+    if nj_audit:
+        print(f"  [judgment] AUDIT-ONLY: {len(nj_audit)} suggestion(s) — "
+              f"run `python3 book-models/lint_note_judgments.py` (does not gate):")
+        for msg in nj_audit:
+            print(f"            {msg}")
     for msg in check_summary_counts(entries):
         print(f"  [census] {msg}")
         n_issues += 1

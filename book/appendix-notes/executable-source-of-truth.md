@@ -1,4 +1,4 @@
-<!-- note-spread: 1 -->
+<!-- note-spread: 2 -->
 
 **Intent** — Model the system as structured data that tools read on every run and generate real artifacts
 from. The model becomes executable documentation that cannot drift, and the codebase becomes operable by a
@@ -11,6 +11,8 @@ read the raw code, an agent gets lost, re-derives the architecture badly, and dr
 lives only implicitly, scattered across the code, so humans re-derive it too. The failure is no shared,
 authoritative, compact representation of the system, which caps how large a codebase agents can operate on at
 all.
+
+<!-- note-fold -->
 
 ## Mechanism
 

@@ -1378,11 +1378,17 @@ def _render_pipe_table(block: str) -> str:
         return aligns[i] if i < len(aligns) else ""
 
     body_rows = [_split_table_row(ln) for ln in lines[2:] if ln.strip()]
-    thead = "".join(f"<th{_cls(i)}>{inline(c)}</th>" for i, c in enumerate(header))
     trs = []
     for row in body_rows:
         tds = "".join(f"<td{_cls(i)}>{inline(c)}</td>" for i, c in enumerate(row))
         trs.append(f"<tr>{tds}</tr>")
+    # A pipe table whose header row is entirely empty is the catalogue's "metadata card" idiom (`| | |`) — a
+    # key/value reference box, not a numbered content table. Render it as an unnumbered `.meta-card` (no
+    # <thead>, and excluded from the `Table N` float-numbering pass by `_FLOAT_RE`). Real tables keep their
+    # header + number.
+    if all(not c.strip() for c in header):
+        return f'<table class="book-table meta-card"><tbody>{"".join(trs)}</tbody></table>'
+    thead = "".join(f"<th{_cls(i)}>{inline(c)}</th>" for i, c in enumerate(header))
     return (
         '<table class="book-table"><thead><tr>'
         f"{thead}</tr></thead><tbody>{''.join(trs)}</tbody></table>"
@@ -1659,6 +1665,15 @@ table.book-table th, table.book-table td {{ border: none; padding: 0.6rem 0.7rem
 table.book-table thead th {{ background: transparent; font-weight: 600;
                              border-bottom: 1px solid var(--muted); }}
 table.book-table th.num, table.book-table td.num {{ text-align: right; }}
+/* Metadata card (`.meta-card`, the Appendix-B per-note summary box): an UNnumbered key/value reference box.
+   A quiet framed panel, narrower than the text measure, tight rows, the field name in the muted small-caps
+   label style — orientation before the prose, not a content table. */
+table.book-table.meta-card {{ width: auto; max-width: 34rem; margin: 0.9rem 0 1.1rem; font-size: 13.5px;
+                              border: 1px solid var(--muted); border-radius: 6px; background: var(--code-bg); }}
+table.book-table.meta-card td {{ padding: 0.32rem 0.7rem; line-height: 1.4; }}
+table.book-table.meta-card td:first-child {{ font-weight: 600; color: var(--muted);
+                                             white-space: nowrap; width: 1%; }}
+table.book-table.meta-card tr + tr td {{ border-top: 1px solid var(--rule, rgba(120,113,108,0.22)); }}
 blockquote table.book-table {{ background: transparent; }}
 blockquote .inset-title {{ font-style: normal; font-weight: 700; margin: 0 0 0.4rem; }}
 blockquote pre.mermaid {{ font-style: normal; }}
@@ -3395,18 +3410,30 @@ def _build_appendix_chapters_v1(next_part: int, for_print: bool = False) -> list
 _APPENDIX_V2_B_OPENING_SLUG = "appendix-b-flagship-mechanisms"
 _APPENDIX_V2_C_OPENING_SLUG = "appendix-c-mechanism-catalog"
 
-_APPENDIX_V2_B_OPENING_PROSE = """\
+def _appendix_v2_b_opening_prose() -> str:
+    """Appendix B's opening frame. States the appendix's PURPOSE against the online catalogue (R1): the
+    catalogue documents *what* each mechanism is; this appendix teaches the engineering *judgment* behind
+    the flagship ones — why an experienced engineer builds it, when, and what mistakes it replaces. Links
+    'online catalogue' to the published web catalogue (`_catalogue_web_url`) so the reader can reach the
+    exhaustive per-mechanism detail this selective appendix deliberately does not duplicate."""
+    cat = _catalogue_web_url()
+    return f"""\
 **Flagship Mechanisms — the deep dives**
 
-The stacks in Appendix A adopt whole capabilities. This appendix goes the other way: it takes the \
-mechanisms that carry the most weight and treats each one on its own — the problem it kills, the shape \
-that kills it, the engineering consequences, and the seam where you wire it in. Read a stack to compose; \
-read a Flagship Mechanism to understand one piece in depth.
+The online catalogue tells you **what** each mechanism is. This appendix explains **why** an experienced \
+engineer builds it, **when** they reach for it, and **what mistakes it replaces** — the engineering \
+judgment it embodies. It is deliberately selective and interpretive, not a second copy of the reference \
+documentation: it treats the mechanisms that carry the most weight, one at a time, and points you to the \
+[online catalogue]({cat}) for the exhaustive per-mechanism detail.
+
+The stacks in Appendix A adopt whole capabilities; this appendix goes the other way, taking one mechanism \
+at a time — the problem it kills, the shape that kills it, the engineering consequences, and the seam where \
+you wire it in. Read a stack to compose; read a Flagship Mechanism to understand one piece in depth.
 
 The notes are grouped by target zone — Agent, Models-bridge, Product — and numbered straight through, so \
 a cross-reference names a stable locator (§B.1 … §B.29) regardless of which zone it falls in. Every \
-mechanism here also appears as a brick in the Mechanism Catalog (Appendix C), and in full in the online \
-catalogue."""
+mechanism here also appears as a brick in the Mechanism Catalog (Appendix C), and in full in the \
+[online catalogue]({cat})."""
 
 _APPENDIX_V2_C_OPENING_PROSE = """\
 **Mechanism Catalog — the complete map**
@@ -3462,6 +3489,155 @@ _GLYPH_ASSET_DIR = HERE / "assets"
 # GoF pattern page. Each authored note carries the `note-spread`/`note-fold` keep-together directives (§13.6).
 _APPENDIX_NOTES_DIR = ROOT / "book" / "appendix-notes"
 
+# ── The per-note DERIVED metadata box + judgment lead-in (Appendix B, R5 + R2) ─────────────────────────
+# Every Appendix-B note opens with its one-line engineering judgment (the lead — teach judgment, not
+# mechanics) and a compact five-field metadata box (Role · Family · Used in stacks · Enforcement · Related
+# mechanisms). BOTH are DERIVED at build time from sources the catalogue already holds true, so the box can
+# never drift from the catalogue it summarizes:
+#   Role / Family     — the validated census (the entry's role folder + its INDEX family heading);
+#   Enforcement        — the INDEX `Enf.` column (census-validated equal to the entry card; carries the
+#                        combined `Soft·Hard`, which the entry-card lead-token parser flattens);
+#   Used in stacks     — reverse-mapped from the flagship-stack model's `parts[].slug` (7 notes belong to no
+#                        stack → `—`);
+#   Related mechanisms — parsed from the entry's own `## Related mechanisms` section (tight relations first);
+#   the judgment       — the note-judgments model's `one_line` (the R7 distinctness-linted source of truth).
+_NOTE_JUDGMENTS_PATH = ROOT / "book-models" / "note-judgments.json"
+_FLAGSHIP_STACK_DECLARED_PATH = ROOT / "book-models" / "flagship_stack_declared.json"
+
+# Enf.-column value (may carry a parenthetical qualifier, e.g. `Hard (signal)`) → the README's three-value
+# vocabulary. The qualifier is dropped; the box shows the bare Hard / Soft / Soft·Hard.
+_ENF_QUALIFIER_RE = re.compile(r"\s*\(.*\)\s*$")
+# Related-mechanisms bullet: a bold `**Tag**` or italic `*Tag (qualifier)*` lead, an em-dash/hyphen, then the
+# first markdown link to the sibling entry.
+_RELATED_BULLET_RE = re.compile(
+    r"^-\s+(?:\*\*(?P<t1>[^*]+)\*\*|\*(?P<t2>[^*]+)\*)\s*[—-]\s*\[(?P<label>[^\]]+)\]\((?P<href>[^)]+)\)")
+# The "tight" relations shown first in the box (the entry's own section carries the complete set).
+_RELATED_TIGHT_ORDER = ("Counterpart", "Sibling", "Enabler", "Consumer")
+_RELATED_BOX_CAP = 4
+
+
+@functools.lru_cache(maxsize=1)
+def _note_judgments() -> dict:
+    """`{slug: {judgment, one_line, foundational, distinct_from?}}` from the hand-authored note-judgments
+    model. Empty when the file is absent (the note then renders with no lead-in — a soft degrade, never a
+    build failure). The R7 distinctness lint (`catalog.py validate`) guards the model's shape."""
+    if not _NOTE_JUDGMENTS_PATH.is_file():
+        return {}
+    return json.loads(_NOTE_JUDGMENTS_PATH.read_text(encoding="utf-8")).get("judgments", {})
+
+
+@functools.lru_cache(maxsize=1)
+def _family_title_map() -> dict[str, str]:
+    """`{family-folder: human INDEX heading}` — e.g. `context-and-dispatch` → `Context & dispatch substrate`.
+    Parsed from INDEX.md: each `## N. <Title>` heading is followed by a `[family folder](<role>/<folder>/)`
+    link, so the one validated census yields the box's Family label. The renderer strips the leading number."""
+    out: dict[str, str] = {}
+    idx = ROOT / "INDEX.md"
+    if not idx.is_file():
+        return out
+    title = None
+    for ln in idx.read_text(encoding="utf-8").splitlines():
+        m = re.match(r"^##\s+\d+\.\s+(.+)$", ln)
+        if m:
+            title = m.group(1).strip()
+        fm = re.search(r"\[family folder\]\([a-z-]+/([a-z-]+)/\)", ln)
+        if fm and title:
+            out[fm.group(1)] = title
+    return out
+
+
+@functools.lru_cache(maxsize=1)
+def _note_enforcement_map() -> dict[str, str]:
+    """`{entry-slug: Hard|Soft|Soft·Hard}` from INDEX.md's census `Enf.` column (validated equal to each
+    entry's metadata card). A trailing qualifier (`Hard (signal)`) is dropped to the bare three-value
+    vocabulary the README defines. The INDEX column is preferred over the entry-card lead token because it
+    carries the combined `Soft·Hard` verbatim."""
+    out: dict[str, str] = {}
+    idx = ROOT / "INDEX.md"
+    if not idx.is_file():
+        return out
+    for ln in idx.read_text(encoding="utf-8").splitlines():
+        if not ln.startswith("|") or ".md)" not in ln:
+            continue
+        cells = [c.strip() for c in ln.strip().strip("|").split("|")]
+        if len(cells) < 7:
+            continue
+        lm = re.search(r"\[([a-z0-9-]+)\.md\]", cells[6])
+        if lm:
+            out[lm.group(1)] = _ENF_QUALIFIER_RE.sub("", cells[5]).strip()
+    return out
+
+
+@functools.lru_cache(maxsize=1)
+def _slug_to_stacks() -> dict[str, list[str]]:
+    """`{part-slug: [stack name, …]}` reverse-mapped from the hand-authored flagship-stack model's
+    `stacks[].parts[].slug`. A note whose slug matches no `parts[].slug` is absent (the box renders `—`); a
+    note in two stacks lists both. One index, built once, joined by slug — no field authored twice."""
+    out: dict[str, list[str]] = {}
+    if not _FLAGSHIP_STACK_DECLARED_PATH.is_file():
+        return out
+    data = json.loads(_FLAGSHIP_STACK_DECLARED_PATH.read_text(encoding="utf-8"))
+    for stack in data.get("stacks", []):
+        name = stack.get("name", "")
+        for part in stack.get("parts", []):
+            slug = part.get("slug")
+            if slug and name:
+                out.setdefault(slug, []).append(name)
+    return out
+
+
+def _note_related_box(rec: dict) -> str:
+    """The box's `Related mechanisms` cell — parsed from the entry's own `## Related mechanisms` section
+    (the source `catalog.py` already validates for REL_TAG membership + link integrity), tight relations
+    first, capped at four, each rendered `*Tag:* [Name](entry.html)` so the box teaches the NATURE of each
+    link, not just its existence. The entry's own section carries the complete set. `—` when the entry links
+    no siblings."""
+    section = rec.get("sections", {}).get("Related Patterns", "") or ""
+    names = _slug_name_map()
+    parsed: list[tuple[str, str, str]] = []  # (base-tag, name, href)
+    for ln in section.splitlines():
+        m = _RELATED_BULLET_RE.match(ln.strip())
+        if not m:
+            continue
+        lead = (m.group("t1") or m.group("t2") or "").strip()
+        base = re.sub(r"\s*\(.*\)\s*$", "", lead).strip().rstrip(":")
+        href = m.group("href").strip()
+        tgt_slug = pathlib.PurePosixPath(href.split("#", 1)[0]).stem
+        name = names.get(tgt_slug) or m.group("label").strip()
+        parsed.append((base, name, href))
+    if not parsed:
+        return "—"
+
+    def _rank(tag: str) -> int:
+        return _RELATED_TIGHT_ORDER.index(tag) if tag in _RELATED_TIGHT_ORDER else len(_RELATED_TIGHT_ORDER)
+
+    ordered = sorted(range(len(parsed)), key=lambda i: (_rank(parsed[i][0]), i))
+    picks = [parsed[i] for i in ordered[:_RELATED_BOX_CAP]]
+    return "; ".join(f"*{tag}:* [{name}]({href})" for tag, name, href in picks)
+
+
+def _note_metadata_box_md(rec: dict) -> list[str]:
+    """The DERIVED five-field metadata box for one Appendix-B note, as markdown-table lines (rendered as the
+    catalogue's headerless metadata-card style). Role/Family from the census, Enforcement from the INDEX
+    `Enf.` column, Used-in-stacks reverse-mapped from the flagship-stack model, Related parsed from the
+    entry's own section. Every field derives from a source the catalogue already holds true."""
+    slug = rec["slug"]
+    role = rec.get("group", "—")
+    family = _family_title_map().get(rec.get("family", ""), rec.get("family", "—"))
+    enforcement = _note_enforcement_map().get(slug, "—")
+    stacks = _slug_to_stacks().get(slug, [])
+    used_in = "; ".join(stacks) if stacks else "—"
+    related = _note_related_box(rec)
+    return [
+        "| | |",
+        "|---|---|",
+        f"| **Role** | {role} |",
+        f"| **Family** | {family} |",
+        f"| **Used in stacks** | {used_in} |",
+        f"| **Enforcement** | {enforcement} |",
+        f"| **Related mechanisms** | {related} |",
+    ]
+
 
 _NOTE_SPREAD_RE = re.compile(r"<!--\s*note-spread:\s*(\d+)\s*-->")
 
@@ -3488,10 +3664,20 @@ def _appendix_b_note_md(rec: dict, stack_membership: "dict | None", for_print: b
     fill = rec.get("fill") or {}
     safe = rec["name"].replace('"', "'")
     lead: list[str] = []
+    # The note LEADS with its one-line engineering judgment (R2 — teach judgment, not mechanics), drawn from
+    # the distinctness-linted note-judgments model. A note with no modeled judgment simply gets no lead-in.
+    judgment = (_note_judgments().get(rec["slug"], {}) or {}).get("one_line", "").strip()
+    if judgment:
+        lead += [f"**The judgment** — {judgment}", ""]
+    # The DERIVED metadata box orients the reader before the prose (R5). Every field is a build-time join
+    # over a census the catalogue already holds true, so the box cannot drift from the catalogue it summarizes.
+    lead += _note_metadata_box_md(rec) + [""]
     if spread >= 2 and fill.get("structure"):          # figure ⟺ spread:2 (measured: 1pp+figure overflows)
         lead += [f"*The Structure of {safe} — its shape at a glance:*", "", fill["structure"], ""]
-    lead += [f'*Projected from the catalogue entry [{rec["family"]} / {rec["name"]}]'
-             f'({rec["catalogue_html"]}).*', ""]
+    # A lightweight pointer to the mechanism's full Gang-of-Four entry in the catalogue (this appendix is
+    # interpretive and selective; the catalogue carries the exhaustive detail — R1). Replaces the old
+    # "Projected from…" provenance line.
+    lead += [f'*Full description → [{rec["name"]}]({rec["catalogue_html"]}).*', ""]
     return "\n".join(lead) + "\n" + body
 
 
@@ -3952,7 +4138,7 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     b_part = next_part + 1
     b_part_title = "Appendix B — Flagship Mechanisms"
     b_opening_body = [
-        _APPENDIX_V2_B_OPENING_PROSE,
+        _appendix_v2_b_opening_prose(),
         "",
         # The nine-capability map + lifted L1 principle moved to the Appendix A opening (§13, the capability
         # lens fronts the stacks). B keeps the 'adopt by capability' summary that links into those stacks.
@@ -4590,7 +4776,7 @@ def _print_word_counts(wc: WordCounts) -> None:
 # monotonic label and an `id` the front-matter list of floats links to.
 _FLOAT_RE = re.compile(
     r'(?P<fig><figure class="book-figure(?![^"]*catalogue-embed)[^"]*"[^>]*>.*?</figure>)'
-    r'|(?P<tbl><table\b[^>]*>.*?</table>)', re.S)
+    r'|(?P<tbl><table\b(?![^>]*\bmeta-card\b)[^>]*>.*?</table>)', re.S)
 _DATA_SHORT_RE = re.compile(r'data-short="([^"]*)"')
 _DATA_LABEL_RE = re.compile(r'data-label="([^"]*)"')
 

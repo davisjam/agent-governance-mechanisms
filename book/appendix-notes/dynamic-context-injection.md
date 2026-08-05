@@ -1,4 +1,4 @@
-<!-- note-spread: 1 -->
+<!-- note-spread: 2 -->
 
 **Intent** — Map the files an agent is about to touch to the exact constraints that govern those files —
 lints, conventions, component boundaries, tests — and inject that subset into the agent's brief before it
@@ -11,6 +11,8 @@ knowledge an experienced engineer has of which rules apply to a given change, so
 that violate them, then spends rounds discovering and repairing the violations — "pinball." A layered
 validation hierarchy makes it worse: context is lost between where the agent authored the change and
 where the failure surfaces. Across many concurrent agents, the wasted work multiplies.
+
+<!-- note-fold -->
 
 ## Mechanism
 
