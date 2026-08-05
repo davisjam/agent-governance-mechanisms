@@ -144,19 +144,19 @@
     "kind": "axis",
     "site_home": "N/A",
     "status": "book-only",
-    "note": "realized as the catalogue's three top-level role sections (agent/ models-bridge/ product/) + the catalogue-views grouping; discussed in the book; no standalone landing card. Governance target (a) — the agent/fleet + the substrate that PRODUCES work. Book index-def tagged at the Appendix A role-blurb bullet."
+    "note": "realized as the catalogue's three top-level role sections (agent/ models-bridge/ product/) + the catalogue-views grouping; discussed in the book; no standalone landing card. Governance target (a) — the agent/fleet + the substrate that PRODUCES work. Book index-def tagged at Appendix C's C.1 Agent zone section (the mechanism-catalogue zone that introduces this target)."
   },
   "governance-target-models-bridge": {
     "kind": "axis",
     "site_home": "N/A",
     "status": "book-only",
-    "note": "realized as the catalogue's three top-level role sections (agent/ models-bridge/ product/) + the catalogue-views grouping; discussed in the book; no standalone landing card. Governance target (b) — the typed MBSE models the fleet reasons THROUGH. Book index-def tagged at the Appendix B role-blurb bullet."
+    "note": "realized as the catalogue's three top-level role sections (agent/ models-bridge/ product/) + the catalogue-views grouping; discussed in the book; no standalone landing card. Governance target (b) — the structured MBSE models the fleet reasons THROUGH. Book index-def tagged at Appendix C's C.2 Models-bridge zone section (the mechanism-catalogue zone that introduces this target)."
   },
   "governance-target-product": {
     "kind": "axis",
     "site_home": "N/A",
     "status": "book-only",
-    "note": "realized as the catalogue's three top-level role sections (agent/ models-bridge/ product/) + the catalogue-views grouping; discussed in the book; no standalone landing card. Governance target (c) — the shipped artifact the fleet PRODUCES. Book index-def tagged at the Appendix C role-blurb bullet."
+    "note": "realized as the catalogue's three top-level role sections (agent/ models-bridge/ product/) + the catalogue-views grouping; discussed in the book; no standalone landing card. Governance target (c) — the shipped artifact the fleet PRODUCES. Book index-def tagged at Appendix C's C.3 Product zone section (the mechanism-catalogue zone that introduces this target)."
   },
   "engineered-agent-loop": {
     "kind": "core-construct",

@@ -3473,6 +3473,21 @@ def _appendix_v2_role_subsections() -> list[tuple[str, str]]:
     return [(str(i + 1), group) for i, (_r, group) in enumerate(_APPENDIX_ROLES)]
 
 
+# The one-sentence definition of each catalogue zone — the agent / models-bridge / product governance
+# triad (the three complementary targets a mature governance system covers: the fleet that PRODUCES the
+# work, the models it reasons THROUGH, the artifact it SHIPS). Keyed by role group. Each heads its
+# Appendix C section, so the section that introduces a zone is also the concept model's canonical
+# `index-def` home for `governance-target-<zone>` — the derived `book_home` the concepts-model gate reads.
+_APPENDIX_V2_ZONE_GLOSS = {
+    "Agent": "the fleet that produces the work, and the substrate that runs it — how agents are "
+             "dispatched, isolated, gated, and observed.",
+    "Models-bridge": "the structured models the fleet reasons through — the shared map a bounded agent "
+                     "uses to operate a codebase larger than its context.",
+    "Product": "the shipped artifact itself — its canonical seams, its content-fidelity validation, and "
+               "its conformance controls.",
+}
+
+
 # ═══════════════════════ Appendix v2 render mechanisms (flag ON; restructure sub-wave 2) ════════════════
 # Three build-generated render paths land here, each behind the flag and each with an HTML + a Typst
 # projection (the Typst twins live in book_typst.py and CALL these helpers for their data):
@@ -4038,8 +4053,15 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     # the CSS-grid / #grid; the packer runs at render time from the one `_appendix_entries` read).
     for suffix, group in _appendix_v2_role_subsections():
         n_in_role = sum(1 for r in ordered if r["group"] == group)
+        # This section introduces its governance zone — the agent / models-bridge / product triad — so it
+        # carries that concept's canonical `index-def`. The anchor attaches to the defining sentence that
+        # follows it, giving `governance-target-<zone>` a resolved book home under the v2 projection.
+        zone_slug = f"governance-target-{group.lower()}"
         c_body += [
             f"### C.{suffix} {group}",
+            "",
+            f"<!-- index-def: {zone_slug} -->",
+            f"**{group} —** {_APPENDIX_V2_ZONE_GLOSS[group]}",
             "",
             f"*{n_in_role} mechanisms. Each brick links to its full Gang-of-Four entry in the online "
             "catalogue; a flagship also carries a deep-dive note in Appendix B.*",
