@@ -16,7 +16,7 @@
       "sections": [
         {
           "section_id": "glossary",
-          "level": 1,
+          "level": 2,
           "heading_text": "Glossary",
           "topic_sentence": "Agentic software engineering is a fast-evolving topic, and it seems that many concepts have been given overlapping or contradictory names.",
           "id_source": "derived",
@@ -190,7 +190,7 @@
       "sections": [
         {
           "section_id": "acknowledgments",
-          "level": 1,
+          "level": 2,
           "heading_text": "Acknowledgments",
           "topic_sentence": "I thank K.",
           "id_source": "derived",
@@ -3142,7 +3142,7 @@
       "sections": [
         {
           "section_id": "the-scope-of-modeling-where-to-read-next",
-          "level": 1,
+          "level": 2,
           "heading_text": "The Scope of Modeling: where to read next",
           "topic_sentence": "This book is an introduction.",
           "id_source": "derived",
@@ -4020,7 +4020,7 @@
       "sections": [
         {
           "section_id": "lessons-learned",
-          "level": 1,
+          "level": 2,
           "heading_text": "Lessons Learned",
           "topic_sentence": "I spent three months building a real piece of software with a coding agent, and the thing I came away with was a methodology, not a model release or a benchmark.",
           "id_source": "derived",
@@ -4522,7 +4522,7 @@
       "sections": [
         {
           "section_id": "the-ada-context",
-          "level": 1,
+          "level": 2,
           "heading_text": "The ADA Context",
           "topic_sentence": null,
           "id_source": "derived",

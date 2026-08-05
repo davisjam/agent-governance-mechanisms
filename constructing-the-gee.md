@@ -62,7 +62,7 @@ formal: each supplies a capability the environment requires.
 ---
 
 <a id="principles"></a>
-# The eight principles
+## The eight principles
 
 The principles are the deep claims that explain the catalogue. They are not entries you install; they are
 the reasons the mechanisms take the shapes they do. One entry, the placement judgment, was lifted out of
@@ -108,7 +108,7 @@ the mechanism set to sit here as a principle in its own right.
 
 ---
 
-# The nine capabilities
+## The nine capabilities
 
 Each capability names a job the environment must do, then works its canonical mechanisms as design-pattern
 entries: **Intent**, the **vivid failure** that motivates it, the **Solution** structure, the
@@ -1053,7 +1053,7 @@ inside its parent.
 ---
 
 <a id="compositions"></a>
-# The eight compositions
+## The eight compositions
 
 Some mechanisms are strong together. A composition is not a bigger pattern nor six unrelated ones; it is a
 stack whose members reinforce each other.
@@ -1103,7 +1103,7 @@ stack whose members reinforce each other.
 
 ---
 
-# How to read the rest
+## How to read the rest
 
 No system needs every entry. This page is the repertoire; the [full census](INDEX.md) lists every
 mechanism by role and family, and each links to its full writeup. Choose by the failures, risks, and
