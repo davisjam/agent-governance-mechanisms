@@ -20,9 +20,10 @@ and a coverage number never says "you added a thing that should be tested and di
 Walk the structured models that declare a testable surface: the seam registry yields fuzz targets, the
 error-path model yields injection obligations, the invariant model yields the checkers owed. Join each
 derived obligation against the test corpus by naming convention, tag, or registry. An obligation with no
-matching test is a finding — named, and attributable to the model element that generated it. Because the set
-is *derived*, adding a seam adds an obligation, so a newly-introduced surface with no test reopens the gap
-until a test closes it. One derive-and-lint shape covers all three obligation kinds, rather than a separate
+matching test is a finding — named, and attributable to the model element that generated it; and, in
+reverse, a test naming an obligation the model no longer declares is a rename-orphan finding, so the join is
+linted both ways. Because the set is *derived*, adding a seam adds an obligation, so a newly-introduced
+surface with no test reopens the gap until a test closes it. One derive-and-lint shape covers all three obligation kinds, rather than a separate
 hand-audit per kind.
 
 ## Engineering consequences

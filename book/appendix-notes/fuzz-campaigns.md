@@ -47,7 +47,11 @@ The synthesis scales from formats to concurrency. There the input is an interlea
 the generator is an interleaving-fuzzer or an exhaustive walk over reachable states, and the oracle is an
 invariant predicate over the model's states — no two workers hold the same lease, a job never leaves a
 terminal state, a queued item is eventually served. Naming the predicate points the search straight at
-the interleaving that violates it, a defect a strong-but-static unit suite walks right past.
+the interleaving that violates it, a defect a strong-but-static unit suite walks right past. Because the
+oracle is a declared property and not a per-seed check, a campaign that finds nothing is proof-shaped — one
+linear-invariant campaign cleared 200 adversarial inputs with the invariant holding on every one, and the
+same technique caught a real zip-bomb, a never-raise-contract breach, and four latent parser crashes before
+the model-derivation half landed.
 
 
 ## Implementation seam

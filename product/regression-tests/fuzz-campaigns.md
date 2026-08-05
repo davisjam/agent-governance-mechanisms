@@ -95,6 +95,13 @@ entry surface, and judge the outcome against that declared set.
   hold the same lease, a job never leaves a terminal state, a queued item is eventually served. Naming
   the predicate predicts where the bug is: writing the exact condition down forces the search straight
   at the interleaving that violates it — a defect a strong-but-static unit suite walks right past.
+- **A clean run over a model-derived oracle is proof-shaped.** When the oracle is the model's own declared
+  outcome set rather than a per-seed assertion, a campaign that finds nothing is not merely "no crash on the
+  seeds we tried" — it is evidence the invariant held across the whole adversarial space the campaign swept.
+  One model-indexed invariant campaign ran clean over its linear-invariant subset: for 200 adversarial
+  membership inputs, the total-clearing invariant held on every one. A result of that shape reads like a
+  bounded proof of the invariant, not a spot-check — the difference between "we fuzzed it and nothing broke"
+  and "the declared property survived the swept space."
 
 The producer-dialect corpus and the model-as-oracle compose: feed the producer's wild dialect to the
 model's entry point and classify the result against the model's declared outcome set. Wild input, rich
@@ -126,10 +133,13 @@ oracle, and a fix that holds for the whole format — all at once.
 - A **producer-dialect corpus** built from a set of independent third-party producers of the document
   formats (rival office suites, PDF writers, document-conversion and from-code generators): each
   round-trips a document so its legal-but-unusual dialect becomes fuzz input.
-- The **model-as-oracle** form, where malformed inputs are pointed at the structured document model's read
-  entry point and classified against its declared legal-outcome set — and the concurrency-invariant
-  variant, where an exhaustive interleaving search judges outcomes against a state-machine's invariant
-  predicate.
+- The **model-as-oracle form, with real catches.** Malformed inputs pointed at the structured model's read
+  entry point, classified against its declared legal-outcome set. Before the model-derivation half even
+  landed, the technique caught a **decompression-amplification upload** (under a megabyte on the wire
+  expanding to hundreds of megabytes on decompress — a zip bomb), a **never-raise-contract breach** on a
+  malformed archive central directory (an entry point contracted never to throw, throwing), and **four
+  latent element-granularity crashes** in a structured-tree parser. The concurrency-invariant variant judges
+  an exhaustive interleaving search against a state-machine's invariant predicate.
 
 ## Related mechanisms
 

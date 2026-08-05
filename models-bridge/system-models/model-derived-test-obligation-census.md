@@ -56,6 +56,11 @@ obligations the models declare.
 - **Regrow the denominator on every model change.** Because the obligation set is derived, adding a seam or
   a failure edge adds an obligation, so a newly-introduced surface with no test reopens the gap until a
   test closes it.
+- **Lint the join in both directions.** The gap is not only obligations with no test; it is also tests
+  naming an obligation that no longer exists. A harness pointed at a derived target id that the model no
+  longer declares is a **rename-orphan** — a test stranded when its target was renamed or removed. Linting
+  target→test catches the *missing* test; linting test→target catches the *stale* one, so a rename cannot
+  silently leave a harness fuzzing nothing.
 - **Generalize across obligation kinds.** The same derive-and-lint shape covers fuzz targets, injection
   tests, and invariant checkers; one census genre, several obligation categories, rather than a separate
   hand-audit per kind.
@@ -89,6 +94,9 @@ obligations the models declare.
   edges with no failure-injection test.
 - The same derive-and-lint shape reused for invariant checkers, so a cross-service invariant declared
   without a verifier is a finding rather than an untested predicate.
+- The reverse-direction check: a fuzz harness whose named target id resolves to no model-declared seam is
+  flagged as a rename-orphan, so renaming a seam reddens the harness that still points at the old id rather
+  than leaving it silently dead.
 
 ## Related mechanisms
 
