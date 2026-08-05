@@ -2896,38 +2896,50 @@ def _resolve_stack_members(md: str, page_by_slug: dict[str, dict]) -> str:
     return _STACK_MEMBER_RE.sub(repl, md)
 
 
-def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
-                         letter: str = "D", part_name: str = "Mechanism Stacks",
-                         locator_figs: bool = False, inline_legend: bool = False,
-                         opening_extras_md: str = "") -> list[dict]:
-    """Build the Mechanism-Stacks chapter records: one opening front-door page (chapter 0), then one page per
-    stack (D.1, D.2, …). Mirrors the role-appendix page shape — same Part, pager chain, and index locator
-    machinery — so the book's TOC/pager/index render it with no special-casing. `page_by_slug` resolves each
-    stack's `role:<slug>` member tokens to links into the flagship pattern pages. Returns [] if no stack
-    files are present.
+def build_hand_authored_appendix(
+    part: int, *,
+    letter: str,
+    part_name: str,
+    opening_slug: str,
+    opening_prose: str,
+    content_dir: pathlib.Path,
+    pages_source: list[tuple[str, str]],
+    locator_figs: bool = False,
+    opening_extras_md: str = "",
+    front_only: bool = False,
+    page_body_fn: "Callable[[str, str, int], str] | None" = None,
+) -> list[dict]:
+    """Build a hand-authored appendix Part's chapter records: one opening front-door page (chapter 0), then
+    one page per present-on-disk content file (`<letter>.1`, `<letter>.2`, …). This is the single scaffold the
+    Mechanism-Stacks, Skill-Recipe, and Operator's-Reference appendices share — one Part, the pager chain, and
+    the index locator machinery — so the book's TOC/pager/index render each with no special-casing. Returns []
+    if no content files are present.
 
-    `letter`/`part_name` letter the appendix: `D`/`Mechanism Stacks` in the legacy projection, `A`/`MAGE
-    Engineering Stacks` in the value-ordered v2 projection (where the stacks lead the appendix). The stack
-    page slug follows the letter (`appendix-<letter>-<stem>`). `locator_figs` (v2 only) stamps each page a
-    `fig_prefix` (`<letter>.<i>`) so its figures number monotonically off the reader-facing locator (D80),
-    not the `<part>.<chapter>` sort key. The legacy path leaves `fig_prefix` unset — its figures keep the
-    `<part>.<chapter>` numbering unchanged, so the default projection stays byte-identical."""
-    stack_files = [(stem, title) for stem, title in _STACKS if (_STACKS_DIR / f"{stem}.md").is_file()]
-    if not stack_files:
+    Parameters letter and shape the Part: `letter`/`part_name` form the `Appendix <letter> — <part_name>`
+    title; `opening_slug`/`opening_prose` give the front-door page its stable slug and body; `content_dir`
+    plus `pages_source` (a `[(stem, title)]` list) supply the per-page content, filtered to files present on
+    disk. `locator_figs` (v2) stamps each record a `fig_prefix` (`<letter>` on the front-door, `<letter>.<i>`
+    per page) so figures number monotonically off the reader-facing locator (D80); left off, `fig_prefix` is
+    unset and figures keep the `<part>.<chapter>` numbering. `opening_extras_md` appends extra front-door prose
+    (joined with a blank line, stripped) — the value-ordered stacks opening carries the capability lens there.
+    `front_only` appends the front-door page and stops (the recipe's print-pointer mode drops its content
+    page). `page_body_fn(raw, stem, i)` transforms each page's raw markdown; the default folds wrapped bullets
+    (stacks overrides it to resolve member tokens + cross-stack links + the inline legend)."""
+    pages = [(stem, title) for stem, title in pages_source
+             if (content_dir / f"{stem}.md").is_file()]
+    if not pages:
         return []
 
     low = letter.lower()
     chapters: list[dict] = []
     part_title = f"Appendix {letter} — {part_name}"
 
-    # OPENING FRONT-DOOR PAGE — heads the stacks Part (chapter 0, sorts before every stack). `opening_extras_md`
-    # (v2 only) carries the DERIVED nine-capability map + lifted L1 principle + the vendor-agnostic note, so the
-    # value-ordered Appendix A opens with the whole capability lens (§2.1); the legacy projection leaves it "".
-    opening_body = _APPENDIX_STACKS_OPENING_PROSE.strip()
+    # OPENING FRONT-DOOR PAGE — heads the Part (chapter 0, sorts before every content page).
+    opening_body = opening_prose.strip()
     if opening_extras_md.strip():
         opening_body = opening_body + "\n\n" + opening_extras_md.strip()
     opening: dict = {
-        "slug": _APPENDIX_STACKS_OPENING_SLUG,
+        "slug": opening_slug,
         "part": part,
         "part_title": part_title,
         "chapter": 0,
@@ -2940,22 +2952,20 @@ def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
         opening["fig_prefix"] = letter
     chapters.append(opening)
 
-    # ONE PAGE PER STACK — <letter>.1, <letter>.2, … in the authored order.
-    for i, (stem, title) in enumerate(stack_files, start=1):
-        raw = (_STACKS_DIR / f"{stem}.md").read_text(encoding="utf-8")
-        body = _resolve_stack_members(_fold_wrapped_bullets(raw.strip()), page_by_slug)
-        body = _normalize_cross_stack_links(body, low)   # cross-stack refs follow the current letter (d/a)
-        if inline_legend:
-            # Restructure sub-wave 2: splice the linked legend under the overview figure + append the anchored
-            # inline-part subsections the legend targets (stub treatments; authored in a later sub-wave).
-            body = _inject_stack_legend(body, stem, letter, i)
+    if front_only:
+        return chapters
+
+    fold = page_body_fn or (lambda raw, stem, i: _fold_wrapped_bullets(raw.strip()))
+    # ONE PAGE PER CONTENT FILE — <letter>.1, <letter>.2, … in listed order.
+    for i, (stem, title) in enumerate(pages, start=1):
+        raw = (content_dir / f"{stem}.md").read_text(encoding="utf-8")
         rec: dict = {
             "slug": f"appendix-{low}-{stem}",
             "part": part,
             "part_title": part_title,
-            "chapter": i,                       # sorts after the opening page's chapter 0
+            "chapter": i,                       # sorts after the front-door's chapter 0
             "chapter_title": f"Appendix {letter} - {i}. {title}",
-            "body_md": body,
+            "body_md": fold(raw, stem, i),
             "is_appendix": True,
             "mermaid": False,
         }
@@ -2963,6 +2973,41 @@ def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
             rec["fig_prefix"] = f"{letter}.{i}"  # D80: figures number "Figure <letter>.<i>-N", monotonic
         chapters.append(rec)
     return chapters
+
+
+def build_stack_chapters(part: int, page_by_slug: dict[str, dict],
+                         letter: str = "D", part_name: str = "Mechanism Stacks",
+                         locator_figs: bool = False, inline_legend: bool = False,
+                         opening_extras_md: str = "") -> list[dict]:
+    """Build the Mechanism-Stacks chapter records: one opening front-door page (chapter 0), then one page per
+    stack (D.1, D.2, …), via the shared hand-authored-appendix scaffold. `page_by_slug` resolves each stack's
+    `role:<slug>` member tokens to links into the flagship pattern pages. Returns [] if no stack files are
+    present.
+
+    `letter`/`part_name` letter the appendix: `D`/`Mechanism Stacks` in the legacy projection, `A`/`MAGE
+    Engineering Stacks` in the value-ordered v2 projection (where the stacks lead the appendix). `locator_figs`
+    (v2 only) stamps each page a `fig_prefix` for D80 monotonic figure numbering; the legacy path leaves it
+    unset, so the default projection stays byte-identical. `opening_extras_md` (v2 only) carries the DERIVED
+    nine-capability map + lifted L1 principle + the vendor-agnostic note onto the front-door, so the
+    value-ordered Appendix A opens with the whole capability lens (§2.1); the legacy projection leaves it ""."""
+    low = letter.lower()
+
+    def _stack_body(raw: str, stem: str, i: int) -> str:
+        body = _resolve_stack_members(_fold_wrapped_bullets(raw.strip()), page_by_slug)
+        body = _normalize_cross_stack_links(body, low)   # cross-stack refs follow the current letter (d/a)
+        if inline_legend:
+            # Restructure sub-wave 2: splice the linked legend under the overview figure + append the anchored
+            # inline-part subsections the legend targets (stub treatments; authored in a later sub-wave).
+            body = _inject_stack_legend(body, stem, letter, i)
+        return body
+
+    return build_hand_authored_appendix(
+        part, letter=letter, part_name=part_name,
+        opening_slug=_APPENDIX_STACKS_OPENING_SLUG,
+        opening_prose=_APPENDIX_STACKS_OPENING_PROSE,
+        content_dir=_STACKS_DIR, pages_source=_STACKS,
+        locator_figs=locator_figs, opening_extras_md=opening_extras_md,
+        page_body_fn=_stack_body)
 
 
 # APPENDIX E — How to Write a Skill. Hand-authored, like the stacks Part (Appendix D): a front-door page
@@ -3031,60 +3076,28 @@ def build_skill_recipe_chapters(part: int, for_print: bool = False,
     (`for_print=True`), the recipe collapses to the front-door alone plus a one-paragraph pointer to the full
     recipe online — the content page is dropped from print. The WEB build (`for_print=False`) always keeps
     the full recipe, so the pointer's target stays live."""
+    # Filter here (not just in the helper) so pointer mode can name the first present page in its online link.
     pages = [(stem, title) for stem, title in _SKILL_RECIPE_PAGES
              if (_SKILL_RECIPE_DIR / f"{stem}.md").is_file()]
     if not pages:
         return []
 
-    low = letter.lower()
     pointer_mode = for_print and _load_print_manifest().get("skill_recipe") == "pointer"
-
-    chapters: list[dict] = []
-    part_title = f"Appendix {letter} — How to Write a Skill"
-
-    # FRONT-DOOR PAGE — heads the recipe Part (chapter 0, sorts before the recipe). In pointer mode it carries
-    # the one-paragraph online pointer (the content page below is dropped from print).
-    front_body = _APPENDIX_SKILL_RECIPE_OPENING_PROSE.strip()
+    extras = ""
     if pointer_mode:
-        front_body += (
-            "\n\n**The full recipe — its three steps grounded in the three self-\\* skills — lives in the "
-            f"web edition of this book:** [{pages[0][1]}]({_recipe_web_url(low)}). Open it there to read each "
-            "step worked through in full."
+        # One-paragraph online pointer appended to the front-door; the content page is then dropped from print.
+        extras = (
+            "**The full recipe — its three steps grounded in the three self-\\* skills — lives in the "
+            f"web edition of this book:** [{pages[0][1]}]({_recipe_web_url(letter.lower())}). Open it there "
+            "to read each step worked through in full."
         )
-    front: dict = {
-        "slug": _APPENDIX_SKILL_RECIPE_OPENING_SLUG,
-        "part": part,
-        "part_title": part_title,
-        "chapter": 0,
-        "chapter_title": part_title,
-        "body_md": front_body,
-        "is_appendix": True,
-        "mermaid": False,
-    }
-    if locator_figs:
-        front["fig_prefix"] = letter
-    chapters.append(front)
 
-    if pointer_mode:
-        return chapters  # print stops at the front-door + pointer; web keeps the full recipe below
-
-    # ONE PAGE PER AUTHORED FILE — <letter>.1, <letter>.2, … in listed order.
-    for i, (stem, title) in enumerate(pages, start=1):
-        raw = (_SKILL_RECIPE_DIR / f"{stem}.md").read_text(encoding="utf-8")
-        rec: dict = {
-            "slug": f"appendix-{low}-{stem}",
-            "part": part,
-            "part_title": part_title,
-            "chapter": i,                       # sorts after the front-door's chapter 0
-            "chapter_title": f"Appendix {letter} - {i}. {title}",
-            "body_md": _fold_wrapped_bullets(raw.strip()),
-            "is_appendix": True,
-            "mermaid": False,
-        }
-        if locator_figs:
-            rec["fig_prefix"] = f"{letter}.{i}"
-        chapters.append(rec)
-    return chapters
+    return build_hand_authored_appendix(
+        part, letter=letter, part_name="How to Write a Skill",
+        opening_slug=_APPENDIX_SKILL_RECIPE_OPENING_SLUG,
+        opening_prose=_APPENDIX_SKILL_RECIPE_OPENING_PROSE,
+        content_dir=_SKILL_RECIPE_DIR, pages_source=_SKILL_RECIPE_PAGES,
+        locator_figs=locator_figs, opening_extras_md=extras, front_only=pointer_mode)
 
 
 # APPENDIX D — Operator's Reference. Hand-authored, like the stacks Part and the skill recipe: a front-door
@@ -3140,47 +3153,12 @@ def build_operators_reference_chapters(part: int, for_print: bool = False,
     `[appendix: appendix-operators-reference]` cross-references) regardless of letter; the content-card slug
     follows the letter (`appendix-<letter>-<stem>`). `locator_figs` (v2) stamps `fig_prefix` for D80 monotonic
     figure numbering (`D`, then `D.1`)."""
-    pages = [(stem, title) for stem, title in _OPERATORS_REFERENCE_PAGES
-             if (_OPERATORS_REFERENCE_DIR / f"{stem}.md").is_file()]
-    if not pages:
-        return []
-
-    low = letter.lower()
-    chapters: list[dict] = []
-    part_title = f"Appendix {letter} — Operator's Reference"
-
-    # FRONT-DOOR PAGE — heads the reference Part (chapter 0, sorts before the cards).
-    front: dict = {
-        "slug": _APPENDIX_OPERATORS_REFERENCE_OPENING_SLUG,
-        "part": part,
-        "part_title": part_title,
-        "chapter": 0,
-        "chapter_title": part_title,
-        "body_md": _APPENDIX_OPERATORS_REFERENCE_OPENING_PROSE.strip(),
-        "is_appendix": True,
-        "mermaid": False,
-    }
-    if locator_figs:
-        front["fig_prefix"] = letter
-    chapters.append(front)
-
-    # ONE PAGE PER AUTHORED CARD — <letter>.1, <letter>.2, … in listed order.
-    for i, (stem, title) in enumerate(pages, start=1):
-        raw = (_OPERATORS_REFERENCE_DIR / f"{stem}.md").read_text(encoding="utf-8")
-        rec: dict = {
-            "slug": f"appendix-{low}-{stem}",
-            "part": part,
-            "part_title": part_title,
-            "chapter": i,                       # sorts after the front-door's chapter 0
-            "chapter_title": f"Appendix {letter} - {i}. {title}",
-            "body_md": _fold_wrapped_bullets(raw.strip()),
-            "is_appendix": True,
-            "mermaid": False,
-        }
-        if locator_figs:
-            rec["fig_prefix"] = f"{letter}.{i}"
-        chapters.append(rec)
-    return chapters
+    return build_hand_authored_appendix(
+        part, letter=letter, part_name="Operator's Reference",
+        opening_slug=_APPENDIX_OPERATORS_REFERENCE_OPENING_SLUG,
+        opening_prose=_APPENDIX_OPERATORS_REFERENCE_OPENING_PROSE,
+        content_dir=_OPERATORS_REFERENCE_DIR, pages_source=_OPERATORS_REFERENCE_PAGES,
+        locator_figs=locator_figs)
 
 
 def _family_order_from_index() -> dict[str, int]:
