@@ -7324,12 +7324,12 @@
         }
       ]
     },
-    "section-id:the-blue-loop-bootstrap-governance": {
+    "section-id:the-blue-path-bootstrap-governance": {
       "kind": "section-id",
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-toward-a-theory-of-mage::the-blue-loop-bootstrap-governance",
+          "element": "6.1-toward-a-theory-of-mage::the-blue-path-bootstrap-governance",
           "role": "section-anchor"
         }
       ]
@@ -7494,12 +7494,12 @@
         }
       ]
     },
-    "section-id:the-four-feedback-loops": {
+    "section-id:the-four-dynamics": {
       "kind": "section-id",
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-toward-a-theory-of-mage::the-four-feedback-loops",
+          "element": "6.1-toward-a-theory-of-mage::the-four-dynamics",
           "role": "section-anchor"
         }
       ]

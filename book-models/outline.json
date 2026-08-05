@@ -5140,25 +5140,25 @@
           "section_id": "the-dynamic-model",
           "level": 2,
           "heading_text": "The dynamic model",
-          "topic_sentence": "[ref:mage-dynamic-model] draws the whole theory on one diagram: a single set of constructs rather than four separate pictures, because the four loops act on the same system.",
+          "topic_sentence": "[ref:mage-dynamic-model] draws the whole theory on one diagram: a single set of constructs rather than four separate pictures, because the four dynamics act on the same system.",
           "id_source": "derived",
           "block_index": 3,
           "points": []
         },
         {
-          "section_id": "the-four-feedback-loops",
+          "section_id": "the-four-dynamics",
           "level": 2,
-          "heading_text": "The four feedback loops",
-          "topic_sentence": "Each loop gets its own section below, and each opens with the master figure showing only that loop highlighted — a reminder that the four are one system, not four separate diagrams.",
+          "heading_text": "The four dynamics",
+          "topic_sentence": "Each dynamic gets its own section below, and each opens with a simplified diagram of just its local causal path.",
           "id_source": "derived",
           "block_index": 11,
           "points": []
         },
         {
-          "section_id": "the-blue-loop-bootstrap-governance",
+          "section_id": "the-blue-path-bootstrap-governance",
           "level": 3,
-          "heading_text": "The blue loop: bootstrap governance",
-          "topic_sentence": "Not all governance is discovered through failure; the blue loop, in [ref:mage-loop-1], seeds the environment before any agent runs.",
+          "heading_text": "The blue path: bootstrap governance",
+          "topic_sentence": "Not all governance is discovered through failure; the blue path, in [ref:mage-loop-1], seeds the environment before any agent runs.",
           "id_source": "derived",
           "block_index": 13,
           "points": []
@@ -5239,7 +5239,7 @@
           "section_id": "corollaries-and-specializations",
           "level": 3,
           "heading_text": "Corollaries and specializations",
-          "topic_sentence": "Several claims the earlier account ranked as coequal predictions are better read as consequences or domain-specific instances of the seven.",
+          "topic_sentence": "Several claims read more precisely as consequences or domain-specific instances of the seven than as coequal predictions.",
           "id_source": "derived",
           "block_index": 61,
           "points": []
@@ -5293,7 +5293,7 @@
           "section_id": "research-agenda",
           "level": 2,
           "heading_text": "Research agenda",
-          "topic_sentence": "The seven hypotheses suggest a focused program, not fifteen disconnected tests.",
+          "topic_sentence": "The seven hypotheses suggest a focused program, not a scatter of disconnected tests.",
           "id_source": "derived",
           "block_index": 91,
           "points": []

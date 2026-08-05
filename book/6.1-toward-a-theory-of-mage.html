@@ -549,9 +549,9 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
 <li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Toward a Theory of MAGE · Toward a Theory of MAGE"><header class="chap"><div class="kicker"><a href="6.0-implications-for-se.html" aria-label="Beginning of Back Matter">Back Matter</a></div><h1><span class="chap-num">6.1</span> Toward a Theory of MAGE</h1></header><p>The book has argued from one case, seen in depth. A theory is what lets that case speak past itself: it names the constructs, draws the mechanisms between them, and states what evidence would make the account fail.</p>
 <p>The theory offered here is middle-range. It does not claim that every software project will behave like the one this book studied, and it assigns no universal coefficients to the relations it draws — a single system cannot support them. What it offers is a dynamic model of a specific phenomenon: how a fleet of coding agents turns abundant implementation capacity into durable engineering progress, or into churn. Read the whole chapter with that scope in mind; I will not restate it under each claim.</p>
-<p>The central claim is not that agentic velocity is inherently productive. Velocity amplifies the fit between the fleet and the engineering environment it runs in. When that environment is incomplete, incoherent, or too weak to hold the work, velocity produces churn, escaped defects, repeated intervention, and governance friction. Those signals create pressure to adapt the environment. Skilled engineers respond: they model missing structure, convert recurring failures into durable mechanisms, and reconcile or retire governance that has grown excessive. When the adaptation works, later agents inherit a more legible action space, and a greater share of raw velocity becomes durable progress.</p>
+<p>The central claim is not that agentic velocity is inherently productive. Velocity amplifies the fit between the fleet and the engineering environment it runs in. When that environment is incomplete, incoherent, or too weak to hold the work, velocity produces churn, escaped defects, repeated intervention, and governance friction. Those signals create pressure to adapt the environment. Engineers and engineering organizations respond by modeling missing structure, converting recurring failures into durable mechanisms, and reconciling or retiring governance that has grown excessive. When the adaptation works, later agents inherit a more legible action space, and a greater share of raw velocity becomes durable progress.</p>
 <h2><span class="sec-num">6.1.1</span> The dynamic model</h2>
-<p><a class="xref" href="6.1-toward-a-theory-of-mage.html#fig-6-1-1">Figure&nbsp;6.1-1</a> draws the whole theory on one diagram: a single set of constructs rather than four separate pictures, because the four loops act on the same system. The figure follows the causal-loop convention of system dynamics <sup class="cite-ref"><a href="#wc-6-1-toward-a-theory-of-mage-1" aria-label="citation 1">1</a></sup><span class="cite-note"><span class="cn-mark">1.</span> Donella H. Meadows, <em>Thinking in Systems: A Primer</em> (Chelsea Green Publishing, 2008).</span>.</p>
+<p><a class="xref" href="6.1-toward-a-theory-of-mage.html#fig-6-1-1">Figure&nbsp;6.1-1</a> draws the whole theory on one diagram: a single set of constructs rather than four separate pictures, because the four dynamics act on the same system. The figure follows the causal-loop convention of system dynamics <sup class="cite-ref"><a href="#wc-6-1-toward-a-theory-of-mage-1" aria-label="citation 1">1</a></sup><span class="cite-note"><span class="cn-mark">1.</span> Donella H. Meadows, <em>Thinking in Systems: A Primer</em> (Chelsea Green Publishing, 2008).</span>.</p>
 <figure id="fig-6-1-1" class="book-figure" data-label="mage-dynamic-model"><svg id="mageDM" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1200"
      role="img" aria-labelledby="mageDM-dmTitle mageDM-dmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
@@ -767,680 +767,172 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <text x="488.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7c6bb0">R</text>
   <text x="504" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">reinforcing</tspan> — loop [4] reopens the frontier.</text>
   <text x="56" y="1179" text-anchor="start" font-size="12.5" font-style="italic" fill="#57534e">Loop [1] bootstrap is an input, not a feedback loop.</text>
-</svg><figcaption data-short="The MAGE Dynamic Model"><span class="fig-label">Figure 6.1-1.</span> <em>The MAGE Dynamic Model.</em> Eight constructs, read clockwise: capacity exercises environment E and drives work; work and E yield realized performance; the gap becomes governance pressure, then structural diagnosis, then adaptation, which reshapes E. Four numbered loops overlay it, legible in grayscale.</figcaption></figure>
+</svg><figcaption data-short="The MAGE Dynamic Model"><span class="fig-label">Figure 6.1-1.</span> <em>The MAGE Dynamic Model.</em> Eight constructs, read clockwise: capacity exercises environment E and drives work; work and E yield realized performance; the gap becomes governance pressure, then structural diagnosis, then adaptation, which reshapes E. Four numbered dynamics overlay it, legible in grayscale.</figcaption></figure>
 <p>The spine runs left to right. <strong>Agentic capacity</strong> — model capability, concurrency, raw implementation rate — exercises a <strong>governed environment</strong> whose effective quality the model calls <em>E</em>. That environment shapes <strong>agentic work</strong> into <strong>realized performance</strong>: durable throughput, defect escape, and the human attention each unit of durable output costs. The gap between the performance the fleet looks capable of and the durable performance it delivers registers as <strong>governance pressure</strong>. Pressure meets <strong>structural diagnosis</strong> — the judgment that reads a signal as a local defect or as evidence of missing structure. Diagnosis drives <strong>governance adaptation</strong>, which changes <em>E</em>. The changed environment reopens the loop.</p>
-<p>Four loops run over that spine, and each has a color and a number so the figure survives in grayscale:</p>
-<ul><li><strong>Blue — the bootstrap loop.</strong> Prior engineering knowledge seeds the initial environment before any agent runs.</li><li><strong>Red — the churn/discovery loop.</strong> Work outruns the environment; churn and failure make the missing governance visible.</li><li><strong>Green — the governance-adaptation loop.</strong> A structural diagnosis reshapes the environment for the next agent.</li><li><strong>Purple — the capability-amplification loop.</strong> A stronger environment raises ambition and concurrency, which exposes a new frontier.</li></ul>
+<p>Four numbered dynamics run over that spine, and each has a color and a number so the figure survives in grayscale:</p>
+<ul><li><strong>Blue — the bootstrap path.</strong> Prior engineering knowledge seeds the initial environment before any agent runs.</li><li><strong>Red — the churn/discovery loop.</strong> Work outruns the environment; churn and failure make the missing governance visible.</li><li><strong>Green — the governance-adaptation loop.</strong> A structural diagnosis reshapes the environment for the next agent.</li><li><strong>Purple — the capability-amplification loop.</strong> A stronger environment raises ambition and concurrency, which exposes a new frontier.</li></ul>
 <p>Follow the red loop first. It carries the experienced driver of the whole system — the pressure an engineer actually feels — and the other three are best read as answers to it: blue lowers the pressure before it starts, green relieves it once it appears, and purple explains why it never stays relieved.</p>
-<p>The four loops are not all the same kind, and naming their types sharpens why the system does not settle. Loops [2] and [3] together form a <strong>balancing</strong> loop — churn drives diagnosis, diagnosis drives adaptation, and adaptation reduces churn: a goal-seeking cycle that drives the environment <em>toward fit</em>. Loop [4] is a <strong>reinforcing</strong> loop — a better environment raises ambition, and greater ambition reopens the frontier: a self-amplifying cycle that keeps moving the target. Loop [1], bootstrap, is an input that seeds the environment, not a feedback loop at all. The balancing loop settles the environment toward fit; the reinforcing loop moves the target the moment it is reached. That pairing — balance toward fit, then reinforce to reopen the frontier — is why MAGE never converges.</p>
-<h2><span class="sec-num">6.1.2</span> The four feedback loops</h2>
-<p>Each loop gets its own section below, and each opens with the master figure showing only that loop highlighted — a reminder that the four are one system, not four separate diagrams.</p>
-<h3>The blue loop: bootstrap governance</h3>
-<p>Not all governance is discovered through failure; the blue loop, in <a class="xref" href="6.1-toward-a-theory-of-mage.html#fig-6-1-2">Figure&nbsp;6.1-2</a>, seeds the environment before any agent runs.</p>
-<figure id="fig-6-1-2" class="book-figure" data-label="mage-loop-1"><svg id="mageLoop1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1200"
-     role="img" aria-labelledby="mageLoop1-dmTitle mageLoop1-dmDesc"
+<p>The four dynamics are not all the same kind, and naming their types sharpens why the system does not settle. Three are feedback loops; bootstrap is the input that sets the initial condition. Loops [2] and [3] together form a <strong>balancing</strong> loop — churn drives diagnosis, diagnosis drives adaptation, and adaptation reduces churn: a goal-seeking cycle that drives the environment <em>toward fit</em>. Loop [4] is a <strong>reinforcing</strong> loop — a better environment raises ambition, and greater ambition reopens the frontier: a self-amplifying cycle that keeps moving the target. The balancing loop settles the environment toward fit; the reinforcing loop moves the target the moment it is reached. That pairing — balance toward fit, then reinforce to reopen the frontier — is why MAGE never converges.</p>
+<h2><span class="sec-num">6.1.2</span> The four dynamics</h2>
+<p>Each dynamic gets its own section below, and each opens with a simplified diagram of just its local causal path. The master figure above already established that the four are one system, so each section shows only the fragment it explains.</p>
+<h3>The blue path: bootstrap governance</h3>
+<p>Not all governance is discovered through failure; the blue path, in <a class="xref" href="6.1-toward-a-theory-of-mage.html#fig-6-1-2">Figure&nbsp;6.1-2</a>, seeds the environment before any agent runs.</p>
+<figure id="fig-6-1-2" class="book-figure" data-label="mage-loop-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 330"
+     role="img" aria-labelledby="l1Title l1Desc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="mageLoop1-dmTitle">The MAGE Dynamic Model — loop 1 (Bootstrap loop) highlighted</title>
-  <desc id="mageLoop1-dmDesc">A single system diagram of eight constructs with four numbered feedback
-    loops overlaid, read as a clockwise cycle. Prior engineering knowledge — standards,
-    requirements, brownfield assets, and prior lessons — sits at the top and feeds the
-    governed environment E through loop 1, the blue bootstrap loop. Agentic capacity, on the
-    left, exercises the governed environment E, the green hub on the right whose quality is
-    representation quality, enforcement coverage, coherence, and economy. Agentic capacity
-    also drives agentic work; the environment E shapes realized performance; agentic work
-    produces realized performance — durable throughput, defect escape, and human attention.
-    A mismatch between work and environment, together with the realized-performance gap,
-    surfaces as governance pressure: churn, recurring failure, escaped defect, repeated
-    intervention, and control friction. Loop 2, the red churn-or-discovery loop, carries
-    governance pressure into structural diagnosis, which asks whether a failure is a local
-    defect or evidence of a missing model, abstraction, or mechanism. Loop 3, the green
-    governance-adaptation loop, carries a structural diagnosis into governance adaptation —
-    model, convert, strengthen, reconcile, retire — and its return arrow reshapes the
-    environment E as a new, better E for the next round. Loop 4, the purple
-    capability-amplification loop, runs from the improved environment back up to agentic
-    capacity: a stronger environment enables bigger tasks and more concurrency, which reopens
-    the whole cycle and exposes new pressure. The neutral black arrows are the shared system
-    plumbing; the four coloured, numbered arrows are the feedback loops the chapter walks. A
-    legend at the bottom names all four loops. Loops 2 and 3 together form a balancing loop,
-    marked B: churn drives diagnosis and adaptation, which reduce churn — a goal-seeking,
-    self-damping cycle toward fit. Loop 4 is a reinforcing loop, marked R: a better environment
-    raises ambition, which reopens the frontier — a self-amplifying cycle. Loop 1 is a bootstrap
-    input, not a feedback loop. The model is directional and middle-range, not a fitted law.</desc>
-
-  <style id="mageLoop1-loopstyle">
-  /* crop view: loop 1 active; the other three loops muted */
-  #mageLoop1 .loop { opacity: 0.12; }
-  #mageLoop1 .loop1 { opacity: 1; }
-  #mageLoop1 .loop1 path { stroke-width: 4.5; }
-  </style>
+  <title id="l1Title">Loop 1 — the bootstrap path</title>
+  <desc id="l1Desc">A simplified three-step path drawn as a downward chain. Prior engineering
+    knowledge — standards, requirements, and prior lessons — feeds into bootstrap governance,
+    which establishes the initial governed environment E of zero. Loop 1, in fleet blue and
+    marked as an input, is not a feedback loop: it sets the initial condition before the fleet
+    meets any project-specific failure.</desc>
 
   <defs>
-    <marker id="mageLoop1-dm-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
-    </marker>
-    <marker id="mageLoop1-dm-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="l1-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
-    </marker>
-    <marker id="mageLoop1-dm-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
-    </marker>
-    <marker id="mageLoop1-dm-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
-    </marker>
-    <marker id="mageLoop1-dm-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7c6bb0"/>
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="880" height="1200" fill="#fdfcf9"/>
+  <rect x="0" y="0" width="380" height="330" fill="#fdfcf9"/>
 
-  <!-- ============ visible title banner (swapped per crop variant) ============ -->
-  <text id="mageLoop1-activebanner" x="150" y="70" text-anchor="middle" fill="#1c1917">
-    <tspan x="150" y="66" font-size="13" font-weight="700" letter-spacing="1.5" fill="#2f5169">ACTIVE LOOP</tspan>
-    <tspan x="150" y="92" font-size="26" font-weight="700" fill="#2f5169">[1]</tspan>
-    <tspan x="150" y="120" font-size="14.5" font-weight="700" fill="#1c1917">Bootstrap loop</tspan>
-    <tspan x="150" y="140" font-size="12.5" font-style="italic" fill="#57534e">prior knowledge seeds E</tspan>
-  </text>
+  <!-- header: badge [1] + loop name + input tag -->
+  <circle cx="34" cy="34" r="15" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.4"/>
+  <text x="34" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">1</text>
+  <text x="58" y="30" text-anchor="start" font-size="15" font-weight="700" fill="#1c1917">Bootstrap path</text>
+  <text x="58" y="47" text-anchor="start" font-size="11.5" font-style="italic" fill="#57534e">prior knowledge seeds E(0)</text>
+  <rect x="306" y="21" width="56" height="22" rx="11" fill="#fdfcf9" stroke="#2f5169" stroke-width="1.8"/>
+  <text x="334" y="36" text-anchor="middle" font-size="12" font-weight="700" fill="#2f5169">input</text>
 
-  <!-- ============ [4] PURPLE capability-amplification loop (drawn first, behind boxes) ==== -->
-  <g class="loop loop4">
-    <path d="M600,236 C500,182 322,178 186,246" fill="none" stroke="#7c6bb0" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#mageLoop1-dm-purple)"/>
-    <circle cx="400" cy="176" r="16" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.5"/>
-    <text x="400" y="182" text-anchor="middle" font-size="18" font-weight="700" fill="#7c6bb0">4</text>
-    <text x="400" y="208" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#7c6bb0">Capability amplification</text>
-    <text x="400" y="226" text-anchor="middle" font-size="12" font-style="italic" fill="#57534e">bigger tasks &#183; more concurrency</text>
-  </g>
+  <!-- Box 1: Prior engineering knowledge -->
+  <rect x="40" y="74" width="300" height="58" rx="8" fill="#fdfcf9" stroke="#2f5169" stroke-width="2"/>
+  <text x="190" y="100" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1c1917">Prior engineering knowledge</text>
+  <text x="190" y="119" text-anchor="middle" font-size="11.5" font-style="italic" fill="#57534e">standards &#183; requirements &#183; prior lessons</text>
 
-  <!-- ============ [3] GREEN governance-adaptation return (behind boxes) ============ -->
-  <g class="loop loop3">
-    <path d="M670,972 L846,972 L846,338 L814,338" fill="none" stroke="#1f7a4d" stroke-width="2.6"
-          stroke-linejoin="round" marker-end="url(#mageLoop1-dm-green)"/>
-    <text x="862" y="655" text-anchor="middle" font-size="13" font-style="italic" fill="#1f7a4d"
-          transform="rotate(-90 862 655)">adapts &#8594; a better E</text>
-  </g>
+  <!-- arrow 1 -->
+  <path d="M190,132 L190,162" fill="none" stroke="#2f5169" stroke-width="2.4" marker-end="url(#l1-arrow)"/>
 
-  <!-- ============ NEUTRAL SPINE (shared system plumbing) ============ -->
-  <g stroke="#1c1917" stroke-width="2" fill="none">
-    <path d="M305,298 L556,290" marker-end="url(#mageLoop1-dm-ink)"/>   <!-- capacity -> E -->
-    <path d="M180,365 L180,466" marker-end="url(#mageLoop1-dm-ink)"/>   <!-- capacity -> work -->
-    <path d="M305,525 L556,525" marker-end="url(#mageLoop1-dm-ink)"/>   <!-- work -> performance -->
-    <path d="M685,415 L685,466" marker-end="url(#mageLoop1-dm-ink)"/>   <!-- E -> performance -->
-    <path d="M628,595 L512,662" marker-end="url(#mageLoop1-dm-ink)"/>   <!-- performance -> pressure -->
-    <path d="M205,580 L320,662" marker-end="url(#mageLoop1-dm-ink)"/>   <!-- work -> pressure (mismatch) -->
-  </g>
-  <text x="430" y="283" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">exercises</text>
-  <text x="702" y="448" text-anchor="start" font-size="14" font-style="italic" fill="#57534e">shapes</text>
-  <text x="238" y="632" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">mismatch</text>
+  <!-- Box 2: Bootstrap governance -->
+  <rect x="40" y="164" width="300" height="52" rx="8" fill="#fdfcf9" stroke="#2f5169" stroke-width="2"/>
+  <text x="190" y="196" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Bootstrap governance</text>
 
-  <!-- ============ [1] BLUE bootstrap loop ============ -->
-  <g class="loop loop1">
-    <path d="M518,135 C556,172 596,200 634,232" fill="none" stroke="#2f5169" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#mageLoop1-dm-blue)"/>
-    <circle cx="585" cy="182" r="16" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.5"/>
-    <text x="585" y="188" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">1</text>
-    <text x="560" y="214" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#2f5169">Bootstrap</text>
-  </g>
+  <!-- arrow 2 -->
+  <path d="M190,216 L190,246" fill="none" stroke="#2f5169" stroke-width="2.4" marker-end="url(#l1-arrow)"/>
 
-  <!-- ============ [2] RED churn / discovery loop ============ -->
-  <g class="loop loop2">
-    <path d="M410,765 L410,801" fill="none" stroke="#b23b3b" stroke-width="3" marker-end="url(#mageLoop1-dm-red)"/>
-    <circle cx="452" cy="784" r="15" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.5"/>
-    <text x="452" y="790" text-anchor="middle" font-size="17" font-weight="700" fill="#b23b3b">2</text>
-    <text x="486" y="789" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#b23b3b">Churn / discovery</text>
-  </g>
-
-  <!-- ============ [3] GREEN governance-adaptation edge ============ -->
-  <g class="loop loop3">
-    <path d="M410,885 L410,921" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#mageLoop1-dm-green)"/>
-    <circle cx="452" cy="904" r="15" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.5"/>
-    <text x="452" y="910" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a4d">3</text>
-    <text x="486" y="909" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#1f7a4d">Governance adaptation</text>
-  </g>
-
-  <!-- ============ BOXES (shared system) ============ -->
-  <!-- Prior engineering knowledge (bootstrap input) -->
-  <rect x="270" y="40" width="320" height="95" rx="9" fill="#f6f4ef" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="430" y="76" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Prior engineering knowledge</text>
-  <text x="430" y="102" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">standards &#183; requirements</text>
-  <text x="430" y="121" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">brownfield assets &#183; prior lessons</text>
-
-  <!-- Agentic capacity -->
-  <rect x="55" y="250" width="250" height="115" rx="9" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="180" y="292" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agentic capacity</text>
-  <text x="180" y="318" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">model capability</text>
-  <text x="180" y="337" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">concurrency &#183; raw velocity</text>
-
-  <!-- Governed environment E (the hub) -->
-  <rect x="560" y="235" width="250" height="180" rx="9" fill="#f6f4ef" stroke="#1f7a4d" stroke-width="3.2"/>
-  <text x="685" y="280" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Governed</text>
-  <text x="685" y="304" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">environment</text>
-  <text x="685" y="330" text-anchor="middle" font-size="21" font-weight="700" fill="#1f7a4d">E</text>
-  <text x="685" y="356" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">representation quality</text>
-  <text x="685" y="374" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">enforcement coverage</text>
-  <text x="685" y="392" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">coherence &#183; economy</text>
-
-  <!-- Agentic work -->
-  <rect x="55" y="470" width="250" height="110" rx="9" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="180" y="512" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agentic work</text>
-  <text x="180" y="538" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">attempted change</text>
-  <text x="180" y="557" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">task frontier</text>
-
-  <!-- Realized performance -->
-  <rect x="560" y="470" width="250" height="125" rx="9" fill="#fdfcf9" stroke="#57534e" stroke-width="2.2"/>
-  <text x="685" y="508" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Realized performance</text>
-  <text x="685" y="534" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">durable throughput</text>
-  <text x="685" y="553" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">defect escape</text>
-  <text x="685" y="572" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">human attention</text>
-
-  <!-- Governance pressure -->
-  <rect x="150" y="665" width="520" height="100" rx="9" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
-  <text x="410" y="700" text-anchor="middle" font-size="20" font-weight="700" fill="#b23b3b">Governance pressure</text>
-  <text x="410" y="726" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">churn &#183; recurring failure &#183; escaped defect</text>
-  <text x="410" y="745" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">repeated intervention &#183; control friction</text>
-
-  <!-- Structural diagnosis -->
-  <rect x="150" y="805" width="520" height="80" rx="9" fill="#fdfcf9" stroke="#57534e" stroke-width="2.2"/>
-  <text x="410" y="840" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Structural diagnosis</text>
-  <text x="410" y="866" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">local defect, or missing model / abstraction / mechanism?</text>
-
-  <!-- Governance adaptation -->
-  <rect x="150" y="925" width="520" height="95" rx="9" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
-  <text x="410" y="962" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Governance adaptation</text>
-  <text x="410" y="990" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">model &#183; convert &#183; strengthen &#183; reconcile &#183; retire</text>
-  <text x="410" y="1010" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">changes the shape of future work</text>
-
-  <!-- ============ R / B loop-typing badges (system-dynamics convention; full-strength in every crop) ==== -->
-  <!-- R — loop [4] is REINFORCING (better E -> more ambition -> new frontier) -->
-  <rect x="421" y="167" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.2"/>
-  <text x="430.5" y="181" text-anchor="middle" font-size="14" font-weight="700" fill="#7c6bb0">R</text>
-  <!-- B — loops [2]+[3] together are a BALANCING loop (churn -> diagnosis -> adaptation -> less churn) -->
-  <rect x="837" y="470" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.2"/>
-  <text x="846.5" y="484" text-anchor="middle" font-size="14" font-weight="700" fill="#1f7a4d">B</text>
-
-  <!-- ============ LEGEND: the four loops (grayscale key — numbers carry meaning) ============ -->
-  <rect x="40" y="1048" width="800" height="140" rx="8" fill="#f6f4ef" stroke="#e4e0d8" stroke-width="1.5"/>
-
-  <circle cx="70" cy="1078" r="14" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.4"/>
-  <text x="70" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">1</text>
-  <text x="92" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Bootstrap loop</text>
-  <text x="92" y="1096" text-anchor="start" font-size="12" fill="#57534e">prior knowledge</text>
-  <text x="92" y="1113" text-anchor="start" font-size="12" fill="#57534e">seeds the environment</text>
-
-  <circle cx="270" cy="1078" r="14" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
-  <text x="270" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">2</text>
-  <text x="292" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Churn / discovery loop</text>
-  <text x="292" y="1096" text-anchor="start" font-size="12" fill="#57534e">pressure reveals</text>
-  <text x="292" y="1113" text-anchor="start" font-size="12" fill="#57534e">missing structure</text>
-
-  <circle cx="470" cy="1078" r="14" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
-  <text x="470" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">3</text>
-  <text x="492" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Governance-adaptation</text>
-  <text x="492" y="1096" text-anchor="start" font-size="12" fill="#57534e">diagnosis reshapes</text>
-  <text x="492" y="1113" text-anchor="start" font-size="12" fill="#57534e">the environment</text>
-
-  <circle cx="670" cy="1078" r="14" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.4"/>
-  <text x="670" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#7c6bb0">4</text>
-  <text x="692" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Capability-amplification</text>
-  <text x="692" y="1096" text-anchor="start" font-size="12" fill="#57534e">a stronger environment</text>
-  <text x="692" y="1113" text-anchor="start" font-size="12" fill="#57534e">enlarges ambition</text>
-
-  <!-- R / B loop-typing note (system-dynamics convention) -->
-  <line x1="56" y1="1132" x2="824" y2="1132" stroke="#e4e0d8" stroke-width="1"/>
-  <rect x="56" y="1146" width="17" height="17" rx="3" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="64.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1f7a4d">B</text>
-  <text x="80" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">balancing</tspan> — loops [2]+[3] seek fit, damping churn (goal-seeking).</text>
-  <rect x="480" y="1146" width="17" height="17" rx="3" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="488.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7c6bb0">R</text>
-  <text x="504" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">reinforcing</tspan> — loop [4] reopens the frontier.</text>
-  <text x="56" y="1179" text-anchor="start" font-size="12.5" font-style="italic" fill="#57534e">Loop [1] bootstrap is an input, not a feedback loop.</text>
-</svg><figcaption data-short="Loop 1 — bootstrap"><span class="fig-label">Figure 6.1-2.</span> <em>Loop 1 — bootstrap.</em> Prior engineering knowledge — standards, requirements, brownfield assets, prior lessons — seeds the governed environment E before any failure occurs. The blue loop lowers the initial failure rate; it does not remove the red loop that follows.</figcaption></figure>
+  <!-- Box 3: Governed environment E(0) (initial state, emphasised) -->
+  <rect x="40" y="248" width="300" height="58" rx="8" fill="#f6f4ef" stroke="#2f5169" stroke-width="2.6"/>
+  <text x="190" y="274" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1c1917">Governed environment</text>
+  <text x="190" y="295" text-anchor="middle" font-size="15" font-weight="700" fill="#2f5169">E(0)</text>
+</svg><figcaption data-short="Bootstrap path"><span class="fig-label">Figure 6.1-2.</span> <em>Bootstrap path.</em> Inherited and anticipated knowledge establishes the initial governed environment before the fleet encounters project-specific failures.</figcaption></figure>
 <p>A project begins with knowledge it inherited and knowledge it can anticipate. A brownfield system already carries architecture, tests, deployment controls, operational history, and institutional obligations. A greenfield project starts with less local evidence, but a skilled engineer can still seed it from prior experience, external standards, known security and reliability practices, and lessons transferred from earlier systems.</p>
 <p><strong>Bootstrap governance</strong> converts that ex-ante knowledge into the initial governed environment: a known obligation or a prior lesson becomes a model, a mechanism, or a constrained architecture, and the sum of them sets the environment's starting quality. This is why disciplined organizations and experienced engineers need not rediscover every failure from scratch. Governance conversion in one project becomes bootstrap knowledge in the next.</p>
-<p>Bootstrap governance is never complete. The environment a product needs depends on the product, its trajectory, and the agents acting on it, and none of that is fully knowable in advance. The blue loop lowers the initial failure rate. It does not close the red loop.</p>
+<p>Bootstrap governance is never complete. The environment a product needs depends on the product, its trajectory, and the agents acting on it, and none of that is fully knowable in advance. The blue path lowers the initial failure rate. It does not close the red loop.</p>
 <h3>The red loop: churn makes missing governance visible</h3>
 <p>The red loop, in <a class="xref" href="6.1-toward-a-theory-of-mage.html#fig-6-1-3">Figure&nbsp;6.1-3</a>, is where work outruns a weak environment and the gap surfaces as pressure.</p>
-<figure id="fig-6-1-3" class="book-figure" data-label="mage-loop-2"><svg id="mageLoop2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1200"
-     role="img" aria-labelledby="mageLoop2-dmTitle mageLoop2-dmDesc"
+<figure id="fig-6-1-3" class="book-figure" data-label="mage-loop-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 330"
+     role="img" aria-labelledby="l2Title l2Desc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="mageLoop2-dmTitle">The MAGE Dynamic Model — loop 2 (Churn / discovery loop) highlighted</title>
-  <desc id="mageLoop2-dmDesc">A single system diagram of eight constructs with four numbered feedback
-    loops overlaid, read as a clockwise cycle. Prior engineering knowledge — standards,
-    requirements, brownfield assets, and prior lessons — sits at the top and feeds the
-    governed environment E through loop 1, the blue bootstrap loop. Agentic capacity, on the
-    left, exercises the governed environment E, the green hub on the right whose quality is
-    representation quality, enforcement coverage, coherence, and economy. Agentic capacity
-    also drives agentic work; the environment E shapes realized performance; agentic work
-    produces realized performance — durable throughput, defect escape, and human attention.
-    A mismatch between work and environment, together with the realized-performance gap,
-    surfaces as governance pressure: churn, recurring failure, escaped defect, repeated
-    intervention, and control friction. Loop 2, the red churn-or-discovery loop, carries
-    governance pressure into structural diagnosis, which asks whether a failure is a local
-    defect or evidence of a missing model, abstraction, or mechanism. Loop 3, the green
-    governance-adaptation loop, carries a structural diagnosis into governance adaptation —
-    model, convert, strengthen, reconcile, retire — and its return arrow reshapes the
-    environment E as a new, better E for the next round. Loop 4, the purple
-    capability-amplification loop, runs from the improved environment back up to agentic
-    capacity: a stronger environment enables bigger tasks and more concurrency, which reopens
-    the whole cycle and exposes new pressure. The neutral black arrows are the shared system
-    plumbing; the four coloured, numbered arrows are the feedback loops the chapter walks. A
-    legend at the bottom names all four loops. Loops 2 and 3 together form a balancing loop,
-    marked B: churn drives diagnosis and adaptation, which reduce churn — a goal-seeking,
-    self-damping cycle toward fit. Loop 4 is a reinforcing loop, marked R: a better environment
-    raises ambition, which reopens the frontier — a self-amplifying cycle. Loop 1 is a bootstrap
-    input, not a feedback loop. The model is directional and middle-range, not a fitted law.</desc>
-
-  <style id="mageLoop2-loopstyle">
-  /* crop view: loop 2 active; the other three loops muted */
-  #mageLoop2 .loop { opacity: 0.12; }
-  #mageLoop2 .loop2 { opacity: 1; }
-  #mageLoop2 .loop2 path { stroke-width: 4.5; }
-  </style>
+  <title id="l2Title">Loop 2 — the churn / discovery loop</title>
+  <desc id="l2Desc">A simplified three-step path drawn as a downward chain. Agentic work against a
+    weak environment E produces governance pressure — churn, escaped defects, repeated
+    intervention — which is then read at structural diagnosis, asking whether the failure is a
+    local defect or evidence of missing structure. Loop 2, in churn red and marked as a balancing
+    loop, turns pressure into knowledge only when judgment recognises a structural failure
+    class.</desc>
 
   <defs>
-    <marker id="mageLoop2-dm-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
-    </marker>
-    <marker id="mageLoop2-dm-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
-    </marker>
-    <marker id="mageLoop2-dm-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="l2-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
-    </marker>
-    <marker id="mageLoop2-dm-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
-    </marker>
-    <marker id="mageLoop2-dm-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7c6bb0"/>
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="880" height="1200" fill="#fdfcf9"/>
+  <rect x="0" y="0" width="380" height="330" fill="#fdfcf9"/>
 
-  <!-- ============ visible title banner (swapped per crop variant) ============ -->
-  <text id="mageLoop2-activebanner" x="150" y="70" text-anchor="middle" fill="#1c1917">
-    <tspan x="150" y="66" font-size="13" font-weight="700" letter-spacing="1.5" fill="#b23b3b">ACTIVE LOOP</tspan>
-    <tspan x="150" y="92" font-size="26" font-weight="700" fill="#b23b3b">[2]</tspan>
-    <tspan x="150" y="120" font-size="14.5" font-weight="700" fill="#1c1917">Churn / discovery loop</tspan>
-    <tspan x="150" y="140" font-size="12.5" font-style="italic" fill="#57534e">pressure reveals missing structure</tspan>
-  </text>
+  <!-- header: badge [2] + loop name + B tag -->
+  <circle cx="34" cy="34" r="15" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
+  <text x="34" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#b23b3b">2</text>
+  <text x="58" y="30" text-anchor="start" font-size="15" font-weight="700" fill="#1c1917">Churn / discovery loop</text>
+  <text x="58" y="47" text-anchor="start" font-size="11.5" font-style="italic" fill="#57534e">pressure reveals missing structure</text>
+  <rect x="330" y="20" width="24" height="24" rx="4" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2"/>
+  <text x="342" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#b23b3b">B</text>
 
-  <!-- ============ [4] PURPLE capability-amplification loop (drawn first, behind boxes) ==== -->
-  <g class="loop loop4">
-    <path d="M600,236 C500,182 322,178 186,246" fill="none" stroke="#7c6bb0" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#mageLoop2-dm-purple)"/>
-    <circle cx="400" cy="176" r="16" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.5"/>
-    <text x="400" y="182" text-anchor="middle" font-size="18" font-weight="700" fill="#7c6bb0">4</text>
-    <text x="400" y="208" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#7c6bb0">Capability amplification</text>
-    <text x="400" y="226" text-anchor="middle" font-size="12" font-style="italic" fill="#57534e">bigger tasks &#183; more concurrency</text>
-  </g>
+  <!-- Box 1: Agentic work + weak E -->
+  <rect x="40" y="74" width="300" height="52" rx="8" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2"/>
+  <text x="190" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Agentic work + weak E</text>
 
-  <!-- ============ [3] GREEN governance-adaptation return (behind boxes) ============ -->
-  <g class="loop loop3">
-    <path d="M670,972 L846,972 L846,338 L814,338" fill="none" stroke="#1f7a4d" stroke-width="2.6"
-          stroke-linejoin="round" marker-end="url(#mageLoop2-dm-green)"/>
-    <text x="862" y="655" text-anchor="middle" font-size="13" font-style="italic" fill="#1f7a4d"
-          transform="rotate(-90 862 655)">adapts &#8594; a better E</text>
-  </g>
+  <!-- arrow 1 -->
+  <path d="M190,126 L190,156" fill="none" stroke="#b23b3b" stroke-width="2.4" marker-end="url(#l2-arrow)"/>
 
-  <!-- ============ NEUTRAL SPINE (shared system plumbing) ============ -->
-  <g stroke="#1c1917" stroke-width="2" fill="none">
-    <path d="M305,298 L556,290" marker-end="url(#mageLoop2-dm-ink)"/>   <!-- capacity -> E -->
-    <path d="M180,365 L180,466" marker-end="url(#mageLoop2-dm-ink)"/>   <!-- capacity -> work -->
-    <path d="M305,525 L556,525" marker-end="url(#mageLoop2-dm-ink)"/>   <!-- work -> performance -->
-    <path d="M685,415 L685,466" marker-end="url(#mageLoop2-dm-ink)"/>   <!-- E -> performance -->
-    <path d="M628,595 L512,662" marker-end="url(#mageLoop2-dm-ink)"/>   <!-- performance -> pressure -->
-    <path d="M205,580 L320,662" marker-end="url(#mageLoop2-dm-ink)"/>   <!-- work -> pressure (mismatch) -->
-  </g>
-  <text x="430" y="283" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">exercises</text>
-  <text x="702" y="448" text-anchor="start" font-size="14" font-style="italic" fill="#57534e">shapes</text>
-  <text x="238" y="632" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">mismatch</text>
+  <!-- Box 2: Governance pressure -->
+  <rect x="40" y="158" width="300" height="58" rx="8" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2"/>
+  <text x="190" y="184" text-anchor="middle" font-size="14.5" font-weight="700" fill="#b23b3b">Governance pressure</text>
+  <text x="190" y="203" text-anchor="middle" font-size="11.5" font-style="italic" fill="#57534e">churn &#183; escape &#183; intervention</text>
 
-  <!-- ============ [1] BLUE bootstrap loop ============ -->
-  <g class="loop loop1">
-    <path d="M518,135 C556,172 596,200 634,232" fill="none" stroke="#2f5169" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#mageLoop2-dm-blue)"/>
-    <circle cx="585" cy="182" r="16" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.5"/>
-    <text x="585" y="188" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">1</text>
-    <text x="560" y="214" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#2f5169">Bootstrap</text>
-  </g>
+  <!-- arrow 2 -->
+  <path d="M190,216 L190,246" fill="none" stroke="#b23b3b" stroke-width="2.4" marker-end="url(#l2-arrow)"/>
 
-  <!-- ============ [2] RED churn / discovery loop ============ -->
-  <g class="loop loop2">
-    <path d="M410,765 L410,801" fill="none" stroke="#b23b3b" stroke-width="3" marker-end="url(#mageLoop2-dm-red)"/>
-    <circle cx="452" cy="784" r="15" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.5"/>
-    <text x="452" y="790" text-anchor="middle" font-size="17" font-weight="700" fill="#b23b3b">2</text>
-    <text x="486" y="789" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#b23b3b">Churn / discovery</text>
-  </g>
-
-  <!-- ============ [3] GREEN governance-adaptation edge ============ -->
-  <g class="loop loop3">
-    <path d="M410,885 L410,921" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#mageLoop2-dm-green)"/>
-    <circle cx="452" cy="904" r="15" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.5"/>
-    <text x="452" y="910" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a4d">3</text>
-    <text x="486" y="909" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#1f7a4d">Governance adaptation</text>
-  </g>
-
-  <!-- ============ BOXES (shared system) ============ -->
-  <!-- Prior engineering knowledge (bootstrap input) -->
-  <rect x="270" y="40" width="320" height="95" rx="9" fill="#f6f4ef" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="430" y="76" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Prior engineering knowledge</text>
-  <text x="430" y="102" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">standards &#183; requirements</text>
-  <text x="430" y="121" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">brownfield assets &#183; prior lessons</text>
-
-  <!-- Agentic capacity -->
-  <rect x="55" y="250" width="250" height="115" rx="9" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="180" y="292" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agentic capacity</text>
-  <text x="180" y="318" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">model capability</text>
-  <text x="180" y="337" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">concurrency &#183; raw velocity</text>
-
-  <!-- Governed environment E (the hub) -->
-  <rect x="560" y="235" width="250" height="180" rx="9" fill="#f6f4ef" stroke="#1f7a4d" stroke-width="3.2"/>
-  <text x="685" y="280" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Governed</text>
-  <text x="685" y="304" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">environment</text>
-  <text x="685" y="330" text-anchor="middle" font-size="21" font-weight="700" fill="#1f7a4d">E</text>
-  <text x="685" y="356" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">representation quality</text>
-  <text x="685" y="374" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">enforcement coverage</text>
-  <text x="685" y="392" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">coherence &#183; economy</text>
-
-  <!-- Agentic work -->
-  <rect x="55" y="470" width="250" height="110" rx="9" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="180" y="512" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agentic work</text>
-  <text x="180" y="538" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">attempted change</text>
-  <text x="180" y="557" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">task frontier</text>
-
-  <!-- Realized performance -->
-  <rect x="560" y="470" width="250" height="125" rx="9" fill="#fdfcf9" stroke="#57534e" stroke-width="2.2"/>
-  <text x="685" y="508" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Realized performance</text>
-  <text x="685" y="534" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">durable throughput</text>
-  <text x="685" y="553" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">defect escape</text>
-  <text x="685" y="572" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">human attention</text>
-
-  <!-- Governance pressure -->
-  <rect x="150" y="665" width="520" height="100" rx="9" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
-  <text x="410" y="700" text-anchor="middle" font-size="20" font-weight="700" fill="#b23b3b">Governance pressure</text>
-  <text x="410" y="726" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">churn &#183; recurring failure &#183; escaped defect</text>
-  <text x="410" y="745" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">repeated intervention &#183; control friction</text>
-
-  <!-- Structural diagnosis -->
-  <rect x="150" y="805" width="520" height="80" rx="9" fill="#fdfcf9" stroke="#57534e" stroke-width="2.2"/>
-  <text x="410" y="840" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Structural diagnosis</text>
-  <text x="410" y="866" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">local defect, or missing model / abstraction / mechanism?</text>
-
-  <!-- Governance adaptation -->
-  <rect x="150" y="925" width="520" height="95" rx="9" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
-  <text x="410" y="962" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Governance adaptation</text>
-  <text x="410" y="990" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">model &#183; convert &#183; strengthen &#183; reconcile &#183; retire</text>
-  <text x="410" y="1010" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">changes the shape of future work</text>
-
-  <!-- ============ R / B loop-typing badges (system-dynamics convention; full-strength in every crop) ==== -->
-  <!-- R — loop [4] is REINFORCING (better E -> more ambition -> new frontier) -->
-  <rect x="421" y="167" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.2"/>
-  <text x="430.5" y="181" text-anchor="middle" font-size="14" font-weight="700" fill="#7c6bb0">R</text>
-  <!-- B — loops [2]+[3] together are a BALANCING loop (churn -> diagnosis -> adaptation -> less churn) -->
-  <rect x="837" y="470" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.2"/>
-  <text x="846.5" y="484" text-anchor="middle" font-size="14" font-weight="700" fill="#1f7a4d">B</text>
-
-  <!-- ============ LEGEND: the four loops (grayscale key — numbers carry meaning) ============ -->
-  <rect x="40" y="1048" width="800" height="140" rx="8" fill="#f6f4ef" stroke="#e4e0d8" stroke-width="1.5"/>
-
-  <circle cx="70" cy="1078" r="14" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.4"/>
-  <text x="70" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">1</text>
-  <text x="92" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Bootstrap loop</text>
-  <text x="92" y="1096" text-anchor="start" font-size="12" fill="#57534e">prior knowledge</text>
-  <text x="92" y="1113" text-anchor="start" font-size="12" fill="#57534e">seeds the environment</text>
-
-  <circle cx="270" cy="1078" r="14" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
-  <text x="270" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">2</text>
-  <text x="292" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Churn / discovery loop</text>
-  <text x="292" y="1096" text-anchor="start" font-size="12" fill="#57534e">pressure reveals</text>
-  <text x="292" y="1113" text-anchor="start" font-size="12" fill="#57534e">missing structure</text>
-
-  <circle cx="470" cy="1078" r="14" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
-  <text x="470" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">3</text>
-  <text x="492" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Governance-adaptation</text>
-  <text x="492" y="1096" text-anchor="start" font-size="12" fill="#57534e">diagnosis reshapes</text>
-  <text x="492" y="1113" text-anchor="start" font-size="12" fill="#57534e">the environment</text>
-
-  <circle cx="670" cy="1078" r="14" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.4"/>
-  <text x="670" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#7c6bb0">4</text>
-  <text x="692" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Capability-amplification</text>
-  <text x="692" y="1096" text-anchor="start" font-size="12" fill="#57534e">a stronger environment</text>
-  <text x="692" y="1113" text-anchor="start" font-size="12" fill="#57534e">enlarges ambition</text>
-
-  <!-- R / B loop-typing note (system-dynamics convention) -->
-  <line x1="56" y1="1132" x2="824" y2="1132" stroke="#e4e0d8" stroke-width="1"/>
-  <rect x="56" y="1146" width="17" height="17" rx="3" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="64.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1f7a4d">B</text>
-  <text x="80" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">balancing</tspan> — loops [2]+[3] seek fit, damping churn (goal-seeking).</text>
-  <rect x="480" y="1146" width="17" height="17" rx="3" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="488.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7c6bb0">R</text>
-  <text x="504" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">reinforcing</tspan> — loop [4] reopens the frontier.</text>
-  <text x="56" y="1179" text-anchor="start" font-size="12.5" font-style="italic" fill="#57534e">Loop [1] bootstrap is an input, not a feedback loop.</text>
-</svg><figcaption data-short="Loop 2 — churn / discovery"><span class="fig-label">Figure 6.1-3.</span> <em>Loop 2 — churn / discovery.</em> Velocity outruns a weak environment and the gap surfaces as governance pressure: churn, escapes, repeated intervention, friction. Pressure is not yet knowledge; the red loop ends at the scarce act of structural diagnosis.</figcaption></figure>
+  <!-- Box 3: Structural diagnosis (the scarce act, emphasised) -->
+  <rect x="40" y="248" width="300" height="58" rx="8" fill="#f6f4ef" stroke="#b23b3b" stroke-width="2.6"/>
+  <text x="190" y="274" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1c1917">Structural diagnosis</text>
+  <text x="190" y="293" text-anchor="middle" font-size="11.5" font-style="italic" fill="#57534e">local defect, or missing structure?</text>
+</svg><figcaption data-short="Churn/discovery loop"><span class="fig-label">Figure 6.1-3.</span> <em>Churn/discovery loop.</em> Work outruns the environment; the resulting pressure becomes useful only when judgment recognizes a structural failure class.</figcaption></figure>
 <p>Agentic velocity is not the immediate motive for governance investment. The motive is the experienced gap between what the fleet appears capable of producing and what becomes durable progress. When the environment is weak, raw implementation capacity produces repeated rediscovery, regressions and reversals, escaped defects, recurring human intervention, control friction, and confidently wrong changes that consume tokens without advancing the system. The book calls the dominant form <strong>churn</strong>.</p>
 <p>Velocity earns its place in the model as an amplifier. It clusters latent weakness in time: failure classes that might have arrived months apart under human-paced work land in a single afternoon, and their proximity makes the structure they share visible. Governance pressure is what the operator feels when that happens.</p>
 <p>Pressure is not yet knowledge. The next act is judgment. <strong>Structural diagnosis</strong> distinguishes a local defect from a structural failure class. A local defect gets repaired and the matter ends. A structural failure reveals a weak or absent model, abstraction, boundary, invariant, oracle, mechanism, or governance seam — something whose absence will keep producing failures until it is supplied. This diagnosis is the scarce work of the whole method, and the red loop is where it is demanded.</p>
 <h3>The green loop: governance adaptation</h3>
 <p>A structural diagnosis triggers governance adaptation, the green loop of <a class="xref" href="6.1-toward-a-theory-of-mage.html#fig-6-1-4">Figure&nbsp;6.1-4</a>.</p>
-<figure id="fig-6-1-4" class="book-figure" data-label="mage-loop-3"><svg id="mageLoop3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1200"
-     role="img" aria-labelledby="mageLoop3-dmTitle mageLoop3-dmDesc"
+<figure id="fig-6-1-4" class="book-figure" data-label="mage-loop-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 330"
+     role="img" aria-labelledby="l3Title l3Desc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="mageLoop3-dmTitle">The MAGE Dynamic Model — loop 3 (Governance-adaptation loop) highlighted</title>
-  <desc id="mageLoop3-dmDesc">A single system diagram of eight constructs with four numbered feedback
-    loops overlaid, read as a clockwise cycle. Prior engineering knowledge — standards,
-    requirements, brownfield assets, and prior lessons — sits at the top and feeds the
-    governed environment E through loop 1, the blue bootstrap loop. Agentic capacity, on the
-    left, exercises the governed environment E, the green hub on the right whose quality is
-    representation quality, enforcement coverage, coherence, and economy. Agentic capacity
-    also drives agentic work; the environment E shapes realized performance; agentic work
-    produces realized performance — durable throughput, defect escape, and human attention.
-    A mismatch between work and environment, together with the realized-performance gap,
-    surfaces as governance pressure: churn, recurring failure, escaped defect, repeated
-    intervention, and control friction. Loop 2, the red churn-or-discovery loop, carries
-    governance pressure into structural diagnosis, which asks whether a failure is a local
-    defect or evidence of a missing model, abstraction, or mechanism. Loop 3, the green
-    governance-adaptation loop, carries a structural diagnosis into governance adaptation —
-    model, convert, strengthen, reconcile, retire — and its return arrow reshapes the
-    environment E as a new, better E for the next round. Loop 4, the purple
-    capability-amplification loop, runs from the improved environment back up to agentic
-    capacity: a stronger environment enables bigger tasks and more concurrency, which reopens
-    the whole cycle and exposes new pressure. The neutral black arrows are the shared system
-    plumbing; the four coloured, numbered arrows are the feedback loops the chapter walks. A
-    legend at the bottom names all four loops. Loops 2 and 3 together form a balancing loop,
-    marked B: churn drives diagnosis and adaptation, which reduce churn — a goal-seeking,
-    self-damping cycle toward fit. Loop 4 is a reinforcing loop, marked R: a better environment
-    raises ambition, which reopens the frontier — a self-amplifying cycle. Loop 1 is a bootstrap
-    input, not a feedback loop. The model is directional and middle-range, not a fitted law.</desc>
-
-  <style id="mageLoop3-loopstyle">
-  /* crop view: loop 3 active; the other three loops muted */
-  #mageLoop3 .loop { opacity: 0.12; }
-  #mageLoop3 .loop3 { opacity: 1; }
-  #mageLoop3 .loop3 path { stroke-width: 4.5; }
-  </style>
+  <title id="l3Title">Loop 3 — the governance-adaptation loop</title>
+  <desc id="l3Desc">A simplified three-step path drawn as a downward chain that returns on itself.
+    A structural diagnosis triggers governance adaptation — model, convert, strengthen, reconcile,
+    retire — which reshapes the environment into a better-shaped E of t plus one. A return arrow
+    on the right closes the loop back to diagnosis, labelled "reduces future pressure". Loop 3, in
+    governed green and marked as a balancing loop, gives later agents a more legible and
+    constrained action space.</desc>
 
   <defs>
-    <marker id="mageLoop3-dm-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
-    </marker>
-    <marker id="mageLoop3-dm-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
-    </marker>
-    <marker id="mageLoop3-dm-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
-    </marker>
-    <marker id="mageLoop3-dm-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="l3-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
-    </marker>
-    <marker id="mageLoop3-dm-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7c6bb0"/>
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="880" height="1200" fill="#fdfcf9"/>
+  <rect x="0" y="0" width="440" height="330" fill="#fdfcf9"/>
 
-  <!-- ============ visible title banner (swapped per crop variant) ============ -->
-  <text id="mageLoop3-activebanner" x="150" y="70" text-anchor="middle" fill="#1c1917">
-    <tspan x="150" y="66" font-size="13" font-weight="700" letter-spacing="1.5" fill="#1f7a4d">ACTIVE LOOP</tspan>
-    <tspan x="150" y="92" font-size="26" font-weight="700" fill="#1f7a4d">[3]</tspan>
-    <tspan x="150" y="120" font-size="14.5" font-weight="700" fill="#1c1917">Governance-adaptation loop</tspan>
-    <tspan x="150" y="140" font-size="12.5" font-style="italic" fill="#57534e">diagnosis reshapes E</tspan>
-  </text>
+  <!-- header: badge [3] + loop name + B tag -->
+  <circle cx="34" cy="34" r="15" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
+  <text x="34" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a4d">3</text>
+  <text x="58" y="30" text-anchor="start" font-size="15" font-weight="700" fill="#1c1917">Governance-adaptation loop</text>
+  <text x="58" y="47" text-anchor="start" font-size="11.5" font-style="italic" fill="#57534e">diagnosis reshapes the environment</text>
+  <rect x="360" y="20" width="24" height="24" rx="4" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="372" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#1f7a4d">B</text>
 
-  <!-- ============ [4] PURPLE capability-amplification loop (drawn first, behind boxes) ==== -->
-  <g class="loop loop4">
-    <path d="M600,236 C500,182 322,178 186,246" fill="none" stroke="#7c6bb0" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#mageLoop3-dm-purple)"/>
-    <circle cx="400" cy="176" r="16" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.5"/>
-    <text x="400" y="182" text-anchor="middle" font-size="18" font-weight="700" fill="#7c6bb0">4</text>
-    <text x="400" y="208" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#7c6bb0">Capability amplification</text>
-    <text x="400" y="226" text-anchor="middle" font-size="12" font-style="italic" fill="#57534e">bigger tasks &#183; more concurrency</text>
-  </g>
+  <!-- return arrow (drawn first, behind boxes): E(t+1) right -> up -> back to diagnosis -->
+  <path d="M330,277 L400,277 L400,100 L332,100" fill="none" stroke="#1f7a4d" stroke-width="2"
+        stroke-linejoin="round" marker-end="url(#l3-arrow)"/>
+  <text x="414" y="190" text-anchor="middle" font-size="11.5" font-style="italic" fill="#1f7a4d"
+        transform="rotate(-90 414 190)">reduces future pressure</text>
 
-  <!-- ============ [3] GREEN governance-adaptation return (behind boxes) ============ -->
-  <g class="loop loop3">
-    <path d="M670,972 L846,972 L846,338 L814,338" fill="none" stroke="#1f7a4d" stroke-width="2.6"
-          stroke-linejoin="round" marker-end="url(#mageLoop3-dm-green)"/>
-    <text x="862" y="655" text-anchor="middle" font-size="13" font-style="italic" fill="#1f7a4d"
-          transform="rotate(-90 862 655)">adapts &#8594; a better E</text>
-  </g>
+  <!-- Box 1: Structural diagnosis -->
+  <rect x="30" y="74" width="300" height="52" rx="8" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="180" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Structural diagnosis</text>
 
-  <!-- ============ NEUTRAL SPINE (shared system plumbing) ============ -->
-  <g stroke="#1c1917" stroke-width="2" fill="none">
-    <path d="M305,298 L556,290" marker-end="url(#mageLoop3-dm-ink)"/>   <!-- capacity -> E -->
-    <path d="M180,365 L180,466" marker-end="url(#mageLoop3-dm-ink)"/>   <!-- capacity -> work -->
-    <path d="M305,525 L556,525" marker-end="url(#mageLoop3-dm-ink)"/>   <!-- work -> performance -->
-    <path d="M685,415 L685,466" marker-end="url(#mageLoop3-dm-ink)"/>   <!-- E -> performance -->
-    <path d="M628,595 L512,662" marker-end="url(#mageLoop3-dm-ink)"/>   <!-- performance -> pressure -->
-    <path d="M205,580 L320,662" marker-end="url(#mageLoop3-dm-ink)"/>   <!-- work -> pressure (mismatch) -->
-  </g>
-  <text x="430" y="283" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">exercises</text>
-  <text x="702" y="448" text-anchor="start" font-size="14" font-style="italic" fill="#57534e">shapes</text>
-  <text x="238" y="632" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">mismatch</text>
+  <!-- arrow 1 -->
+  <path d="M180,126 L180,156" fill="none" stroke="#1f7a4d" stroke-width="2.4" marker-end="url(#l3-arrow)"/>
 
-  <!-- ============ [1] BLUE bootstrap loop ============ -->
-  <g class="loop loop1">
-    <path d="M518,135 C556,172 596,200 634,232" fill="none" stroke="#2f5169" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#mageLoop3-dm-blue)"/>
-    <circle cx="585" cy="182" r="16" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.5"/>
-    <text x="585" y="188" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">1</text>
-    <text x="560" y="214" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#2f5169">Bootstrap</text>
-  </g>
+  <!-- Box 2: Governance adaptation -->
+  <rect x="30" y="158" width="300" height="58" rx="8" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2"/>
+  <text x="180" y="184" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1f7a4d">Governance adaptation</text>
+  <text x="180" y="203" text-anchor="middle" font-size="11" font-style="italic" fill="#57534e">model &#183; convert &#183; strengthen &#183; reconcile &#183; retire</text>
 
-  <!-- ============ [2] RED churn / discovery loop ============ -->
-  <g class="loop loop2">
-    <path d="M410,765 L410,801" fill="none" stroke="#b23b3b" stroke-width="3" marker-end="url(#mageLoop3-dm-red)"/>
-    <circle cx="452" cy="784" r="15" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.5"/>
-    <text x="452" y="790" text-anchor="middle" font-size="17" font-weight="700" fill="#b23b3b">2</text>
-    <text x="486" y="789" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#b23b3b">Churn / discovery</text>
-  </g>
+  <!-- arrow 2 -->
+  <path d="M180,216 L180,246" fill="none" stroke="#1f7a4d" stroke-width="2.4" marker-end="url(#l3-arrow)"/>
 
-  <!-- ============ [3] GREEN governance-adaptation edge ============ -->
-  <g class="loop loop3">
-    <path d="M410,885 L410,921" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#mageLoop3-dm-green)"/>
-    <circle cx="452" cy="904" r="15" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.5"/>
-    <text x="452" y="910" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a4d">3</text>
-    <text x="486" y="909" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#1f7a4d">Governance adaptation</text>
-  </g>
-
-  <!-- ============ BOXES (shared system) ============ -->
-  <!-- Prior engineering knowledge (bootstrap input) -->
-  <rect x="270" y="40" width="320" height="95" rx="9" fill="#f6f4ef" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="430" y="76" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Prior engineering knowledge</text>
-  <text x="430" y="102" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">standards &#183; requirements</text>
-  <text x="430" y="121" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">brownfield assets &#183; prior lessons</text>
-
-  <!-- Agentic capacity -->
-  <rect x="55" y="250" width="250" height="115" rx="9" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="180" y="292" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agentic capacity</text>
-  <text x="180" y="318" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">model capability</text>
-  <text x="180" y="337" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">concurrency &#183; raw velocity</text>
-
-  <!-- Governed environment E (the hub) -->
-  <rect x="560" y="235" width="250" height="180" rx="9" fill="#f6f4ef" stroke="#1f7a4d" stroke-width="3.2"/>
-  <text x="685" y="280" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Governed</text>
-  <text x="685" y="304" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">environment</text>
-  <text x="685" y="330" text-anchor="middle" font-size="21" font-weight="700" fill="#1f7a4d">E</text>
-  <text x="685" y="356" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">representation quality</text>
-  <text x="685" y="374" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">enforcement coverage</text>
-  <text x="685" y="392" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">coherence &#183; economy</text>
-
-  <!-- Agentic work -->
-  <rect x="55" y="470" width="250" height="110" rx="9" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="180" y="512" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agentic work</text>
-  <text x="180" y="538" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">attempted change</text>
-  <text x="180" y="557" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">task frontier</text>
-
-  <!-- Realized performance -->
-  <rect x="560" y="470" width="250" height="125" rx="9" fill="#fdfcf9" stroke="#57534e" stroke-width="2.2"/>
-  <text x="685" y="508" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Realized performance</text>
-  <text x="685" y="534" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">durable throughput</text>
-  <text x="685" y="553" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">defect escape</text>
-  <text x="685" y="572" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">human attention</text>
-
-  <!-- Governance pressure -->
-  <rect x="150" y="665" width="520" height="100" rx="9" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
-  <text x="410" y="700" text-anchor="middle" font-size="20" font-weight="700" fill="#b23b3b">Governance pressure</text>
-  <text x="410" y="726" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">churn &#183; recurring failure &#183; escaped defect</text>
-  <text x="410" y="745" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">repeated intervention &#183; control friction</text>
-
-  <!-- Structural diagnosis -->
-  <rect x="150" y="805" width="520" height="80" rx="9" fill="#fdfcf9" stroke="#57534e" stroke-width="2.2"/>
-  <text x="410" y="840" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Structural diagnosis</text>
-  <text x="410" y="866" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">local defect, or missing model / abstraction / mechanism?</text>
-
-  <!-- Governance adaptation -->
-  <rect x="150" y="925" width="520" height="95" rx="9" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
-  <text x="410" y="962" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Governance adaptation</text>
-  <text x="410" y="990" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">model &#183; convert &#183; strengthen &#183; reconcile &#183; retire</text>
-  <text x="410" y="1010" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">changes the shape of future work</text>
-
-  <!-- ============ R / B loop-typing badges (system-dynamics convention; full-strength in every crop) ==== -->
-  <!-- R — loop [4] is REINFORCING (better E -> more ambition -> new frontier) -->
-  <rect x="421" y="167" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.2"/>
-  <text x="430.5" y="181" text-anchor="middle" font-size="14" font-weight="700" fill="#7c6bb0">R</text>
-  <!-- B — loops [2]+[3] together are a BALANCING loop (churn -> diagnosis -> adaptation -> less churn) -->
-  <rect x="837" y="470" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.2"/>
-  <text x="846.5" y="484" text-anchor="middle" font-size="14" font-weight="700" fill="#1f7a4d">B</text>
-
-  <!-- ============ LEGEND: the four loops (grayscale key — numbers carry meaning) ============ -->
-  <rect x="40" y="1048" width="800" height="140" rx="8" fill="#f6f4ef" stroke="#e4e0d8" stroke-width="1.5"/>
-
-  <circle cx="70" cy="1078" r="14" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.4"/>
-  <text x="70" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">1</text>
-  <text x="92" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Bootstrap loop</text>
-  <text x="92" y="1096" text-anchor="start" font-size="12" fill="#57534e">prior knowledge</text>
-  <text x="92" y="1113" text-anchor="start" font-size="12" fill="#57534e">seeds the environment</text>
-
-  <circle cx="270" cy="1078" r="14" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
-  <text x="270" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">2</text>
-  <text x="292" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Churn / discovery loop</text>
-  <text x="292" y="1096" text-anchor="start" font-size="12" fill="#57534e">pressure reveals</text>
-  <text x="292" y="1113" text-anchor="start" font-size="12" fill="#57534e">missing structure</text>
-
-  <circle cx="470" cy="1078" r="14" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
-  <text x="470" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">3</text>
-  <text x="492" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Governance-adaptation</text>
-  <text x="492" y="1096" text-anchor="start" font-size="12" fill="#57534e">diagnosis reshapes</text>
-  <text x="492" y="1113" text-anchor="start" font-size="12" fill="#57534e">the environment</text>
-
-  <circle cx="670" cy="1078" r="14" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.4"/>
-  <text x="670" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#7c6bb0">4</text>
-  <text x="692" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Capability-amplification</text>
-  <text x="692" y="1096" text-anchor="start" font-size="12" fill="#57534e">a stronger environment</text>
-  <text x="692" y="1113" text-anchor="start" font-size="12" fill="#57534e">enlarges ambition</text>
-
-  <!-- R / B loop-typing note (system-dynamics convention) -->
-  <line x1="56" y1="1132" x2="824" y2="1132" stroke="#e4e0d8" stroke-width="1"/>
-  <rect x="56" y="1146" width="17" height="17" rx="3" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="64.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1f7a4d">B</text>
-  <text x="80" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">balancing</tspan> — loops [2]+[3] seek fit, damping churn (goal-seeking).</text>
-  <rect x="480" y="1146" width="17" height="17" rx="3" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="488.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7c6bb0">R</text>
-  <text x="504" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">reinforcing</tspan> — loop [4] reopens the frontier.</text>
-  <text x="56" y="1179" text-anchor="start" font-size="12.5" font-style="italic" fill="#57534e">Loop [1] bootstrap is an input, not a feedback loop.</text>
-</svg><figcaption data-short="Loop 3 — governance adaptation"><span class="fig-label">Figure 6.1-4.</span> <em>Loop 3 — governance adaptation.</em> A structural diagnosis triggers adaptation — model, convert, strengthen, reconcile, retire — and the green return arrow reshapes the environment E. The output is not more controls; it is a better shape for the next agent's work.</figcaption></figure>
+  <!-- Box 3: Better-shaped environment E(t+1) (emphasised) -->
+  <rect x="30" y="248" width="300" height="58" rx="8" fill="#f6f4ef" stroke="#1f7a4d" stroke-width="2.6"/>
+  <text x="180" y="274" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">Better-shaped environment</text>
+  <text x="180" y="295" text-anchor="middle" font-size="15" font-weight="700" fill="#1f7a4d">E(t+1)</text>
+</svg><figcaption data-short="Governance-adaptation loop"><span class="fig-label">Figure 6.1-4.</span> <em>Governance-adaptation loop.</em> Diagnosis changes the environment so that later agents inherit a more legible and constrained action space.</figcaption></figure>
 <p>The original theory named one move here, <strong>governance conversion</strong>: turn a recurring failure class into a durable mechanism the environment enforces on every later agent. Mature adaptation keeps that move and adds four more around it:</p>
 <ul><li><strong>Model</strong> — make missing intent or structure legible, so agents reason over the right representation.</li><li><strong>Convert</strong> — turn a recurring failure into a durable mechanism.</li><li><strong>Strengthen</strong> — replace weak probabilistic guidance with harder enforcement where the obligation justifies it.</li><li><strong>Reconcile</strong> — resolve controls that duplicate, conflict, or fire in the wrong order.</li><li><strong>Retire</strong> — remove governance that has gone stale or become net-harmful.</li></ul>
 <p>The output is not merely more controls. It is a change in the shape of future work. Later agents inherit a more compact representation, clearer constraints, fewer invalid moves, earlier evidence, narrower sanctioned seams, and more reliable admission conditions. That inheritance is the immediate mechanism by which the environment's quality changes — and it is why adaptation can be subtractive as well as additive: reconciling a control collision or retiring a stale gate raises quality without adding a thing.</p>
@@ -1451,224 +943,57 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>Defined this way, <em>E</em> is a quality, not a quantity. A large support apparatus raises <em>E</em> only if it is coherent, economical, and actually covers the obligations that matter; the same apparatus can instead be duplicated machinery, stale enforcement, or a tower of governance that lowers <em>E</em> while the control count climbs. Lint count and support ratio are indicators of investment. They are not substitutes for quality.</p>
 <h3>The purple loop: capability amplification</h3>
 <p>Successful governance does not end the process; the purple loop of <a class="xref" href="6.1-toward-a-theory-of-mage.html#fig-6-1-5">Figure&nbsp;6.1-5</a> reopens it.</p>
-<figure id="fig-6-1-5" class="book-figure" data-label="mage-loop-4"><svg id="mageLoop4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1200"
-     role="img" aria-labelledby="mageLoop4-dmTitle mageLoop4-dmDesc"
+<figure id="fig-6-1-5" class="book-figure" data-label="mage-loop-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 384"
+     role="img" aria-labelledby="l4Title l4Desc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="mageLoop4-dmTitle">The MAGE Dynamic Model — loop 4 (Capability-amplification loop) highlighted</title>
-  <desc id="mageLoop4-dmDesc">A single system diagram of eight constructs with four numbered feedback
-    loops overlaid, read as a clockwise cycle. Prior engineering knowledge — standards,
-    requirements, brownfield assets, and prior lessons — sits at the top and feeds the
-    governed environment E through loop 1, the blue bootstrap loop. Agentic capacity, on the
-    left, exercises the governed environment E, the green hub on the right whose quality is
-    representation quality, enforcement coverage, coherence, and economy. Agentic capacity
-    also drives agentic work; the environment E shapes realized performance; agentic work
-    produces realized performance — durable throughput, defect escape, and human attention.
-    A mismatch between work and environment, together with the realized-performance gap,
-    surfaces as governance pressure: churn, recurring failure, escaped defect, repeated
-    intervention, and control friction. Loop 2, the red churn-or-discovery loop, carries
-    governance pressure into structural diagnosis, which asks whether a failure is a local
-    defect or evidence of a missing model, abstraction, or mechanism. Loop 3, the green
-    governance-adaptation loop, carries a structural diagnosis into governance adaptation —
-    model, convert, strengthen, reconcile, retire — and its return arrow reshapes the
-    environment E as a new, better E for the next round. Loop 4, the purple
-    capability-amplification loop, runs from the improved environment back up to agentic
-    capacity: a stronger environment enables bigger tasks and more concurrency, which reopens
-    the whole cycle and exposes new pressure. The neutral black arrows are the shared system
-    plumbing; the four coloured, numbered arrows are the feedback loops the chapter walks. A
-    legend at the bottom names all four loops. Loops 2 and 3 together form a balancing loop,
-    marked B: churn drives diagnosis and adaptation, which reduce churn — a goal-seeking,
-    self-damping cycle toward fit. Loop 4 is a reinforcing loop, marked R: a better environment
-    raises ambition, which reopens the frontier — a self-amplifying cycle. Loop 1 is a bootstrap
-    input, not a feedback loop. The model is directional and middle-range, not a fitted law.</desc>
-
-  <style id="mageLoop4-loopstyle">
-  /* crop view: loop 4 active; the other three loops muted */
-  #mageLoop4 .loop { opacity: 0.12; }
-  #mageLoop4 .loop4 { opacity: 1; }
-  #mageLoop4 .loop4 path { stroke-width: 4.5; }
-  </style>
+  <title id="l4Title">Loop 4 — the capability-amplification loop</title>
+  <desc id="l4Desc">A simplified four-step path drawn as a downward chain. A stronger environment
+    enables larger tasks and more concurrency, which pushes out an expanded task frontier, which
+    in turn raises new governance pressure. Loop 4, in inset purple and marked as a reinforcing
+    loop, shows how successful governance enables more ambitious work that exposes the next
+    unguided surface, so MAGE does not terminate.</desc>
 
   <defs>
-    <marker id="mageLoop4-dm-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
-    </marker>
-    <marker id="mageLoop4-dm-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#2f5169"/>
-    </marker>
-    <marker id="mageLoop4-dm-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
-    </marker>
-    <marker id="mageLoop4-dm-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1f7a4d"/>
-    </marker>
-    <marker id="mageLoop4-dm-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <marker id="l4-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#7c6bb0"/>
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="880" height="1200" fill="#fdfcf9"/>
+  <rect x="0" y="0" width="380" height="384" fill="#fdfcf9"/>
 
-  <!-- ============ visible title banner (swapped per crop variant) ============ -->
-  <text id="mageLoop4-activebanner" x="150" y="70" text-anchor="middle" fill="#1c1917">
-    <tspan x="150" y="66" font-size="13" font-weight="700" letter-spacing="1.5" fill="#7c6bb0">ACTIVE LOOP</tspan>
-    <tspan x="150" y="92" font-size="26" font-weight="700" fill="#7c6bb0">[4]</tspan>
-    <tspan x="150" y="120" font-size="14.5" font-weight="700" fill="#1c1917">Capability-amplification loop</tspan>
-    <tspan x="150" y="140" font-size="12.5" font-style="italic" fill="#57534e">success reopens the loop</tspan>
-  </text>
+  <!-- header: badge [4] + loop name + R tag -->
+  <circle cx="34" cy="34" r="15" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.4"/>
+  <text x="34" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#7c6bb0">4</text>
+  <text x="58" y="30" text-anchor="start" font-size="15" font-weight="700" fill="#1c1917">Capability-amplification loop</text>
+  <text x="58" y="47" text-anchor="start" font-size="11.5" font-style="italic" fill="#57534e">stronger E enlarges ambition</text>
+  <rect x="330" y="20" width="24" height="24" rx="4" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="342" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#7c6bb0">R</text>
 
-  <!-- ============ [4] PURPLE capability-amplification loop (drawn first, behind boxes) ==== -->
-  <g class="loop loop4">
-    <path d="M600,236 C500,182 322,178 186,246" fill="none" stroke="#7c6bb0" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#mageLoop4-dm-purple)"/>
-    <circle cx="400" cy="176" r="16" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.5"/>
-    <text x="400" y="182" text-anchor="middle" font-size="18" font-weight="700" fill="#7c6bb0">4</text>
-    <text x="400" y="208" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#7c6bb0">Capability amplification</text>
-    <text x="400" y="226" text-anchor="middle" font-size="12" font-style="italic" fill="#57534e">bigger tasks &#183; more concurrency</text>
-  </g>
+  <!-- Box 1: Stronger environment -->
+  <rect x="40" y="74" width="300" height="50" rx="8" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="190" y="104" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Stronger environment</text>
 
-  <!-- ============ [3] GREEN governance-adaptation return (behind boxes) ============ -->
-  <g class="loop loop3">
-    <path d="M670,972 L846,972 L846,338 L814,338" fill="none" stroke="#1f7a4d" stroke-width="2.6"
-          stroke-linejoin="round" marker-end="url(#mageLoop4-dm-green)"/>
-    <text x="862" y="655" text-anchor="middle" font-size="13" font-style="italic" fill="#1f7a4d"
-          transform="rotate(-90 862 655)">adapts &#8594; a better E</text>
-  </g>
+  <!-- arrow 1 -->
+  <path d="M190,124 L190,150" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#l4-arrow)"/>
 
-  <!-- ============ NEUTRAL SPINE (shared system plumbing) ============ -->
-  <g stroke="#1c1917" stroke-width="2" fill="none">
-    <path d="M305,298 L556,290" marker-end="url(#mageLoop4-dm-ink)"/>   <!-- capacity -> E -->
-    <path d="M180,365 L180,466" marker-end="url(#mageLoop4-dm-ink)"/>   <!-- capacity -> work -->
-    <path d="M305,525 L556,525" marker-end="url(#mageLoop4-dm-ink)"/>   <!-- work -> performance -->
-    <path d="M685,415 L685,466" marker-end="url(#mageLoop4-dm-ink)"/>   <!-- E -> performance -->
-    <path d="M628,595 L512,662" marker-end="url(#mageLoop4-dm-ink)"/>   <!-- performance -> pressure -->
-    <path d="M205,580 L320,662" marker-end="url(#mageLoop4-dm-ink)"/>   <!-- work -> pressure (mismatch) -->
-  </g>
-  <text x="430" y="283" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">exercises</text>
-  <text x="702" y="448" text-anchor="start" font-size="14" font-style="italic" fill="#57534e">shapes</text>
-  <text x="238" y="632" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">mismatch</text>
+  <!-- Box 2: Larger tasks / more concurrency -->
+  <rect x="40" y="152" width="300" height="50" rx="8" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="190" y="182" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Larger tasks &#183; more concurrency</text>
 
-  <!-- ============ [1] BLUE bootstrap loop ============ -->
-  <g class="loop loop1">
-    <path d="M518,135 C556,172 596,200 634,232" fill="none" stroke="#2f5169" stroke-width="3"
-          stroke-linecap="round" marker-end="url(#mageLoop4-dm-blue)"/>
-    <circle cx="585" cy="182" r="16" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.5"/>
-    <text x="585" y="188" text-anchor="middle" font-size="18" font-weight="700" fill="#2f5169">1</text>
-    <text x="560" y="214" text-anchor="middle" font-size="14" font-style="italic" font-weight="600" fill="#2f5169">Bootstrap</text>
-  </g>
+  <!-- arrow 2 -->
+  <path d="M190,202 L190,228" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#l4-arrow)"/>
 
-  <!-- ============ [2] RED churn / discovery loop ============ -->
-  <g class="loop loop2">
-    <path d="M410,765 L410,801" fill="none" stroke="#b23b3b" stroke-width="3" marker-end="url(#mageLoop4-dm-red)"/>
-    <circle cx="452" cy="784" r="15" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.5"/>
-    <text x="452" y="790" text-anchor="middle" font-size="17" font-weight="700" fill="#b23b3b">2</text>
-    <text x="486" y="789" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#b23b3b">Churn / discovery</text>
-  </g>
+  <!-- Box 3: Expanded task frontier -->
+  <rect x="40" y="230" width="300" height="50" rx="8" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
+  <text x="190" y="260" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Expanded task frontier</text>
 
-  <!-- ============ [3] GREEN governance-adaptation edge ============ -->
-  <g class="loop loop3">
-    <path d="M410,885 L410,921" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#mageLoop4-dm-green)"/>
-    <circle cx="452" cy="904" r="15" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.5"/>
-    <text x="452" y="910" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a4d">3</text>
-    <text x="486" y="909" text-anchor="start" font-size="14" font-style="italic" font-weight="600" fill="#1f7a4d">Governance adaptation</text>
-  </g>
+  <!-- arrow 3 -->
+  <path d="M190,280 L190,306" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#l4-arrow)"/>
 
-  <!-- ============ BOXES (shared system) ============ -->
-  <!-- Prior engineering knowledge (bootstrap input) -->
-  <rect x="270" y="40" width="320" height="95" rx="9" fill="#f6f4ef" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="430" y="76" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Prior engineering knowledge</text>
-  <text x="430" y="102" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">standards &#183; requirements</text>
-  <text x="430" y="121" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">brownfield assets &#183; prior lessons</text>
-
-  <!-- Agentic capacity -->
-  <rect x="55" y="250" width="250" height="115" rx="9" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="180" y="292" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agentic capacity</text>
-  <text x="180" y="318" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">model capability</text>
-  <text x="180" y="337" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">concurrency &#183; raw velocity</text>
-
-  <!-- Governed environment E (the hub) -->
-  <rect x="560" y="235" width="250" height="180" rx="9" fill="#f6f4ef" stroke="#1f7a4d" stroke-width="3.2"/>
-  <text x="685" y="280" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Governed</text>
-  <text x="685" y="304" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">environment</text>
-  <text x="685" y="330" text-anchor="middle" font-size="21" font-weight="700" fill="#1f7a4d">E</text>
-  <text x="685" y="356" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">representation quality</text>
-  <text x="685" y="374" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">enforcement coverage</text>
-  <text x="685" y="392" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">coherence &#183; economy</text>
-
-  <!-- Agentic work -->
-  <rect x="55" y="470" width="250" height="110" rx="9" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.2"/>
-  <text x="180" y="512" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agentic work</text>
-  <text x="180" y="538" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">attempted change</text>
-  <text x="180" y="557" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">task frontier</text>
-
-  <!-- Realized performance -->
-  <rect x="560" y="470" width="250" height="125" rx="9" fill="#fdfcf9" stroke="#57534e" stroke-width="2.2"/>
-  <text x="685" y="508" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Realized performance</text>
-  <text x="685" y="534" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">durable throughput</text>
-  <text x="685" y="553" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">defect escape</text>
-  <text x="685" y="572" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">human attention</text>
-
-  <!-- Governance pressure -->
-  <rect x="150" y="665" width="520" height="100" rx="9" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
-  <text x="410" y="700" text-anchor="middle" font-size="20" font-weight="700" fill="#b23b3b">Governance pressure</text>
-  <text x="410" y="726" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">churn &#183; recurring failure &#183; escaped defect</text>
-  <text x="410" y="745" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">repeated intervention &#183; control friction</text>
-
-  <!-- Structural diagnosis -->
-  <rect x="150" y="805" width="520" height="80" rx="9" fill="#fdfcf9" stroke="#57534e" stroke-width="2.2"/>
-  <text x="410" y="840" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Structural diagnosis</text>
-  <text x="410" y="866" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">local defect, or missing model / abstraction / mechanism?</text>
-
-  <!-- Governance adaptation -->
-  <rect x="150" y="925" width="520" height="95" rx="9" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
-  <text x="410" y="962" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Governance adaptation</text>
-  <text x="410" y="990" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">model &#183; convert &#183; strengthen &#183; reconcile &#183; retire</text>
-  <text x="410" y="1010" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">changes the shape of future work</text>
-
-  <!-- ============ R / B loop-typing badges (system-dynamics convention; full-strength in every crop) ==== -->
-  <!-- R — loop [4] is REINFORCING (better E -> more ambition -> new frontier) -->
-  <rect x="421" y="167" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.2"/>
-  <text x="430.5" y="181" text-anchor="middle" font-size="14" font-weight="700" fill="#7c6bb0">R</text>
-  <!-- B — loops [2]+[3] together are a BALANCING loop (churn -> diagnosis -> adaptation -> less churn) -->
-  <rect x="837" y="470" width="19" height="19" rx="3.5" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.2"/>
-  <text x="846.5" y="484" text-anchor="middle" font-size="14" font-weight="700" fill="#1f7a4d">B</text>
-
-  <!-- ============ LEGEND: the four loops (grayscale key — numbers carry meaning) ============ -->
-  <rect x="40" y="1048" width="800" height="140" rx="8" fill="#f6f4ef" stroke="#e4e0d8" stroke-width="1.5"/>
-
-  <circle cx="70" cy="1078" r="14" fill="#fdfcf9" stroke="#2f5169" stroke-width="2.4"/>
-  <text x="70" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">1</text>
-  <text x="92" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Bootstrap loop</text>
-  <text x="92" y="1096" text-anchor="start" font-size="12" fill="#57534e">prior knowledge</text>
-  <text x="92" y="1113" text-anchor="start" font-size="12" fill="#57534e">seeds the environment</text>
-
-  <circle cx="270" cy="1078" r="14" fill="#fdfcf9" stroke="#b23b3b" stroke-width="2.4"/>
-  <text x="270" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#b23b3b">2</text>
-  <text x="292" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Churn / discovery loop</text>
-  <text x="292" y="1096" text-anchor="start" font-size="12" fill="#57534e">pressure reveals</text>
-  <text x="292" y="1113" text-anchor="start" font-size="12" fill="#57534e">missing structure</text>
-
-  <circle cx="470" cy="1078" r="14" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2.4"/>
-  <text x="470" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">3</text>
-  <text x="492" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Governance-adaptation</text>
-  <text x="492" y="1096" text-anchor="start" font-size="12" fill="#57534e">diagnosis reshapes</text>
-  <text x="492" y="1113" text-anchor="start" font-size="12" fill="#57534e">the environment</text>
-
-  <circle cx="670" cy="1078" r="14" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.4"/>
-  <text x="670" y="1084" text-anchor="middle" font-size="16" font-weight="700" fill="#7c6bb0">4</text>
-  <text x="692" y="1076" text-anchor="start" font-size="14" font-weight="700" fill="#1c1917">Capability-amplification</text>
-  <text x="692" y="1096" text-anchor="start" font-size="12" fill="#57534e">a stronger environment</text>
-  <text x="692" y="1113" text-anchor="start" font-size="12" fill="#57534e">enlarges ambition</text>
-
-  <!-- R / B loop-typing note (system-dynamics convention) -->
-  <line x1="56" y1="1132" x2="824" y2="1132" stroke="#e4e0d8" stroke-width="1"/>
-  <rect x="56" y="1146" width="17" height="17" rx="3" fill="#fdfcf9" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="64.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1f7a4d">B</text>
-  <text x="80" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">balancing</tspan> — loops [2]+[3] seek fit, damping churn (goal-seeking).</text>
-  <rect x="480" y="1146" width="17" height="17" rx="3" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="488.5" y="1159" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7c6bb0">R</text>
-  <text x="504" y="1159" text-anchor="start" font-size="12.5" fill="#1c1917"><tspan font-weight="700">reinforcing</tspan> — loop [4] reopens the frontier.</text>
-  <text x="56" y="1179" text-anchor="start" font-size="12.5" font-style="italic" fill="#57534e">Loop [1] bootstrap is an input, not a feedback loop.</text>
-</svg><figcaption data-short="Loop 4 — capability amplification"><span class="fig-label">Figure 6.1-5.</span> <em>Loop 4 — capability amplification.</em> A stronger environment enables bigger tasks and more concurrency, so the purple loop runs back up to agentic capacity. The expanded frontier exposes new failure classes, which is why MAGE does not terminate.</figcaption></figure>
+  <!-- Box 4: New governance pressure (reopens the cycle, emphasised) -->
+  <rect x="40" y="308" width="300" height="52" rx="8" fill="#f6f4ef" stroke="#7c6bb0" stroke-width="2.6"/>
+  <text x="190" y="340" text-anchor="middle" font-size="15" font-weight="700" fill="#7c6bb0">New governance pressure</text>
+</svg><figcaption data-short="Capability-amplification loop"><span class="fig-label">Figure 6.1-5.</span> <em>Capability-amplification loop.</em> Successful governance enables more ambitious work, which exposes the next unguided surface.</figcaption></figure>
 <p>It expands what the engineer attempts. A stronger environment makes larger delegated tasks feasible, supports greater concurrency, invites more ambitious product requirements, cheapens refactoring, and lets the operator run agentic capacity denser. Every one of those pushes the work into surface the environment has not yet governed, and the expanded frontier exposes new weaknesses.</p>
 <p>This is <strong>capability amplification</strong>, and it is why MAGE does not terminate. The environment never converges on a final set of controls, because the product, the fleet, and the task frontier keep changing underneath it — and each gain in governance raises the ambition that finds the next gap. The loop also answers a natural objection: that better agents will eventually remove the need for governance. They do the opposite. A more capable fleet raises attainable velocity and ambition, which raises the consequences of a weak model or a missing control. The frontier moves out with the capability, and governance follows it.</p>
 <h2><span class="sec-num">6.1.3</span> Constructs and path-specific moderators</h2>
@@ -1682,17 +1007,17 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <h2><span class="sec-num">6.1.5</span> Outcomes and observables</h2>
 <p>The model earns its keep only if its outcomes can be watched. Three of them carry the theory, and they are the three dimensions the productivity literature already names — velocity, quality, and sustainability — read for a fleet rather than a team. <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-3">Table&nbsp;6.1-3</a> states each and the observables that would track it.</p>
 <table id="tbl-6-1-3" class="book-table" data-label="mage-outcomes"><caption data-short="The three MAGE outcomes and their observables"><span class="tbl-label">Table 6.1-3.</span> <em>The Outcomes.</em> The three primary outcomes the theory predicts, the way to state each so it reads as durable progress rather than raw activity, and the observables that would track it.</caption><thead><tr><th>Outcome</th><th>What it measures</th><th>Example observables</th></tr></thead><tbody><tr><td><strong>Durable throughput</strong></td><td>Raw implementation converted into lasting system progress</td><td>landed changes net of rework; churn share; the slope of sustained throughput</td></tr><tr><td><strong>Defect escape</strong></td><td>Relevant failures reaching later lifecycle stages or production</td><td>escaped-defect rate; reopen rate; silent-corruption escape</td></tr><tr><td><strong>Human-attention burden</strong></td><td>Human judgment required per unit of durable output</td><td>interventions per landed change; review time; conversion effort</td></tr></tbody></table>
-<p>State the third outcome as a rate, not a ceiling. The earlier account was tempted to promise <em>bounded</em> oversight cost — a fixed cap on total human work. The evidence does not carry that claim. What it carries is amortization: as recurring failure classes convert into durable governance, the attention each landed change demands falls, even while the total governance work keeps growing. Per-change attention declines; the aggregate need not. That is the honest shape, and it is the one the predictions below defend.</p>
+<p>State human-attention burden as a rate, not a ceiling. The theory predicts amortization: as recurring failure classes convert into durable governance, the attention required per landed change falls, even if total governance work continues to grow. Per-change attention declines; the aggregate need not.</p>
 <h3>Apparatus measures are indicators, not quality</h3>
 <p>A second discipline governs how the environment itself is read. The quantities easiest to count — the support ratio, the model-coverage fraction, the control count, the gate count, the model-sync rate, the control-interaction findings, the stale-control rate — measure investment or accumulation. They do not measure whether the environment is any good.</p>
 <p>A large support apparatus can be effective governance. It can also be duplicated machinery, accidental complexity, stale enforcement, a tower of governance, or an internally conflicting control estate. The number cannot tell you which. A high support ratio gains meaning only when it is joined to an outcome — when the apparatus that leads production is shown to sustain throughput or drive escape down. Treat every apparatus measure as an input or an indicator. Effective governed-environment quality is what the outcomes reveal, and the apparatus is only its raw material.</p>
 <h2><span class="sec-num">6.1.6</span> Principal predictions</h2>
-<p>Here is where the model sticks its neck out. The earlier version offered fifteen predictions of mixed rank — core propositions beside moderators beside domain-specific instances — and the inventory read as less disciplined than the theory under it. The rewrite reduces them to <strong>seven principal hypotheses</strong>. Each names a mechanism and the single observation that would sink it. The rest become corollaries and specializations, named as examples rather than coequal claims.</p>
+<p>Here is where the model sticks its neck out. The dynamic model yields <strong>seven principal hypotheses</strong>. Each names a mechanism and the single observation that would sink it. Core causal propositions appear here; derivative consequences and domain-specific instances follow as corollaries and specializations.</p>
 <p>None of the seven is <em>tested</em> by this case. One repository cannot test a claim about a population. Every row is offered so a larger study can, and every row is stated as a directional, conditional claim — the shape it should take, and the conditions under which it should hold — not a measured law. <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-4">Table&nbsp;6.1-4</a> lists the seven with the observation that would falsify each.</p>
-<table id="tbl-6-1-4" class="book-table" data-label="mage-hypotheses"><caption data-short="MAGE&#x27;s seven falsifiable hypotheses H1–H7"><span class="tbl-label">Table 6.1-4.</span> <em>The Seven Hypotheses.</em> MAGE's principal predictions, each with the observation that would falsify it. Directional and conditional; single-case; offered for replication, not proven.</caption><thead><tr><th>ID</th><th>Hypothesis</th><th>Key falsifier</th></tr></thead><tbody><tr><td><strong>H1 — Failure-class exposure</strong></td><td>Higher agentic velocity shortens the elapsed time to recognize recurring failures as one shared structural class, controlling for the opportunities to trigger the class.</td><td>Recognition latency does not improve with velocity once exposure opportunities are controlled.</td></tr><tr><td><strong>H2 — Governance moderation</strong></td><td>Governed-environment quality sets the sign of velocity's effect: higher velocity raises churn in low-quality environments and durable throughput in high-quality ones.</td><td>Velocity relates to durable throughput the same way regardless of environment quality.</td></tr><tr><td><strong>H3 — Mechanized assurance</strong></td><td>Greater risk-weighted coverage of relevant failure classes by effective deterministic mechanisms lowers defect escape, and its advantage over attention-based control widens as velocity rises — for adequately scoped mechanisms.</td><td>Mechanized coverage adds no protection, or its advantage over review does not widen as human attention saturates.</td></tr><tr><td><strong>H4 — Representation leverage</strong></td><td>Task-relevant structured models cut context cost and churn without lowering task quality, and synchronized models carry predictive information beyond conventional code-coverage measures.</td><td>Model use at matched recall yields no efficiency gain, lowers quality, or adds no predictive power over coverage.</td></tr><tr><td><strong>H5 — Local model deficiency</strong></td><td>Unmodelled or drifted architectural surface predicts later churn or escape in the same subsystem.</td><td>Orphaned or drifted surfaces are no more likely than modelled ones to see later churn or escape.</td></tr><tr><td><strong>H6 — Oversight amortization</strong></td><td>As recurring failure classes convert into durable governance, human attention per unit of durable output declines — even if total governance work keeps growing.</td><td>Interventions per durable change stay flat or rise as effective conversion coverage grows.</td></tr><tr><td><strong>H7 — Conversion conditions</strong></td><td>Structural failures convert into shared governance faster and more durably when the capability to diagnose structure and the authority to change the environment are colocated, or connected by a working organizational pathway.</td><td>Split-authority or low-fit settings convert at the same rate and durability as high-fit, effective-authority ones.</td></tr></tbody></table>
-<p>Two of the seven carry conditions worth stating in the open. H3 does not claim hard controls never fail; it claims that a correctly encoded, adequately scoped mechanism is <em>less sensitive to throughput</em> than finite review, so the gap between them opens as the fleet speeds up. H6 does not promise the total oversight bill stops growing; it claims the <em>per-change</em> share falls as classes convert. Strip those conditions and both claims overreach — which is exactly the failure the seven-hypothesis discipline exists to prevent.</p>
+<table id="tbl-6-1-4" class="book-table" data-label="mage-hypotheses"><caption data-short="MAGE&#x27;s seven falsifiable hypotheses H1–H7"><span class="tbl-label">Table 6.1-4.</span> <em>The Seven Hypotheses.</em> MAGE's principal predictions, each with the observation that would falsify it. Directional and conditional; single-case; offered for replication, not proven.</caption><thead><tr><th>ID</th><th>Hypothesis</th><th>Key falsifier</th></tr></thead><tbody><tr><td><strong>H1 — Failure-class exposure</strong></td><td>Higher agentic velocity shortens the elapsed time to recognize recurring failures as one shared structural class, controlling for the opportunities to trigger the class.</td><td>Recognition latency does not improve with velocity once exposure opportunities are controlled.</td></tr><tr><td><strong>H2 — Governance moderation</strong></td><td>Governed-environment quality sets the sign of velocity's effect: higher velocity raises churn in low-quality environments and durable throughput in high-quality ones.</td><td>Velocity relates to durable throughput the same way regardless of environment quality.</td></tr><tr><td><strong>H3 — Mechanized assurance</strong></td><td>Greater risk-weighted coverage of relevant failure classes by effective deterministic mechanisms lowers defect escape, and its advantage over attention-based control widens as velocity rises — for adequately scoped mechanisms.</td><td>Mechanized coverage adds no protection, or its advantage over review does not widen as human attention saturates.</td></tr><tr><td><strong>H4 — Representation leverage</strong></td><td><strong>H4a — Representation efficiency.</strong> Task-relevant structured models reduce context cost and churn without lowering task quality. <strong>H4b — Synchronization signal.</strong> Model-synchronization measures provide predictive information about later churn or defect escape beyond conventional code-coverage measures.</td><td><strong>H4a:</strong> Model use at matched recall yields no efficiency gain or lowers task quality. <strong>H4b:</strong> Synchronization measures add no predictive power over conventional code-coverage measures.</td></tr><tr><td><strong>H5 — Local model deficiency</strong></td><td>Unmodelled or drifted architectural surface predicts later churn or escape in the same subsystem.</td><td>Orphaned or drifted surfaces are no more likely than modelled ones to see later churn or escape.</td></tr><tr><td><strong>H6 — Oversight amortization</strong></td><td>As recurring failure classes convert into durable governance, human attention per unit of durable output declines — even if total governance work keeps growing.</td><td>Interventions per durable change stay flat or rise as effective conversion coverage grows.</td></tr><tr><td><strong>H7 — Conversion conditions</strong></td><td>Structural failures convert into shared governance faster and more durably when the capability to diagnose structure and the authority to change the environment are colocated, or connected by a working organizational pathway.</td><td>Split-authority or low-fit settings convert at the same rate and durability as high-fit, effective-authority ones.</td></tr></tbody></table>
+<p>Two of the seven carry conditions worth stating in the open. H3 does not claim hard controls never fail; it claims that a correctly encoded, adequately scoped mechanism is <em>less sensitive to throughput</em> than finite review, so the gap between them opens as the fleet speeds up. H6 does not promise the total oversight bill stops growing; it claims the <em>per-change</em> share falls as classes convert. Strip those conditions and both claims overreach; stated with them, each says only what the evidence can bear.</p>
 <h3>Corollaries and specializations</h3>
-<p>Several claims the earlier account ranked as coequal predictions are better read as consequences or domain-specific instances of the seven. Naming them as such is not a demotion of their truth. It is a statement of where each sits in the causal structure; <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-5">Table&nbsp;6.1-5</a> places them.</p>
+<p>Several claims read more precisely as consequences or domain-specific instances of the seven than as coequal predictions. Naming them as such is not a demotion of their truth. It is a statement of where each sits in the causal structure; <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-5">Table&nbsp;6.1-5</a> places them.</p>
 <table id="tbl-6-1-5" class="book-table" data-label="mage-corollaries"><caption data-short="Former predictions mapped to their subordinate status"><span class="tbl-label">Table 6.1-5.</span> <em>Corollaries and Specializations.</em> Former coequal predictions, restated as consequences or instances of the principal hypotheses.</caption><thead><tr><th>Former prediction</th><th>New status</th></tr></thead><tbody><tr><td>Speed and stability do not trade</td><td>Corollary of H2 and H3</td></tr><tr><td>Conversion gets faster as tooling matures</td><td>Learning-curve specialization of H7</td></tr><tr><td>The substrate heals faster as it accretes controls</td><td>Consequence of H3 and H6</td></tr><tr><td>Grammar coverage beats line coverage</td><td>Domain-specific instance of H4</td></tr><tr><td>A fidelity gate reduces silent corruption</td><td>Product-specific instance of H3</td></tr><tr><td>Deployment pain stays bounded</td><td>Subjective consequence of H6; future work</td></tr></tbody></table>
 <p>The speed–stability claim, the one <em>Accelerate</em> made famous, now falls out of H2 and H3 together rather than standing alone: in a high-quality environment, pushing frequency up does not push the change-fail rate up. The two domain instances — grammar coverage driving out format escapes, a content-fidelity gate killing the silent-corruption class — are H4 and H3 read on one product's surface, valuable as grounding but not as separate laws.</p>
 <h2><span class="sec-num">6.1.7</span> Two directional relations</h2>
@@ -1782,7 +1107,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <h3>Epistemic note</h3>
 <p>The induced kernel and its later extensions are epistemically different, and the chapter should not blur them. The five-step loop was induced from the bounded case and its incident corpus. The four extensions are grounded in continued development, further observation, and integration across the book. Read the kernel as the case's direct yield and the extensions as refinements proposed for later testing — not as independently confirmed, population-level laws.</p>
 <h2><span class="sec-num">6.1.9</span> Research agenda</h2>
-<p>The seven hypotheses suggest a focused program, not fifteen disconnected tests. Three study designs would cover most of the model, and none needs this repository; <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-6">Table&nbsp;6.1-6</a> maps each design onto the hypotheses it would test.</p>
+<p>The seven hypotheses suggest a focused program, not a scatter of disconnected tests. Three study designs would cover most of the model, and none needs this repository; <a class="xref" href="6.1-toward-a-theory-of-mage.html#tbl-6-1-6">Table&nbsp;6.1-6</a> maps each design onto the hypotheses it would test.</p>
 <table id="tbl-6-1-6" class="book-table" data-label="mage-agenda"><caption data-short="Three study designs mapped to H1–H7"><span class="tbl-label">Table 6.1-6.</span> <em>The Research Agenda.</em> Three study designs and the principal hypotheses each would test.</caption><thead><tr><th>Study design</th><th>Principal hypotheses</th></tr></thead><tbody><tr><td>Multi-project longitudinal panel with environment-quality variation</td><td>H2, H3, H4, H6</td></tr><tr><td>Subsystem-level panel tracking model gaps, churn, and escapes</td><td>H1, H5</td></tr><tr><td>Organizational comparison of diagnosis and authority pathways</td><td>H7</td></tr></tbody></table>
 <p>A particularly strong design would instrument a failure class from first occurrence through its whole life — recurrence, structural recognition, governance intervention, and later recurrence or escape. Such an instrument would test the discovery and adaptation loops directly, rather than leaning on aggregate repository metrics that cannot separate "the environment matured" from "the operator did."</p>
 <h2><span class="sec-num">6.1.10</span> Closing</h2>
