@@ -361,6 +361,15 @@ a.gloss-site:hover, a.gloss-site:focus { color: var(--accent); border-bottom-col
   .chapnav-here { flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
                    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 }
+/* Part-nav footer on a Part landing page — a pill bar over the six numbered Parts (current = filled, non-link).
+   Mirrors the .chapnav pill look. */
+.part-nav { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+             margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.part-pill { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+a.part-pill:hover, a.part-pill:focus { border-color: var(--accent); background: var(--panel); }
+.part-pill.current { color: var(--ink); background: var(--panel); border-color: var(--accent); font-weight: 700; }
 .book-foot { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }
 /* index page */

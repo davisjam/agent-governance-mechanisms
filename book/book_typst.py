@@ -165,9 +165,11 @@ def _typst_str(s: str) -> str:
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-# The constituent-part anchor family the Appendix-A legend links target (`a-<idx>-<slug>`) — the only heading
-# anchors promoted to a Typst label (see `_render_heading`), and the labels the legend `#link`s resolve to.
-_LEGEND_ANCHOR_RE = re.compile(r"^a-\d+-")
+# Heading anchors promoted to a Typst label (see `_render_heading`) — the intra-document `#link` targets.
+# Two families: the Appendix-A legend's constituent parts (`a-<idx>-<slug>`), and a numbered Part's landing
+# anchor (`part-<N>`) so the Part-nav strip can `#link(<part-N>)` to any Part. Scoped so no other heading grows
+# a document-wide label that could collide.
+_LEGEND_ANCHOR_RE = re.compile(r"^(a-\d+-|part-\d+$)")
 
 
 # ── Appendix v2 render-mechanism Typst twins (flag ON; restructure sub-wave 2) ──────────────────────
@@ -895,6 +897,8 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
             frag = f"#block(sticky: true)[{frag}]"
         if frag:
             out.append(frag)
+    if is_part_page:
+        out.append(_part_nav_typst(chapter.part))  # the Part-nav strip closes a Part landing page
     # CHAPTER-RELATIVE float numbering (mirrors the web `_number_floats` scheme): figures/tables read
     # "<part>.<chapter>-N" and N resets to 1 per chapter. The chapter's `<part>.<chapter>` id is baked as
     # a literal into a per-chapter `#set figure(numbering: …)` closure (no state/context coupling — set
@@ -1123,6 +1127,25 @@ def _is_part_page(ch: "ir.Chapter") -> bool:
     return ch.slug == f"part-{ch.part}-intro"
 
 
+def _part_nav_typst(current_part: int) -> str:
+    """The Part-nav strip closing a Part landing page in the PDF — a small bordered block naming the six numbered
+    Parts. The current Part is plain `#strong` text (no link); every other Part is a `#link(<part-N>)` that jumps
+    to that Part's divider page (labeled in `_part_divider_typst`). The Typst twin of `_part_nav_html`; both read
+    `build_book_html._PART_TITLES` restricted to Parts 1–6, so the two projections cannot disagree."""
+    titles = bb._PART_TITLES
+    sep = " #text(fill: dt.muted)[·] "
+    entries: list[str] = []
+    for n in range(1, 7):
+        label = f"Part {n} — {titles.get(n, '')}"
+        if n == current_part:
+            entries.append(f"#strong[{inline_typst(label)}]")
+        else:
+            entries.append(f"#link(<part-{n}>)[{inline_typst(label)}]")
+    return ("#block(width: 100%, inset: (x: 10pt, y: 8pt), radius: 6pt, "
+            "stroke: (left: 2pt + dt.accent, rest: 0.5pt + dt.rule), fill: dt.panel)[\n"
+            "  #text(size: 0.85em)[" + sep.join(entries) + "]\n]")
+
+
 def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
     """A part-divider page before the first chapter of a numbered Part or an appendix Part. Front matter
     (0) and true back matter (7 — apparatus) get no divider — they flow as chapters. Returns the Typst for
@@ -1131,8 +1154,12 @@ def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
     if part in (0, 7):
         return None
     part_titles = bb._PART_TITLES
+    label = ""
     if part in part_titles and part <= 6:
         kicker, title = f"Part {part}", part_titles[part]
+        # The divider page is the Part opener, so it carries the `<part-N>` label the Part-nav strip links to
+        # (`#link(<part-N>)`). Numbered Parts only — the appendix families are not Part-nav targets.
+        label = f" <part-{part}>"
     else:
         # Appendix part: the chapter title carries the family (e.g. "Appendix A - 9. …" / "Appendix D — …").
         mm = re.match(r"\s*(Appendix\s+[A-Z])\b[\s—:-]*(.*)", ch.title)
@@ -1152,7 +1179,7 @@ def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
         "  #v(0.4em)\n"
         f"  #text(size: 2em, weight: \"bold\")[{inline_typst(title)}]\n"
         "  #v(0.5em) #line(length: 30%, stroke: 1pt + dt.rule)\n"
-        "]"
+        "]" + label
     )
 
 

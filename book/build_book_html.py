@@ -1887,6 +1887,15 @@ a.gloss-site:hover, a.gloss-site:focus {{ color: var(--accent); border-bottom-co
   .chapnav-here {{ flex: 0 0 auto; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
                    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }}
 }}
+/* Part-nav footer on a Part landing page — a pill bar over the six numbered Parts (current = filled, non-link).
+   Mirrors the .chapnav pill look. */
+.part-nav {{ display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+             margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }}
+.part-pill {{ font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; font-weight: 600;
+              color: var(--accent); text-decoration: none; padding: 0.5rem 0.85rem; line-height: 1.1;
+              border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }}
+a.part-pill:hover, a.part-pill:focus {{ border-color: var(--accent); background: var(--panel); }}
+.part-pill.current {{ color: var(--ink); background: var(--panel); border-color: var(--accent); font-weight: 700; }}
 .book-foot {{ margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); color: var(--muted);
               font-size: 13px; text-align: center; }}
 /* index page */
@@ -2087,6 +2096,21 @@ def _static_nav_html(name: str, back_extra: list[tuple[str, str, str]] | None = 
     fwd: list[tuple[str, str, str]] = list(fwd_extra or [])
     fwd.append(("Index »", f"{BOOK_INDEX_SLUG}.html", "Index of terms"))
     return _render_chapnav(back, name, fwd)
+
+
+def _part_nav_html(current_part: int) -> str:
+    """The Part-nav footer for a Part landing page: a pill bar over the six numbered Parts. The current Part is
+    a non-link `<strong aria-current="page">`; every other Part links to its own landing page (`part-<N>-intro`).
+    Reads one list — `_PART_TITLES` restricted to Parts 1–6 — so it is the web twin of `_part_nav_typst` (one
+    list, two projections). Front matter and the apparatus are not numbered Parts, so they are not nav targets."""
+    pills: list[str] = []
+    for n in range(1, 7):
+        label = html.escape(f'Part {n} — {_PART_TITLES.get(n, "")}')
+        if n == current_part:
+            pills.append(f'<strong class="part-pill current" aria-current="page">{label}</strong>')
+        else:
+            pills.append(f'<a class="part-pill" href="part-{n}-intro.html">{label}</a>')
+    return ('<nav class="part-nav" aria-label="Parts of the book">' + "".join(pills) + '</nav>')
 
 
 def toc_html(chapters: list[dict], current_slug: str | None) -> str:
@@ -6155,6 +6179,8 @@ def build() -> int:
         if c["slug"] == GLOSSARY_CHAPTER_SLUG:
             body = _link_glossary_sites(body, gloss_link_map)
         body += works_cited_section()  # per-chapter numbered Works Cited (empty when nothing is cited)
+        if c.get("is_part_page"):
+            body += _part_nav_html(c["part"])  # the Part-nav pill bar sits at the foot of a Part landing page
         # The single left→right sequence bar (Table of contents « … │ THIS CHAPTER │ … » Index), bottom-only.
         nav_bar = _chapter_nav_html(chapters, i)
         foot = f'<div class="book-foot">{html.escape(COPYRIGHT)}</div>'
