@@ -21,7 +21,9 @@
     "more": "A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window. Churn is the symptom; its causes are three not-knowings — what to build, how to realize it, how to change safely — and the theses below divide them: models treat the first two, governance the third.",
     "mechanisms": [],
     "related_ideas": [],
-    "entry_figures": []
+    "entry_figures": [
+      {"asset": "reasoning-horizon.svg", "caption": "*The chain that ends in churn.* Reasoning state grows with the task; once it outruns working memory it is compacted, and lossy compaction degrades the reasoning it stands in for. The left branch ends in churn; the right shows the same task reasoned through a model, which loses less."}
+    ]
   },
 
   "governance-centric": {
@@ -51,7 +53,9 @@
     "more": "Models used to die because keeping them current was somebody's unpaid job; agents now do that job for cents, re-checking the map against the code on every change. A drifted prose doc lies quietly — a drifted model fails the build.",
     "mechanisms": ["executable-source-of-truth", "drift-parity-gates", "component-zone-model", "pdf-model", "office-models"],
     "related_ideas": [],
-    "entry_figures": []
+    "entry_figures": [
+      {"asset": "reasoning-horizon.svg", "caption": "*The reasoning horizon, and what a model does to it.* Reasoning state grows with a task's length; once it outruns working memory it must be compacted. Reason through a model and each compaction loses less, so the horizon stretches and the branch reaches progress instead of churn."}
+    ]
   },
 
   "alignment-thesis": {
@@ -81,7 +85,9 @@
     "more": "Mechanisms sit on a spectrum from soft to hard: a convention or a brief aims the agent but cannot block it; a lint or a gate holds the line whether the agent cooperates or not. The second time a soft rule fails, move it right — the documented rule becomes a lint the agent cannot talk past.",
     "mechanisms": ["self-governance", "semantic-lints", "coherence-lints", "ddt-pin-trailers"],
     "related_ideas": [],
-    "entry_figures": []
+    "entry_figures": [
+      {"asset": "governance-conversion-loop.svg", "caption": "*The hardening loop.* A recurring failure is caught, then converted into a mechanism and pushed toward the hardest enforcement it admits, so the class cannot return. The control substrate grows one retired failure at a time."}
+    ]
   },
 
   "seat-moves": {

@@ -13,13 +13,35 @@
 
 <!-- fig: 0 -->
 
+You cannot foresee every failure a fast fleet will find. Velocity is what surfaces them: agents moving
+at scale reach edges no specification named and no designer pictured. Trying to enumerate them all up
+front is a losing game. The practice is the opposite — let velocity expose the failures, then convert
+each recurring one into a mechanism the environment enforces.
+
 <!-- more -->
 
-*Stub — the full 5–10 minute treatment lands in the C-2 content pass.*
+The place a failure lands is a point on a spectrum, and the practice is a direction along it. A
+convention or a brief aims the agent but cannot block it; a lint or a gate holds the line whether the
+agent cooperates or not. When a soft rule fails a second time, that recurrence is the signal to move it
+right: the documented rule becomes a lint the agent cannot talk past, or a gate the deploy cannot skip.
+
+<!-- fig: 1 -->
+
+Push each conversion as far toward hard enforcement as the failure admits — hard where the wrong state
+can be made impossible, soft where it genuinely cannot, but never leave a recurring failure resting on
+"we will remember." Each conversion retires one class and adds one member to the control substrate, which
+grows a failure at a time into the environment that later work stands on.
 
 ## Why it's more than fixing the bug
 
-*Stub — the full 5–10 minute treatment lands in the C-2 content pass.*
+Fixing the bug closes this instance and leaves the class open. The next agent — the one who never read
+the postmortem, because every context starts cold — walks straight back into it. The failure recurs
+because nothing in the environment changed; only the code did, once.
+
+Converting to a control closes the class. The failure that recurred cannot recur again, because the
+ground now refuses it, and it refuses it for every future agent without anyone remembering to check. The
+cost is paid once, at conversion, and amortized across all the work that comes after. A fix is a patch on
+one spot; a control is a property of the whole environment.
 
 ## The mechanisms that instantiate it
 

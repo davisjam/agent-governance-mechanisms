@@ -258,10 +258,89 @@
 
   <text x="720" y="533" text-anchor="middle" font-size="20" font-style="italic" fill="#1f7a4d">checked: the map must match the territory</text>
 </svg></figure>
+<p>Start with the constraint. A foundation model reasons through a bounded context and rebuilds its picture of the system on every task. Software engineering is a long-horizon task: the reasoning state a real change needs — the interfaces it touches, the invariants it must not break, the way the pieces compose — outruns the working memory that has to hold it. So that state gets compressed and reconstructed, over and over, and every lossy round trip degrades the reasoning it stands in for.</p>
+<p>A model answers that chain at its source. Give the fleet a compact, structured representation to reason through, and each reconstruction restores more of what mattered. The reasoning horizon the human–agent system can hold stretches out. Compactness is one part of why, not the whole claim: the real leverage is that a model re-expresses the system at a higher level — subsystem, interface, invariant, workflow — where the irrelevant implementation detail has already been dropped.</p>
+<figure class="cc-body-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560"
+     role="group" aria-labelledby="rhTitle rhDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="cf-2-rhTitle">The reasoning horizon, and what models do to it</title>
+  <desc id="cf-2-rhDesc">A human and a foundation model work a task. The reasoning state the task requires grows
+    with the task's length, shown as a wedge widening from left to right. When that state outgrows the
+    working memory available to hold it, it must be compacted and reconstructed, and the path forks.
+    Without models, on the left, the fleet reasons over raw implementation-level state; compaction is lossy,
+    rebuilds are frequent, and the result is churn. With MAGE models, on the right, the fleet reasons over
+    executable abstractions that already discarded the irrelevant detail; compaction loses far less, coherent
+    reasoning runs longer, and the result is productive progress. The contrast axis is fidelity under
+    compaction, not size: models are a better compression domain because they abstract, they do not merely
+    shrink.</desc>
+
+  <defs>
+    <marker id="cf-2-rhArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- ================= SPINE — reasoning state grows with task length ================= -->
+  <text x="500" y="42" text-anchor="middle" font-size="19" fill="#57534e">A human and a foundation model work a task.</text>
+  <!-- growing wedge: thin at the short-horizon end, thick at the long-horizon end -->
+  <polygon points="120,96 880,74 880,128 120,104" fill="#faf1e6" stroke="#57534e" stroke-width="1.5"/>
+  <text x="500" y="106" text-anchor="middle" font-size="19" font-style="italic" fill="#1c1917">Reasoning state grows with the length of the task</text>
+  <text x="150" y="150" text-anchor="middle" font-size="18" fill="#57534e">short horizon</text>
+  <text x="850" y="150" text-anchor="middle" font-size="18" fill="#57534e">long horizon</text>
+
+  <!-- the pinch: state outgrows working memory, so it must be compacted -->
+  <text x="500" y="184" text-anchor="middle" font-size="19" fill="#1c1917">The state outgrows working memory, so it must be compacted and rebuilt.</text>
+
+  <!-- fork edges from the spine down into the two columns -->
+  <g fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#cf-2-rhArrow)">
+    <path d="M430,196 C360,214 300,214 265,236"/>
+    <path d="M570,196 C640,214 700,214 735,236"/>
+  </g>
+
+  <!-- ================= LEFT — without models ================= -->
+  <rect x="60" y="242" width="410" height="292" rx="10" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
+  <text x="265" y="280" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Without models</text>
+
+  <text x="265" y="322" text-anchor="middle" font-size="19" fill="#1c1917">Reason over raw</text>
+  <text x="265" y="346" text-anchor="middle" font-size="19" fill="#1c1917">implementation-level state</text>
+
+  <line x1="265" y1="360" x2="265" y2="392" stroke="#57534e" stroke-width="2" marker-end="url(#cf-2-rhArrow)"/>
+
+  <text x="265" y="414" text-anchor="middle" font-size="19" fill="#1c1917">Lossy compaction,</text>
+  <text x="265" y="438" text-anchor="middle" font-size="19" fill="#1c1917">frequent reconstruction</text>
+
+  <line x1="265" y1="452" x2="265" y2="474" stroke="#57534e" stroke-width="2" marker-end="url(#cf-2-rhArrow)"/>
+
+  <rect x="105" y="484" width="320" height="40" rx="10" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
+  <text x="265" y="510" text-anchor="middle" font-size="22" font-weight="700" fill="#b23b3b">Churn</text>
+
+  <!-- ================= RIGHT — with MAGE models ================= -->
+  <rect x="530" y="242" width="410" height="292" rx="10" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
+  <text x="735" y="280" text-anchor="middle" font-size="24" font-weight="700" fill="#9a3f12">With MAGE models</text>
+
+  <text x="735" y="322" text-anchor="middle" font-size="19" fill="#1c1917">Reason over executable</text>
+  <text x="735" y="346" text-anchor="middle" font-size="19" fill="#1c1917">abstractions</text>
+
+  <line x1="735" y1="360" x2="735" y2="392" stroke="#57534e" stroke-width="2" marker-end="url(#cf-2-rhArrow)"/>
+
+  <text x="735" y="414" text-anchor="middle" font-size="19" fill="#1c1917">Less-lossy compaction,</text>
+  <text x="735" y="438" text-anchor="middle" font-size="19" fill="#1c1917">longer coherent reasoning</text>
+
+  <line x1="735" y1="452" x2="735" y2="474" stroke="#57534e" stroke-width="2" marker-end="url(#cf-2-rhArrow)"/>
+
+  <rect x="575" y="484" width="320" height="40" rx="10" fill="#fdfcf9" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="735" y="510" text-anchor="middle" font-size="22" font-weight="700" fill="#9a3f12">Productive progress</text>
+</svg><figcaption><em>The reasoning horizon, and what a model does to it.</em> Reasoning state grows with a task's length; once it outruns working memory it must be compacted. Reason through a model and each compaction loses less, so the horizon stretches and the branch reaches progress instead of churn.</figcaption></figure>
+<p>The book states this as the <strong>Reasoning-Horizon Proposition</strong>: productivity degrades once the working reasoning state a task requires exceeds the effective reasoning horizon of the human–agent system, and executable models extend that horizon by replacing implementation-level state with abstractions whose properties survive repeated compaction with less loss. The proposition is offered for the reader to test against their own systems, not asserted as a law; its testable form is the hypothesis H4, and its full treatment lives in the theory chapter, <a href="book/6.0-toward-a-theory-of-mage.html">Toward a Theory of MAGE</a>. A model is a better <em>compression domain</em>, then — not merely a smaller file. Compacting over a model loses far less than compacting over code, because what survives is the information that carried the reasoning.</p>
+<p>This is what "documentation, taken to its limit" means. A README is prose a human skims; push it until an agent must reason from it on every change, and it becomes typed data that tools read and generate from — a model, not a document.</p>
 <p>Models used to die because keeping them current was somebody's unpaid job; agents now do that job for cents, re-checking the map against the code on every change. A drifted prose doc lies quietly — a drifted model fails the build.</p>
-<p><em>Stub — the full 5–10 minute treatment lands in the C-2 content pass.</em></p>
+<p>The bound is honest. A model moves the wall; it does not remove it. Raise the level at which reasoning happens and you delay the point where working memory becomes the bottleneck — but beyond that point, decomposition and modularity become unavoidable again. The account does not lean on today's context window: a longer window or a new memory architecture moves the wall, none removes it, because a finite reasoner still has a finite horizon.</p>
 <h2>Why it's more than a tidier README</h2>
-<p><em>Stub — the full 5–10 minute treatment lands in the C-2 content pass.</em></p>
+<p>A tidier README is still prose, and prose drifts because nothing forces it true. It is read occasionally and validated never, so a drifted doc lies quietly while the code moves on. A structured model is executable: tools, lints, and deploy scripts read it on every run, so the build fails the moment it diverges from the code. Drift surfaces as a red build, not a stale paragraph nobody reopened.</p>
+<p>The deeper difference is the reasoning horizon. However tidy, a README still asks the agent to reconstruct the system from implementation-level prose — the state it must hold stays large. A model changes the <em>level</em> the reasoning happens at, so the state that must survive each compaction is smaller and richer. That is leverage no amount of tidying gives you.</p>
+<h2>In practice</h2>
+<p>The mechanisms below instantiate the thesis over one real system. Every mutation of a PDF routes through a single typed model with a ban-lint on the raw library, so an agent reasons about "add a tag" at the model level instead of the byte level. A component-and-zone model names the subsystems and the boundaries between them, so the fleet reasons over a map of the architecture rather than re-deriving it from the code each task. A drift-parity gate holds each model equal to the code it describes. The prose lives in markdown; the structure lives in the model; the gate keeps the two from parting.</p>
 <h2>The mechanisms that instantiate it</h2>
 <ul><li><a href="models-bridge/system-models/executable-source-of-truth.html">executable-source-of-truth</a></li><li><a href="models-bridge/system-models/drift-parity-gates.html">drift-parity-gates</a></li><li><a href="models-bridge/system-models/component-zone-model.html">component-zone-model</a></li><li><a href="product/canonical-models-and-seams/pdf-model.html">pdf-model</a></li><li><a href="product/canonical-models-and-seams/office-models.html">office-models</a></li></ul>
 <h2>Related concepts</h2>
