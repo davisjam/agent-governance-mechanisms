@@ -357,4 +357,4 @@ to measure the difference. That is the empirical program this book most wants to
 one entry in it, drawn as plainly as I could draw it, and left where the next person can knock it down.
 
 > See also the prose form of these implications in [Implications for Software Engineering](6.0-implications-for-se.html),
-> and the metrics behind every observable in [The Operator's Dashboard](6.5-the-operators-dashboard.html).
+> and the metrics behind every observable in [The Operator's Dashboard](6.4-the-operators-dashboard.html).

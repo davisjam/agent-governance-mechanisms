@@ -19,7 +19,7 @@ catalogue is a set of controls, not a sequence of levels. A team adopts the ones
 bottleneck — the failure class actually costing it — in whatever order its constraints dictate, and it
 reads its progress off outcomes rather than off a stage it has attained. The measurement model of the
 previous chapter is the scorecard [ref: mage-construct-crosswalk]: durable throughput, defect-escape, and
-oversight cost, each an observable on the [operator's dashboard](6.5-the-operators-dashboard.html), each a thing
+oversight cost, each an observable on the [operator's dashboard](6.4-the-operators-dashboard.html), each a thing
 the controls are supposed to move. The capability packages of the stacks appendix [appendix: appendix-stacks] are
 the closest MAGE comes to a ladder, and they are careful about it. Each stack names an interlock and a
 sensible adoption order for the controls inside it, because some controls presume others; but that order

@@ -227,7 +227,7 @@ GLOSSARY_CHAPTER_SLUG = "0.2-the-books-language"
 # Operator's Dashboard (its metric table) is the second. The renderer frames these in a `.apparatus-page`
 # box (HTML) / a `#block` frame (Typst) — see the CSS `.apparatus-page` swap-point block and
 # `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
-_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book", "6.5-the-operators-dashboard"}
+_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book", "6.4-the-operators-dashboard"}
 _GLOSS_TERM_SLUGS = {
     "Model": "model",
     "Map and territory": "map-and-territory",

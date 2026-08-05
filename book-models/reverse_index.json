@@ -6284,7 +6284,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::dictation-and-the-rewrite-that-mattered",
+          "element": "6.3-colophon::dictation-and-the-rewrite-that-mattered",
           "role": "section-anchor"
         }
       ]
@@ -6734,7 +6734,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::language-models-openly-and-on-a-short-leash",
+          "element": "6.3-colophon::language-models-openly-and-on-a-short-leash",
           "role": "section-anchor"
         }
       ]
@@ -7199,7 +7199,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::the-argument-had-somewhere-outside-the-prose-to-live",
+          "element": "6.3-colophon::the-argument-had-somewhere-outside-the-prose-to-live",
           "role": "section-anchor"
         }
       ]
@@ -8229,7 +8229,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::walking-a-revision-from-model-to-prose",
+          "element": "6.3-colophon::walking-a-revision-from-model-to-prose",
           "role": "section-anchor"
         }
       ]
@@ -8259,7 +8259,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::what-the-machinery-could-not-do",
+          "element": "6.3-colophon::what-the-machinery-could-not-do",
           "role": "section-anchor"
         }
       ]

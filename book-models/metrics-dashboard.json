@@ -4,7 +4,7 @@
   "inclusion_criterion": "A metric belongs iff it is one you STEER BY while the work is in flight (formative) or one you CERTIFY THE RESULT with at maturity (summative) — measured to guide or to judge engineering with MAGE, not merely reported.",
 
   "_page": {
-    "slug": "6.5-the-operators-dashboard",
+    "slug": "6.4-the-operators-dashboard",
     "companion_to": { "chapter": "2.5", "page_slug": "2.5-metrics", "anchor": "" }
   },
 

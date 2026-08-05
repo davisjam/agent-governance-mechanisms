@@ -785,7 +785,7 @@
       "exempt": "conclusion"
     },
     {
-      "slug": "6.4-colophon",
+      "slug": "6.3-colophon",
       "advances": [],
       "exempt": null
     }
@@ -793,7 +793,7 @@
   "flags": {
     "zero_claim_suspects": [
       {
-        "chapter": "6.4-colophon",
+        "chapter": "6.3-colophon",
         "advances": 0
       }
     ],
