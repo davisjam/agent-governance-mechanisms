@@ -54,11 +54,11 @@ DEPRECATED_VOCAB: dict[str, str] = {
 _PART_GLOB = "part*/*.md"
 
 # The former single `backmatter/` dir was split into `part6/` (Reflections) + `part7/` (Back Matter
-# apparatus) when the closing chapters were promoted to a named Part. Both now match `part*/`, but the
-# scope rule above still classes them as back matter (out of vocab scope) — the same exclusion the single
-# `backmatter/` dir carried before the split. Bringing Part 6's promoted narrative prose into canonical-
-# vocab scope is a follow-up for the content wave, not this structural move.
-_EXCLUDED_PART_DIRS = ("part6", "part7")
+# apparatus) when the closing chapters were promoted to a named Part. Part 6 is now real narrative — the
+# theory, implications-for-SE, and conclusion chapters — so it is IN scope, held to the same house term as
+# Parts 1–5. Part 7 (about-the-author, colophon) stays out of scope: it is apparatus, the back matter the
+# single `backmatter/` dir carried before the split.
+_EXCLUDED_PART_DIRS = ("part7",)
 
 # A deprecated phrase is matched as its two words joined by whitespace (so the hyphenated slug form
 # `typed-model` in a `<!-- point: … -->` id is NOT a hit), case-insensitive, with an optional plural on
