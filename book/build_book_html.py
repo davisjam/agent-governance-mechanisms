@@ -5534,22 +5534,30 @@ def _pdf_page_count(pdf_path: pathlib.Path) -> int:
     return len(re.findall(rb"/Type\s*/Page\b", data))
 
 
+def _run_pdftotext(pdf_path: pathlib.Path, *extra_args: str, purpose: str) -> str:
+    """Run poppler `pdftotext` on `pdf_path` and return its stdout, the one seam every PDF-text sensor shares.
+    Fails loud (SystemExit) if pdftotext is absent from PATH — `purpose` names the caller in that message — or
+    if it exits non-zero. `extra_args` inserts flags (e.g. `-bbox`) before the `<pdf> -` (stdout) argument
+    pair; the non-zero-exit message echoes the same flags."""
+    if not shutil.which("pdftotext"):
+        raise SystemExit(f"pdftotext (poppler) not found on PATH — required for {purpose}")
+    argv = ["pdftotext", *extra_args, str(pdf_path), "-"]
+    r = subprocess.run(argv, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise SystemExit(f"{' '.join(['pdftotext', *extra_args])} failed (rc={r.returncode}): {r.stderr}")
+    return r.stdout
+
+
 def _extract_pdf_text(pdf_path: pathlib.Path) -> str:
     """Extract the PDF's text via poppler `pdftotext` (on PATH). Returns whitespace-normalized text so a
     title wrapped across two lines in the layout still matches as one run. Fails loud if pdftotext is
     absent (the integrity gate needs it)."""
-    import shutil
-    import subprocess
-    if not shutil.which("pdftotext"):
-        raise SystemExit("pdftotext (poppler) not found on PATH — required for the PDF content-integrity gate")
-    r = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True)
-    if r.returncode != 0:
-        raise SystemExit(f"pdftotext failed (rc={r.returncode}): {r.stderr}")
+    stdout = _run_pdftotext(pdf_path, purpose="the PDF content-integrity gate")
     # Rejoin words broken by CSS `hyphens: auto` line-breaks: poppler emits the fragment, a hyphen
     # (ASCII `-`, U+2010 `‐`, or soft-hyphen U+00AD), then a newline. Stripping the break-hyphen makes a
     # tail run like "to start using" match even when reflow hyphenated "using" at the column edge — so a
     # margin/font change cannot make the content-integrity gate false-fail on intact text.
-    dehyphenated = re.sub(r"[-‐­]\n", "", r.stdout)
+    dehyphenated = re.sub(r"[-‐­]\n", "", stdout)
     return re.sub(r"\s+", " ", dehyphenated)
 
 
@@ -5573,14 +5581,7 @@ _DENSITY_MIN_FRACTION = 0.40  # relaxed from 0.50 (author call): density is a ho
 def _pdf_per_page_word_counts(pdf_path: pathlib.Path) -> list[int]:
     """Word count per page. `pdftotext` emits a form-feed (\\x0c) between pages; split on it, apply the
     same `hyphens: auto` rejoin as `_extract_pdf_text`, then count whitespace-delimited words per page."""
-    import shutil
-    import subprocess
-    if not shutil.which("pdftotext"):
-        raise SystemExit("pdftotext (poppler) not found on PATH — required for the density metric")
-    r = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True)
-    if r.returncode != 0:
-        raise SystemExit(f"pdftotext failed (rc={r.returncode}): {r.stderr}")
-    pages = r.stdout.split("\x0c")
+    pages = _run_pdftotext(pdf_path, purpose="the density metric").split("\x0c")
     counts: list[int] = []
     for page in pages:
         dehyphenated = re.sub(r"[-‐­]\n", "", page)
@@ -5596,15 +5597,8 @@ def _pdf_per_page_text(pdf_path: pathlib.Path) -> list[str]:
     form-feed (\\x0c) between pages; split on it, drop lines that are only a page-number folio, rejoin words
     broken across a line by hyphenation (soft-hyphen / U+2010 / ASCII), then collapse whitespace. Used by the
     orphaned-heading sensor to test whether a page's ONLY content is a chapter/section title."""
-    import shutil
-    import subprocess
-    if not shutil.which("pdftotext"):
-        raise SystemExit("pdftotext (poppler) not found on PATH — required for the orphaned-heading sensor")
-    r = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True)
-    if r.returncode != 0:
-        raise SystemExit(f"pdftotext failed (rc={r.returncode}): {r.stderr}")
     out: list[str] = []
-    for page in r.stdout.split("\x0c"):
+    for page in _run_pdftotext(pdf_path, purpose="the orphaned-heading sensor").split("\x0c"):
         lines = [ln for ln in page.splitlines()
                  if ln.strip() and not re.fullmatch(r"\d+", ln.strip())]
         dehyphenated = re.sub(r"[-‐­]\n", "", "\n".join(lines))
@@ -5670,13 +5664,9 @@ def _pdf_margin_bleed(pdf_path: pathlib.Path) -> list[tuple[int, str, float, flo
     could not resolve legibly (an unbreakable token among wrapping cells, an over-long code line), so it can
     be routed to landscape or restructured. Same shape as the orphaned-heading sensor: read the rendered PDF,
     assert a layout invariant. Returns (page_number, word_text, word_right_pt, edge_pt) per offending word."""
-    if not shutil.which("pdftotext"):
-        raise SystemExit("pdftotext (poppler) not found on PATH — required for the overflow sensor")
-    r = subprocess.run(["pdftotext", "-bbox", str(pdf_path), "-"], capture_output=True, text=True)
-    if r.returncode != 0:
-        raise SystemExit(f"pdftotext -bbox failed (rc={r.returncode}): {r.stderr}")
+    stdout = _run_pdftotext(pdf_path, "-bbox", purpose="the overflow sensor")
     bleeds: list[tuple[int, str, float, float]] = []
-    for pno, pm in enumerate(_BBOX_PAGE_RE.finditer(r.stdout), start=1):
+    for pno, pm in enumerate(_BBOX_PAGE_RE.finditer(stdout), start=1):
         page_w = float(pm.group(1))
         xmargin = (_LANDSCAPE_XMARGIN_PT if abs(page_w - _LANDSCAPE_PAGE_W_PT) < 2 else _BODY_XMARGIN_PT)
         right_edge = page_w - xmargin
