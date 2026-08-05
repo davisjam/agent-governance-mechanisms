@@ -1916,17 +1916,31 @@ section.eng-note, section.eng-note-panel { break-inside: avoid; }
 .brick-grid { display: grid; grid-template-columns: repeat(var(--brick-cols, 2), minmax(0, 1fr));
               gap: 1rem; margin: 1.4rem 0 2rem; }
 .brick { border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); padding: 0.85rem 0.95rem;
-         display: flex; flex-direction: column; gap: 0.45rem; min-width: 0; }
-.brick-fig { display: flex; align-items: center; justify-content: center; height: 5.5rem; border-radius: 5px;
+         display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+/* R7 (#1 feedback): the thumbnail slot is TALLER so the diagram/glyph — and therefore its text — renders
+   larger and legible; the summary font DROPS a notch. Bricks stay equal-size (R6): the rebalance applies
+   uniformly to every brick. */
+.brick-fig { display: flex; align-items: center; justify-content: center; height: 6.75rem; border-radius: 5px;
              border: 1px dashed var(--rule); background: var(--panel); color: var(--muted); font-size: 12px;
-             letter-spacing: 0.04em; text-transform: uppercase; overflow: hidden; padding: 0.35rem; }
+             letter-spacing: 0.04em; text-transform: uppercase; overflow: hidden; padding: 0.3rem; }
 .brick-fig svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
-.brick-fig-glyph svg { max-height: 4.6rem; }
+.brick-fig-glyph svg { max-height: 5.7rem; }
+/* Technique kicker — a small, muted eyebrow naming the transferable technique above a concrete brick title. */
+.brick-kicker { margin: 0.1rem 0 -0.1rem; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+                text-transform: uppercase; color: var(--accent); }
 .brick-name { margin: 0; font-weight: 700; line-height: 1.25; }
 .brick-name a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); }
 .brick-name a:hover, .brick-name a:focus { color: var(--accent); }
-.brick-sum { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.brick-sum { margin: 0; font-size: 12.5px; line-height: 1.48; color: var(--ink); }
 .brick-meta { margin: 0.1rem 0 0; font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
+/* Instance backref — "An instance of: X →"; the domain-specific variant reads louder (accent, heavier). */
+.brick-instance { margin: 0.05rem 0 0; font-size: 12px; color: var(--muted); line-height: 1.4; }
+.brick-instance a { color: inherit; }
+.brick-instance-domain { color: var(--accent); font-weight: 600; }
+/* Advanced-examples line on a technique brick — quiet, sits under the summary. */
+.brick-adv { margin: 0.05rem 0 0; font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+/* Engineering-Note ref (flagship only) — a muted footnote under the chip line, never a second chip row. */
+.brick-note-ref { margin: 0.1rem 0 0; font-size: 11.5px; color: var(--muted); letter-spacing: 0.02em; }
 @media (max-width: 40rem) { .brick-grid { grid-template-columns: 1fr; }
                             .brick { grid-column: span 1 !important; } }
 /* 4. D77 — appendix CHAPTER headings in ALL CAPS, so an appendix page's title reads as clearly distinct
@@ -3435,17 +3449,63 @@ a cross-reference names a stable locator (§B.1 … §B.29) regardless of which 
 mechanism here also appears as a brick in the Mechanism Catalog (Appendix C), and in full in the \
 [online catalogue]({cat})."""
 
-_APPENDIX_V2_C_OPENING_PROSE = """\
-**Mechanism Catalog — the complete map**
+def _technique_index_md() -> str:
+    """A compact DERIVED 'methods map' for the appendix opening — every technique (its `abstract_name`) with
+    its in-book advanced-example count, in descending count order. A one-line entry point through the abstract
+    vocabulary that complements (does not duplicate) the per-brick kicker + backref. Count and the technique
+    total are computed, never typed, so the index cannot drift from the classification spine."""
+    spine = _technique_spine()
+    techs = sorted(
+        ((len(spine["examples"].get(slug, [])), name) for slug, name in spine["abstract"].items()),
+        key=lambda t: (-t[0], t[1]))
+    items = " · ".join(f"**{name}**" + (f" ({n})" if n else "") for n, name in techs)
+    return (
+        f"**The techniques.** {len(techs)} canonical techniques organize the catalogue. Every *instance* "
+        "brick names the technique it folds under; every *technique* brick lists its advanced examples. Here "
+        "are the techniques, by number of in-book examples:\n\n"
+        f"{items}\n")
 
-This is the whole catalogue at a glance: every mechanism, grouped by target zone, each as a compact brick \
-— a figure, a three-sentence summary, and its metadata. Use it to scan the full vocabulary and jump to \
-the deeper treatment: a flagship links to its Flagship Mechanism (Appendix B); every mechanism links to \
-its complete Gang-of-Four entry in the online catalogue.
 
-The three sections below — Agent, Models-bridge, Product — will render as packed brick grids in a later \
-build. This wave establishes the section structure and the complete reference index; the bricks assemble \
-next."""
+def _appendix_v2_c_opening_prose() -> str:
+    """Appendix C's opening frame (R1). Leads with the field-manual instruction — *browse, don't read* — then
+    the four-surface A/B/C/online relationship table and the brick legend, so the reader can decode a brick on
+    the first screen. The A/B/C references use `[appendix: <slug>]` markers (letter-agnostic: a later
+    appendix re-lettering re-resolves them with no prose edit); the online catalogue is a plain governed link."""
+    cat = _catalogue_web_url()
+    return f"""\
+## How to use this catalogue
+
+This appendix is a reference manual, not a chapter. Browse it; you are not meant to read it straight \
+through. Each mechanism appears in its smallest useful form — a diagram, a short engineering summary, and a \
+line of metadata — so you can recognize a mechanism and find it fast.
+
+The chip line under each mechanism tells you four things at a glance: its **family**, its **primary \
+concern**, whether it enforces **softly or hard**, and whether it is **essential** (expected in nearly every \
+Governed Engineering Environment) or **specialized** (worth adopting when your domain calls for it). \
+Essential and specialized mark expected applicability, not quality — a specialized mechanism is not a lesser \
+one.
+
+When a mechanism is central to MAGE, its Engineering Note in [appendix: appendix-b-flagship-mechanisms] \
+carries the judgment behind it, and the brick points you there. The full [online catalogue]({cat}) holds the \
+complete documentation, implementation guidance, and extended examples.
+
+| Surface | Purpose | The reader's question |
+|---|---|---|
+| [appendix: appendix-stacks] | Reusable engineering architectures | *How do these mechanisms work together?* |
+| [appendix: appendix-b-flagship-mechanisms] | Engineering judgment | *Why would an experienced engineer build it this way?* |
+| [appendix: appendix-c-mechanism-catalog] (this appendix) | Mechanism catalogue | *What mechanisms exist, and where do I find them?* |
+| [Online catalogue]({cat}) | Complete documentation | *I want the full entry — implementation, examples, the rest.* |
+
+**Reading a brick.** Under each mechanism: **Family · Primary concern · Enforcement · Applicability**. \
+*Enforcement* — **Hard** blocks, **Soft** guides, **Soft·Hard** ships a soft aim with a hard sensor. \
+*Applicability* — **Essential** (expected in nearly every environment) or **Specialized** (adopt when the \
+domain calls for it); this marks expected fit, not quality. A **technique** brick leads with the transferable \
+pattern name and points to its advanced examples; an **instance** brick names the technique it folds under, \
+loudest for the document-accessibility instances whose transferable lesson is the technique. A **flagship** \
+mechanism also carries an **Engineering Note** link to its deeper discussion in \
+[appendix: appendix-b-flagship-mechanisms].
+
+{_technique_index_md()}"""
 
 
 def _appendix_v2_role_subsections() -> list[tuple[str, str]]:
@@ -3483,6 +3543,12 @@ _FLAGSHIP_STACK_PATH = ROOT / "book-models" / "flagship-stack.json"
 _BRICK_LAYOUT_PATH = ROOT / "book-models" / "brick-layout.json"
 _BRICK_FITNESS_PATH = ROOT / "book-models" / "brick-fitness.json"
 _BRICK_SUMMARIES_PATH = ROOT / "book-models" / "brick-summaries.json"
+# The two CURATED Appendix-C metadata models (R3 applicability + R4 primary-concern). Every other brick chip
+# is DERIVED: enforcement from the entry card Enf. row (`_note_enforcement_map`), and the technique/instance
+# spine (`kind`, `abstract_name`, `parent_technique`, `advanced_examples`) from the classification model's
+# dispositions (`_technique_spine`). `brick-metadata.json` also holds the ~10 `domain_specific` slugs.
+_BRICK_APPLICABILITY_PATH = ROOT / "book-models" / "brick-applicability.json"
+_BRICK_METADATA_PATH = ROOT / "book-models" / "brick-metadata.json"
 _GLYPH_ASSET_DIR = HERE / "assets"
 # Authored compressed Appendix-B notes (restructure sub-wave 4a prototype). One `<slug>.md` per flagship that
 # has been compressed to a keep-together Flagship-Mechanism note; a flagship without one falls back to the full
@@ -3855,6 +3921,121 @@ def _load_brick_summaries() -> dict[str, str]:
     return data.get("summaries", {})
 
 
+@functools.lru_cache(maxsize=1)
+def _load_brick_applicability() -> dict[str, str]:
+    """`{slug: "essential"|"specialized"}` — the curated R3 adoption signal (`book-models/brick-applicability.json`).
+    Rendered as the fourth brick chip (Applicability). Absent file → `{}` (the chip then omits). NOT a quality
+    ranking: `essential` = expected in nearly every governed environment; `specialized` = domain-triggered."""
+    if not _BRICK_APPLICABILITY_PATH.is_file():
+        return {}
+    data = json.loads(_BRICK_APPLICABILITY_PATH.read_text(encoding="utf-8"))
+    return {slug: (rec or {}).get("applicability", "") for slug, rec in data.get("applicability", {}).items()}
+
+
+@functools.lru_cache(maxsize=1)
+def _load_primary_concern() -> dict[str, str]:
+    """`{slug: concern}` — the curated R4 cross-cutting organizer (`book-models/brick-metadata.json`), rendered
+    as the second brick chip (Primary-concern). Each concern cross-walks 1:1 to a GEE capability. Absent → `{}`."""
+    if not _BRICK_METADATA_PATH.is_file():
+        return {}
+    return json.loads(_BRICK_METADATA_PATH.read_text(encoding="utf-8")).get("primary_concern", {})
+
+
+@functools.lru_cache(maxsize=1)
+def _load_domain_specific() -> frozenset[str]:
+    """The ~10 document-accessibility instance slugs (`book-models/brick-metadata.json`'s `domain_specific`).
+    An entry here is one whose transferable unit is the TECHNIQUE it instantiates, not the mechanism itself —
+    so its instance backref is styled LOUDER (`A document-accessibility instance of the technique: …`)."""
+    if not _BRICK_METADATA_PATH.is_file():
+        return frozenset()
+    return frozenset(json.loads(_BRICK_METADATA_PATH.read_text(encoding="utf-8")).get("domain_specific", []))
+
+
+@functools.lru_cache(maxsize=1)
+def _entry_records_sorted() -> tuple[dict, ...]:
+    """Every catalogue entry record in the census hierarchy — role order (`_APPENDIX_ROLES`), then family census
+    number, then family, then slug — the SAME order `_build_appendix_chapters_v2` walks to number the flagships.
+    Cached so the technique spine, the flagship-number map, and the census-order index share one read."""
+    entries = _appendix_entries()
+    role_index = {group: i for i, (_r, group) in enumerate(_APPENDIX_ROLES)}
+    family_order = _family_order_from_index()
+    return tuple(sorted(
+        entries,
+        key=lambda e: (role_index.get(e["group"], 99), family_order.get(e["family"], 999), e["family"], e["slug"])))
+
+
+@functools.lru_cache(maxsize=1)
+def _census_order() -> dict[str, int]:
+    """`{slug: rank}` in the census hierarchy — used to order a technique's `advanced_examples` list stably."""
+    return {e["slug"]: i for i, e in enumerate(_entry_records_sorted())}
+
+
+@functools.lru_cache(maxsize=1)
+def _entry_display_map() -> dict[str, tuple[str, str]]:
+    """`{slug: (display-name, catalogue-html-link)}` for every entry — resolves a technique's `advanced_examples`
+    slugs and an instance's `parent_technique` slug to their brick name + link, across zones."""
+    return {e["slug"]: (e["name"], e["catalogue_html"]) for e in _appendix_entries()}
+
+
+@functools.lru_cache(maxsize=1)
+def _flagship_appendix_num() -> dict[str, int]:
+    """`{flagship-slug: N}` — each flagship's monotonic Appendix-B rank (B.1 … B.29) in census order, computed
+    exactly as `_build_appendix_chapters_v2` numbers them (which mutates its own record copies). This is the
+    DERIVED source the brick C→B ref reads, so `Engineering Note → B.N` cannot drift from the note's own number."""
+    flag = _flagship_slugs()
+    out: dict[str, int] = {}
+    n = 0
+    for e in _entry_records_sorted():
+        if e["slug"] in flag:
+            n += 1
+            out[e["slug"]] = n
+    return out
+
+
+@functools.lru_cache(maxsize=1)
+def _technique_spine() -> dict:
+    """The DERIVED technique/instance overlay (R6-safe navigational layer), read entirely from the classification
+    model's dispositions — no new data. The `keep-as-L2` / `demote-to-L3` axis IS the technique/instance axis:
+
+      * `keep-as-L2 <AbstractName>`  → a **technique** whose display name is `<AbstractName>`.
+      * `demote-to-L3-under <T>` / `merge-into <T>` / `move-to-book-case <T>` → an **instance** that folds under
+        technique `<T>` (resolved to its canonical brick slug; a `move-to-book-case` technique has no brick, so
+        the parent slug is None and the backref names it as text).
+      * `lift-to-L1 …` → a **principle** (the one placement-principle outlier), neither technique nor instance.
+
+    Returns `{kind, abstract, parent_slug, parent_name, examples}` — `examples[technique_slug]` inverts the
+    parent edges to that technique's `advanced_examples`, ordered by census rank."""
+    cls = _load_classification()
+    canon = {rec["parent"]: slug for slug, rec in cls.items() if rec["head"] == "keep-as-L2"}
+    kind: dict[str, str] = {}
+    abstract: dict[str, str] = {}
+    parent_slug: dict[str, str | None] = {}
+    parent_name: dict[str, str] = {}
+    examples: dict[str, list[str]] = {}
+    for slug, rec in cls.items():
+        head, name = rec["head"], rec["parent"]
+        if head == "keep-as-L2":
+            kind[slug] = "technique"
+            abstract[slug] = name
+            examples.setdefault(slug, [])
+        elif head in ("demote-to-L3-under", "merge-into", "move-to-book-case"):
+            kind[slug] = "instance"
+            parent_name[slug] = name
+            psl = canon.get(name)               # None for the book-case technique (no in-catalogue brick)
+            parent_slug[slug] = psl
+            if psl is not None:
+                examples.setdefault(psl, []).append(slug)
+        elif head == "lift-to-L1":
+            kind[slug] = "principle"
+        else:
+            kind[slug] = "instance"             # defensive — an unknown head is treated as a leaf
+    order = _census_order()
+    for k in examples:
+        examples[k].sort(key=lambda s: order.get(s, 999))
+    return {"kind": kind, "abstract": abstract, "parent_slug": parent_slug,
+            "parent_name": parent_name, "examples": examples}
+
+
 # The hard word cap on the summary a brick emits (restructure sub-wave 5b). A grid brick that towers over its
 # row-neighbour with a 12–15-line summary leaves a jagged row and wasted vertical space; capping the emitted
 # text keeps row heights even. The curated summaries all sit well under it; a still-long Intent fallback is
@@ -4002,20 +4183,43 @@ def _brick_cells(group: str, flagship: set[str], ncols: int) -> list[dict]:
     entries.sort(key=lambda e: (family_order.get(e["family"], 999), e["family"], e["slug"]))
     fitness = _load_brick_fitness()
     curated = _load_brick_summaries()
+    concern = _load_primary_concern()
+    applic = _load_brick_applicability()
+    enf_combined = _note_enforcement_map()       # Hard | Soft | Soft·Hard, from the INDEX Enf. column
+    spine = _technique_spine()
+    domain_specific = _load_domain_specific()
+    fnum = _flagship_appendix_num()
+    disp_name = _entry_display_map()
     cells: list[dict] = []
     for e in entries:
+        slug = e["slug"]
         intent = (e.get("intent") or "").strip()
-        fit = fitness.get(e["slug"], {})
-        summary = _cap_brick_summary((curated.get(e["slug"]) or intent).strip())
+        fit = fitness.get(slug, {})
+        summary = _cap_brick_summary((curated.get(slug) or intent).strip())
+        kind = spine["kind"].get(slug)
+        # Resolve the technique's advanced-example slugs and an instance's parent slug to (name, link) pairs.
+        adv = [(disp_name[s][0], disp_name[s][1]) for s in spine["examples"].get(slug, []) if s in disp_name]
+        parent_slug = spine["parent_slug"].get(slug)
+        parent_link = disp_name[parent_slug][1] if parent_slug in disp_name else None
         cells.append({
-            "slug": e["slug"],
+            "slug": slug,
             "name": e["name"],
             "catalogue_html": e["catalogue_html"],
             "group": e["group"],
             "family": e["family"],
             "enforcement": e.get("enforcement"),
-            "span": _brick_span(e["slug"], ncols),
-            "is_flagship": e["slug"] in flagship,
+            "enforcement_combined": enf_combined.get(slug) or (e.get("enforcement") or "").capitalize(),
+            "primary_concern": concern.get(slug),
+            "applicability": applic.get(slug),
+            "span": _brick_span(slug, ncols),
+            "is_flagship": slug in flagship,
+            "appendix_num": fnum.get(slug),               # B.N rank on a flagship, else None
+            "kind": kind,                                  # technique | instance | principle | None
+            "abstract_name": spine["abstract"].get(slug),  # technique display name (kicker)
+            "parent_technique_name": spine["parent_name"].get(slug),  # instance backref target name
+            "parent_technique_link": parent_link,          # instance backref target link (None → text only)
+            "advanced_examples": adv,                      # [(name, link), …] for a technique
+            "is_domain_specific": slug in domain_specific,  # louder instance backref for the ~10 doc-a11y instances
             "summary": summary,
             "verdict": fit.get("verdict"),               # PASS | SIMPLIFY | GLYPH | None
             "glyph_class": fit.get("glyph_class"),        # set only on GLYPH verdicts
@@ -4025,10 +4229,15 @@ def _brick_cells(group: str, flagship: set[str], ncols: int) -> list[dict]:
 
 
 def _brick_meta_line(cell: dict) -> str:
-    """The brick metadata footer text: `<zone> · <family> · <Soft|Hard>` (§5.2)."""
-    enf = (cell.get("enforcement") or "").capitalize() or "—"
+    """The four-facet brick chip line: `Family · Primary-concern · Enforcement · Applicability`. Role/zone is
+    NOT a chip — the C.1/C.2/C.3 section the brick sits in already carries it, so the freed slot spends on
+    concern + applicability the reader can't otherwise see. Enforcement carries the combined `Soft·Hard` for the
+    dual entries (a soft aim shipped with a hard sensor). A missing curated facet degrades to `—`."""
     fam = _humanize_slug(cell["family"])
-    return f"{cell['group']} · {fam} · {enf}"
+    concern = cell.get("primary_concern") or "—"
+    enf = cell.get("enforcement_combined") or "—"
+    applic = (cell.get("applicability") or "").capitalize() or "—"
+    return f"{fam} · {concern} · {enf} · {applic}"
 
 
 _BRICK_NCOLS = 2  # §13.4 / §"Recommended final architecture": TWO print columns (three forces diagrams too small).
@@ -4057,13 +4266,47 @@ def _brick_grid_html(group: str) -> str:
                    f'{_inline_svg_for_thumb(thumb_path, c["slug"])}</div>'
                    if thumb_path else
                    '<div class="brick-fig" aria-hidden="true"><span>Structure diagram</span></div>')
+
+            # ── The thin technique/instance overlay (R6-safe: text lines, never a size change) ──
+            # TECHNIQUE brick → an `abstract_name` kicker over the title; INSTANCE brick → a backref to the
+            # technique it folds under, styled LOUDER for the ~10 document-accessibility instances.
+            kicker = (f'<p class="brick-kicker">Technique · {inline(c["abstract_name"])}</p>'
+                      if c.get("kind") == "technique" and c.get("abstract_name") else "")
+            backref = ""
+            if c.get("kind") == "instance" and c.get("parent_technique_name"):
+                pname = inline(c["parent_technique_name"])
+                target = (f'<a href="{html.escape(c["parent_technique_link"], quote=True)}">{pname}</a>'
+                          if c.get("parent_technique_link") else pname)
+                if c.get("is_domain_specific"):
+                    backref = (f'<p class="brick-instance brick-instance-domain">A document-accessibility '
+                               f'instance of the technique: {target} &rarr;</p>')
+                else:
+                    backref = f'<p class="brick-instance">An instance of: {target} &rarr;</p>'
+            # TECHNIQUE with in-catalogue instances → a quiet "Advanced examples →" line.
+            adv = ""
+            if c.get("kind") == "technique" and c.get("advanced_examples"):
+                links = ", ".join(
+                    f'<a href="{html.escape(url, quote=True)}">{inline(nm)}</a>'
+                    for nm, url in c["advanced_examples"])
+                adv = f'<p class="brick-adv">Advanced examples &rarr; {links}</p>'
+            # C→B (R2): a flagship carries a lightweight Engineering-Note ref to its Appendix-B deep dive.
+            note_ref = ""
+            if c.get("is_flagship") and c.get("appendix_num"):
+                note_ref = (f'<p class="brick-note-ref">Engineering Note &rarr; '
+                            f'<a href="appendix-b-{html.escape(c["slug"], quote=True)}.html">'
+                            f'B.{c["appendix_num"]}</a></p>')
+
             rendered.append(
                 f'<div class="brick" style="grid-column: span {span};">'
                 f'{fig}'
+                f'{kicker}'
                 f'<p class="brick-name"><a href="{html.escape(c["catalogue_html"], quote=True)}">'
                 f'{inline(c["name"])}</a>{online}</p>'
+                f'{backref}'
                 f'<p class="brick-sum">{summary}</p>'
+                f'{adv}'
                 f'<p class="brick-meta">{html.escape(_brick_meta_line(c))}</p>'
+                f'{note_ref}'
                 "</div>"
             )
     return (f'<div class="brick-grid" style="--brick-cols: {_BRICK_NCOLS};">'
@@ -4181,7 +4424,7 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     c_part = next_part + 2
     c_part_title = "Appendix C — Mechanism Catalog"
     c_body = [
-        _APPENDIX_V2_C_OPENING_PROSE,
+        _appendix_v2_c_opening_prose(),
         "",
         # The clickable map — every mechanism chip routed to its Appendix-B page or its web entry.
         f"<!-- figure-iframe: {_BOOK_FIGURE_NAME} | The governance mechanism map — every mechanism in the "

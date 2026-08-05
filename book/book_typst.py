@@ -219,21 +219,50 @@ def _render_brick_grid(directive_line: str) -> str:
             thumb = bb._brick_thumb_svg_path(c)
             if thumb:
                 rel = _root_rel(thumb, _EmitCtx.root)
+                # R7 (#1 feedback): a TALLER thumbnail slot so the diagram/glyph text reads larger; the
+                # summary font drops in step. Uniform across bricks, so equal-size (R6) is untouched.
                 fig_block = (
-                    "#block(width: 100%, height: 4.2em, radius: 4pt, stroke: 0.5pt + dt.rule, "
+                    "#block(width: 100%, height: 5.4em, radius: 4pt, stroke: 0.5pt + dt.rule, "
                     "fill: dt.panel, inset: 4pt, clip: true)[#align(center + horizon)["
                     f"#image({_typst_str(rel)}, fit: \"contain\", width: 100%, height: 100%)]]"
                 )
             else:
                 fig_block = (
-                    "#block(width: 100%, height: 4.2em, radius: 4pt, stroke: (paint: dt.rule, dash: \"dashed\"), "
+                    "#block(width: 100%, height: 5.4em, radius: 4pt, stroke: (paint: dt.rule, dash: \"dashed\"), "
                     "fill: dt.panel, inset: 6pt)[#align(center + horizon)[#text(size: 8pt, fill: dt.muted)[STRUCTURE DIAGRAM]]]"
                 )
+
+            # ── The technique/instance overlay (mirror of the HTML renderer; print shows NAMES, not links) ──
+            kicker = ""
+            if c.get("kind") == "technique" and c.get("abstract_name"):
+                kicker = (f"#text(size: 7.5pt, weight: \"bold\", tracking: 0.08em, fill: dt.accent)"
+                          f"[TECHNIQUE · {inline_typst(c['abstract_name'])}]\n\n")
+            backref = ""
+            if c.get("kind") == "instance" and c.get("parent_technique_name"):
+                pname = inline_typst(c["parent_technique_name"])
+                if c.get("is_domain_specific"):
+                    backref = (f"\n\n#text(size: 8pt, weight: \"semibold\", fill: dt.accent)"
+                               f"[A document-accessibility instance of the technique: {pname} →]")
+                else:
+                    backref = f"\n\n#text(size: 8pt, fill: dt.muted)[An instance of: {pname} →]"
+            adv = ""
+            if c.get("kind") == "technique" and c.get("advanced_examples"):
+                names = ", ".join(inline_typst(nm) for nm, _url in c["advanced_examples"])
+                adv = f"\n\n#text(size: 7.5pt, fill: dt.muted)[Advanced examples → {names}]"
+            note_ref = ""
+            if c.get("is_flagship") and c.get("appendix_num"):
+                note_ref = (f"\n\n#text(size: 7.5pt, fill: dt.muted)"
+                            f"[Engineering Note → B.{c['appendix_num']}]")
+
             cell_body = (
                 fig_block + "\n"
-                f"#link({_typst_str(c['catalogue_html'])})[#strong[{inline_typst(c['name'])}]]{_esc(online)}\n\n"
-                f"#text(size: 9.5pt)[{summary}]\n\n"
+                + kicker
+                + f"#link({_typst_str(c['catalogue_html'])})[#strong[{inline_typst(c['name'])}]]{_esc(online)}"
+                + backref + "\n\n"
+                f"#text(size: 9pt)[{summary}]"
+                + adv + "\n\n"
                 f"#text(size: 8.5pt, fill: dt.muted)[{meta}]"
+                + note_ref
             )
             cell = ("#block(width: 100%, radius: 8pt, stroke: 0.5pt + dt.rule, inset: 9pt, breakable: false)[\n"
                     + _indent(cell_body) + "\n]")

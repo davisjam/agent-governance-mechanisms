@@ -1065,6 +1065,17 @@ def cmd_validate(_args) -> int:
         for f in hard_refs:
             print(f"          {f.file}:{f.line}: [{f.kind}] literal {f.text!r} — {f.remedy}")
         n_issues += len(hard_refs)
+    # BRICK-METADATA — every catalogue mechanism carries a curated Appendix-C applicability AND primary-concern
+    # call, and the two curated models (brick-applicability.json + brick-metadata.json) agree with the census.
+    # Both models were authored complete (all 83 slugs), so the tree is green from birth → lands BLOCKING: a new
+    # entry that omits either call, or a mismatched slug, increments n_issues. See book-models/lint_brick_metadata.py.
+    import lint_brick_metadata as lbm  # noqa: E402 — blocking applicability+concern completeness lint
+    brick_meta_findings = lbm.findings()
+    if brick_meta_findings:
+        print(f"  [brickmeta] {lbm.summary_line(brick_meta_findings)}:")
+        for f in brick_meta_findings:
+            print(f"          {f.slug}: {f.problem}")
+        n_issues += len(brick_meta_findings)
     # FLAGSHIP-STACK CONFORMANCE (FS1–FS5) — AUDIT-ONLY. The deep-dive TEMPLATE check over the flagship
     # PACKAGE model (book-models/flagship-stack.json): join integrity, page shape, figure house-rules,
     # freshness. Lands audit-only-first (repo blocking-lint discipline) while the model carries fewer than

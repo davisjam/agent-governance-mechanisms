@@ -1,0 +1,155 @@
+{
+  "_note": "Appendix-C engineering metadata (R4) — the SMALL curated attribute set that helps a reader organize the catalogue without bloating the equal-sized brick. Two curated facts live here: `primary_concern` (the cross-cutting organizer shown as the second brick chip; each cross-walks 1:1 to a GEE capability in catalogue-classification.json so the chip adopts an existing schema rather than inventing one) and `domain_specific` (the ~10 document-accessibility instances whose transferable unit is the TECHNIQUE they instantiate, not the mechanism — surfaced as a louder instance backref). Everything else is DERIVED at build time, NOT stored here: enforcement from the entry card Enf. row (book/build_book_html.py:_note_enforcement_map), applicability from brick-applicability.json, and kind / abstract_name / parent_technique / advanced_examples from catalogue-classification.json's dispositions (the keep-as-L2 / demote-to-L3 axis). Consumed by book/build_book_html.py:_load_primary_concern() + _load_domain_specific(); the drift lint book-models/lint_brick_metadata.py asserts every catalogue slug appears here AND in brick-applicability.json. Vocabulary uses 'structured', not 'typed'. Source: book/_design/drafts/appendix-c-feedback/ (engineering-metadata-DRAFT.json + technique-vs-mechanism.md).",
+  "_primary_concern_vocabulary": {
+    "_kind": "closed, reader-facing set of 9 concerns; each cross-walks 1:1 to a GEE capability in catalogue-classification.json (the repo's own concern taxonomy) so the chip adopts an existing schema rather than inventing one; per-entry assignment is CURATED judgment, not the parent L2 capability copied verbatim",
+    "concerns": {
+      "Context": {
+        "gloss": "deliver the right rules and knowledge to the actor at the point of action",
+        "gee_capability": "CAP-CONSTRAIN"
+      },
+      "Admission": {
+        "gloss": "gate the work order and the path to production",
+        "gee_capability": "CAP-ADMIT"
+      },
+      "Orchestration": {
+        "gloss": "manage fleet work, state, resources, and lifecycle",
+        "gee_capability": "CAP-MANAGE"
+      },
+      "Modeling": {
+        "gloss": "represent the system as authoritative structured models the fleet reasons through",
+        "gee_capability": "CAP-KNOW"
+      },
+      "Synchronization": {
+        "gloss": "keep the models equal to the code and system they describe",
+        "gee_capability": "CAP-SYNC"
+      },
+      "Validation": {
+        "gloss": "check output conforms and establish completion on re-derived evidence",
+        "gee_capability": "CAP-COMPLETE"
+      },
+      "Provenance": {
+        "gloss": "durably attribute every mutation and trace its cause",
+        "gee_capability": "CAP-PROVENANCE"
+      },
+      "Governance": {
+        "gloss": "govern the control estate itself",
+        "gee_capability": "CAP-GOVERN"
+      },
+      "Constraint": {
+        "gloss": "confine mutation to sanctioned surfaces and closed action vocabularies",
+        "gee_capability": "CAP-CONSTRAIN"
+      }
+    }
+  },
+  "_distribution": {
+    "primary_concern": {
+      "Provenance": 6,
+      "Modeling": 19,
+      "Orchestration": 11,
+      "Admission": 8,
+      "Constraint": 10,
+      "Context": 4,
+      "Synchronization": 5,
+      "Validation": 11,
+      "Governance": 9
+    },
+    "domain_specific": 10
+  },
+  "domain_specific": [
+    "pdf-model",
+    "office-models",
+    "canonical-walkers",
+    "content-validator",
+    "remediation-verbs",
+    "mutator-stamps",
+    "f10-wiring-lint",
+    "a11y-prefix",
+    "derive-changelog",
+    "standards-rule-engine"
+  ],
+  "primary_concern": {
+    "a11y-prefix": "Provenance",
+    "agent-first-mbse-harness": "Modeling",
+    "agent-orchestration-model": "Modeling",
+    "agent-registry": "Orchestration",
+    "aggregate-compute-protection": "Orchestration",
+    "brief-linting": "Admission",
+    "build-serializer": "Orchestration",
+    "canonical-walkers": "Constraint",
+    "caused-by-provenance": "Provenance",
+    "claude-md-rule-index": "Context",
+    "codemod-first": "Constraint",
+    "coherence-lints": "Synchronization",
+    "component-zone-model": "Modeling",
+    "composed-state-machine-model": "Modeling",
+    "concurrency-contracts": "Modeling",
+    "content-validator": "Validation",
+    "control-coverage-census": "Governance",
+    "control-substrate-dependency": "Governance",
+    "coverage-model-mapping": "Validation",
+    "cron-alerts-gate": "Admission",
+    "data-flow-model": "Modeling",
+    "ddt-pin-trailers": "Synchronization",
+    "deploy-heartbeats": "Orchestration",
+    "deployment-topology-model": "Modeling",
+    "derive-changelog": "Provenance",
+    "doc-hygiene-lints": "Synchronization",
+    "docs-hierarchy": "Context",
+    "domain-registries": "Modeling",
+    "drift-parity-gates": "Synchronization",
+    "dynamic-context-injection": "Context",
+    "epic-and-design-templates": "Admission",
+    "epic-definition-of-done": "Validation",
+    "executable-source-of-truth": "Modeling",
+    "f10-wiring-lint": "Provenance",
+    "formal-invariant-verification": "Validation",
+    "fuzz-campaigns": "Validation",
+    "governance-graph": "Governance",
+    "invariant-dag-execution-policy": "Orchestration",
+    "journey-criticality-test-placement": "Validation",
+    "journey-task-closure": "Validation",
+    "lifecycle-hooks": "Orchestration",
+    "lifecycle-model": "Modeling",
+    "mandatory-snippet-table": "Context",
+    "merge-train-mis-batching": "Admission",
+    "meta-model-consumption": "Modeling",
+    "model-derived-test-obligation-census": "Validation",
+    "model-driven-codegen": "Modeling",
+    "model-graded-finding-severity": "Governance",
+    "mutator-stamps": "Provenance",
+    "office-models": "Constraint",
+    "operational-playbooks": "Governance",
+    "operator-runbook-skill": "Governance",
+    "pdf-model": "Constraint",
+    "pre-commit-hook": "Admission",
+    "process-view": "Modeling",
+    "property-tests": "Validation",
+    "query-surface": "Modeling",
+    "raw-redis-seam": "Constraint",
+    "reflection-facet-substrate": "Orchestration",
+    "remediation-verbs": "Constraint",
+    "required-config-per-role-manifest": "Admission",
+    "resource-pressure-gating": "Orchestration",
+    "role-typed-dispatch": "Constraint",
+    "rule-metadata-registry": "Governance",
+    "self-governance": "Governance",
+    "semantic-level-enforcement": "Governance",
+    "semantic-lints": "Constraint",
+    "sentinel-first-commit": "Admission",
+    "service-client": "Constraint",
+    "service-flow-model": "Modeling",
+    "staged-deploy-gates": "Admission",
+    "standards-rule-engine": "Validation",
+    "symbol-anchored-traceability-graph": "Synchronization",
+    "synchronization-model": "Modeling",
+    "telemetry-collection-provenance": "Provenance",
+    "test-onion-tiers": "Validation",
+    "test-serializer": "Orchestration",
+    "timeout-budget-ordering-model": "Modeling",
+    "tombstone-commits": "Orchestration",
+    "typed-categories": "Constraint",
+    "typed-contract-surfaces": "Modeling",
+    "typed-event-bus": "Orchestration",
+    "user-journey-model": "Modeling"
+  }
+}

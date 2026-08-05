@@ -421,17 +421,31 @@ section.eng-note, section.eng-note-panel { break-inside: avoid; }
 .brick-grid { display: grid; grid-template-columns: repeat(var(--brick-cols, 2), minmax(0, 1fr));
               gap: 1rem; margin: 1.4rem 0 2rem; }
 .brick { border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); padding: 0.85rem 0.95rem;
-         display: flex; flex-direction: column; gap: 0.45rem; min-width: 0; }
-.brick-fig { display: flex; align-items: center; justify-content: center; height: 5.5rem; border-radius: 5px;
+         display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+/* R7 (#1 feedback): the thumbnail slot is TALLER so the diagram/glyph — and therefore its text — renders
+   larger and legible; the summary font DROPS a notch. Bricks stay equal-size (R6): the rebalance applies
+   uniformly to every brick. */
+.brick-fig { display: flex; align-items: center; justify-content: center; height: 6.75rem; border-radius: 5px;
              border: 1px dashed var(--rule); background: var(--panel); color: var(--muted); font-size: 12px;
-             letter-spacing: 0.04em; text-transform: uppercase; overflow: hidden; padding: 0.35rem; }
+             letter-spacing: 0.04em; text-transform: uppercase; overflow: hidden; padding: 0.3rem; }
 .brick-fig svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
-.brick-fig-glyph svg { max-height: 4.6rem; }
+.brick-fig-glyph svg { max-height: 5.7rem; }
+/* Technique kicker — a small, muted eyebrow naming the transferable technique above a concrete brick title. */
+.brick-kicker { margin: 0.1rem 0 -0.1rem; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+                text-transform: uppercase; color: var(--accent); }
 .brick-name { margin: 0; font-weight: 700; line-height: 1.25; }
 .brick-name a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); }
 .brick-name a:hover, .brick-name a:focus { color: var(--accent); }
-.brick-sum { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.brick-sum { margin: 0; font-size: 12.5px; line-height: 1.48; color: var(--ink); }
 .brick-meta { margin: 0.1rem 0 0; font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
+/* Instance backref — "An instance of: X →"; the domain-specific variant reads louder (accent, heavier). */
+.brick-instance { margin: 0.05rem 0 0; font-size: 12px; color: var(--muted); line-height: 1.4; }
+.brick-instance a { color: inherit; }
+.brick-instance-domain { color: var(--accent); font-weight: 600; }
+/* Advanced-examples line on a technique brick — quiet, sits under the summary. */
+.brick-adv { margin: 0.05rem 0 0; font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+/* Engineering-Note ref (flagship only) — a muted footnote under the chip line, never a second chip row. */
+.brick-note-ref { margin: 0.1rem 0 0; font-size: 11.5px; color: var(--muted); letter-spacing: 0.02em; }
 @media (max-width: 40rem) { .brick-grid { grid-template-columns: 1fr; }
                             .brick { grid-column: span 1 !important; } }
 /* 4. D77 — appendix CHAPTER headings in ALL CAPS, so an appendix page's title reads as clearly distinct
@@ -588,7 +602,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <ul>
 <li class="idx-concept"><span class="idx-term">Data-flow diagram</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.2-the-logical-view.html#idx-def-data-flow-diagram">Ch. 13</a></span></span></li>
 <li><span class="idx-term">DDT</span> <span class="idx-refs"><a href="2.5-metrics.html">Ch. 10</a>, <a href="appendix-c-mechanism-catalog.html">Appendix C</a></span></li>
-<li><span class="idx-term">Definition of Done (DoD)</span> <span class="idx-refs"><a href="2.2-models-and-the-semantic-gap.html">Ch. 7</a>, <a href="2.3-the-governed-environment.html">Ch. 8</a>, <a href="5.3-the-built-system.html">Ch. 28</a></span></li>
+<li><span class="idx-term">Definition of Done (DoD)</span> <span class="idx-refs"><a href="2.2-models-and-the-semantic-gap.html">Ch. 7</a>, <a href="2.3-the-governed-environment.html">Ch. 8</a>, <a href="5.3-the-built-system.html">Ch. 28</a>, <a href="appendix-c-mechanism-catalog.html">Appendix C</a></span></li>
 <li class="idx-concept"><span class="idx-term">Demoable vs. productizable</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="4.4-training-data.html#idx-def-demoable-vs-productizable">Ch. 23</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Deployment-topology model</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.5-the-physical-view.html#idx-def-deployment-topology-model">Ch. 16</a></span></span></li>
 <li class="idx-concept"><span class="idx-term">Derivation direction</span><span class="idx-subs"><span class="idx-sub"><span class="idx-sub-lead">definition of:</span> <a href="3.1-the-executable-zoo.html#idx-def-derivation-direction">Ch. 12</a></span></span></li>
