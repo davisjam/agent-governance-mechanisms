@@ -53,6 +53,13 @@ DEPRECATED_VOCAB: dict[str, str] = {
 # SVGs are out of scope (see the module docstring).
 _PART_GLOB = "part*/*.md"
 
+# The former single `backmatter/` dir was split into `part6/` (Reflections) + `part7/` (Back Matter
+# apparatus) when the closing chapters were promoted to a named Part. Both now match `part*/`, but the
+# scope rule above still classes them as back matter (out of vocab scope) — the same exclusion the single
+# `backmatter/` dir carried before the split. Bringing Part 6's promoted narrative prose into canonical-
+# vocab scope is a follow-up for the content wave, not this structural move.
+_EXCLUDED_PART_DIRS = ("part6", "part7")
+
 # A deprecated phrase is matched as its two words joined by whitespace (so the hyphenated slug form
 # `typed-model` in a `<!-- point: … -->` id is NOT a hit), case-insensitive, with an optional plural on
 # the trailing noun and a leading/trailing word boundary. Built from DEPRECATED_VOCAB so the map stays sole.
@@ -69,7 +76,7 @@ _NOQA_RE = re.compile(r"noqa:\s*canonical-vocab\s*(?:—|\s-\s)\s*\S")
 
 
 def _chapter_files() -> list[pathlib.Path]:
-    return sorted(BOOK.glob(_PART_GLOB))
+    return sorted(p for p in BOOK.glob(_PART_GLOB) if p.parent.name not in _EXCLUDED_PART_DIRS)
 
 
 def findings() -> list[str]:

@@ -96,7 +96,7 @@
       "home": "the-premise-mechanize-discipline",
       "asserted_at": [
         "the-premise-mechanize-discipline",
-        "6.1-implications-for-se"
+        "6.2-implications-for-se"
       ],
       "contradicted_by": "Blaming coordination / communication overhead; OR treating the context window as the sole bound, ignoring reasoning capacity.",
       "watch_phrases": [
@@ -273,7 +273,7 @@
       "asserted_at": [
         "the-lineage-the-modeling-tradition",
         "models-as-the-universal-language-of-engineering",
-        "6.2-conclusion"
+        "6.3-conclusion"
       ],
       "contradicted_by": "Framing models as a nice-to-have or a software-specific trick rather than engineering's common language.",
       "watch_phrases": [],

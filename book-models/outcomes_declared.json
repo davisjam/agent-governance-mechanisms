@@ -151,7 +151,7 @@
       "provenance": "declared",
       "anchor": "6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours.",
       "secondary_units": [
-        "6.2-conclusion"
+        "6.3-conclusion"
       ]
     },
     {
@@ -527,7 +527,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "6.1-implications-for-se",
+      "primary_unit": "6.2-implications-for-se",
       "verb": "evaluate",
       "obj": "what the method changes for how software engineering is measured, staffed, and taught",
       "statement": "After this chapter, the reader can evaluate the discipline-level implications: where judgment moved, what saturates, and why models are the universal language of engineering.",
@@ -536,7 +536,7 @@
     },
     {
       "granularity": "chapter",
-      "primary_unit": "6.2-conclusion",
+      "primary_unit": "6.3-conclusion",
       "verb": "situate",
       "obj": "the book within the software-engineering literature and identify what stays the reader's own",
       "statement": "After this chapter, the reader can situate the book in the SE literature and identify the part of the work that stays human.",
@@ -769,7 +769,7 @@
       "provenance": "derived",
       "anchor": "point: some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified / the-residual-is-a-human-job-that-sets-the-throughput-ceiling / the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis / naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible / the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out",
       "secondary_units": [
-        "6.1-implications-for-se"
+        "6.2-implications-for-se"
       ]
     }
   ]

@@ -32,7 +32,7 @@ reasoning state a task requires exceeds the effective reasoning horizon of the h
 executable models extend that horizon by replacing implementation-level state with abstractions whose
 properties survive repeated compaction with less loss. The proposition is offered for the reader to test
 against their own systems, not asserted as a law; its testable form is the hypothesis H4, and its full
-treatment lives in the theory chapter, [Toward a Theory of MAGE](book/6.0-toward-a-theory-of-mage.html).
+treatment lives in the theory chapter, [Toward a Theory of MAGE](book/6.1-toward-a-theory-of-mage.html).
 A model is a better *compression domain*, then — not merely a smaller file. Compacting over a model
 loses far less than compacting over code, because what survives is the information that carried the
 reasoning.

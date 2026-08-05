@@ -362,7 +362,9 @@ def _collect_glossary(chapters: list[dict]) -> None:
                 _GLOSSARY[term] = m.group("def").strip()
 
 # Part number → the source subdirectory that holds its chapters. Front matter is part 0, the
-# five numbered parts are 1–5 (Part 4 is the Model Zoo), back matter is part 6. Appendix parts follow.
+# six numbered parts are 1–6 (Part 4 is the Model Zoo, Part 6 is Reflections — the substantive
+# closing chapters), true back matter (apparatus: about-the-author, colophon) is part 7. Appendix
+# parts follow.
 _PART_DIRS = {
     0: "frontmatter",
     1: "part1",
@@ -370,7 +372,8 @@ _PART_DIRS = {
     3: "part3",
     4: "part4",
     5: "part5",
-    6: "backmatter",
+    6: "part6",
+    7: "part7",
 }
 
 # Part number → its display title (mirrors the `part-title` metadata; kept here so a part with no
@@ -382,7 +385,8 @@ _PART_TITLES = {
     3: "The Model Zoo",
     4: "Putting It to Work",
     5: "A MAGE Case Study",
-    6: "Back Matter",
+    6: "Reflections",
+    7: "Back Matter",
 }
 
 # Per-Part epigraph rendered at the opener of the first chapter in each numbered Part. Each is a
@@ -774,7 +778,7 @@ def parse_chapter(path: pathlib.Path, part: int, chapter: int, metrics: dict[str
         # Redirect any authored link to a now-dropped (non-flagship) appendix page to the live web entry, so
         # a main-narrative cross-reference to a mechanism the print appendix omits stays resolvable.
         "body_md": _redirect_dropped_appendix_links("\n".join(lines).strip()),
-        "is_matter": part in (0, 6),  # front / back matter — no "Chapter N" kicker
+        "is_matter": part in (0, 7),  # front / back matter — no "Chapter N" kicker
         # Pull the Mermaid runtime onto this page only if the chapter carries a ```mermaid fence
         # (the Model Zoo chapters reuse the appendix Structure diagrams; other chapters do not).
         "mermaid": "```mermaid" in body,
@@ -2086,7 +2090,7 @@ def _part_label(c: dict) -> str:
     themselves; numbered Parts get 'Part N — Title'."""
     if c.get("is_appendix"):
         return c["part_title"]
-    if c["part"] in (0, 6):
+    if c["part"] in (0, 7):
         return c["part_title"]
     return f'Part {c["part"]} — {c["part_title"]}'
 
@@ -5068,7 +5072,7 @@ def compute_word_counts(chapters: list[dict]) -> WordCounts:
                 body_part_order.append(part)
             body_by_part[part] += wc
 
-    body_parts = [(_PART_TITLES.get(p, f"Part {p}") if p in (0, 6)
+    body_parts = [(_PART_TITLES.get(p, f"Part {p}") if p in (0, 7)
                    else f"Part {p} — {_PART_TITLES.get(p, '')}", body_by_part[p])
                   for p in body_part_order]
     body_total = sum(body_by_part.values())
@@ -5801,8 +5805,8 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
     if missing_titles:
         problems.append(f"{len(missing_titles)} chapter title(s) missing from PDF: {missing_titles[:5]}")
 
-    # Every rendered Part title (numbered Parts 1–5 get a divider; front/back matter do not).
-    rendered_parts = sorted({c["part"] for c in full if c["part"] not in (0, 6)})
+    # Every rendered Part title (numbered Parts 1–6 get a divider; front/back matter do not).
+    rendered_parts = sorted({c["part"] for c in full if c["part"] not in (0, 7)})
     for p in rendered_parts:
         appendix_part = next((c for c in full if c["part"] == p and c.get("is_appendix")), None)
         pt = appendix_part["part_title"] if appendix_part else _PART_TITLES.get(p, "")
@@ -6085,11 +6089,12 @@ def build() -> int:
         else:
             num_label = f'Chapter {c["seq"]}'
         kicker = _kicker_html(chapters, i, num_label)
-        # `part.chapter` heading number — body chapters (Parts 1-5) + back-matter body get it; front-matter
-        # apparatus (part 0) and the appendix (its own A/B/C locators) stay unnumbered. Display-only: it
-        # prefixes the chapter H1 here and, as `section_prefix` below, each `## ` section — and never touches
-        # a heading's `{#slug}` id anchor, so cross-refs, index-defs, and glossary pointers keep resolving.
-        chap_num = (None if c["part"] == 0 or c.get("is_appendix")
+        # `part.chapter` heading number — numbered body chapters (Parts 1-6) get it; front-matter
+        # apparatus (part 0), true back matter (part 7 — about-the-author, colophon), and the appendix
+        # (its own A/B/C locators) stay unnumbered. Display-only: it prefixes the chapter H1 here and, as
+        # `section_prefix` below, each `## ` section — and never touches a heading's `{#slug}` id anchor,
+        # so cross-refs, index-defs, and glossary pointers keep resolving.
+        chap_num = (None if c.get("is_matter") or c.get("is_appendix")
                     else f'{c["part"]}.{c["chapter"]}')
         chap_num_html = f'<span class="chap-num">{html.escape(chap_num)}</span> ' if chap_num else ""
         header = (
@@ -6103,7 +6108,7 @@ def build() -> int:
         _number_citations(c["slug"], c["body_md"])
         cited_keys = list(_CITE_STATE["order"])
         # `## ` sections carry a `part.chapter.N` display prefix wherever the chapter H1 is numbered (body
-        # Parts 1-5 + back-matter); front-matter apparatus and the appendix stay unnumbered (`chap_num` None).
+        # Parts 1-6); front/back-matter apparatus and the appendix stay unnumbered (`chap_num` None).
         section_prefix = chap_num
         body = md_to_html(c["body_md"], anchor_map=page_anchor_maps.get(c["slug"]),
                           section_prefix=section_prefix)

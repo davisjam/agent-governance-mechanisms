@@ -96,7 +96,7 @@
         "0.3-preface",
         "1.1-the-printer",
         "4.5-lessons-learned",
-        "6.2-conclusion"
+        "6.3-conclusion"
       ],
       "body_depth": 2,
       "front_loaded": false,
@@ -123,7 +123,7 @@
         "0.3-preface",
         "1.2-mage-by-example",
         "5.4-the-road-to-mage",
-        "6.1-implications-for-se"
+        "6.2-implications-for-se"
       ],
       "body_depth": 2,
       "front_loaded": false,
@@ -219,7 +219,7 @@
         "4.1-brownfield",
         "4.2-the-skills",
         "4.5-lessons-learned",
-        "6.1-implications-for-se"
+        "6.2-implications-for-se"
       ],
       "body_depth": 8,
       "front_loaded": false,
@@ -423,8 +423,8 @@
         "0.3-preface",
         "3.7-the-scope-of-modeling",
         "4.4-training-data",
-        "6.1-implications-for-se",
-        "6.2-conclusion"
+        "6.2-implications-for-se",
+        "6.3-conclusion"
       ],
       "body_depth": 4,
       "front_loaded": false,
@@ -453,8 +453,8 @@
         "1.5-the-engineers-seat",
         "4.5-lessons-learned",
         "5.4-the-road-to-mage",
-        "6.1-implications-for-se",
-        "6.2-conclusion"
+        "6.2-implications-for-se",
+        "6.3-conclusion"
       ],
       "body_depth": 4,
       "front_loaded": false,
@@ -487,7 +487,7 @@
         "5.2-the-timeline-and-the-work",
         "5.3-the-built-system",
         "5.4-the-road-to-mage",
-        "6.1-implications-for-se"
+        "6.2-implications-for-se"
       ],
       "body_depth": 5,
       "front_loaded": false,
@@ -770,12 +770,12 @@
       "exempt": null
     },
     {
-      "slug": "6.0-toward-a-theory-of-mage",
+      "slug": "6.1-toward-a-theory-of-mage",
       "advances": [],
       "exempt": null
     },
     {
-      "slug": "6.1-implications-for-se",
+      "slug": "6.2-implications-for-se",
       "advances": [
         "oversight-does-not-scale",
         "govern-the-environment",
@@ -786,7 +786,7 @@
       "exempt": "discussion"
     },
     {
-      "slug": "6.2-conclusion",
+      "slug": "6.3-conclusion",
       "advances": [
         "fault-lies-in-instructions",
         "mage-becomes-practical",
@@ -795,7 +795,7 @@
       "exempt": "conclusion"
     },
     {
-      "slug": "6.4-colophon",
+      "slug": "7.2-colophon",
       "advances": [],
       "exempt": null
     }
@@ -807,11 +807,11 @@
         "advances": 0
       },
       {
-        "chapter": "6.0-toward-a-theory-of-mage",
+        "chapter": "6.1-toward-a-theory-of-mage",
         "advances": 0
       },
       {
-        "chapter": "6.4-colophon",
+        "chapter": "7.2-colophon",
         "advances": 0
       }
     ],
@@ -833,7 +833,7 @@
           "4.1-brownfield",
           "4.2-the-skills",
           "4.5-lessons-learned",
-          "6.1-implications-for-se"
+          "6.2-implications-for-se"
         ]
       },
       {

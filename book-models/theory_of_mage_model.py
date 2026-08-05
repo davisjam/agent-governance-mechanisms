@@ -42,7 +42,7 @@ _BOOK = os.path.join(_ROOT, "book")
 _DECLARED = os.path.join(_HERE, "theory_of_mage_declared.json")
 
 #: The page the hypotheses table is authored into (parity target).
-_PAGE_REL = os.path.join("backmatter", "6.0-toward-a-theory-of-mage.md")
+_PAGE_REL = os.path.join("part6", "6.1-toward-a-theory-of-mage.md")
 
 #: The ratified counts — encode the author's set so a silent add/drop/reclassify reddens (the dashboard
 #: model's C5-analogue: the count guard is the backstop against silent H-table drift).

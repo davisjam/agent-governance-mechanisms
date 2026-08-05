@@ -778,10 +778,11 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     them as DIRECTIVE, so we re-read the raw slice for the slug), (b) fold a mermaid's following italic
     caption, and (c) emit each block."""
     # `part.chapter` chapter number + `part.chapter.N` section numbers — the print twin of the web build's
-    # `chap-num`/`sec-num` (D67a). Body chapters (Parts 1-5) + back-matter body are numbered; front matter
-    # (part 0) and the appendix (its own A/B/C locators) are not. Numbers are display-only — they never touch
-    # a heading anchor, so `@ref`/metadata queries keep resolving.
-    numbered = chapter.part != 0 and not chapter.slug.startswith("appendix")
+    # `chap-num`/`sec-num` (D67a). Numbered body chapters (Parts 1-6) get numbers; front matter (part 0),
+    # true back matter (part 7 — apparatus), and the appendix (its own A/B/C locators) do not. This keeps
+    # the PDF in step with the web build's `is_matter = part in (0, 7)`. Numbers are display-only — they
+    # never touch a heading anchor, so `@ref`/metadata queries keep resolving.
+    numbered = chapter.part not in (0, 7) and not chapter.slug.startswith("appendix")
     is_appendix = chapter.slug.startswith("appendix")
     chap_num = f"{chapter.part}.{chapter.chapter}" if numbered else None
     title_num = f"#text(fill: dt.muted)[{chap_num}] " if chap_num else ""
@@ -1111,13 +1112,13 @@ def _copyright_page_typst(ack_chapter: ir.Chapter, default_mod: str) -> str:
 
 def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
     """A part-divider page before the first chapter of a numbered Part or an appendix Part. Front matter
-    (0) and back matter (6) get no divider — they flow as chapters. Returns the Typst for the divider, or
-    None when this part gets none. The part title matches the web book's `_PART_TITLES` for numbered parts;
-    an appendix part reuses its own family name (e.g. "Appendix A — the pattern language")."""
-    if part in (0, 6):
+    (0) and true back matter (7 — apparatus) get no divider — they flow as chapters. Returns the Typst for
+    the divider, or None when this part gets none. The part title matches the web book's `_PART_TITLES` for
+    numbered parts; an appendix part reuses its own family name (e.g. "Appendix A — the pattern language")."""
+    if part in (0, 7):
         return None
     part_titles = bb._PART_TITLES
-    if part in part_titles and part <= 5:
+    if part in part_titles and part <= 6:
         kicker, title = f"Part {part}", part_titles[part]
     else:
         # Appendix part: the chapter title carries the family (e.g. "Appendix A - 9. …" / "Appendix D — …").

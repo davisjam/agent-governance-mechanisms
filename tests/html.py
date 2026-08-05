@@ -184,11 +184,12 @@ def check_no_empty_table_header():
 def _book_md_files() -> list[str]:
     """Every book chapter-source markdown file. The `[data:]` markers and the `{#anchor}` heading ids live
     in the SOURCE markdown, not the rendered HTML, so the data-claims lint reads the source of truth
-    directly. Globs all seven chapter dirs — frontmatter (Part 0) and backmatter (Part 6) hold real chapter
-    files (e.g. the colophon), not just part1-5; a part*-only glob would miss a data-claim living there."""
+    directly. Globs all chapter dirs — frontmatter (Part 0), part6 (Reflections), and part7 (Back Matter
+    apparatus, e.g. the colophon) hold real chapter files, not just part1-5; a part1-5-only glob would miss
+    a data-claim living there."""
     import glob
     files: list[str] = []
-    for sub in ("frontmatter", "part1", "part2", "part3", "part4", "part5", "backmatter"):
+    for sub in ("frontmatter", "part1", "part2", "part3", "part4", "part5", "part6", "part7"):
         files.extend(glob.glob(os.path.join(ROOT, "book", sub, "*.md")))
     return sorted(files)
 

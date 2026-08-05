@@ -142,8 +142,8 @@
     "0.5-acknowledgments": "apparatus",
     "3.7-the-scope-of-modeling": "end-of-part-synthesis",
     "4.5-lessons-learned": "discussion",
-    "6.1-implications-for-se": "discussion",
-    "6.2-conclusion": "conclusion"
+    "6.2-implications-for-se": "discussion",
+    "6.3-conclusion": "conclusion"
   },
   "chapter_advances": {
     "0.3-preface": ["abundant-implementation", "fault-lies-in-instructions", "oversight-does-not-scale", "churn-is-the-limit", "three-not-knowings-cause-churn", "govern-the-environment", "modeling-thesis", "alignment-thesis", "theses-treat-the-causes", "failures-become-machinery", "sync-cost-reduced", "mage-becomes-practical", "grounded-in-one-case"],
@@ -178,7 +178,7 @@
     "5.2-the-timeline-and-the-work": ["abundant-implementation", "grounded-in-one-case"],
     "5.3-the-built-system": ["modeling-thesis", "grounded-in-one-case"],
     "5.4-the-road-to-mage": ["oversight-does-not-scale", "seat-moves", "grounded-in-one-case"],
-    "6.1-implications-for-se": ["oversight-does-not-scale", "govern-the-environment", "mage-becomes-practical", "seat-moves", "grounded-in-one-case"],
-    "6.2-conclusion": ["fault-lies-in-instructions", "mage-becomes-practical", "seat-moves"]
+    "6.2-implications-for-se": ["oversight-does-not-scale", "govern-the-environment", "mage-becomes-practical", "seat-moves", "grounded-in-one-case"],
+    "6.3-conclusion": ["fault-lies-in-instructions", "mage-becomes-practical", "seat-moves"]
   }
 }

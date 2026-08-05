@@ -38,11 +38,11 @@ _GENERATED = {"index", "book-index", "catalogue-figure", "figures", "bibliograph
 
 
 def _all_book_md_files() -> list[str]:
-    """Every book chapter-source markdown — front matter, the five parts, AND back matter. (The data-claims
-    lint's helper globs only `part*`; citations also live in the preface, the conclusion, and 6.0, so this
-    covers all seven chapter dirs.)"""
+    """Every book chapter-source markdown — front matter, the six numbered parts, AND back matter. (The
+    data-claims lint's helper globs only `part*`; citations also live in the preface, the Reflections
+    chapters, and the colophon, so this covers all chapter dirs.)"""
     out: list[str] = []
-    for sub in ("frontmatter", "part1", "part2", "part3", "part4", "part5", "backmatter"):
+    for sub in ("frontmatter", "part1", "part2", "part3", "part4", "part5", "part6", "part7"):
         out += glob.glob(os.path.join(_BOOK, sub, "*.md"))
     return sorted(out)
 

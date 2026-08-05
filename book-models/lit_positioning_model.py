@@ -187,13 +187,13 @@ def _chapter_slugs() -> "set[str]":
 
 
 def _chapter_text(slug: str) -> str:
-    """The source markdown of a chapter slug (book/{frontmatter,part<N>,backmatter}/<slug>.md), or '' when
-    the slug has no file. Globs all seven chapter dirs — Part 0 (frontmatter) and Part 6 (backmatter) hold
-    real chapter files (the preface, the conclusion, 6.0), not just part1-5; a part*-only glob misses them
-    and false-flags a landed cite as absent. Used by LP3 to confirm a landed cite actually appears in a
-    target chapter."""
+    """The source markdown of a chapter slug (book/{frontmatter,part<N>}/<slug>.md), or '' when the slug
+    has no file. Globs all chapter dirs — Part 0 (frontmatter), Part 6 (Reflections), and Part 7 (Back
+    Matter apparatus) hold real chapter files (the preface, the theory/implications/conclusion, the
+    colophon), not just part1-5; a part1-5-only glob misses them and false-flags a landed cite as absent.
+    Used by LP3 to confirm a landed cite actually appears in a target chapter."""
     import glob
-    for sub in ("frontmatter", "part1", "part2", "part3", "part4", "part5", "backmatter"):
+    for sub in ("frontmatter", "part1", "part2", "part3", "part4", "part5", "part6", "part7"):
         hits = glob.glob(os.path.join(_ROOT, "book", sub, slug + ".md"))
         if hits:
             return open(hits[0], encoding="utf-8").read()

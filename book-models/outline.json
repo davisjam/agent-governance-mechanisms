@@ -5295,7 +5295,7 @@
       ]
     },
     {
-      "slug": "6.0-toward-a-theory-of-mage",
+      "slug": "6.1-toward-a-theory-of-mage",
       "part": 6,
       "sections": [
         {
@@ -5482,7 +5482,7 @@
       "preamble_points": []
     },
     {
-      "slug": "6.1-implications-for-se",
+      "slug": "6.2-implications-for-se",
       "part": 6,
       "sections": [
         {
@@ -5615,7 +5615,7 @@
       "preamble_points": []
     },
     {
-      "slug": "6.2-conclusion",
+      "slug": "6.3-conclusion",
       "part": 6,
       "sections": [
         {
@@ -5640,8 +5640,8 @@
       "preamble_points": []
     },
     {
-      "slug": "6.4-colophon",
-      "part": 6,
+      "slug": "7.2-colophon",
+      "part": 7,
       "sections": [
         {
           "section_id": "the-production-briefly",

@@ -1219,7 +1219,7 @@ def cmd_validate(_args) -> int:
     # ORDERING of the glossary/concept TERM class: a term's canonical definition (its `index-def`, or the front
     # glossary when registered there — front matter, always define-first) must sit no later than the page that
     # first USES it (a tracked `index-example`). The one tracked use-before-def that stood at landing
-    # (`judgment-is-the-scarce-resource` — exemplified in 4.5-lessons-learned but defined in 6.2-conclusion)
+    # (`judgment-is-the-scarce-resource` — exemplified in 4.5-lessons-learned but defined in 6.3-conclusion)
     # was reconciled by registering the term in the front glossary, so the finding drained to 0 and the lint
     # flipped from AUDIT-ONLY to BLOCKING (repo blocking-lint discipline: land audit-only, drain, then gate).
     # A newly-authored use-before-def now reddens validate. Tracked uses only — a first mention in undecorated

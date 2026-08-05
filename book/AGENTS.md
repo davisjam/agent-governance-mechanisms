@@ -48,15 +48,17 @@ book/
   part3/          3.1-… … 3.4-…                             (Part 3 — The Governed Engineering Environment)
   part4/          4.1-… … 4.6-…                             (Part 4 — The Model Zoo)
   part5/          5.1-… … 5.5-…                             (Part 5 — Putting It to Work)
-  backmatter/     6.2-conclusion.md                         (Part 6 — Back Matter)
+  part6/          6.1-toward-a-theory-of-mage.md, 6.2-implications-for-se.md, 6.3-conclusion.md   (Part 6 — Reflections)
+  part7/          7.1-about-the-author.md, 7.2-colophon.md  (Part 7 — Back Matter)
   data/metrics.json          # headline numbers, referenced from prose via {{token}}
   assets/                     # figure assets (inline SVGs, rasters)
   appendix-fills/<role>/<slug>.md   # per-entry Structure + Sample Code fills for the appendix
   index-terms.md             # curated supplement to the term index
 ```
 
-- **Part numbers:** front matter is Part 0, the numbered Parts are 1–5, back matter is Part 6. Appendix
-  Parts (A/B/C) are numbered after these.
+- **Part numbers:** front matter is Part 0, the numbered Parts are 1–6 (Part 6 — Reflections — holds the
+  substantive closing chapters), true back matter (apparatus) is Part 7. Appendix Parts (A/B/C) are
+  numbered after these.
 - **The filename's leading digit must match its directory** — a `2.1-…md` under `part1/` fails the build
   loud (guards a misfiled chapter).
 - **Chapters sort by `(part, chapter)`.** A stray non-`<N>.<M>-` file in a part dir is skipped, not
@@ -365,7 +367,7 @@ concept registry.
 
 ## 7. Quick checklist for editing the book
 
-- Edit markdown under `part<N>/`, `frontmatter/`, `backmatter/` — never the `.html`.
+- Edit markdown under `part<N>/`, `frontmatter/` — never the `.html`.
 - New recurring number → `data/metrics.json`, referenced as `{{token}}`.
 - New figure → drop the asset in `assets/`, reference with `<!-- figure: assets/<file> | caption -->`,
   and **introduce it**: put `<!-- label: <key> -->` on the line above it and name it with a `[ref:<key>]`

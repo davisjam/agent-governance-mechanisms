@@ -17,7 +17,7 @@
       "labels": 90,
       "refs": 90,
       "chapters": 37,
-      "parts": 7,
+      "parts": 8,
       "points": 568,
       "terms": 292,
       "claims": 19
@@ -369,7 +369,7 @@
         }
       ]
     },
-    "chapter:6.1-implications-for-se": {
+    "chapter:6.2-implications-for-se": {
       "kind": "chapter",
       "dependents": [
         {
@@ -379,7 +379,7 @@
         },
         {
           "view": "outcomes",
-          "element": "6.1-implications-for-se::evaluate-what-the-method-changes-for-how-software",
+          "element": "6.2-implications-for-se::evaluate-what-the-method-changes-for-how-software",
           "role": "primary-unit"
         },
         {
@@ -389,7 +389,7 @@
         }
       ]
     },
-    "chapter:6.2-conclusion": {
+    "chapter:6.3-conclusion": {
       "kind": "chapter",
       "dependents": [
         {
@@ -399,7 +399,7 @@
         },
         {
           "view": "outcomes",
-          "element": "6.2-conclusion::situate-the-book-within-the-software-engineering",
+          "element": "6.3-conclusion::situate-the-book-within-the-software-engineering",
           "role": "primary-unit"
         },
         {
@@ -6179,7 +6179,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::a-capability-model-not-a-maturity-model",
+          "element": "6.1-toward-a-theory-of-mage::a-capability-model-not-a-maturity-model",
           "role": "section-anchor"
         }
       ]
@@ -6354,7 +6354,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::apparatus-measures-are-indicators-not-quality",
+          "element": "6.1-toward-a-theory-of-mage::apparatus-measures-are-indicators-not-quality",
           "role": "section-anchor"
         }
       ]
@@ -6394,7 +6394,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::attention-based-versus-mechanized-control",
+          "element": "6.1-toward-a-theory-of-mage::attention-based-versus-mechanized-control",
           "role": "section-anchor"
         }
       ]
@@ -6474,7 +6474,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::closing",
+          "element": "6.1-toward-a-theory-of-mage::closing",
           "role": "section-anchor"
         }
       ]
@@ -6529,7 +6529,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::constructs-and-path-specific-moderators",
+          "element": "6.1-toward-a-theory-of-mage::constructs-and-path-specific-moderators",
           "role": "section-anchor"
         }
       ]
@@ -6564,7 +6564,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::corollaries-and-specializations",
+          "element": "6.1-toward-a-theory-of-mage::corollaries-and-specializations",
           "role": "section-anchor"
         }
       ]
@@ -6699,7 +6699,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::empirical-research-opportunities",
+          "element": "6.2-implications-for-se::empirical-research-opportunities",
           "role": "section-anchor"
         }
       ]
@@ -6709,7 +6709,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::epistemic-note",
+          "element": "6.1-toward-a-theory-of-mage::epistemic-note",
           "role": "section-anchor"
         }
       ]
@@ -6749,7 +6749,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::evolution-of-this-theory",
+          "element": "6.1-toward-a-theory-of-mage::evolution-of-this-theory",
           "role": "section-anchor"
         }
       ]
@@ -6849,7 +6849,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::from-governing-what-you-know-to-discovering-what-you-don-t",
+          "element": "6.2-implications-for-se::from-governing-what-you-know-to-discovering-what-you-don-t",
           "role": "section-anchor"
         }
       ]
@@ -6939,7 +6939,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::governing-the-oracle-fallible-test-suites-as-a-research-frontier",
+          "element": "6.2-implications-for-se::governing-the-oracle-fallible-test-suites-as-a-research-frontier",
           "role": "section-anchor"
         }
       ]
@@ -7124,7 +7124,7 @@
         },
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::limitations",
+          "element": "6.2-implications-for-se::limitations",
           "role": "section-anchor"
         }
       ]
@@ -7134,7 +7134,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::limits-and-human-judgment",
+          "element": "7.2-colophon::limits-and-human-judgment",
           "role": "section-anchor"
         }
       ]
@@ -7154,7 +7154,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::mage-applied-outside-software",
+          "element": "7.2-colophon::mage-applied-outside-software",
           "role": "section-anchor"
         }
       ]
@@ -7164,7 +7164,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::managing-the-workforce-is-not-governing-the-environment",
+          "element": "6.2-implications-for-se::managing-the-workforce-is-not-governing-the-environment",
           "role": "section-anchor"
         }
       ]
@@ -7244,7 +7244,7 @@
         },
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::models-as-the-universal-language-of-engineering",
+          "element": "6.2-implications-for-se::models-as-the-universal-language-of-engineering",
           "role": "section-anchor"
         }
       ]
@@ -7304,7 +7304,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::outcomes-and-observables",
+          "element": "6.1-toward-a-theory-of-mage::outcomes-and-observables",
           "role": "section-anchor"
         }
       ]
@@ -7314,7 +7314,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::principal-predictions",
+          "element": "6.1-toward-a-theory-of-mage::principal-predictions",
           "role": "section-anchor"
         }
       ]
@@ -7364,7 +7364,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::research-agenda",
+          "element": "6.1-toward-a-theory-of-mage::research-agenda",
           "role": "section-anchor"
         }
       ]
@@ -7544,7 +7544,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::soft-mechanisms-saturate-the-substrate-has-to-become-machine-actionable",
+          "element": "6.2-implications-for-se::soft-mechanisms-saturate-the-substrate-has-to-become-machine-actionable",
           "role": "section-anchor"
         }
       ]
@@ -7629,7 +7629,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::the-beautiful-garden-why-per-task-ablation-cannot-price-a-governed-environment",
+          "element": "6.2-implications-for-se::the-beautiful-garden-why-per-task-ablation-cannot-price-a-governed-environment",
           "role": "section-anchor"
         }
       ]
@@ -7639,7 +7639,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::the-blue-path-bootstrap-governance",
+          "element": "6.1-toward-a-theory-of-mage::the-blue-path-bootstrap-governance",
           "role": "section-anchor"
         }
       ]
@@ -7659,7 +7659,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::the-churn-relation",
+          "element": "6.1-toward-a-theory-of-mage::the-churn-relation",
           "role": "section-anchor"
         }
       ]
@@ -7749,7 +7749,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::the-dynamic-model",
+          "element": "6.1-toward-a-theory-of-mage::the-dynamic-model",
           "role": "section-anchor"
         }
       ]
@@ -7829,7 +7829,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::the-four-dynamics",
+          "element": "6.1-toward-a-theory-of-mage::the-four-dynamics",
           "role": "section-anchor"
         }
       ]
@@ -7919,7 +7919,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::the-green-loop-governance-adaptation",
+          "element": "6.1-toward-a-theory-of-mage::the-green-loop-governance-adaptation",
           "role": "section-anchor"
         }
       ]
@@ -7974,7 +7974,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::the-judgment-moved-and-it-moved-toward-you",
+          "element": "6.2-implications-for-se::the-judgment-moved-and-it-moved-toward-you",
           "role": "section-anchor"
         }
       ]
@@ -8094,7 +8094,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::the-manuscript-became-an-engineered-system",
+          "element": "7.2-colophon::the-manuscript-became-an-engineered-system",
           "role": "section-anchor"
         }
       ]
@@ -8114,7 +8114,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::the-methodology-of-deep-single-case-evidence",
+          "element": "6.2-implications-for-se::the-methodology-of-deep-single-case-evidence",
           "role": "section-anchor"
         }
       ]
@@ -8179,7 +8179,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::the-models-that-governed-it",
+          "element": "7.2-colophon::the-models-that-governed-it",
           "role": "section-anchor"
         }
       ]
@@ -8224,7 +8224,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::the-new-measurement-regime",
+          "element": "6.2-implications-for-se::the-new-measurement-regime",
           "role": "section-anchor"
         }
       ]
@@ -8244,7 +8244,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.2-conclusion::the-part-that-stays-yours",
+          "element": "6.3-conclusion::the-part-that-stays-yours",
           "role": "section-anchor"
         }
       ]
@@ -8319,7 +8319,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::the-production-briefly",
+          "element": "7.2-colophon::the-production-briefly",
           "role": "section-anchor"
         }
       ]
@@ -8329,7 +8329,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::the-purple-loop-capability-amplification",
+          "element": "6.1-toward-a-theory-of-mage::the-purple-loop-capability-amplification",
           "role": "section-anchor"
         }
       ]
@@ -8359,7 +8359,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::the-reasoning-horizon-proposition",
+          "element": "6.1-toward-a-theory-of-mage::the-reasoning-horizon-proposition",
           "role": "section-anchor"
         }
       ]
@@ -8369,7 +8369,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::the-red-loop-churn-makes-missing-governance-visible",
+          "element": "6.1-toward-a-theory-of-mage::the-red-loop-churn-makes-missing-governance-visible",
           "role": "section-anchor"
         }
       ]
@@ -8639,7 +8639,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::three-gains-that-usually-trade-against-each-other",
+          "element": "6.2-implications-for-se::three-gains-that-usually-trade-against-each-other",
           "role": "section-anchor"
         }
       ]
@@ -8724,7 +8724,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.0-toward-a-theory-of-mage::two-directional-relations",
+          "element": "6.1-toward-a-theory-of-mage::two-directional-relations",
           "role": "section-anchor"
         }
       ]
@@ -8849,7 +8849,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::what-migrates-into-the-environment",
+          "element": "6.2-implications-for-se::what-migrates-into-the-environment",
           "role": "section-anchor"
         }
       ]
@@ -8869,7 +8869,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.4-colophon::what-the-language-models-did",
+          "element": "7.2-colophon::what-the-language-models-did",
           "role": "section-anchor"
         }
       ]
@@ -8919,7 +8919,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.1-implications-for-se::what-this-changes-for-how-we-measure-staff-and-teach",
+          "element": "6.2-implications-for-se::what-this-changes-for-how-we-measure-staff-and-teach",
           "role": "section-anchor"
         }
       ]
@@ -9039,7 +9039,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "6.2-conclusion::where-to-go-next",
+          "element": "6.3-conclusion::where-to-go-next",
           "role": "section-anchor"
         }
       ]

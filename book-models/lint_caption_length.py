@@ -34,7 +34,7 @@ BOOK = HERE.parent / "book"
 
 # Chapter source dirs — front/back matter + the five parts. Appendix fills / README / manifests are not
 # authored-caption chapters, matching the book suite's own chapter-source scope.
-CHAPTER_DIRS = ("frontmatter", "part1", "part2", "part3", "part4", "part5", "backmatter")
+CHAPTER_DIRS = ("frontmatter", "part1", "part2", "part3", "part4", "part5", "part6", "part7")
 
 MAX_SENTENCES = 3
 MAX_WORDS = 50

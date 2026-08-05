@@ -155,6 +155,8 @@
       "closing_anchor": "system that shipped. The next chapter gives you a first concrete look.",
       "delivers": {
         "concepts": [
+          "reasoning-horizon",
+          "long-horizon-task",
           "one-shot-scripting",
           "supervised-autonomy",
           "printer-metaphor",
@@ -1218,7 +1220,7 @@
       ]
     },
     {
-      "slug": "6.1-implications-for-se",
+      "slug": "6.2-implications-for-se",
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",
@@ -1252,7 +1254,7 @@
       ]
     },
     {
-      "slug": "6.2-conclusion",
+      "slug": "6.3-conclusion",
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",

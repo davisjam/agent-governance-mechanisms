@@ -19,8 +19,9 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)  # the governance-catalog repo root (book-models/ is one level down)
 _BOOK = os.path.join(_ROOT, "book")
 
-#: The chapter-bearing subdirectories, in reading order.
-_SUBDIRS = ("frontmatter", "part1", "part2", "part3", "part4", "part5", "backmatter")
+#: The chapter-bearing subdirectories, in reading order. Part 6 (Reflections) and Part 7 (Back Matter
+#: apparatus) replaced the old single `backmatter/` when the closing chapters were promoted to a named Part.
+_SUBDIRS = ("frontmatter", "part1", "part2", "part3", "part4", "part5", "part6", "part7")
 
 #: A chapter file name is `<N>.<M>-slug.md`.
 _CHAPTER_RE = re.compile(r"\d+\.\d+-")

@@ -32,7 +32,7 @@
     "units_serving_as_elaborative": 19,
     "sections_total": 265,
     "sections_primary_of_an_outcome": 41,
-    "modules": 6,
+    "modules": 7,
     "lessons": 33
   },
   "taxonomy": {
@@ -423,26 +423,34 @@
         ],
         "lessons": [
           {
-            "lesson": "6.0-toward-a-theory-of-mage",
+            "lesson": "6.1-toward-a-theory-of-mage",
             "own_outcomes": [],
             "section_outcomes": []
           },
           {
-            "lesson": "6.1-implications-for-se",
+            "lesson": "6.2-implications-for-se",
             "own_outcomes": [
-              "6.1-implications-for-se::evaluate-what-the-method-changes-for-how-software"
+              "6.2-implications-for-se::evaluate-what-the-method-changes-for-how-software"
             ],
             "section_outcomes": []
           },
           {
-            "lesson": "6.2-conclusion",
+            "lesson": "6.3-conclusion",
             "own_outcomes": [
-              "6.2-conclusion::situate-the-book-within-the-software-engineering"
+              "6.3-conclusion::situate-the-book-within-the-software-engineering"
             ],
             "section_outcomes": []
-          },
+          }
+        ]
+      },
+      {
+        "module": "part-7",
+        "number": 7,
+        "title": "Part 7",
+        "own_outcomes": [],
+        "lessons": [
           {
-            "lesson": "6.4-colophon",
+            "lesson": "7.2-colophon",
             "own_outcomes": [],
             "section_outcomes": []
           }
@@ -571,7 +579,7 @@
       "granularity": "part",
       "primary_unit": "part-6",
       "secondary_units": [
-        "6.2-conclusion"
+        "6.3-conclusion"
       ],
       "verb": "evaluate",
       "obj": "what the method changes for how software engineering is measured, staffed, and taught",
@@ -932,9 +940,9 @@
       "gap_note": null
     },
     {
-      "outcome_id": "6.1-implications-for-se::evaluate-what-the-method-changes-for-how-software",
+      "outcome_id": "6.2-implications-for-se::evaluate-what-the-method-changes-for-how-software",
       "granularity": "chapter",
-      "primary_unit": "6.1-implications-for-se",
+      "primary_unit": "6.2-implications-for-se",
       "secondary_units": [],
       "verb": "evaluate",
       "obj": "what the method changes for how software engineering is measured, staffed, and taught",
@@ -945,9 +953,9 @@
       "gap_note": null
     },
     {
-      "outcome_id": "6.2-conclusion::situate-the-book-within-the-software-engineering",
+      "outcome_id": "6.3-conclusion::situate-the-book-within-the-software-engineering",
       "granularity": "chapter",
-      "primary_unit": "6.2-conclusion",
+      "primary_unit": "6.3-conclusion",
       "secondary_units": [],
       "verb": "situate",
       "obj": "the book within the software-engineering literature and identify what stays the reader's own",
@@ -1358,7 +1366,7 @@
       "granularity": "section",
       "primary_unit": "the-residual-goals-no-mechanism-reaches",
       "secondary_units": [
-        "6.1-implications-for-se"
+        "6.2-implications-for-se"
       ],
       "verb": "identify",
       "obj": "the residual goals no mechanism reaches, why they stay human judgment, and how authoring a spec pulls one out",
