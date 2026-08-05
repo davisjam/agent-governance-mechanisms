@@ -1429,8 +1429,8 @@ PAGE_CSS = """
   .cc-mech-empty { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:8px 0; }
   a.cc-read-link { font-weight:600; text-decoration:none; }
   a.cc-read-link:hover { text-decoration:underline; }
-  /* The "Concept card →" link the landing bands carry into each Concept Card. */
-  a.s-concept { display:inline-block; margin-left:14px; font-size:var(--fs-meta); font-weight:600;
+  /* The brick's single "→ read the concept" link into each rich Concept ENTRY (two-tier split). */
+  a.s-concept { display:inline-block; font-size:var(--fs-meta); font-weight:600;
                 color:var(--accent); text-decoration:none; }
   a.s-concept:hover { text-decoration:underline; }
 """
@@ -1536,11 +1536,23 @@ def render_md(md: str) -> str:
     md = re.sub(r"<!--\s*prior-art:.*?-->", "", md, flags=re.DOTALL)
     lines = md.split("\n")
     out: list[str] = []
+    fig_ns = [0]  # per-page figure counter → a unique id-namespace per spliced figure (no dup-id collision)
     i, n = 0, len(lines)
     while i < n:
         st = lines[i].strip()
         if re.match(r'^<a id="[a-z0-9-]+"></a>$', st):
             out.append(st); i += 1; continue  # bare in-page anchor target — pass through raw (not escaped)
+        mfig = re.match(r"^<!--\s*fig:\s*([^|]+?)\s*(?:\|\s*(.*?)\s*)?-->$", st)
+        if mfig:  # figure-splice directive `<!-- fig: <asset> | <caption> -->` → inline <figure> (R1: the
+            # uniform figure home; the concept-entry renderer rewrites its positional `<!-- fig: N -->` to
+            # this asset form, so book/assets stays the figure SSOT). Consume it either way — never leak.
+            asset = mfig.group(1).strip()
+            caption = _inline((mfig.group(2) or "").strip()) if (mfig.group(2) or "").strip() else ""
+            fig_svg = _inline_svg_figure("assets/" + asset, caption, cls="cc-body-fig")
+            if fig_svg:
+                fig_ns[0] += 1
+                out.append(_ns_svg_ids(fig_svg, f"cf-{fig_ns[0]}"))
+            i += 1; continue
         if st.startswith("```"):
             i += 1
             code: list[str] = []
@@ -1756,29 +1768,12 @@ LANDING_CSS = """
   .slot.slot-bigfig .s-fig svg { max-width:1080px; margin:0 auto; }
   .slot.slot-bigfig .s-words { max-width:80ch; margin:0 auto; text-align:center; }
   .slot.slot-bigfig .s-claim { max-width:74ch; margin-left:auto; margin-right:auto; }
-  .slot.slot-bigfig .s-more-text { margin-left:auto; margin-right:auto; }
-  .slot.slot-bigfig button.s-expand { margin-left:auto; margin-right:auto; text-align:center; }
 
   /* The matched thesis PAIR - two half-width cells, figure above words. */
   .pair { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
   .pair .p-cell { border-top:3px solid var(--box-thesis-rule); padding-top:14px; scroll-margin-top:16px; }
   .pair .p-cell .s-kick { color:var(--box-thesis-rule); }
   .pair .p-cell .s-fig { margin:0 0 12px; }
-
-  /* The LIGHT "expand to learn more" disclosure. The button is INJECTED by EXPAND_JS; with JS off the
-     .s-more-text block simply shows (no broken control). */
-  .s-more-text { font-size:var(--fs-card-body); color:var(--muted); line-height:1.6; margin:0 0 10px; max-width:64ch; }
-  .idea-hero .s-more-text { margin-left:auto; margin-right:auto; }
-  button.s-expand { display:block; font:inherit; font-size:var(--fs-meta); font-weight:700;
-             color:var(--accent); background:none; border:none; padding:0; margin:0 0 10px; cursor:pointer;
-             letter-spacing:.01em; text-align:left; }
-  button.s-expand::before { content:"\\203A\\00a0"; }
-  button.s-expand:hover { text-decoration:underline; }
-  button.s-expand:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:3px; }
-  .idea-hero button.s-expand { margin:0 auto 10px; text-align:center; }
-  .s-read { display:inline-block; font-size:var(--fs-meta); font-weight:700; color:var(--accent);
-            text-decoration:none; }
-  .s-read:hover { text-decoration:underline; }
 
   /* ---- the closing: conclusion + four ways in ----------------------------------------------- */
   /* A wide, fluid footer block (author feedback: the closing read too narrow on a wide display). It uses
@@ -2068,23 +2063,12 @@ def _big_ideas_ordered() -> list[dict]:
     return [raw[k] | {"_slug": k} for k in order if k in raw]
 
 
-def _read_link(book_home: str, label: str = "Read in the book →") -> str:
-    """The uniform per-slot book link — one consistent verb+destination across every Big Idea."""
-    return f'<a class="s-read" href="{_attr(book_home)}">{_esc(label)}</a>'
-
-
 def _concept_link(slug: str) -> str:
-    """The per-band link into the idea's Concept Card page (root-level `concept-<slug>.html`). This is the
-    inbound link the orphan gate requires and the concept model's CC4 reachability join checks."""
-    return f'<a class="s-concept" href="concept-{_attr(slug)}.html">Concept card →</a>'
-
-
-def _more_block(rec_id: str, more: str) -> str:
-    """The LIGHT disclosure body. Rendered VISIBLE by default (no `hidden` attribute) so with JS off the
-    text simply shows — no broken control. The end-of-page script (EXPAND_JS) progressively enhances it:
-    it injects a keyboard-operable toggle button, collapses this block, and wires aria-expanded — CSP-safe
-    (addEventListener, no inline handler)."""
-    return f'<div class="s-more-text" id="more-{_attr(rec_id)}" data-more>{_esc(more)}</div>'
+    """The brick's single link into the idea's rich Concept ENTRY page (root-level `concept-<slug>.html`).
+    In the two-tier split the brick carries ONLY this link — figure · title · claim · '→ read the concept'
+    — so the entry is reached in one click. This is the inbound link the orphan gate requires and the
+    concept model's CC4 reachability join checks (href unchanged under the relabel, so CC4's grep holds)."""
+    return f'<a class="s-concept" href="concept-{_attr(slug)}.html">→ read the concept</a>'
 
 
 def _idea_figure(rec: dict) -> str:
@@ -2107,8 +2091,7 @@ def _big_idea_band(rec: dict, figright: bool = False, bigfig: bool = False) -> s
         f'    <p class="s-kick">{_esc(rec.get("kicker", ""))}</p>\n'
         f'    <h2 class="s-title">{_esc(rec.get("title", ""))}</h2>\n'
         f'    <p class="s-claim">{_esc(rec.get("claim", ""))}</p>\n'
-        f'    {_more_block(rec.get("id", ""), rec.get("more", ""))}\n'
-        f'    {_read_link(rec.get("book_home", ""))}{_concept_link(rec.get("_slug", ""))}\n'
+        f'    {_concept_link(rec.get("_slug", ""))}\n'
         f'  </div>\n'
         f'</div>')
 
@@ -2123,8 +2106,7 @@ def _thesis_cell(rec: dict, concept_id: str) -> str:
         f'  <p class="s-kick">{_esc(rec.get("kicker", ""))}</p>\n'
         f'  <h2 class="s-title">{_esc(rec.get("title", ""))}</h2>\n'
         f'  <p class="s-claim">{_esc(rec.get("claim", ""))}</p>\n'
-        f'  {_more_block(rec.get("id", ""), rec.get("more", ""))}\n'
-        f'  {_read_link(rec.get("book_home", ""))}{_concept_link(rec.get("_slug", ""))}\n'
+        f'  {_concept_link(rec.get("_slug", ""))}\n'
         f'</div>')
 
 
@@ -2144,8 +2126,7 @@ def _landing_big_ideas() -> str:
         f'    <p class="s-kick">{_esc(p1.get("kicker", ""))}</p>\n'
         f'    <h2 class="s-title">{_esc(p1.get("title", ""))}</h2>\n'
         f'    <p class="s-claim">{_esc(p1.get("claim", ""))}</p>\n'
-        f'    {_more_block(p1.get("id", ""), p1.get("more", ""))}\n'
-        f'    {_read_link(p1.get("book_home", ""))}{_concept_link(p1.get("_slug", ""))}\n'
+        f'    {_concept_link(p1.get("_slug", ""))}\n'
         '  </div>\n'
         '</div>')
     parts.append('<hr class="i-sep" />')
@@ -2248,32 +2229,6 @@ def _landing_reference() -> str:
         '</section>')
 
 
-# End-of-body progressive-enhancement script for the LIGHT per-slot disclosure. Each `.s-more-text` block
-# ships VISIBLE (so with JS off the text is readable — no broken control). This injects a keyboard-operable
-# toggle button before each block, collapses it, and keeps `aria-expanded` in sync. CSP-safe: it uses
-# addEventListener and DOM APIs only — no inline event handlers, no eval.
-EXPAND_JS = """<script>
-(function(){
-  var blocks = document.querySelectorAll('.s-more-text[data-more]');
-  Array.prototype.forEach.call(blocks, function(m){
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 's-expand';
-    btn.setAttribute('aria-controls', m.id);
-    btn.setAttribute('aria-expanded', 'false');
-    btn.textContent = 'Expand to learn more';
-    m.parentNode.insertBefore(btn, m);
-    m.setAttribute('hidden', '');
-    btn.addEventListener('click', function(){
-      var willOpen = m.hasAttribute('hidden');
-      if (willOpen) { m.removeAttribute('hidden'); } else { m.setAttribute('hidden', ''); }
-      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-      btn.textContent = willOpen ? 'Show less' : 'Expand to learn more';
-    });
-  });
-})();
-</script>"""
-
 LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 =====================
        The landing is a PROJECTION of the Big-Ideas model (book-models/landing-big-ideas.json), laid out
        as the book's own argument in the book's own order (Option 3 "the argument"). The hero is a
@@ -2281,9 +2236,11 @@ LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 ==============
        churn flowchart renders full-width beneath it as the landing's LEAD VISUAL. Then the stance (one
        band), the two theses (a matched pair), practice and seat (alternating bands), and the CLOSING —
        the conclusion + three ways in (full catalogue · book · quickstart). The census and the quiet
-       vocabulary/definitions/outcomes reference strip follow as back-matter (appended in cmd_build). Each
-       Big-Idea slot = figure · concise claim · a light "expand to learn more" · "Read in the book →". No
-       card masonry, no <details> peeks — a build renders every slot from the model. -->
+       vocabulary/definitions/outcomes reference strip follow as back-matter (appended in cmd_build).
+       Two-tier split: each landing BRICK shows four elements only — figure · title · concise claim · a
+       single "→ read the concept" link — and the rich material (intuition, mechanisms, related concepts,
+       extra figures, the book hand-off) lives on the standalone concept-<slug>.html ENTRY the brick links.
+       No card masonry, no <details> peeks — a build renders every brick from the model. -->
   <div class="hero-band">
     <div class="hero-lead">
       {book_title_block}
@@ -3084,8 +3041,40 @@ def cmd_build(_args) -> int:
     _sync_adoption_sequence()  # dual-emit: fill quick-start's Auto + Interactive regions from the one source block
     _ABBR_MAP = parse_abstractions()
     written = 0
+    n_concept = 0
     md_files = sorted(catalogue_md_files())
     by_path = {e.path: e for e in entries}
+    # Two-tier Concept ENTRIES: root-level `concept-<slug>.md`, hand-authored (Option B), rendered here with
+    # the model PROJECTED IN — the `<!-- more -->` directive fills from the concept's `more` (so the
+    # reasoning-horizon reframe of `more` flows straight into the entry), and each positional
+    # `<!-- fig: N -->` directive resolves against the model's figure list (fig[0] = the shared brick
+    # `figure`, fig[1..] = `entry_figures`), so the entry stays the model's projection for its figures + lead
+    # while the prose is hand-authored. The landing brick's "→ read the concept" link is the inbound edge
+    # the orphan gate needs; CC6 pins the entry's card + title + claim against the model.
+    bm_dir = os.path.join(ROOT, "book-models")
+    if bm_dir not in sys.path:
+        sys.path.insert(0, bm_dir)
+    import landing_big_ideas_model as lbi  # noqa: E402 — the two-tier Concept model + projectors
+    _concepts_by_slug = {c.slug: c for c in lbi.derive_model().concepts}
+
+    def _project_concept_entry(slug: str, raw_md: str) -> "str | None":
+        """Project the model into a concept entry's markdown before render_md: fill `<!-- more -->` from the
+        model `more`, and rewrite each positional `<!-- fig: N -->` to the asset-form directive render_md
+        splices (0 = the brick figure). Returns None if the slug is not a modeled concept."""
+        c = _concepts_by_slug.get(slug)
+        if c is None:
+            return None
+        figs = lbi.concept_figures(c)
+        out_md = raw_md.replace("<!-- more -->", c.intuition)
+
+        def _fig(m):
+            k = int(m.group(1))
+            if 0 <= k < len(figs):
+                asset, cap = figs[k]
+                return f"<!-- fig: {asset} | {cap} -->"
+            return ""  # out-of-range positional → consume, never leak
+        return re.sub(r"<!--\s*fig:\s*(\d+)\s*-->", _fig, out_md)
+
     for f in md_files:
         rel = os.path.relpath(f, ROOT)
         depth = rel.count(os.sep)
@@ -3094,6 +3083,15 @@ def cmd_build(_args) -> int:
         md = open(f, encoding="utf-8").read()
         e = by_path.get(rel)
         title = (re.search(r"^# (.+)$", md, re.M) or [None, rel])[1]
+        if os.sep not in rel and rel.startswith("concept-") and rel.endswith(".md"):
+            slug = rel[len("concept-"):-3]
+            entry_md = _project_concept_entry(slug, md)
+            if entry_md is not None:  # a modeled concept entry — render with figures + `more` projected in
+                crumb = _crumb("", [("Concepts", "index.html#concepts"), (title, "")])
+                html = _page(title, crumb, render_md(entry_md), rel_root="")
+                open(f[:-3] + ".html", "w", encoding="utf-8").write(html)
+                n_concept += 1
+                continue
         if rel == ABBR_SRC:  # the glossary — id-anchored sections so `#slug` targets resolve
             body = build_abstractions_body(md, _ABBR_MAP)
             html = _page(title, _crumb(rel_root, [(title, "")]), body, rel_root=rel_root)
@@ -3115,20 +3113,21 @@ def cmd_build(_args) -> int:
         out_path = f[:-3] + ".html"
         open(out_path, "w", encoding="utf-8").write(html)
         written += 1
-    # landing index.html = a projection of the Big-Ideas model (hero + six slots + the closing conclusion +
-    # three ways-in buttons), then the census and the quiet vocabulary/definitions/outcomes reference strip
-    # then the end-of-body progressive-enhancement script. Every Big-Idea slot is rendered from
-    # book-models/landing-big-ideas.json; figures splice as bare responsive <svg> with their internal
-    # ids namespaced per slot (_ns_svg_ids) so no two figures collide (check_no_duplicate_ids).
-    # The landing ENDS at the closing CTA + the three ways-in cards — no on-landing census enumeration
-    # and no back-matter reference strip. The entries' inbound links (for the reachability gate) come from
-    # catalogue-views.html (the "Full catalogue" card target), which enumerates every entry.
+    # landing index.html = a projection of the Big-Ideas model (hero + six minimal BRICKS + the closing
+    # conclusion + three ways-in buttons), then the census and the quiet vocabulary/definitions/outcomes
+    # reference strip. Every brick is rendered from book-models/landing-big-ideas.json; figures splice as
+    # bare responsive <svg> with their internal ids namespaced per brick (_ns_svg_ids) so no two figures
+    # collide (check_no_duplicate_ids). In the two-tier split the brick shows figure · title · claim + one
+    # "→ read the concept" link; the rich material lives on each concept ENTRY (rendered in the md loop
+    # above). The landing ENDS at the closing CTA + the three ways-in cards — no on-landing census
+    # enumeration and no back-matter reference strip. The entries' inbound links (for the reachability gate)
+    # come from catalogue-views.html (the "Full catalogue" card target), which enumerates every entry.
     # The hero carries NO cover figure — the Big Idea 1 churn flowchart is the landing's lead visual now.
     landing_body = (NAV_GRID + "\n" + LANDING_INTRO.format(
         book_title_block=_book_title_block(),
         big_ideas=_landing_big_ideas(),
         closing=_landing_closing(),
-    ) + "\n" + EXPAND_JS)
+    ))
     landing = (f"<!doctype html>\n<html lang=\"en\">\n{GENERATED_BANNER}\n<head>\n"
                f'<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
                f"<title>Agent Governance Mechanisms</title>\n{FONTS_LINK}\n"
@@ -3136,25 +3135,11 @@ def cmd_build(_args) -> int:
                f'<body class="landing">\n<main>\n{landing_body}\n{_site_footer("")}\n</main>\n</body>\n</html>\n')
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
-    # The Concepts section's per-idea pages: one `concept-<slug>.html` per Big Idea, projected from the
-    # Big-Ideas model. Ownership split (avoids a book-models -> catalog circular import): the model owns
-    # the card BODY + the resolved edge links; cmd_build owns the `_page` chrome, the write, and (via the
-    # landing bands' "Concept card →" links, added in _landing_big_ideas) the inbound link the orphan gate
-    # needs. The figure splice is injected as a callback so the model imports no catalog symbol. Written
-    # here (before the orphan gate) so each page is linked the moment it exists.
-    bm_concepts = os.path.join(ROOT, "book-models")
-    if bm_concepts not in sys.path:
-        sys.path.insert(0, bm_concepts)
-    import landing_big_ideas_model as lbi  # noqa: E402 — Concept-Card projector
-    _cc_svg = lambda figure, ns: _ns_svg_ids(_inline_svg("assets/" + figure), ns)  # noqa: E731 — injected splice
-    n_concept = 0
-    for card in lbi.render_concept_cards(svg_render=_cc_svg):
-        crumb = _crumb("", [("Concepts", "index.html#concepts"), (card.title, "")])
-        html = _page(card.title, crumb, card.body_html, subtitle=card.subtitle, rel_root="")
-        open(os.path.join(ROOT, f"concept-{card.slug}.html"), "w", encoding="utf-8").write(html)
-        n_concept += 1
+    # The six concept ENTRY pages (`concept-<slug>.html`) were rendered in the md loop above from their
+    # hand-authored `concept-<slug>.md`, with the model's figures + `more` projected in — no separate
+    # whole-body projection now (Option B: the entry is authored + parity-gated, not generated whole).
     print(f"built {written} entry/index pages + landing index.html + catalogue-views.html "
-          f"+ {n_concept} concept-card pages ({len(entries)} mechanisms in census)")
+          f"+ {n_concept} concept entry pages ({len(entries)} mechanisms in census)")
     # Regenerate the packaged skill bundle from the same sources — same "can't drift" discipline as the
     # HTML. build is the one regeneration point (pre-commit hook, deploy, and CI all call it), so this
     # single wire-in keeps plugin/ fresh. Subprocess avoids a catalog <-> bundle_skill circular import.

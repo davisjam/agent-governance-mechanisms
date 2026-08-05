@@ -89,8 +89,8 @@
   .cc-mech-empty { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:8px 0; }
   a.cc-read-link { font-weight:600; text-decoration:none; }
   a.cc-read-link:hover { text-decoration:underline; }
-  /* The "Concept card →" link the landing bands carry into each Concept Card. */
-  a.s-concept { display:inline-block; margin-left:14px; font-size:var(--fs-meta); font-weight:600;
+  /* The brick's single "→ read the concept" link into each rich Concept ENTRY (two-tier split). */
+  a.s-concept { display:inline-block; font-size:var(--fs-meta); font-weight:600;
                 color:var(--accent); text-decoration:none; }
   a.s-concept:hover { text-decoration:underline; }
 
@@ -161,29 +161,12 @@
   .slot.slot-bigfig .s-fig svg { max-width:1080px; margin:0 auto; }
   .slot.slot-bigfig .s-words { max-width:80ch; margin:0 auto; text-align:center; }
   .slot.slot-bigfig .s-claim { max-width:74ch; margin-left:auto; margin-right:auto; }
-  .slot.slot-bigfig .s-more-text { margin-left:auto; margin-right:auto; }
-  .slot.slot-bigfig button.s-expand { margin-left:auto; margin-right:auto; text-align:center; }
 
   /* The matched thesis PAIR - two half-width cells, figure above words. */
   .pair { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
   .pair .p-cell { border-top:3px solid var(--box-thesis-rule); padding-top:14px; scroll-margin-top:16px; }
   .pair .p-cell .s-kick { color:var(--box-thesis-rule); }
   .pair .p-cell .s-fig { margin:0 0 12px; }
-
-  /* The LIGHT "expand to learn more" disclosure. The button is INJECTED by EXPAND_JS; with JS off the
-     .s-more-text block simply shows (no broken control). */
-  .s-more-text { font-size:var(--fs-card-body); color:var(--muted); line-height:1.6; margin:0 0 10px; max-width:64ch; }
-  .idea-hero .s-more-text { margin-left:auto; margin-right:auto; }
-  button.s-expand { display:block; font:inherit; font-size:var(--fs-meta); font-weight:700;
-             color:var(--accent); background:none; border:none; padding:0; margin:0 0 10px; cursor:pointer;
-             letter-spacing:.01em; text-align:left; }
-  button.s-expand::before { content:"\203A\00a0"; }
-  button.s-expand:hover { text-decoration:underline; }
-  button.s-expand:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:3px; }
-  .idea-hero button.s-expand { margin:0 auto 10px; text-align:center; }
-  .s-read { display:inline-block; font-size:var(--fs-meta); font-weight:700; color:var(--accent);
-            text-decoration:none; }
-  .s-read:hover { text-decoration:underline; }
 
   /* ---- the closing: conclusion + four ways in ----------------------------------------------- */
   /* A wide, fluid footer block (author feedback: the closing read too narrow on a wide display). It uses
@@ -332,9 +315,11 @@
        churn flowchart renders full-width beneath it as the landing's LEAD VISUAL. Then the stance (one
        band), the two theses (a matched pair), practice and seat (alternating bands), and the CLOSING —
        the conclusion + three ways in (full catalogue · book · quickstart). The census and the quiet
-       vocabulary/definitions/outcomes reference strip follow as back-matter (appended in cmd_build). Each
-       Big-Idea slot = figure · concise claim · a light "expand to learn more" · "Read in the book →". No
-       card masonry, no <details> peeks — a build renders every slot from the model. -->
+       vocabulary/definitions/outcomes reference strip follow as back-matter (appended in cmd_build).
+       Two-tier split: each landing BRICK shows four elements only — figure · title · concise claim · a
+       single "→ read the concept" link — and the rich material (intuition, mechanisms, related concepts,
+       extra figures, the book hand-off) lives on the standalone concept-<slug>.html ENTRY the brick links.
+       No card masonry, no <details> peeks — a build renders every brick from the model. -->
   <div class="hero-band">
     <div class="hero-lead">
       <h1 class="book-h1">Model-Based Agentic Software Engineering</h1>
@@ -429,8 +414,7 @@
     <p class="s-kick">Big idea 1 · the problem</p>
     <h2 class="s-title">Churn is the scaling limit</h2>
     <p class="s-claim">An agent fleet scales until the work outgrows its context window. Then it churns: it re-derives what it already built and confidently undoes yesterday's fix.</p>
-    <div class="s-more-text" id="more-bi-churn" data-more>A team of people slows under Brooks's Law; an agent fleet collapses when the work exceeds its window. Churn is the symptom; its causes are three not-knowings — what to build, how to realize it, how to change safely — and the theses below divide them: models treat the first two, governance the third.</div>
-    <a class="s-read" href="book/1.1-the-printer.html">Read in the book →</a><a class="s-concept" href="concept-churn.html">Concept card →</a>
+    <a class="s-concept" href="concept-churn.html">→ read the concept</a>
   </div>
 </div>
 
@@ -528,8 +512,7 @@
     <p class="s-kick">Big idea 2 · the stance</p>
     <h2 class="s-title">Governance-centric — the enabling substrate</h2>
     <p class="s-claim">Build the environment first: encode each obligation as a mechanism the environment enforces, so quality is a property of the ground the agents stand on.</p>
-    <div class="s-more-text" id="more-bi-governance-centric" data-more>Velocity-centric hands work around a ring of job titles and leaves quality implicit; oversight-centric parks a human beside each change, and attention does not scale with the fleet. Governance pays attention per class of failure instead: once, when you build the mechanism that retires it.</div>
-    <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a><a class="s-concept" href="concept-governance-centric.html">Concept card →</a>
+    <a class="s-concept" href="concept-governance-centric.html">→ read the concept</a>
   </div>
 </div>
 
@@ -630,8 +613,7 @@
   <p class="s-kick">Big idea 3 · Thesis 1</p>
   <h2 class="s-title">Documentation, taken to its limit, is a structured model</h2>
   <p class="s-claim">A context-bounded agent cannot hold the whole system. Give it a structured, drift-checked model to reason through, and the work fits in the window.</p>
-  <div class="s-more-text" id="more-bi-modeling-thesis" data-more>Models used to die because keeping them current was somebody's unpaid job; agents now do that job for cents, re-checking the map against the code on every change. A drifted prose doc lies quietly — a drifted model fails the build.</div>
-  <a class="s-read" href="book/1.3-loops-and-models.html">Read in the book →</a><a class="s-concept" href="concept-modeling-thesis.html">Concept card →</a>
+  <a class="s-concept" href="concept-modeling-thesis.html">→ read the concept</a>
 </div>
 <div class="p-cell" id="card-thesis-alignment">
   <figure class="s-fig" id="bi-alignment-thesis"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440"
@@ -697,8 +679,7 @@
   <p class="s-kick">Big idea 4 · Thesis 2</p>
   <h2 class="s-title">Hold intent with a mechanism: prevent first, sense the rest</h2>
   <p class="s-claim">Enforced mechanisms hold work to intent across later changes. Constrain first so the wrong move is unavailable; where prevention falls short, a sensor catches the drift.</p>
-  <div class="s-more-text" id="more-bi-alignment-thesis" data-more>A type the compiler checks, a lint that blocks the commit, a gate that refuses the deploy: each holds a policy decided once against every later change. Costly goals earn both a constraint and a sensor; what neither reaches stays a human job.</div>
-  <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a><a class="s-concept" href="concept-alignment-thesis.html">Concept card →</a>
+  <a class="s-concept" href="concept-alignment-thesis.html">→ read the concept</a>
 </div>
 </div>
 
@@ -742,8 +723,7 @@
     <p class="s-kick">Big idea 5 · the practice</p>
     <h2 class="s-title">Convert recurring failures into controls</h2>
     <p class="s-claim">Velocity surfaces the failures you could not foresee. Convert each recurring one into a mechanism, pushed as far toward hard enforcement as it will go.</p>
-    <div class="s-more-text" id="more-bi-convert-failures" data-more>Mechanisms sit on a spectrum from soft to hard: a convention or a brief aims the agent but cannot block it; a lint or a gate holds the line whether the agent cooperates or not. The second time a soft rule fails, move it right — the documented rule becomes a lint the agent cannot talk past.</div>
-    <a class="s-read" href="book/2.3-the-governed-environment.html">Read in the book →</a><a class="s-concept" href="concept-convert-failures.html">Concept card →</a>
+    <a class="s-concept" href="concept-convert-failures.html">→ read the concept</a>
   </div>
 </div>
 
@@ -846,8 +826,7 @@
     <p class="s-kick">Big idea 6 · the seat</p>
     <h2 class="s-title">The lifecycle stays, but now agents sit in the developer's seat</h2>
     <p class="s-claim">SDLC becomes SELC: one seat reassigned, the lifecycle otherwise intact. The fleet writes the code; the engineer keeps the seats that were always the engineering.</p>
-    <div class="s-more-text" id="more-bi-seat-moves" data-more>The engineer flanks the fleet: models carry intent in on one side, judgment meets the output on the other. The seats the human keeps — requirements, specification, design, validation — were always the consequential ones; now they are the job.</div>
-    <a class="s-read" href="book/1.5-the-engineers-seat.html">Read in the book →</a><a class="s-concept" href="concept-seat-moves.html">Concept card →</a>
+    <a class="s-concept" href="concept-seat-moves.html">→ read the concept</a>
   </div>
 </div>
   </div>
@@ -864,27 +843,6 @@
   </div>
 </section>
 
-<script>
-(function(){
-  var blocks = document.querySelectorAll('.s-more-text[data-more]');
-  Array.prototype.forEach.call(blocks, function(m){
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 's-expand';
-    btn.setAttribute('aria-controls', m.id);
-    btn.setAttribute('aria-expanded', 'false');
-    btn.textContent = 'Expand to learn more';
-    m.parentNode.insertBefore(btn, m);
-    m.setAttribute('hidden', '');
-    btn.addEventListener('click', function(){
-      var willOpen = m.hasAttribute('hidden');
-      if (willOpen) { m.removeAttribute('hidden'); } else { m.setAttribute('hidden', ''); }
-      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-      btn.textContent = willOpen ? 'Show less' : 'Expand to learn more';
-    });
-  });
-})();
-</script>
 <footer class="site-foot"><span class="foot-line foot-copy">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue</span><span class="foot-line foot-links"><a class="gh" href="https://github.com/davisjam/model-based-agentic-software-engineering"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> model-based-agentic-software-engineering</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the book →</a></span><span class="foot-line foot-nsf">This work was supported by the U.S. National Science Foundation under grants #2541917 and #2452533.</span></footer>
 </main>
 </body>

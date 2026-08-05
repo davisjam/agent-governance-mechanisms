@@ -1,45 +1,52 @@
-"""The CONCEPT-CARD projection model — one Concept Card page per Big Idea, projected from the declared
-landing model so the card cannot drift from the model.
+"""The two-tier CONCEPT model — the landing BRICK projector's typed source + the concept-ENTRY parity
+checks, over the declared landing model so brick and entry cannot drift from it.
 
 MODULE-NAME NOTE. The file mirrors its declared source `landing-big-ideas.json` (the repo's
 `X.json <-> X_model.py` pairing), so the module keeps the "big-ideas" name even though the RENDERED
 vocabulary is "Concept" — the six ideas are the site's Concepts section, rebranded from "Big Ideas."
 A sibling of `metrics_dashboard_model.py` / `theory_of_mage_model.py`: the hand-authored source of truth
 is `book-models/landing-big-ideas.json`; this module derives a typed model over the six idea records
-(the `gateway` is not a concept), renders a Concept Card page body per idea, and reports the card
-concerns with a non-overlapping drift check.
+(the `gateway` is not a concept) and reports the two-tier drift with a non-overlapping check.
 
-TWO CONCERNS, ONE SOURCE.
-  - `render_concept_cards(svg_render=...)` — the ordered ConceptCardView list `catalog.py:cmd_build`
-    writes as `concept-<slug>.html`. Each view carries the card BODY HTML (the six rendered sections;
-    the "supporting examples" section is dropped permanently per the author, and Applications waits for
-    Phase 3) plus the resolved outbound links. The model owns data->body; `catalog.py` owns the page
-    chrome, the write, and the landing band link — so the model imports no catalog symbol (no circular
-    import); the figure splice is injected as `svg_render(figure, ns)`.
-  - `all_findings()` — the card drift check (CC1-CC4). It owns ONLY the NEW concerns (the two new-field
-    schema, the Concept->mechanism edge, concept-page existence + landing linkage); `check_big_ideas` in
-    catalog.py keeps owning band drift (book_home / figure / word-cap / id-on-landing) unchanged, so the
-    two checks are non-overlapping.
+TWO-TIER SPLIT (the ratified re-scope). The landing BRICK (rendered by `catalog.py`) shows four elements
+only — figure · title · one-line claim · a '→ read the concept' link. The rich material — the `more`
+intuition, the extra figures, the mechanism edge, the related concepts, the book hand-off — lives on the
+standalone `concept-<slug>.html` ENTRY, a hand-authored markdown file (`concept-<slug>.md`) the way a
+mechanism catalogue entry is authored + validated (NOT projected whole). This module no longer renders the
+entry BODY; it owns the typed model + the projectors the entry-author and the checks share, plus the drift
+check. `catalog.py:cmd_build` renders each `concept-<slug>.md` to `.html`, projecting the model's `more`
+into the entry's opening and the model's figures into the entry's `<!-- fig: N -->` slots.
 
-Reads the meta-file at check time (no codegen, no snapshot). AUDIT-ONLY-first landing: `catalog.py
-validate` prints the CC findings under an AUDIT-ONLY banner without gating; a follow-up flips them
-BLOCKING once a clean session confirms the drain (the repo's blocking-lint landing discipline). The
-thin `mechanisms: []` default keeps CC2 trivially green from day one.
+PROJECTORS (model owns data; the entry author + the renderer + CC6 all read these, so the card and figures
+cannot drift):
+  - `concept_figures(c)` — the ordered figure list `[(asset, caption)]`: fig[0] is the shared brick
+    `figure` (caption ""), fig[1..] are the entry-only `entry_figures`. The renderer resolves each
+    `<!-- fig: N -->` positional directive against this list.
+  - `concept_card_lines(c, model)` — the entry's 5-row Concept-card table as markdown `|`-rows; CC6 pins
+    the authored card against this projection with `page_block_parity`.
 
-Run `python3 book-models/landing_big_ideas_model.py verify` to drift-check (CC1-CC4, audit-only);
-`... show` to list every concept and its declared mechanism edge.
+DRIFT CHECK (`all_findings()`, CC1-CC6; non-overlapping with `check_big_ideas`, which keeps brick/band
+drift — book_home / figure / word-cap / id-on-landing). CC1 brick-field + edge-type schema; CC2/CC3 the
+two edges resolve; CC4 the entry page exists + the landing links it; CC5 each entry declares 1–3 figures
+that RESOLVE under book/assets AND the built entry page RENDERS 1–3 figures; CC6 the entry's Concept card
+table + `# <title>` + `**Claim** —` line equal the model (the gate that makes the hand-authored entry
+safe). Reads the meta-file at check time (no codegen, no snapshot). AUDIT-ONLY-first landing: `catalog.py
+validate` prints the findings under an AUDIT-ONLY banner without gating; a follow-up flips them BLOCKING
+once a clean session confirms the drain (the repo's blocking-lint landing discipline).
+
+Run `python3 book-models/landing_big_ideas_model.py verify` to drift-check (CC1-CC6, audit-only);
+`... show` to list every concept, its declared mechanism edge, and its figures.
 """
 from __future__ import annotations
 
-import html
 import json
 import os
 import sys
 from dataclasses import dataclass, field
 
 from _projection_parity import (
-    catalogue_entry_paths,
     catalogue_entry_slugs,
+    page_block_parity,
     require_fields,
     resolve_edges,
 )
@@ -52,16 +59,10 @@ _DECLARED = os.path.join(_HERE, "landing-big-ideas.json")
 #: (consistent with check_big_ideas excluding it from projection).
 _NON_CONCEPT = "gateway"
 
-#: The existing rendered fields every Concept Card needs, non-empty (CC1). `intuition` maps to the JSON's
-#: `more`; `figure`/`book_home` are resolved elsewhere (check_big_ideas owns their on-disk resolution).
+#: The brick fields every Concept needs non-empty (CC1a). `intuition` maps to the JSON's `more` — KEPT
+#: (it renders on the ENTRY now, not the brick, and the reasoning-horizon reframe lands in it), not dropped.
+#: `figure`/`book_home` are resolved elsewhere (check_big_ideas owns their on-disk resolution).
 _REQUIRED_RENDERED = ("title", "kicker", "claim", "figure", "book_home", "intuition")
-
-#: A decorative single-accent "idea" glyph for the Concept chip — drawn in `currentColor` (inherits the
-#: chip's `--accent`), so it carries no raw hex and needs no house SVG asset under book/assets/.
-_CONCEPT_ICON = ('<svg class="cc-ico" viewBox="0 0 16 16" aria-hidden="true" focusable="false">'
-                 '<path fill="currentColor" d="M8 1.4a4.6 4.6 0 0 0-2.8 8.25c.42.33.68.72.78 1.15l.16.7h3.72'
-                 'l.16-.7c.1-.43.36-.82.78-1.15A4.6 4.6 0 0 0 8 1.4Zm-1.85 11.3h3.7v1.05h-3.7V12.7Zm.62 '
-                 '1.95h2.46v.35a1.23 1.23 0 0 1-2.46 0v-.35Z"/></svg>')
 
 
 # ---- typed model ------------------------------------------------------------------------------------
@@ -69,9 +70,11 @@ _CONCEPT_ICON = ('<svg class="cc-ico" viewBox="0 0 16 16" aria-hidden="true" foc
 @dataclass
 class Concept:
     """One of the six Concepts. `slug` is the JSON key (== the `concept-<slug>.html` page slug), distinct
-    from the existing `bi-<slug>` site id (`id`, the projection-drift join key). `intuition` is the
-    existing `more` prose; `mechanisms` is the NEW hand-declared Concept->mechanism edge; `related_ideas`
-    is the NEW optional Relationships override ([] => the projector uses the _order-adjacency seed)."""
+    from the existing `bi-<slug>` site id (`id`, the projection-drift join key). `intuition` is the `more`
+    prose (rendered on the ENTRY's opening); `mechanisms` is the hand-declared Concept->mechanism edge;
+    `related_ideas` is the optional Related-concepts override ([] => the _order-adjacency seed);
+    `entry_figures` are the entry-only figures fig[1..] ({asset, caption} dicts) beyond the shared brick
+    figure fig[0] (=`figure`)."""
     slug: str
     id: str
     title: str
@@ -82,6 +85,7 @@ class Concept:
     book_home: str
     mechanisms: "list[str]" = field(default_factory=list)
     related_ideas: "list[str]" = field(default_factory=list)
+    entry_figures: "list[dict]" = field(default_factory=list)
 
 
 @dataclass
@@ -89,16 +93,6 @@ class ConceptModel:
     word_cap: int
     order: "list[str]"
     concepts: "list[Concept]"   # the six, in _order; gateway excluded
-
-
-@dataclass
-class ConceptCardView:
-    """What `catalog.py:cmd_build` needs to write one `concept-<slug>.html`: the slug, the page title, the
-    subtitle (the canonical claim), and the card body HTML (chrome-free — catalog.py `_page`-wraps it)."""
-    slug: str
-    title: str
-    subtitle: str
-    body_html: str
 
 
 # ---- load + build -----------------------------------------------------------------------------------
@@ -129,6 +123,7 @@ def derive_model(raw: "dict | None" = None) -> ConceptModel:
             intuition=rec.get("more", ""), book_home=rec.get("book_home", ""),
             mechanisms=list(rec.get("mechanisms", []) or []),
             related_ideas=list(rec.get("related_ideas", []) or []),
+            entry_figures=list(rec.get("entry_figures", []) or []),
         )
         for slug, rec in _concept_records(raw)
     ]
@@ -152,95 +147,61 @@ def _related_slugs(model: ConceptModel, c: Concept) -> "list[str]":
     return seed
 
 
-# ---- projection: the Concept Card body --------------------------------------------------------------
+# ---- projectors: the shared figure list + the entry Concept-card table ------------------------------
+# The entry markdown is hand-authored, but the FIGURES and the CONCEPT-CARD table are projected from the
+# model so they cannot drift: the entry positions figures with `<!-- fig: N -->` directives the renderer
+# resolves against `concept_figures`, and pastes the card table `concept_card_lines` emits (CC6 pins it).
 
-def _esc(s: str) -> str:
-    return html.escape(str(s))
-
-
-def _attr(s: str) -> str:
-    return html.escape(str(s), quote=True)
-
-
-def _placeholder_svg(figure: str, ns: str) -> str:
-    """The default `svg_render` for standalone runs (verify/show) — the real figure splice is injected by
-    catalog.py at build time; here we only need a stable stand-in that never touches the asset tree."""
-    return f"<!-- figure: {figure} (ns {ns}) -->"
-
-
-def _card_body(model: ConceptModel, c: Concept, svg_render) -> str:
-    """The Concept Card body — the six rendered sections (examples omitted; Applications waits for Phase 3).
-    The canonical claim rides in the page subtitle (catalog.py `_page`), so the body opens on the tinted
-    Concepts band, then the concept title as the page's single top-level `<h1>` (the section headings stay
-    `<h2>`), then the figure, engineering intuition, relationships, mechanisms, and read-more."""
-    title_of = {x.slug: x.title for x in model.concepts}
-    entry_href = catalogue_entry_paths()
-
-    # 2 · Canonical figure — spliced with its ids namespaced per page (no landing/other-card id collision).
-    fig_svg = svg_render(c.figure, f"cc-{c.slug}") if c.figure else ""
-    fig = f'<figure class="cc-fig">{fig_svg}</figure>' if fig_svg else ""
-
-    # 4 · Relationships — adjacency seed (or curated override), each -> its Concept Card.
-    rel = _related_slugs(model, c)
-    rel_items = "".join(
-        f'<li><a href="concept-{_attr(s)}.html">{_esc(title_of.get(s, s))}</a></li>' for s in rel)
-    rel_block = (f'<section class="cc-rel"><h2>Related concepts</h2><ul class="cc-links">{rel_items}</ul>'
-                 f'</section>') if rel_items else ""
-
-    # 5 · Mechanisms — the hand-declared Concept->mechanism edge (may be empty on a thin card).
-    if c.mechanisms:
-        mech_items = "".join(
-            f'<li><a href="{_attr(entry_href.get(s, s + ".html"))}"><code>{_esc(s)}</code></a></li>'
-            for s in c.mechanisms)
-        mech_body = f'<ul class="cc-links">{mech_items}</ul>'
-    else:
-        mech_body = ('<p class="cc-mech-empty">No mechanism edge declared yet — this concept ships thin '
-                     '(the edge is enriched in a later pass).</p>')
-    mech_block = f'<section class="cc-mech"><h2>Mechanisms</h2>{mech_body}</section>'
-
-    return (
-        f'<div class="concept-band">'
-        f'<span class="concept-chip">{_CONCEPT_ICON}Concept</span>'
-        f'<span class="concept-kicker">{_esc(c.kicker)}</span>'
-        f'</div>\n'
-        f'<h1 class="cc-title">{_esc(c.title)}</h1>\n'
-        f'{fig}\n'
-        f'<section class="cc-intuition"><h2>Engineering intuition</h2><p>{_esc(c.intuition)}</p></section>\n'
-        f'{rel_block}\n'
-        f'{mech_block}\n'
-        f'<section class="cc-read"><h2>Read more</h2>'
-        f'<p><a class="cc-read-link" href="{_attr(c.book_home)}">Read in the book →</a></p></section>'
-    )
+def concept_figures(c: Concept) -> "list[tuple[str, str]]":
+    """The concept's ordered `(asset, caption)` figures: fig[0] is the shared brick `figure` (caption ""),
+    fig[1..] are the entry-only `entry_figures`. The entry renderer resolves each positional
+    `<!-- fig: N -->` directive by indexing this list, so the model stays the figure SSOT."""
+    figs: "list[tuple[str, str]]" = []
+    if c.figure:
+        figs.append((c.figure, ""))
+    for f in c.entry_figures:
+        if isinstance(f, dict) and f.get("asset"):
+            figs.append((str(f.get("asset")), str(f.get("caption", ""))))
+    return figs
 
 
-def render_concept_cards(model: "ConceptModel | None" = None, svg_render=None) -> "list[ConceptCardView]":
-    """One ConceptCardView per concept, in `_order` — the card bodies `catalog.py:cmd_build` `_page`-wraps
-    and writes. `svg_render(figure, ns) -> str` splices the figure SVG (injected by catalog.py so the model
-    imports no catalog symbol); it defaults to a placeholder for standalone runs."""
-    if model is None:
-        model = derive_model()
-    if svg_render is None:
-        svg_render = _placeholder_svg
+def _card_mechanisms_cell(c: Concept) -> str:
+    return f"{len(c.mechanisms)} — " + ", ".join(c.mechanisms) if c.mechanisms else "— none yet"
+
+
+def concept_card_lines(c: Concept, model: ConceptModel) -> "list[str]":
+    """The entry's 5-row Concept-card as markdown table rows (header + rule + 5 body rows). The entry pastes
+    these verbatim; CC6 pins the authored table against this projection with `page_block_parity`, so the
+    card identity (claim / mechanisms / book_home) cannot drift from the model."""
     return [
-        ConceptCardView(slug=c.slug, title=c.title, subtitle=c.claim,
-                        body_html=_card_body(model, c, svg_render))
-        for c in model.concepts
+        f"| Concept | {c.kicker} |",
+        "| --- | --- |",
+        f"| Claim | {c.claim} |",
+        f"| Mechanisms | {_card_mechanisms_cell(c)} |",
+        f"| Related | {' · '.join(_related_slugs(model, c)) or '—'} |",
+        f"| In the book | {c.book_home} |",
     ]
 
 
-# ---- the drift check (CC1-CC4; non-overlapping with check_big_ideas) ---------------------------------
+# ---- the drift check (CC1-CC6; non-overlapping with check_big_ideas) ---------------------------------
 
 def schema_findings(model: "ConceptModel | None" = None) -> "list[str]":
-    """CC1 — every concept carries the existing rendered fields non-empty AND the two new fields with the
-    right type (`mechanisms` / `related_ideas` are lists of strings)."""
+    """CC1a — every concept carries the brick fields non-empty (title/kicker/claim/figure/book_home +
+    `intuition`, KEPT for the entry). CC1b — the two edge fields are lists of strings and `entry_figures`
+    is a list of {asset, caption} objects."""
     if model is None:
         model = derive_model()
-    findings = require_fields(model.concepts, _REQUIRED_RENDERED, "concept")
+    findings = require_fields(model.concepts, _REQUIRED_RENDERED, "CC1a concept")
     for slug, rec in _concept_records():
         for key in ("mechanisms", "related_ideas"):
             val = rec.get(key, [])
             if not isinstance(val, list) or not all(isinstance(x, str) for x in val):
-                findings.append(f"CC1 concept {slug!r} field {key!r} must be a list of strings")
+                findings.append(f"CC1b concept {slug!r} field {key!r} must be a list of strings")
+        figs = rec.get("entry_figures", [])
+        if not isinstance(figs, list) or not all(
+                isinstance(f, dict) and isinstance(f.get("asset"), str) for f in figs):
+            findings.append(f"CC1b concept {slug!r} field 'entry_figures' must be a list of "
+                            f"{{asset, caption}} objects")
     return findings
 
 
@@ -275,12 +236,61 @@ def reachability_findings(model: "ConceptModel | None" = None) -> "list[str]":
     return findings
 
 
-def all_findings(model: "ConceptModel | None" = None) -> "list[str]":
-    """CC1-CC4 — the full Concept-Card drift check `catalog.py validate` runs (audit-only). Non-overlapping
-    with `check_big_ideas` (which keeps band drift)."""
+def figure_findings(model: "ConceptModel | None" = None) -> "list[str]":
+    """CC5 — each concept declares 1–3 figures (fig[0] the brick figure + `entry_figures`), every declared
+    asset resolves under book/assets/, AND (post-build, best-effort) the built entry page RENDERS 1–3
+    figure blocks. Counting the RENDERED figures — not just the model field — is what makes CC5 gate what it
+    claims: the model count and the page's real figure count must agree (reviewer R2)."""
     if model is None:
         model = derive_model()
-    return schema_findings(model) + edge_findings(model) + reachability_findings(model)
+    findings: "list[str]" = []
+    for c in model.concepts:
+        figs = concept_figures(c)
+        if not 1 <= len(figs) <= 3:
+            findings.append(f"CC5 concept {c.slug!r}: declares {len(figs)} figures (want 1–3)")
+        for asset, _cap in figs:
+            if asset and not os.path.isfile(os.path.join(_ROOT, "book", "assets", asset)):
+                findings.append(f"CC5 concept {c.slug!r}: figure asset {asset!r} not found under book/assets/")
+        page = os.path.join(_ROOT, f"concept-{c.slug}.html")
+        if os.path.isfile(page):  # best-effort: only once the entry is built
+            n_rendered = open(page, encoding="utf-8").read().count('class="cc-body-fig"')
+            if not 1 <= n_rendered <= 3:
+                findings.append(f"CC5 concept {c.slug!r}: entry page renders {n_rendered} figure(s) "
+                                f"(want 1–3) — check the `<!-- fig: N -->` directives")
+    return findings
+
+
+def parity_findings(model: "ConceptModel | None" = None) -> "list[str]":
+    """CC6 — the brick↔entry parity gate that makes the hand-authored entry safe. For each concept: the
+    entry's Concept-card table equals the model projection (`page_block_parity`), its `# <title>` heading
+    equals the model title, and its `**Claim** —` intent line equals the model claim. Best-effort: a
+    missing `concept-<slug>.md` is one finding, not a crash."""
+    if model is None:
+        model = derive_model()
+    findings: "list[str]" = []
+    for c in model.concepts:
+        md_path = os.path.join(_ROOT, f"concept-{c.slug}.md")
+        display = f"concept-{c.slug}.md"
+        if not os.path.isfile(md_path):
+            findings.append(f"CC6 concept {c.slug!r}: {display} does not exist")
+            continue
+        lines = concept_card_lines(c, model)
+        findings += page_block_parity(md_path, lines[0], lines, display=display, label="concept card")
+        md_lines = [ln.rstrip() for ln in open(md_path, encoding="utf-8").read().splitlines()]
+        if f"# {c.title}" not in md_lines:
+            findings.append(f"CC6 concept {c.slug!r}: `# {c.title}` title heading missing or drifted")
+        if f"**Claim** — {c.claim}" not in "\n".join(md_lines):
+            findings.append(f"CC6 concept {c.slug!r}: `**Claim** —` line drifted from the model claim")
+    return findings
+
+
+def all_findings(model: "ConceptModel | None" = None) -> "list[str]":
+    """CC1-CC6 — the full two-tier Concept drift check `catalog.py validate` runs (audit-only).
+    Non-overlapping with `check_big_ideas` (which keeps brick/band drift)."""
+    if model is None:
+        model = derive_model()
+    return (schema_findings(model) + edge_findings(model) + reachability_findings(model)
+            + figure_findings(model) + parity_findings(model))
 
 
 # ---- CLI --------------------------------------------------------------------------------------------
@@ -289,9 +299,11 @@ def _cmd_show() -> int:
     model = derive_model()
     for c in model.concepts:
         edge = ", ".join(c.mechanisms) if c.mechanisms else "(thin — no edge)"
+        figs = ", ".join(a for a, _ in concept_figures(c))
         print(f"{c.slug:20} {c.title}")
         print(f"                     mechanisms: {edge}")
         print(f"                     related:    {', '.join(_related_slugs(model, c))}")
+        print(f"                     figures:    {figs}")
     print(f"\n{len(model.concepts)} concepts (gateway excluded)")
     return 0
 
@@ -305,8 +317,8 @@ def _cmd_verify() -> int:
         for f in findings:
             print(f"  {f}")
         return 0  # audit-only: report, never gate
-    print(f"concept-cards is in sync ({len(model.concepts)} concepts; schema clean; every mechanism edge "
-          f"resolves; pages reachable)")
+    print(f"concept entries in sync ({len(model.concepts)} concepts; schema clean; every mechanism edge "
+          f"resolves; pages reachable; figures + card parity clean)")
     return 0
 
 
