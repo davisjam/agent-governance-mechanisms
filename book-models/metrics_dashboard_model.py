@@ -1,7 +1,7 @@
 """The METRICS-DASHBOARD view — a typed model of the metrics the book steers by or certifies with, carrying
 the author's INCLUSION CRITERION so a future metric is testable against it, not sorted by taste. A sibling of
 the other declared -> generated book models (claims / outline / flagship-stack): the hand-authored source of
-truth is `book-models/metrics-dashboard.json`; this module projects ALL nine metrics into the Operator's
+truth is `book-models/metrics-dashboard.json`; this module projects ALL ten metrics into the Operator's
 Dashboard page (Appendix D.1, Operator's Reference), grouped by MODE, and holds that page's table equal to
 the model with a parity check.
 
@@ -14,7 +14,7 @@ BY while the work is in flight (formative) or one you CERTIFY THE RESULT with at
 measured to guide or to judge engineering with MAGE, not merely reported.
 
 TWO PROJECTIONS, ONE SOURCE.
-  * `render_table_md()` — the markdown table the Operator's Dashboard page shows: all nine metrics in two mode bands
+  * `render_table_md()` — the markdown table the Operator's Dashboard page shows: all ten metrics in two mode bands
     (a Formative band, a divider/band-label row, then a Summative band that carries the summative + both
     metrics). Author it into the page from `... table`; the page and the model cannot then diverge without
     the parity check reddening.
@@ -48,10 +48,10 @@ _PAGE_REL = os.path.join("appendix-operators-reference", "operators-dashboard.md
 _VALID_MODES = ("formative", "summative", "both")
 
 #: The ratified mode split — encode the author's set so a silent add/drop/reclassify reddens (C5).
-EXPECT_TOTAL = 9
+EXPECT_TOTAL = 10
 EXPECT_FORMATIVE = 6
 EXPECT_SUMMATIVE = 1
-EXPECT_BOTH = 2
+EXPECT_BOTH = 3
 
 #: The dashboard columns (the header the projection emits and the page carries; parity is exact).
 _COLUMNS = ("Metric", "Mode", "What it counts", "When to watch", "Healthy direction", "Defined in")
@@ -137,7 +137,7 @@ def structural_findings(model: "DashboardModel | None" = None) -> "list[str]":
     C2 — every metric carries all required fields, non-empty (defined_in is a dict with chapter+page_slug).
     C3 — slugs are unique and kebab-case; `mode` is one of the valid formative/summative/both values.
     C4 — every `defined_in.page_slug` resolves to a real book chapter page.
-    C5 — the mode split matches the ratified set (all nine present; 6 formative, 1 summative, 2 both).
+    C5 — the mode split matches the ratified set (all ten present; 6 formative, 1 summative, 3 both).
     """
     if model is None:
         model = derive_model()
@@ -173,7 +173,7 @@ def structural_findings(model: "DashboardModel | None" = None) -> "list[str]":
         if page and page not in page_slugs:
             findings.append(f"C4 metric {m.slug!r} defined_in page {page!r} resolves to no book chapter")
 
-    # C5 — the ratified mode split (all nine present; the mode-classified counts).
+    # C5 — the ratified mode split (all ten present; the mode-classified counts).
     total = len(model.metrics)
     if total != EXPECT_TOTAL:
         findings.append(f"C5 {total} metrics, expected {EXPECT_TOTAL} (a metric was added or removed)")
@@ -213,7 +213,7 @@ def _band_row(label: str) -> str:
 
 
 def render_table_rows(model: "DashboardModel | None" = None) -> "list[str]":
-    """All nine metrics as markdown table lines (no header), in two mode bands separated by a band-label
+    """All ten metrics as markdown table lines (no header), in two mode bands separated by a band-label
     divider — the page carries exactly these."""
     if model is None:
         model = derive_model()

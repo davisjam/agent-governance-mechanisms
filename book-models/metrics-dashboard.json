@@ -1,5 +1,5 @@
 {
-  "_provenance": "AUTHORED source of truth for the Operator's Dashboard — the metrics the book steers by or certifies with. book-models/metrics_dashboard_model.py projects ALL nine metrics into the Operator's Dashboard page's table (Appendix D.1, Operator's Reference), grouped by MODE (formative / summative), and holds the page equal to this model with a parity check (run `python3 book-models/metrics_dashboard_model.py verify`). Edit a metric HERE, then regenerate the page table with `... table`. The book's own declared -> generated idiom, applied to its metrics.",
+  "_provenance": "AUTHORED source of truth for the Operator's Dashboard — the metrics the book steers by or certifies with. book-models/metrics_dashboard_model.py projects ALL ten metrics into the Operator's Dashboard page's table (Appendix D.1, Operator's Reference), grouped by MODE (formative / summative), and holds the page equal to this model with a parity check (run `python3 book-models/metrics_dashboard_model.py verify`). Edit a metric HERE, then regenerate the page table with `... table`. The book's own declared -> generated idiom, applied to its metrics.",
 
   "inclusion_criterion": "A metric belongs iff it is one you STEER BY while the work is in flight (formative) or one you CERTIFY THE RESULT with at maturity (summative) — measured to guide or to judge engineering with MAGE, not merely reported.",
 
@@ -103,6 +103,16 @@
       "defined_in": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "control-growth" },
       "mode": "both",
       "rationale": "Both: watched formatively as controls accrete one failure class at a time, reported summatively at maturity as the final control count. A trajectory metric — steered by while forming, certified at the end."
+    },
+    {
+      "name": "Epic-closure rate",
+      "slug": "epic-closure-rate",
+      "counts": "Epics moved into the closed set per week — the finishing rate, not the commit rate.",
+      "informs": "Whether an operating-mode shift converts to durable throughput rather than raw output.",
+      "healthy_direction": "Rises when the environment absorbs autonomous loops; flat velocity beside a rising closure rate is the healthy anti-decay shape.",
+      "defined_in": { "chapter": "5.2", "page_slug": "5.2-the-timeline-and-the-work", "anchor": "" },
+      "mode": "both",
+      "rationale": "Both: steered by formatively as an operating-mode shift lands (does the environment convert velocity into finishes rather than raw output?), certified summatively as the loop-mode payoff. Observed over a ~2-week, single-data-point window so far — a direction, not yet a rate; the figures + caveats live in the epic-closure-rate data-claim."
     }
   ]
 }
