@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored SVG (label: mage-trajectories). Two velocity trajectories under contrasting
+     governed-environment quality E. X: cumulative work over time. Y: DURABLE throughput,
+     V_durable = V_raw*(1 - c(m)). The governed curve (high E) climbs near-linearly with a
+     small hardening dip where velocity buys trust; the under-governed curve (low E) shares the
+     early slope, then bends over and flattens as churn overtakes it. The shaded gap between the
+     two is churn — the rework that raw velocity burns when the work outruns the fleet's window;
+     the flattening is the churn wall. Line A is the book's own observed velocity series (this
+     single case); Line B is predicted, not measured — one case cannot draw the low-E curve.
+     Palette: Umber Monograph tokens (governed #1f7a4d high-E curve, churn #b23b3b low-E curve,
+     accent #9a3f12 churn gap + wall, ink #1c1917 axes, muted #57534e captions, rule #e4e0d8).
+     Fonts >= 17u so every label clears the book body size at render width. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 470"
+     role="img" aria-labelledby="t2Title t2Desc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="t2Title">Two velocity trajectories — the churn wall</title>
+  <desc id="t2Desc">A two-line chart. The horizontal axis is cumulative work over time; the
+    vertical axis is durable throughput, defined as raw velocity times one minus the churn
+    share. Both curves start together and share the same early slope. The governed curve, high
+    E, in green, climbs roughly linearly to the top right, with a small dip partway along
+    labelled hardening — velocity buys trust, then resumes climbing; it is the book's own
+    observed velocity series. The under-governed curve, low E, in red, rises with the same early
+    slope, then bends over and asymptotes flat; its flattening is annotated the churn wall. The
+    widening region between the two curves is shaded and labelled churn — the rework raw
+    velocity burns when the work outruns what the fleet can hold in view. A note records that
+    Line A is observed in this single case while Line B is predicted, not measured: one case
+    cannot draw the low-E curve, only forecast it.</desc>
+
+  <defs>
+    <marker id="t2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+    <marker id="t2-lead" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
+    </marker>
+  </defs>
+
+  <!-- faint gridlines for depth -->
+  <line x1="100" y1="150" x2="820" y2="150" stroke="#e4e0d8" stroke-width="1"/>
+  <line x1="100" y1="245" x2="820" y2="245" stroke="#e4e0d8" stroke-width="1"/>
+  <line x1="100" y1="320" x2="820" y2="320" stroke="#e4e0d8" stroke-width="1"/>
+
+  <!-- axes -->
+  <path d="M100,390 L100,52" fill="none" stroke="#1c1917" stroke-width="1.8" marker-end="url(#t2-ah)"/>
+  <path d="M100,390 L828,390" fill="none" stroke="#1c1917" stroke-width="1.8" marker-end="url(#t2-ah)"/>
+  <text x="96" y="40" text-anchor="start" font-size="18" font-weight="600" fill="#1c1917">durable throughput  &#8593;</text>
+  <text x="460" y="432" text-anchor="middle" font-size="18" font-weight="600" fill="#1c1917">cumulative work over time  &#8594;</text>
+
+  <!-- churn gap (shaded region between the two curves, from divergence rightward) -->
+  <polygon points="300,250 360,232 420,250 475,240 560,180 680,130 810,96 810,240 680,241 540,242 440,244 360,248 300,250"
+           fill="#9a3f12" fill-opacity="0.12"/>
+
+  <!-- Line B: under-governed (low E) — same early slope, then bends over and flattens -->
+  <polyline points="100,388 200,302 290,258 360,248 440,244 540,242 680,241 810,240"
+            fill="none" stroke="#b23b3b" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- Line A: governed (high E) — near-linear with a small hardening dip, then resumes -->
+  <polyline points="100,388 200,300 300,250 360,232 420,250 475,240 560,180 680,130 810,96"
+            fill="none" stroke="#1f7a4d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- endpoint dots -->
+  <circle cx="810" cy="96" r="5" fill="#1f7a4d"/>
+  <circle cx="810" cy="240" r="5" fill="#b23b3b"/>
+
+  <!-- curve labels -->
+  <text x="806" y="84" text-anchor="end" font-size="19" font-weight="700" fill="#1f7a4d">governed (high E)</text>
+  <text x="806" y="227" text-anchor="end" font-size="18" font-weight="700" fill="#b23b3b">under-governed (low E)</text>
+
+  <!-- churn label inside the gap -->
+  <text x="540" y="212" text-anchor="middle" font-size="18" font-style="italic" fill="#9a3f12">churn</text>
+
+  <!-- churn wall annotation below B's flattening (leader up to the flat tail) -->
+  <line x1="612" y1="288" x2="640" y2="246" stroke="#9a3f12" stroke-width="1.4" marker-end="url(#t2-lead)"/>
+  <text x="600" y="306" text-anchor="middle" font-size="19" font-weight="700" fill="#9a3f12">churn wall</text>
+
+  <!-- hardening-dip callout (leader up to the dip, text below) -->
+  <line x1="378" y1="326" x2="392" y2="256" stroke="#57534e" stroke-width="1.4" marker-end="url(#t2-lead)"/>
+  <text x="352" y="345" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">hardening dip &#8212;</text>
+  <text x="352" y="365" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">velocity buys trust</text>
+
+  <!-- caption note: observed vs predicted -->
+  <text x="100" y="455" text-anchor="start" font-size="17" font-style="italic" fill="#57534e">Line A is observed (this single case); Line B is predicted, not measured.</text>
+</svg>

@@ -1,0 +1,341 @@
+{
+  "_note": "Appendix-C R3 applicability classification (DRAFT \u2014 appendix-c-feedback). ADOPTION SIGNAL, NOT a quality ranking: `essential` answers 'should almost every Governed Engineering Environment contain this?'; `specialized` means 'valuable when the problem domain requires it.' A specialized mechanism is not lesser \u2014 it is domain-triggered. Judgment-based, anchored on the review's worked examples (essential: brief-linting, lifecycle-hooks, governance-graph, semantic-lints, executable-source-of-truth, drift-parity-gates; specialized: pdf-model, coverage-model-mapping, resource-pressure-gating, formal-invariant-verification). Split: 34 essential / 49 specialized. Curated (declared judgment); to be wired into the Appendix-C brick chip line as a tag, never a brick-size change (R3+R6). Keyed by bare entry slug.",
+  "_split": {
+    "essential": 34,
+    "specialized": 49
+  },
+  "applicability": {
+    "a11y-prefix": {
+      "applicability": "specialized",
+      "why": "a reserved inserted-artifact prefix is specific to a tool that inserts content"
+    },
+    "agent-first-mbse-harness": {
+      "applicability": "essential",
+      "why": "the thin schema-over-records harness is the enabling method for every model here"
+    },
+    "agent-orchestration-model": {
+      "applicability": "specialized",
+      "why": "a formal model of the orchestrator loop is an advanced governed-substrate move"
+    },
+    "agent-registry": {
+      "applicability": "essential",
+      "why": "knowing who is in flight is core fleet state for any orchestrator"
+    },
+    "aggregate-compute-protection": {
+      "applicability": "specialized",
+      "why": "only needed when many agents saturate one host"
+    },
+    "brief-linting": {
+      "applicability": "essential",
+      "why": "every fleet admits work orders; linting them before dispatch is the baseline gate"
+    },
+    "build-serializer": {
+      "applicability": "specialized",
+      "why": "a heavy-compute semaphore matters only under host contention"
+    },
+    "canonical-walkers": {
+      "applicability": "specialized",
+      "why": "one canonical walker per tree assumes a specific structured tree to traverse"
+    },
+    "caused-by-provenance": {
+      "applicability": "essential",
+      "why": "a typed cause on every change is a cheap, broadly-useful commit-trailer discipline"
+    },
+    "claude-md-rule-index": {
+      "applicability": "essential",
+      "why": "a governance document held honest by its own lints suits every project"
+    },
+    "codemod-first": {
+      "applicability": "essential",
+      "why": "an AST codemod for large mechanical backlogs applies to any fleet with such sweeps"
+    },
+    "coherence-lints": {
+      "applicability": "essential",
+      "why": "asserting independent sources agree is a broadly-applicable consistency check"
+    },
+    "component-zone-model": {
+      "applicability": "essential",
+      "why": "a typed component/zone map underpins scoping in any sizeable codebase"
+    },
+    "composed-state-machine-model": {
+      "applicability": "specialized",
+      "why": "modeling concurrent lifecycles applies only where such concurrency exists"
+    },
+    "concurrency-contracts": {
+      "applicability": "specialized",
+      "why": "typed concurrency registries matter only when real concurrency is present"
+    },
+    "content-validator": {
+      "applicability": "specialized",
+      "why": "an input-subset-of-output fidelity gate is triggered by a content-preservation requirement"
+    },
+    "control-coverage-census": {
+      "applicability": "specialized",
+      "why": "a governance-coverage census is a maturity audit, not a starter mechanism"
+    },
+    "control-substrate-dependency": {
+      "applicability": "specialized",
+      "why": "blast-radius metadata pays off once cross-cutting substrate churn is frequent"
+    },
+    "coverage-model-mapping": {
+      "applicability": "specialized",
+      "why": "projecting coverage onto model nodes needs mature models to map onto"
+    },
+    "cron-alerts-gate": {
+      "applicability": "specialized",
+      "why": "assumes a cron/alert plane the fleet must not outrun"
+    },
+    "data-flow-model": {
+      "applicability": "specialized",
+      "why": "a data-flow graph is needed when governed-data or privacy is a concern"
+    },
+    "ddt-pin-trailers": {
+      "applicability": "specialized",
+      "why": "doc-derived characterization tests with pin trailers are an advanced regression layer"
+    },
+    "deploy-heartbeats": {
+      "applicability": "specialized",
+      "why": "liveness pings matter only for long-running deploy processes"
+    },
+    "deployment-topology-model": {
+      "applicability": "specialized",
+      "why": "modeling where things run assumes a non-trivial deployment topology"
+    },
+    "derive-changelog": {
+      "applicability": "specialized",
+      "why": "reconstructing mutation history from stamps assumes a stamping product"
+    },
+    "doc-hygiene-lints": {
+      "applicability": "essential",
+      "why": "cheap mechanical documentation checks apply to any repo"
+    },
+    "docs-hierarchy": {
+      "applicability": "essential",
+      "why": "every fleet needs one bounded canonical rule map in boot context"
+    },
+    "domain-registries": {
+      "applicability": "essential",
+      "why": "frozen typed registries of domain facts are a single-source-of-truth every project wants"
+    },
+    "drift-parity-gates": {
+      "applicability": "essential",
+      "why": "bidirectional model-code parity is the gate every model depends on"
+    },
+    "dynamic-context-injection": {
+      "applicability": "essential",
+      "why": "point-of-action rule delivery keeps any agent inside policy without bloating context"
+    },
+    "epic-and-design-templates": {
+      "applicability": "essential",
+      "why": "fixed planning-artifact templates structure work in any effort"
+    },
+    "epic-definition-of-done": {
+      "applicability": "essential",
+      "why": "a trust-nothing completion gate is a universal close discipline"
+    },
+    "executable-source-of-truth": {
+      "applicability": "essential",
+      "why": "typed data tools read and generate from is the core modeling move for any GEE"
+    },
+    "f10-wiring-lint": {
+      "applicability": "specialized",
+      "why": "a lint that every mutator wires a stamp assumes a mutator-verb model"
+    },
+    "formal-invariant-verification": {
+      "applicability": "specialized",
+      "why": "exhaustive temporal verification is reserved for hairy safety/liveness invariants"
+    },
+    "fuzz-campaigns": {
+      "applicability": "specialized",
+      "why": "adversarial fuzzing is triggered by parsing untrusted or malformed input"
+    },
+    "governance-graph": {
+      "applicability": "essential",
+      "why": "a typed graph of the control mechanisms suits every fleet that runs several"
+    },
+    "invariant-dag-execution-policy": {
+      "applicability": "specialized",
+      "why": "a build/deploy DAG scheduler matters only with a real dependency graph"
+    },
+    "journey-criticality-test-placement": {
+      "applicability": "specialized",
+      "why": "criticality-derived test tiers assume modeled user journeys"
+    },
+    "journey-task-closure": {
+      "applicability": "specialized",
+      "why": "terminal post-condition formulas assume modeled journeys with observable leaves"
+    },
+    "lifecycle-hooks": {
+      "applicability": "essential",
+      "why": "binding steps to runtime events is the foundation of any enforced fleet discipline"
+    },
+    "lifecycle-model": {
+      "applicability": "specialized",
+      "why": "modeling the operating substrate is an operator-facing maturity layer"
+    },
+    "mandatory-snippet-table": {
+      "applicability": "essential",
+      "why": "a required-snippet registry is the content half of brief admission any fleet needs"
+    },
+    "merge-train-mis-batching": {
+      "applicability": "specialized",
+      "why": "only pays off at high commit throughput where landing batches conflict"
+    },
+    "meta-model-consumption": {
+      "applicability": "essential",
+      "why": "querying models at runtime rather than snapshotting is core to using any model"
+    },
+    "model-derived-test-obligation-census": {
+      "applicability": "specialized",
+      "why": "deriving the test-obligation set needs mature structured models first"
+    },
+    "model-driven-codegen": {
+      "applicability": "specialized",
+      "why": "generating artifacts from models applies only where such artifacts exist"
+    },
+    "model-graded-finding-severity": {
+      "applicability": "specialized",
+      "why": "distance-graded severity needs a component model and many lints to grade"
+    },
+    "mutator-stamps": {
+      "applicability": "specialized",
+      "why": "embedding attribution stamps in artifacts is specific to a mutating product"
+    },
+    "office-models": {
+      "applicability": "specialized",
+      "why": "a typed Office-format model is triggered by remediating Office documents"
+    },
+    "operational-playbooks": {
+      "applicability": "essential",
+      "why": "documented decision procedures beat reasoning from scratch in any operation"
+    },
+    "operator-runbook-skill": {
+      "applicability": "specialized",
+      "why": "a packaged operator skill is an advanced convenience over plain playbooks"
+    },
+    "pdf-model": {
+      "applicability": "specialized",
+      "why": "a typed PDF seam is triggered by remediating PDFs"
+    },
+    "pre-commit-hook": {
+      "applicability": "essential",
+      "why": "the universal per-commit gate every codebase already understands"
+    },
+    "process-view": {
+      "applicability": "specialized",
+      "why": "an explicit process/concurrency view is needed only where processes race"
+    },
+    "property-tests": {
+      "applicability": "essential",
+      "why": "property-based invariant testing is a universal technique"
+    },
+    "query-surface": {
+      "applicability": "essential",
+      "why": "one query API over the models is core once more than one model exists"
+    },
+    "raw-redis-seam": {
+      "applicability": "specialized",
+      "why": "a single Redis seam assumes Redis is in the stack"
+    },
+    "reflection-facet-substrate": {
+      "applicability": "specialized",
+      "why": "an operator-nudge substrate is an advanced maturity layer"
+    },
+    "remediation-verbs": {
+      "applicability": "specialized",
+      "why": "a bounded repair vocabulary is triggered by having a mutation domain to bound"
+    },
+    "required-config-per-role-manifest": {
+      "applicability": "specialized",
+      "why": "a per-role-per-plane config manifest suits multi-plane deployments"
+    },
+    "resource-pressure-gating": {
+      "applicability": "specialized",
+      "why": "valuable only where a saturable host resource is the bottleneck"
+    },
+    "role-typed-dispatch": {
+      "applicability": "essential",
+      "why": "any multi-agent fleet must type who may do what"
+    },
+    "rule-metadata-registry": {
+      "applicability": "essential",
+      "why": "machine-readable rule metadata is the queryable backbone of any rule index"
+    },
+    "self-governance": {
+      "applicability": "essential",
+      "why": "converting recurring failures into controls is the meta-discipline every GEE lives by"
+    },
+    "semantic-level-enforcement": {
+      "applicability": "essential",
+      "why": "placing a check at the level the property first appears is a universal siting rule"
+    },
+    "semantic-lints": {
+      "applicability": "essential",
+      "why": "blocking ban-lints over your own source are a universal structural defense"
+    },
+    "sentinel-first-commit": {
+      "applicability": "specialized",
+      "why": "a first-commit health check assumes a worktree-per-agent fleet"
+    },
+    "service-client": {
+      "applicability": "specialized",
+      "why": "one typed cross-service HTTP client assumes a multi-service architecture"
+    },
+    "service-flow-model": {
+      "applicability": "specialized",
+      "why": "a service-architecture model applies only to service-oriented systems"
+    },
+    "staged-deploy-gates": {
+      "applicability": "essential",
+      "why": "any fleet shipping to production needs a staged canary path"
+    },
+    "standards-rule-engine": {
+      "applicability": "specialized",
+      "why": "an external-standard conformance engine is triggered by having a standard to meet"
+    },
+    "symbol-anchored-traceability-graph": {
+      "applicability": "specialized",
+      "why": "a full traceability graph is an advanced anti-drift investment"
+    },
+    "synchronization-model": {
+      "applicability": "specialized",
+      "why": "a typed model of sync behaviour is needed where synchronization is intricate"
+    },
+    "telemetry-collection-provenance": {
+      "applicability": "specialized",
+      "why": "telemetry provenance matters once you collect telemetry across environments"
+    },
+    "test-onion-tiers": {
+      "applicability": "essential",
+      "why": "tiering a suite by cost and coverage applies to any large test base"
+    },
+    "test-serializer": {
+      "applicability": "specialized",
+      "why": "a single-writer test mediator assumes concurrent worktrees on one machine"
+    },
+    "timeout-budget-ordering-model": {
+      "applicability": "specialized",
+      "why": "a wall-clock budget-nesting model is needed where timeouts compound"
+    },
+    "tombstone-commits": {
+      "applicability": "specialized",
+      "why": "worktree lifecycle bookkeeping assumes the worktree-per-agent model"
+    },
+    "typed-categories": {
+      "applicability": "essential",
+      "why": "typed enums over free-form strings are a universal anti-typo discipline"
+    },
+    "typed-contract-surfaces": {
+      "applicability": "essential",
+      "why": "turning cross-party contracts into checked models suits any integrated system"
+    },
+    "typed-event-bus": {
+      "applicability": "essential",
+      "why": "a health-signal surface is core to observing any running fleet"
+    },
+    "user-journey-model": {
+      "applicability": "specialized",
+      "why": "first-class user journeys apply only to products that have them"
+    }
+  }
+}

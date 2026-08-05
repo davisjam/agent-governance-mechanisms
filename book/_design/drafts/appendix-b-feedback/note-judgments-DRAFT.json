@@ -1,0 +1,232 @@
+{
+  "_provenance": "DRAFT model for the Appendix B (Engineering Deep Dives) editorial refinement — R7 of book/_design/drafts/appendix-b-feedback/FEEDBACK.md. One distinct transferable engineering JUDGMENT per flagship note: the way of thinking a reader should remember six months from now, faithful to what each note ACTUALLY teaches (read from book/appendix-notes/*.md). NOT a declared->generated model yet; a later book-main wave lands it as book-models/note_judgments_declared.json + a distinctness lint (see note-judgments-lint-spec.md). Vocabulary: 'structured' not 'typed'.",
+  "_shape": "slug -> { judgment (2-sentence principle), one_line (crisp memorable form), foundational (recurs across the book / defines MAGE vs supports it), distinct_from? (sibling slug -> the phrase that separates them, present only on near-collision pairs) }. distinct_from is the curated disambiguation the distinctness lint reads.",
+  "_distinctness_invariant": "No two notes may teach the same judgment. Where two share an enforcement PRIMITIVE (ban-lint, drift gate, closed vocabulary), the JUDGMENT still differs — the shared mechanism is recorded as a distinct_from differentiator, not a merge. Every near-collision resolved below carries a distinct_from edge on both ends.",
+  "judgments": {
+    "brief-linting": {
+      "judgment": "Place a deterministic check at the point of no return — the moment after which an error becomes unrecoverable. Run it anywhere earlier and a probabilistic reviewer misses the boring structural precondition; run it there and a machine catches it every time.",
+      "one_line": "Put the check at the point of no return.",
+      "foundational": true,
+      "distinct_from": {
+        "content-validator": "brief-linting gates a PRECONDITION before an irreversible autonomous act; content-validator asserts a POSTCONDITION after the act",
+        "staged-deploy-gates": "brief-linting guards the dispatch handoff; staged-deploy guards user exposure",
+        "semantic-lints": "brief-linting checks the brief's form before dispatch; semantic-lints check source invariants the compiler can't express"
+      }
+    },
+    "dynamic-context-injection": {
+      "judgment": "Push the governing constraints into the actor's mandatory context instead of hoping it goes looking — relocate a rule from available to binding by putting it where it must be read. Rich enough metadata makes this a slicing operator that runs both ways: files to the constraints that govern them, and a diff back to the findings it introduced.",
+      "one_line": "Push the constraints into context; don't hope the actor pulls them.",
+      "foundational": true,
+      "distinct_from": {
+        "meta-model-consumption": "dynamic-context-injection PUSHES the relevant slice into an actor's context; meta-model-consumption is a consumer READING the model instead of copying a value out"
+      }
+    },
+    "claude-md-rule-index": {
+      "judgment": "Treat the document that carries every convention as enforced infrastructure, not a wiki page: boot it into every actor's context so it binds by construction, and hold it honest with its own budget and conformance lints. Guidance that lives in someone's head never reaches a fresh actor; a rules doc left ungoverned bloats until nobody reads it.",
+      "one_line": "Govern the governing document like an artifact, or it rots.",
+      "foundational": false
+    },
+    "operational-playbooks": {
+      "judgment": "Write the incident response down once, when no incident is burning, and make it discoverable at the trigger — so the reaction encodes pre-reasoned judgment instead of a guess made under pressure. The sharp edges of a recovery are exactly what a first-principles re-derivation gets wrong when time is shortest.",
+      "one_line": "Pre-reason the response before the incident; re-deriving under pressure fails.",
+      "foundational": false,
+      "distinct_from": {
+        "typed-event-bus": "playbooks are the RESPONSE content (what to do); the event bus is the SIGNAL surface + reactor loop that opens them",
+        "self-governance": "a playbook DOCUMENTS a response to a recurring situation; self-governance builds a CONTROL so the situation can't recur"
+      }
+    },
+    "self-governance": {
+      "judgment": "When a failure recurs, don't re-patch the instance — name its class and add the smallest durable control that kills it, preferring a constraint that makes the wrong move unrepresentable over a sensor that catches it. Fire that conversion on a cadence so it depends on a schedule, not on someone remembering under a deep queue.",
+      "one_line": "Convert a recurring failure into its smallest class-killing control, on a cadence.",
+      "foundational": true,
+      "distinct_from": {
+        "semantic-lints": "self-governance is the LOOP that decides to build a control and right-sizes it; semantic-lints are one CONTROL family the loop can reach for",
+        "lifecycle-hooks": "self-governance is the conversion judgment; lifecycle-hooks is the runtime binding it fires on"
+      }
+    },
+    "epic-definition-of-done": {
+      "judgment": "At a completion boundary, trust nothing recorded — re-derive the verdict from the substrate as it stands now, because claims rot as sibling work churns the ground under them. A phase marker or a prior pass count is a statement about the past, not the present.",
+      "one_line": "Re-verify at the boundary; recorded claims rot.",
+      "foundational": false
+    },
+    "agent-registry": {
+      "judgment": "Decide from a recorded fact, not an inferred signal: a reclaim that reads a written record of what is live cannot race the way one guessing from filesystem timestamps does. The instant liveness is inferred rather than looked up, a mid-work actor looks identical to a dead one.",
+      "one_line": "Read liveness from a record, never infer it from side effects.",
+      "foundational": false
+    },
+    "lifecycle-hooks": {
+      "judgment": "Bind a recurring process step to a runtime lifecycle event so its firing is guaranteed even when attention is thin — reaching failures a lint never can, because they happen at runtime with no source artifact to analyze. Split the two halves a lint fuses: the firing is hard, the payload can still be soft guidance that aims the next decision.",
+      "one_line": "Bind the step to a lifecycle event; the firing is hard, the payload can be soft.",
+      "foundational": false,
+      "distinct_from": {
+        "brief-linting": "lifecycle-hooks reach a RUNTIME omission with no source artifact; brief-linting statically checks a source artifact (the brief)"
+      }
+    },
+    "typed-event-bus": {
+      "judgment": "Give the fleet a structured, self-documenting signal surface and make the orchestrator react to it — silent degradation accretes for hours without a queryable health signal and something that acts on it. A closed topic registry keeps a typo from minting a dead signal; the reaction loop is the half that turns a read into a steer.",
+      "one_line": "Build the observe-then-react loop: a structured signal surface plus something that acts on it.",
+      "foundational": true,
+      "distinct_from": {
+        "operational-playbooks": "the event bus is the SIGNAL + reactor; playbooks are the RESPONSE content it opens"
+      }
+    },
+    "resource-pressure-gating": {
+      "judgment": "Govern a saturable resource on a live pressure signal read at two layers — an admission gate that refuses heavy work before it starts and an execution shed that stops work pressure has overtaken. A count of how many jobs run is not the same fact as whether the host can bear them now, and one shared reading keeps the two layers from disagreeing.",
+      "one_line": "Gate a saturable resource on live pressure at both admission and execution.",
+      "foundational": false,
+      "distinct_from": {
+        "synchronization-model": "resource-pressure-gating reacts to dynamic SATURATION of a resource; synchronization-model declares static lock ORDERING contracts",
+        "test-serializer": "resource-pressure-gating sheds by pressure level; test-serializer serializes to a fixed writer count regardless of pressure"
+      }
+    },
+    "test-serializer": {
+      "judgment": "Process isolation is not resource isolation — separate processes still contend for one host's CPU, disk, and ports, so serialize the contenders through a mediator whose un-mediated path is structurally refused, not merely discouraged. A convention agents are asked to remember is skipped under time pressure; a banned raw call makes the mediated path the only path.",
+      "one_line": "Process isolation isn't resource isolation; ban the un-mediated path.",
+      "foundational": false,
+      "distinct_from": {
+        "pdf-model": "test-serializer bans a raw call to serialize HOST-RESOURCE contention; pdf-model bans a raw call to make a CORRUPTION bug class unrepresentable",
+        "synchronization-model": "test-serializer is one single-writer mediator; synchronization-model is the declared MODEL of every lock and its ordering"
+      }
+    },
+    "staged-deploy-gates": {
+      "judgment": "Catch a regression before exposure, not after — escalate cheap-to-expensive stages and gate promotion on a signal no user can reach, because rollback is reactive and by then users have already hit the break. Higher release frequency makes this more valuable, not less: the more often you ship, the more often an un-gated bad build reaches someone.",
+      "one_line": "Gate before exposure, cheapest signal first; frequency raises the stakes.",
+      "foundational": false,
+      "distinct_from": {
+        "brief-linting": "staged-deploy gates USER EXPOSURE with escalating stages; brief-linting gates the DISPATCH handoff with one static check"
+      }
+    },
+    "pdf-model": {
+      "judgment": "Make the failure class unrepresentable rather than merely discouraged: route all access to a treacherous resource through one structured seam and ban the raw library, so a reviewer never has to spot a missing invariant in a diff that looks correct. The seam encodes the invariants once; the raw API becomes unreachable.",
+      "one_line": "Make the bug class unrepresentable — one structured seam, raw API banned.",
+      "foundational": false,
+      "distinct_from": {
+        "remediation-verbs": "pdf-model routes access through one SEAM to make a bug unrepresentable; remediation-verbs bound the ACTION SPACE to a closed verb set to make governance tractable",
+        "test-serializer": "pdf-model's seam prevents CORRUPTION; test-serializer's mediator prevents host CONTENTION"
+      }
+    },
+    "remediation-verbs": {
+      "judgment": "Narrow the action space to a closed, named set of moves so the whole space is enumerable — then attribution, validation, and policy become tractable as a set rather than a review of arbitrary output. Free-form mutation leaves 'is every change stamped and on-policy?' unanswerable because the moves are open-ended.",
+      "one_line": "Narrow the action space to a closed vocabulary instead of reviewing arbitrary output.",
+      "foundational": false,
+      "distinct_from": {
+        "pdf-model": "remediation-verbs bound WHICH MOVES exist; pdf-model bounds HOW a resource is reached"
+      }
+    },
+    "mutator-stamps": {
+      "judgment": "Make provenance reconstructible from the artifact itself, not merely recorded in a log that scrolls away — embed the attribution where the change lives so the full history rebuilds from the delivered file at any time. A log is gone when you most need it; the artifact is always in hand.",
+      "one_line": "Make provenance reconstructible from the artifact, not merely logged.",
+      "foundational": false
+    },
+    "content-validator": {
+      "judgment": "Assert the property you cannot see go wrong as a machine-checked post-condition on every run — a silent drop is invisible to a human spot-check precisely because the output still looks fine. A post-condition that fails the job takes human trust out of the loop for exactly the failures that hide.",
+      "one_line": "Guard silent failures with a machine-checked post-condition, not a spot-check.",
+      "foundational": false,
+      "distinct_from": {
+        "brief-linting": "content-validator checks a POSTCONDITION of the work; brief-linting checks a PRECONDITION of the dispatch"
+      }
+    },
+    "semantic-lints": {
+      "judgment": "Encode the invariants your type system can't express as build-failing checks — mechanize what review does by attention and the compiler doesn't do at all, moving an audit into a lint. Earn it atop a maxed-out commodity-analysis floor, and keep a checker over structured source on a parser, never a pattern that can backtrack and hang the gate.",
+      "one_line": "Move the audit into a lint — mechanize the invariant the compiler can't express.",
+      "foundational": true,
+      "distinct_from": {
+        "self-governance": "semantic-lints are a control FAMILY; self-governance is the loop that decides when to build one and how large"
+      }
+    },
+    "executable-source-of-truth": {
+      "judgment": "Hold the authoritative knowledge of the system as machine-readable structured data that tools read on every run and generate real artifacts from — so it cannot drift like prose, and a context-bounded actor can operate a context-exceeding codebase by reasoning through the map instead of the whole territory. The model is the interface; agents do the disciplined regeneration humans resent, which is why this is practical now.",
+      "one_line": "Make authoritative system knowledge structured data, continuously read and held true.",
+      "foundational": true,
+      "distinct_from": {
+        "drift-parity-gates": "executable-source-of-truth is HAVING the map as structured data; drift-parity-gates is the sensor that keeps it equal to the territory",
+        "meta-model-consumption": "executable-source-of-truth is authoring the model; meta-model-consumption is consuming it without copying values out"
+      }
+    },
+    "drift-parity-gates": {
+      "judgment": "Check both directions of a model-to-reality mapping — every model row exists on disk AND every real thing is modeled — because a one-way regenerate-from-code check makes code the truth and leaves the model free to lie. Bidirectional parity is stricter on purpose: a change must update both sides in the same commit.",
+      "one_line": "Enforce parity in both directions; a one-way check lets the model lie.",
+      "foundational": true,
+      "distinct_from": {
+        "symbol-anchored-traceability-graph": "drift-parity gates ONE model against its reality; symbol-anchored governs the web of JOIN EDGES between models, code, lints, and tests",
+        "synchronization-model": "drift-parity is the general both-ways gate; synchronization-model is one model (locks + ordering) it can guard"
+      }
+    },
+    "meta-model-consumption": {
+      "judgment": "Read the source of truth at use time; never embed a hardcoded snapshot of a value the model already holds. A copied-out literal drifts the instant the model moves and the consumer keeps passing while reasoning about a stale world — the single most common substrate-drift vector.",
+      "one_line": "Derive the value at use time; a copied snapshot is a drift bug waiting.",
+      "foundational": false,
+      "distinct_from": {
+        "symbol-anchored-traceability-graph": "meta-model-consumption is read-don't-copy for a VALUE; symbol-anchored is read-don't-copy for a JOIN EDGE, anchored to a resolvable symbol"
+      }
+    },
+    "control-substrate-dependency": {
+      "judgment": "Lift a control's buried substrate assumption into a declared field so a cross-cutting change's blast radius becomes a computed query, not a grep-and-read of every checker's body. What breaks when I migrate the substrate should be answerable before you touch it, from declarations rather than by discovering false passes and false fails after the change lands.",
+      "one_line": "Declare the assumption so the blast radius is queryable before you change anything.",
+      "foundational": false
+    },
+    "coverage-model-mapping": {
+      "judgment": "Project coverage onto the model's meaningful nodes — its invariants, states, and seams — not onto lines, because an aggregate percentage can sit at ninety while a critical race invariant has zero tests touching it. The question worth answering is per-node ('is THIS invariant exercised?'), and an uncovered critical node is a concrete next test.",
+      "one_line": "Measure coverage against invariants, not lines; the aggregate hides the gap.",
+      "foundational": false,
+      "distinct_from": {
+        "model-derived-test-obligation-census": "coverage-model-mapping projects EXISTING coverage onto known nodes (is this node covered?); the obligation census DERIVES the set of tests that should exist and flags ones never written at all"
+      }
+    },
+    "model-derived-test-obligation-census": {
+      "judgment": "Derive the set of things that should be tested from the models — every seam that should be fuzzed, every failure edge that owes an injection test, every invariant that owes a checker — and lint the gap, so a missing test is a named finding rather than an absence nobody notices. Coverage counts what exists and structurally cannot count what was never written.",
+      "one_line": "Derive the test-obligation set from the models; coverage can't see a test never written.",
+      "foundational": false,
+      "distinct_from": {
+        "coverage-model-mapping": "the census measures ABSENCE (which obligations have no test at all); coverage-model-mapping measures which EXISTING nodes a suite touches"
+      }
+    },
+    "formal-invariant-verification": {
+      "judgment": "Prove a concurrency invariant by exhaustive search matched to its temporal shape — safety by state-space search, liveness by a temporal checker — because a sampled property test sails past the one adversarial schedule a distributed race hides in. Make the temporal form a required field that derives the checker, so a mis-declared invariant can't be routed to a runtime that structurally can't see its violation.",
+      "one_line": "Prove the invariant by exhaustive search its shape demands; sampling misses the rare schedule.",
+      "foundational": false,
+      "distinct_from": {
+        "coverage-model-mapping": "formal verification PROVES an invariant exhaustively; coverage-model-mapping only shows a node was exercised, and pairs with proof for the ones that need it",
+        "composed-state-machine-model": "formal-invariant-verification PROVES an invariant; the composed model NAMES the cross-machine invariants to be proven"
+      }
+    },
+    "composed-state-machine-model": {
+      "judgment": "In a concurrent lifecycle the properties that matter span several machines, not one — so make the composition the subject and name the cross-machine invariants explicitly, because a suite that walks each machine alone reports green while the composition is broken. The hard part is stating the predicate a single-machine view never forces you to name.",
+      "one_line": "Model the composition, not the machines; the invariants that break live between them.",
+      "foundational": false,
+      "distinct_from": {
+        "formal-invariant-verification": "the composed model DECLARES the machines and their cross-machine invariants; formal verification is the method that proves them"
+      }
+    },
+    "synchronization-model": {
+      "judgment": "Declare concurrency contracts — every lock, the resource it guards, and the required acquisition order — as a checkable model, so an inverted lock order fails at author time instead of deadlocking in production where the lesson arrives too late. An undeclared lock and an unstated ordering are both invisible in the code and catastrophic at runtime.",
+      "one_line": "Declare locks and their ordering as a checkable model; inversions should fail at author time.",
+      "foundational": false,
+      "distinct_from": {
+        "governance-graph": "synchronization-model models LOCK ORDERING among resources; governance-graph models CONFLICTS between control mechanisms over shared resources"
+      }
+    },
+    "governance-graph": {
+      "judgment": "Model your guardrails as a system in their own right — each a node over the resources it touches, each edge a conflict — so a collision between two controls is caught at authoring, before they trip each other in production. Every new mechanism is a new pair against every existing one, and the interaction is drawn nowhere until you draw it.",
+      "one_line": "Model your controls as a system; catch guardrail collisions at authoring, not in production.",
+      "foundational": true,
+      "distinct_from": {
+        "synchronization-model": "governance-graph resolves conflicts among CONTROL MECHANISMS; synchronization-model resolves ordering among LOCKS"
+      }
+    },
+    "symbol-anchored-traceability-graph": {
+      "judgment": "Anchor every cross-reference to a resolvable symbol, never a line number, and re-derive it at check time — a snapshotted join rots silently while a derived one reddens the moment the code moves. The same anchors that catch drift make the graph a navigable cross-layer index, and a claim that resolves to no clean symbol surfaces a missing abstraction rather than an error.",
+      "one_line": "Derived edges defend; snapshotted ones drift — anchor joins to symbols and re-derive them.",
+      "foundational": true,
+      "distinct_from": {
+        "drift-parity-gates": "symbol-anchored governs the WEB of joins between models/code/lints/tests; drift-parity gates a single model against its reality",
+        "meta-model-consumption": "symbol-anchored keeps a JOIN EDGE from drifting; meta-model-consumption keeps a copied VALUE from drifting"
+      }
+    },
+    "fuzz-campaigns": {
+      "judgment": "When an adversarial input finds a defect, fix to the stable point in the specification, not the failing seed, so the fix holds for every spec-allowed input rather than the one that crashed. The sharpest adversary is not random bytes but producer diversity — round-trip a real document through a rival writer and let its legal-but-unusual dialect be the input — judged against a structured model's declared outcome set as the oracle.",
+      "one_line": "Fix to the spec point, not the seed; real producers are a better adversary than random bytes.",
+      "foundational": false
+    }
+  }
+}

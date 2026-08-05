@@ -1,0 +1,166 @@
+{
+  "_provenance": "DRAFT PROPOSAL (D91, 260804) — a candidate declared model for a 'Theory of MAGE' appendix, in the book-models declared->generated idiom (sibling to metrics-dashboard.json / claims.json). NOT YET WIRED: no model.py projects it and no page is held equal to it; this file exists so the author can ratify the constructs/edges/predictions before any infrastructure lands. If adopted, a theory_of_mage_model.py would project the crosswalk table + predictions table into the appendix page and drift-check them, exactly as metrics_dashboard_model.py does for 6.5.",
+
+  "_intent": "Encode the book's argument as an Accelerate-style causal/structural model: latent CONSTRUCTS (the two theses, governance conversion, the fleet, the governed environment), the PREDICTIVE relations among them, and a set of falsifiable PREDICTIONS — each tied to a dashboard OBSERVABLE (by metrics-dashboard slug) and a FALSIFICATION condition. Single-case (DocAble); directional, not proven.",
+
+  "hedge": "N=1: one repository, one fleet, one operator, ~20 weeks focused. These are ANALYTIC-generalization predictions (claims about a mechanism and its scope conditions), not statistical generalization to a population. They are stated so future multi-case / longitudinal / controlled work can test them. Directional, not fitted; no path coefficients are claimed.",
+
+  "constructs": [
+    {
+      "id": "agentic-velocity",
+      "role": "exogenous-driver",
+      "name": "Agentic velocity",
+      "gloss": "The fleet's raw throughput — many probabilistic reasoning loops acting in parallel, around the clock. The driver that both produces change and EXPOSES failure: related failures that would arrive weeks apart now arrive in an afternoon, close enough to see the structure they share.",
+      "observables": ["velocity", "churn"]
+    },
+    {
+      "id": "modeling-investment",
+      "role": "capability",
+      "name": "Modeling investment (Modeling Thesis)",
+      "gloss": "Typed models held equal to the code by a gate, so a context-bounded agent can reason through a compact map instead of dragging raw source through its window. Binds intent to implementation; shrinks what the agent must hold in-window before the work churns.",
+      "observables": ["missing-model-metric", "model-sync-efficacy", "support-ratio", "mbse-nav-token-savings"]
+    },
+    {
+      "id": "governance-conversion",
+      "role": "capability",
+      "name": "Governance conversion (Alignment Thesis)",
+      "gloss": "Each recurring failure class converted once into a durable, deterministic mechanism (a constraint that prevents, a sensor that catches), enforced on every later agent instead of re-caught by inspection. Policy decided once holds against every change after.",
+      "observables": ["control-growth"]
+    },
+    {
+      "id": "governed-environment-quality",
+      "role": "latent-intermediate",
+      "name": "Governed environment quality (E)",
+      "gloss": "The intermediate MAGE analog of Accelerate's 'software delivery performance': the degree to which (a) the map equals the territory (models carry the system and stay true) and (b) failure classes are mechanized (held by hard controls, not watched by review). Modeling investment and governance conversion both load onto E.",
+      "observables": ["missing-model-metric", "control-growth", "support-ratio", "model-sync-efficacy"]
+    },
+    {
+      "id": "sustained-velocity",
+      "role": "outcome",
+      "name": "Sustained (near-linear) durable throughput",
+      "gloss": "Durable progress that stays roughly linear as the system scales — the fleet does not hit the churn wall (its analog of Brooks's Law). The Velocity dimension of productivity, corrected for rework.",
+      "observables": ["velocity", "churn"]
+    },
+    {
+      "id": "falling-escape",
+      "role": "outcome",
+      "name": "Falling defect-escape rate",
+      "gloss": "Fewer confidently-wrong changes reach production as mechanized coverage rises. The Quality dimension.",
+      "observables": ["control-growth", "model-claim-coverage", "grammar-coverage"]
+    },
+    {
+      "id": "bounded-oversight",
+      "role": "outcome",
+      "name": "Bounded oversight cost",
+      "gloss": "Human attention moves from changes to CLASSES of change, so per-change review does not saturate as velocity rises; judgment stays the scarce resource without becoming the bottleneck. The Sustainability/Satisfaction dimension.",
+      "observables": ["support-ratio", "control-growth"]
+    },
+    {
+      "id": "capability-fit",
+      "role": "scope-condition",
+      "name": "Capability-fit",
+      "gloss": "The agents must be matched to human judgment good enough to read a failure as the symptom of a missing abstraction. Below this fit, velocity becomes motion without direction.",
+      "observables": []
+    },
+    {
+      "id": "authority",
+      "role": "scope-condition",
+      "name": "Authority to change the environment",
+      "gloss": "The person who sees the recurring failure must be able to change the architecture, mechanisms, and gates. Split the authority and the same signal yields a local patch instead of a shared mechanism; the class never dies.",
+      "observables": ["control-growth"]
+    }
+  ],
+
+  "relations": [
+    {"from": "agentic-velocity", "to": "modeling-investment", "sign": "enables", "reading": "Velocity surfaces the unmodelled surface fast enough to keep modeling worth its upkeep (cheap repeated cognition maintains the map)."},
+    {"from": "agentic-velocity", "to": "governance-conversion", "sign": "enables", "reading": "Velocity clusters recurrences in time, so a failure class becomes visible and convertible sooner."},
+    {"from": "modeling-investment", "to": "governed-environment-quality", "sign": "positive", "reading": "Map-equals-territory is half of E."},
+    {"from": "governance-conversion", "to": "governed-environment-quality", "sign": "positive", "reading": "Mechanized coverage is the other half of E."},
+    {"from": "governed-environment-quality", "to": "sustained-velocity", "sign": "positive", "reading": "A governed environment keeps durable throughput ~linear."},
+    {"from": "governed-environment-quality", "to": "falling-escape", "sign": "positive", "reading": "Mechanized coverage catches or forbids the confidently-wrong change."},
+    {"from": "governed-environment-quality", "to": "bounded-oversight", "sign": "positive", "reading": "Converting a class once removes it from the per-change review budget forever."},
+    {"from": "agentic-velocity", "to": "sustained-velocity", "sign": "conditional", "moderated_by": "governed-environment-quality", "reading": "THE LOAD-BEARING EDGE: raw velocity's effect on durable throughput is NEGATIVE (churn) when E is low and POSITIVE when E is high. E moderates the velocity->outcome path. This is why 'measure governed throughput, not volume.'"},
+    {"from": "capability-fit", "to": "governance-conversion", "sign": "gates", "reading": "Conversion needs judgment that can classify a failure as structural."},
+    {"from": "authority", "to": "governance-conversion", "sign": "gates", "reading": "Conversion needs the power to change the environment; split authority stalls it."}
+  ],
+
+  "predictions": [
+    {
+      "id": "P1-velocity-exposes-structure",
+      "statement": "Higher agentic velocity surfaces a structural failure class sooner — related failures cluster close enough in time to reveal the structure they share.",
+      "mechanism": "Change fast enough that failures which would arrive quarters apart arrive in one afternoon; proximity converts noise into a visible class.",
+      "observable": "velocity vs. time-to-recur of a failure class; the paired fix-and-lint conversion cadence (208 such commits) tracking commits/week.",
+      "observable_slugs": ["velocity", "control-growth"],
+      "falsification": "At higher velocity, same-class failures surface no sooner (inter-arrival independent of throughput), or conversion cadence does not track velocity."
+    },
+    {
+      "id": "P2-governed-throughput-linear",
+      "statement": "An environment whose support apparatus LEADS production sustains near-linear durable throughput; an under-invested one decays as churn eats it.",
+      "mechanism": "Models compress the system below the context window, so work fits before it churns; the churn wall (the fleet's Brooks's Law) moves out of reach only when the map leads.",
+      "observable": "velocity-curve slope read against support ratio (0.85x->2.48x->3.68x->3.06x) and the missing-model drain (56%->7.89%); churn deletions collapse (backend/ 286,378->3,767) as the environment stabilizes.",
+      "observable_slugs": ["support-ratio", "missing-model-metric", "churn", "velocity"],
+      "falsification": "A low-support / high-orphan environment sustains linear durable velocity as well as a high-support one, or a high-support environment still decays into churn."
+    },
+    {
+      "id": "P3-control-lowers-escape-review-does-not",
+      "statement": "Escaped-defect rate falls as mechanized coverage rises; under review-only governance escaped defects RISE with velocity.",
+      "mechanism": "A hard control fires on every change regardless of throughput; per-change review coverage falls toward zero as attention saturates, so its escape rate rises to the raw per-change defect rate.",
+      "observable": "control growth (0->747 lints, 0->102 gates) against escaped-defect / regression-reopen rate; the fix-and-lint density.",
+      "observable_slugs": ["control-growth"],
+      "falsification": "Escape rate is independent of mechanized coverage, or review-based teams hold escape rate flat as velocity climbs."
+    },
+    {
+      "id": "P4-soft-saturates-hard-does-not",
+      "statement": "Expected violations of a soft (prose/convention/review) mechanism grow in proportion to velocity; a hard constraint's stay near zero.",
+      "mechanism": "A convention obeyed 99-in-100 is a probability flip; flip it V times per unit and expected violations = q*V, linear in velocity. A constraint that removes the move costs no iteration and cannot be reworded away.",
+      "observable": "recurrence count of a convention-guarded class before/after determinization — e.g. the worktree-marker incident: 3 destructions in 5 days under prose, 0 after the marker file.",
+      "observable_slugs": ["control-growth"],
+      "falsification": "A purely soft / review regime holds violation counts flat as velocity rises, or determinizing a class does not drive its recurrence to ~0."
+    },
+    {
+      "id": "P5-model-compression-three-way-gain",
+      "statement": "Working through a model that compresses the system below the window lowers tokens-to-answer AND speeds landing AND lowers escapes together — not a trade among the three.",
+      "mechanism": "Every token in the window earns its place; the same model carries the invariants the change is checked against. The gain lives in the representation, not in a smarter agent.",
+      "observable": "MBSE navigation token-savings (model on vs. off) at MATCHED recall — the near-term measurable the 'garden null' left open (per-task RECALL cannot see it; efficiency and system-level ablations can).",
+      "observable_slugs": ["mbse-nav-token-savings", "missing-model-metric"],
+      "falsification": "Token savings come at a measured cost in velocity or quality (a real trade appears), or matched-recall efficiency shows no model advantage."
+    },
+    {
+      "id": "P6-fit-and-authority-gate",
+      "statement": "The whole mechanism holds only where human judgment can read a failure as structural (capability-fit) and the person who sees it can change the environment (authority); split authority produces local patches and the class never dies.",
+      "mechanism": "Conversion is a judgment act followed by an environment edit; remove either and a failure yields a patch, not a mechanism.",
+      "observable": "conversion rate and control growth against authority locus; recurrence of a class after a local patch.",
+      "observable_slugs": ["control-growth"],
+      "falsification": "Split-authority or low-fit settings convert failure classes into shared, durable controls at the same rate as single-owner high-fit ones."
+    }
+  ],
+
+  "equations": [
+    {
+      "id": "EQ1-churn-wall",
+      "name": "Sustainable-velocity / churn-wall relation",
+      "form": "V_durable = V_raw * (1 - c(m))",
+      "reading": "Durable throughput is raw velocity net of the churn share c. c decreases as model-compression coverage m rises (more of the relevant surface fits the window); c -> 1 (net progress collapses) when the relevant surface exceeds what the fleet can hold. Directional, not fitted.",
+      "ties_to": ["P2-governed-throughput-linear"]
+    },
+    {
+      "id": "EQ2-two-regime-escape",
+      "name": "Defect-escape under two governance regimes",
+      "form": "eps_review ≈ p*(1 - r(V)), r(V)->0 as V->inf  =>  eps_review -> p ;   eps_control ≈ p*(1 - kappa), kappa independent of V ;   Delta_eps = eps_review - eps_control -> p*kappa, widening with V",
+      "reading": "p = per-change defect probability; r(V) = review coverage, which saturates toward zero as velocity rises; kappa = mechanized-coverage fraction (share of failure classes held by a hard control), which a machine applies every time regardless of velocity. The escape-rate GAP between the two regimes widens with velocity — the falsifiable core of P3. Companion soft-saturation form: expected soft-convention violations E[v] = q*V (linear in velocity), vs 0 for a hard constraint (P4).",
+      "ties_to": ["P3-control-lowers-escape-review-does-not", "P4-soft-saturates-hard-does-not"]
+    }
+  ],
+
+  "productivity_grounding": {
+    "_note": "How the three MAGE outcomes map onto the productivity-measurement literature mined for this appendix (Sadowski & Zimmermann, eds., Rethinking Productivity in Software Engineering, 2019).",
+    "output_over_input": "Productivity = Output/Input. MAGE's claim is that under a fleet the naive Output (commits, lines) diverges from durable Output; E is what keeps measured output equal to durable output.",
+    "three_dimensions": {
+      "velocity": "sustained-velocity outcome",
+      "quality": "falling-escape outcome",
+      "satisfaction_sustainability": "bounded-oversight outcome"
+    },
+    "gqm": "Each prediction is stated Goal->Question->Metric: the construct is the goal, the prediction the question, the dashboard slug the metric.",
+    "goodhart_caveat": "'Measure governed throughput, not volume' is the false-incentive warning: optimize the surface number (commits/lines) and you get volume, i.e. a fast pile of churn. The moderated velocity->outcome edge is the formal statement of that warning."
+  }
+}

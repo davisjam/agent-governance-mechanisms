@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Class glyph: LAYERED-STACK. Three horizontal bands with an arrow crossing a boundary,
+     reading as "composition / dependency stack". Umber Monograph palette; ink + accent only. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120"
+     role="img" aria-labelledby="glyphStackTitle glyphStackDesc">
+  <title id="glyphStackTitle">Layered-stack class glyph</title>
+  <desc id="glyphStackDesc">Three horizontal bands stacked with a small interlocking notch between the
+    top two, and an accent arrow piercing downward across the layer boundaries — a composition or
+    dependency stack.</desc>
+  <g fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- top band with an interlock notch on its lower edge -->
+    <path d="M22,24 L98,24 L98,44 L68,44 L68,50 L52,50 L52,44 L22,44 Z"/>
+    <!-- middle band with the matching notch on its upper edge -->
+    <path d="M22,50 L52,50 L52,44 L68,44 L68,50 L98,50 L98,70 L22,70 Z"/>
+    <!-- bottom band -->
+    <rect x="22" y="76" width="76" height="20" rx="2"/>
+  </g>
+  <!-- arrow crossing the boundaries -->
+  <g fill="none" stroke="#9a3f12" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="36" y1="16" x2="36" y2="100"/>
+    <path d="M30,92 L36,100 L42,92"/>
+  </g>
+</svg>
