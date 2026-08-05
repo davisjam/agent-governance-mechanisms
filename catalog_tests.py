@@ -74,6 +74,7 @@ from tests.html import (
     check_data_claims,
     check_definitions_site,
     check_exactly_one_h1_per_page,
+    check_exactly_one_h1_selftest,
     check_outcomes_site,
     check_html_links,
     check_no_duplicate_ids,
@@ -126,13 +127,19 @@ CHECKS = [
     # that ~88s browser pass, so the class can't regress without paying for axe. See tests/html.py.
     Check("html: no link-derived DPUB role on a non-<a> element (stdlib twin of axe aria-allowed-role)", 1,
           lambda strict: check_no_link_dpub_role_on_nonanchor()),
-    # AUDIT-ONLY (rule #55 first landing): the stdlib Tier-1 twin of axe's Tier-2 `page-has-heading-one` —
-    # that rule broke CI twice this session (a page with no <h1>). At HEAD every page clears the zero-<h1>
-    # case, but 6 pre-existing pages carry MORE than one <h1> (a duplicated chapter-title heading, or a
-    # hand-authored page's section headings pitched at h1 instead of h2) — real gaps a fix-wave must drain
-    # before this promotes to BLOCKING. See tests/html.py.
+    # BLOCKING: the stdlib Tier-1 twin of axe's Tier-2 `page-has-heading-one` — that rule broke CI twice
+    # (a page shipped with no <h1>); this catches the class deterministically at every push, before the slow
+    # browser pass samples it. `exactly one` (not merely `at least one`) also catches the sibling defect axe
+    # misses: a page emitting a SECOND <h1> (a duplicated chapter-title heading, or a section heading pitched
+    # at h1 instead of h2) still satisfies `page-has-heading-one` but breaks the outline for screen-reader
+    # heading navigation. Landed AUDIT-ONLY (rule #55 first landing); a fix-wave drained the pre-existing
+    # offenders to 0, so this is now promoted to BLOCKING. See tests/html.py.
     Check("html: exactly one <h1> per page (stdlib twin of T2 page-has-heading-one)", 1,
-          lambda strict: check_exactly_one_h1_per_page(), audit_only=True),
+          lambda strict: check_exactly_one_h1_per_page()),
+    # Failure-injection self-test: proves the now-BLOCKING one-<h1> check still flags a 2-<h1> (and a 0-<h1>)
+    # page on synthetic input, so a future refactor cannot silently degrade it to a green no-op.
+    Check("html: one-<h1> check flags injected 2-<h1> / 0-<h1> pages (self-test)", 1,
+          lambda strict: check_exactly_one_h1_selftest()),
     Check("book: no stray HTML comments in source (source-side twin of notation-leak; stray-book-comment)", 1, lambda strict: check_no_stray_comments()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),

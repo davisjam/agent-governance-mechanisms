@@ -861,34 +861,64 @@ class _H1Collector(HTMLParser):
 
 
 def check_exactly_one_h1_per_page():
-    """AUDIT-ONLY (rule #55 first landing): every built content HTML page carries EXACTLY ONE `<h1>`. The
-    stdlib (Tier-1) twin of axe's Tier-2 `page-has-heading-one` — a `page-has-heading-one` failure (a page
-    shipped with no `<h1>`) broke CI twice this session; this catches the class deterministically at every
-    push, before the slow browser pass samples it.
+    """BLOCKING: every built content HTML page carries EXACTLY ONE `<h1>`. The stdlib (Tier-1) twin of
+    axe's Tier-2 `page-has-heading-one` — a `page-has-heading-one` failure (a page shipped with no `<h1>`)
+    broke CI twice; this catches the class deterministically at every push, before the slow browser pass
+    samples it.
 
     `exactly one` (not merely `at least one`) also catches a sibling defect axe's rule alone misses: a
     page that emits a SECOND `<h1>` — a duplicated chapter-title heading, or a section heading pitched one
     level too high — still satisfies `page-has-heading-one` but breaks the page's outline for
     screen-reader heading navigation.
 
-    Landed AUDIT-ONLY: at HEAD every built page clears the zero-`<h1>` case, but 6 pre-existing pages carry
-    more than one (a book chapter's auto-emitted `<h1>{title}</h1>` header followed by a duplicate
-    hand-authored `# <title>` in the chapter's own markdown, or a hand-authored page whose section headings
-    are pitched at h1 instead of h2) — real gaps, not a check false-positive. A fix-wave drains those before
-    promotion to BLOCKING (rule #55); this AUDIT-ONLY landing is that worklist."""
+    Landed AUDIT-ONLY-first (rule #55): the pre-existing offenders (a book chapter's auto-emitted
+    `<h1>{title}</h1>` header followed by a duplicate hand-authored `# <title>`, or a hand-authored page
+    whose section headings were pitched at h1 instead of h2) were drained to 0 by a fix-wave, so this is
+    now promoted to BLOCKING and every built page must clear it."""
     files = html_files()
     if not files:
         return FAIL, ["no built HTML found — run `catalog.py build` first"]
     issues: list[str] = []
     for f in files:
-        p = _H1Collector()
-        p.feed(open(f, encoding="utf-8").read())
-        if not p.lines:
-            issues.append(f"{rel(f)}: no <h1> — every content page needs exactly one top-level heading")
-        elif len(p.lines) > 1:
-            at = ", ".join(f"line {n}" for n in p.lines)
-            issues.append(f"{rel(f)}: {len(p.lines)} <h1> elements ({at}) — expected exactly one")
+        issue = _h1_issue(open(f, encoding="utf-8").read(), rel(f))
+        if issue:
+            issues.append(issue)
     return (FAIL if issues else PASS), issues
+
+
+def _h1_issue(html_text: str, name: str) -> str | None:
+    """Pure per-page `<h1>`-arity decision — the unit-testable seam of `check_exactly_one_h1_per_page`.
+    Returns the issue string when `name` does not carry EXACTLY ONE `<h1>` (zero, or two-or-more), else
+    None. Extracting the decision lets a failure-injection self-test exercise the real code on synthetic
+    input without a built tree on disk."""
+    p = _H1Collector()
+    p.feed(html_text)
+    if not p.lines:
+        return f"{name}: no <h1> — every content page needs exactly one top-level heading"
+    if len(p.lines) > 1:
+        at = ", ".join(f"line {n}" for n in p.lines)
+        return f"{name}: {len(p.lines)} <h1> elements ({at}) — expected exactly one"
+    return None
+
+
+def check_exactly_one_h1_selftest():
+    """Failure-injection self-test for the BLOCKING one-`<h1>`-per-page check's decision seam (`_h1_issue`).
+    A promoted BLOCKING check that silently degrades to a no-op (e.g. a future refactor stops feeding the
+    parser) would go green forever; this injects the exact defects the check exists to catch and asserts it
+    still flags them: a page with a SECOND `<h1>` and a page with NONE both raise, while a well-formed
+    single-`<h1>` page passes clean."""
+    problems: list[str] = []
+    one = _h1_issue("<html><body><h1>Title</h1><h2>Section</h2><p>body</p></body></html>", "single.html")
+    if one is not None:
+        problems.append(f"single-<h1> page was flagged (check over-fires): {one!r}")
+    two = _h1_issue("<html><body><h1>Title</h1><p>body</p><h1>Second title</h1></body></html>", "double.html")
+    if two is None:
+        problems.append("two-<h1> page was NOT flagged — the BLOCKING check has degraded to a no-op")
+    elif "2 <h1> elements" not in two:
+        problems.append(f"two-<h1> page flagged with an unexpected message: {two!r}")
+    if _h1_issue("<html><body><h2>Section</h2><p>body</p></body></html>", "none.html") is None:
+        problems.append("zero-<h1> page was NOT flagged — the BLOCKING check has degraded to a no-op")
+    return (FAIL if problems else PASS), problems
 
 
 def check_models_view_site():
