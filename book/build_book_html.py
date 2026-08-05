@@ -4522,22 +4522,59 @@ def _appendix_letter_map(chapters: "list[dict]") -> "dict[str, str]":
     return amap
 
 
-def _resolve_appendix_refs_md(md: str, amap: "dict[str, str]") -> str:
-    """Rewrite every `[appendix: <slug>]` marker to a plain markdown link `[Appendix <letter>](<slug>.html)`,
-    the letter looked up in `amap`. Runs on the markdown source once the appendix letters are known and
-    BEFORE the inline renderer, so both the HTML build (`inline` → `<a>`) and the Typst build (`inline_typst`
-    → `#link`) then render it through their ordinary link path — the reference cannot diverge between
-    surfaces. Fails loud on a slug that names no appendix page: a rotted symbolic reference must stop the
-    build, exactly as a dangling `[ref:]` does, never ship as literal `[appendix:foo]` text."""
+def _resolve_appendix_refs_md(md: str, amap: "dict[str, str]",
+                              bare_page: "dict[str, tuple[str, str]]",
+                              web_map: "dict[str, str]") -> str:
+    """Rewrite every `[appendix: <slug>]` marker to a plain markdown link, resolved once the appendix letters
+    are known and BEFORE the inline renderer, so both the HTML build (`inline` → `<a>`) and the Typst build
+    (`inline_typst` → `#link`) render it through their ordinary link path — the reference cannot diverge
+    between surfaces. Three slug forms resolve, in order:
+
+    - A **page slug** (`appendix-skill-recipe`, `appendix-b-pdf-model`) → `[Appendix <letter>](<slug>.html)`
+      via `amap`. This is the form the main narrative authors.
+    - A **bare flagship mechanism slug** (`executable-source-of-truth`) — the form a Flagship Note author
+      naturally writes to point at a sibling note → its in-book page `[Appendix <letter>](<page-slug>.html)`.
+    - A **bare non-flagship mechanism slug** (`reflection-facet-substrate`, a valid catalogue entry the print
+      appendix omits) → its live WEB catalogue entry `[online](<web-url>)`, the same flagship→in-book /
+      non-flagship→web rule the chapter-body links and the web-index follow.
+
+    A slug in none of the three is a rotted reference and fails loud, exactly as a dangling `[ref:]` does —
+    it must stop the build, never ship as literal `[appendix:foo]` text."""
     def repl(m: "re.Match[str]") -> str:
         slug = m.group(1)
         letter = amap.get(slug)
-        if letter is None:
-            known = ", ".join(sorted(amap)) or "(no appendix pages in this build)"
-            raise SystemExit(
-                f"[appendix: {slug}] names no appendix page — known appendix slugs: {known}")
-        return f"[Appendix {letter}]({slug}.html)"
+        if letter is not None:
+            return f"[Appendix {letter}]({slug}.html)"
+        page = bare_page.get(slug)
+        if page is not None:
+            page_slug, page_letter = page
+            return f"[Appendix {page_letter}]({page_slug}.html)"
+        web = web_map.get(slug)
+        if web is not None:
+            return f"[online]({web})"
+        known = ", ".join(sorted(amap)) or "(no appendix pages in this build)"
+        raise SystemExit(
+            f"[appendix: {slug}] names no appendix page or catalogue entry — known appendix slugs: {known}")
     return _APPENDIX_REF_RE.sub(repl, md)
+
+
+def _bare_flagship_page_map(chapters: "list[dict]") -> "dict[str, tuple[str, str]]":
+    """`{bare-mechanism-slug: (page-slug, letter)}` for every in-book appendix page whose slug carries the
+    `appendix-<letter>-<mechanism>` shape, so a Flagship Note may cross-reference a sibling by its bare
+    mechanism slug (`[appendix: pdf-model]`) and resolve to that mechanism's in-book page. The letter is
+    DERIVED from the page's `part_title`, matching `_appendix_letter_map`; a page without an `Appendix <L>`
+    title contributes nothing."""
+    out: dict[str, tuple[str, str]] = {}
+    for c in chapters:
+        if not c.get("is_appendix"):
+            continue
+        m = re.search(r"Appendix\s+([A-Z])", c.get("part_title", ""))
+        if not m:
+            continue
+        mm = re.match(r"appendix-[a-z]-(.+)$", c["slug"])
+        if mm:
+            out[mm.group(1)] = (c["slug"], m.group(1))
+    return out
 
 
 def _collect_floats(chapters: list[dict], page_anchor_maps: dict) -> "tuple[list[dict], dict[str, dict]]":
@@ -5145,8 +5182,10 @@ def build() -> int:
     # — before the harvest/glossary/float passes below and the per-chapter render — keeps ONE resolution
     # point feeding every downstream consumer (see `_resolve_appendix_refs_md`).
     _appendix_refs = _appendix_letter_map(chapters)
+    _bare_refs = _bare_flagship_page_map(chapters)
+    _web_refs = _web_redirect_map()
     for c in chapters:
-        c["body_md"] = _resolve_appendix_refs_md(c["body_md"], _appendix_refs)
+        c["body_md"] = _resolve_appendix_refs_md(c["body_md"], _appendix_refs, _bare_refs, _web_refs)
 
     # The first chapter of each Part opens with an epigraph (numbered Parts only).
     seen_parts: set[int] = set()

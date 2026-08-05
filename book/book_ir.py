@@ -376,6 +376,8 @@ def parse_book(include_appendices: bool = False, for_print: bool = False) -> Doc
         # this parse (their letters are what a reference resolves against); the structure-only views that
         # parse the narrative WITHOUT appendices never render these markers, so they leave them untouched.
         amap = bb._appendix_letter_map(chapters)
+        bare_page = bb._bare_flagship_page_map(chapters)
+        web_map = bb._web_redirect_map()
         for c in chapters:
-            c["body_md"] = bb._resolve_appendix_refs_md(c["body_md"], amap)
+            c["body_md"] = bb._resolve_appendix_refs_md(c["body_md"], amap, bare_page, web_map)
     return Document([_parse_chapter(c) for c in chapters])

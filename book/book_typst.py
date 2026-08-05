@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import hashlib
 import html as _htmlmod
+import json
 import pathlib
 import re
 
@@ -655,20 +656,23 @@ def _note_spread_info(blocks: "list[Block_t]") -> "tuple[int | None, int | None]
     return spread, fold_i
 
 
-def _render_note_spread(blocks: "list[Block_t]", spread_n: int, fold_i: "int | None") -> str:
+def _render_note_spread(blocks: "list[Block_t]", spread_n: int, fold_i: "int | None",
+                        name: str = "spread-1") -> str:
     """Render a keep-together note's body (§13.6). `spread:1` → the whole body inside `#keep-together[…]` (one
     indivisible page block); `spread:2` → the blocks before/after the `note-fold` divider inside
-    `#note-spread2([panel-a], [panel-b])` (two named panels, each held to one page). The preamble helpers carry
-    the rendered-height assertion, so an overflowing panel fails the compile."""
+    `#note-spread2([panel-a], [panel-b])` (two named panels, each held to one page). `name` labels the panels
+    in the rendered-height assertion so an overflow message names the note it overflowed on. The preamble
+    helpers carry the assertion, so an overflowing panel fails the compile."""
     def render_range(bs: "list[Block_t]") -> str:
         frags = [render_typst(b) for b in bs if b.kind is not ir.BlockKind.DIRECTIVE]
         return "\n\n".join(f for f in frags if f)
 
+    qname = json.dumps(name)
     if spread_n >= 2 and fold_i is not None:
         panel_a = render_range(blocks[:fold_i])
         panel_b = render_range(blocks[fold_i + 1:])
-        return (f"#note-spread2([\n{_indent(panel_a)}\n], [\n{_indent(panel_b)}\n])")
-    return f"#keep-together([\n{_indent(render_range(blocks))}\n])"
+        return (f"#note-spread2({qname}, [\n{_indent(panel_a)}\n], [\n{_indent(panel_b)}\n])")
+    return f"#keep-together({qname}, [\n{_indent(render_range(blocks))}\n])"
 
 
 def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
@@ -694,7 +698,8 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         num_setup = (f"#set figure(numbering: (n) => [{chap_id}-#n])\n"
                      "#counter(figure.where(kind: image)).update(0)\n"
                      "#counter(figure.where(kind: table)).update(0)\n")
-        return num_setup + "\n" + out[0] + "\n\n" + _render_note_spread(blocks, spread_n, fold_i)
+        return (num_setup + "\n" + out[0] + "\n\n"
+                + _render_note_spread(blocks, spread_n, fold_i, name=chapter.slug))
     skip: set[int] = set()
     section_no = 0                     # per-chapter `## ` counter (advanced only when the chapter is numbered)
     _title_norm = chapter.title.strip().lower()
@@ -837,11 +842,11 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
     block(breakable: false, width: 100%, body)
   })
 }
-#let keep-together(body) = _keep-together-panel("spread-1", body)
-#let note-spread2(panel-a, panel-b) = {
-  _keep-together-panel("spread-2 panel 1", panel-a)
+#let keep-together(name, body) = _keep-together-panel(name, body)
+#let note-spread2(name, panel-a, panel-b) = {
+  _keep-together-panel(name + " panel 1", panel-a)
   pagebreak(weak: true)
-  _keep-together-panel("spread-2 panel 2", panel-b)
+  _keep-together-panel(name + " panel 2", panel-b)
 }
 """
 
