@@ -73,6 +73,7 @@ from tests.html import (
     check_concepts_site_home,
     check_data_claims,
     check_definitions_site,
+    check_exactly_one_h1_per_page,
     check_outcomes_site,
     check_html_links,
     check_no_duplicate_ids,
@@ -125,6 +126,13 @@ CHECKS = [
     # that ~88s browser pass, so the class can't regress without paying for axe. See tests/html.py.
     Check("html: no link-derived DPUB role on a non-<a> element (stdlib twin of axe aria-allowed-role)", 1,
           lambda strict: check_no_link_dpub_role_on_nonanchor()),
+    # AUDIT-ONLY (rule #55 first landing): the stdlib Tier-1 twin of axe's Tier-2 `page-has-heading-one` —
+    # that rule broke CI twice this session (a page with no <h1>). At HEAD every page clears the zero-<h1>
+    # case, but 6 pre-existing pages carry MORE than one <h1> (a duplicated chapter-title heading, or a
+    # hand-authored page's section headings pitched at h1 instead of h2) — real gaps a fix-wave must drain
+    # before this promotes to BLOCKING. See tests/html.py.
+    Check("html: exactly one <h1> per page (stdlib twin of T2 page-has-heading-one)", 1,
+          lambda strict: check_exactly_one_h1_per_page(), audit_only=True),
     Check("book: no stray HTML comments in source (source-side twin of notation-leak; stray-book-comment)", 1, lambda strict: check_no_stray_comments()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),
