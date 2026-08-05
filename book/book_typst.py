@@ -54,6 +54,27 @@ HERE = pathlib.Path(__file__).resolve().parent
 _TOKENS = _dtokens.load()
 _TYPST_PREAMBLE = _dtokens.typst_preamble(_TOKENS)
 _DEF_SLUGS = frozenset({"model", "agent", "engineering", "software-engineering"})
+
+# ── Output-mode axis (single source of truth for every print-vs-screen typesetting decision) ────────
+# The PDF projection targets ONE output medium. `OUTPUT_TYPE` names it, and every choice that differs
+# between a screen PDF and a bound print edition branches on this ONE constant — so enabling a print
+# edition later is a config flip here, not a rewrite spread across the emitter.
+#   "screen" (default, the shipped output): a continuously-scrolled PDF read on a device. It has no
+#            recto/verso and no facing pages, so part/appendix openers take a PLAIN page break — never a
+#            recto-forcing `to: "odd"`, which would strand a blank verso the screen reader only sees as a
+#            gratuitous empty page.
+#   "print"  (future): a bound edition. Openers force a recto (odd) page, accepting a blank verso where
+#            the prior section ends on an odd page — the standard print convention. Kept as a recoverable
+#            branch so the print behaviour is a one-line flip, but NOT active.
+OUTPUT_TYPE = "screen"
+
+# Appendix chapter/note headings repeat many times (one per entry), so they read as a per-entry head, not
+# a part-opener. The general H1 show rule sizes chapter titles at 1.5em (16.5pt on the 11pt body) — too
+# large for a heading that recurs 29× down Appendix B. Appendix chapter titles override to this smaller
+# absolute size: bigger than the 13.2pt H2 subsection heads below them (so the hierarchy stays legible),
+# well under the 16.5pt part-opener scale. Absolute pt (not em) because inside the fired H1 show rule an
+# `em` would resolve against the already-scaled 16.5pt heading size, not the body.
+_APPENDIX_HEADING_SIZE = "14.5pt"
 _MERMAID_CACHE = HERE / ".mermaid-svg-cache"
 _MERMAID_CONFIG = HERE / "assets" / "mermaid-config.json"
 
@@ -666,22 +687,27 @@ def _note_spread_info(blocks: "list[Block_t]") -> "tuple[int | None, int | None]
 
 
 def _render_note_spread(blocks: "list[Block_t]", spread_n: int, fold_i: "int | None",
-                        name: str = "spread-1") -> str:
+                        name: str = "spread-1", title_frag: str = "") -> str:
     """Render a keep-together note's body (§13.6). `spread:1` → the whole body inside `#keep-together[…]` (one
     indivisible page block); `spread:2` → the blocks before/after the `note-fold` divider inside
     `#note-spread2([panel-a], [panel-b])` (two named panels, each held to one page). `name` labels the panels
     in the rendered-height assertion so an overflow message names the note it overflowed on. The preamble
-    helpers carry the assertion, so an overflowing panel fails the compile."""
+    helpers carry the assertion, so an overflowing panel fails the compile.
+
+    `title_frag` (the chapter/note heading) is folded INTO the first measured block, so the title and its
+    body form one indivisible unit — the title is never stranded alone on a page — and the assertion budgets
+    title+body against one page (an over-long note fails the compile)."""
     def render_range(bs: "list[Block_t]") -> str:
         frags = [render_typst(b) for b in bs if b.kind is not ir.BlockKind.DIRECTIVE]
         return "\n\n".join(f for f in frags if f)
 
+    head = f"{title_frag}\n\n" if title_frag else ""
     qname = json.dumps(name)
     if spread_n >= 2 and fold_i is not None:
         panel_a = render_range(blocks[:fold_i])
         panel_b = render_range(blocks[fold_i + 1:])
-        return (f"#note-spread2({qname}, [\n{_indent(panel_a)}\n], [\n{_indent(panel_b)}\n])")
-    return f"#keep-together({qname}, [\n{_indent(render_range(blocks))}\n])"
+        return (f"#note-spread2({qname}, [\n{_indent(head + panel_a)}\n], [\n{_indent(panel_b)}\n])")
+    return f"#keep-together({qname}, [\n{_indent(head + render_range(blocks))}\n])"
 
 
 def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
@@ -694,21 +720,35 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     # (part 0) and the appendix (its own A/B/C locators) are not. Numbers are display-only — they never touch
     # a heading anchor, so `@ref`/metadata queries keep resolving.
     numbered = chapter.part != 0 and not chapter.slug.startswith("appendix")
+    is_appendix = chapter.slug.startswith("appendix")
     chap_num = f"{chapter.part}.{chapter.chapter}" if numbered else None
     title_num = f"#text(fill: dt.muted)[{chap_num}] " if chap_num else ""
-    out: list[str] = [f"= {title_num}{inline_typst(chapter.title)}", ""]
+    title_body = f"{title_num}{inline_typst(chapter.title)}"
+    # Appendix chapter/note titles render at the smaller per-entry head size (see _APPENDIX_HEADING_SIZE);
+    # body chapters keep the 1.5em H1 from the show rule.
+    title_line = (f"= #text(size: {_APPENDIX_HEADING_SIZE})[{title_body}]" if is_appendix
+                  else f"= {title_body}")
+    out: list[str] = [title_line, ""]
     blocks = chapter.blocks
-    # Keep-together note (appendix v2, §13.6): a note declaring `note-spread` wraps its body in a non-breaking
-    # block (spread:1) or two folded panels (spread:2), each held to one page's budget by the preamble
-    # helpers. Handled here (a whole-chapter concern) before the per-block walk; other chapters fall through.
+    # Keep-together note (appendix v2, §13.6): a note declaring `note-spread` renders as an indivisible
+    # one-page card — but ONLY in print mode, where a page boundary is a hard reading seam. On a SCREEN PDF
+    # (continuously scrolled, the shipped output) there is no page-card: forcing the body into one indivisible
+    # page block is what stranded the title on its own near-empty page (the orphaned-heading failure) once the
+    # body neared a full page. So in screen mode a note flows like any chapter — its title is a sticky heading
+    # (kept-with-next by the preamble show rule) and its body breaks naturally — which removes the orphan with
+    # no content change. Print mode keeps the rigid asserted card (the seam is recoverable via OUTPUT_TYPE).
     spread_n, fold_i = _note_spread_info(blocks)
-    if spread_n:
+    if spread_n and OUTPUT_TYPE == "print":
         chap_id = f"{chapter.part}.{chapter.chapter}"
         num_setup = (f"#set figure(numbering: (n) => [{chap_id}-#n])\n"
                      "#counter(figure.where(kind: image)).update(0)\n"
                      "#counter(figure.where(kind: table)).update(0)\n")
-        return (num_setup + "\n" + out[0] + "\n\n"
-                + _render_note_spread(blocks, spread_n, fold_i, name=chapter.slug))
+        # Fold the note TITLE into the measured keep-together block. The title heading and its body then form
+        # ONE indivisible unit — the title can never be stranded on a page while the body flows to the next —
+        # and the rendered-height assertion now measures title+body against one page's budget, so an over-long
+        # note fails the compile naming itself (the fatal sensor). Print-only; screen notes flow (see above).
+        return (num_setup + "\n"
+                + _render_note_spread(blocks, spread_n, fold_i, name=chapter.slug, title_frag=title_line))
     skip: set[int] = set()
     section_no = 0                     # per-chapter `## ` counter (advanced only when the chapter is numbered)
     _title_norm = chapter.title.strip().lower()
@@ -822,7 +862,11 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 // `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level (D67b). Overrides the general
 // bold above (later same-target show rule wins); keeps the display face at body size.
 #show heading.where(level: 3): set text(weight: "regular", style: "italic")
-#show heading: set block(above: 1.4em, below: 0.7em)
+// Keep-with-next: a heading STICKS to the content after it, so a heading can never be the last meaningful
+// thing on a page (the orphaned-title failure — a chapter/section head alone on a page with its body flowing
+// to the next). `sticky` moves the heading to the following block's page rather than stranding it. The
+// build-time orphaned-heading sensor (in build_book_html.verify_pdf) is the belt to this suspenders.
+#show heading: set block(above: 1.4em, below: 0.7em, sticky: true)
 #set figure(gap: 0.6em)
 // D71(b) — more air between body text and a figure/table than the 0.9em paragraph spacing, so a float
 // reads as set apart from the prose above and below it (systematic, every figure/table).
@@ -992,8 +1036,11 @@ def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
             title = title or kicker
         else:
             return None
+    # Screen mode opens a part/appendix divider on a plain page break (no recto-forcing → no blank verso);
+    # print mode forces a recto (odd) page per the bound-edition convention. Branches on the OUTPUT_TYPE seam.
+    opener = "#pagebreak(to: \"odd\")\n" if OUTPUT_TYPE == "print" else "#pagebreak()\n"
     return (
-        "#pagebreak(to: \"odd\")\n"
+        opener +
         "#block(breakable: false)[\n"
         f"  #v(2.4in)\n"
         f"  #text(size: 1.1em, fill: dt.muted)[{inline_typst(kicker)}]\n"

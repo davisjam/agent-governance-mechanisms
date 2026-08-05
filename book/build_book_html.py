@@ -39,7 +39,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from typing import NamedTuple
+from typing import Callable, NamedTuple
 
 HERE = pathlib.Path(__file__).resolve().parent
 
@@ -5129,6 +5129,56 @@ def _pdf_per_page_word_counts(pdf_path: pathlib.Path) -> list[int]:
     return counts
 
 
+def _pdf_per_page_text(pdf_path: pathlib.Path) -> list[str]:
+    """Per-page extracted text (whitespace-normalized, folio-stripped, hyphen-rejoined). `pdftotext` emits a
+    form-feed (\\x0c) between pages; split on it, drop lines that are only a page-number folio, rejoin words
+    broken across a line by hyphenation (soft-hyphen / U+2010 / ASCII), then collapse whitespace. Used by the
+    orphaned-heading sensor to test whether a page's ONLY content is a chapter/section title."""
+    import shutil
+    import subprocess
+    if not shutil.which("pdftotext"):
+        raise SystemExit("pdftotext (poppler) not found on PATH — required for the orphaned-heading sensor")
+    r = subprocess.run(["pdftotext", str(pdf_path), "-"], capture_output=True, text=True)
+    if r.returncode != 0:
+        raise SystemExit(f"pdftotext failed (rc={r.returncode}): {r.stderr}")
+    out: list[str] = []
+    for page in r.stdout.split("\x0c"):
+        lines = [ln for ln in page.splitlines()
+                 if ln.strip() and not re.fullmatch(r"\d+", ln.strip())]
+        dehyphenated = re.sub(r"[-‐­]\n", "", "\n".join(lines))
+        out.append(re.sub(r"\s+", " ", dehyphenated).strip())
+    return out
+
+
+def _pdf_orphan_heading_pages(pdf_path: pathlib.Path, chapter_titles: list[str],
+                              norm: "Callable[[str], str]") -> list[tuple[int, str]]:
+    """Orphaned-heading sensor: pages whose ONLY meaningful content is a chapter/note title, with the body
+    flowing to the next page. This is the empty-page-with-only-a-title failure — a keep-together note whose
+    heading was stranded, or any section head left last on a page. Returns (page_number, title) for each.
+
+    Detection is exact: a page's whole content, reduced to alphanumerics, must EQUAL a chapter title reduced
+    the same way (nothing else on the page). Reducing to alphanumerics sidesteps the line-break hyphenation
+    ambiguity — a title that wrapped at a real hyphen ("cross-machine" → "crossmachine") still matches. A
+    part/appendix divider carries a Part/family title plus the chapter body, so it never reduces to a single
+    chapter title — no false positive. The keep-together title-fold (in the Typst emitter) is the architecture
+    that prevents the failure; this is the build-time control that catches any residual."""
+    def squish(s: str) -> str:
+        return re.sub(r"[^a-z0-9]+", "", norm(s).lower())
+
+    per_page = _pdf_per_page_text(pdf_path)
+    title_by_squish = {squish(t): t for t in chapter_titles}
+    orphans: list[tuple[int, str]] = []
+    for idx, page_text in enumerate(per_page, 1):
+        if not page_text:
+            continue
+        # A title is short; the word guard is a belt to the exact whole-page-equals-a-title signal.
+        if len(page_text.split()) <= 30:
+            sq = squish(page_text)
+            if sq and sq in title_by_squish:
+                orphans.append((idx, title_by_squish[sq]))
+    return orphans
+
+
 def _density_report(pdf_path: pathlib.Path) -> tuple[int, list[str]]:
     """Compute + print the words-per-page density metric and gate on: over the FIRST N pages, at least
     _DENSITY_MIN_FRACTION exceed _DENSITY_WORDS_THRESHOLD words. Returns (rc, problems): rc is 0 if the
@@ -5264,6 +5314,19 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
     # Words-per-page density metric + O'Reilly-band gate (prints its own report).
     _, density_problems = _density_report(pdf_path)
     problems.extend(density_problems)
+
+    # Orphaned-heading sensor: no page may carry ONLY a chapter/note title with its body flowing to the next
+    # (the empty-page-with-only-a-title failure). BLOCKING — the keep-together title-fold in the Typst emitter
+    # makes this impossible for notes, and this control catches any residual across the whole book.
+    orphans = _pdf_orphan_heading_pages(pdf_path, [c["chapter_title"] for c in full], _norm)
+    if orphans:
+        listing = ", ".join(f"p{n} ({t!r})" for n, t in orphans[:8])
+        print(f"PDF ORPHANED-HEADING SENSOR: FAIL — {len(orphans)} page(s) hold only a title: {listing}",
+              file=sys.stderr)
+        problems.append(f"orphaned heading(s): {len(orphans)} page(s) carry a title with the body on the "
+                        f"next page — {listing}")
+    else:
+        print("PDF ORPHANED-HEADING SENSOR: PASS — no page holds only a title.")
 
     if problems:
         print(f"PDF CONTENT-INTEGRITY FAILURES ({len(problems)}):", file=sys.stderr)

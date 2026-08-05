@@ -18,7 +18,7 @@ this appendix exists to avoid. Where *Accelerate* had thousands of survey respon
 the strength of each path, this has one system seen in depth. The shapes are the same; the claims are
 weaker on purpose.
 
-## 1. What the theory is for
+## What the theory is for
 
 Every mature engineering discipline reasons about the thing it builds through a model. This appendix
 turns that habit on MAGE itself. The book's prose gives you the mechanism; the model gives you the
@@ -32,7 +32,7 @@ the work outgrows what the fleet can hold in view. In a well-governed one, the s
 **durable throughput**. Velocity is not good or bad. It is a multiplier whose sign is set by the
 environment. Everything else in the model exists to explain that sign.
 
-## 2. The model
+## The model
 
 [ref:mage-causal-model] draws it. One driver on the left, two capabilities it feeds, one intermediate they
 compose into, three outcomes on the right, and two conditions that gate the whole thing.
@@ -76,7 +76,7 @@ sees the recurring failure must be able to change the environment. Split either 
 a capable fleet in unfit hands is motion without direction, and a clear failure signal under split
 authority yields a local patch instead of a shared mechanism, so the class never dies.
 
-## 3. The measurement model
+## The measurement model
 
 A causal model earns its keep only if its constructs can be observed. Each one here ties to a metric on
 the Operator's Dashboard, so the theory is not free-floating — it reads out of numbers the build already
@@ -105,7 +105,7 @@ literature. None has an in-repo observable on this build, so I state those predi
 awaiting-instrumentation: the mechanism is stated, the metric is named, and the honest note is that
 measuring it here would need an observable this dashboard has not added.
 
-## 4. The predictions
+## The predictions
 
 Here is where the model sticks its neck out. Each prediction names a mechanism, the observable that would
 show it, and the observation that would refute it. None is *tested* by this case — one repository cannot
@@ -138,7 +138,7 @@ marks an *Accelerate* delivery metric and **[SZ]** a construct from the producti
 The five external-construct rows (P7, P8, P11, P14, P15) name a metric this build does not yet record —
 they are predictions awaiting instrumentation, not readings.
 
-### 4.1 Reading the fleet (agent)
+## Reading the fleet (agent)
 
 These predictions read the model on the side that *produces* the work — velocity as the exposing driver,
 governance conversion as the durable answer, and the human cost of running the loop.
@@ -202,7 +202,7 @@ provided E is high. It is false if pain rises with velocity even in a demonstrab
 here as the subjective companion to P14's objective count, to be measured properly only across many
 operators.*
 
-### 4.2 Reading the maps (models-bridge)
+## Reading the maps (models-bridge)
 
 These read the model through its typed maps — the map-equals-territory half of E, where modeling investment
 keeps durable throughput linear or lets churn in.
@@ -243,7 +243,7 @@ left open. It is false if the savings come at a measured cost in velocity or qua
 efficiency shows no model advantage. *N=1, and worse: the token-savings field was null at collection, so
 this is the sharpest bet the book cannot yet even partially read.*
 
-### 4.3 Reading the artifact (product)
+## Reading the artifact (product)
 
 These read the model at the shipped artifact — the mechanized-coverage half of E and the defect-escape it
 drives out.
@@ -282,7 +282,7 @@ rate with the gate present and saturated as without it. *One product's corruptio
 general claim needs the pattern reproduced where a test suite and a fidelity gate can be toggled
 independently.*
 
-### 4.4 Where I would put money
+## Where I would put money
 
 The three founding predictions in the middle — P2, P3, P4 — are the ones I would back, because each rests on
 an arithmetic that does not care about the details. Read together they say one thing: at velocity, the
@@ -291,7 +291,7 @@ a common intuition and rides a named external construct: **P8** (speed and stabi
 fleet) and **P10** (a green model beats a green coverage number). **P9** is the one most directly checkable
 on the dashboard series this book already kept.
 
-## 5. Two relations, sharpened
+## Two relations, sharpened
 
 Two of the predictions have a form clean enough to write down. Neither is a fitted law. Each is a shape
 that says which way the quantity moves, and why. The first is the model's core relation — durable velocity
@@ -331,7 +331,7 @@ fail *q·V* times, linear in velocity, against zero for the constraint that remo
 by the stability axis it is the arithmetic under P8 as well). The `r(V) → 0` idealization is a claim about
 arithmetic, not a curve I measured; read it as the reason the gap must open, not as a fitted rate.
 
-## 6. For posterity
+## For posterity
 
 I will not oversell what this is. It is a theory read off one system, offered in the spirit of the field's
 better single-case work: here is the mechanism, here are the conditions I think it needs, here is what you
