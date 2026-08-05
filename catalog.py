@@ -935,6 +935,27 @@ def cmd_validate(_args) -> int:
               f"SVG palette (governed audit-only by lint_design_token_drift; does not gate):")
         for msg in bi_palette:
             print(f"            {msg}")
+    # CONCEPT-CARD DRIFT GATE — AUDIT-ONLY. The Concepts section's per-idea pages (concept-<slug>.html) are
+    # a projection of the same landing-big-ideas.json model: landing_big_ideas_model.py renders the card body
+    # and reports CC1-CC4 — the two new-field schema, the hand-declared Concept->mechanism edge resolution,
+    # the related-idea resolution, and concept-page existence + landing linkage. Non-overlapping with
+    # check_big_ideas (which keeps band drift). Lands AUDIT-ONLY-first (repo blocking-lint discipline): it
+    # PRINTS its findings so a committer sees any card<->model drift, but does NOT increment n_issues. A
+    # follow-up flips it BLOCKING once a clean session confirms the drain. See
+    # book-models/landing_big_ideas_model.py.
+    bm_concepts = os.path.join(ROOT, "book-models")
+    if bm_concepts not in sys.path:
+        sys.path.insert(0, bm_concepts)
+    import landing_big_ideas_model as lbi  # noqa: E402 — audit-only concept-card drift model
+    cc_findings = lbi.all_findings()
+    if cc_findings:
+        print(f"  [concept] AUDIT-ONLY: {len(cc_findings)} concept-card finding(s) — "
+              f"run `python3 book-models/landing_big_ideas_model.py verify` (does not gate):")
+        for msg in cc_findings:
+            print(f"            {msg}")
+    else:
+        print("  [concept] AUDIT-ONLY: six Concept Cards match the model "
+              "(schema clean; every mechanism edge resolves; pages reachable)")
     for msg in check_banned_terms():
         print(f"  [banned] {msg}")
         n_issues += 1
@@ -1358,6 +1379,29 @@ PAGE_CSS = """
   table.census-t tr:hover { background:var(--panel); }
   .fam-lede { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:2px 0 6px; }
   .foot { font-size: var(--fs-micro); color: var(--muted); border-top:var(--border-hairline) solid var(--line); padding-top:14px; margin-top: 34px; }
+  /* Concept Card (the Concepts section's per-idea page). Single umber accent throughout — the section's
+     identity is the warm accent-tint band + the "Concept" chip + its idea glyph, never a new hue. */
+  .concept-band { display:flex; align-items:center; gap:12px; background:var(--accent-tint);
+                  border-left:var(--border-accent-bar) solid var(--accent);
+                  border-radius:0 var(--radius-code) var(--radius-code) 0; padding:8px 14px; margin:2px 0 20px; }
+  .concept-chip { display:inline-flex; align-items:center; gap:6px; color:var(--accent); font-weight:700;
+                  font-size:var(--fs-micro); letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; }
+  .concept-chip .cc-ico { width:1.1em; height:1.1em; flex:0 0 auto; }
+  .concept-kicker { font-size:var(--fs-meta); color:var(--muted); }
+  figure.cc-fig { margin:20px 0; max-width:660px; }
+  figure.cc-fig svg { width:100%; height:auto; }
+  section.cc-rel, section.cc-mech, section.cc-intuition, section.cc-read { margin-top:8px; }
+  ul.cc-links { list-style:none; margin:8px 0; padding:0; }
+  ul.cc-links li { margin:5px 0; }
+  ul.cc-links li a { font-weight:600; text-decoration:none; }
+  ul.cc-links li a:hover { text-decoration:underline; color:var(--accent); }
+  .cc-mech-empty { font-size:var(--fs-meta); color:var(--muted); font-style:italic; margin:8px 0; }
+  a.cc-read-link { font-weight:600; text-decoration:none; }
+  a.cc-read-link:hover { text-decoration:underline; }
+  /* The "Concept card →" link the landing bands carry into each Concept Card. */
+  a.s-concept { display:inline-block; margin-left:14px; font-size:var(--fs-meta); font-weight:600;
+                color:var(--accent); text-decoration:none; }
+  a.s-concept:hover { text-decoration:underline; }
 """
 
 ROLE_DISPLAY = {"agent": "Agent", "models-bridge": "Models-bridge", "product": "Product"}
@@ -1998,6 +2042,12 @@ def _read_link(book_home: str, label: str = "Read in the book →") -> str:
     return f'<a class="s-read" href="{_attr(book_home)}">{_esc(label)}</a>'
 
 
+def _concept_link(slug: str) -> str:
+    """The per-band link into the idea's Concept Card page (root-level `concept-<slug>.html`). This is the
+    inbound link the orphan gate requires and the concept model's CC4 reachability join checks."""
+    return f'<a class="s-concept" href="concept-{_attr(slug)}.html">Concept card →</a>'
+
+
 def _more_block(rec_id: str, more: str) -> str:
     """The LIGHT disclosure body. Rendered VISIBLE by default (no `hidden` attribute) so with JS off the
     text simply shows — no broken control. The end-of-page script (EXPAND_JS) progressively enhances it:
@@ -2027,7 +2077,7 @@ def _big_idea_band(rec: dict, figright: bool = False, bigfig: bool = False) -> s
         f'    <h2 class="s-title">{_esc(rec.get("title", ""))}</h2>\n'
         f'    <p class="s-claim">{_esc(rec.get("claim", ""))}</p>\n'
         f'    {_more_block(rec.get("id", ""), rec.get("more", ""))}\n'
-        f'    {_read_link(rec.get("book_home", ""))}\n'
+        f'    {_read_link(rec.get("book_home", ""))}{_concept_link(rec.get("_slug", ""))}\n'
         f'  </div>\n'
         f'</div>')
 
@@ -2043,7 +2093,7 @@ def _thesis_cell(rec: dict, concept_id: str) -> str:
         f'  <h2 class="s-title">{_esc(rec.get("title", ""))}</h2>\n'
         f'  <p class="s-claim">{_esc(rec.get("claim", ""))}</p>\n'
         f'  {_more_block(rec.get("id", ""), rec.get("more", ""))}\n'
-        f'  {_read_link(rec.get("book_home", ""))}\n'
+        f'  {_read_link(rec.get("book_home", ""))}{_concept_link(rec.get("_slug", ""))}\n'
         f'</div>')
 
 
@@ -2064,7 +2114,7 @@ def _landing_big_ideas() -> str:
         f'    <h2 class="s-title">{_esc(p1.get("title", ""))}</h2>\n'
         f'    <p class="s-claim">{_esc(p1.get("claim", ""))}</p>\n'
         f'    {_more_block(p1.get("id", ""), p1.get("more", ""))}\n'
-        f'    {_read_link(p1.get("book_home", ""))}\n'
+        f'    {_read_link(p1.get("book_home", ""))}{_concept_link(p1.get("_slug", ""))}\n'
         '  </div>\n'
         '</div>')
     parts.append('<hr class="i-sep" />')
@@ -2217,7 +2267,7 @@ LANDING_INTRO = """  <!-- ===================== HERO + BIG IDEA 1 ==============
     </div>
   </div>
 
-  <div class="big-ideas">
+  <div class="big-ideas" id="concepts">
   {big_ideas}
   </div>
 
@@ -3055,8 +3105,25 @@ def cmd_build(_args) -> int:
                f'<body class="landing">\n<main>\n{landing_body}\n{_site_footer("")}\n</main>\n</body>\n</html>\n')
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(landing)
     open(os.path.join(ROOT, "catalogue-views.html"), "w", encoding="utf-8").write(build_views_page(entries))
+    # The Concepts section's per-idea pages: one `concept-<slug>.html` per Big Idea, projected from the
+    # Big-Ideas model. Ownership split (avoids a book-models -> catalog circular import): the model owns
+    # the card BODY + the resolved edge links; cmd_build owns the `_page` chrome, the write, and (via the
+    # landing bands' "Concept card →" links, added in _landing_big_ideas) the inbound link the orphan gate
+    # needs. The figure splice is injected as a callback so the model imports no catalog symbol. Written
+    # here (before the orphan gate) so each page is linked the moment it exists.
+    bm_concepts = os.path.join(ROOT, "book-models")
+    if bm_concepts not in sys.path:
+        sys.path.insert(0, bm_concepts)
+    import landing_big_ideas_model as lbi  # noqa: E402 — Concept-Card projector
+    _cc_svg = lambda figure, ns: _ns_svg_ids(_inline_svg("assets/" + figure), ns)  # noqa: E731 — injected splice
+    n_concept = 0
+    for card in lbi.render_concept_cards(svg_render=_cc_svg):
+        crumb = _crumb("", [("Concepts", "index.html#concepts"), (card.title, "")])
+        html = _page(card.title, crumb, card.body_html, subtitle=card.subtitle, rel_root="")
+        open(os.path.join(ROOT, f"concept-{card.slug}.html"), "w", encoding="utf-8").write(html)
+        n_concept += 1
     print(f"built {written} entry/index pages + landing index.html + catalogue-views.html "
-          f"({len(entries)} mechanisms in census)")
+          f"+ {n_concept} concept-card pages ({len(entries)} mechanisms in census)")
     # Regenerate the packaged skill bundle from the same sources — same "can't drift" discipline as the
     # HTML. build is the one regeneration point (pre-commit hook, deploy, and CI all call it), so this
     # single wire-in keeps plugin/ fresh. Subprocess avoids a catalog <-> bundle_skill circular import.

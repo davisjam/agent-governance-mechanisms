@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Build-serializer (M=8 semaphore)</title>
+<title>Governance-centric — the enabling substrate</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* Legacy var aliases → design tokens: --line/--link predate the token model and are referenced across
@@ -163,27 +163,101 @@
 </head>
 <body>
 <main>
-<nav class="crumb"><a href="../../index.html">Home</a> &nbsp;/&nbsp; <a href="../../agent/README.html">Agent</a> &nbsp;/&nbsp; Mediators &amp; resource locks &nbsp;/&nbsp; Build-serializer (M=8 semaphore)</nav>
-<p class="subtitle">Cap concurrent heavy builds with an M=8 host semaphore.</p>
-<h1>Build-serializer (M=8 semaphore)</h1>
-<p><strong>Intent</strong> — A host-level <strong>counting semaphore (M=8)</strong> over the adjacent heavy-compute tools (<code>dotnet build</code>, <code>tsc</code>, <code>csharp-query</code>, jedi lints, <code>pyright</code>), so concurrent worktrees get parallelism up to the machine's capacity without oversubscribing it.</p>
-<table><tbody><tr><td>Summary</td><td>Cap concurrent heavy builds with an M=8 host semaphore.</td></tr><tr><td>Target</td><td>Agent · <strong>Mediators &amp; resource locks</strong></td></tr><tr><td>Form</td><td><code>validation</code></td></tr><tr><td>Move</td><td><code>sensor</code> — detects the error after the fact</td></tr><tr><td>Model</td><td>—</td></tr><tr><td>Enforcement</td><td><strong>Hard</strong> (deterministic) · <em>blocking</em> — a byte-range semaphore caps concurrency at 8; five tool enforcers refuse the raw call</td></tr></tbody></table>
-<p><em>Its place in the environment — a <strong>variant / known-use</strong> of <strong>Mediated Resource Admission</strong>, under <strong>MANAGE · Manage work, state, and resources</strong>. Preserved here for its technical texture; the <a href="../../constructing-the-gee.html#cap-manage">construction kit</a> shows how it folds.</em></p>
-<h2>Motivation — the failure it kills</h2>
-<p>The heavy build tools are the same shared-host hazard as <code>dotnet test</code>: N worktrees compiling, type-checking, and running Roslyn queries at once saturate CPU and memory and slow <em>everyone</em>. But unlike <code>dotnet test</code>, these tools are numerous and mostly parallel-safe, so the failure to avoid is both <em>oversubscription</em> (too many at once melts the host) <strong>and</strong> <em>over-serialization</em> (N=1 would waste cores and stall the fleet).</p>
-<h2>Why it's not just "use the test-serializer for builds too" (N=1)</h2>
-<p><code>dotnet test</code> is <em>mutually destructive</em> (port/artifact contention), so single-writer is correct there. Builds are <em>parallel-safe but heavy</em> and far more frequent, so N=1 would leave most cores idle and throttle throughput needlessly. The right primitive is a <strong>bounded semaphore (M=8)</strong>: allow concurrency up to the host's capacity, cap it there. What decides the lock's cardinality? The resource's contention profile: a single-writer lock for mutually-destructive work, a bounded-concurrency semaphore for parallel-safe-but-heavy work. Same mediator pattern, different M.</p>
-<h2>Mechanism</h2>
-<p>The build serializer holds a <strong>byte-range semaphore</strong> (M slots) on a shared host lock; the five adjacent tools acquire a slot before running and release after. Per-run logs are written with timestamps. Each of the five tools has an active enforcer that refuses the un-mediated call. The <em>sibling</em> <a href="test-serializer.html">test-serializer</a> handles <code>dotnet test</code> at N=1.</p>
-<h2>Prerequisites</h2>
-<ul><li><strong>A counting-semaphore primitive</strong> (here byte-range flock over M offsets).</li><li><strong>An identified set of adjacent heavy tools</strong> to route; anything left out leaks past the cap.</li><li><strong>A per-tool enforcer</strong> for each, so the mediated path is the only path.</li><li><strong>A tuned M</strong> appropriate to the host's core/memory budget.</li></ul>
-<h2>Consequences &amp; costs</h2>
-<ul><li><strong>M is a fixed guess.</strong> Eight is a static ceiling, not adaptive to host size or current load: too high oversubscribes a small host, too low wastes a big one.</li><li><strong>Coverage is only as complete as the routed set.</strong> A new heavy tool not wired through the semaphore silently escapes the cap.</li><li><strong>Five enforcers to maintain.</strong> Each tool's enforcer is a surface that can drift.</li><li><strong>Log proliferation.</strong> Per-run timestamped logs accumulate (by design, but they add up).</li></ul>
-<h2>Known uses</h2>
-<ul><li>The build serializer: the M=8 byte-range semaphore over the five tools.</li><li>The five active per-tool enforcers (<code>dotnet build</code> / <code>tsc</code> / <code>csharp-query</code> / jedi / <code>pyright</code>).</li></ul>
-<h2>Related mechanisms</h2>
-<ul><li><em>See also (sibling)</em> — <a href="test-serializer.html">test-serializer</a>: the same pattern at <strong>N=1</strong>. Together they are the worked example of choosing lock cardinality by contention profile (destructive ⇒ N=1; parallel-safe-but-heavy ⇒ M=8).</li><li><strong>Layer</strong> — with <a href="test-serializer.html">test-serializer</a> and <a href="aggregate-compute-protection.html">aggregate-compute-protection</a>, the host-compute rationing tier.</li></ul>
-<footer class="site-foot"><span class="foot-line foot-copy">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue</span><span class="foot-line foot-links"><a class="gh" href="https://github.com/davisjam/model-based-agentic-software-engineering"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> model-based-agentic-software-engineering</a>&nbsp;·&nbsp; <a class="book-foot" href="../../book/index.html">Read the book →</a></span><span class="foot-line foot-nsf">This work was supported by the U.S. National Science Foundation under grants #2541917 and #2452533.</span></footer>
+<nav class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="index.html#concepts">Concepts</a> &nbsp;/&nbsp; Governance-centric — the enabling substrate</nav>
+<p class="subtitle">Build the environment first: encode each obligation as a mechanism the environment enforces, so quality is a property of the ground the agents stand on.</p>
+<div class="concept-band"><span class="concept-chip"><svg class="cc-ico" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 1.4a4.6 4.6 0 0 0-2.8 8.25c.42.33.68.72.78 1.15l.16.7h3.72l.16-.7c.1-.43.36-.82.78-1.15A4.6 4.6 0 0 0 8 1.4Zm-1.85 11.3h3.7v1.05h-3.7V12.7Zm.62 1.95h2.46v.35a1.23 1.23 0 0 1-2.46 0v-.35Z"/></svg>Concept</span><span class="concept-kicker">Big idea 2 · the stance</span></div>
+<figure class="cc-fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820"
+     role="group" aria-labelledby="omTitle omDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="cc-governance-centric-omTitle">Three process models for agentic software engineering</title>
+  <desc id="cc-governance-centric-omDesc">Three panels arranged as a triangle. The two poles sit on top:
+    velocity-centric at top-left — a human sets a goal, then a ring of role-labeled agents —
+    planner, developer, tester, reviewer, security, deploy — passes work around a cycle, with
+    insufficient quality control; and oversight-centric at top-right — a human and a single
+    agent exchange a prompt and an output in a round trip, so human attention gates every step
+    of progress. Governance-centric sits centered beneath them as the synthesis: a human hands
+    policies into a governed engineering environment that contains the agent, so known
+    obligations become controls before the agent works. The book takes the third stance.</desc>
+
+  <defs>
+    <marker id="cc-governance-centric-omArrow" markerWidth="8" markerHeight="8" refX="6.5" refY="3"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <!-- faint synthesis connectors: from the two top corners down to the governance panel -->
+  <g fill="none" stroke="#e4e0d8" stroke-width="2" stroke-dasharray="5,7">
+    <path d="M295,470 C360,545 470,560 560,590"/>
+    <path d="M885,470 C820,545 710,560 620,590"/>
+  </g>
+
+  <!-- ============ (a) Velocity-centric: role ring (top-left) ============ -->
+  <text x="295" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1c1917">(a) Velocity-centric</text>
+  <g font-size="28" fill="#1c1917" text-anchor="middle">
+    <text x="295" y="112" font-weight="700">Human</text>
+    <text x="295" y="144" font-size="22" font-style="italic" fill="#57534e">goal ↓</text>
+
+    <!-- six roles around a cycle -->
+    <text x="295" y="196">Planner</text>
+    <text x="411" y="256">Developer</text>
+    <text x="411" y="336">Tester</text>
+    <text x="295" y="396">Reviewer</text>
+    <text x="179" y="336">Security</text>
+    <text x="179" y="256">Deploy</text>
+
+    <!-- cycle arrows (clockwise) -->
+    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#cc-governance-centric-omArrow)">
+      <path d="M345,202 C383,214 403,232 406,236"/>
+      <path d="M431,276 C437,296 437,306 435,311"/>
+      <path d="M413,350 C403,366 383,384 359,391"/>
+      <path d="M243,398 C207,388 187,370 183,363"/>
+      <path d="M161,322 C155,306 155,290 156,287"/>
+      <path d="M177,246 C187,232 207,214 234,206"/>
+    </g>
+  </g>
+  <text x="295" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#b23b3b">Insufficient quality control</text>
+
+  <!-- ============ (b) Oversight-centric: round trip (top-right) ============ -->
+  <text x="885" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1c1917">(b) Oversight-centric</text>
+  <g font-size="28" fill="#1c1917">
+    <text x="753" y="266" text-anchor="middle" font-weight="700">Human</text>
+    <text x="1017" y="258" text-anchor="middle">Agent:</text>
+    <text x="1017" y="290" text-anchor="middle" font-size="22" fill="#57534e">bounded work</text>
+
+    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#cc-governance-centric-omArrow)">
+      <path d="M811,240 C871,206 899,206 959,240"/>
+      <path d="M959,282 C899,316 871,316 811,282"/>
+    </g>
+    <text x="885" y="196" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">prompt</text>
+    <text x="885" y="348" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">output</text>
+  </g>
+  <text x="885" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#57534e">Human attention gates progress</text>
+
+  <!-- ============ (c) Governance-centric: env box (bottom-center, the synthesis) ============ -->
+  <text x="590" y="606" text-anchor="middle" font-size="38" font-weight="700" fill="#1c1917">(c) Governance-centric</text>
+  <g font-size="28" fill="#1c1917">
+    <text x="452" y="674" text-anchor="middle" font-weight="700">Human</text>
+
+    <rect x="518" y="638" width="272" height="150" rx="8" fill="none" stroke="#2f5169" stroke-width="2"/>
+    <text x="654" y="670" text-anchor="middle" font-size="24" fill="#2f5169">Governed</text>
+    <text x="654" y="696" text-anchor="middle" font-size="24" fill="#2f5169">engineering</text>
+    <text x="654" y="720" text-anchor="middle" font-size="24" fill="#2f5169">environment</text>
+    <rect x="584" y="726" width="140" height="46" rx="4" fill="none" stroke="#1c1917" stroke-width="1.4"/>
+    <text x="654" y="756" text-anchor="middle" font-size="24">Agent</text>
+
+    <g fill="none" stroke="#1c1917" stroke-width="1.5" marker-end="url(#cc-governance-centric-omArrow)">
+      <path d="M452,686 L452,738 L512,738"/>
+    </g>
+    <text x="460" y="770" text-anchor="middle" font-size="22" font-style="italic" fill="#57534e">policies</text>
+  </g>
+  <text x="590" y="806" text-anchor="middle" font-size="24" font-style="italic" fill="#2f5169">Known policies become controls</text>
+</svg></figure>
+<section class="cc-intuition"><h2>Engineering intuition</h2><p>Velocity-centric hands work around a ring of job titles and leaves quality implicit; oversight-centric parks a human beside each change, and attention does not scale with the fleet. Governance pays attention per class of failure instead: once, when you build the mechanism that retires it.</p></section>
+<section class="cc-rel"><h2>Related concepts</h2><ul class="cc-links"><li><a href="concept-churn.html">Churn is the scaling limit</a></li><li><a href="concept-modeling-thesis.html">Documentation, taken to its limit, is a structured model</a></li></ul></section>
+<section class="cc-mech"><h2>Mechanisms</h2><ul class="cc-links"><li><a href="agent/gates-and-merge-train/pre-commit-hook.html"><code>pre-commit-hook</code></a></li><li><a href="agent/gates-and-merge-train/staged-deploy-gates.html"><code>staged-deploy-gates</code></a></li><li><a href="agent/lifecycle-and-observability/cron-alerts-gate.html"><code>cron-alerts-gate</code></a></li></ul></section>
+<section class="cc-read"><h2>Read more</h2><p><a class="cc-read-link" href="book/2.3-the-governed-environment.html">Read in the book →</a></p></section>
+<footer class="site-foot"><span class="foot-line foot-copy">© <a href="https://davisjam.github.io">James C. Davis</a>, 2026–present &nbsp;·&nbsp; Assistant Professor, ECE @ Purdue</span><span class="foot-line foot-links"><a class="gh" href="https://github.com/davisjam/model-based-agentic-software-engineering"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="vertical-align:-2px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> model-based-agentic-software-engineering</a>&nbsp;·&nbsp; <a class="book-foot" href="book/index.html">Read the book →</a></span><span class="foot-line foot-nsf">This work was supported by the U.S. National Science Foundation under grants #2541917 and #2452533.</span></footer>
 </main>
 </body>
 </html>
