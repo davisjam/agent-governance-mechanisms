@@ -1,40 +1,70 @@
-"""The SUBSTANTIATION aggregator — nests the DATA ledger and the LITERATURE positioning UNDER the argument
-spine and, per claim, surfaces what backs it. The query the author asked for: "where we cite in the text,
-back those cites in the model (ref, claims-from-it), nested under the spine, so we can query for
-under-substantiated-or-situated claims about reality."
+"""The SUBSTANTIATION aggregator — nests the three evidence legs (DATA ledger, LITERATURE positioning, and
+FIELD-NOTE ledger) UNDER a claim universe and, per claim, surfaces what backs it. The query the author asked
+for: "where we cite in the text, back those cites in the model (ref, claims-from-it), nested under the
+claims, so we can query for under-substantiated-or-situated — and outright SOAPBOX — claims about reality."
 
-It reads THREE meta-files at query time (rule-#33 best form — stable, no codegen, no snapshot):
+THE CLAIM UNIVERSE — spine + theory. The argument spine is the book's backbone claims; the 'Toward a Theory
+of MAGE' chapter adds reality-asserting THEORY nodes (the seven hypotheses H1-H7 + their sub-hypotheses, the
+corollaries, and the research-agenda proposals) that are NOT spine claims. Both are appended to one universe
+so the report reaches the theory too, and a datum or citation may bind to EITHER by id (the id set simply
+grows — no new binding machinery).
+
+It reads meta-files at query time (rule-#33 best form — stable, no codegen, no snapshot):
   - book-models/argument_spine_declared.json — the spine claims + their `quantifiable` / `reality_claim`
-    flags (a claim that asserts something about reality, vs a definitional or normative one).
+    (asserts something about reality) / optional `frame` flags.
+  - book-models/theory_of_mage_declared.json — the theory reality-nodes. The chapter globally frames all of
+    them as offered-for-replication (its `hedge` + the table caption 'offered for replication, not proven'),
+    so they register with frame=offered-for-replication and never SOAPBOX — honestly SITUATED, not asserted.
   - book/data/data-claims.json — the metric->claim ledger (each datum's `spine_claim`/`spine_claims` +
-    observable + data_source + limitation). This is the DATA half.
+    observable + data_source + limitation). The DATA leg.
   - book-models/lit-positioning.json — the literature-positioning citations, each `{key, backs_claims,
-    relation}`. This is the LITERATURE half. Robust to its absence (data-only + a note), so W-LEDGER does
-    not hard-depend on the LPP-MODEL ordering.
+    relation}`. The LITERATURE leg. Robust to its absence.
+  - book-models/field-notes.json — the FIELD-NOTE leg: lived DocAble incidents narrated in the book, each
+    `{id, incident, chapter_slug, backs_claims, limitation}`. First-hand experience, not a datum and not a
+    citation. Robust to its absence.
 
-Per spine claim it aggregates `data_backing` (the data-claims bound to it) + `literature_backing` (the
-citations whose `backs_claims` include it), then computes two reports:
-  - DL3 UNDERQUANTIFIED — a `quantifiable:true` claim with ZERO data_backing (the author's "which
-    quantifiable claims are underquantified" surface — seeds future collection).
-  - UNDER-SUBSTANTIATED-OR-SITUATED — a `reality_claim:true` claim with ZERO data_backing AND ZERO
-    literature_backing (an empirical/positioned claim with no evidence of any kind — the broader gap).
-Both REPORT, never gate.
+Per claim it aggregates `data_backing` + `literature_backing` + `field_note_backing`, carries the claim's
+`frame ∈ {reality, offered-for-replication, single-case, possibility}` (default `reality` — an unframed
+assertion IS a reality-claim needing backing), then computes three reports:
+  - DL3 UNDERQUANTIFIED — a `quantifiable:true` claim with ZERO data_backing.
+  - UNDER-SUBSTANTIATED-OR-SITUATED — a `reality_claim:true` claim with NONE of the three backings (no
+    evidence of any kind — the broad gap; includes honestly-framed theory nodes).
+  - SOAPBOX — the sharp one: a reality-claim with NO backing of any kind AND frame=="reality" (NOT hedged as
+    offered/single-case/possibility). SOAPBOX ⊆ UNDER-SUBSTANTIATED-OR-SITUATED (the framed ones are
+    situated, not soapbox).
+All three REPORT, never gate.
 
-Run `python3 book-models/substantiation.py` to print the per-claim backing + the two reports; `... json`
+Honest boundary: the check only sees REGISTERED claims. Unregistered Discussion prose (a sentence in no
+model) is invisible to it — finding those is the human audit. A clean SOAPBOX report means every registered
+reality-claim is backed or honestly framed, not that no over-claim exists anywhere in the prose.
+
+Run `python3 book-models/substantiation.py` to print the per-claim backing + the three reports; `... json`
 for the machine form. Also the engine behind `catalog.py substantiation`.
 """
 from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from dataclasses import dataclass, field
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)
 _SPINE_DECLARED = os.path.join(_HERE, "argument_spine_declared.json")
+_THEORY_DECLARED = os.path.join(_HERE, "theory_of_mage_declared.json")
 _LIT_POSITIONING = os.path.join(_HERE, "lit-positioning.json")
+_FIELD_NOTES = os.path.join(_HERE, "field-notes.json")
 _DATA_CLAIMS = os.path.join(_ROOT, "book", "data", "data-claims.json")
+
+#: The honesty-frame vocabulary. `reality` is the honest default — an unframed assertion IS a reality-claim
+#: that owes backing. The other three are honest hedges that keep a claim off the SOAPBOX report.
+_FRAMES = ("reality", "offered-for-replication", "single-case", "possibility")
+
+#: The theory chapter globally frames ALL its predictions as offered-for-replication (the theory JSON `hedge`
+#: + the Seven-Hypotheses table caption). So theory nodes register with this frame by default — honestly
+#: SITUATED, never SOAPBOX — unless a node carries its own explicit `frame`.
+_THEORY_DEFAULT_FRAME = "offered-for-replication"
 
 
 # ---- typed rows ------------------------------------------------------------------------------------
@@ -56,13 +86,30 @@ class LiteratureBacking:
 
 
 @dataclass
+class FieldNoteBacking:
+    """The third evidence leg — a lived DocAble incident (not a datum, not a citation) that backs a claim."""
+    id: str
+    incident: str
+    chapter_slug: str
+    limitation: str
+
+
+@dataclass
 class ClaimSubstantiation:
     id: str
     statement: str
     quantifiable: bool
     reality_claim: bool
+    frame: str = "reality"
+    kind: str = "spine"  # provenance: `spine` claim or a `theory` node (hypothesis / corollary / agenda)
     data_backing: list[DataBacking] = field(default_factory=list)
     literature_backing: list[LiteratureBacking] = field(default_factory=list)
+    field_note_backing: list[FieldNoteBacking] = field(default_factory=list)
+
+    @property
+    def has_backing(self) -> bool:
+        """Any evidence of any kind — data, literature, or a field note."""
+        return bool(self.data_backing or self.literature_backing or self.field_note_backing)
 
     @property
     def underquantified(self) -> bool:
@@ -71,19 +118,68 @@ class ClaimSubstantiation:
 
     @property
     def under_substantiated(self) -> bool:
-        """A reality-claim with neither data nor literature behind it — the broader gap."""
-        return self.reality_claim and not self.data_backing and not self.literature_backing
+        """A reality-claim with none of the three backings behind it — the broad gap (SITUATED or SOAPBOX)."""
+        return self.reality_claim and not self.has_backing
+
+    @property
+    def soapbox(self) -> bool:
+        """The sharp one — a reality-claim asserted with NO backing of any kind AND no honest speculative
+        frame (frame=='reality'). SOAPBOX ⊆ under_substantiated: the framed ones are situated, not soapbox."""
+        return self.under_substantiated and self.frame == "reality"
 
 
-# ---- load the three meta-files ---------------------------------------------------------------------
+# ---- load the meta-files ---------------------------------------------------------------------------
 
 def _load(path: str) -> "dict | None":
     return json.load(open(path, encoding="utf-8")) if os.path.isfile(path) else None
 
 
+def _slug(text: str) -> str:
+    """A stable kebab id for a theory node that carries no id of its own (corollary / research-agenda)."""
+    s = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    return s[:60]
+
+
 def _spine_claims() -> "list[dict]":
     data = _load(_SPINE_DECLARED) or {}
     return data.get("spine", [])
+
+
+def _theory_claims() -> "list[dict]":
+    """The theory chapter's reality-asserting nodes as claim dicts, in a stable order: the seven hypotheses
+    (each followed by its sub-hypotheses), the corollaries, then the research-agenda proposals. Each is a
+    reality-claim; each defaults to frame=offered-for-replication (the chapter's global hedge) unless the
+    node carries its own `frame`. Hypotheses use their JSON id; corollaries + agenda points carry no id, so a
+    stable slug is synthesized. Robust to the theory file's absence (returns [])."""
+    m = _load(_THEORY_DECLARED)
+    if m is None:
+        return []
+    out: "list[dict]" = []
+
+    def _node(cid: str, statement: str, frame: str) -> dict:
+        return {"id": cid, "statement": statement, "reality_claim": True, "quantifiable": False,
+                "frame": frame if frame in _FRAMES else _THEORY_DEFAULT_FRAME, "kind": "theory"}
+
+    for h in m.get("hypotheses", []):
+        if not isinstance(h, dict) or "id" not in h:
+            continue
+        out.append(_node(h["id"], h.get("statement", ""), h.get("frame", _THEORY_DEFAULT_FRAME)))
+        for sh in h.get("sub_hypotheses", []) or []:
+            if isinstance(sh, dict) and sh.get("id"):
+                out.append(_node(sh["id"], sh.get("statement", ""), sh.get("frame", _THEORY_DEFAULT_FRAME)))
+    for c in m.get("corollaries", []):
+        if isinstance(c, dict) and c.get("claim"):
+            out.append(_node(f"corollary-{_slug(c['claim'])}", c["claim"],
+                             c.get("frame", _THEORY_DEFAULT_FRAME)))
+    for r in m.get("research_agenda", []):
+        if isinstance(r, dict) and r.get("study_design"):
+            out.append(_node(f"research-agenda-{_slug(r['study_design'])}", r["study_design"],
+                             r.get("frame", _THEORY_DEFAULT_FRAME)))
+    return out
+
+
+def _theory_ids() -> "set[str]":
+    return {c["id"] for c in _theory_claims()}
 
 
 def _data_bindings() -> "dict[str, list[DataBacking]]":
@@ -124,29 +220,67 @@ def _lit_bindings() -> "tuple[dict[str, list[LiteratureBacking]], bool]":
     return out, True
 
 
+def _fieldnote_bindings() -> "tuple[dict[str, list[FieldNoteBacking]], bool]":
+    """(claim id -> the field notes that back it, notes_present). Reads field-notes.json; robust to its
+    absence — returns ({}, False), mirroring _lit_bindings. A note binds via its `backs_claims` list (a spine
+    claim id OR a theory node id)."""
+    art = _load(_FIELD_NOTES)
+    if art is None:
+        return {}, False
+    out: "dict[str, list[FieldNoteBacking]]" = {}
+    for n in art.get("field_notes", []):
+        if not isinstance(n, dict) or not n.get("id"):
+            continue
+        backing = FieldNoteBacking(
+            id=n["id"], incident=n.get("incident", ""),
+            chapter_slug=n.get("chapter_slug", ""), limitation=n.get("limitation", ""),
+        )
+        for cid in n.get("backs_claims", []) or []:
+            out.setdefault(cid, []).append(backing)
+    return out, True
+
+
 # ---- aggregate -------------------------------------------------------------------------------------
 
+def _normalize_frame(raw: "str | None") -> str:
+    """A claim's honesty frame — the declared value if in the vocabulary, else the honest default `reality`
+    (an unframed reality-claim owes backing)."""
+    return raw if raw in _FRAMES else "reality"
+
+
 def aggregate() -> "tuple[list[ClaimSubstantiation], bool]":
-    """(per-claim substantiation in spine order, lit_present). The nest-under-the-spine query surface."""
+    """(per-claim substantiation over the spine + theory universe, lit_present). Spine claims first (in spine
+    order), then the theory reality-nodes; each claim binds its data / literature / field-note backing by id."""
     data_by_claim = _data_bindings()
     lit_by_claim, lit_present = _lit_bindings()
+    note_by_claim, _ = _fieldnote_bindings()
     rows: "list[ClaimSubstantiation]" = []
-    for c in sorted(_spine_claims(), key=lambda d: d.get("order", 0)):
-        rows.append(ClaimSubstantiation(
+
+    def _row(c: dict, kind: str, default_frame: str) -> ClaimSubstantiation:
+        return ClaimSubstantiation(
             id=c["id"], statement=c.get("statement", ""),
             quantifiable=bool(c.get("quantifiable", False)),
             reality_claim=bool(c.get("reality_claim", False)),
+            frame=_normalize_frame(c.get("frame", default_frame)),
+            kind=kind,
             data_backing=data_by_claim.get(c["id"], []),
             literature_backing=lit_by_claim.get(c["id"], []),
-        ))
+            field_note_backing=note_by_claim.get(c["id"], []),
+        )
+
+    for c in sorted(_spine_claims(), key=lambda d: d.get("order", 0)):
+        rows.append(_row(c, "spine", "reality"))
+    for c in _theory_claims():
+        rows.append(_row(c, "theory", _THEORY_DEFAULT_FRAME))
     return rows, lit_present
 
 
 def dl_findings() -> "list[str]":
     """DL1 (join-integrity) + DL2 (four-fields-present) over the data-claims — the structural half the
-    extended check_data_claims surfaces. DL1: every datum's spine_claim(s) resolve to a real spine claim.
-    DL2: every datum carries non-empty observable + data_source + limitation. Deterministic; audit-only."""
-    spine_ids = {c["id"] for c in _spine_claims()}
+    extended check_data_claims surfaces. DL1: every datum's `spine_claim`(s) resolve to a real claim id in
+    the universe (a SPINE claim OR a THEORY node — a datum may now bind to either). DL2: every datum carries
+    non-empty observable + data_source + limitation. Deterministic; audit-only."""
+    claim_ids = {c["id"] for c in _spine_claims()} | _theory_ids()
     raw = _load(_DATA_CLAIMS) or {}
     findings: "list[str]" = []
     for slug, e in raw.items():
@@ -156,8 +290,8 @@ def dl_findings() -> "list[str]":
         if not ids:
             findings.append(f"DL1 data-claim {slug!r} binds to no spine_claim (add spine_claim or spine_claims)")
         for cid in ids:
-            if cid not in spine_ids:
-                findings.append(f"DL1 data-claim {slug!r} spine_claim {cid!r} resolves to no spine claim")
+            if cid not in claim_ids:
+                findings.append(f"DL1 data-claim {slug!r} spine_claim {cid!r} resolves to no spine claim or theory node")
         for f_name in ("observable", "data_source", "limitation"):
             if not str(e.get(f_name, "")).strip():
                 findings.append(f"DL2 data-claim {slug!r} has an empty {f_name!r} field")
@@ -174,11 +308,20 @@ def under_substantiated() -> "list[ClaimSubstantiation]":
     return [r for r in rows if r.under_substantiated]
 
 
+def soapbox() -> "list[ClaimSubstantiation]":
+    """The SOAPBOX report — reality-claims asserted with no backing of any kind and no honest speculative
+    frame. The author's 'no-soapboxing' worry, made mechanical. REPORT, never gate."""
+    rows, _ = aggregate()
+    return [r for r in rows if r.soapbox]
+
+
 # ---- CLI -------------------------------------------------------------------------------------------
 
 def _flag_tag(r: "ClaimSubstantiation") -> str:
     tags = []
-    if r.under_substantiated:
+    if r.soapbox:
+        tags.append("SOAPBOX")
+    elif r.under_substantiated:
         tags.append("UNDER-SUBSTANTIATED-OR-SITUATED")
     elif r.underquantified:
         tags.append("UNDERQUANTIFIED")
@@ -186,6 +329,7 @@ def _flag_tag(r: "ClaimSubstantiation") -> str:
         tags.append("reality")
     if r.quantifiable:
         tags.append("quantifiable")
+    tags.append(f"frame={r.frame}")
     return f"  [{'; '.join(tags)}]" if tags else ""
 
 
@@ -193,14 +337,16 @@ def _to_jsonable() -> dict:
     rows, lit_present = aggregate()
     from dataclasses import asdict
     return {
-        "_note": ("Substantiation aggregate — data-claims + lit-positioning citations nested under each "
-                  "argument-spine claim. UNDERQUANTIFIED = quantifiable claim with no data; "
-                  "UNDER-SUBSTANTIATED-OR-SITUATED = reality-claim with neither data nor literature. Reports."),
+        "_note": ("Substantiation aggregate — data-claims + lit-positioning citations + field notes nested "
+                  "under each claim (spine + theory). UNDERQUANTIFIED = quantifiable claim with no data; "
+                  "UNDER-SUBSTANTIATED-OR-SITUATED = reality-claim with no data/lit/field-note; "
+                  "SOAPBOX = under-substantiated AND frame=='reality' (unhedged). Reports."),
         "lit_positioning_present": lit_present,
         "claims": [{**asdict(r), "underquantified": r.underquantified,
-                    "under_substantiated": r.under_substantiated} for r in rows],
+                    "under_substantiated": r.under_substantiated, "soapbox": r.soapbox} for r in rows],
         "underquantified": [r.id for r in rows if r.underquantified],
         "under_substantiated_or_situated": [r.id for r in rows if r.under_substantiated],
+        "soapbox": [r.id for r in rows if r.soapbox],
     }
 
 
@@ -209,7 +355,10 @@ def render(as_json: bool = False) -> int:
     if as_json:
         print(json.dumps(_to_jsonable(), ensure_ascii=False, indent=2))
         return 0
-    print("== substantiation — data + literature nested under the argument spine ==")
+    n_spine = sum(1 for r in rows if r.kind == "spine")
+    n_theory = sum(1 for r in rows if r.kind == "theory")
+    print(f"== substantiation — data + literature + field notes nested under the claim universe "
+          f"({n_spine} spine + {n_theory} theory) ==")
     if not lit_present:
         print("  (note: book-models/lit-positioning.json absent — literature half empty; run the "
               "lit_positioning model's regenerate)")
@@ -226,13 +375,22 @@ def render(as_json: bool = False) -> int:
             print(f"  lit:  {keys}")
         else:
             print("  lit:  — none")
+        if r.field_note_backing:
+            keys = ", ".join(n.id for n in r.field_note_backing)
+            print(f"  note: {keys}")
+        else:
+            print("  note: — none")
     uq = [r for r in rows if r.underquantified]
     us = [r for r in rows if r.under_substantiated]
+    sb = [r for r in rows if r.soapbox]
     print("\n== DL3 UNDERQUANTIFIED (quantifiable claim, no data yet — seeds future collection) ==")
     print("  " + (", ".join(r.id for r in uq) if uq else "none — every quantifiable claim has bound data"))
-    print("== UNDER-SUBSTANTIATED-OR-SITUATED (reality-claim with neither data nor literature) ==")
+    print("== UNDER-SUBSTANTIATED-OR-SITUATED (reality-claim with no data / lit / field-note) ==")
     print("  " + (", ".join(r.id for r in us) if us
-                  else "none — every reality-claim has data or literature behind it"))
+                  else "none — every reality-claim has data, literature, or a field note behind it"))
+    print("== SOAPBOX (reality-claim, no backing of any kind, unhedged frame=='reality') ==")
+    print("  " + (", ".join(r.id for r in sb) if sb
+                  else "none — every unbacked reality-claim carries an honest speculative frame"))
     return 0
 
 

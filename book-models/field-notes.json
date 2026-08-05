@@ -1,0 +1,22 @@
+{
+  "_provenance": "HAND-AUTHORED field-note ledger — the THIRD evidence leg beside the DATA ledger (book/data/data-claims.json) and the LITERATURE positioning (book-models/lit-positioning.json). A field note is a lived DocAble incident narrated in the book that can BACK a reality-claim: not a measured datum and not an outside citation, but first-hand engineering experience. substantiation.py reads this at query time (rule-#33 best form) as `FieldNoteBacking`, symmetric with DataBacking / LiteratureBacking. Each entry: {id, incident, chapter_slug, backs_claims: [claim-id...], limitation}. A note binds to a claim (spine claim OR theory node id) by listing the claim id in `backs_claims`.",
+
+  "_note": "SEEDED with the two lived incidents the theory-traceability design (Part B.2) names — both already narrated in the book. Their `backs_claims` are intentionally EMPTY here: this wave BUILDS the field-note leg (the typed backing + the reader + the ledger schema); binding the notes to specific claims (and adding the harvest incident set) is the separate evidentiary wave that targets this structure. So the mechanism loads and is queryable now; the claim bindings land next.",
+
+  "field_notes": [
+    {
+      "id": "fn-worktree-cleanup-three-failures",
+      "incident": "A worktree-cleanup guard failed three times in five days, each time destroying a live agent's work — the recurring failure that motivated converting the ad-hoc cleanup into a guarded, id-aware mechanism.",
+      "chapter_slug": "6.1-implications",
+      "backs_claims": [],
+      "limitation": "Single operator, single repository; the frequency is one project's experience, not a measured rate."
+    },
+    {
+      "id": "fn-weekend-ts-migration",
+      "incident": "An entire front end was moved to a typed language over a weekend with no observed defects — the lived instance behind the refactoring-is-cheap-under-a-strong-environment claim.",
+      "chapter_slug": "6.1-implications",
+      "backs_claims": [],
+      "limitation": "One migration, no controlled comparison; 'no defects observed' is bounded by what the environment's gates could see."
+    }
+  ]
+}
