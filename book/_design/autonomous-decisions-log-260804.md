@@ -480,3 +480,526 @@ My judgments (autonomous):
   dilutive, chapters far apart; not worth endgame churn. Reported.
 - engineers-seat core-vs-local: keep as CORE (recurs as the SDLC→SELC frame). 
 SEQUENCING: D59 model BUILD runs LAST among content waves (after Part-5 + D61 + D60) so its anchors are final.
+
+## D62 — Operator's Dashboard rebuilt on the FORMATIVE/SUMMATIVE axis (author, 260804, post-publish)
+
+Author reframed the metrics dashboard: distinguish **formative** (measured DURING the work, feedback to steer
+the next step) from **summative** (measured at MATURITY, a verdict on what was achieved) — richer than
+target/signal, and standard assessment vocabulary the audience knows. Author directions: **BROADER** (catch
+all 9, not the strict 5); **a MIDRULE** to visually distinguish the two groups; **overlap/duplication is
+FINE** — "this table is an engineering reference; duplication from earlier in the book is expected" (waives
+the earlier keep-coverage-oracles-at-2.5 objection → include grammar + model-claim coverage too).
+
+Classification (mode field: formative | summative | both):
+- **Formative (6):** Missing-Model Metric, Velocity, Churn, Model-sync efficacy, Grammar coverage,
+  Model-claim coverage.
+- **Summative (3):** MBSE navigation token-savings (payoff verdict) + Support ratio + Control growth — the
+  latter two are TRAJECTORY metrics = **both** (watched formatively as they form, reported summatively at
+  maturity); tag them "both", seat them in the summative band since their reference number is the mature verdict.
+Rebuild: all 9 in metrics-dashboard.json with `mode`; inclusion_criterion → "a metric you steer by
+(formative) OR certify the result with (summative)"; 6.5 page table split into Formative | (midrule) |
+Summative groups + a one-line note that some rows also appear in 2.5's in-loop table by design (expected for
+a reference). Update metrics_dashboard_model.py (mode field + validator: all 9 present, mode-valid; parity)
+and the ratified-count check. Then REDEPLOY + re-bump submodule.
+
+## D63 — frontispiece figure: ground "The Printer" as a Coding-agent box (author, 260804, post-publish)
+
+Author: "The Printer" as the top box of the opening figure (mage-method.svg, "The MAGE Method at a Glance")
+reads too metaphorical. Reframe it: wrap it in a **"Coding agent"** box with **"reasoning engine + printer"
+at its heart** — so the pure metaphor is grounded in the literal thing (a coding agent = a reasoning engine
++ a printer). SVG redraw of the top element only: outer label "Coding agent", inner "reasoning engine +
+printer" heart; keep the Umber accent palette, keep the downstream "generates code" arrow + the rest of the
+flow intact; MUST pass tests/svg_fit.py (0 overflow findings — the box needs 2 lines now, so grow/space it
+and re-fit); update the caption / <desc> a11y text if they lean on "The Printer" as the top node (the desc
+already says "The Printer — a coding agent — …", so it's mostly consistent). The Printer stays a CORE
+metaphor in the prose (D59) — this only grounds its depiction in the frontispiece. SEQUENCING: separate wave
+AFTER D62 (single-live-writer); batch into the SAME redeploy as D62 (hold redeploy until both land).
+
+## QUIESCE (author, 260804) + next-session queue
+
+**Answer to "is the inclusion criterion written down?":** YES, in THREE places — (1) the SSOT declared model
+`book-models/metrics-dashboard.json` `inclusion_criterion` field; (2) rendered on the dashboard page opener
+`book/backmatter/6.5-the-operators-dashboard.md`; (3) this log (D50, D62).
+
+**Quiesce state:** book main local HEAD = **1411850** (D62 formative/summative dashboard rebuild), origin/main
+= 812a85a (the earlier publish). So D62 is COMMITTED LOCAL, **NOT deployed** — deliberately held so next
+session's font-fit lands in the SAME redeploy. Tree clean outside _design/. No in-flight writer agents at
+quiesce (D62 done; D63 never dispatched). Full-suite verify of 1411850 came back GREEN (32/32) just after quiesce — known-good.
+
+**D64 — NEXT SESSION (author directive): reduce the dashboard FONT so the 9×6 table fits ONE landscape page.**
+Current committed state (1411850) is a clean 2-landscape-page breakable reference (agent verified it genuinely
+overruns one page; column-width squeezing clipped/scrambled, so it kept 2 pages rather than drop content).
+Author's call: next session REDUCE FONT SIZE on the dashboard table (in book_typst.py, scoped to the apparatus
+landscape page) to fit one page — a font reduction, not content/column drops.
+
+**NEXT-SESSION QUEUE (do in order, then ONE redeploy + submodule bump):**
+1. 1411850 ALREADY green (32/32) — skip re-verify.
+2. D64: reduce dashboard table font → one landscape page (verify --pdf fit).
+3. D63: redraw mage-method.svg top box → "Coding agent" box with "reasoning engine + printer" heart
+   (ground the Printer metaphor); pass tests/svg_fit.py; update caption/desc; keep flow + Umber palette.
+4. REDEPLOY: catalog.py deploy github via orchestrator detached bg + re-bump ada-tool submodule locally
+   (do NOT push parent).
+
+## D65 — invariants-triangle articulation: ponder verdict PARTIAL → insert (author, 260804)
+
+Ponder (book/_design/invariants-earn-keep-ponder-260804.md) checked book-models first, then prose/figures.
+VERDICT: PARTIAL. Present: "model isn't a mechanism until enforced" (claims.json:240 model-not-mechanism-
+until-enforced) + prose-that-rots (2.3:280, 3.1:69/97-105, Inset I1) + invariants-as-checked-predicates
+(3.1:586-589 per-model-template field (d): invariant·temporal-shape·how-checked; SysML borrow 3.1:109).
+ABSENT: (a) the three nodes named as ONE triangle model→invariants→coherence-gate (currently a 5-field
+template + a 6-part model-coherence stack DATA/CONSUME/EMIT/PARITY/DERIVE/SEAL — no invariants node); (b) the
+"invariants map 1:1 onto failures" proof (declared nowhere). No figure carries the triangle.
+
+MY JUDGMENTS (autonomous; author flagged 2 calls):
+- INSERT one short prose beat + one new FIGURE in §3.1 right after the per-model-template (~3.1:598): name
+  the triangle (model[typed edges] → invariants[predicates w/ stable IDs] → coherence-gate[enforces at
+  deploy/lint]), tie to the SysML borrow, state earn-keep on the INVARIANT axis (a model earns its keep
+  through the invariants it lets you enforce, not the schema). Figure = domain-neutral 3-node triangle; the
+  CLOSING edge (gate→model) carries the failures point (what the stack figure can't say). Domain-neutral
+  labels (the book's free/leased/done example — NOT InterServiceCall; that was the author's ada-tool example,
+  not book content).
+- SOFTEN piece 4: NOT a universal "1:1" (the book's single-case-humility claim won't support it). State it
+  DIRECTIONALLY + ground in Part 5's failure→mechanism record (5.2:247): "in the case study, the gaps the
+  model caught were violated-but-unstated invariants." Evidence-grounded, humble.
+- ADD a claims.json entry for the principle so the book's OWN coherence gate tracks it (reflexive/dogfood) —
+  e.g. `model-earns-keep-via-invariants` or `the-coherence-triangle`. Insert wave writes it + regenerates.
+SEQUENCING: INSERT wave is a book writer (3.1 md + new assets/*.svg + claims.json + regen) → queue behind the
+live SITE wave; runs after the frontispiece+seat wave. Batched into the one redeploy.
+
+## D66 — glossary (0.2) author direct-edit + slug rename + a 6.2 collision (author, 260804)
+
+Author hand-edited book/frontmatter/0.2-the-books-language.md: title "# The Book's Language" → "# Glossary";
+rewrote the intro to frame agentic-SE's naming chaos + the book articulating coherent vocabulary, and to
+name the FOUR parts. Verified: the four parts match the actual four `##` groups exactly (The core ideas / How
+coding agents work (and fail) / The Governed Engineering Environment / DocAble specifics) — internally
+consistent. Edit is GOOD (plainer name matches the D61 textbook-voice rule; clearer intro). Author: "if you
+like it, update the slug to match" → rename slug 0.2-the-books-language → 0.2-glossary.
+**COLLISION surfaced to author (NOT auto-resolved):** back-matter `6.2-glossary.md` is ALREADY titled
+"Glossary" — the AUTO-GENERATED full reference glossary (`<!-- glossary-auto -->`, all terms), vs 0.2 = the
+CURATED front-matter primer (4 thematic groups, read up front). Two "Glossary" pages = confusing. Fork for
+author: (A) 0.2="Glossary" (primer) + rename 6.2 → "Complete Glossary"/"Term Reference" [my lean]; (B) 0.2
+keeps a distinct name; (C) other. Rename ripple surface (small): README.md, AGENTS.md, 3.3-the-process-view.md
+link 0.2 by slug/title. Committing the author's 0.2.md edit + the rename waits for a CLEAN tree (after site
+wave) + the author's fork answer. The site wave was told (SendMessage) to leave 0.2.md/0.2.html unstaged.
+
+## D67 — heading typesetting: number #/## + italicize a bold sub-level (author, 260804)
+(a) Author wants `#` (chapter/H1) AND `##` (section/H2) headings to carry NUMBERS in the typeset output — as
+an editor it's hard to reference sections with no numbers. (Earlier section-numbering-260804 added 1.1.x to
+`##` in the build — investigate current state: is it web-only / not on the PDF / is `#` unnumbered? The
+author perceives "no numbers", so re-check both projections + number the chapter H1 too, e.g. "1.1 The
+Printer" + "1.1.1 <section>".) (b) In 0.3-preface "Where this book sits on the shelf" → "Three books frame…"
+→ "The premise: mechanize discipline": "The premise" is a boldfaced heading level; author wants THIS heading
+level ITALICIZED instead of bold. Identify the level (likely a `###`/`####` or bold-lead) and change its
+render bold→italic in build_book_html.py + book_typst.py. → typesetting wave (build renderer).
+
+## D68 — insets: drop exposed numbers (title-only) + de-self-reference (author Pic 1, 260804)
+Author (3.3/3.6 inset screenshot): (1) the meta-text is "weirdly self-referential" ("Two insets a reader
+needs for this view's model pages:" + "The four models … get a paragraph each here …") → reword to not
+narrate the page furniture. (2) "Insets don't deserve exposing the numbers, just the title" — render inset
+heading as TITLE ONLY, drop the "Inset I<N> —" prefix. (3) out-of-order (I10 before I7) — MOOT once numbers
+are undisplayed. FINDING: insets ARE cross-referenced by number in prose (3.2 refs I5; 3.6 refs I10,I7; 3.3
+defines I1,I2,I3,I4,I6; 3.1 I1) — so de-numbering the DISPLAY requires rewording those ~8 prose "Inset I<N>"
+refs to title/descriptive form ("the coverage inset" / "the protocols inset"), else they dangle. Inset render
+= `inset-title` <p> in build_book_html.py (the "Inset I<N> —" prefix is in the md title text or the render;
+locate + drop). → wave: title-only inset render + reword prose refs + de-self-reference 3.3/3.6 meta-text.
+
+## D69 — Table 3.6-1 temporal-shape column: DROP it (answer: liveness lives in 3.3) (author Pic 2, 260804)
+Author: the "Temporal shape" column is all "□P (safety)" → if no non-safety props, not worth the column; and
+"are there liveness properties we should show?" ANSWER (investigated): the book DOES have liveness (◇)
+properties — but they belong to the **Process view (3.3)**, the temporal/TLA+/concurrency view (3.3 is full
+of liveness + ◇). The **Scenarios-view join (Table 3.6-1)** is structural coverage/derivation invariants
+(every part has a test, deps match, endpoint exercised, tier is pure, no LOAD edge, staging⊇local) — these
+are GENUINELY all-safety (□). So: DROP the temporal-shape column from 3.6-1 (uniform → redundant); liveness
+is correctly shown in 3.3 where the column earns its place (verify 3.3's table shows the safety+liveness mix).
+→ wave: drop the 3.6-1 temporal-shape column; confirm 3.3 carries the liveness properties.
+
+## D70 — figure min-fontsize: mechanical lint + fix 3.8-1 & 4.2-1 (author, 260804)
+Author: Figure 3.8-1 (model-sync-two-layer-net) AND Figure 4.2-1 are too small + their text is SMALLER THAN
+BODY TEXT, violating the "figure text not smaller than book body text" rule; widen them (column space
+available) + raise font ≥ body. AND: "the fontsize issue can be detected MECHANICALLY -- do so" → extend
+tests/svg_fit.py with a check that flags any figure whose text font-size < the book body-text size (A.8
+audit→lint). Land the check AUDIT-ONLY-first (rule #55 — it will likely find >0), reveal ALL violators, then
+a fix wave widens/enlarges each (3.8-1, 4.2-1, + whatever else it catches). Need the canonical body-text px
+size to compare against (from design-tokens / the render). → wave: (a) svg min-font check audit-only; (b) fix
+the flagged figures.
+
+## D71 — Typst layout: keep-with-next intro lines + text↔table spacing (author, 260804)
+Author (Table 4.2-1/4.2-2 screenshot, 2 notes): (1) need a NON-BREAKING notion so a sentence INTRODUCING a
+figure/table ("… in Table 4.2-1.") is not split across a page break from the fig/table it introduces —
+LaTeX's `~` is a light version; TYPST can do better (a keep-with-next: wrap the intro line + the following
+float in a `block(breakable: false)`, or a show-rule that binds a table/figure to its preceding paragraph).
+(2) NOT enough vertical space between body text and tables — add systematic spacing. FIX SYSTEMATICALLY in
+book_typst.py (a general rule for ALL figure/table intros + block spacing), NOT one-off. → typesetting wave.
+
+## D72 — transformer sentence + "Attention is all you need" footnote (author, 260804)
+Author: change "A large language model is a transformer, and it is extraordinarily good at one thing: turning
+an input into an output" → "…turning an input into an output **according to a simple-up-to-pretty-complex
+mapping function that it learns from its training data**." AND add a FOOTNOTE citing the "Attention Is All You
+Need" paper (Vaswani et al. 2017, the Transformer) that explains this for a non-technical reader who's made it
+this far. Use the book's footnote mechanism + add the citation to references.bib if not present. → book content
+wave (locate the sentence — grep result above).
+
+## D66 RESOLVED (author, 260804): delete empty 6.2, one glossary up front, rename 0.2 slug
+Author saw back-matter 6.2-glossary renders EMPTY (the `<!-- glossary-auto -->` harvester produced nothing —
+the book's 11 term defs are inline `gloss:` SIDENOTES, not harvested to the back page). Author decision: the
+back-matter glossary is "not needed — the opening glossary (0.2) should be all we need, and if there are
+other terms we should be putting them UP FRONT." So the fork is resolved by ELIMINATION:
+- DELETE `book/backmatter/6.2-glossary.md` (+ its .html, nav/pager entry, list-of-figures if any). The
+  `glossary-auto` directive/mechanism in build_book_html.py can stay dormant (or note it unused).
+- RENUMBER back-matter to close the 6.2 gap: 6.3-about-the-author→6.2, 6.4-colophon→6.3,
+  6.5-the-operators-dashboard→6.4 — cross-ref-safe rename (fix all refs incl. the D48 dashboard slug in
+  metrics_dashboard_model.py + the apparatus-oneager title set + any 6.x links; regen outline/argument-spine/
+  reverse-index). (Or, if renumber ripple is too deep, leave the gap — but author just asked for MORE numbering
+  [D67], so a 6.2 gap is bad → renumber.)
+- RENAME 0.2 slug: 0.2-the-books-language → 0.2-glossary (now unambiguous). Fix refs (README, AGENTS, 3.3).
+- CONSOLIDATE: check the 11 inline `gloss:` terms vs 0.2's four groups; add any genuinely-missing KEY term
+  to the right 0.2 group (keep 0.2 CURATED, not exhaustive — the inline sidenotes stay where they are; only
+  promote terms that belong in the up-front primer; surface borderline calls). Author's 0.2 CONTENT edit
+  already landed (652d474); this wave does delete+renumber+slug-rename+consolidate.
+→ GLOSSARY wave (Opus; cross-ref-rippling rename — handle like the front-matter restructure).
+
+## D73 — caption cap (≤3 sentences AND ≤50 words, HARD/no-noqa) + fix a11y-leak captions (author, 260804)
+Author (appendix "Figure 7.504-1: Accessible description: a turn-end …" screenshot): (1) captions are
+"comically long" → CAP at ≤3 SENTENCES AND ≤50 WORDS, and MECHANIZE it (a lint) with NO noqa/dispensation
+marker allowed — a HARD cap (A.8 audit→lint; but unlike most, NO escape hatch per author). (2) The
+"Accessible description:" PREFIX is the SVG `<desc>` a11y text leaking into the VISIBLE caption — WRONG; the
+accessible description is for screen readers, not the printed caption. Fix the caption-render path so a11y
+`<desc>` never becomes/prefixes the visible caption (appendix-fill figures, the 7.x numbering path). (3) Fix
+all over-long captions the lint reveals. NOTE: many book captions are currently 2-4 sentences / >50 words
+(mage-method, semantic-gap, etc.) → this is a real trim-ALL-captions fix-wave. Land the lint AUDIT-ONLY-first
+(rule #55), reveal all violators, TRIM every caption to the cap, then flip BLOCKING (hard, no-noqa). → folds
+into the FIG mechanical-lint wave (with D70 min-font).
+
+## D74 — Figure 6.3-1 (author headshot) smaller + WRAPFIGURE (author, 260804)
+Author: Figure 6.3-1 (`assets/author-headshot.jpg`, the author portrait in 6.3-about-the-author) is "huge and
+looks silly" → typeset SMALLER and as a WRAPFIGURE so the bio text FLOWS AROUND it (portrait-beside-text). A
+partial wrap mechanism may already exist (book_typst.py:655/808 have "wrap"). → folds into the TYP layout wave
+(with D71 keep-with-next + spacing); size + wrap the headshot; HTML can float it too.
+
+## D75–D78 — appendix rendering + temporal notation (author, 260804)
+
+**D75 — Related Patterns: link Bridge/Enabler (all REL_TAG bullets), like See also.** In the appendix entry
+template's "Related mechanisms", the "See also —" bullets link their target mechanism but "Bridge —" /
+"Enabler —" do NOT. Make EVERY REL_TAG bullet (REL_TAGS = Counterpart, Generalization, Enabler, Consumer,
+Layer, Bridge, Sibling, See also — catalog.py:132) link its target mechanism the same way See-also does.
+Render fix in catalog.py (the related-bullet target-parse/link path ~274/355). → APX wave.
+
+**D76 — "See also" typesetting: ONE "See also:" then bullets.** Currently each related bullet repeats its tag
+("See also — …", "See also — …"). Group consecutive same-tag bullets under a SINGLE tag label ("See also:")
+with a bullet per item (applies to any tag with >1 bullet). → APX wave (catalog.py related-section render).
+
+**D77 — appendix heading typesetting: tone down + ALL-CAPS chapters.** Appendix pattern entries should be
+tight 1-pagers. (a) reduce ALL appendix heading sizes one level; (b) make the appendix CHAPTER headings
+ALL CAPS so they're (1) clearly distinct from the book's chapters and (2) still stand out despite being
+smaller. catalog.py heading CSS (h1/h2 fs-thesis-title/fs-section ~1181) + the Typst appendix path. → APX wave.
+
+**D78 — proper temporal-logic symbols throughout; NO ASCII "[]" notation.** Replace ASCII temporal notation
+with proper Unicode: `[]P`→□P (always/safety), `<>P`→◇P (eventually/liveness), `P ~> Q`→P ↝ Q (leads-to;
+or keep ~> if the book's convention prefers it — pick one + apply consistently). Sites: 3.3-the-process-view
++ appendix-fills (composed-state-machine-model, formal-invariant-verification) + anywhere temporal logic
+appears. CAREFUL: do NOT touch markdown `[](…)` links or `<…>` html/comments — target only the temporal-logic
+strings. Ensure the symbols render in BOTH HTML + Typst. → folds into BC2 (Part-3 wave); also fix appendix-fills.
+
+## D79–D80 — more appendix rendering (author, 260804) → APX wave
+
+**D79 — delete the "Structure / The Structure diagram appears at the top of this page" template boilerplate.**
+Every appendix entry emits a "Structure" section whose body is the template line "The Structure diagram
+appears at the top of this page." DELETE this template entry entirely — let the figure do the talking (the
+diagram is right there). catalog.py appendix-entry template. → APX.
+
+**D80 — appendix figure numbers are hardcoded garbage (7.504-1, 8.608-1); make them DERIVED + monotonic.**
+The book does not have 600 figures; "504"/"608" are hardcoded in metadata (likely a source-line or hash used
+as the figure number). Appendix figure numbers MUST be derived MONOTONICALLY from the numbering system (like
+the book's part.chapter-N figures), not hardcoded. Fix the appendix figure-numbering logic in catalog.py to
+assign sequential numbers. (Same class as the D73 "7.504-1" observation.) → APX.
+
+**Reassign within the appendix cluster:** D73's a11y-`<desc>`-LEAK-into-caption fix → APX (it's appendix
+caption RENDERING); D73's caption-CAP lint (≤3 sentences/≤50 words, hard) + trim-all-captions stays in FIG
+(book-wide mechanical). APX wave = D75 (link REL-tag bullets) + D76 (group See-also under one label) + D77
+(appendix headings −1 level + ALL-CAPS chapters) + D79 (delete Structure boilerplate) + D80 (monotonic
+appendix figure numbering) + D73-a11y-leak. catalog.py appendix/catalogue render — Opus.
+
+## D81 — no emoji-as-word in prose (author, 260804)
+Author: "A weak-prover fallback is a standing ⚠️." — never use emoji as a WORD in the text; write out the
+meaning ("a standing hazard/liability/known-risk"). Book-wide sweep: replace inline prose-emoji (⚠️ ✓ ✗ ✅ ❌
+used as words) with written-out meaning. (NOTE: ✓ checkmarks in the deliberate "This chapter illustrates ✓"
+boxes + the D56 frontispiece-closure checklist are INTENTIONAL list-markers, not prose-emoji — LEAVE those;
+target emoji used as a noun/adjective in a sentence.) Fold into the wave that owns the file where each occurs
+(likely appendix-fills → APX, and part3 → BC2).
+
+## D82 — BIG: appendix RESTRUCTURE into A/B/C tiers (author, 260804) — design-ponder first
+Author proposes reordering the appendices by VALUE not taxonomy:
+- **Appendix A: MAGE Model Stacks** — LEAD with the flagship stacks (currently Appendix D). Each A.X = overview
+  + constituent parts inline (≤5 parts, one page each), with the overview figure carrying AUTOFILLED CLICKABLE
+  links to each part's A.X anchor (build-time). A.1, A.2, … per stack. Opening remarks up front.
+- **Appendix B: Engineering Notes** — deeper dive on ~10 flagships.
+- **Appendix C: Mechanism Catalog** — the FULL list, C.1 Agent (current A) / C.2 Models-bridge (current B) /
+  C.3 Product (current C). VERY TIGHT — "glossary not details": a GRAPHIC-NOVEL brick grid, each cell = the
+  mechanism's figure + a 3-sentence summary.
+- Opening remarks add the CLAUDE-CODE-AGNOSTIC note: "Every vendor-specific feature is an instance of a MAGE
+  concept. E.g. Claude Code's hooks are an implementation of enforcement points — your framework may implement
+  it differently, but the concept is portable."
+MY DESIGN QUESTIONS (leans): (1) full 83 entries — WEB keeps complete, PRINT gets the tiered A/B/C (the
+established print-vs-web projection; no content lost) [strong lean]; (2) which 10 flagships for B (from the
+flagship set); (3) autofilled numbering = build-generated LINKED LEGEND under the overview figure (not SVG
+internals); (4) bricks = CSS grid (web) + Typst grid (print). This ABSORBS the queued APX small-fixes
+(D75 link REL tags, D76 See-also grouping, D77 heading sizes+ALL-CAPS, D79 Structure boilerplate, D80
+monotonic fig numbering, D73 a11y-desc-leak, D81 appendix emoji) — hold APX, fold into the restructure.
+APPROACH: design-ponder first (read-only, Opus, checks flagship-stack/catalogue-classification/
+print-appendix-manifest models) → concrete build+migration plan → author ratifies → implement. Big lift.
+
+## D82 RATIFIED (author, 260804) + full autonomy ("proceed without pinging me")
+Author answered the 4 design Qs: (1) web keeps full GoF catalogue, print=tiered A/B/C [confirmed]; (2) B
+Engineering Notes = ALL genuine flagships, DON'T pre-prune (author prunes later); binding constraint = each
+note gets a 1-full-page OR 2-full-page treatment, open-book readable with NO mid-note page break (keep-together
+per note); (3) autofilled linked-legend numbering — approved, "give it a try"; (4) brick grid — approved.
+"Happy building" + "You are autonomous, proceed without pinging me" → NO further ratification rounds; the
+restructure ponder's plan → dispatch implementation directly; drain ALL queued waves autonomously; ONE
+redeploy at the end; report at close. (Relayed the 4 answers to the ponder a9e342e8 via SendMessage.)
+
+## D82 ponder DONE + my resolutions of the §11 load-bearing calls (autonomous, 260804)
+Design: book/_design/appendix-restructure-260804.md (§8 migration, §10 build touch-points w/ file:line, §12
+9-step dependency-ordered exec plan). Restructure is ~fully MODEL-DERIVED (flagship_stack_model FS1-FS5 →
+App A inline parts + Q3 legend; print-appendix-manifest _flagship_slugs 29-set → App B Engineering Notes;
+appendix-fills (all 83) → App C bricks, no new figures; for_print projection → Q1 web-full/print-tiered).
+
+MY RESOLUTIONS (author is autonomous, no ping — decide + report at deploy):
+- §11-A (3 stacks have 6 parts > the "≤5" guide): RELAX to ≤6 — do NOT drop genuine interlocking parts to
+  hit an arbitrary cap (fidelity > round number; "at most 5" was a rough guide).
+- §11-B (29 Notes ≈ 30-55 print pages): PROCEED with all 29 — author explicitly said "don't pre-prune, I'll
+  prune later"; within the 28-36K word ceiling; page-count is the author's later tradeoff.
+- §11-C (bricks source): SHIP v1 with the FALLBACK-derived tight 3-sentence brick (from existing Intent+
+  Summary), NOT a blocking 83-brick authoring wave; purpose-built `### Brick` fill slots = a FOLLOW-UP polish.
+- §11 sequencing + skill-recipe E→D letter shift: follow the §12 9-step dependency-ordered plan.
+IMPL: big lift → dispatch as SUB-WAVES per §12 (not one mega-agent; agents die on huge tasks). Sequence the
+restructure AFTER the contained chapter waves (INS/TYP/FIG) so the risky catalog.py rework runs with an
+otherwise-clear queue. Absorbs D73(a11y-leak)/D75-D81.
+
+## D81 REVISED (260804): it's a RENDER bug, not a content sweep
+The book SOURCE has no emoji-as-word (BC2 confirmed; the ~10 ⚠ files are all node_modules deps). The
+"standing ⚠️" the author saw is RENDER-INJECTED: source `appendix-fills/models-bridge/symbol-anchored-
+traceability-graph.md:103` says "a standing **warning**" (words) but the BUILT html renders "a standing ⚠️" —
+build_book_html.py converts the word "warning" (or an admonition marker) to the ⚠️ emoji. FIX = remove that
+emoji-substitution render rule so "warning" stays the word (author: never emoji-as-word). → RENDER fix, fold
+into the TYP renderer wave (build_book_html.py). Content needs no sweep.
+
+## D81 FINAL (260804): stale-html, not a real bug
+Source says "standing warning" (words); catalog.py ⚠ are only its own diagnostic flags (PRELIMINARY/DRIFT/
+BOOK-HOME-OWED), NOT injected into content; the .md's last commit (81865e9) authored it as "warning". The
+built appendix-b html showing "⚠️" is STALE (pre-dates the wording). A rebuild regenerates it as "warning";
+the deploy + the D82 restructure both rebuild the appendix, so it self-heals. No content/render change; D81
+closed. (The ~10 grep-⚠ files are all node_modules deps — irrelevant.)
+
+## D83 — un-rendered markers leak on served pages (LIVE bug) → fix + mechanical sensor (author, 260804)
+LIVE: constructing-the-gee.html shows literal "--census" (line 151) + "--summary" — the marker directives
+leaked un-rendered. ROOT CAUSE: `constructing-the-gee.md` is a STANDALONE served conceptual page (not a
+catalogue entry); catalog.py processes `<!-- summary: … -->` (metadata, strip) + `<!--census:controls-->N
+<!--/census-->` (substitute the count) for ENTRIES but NOT for these standalone served .md pages → the markers
+survive into the HTML. Source `constructing-the-gee.md:1` (summary), :24 (census 82).
+SENSOR GAP: `check_census_tokens(entries)` (catalog.py:945) scans ENTRIES only, not standalone served pages —
+so the leak wasn't caught (rule #17 served-page smoke gate doesn't assert marker-freedom on these pages).
+FIX (author "fix it and prevent in future"):
+1. FIX: run the marker-processing (summary-strip + census-substitute + any other `<!-- directive -->`) on ALL
+   served .md pages (constructing-the-gee, development-workflow, quick-start, etc.), not just entries. Rebuild
+   → the leaks vanish.
+2. PREVENT: add a MECHANICAL sensor (A.8; extend rule #17) — a build/validate check that scans EVERY served
+   HTML for surviving marker syntax (`<!-- summary`, `<!--census`, leaked `--census`/`--summary`, any raw
+   `<!-- <directive> -->` that should have been consumed) and FAILS. Closed monotonic marker set. Land it so
+   it's impossible in future. → focused catalog.py fix-wave (D83), sequence after TYP (before FIG/RESTRUCTURE).
+
+## D84 — coherence-triangle beat: "structured" not "typed" + schema-is-valuable reframe (author, 260804)
+Author corrections to the just-landed INS beat (887f5e1):
+1. TERMINOLOGY: "typed model" → "STRUCTURED model" (the book's canonical term now). Fix the 3.1 beat + the
+   coherence-triangle.svg node label ("Typed model"→"Structured model") + check book-wide consistency
+   (grep result above sizes whether 'typed model/data' leaked elsewhere → sweep if so).
+2. REFRAME earn-keep: the schema IS valuable. Change "The schema is not what earns the model its keep. The
+   invariants that get checked are." → a TWO-KINDS-OF-VALUE frame: "The model provides two kinds of value.
+   First, the schema — records/edges/state machines — names the parts and gives tools something to read.
+   Second, the invariants that get checked — the predicates that must hold." Value BOTH; the triangle's point
+   becomes that the invariants+gate COMPLETE the model's value, not that the schema is worthless.
+3. UPDATE the claim `model-earns-keep-via-invariants` (claims_declared.json): its statement "…through the
+   invariants…not its schema" + contradicted-by watch now conflict with schema-is-valuable — revise to "a
+   model's value is BOTH its structure and its enforced invariants" (or similar); regen claims.json.
+→ focused 3.1 revision wave (prose + svg + claim); disjoint from TYP(renderer)/D83(catalog.py) but serializes.
+
+## D84b — canonical-vocabulary lint (author, 260804): mechanize "structured model" over "typed model"
+Author: "Add a regex to prevent...?" — YES. Add a lint (tests/ or catalog_tests.py gate) enforcing the book's
+canonical vocabulary: flag deprecated **"typed model" / "typed data"** → canonical **"structured model/data"**.
+Design: a DEPRECATED→CANONICAL map (a dict), regex per entry, so future term-shifts add a row (single source
+of truth, A.9). NOT a blanket "typed" ban — "typed" is legit in "typed enum/step/language"; target only the
+specific 2-word phrases. `noqa` escape for genuine exceptions (e.g. a deliberate contrast or quote). Land per
+rule #55: the D84 wave FIXES the ~4 current hits (2.5:266, 3.1:58/384/402/626, 3.8:8, 4.1:286/295 — with
+per-site judgment on load-bearing "typed") to ZERO, then flips the lint BLOCKING. This is the "fix + prevent"
+pattern the author keeps asking for (dogfoods the book's audit→lint / mechanize-discipline thesis). Folds into
+the D84 wave.
+
+## D85 — appendix-restructure feedback INTEGRATED (author review, 260804) — reviewer wins (Phase-1b style)
+Author provided a detailed critique (book/_design/appendix-feedback-260804.md). Ratifies the A/B/C VALUE
+ORDER; REJECTS the current content budgets. Core correction: **A compositional, B selective, C terminally
+concise** — the current plan triple-treats each flagship (1pp in A + 1-2pp in B + a brick in C = too much
+duplication). REVISED PLAN (reviewer's calls WIN; supersedes my earlier D82 §11 resolutions where they
+conflict):
+- **Rename A → "MAGE Engineering Stacks"** ("Model Stacks" misleads = foundation-model stack). Opening ≤1-2pp
+  (nine-cap map + portability note OK; don't over-theorize).
+- **A contract = COMPOSITION:** each constituent part is ~150-250 WORDS (role / receives / emits-guarantees /
+  pointer to its B deep-dive), NOT a full page. The STACK is the unit; constituents are not mini-essays.
+  (Corrects §2.1 "one page per stack" — it was really one CHAPTER per stack.) Relax ≤5→≤6 parts BUT shorten
+  the treatments (6 full-page parts was the real problem, not the number).
+- **B rename → "Flagship Mechanisms"; SELECTIVE, not model-forced.** The model must ENCODE the editorial
+  decision, not MAKE it (flagship_slugs≠auto-29). Prefer TWO tiers: B1 = 10-15 genuinely central (2 full pages
+  MAX each) + B2 = remaining print flagships concise (½-1pp). OR all 29 but default 1pp, 2pp rare. DO NOT
+  ratify 29@1-2pp without a rendered PAGE-BUDGET PROTOTYPE. "No pre-prune" = migration-only, not permanent.
+  Grouped by role but numbered MONOTONICALLY.
+- **C = RETRIEVAL, terminally concise:** 3 sentences + figure + metadata, no argument. **VISUAL FITNESS RULE:**
+  a brick figure must be legible at final print size WITHOUT reading internal body text → 3 renderings
+  (existing Structure diagram if it passes / simplified brick diagram / no diagram + a mechanism-class glyph).
+  **TWO columns** in print (3 too small). Ship FALLBACK bricks first, render all 83, set the template, THEN
+  curate (don't author 249 sentences blind).
+- **Linked legend refinement:** link text = mechanism NAME + generated LOCATOR, e.g. "MARK — Mutator Stamps
+  (§A.1.2)"; don't rely on color/abbrev alone.
+- **Keep-together needs a PROTOTYPE, not confidence:** nonbreaking-1pp-block has a real failure mode (can't
+  satisfy don't-split ∧ fit-page). Treat as AUTHORED LAYOUTS: `spread:1` (one indivisible block) / `spread:2`
+  (two named panels + author-chosen fold); BUILD FAILURE if a panel exceeds its page budget. Word-cap = early
+  sensor only; RENDERED HEIGHT is the true invariant → add a PDF-LAYOUT audit, don't trust word count.
+- **Appendix D (skill recipe): KEEP FULL CONTENT in the book** (author end-note — do NOT make it a vestigial
+  pointer; the tool-skill-vs-mastery-skill distinction is insightful). ENRICH: quote Anthropic's latest
+  "how to write a skill" guidance as an inset/blockquote FOREWORD, then OUR take after it (ours is better).
+- **MIGRATION: incremental, NOT big-bang** (the biggest de-risking). 7-step order: (1) separate stable
+  semantic ID from display location — links target IDs, not letters/slugs that encode placement; (2) add
+  reader-facing locator + figure-prefix fields, fix D80 independently; (3) build new A/B/C projections
+  ALONGSIDE the old behind a build FLAG; (4) add HTML+Typst renderers for legends/notes/bricks; (5) run BOTH,
+  compare coverage + link integrity; (6) switch print to new; (7) remove legacy + add redirects.
+- §11-C: Wave-A (authored stack prose; model too terse for polished compositional prose) BUT enforce
+  STRUCTURAL CORRESPONDENCE (every modeled part appears exactly once, in model order; no unmodeled part).
+IMPL now follows THIS revised plan + the 7-step migration (not the original §12 big-bang). Still sequenced
+after the contained chapter waves. I'll append the full revised architecture to the restructure design doc.
+
+## D86 — C brick layout = automated constraint-driven packing (author, 260804)
+Author: C bricks are variable-width (some wide); AUTOMATE layout with a brick-PACKER per section + constraints
+("these two side by side", "this near that"). Integrated into the restructure design §14: shelf/row-packing
+(genre A.9) + declarable `span:` widths (auto-derived from figure aspect + visual-fitness bound) + adjacency
+hints (`pair_with`/`near`), build-time deterministic, HTML CSS-grid + Typst packer; 1/2-col/mixed as resolved.
+V1 = shelf-pack + spans + hints, refine after rendering all 83 (fallback-first). → C sub-wave of restructure.
+
+## D87 — parallelize appendix implementation via concurrent DRAFTING (author, 260804)
+Author: "dispatch much of the implementation wave concurrent into drafts." YES — split the restructure into:
+(a) SEQUENTIAL INFRASTRUCTURE (catalog.py A/B/C renderers, the C brick-packer, the 7-step migration behind a
+flag) — single catalog.py, careful; (b) PARALLEL CONTENT DRAFTING (Appendix D prose, A constituent 150-250w
+blurbs per stack, B Flagship-Mechanism notes) — INDEPENDENT authoring that writes to DRAFT files under
+`book/_design/drafts/` (NOT book main, NOT committed, NOT built), so many run CONCURRENTLY with the book-main
+drain + each other, no single-writer collision. The infrastructure wave later ASSEMBLES the drafts. Draftable
+NOW: Appendix D (author flagged) + A-constituent blurbs (stack model known: FS1-FS5/7 stacks). B-notes gated
+on the count decision (10-15 vs 29 — pending the reviewer's page-budget prototype); draft the safe-core after.
+Appendix D content = full skill-recipe (tool-skill vs mastery-skill) + Anthropic "how-to-write-a-skill" inset
+foreword + OUR take after (§13.7 / author end-note).
+
+## D88 — persisted the parallel-drafting + single-live-writer pattern into the submodule CLAUDE.md (author, 260804)
+Author: "update this repo's CLAUDE/AGENTS to explain this to yourself. You forget it." Added a "## Working on
+this repo with a fleet (single-live-writer + parallel drafting)" section to the submodule-root CLAUDE.md
+(governance-catalog/CLAUDE.md): (1) ONE writer at a time on main (the pre-commit hook force-stages regen
+html+book-models → concurrent commits collide; two-commit/stash to isolate; --no-verify banned); (2) drafting
+PARALLELIZES (drafts to book/_design/drafts/, not main) while INFRASTRUCTURE serializes (catalog.py/build_
+book_html.py/book_typst.py, one writer); (3) gate discipline (full-suite between writers, never git add -A,
+briefs read the submodule-ROOT CLAUDE.md — there is no book/CLAUDE.md, per the D-drafter's finding). The edit
+is UNCOMMITTED (D84 live); commit it in the next clean window after D84.
+Also: Appendix D draft DONE → book/_design/drafts/appendix-D-skill-recipe-draft-260804.md (fetched Anthropic
+guidance + our take framed as skills-as-layers-of-models; flagged E→D letter collision + assembler TODOs).
+Brief-template fix noted: stop telling agents "read book/CLAUDE.md" — it's the submodule-root CLAUDE.md.
+
+## D89 — no hardcoded references; all xref + a sensor (author, 260804)
+Author: "the book should contain NO hardcoded references, all should be xref. Mechanically prevent going
+forward (sensor) and fix all violations." This IS the reviewer's migration step-1 (links target stable IDs,
+not letters/slugs that encode placement) applied book-wide → the FOUNDATION for a relettering-safe restructure.
+SCOPE (grep): only ~3 hardcoded "Appendix <Letter>" literals in the body; ZERO literal "Chapter N"/"Figure
+N-M"/"§N" (those already use [ref:] — the book is already largely xref-clean). Existing xref machinery:
+build_book_html.py _apply_part_refs(440), _apply_gh_refs(489), _chap_ref(1833), [ref:key] floats(1055).
+WAVE: (1) EXTEND xref to APPENDIX cross-references (a symbolic appendix-ref resolving the letter at build, so
+"Appendix E"→D relettering can't break refs); (2) FIX the 3 hardcoded "Appendix X" (+ any in appendix-fills —
+though the restructure redoes those); (3) ADD a no-hardcoded-ref LINT flagging literal cross-ref patterns in
+prose ("Appendix [A-Z]", "Chapter [0-9]", "(Figure|Table) N-M" not via [ref:], "§N"), noqa escape, lands ~clean
+after the 3 fixes (rule #55). Sequence D89 BEFORE the restructure (its step-1). Appendix D draft COMPLETE in
+drafts/ (Anthropic guidance + MAGE layer-of-models take + judgment-over-rules convergence).
+
+## A-blurb FORMAT LOCKED (from pilot a9b476a8, 260804) → fan out remaining stacks
+Pilot drafted stack 1 (provenance-and-fidelity, 5 blurbs 150-250w, structural correspondence). Format LOCKED
+(pilot's calls accepted): skeleton = 1-sentence ROLE lead + bold **Receives** / **Guarantees** / **Hands to
+<next>** (seam kept as its own segment — composition is A's point) + `→ Deeper treatment: [its
+Flagship-Mechanism note] — *<name>* (Appendix B)` pointer; DROP the `durability` field (not compositional);
+DE-JARGON part titles (role-based, no bare artifact names / rule numbers — interpretability rule); ~150-200w;
+all modeled parts once, in model order, none extra. Fan out the remaining stacks as concurrent drafters into
+book/_design/drafts/A-stack-<slug>-blurbs.md.
+
+## D70-followup — enlarge the ~13 audit-only min-font figures + flip lint blocking (260804)
+FIG (0cd65e1) landed lint_figure_min_font.py AUDIT-ONLY (rule #55) + fixed the 2 explicitly-flagged figures
+(3.8-1 model-sync, 4.2-1 three-skills). ~13 more figures have text below body-size (audit list): skill-recipe,
+substrate-derivation, deployment-model-structure, dataflow-inset, loop-engineering, novelty-axis,
+coherence-triangle, squash-zero-promote, dag-policy-structure, llm-as-function-call, mage-method,
+example-vs-generative, frontend-mvc-editor-dsl, dsl-remediation-function. FOLLOW-UP wave: enlarge each to ≥
+body-text size (widen where column space allows), keep svg_fit + overflow clean, then FLIP lint_figure_min_font
+BLOCKING. Queue as a figure-enlargement wave (can batch late in the drain, before redeploy). Note: FIG agent
+hit a transient 500 mid-work; orchestrator finished + committed the audit-only-first landing.
+
+## D90 — [FIX, low-pri, deferred] potential cmd_validate lint-registration helper
+This session added several book lints (lint_canonical_vocab, lint_figure_min_font, lint_caption_length, the
+D83 marker sensor, + D89 no-hardcoded-ref coming), each a distinct check in its own file (uniform
+one-lint-per-file convention, A.19 — NOT logic duplication). The only repeated shape is the ~5-line
+cmd_validate REGISTRATION stanza per lint (import → run → format findings → n_issues+= or audit-print). If
+the count keeps growing, extract a `_run_book_lint(module, blocking=bool)` helper to DRY registration — but
+FOLD it into the RESTRUCTURE's catalog.py rework (which touches cmd_validate anyway), NOT a standalone
+refactor now. Explicit-per-lint registration is readable; low priority. Noted per A.10 architecture self-check.
+
+## D91 — a THEORY OF MAGE appendix (research implications; author, 260804)
+Author: articulate a THEORY of MAGE in the manner of Forsgren et al.'s *Accelerate* — offer FALSIFIABLE
+PREDICTIONS from the MAGE framework, connected to the Operator's Dashboard metrics; "a beautiful summary."
+Needs a MODEL then text following it (declared→generated). Mine candidate metrics from Sadowski & Zimmermann
+(~/Downloads/978*.pdf) + the *Accelerate* manner (~/Downloads/Accelerate*.pdf). VERY CAREFUL thought: ~1-2
+FIGURES + 1-2 TABLES + perhaps EQUATIONS. HEDGE heavily ("N=1 generalization, but here it is for posterity").
+Author: "start by placing it in an Appendix, we iterate from there." APPROACH: dispatch a concurrent design-
+ponder + INITIAL DRAFT (Opus) — reads both PDFs (fair-use research reference; OUR theory, not reproducing
+theirs), designs the MAGE theory (constructs = the two theses + governance conversion + the metrics; causal/
+predictive relations; falsifiable predictions tied to the dashboard metrics), proposes the figures/tables/
+equations, drafts into book/_design/drafts/theory-of-mage-draft-260804.md for author iteration. Concurrent
+(drafts only, no book-main collision). Then an appendix-placement wave after the restructure settles the
+appendix scheme. Don't overdo it.
+
+## D91 draft DONE (260804) — Theory of MAGE, awaiting author iteration
+Drafter a30e19cd → book/_design/drafts/theory-of-mage-draft-260804.md (PART A design + PART B appendix draft)
++ theory-of-mage-model-260804.json (declared model, unwired pending ratify). Theory: driver=agentic velocity,
+MODERATED by governed-environment-quality E (the Accelerate "delivery performance" slot); capabilities =
+modeling-investment (Modeling Thesis) + governance-conversion (Alignment Thesis); outcomes = throughput/escape/
+oversight (≈ Sadowski-Zimmermann Velocity/Quality/Satisfaction). 6 falsifiable predictions P1-P6 (each:
+mechanism + dashboard observable + falsification). 2 eqs (churn-wall V_durable=V_raw·(1−c(m)); two-regime
+escape). Fig T-1 causal model + T-2 velocity trajectories; 2 tables. Hedged N=1/analytic/directional.
+AUTHOR ITERATION Qs surfaced: (1) placement — standalone vs fold into 6.0-implications (overlaps ~3 preds);
+(2) formality level; (3) 6 preds vs trim to 4 (P2-P4 sharpest); (4) naming "E". → appendix-placement wave
+AFTER the author's leans + the restructure settles the appendix scheme. Refs confirmed: Accelerate (Fergrson.pdf),
+Sadowski-Zimmermann (978-1-4842-4221-6.pdf).
+
+## QUIESCE (author, 260804) — mid-restructure
+HEAD 0b59124 (restructure sub-wave 1: A/B/C/D projection behind ADA_APPENDIX_V2 flag, default byte-identical).
+14 commits ahead of origin, batched/undeployed. No writer agents live. Restructure sub-waves 2-6 + GLOSS +
+D70-followup + D91-theory-placement + redeploy remain (see handoff). Theory draft awaits author iteration
+(4 Qs). Sub-wave-1 verify was mid-run — re-confirm green next session. Clean stop.
+
+## D91 RATIFIED (author, 260804, resume) — land the Theory of MAGE
+Author: "land the MAGE theory work, calls are good, prefer more predictions, naming is fine." Decisions:
+- PLACEMENT: STANDALONE appendix (author's earlier "place it in an Appendix") — Appendix **E** in the v2
+  scheme (A stacks / B flagships / C catalog / D skill / **E Theory of MAGE — Research Implications**). Do NOT
+  fold into 6.0-implications; instead 6.0 can cross-ref E (and E can note the overlap). 
+- PREDICTIONS: KEEP ALL 6 (P1-P6) — "prefer more" (add a 7th only if it's genuinely sharp + falsifiable; don't
+  pad). 
+- FORMALITY: directional equations (N=1 forbids a fitted SEM) — approved ("calls are good").
+- NAMING: "governed-environment quality (E)" — fine, keep.
+THEORY-APPENDIX wave (draws the 2 SVGs Fig T-1 causal model + T-2 velocity trajectories per the draft's specs;
+writes the appendix .md from drafts/theory-of-mage-draft; wires the declared theory-of-mage-model.json into
+the book-models validate; places as Appendix E in the v2 scheme). Sequence it as a restructure sub-wave BEFORE
+the switch (so E is part of the v2 scheme that goes live). Hedge N=1 throughout.
+
+## Op note — stalled book-agent diagnosis + restart (recurred 260804)
+Recurring this session (FIG 500, Part-4-chapter weekly-limit, sub-wave 3 API-stall): a dispatched book agent
+can hang silently. DIAGNOSTIC: transcript-output-file mtime FROZEN for minutes + NO owned build/tool proc
+running (ps for catalog.py/typst) + no writes (dirty=0) + no commit = DEAD (usually API flakiness), not a slow
+build. FIX: TaskStop it, confirm tree clean (HEAD unchanged, dirty=0), re-dispatch from the clean tree — split
+an over-large wave into smaller ones to de-risk (the combined sub-wave 3 stalled read-only at 262KB; the split
+3a completed cleanly). Book-submodule agent op (plain Agent(), not the ada-tool L1 registry) → lives here, not
+the operate-repo runbook. Sub-wave-3a (8ad7500) full-suite verify pending.
