@@ -1898,6 +1898,11 @@ section.eng-note, section.eng-note-panel { break-inside: avoid; }
 .brick-meta { margin: 0.1rem 0 0; font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
 @media (max-width: 40rem) { .brick-grid { grid-template-columns: 1fr; }
                             .brick { grid-column: span 1 !important; } }
+/* 4. D77 — appendix CHAPTER headings in ALL CAPS, so an appendix page's title reads as clearly distinct
+      from the book's own chapter titles. CSS text-transform only (the DOM text is unchanged, so the TOC,
+      pager, index, and any text-extraction stay case-exact). Scoped to the appendix `<main>` so book
+      chapters are untouched. */
+main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 """
 
 
@@ -2055,7 +2060,7 @@ def _kicker_html(chapters: list[dict], idx: int, num_label: str) -> str:
 
 
 def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str = "",
-         head_meta: str = "") -> str:
+         head_meta: str = "", appendix: bool = False) -> str:
     runtime = MERMAID_CDN if mermaid else ""
     # <main> landmark so the content is a single main region (axe landmark-one-main / region). It carries
     # an aria-label of the page title so it stays a UNIQUELY-NAMED main landmark even when a page embeds the
@@ -2070,12 +2075,16 @@ def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str
     # The v2 render-mechanism CSS ships ONLY when the flag is on, so the default build's `<style>` is
     # byte-identical to HEAD (the safety invariant); flag-ON pages get the legend / brick-grid / note styles.
     css = CSS + (_APPENDIX_V2_CSS if _appendix_v2_enabled() else "")
+    # D77 (v2 only): an appendix chapter page carries a `wrap appendix` class so the v2 CSS can render its
+    # `<h1>` chapter heading in ALL CAPS — distinct from the book's own chapter titles. Gated on the flag so
+    # the legacy (flag-OFF) build stays byte-identical to HEAD; the class does nothing without `_APPENDIX_V2_CSS`.
+    main_cls = "wrap appendix" if (appendix and _appendix_v2_enabled()) else "wrap"
     return (
         f'<!DOCTYPE html>\n<html lang="en">{provenance}<head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
         f'{head_meta}'
         f"<title>{html.escape(title)}</title>{FONTS_LINK}<style>{css}</style></head><body>"
-        f'{toc}<main class="wrap" aria-label="{label}">{main}</main>{runtime}</body></html>\n'
+        f'{toc}<main class="{main_cls}" aria-label="{label}">{main}</main>{runtime}</body></html>\n'
     )
 
 
@@ -2408,12 +2417,14 @@ def _appendix_intro_extras_md() -> str:
     return "\n".join(parts).strip()
 
 
-# Authored chapter links to an appendix pattern page: `](appendix-<a|b|c>-<slug>.html[#frag])`. The main
+# Authored chapter links to an appendix pattern page: `](appendix-<a..e>-<slug>.html[#frag])`. The main
 # narrative cross-references mechanisms by their in-book page; when a mechanism is non-flagship (its page is
 # dropped from the print projection), the link is redirected to the live WEB catalogue entry — the SAME
 # flagship→in-book / non-flagship→web rule the stack links and the web-index follow (uniformity, not a
-# special case). A flagship target is left untouched.
-_APPENDIX_BODY_LINK_RE = re.compile(r"\(appendix-[abc]-([a-z0-9-]+)\.html(?:#[^)]*)?\)")
+# special case). The authored letter is the LEGACY location; under the value-ordered (v2) projection a
+# flagship's page moved to Appendix B and a stack's to Appendix A, so the letter is re-mapped there (below).
+# The `[a-e]` class also catches an authored stack link (`appendix-d-<stem>`) so the v2 re-lettering reaches it.
+_APPENDIX_BODY_LINK_RE = re.compile(r"\(appendix-[a-e]-([a-z0-9-]+)\.html(?:#[^)]*)?\)")
 _WEB_REDIRECT_CACHE: dict[str, str] | None = None
 
 
@@ -2430,15 +2441,33 @@ def _web_redirect_map() -> dict[str, str]:
 
 
 def _redirect_dropped_appendix_links(md: str) -> str:
-    """Rewrite an authored `](appendix-<letter>-<slug>.html)` cross-reference to the WEB catalogue entry when
-    `<slug>` is a non-flagship mechanism the print appendix no longer emits a page for; a flagship link (its
-    page still exists) is left as-is. Any `#fragment` is dropped — the web entry carries its own anchors —
-    so a chapter's 'learn more about this mechanism' link stays live after the print projection dropped the
-    in-book page, instead of dangling as a missing target."""
+    """Keep an authored `](appendix-<letter>-<slug>.html)` chapter cross-reference resolvable in whichever
+    appendix projection this build renders. Three cases, checked in order:
+
+    1. **Non-flagship mechanism** — the print appendix emits no page for it, so the link redirects to the live
+       WEB catalogue entry in BOTH projections. Any `#fragment` is dropped (the web entry carries its own).
+    2. **Flagship / stack under the value-ordered (v2) projection** — the mechanism's page moved: a flagship
+       to Appendix B (`appendix-b-<slug>`), a stack to Appendix A (`appendix-a-<stem>`). The authored LEGACY
+       letter is re-mapped to the v2 home so the link does not dangle after the cutover. The `#fragment` is
+       dropped — the v2 flagship page is a compressed note whose anchors differ from the legacy GoF page.
+    3. **Legacy projection** — the authored letter already IS the legacy location, so the link is left as-is.
+
+    Every authored `appendix-<letter>-<slug>` target is a catalogue entry or a known stack stem (verified: the
+    legacy build has zero dangling appendix links), so case 3's pass-through only ever fires for legacy."""
     redirect = _web_redirect_map()
+    v2 = _appendix_v2_enabled()
+    flagship = _flagship_slugs()
     def repl(m: "re.Match[str]") -> str:
-        web = redirect.get(m.group(1))
-        return f"({web})" if web is not None else m.group(0)
+        slug = m.group(1)
+        web = redirect.get(slug)
+        if web is not None:                       # (1) non-flagship mechanism → live web entry, both builds
+            return f"({web})"
+        if v2:                                    # (2) flagship / stack link → its v2 home page
+            if slug in _STACK_STEMS:
+                return f"(appendix-a-{slug}.html)"
+            if slug in flagship:
+                return f"(appendix-b-{slug}.html)"
+        return m.group(0)                         # (3) legacy: the authored letter is already correct
     return _APPENDIX_BODY_LINK_RE.sub(repl, md)
 
 
@@ -3242,22 +3271,24 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
 
 
 # ─────────────────────────── Appendix projection: v1 (role-ordered) vs v2 (value-ordered) ───────────────
-# The appendix has two projections behind a build flag, so the value-ordered restructure lands ALONGSIDE the
-# current one and nothing switches until the flag flips (the reviewer's incremental migration, steps 2–3):
-#   v1 (DEFAULT, flag OFF) — the current role-ordered set: Appendix A Agent · B Models-bridge · C Product
-#       (flagship GoF pages) · D Mechanism Stacks · E How to Write a Skill. Renders byte-identically to before.
-#   v2 (flag ON) — the value-ordered set: A MAGE Engineering Stacks · B Flagship Mechanisms
-#       (one Part, role subsections) · C Mechanism Catalog (C.1/C.2/C.3 brick grid, STUBBED this wave) ·
-#       D How to Write a Skill (relettered E→D). Figure numbers derive monotonically off the A.X/B.N locator.
-# The flag is the module constant APPENDIX_V2, overridable at runtime by env ADA_APPENDIX_V2 (any non-empty
-# value that is not "0"/"false"/"no" turns it on). Default OFF keeps the published build unchanged.
-APPENDIX_V2 = False
+# The appendix has two projections behind a build flag. The CUTOVER (restructure sub-wave 6) flipped the
+# default to v2 — the shipped edition (web + PDF) is now the value-ordered A/B/C/D/E restructure:
+#   v2 (DEFAULT, flag ON) — the value-ordered set: A MAGE Engineering Stacks · B Flagship Mechanisms
+#       (one Part, role subsections, monotonic B.N) · C Mechanism Catalog (C.1/C.2/C.3 brick grid) ·
+#       D How to Write a Skill (relettered from legacy E) · E A Theory of MAGE. Figure numbers derive
+#       monotonically off the A.X / B.N locator.
+#   v1 (flag OFF) — the legacy role-ordered set: Appendix A Agent · B Models-bridge · C Product (flagship GoF
+#       pages) · D Mechanism Stacks · E How to Write a Skill. KEPT DORMANT for reversibility (its removal is a
+#       separate post-cutover wave); the byte-identical-to-HEAD invariant it once held is intentionally retired.
+# The flag is the module constant APPENDIX_V2, overridable at runtime by env ADA_APPENDIX_V2 ("0"/"false"/"no"
+# forces the legacy projection back on; any other non-empty value forces v2). Set APPENDIX_V2=False to revert.
+APPENDIX_V2 = True
 
 
 def _appendix_v2_enabled() -> bool:
-    """True when the NEW value-ordered A/B/C/D appendix projection is selected. Default OFF — the legacy
-    role-ordered projection renders, byte-identical to before. Enable by setting env `ADA_APPENDIX_V2=1`
-    (any non-empty value other than `0`/`false`/`no`), or by flipping the `APPENDIX_V2` module constant."""
+    """True when the value-ordered A/B/C/D/E appendix projection is selected — the DEFAULT since the cutover
+    (`APPENDIX_V2 = True`). Force the legacy role-ordered projection back on with env `ADA_APPENDIX_V2=0`
+    (or `false`/`no`); any other non-empty value forces v2; unset falls through to the `APPENDIX_V2` constant."""
     env = os.environ.get("ADA_APPENDIX_V2")
     if env is not None:
         return env.strip().lower() not in ("", "0", "false", "no", "off")
@@ -5484,7 +5515,7 @@ def build() -> int:
         out = HERE / f'{c["slug"]}.html'
         out.write_text(
             page(f'{num_label} · {c["chapter_title"]}', toc, main, mermaid=c.get("mermaid", False),
-                 head_meta=_chapter_head_meta(c, cited_keys)),
+                 head_meta=_chapter_head_meta(c, cited_keys), appendix=c.get("is_appendix", False)),
             encoding="utf-8",
         )
 
