@@ -43,6 +43,13 @@ from — a model, not a document.
 
 <!-- more -->
 
+Keep the two reasons distinct. The reasoning horizon is the *value* reason: a model earns its place
+because it lets the fleet reason through more system at once. The economics is the *practical-now*
+reason: keeping a model true was once human labor nobody paid for, so models rotted, and a fleet now
+shoulders that upkeep on every change at trivial cost — which is what makes a *drift-checked* model
+workable today rather than an aspiration. The horizon says why you want a model; the cheap upkeep says
+why you can finally keep one true. Neither outranks the other.
+
 The bound is honest. A model moves the wall; it does not remove it. Raise the level at which reasoning
 happens and you delay the point where working memory becomes the bottleneck — but beyond that point,
 decomposition and modularity become unavoidable again. The account does not lean on today's context
@@ -56,7 +63,7 @@ occasionally and validated never, so a drifted doc lies quietly while the code m
 model is executable: tools, lints, and deploy scripts read it on every run, so the build fails the
 moment it diverges from the code. Drift surfaces as a red build, not a stale paragraph nobody reopened.
 
-The deeper difference is the reasoning horizon. However tidy, a README still asks the agent to
+The other difference is the reasoning horizon. However tidy, a README still asks the agent to
 reconstruct the system from implementation-level prose — the state it must hold stays large. A model
 changes the *level* the reasoning happens at, so the state that must survive each compaction is smaller
 and richer. That is leverage no amount of tidying gives you.
