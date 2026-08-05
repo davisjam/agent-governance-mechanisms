@@ -62,6 +62,7 @@ from tests.citations import (
     check_scholar_meta,
 )
 from tests.common import FAIL, PASS, SKIP, changed_vs_origin
+from tests.deploy import check_deploy_publishable
 from tests.external import check_axe, check_axe_coverage_set, check_claude_validate, check_html_valid
 from tests.html import (
     check_book_html_tracking,
@@ -107,6 +108,8 @@ def _plugin_changed(changed: frozenset[str]) -> bool:
 
 
 CHECKS = [
+    Check("deploy: _is_publishable rejects every _design/ path (any ext); publishes real outputs", 1,
+          lambda strict: check_deploy_publishable()),
     Check("markdown: schema + md-link existence", 1, lambda strict: check_markdown_schema()),
     Check("markdown: #anchor resolution", 1, lambda strict: check_markdown_anchors()),
     Check("render: XSS neutralization (escape seam + link scheme)", 1, lambda strict: check_render_safety()),

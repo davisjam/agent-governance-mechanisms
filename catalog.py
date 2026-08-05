@@ -3509,7 +3509,17 @@ def _is_publishable(path: str) -> bool:
     generated artifact type (`.html`, figures, data, bundles — never `.md` source) under a
     content root. Hand-authored source (any `.md`: chapter, design doc, draft) and scratch of
     an unexpected type (a `.mjs` helper, a `.log`) fail this and are left for the human to add
-    explicitly — deploy publishes the regenerated site, it does not author-commit source."""
+    explicitly — deploy publishes the regenerated site, it does not author-commit source.
+
+    ANY path with a `_design` component is rejected outright, at ANY extension. The `_design/`
+    tree holds working design drafts — draft prose (`.md`) AND draft figures/data (`.svg`,
+    `.json`, …). None of it is a published build output. The extension exclusion alone kept
+    `.md` drafts safe but let a `.svg` under `book/_design/drafts/` (root="book", a
+    publishable ext) slip into a `deploy: rebuild site` commit — the exact incident this guard
+    kills. A legit new figure belongs under a content root OUTSIDE `_design/` (e.g.
+    `book/assets/`), where it still publishes."""
+    if "_design" in path.split("/"):
+        return False
     root = path.split("/", 1)[0]
     ext = path.rsplit(".", 1)[-1].lower() if "." in path else ""
     return root in _CONTENT_ROOTS and ext in _PUBLISHABLE_EXTS
