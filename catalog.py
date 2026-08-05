@@ -1120,6 +1120,25 @@ def cmd_validate(_args) -> int:
         for f in md_findings:
             print(f"              {f}")
         n_issues += len(md_findings)
+    # THEORY-OF-MAGE DRIFT GATE — AUDIT-ONLY. The 'Toward a Theory of MAGE' chapter's Seven-Hypotheses
+    # table is a projection of a declared model (book-models/theory_of_mage_declared.json): the model
+    # projects the 3-column table (H4 folds its H4a/H4b sub-hypotheses), theory_of_mage_model.py holds the
+    # chapter's table byte-equal to that projection, delegates internal well-formedness to
+    # theory_model_check.check() (TM1-TM7), and guards the ratified hypothesis + sub-hypothesis counts. Lands
+    # AUDIT-ONLY-first (repo blocking-lint discipline) — it PRINTS its findings here so a committer sees any
+    # chapter<->JSON drift, but does NOT increment n_issues. A follow-up flips it BLOCKING once a clean
+    # session confirms parity holds (the dashboard model's own landing path). See
+    # book-models/theory_of_mage_model.py.
+    import theory_of_mage_model as tmm  # noqa: E402 — audit-only theory-projection/parity model
+    tm_findings = tmm.all_findings()
+    if tm_findings:
+        print(f"  [theory] AUDIT-ONLY: {len(tm_findings)} theory-drift finding(s) — "
+              f"run `python3 book-models/theory_of_mage_model.py verify` (does not gate):")
+        for f in tm_findings:
+            print(f"           {f}")
+    else:
+        print("  [theory] AUDIT-ONLY: chapter Seven-Hypotheses table matches the declared model "
+              "(7 hypotheses, 2 sub-hypotheses; structural clean)")
     # METAPHOR-SPANS CONFORMANCE — STRUCTURAL BLOCKING + OVERLAP AUDIT-ONLY. The book's sustained metaphors
     # are a declared model (book-models/metaphor-spans.json): each metaphor's span (introduced -> pays off)
     # plus its kind (core = always live / local = must pay off before the next local), so the author's rule
@@ -3398,6 +3417,19 @@ def cmd_substantiation(args) -> int:
     return sub.render(as_json=args.json)
 
 
+def cmd_theory(args) -> int:
+    """The THEORY-OF-MAGE drift gate — the 'Toward a Theory of MAGE' chapter's Seven-Hypotheses table is a
+    projection of the declared model (book-models/theory_of_mage_declared.json). No arg (or `verify`) drift-
+    checks the chapter table against the projection (structural TM1-TM7 via theory_model_check + parity +
+    the ratified count guard); `hypotheses-table` prints the markdown table for the page; `show` lists every
+    hypothesis. Reads the meta-file at query time; AUDIT-ONLY (reports, never gates)."""
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in sys.path:
+        sys.path.insert(0, bm)
+    import theory_of_mage_model as tmm  # noqa: E402 — theory projection/parity model, reads meta-file
+    return tmm.main(["catalog.py theory", getattr(args, "sub", None) or "verify"])
+
+
 def cmd_delivers(args) -> int:
     """The DELIVERS coverage map — what each chapter HANDS THE READER: its concept(s) (DERIVED from the
     chapter's own `index-def` tags, never re-keyed) and its operational artifact(s) (hand-authored,
@@ -3768,6 +3800,8 @@ def main() -> int:
     lp.add_argument("--json", action="store_true", help="dump the raw matched record(s)")
     su = sub.add_parser("substantiation", help="the unified substantiation query: data-claims + lit-positioning citations nested under each argument-spine claim; flags UNDERQUANTIFIED (quantifiable, no data) + UNDER-SUBSTANTIATED-OR-SITUATED (reality-claim, no data AND no literature)")
     su.add_argument("--json", action="store_true", help="dump the machine form")
+    th = sub.add_parser("theory", help="the theory-of-mage drift gate: hold the 'Toward a Theory of MAGE' chapter's Seven-Hypotheses table equal to the declared model (book-models/theory_of_mage_declared.json). No arg drift-checks (structural + parity + count); hypotheses-table prints the table; show lists the hypotheses")
+    th.add_argument("sub", nargs="?", choices=["verify", "hypotheses-table", "show"], help="verify (default) | hypotheses-table | show")
     dv = sub.add_parser("delivers", help="the per-chapter deliverable coverage map (concept OR artifact): one row per chapter (concepts DERIVED from index-def tags · authored artifact types · verdict), then DELIVERS-NEITHER (derived gap alarm) + ALL-PROSE-WOULD-BENEFIT (authored flag)")
     dv.add_argument("--json", action="store_true", help="dump the machine map (the chapter-shape model)")
     va = sub.add_parser("views-audit", help="book-models drift audit: structural (every view->md reference resolves) + freshness (each view artifact equals a fresh derivation). Fast pre-commit gate; AUDIT-ONLY (prints, exits 0) unless --strict")
@@ -3786,6 +3820,7 @@ def main() -> int:
             "definitions": cmd_definitions, "outcomes-site": cmd_outcomes_site,
             "claims": cmd_claims, "spine": cmd_spine, "litpos": cmd_litpos,
             "substantiation": cmd_substantiation,
+            "theory": cmd_theory,
             "delivers": cmd_delivers,
             "views-audit": cmd_views_audit,
             "install-hooks": cmd_install_hooks, "deploy": cmd_deploy}[args.cmd](args)

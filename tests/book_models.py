@@ -282,6 +282,23 @@ def check_lit_positioning():
     return (FAIL if issues else PASS), issues
 
 
+def check_theory_model():
+    """The theory-of-mage projection view's drift check (audit-only first landing, rule-#55 discipline). The
+    'Toward a Theory of MAGE' chapter's Seven-Hypotheses table is a projection of the declared model
+    (`theory_of_mage_declared.json`): this re-derives the model and reports the STRUCTURAL invariants
+    (TM1-TM7, delegated to `theory_model_check.check()` — internal well-formedness), the PARITY check (the
+    chapter's table equals `render_hypotheses_table_md()`), and the ratified COUNT guard (7 hypotheses, 2
+    sub-hypotheses). Keyed off `book-models/theory_of_mage_declared.json` + the theory chapter prose."""
+    import theory_of_mage_model as tmm  # noqa: E402 — path set above; the book-model package
+
+    issues = list(tmm.all_findings())
+
+    # Audit-only: same non-gating contract as the sibling first landings — surfaced as [audt], excluded from
+    # the fail tally. A follow-up promotes the parity + count guard to blocking once a clean session confirms
+    # the chapter stays byte-equal to the projection (the dashboard model's own landing path).
+    return (FAIL if issues else PASS), issues
+
+
 def check_metaphor_spans():
     """The metaphor-spans view's structural + overlap check (audit-only first landing, rule-#55 discipline).
     The model (`book-models/metaphor-spans.json`) records every sustained metaphor's span — introduced ->

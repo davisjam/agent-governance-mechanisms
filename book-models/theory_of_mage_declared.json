@@ -141,7 +141,7 @@
     {
       "id": "H2-governance-moderation",
       "name": "Governance moderation",
-      "statement": "Governed-environment quality sets the SIGN of velocity's effect: higher velocity raises churn in low-quality environments and durable throughput in high-quality ones.",
+      "statement": "Governed-environment quality sets the sign of velocity's effect: higher velocity raises churn in low-quality environments and durable throughput in high-quality ones.",
       "falsifier": "Velocity relates to durable throughput the same way regardless of environment quality.",
       "loops": ["L2-churn-discovery", "L3-governance-adaptation"]
     },
