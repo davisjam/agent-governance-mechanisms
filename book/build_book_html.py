@@ -235,6 +235,7 @@ _GLOSS_TERM_SLUGS = {
     "Alignment Thesis": "thesis-alignment",
     "Governance Conversion": "governance-conversion",
     "The Printer": "printer-metaphor",
+    "Judgment is the scarce resource": "judgment-is-the-scarce-resource",
     "Churn": "churn",
     "Context Window": "context-window",
     "Foundation model": "foundation-model",

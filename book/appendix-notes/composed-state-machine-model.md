@@ -1,4 +1,4 @@
-<!-- note-spread: 2 -->
+<!-- note-spread: 1 -->
 
 **Intent** — Model a concurrent lifecycle as a *set* of structured state machines running at once, their
 cross-machine predicates declared as first-class, shape-verified invariants.

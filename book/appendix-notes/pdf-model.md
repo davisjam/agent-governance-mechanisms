@@ -1,4 +1,4 @@
-<!-- note-spread: 2 -->
+<!-- note-spread: 1 -->
 
 **Intent** — Route *all* reads and writes of a complex file format through one structured model, with raw
 access to the underlying library banned by a lint, so the format's invariants are compiler-checked and every

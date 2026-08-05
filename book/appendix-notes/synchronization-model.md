@@ -39,5 +39,6 @@ rather than an aspirational list.
 
 Coverage rides on the lint seeing every lock site; a site the lint cannot reach stays undeclared and
 unmodelled. The ordering graph is only as complete as its declared edges — an unstated ordering is an
-unchecked one. And the model captures OS-level locks, not the higher-level single-writer and mediator
-contracts of the same concurrency story, which need their own treatment.
+unchecked one. And this model is the OS-lock layer — which locks exist and in what order they are taken —
+not the higher-level *mediator & single-writer contracts* that declare who may run a call and how many at
+once; that is a separate DECLARE surface layered above it.

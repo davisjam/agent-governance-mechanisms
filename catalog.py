@@ -1141,22 +1141,23 @@ def cmd_validate(_args) -> int:
     print(f"  [metaphor] AUDIT-ONLY: {msm.coverage_note()}")
     for f in msm.overlap_findings() + msm.vehicle_collision_findings():
         print(f"  [metaphor] AUDIT-ONLY: {f}")
-    # DEFINE-BEFORE-USE (term ordering) — AUDIT-ONLY. Extends the claims model's C1 site-resolution to the
+    # DEFINE-BEFORE-USE (term ordering) — BLOCKING. Extends the claims model's C1 site-resolution to the
     # ORDERING of the glossary/concept TERM class: a term's canonical definition (its `index-def`, or the front
     # glossary when registered there — front matter, always define-first) must sit no later than the page that
-    # first USES it (a tracked `index-example`). One tracked use-before-def stands today
-    # (`judgment-is-the-scarce-resource` — exemplified in 4.5-lessons-learned but defined in 6.2-conclusion),
-    # so it lands AUDIT-ONLY-first (repo blocking-lint discipline): it PRINTS the worklist here but does NOT
-    # gate. A follow-up flips it blocking once the def moves ahead of the use (or the earlier use is retagged).
-    # Tracked uses only — a first mention in undecorated prose is out of scope (the concepts model's own
-    # limitation). See book-models/lint_define_before_use.py.
-    import lint_define_before_use as ldbu  # noqa: E402 — audit-only term-ordering lint
+    # first USES it (a tracked `index-example`). The one tracked use-before-def that stood at landing
+    # (`judgment-is-the-scarce-resource` — exemplified in 4.5-lessons-learned but defined in 6.2-conclusion)
+    # was reconciled by registering the term in the front glossary, so the finding drained to 0 and the lint
+    # flipped from AUDIT-ONLY to BLOCKING (repo blocking-lint discipline: land audit-only, drain, then gate).
+    # A newly-authored use-before-def now reddens validate. Tracked uses only — a first mention in undecorated
+    # prose is out of scope (the concepts model's own limitation). See book-models/lint_define_before_use.py.
+    import lint_define_before_use as ldbu  # noqa: E402 — term-ordering lint (BLOCKING)
     dbu = ldbu.findings()
     if dbu:
-        print(f"  [define-order] AUDIT-ONLY: {ldbu.summary_line(dbu)} — "
-              f"run `python3 book-models/lint_define_before_use.py` (does not gate):")
+        print(f"  [define-order] {ldbu.summary_line(dbu)} — "
+              f"run `python3 book-models/lint_define_before_use.py`:")
         for f in dbu:
             print(f"                 {f.slug} — used in {f.use_page} but defined later in {f.def_page}")
+        n_issues += len(dbu)
     print(f"validated {len(entries)} entries "
           f"(agent {by_role['Agent']} · bridge {by_role['Bridge']} · product {by_role['Product']}) "
           f"— {n_issues} issue(s)")

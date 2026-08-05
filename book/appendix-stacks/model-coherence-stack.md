@@ -5,7 +5,7 @@ the agent queries is what is true.*
 ## The capability
 
 **Give a bounded-context agent a typed map it can reason through, and hold that map equal to the code so the
-map never lies.** It answers two of the nine capabilities at once — *maintain authoritative system
+map never lies.** It answers two capabilities at once — *maintain authoritative system
 knowledge* and *keep representations equal to reality*. The models are executable data, not prose — read live, checked against
 reality by a gate, derived where a derived edge cannot drift, and generated back into the system. An agent
 that cannot hold the whole codebase queries the map instead, and the map is trustworthy because machinery,
@@ -46,7 +46,7 @@ Typical domains:
 ## Composition
 
 <!-- label: model-coherence-stack -->
-<!-- figure: assets/model-coherence-stack.svg | The model-coherence stack in one picture. Six parts run left to right in two capability lanes. Authoritative knowledge (fleet blue): DATA models the system as executable typed data; CONSUME reads it live and never snapshots; EMIT generates artifacts back from the model. Equal to reality (governed green): PARITY fails the build when a model and reality disagree either way; DERIVE anchors every model-to-code edge on a resolvable symbol a lint re-checks, so a derived edge cannot drift. SEAL (accent) routes all mutation of a shipped format through one typed model held sole by a ban-lint. The map is executable, read live, held equal to the territory, and generated back into it. -->
+<!-- figure: assets/model-coherence-stack.svg | The model-coherence stack in one picture. Six parts run left to right in two capability lanes plus the sealed-format part. Authoritative knowledge (fleet blue): DATA models the system as executable typed data; CONSUME reads it live and never snapshots; EMIT generates artifacts back from the model. Equal to reality (governed green): PARITY fails the build when a model and reality disagree either way; DERIVE anchors every model-to-code edge on a resolvable symbol a lint re-checks, so a derived edge cannot drift. SEAL (accent) routes all mutation of a shipped format through one typed model held sole by a ban-lint. The map is executable, read live, held equal to the territory, and generated back into it. -->
 
 The stack has two lanes. Three parts make the map authoritative — model it as data, read it live, generate
 from it. Two parts hold it equal to reality — a parity gate and derived edges. One part seals the same
