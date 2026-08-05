@@ -21,7 +21,7 @@ build them. Every capability below serves one thesis or the other, and most serv
 
 ## The claim this catalogue makes
 
-The DocAble case produced <!--census:controls-->84<!--/census--> concrete governance mechanisms.
+The DocAble case produced <!--census:controls-->85<!--/census--> concrete governance mechanisms.
 Comparative analysis reduced them to **24 canonical mechanisms** under **9 capabilities**. The rest are
 retained, not discarded: the **variants and known uses** fold under a parent mechanism, **two pairs merge**
 into one, **one entry rises** to a principle that explains where the others sit, and the **external-spec
@@ -909,6 +909,10 @@ proliferate — for a handful, the graph is ceremony.
   facet.** The same governance-of-governance subject read for *coverage* rather than conflict: which
   failure classes have a control and which sit uncovered. Deep dive →
   [the governance-of-governance stack](book/appendix-a-governance-of-governance-stack.html) (alt appendix).
+- **[the orphan-coverage metric](models-bridge/system-models/orphan-coverage-metric.md) — inverse-walk
+  facet.** The same coverage subject walked the other direction: point a tracer at the *code* and score the
+  sites no model or control reaches, so an un-governed region surfaces as a ranked orphan cluster rather
+  than an empty target cell. The census asks which target is thin; this asks which code is un-covered.
 
 *Deep dive:* [the governance-of-governance stack](book/appendix-a-governance-of-governance-stack.html) (alt
 appendix) — its GRAPH member.

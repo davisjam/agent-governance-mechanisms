@@ -6,13 +6,13 @@
 Every mechanism, by **role** and family. `form` (the shape it takes) and `Enf.` (soft/hard) are the
 cross-cuts (see [README](README.md)). Families **1–5** = the **agent** role
 (the fleet + work-producing substrate); family **6** = the **models-bridge** (the MBSE substrate between
-the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->84<!--/census--> entries are fully
+the two); families **7–11** = the **product** role (the shipped artifact). All <!--census:controls-->85<!--/census--> entries are fully
 written (**✅**).
 
 **Read this as a construction kit.** The census below lists every mechanism by role and family. For the
 architecture *behind* the list — what the environment must be able to do, and which mechanisms give it
 those capabilities — start at **[Constructing the Governed Engineering Environment](https://davisjam.github.io/model-based-agentic-software-engineering/constructing-the-gee.html)**.
-The case produced <!--census:controls-->84<!--/census--> concrete mechanisms; comparative analysis reduced
+The case produced <!--census:controls-->85<!--/census--> concrete mechanisms; comparative analysis reduced
 them to **24 canonical mechanisms under 9 capabilities**, with the remainder retained as variants and
 known uses. That page groups every entry under its capability and names the eight compositions that are
 strong together.
@@ -94,7 +94,7 @@ of soft/hard.
 
 ## 6. System models
 
-*One MBSE **method** (the trunk — <!--census:bridge_method:word-->sixteen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Eighteen<!--/census--> models split product-facing (service-flow, user-journey, domain-registries, composed-state-machine, process-view) · orchestration-facing (synchronization, agent-orch, governance-graph, lifecycle) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->sixteen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. These model entries are a **curated sample of the portable genres**, not the whole zoo: the real substrate carries on the order of sixty typed models, and these cover the ones that transfer. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
+*One MBSE **method** (the trunk — <!--census:bridge_method:word-->seventeen<!--/census--> subject-agnostic mechanisms) reified toward the two subjects the bridge couples: the **product** it ships and the **orchestration** that builds it (a **Y**). <!--census:bridge_models:Word-->Eighteen<!--/census--> models split product-facing (service-flow, user-journey, domain-registries, composed-state-machine, process-view) · orchestration-facing (synchronization, agent-orch, governance-graph, lifecycle) · shared-spine (component-zone, concurrency, deployment — both faces); the <!--census:bridge_method:word-->seventeen<!--/census--> method-mechanisms — incl. formal temporal-logic verification, coverage→model-node mapping, journey-criticality → test-tier placement, invariant-DAG execution policy, computed control↔substrate blast-radius, and the symbol-anchored traceability graph — hold them all true. These model entries are a **curated sample of the portable genres**, not the whole zoo: the real substrate carries on the order of sixty typed models, and these cover the ones that transfer. Rows below are grouped trunk → product → orchestration → shared.* — [family folder](models-bridge/system-models/) · [role README](models-bridge/)
 
 | ✓ | Mechanism | Form | Move | Model | Enf. | Entry |
 |---|---|---|---|---|---|---|
@@ -114,6 +114,7 @@ of soft/hard.
 | ✅ | Model-graded finding severity (distance-graded gate) — *trunk / method* | `quality-gate` | `sensor` | `governs-a-model` | Hard | [model-graded-finding-severity.md](models-bridge/system-models/model-graded-finding-severity.md) |
 | ✅ | Model-derived test-obligation census (derive obligations, lint the gap) — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Hard | [model-derived-test-obligation-census.md](models-bridge/system-models/model-derived-test-obligation-census.md) |
 | ✅ | Control-coverage census (controls per governance target) — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Soft·Hard | [control-coverage-census.md](models-bridge/system-models/control-coverage-census.md) |
+| ✅ | Orphan-coverage metric (walk code → governance; score the un-covered remainder) — *trunk / method* | `validation` | `sensor` | `governs-a-model` | Soft | [orphan-coverage-metric.md](models-bridge/system-models/orphan-coverage-metric.md) |
 | ✅ | Service-flow / API model — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [service-flow-model.md](models-bridge/system-models/service-flow-model.md) |
 | ✅ | User-journey model (product-goal → implementation) — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [user-journey-model.md](models-bridge/system-models/user-journey-model.md) |
 | ✅ | Domain registries — *product-facing* | `typed-ir` | `package` | `is-a-model` | Hard | [domain-registries.md](models-bridge/system-models/domain-registries.md) |

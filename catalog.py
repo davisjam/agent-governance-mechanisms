@@ -208,7 +208,8 @@ MODEL_NODES = [
                "meta-model-consumption", "model-driven-codegen", "model-graded-finding-severity",
                "invariant-dag-execution-policy", "semantic-level-enforcement",
                "journey-criticality-test-placement", "journey-task-closure", "f10-wiring-lint",
-               "model-derived-test-obligation-census", "control-coverage-census"]},
+               "model-derived-test-obligation-census", "control-coverage-census",
+               "orphan-coverage-metric"]},
 ]
 
 # ── Abstractions glossary (the interpretability de-referencer) ──

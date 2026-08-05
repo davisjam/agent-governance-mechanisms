@@ -73,6 +73,10 @@
       "applicability": "specialized",
       "why": "a governance-coverage census is a maturity audit, not a starter mechanism"
     },
+    "orphan-coverage-metric": {
+      "applicability": "specialized",
+      "why": "an inverse coverage metric over the code estate is a maturity audit, not a starter mechanism"
+    },
     "control-substrate-dependency": {
       "applicability": "specialized",
       "why": "blast-radius metadata pays off once cross-cutting substrate churn is frequent"

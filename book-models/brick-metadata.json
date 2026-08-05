@@ -85,6 +85,7 @@
     "concurrency-contracts": "Modeling",
     "content-validator": "Validation",
     "control-coverage-census": "Governance",
+    "orphan-coverage-metric": "Governance",
     "control-substrate-dependency": "Governance",
     "coverage-model-mapping": "Validation",
     "cron-alerts-gate": "Admission",
