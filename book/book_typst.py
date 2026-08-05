@@ -195,9 +195,21 @@ def _render_brick_grid(directive_line: str) -> str:
             summary = _esc(c["summary"]) if c["summary"] else \
                 "#emph[Three-sentence summary authored in a later sub-wave.]"
             meta = _esc(bb._brick_meta_line(c))
+            thumb = bb._brick_thumb_svg_path(c)
+            if thumb:
+                rel = _root_rel(thumb, _EmitCtx.root)
+                fig_block = (
+                    "#block(width: 100%, height: 4.2em, radius: 4pt, stroke: 0.5pt + dt.rule, "
+                    "fill: dt.panel, inset: 4pt, clip: true)[#align(center + horizon)["
+                    f"#image({_typst_str(rel)}, fit: \"contain\", width: 100%, height: 100%)]]"
+                )
+            else:
+                fig_block = (
+                    "#block(width: 100%, height: 4.2em, radius: 4pt, stroke: (paint: dt.rule, dash: \"dashed\"), "
+                    "fill: dt.panel, inset: 6pt)[#align(center + horizon)[#text(size: 8pt, fill: dt.muted)[STRUCTURE DIAGRAM]]]"
+                )
             cell_body = (
-                "#block(width: 100%, height: 3.2em, radius: 4pt, stroke: (paint: dt.rule, dash: \"dashed\"), "
-                "fill: dt.panel, inset: 6pt)[#align(center + horizon)[#text(size: 8pt, fill: dt.muted)[STRUCTURE DIAGRAM]]]\n"
+                fig_block + "\n"
                 f"#link({_typst_str(c['catalogue_html'])})[#strong[{_esc(c['name'])}]]{_esc(online)}\n\n"
                 f"#text(size: 9.5pt)[{summary}]\n\n"
                 f"#text(size: 8.5pt, fill: dt.muted)[{meta}]"
@@ -219,10 +231,7 @@ def _mermaid_svg_path(source: str) -> pathlib.Path:
     uses, so we reuse its cache instead of re-rendering. If the cache miss, we drive the HTML renderer's
     `render_mermaid_svg` (which renders + caches) then return the path."""
     src = source.strip()
-    key = hashlib.sha256(
-        (src + "\x00" + _MERMAID_CONFIG.read_text(encoding="utf-8") + "\x00idscheme-v1").encode("utf-8")
-    ).hexdigest()
-    cached = _MERMAID_CACHE / f"{key}.svg"
+    cached = _MERMAID_CACHE / f"{bb._mermaid_cache_key(src)}.svg"
     if not cached.exists():
         bb.render_mermaid_svg(src)                       # renders + writes the cache file (fails loud if mmdc absent)
     return cached

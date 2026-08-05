@@ -1006,6 +1006,16 @@ def cmd_validate(_args) -> int:
     if minfont:
         print(f"  [minfont] AUDIT-ONLY: {lfmf.summary_line(minfont)} — "
               f"run `python3 book-models/lint_figure_min_font.py` (does not gate)")
+    # BRICK FITNESS — the Appendix-C §13.4 sensor: a brick whose Structure diagram scores SIMPLIFY/GLYPH under
+    # the thumbnail-fitness rubric but carries NO verdict in book-models/brick-fitness.json (the model the grid
+    # renderer reads to pick diagram-vs-glyph). AUDIT-ONLY-first per the repo's blocking-lint discipline: all 83
+    # verdicts are recorded, so it reports zero today; it exists to catch the NEXT unrecorded dense diagram. It
+    # PRINTS any finding but does NOT increment n_issues. See book-models/lint_brick_fitness.py.
+    import lint_brick_fitness as lbf  # noqa: E402 — audit-only brick-fitness sensor
+    brick_unscored = lbf.findings()
+    if brick_unscored:
+        print(f"  [brick]  AUDIT-ONLY: {lbf.summary_line(brick_unscored)} — "
+              f"run `python3 book-models/lint_brick_fitness.py` (does not gate)")
     # APPENDIX-B NOTE WORD-CAP — the EARLY sensor over the authored Flagship-Mechanism notes
     # (`book/appendix-notes/*.md`): a note whose prose outgrows its declared `note-spread` budget. AUDIT-ONLY
     # per the repo's blocking-lint discipline — it PRINTS its finding count (so an author sees a note that has

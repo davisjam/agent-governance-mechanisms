@@ -118,6 +118,15 @@ _MMDC = HERE / "node_modules" / ".bin" / "mmdc"
 _MMDC_PUPPETEER = HERE / "assets" / "mmdc-puppeteer.json"
 
 
+def _mermaid_cache_key(source: str) -> str:
+    """The content-hash cache key for a mermaid fence body — `sha256(source + config + idscheme)`. The single
+    source of truth for the on-disk `.mermaid-svg-cache/<key>.svg` filename, shared by `render_mermaid_svg`
+    (which renders + caches) and the Typst projection's cache-path lookup, so the two never disagree."""
+    return hashlib.sha256(
+        (source.strip() + "\x00" + _MERMAID_CONFIG.read_text(encoding="utf-8") + "\x00idscheme-v1").encode("utf-8")
+    ).hexdigest()
+
+
 def render_mermaid_svg(source: str) -> str:
     """Render a ```mermaid fence body to a self-contained inline `<svg>…</svg>` at BUILD time via
     mermaid-cli (`mmdc`, which drives the Puppeteer toolchain). Result is cached by a content hash of
@@ -128,9 +137,7 @@ def render_mermaid_svg(source: str) -> str:
     still bounds it, and wrapped in `<pre class="mermaid">` so existing print/screen CSS applies unchanged.
     """
     src = source.strip()
-    key = hashlib.sha256(
-        (src + "\x00" + _MERMAID_CONFIG.read_text(encoding="utf-8") + "\x00idscheme-v1").encode("utf-8")
-    ).hexdigest()
+    key = _mermaid_cache_key(src)
     # Give each rendered SVG a UNIQUE root id from its content hash. mmdc defaults to a fixed id="my-svg"
     # (+ chart-title-my-svg / chart-desc-my-svg), so two diagrams on one page collide (duplicate-ID →
     # html-validate FAILs). A per-diagram svgId namespaces the SVG's ids. (The "idscheme-v1" marker in the
@@ -1881,7 +1888,9 @@ section.eng-note, section.eng-note-panel { break-inside: avoid; }
          display: flex; flex-direction: column; gap: 0.45rem; min-width: 0; }
 .brick-fig { display: flex; align-items: center; justify-content: center; height: 5.5rem; border-radius: 5px;
              border: 1px dashed var(--rule); background: var(--panel); color: var(--muted); font-size: 12px;
-             letter-spacing: 0.04em; text-transform: uppercase; }
+             letter-spacing: 0.04em; text-transform: uppercase; overflow: hidden; padding: 0.35rem; }
+.brick-fig svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+.brick-fig-glyph svg { max-height: 4.6rem; }
 .brick-name { margin: 0; font-weight: 700; line-height: 1.25; }
 .brick-name a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); }
 .brick-name a:hover, .brick-name a:focus { color: var(--accent); }
@@ -3355,6 +3364,8 @@ def _appendix_v2_role_subsections() -> list[tuple[str, str]]:
 
 _FLAGSHIP_STACK_PATH = ROOT / "book-models" / "flagship-stack.json"
 _BRICK_LAYOUT_PATH = ROOT / "book-models" / "brick-layout.json"
+_BRICK_FITNESS_PATH = ROOT / "book-models" / "brick-fitness.json"
+_GLYPH_ASSET_DIR = HERE / "assets"
 # Authored compressed Appendix-B notes (restructure sub-wave 4a prototype). One `<slug>.md` per flagship that
 # has been compressed to a keep-together Flagship-Mechanism note; a flagship without one falls back to the full
 # GoF pattern page. Each authored note carries the `note-spread`/`note-fold` keep-together directives (§13.6).
@@ -3541,6 +3552,81 @@ def _load_brick_layout() -> dict[str, dict]:
     return data.get("bricks", {})
 
 
+@functools.lru_cache(maxsize=1)
+def _load_brick_fitness() -> dict[str, dict]:
+    """`{slug: {verdict, glyph_class?}}` — the declared visual-fitness verdicts (`book-models/brick-fitness.json`,
+    §13.4 / sub-wave 5). `verdict` is PASS / SIMPLIFY (both thumbnail the entry's Structure diagram) or GLYPH
+    (show the class glyph named by `glyph_class`). Absent file → `{}` (every brick then falls back to its
+    diagram, or the placeholder if it has none). This is the SOLE source of the GLYPH set — the builder holds
+    no hardcoded slug list."""
+    if not _BRICK_FITNESS_PATH.is_file():
+        return {}
+    data = json.loads(_BRICK_FITNESS_PATH.read_text(encoding="utf-8"))
+    return data.get("verdicts", {})
+
+
+def _structure_mermaid_source(fill: dict) -> str | None:
+    """The ```mermaid fence body from an entry's Structure fill slot, or None if the entry carries no diagram
+    (the root `agent/ models-bridge/ product/` framing entries have no fill). The Structure slot is prose plus
+    one mermaid fence plus an accessible-description line; we lift just the fence body for thumbnail rendering."""
+    struct = (fill or {}).get("structure")
+    if not struct:
+        return None
+    m = re.search(r"```mermaid\s*\n(.*?)\n```", struct, re.S)
+    return m.group(1).strip() if m else None
+
+
+def _brick_thumb_svg_path(cell: dict) -> pathlib.Path | None:
+    """The on-disk SVG for a brick's thumbnail — a class glyph for a GLYPH verdict, else the entry's Structure
+    diagram rendered to a cached SVG (fails loud if mmdc is missing, like every other diagram). Returns None
+    when the entry has no diagram and no GLYPH assignment, so the caller keeps the text placeholder. One path
+    serves both projections: the HTML build inlines it, the Typst build `#image`s it, so they cannot diverge."""
+    verdict = cell.get("verdict")
+    if verdict == "GLYPH":
+        gclass = cell.get("glyph_class")
+        if gclass:
+            p = _GLYPH_ASSET_DIR / f"glyph-{gclass}.svg"
+            if p.is_file():
+                return p
+    src = cell.get("structure_mermaid")
+    if not src:
+        return None
+    render_mermaid_svg(src)                       # render + cache (fails loud if mmdc absent)
+    p = _MERMAID_CACHE / f"{_mermaid_cache_key(src)}.svg"
+    return p if p.is_file() else None
+
+
+def _inline_svg_for_thumb(path: pathlib.Path, uid: str) -> str:
+    """Splice an on-disk SVG file down to its `<svg>…</svg>`, stripping the XML prolog / doctype and the fixed
+    width/height (so the `.brick-fig svg` CSS max-width/height rule governs sizing) — the same reduction
+    `render_mermaid_svg` applies to inline mermaid SVGs, reused here for both glyph assets and the mermaid
+    cache files a brick thumbnail draws.
+
+    Every `id` (and its `#id` / `aria-labelledby` references) is suffixed with `uid` (the brick slug) so a
+    class glyph reused across bricks — `graph` covers three GLYPH entries — never emits a duplicate ID on the
+    one catalogue page, and a mermaid diagram's arrowhead `url(#…)` refs stay internally consistent."""
+    svg = path.read_text(encoding="utf-8")
+    svg = re.sub(r"^\s*<\?xml[^>]*\?>\s*", "", svg)
+    svg = re.sub(r"<!DOCTYPE[^>]*>\s*", "", svg, flags=re.I)
+    m = re.search(r"<svg\b.*</svg>", svg, re.S)
+    if m:
+        svg = m.group(0)
+    svg = re.sub(r'(<svg\b[^>]*?)\swidth="[^"]*"', r"\1", svg, count=1)
+    svg = re.sub(r'(<svg\b[^>]*?)\sheight="[^"]*"', r"\1", svg, count=1)
+    suffix = "-" + re.sub(r"[^a-zA-Z0-9_-]", "", uid)
+    ids = sorted(set(re.findall(r'\bid="([^"]+)"', svg)), key=len, reverse=True)
+    for old in ids:
+        new = old + suffix
+        svg = svg.replace(f'id="{old}"', f'id="{new}"')
+        svg = svg.replace(f"#{old}", f"#{new}")           # url(#id) + href="#id"
+    svg = re.sub(
+        r'aria-labelledby="([^"]+)"',
+        lambda mm: 'aria-labelledby="' + " ".join(t + suffix for t in mm.group(1).split()) + '"',
+        svg,
+    )
+    return svg
+
+
 def _brick_span(slug: str, ncols: int) -> int:
     """The column span for a brick: the declared `span` (`1`/`2`/`"full"`), clamped to `[1, ncols]`. A wide
     diagram declares `2` or `full`; the default is a 1-col brick. `full` maps to the whole row."""
@@ -3607,9 +3693,11 @@ def _brick_cells(group: str, flagship: set[str], ncols: int) -> list[dict]:
     family_order = _family_order_from_index()
     entries = [e for e in _appendix_entries() if e["group"] == group]
     entries.sort(key=lambda e: (family_order.get(e["family"], 999), e["family"], e["slug"]))
+    fitness = _load_brick_fitness()
     cells: list[dict] = []
     for e in entries:
         intent = (e.get("intent") or "").strip()
+        fit = fitness.get(e["slug"], {})
         cells.append({
             "slug": e["slug"],
             "name": e["name"],
@@ -3620,6 +3708,9 @@ def _brick_cells(group: str, flagship: set[str], ncols: int) -> list[dict]:
             "span": _brick_span(e["slug"], ncols),
             "is_flagship": e["slug"] in flagship,
             "summary": intent,
+            "verdict": fit.get("verdict"),               # PASS | SIMPLIFY | GLYPH | None
+            "glyph_class": fit.get("glyph_class"),        # set only on GLYPH verdicts
+            "structure_mermaid": _structure_mermaid_source(e.get("fill") or {}),
         })
     return cells
 
@@ -3651,9 +3742,15 @@ def _brick_grid_html(group: str) -> str:
             online = " (online)" if not c["is_flagship"] else ""
             summary = html.escape(c["summary"]) if c["summary"] else \
                 "<em>Three-sentence summary authored in a later sub-wave.</em>"
+            thumb_path = _brick_thumb_svg_path(c)
+            glyph_cls = " brick-fig-glyph" if c.get("verdict") == "GLYPH" else ""
+            fig = (f'<div class="brick-fig{glyph_cls}" aria-hidden="true">'
+                   f'{_inline_svg_for_thumb(thumb_path, c["slug"])}</div>'
+                   if thumb_path else
+                   '<div class="brick-fig" aria-hidden="true"><span>Structure diagram</span></div>')
             rendered.append(
                 f'<div class="brick" style="grid-column: span {span};">'
-                '<div class="brick-fig" aria-hidden="true"><span>Structure diagram</span></div>'
+                f'{fig}'
                 f'<p class="brick-name"><a href="{html.escape(c["catalogue_html"], quote=True)}">'
                 f'{html.escape(c["name"])}</a>{online}</p>'
                 f'<p class="brick-sum">{summary}</p>'
