@@ -3,11 +3,13 @@ FIELD-NOTE ledger) UNDER a claim universe and, per claim, surfaces what backs it
 for: "where we cite in the text, back those cites in the model (ref, claims-from-it), nested under the
 claims, so we can query for under-substantiated-or-situated — and outright SOAPBOX — claims about reality."
 
-THE CLAIM UNIVERSE — spine + theory. The argument spine is the book's backbone claims; the 'Toward a Theory
-of MAGE' chapter adds reality-asserting THEORY nodes (the seven hypotheses H1-H7 + their sub-hypotheses, the
-corollaries, and the research-agenda proposals) that are NOT spine claims. Both are appended to one universe
-so the report reaches the theory too, and a datum or citation may bind to EITHER by id (the id set simply
-grows — no new binding machinery).
+THE CLAIM UNIVERSE — spine + theory + discussion. The argument spine is the book's backbone claims; the
+'Toward a Theory of MAGE' chapter adds reality-asserting THEORY nodes (the seven hypotheses H1-H7 + their
+sub-hypotheses, the corollaries, and the research-agenda proposals) that are NOT spine claims; and the
+DISCUSSION-claims ledger adds the reality-asserting sentences that live in the book's Discussion /
+Implications / Future prose and belong to no ordered spine step and no theory node. All three are appended to
+one universe so the report reaches every registered claim, and a datum or citation may bind to ANY by id (the
+id set simply grows — no new binding machinery).
 
 It reads meta-files at query time (rule-#33 best form — stable, no codegen, no snapshot):
   - book-models/argument_spine_declared.json — the spine claims + their `quantifiable` / `reality_claim`
@@ -15,6 +17,11 @@ It reads meta-files at query time (rule-#33 best form — stable, no codegen, no
   - book-models/theory_of_mage_declared.json — the theory reality-nodes. The chapter globally frames all of
     them as offered-for-replication (its `hedge` + the table caption 'offered for replication, not proven'),
     so they register with frame=offered-for-replication and never SOAPBOX — honestly SITUATED, not asserted.
+  - book-models/discussion-claims.json — the DISCUSSION-claim ledger: reality-claims asserted in the book's
+    Discussion / Implications / Future prose that belong to no other model. Each registers with a `frame`,
+    default `reality` (a Discussion reality-claim owes backing — it does NOT inherit the theory's
+    offered-for-replication hedge). Robust to its absence. The prose-audit pass (writing/audit.md Pass 7) is
+    what FINDS the claims to register here; registration hands them to this check, which holds them thereafter.
   - book/data/data-claims.json — the metric->claim ledger (each datum's `spine_claim`/`spine_claims` +
     observable + data_source + limitation). The DATA leg.
   - book-models/lit-positioning.json — the literature-positioning citations, each `{key, backs_claims,
@@ -24,14 +31,14 @@ It reads meta-files at query time (rule-#33 best form — stable, no codegen, no
     citation. Robust to its absence.
 
 Per claim it aggregates `data_backing` + `literature_backing` + `field_note_backing`, carries the claim's
-`frame ∈ {reality, offered-for-replication, single-case, possibility}` (default `reality` — an unframed
-assertion IS a reality-claim needing backing), then computes three reports:
+`frame ∈ {reality, offered-for-replication, single-case, possibility, conjecture}` (default `reality` — an
+unframed assertion IS a reality-claim needing backing), then computes three reports:
   - DL3 UNDERQUANTIFIED — a `quantifiable:true` claim with ZERO data_backing.
   - UNDER-SUBSTANTIATED-OR-SITUATED — a `reality_claim:true` claim with NONE of the three backings (no
     evidence of any kind — the broad gap; includes honestly-framed theory nodes).
   - SOAPBOX — the sharp one: a reality-claim with NO backing of any kind AND frame=="reality" (NOT hedged as
-    offered/single-case/possibility). SOAPBOX ⊆ UNDER-SUBSTANTIATED-OR-SITUATED (the framed ones are
-    situated, not soapbox).
+    offered/single-case/possibility/conjecture). SOAPBOX ⊆ UNDER-SUBSTANTIATED-OR-SITUATED (the framed ones
+    are situated, not soapbox).
 All three REPORT, never gate.
 
 Honest boundary: the check only sees REGISTERED claims. Unregistered Discussion prose (a sentence in no
@@ -55,11 +62,15 @@ _SPINE_DECLARED = os.path.join(_HERE, "argument_spine_declared.json")
 _THEORY_DECLARED = os.path.join(_HERE, "theory_of_mage_declared.json")
 _LIT_POSITIONING = os.path.join(_HERE, "lit-positioning.json")
 _FIELD_NOTES = os.path.join(_HERE, "field-notes.json")
+_DISCUSSION_DECLARED = os.path.join(_HERE, "discussion-claims.json")
 _DATA_CLAIMS = os.path.join(_ROOT, "book", "data", "data-claims.json")
 
 #: The honesty-frame vocabulary. `reality` is the honest default — an unframed assertion IS a reality-claim
-#: that owes backing. The other three are honest hedges that keep a claim off the SOAPBOX report.
-_FRAMES = ("reality", "offered-for-replication", "single-case", "possibility")
+#: that owes backing. The other four are honest hedges that keep a claim off the SOAPBOX report:
+#: `offered-for-replication` (a hypothesis offered for others to test), `single-case` (scoped to the DocAble
+#: case), `possibility` (an offered reading, not asserted), and `conjecture` (a claim the author keeps LOUD
+#: but OWNS as speculation rather than established fact — kept-loud-but-owned).
+_FRAMES = ("reality", "offered-for-replication", "single-case", "possibility", "conjecture")
 
 #: The theory chapter globally frames ALL its predictions as offered-for-replication (the theory JSON `hedge`
 #: + the Seven-Hypotheses table caption). So theory nodes register with this frame by default — honestly
@@ -182,6 +193,29 @@ def _theory_ids() -> "set[str]":
     return {c["id"] for c in _theory_claims()}
 
 
+def _discussion_claims() -> "list[dict]":
+    """The DISCUSSION-claim ledger's reality-claims as claim dicts — a mirror of `_theory_claims()`, but each
+    defaults to frame=`reality` (a Discussion reality-claim owes backing; it does NOT inherit the theory's
+    offered-for-replication hedge) unless the entry carries its own `frame`. Each entry is a reality-claim.
+    Robust to the file's absence (returns [])."""
+    m = _load(_DISCUSSION_DECLARED)
+    if m is None:
+        return []
+    out: "list[dict]" = []
+    for c in m.get("discussion_claims", []):
+        if not isinstance(c, dict) or not c.get("id"):
+            continue
+        frame = c.get("frame", "reality")
+        out.append({"id": c["id"], "statement": c.get("statement", ""), "reality_claim": True,
+                    "quantifiable": bool(c.get("quantifiable", False)),
+                    "frame": frame if frame in _FRAMES else "reality", "kind": "discussion"})
+    return out
+
+
+def _discussion_ids() -> "set[str]":
+    return {c["id"] for c in _discussion_claims()}
+
+
 def _data_bindings() -> "dict[str, list[DataBacking]]":
     """claim id -> the data-claims bound to it. A datum binds via `spine_claim` (str) or `spine_claims`
     (list); both are read and unioned so a datum bearing weight for several claims reaches each."""
@@ -249,8 +283,9 @@ def _normalize_frame(raw: "str | None") -> str:
 
 
 def aggregate() -> "tuple[list[ClaimSubstantiation], bool]":
-    """(per-claim substantiation over the spine + theory universe, lit_present). Spine claims first (in spine
-    order), then the theory reality-nodes; each claim binds its data / literature / field-note backing by id."""
+    """(per-claim substantiation over the spine + theory + discussion universe, lit_present). Spine claims first (in spine
+    order), then the theory reality-nodes, then the discussion claims; each claim binds its data / literature
+    / field-note backing by id."""
     data_by_claim = _data_bindings()
     lit_by_claim, lit_present = _lit_bindings()
     note_by_claim, _ = _fieldnote_bindings()
@@ -272,15 +307,17 @@ def aggregate() -> "tuple[list[ClaimSubstantiation], bool]":
         rows.append(_row(c, "spine", "reality"))
     for c in _theory_claims():
         rows.append(_row(c, "theory", _THEORY_DEFAULT_FRAME))
+    for c in _discussion_claims():
+        rows.append(_row(c, "discussion", "reality"))
     return rows, lit_present
 
 
 def dl_findings() -> "list[str]":
     """DL1 (join-integrity) + DL2 (four-fields-present) over the data-claims — the structural half the
     extended check_data_claims surfaces. DL1: every datum's `spine_claim`(s) resolve to a real claim id in
-    the universe (a SPINE claim OR a THEORY node — a datum may now bind to either). DL2: every datum carries
-    non-empty observable + data_source + limitation. Deterministic; audit-only."""
-    claim_ids = {c["id"] for c in _spine_claims()} | _theory_ids()
+    the universe (a SPINE claim, a THEORY node, OR a DISCUSSION claim — a datum may bind to any). DL2: every
+    datum carries non-empty observable + data_source + limitation. Deterministic; audit-only."""
+    claim_ids = {c["id"] for c in _spine_claims()} | _theory_ids() | _discussion_ids()
     raw = _load(_DATA_CLAIMS) or {}
     findings: "list[str]" = []
     for slug, e in raw.items():
@@ -291,7 +328,7 @@ def dl_findings() -> "list[str]":
             findings.append(f"DL1 data-claim {slug!r} binds to no spine_claim (add spine_claim or spine_claims)")
         for cid in ids:
             if cid not in claim_ids:
-                findings.append(f"DL1 data-claim {slug!r} spine_claim {cid!r} resolves to no spine claim or theory node")
+                findings.append(f"DL1 data-claim {slug!r} spine_claim {cid!r} resolves to no spine claim, theory node, or discussion claim")
         for f_name in ("observable", "data_source", "limitation"):
             if not str(e.get(f_name, "")).strip():
                 findings.append(f"DL2 data-claim {slug!r} has an empty {f_name!r} field")
@@ -338,7 +375,7 @@ def _to_jsonable() -> dict:
     from dataclasses import asdict
     return {
         "_note": ("Substantiation aggregate — data-claims + lit-positioning citations + field notes nested "
-                  "under each claim (spine + theory). UNDERQUANTIFIED = quantifiable claim with no data; "
+                  "under each claim (spine + theory + discussion). UNDERQUANTIFIED = quantifiable claim with no data; "
                   "UNDER-SUBSTANTIATED-OR-SITUATED = reality-claim with no data/lit/field-note; "
                   "SOAPBOX = under-substantiated AND frame=='reality' (unhedged). Reports."),
         "lit_positioning_present": lit_present,
@@ -357,8 +394,9 @@ def render(as_json: bool = False) -> int:
         return 0
     n_spine = sum(1 for r in rows if r.kind == "spine")
     n_theory = sum(1 for r in rows if r.kind == "theory")
+    n_discussion = sum(1 for r in rows if r.kind == "discussion")
     print(f"== substantiation — data + literature + field notes nested under the claim universe "
-          f"({n_spine} spine + {n_theory} theory) ==")
+          f"({n_spine} spine + {n_theory} theory + {n_discussion} discussion) ==")
     if not lit_present:
         print("  (note: book-models/lit-positioning.json absent — literature half empty; run the "
               "lit_positioning model's regenerate)")

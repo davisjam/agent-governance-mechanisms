@@ -176,9 +176,9 @@
         {"key": "davis2026cheapcode", "backs_claims": ["grounded-in-one-case"], "relation": "substantiates"},
         {"key": "runeson2009guidelines", "backs_claims": ["grounded-in-one-case"], "relation": "situates"},
         {"key": "beach2019processtracing", "backs_claims": ["grounded-in-one-case"], "relation": "situates"},
-        {"key": "faulkner2026vinext", "backs_claims": ["abundant-implementation"], "relation": "convergent-evidence"},
-        {"key": "carlini2026ccompiler", "backs_claims": ["abundant-implementation"], "relation": "convergent-evidence"},
-        {"key": "anthropic2026migration", "backs_claims": ["abundant-implementation"], "relation": "convergent-evidence"}
+        {"key": "faulkner2026vinext", "backs_claims": ["abundant-implementation", "build-reports-corroborate-practices"], "relation": "convergent-evidence"},
+        {"key": "carlini2026ccompiler", "backs_claims": ["abundant-implementation", "build-reports-corroborate-practices"], "relation": "convergent-evidence"},
+        {"key": "anthropic2026migration", "backs_claims": ["abundant-implementation", "build-reports-corroborate-practices"], "relation": "convergent-evidence"}
       ],
       "advances_theses": ["grounded-in-one-case", "abundant-implementation"],
       "status": "landed",
@@ -200,6 +200,41 @@
       "status": "landed",
       "fold_target": "",
       "notes": "AUTHOR-SUPPLIED (coordinator, 260803) — LANDED (LPP-PROSE) in 2.3-the-governed-environment, right after the chapter intro's 'two forms every governance mechanism finally takes', before the ex-ante section. A light 2-3-sentence convergent-evidence note: the field is beginning to formalize governance of agentic SE (Ait et al.'s policy DSL for human-agent collaboration, ASE 2025 NIER); MAGE develops a full governed environment well beyond a single policy language. Respectful, non-dismissive per the author's steer. relation=convergent-evidence (they independently converge on governing agentic SE, NOT 'establish'). ait2025governance (arXiv 2510.14465) added to references.bib."
+    },
+    {
+      "id": "empirical-measurement-regime",
+      "section": "§13",
+      "title": "The new measurement regime / commoditized intelligence",
+      "x": "Empirical software engineering has long tried to measure process interventions whose effects were small beside the variation among developers — skill, context, and intelligence swamped the signal.",
+      "y": "GenAI commoditizes the intelligence input: a ~400-study systematic review maps the field's effort, a three-firm field experiment across 4,867 developers measures a 26% rise in completed tasks, and the canonical single-task RCT clocks a 55.8% speedup — with honest complications where experienced developers in familiar repositories slow down.",
+      "z": "MAGE proposes to hold the intelligence confound fixed and vary the environment, representations, and governance — a measurement regime whose effects are large and reproducible enough to build cumulative theory on.",
+      "target_locations": ["6.1-implications-for-se"],
+      "citations": [
+        {"key": "hou2024llm4se", "backs_claims": ["empirical-se-signal-to-noise"], "relation": "situates"},
+        {"key": "cui2025genai", "backs_claims": ["empirical-se-signal-to-noise"], "relation": "substantiates"},
+        {"key": "peng2023copilot", "backs_claims": ["empirical-se-signal-to-noise"], "relation": "substantiates"},
+        {"key": "metr2025productivity", "backs_claims": ["empirical-se-signal-to-noise"], "relation": "situates"}
+      ],
+      "advances_theses": ["empirical-se-signal-to-noise"],
+      "status": "landed",
+      "fold_target": "",
+      "notes": "Registers the S2 empirical-SE-decades claim (6.1:721-726) + closes the 6.1.9 measurement-regime LPP gap (cites landed in prose in publish #2 but modeled nowhere). hou2024llm4se situates the 'hundreds of studies / decades of effort' framing (a ~400-study SLR); cui2025genai + peng2023copilot substantiate the controlled gains; metr2025productivity situates the 'if modest, sometimes reverses' hedge (16 devs, 19% slower in familiar repos). Verb discipline: no 'establish'. All four keys resolve in references.bib (added publish #2) and appear in 6.1. backs_claims + advances_theses bind the DISCUSSION claim empirical-se-signal-to-noise (registered in discussion-claims.json); LP2/LP6 resolve it via the widened spine+theory+discussion universe. NOTE: 6.1 is a backmatter chapter (LP3's _chapter_text globs book/part*/ only), so LP3 reports these landed cites as not-appearing-in-a-target-chapter (audit-only, non-gating) — the 0.3-preface / single-case-methodology precedent."
+    },
+    {
+      "id": "maturity-model-critique",
+      "section": "§14",
+      "title": "Capability model, not a maturity ladder",
+      "x": "For two decades the staged software maturity model — the CMM and its CMMI successor — was the dominant frame for engineering quality: rank an organization on a five-rung ladder and tell it to climb.",
+      "y": "The staged model drew a documented critique — software capability evaluations grade process conformance in place of the outcomes the process was meant to produce, and under pressure the ladder decays into box-ticking (Bollinger & McGowan).",
+      "z": "MAGE is a capability model, not a maturity ladder: a project's current bottleneck selects the next modeling or governance capability it needs, so no rung becomes the goal.",
+      "target_locations": ["6.0-toward-a-theory-of-mage"],
+      "citations": [
+        {"key": "bollinger1991critical", "backs_claims": ["maturity-model-box-ticking"], "relation": "substantiates"}
+      ],
+      "advances_theses": ["govern-the-environment"],
+      "status": "landed",
+      "fold_target": "",
+      "notes": "Registers + backs the S3 CMM box-ticking claim (6.0:229) per the author's CITE ruling. Bollinger & McGowan, 'A Critical Look at Software Capability Evaluations', IEEE Software 8(4):25-41, 1991 (DOI 10.1109/52.300034; IEEE Software 25th-anniversary Top Pick) documents the process-conformance-over-outcomes + box-ticking failure mode — relation=substantiates. backs_claims binds the DISCUSSION claim maturity-model-box-ticking (registered in discussion-claims.json). The cite marker [cite: bollinger1991critical] is in 6.0 prose at the box-ticking sentence. NOTE: 6.0 is a backmatter chapter (LP3's _chapter_text globs book/part*/ only), so LP3 reports this landed cite as not-appearing-in-a-target-chapter (audit-only, non-gating) — the single-case-methodology precedent."
     }
   ]
 }

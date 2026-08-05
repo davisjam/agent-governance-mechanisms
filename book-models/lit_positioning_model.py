@@ -46,6 +46,8 @@ import re
 import sys
 from dataclasses import asdict, dataclass, field
 
+from _book_pages import book_page_slugs  # shared chapter-page-slug resolver (extract-on-2nd-site)
+
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)  # the catalogue root — book/ lives beneath it
 _ARTIFACT = os.path.join(_HERE, "lit-positioning.json")
@@ -141,12 +143,26 @@ class LitPositioningModel:
 # ---- join sources (read at check time — single source of truth, no snapshot) ------------------------
 
 def _spine_ids() -> "set[str]":
-    """The join target for LP2 + LP6 — every argument-spine claim id, read from the hand-authored spine
-    declared source at check time."""
+    """Every argument-spine claim id, read from the hand-authored spine declared source at check time."""
     if not os.path.isfile(_SPINE_DECLARED):
         return set()
     data = json.load(open(_SPINE_DECLARED, encoding="utf-8"))
     return {c["id"] for c in data.get("spine", [])}
+
+
+def _claim_ids() -> "set[str]":
+    """The join target for LP2 + LP6 — the full claim universe a citation may nest under: the argument-spine
+    claims PLUS the theory nodes PLUS the discussion claims. A lit-positioning citation legitimately backs a
+    DISCUSSION claim (a reality-claim in the book's Discussion prose) or a THEORY node, not only a spine
+    claim, so the resolvable set is the same universe the substantiation aggregator joins over — one source of
+    truth, no drift. Robust to substantiation's absence (falls back to the spine alone)."""
+    ids = _spine_ids()
+    try:
+        import substantiation  # sibling book-model; the claim-universe SSoT
+        ids = ids | substantiation._theory_ids() | substantiation._discussion_ids()
+    except Exception:  # noqa: BLE001 — degrade to spine-only if the aggregator is unavailable; LP is audit-only
+        pass
+    return ids
 
 
 def _bib_keys() -> "set[str]":
@@ -158,13 +174,16 @@ def _bib_keys() -> "set[str]":
 
 
 def _chapter_slugs() -> "set[str]":
-    """The join target for LP4 — every book chapter slug. Taken from the argument-spine's chapter labels
-    (exhaustive over the outline by AS5), which covers Part 0 and Part 6 chapters the book/part*/ glob does
-    not carry as files. Read at check time."""
-    if not os.path.isfile(_SPINE_DECLARED):
-        return set()
-    data = json.load(open(_SPINE_DECLARED, encoding="utf-8"))
-    return set(data.get("chapter_advances", {}))
+    """The join target for LP4 — every book chapter slug. The UNION of two sources: (1) the argument-spine's
+    chapter labels (exhaustive over the outline by AS5, so it covers chapters carried only in the outline),
+    and (2) the on-disk chapter files (the shared `_book_pages` resolver the sibling models use), so any real
+    chapter page — e.g. a backmatter chapter the spine's chapter_advances map does not enumerate — resolves.
+    The union only widens the valid set, so it can never introduce an LP4 finding. Read at check time."""
+    slugs: "set[str]" = set(book_page_slugs())
+    if os.path.isfile(_SPINE_DECLARED):
+        data = json.load(open(_SPINE_DECLARED, encoding="utf-8"))
+        slugs |= set(data.get("chapter_advances", {}))
+    return slugs
 
 
 def _chapter_text(slug: str) -> str:
@@ -192,7 +211,7 @@ def derive_model() -> LitPositioningModel:
     """Build the model from the hand-authored declarations — the single derivation regen and the drift check
     share. Order is the authored order (the §-number order), so the artifact is deterministic."""
     decl = _load_declared()
-    spine = _spine_ids()
+    claims = _claim_ids()
     bib = _bib_keys()
     chapters = _chapter_slugs()
     interventions: list[Intervention] = []
@@ -201,7 +220,7 @@ def derive_model() -> LitPositioningModel:
             key=c["key"], backs_claims=list(c.get("backs_claims", [])), relation=c.get("relation", ""),
             illustrates_pattern=c.get("illustrates_pattern", ""),
             resolves_bib=c["key"] in bib,
-            backs_resolve=all(cid in spine for cid in c.get("backs_claims", [])) and bool(c.get("backs_claims")),
+            backs_resolve=all(cid in claims for cid in c.get("backs_claims", [])) and bool(c.get("backs_claims")),
         ) for c in r.get("citations", [])]
         locs = list(r.get("target_locations", []))
         theses = list(r.get("advances_theses", []))
@@ -213,7 +232,7 @@ def derive_model() -> LitPositioningModel:
             status=r.get("status", "planned"), fold_target=r.get("fold_target", ""),
             notes=r.get("notes", ""),
             locations_resolve=[slug in chapters for slug in locs],
-            theses_resolve=[tid in spine for tid in theses],
+            theses_resolve=[tid in claims for tid in theses],
         )
         # LP3 derived: a landed record's cites appear in at least one target chapter's source.
         if iv.status == "landed":
@@ -234,7 +253,7 @@ def structural_findings(model: "LitPositioningModel | None" = None) -> "list[str
     chapters reddens."""
     if model is None:
         model = derive_model()
-    spine = _spine_ids()
+    claims = _claim_ids()
     chapters = _chapter_slugs()
     findings: "list[str]" = []
 
@@ -258,13 +277,13 @@ def structural_findings(model: "LitPositioningModel | None" = None) -> "list[str
                 findings.append(f"LP1 intervention {iv.id!r} citation {c.key!r} relation {c.relation!r} "
                                 f"not in {RELATIONS}")
             if not c.backs_claims:
-                findings.append(f"LP1 intervention {iv.id!r} citation {c.key!r} backs no spine claim")
+                findings.append(f"LP1 intervention {iv.id!r} citation {c.key!r} backs no claim")
 
-    # LP2 - thesis join: every advances_theses id resolves to a real spine claim.
+    # LP2 - thesis join: every advances_theses id resolves to a real claim (spine, theory, or discussion).
     for iv in model.interventions:
         for tid in iv.advances_theses:
-            if tid not in spine:
-                findings.append(f"LP2 intervention {iv.id!r} advances unknown spine claim {tid!r}")
+            if tid not in claims:
+                findings.append(f"LP2 intervention {iv.id!r} advances unknown claim {tid!r}")
 
     # LP3 - landing integrity (LANDED records only; planned are PENDING, reported by the CLI).
     bib = _bib_keys()
@@ -287,12 +306,13 @@ def structural_findings(model: "LitPositioningModel | None" = None) -> "list[str
             if slug not in chapters:
                 findings.append(f"LP4 intervention {iv.id!r} target_location {slug!r} is not a book chapter")
 
-    # LP6 - citation join: every backs_claims id resolves to a real spine claim.
+    # LP6 - citation join: every backs_claims id resolves to a real claim (spine, theory, or discussion — the
+    # substantiation aggregator's full universe; a citation may nest under a discussion claim, not only a spine one).
     for iv in model.interventions:
         for c in iv.citations:
             for cid in c.backs_claims:
-                if cid not in spine:
-                    findings.append(f"LP6 intervention {iv.id!r} citation {c.key!r} backs unknown spine "
+                if cid not in claims:
+                    findings.append(f"LP6 intervention {iv.id!r} citation {c.key!r} backs unknown "
                                     f"claim {cid!r}")
     return findings
 

@@ -217,6 +217,74 @@ Skip this pass for agent-facing docs. Run it only on catalogue entries, against 
   concrete file the reader can't see. **Fix:** state the conceptual mechanism; name a real artifact at
   most once, for grounding, in a way that stays understandable without it.
 
+## Pass 7 — Reality-claim registration (book Discussion / Future prose)
+
+Run this pass only on **book prose that argues about the world** — the Discussion, Implications, and
+Future-work material (the Ch-6 backmatter, the end-of-part syntheses, any passage that reaches past the
+DocAble case). Skip it for catalogue entries and for tutorial/reference prose that only explains the
+apparatus.
+
+**Why this pass exists.** The book carries a mechanized substantiation check: it reads the registered
+claim universe (the argument spine + the theory nodes) and flags any registered reality-claim that has no
+backing and no honest speculative frame — a **soapbox** claim. That check only sees *registered* claims. A
+sweeping assertion sitting in Discussion prose, in no model, is invisible to it. This pass is the human
+half of the loop: **it finds the unregistered reality-claims the mechanized check cannot see, so they can
+be registered.** Once a claim is registered — with a frame and a backing — the mechanized check holds the
+line on it thereafter. The audit finds the orphan; the model keeps it honest. Soft finds it, hard holds it.
+
+**Detect.** Read the passage for a **sweeping claim about the world** — a statement asserted as fact that
+reaches beyond the DocAble case and beyond the literature the passage already cites. Three shapes recur:
+
+- **Historical / causal.** A claim about *why* something in the field happened — "the movement arose
+  because…", "the field spent decades doing X". It asserts a cause or a history, not an observation of this
+  project.
+- **Empirical / prevalence.** A claim about what is *generally* true across the field — "practices of this
+  kind fail under pressure", "this rarely shows an effect". It quantifies or generalizes over cases the book
+  did not measure.
+- **Verb-mismatch.** A claim whose verb over-reaches its evidence — prose that says a source *establishes*
+  or *proves* something the book's own model records as *convergent* or *situating* evidence. The verb
+  claims more than the backing licenses.
+
+For each candidate, confirm one of two things holds, or flag it:
+
+1. It is **registered** in the claim model with a `frame` and a backing — a DocAble datum, a literature
+   citation, or a lived field note.
+2. It carries an **honest frame in the prose itself** — offered as a hypothesis for replication, scoped to
+   the single case, or hedged as a possibility / the author's stated reading.
+
+If neither holds, it is a **soapbox orphan**: a reality-claim, asserted flat, backed by nothing and hedged
+by nothing, invisible to the mechanized check. That is the finding.
+
+**What counts / what doesn't.** Aim the pass; do not let it fire on ordinary prose.
+
+- **Counts:** a sweeping historical, empirical, or causal assertion about the field or the world — the
+  three shapes above. The test is *"does this assert something a reader could dispute on the evidence, that
+  the passage does not back or hedge?"*
+- **Does not count:** ordinary connective prose ("so the next section turns to…"); definitions and
+  restatements of the book's own terms; a claim already backed by a citation or datum in the same passage; a
+  claim already hedged in the prose ("I read this as…", "a hypothesis this case cannot settle", "on this one
+  project"); and the author's openly-marked standpoint ("the claim I want to make loudly is…") — that last
+  is a *knowing* reality-claim, not a hidden one, but note it so the author can decide to register it as
+  such (see the fix).
+
+**Fix.** A soapbox orphan is registered or reframed — three moves, the author's call which:
+
+- **Cite it.** Add a literature citation (or a DocAble datum) that backs the claim, then register the claim
+  in the model with that citation bound as its backing. The claim keeps its `reality` frame because it now
+  has evidence. Best when the claim is load-bearing and a real source exists.
+- **Hedge it.** Reframe the sentence in the prose as offered / single-case / a possibility / the author's
+  reading, and register the claim with the matching non-`reality` frame. Best when no clean source exists
+  but the claim earns a place as an offered idea.
+- **Register it loud, or cut it.** If the author means to assert it flat with no external source, register
+  it as a `reality` claim and accept that it shows on the soapbox report — the report is a visibility tool,
+  not a gate, and a knowingly-owned assertion sitting there is honest. If it earns neither a cite nor a
+  frame nor an owned standpoint, cut it.
+
+**Report shape.** Fold soapbox-orphan findings into the audit report's **first tier** (Correctness &
+interpretability). Each finding: quote the sentence, name which of the three shapes it is, and state the
+fix as one of the three moves above. A soapbox orphan is a correctness finding, not a voice nitpick — it is
+a claim the book asserts and cannot yet stand behind.
+
 ---
 
 ## Prioritization — rank the findings

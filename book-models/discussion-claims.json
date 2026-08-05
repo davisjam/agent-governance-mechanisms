@@ -1,0 +1,29 @@
+{
+  "_provenance": "HAND-AUTHORED discussion-claims ledger — the reality-asserting claims that live in the book's Discussion / Implications / Future prose and belong to NO other model (not an ordered spine claim, not a theory hypothesis / corollary / research-agenda node). substantiation.py reads this at query time as a THIRD source of the claim universe, symmetric with the spine and the theory. Each claim registers with a `frame` and is backed via the SAME id-join machinery every other claim uses: a data-claims entry's spine_claim(s), a lit-positioning citation's backs_claims, or a field-note's backs_claims may list a discussion-claim id. The default frame is `reality` — a Discussion reality-claim owes backing (unlike the theory nodes, which default to offered-for-replication under the chapter's global hedge). Adding a claim here makes it VISIBLE to the SOAPBOX report; the prose-audit pass (writing/audit.md Pass 7) is what FINDS the claims to add.",
+
+  "_note": "SEEDED with three of the four soapbox candidates the hand-audit (theory-traceability design Part C) found: S2 (empirical-SE-decades) and S4 (build-reports verb) — both already prose-fixed, registered here with literature backing bound in lit_positioning_declared.json; and S3 (CMM box-ticking) — registered per the author's CITE ruling, backed by the Bollinger & McGowan critique bound in lit_positioning_declared.json. S1 (Agile-origin) is deliberately NOT registered here — the author is still deciding hybrid-cite vs pure-conjecture; leaving it unregistered keeps it off the SOAPBOX report until the ruling, and the Pass-7 audit keeps it visible in the meantime.",
+
+  "discussion_claims": [
+    {
+      "id": "empirical-se-signal-to-noise",
+      "statement": "For decades empirical software engineering could rarely show a process effect much bigger than the variation among developers; the intelligence, skill, and context confounds swamped the signal.",
+      "chapter_slug": "6.1-implications-for-se",
+      "reality_claim": true,
+      "frame": "reality"
+    },
+    {
+      "id": "build-reports-corroborate-practices",
+      "statement": "Independent practitioner build reports converge on the moves this book teaches — heavy testing, spec-driven development, an environment that enforces its own rules — corroborating that the practices work.",
+      "chapter_slug": "6.1-implications-for-se",
+      "reality_claim": true,
+      "frame": "reality"
+    },
+    {
+      "id": "maturity-model-box-ticking",
+      "statement": "The staged maturity model (CMM/CMMI), under pressure, decays into box-ticking — reaching a level stands in for shipping better software.",
+      "chapter_slug": "6.0-toward-a-theory-of-mage",
+      "reality_claim": true,
+      "frame": "reality"
+    }
+  ]
+}
