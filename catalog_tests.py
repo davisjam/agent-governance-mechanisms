@@ -77,6 +77,7 @@ from tests.html import (
     check_html_links,
     check_no_duplicate_ids,
     check_no_empty_table_header,
+    check_no_link_dpub_role_on_nonanchor,
     check_no_notation_leak,
     check_summary_no_flow_content,
 )
@@ -118,6 +119,12 @@ CHECKS = [
     Check("html: no flow content under <summary> (stdlib twin of T2 element-permitted-content)", 1, lambda strict: check_summary_no_flow_content()),
     Check("html: no empty <th> (stdlib twin of T2 empty-table-header)", 1, lambda strict: check_no_empty_table_header()),
     Check("html: no book notation leaks (whole-vocabulary; marker / {{token}} / [+emph+])", 1, lambda strict: check_no_notation_leak()),
+    # BLOCKING (green at landing): a link-derived DPUB-ARIA role (doc-noteref / doc-biblioref / doc-glossref
+    # / doc-backlink) on a non-<a> element — axe's aria-allowed-role rejects it, and it once blocked a
+    # publish when the note-marker renderer put doc-noteref on a bare <sup>. A deterministic Tier-1 twin of
+    # that ~88s browser pass, so the class can't regress without paying for axe. See tests/html.py.
+    Check("html: no link-derived DPUB role on a non-<a> element (stdlib twin of axe aria-allowed-role)", 1,
+          lambda strict: check_no_link_dpub_role_on_nonanchor()),
     Check("book: no stray HTML comments in source (source-side twin of notation-leak; stray-book-comment)", 1, lambda strict: check_no_stray_comments()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),
