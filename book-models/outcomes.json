@@ -30,7 +30,7 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 259,
+    "sections_total": 262,
     "sections_primary_of_an_outcome": 41,
     "modules": 6,
     "lessons": 33
@@ -325,7 +325,7 @@
               "4.1-brownfield::apply-three-approaches-to-inducing-a-model-fro"
             ],
             "section_outcomes": [
-              "the-starting-point-and-the-destination::name-both-ends-before-you-move"
+              "the-starting-point-and-the-destinations::name-the-starting-point-and-both-destinations"
             ]
           },
           {
@@ -1397,16 +1397,16 @@
       "gap_note": null
     },
     {
-      "outcome_id": "the-starting-point-and-the-destination::name-both-ends-before-you-move",
+      "outcome_id": "the-starting-point-and-the-destinations::name-the-starting-point-and-both-destinations",
       "granularity": "section",
-      "primary_unit": "the-starting-point-and-the-destination",
+      "primary_unit": "the-starting-point-and-the-destinations",
       "secondary_units": [],
       "verb": "name",
-      "obj": "both ends before you move",
-      "statement": "After this section, the reader can name both ends before you move.",
+      "obj": "the starting point and both destinations before you move",
+      "statement": "After this section, the reader can name the starting point and both destinations before you move.",
       "bloom": "know",
       "provenance": "derived",
-      "anchor": "ts: Name both ends before you move.",
+      "anchor": "ts: Name the starting point and both destinations before you move.",
       "gap_note": null
     },
     {

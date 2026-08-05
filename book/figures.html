@@ -549,7 +549,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-d-operators-dashboard.html">Appendix D - 1. The Operator's Dashboard</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 74 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 75 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
      role="group" aria-labelledby="fig-0-1-1-mmTitle fig-0-1-1-mmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-0-1-1-mmTitle">The MAGE method at a glance</title>
@@ -2768,11 +2768,101 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- ===== Caption spine ===== -->
   <text x="40" y="672" font-size="18" font-style="italic" font-weight="700" fill="#1c1917">Derived defends, snapshotted drifts — and what isn't modeled can't drift-check.</text>
-</svg><figcaption data-short="The Two-Layer Net"><span class="fig-label">Figure 3.8-1.</span> <em>The Two-Layer Net.</em> The model↔code gap spanned by two layers, with two escape hatches drawn as gaps in the net. Derived defends, snapshotted drifts — and what isn't modeled can't drift-check.</figcaption></figure><p class="gallery-source">From <a href="3.8-keeping-models-in-sync.html#fig-3-8-1">19 · Keeping the Models in Sync with the Code — A Measurement</a></p></section><hr><section class="gallery-item"><figure id="fig-4-1-1-fig-4-1-1" class="book-figure" data-label="squash-zero-promote"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420"
-     role="group" aria-labelledby="fig-4-1-1-szpTitle fig-4-1-1-szpDesc"
+</svg><figcaption data-short="The Two-Layer Net"><span class="fig-label">Figure 3.8-1.</span> <em>The Two-Layer Net.</em> The model↔code gap spanned by two layers, with two escape hatches drawn as gaps in the net. Derived defends, snapshotted drifts — and what isn't modeled can't drift-check.</figcaption></figure><p class="gallery-source">From <a href="3.8-keeping-models-in-sync.html#fig-3-8-1">19 · Keeping the Models in Sync with the Code — A Measurement</a></p></section><hr><section class="gallery-item"><figure id="fig-4-1-1-fig-4-1-1" class="book-figure" data-label="wiki-linkage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540"
+     role="group" aria-labelledby="fig-4-1-1-wlTitle fig-4-1-1-wlDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-4-1-1-szpTitle">Squash, zero, promote: how a lint is worn into a legacy tree one step at a time</title>
-  <desc id="fig-4-1-1-szpDesc">A new smell-detecting lint moves through three states, left to right. First it
+  <title id="fig-4-1-1-wlTitle">The wiki is the model you already have</title>
+  <desc id="fig-4-1-1-wlDesc">Two panels drawn to the same shape. On the left, a drifted wiki: a wiki
+    page joins down to the code and tests that realize it, but the back-links from code and
+    tests up to the page are missing, and one code region is an orphan with no page at all —
+    a weakly typed, incomplete join. On the right, the model you build: a typed model node
+    with a complete round-trip join to the same code and tests, held in place by a drift gate.
+    A gutter arrow shows the left maturing into the right through the staged migration.</desc>
+
+  <defs>
+    <marker id="fig-4-1-1-wl-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+    <marker id="fig-4-1-1-wl-ah-weak" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== LEFT PANEL — the drifted wiki ===================== -->
+  <text x="239" y="52" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">The model you already have</text>
+  <rect x="24" y="68" width="430" height="448" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
+
+  <!-- wiki page -->
+  <rect x="144" y="98" width="190" height="66" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="239" y="128" text-anchor="middle" font-size="20" font-weight="700" fill="#9a3f12">Wiki page</text>
+  <text x="239" y="150" text-anchor="middle" font-size="13" fill="#57534e">a claim about the system</text>
+
+  <!-- code + tests -->
+  <rect x="54" y="330" width="168" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="138" y="366" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Code</text>
+
+  <rect x="256" y="330" width="168" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="340" y="366" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Tests</text>
+
+  <!-- orphan: code with no page -->
+  <rect x="256" y="428" width="168" height="56" rx="8" fill="#f6f4ef" stroke="#57534e" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="340" y="452" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Orphan region</text>
+  <text x="340" y="472" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">no page at all</text>
+
+  <!-- page -> code: solid (the link that usually exists) -->
+  <path d="M205,166 C170,230 150,270 140,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-4-1-1-wl-ah)"/>
+  <text x="120" y="250" text-anchor="end" font-size="14" font-style="italic" fill="#57534e">explains</text>
+
+  <!-- code -> page: dashed, the missing back-link -->
+  <path d="M175,326 C205,268 230,220 262,168" fill="none" stroke="#57534e" stroke-width="1.7" stroke-dasharray="6 5" marker-end="url(#fig-4-1-1-wl-ah-weak)"/>
+  <text x="248" y="250" text-anchor="start" font-size="13.5" font-style="italic" fill="#57534e">back-link missing</text>
+
+  <!-- page -> tests: dashed, partial -->
+  <path d="M300,166 C330,240 340,280 340,324" fill="none" stroke="#57534e" stroke-width="1.7" stroke-dasharray="6 5" marker-end="url(#fig-4-1-1-wl-ah-weak)"/>
+
+  <text x="239" y="504" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">weakly typed · join incomplete</text>
+
+  <!-- ===================== GUTTER — matures into ===================== -->
+  <path d="M460,292 L544,292" fill="none" stroke="#1c1917" stroke-width="2.5" marker-end="url(#fig-4-1-1-wl-ah)"/>
+  <text x="502" y="280" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">matures</text>
+
+  <!-- ===================== RIGHT PANEL — the model you build ===================== -->
+  <text x="761" y="52" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">The model you build</text>
+  <rect x="550" y="68" width="430" height="448" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
+
+  <!-- model node -->
+  <rect x="666" y="98" width="190" height="66" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="761" y="128" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Model node</text>
+  <text x="761" y="150" text-anchor="middle" font-size="13" fill="#57534e">invariant · state machine</text>
+
+  <!-- code + tests -->
+  <rect x="580" y="330" width="168" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="664" y="366" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Code</text>
+
+  <rect x="782" y="330" width="168" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="866" y="366" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">Tests</text>
+
+  <!-- model <-> code: complete round-trip join (both ends) -->
+  <path d="M712,166 C676,232 660,272 655,324" fill="none" stroke="#1c1917" stroke-width="2"
+        marker-start="url(#fig-4-1-1-wl-ah)" marker-end="url(#fig-4-1-1-wl-ah)"/>
+  <text x="636" y="252" text-anchor="end" font-size="13.5" font-style="italic" fill="#57534e">round-trip</text>
+
+  <!-- model <-> tests: complete round-trip join (both ends) -->
+  <path d="M810,166 C846,232 862,272 866,324" fill="none" stroke="#1c1917" stroke-width="2"
+        marker-start="url(#fig-4-1-1-wl-ah)" marker-end="url(#fig-4-1-1-wl-ah)"/>
+  <text x="886" y="252" text-anchor="start" font-size="13.5" font-style="italic" fill="#57534e">round-trip</text>
+
+  <!-- drift gate straddling the joins (hexagon) -->
+  <polygon points="700,432 727,405 835,405 862,432 835,459 727,459"
+           fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="781" y="438" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Drift gate</text>
+
+  <text x="761" y="504" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">typed · gate-enforced</text>
+</svg><figcaption data-short="The wiki is the model you already have"><span class="fig-label">Figure 4.1-1.</span> <em>The wiki is the model you already have.</em> Pages, links, and backlinks already form a graph; the first move joins it down to code and tests, the same round-trip join a structured model carries. Audit, Synchronize, Govern, and Extend mature the left panel into the right.</figcaption></figure><p class="gallery-source">From <a href="4.1-brownfield.html#fig-4-1-1">20 · Brownfield</a></p></section><hr><section class="gallery-item"><figure id="fig-4-1-2-fig-4-1-2" class="book-figure" data-label="squash-zero-promote"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420"
+     role="group" aria-labelledby="fig-4-1-2-szpTitle fig-4-1-2-szpDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-4-1-2-szpTitle">Squash, zero, promote: how a lint is worn into a legacy tree one step at a time</title>
+  <desc id="fig-4-1-2-szpDesc">A new smell-detecting lint moves through three states, left to right. First it
     lands audit-only: it reports every finding but blocks no commit, so it never breaks an in-flight
     agent. Then a fix wave — an agent making behavior-preserving edits under test coverage — drains
     the finding count to zero; this is a loop that runs under the audit-only state until nothing is
@@ -2782,11 +2872,11 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
     smells that leave stay gone.</desc>
 
   <defs>
-    <marker id="fig-4-1-1-szpArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+    <marker id="fig-4-1-2-szpArrow" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
       <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#1c1917"/>
     </marker>
-    <marker id="fig-4-1-1-szpArrowRed" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
+    <marker id="fig-4-1-2-szpArrowRed" markerWidth="9" markerHeight="9" refX="7" refY="3.2"
             orient="auto" markerUnits="userSpaceOnUse">
       <path d="M0,0 L8,3.2 L0,6.4 Z" fill="#b23b3b"/>
     </marker>
@@ -2812,7 +2902,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <text x="845" y="172" text-anchor="middle" font-size="16" fill="#1c1917">fails a regressing commit</text>
 
   <!-- edges along the spine -->
-  <g fill="none" stroke="#1c1917" stroke-width="2.5" marker-end="url(#fig-4-1-1-szpArrow)">
+  <g fill="none" stroke="#1c1917" stroke-width="2.5" marker-end="url(#fig-4-1-2-szpArrow)">
     <path d="M82,150 L128,150"/>
     <path d="M360,150 L428,150"/>
     <path d="M660,150 L728,150"/>
@@ -2821,18 +2911,18 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <text x="695" y="140" text-anchor="middle" font-size="16" fill="#57534e">at zero</text>
 
   <!-- fix-wave loop under the middle state -->
-  <g fill="none" stroke="#2f5169" stroke-width="2.5" marker-end="url(#fig-4-1-1-szpArrow)">
+  <g fill="none" stroke="#2f5169" stroke-width="2.5" marker-end="url(#fig-4-1-2-szpArrow)">
     <path d="M490,190 C460,250 630,250 600,192"/>
   </g>
   <text x="545" y="268" text-anchor="middle" font-size="18" font-style="italic" fill="#2f5169">behavior-preserving fixes, under test coverage</text>
 
   <!-- one-way barrier after blocking: the class can't return -->
   <line x1="972" y1="96" x2="972" y2="204" stroke="#b23b3b" stroke-width="4"/>
-  <g fill="none" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#fig-4-1-1-szpArrowRed)">
+  <g fill="none" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#fig-4-1-2-szpArrowRed)">
     <path d="M845,206 C845,240 940,240 966,206"/>
   </g>
   <text x="852" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">the smell can never return</text>
-</svg><figcaption data-short="Audit, Drain, Promote"><span class="fig-label">Figure 4.1-1.</span> <em>Audit, Drain, Promote.</em> A new lint lands audit-only — every finding reported, no commit blocked, so it never breaks an in-flight agent. A fix wave drains it to zero, and only then is it promoted to blocking, so the class of smell can never return.</figcaption></figure><p class="gallery-source">From <a href="4.1-brownfield.html#fig-4-1-1">20 · Brownfield</a></p></section><hr><section class="gallery-item"><figure id="fig-4-2-1-fig-4-2-1" class="book-figure" data-label="three-skills"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 620"
+</svg><figcaption data-short="Audit, Drain, Promote"><span class="fig-label">Figure 4.1-2.</span> <em>Audit, Drain, Promote.</em> A new lint lands audit-only — every finding reported, no commit blocked, so it never breaks an in-flight agent. A fix wave drains it to zero, and only then is it promoted to blocking, so the class of smell can never return.</figcaption></figure><p class="gallery-source">From <a href="4.1-brownfield.html#fig-4-1-2">20 · Brownfield</a></p></section><hr><section class="gallery-item"><figure id="fig-4-2-1-fig-4-2-1" class="book-figure" data-label="three-skills"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 620"
      role="group" aria-labelledby="fig-4-2-1-tsTitle fig-4-2-1-tsDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-4-2-1-tsTitle">Three skills as complements around one substrate</title>

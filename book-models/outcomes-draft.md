@@ -164,7 +164,7 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 ### Lesson 4.1-brownfield
 
 - **[DECLARED]** (apply) After this chapter, the reader can apply top-down, bottom-up, and lint-cover-then-induce approaches to bring a brownfield codebase under a model. — _anchor: Section titles 'approach-one-top-down-...', 'approach-two-bottom-up-inducing-the-model-from-code', 'approach-three-lint-cover-then-induce'._
-  - **[DERIVED]** (know) After this section, the reader can name both ends before you move. — _anchor: ts: Name both ends before you move._
+  - **[DERIVED]** (know) After this section, the reader can name the starting point and both destinations before you move. — _anchor: ts: Name the starting point and both destinations before you move._
 
 ### Lesson 4.2-the-skills
 

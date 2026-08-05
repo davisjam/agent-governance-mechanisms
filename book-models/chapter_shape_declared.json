@@ -560,8 +560,8 @@
         ],
         "artifact_would_help": false
       },
-      "note": "Failure: most readers stare at brownfield + agent-worsened sprawl; answer: the recipe, step by step; 'model-based engineering environment' implicit thesis-link. Closes on the 300k->200k scar evidence — concrete consequence.",
-      "opening_anchor": "Everything so far has assumed a clean start. Greenfield is the easy",
+      "note": "Failure: most readers stare at brownfield + agent-worsened sprawl; answer: start from the wiki you already have — treat the drifted wiki as an immature model, connect it round-trip, then mature it (Audit/Synchronize/Govern/Extend) toward the executable models the earlier Parts built; 'model-based engineering environment' implicit thesis-link (modeling). Closes on the 300k->200k scar evidence — concrete consequence.",
+      "opening_anchor": "You have the mindset, the governed environment, and the models; this Part",
       "closing_anchor": "it, and enforcement holding all three together every time the code changes."
     },
     {
