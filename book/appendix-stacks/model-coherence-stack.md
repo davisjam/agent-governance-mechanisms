@@ -197,6 +197,52 @@ cannot quietly fall behind their source.
 The whole stack leans on one presumption: consumers read live and mutations route through the sanctioned
 surface. A smuggled snapshot or an escaped raw call is where it weakens — each held by its own lint.
 
+## Choosing a rung for one fact — hold the join at the highest affordable rung
+
+The stack's parts are also a **strength ladder for a single fact that lives on two surfaces.** Whenever the
+same fact is written in two places — a value in the model and a copy in the code, a spec and a sample, a
+status recorded once and read somewhere else — the two can fall out of step. The parts above say how firmly
+you can hold them together, strongest first:
+
+- **UNIFY (strongest) — no second surface at all.** Keep the fact in exactly one place, as executable data
+  (the **DATA** rung). There is no join to hold because there is no copy. The compiler, not a gate, keeps it
+  honest.
+- **CODEGEN — generate the second surface.** Where a second artifact must exist, emit it from the first
+  (the **EMIT** rung), with a provenance header. The copy is regenerated, not hand-authored, so it cannot be
+  edited into disagreement — a stray hand-edit is reverted on the next run.
+- **DERIVE — compute the join.** Where both surfaces are genuinely authored, anchor the edge between them on
+  a resolvable symbol a lint re-checks (the **DERIVE** rung). Move the code and the scan reddens; the join
+  cannot break in silence.
+- **PARITY — assert the join.** Where you cannot compute the edge, a deterministic lint asserts the two
+  surfaces match and fails the build when they diverge (the **PARITY** rung). Both surfaces are hand-kept;
+  the gate catches the drift after the fact.
+- **comment (holds nothing).** A note that says "keep these in sync" is the bottom of the ladder. It records
+  the obligation and enforces none of it — the two surfaces drift the first time someone touches one and not
+  the other.
+
+**The rule: for each two-surface fact, hold the join at the highest rung the two boundaries afford** — not
+the highest rung imaginable. Some facts cannot climb. A config value and its documented sample must exist
+as two real artifacts on two sides of a boundary; a model row and the code it governs are legitimately
+separate. Those honest non-climbs are sanctioned — you hold them at PARITY or DERIVE and stop. What the rule
+forbids is holding a join *below* its affordable rung: a fact synced by a comment that a parity gate could
+have caught, a hand-mirrored pair that codegen could have generated, two copies that agree only because
+nobody has touched either yet.
+
+**A join held below its affordable rung is a latent drift class, and a close-time audit treats it as a
+failure.** The reflex to reach for, whenever a change puts the *second* copy of a fact on disk, is to ask
+which rung this pair can climb to and hold it there. The close-time review that keeps an effort honest (the
+*derived defends, snapshotted drifts* discipline behind the Definition-of-Done) makes the same check at the
+end: a fact left on a weaker rung than it afforded is flagged, not shipped. An audit of one such review pass
+found most of its drift instances were exactly this defect — a join a rung too low — rather than an
+outright missing check.
+
+The everyday shape is a **status or summary field that is read to make a decision but written by hand.** Left
+as a hand-edited line, it drifts the moment real work moves past it and the next reader trusts a stale value.
+Derive it instead from the artifacts that already record the truth — a projection over the underlying files
+and history — and it cannot drift, because there is no second surface to fall behind. That is the ladder
+applied to one field: climb from a hand-kept copy (comment rung) to a derived projection (UNIFY/DERIVE) and
+the whole drift class closes.
+
 ## The full treatment
 
 Each constituent links to its full pattern — in this appendix for the flagship members, online for the rest.
