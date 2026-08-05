@@ -48,7 +48,7 @@ book/
   part3/          3.1-… … 3.4-…                             (Part 3 — The Governed Engineering Environment)
   part4/          4.1-… … 4.6-…                             (Part 4 — The Model Zoo)
   part5/          5.1-… … 5.5-…                             (Part 5 — Putting It to Work)
-  backmatter/     6.1-conclusion.md                         (Part 6 — Back Matter)
+  backmatter/     6.2-conclusion.md                         (Part 6 — Back Matter)
   data/metrics.json          # headline numbers, referenced from prose via {{token}}
   assets/                     # figure assets (inline SVGs, rasters)
   appendix-fills/<role>/<slug>.md   # per-entry Structure + Sample Code fills for the appendix

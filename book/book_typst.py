@@ -876,6 +876,10 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 #show figure: set block(above: 1.5em, below: 1.5em)
 #show figure.caption: set text(size: 0.9em, style: "italic", fill: dt.muted)
 #show figure.where(kind: table): set figure.caption(position: top)
+// A dense table (e.g. the seven-hypotheses table) can exceed one page; let a TABLE figure break across
+// pages so its rows flow to the next page instead of bleeding past the bottom margin. Image figures stay
+// atomic (unset), so a diagram is never split. The `fit-table` wrapper only scales genuinely-wide tables.
+#show figure.where(kind: table): set block(breakable: true)
 // Booktabs table style (matches the HTML book's Tufte/booktabs tables): a heavy top rule, a light rule
 // under the header, a heavy bottom rule — NO vertical rules or cell boxes. Whitespace separates columns.
 #set table(stroke: none, inset: (x: 8pt, y: 5pt))

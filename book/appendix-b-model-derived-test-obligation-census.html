@@ -473,10 +473,11 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="5.4-the-road-to-mage.html">29&nbsp; The Road to MAGE</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
-<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
-<li><a class="" href="6.2-about-the-author.html">About the Author</a></li>
-<li><a class="" href="6.3-colophon.html">Colophon</a></li>
-<li><a class="" href="6.4-the-operators-dashboard.html">The Operator's Dashboard</a></li>
+<li><a class="" href="6.1-toward-a-theory-of-mage.html">Toward a Theory of MAGE</a></li>
+<li><a class="" href="6.2-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
+<li><a class="" href="6.4-colophon.html">Colophon</a></li>
+<li><a class="" href="6.5-the-operators-dashboard.html">The Operator's Dashboard</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
 <li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
@@ -521,10 +522,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li>
-<li class="part">Appendix E — A Theory of MAGE</li>
-<li><a class="" href="appendix-theory-of-mage.html">Appendix E — A Theory of MAGE</a></li>
-<li><a class="" href="appendix-e-capability-model.html">Appendix E - 1. A Capability Model, Not a Maturity Model</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 21. Model-derived test-obligation census (derive what should be tested, lint the gap)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 21. Model-derived test-obligation census (derive what should be tested, lint the gap)</h1></header><p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/model-derived-test-obligation-census.html">system-models / Model-derived test-obligation census (derive what should be tested, lint the gap)</a>.</em></p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 21. Model-derived test-obligation census (derive what should be tested, lint the gap)"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 21. Model-derived test-obligation census (derive what should be tested, lint the gap)</h1></header><p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/model-derived-test-obligation-census.html">system-models / Model-derived test-obligation census (derive what should be tested, lint the gap)</a>.</em></p>
 <p><strong>Intent</strong> — Derive the set of things that <em>should</em> be tested from the structured models themselves — every external seam that should be fuzzed, every failure edge that should have an injection test, every invariant that should have a checker — and lint the gap between that derived obligation set and the tests that actually exist. Coverage stops being a percentage over lines you happened to write and becomes a walk over the model: an untested obligation is a named, listable finding, not an absence nobody notices.</p>
 <h2>Problem</h2>
 <p>Line coverage measures the code you wrote <em>and</em> tested; it is blind to the code you should have written a test for and didn't. The dangerous gaps are the ones nothing points at — an external seam never fuzzed, a failure edge with no injection test, a cross-service invariant with no checker. A percentage climbs toward a hundred while whole <em>categories</em> of obligation sit at zero, because coverage counts what exists and cannot count what's missing. And the obligation set is not static: every new seam, edge, and invariant adds one, and a coverage number never says "you added a thing that should be tested and didn't test it."</p>

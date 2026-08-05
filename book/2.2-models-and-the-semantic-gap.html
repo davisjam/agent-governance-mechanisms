@@ -473,10 +473,11 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="5.4-the-road-to-mage.html">29&nbsp; The Road to MAGE</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
-<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
-<li><a class="" href="6.2-about-the-author.html">About the Author</a></li>
-<li><a class="" href="6.3-colophon.html">Colophon</a></li>
-<li><a class="" href="6.4-the-operators-dashboard.html">The Operator's Dashboard</a></li>
+<li><a class="" href="6.1-toward-a-theory-of-mage.html">Toward a Theory of MAGE</a></li>
+<li><a class="" href="6.2-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
+<li><a class="" href="6.4-colophon.html">Colophon</a></li>
+<li><a class="" href="6.5-the-operators-dashboard.html">The Operator's Dashboard</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
 <li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
@@ -521,10 +522,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li>
-<li class="part">Appendix E — A Theory of MAGE</li>
-<li><a class="" href="appendix-theory-of-mage.html">Appendix E — A Theory of MAGE</a></li>
-<li><a class="" href="appendix-e-capability-model.html">Appendix E - 1. A Capability Model, Not a Maturity Model</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 7 · Models and the Semantic Gap"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 7</a></div><h1><span class="chap-num">2.2</span> Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject a mechanism. This one is about the most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. A model is the sweet spot between prose too vague to bind and code too verbose to reason over. But a model only helps if you check it where checking makes sense.</p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 7 · Models and the Semantic Gap"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 7</a></div><h1><span class="chap-num">2.2</span> Models and the Semantic Gap</h1></header><p>The last chapter gave you four places to inject a mechanism. This one is about the most valuable thing you can put there — a <em>model</em> — and about a trap that catches people the moment they try to enforce one: pushing on the model at the wrong level, and watching it slip. A model is the sweet spot between prose too vague to bind and code too verbose to reason over. But a model only helps if you check it where checking makes sense.</p>
 <h2><span class="sec-num">2.2.1</span> Words are soft, code is verbose, a model is the sweet spot</h2>
 <p id="idx-ex-injection-point-1">Your first governance mechanism is the prompt, because the agent is a language model and words are how you talk to it. But words are soft. They are ambiguous, and the more ambiguity you leave in, the less happy you will be. You can push the ambiguity down by writing documentation — describing the environment, the product, its goals, its policies — and if you were briefing a <em>human</em> team, that would be enough. Humans are not dumb; they remember, they know what matters, they know where to look things up, and they know they will be fired if they misbehave. Agents are different: brilliant reasoners who must be told exactly what to reason over, and for whom a loose document is simply not precise enough.</p>
 <p id="idx-def-model-as-map">Code is the opposite failure. Code is perfectly precise — it is exactly what will happen — but it is far too verbose to reason over in bulk. What you want sits between the two: something accurate and unambiguous, yet compact. The word for that thing is a <strong>model</strong>.</p>

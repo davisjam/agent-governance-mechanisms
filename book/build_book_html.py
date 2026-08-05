@@ -227,7 +227,7 @@ GLOSSARY_CHAPTER_SLUG = "0.2-the-books-language"
 # Operator's Dashboard (its metric table) is the second. The renderer frames these in a `.apparatus-page`
 # box (HTML) / a `#block` frame (Typst) — see the CSS `.apparatus-page` swap-point block and
 # `_APPARATUS_ONEPAGER_TITLES` in book_typst.py.
-_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book", "6.4-the-operators-dashboard"}
+_APPARATUS_ONEPAGER_SLUGS = {"0.4-how-to-read-this-book", "6.5-the-operators-dashboard"}
 _GLOSS_TERM_SLUGS = {
     "Model": "model",
     "Map and territory": "map-and-territory",
@@ -2327,7 +2327,7 @@ def _load_classification() -> dict[str, dict[str, str]]:
 
 def _load_print_manifest(cls: dict[str, dict[str, str]] | None = None) -> dict:
     """Read print-appendix-manifest.json → the declared print-projection deviations (`print_promotions`,
-    `intro_l1_principles`, `appendix_exclude`, `appendix_e`, `stack_compression`). Validate every slug it
+    `intro_l1_principles`, `appendix_exclude`, `skill_recipe`, `stack_compression`). Validate every slug it
     lists names a real catalogue entry, so a typo fails the build loud rather than silently dropping or
     inventing a flagship. Fail-loud if the file is missing."""
     if not _PRINT_MANIFEST_PATH.is_file():
@@ -2974,9 +2974,7 @@ def build_skill_recipe_chapters(part: int, for_print: bool = False,
     When the print manifest sets `skill_recipe == "pointer"` AND this is the print/PDF projection
     (`for_print=True`), the recipe collapses to the front-door alone plus a one-paragraph pointer to the full
     recipe online — the content page is dropped from print. The WEB build (`for_print=False`) always keeps
-    the full recipe, so the pointer's target stays live. (The manifest key was renamed from the legacy
-    `appendix_e` when the real Appendix E — A Theory of MAGE — claimed that letter; see
-    `build_theory_of_mage_chapters`.)"""
+    the full recipe, so the pointer's target stays live."""
     pages = [(stem, title) for stem, title in _SKILL_RECIPE_PAGES
              if (_SKILL_RECIPE_DIR / f"{stem}.md").is_file()]
     if not pages:
@@ -3024,94 +3022,6 @@ def build_skill_recipe_chapters(part: int, for_print: bool = False,
             "chapter": i,                       # sorts after the front-door's chapter 0
             "chapter_title": f"Appendix {letter} - {i}. {title}",
             "body_md": _fold_wrapped_bullets(raw.strip()),
-            "is_appendix": True,
-            "mermaid": False,
-        }
-        if locator_figs:
-            rec["fig_prefix"] = f"{letter}.{i}"
-        chapters.append(rec)
-    return chapters
-
-
-# ─────────────────────────── Appendix E — A Theory of MAGE ───────────────────────────
-# Hand-authored, like the stacks Part and the skill-recipe Part: two authored markdown chapters under
-# `appendix-theory-of-mage/` — the causal model (front-door, carrying the two figures) + the
-# capability-vs-maturity chapter (E.1). No catalogue projection; the theory is prose the author wrote, not a
-# mechanism map. Value-ordered (v2) projection only; landed behind the manifest `appendix_e` render mode.
-_THEORY_DIR = HERE / "appendix-theory-of-mage"
-
-# The front-door slug — the stable target of `[appendix: appendix-theory-of-mage]` cross-references,
-# independent of the appendix letter (mirrors `appendix-stacks` / `appendix-skill-recipe`).
-_APPENDIX_THEORY_OPENING_SLUG = "appendix-theory-of-mage"
-
-# The authored chapters in reading order → (page-slug stem, display title). The FIRST is the front-door
-# (chapter 0, titled by the Part); the rest are numbered content pages (E.1, …). Titles mirror each file's
-# `<!-- chapter-title: … -->` marker (kept in the source for provenance; stripped from the rendered body).
-_THEORY_PAGES: list[tuple[str, str]] = [
-    ("theory-of-mage", "A Theory of MAGE"),
-    ("capability-model", "A Capability Model, Not a Maturity Model"),
-]
-
-
-def build_theory_of_mage_chapters(part: int, for_print: bool = False,
-                                  letter: str = "E", locator_figs: bool = False) -> list[dict]:
-    """Build the A-Theory-of-MAGE chapter records: one front-door page (chapter 0, the causal-model chapter)
-    then one page per remaining authored file (E.1, the capability-vs-maturity chapter). Mirrors the stacks /
-    skill-recipe Parts — a hand-authored appendix Part rendered by the existing pager/TOC/index/float
-    machinery with no catalogue projection. Every record carries `is_appendix: True`.
-
-    The authored files keep their `<!-- part-title: … -->` / `<!-- chapter-title: … -->` markers for
-    provenance; this builder STRIPS them from the rendered body (the page header comes from the record's
-    `chapter_title`, set here) and letters the titles. `letter` letters the Part ("E" in the value-ordered v2
-    projection, where the theory trails the skill recipe). `locator_figs` (v2) stamps a `fig_prefix` so the
-    two figures number monotonically off the reader-facing E locator (D80): "Figure E-1" (causal model) /
-    "Figure E-2" (trajectories). Returns [] when the render mode is off or no content files are present.
-
-    Render mode reads the print manifest's `appendix_e`: `"full"` (the default this wave) renders both
-    chapters; `"off"` drops the appendix. This is the value-ordered-appendix analogue of the skill recipe's
-    `skill_recipe` mode."""
-    if _load_print_manifest().get("appendix_e", "full") == "off":
-        return []
-    pages = [(stem, title) for stem, title in _THEORY_PAGES
-             if (_THEORY_DIR / f"{stem}.md").is_file()]
-    if not pages:
-        return []
-
-    low = letter.lower()
-    part_title = f"Appendix {letter} — A Theory of MAGE"
-    chapters: list[dict] = []
-
-    def _body(stem: str) -> str:
-        raw = (_THEORY_DIR / f"{stem}.md").read_text(encoding="utf-8")
-        raw = META_RE.sub("", raw)  # strip the provenance part-title/chapter-title markers (set on the record)
-        return _fold_wrapped_bullets(raw.strip())
-
-    # FRONT-DOOR PAGE — the causal-model chapter heads the Part (chapter 0, sorts before E.1). Its title is
-    # the Part title, matching the stacks / skill-recipe front-doors; the two figures live here.
-    front_stem = pages[0][0]
-    front: dict = {
-        "slug": _APPENDIX_THEORY_OPENING_SLUG,
-        "part": part,
-        "part_title": part_title,
-        "chapter": 0,
-        "chapter_title": part_title,
-        "body_md": _body(front_stem),
-        "is_appendix": True,
-        "mermaid": False,
-    }
-    if locator_figs:
-        front["fig_prefix"] = letter
-    chapters.append(front)
-
-    # ONE PAGE PER REMAINING FILE — E.1, E.2, … in listed order.
-    for i, (stem, title) in enumerate(pages[1:], start=1):
-        rec: dict = {
-            "slug": f"appendix-{low}-{stem}",
-            "part": part,
-            "part_title": part_title,
-            "chapter": i,                       # sorts after the front-door's chapter 0
-            "chapter_title": f"Appendix {letter} - {i}. {title}",
-            "body_md": _body(stem),
             "is_appendix": True,
             "mermaid": False,
         }
@@ -3288,11 +3198,12 @@ def _appendix_contents_md(ordered: list[dict]) -> str:
 
 # ─────────────────────────── Appendix projection: v1 (role-ordered) vs v2 (value-ordered) ───────────────
 # The appendix has two projections behind a build flag. The CUTOVER (restructure sub-wave 6) flipped the
-# default to v2 — the shipped edition (web + PDF) is now the value-ordered A/B/C/D/E restructure:
+# default to v2 — the shipped edition (web + PDF) is now the value-ordered A/B/C/D restructure:
 #   v2 (DEFAULT, flag ON) — the value-ordered set: A MAGE Engineering Stacks · B Flagship Mechanisms
 #       (one Part, role subsections, monotonic B.N) · C Mechanism Catalog (C.1/C.2/C.3 brick grid) ·
-#       D How to Write a Skill (relettered from legacy E) · E A Theory of MAGE. Figure numbers derive
-#       monotonically off the A.X / B.N locator.
+#       D How to Write a Skill (relettered from legacy E). "A Theory of MAGE" is no longer an appendix —
+#       it was relocated to a numbered main-text chapter. Figure numbers derive monotonically off the
+#       A.X / B.N locator.
 #   v1 (flag OFF) — the legacy role-ordered set: Appendix A Agent · B Models-bridge · C Product (flagship GoF
 #       pages) · D Mechanism Stacks · E How to Write a Skill. KEPT DORMANT for reversibility (its removal is a
 #       separate post-cutover wave); the byte-identical-to-HEAD invariant it once held is intentionally retired.
@@ -3302,7 +3213,7 @@ APPENDIX_V2 = True
 
 
 def _appendix_v2_enabled() -> bool:
-    """True when the value-ordered A/B/C/D/E appendix projection is selected — the DEFAULT since the cutover
+    """True when the value-ordered A/B/C/D appendix projection is selected — the DEFAULT since the cutover
     (`APPENDIX_V2 = True`). Force the legacy role-ordered projection back on with env `ADA_APPENDIX_V2=0`
     (or `false`/`no`); any other non-empty value forces v2; unset falls through to the `APPENDIX_V2` constant."""
     env = os.environ.get("ADA_APPENDIX_V2")
@@ -3444,7 +3355,7 @@ def _build_appendix_chapters_v1(next_part: int, for_print: bool = False) -> list
 
     # APPENDIX E — How to Write a Skill. A hand-authored Part after the stacks (its own front-door page +
     # the recipe page), rendered the same way — no catalogue projection, no role/family machinery. In the
-    # print/PDF projection with `appendix_e == "pointer"` it collapses to the front-door + an online pointer.
+    # print/PDF projection with `skill_recipe == "pointer"` it collapses to the front-door + an online pointer.
     chapters += build_skill_recipe_chapters(part=stacks_part + 1, for_print=for_print)
     return chapters
 
@@ -4099,15 +4010,12 @@ def _build_appendix_chapters_v2(next_part: int, for_print: bool = False) -> list
     })
 
     # ── APPENDIX D — How to Write a Skill (was legacy Appendix E). Full content retained (design §13.7).
+    #    The appendices end at D: "A Theory of MAGE" was relocated out of the appendices to a numbered
+    #    main-text chapter (backmatter, after "Implications for Software Engineering"), so there is no
+    #    Appendix E.
     d_part = next_part + 3
     chapters += build_skill_recipe_chapters(
         part=d_part, for_print=for_print, letter="D", locator_figs=True)
-
-    # ── APPENDIX E — A Theory of MAGE. Two hand-authored chapters (causal model + capability-vs-maturity),
-    #    registered exactly as D is: a hand-authored builder appended here, gated by the manifest render mode.
-    e_part = next_part + 4
-    chapters += build_theory_of_mage_chapters(
-        part=e_part, for_print=for_print, letter="E", locator_figs=True)
     return chapters
 
 

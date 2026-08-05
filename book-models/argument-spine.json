@@ -8,7 +8,7 @@
     "advancement_edges": 86,
     "reconciled_claims": 18,
     "reconciled_big_ideas": 6,
-    "zero_claim_suspects": 1,
+    "zero_claim_suspects": 2,
     "over_cap_unfocused": 0,
     "thin_claim_gaps": 0,
     "thin_claims_front_loaded": 0,
@@ -96,7 +96,7 @@
         "0.3-preface",
         "1.1-the-printer",
         "4.5-lessons-learned",
-        "6.1-conclusion"
+        "6.2-conclusion"
       ],
       "body_depth": 2,
       "front_loaded": false,
@@ -424,7 +424,7 @@
         "3.7-the-scope-of-modeling",
         "4.4-training-data",
         "6.0-implications-for-se",
-        "6.1-conclusion"
+        "6.2-conclusion"
       ],
       "body_depth": 4,
       "front_loaded": false,
@@ -454,7 +454,7 @@
         "4.5-lessons-learned",
         "5.4-the-road-to-mage",
         "6.0-implications-for-se",
-        "6.1-conclusion"
+        "6.2-conclusion"
       ],
       "body_depth": 4,
       "front_loaded": false,
@@ -776,7 +776,12 @@
       "exempt": "discussion"
     },
     {
-      "slug": "6.1-conclusion",
+      "slug": "6.1-toward-a-theory-of-mage",
+      "advances": [],
+      "exempt": null
+    },
+    {
+      "slug": "6.2-conclusion",
       "advances": [
         "fault-lies-in-instructions",
         "mage-becomes-practical",
@@ -785,7 +790,7 @@
       "exempt": "conclusion"
     },
     {
-      "slug": "6.3-colophon",
+      "slug": "6.4-colophon",
       "advances": [],
       "exempt": null
     }
@@ -793,7 +798,11 @@
   "flags": {
     "zero_claim_suspects": [
       {
-        "chapter": "6.3-colophon",
+        "chapter": "6.1-toward-a-theory-of-mage",
+        "advances": 0
+      },
+      {
+        "chapter": "6.4-colophon",
         "advances": 0
       }
     ],

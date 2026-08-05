@@ -40,7 +40,7 @@ BOOK = HERE.parent / "book"
 # The authored-prose dirs that ship as book narrative. `book/_design/` (design docs) is excluded by omission.
 PROSE_DIRS = (
     "frontmatter", "part1", "part2", "part3", "part4", "part5", "backmatter",
-    "appendix-fills", "appendix-stacks", "appendix-skill-recipe", "appendix-theory-of-mage",
+    "appendix-fills", "appendix-stacks", "appendix-skill-recipe",
 )
 
 # ── The literal cross-reference patterns a symbolic marker should replace ─────────────────────────────

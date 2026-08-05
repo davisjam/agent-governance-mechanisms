@@ -473,10 +473,11 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="5.4-the-road-to-mage.html">29&nbsp; The Road to MAGE</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
-<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
-<li><a class="" href="6.2-about-the-author.html">About the Author</a></li>
-<li><a class="" href="6.3-colophon.html">Colophon</a></li>
-<li><a class="" href="6.4-the-operators-dashboard.html">The Operator's Dashboard</a></li>
+<li><a class="" href="6.1-toward-a-theory-of-mage.html">Toward a Theory of MAGE</a></li>
+<li><a class="" href="6.2-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
+<li><a class="" href="6.4-colophon.html">Colophon</a></li>
+<li><a class="" href="6.5-the-operators-dashboard.html">The Operator's Dashboard</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
 <li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
@@ -521,10 +522,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li>
-<li class="part">Appendix E — A Theory of MAGE</li>
-<li><a class="" href="appendix-theory-of-mage.html">Appendix E — A Theory of MAGE</a></li>
-<li><a class="" href="appendix-e-capability-model.html">Appendix E - 1. A Capability Model, Not a Maturity Model</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 11. Operational playbooks"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 11. Operational playbooks</h1></header><p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/operational-playbooks.html">governance-doc-controls / Operational playbooks</a>.</em></p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 11. Operational playbooks"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 11. Operational playbooks</h1></header><p><em>Projected from the catalogue entry <a href="../agent/governance-doc-controls/operational-playbooks.html">governance-doc-controls / Operational playbooks</a>.</em></p>
 <p><strong>Intent</strong> — A library of documented, situation-keyed decision procedures — <em>when situation X arises, take these steps in this order</em> — that agents and orchestrators consult instead of reasoning from scratch, so a recurring operational situation (a broken deploy, a wedged cron, a stuck worktree, a chicken-and-egg recovery) gets a consistent, pre-reasoned, incident-tested response.</p>
 <h2>Problem</h2>
 <p>Operational situations recur: a deploy fails a known way, a cron loop can't self-recover, a worktree is destroyed mid-flight, an alert gate deadlocks. Each time, an agent under incident pressure re-derives a response from first principles and gets the sharp edges wrong. A flailing reset destroys landed work, a naive cron restart re-enters the same loop, a "cleanup" removes a live worktree. The response comes out inconsistent and error-prone, and the cost lands hardest exactly when time is shortest.</p>

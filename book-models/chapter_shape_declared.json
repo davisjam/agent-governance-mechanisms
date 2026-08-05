@@ -809,7 +809,7 @@
       "closing_anchor": "run the experiment and report back. Come tell me what you found."
     },
     {
-      "slug": "6.1-conclusion",
+      "slug": "6.2-conclusion",
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",

@@ -30,10 +30,10 @@
     "outcomes_with_elaborative_units": 21,
     "elaborative_links": 27,
     "units_serving_as_elaborative": 19,
-    "sections_total": 227,
+    "sections_total": 246,
     "sections_primary_of_an_outcome": 41,
     "modules": 6,
-    "lessons": 32
+    "lessons": 33
   },
   "taxonomy": {
     "know": [
@@ -430,14 +430,19 @@
             "section_outcomes": []
           },
           {
-            "lesson": "6.1-conclusion",
+            "lesson": "6.1-toward-a-theory-of-mage",
+            "own_outcomes": [],
+            "section_outcomes": []
+          },
+          {
+            "lesson": "6.2-conclusion",
             "own_outcomes": [
-              "6.1-conclusion::situate-the-book-within-the-software-engineering"
+              "6.2-conclusion::situate-the-book-within-the-software-engineering"
             ],
             "section_outcomes": []
           },
           {
-            "lesson": "6.3-colophon",
+            "lesson": "6.4-colophon",
             "own_outcomes": [],
             "section_outcomes": []
           }
@@ -566,7 +571,7 @@
       "granularity": "part",
       "primary_unit": "part-6",
       "secondary_units": [
-        "6.1-conclusion"
+        "6.2-conclusion"
       ],
       "verb": "evaluate",
       "obj": "what the method changes for how software engineering is measured, staffed, and taught",
@@ -940,9 +945,9 @@
       "gap_note": null
     },
     {
-      "outcome_id": "6.1-conclusion::situate-the-book-within-the-software-engineering",
+      "outcome_id": "6.2-conclusion::situate-the-book-within-the-software-engineering",
       "granularity": "chapter",
-      "primary_unit": "6.1-conclusion",
+      "primary_unit": "6.2-conclusion",
       "secondary_units": [],
       "verb": "situate",
       "obj": "the book within the software-engineering literature and identify what stays the reader's own",

@@ -1025,10 +1025,10 @@
           "three-ways-to-run-an-agent",
           "governance-centric",
           "velocity-exposes-the-danger",
-          "optionality-is-poison",
           "refactoring-is-free",
-          "done-is-a-claim",
           "broken-cost-estimator",
+          "optionality-is-poison",
+          "done-is-a-claim",
           "tests-for-agent-failure-modes",
           "vibe-coding-vs-engineering",
           "explicitness-is-essential",
@@ -1136,7 +1136,9 @@
       "opening_anchor": "The last chapter established the problem. This one tells what happened when",
       "closing_anchor": "governed is the story the rest of this book has already told.",
       "delivers": {
-        "concepts": [],
+        "concepts": [
+          "support-ratio"
+        ],
         "artifacts": [
           {
             "type": "worked-example",
@@ -1250,7 +1252,7 @@
       ]
     },
     {
-      "slug": "6.1-conclusion",
+      "slug": "6.2-conclusion",
       "opening": {
         "failure_question": "explicit",
         "answer": "explicit",

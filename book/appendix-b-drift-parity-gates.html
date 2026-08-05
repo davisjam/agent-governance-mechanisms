@@ -473,10 +473,11 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="5.4-the-road-to-mage.html">29&nbsp; The Road to MAGE</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
-<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
-<li><a class="" href="6.2-about-the-author.html">About the Author</a></li>
-<li><a class="" href="6.3-colophon.html">Colophon</a></li>
-<li><a class="" href="6.4-the-operators-dashboard.html">The Operator's Dashboard</a></li>
+<li><a class="" href="6.1-toward-a-theory-of-mage.html">Toward a Theory of MAGE</a></li>
+<li><a class="" href="6.2-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
+<li><a class="" href="6.4-colophon.html">Colophon</a></li>
+<li><a class="" href="6.5-the-operators-dashboard.html">The Operator's Dashboard</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
 <li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
@@ -521,10 +522,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li>
-<li class="part">Appendix E — A Theory of MAGE</li>
-<li><a class="" href="appendix-theory-of-mage.html">Appendix E — A Theory of MAGE</a></li>
-<li><a class="" href="appendix-e-capability-model.html">Appendix E - 1. A Capability Model, Not a Maturity Model</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 16. Drift &amp; parity gates"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 16. Drift &amp; parity gates</h1></header><p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/drift-parity-gates.html">system-models / Drift &amp; parity gates</a>.</em></p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap appendix" aria-label="Appendix · Appendix B - 16. Drift &amp; parity gates"><header class="chap"><div class="kicker"><a href="appendix-b-flagship-mechanisms.html" aria-label="Beginning of Appendix B — Flagship Mechanisms">Appendix B — Flagship Mechanisms</a></div><h1>Appendix B - 16. Drift &amp; parity gates</h1></header><p><em>Projected from the catalogue entry <a href="../models-bridge/system-models/drift-parity-gates.html">system-models / Drift &amp; parity gates</a>.</em></p>
 <p><strong>Intent</strong> — A fleet of lints and tests enforces <em>bidirectional parity between each model and reality</em> — every model row maps to a real thing on disk, and every real thing maps to a model row — so a model cannot silently drift from the code it governs.</p>
 <h2>Problem</h2>
 <p>An executable model is only trustworthy while it stays true. The failure this kills is silent drift: the model says one thing, the code does another, and everything downstream — dispatch, code generation, deploy — reasons from a lie. Because the model <em>looks</em> authoritative, drift is worse than a missing model. It recurs whenever code changes without the model, or the model changes without the code.</p>

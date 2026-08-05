@@ -40,7 +40,7 @@ _ROOT = os.path.dirname(_HERE)  # the governance-catalog repo root (book-models/
 _BOOK = os.path.join(_ROOT, "book")
 
 #: The back-matter page the mode-banded table is authored into (parity target).
-_PAGE_REL = os.path.join("backmatter", "6.4-the-operators-dashboard.md")
+_PAGE_REL = os.path.join("backmatter", "6.5-the-operators-dashboard.md")
 
 #: The valid MODE values — the formative/summative axis, plus `both` for a trajectory metric.
 _VALID_MODES = ("formative", "summative", "both")

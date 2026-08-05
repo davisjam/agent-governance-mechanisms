@@ -1,275 +1,250 @@
 {
-  "_provenance": "HAND-AUTHORED declared source for the 'A Theory of MAGE' back-matter appendix (book/appendix-theory-of-mage/). This file IS edited by hand; it is the single source of truth for the appendix's causal model — the latent CONSTRUCTS (the two theses, governance conversion, the fleet, the governed environment), the PREDICTIVE relations among them, the fifteen falsifiable PREDICTIONS (P1-P15), and the two directional equations (EQ1 churn-wall, EQ2 two-regime escape). Sibling in the book-models declared->generated idiom (see argument_spine_declared.json / claims_declared.json). NOT YET WIRED: no *_model.py projects it and no appendix page is held equal to it this wave, so it carries no generated artifact and the pre-commit regen loop does not touch it. If adopted, a theory_of_mage_model.py would project the measurement-model crosswalk + the predictions table into the appendix and drift-check them against the authored prose, exactly as metrics_dashboard_model.py does for the Operator's Dashboard. Regen discipline (once a consumer exists): edit HERE, then regenerate the projected artifact; never hand-edit the projection.",
+  "_provenance": "HAND-AUTHORED declared source for the 'Toward a Theory of MAGE' back-matter chapter (book/backmatter/6.1-toward-a-theory-of-mage.md). This file IS edited by hand; it is the single source of truth for the chapter's dynamic model — the latent CONSTRUCTS, the four FEEDBACK LOOPS (with system-dynamics R/B typing), the path-specific MODERATORS, the three OUTCOMES, the seven falsifiable HYPOTHESES (H1-H7, replacing the legacy P1-P15), the corollaries, and the two directional relations. The chapter was relocated out of the appendices (legacy Appendix E) to a numbered main-text chapter this wave; the model was rewritten from the fifteen-prediction inventory to the seven-hypothesis dynamic model to match. Sibling in the book-models declared->generated idiom (see argument_spine_declared.json / claims_declared.json). NOT YET WIRED (ROUND-2): no *_model.py projects it and no chapter page is held equal to it this wave, so it carries no generated artifact and the pre-commit regen loop does not touch it. If adopted, a theory_of_mage_model.py would project the moderators + hypotheses tables into the chapter and drift-check them against the authored prose, exactly as metrics_dashboard_model.py does for the Operator's Dashboard. Regen discipline (once a consumer exists): edit HERE, then regenerate the projected artifact; never hand-edit the projection.",
 
-  "_intent": "Encode the book's argument as an Accelerate-style causal/structural model: latent CONSTRUCTS, the PREDICTIVE relations among them, and a set of falsifiable PREDICTIONS — each tied to a dashboard OBSERVABLE (by metrics-dashboard slug) OR flagged as an external construct awaiting instrumentation, plus a FALSIFICATION condition and its governance TARGET. Single-case (DocAble); directional, not proven.",
+  "_intent": "Encode the book's argument as a middle-range DYNAMIC model in the causal-loop convention of system dynamics: latent CONSTRUCTS connected by four numbered feedback loops over one shared spine, path-specific MODERATORS attached to single transitions, three OUTCOMES, and seven falsifiable HYPOTHESES that follow from the loops. Single-case (DocAble); directional, not proven; no path coefficients are claimed.",
 
-  "hedge": "N=1: one repository, one fleet, one operator, ~20 weeks focused. These are ANALYTIC-generalization predictions (claims about a mechanism and its scope conditions), not statistical generalization to a population. They are stated so future multi-case / longitudinal / controlled work can test them. Directional, not fitted; no path coefficients are claimed.",
+  "hedge": "N=1: one repository, one fleet, one operator, ~20 weeks focused. These are ANALYTIC-generalization claims (about a mechanism and its scope conditions), not statistical generalization to a population. They are stated so future multi-case / longitudinal / controlled work can test them. Directional and middle-range, not fitted.",
 
-  "observable_provenance": {
-    "dash": "A slug on the Operator's Dashboard (book-models/metrics-dashboard.json): missing-model-metric, velocity, churn, model-sync-efficacy, grammar-coverage, model-claim-coverage, mbse-nav-token-savings, support-ratio, control-growth.",
-    "external_construct": "A metric this build does NOT record — an Accelerate (DORA) delivery/pain metric or a Sadowski-Zimmermann productivity construct. A prediction riding one carries an `external_construct` field and empty-or-secondary `observable_slugs`; it is a prediction AWAITING INSTRUMENTATION, never a reading. No dashboard slug is fabricated for it."
+  "spine": {
+    "_note": "The shared left-to-right system the four loops run over, read clockwise. Each construct id is reused by the loops, moderators, and hypotheses below.",
+    "order": [
+      "agentic-capacity",
+      "governed-environment-quality",
+      "agentic-work",
+      "realized-performance",
+      "governance-pressure",
+      "structural-diagnosis",
+      "governance-adaptation"
+    ]
   },
 
   "constructs": [
     {
-      "id": "agentic-velocity",
+      "id": "agentic-capacity",
       "role": "exogenous-driver",
-      "name": "Agentic velocity",
-      "gloss": "The fleet's raw throughput — many probabilistic reasoning loops acting in parallel, around the clock. The driver that both produces change and EXPOSES failure: related failures that would arrive weeks apart now arrive in an afternoon, close enough to see the structure they share.",
-      "observables": ["velocity", "churn"]
-    },
-    {
-      "id": "modeling-investment",
-      "role": "capability",
-      "name": "Modeling investment (Modeling Thesis)",
-      "gloss": "Typed models held equal to the code by a gate, so a context-bounded agent can reason through a compact map instead of dragging raw source through its window. Binds intent to implementation; shrinks what the agent must hold in-window before the work churns.",
-      "observables": ["missing-model-metric", "model-sync-efficacy", "support-ratio", "mbse-nav-token-savings"]
-    },
-    {
-      "id": "governance-conversion",
-      "role": "capability",
-      "name": "Governance conversion (Alignment Thesis)",
-      "gloss": "Each recurring failure class converted once into a durable, deterministic mechanism (a constraint that prevents, a sensor that catches), enforced on every later agent instead of re-caught by inspection. Policy decided once holds against every change after.",
-      "observables": ["control-growth"]
+      "name": "Agentic capacity",
+      "gloss": "Model capability, concurrency, and raw implementation rate. The amplifier: velocity clusters latent weakness in time, so failure classes that would arrive months apart under human-paced work land in a single afternoon, close enough to see the structure they share."
     },
     {
       "id": "governed-environment-quality",
       "role": "latent-intermediate",
-      "name": "Governed environment quality (E)",
-      "gloss": "The intermediate MAGE analog of Accelerate's 'software delivery performance': the degree to which (a) the map equals the territory (models carry the system and stay true) and (b) failure classes are mechanized (held by hard controls, not watched by review). Modeling investment and governance conversion both load onto E.",
-      "observables": ["missing-model-metric", "control-growth", "support-ratio", "model-sync-efficacy"]
+      "name": "Effective governed-environment quality (E)",
+      "gloss": "The degree to which the environment gives agents a current, task-relevant representation of the system together with coherent, proportionate, machine-actionable coverage of its important obligations. A QUALITY, not a quantity — apparatus count is an indicator, not a substitute.",
+      "dimensions": [
+        {"id": "representation-quality", "question": "Are the relevant properties legible in the environment's current models?"},
+        {"id": "enforcement-coverage", "question": "Are the important known obligations held mechanically, not merely watched?"},
+        {"id": "coherence", "question": "Do the mechanisms compose without harmful collision or duplication?"},
+        {"id": "economy", "question": "Is the governance burden proportionate to the risk and value it controls?"}
+      ]
     },
     {
-      "id": "sustained-velocity",
-      "role": "outcome",
-      "name": "Sustained (near-linear) durable throughput",
-      "gloss": "Durable progress that stays roughly linear as the system scales — the fleet does not hit the churn wall (its analog of Brooks's Law). The Velocity dimension of productivity, corrected for rework.",
-      "observables": ["velocity", "churn"]
+      "id": "agentic-work",
+      "role": "process",
+      "name": "Agentic work",
+      "gloss": "Attempted change against the current task frontier. Capacity drives it; the environment shapes it into realized performance."
     },
     {
-      "id": "falling-escape",
-      "role": "outcome",
-      "name": "Falling defect-escape rate",
-      "gloss": "Fewer confidently-wrong changes reach production as mechanized coverage rises. The Quality dimension.",
-      "observables": ["control-growth", "model-claim-coverage", "grammar-coverage"]
+      "id": "realized-performance",
+      "role": "process",
+      "name": "Realized performance",
+      "gloss": "What the work actually delivers: durable throughput, defect escape, and the human attention each unit of durable output costs."
     },
     {
-      "id": "bounded-oversight",
-      "role": "outcome",
-      "name": "Bounded oversight cost",
-      "gloss": "Human attention moves from changes to CLASSES of change, so per-change review does not saturate as velocity rises; judgment stays the scarce resource without becoming the bottleneck. The Sustainability/Satisfaction dimension.",
-      "observables": ["support-ratio", "control-growth"]
+      "id": "governance-pressure",
+      "role": "signal",
+      "name": "Governance pressure",
+      "gloss": "The experienced gap between the performance the fleet looks capable of and the durable performance it delivers: churn, recurring failure, escaped defect, repeated intervention, control friction. The central experienced driver — the pressure an operator actually feels."
     },
     {
-      "id": "capability-fit",
-      "role": "scope-condition",
-      "name": "Capability-fit",
-      "gloss": "The agents must be matched to human judgment good enough to read a failure as the symptom of a missing abstraction. Below this fit, velocity becomes motion without direction.",
-      "observables": []
+      "id": "structural-diagnosis",
+      "role": "judgment",
+      "name": "Structural diagnosis",
+      "gloss": "The scarce act of judgment that reads a signal as a local defect (repair and move on) or as evidence of a missing model, abstraction, boundary, invariant, oracle, mechanism, or governance seam. Pressure is not yet knowledge; diagnosis is."
     },
     {
-      "id": "authority",
-      "role": "scope-condition",
-      "name": "Authority to change the environment",
-      "gloss": "The person who sees the recurring failure must be able to change the architecture, mechanisms, and gates. Split the authority and the same signal yields a local patch instead of a shared mechanism; the class never dies.",
-      "observables": ["control-growth"]
+      "id": "governance-adaptation",
+      "role": "capability",
+      "name": "Governance adaptation",
+      "gloss": "The repertoire that changes E: model (make structure legible), convert (a recurring failure into a durable mechanism), strengthen (weak guidance into harder enforcement), reconcile (duplicated/conflicting controls), retire (stale or net-harmful governance). Subtractive as well as additive."
     }
+  ],
+
+  "loops": [
+    {
+      "id": "L1-bootstrap",
+      "number": 1,
+      "name": "Bootstrap loop",
+      "color": "blue",
+      "type": "input",
+      "type_note": "An input/initialization, NOT a feedback loop — it seeds the initial environment before any agent runs.",
+      "reading": "Prior engineering knowledge — inherited architecture, tests, controls, standards, prior incidents, lessons transferred from earlier systems — converts into the initial governed environment E(0). Governance conversion in one project becomes bootstrap knowledge in the next. Lowers the initial failure rate; does not close the red loop."
+    },
+    {
+      "id": "L2-churn-discovery",
+      "number": 2,
+      "name": "Churn / discovery loop",
+      "color": "red",
+      "type": "balancing-with-L3",
+      "type_note": "Together with L3 forms a BALANCING loop (see B-loop below): the goal-seeking arm that surfaces pressure.",
+      "reading": "Work outruns a weak environment; the gap surfaces as governance pressure. Velocity amplifies and temporally clusters latent weakness. The red loop ends at structural diagnosis — the scarce work."
+    },
+    {
+      "id": "L3-governance-adaptation",
+      "number": 3,
+      "name": "Governance-adaptation loop",
+      "color": "green",
+      "type": "balancing-with-L2",
+      "type_note": "Together with L2 forms a BALANCING loop: adaptation reshapes E to reduce the churn that drove it.",
+      "reading": "A structural diagnosis triggers an adaptation (model / convert / strengthen / reconcile / retire); the return arm reshapes E. Later agents inherit a more compact representation, clearer constraints, fewer invalid moves, earlier evidence, narrower seams, more reliable admission conditions."
+    },
+    {
+      "id": "L4-capability-amplification",
+      "number": 4,
+      "name": "Capability-amplification loop",
+      "color": "purple",
+      "type": "reinforcing",
+      "type_note": "A REINFORCING loop (see R-loop below): self-amplifying, keeps moving the target.",
+      "reading": "A stronger environment enables bigger tasks, more concurrency, more ambitious requirements, cheaper refactoring, denser use of capacity. The expanded frontier exposes new failure classes and reopens the loop. This is why MAGE does not terminate."
+    }
+  ],
+
+  "loop_typing": {
+    "_note": "System-dynamics causal-loop typing (Meadows convention). Naming the types sharpens the non-terminating claim: the balancing loop drives the environment toward fit; the reinforcing loop moves the target the moment it is reached.",
+    "B": {"loops": ["L2-churn-discovery", "L3-governance-adaptation"], "kind": "balancing", "reading": "churn -> diagnosis -> adaptation -> less churn: goal-seeking, self-damping, toward fit."},
+    "R": {"loops": ["L4-capability-amplification"], "kind": "reinforcing", "reading": "better E -> more ambition -> new frontier: self-amplifying, reopens the loop."},
+    "input": {"loops": ["L1-bootstrap"], "kind": "input", "reading": "seeds E before any failure; not a feedback loop."}
+  },
+
+  "moderators": [
+    {"id": "capability-fit", "operates_on": "governance-pressure -> structural-diagnosis", "reading": "Fit between the work, agent capability, and the judgment a diagnosis needs. Below fit, pressure arrives but no diagnosis converts it — motion without direction."},
+    {"id": "authority", "operates_on": "structural-diagnosis -> governance-adaptation", "reading": "Ability or organizational path to modify shared architecture and controls. Need not live in one architect; the failure is a path that terminates in a local patch, leaving the class to recur."},
+    {"id": "domain-governability", "operates_on": "governed-environment-quality -> outcomes", "reading": "Degree to which important properties can be represented and mechanically checked."},
+    {"id": "control-estate-coherence", "operates_on": "apparatus -> governed-environment-quality", "reading": "Degree to which mechanisms compose without harmful interaction; the guard against a tower of governance."}
+  ],
+
+  "outcomes": [
+    {"id": "durable-throughput", "name": "Durable throughput", "measures": "Raw implementation converted into lasting system progress.", "observables": ["landed changes net of rework", "churn share", "slope of sustained throughput"]},
+    {"id": "defect-escape", "name": "Defect escape", "measures": "Relevant failures reaching later lifecycle stages or production.", "observables": ["escaped-defect rate", "reopen rate", "silent-corruption escape"]},
+    {"id": "human-attention-burden", "name": "Human-attention burden", "measures": "Human judgment required per unit of durable output. State as a RATE, not a ceiling — per-change attention amortizes even while total governance work grows.", "observables": ["interventions per landed change", "review time", "conversion effort"]}
+  ],
+
+  "apparatus_measures_caveat": "Support ratio, model-coverage fraction, control count, gate count, model-sync rate, control-interaction findings, stale-control rate measure INVESTMENT or ACCUMULATION, not quality. A large apparatus can be effective governance OR duplicated machinery / accidental complexity / stale enforcement / a tower of governance. Each is an input or indicator; effective quality is what the OUTCOMES reveal.",
+
+  "hypotheses": [
+    {
+      "id": "H1-failure-class-exposure",
+      "name": "Failure-class exposure",
+      "statement": "Higher agentic velocity shortens the elapsed time to recognize recurring failures as one shared structural class, controlling for the opportunities to trigger the class.",
+      "falsifier": "Recognition latency does not improve with velocity once exposure opportunities are controlled.",
+      "loops": ["L2-churn-discovery"]
+    },
+    {
+      "id": "H2-governance-moderation",
+      "name": "Governance moderation",
+      "statement": "Governed-environment quality sets the SIGN of velocity's effect: higher velocity raises churn in low-quality environments and durable throughput in high-quality ones.",
+      "falsifier": "Velocity relates to durable throughput the same way regardless of environment quality.",
+      "loops": ["L2-churn-discovery", "L3-governance-adaptation"]
+    },
+    {
+      "id": "H3-mechanized-assurance",
+      "name": "Mechanized assurance",
+      "statement": "Greater risk-weighted coverage of relevant failure classes by effective deterministic mechanisms lowers defect escape, and its advantage over attention-based control widens as velocity rises — for adequately scoped mechanisms.",
+      "falsifier": "Mechanized coverage adds no protection, or its advantage over review does not widen as human attention saturates.",
+      "loops": ["L3-governance-adaptation"]
+    },
+    {
+      "id": "H4-representation-leverage",
+      "name": "Representation leverage",
+      "statement": "Task-relevant structured models cut context cost and churn without lowering task quality, and synchronized models carry predictive information beyond conventional code-coverage measures.",
+      "falsifier": "Model use at matched recall yields no efficiency gain, lowers quality, or adds no predictive power over coverage.",
+      "loops": ["L3-governance-adaptation"]
+    },
+    {
+      "id": "H5-local-model-deficiency",
+      "name": "Local model deficiency",
+      "statement": "Unmodelled or drifted architectural surface predicts later churn or escape in the same subsystem.",
+      "falsifier": "Orphaned or drifted surfaces are no more likely than modelled ones to see later churn or escape.",
+      "loops": ["L2-churn-discovery"]
+    },
+    {
+      "id": "H6-oversight-amortization",
+      "name": "Oversight amortization",
+      "statement": "As recurring failure classes convert into durable governance, human attention per unit of durable output declines — even if total governance work keeps growing.",
+      "falsifier": "Interventions per durable change stay flat or rise as effective conversion coverage grows.",
+      "loops": ["L3-governance-adaptation"]
+    },
+    {
+      "id": "H7-conversion-conditions",
+      "name": "Conversion conditions",
+      "statement": "Structural failures convert into shared governance faster and more durably when the capability to diagnose structure and the authority to change the environment are colocated, or connected by a working organizational pathway.",
+      "falsifier": "Split-authority or low-fit settings convert at the same rate and durability as high-fit, effective-authority ones.",
+      "moderated_by": ["capability-fit", "authority"],
+      "loops": ["L3-governance-adaptation"]
+    }
+  ],
+
+  "corollaries": [
+    {"claim": "Speed and stability do not trade", "status": "Corollary of H2 and H3"},
+    {"claim": "Conversion gets faster as tooling matures", "status": "Learning-curve specialization of H7"},
+    {"claim": "The substrate heals faster as it accretes controls", "status": "Consequence of H3 and H6"},
+    {"claim": "Grammar coverage beats line coverage", "status": "Domain-specific instance of H4"},
+    {"claim": "A fidelity gate reduces silent corruption", "status": "Product-specific instance of H3"},
+    {"claim": "Deployment pain stays bounded", "status": "Subjective consequence of H6; future work"}
   ],
 
   "relations": [
-    {"from": "agentic-velocity", "to": "modeling-investment", "sign": "enables", "reading": "Velocity surfaces the unmodelled surface fast enough to keep modeling worth its upkeep (cheap repeated cognition maintains the map)."},
-    {"from": "agentic-velocity", "to": "governance-conversion", "sign": "enables", "reading": "Velocity clusters recurrences in time, so a failure class becomes visible and convertible sooner."},
-    {"from": "modeling-investment", "to": "governed-environment-quality", "sign": "positive", "reading": "Map-equals-territory is half of E."},
-    {"from": "governance-conversion", "to": "governed-environment-quality", "sign": "positive", "reading": "Mechanized coverage is the other half of E."},
-    {"from": "governed-environment-quality", "to": "sustained-velocity", "sign": "positive", "reading": "A governed environment keeps durable throughput ~linear."},
-    {"from": "governed-environment-quality", "to": "falling-escape", "sign": "positive", "reading": "Mechanized coverage catches or forbids the confidently-wrong change."},
-    {"from": "governed-environment-quality", "to": "bounded-oversight", "sign": "positive", "reading": "Converting a class once removes it from the per-change review budget forever."},
-    {"from": "agentic-velocity", "to": "sustained-velocity", "sign": "conditional", "moderated_by": "governed-environment-quality", "reading": "THE LOAD-BEARING EDGE: raw velocity's effect on durable throughput is NEGATIVE (churn) when E is low and POSITIVE when E is high. E moderates the velocity->outcome path. This is why 'measure governed throughput, not volume.'"},
-    {"from": "capability-fit", "to": "governance-conversion", "sign": "gates", "reading": "Conversion needs judgment that can classify a failure as structural."},
-    {"from": "authority", "to": "governance-conversion", "sign": "gates", "reading": "Conversion needs the power to change the environment; split authority stalls it."}
-  ],
-
-  "predictions": [
     {
-      "id": "P1-velocity-exposes-structure",
-      "target": "agent",
-      "statement": "Higher agentic velocity surfaces a structural failure class sooner — related failures cluster close enough in time to reveal the structure they share.",
-      "mechanism": "Change fast enough that failures which would arrive quarters apart arrive in one afternoon; proximity converts noise into a visible class.",
-      "observable": "velocity vs. time-to-recur of a failure class; the paired fix-and-lint conversion cadence (208 such commits) tracking commits/week.",
-      "observable_slugs": ["velocity", "control-growth"],
-      "falsification": "At higher velocity, same-class failures surface no sooner (inter-arrival independent of throughput), or conversion cadence does not track velocity."
+      "id": "R1-churn",
+      "name": "The churn relation",
+      "form": "V_durable = V_raw * (1 - c)",
+      "substantive_claim": "dc/dE < 0 over the under-governed range: churn share falls as effective environment quality climbs. But NOT monotone across all governance accumulation — push apparatus past fit and churn rises again from collisions, false positives, latency, context burden, and constraints that block legitimate work.",
+      "shape": "under-governed -> churn high ; well-fit -> churn lowest ; overgrown -> churn rises from friction",
+      "ties_to": ["H2-governance-moderation", "H5-local-model-deficiency"]
     },
     {
-      "id": "P2-governed-throughput-linear",
-      "target": "models-bridge",
-      "statement": "An environment whose support apparatus LEADS production sustains near-linear durable throughput; an under-invested one decays as churn eats it.",
-      "mechanism": "Models compress the system below the context window, so work fits before it churns; the churn wall (the fleet's Brooks's Law) moves out of reach only when the map leads.",
-      "observable": "velocity-curve slope read against support ratio (0.85x->2.48x->3.68x->3.06x) and the missing-model drain (56%->7.89%); churn deletions collapse (backend/ 286,378->3,767) as the environment stabilizes.",
-      "observable_slugs": ["support-ratio", "missing-model-metric", "churn", "velocity"],
-      "falsification": "A low-support / high-orphan environment sustains linear durable velocity as well as a high-support one, or a high-support environment still decays into churn."
-    },
-    {
-      "id": "P3-control-lowers-escape-review-does-not",
-      "target": "product",
-      "statement": "Escaped-defect rate falls as mechanized coverage rises; under review-only governance escaped defects RISE with velocity.",
-      "mechanism": "A hard control fires on every change regardless of throughput; per-change review coverage falls toward zero as attention saturates, so its escape rate rises to the raw per-change defect rate.",
-      "observable": "control growth (0->747 lints, 0->102 gates) against escaped-defect / regression-reopen rate; the fix-and-lint density.",
-      "observable_slugs": ["control-growth"],
-      "falsification": "Escape rate is independent of mechanized coverage, or review-based teams hold escape rate flat as velocity climbs."
-    },
-    {
-      "id": "P4-soft-saturates-hard-does-not",
-      "target": "agent",
-      "statement": "Expected violations of a soft (prose/convention/review) mechanism grow in proportion to velocity; a hard constraint's stay near zero.",
-      "mechanism": "A convention obeyed 99-in-100 is a probability flip; flip it V times per unit and expected violations = q*V, linear in velocity. A constraint that removes the move costs no iteration and cannot be reworded away.",
-      "observable": "recurrence count of a convention-guarded class before/after determinization — e.g. the worktree-marker incident: 3 destructions in 5 days under prose, 0 after the marker file.",
-      "observable_slugs": ["control-growth"],
-      "falsification": "A purely soft / review regime holds violation counts flat as velocity rises, or determinizing a class does not drive its recurrence to ~0."
-    },
-    {
-      "id": "P5-model-compression-three-way-gain",
-      "target": "models-bridge",
-      "statement": "Working through a model that compresses the system below the window lowers tokens-to-answer AND speeds landing AND lowers escapes together — not a trade among the three.",
-      "mechanism": "Every token in the window earns its place; the same model carries the invariants the change is checked against. The gain lives in the representation, not in a smarter agent.",
-      "observable": "MBSE navigation token-savings (model on vs. off) at MATCHED recall — the near-term measurable the 'garden null' left open (per-task RECALL cannot see it; efficiency and system-level ablations can).",
-      "observable_slugs": ["mbse-nav-token-savings", "missing-model-metric"],
-      "falsification": "Token savings come at a measured cost in velocity or quality (a real trade appears), or matched-recall efficiency shows no model advantage."
-    },
-    {
-      "id": "P6-fit-and-authority-gate",
-      "target": "agent",
-      "statement": "The whole mechanism holds only where human judgment can read a failure as structural (capability-fit) and the person who sees it can change the environment (authority); split authority produces local patches and the class never dies.",
-      "mechanism": "Conversion is a judgment act followed by an environment edit; remove either and a failure yields a patch, not a mechanism.",
-      "observable": "conversion rate and control growth against authority locus; recurrence of a class after a local patch.",
-      "observable_slugs": ["control-growth"],
-      "falsification": "Split-authority or low-fit settings convert failure classes into shared, durable controls at the same rate as single-owner high-fit ones."
-    },
-    {
-      "id": "P7-substrate-heals-faster",
-      "target": "agent",
-      "statement": "The time to restore the substrate after an agent-caused disruption falls as the control count rises — each converted failure class either cannot recur or recovers itself.",
-      "mechanism": "The governance-conversion -> E -> bounded-oversight path read on the recovery side: a class converted once is a class that no longer costs restoration time, so the pool of disruptions that still need a human to dig out shrinks toward the newest, un-converted classes only.",
-      "observable": "time-to-restore-service, scoped to substrate disruptions (a clobbered main, a destroyed worktree, a stuck queue), measured against control growth; mean restore time should FALL as the lint/gate count CLIMBS.",
-      "observable_slugs": ["control-growth"],
-      "external_construct": "time-to-restore-service (DORA) — not on the Operator's Dashboard; needs an added observable to measure here.",
-      "falsification": "Mean time-to-restore for substrate disruptions stays flat or rises while the control count climbs."
-    },
-    {
-      "id": "P8-speed-stability-no-trade",
-      "target": "product",
-      "statement": "In a high-E environment, pushing deployment frequency up does not push the change-fail rate up — the fleet reproduces Accelerate's speed-AND-stability finding rather than a speed/stability trade.",
-      "mechanism": "The load-bearing moderation edge (velocity -> outcomes, moderated by E) tested on the stability axis: when E is high the sign is positive, so more frequent shipping and lower failure coexist. Same edge P2/P3 ride, new axis.",
-      "observable": "change-fail-rate against deployment-frequency; as frequency RISES, change-fail-rate stays FLAT or FALLS, provided E is high.",
-      "observable_slugs": [],
-      "external_construct": "change-fail-rate and deployment-frequency (DORA) — not on the Operator's Dashboard; needs an added observable to measure here.",
-      "falsification": "In a demonstrably high-E environment, change-fail-rate rises with deployment frequency — a genuine speed/stability trade reappears."
-    },
-    {
-      "id": "P9-unmodelled-surface-leads-churn",
-      "target": "models-bridge",
-      "statement": "Unmodelled surface is where the fleet churns next: a subtree carrying a high missing-model rate predicts a later churn spike in the SAME subtree.",
-      "mechanism": "modeling-investment -> E -> sustained-throughput read as a leading indicator: the missing-model metric observes the map-equals-territory half of E, and churn is the cost when that half is thin. Sharpens P2 from an aggregate claim into a subtree-level leading indicator.",
-      "observable": "missing-model metric (leading) vs. churn (lagging), correlated positive and lagged; a high orphan cluster this window predicts a churn spike in that subtree next window.",
-      "observable_slugs": ["missing-model-metric", "churn"],
-      "falsification": "Orphan clusters do not predict subsequent churn — churn lands as often in well-modelled subtrees as in orphaned ones."
-    },
-    {
-      "id": "P10-green-model-beats-green-coverage",
-      "target": "models-bridge",
-      "statement": "Whether the drift and parity gates stay green (the model still equals the code) predicts low defect-escape more strongly than line coverage does.",
-      "mechanism": "governed-environment-quality via its model-sync half: model-sync efficacy is a direct read of 'map == territory', and E is what drives falling escape; a change reasoned through a true map escapes less often than one merely covered by tests.",
-      "observable": "model-sync efficacy (gate green-rate) against escaped-defect rate, benchmarked against line coverage's own correlation with escape; sync efficacy should carry MORE of the escape signal once both are in the model.",
-      "observable_slugs": ["model-sync-efficacy"],
-      "falsification": "With coverage controlled, model-sync efficacy adds no predictive power on escape — or coverage dominates it."
-    },
-    {
-      "id": "P11-conversion-lead-time-shortens",
-      "target": "agent",
-      "statement": "The lead time from a failure class recognized to a durable control landed and enforced shortens over the project's life, as the control-authoring apparatus matures.",
-      "mechanism": "The agentic-velocity -> governance-conversion edge compounded by tooling: velocity surfaces the class, and a maturing meta-substrate (codemods, lint scaffolds, brief templates, the audit-to-lint reflex) turns surfacing into enforcement faster each time.",
-      "observable": "delivery lead time measured on CONVERSION commits (recognition -> enforced control) against project time; conversion lead time should FALL as the substrate matures.",
-      "observable_slugs": [],
-      "external_construct": "delivery-lead-time (DORA) — not on the Operator's Dashboard; needs an added observable to measure here.",
-      "falsification": "Conversion lead time is flat or grows as the substrate matures — each new control costs as much wall-clock as the first."
-    },
-    {
-      "id": "P12-grammar-coverage-drives-out-escapes",
-      "target": "product",
-      "statement": "For a format handler, post-release escapes fall as grammar coverage climbs toward full exercise of the input grammar — and line coverage is a poor stand-in.",
-      "mechanism": "E -> falling-defect-escape on the mechanized-coverage half: generative validation is the control, and grammar coverage is its saturation oracle; the surviving defects hide in grammar productions no line number reports as missing.",
-      "observable": "grammar coverage against the handler's escape rate, contrasted with line coverage; escape FALLS as grammar coverage RISES and is only WEAKLY related to line coverage.",
-      "observable_slugs": ["grammar-coverage"],
-      "falsification": "Escape tracks line coverage but is flat against grammar coverage — inputs that exercise every production escape no less than a line-covered baseline."
-    },
-    {
-      "id": "P13-fidelity-gate-kills-silent-corruption",
-      "target": "product",
-      "statement": "A content-fidelity gate — one that asserts the output still contains the input's content — drives silent-corruption escapes to near zero.",
-      "mechanism": "E -> falling-defect-escape via a control aimed at the confidently-wrong change: model-claim coverage of the fidelity invariants is the observable that the gate actually exercises what it claims to protect; a class ordinary unit tests miss because the run 'succeeded'.",
-      "observable": "model-claim coverage of the fidelity validator against a silent-corruption escape rate; as claim coverage of the fidelity invariants RISES, the escape rate FALLS toward zero — a fall the ordinary pass rate does not predict.",
-      "observable_slugs": ["model-claim-coverage"],
-      "falsification": "Silent-corruption escapes occur at the same rate with the fidelity gate present and saturated as without it."
-    },
-    {
-      "id": "P14-oversight-moves-to-classes",
-      "target": "agent",
-      "statement": "As controls accrete, the operator's interruption load per landed change falls even while raw velocity rises — attention shifts from reviewing changes to authoring the class that governs them.",
-      "mechanism": "The bounded-oversight outcome: converting a class once removes it from the per-change review budget forever, so per-change human interruption decays.",
-      "observable": "interruptions per landed change (time fragmentation / context-switch cost), with the support ratio as the dashboard proxy for the apparatus doing the absorbing; interruptions-per-change FALL as controls ACCRETE, even as velocity climbs.",
-      "observable_slugs": ["support-ratio"],
-      "external_construct": "time-fragmentation / context-switch cost (Sadowski-Zimmermann) — not on the Operator's Dashboard; needs an added observable to measure here.",
-      "falsification": "Operator interruptions per landed change are flat or rising as controls accrete and velocity climbs."
-    },
-    {
-      "id": "P15-deployment-pain-bounded",
-      "target": "agent",
-      "statement": "In a high-E environment, operator-reported deployment pain and burnout stay bounded as velocity rises — they do not climb with throughput.",
-      "mechanism": "The bounded-oversight outcome on its satisfaction axis (the third productivity dimension): a governed environment keeps the human cost of speed flat, because the substrate absorbs the failure-recovery load that would otherwise make faster feel worse. The subjective companion to P14's objective count.",
-      "observable": "deployment pain / burnout (the Accelerate survey construct) against velocity; as velocity RISES, reported deployment pain stays FLAT, provided E is high.",
-      "observable_slugs": [],
-      "external_construct": "deployment-pain / burnout (DORA) — not on the Operator's Dashboard; needs an added observable to measure here.",
-      "falsification": "Reported deployment pain rises with velocity even in a high-E environment."
+      "id": "R2-two-regime-escape",
+      "name": "Attention-based versus mechanized control",
+      "form": "eps_review ~= p*(1 - r(V)) ;  eps_control ~= p*(1 - kappa)",
+      "substantive_claim": "p = risk-weighted defect-opportunity rate; r(V) = finite-review coverage, which falls as velocity rises so eps_review climbs toward p; kappa = mechanized-coverage fraction, which a mechanism applies every change regardless of throughput. For adequately scoped mechanisms kappa is LESS sensitive to throughput than r(V), so the escape gap widens with velocity.",
+      "ties_to": ["H3-mechanized-assurance"]
     }
   ],
 
-  "prediction_targets": {
-    "_note": "Governance target each prediction reads, per the appendix's three-target framing (agent = the fleet that produces the work; models-bridge = the typed maps it reasons through; product = the shipped artifact). Balances the merged set off the velocity axis.",
-    "agent": ["P1-velocity-exposes-structure", "P4-soft-saturates-hard-does-not", "P6-fit-and-authority-gate", "P7-substrate-heals-faster", "P11-conversion-lead-time-shortens", "P14-oversight-moves-to-classes", "P15-deployment-pain-bounded"],
-    "models-bridge": ["P2-governed-throughput-linear", "P5-model-compression-three-way-gain", "P9-unmodelled-surface-leads-churn", "P10-green-model-beats-green-coverage"],
-    "product": ["P3-control-lowers-escape-review-does-not", "P8-speed-stability-no-trade", "P12-grammar-coverage-drives-out-escapes", "P13-fidelity-gate-kills-silent-corruption"]
-  },
-
-  "external_construct_predictions": {
-    "_note": "The five predictions riding a metric this build does not yet record — Accelerate delivery/pain metrics (DORA) and a Sadowski-Zimmermann interruption construct (SZ). Each is a prediction AWAITING INSTRUMENTATION: the mechanism is stated and the metric named, but no in-repo dashboard slug is fabricated for it.",
-    "predictions": ["P7-substrate-heals-faster", "P8-speed-stability-no-trade", "P11-conversion-lead-time-shortens", "P14-oversight-moves-to-classes", "P15-deployment-pain-bounded"]
-  },
-
-  "equations": [
-    {
-      "id": "EQ1-churn-wall",
-      "name": "Sustainable-velocity / churn-wall relation",
-      "form": "V_durable = V_raw * (1 - c(m))",
-      "reading": "Durable throughput is raw velocity net of the churn share c. c decreases as model-compression coverage m rises (more of the relevant surface fits the window); c -> 1 (net progress collapses) when the relevant surface exceeds what the fleet can hold. Directional, not fitted.",
-      "ties_to": ["P2-governed-throughput-linear", "P9-unmodelled-surface-leads-churn"]
-    },
-    {
-      "id": "EQ2-two-regime-escape",
-      "name": "Defect-escape under two governance regimes",
-      "form": "eps_review ≈ p*(1 - r(V)), r(V)->0 as V->inf  =>  eps_review -> p ;   eps_control ≈ p*(1 - kappa), kappa independent of V ;   Delta_eps = eps_review - eps_control -> p*kappa, widening with V",
-      "reading": "p = per-change defect probability; r(V) = review coverage, which saturates toward zero as velocity rises; kappa = mechanized-coverage fraction (share of failure classes held by a hard control), which a machine applies every time regardless of velocity. The escape-rate GAP between the two regimes widens with velocity — the falsifiable core of P3. Companion soft-saturation form: expected soft-convention violations E[v] = q*V (linear in velocity), vs 0 for a hard constraint (P4); by the stability axis the same arithmetic underlies P8.",
-      "ties_to": ["P3-control-lowers-escape-review-does-not", "P4-soft-saturates-hard-does-not", "P8-speed-stability-no-trade"]
-    }
+  "research_agenda": [
+    {"study_design": "Multi-project longitudinal panel with environment-quality variation", "hypotheses": ["H2", "H3", "H4", "H6"]},
+    {"study_design": "Subsystem-level panel tracking model gaps, churn, and escapes", "hypotheses": ["H1", "H5"]},
+    {"study_design": "Organizational comparison of diagnosis and authority pathways", "hypotheses": ["H7"]},
+    {"study_design": "Instrument one failure class from first occurrence through recurrence -> structural recognition -> governance intervention -> later recurrence or escape (tests the discovery and adaptation loops directly)", "hypotheses": ["H1", "H2", "H3", "H6"]}
   ],
 
-  "productivity_grounding": {
-    "_note": "How the three MAGE outcomes map onto the productivity-measurement literature mined for this appendix (Sadowski & Zimmermann, eds., Rethinking Productivity in Software Engineering, 2019).",
-    "output_over_input": "Productivity = Output/Input. MAGE's claim is that under a fleet the naive Output (commits, lines) diverges from durable Output; E is what keeps measured output equal to durable output.",
-    "three_dimensions": {
-      "velocity": "sustained-velocity outcome",
-      "quality": "falling-escape outcome",
-      "satisfaction_sustainability": "bounded-oversight outcome"
+  "evolution": {
+    "_note": "The empirical kernel and the later extensions are epistemically different and must not be blurred.",
+    "kernel": {
+      "source": "davis2026cheapcode (Cheap Code, Costly Judgment) — first twelve weeks of the DocAble build",
+      "five_step_loop": [
+        "velocity exposes failure",
+        "the engineer classifies the failure as local or structural",
+        "structural failures are converted into governance",
+        "later agents inherit a narrower, more explicit action space",
+        "repeated conversions raise the environment's capacity to absorb future work"
+      ]
     },
-    "gqm": "Each prediction is stated Goal->Question->Metric: the construct is the goal, the prediction the question, the dashboard slug the metric.",
-    "goodhart_caveat": "'Measure governed throughput, not volume' is the false-incentive warning: optimize the surface number (commits/lines) and you get volume, i.e. a fast pile of churn. The moderated velocity->outcome edge is the formal statement of that warning."
+    "extensions": [
+      "Ex-ante (bootstrap) governance became a first-class path, complementary to ex-post conversion.",
+      "Modeling became a coequal route to governability (the Modeling Thesis).",
+      "Governance accumulation proved non-monotonic — mature adaptation includes reconciliation and retirement.",
+      "The process became visibly multi-loop (bootstrap / churn / adaptation / amplification)."
+    ]
+  },
+
+  "figures": {
+    "master": "assets/mage-dynamic-model.svg",
+    "loop_crops": [
+      "assets/mage-loop-1-bootstrap.svg",
+      "assets/mage-loop-2-churn.svg",
+      "assets/mage-loop-3-adaptation.svg",
+      "assets/mage-loop-4-amplification.svg"
+    ],
+    "churn_curve": "assets/mage-churn-curve.svg"
   }
 }

@@ -473,10 +473,11 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="5.4-the-road-to-mage.html">29&nbsp; The Road to MAGE</a></li>
 <li class="part">Back Matter</li>
 <li><a class="" href="6.0-implications-for-se.html">Implications for Software Engineering</a></li>
-<li><a class="" href="6.1-conclusion.html">Conclusion</a></li>
-<li><a class="" href="6.2-about-the-author.html">About the Author</a></li>
-<li><a class="" href="6.3-colophon.html">Colophon</a></li>
-<li><a class="" href="6.4-the-operators-dashboard.html">The Operator's Dashboard</a></li>
+<li><a class="" href="6.1-toward-a-theory-of-mage.html">Toward a Theory of MAGE</a></li>
+<li><a class="" href="6.2-conclusion.html">Conclusion</a></li>
+<li><a class="" href="6.3-about-the-author.html">About the Author</a></li>
+<li><a class="" href="6.4-colophon.html">Colophon</a></li>
+<li><a class="" href="6.5-the-operators-dashboard.html">The Operator's Dashboard</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
 <li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
@@ -521,10 +522,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-c-mechanism-catalog.html">Appendix C — Mechanism Catalog</a></li>
 <li class="part">Appendix D — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix D — How to Write a Skill</a></li>
-<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li>
-<li class="part">Appendix E — A Theory of MAGE</li>
-<li><a class="" href="appendix-theory-of-mage.html">Appendix E — A Theory of MAGE</a></li>
-<li><a class="" href="appendix-e-capability-model.html">Appendix E - 1. A Capability Model, Not a Maturity Model</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 10 · Metrics"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 10</a></div><h1><span class="chap-num">2.5</span> Metrics</h1></header><p>Every agent runs a loop. It takes an input, reasons, acts, and folds the result back around. The chapter on loops said the metric is what the agent steers by — skip it and the agent searches forever, never knowing when to stop. That chapter spent its words on the acting half. This one develops the sensing half, because a loop with no honest sense of its own state cannot steer at all.</p>
+<li><a class="" href="appendix-d-the-recipe.html">Appendix D - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Chapter 10 · Metrics"><header class="chap"><div class="kicker"><a href="2.1-the-agent-stack.html" aria-label="Beginning of Part 2 — The Governed Engineering Environment">Part 2 — The Governed Engineering Environment</a> &nbsp;::&nbsp; <a href="index.html" aria-label="Book contents — jump to the chapter list">Chapter 10</a></div><h1><span class="chap-num">2.5</span> Metrics</h1></header><p>Every agent runs a loop. It takes an input, reasons, acts, and folds the result back around. The chapter on loops said the metric is what the agent steers by — skip it and the agent searches forever, never knowing when to stop. That chapter spent its words on the acting half. This one develops the sensing half, because a loop with no honest sense of its own state cannot steer at all.</p>
 <p>A metric senses. A playbook acts. A mechanism enforces. Those three make up a governed loop, and the metric comes first because the other two are blind without it. A playbook that fires on a number that measures the wrong thing does the wrong work. A mechanism that grades on a number too coarse to name the fault blocks the wrong commit. So the question that governs every metric in this chapter is not "can I measure this?" — almost anything can be counted — but "does this number drive a decision?"</p>
 <h2><span class="sec-num">2.5.1</span> Measure one level deeper</h2>
 <p id="idx-def-measure-one-level-deeper">John Ousterhout gives the rule in one line <sup class="cite-ref"><a href="#wc-2-5-metrics-1" aria-label="citation 1">1</a></sup><span class="cite-note"><span class="cn-mark">1.</span> John Ousterhout, <em>A Philosophy of Software Design</em> (Yaknyam Press, 2018).</span>: <strong>measure one level deeper than the number you think you want.</strong> A metric earns its place only when it drives a decision, and the surface number usually cannot; the deeper the measurement, the nearer it sits to the decision it must drive.</p>

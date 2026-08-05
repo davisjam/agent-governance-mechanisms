@@ -222,16 +222,19 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 
 ## Module 6 — Implications for Software Engineering
 
-- **[DECLARED]** (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering. _(primary: Module 6 · elaborated by: 6.1)_ — _anchor: 6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours._
+- **[DECLARED]** (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering. _(primary: Module 6 · elaborated by: 6.2)_ — _anchor: 6.0 implications-for-se sections (the-judgment-moved, what-this-changes-for-how-we-measure-staff-and-teach, models-are-the-universal-language) + 6.1 the-part-that-stays-yours._
 
 ### Lesson 6.0-implications-for-se
 
 - **[DECLARED]** (evaluate) After this chapter, the reader can evaluate the discipline-level implications: where judgment moved, what saturates, and why models are the universal language of engineering. — _anchor: Section titles 'the-judgment-moved-and-it-moved-toward-you', 'what-this-changes-for-how-we-measure-staff-and-teach', 'models-are-the-universal-language-of-engineering'._
 - _elaborates (owned by the-residual-goals-no-mechanism-reaches):_ (know) After this section, the reader can identify the residual — goals that are neither preventable nor detectable because the failure is an absence nobody specified — explain why it sets the throughput ceiling and is the complement of the two moves rather than a third axis value, and see how authoring the missing spec pulls a goal out of it.
 
-### Lesson 6.1-conclusion
+### Lesson 6.1-toward-a-theory-of-mage
+
+
+### Lesson 6.2-conclusion
 
 - **[DECLARED]** (analyze) After this chapter, the reader can situate the book in the SE literature and identify the part of the work that stays human. — _anchor: Section titles 'fitting-this-book-into-the-software-engineering-literature' + 'the-part-that-stays-yours'._
 - _elaborates (owned by Module 6):_ (evaluate) After Part 6, the reader can evaluate the method's implications for the discipline — where the judgment moved, what stays human, and where models become the universal language of engineering.
 
-### Lesson 6.3-colophon
+### Lesson 6.4-colophon
