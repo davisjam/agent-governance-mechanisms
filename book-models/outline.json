@@ -7,7 +7,7 @@
     "derived_ids": 234,
     "missing_topic_sentence": 6,
     "sections_drained": 179,
-    "paragraph_points": 558
+    "paragraph_points": 559
   },
   "chapters": [
     {
@@ -3292,27 +3292,27 @@
           "heading_text": "Start with the model you already have",
           "topic_sentence": "Do not dismiss a drifted wiki as failed documentation.",
           "id_source": "derived",
-          "block_index": 12,
+          "block_index": 13,
           "points": [
             {
               "slug": "treat-a-drifted-wiki-as-an-immature-model",
               "text": "Treat a drifted wiki as an immature model.",
-              "block_index": 14
+              "block_index": 15
             },
             {
               "slug": "what-the-wiki-lacks-is-a-disciplined-join-to-the-territory",
               "text": "The wiki lacks a disciplined join to the territory.",
-              "block_index": 16
+              "block_index": 17
             },
             {
               "slug": "the-first-brownfield-move-is-to-connect-the-wiki-not-replace-it",
               "text": "First move: connect the wiki, don't replace it.",
-              "block_index": 18
+              "block_index": 19
             },
             {
               "slug": "a-round-trip-join-lets-an-audit-sort-every-gap-into-three-cases",
               "text": "Round-trip links let an audit sort every gap three ways.",
-              "block_index": 21
+              "block_index": 22
             }
           ]
         },
@@ -3322,17 +3322,17 @@
           "heading_text": "The minimum package",
           "topic_sentence": "Four small additions turn the wiki from optional documentation into the start of an engineering environment.",
           "id_source": "derived",
-          "block_index": 25,
+          "block_index": 26,
           "points": [
             {
               "slug": "four-small-additions-turn-the-wiki-into-an-engineering-environment",
               "text": "Four additions turn the wiki into an engineering environment.",
-              "block_index": 27
+              "block_index": 28
             },
             {
               "slug": "never-add-metadata-without-adding-consumers",
               "text": "Never add metadata without adding consumers.",
-              "block_index": 30
+              "block_index": 31
             }
           ]
         },
@@ -3342,32 +3342,32 @@
           "heading_text": "Audit, synchronize, govern, extend",
           "topic_sentence": "The migration runs in four stages.",
           "id_source": "derived",
-          "block_index": 32,
+          "block_index": 33,
           "points": [
             {
               "slug": "the-migration-runs-in-four-stages-each-a-useful-stopping-point",
               "text": "Four stages, each a useful stopping point.",
-              "block_index": 34
+              "block_index": 35
             },
             {
               "slug": "audit-builds-the-graph-and-stays-an-audit-not-a-gate",
               "text": "Audit builds the graph and stays advisory.",
-              "block_index": 36
+              "block_index": 37
             },
             {
               "slug": "synchronize-drains-drift-with-a-boy-scout-rule",
               "text": "Synchronize drains drift with a boy-scout rule.",
-              "block_index": 38
+              "block_index": 39
             },
             {
               "slug": "govern-promotes-the-wiki-from-optional-context-to-required-input",
               "text": "Govern promotes the wiki from optional context to required input.",
-              "block_index": 40
+              "block_index": 41
             },
             {
               "slug": "extend-adds-structured-fields-only-where-a-consumer-exists",
               "text": "Extend adds structured fields only where a consumer exists.",
-              "block_index": 42
+              "block_index": 43
             }
           ]
         },
@@ -3377,27 +3377,27 @@
           "heading_text": "The starting point and the destinations",
           "topic_sentence": "Name the starting point and both destinations before you move.",
           "id_source": "derived",
-          "block_index": 44,
+          "block_index": 45,
           "points": [
             {
               "slug": "name-the-starting-point-and-both-destinations-before-moving",
               "text": "Name the starting point and both destinations before moving.",
-              "block_index": 46
+              "block_index": 47
             },
             {
               "slug": "the-first-destination-is-a-trusted-linked-map",
               "text": "The first destination is a trusted, linked map.",
-              "block_index": 49
+              "block_index": 50
             },
             {
               "slug": "the-far-destination-is-models-code-and-a-traceable-quality-case",
               "text": "The far destination: models, matching code, a traceable quality case.",
-              "block_index": 51
+              "block_index": 52
             },
             {
               "slug": "the-wiki-path-gives-the-three-approaches-somewhere-to-meet",
               "text": "The wiki path gives the three approaches somewhere to meet.",
-              "block_index": 55
+              "block_index": 56
             }
           ]
         },
@@ -3407,17 +3407,17 @@
           "heading_text": "Approach one: top-down, from a whiteboard",
           "topic_sentence": "Start coarse and refine.",
           "id_source": "derived",
-          "block_index": 59,
+          "block_index": 60,
           "points": [
             {
               "slug": "top-down-starts-coarse-and-refines-to-diminishing-returns",
               "text": "Top-down starts coarse, refines until diminishing returns.",
-              "block_index": 61
+              "block_index": 62
             },
             {
               "slug": "every-model-code-mismatch-means-one-of-three-things",
               "text": "Each model-code mismatch is refine, remodel, or bug.",
-              "block_index": 64
+              "block_index": 65
             }
           ]
         },
@@ -3427,22 +3427,22 @@
           "heading_text": "Approach two: bottom-up, inducing the model from code",
           "topic_sentence": "The second approach starts from the code and flies upward.",
           "id_source": "derived",
-          "block_index": 66,
+          "block_index": 67,
           "points": [
             {
               "slug": "bottom-up-induces-the-model-from-code-upward",
               "text": "Bottom-up induces the model from code upward.",
-              "block_index": 69
+              "block_index": 70
             },
             {
               "slug": "the-abstraction-level-follows-from-defining-correctness",
               "text": "Define correctness first; it fixes the abstraction level.",
-              "block_index": 72
+              "block_index": 73
             },
             {
               "slug": "a-high-abstraction-property-is-cheap-to-enforce",
               "text": "A high-abstraction property is cheap to enforce.",
-              "block_index": 75
+              "block_index": 76
             }
           ]
         },
@@ -3487,12 +3487,12 @@
           "heading_text": "The metric that points at what you missed",
           "topic_sentence": "Induction gives you a first model, but it never tells you where it stops.",
           "id_source": "derived",
-          "block_index": 96,
+          "block_index": 95,
           "points": [
             {
               "slug": "the-missing-model-metric-points-at-unmodelled-code",
               "text": "The missing-model metric points at unmodelled code.",
-              "block_index": 99
+              "block_index": 98
             }
           ]
         },
@@ -3502,17 +3502,17 @@
           "heading_text": "Coverage, run backwards",
           "topic_sentence": "Coverage walks one direction: model to code.",
           "id_source": "derived",
-          "block_index": 101,
+          "block_index": 100,
           "points": [
             {
               "slug": "an-orphan-test-reaches-code-tracing-to-no-model",
               "text": "An orphan test reaches code tracing to no model.",
-              "block_index": 103
+              "block_index": 102
             },
             {
               "slug": "you-move-this-metric-by-adding-a-model",
               "text": "You move this metric by adding a model.",
-              "block_index": 105
+              "block_index": 104
             }
           ]
         },
@@ -3522,32 +3522,32 @@
           "heading_text": "Data from the case study",
           "topic_sentence": "A pilot makes the shape concrete.",
           "id_source": "derived",
-          "block_index": 107,
+          "block_index": 106,
           "points": [
             {
               "slug": "the-pilot-found-a-granularity-gap-not-a-scolding",
               "text": "The pilot found a granularity gap, not failure.",
-              "block_index": 109
+              "block_index": 108
             },
             {
               "slug": "the-metric-separates-missing-model-missing-anchor-and-below-grain",
               "text": "It separates missing model, missing anchor, below-grain.",
-              "block_index": 111
+              "block_index": 110
             },
             {
               "slug": "run-on-its-own-codebase-the-metric-caught-real-bugs",
               "text": "Run on its own codebase, it caught bugs.",
-              "block_index": 113
+              "block_index": 112
             },
             {
               "slug": "a-real-migration-uses-all-three-approaches-together",
               "text": "A real migration uses all three approaches together.",
-              "block_index": 115
+              "block_index": 114
             },
             {
               "slug": "this-is-a-solo-field-report-not-a-controlled-study",
               "text": "This is a solo field report, not evidence.",
-              "block_index": 117
+              "block_index": 116
             }
           ]
         },
@@ -3557,22 +3557,22 @@
           "heading_text": "How much governance is enough",
           "topic_sentence": "Which raises the real question: how much governance is enough?",
           "id_source": "derived",
-          "block_index": 119,
+          "block_index": 118,
           "points": [
             {
               "slug": "govern-by-cost-times-frequency-of-the-failure",
               "text": "Govern by failure cost times its frequency.",
-              "block_index": 121
+              "block_index": 120
             },
             {
               "slug": "size-by-cost-times-frequency-architecture-before-controls",
               "text": "Size by cost times frequency; architecture before controls.",
-              "block_index": 123
+              "block_index": 122
             },
             {
               "slug": "price-a-controls-upkeep-before-you-build-it",
               "text": "Price a control's upkeep before you build it.",
-              "block_index": 126
+              "block_index": 125
             }
           ]
         },
@@ -3582,27 +3582,32 @@
           "heading_text": "How I know this",
           "topic_sentence": "I know this because I lived it.",
           "id_source": "derived",
-          "block_index": 129,
+          "block_index": 128,
           "points": [
             {
               "slug": "an-agent-told-to-type-python-made-everything-strings",
               "text": "An agent told to type Python used strings.",
-              "block_index": 131
+              "block_index": 130
             },
             {
               "slug": "structure-is-compression-300k-janky-became-200k-clean",
               "text": "Structure is compression: 300k janky became 200k clean.",
-              "block_index": 133
+              "block_index": 132
             },
             {
               "slug": "turn-on-every-commodity-lint-and-squash-to-zero-blocking",
               "text": "Turn on every commodity lint, squash to blocking.",
-              "block_index": 135
+              "block_index": 134
             },
             {
               "slug": "induce-a-typed-model-per-dense-primitive-region-iteratively",
               "text": "Induce a structured model per dense primitive region.",
-              "block_index": 137
+              "block_index": 136
+            },
+            {
+              "slug": "the-retrofit-was-governance-conversion-at-brownfield-scale",
+              "text": "The retrofit was governance conversion at brownfield scale.",
+              "block_index": 138
             }
           ]
         }
