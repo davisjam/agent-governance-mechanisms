@@ -3455,6 +3455,7 @@ def _appendix_v2_role_subsections() -> list[tuple[str, str]]:
 _FLAGSHIP_STACK_PATH = ROOT / "book-models" / "flagship-stack.json"
 _BRICK_LAYOUT_PATH = ROOT / "book-models" / "brick-layout.json"
 _BRICK_FITNESS_PATH = ROOT / "book-models" / "brick-fitness.json"
+_BRICK_SUMMARIES_PATH = ROOT / "book-models" / "brick-summaries.json"
 _GLYPH_ASSET_DIR = HERE / "assets"
 # Authored compressed Appendix-B notes (restructure sub-wave 4a prototype). One `<slug>.md` per flagship that
 # has been compressed to a keep-together Flagship-Mechanism note; a flagship without one falls back to the full
@@ -3655,6 +3656,36 @@ def _load_brick_fitness() -> dict[str, dict]:
     return data.get("verdicts", {})
 
 
+@functools.lru_cache(maxsize=1)
+def _load_brick_summaries() -> dict[str, str]:
+    """`{slug: curated-summary}` — the curated ≤3-sentence brick summaries (`book-models/brick-summaries.json`,
+    restructure sub-wave 5b). An OVERRIDE over the `**Intent**` fallback: a slug present here renders its curated
+    summary in the Appendix-C brick; every other entry keeps its Intent line. Absent file → `{}` (every brick
+    then falls back to Intent). Not every entry needs one — the curated set covers the bricks whose Intent ran
+    long enough to tower over its grid neighbours."""
+    if not _BRICK_SUMMARIES_PATH.is_file():
+        return {}
+    data = json.loads(_BRICK_SUMMARIES_PATH.read_text(encoding="utf-8"))
+    return data.get("summaries", {})
+
+
+# The hard word cap on the summary a brick emits (restructure sub-wave 5b). A grid brick that towers over its
+# row-neighbour with a 12–15-line summary leaves a jagged row and wasted vertical space; capping the emitted
+# text keeps row heights even. The curated summaries all sit well under it; a still-long Intent fallback is
+# truncated at the cap (the audit-only summary sensor flags it so a curated summary can replace it later).
+_BRICK_SUMMARY_WORD_CAP = 55
+
+
+def _cap_brick_summary(text: str) -> str:
+    """Cap a brick summary at `_BRICK_SUMMARY_WORD_CAP` words. Under the cap the text is returned unchanged;
+    over it, the summary is truncated at the word boundary and an ellipsis appended — a layout backstop for a
+    long Intent fallback, never expected to fire on a curated summary."""
+    words = text.split()
+    if len(words) <= _BRICK_SUMMARY_WORD_CAP:
+        return text
+    return " ".join(words[:_BRICK_SUMMARY_WORD_CAP]).rstrip(",;:.") + "…"
+
+
 def _structure_mermaid_source(fill: dict) -> str | None:
     """The ```mermaid fence body from an entry's Structure fill slot, or None if the entry carries no diagram
     (the root `agent/ models-bridge/ product/` framing entries have no fill). The Structure slot is prose plus
@@ -3777,17 +3808,19 @@ def _brick_pack(bricks: list[dict], ncols: int = 2) -> list[list[dict]]:
 def _brick_cells(group: str, flagship: set[str], ncols: int) -> list[dict]:
     """The ordered brick-cell records for one role zone — every catalogue entry in `group`, in the census
     hierarchy (family census number, then within-family slug), each carrying the fields the cell template
-    renders: name, catalogue link, family, enforcement, computed span, flagship flag, and a stub summary
-    (the entry's Intent — the §5.3 fallback; the curated three-sentence `### Brick` summary lands in the C
-    assembly sub-wave). The figure thumbnail is a placeholder slot this wave."""
+    renders: name, catalogue link, family, enforcement, computed span, flagship flag, and the summary — the
+    curated brick summary (`book-models/brick-summaries.json`) when the slug carries one, else the entry's
+    Intent fallback — capped at `_BRICK_SUMMARY_WORD_CAP` words so a long summary can't tower over its row."""
     family_order = _family_order_from_index()
     entries = [e for e in _appendix_entries() if e["group"] == group]
     entries.sort(key=lambda e: (family_order.get(e["family"], 999), e["family"], e["slug"]))
     fitness = _load_brick_fitness()
+    curated = _load_brick_summaries()
     cells: list[dict] = []
     for e in entries:
         intent = (e.get("intent") or "").strip()
         fit = fitness.get(e["slug"], {})
+        summary = _cap_brick_summary((curated.get(e["slug"]) or intent).strip())
         cells.append({
             "slug": e["slug"],
             "name": e["name"],
@@ -3797,7 +3830,7 @@ def _brick_cells(group: str, flagship: set[str], ncols: int) -> list[dict]:
             "enforcement": e.get("enforcement"),
             "span": _brick_span(e["slug"], ncols),
             "is_flagship": e["slug"] in flagship,
-            "summary": intent,
+            "summary": summary,
             "verdict": fit.get("verdict"),               # PASS | SIMPLIFY | GLYPH | None
             "glyph_class": fit.get("glyph_class"),        # set only on GLYPH verdicts
             "structure_mermaid": _structure_mermaid_source(e.get("fill") or {}),

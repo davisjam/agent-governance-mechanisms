@@ -25,8 +25,17 @@ An `erDiagram` with attribute blocks is treated as SIMPLIFY by the assessment (a
 at thumbnail); this sensor approximates that by scoring any `erDiagram` carrying attribute braces as at least
 SIMPLIFY. A diagram with no verdict but scoring PASS is fine — a legible-as-is diagram needs no curation.
 
-LANDING: audit-only. With all 83 verdicts recorded, it reports zero; it exists to catch the NEXT unrecorded
-dense diagram. `--strict` exits 1 on any finding (the blocking flip, once the model is trusted to stay full).
+SECOND SENSOR — brick-summary length cap (restructure sub-wave 5b). A grid brick that towers over its
+row-neighbour with a long summary leaves a jagged row and wasted vertical space, so the renderer caps every
+emitted summary at a fixed word count (`_BRICK_SUMMARY_WORD_CAP` in the builder, mirrored here as
+`_SUMMARY_WORD_CAP`). This sensor resolves each entry's SOURCE summary — the curated summary in
+`book-models/brick-summaries.json` when present, else the entry's `**Intent**` line — and flags any that runs
+over the cap. An over-cap source is truncated at build time, so it renders even but loses its tail; the
+finding says "author a curated summary for this slug so nothing is cut."
+
+LANDING: audit-only. The diagram sensor reports zero with all 83 verdicts recorded; the summary sensor may
+report a handful of long Intents awaiting a curated summary. `--strict` exits 1 on any finding from either
+sensor (the blocking flip, once both models are trusted to stay full).
 
     python3 book-models/lint_brick_fitness.py            # print findings (audit-only, exit 0)
     python3 book-models/lint_brick_fitness.py --strict   # exit 1 on any finding
@@ -43,6 +52,14 @@ from dataclasses import dataclass
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 _FILLS = ROOT / "book" / "appendix-fills"
+_SUMMARIES = HERE / "brick-summaries.json"
+
+# The word cap on a rendered brick summary. MUST equal `_BRICK_SUMMARY_WORD_CAP` in book/build_book_html.py —
+# the renderer truncates at that count, this sensor flags any source summary that would be truncated.
+_SUMMARY_WORD_CAP = 55
+# The role zones whose entry `.md` files carry the `**Intent**` fallback summary.
+_ROLE_DIRS = ("agent", "models-bridge", "product")
+_INTENT_RE = re.compile(r"\*\*Intent\*\* —\s*(.+?)(?:\n\n|\n\|)", re.S)
 _FITNESS = HERE / "brick-fitness.json"
 
 # Node-shape label extractors — the bracketed text inside each mermaid node shape. Ordered longest-delimiter
@@ -158,6 +175,56 @@ def summary_line(fs: list[Finding]) -> str:
             f"brick-fitness.json")
 
 
+# ── Second sensor — brick-summary length cap ─────────────────────────────────────────────────────────
+
+@dataclass(frozen=True)
+class SummaryFinding:
+    slug: str
+    source: str          # "curated" | "intent"
+    words: int
+
+
+def _curated_summaries() -> dict[str, str]:
+    if not _SUMMARIES.is_file():
+        return {}
+    return json.loads(_SUMMARIES.read_text(encoding="utf-8")).get("summaries", {})
+
+
+def _entry_intents() -> dict[str, str]:
+    """`{slug: intent}` — the `**Intent**` fallback summary parsed from each role-zone entry `.md`. Whitespace
+    is collapsed to match how the renderer emits the summary."""
+    out: dict[str, str] = {}
+    for role in _ROLE_DIRS:
+        for f in sorted((ROOT / role).glob("*/*.md")):
+            if f.name == "README.md":
+                continue
+            m = _INTENT_RE.search(f.read_text(encoding="utf-8"))
+            if m:
+                out[f.stem] = " ".join(m.group(1).split())
+    return out
+
+
+def summary_findings() -> list[SummaryFinding]:
+    """Every entry whose SOURCE summary — curated override if present, else Intent — exceeds the word cap."""
+    curated = _curated_summaries()
+    intents = _entry_intents()
+    out: list[SummaryFinding] = []
+    for slug in sorted(set(curated) | set(intents)):
+        if slug in curated:
+            text, source = curated[slug], "curated"
+        else:
+            text, source = intents[slug], "intent"
+        words = len(text.split())
+        if words > _SUMMARY_WORD_CAP:
+            out.append(SummaryFinding(slug, source, words))
+    return out
+
+
+def summary_summary_line(fs: list[SummaryFinding]) -> str:
+    return (f"{len(fs)} brick(s) whose source summary exceeds the {_SUMMARY_WORD_CAP}-word grid cap "
+            f"(truncated at build; author a curated summary to keep the tail)")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--strict", action="store_true", help="exit 1 on any finding (the blocking flip)")
@@ -170,7 +237,15 @@ def main() -> int:
         m = f.metrics
         print(f"    [{f.scored:>8}] {f.zone}/{f.slug} — nodes={m.nodes} longest={m.longest} "
               f"total={m.total} edges={m.edges} edge-labels={m.edge_labels} subgraphs={m.subgraphs}")
-    if fs and args.strict:
+
+    sfs = summary_findings()
+    print(f"== brick-summary — {_SUMMARY_WORD_CAP}-word grid cap sensor over curated summaries + Intent "
+          f"fallbacks [{mode}] ==")
+    print(f"   {summary_summary_line(sfs)}")
+    for sf in sfs:
+        print(f"    [{sf.source:>8}] {sf.slug} — {sf.words} words (cap {_SUMMARY_WORD_CAP})")
+
+    if (fs or sfs) and args.strict:
         return 1
     return 0
 

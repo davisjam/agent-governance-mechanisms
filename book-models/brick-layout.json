@@ -1,10 +1,7 @@
 {
-  "_note": "Declared brick-layout constraints for the Appendix-C mechanism-catalog brick grid (appendix-restructure §14). Consumed at build time by book/build_book_html.py:_load_brick_layout(). Each key is a catalogue entry slug; `span` is 1 (default, a 1-column brick), 2 (a wide diagram spanning two columns), or \"full\" (a whole row). `pair_with` places the named sibling immediately adjacent; `near` keeps it sequentially close. RE-TUNED in restructure sub-wave 5 AFTER the fitness pass (book-models/brick-fitness.json): the three originally span-2 seeds all scored GLYPH — a GLYPH renders as a compact class glyph, which belongs at span 1 — so span-2 is dropped from them and re-seeded on `office-models`, the widest surviving SIMPLIFY pipeline, to keep the packer's mixed-layout path exercised. Empty {} entries keep a slug declared for reviewer visibility that its span was deliberately dropped to 1 after the fitness pass. Adjacency hints are kept: the test/build-serializer sibling pair and the composed/symbol near-adjacency (both now GLYPH, both Bridge graph/trace models).",
+  "_note": "Declared brick-layout constraints for the Appendix-C mechanism-catalog brick grid (appendix-restructure §14). Consumed at build time by book/build_book_html.py:_load_brick_layout(). Each key is a catalogue entry slug; `pair_with` places the named sibling immediately adjacent; `near` keeps it sequentially close. RE-TUNED in restructure sub-wave 5b: `span` is DROPPED entirely — every brick is span-1. The render-based vision-judge review (book/_design/drafts/appendix-c-vision-judge-260804.md) found span-2 unjustified: a span-2 brick renders its diagram centered at native small size in a wide grey field, so the extra width benefits only the summary's line-count, not the figure. A uniform span-1 grid packs cleaner and removes the tiny-diagram-in-grey look. Only adjacency hints remain: the test/build-serializer sibling pair and the composed/symbol near-adjacency (both GLYPH Bridge graph/trace models).",
   "bricks": {
-    "governance-graph": {},
     "composed-state-machine-model": { "near": "symbol-anchored-traceability-graph" },
-    "symbol-anchored-traceability-graph": {},
-    "office-models": { "span": 2 },
     "test-serializer": { "pair_with": "build-serializer" }
   }
 }
