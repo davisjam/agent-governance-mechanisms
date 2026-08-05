@@ -34,6 +34,7 @@ import sys
 from dataclasses import dataclass
 
 import theory_model_check as _tmc  # sibling in book-models/; the internal well-formedness check (TM1-TM7)
+from _projection_parity import page_block_parity  # shared authored-page table-parity check (extract-on-3rd-site)
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)  # the governance-catalog repo root (book-models/ is one level down)
@@ -170,47 +171,15 @@ def render_hypotheses_table_md(model: "TheoryModel | None" = None) -> str:
 
 # ---- parity: the page carries the projection --------------------------------------------------------
 
-def _page_table_lines(page_md: str) -> "list[str]":
-    """Extract the hypotheses table from the page — the contiguous run of `|`-rows that starts at the model's
-    exact header line (the dashboard extractor idiom). The `<!-- label -->` / caption comments sit ABOVE the
-    header, so they are not swept in. Returns [] if the header is not found."""
-    lines = [ln.rstrip() for ln in page_md.splitlines()]
-    try:
-        start = lines.index(_TABLE_HEADER)
-    except ValueError:
-        return []
-    out: "list[str]" = []
-    for ln in lines[start:]:
-        if ln.startswith("|"):
-            out.append(ln)
-        else:
-            break
-    return out
-
-
 def parity_findings(model: "TheoryModel | None" = None) -> "list[str]":
     """The page's table must equal the model's projection — the authored-content + parity-validator idiom.
-    A mismatch means the page and the model drifted; regenerate the table from `... hypotheses-table`."""
+    A mismatch means the page and the model drifted; regenerate the table from `... hypotheses-table`.
+    Delegates the extract-and-diff to the shared `page_block_parity` harness (extract-on-3rd-site DRY)."""
     if model is None:
         model = derive_model()
-    page_path = os.path.join(_BOOK, _PAGE_REL)
-    if not os.path.isfile(page_path):
-        return [f"parity: theory chapter page {_PAGE_REL} does not exist"]
-    page_md = open(page_path, encoding="utf-8").read()
-    got = _page_table_lines(page_md)
-    want = render_hypotheses_table_md(model).splitlines()
-    if not got:
-        return [f"parity: no hypotheses table found in {_PAGE_REL} (expected the model's header line)"]
-    if got != want:
-        findings = [f"parity: {_PAGE_REL} table differs from the model projection — "
-                    f"regenerate with `hypotheses-table`"]
-        for i in range(max(len(got), len(want))):
-            g = got[i] if i < len(got) else "<missing>"
-            w = want[i] if i < len(want) else "<missing>"
-            if g != w:
-                findings.append(f"  row {i}: page {g!r} != model {w!r}")
-        return findings
-    return []
+    return page_block_parity(
+        os.path.join(_BOOK, _PAGE_REL), _TABLE_HEADER, render_hypotheses_table_md(model).splitlines(),
+        display=_PAGE_REL, label="hypotheses table", regen_hint="hypotheses-table")
 
 
 # ---- structural + count guard -----------------------------------------------------------------------

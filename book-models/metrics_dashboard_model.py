@@ -33,6 +33,7 @@ import sys
 from dataclasses import dataclass
 
 from _book_pages import book_page_slugs as _book_page_slugs  # shared page-slug resolver (extract-on-2nd-site)
+from _projection_parity import page_block_parity  # shared authored-page table-parity check (extract-on-3rd-site)
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _DECLARED = os.path.join(_HERE, "metrics-dashboard.json")
@@ -231,50 +232,15 @@ def render_table_md(model: "DashboardModel | None" = None) -> str:
 
 # ---- parity: the page carries the projection --------------------------------------------------------
 
-def _page_table_lines(page_md: str) -> "list[str]":
-    """Extract the dashboard table from the page — the contiguous run of `|`-rows that starts at the model's
-    exact header line. The band-label divider rows also begin with `|`, so the whole grouped table is one
-    contiguous run. Returns [] if the header is not found."""
-    lines = [ln.rstrip() for ln in page_md.splitlines()]
-    try:
-        start = lines.index(_TABLE_HEADER)
-    except ValueError:
-        return []
-    out: "list[str]" = []
-    for ln in lines[start:]:
-        if ln.startswith("|"):
-            out.append(ln)
-        else:
-            break
-    return out
-
-
 def parity_findings(model: "DashboardModel | None" = None) -> "list[str]":
     """The page's table must equal the model's projection — the authored-content + parity-validator idiom.
-    A mismatch means the page and the model have drifted; regenerate the table from `... table`."""
+    A mismatch means the page and the model have drifted; regenerate the table from `... table`. Delegates
+    the extract-and-diff to the shared `page_block_parity` harness (extract-on-3rd-site DRY)."""
     if model is None:
         model = derive_model()
-    page_path = os.path.join(_BOOK, _PAGE_REL)
-    if not os.path.isfile(page_path):
-        return [f"parity: Operator's Dashboard page {_PAGE_REL} does not exist"]
-    page_md = open(page_path, encoding="utf-8").read()
-    got = _page_table_lines(page_md)
-    want = render_table_md(model).splitlines()
-    if not got:
-        return [f"parity: no dashboard table found in {_PAGE_REL} (expected the model's header line)"]
-    if got != want:
-        findings = [f"parity: {_PAGE_REL} table differs from the model projection — regenerate with `table`"]
-        for i in range(max(len(got), len(want))):
-            g = got[i] if i < len(got) else "<missing>"
-            w = want[i] if i < len(want) else "<missing>"
-            if g != w:
-                findings.append(f"  row {i}: page {g!r} != model {w!r}")
-        return findings
-    return findings_ok()
-
-
-def findings_ok() -> "list[str]":
-    return []
+    return page_block_parity(
+        os.path.join(_BOOK, _PAGE_REL), _TABLE_HEADER, render_table_md(model).splitlines(),
+        display=_PAGE_REL, label="dashboard table", regen_hint="table")
 
 
 def all_findings(model: "DashboardModel | None" = None) -> "list[str]":
