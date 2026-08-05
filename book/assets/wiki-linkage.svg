@@ -35,7 +35,7 @@
   <!-- wiki page -->
   <rect x="144" y="98" width="190" height="66" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
   <text x="239" y="128" text-anchor="middle" font-size="20" font-weight="700" fill="#9a3f12">Wiki page</text>
-  <text x="239" y="150" text-anchor="middle" font-size="13" fill="#57534e">a claim about the system</text>
+  <text x="239" y="150" text-anchor="middle" font-size="15.15" fill="#57534e">a claim about the system</text>
 
   <!-- code + tests -->
   <rect x="54" y="330" width="168" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
@@ -46,25 +46,25 @@
 
   <!-- orphan: code with no page -->
   <rect x="256" y="428" width="168" height="56" rx="8" fill="#f6f4ef" stroke="#57534e" stroke-width="2" stroke-dasharray="6 5"/>
-  <text x="340" y="452" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Orphan region</text>
-  <text x="340" y="472" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">no page at all</text>
+  <text x="340" y="452" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Orphan region</text>
+  <text x="340" y="472" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">no page at all</text>
 
   <!-- page -> code: solid (the link that usually exists) -->
   <path d="M205,166 C170,230 150,270 140,324" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#wl-ah)"/>
-  <text x="120" y="250" text-anchor="end" font-size="14" font-style="italic" fill="#57534e">explains</text>
+  <text x="120" y="250" text-anchor="end" font-size="16" font-style="italic" fill="#57534e">explains</text>
 
   <!-- code -> page: dashed, the missing back-link -->
   <path d="M175,326 C205,268 230,220 262,168" fill="none" stroke="#57534e" stroke-width="1.7" stroke-dasharray="6 5" marker-end="url(#wl-ah-weak)"/>
-  <text x="248" y="250" text-anchor="start" font-size="13.5" font-style="italic" fill="#57534e">back-link missing</text>
+  <text x="248" y="250" text-anchor="start" font-size="16" font-style="italic" fill="#57534e">back-link missing</text>
 
   <!-- page -> tests: dashed, partial -->
   <path d="M300,166 C330,240 340,280 340,324" fill="none" stroke="#57534e" stroke-width="1.7" stroke-dasharray="6 5" marker-end="url(#wl-ah-weak)"/>
 
-  <text x="239" y="504" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">weakly typed · join incomplete</text>
+  <text x="239" y="504" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">weakly typed · join incomplete</text>
 
   <!-- ===================== GUTTER — matures into ===================== -->
   <path d="M460,292 L544,292" fill="none" stroke="#1c1917" stroke-width="2.5" marker-end="url(#wl-ah)"/>
-  <text x="502" y="280" text-anchor="middle" font-size="14" font-weight="700" fill="#1c1917">matures</text>
+  <text x="502" y="280" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">matures</text>
 
   <!-- ===================== RIGHT PANEL — the model you build ===================== -->
   <text x="761" y="52" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">The model you build</text>
@@ -73,7 +73,7 @@
   <!-- model node -->
   <rect x="666" y="98" width="190" height="66" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
   <text x="761" y="128" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Model node</text>
-  <text x="761" y="150" text-anchor="middle" font-size="13" fill="#57534e">invariant · state machine</text>
+  <text x="761" y="150" text-anchor="middle" font-size="15.3" fill="#57534e">invariant · state machine</text>
 
   <!-- code + tests -->
   <rect x="580" y="330" width="168" height="58" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
@@ -85,17 +85,17 @@
   <!-- model <-> code: complete round-trip join (both ends) -->
   <path d="M712,166 C676,232 660,272 655,324" fill="none" stroke="#1c1917" stroke-width="2"
         marker-start="url(#wl-ah)" marker-end="url(#wl-ah)"/>
-  <text x="636" y="252" text-anchor="end" font-size="13.5" font-style="italic" fill="#57534e">round-trip</text>
+  <text x="636" y="252" text-anchor="end" font-size="16" font-style="italic" fill="#57534e">round-trip</text>
 
   <!-- model <-> tests: complete round-trip join (both ends) -->
   <path d="M810,166 C846,232 862,272 866,324" fill="none" stroke="#1c1917" stroke-width="2"
         marker-start="url(#wl-ah)" marker-end="url(#wl-ah)"/>
-  <text x="886" y="252" text-anchor="start" font-size="13.5" font-style="italic" fill="#57534e">round-trip</text>
+  <text x="886" y="252" text-anchor="start" font-size="16" font-style="italic" fill="#57534e">round-trip</text>
 
   <!-- drift gate straddling the joins (hexagon) -->
   <polygon points="700,432 727,405 835,405 862,432 835,459 727,459"
            fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="781" y="438" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">Drift gate</text>
 
-  <text x="761" y="504" text-anchor="middle" font-size="13.5" font-style="italic" fill="#57534e">typed · gate-enforced</text>
+  <text x="761" y="504" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">typed · gate-enforced</text>
 </svg>

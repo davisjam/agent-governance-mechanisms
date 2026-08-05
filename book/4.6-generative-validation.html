@@ -668,7 +668,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
     <path d="M 40,60 v 100 a 150,14 0 0 0 300,0 v -100" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
     <ellipse cx="190" cy="60" rx="150" ry="14" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
     <text x="190" y="112" text-anchor="middle" font-size="21" font-weight="700" fill="#1c1917">shared structured model</text>
-    <text x="190" y="140" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">the specification</text>
+    <text x="190" y="140" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">the specification</text>
   </g>
 
   <!-- ===== the input generator ===== -->
@@ -677,19 +677,19 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- ===== the three oracles ===== -->
   <rect x="430" y="60" width="330" height="400" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
-  <text x="450" y="92" font-size="18" font-style="italic" fill="#57534e">one move, three oracles</text>
+  <text x="450" y="92" font-size="18.88" font-style="italic" fill="#57534e">one move, three oracles</text>
 
   <rect x="460" y="110" width="270" height="84" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="595" y="144" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">declared invariant</text>
-  <text x="595" y="172" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">property test</text>
+  <text x="595" y="172" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">property test</text>
 
   <rect x="460" y="225" width="270" height="84" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="595" y="259" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">never-crash contract</text>
-  <text x="595" y="287" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">fuzz</text>
+  <text x="595" y="287" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">fuzz</text>
 
   <rect x="460" y="340" width="270" height="84" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="595" y="374" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">the structured model</text>
-  <text x="595" y="402" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">itself — fuzz + MBSE</text>
+  <text x="595" y="402" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">itself — fuzz + MBSE</text>
 
   <!-- model -> oracles (the model is the oracle) -->
   <path d="M344,120 C390,125 410,135 452,146" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#gl-ah)"/>
@@ -711,23 +711,23 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <rect x="850" y="170" width="280" height="110" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
   <text x="990" y="205" text-anchor="middle" font-size="19" font-weight="700" fill="#b23b3b">counterexample →</text>
-  <text x="990" y="232" text-anchor="middle" font-size="17" fill="#b23b3b">shrink / RCA to the</text>
-  <text x="990" y="256" text-anchor="middle" font-size="17" fill="#b23b3b">spec point</text>
+  <text x="990" y="232" text-anchor="middle" font-size="18.88" fill="#b23b3b">shrink / RCA to the</text>
+  <text x="990" y="256" text-anchor="middle" font-size="18.88" fill="#b23b3b">spec point</text>
 
   <!-- counterexample -> coverage -->
   <path d="M990,284 C985,340 980,390 978,436" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#gl-ah)"/>
 
   <rect x="810" y="440" width="340" height="110" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
   <text x="980" y="478" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">coverage: did we explore?</text>
-  <text x="980" y="508" text-anchor="middle" font-size="15.5" fill="#57534e">grammar · line/branch · model-claim</text>
+  <text x="980" y="508" text-anchor="middle" font-size="18.88" fill="#57534e">grammar · line/branch · model-claim</text>
 
   <!-- the loop closes: coverage refines the generator ... -->
   <path d="M806,510 C560,570 300,560 195,504" fill="none" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#gl-ah-mut)"/>
-  <text x="500" y="530" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">refine the generator</text>
+  <text x="500" y="530" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">refine the generator</text>
 
   <!-- ... and model-claim coverage joins back to the model -->
   <path d="M806,540 C500,650 140,625 60,440 C 35,320 90,215 148,186" fill="none" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#gl-ah-mut)"/>
-  <text x="430" y="652" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">model-claim coverage — the metrics chapter owns it</text>
+  <text x="430" y="652" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">model-claim coverage — the metrics chapter owns it</text>
 </svg><figcaption data-short="The Coin Is the Model"><span class="fig-label">Figure 4.6-2.</span> <em>The Coin Is the Model.</em> Fuzzing and property testing are two sides of one coin: both draw their oracle from the same shared specification, and coverage asks whether the generator ever reached the claims the model makes.</figcaption></figure>
 <h2><span class="sec-num">4.6.7</span> When to reach for which</h2>
 <p>The family gives a compact decision aid, and the axes of the opening table are the decision.</p>

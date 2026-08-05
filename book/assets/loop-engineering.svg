@@ -35,18 +35,18 @@
   <!-- ===== the admission gate on the feedback path (lever 4) ===== -->
   <rect x="360" y="38" width="240" height="70" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
   <circle cx="392" cy="62" r="12" fill="#1f7a4d"/>
-  <text x="392" y="67" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">4</text>
+  <text x="392" y="67" text-anchor="middle" font-size="15.36" font-weight="700" fill="#ffffff">4</text>
   <text x="492" y="68" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Admission rule</text>
-  <text x="480" y="94" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">may the result advance?</text>
+  <text x="480" y="94" text-anchor="middle" font-size="15.36" font-style="italic" fill="#57534e">may the result advance?</text>
 
   <!-- ===== feedback path: output → gate → next turn's input ===== -->
   <path d="M 775 208 L 775 72 L 607 72" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#leArrow)"/>
   <path d="M 360 72 L 185 72 L 185 202" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#leArrow)"/>
-  <text x="300" y="127" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the next turn's input</text>
+  <text x="300" y="127" text-anchor="middle" font-size="15.36" font-style="italic" fill="#57534e">the next turn's input</text>
 
   <!-- fail branch: gate → reason again -->
   <path d="M 480 108 L 480 202" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#leArrowGreen)"/>
-  <text x="494" y="160" font-size="15" font-style="italic" fill="#1f7a4d">fails — run again</text>
+  <text x="494" y="160" font-size="15.36" font-style="italic" fill="#1f7a4d">fails — run again</text>
 
   <!-- ===== the three stations ===== -->
   <!-- Modeled state (lever 1, blue) -->
@@ -71,21 +71,21 @@
   <!-- ===== the lever callouts ===== -->
   <!-- lever 1 — the state exposed (Modeling Thesis) -->
   <circle cx="86" cy="352" r="12" fill="#2f5169"/>
-  <text x="86" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">1</text>
+  <text x="86" y="357" text-anchor="middle" font-size="15.36" font-weight="700" fill="#ffffff">1</text>
   <text x="196" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#2f5169">The state exposed</text>
   <text x="185" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a model, deliberately reduced</text>
   <text x="185" y="403" text-anchor="middle" font-size="16" font-style="italic" fill="#2f5169">— the Modeling Thesis lever</text>
 
   <!-- lever 2 — the action surface -->
   <circle cx="378" cy="352" r="12" fill="#1f7a4d"/>
-  <text x="378" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">2</text>
+  <text x="378" y="357" text-anchor="middle" font-size="15.36" font-weight="700" fill="#ffffff">2</text>
   <text x="492" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#1f7a4d">The action surface</text>
   <text x="480" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">tools and sanctioned seams —</text>
   <text x="480" y="403" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the wrong move is unavailable</text>
 
   <!-- lever 3 — the success criterion -->
   <circle cx="662" cy="352" r="12" fill="#1f7a4d"/>
-  <text x="662" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">3</text>
+  <text x="662" y="357" text-anchor="middle" font-size="15.36" font-weight="700" fill="#ffffff">3</text>
   <text x="793" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#1f7a4d">The success criterion</text>
   <text x="775" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">progress is measured, not felt</text>
 

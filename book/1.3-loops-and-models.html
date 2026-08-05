@@ -578,27 +578,27 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- 1. goal (center 135) -->
   <rect x="30" y="70" width="210" height="104" rx="8" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
   <text x="135" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Goal</text>
-  <text x="135" y="142" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">what you want built</text>
+  <text x="135" y="142" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">what you want built</text>
 
   <!-- 2. model (center 380) -->
   <rect x="275" y="70" width="210" height="104" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
   <text x="380" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#9a3f12">Model</text>
-  <text x="380" y="142" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">the structured description</text>
+  <text x="380" y="142" text-anchor="middle" font-size="16.59" font-style="italic" fill="#57534e">the structured description</text>
 
   <!-- 3. agent builds (center 625) -->
   <rect x="520" y="70" width="210" height="104" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="625" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Agent builds</text>
-  <text x="625" y="142" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the printer runs</text>
+  <text x="625" y="142" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">the printer runs</text>
 
   <!-- 4. evidence (center 870) -->
   <rect x="765" y="70" width="210" height="104" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="870" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Evidence</text>
-  <text x="870" y="142" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">what came out</text>
+  <text x="870" y="142" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">what came out</text>
 
   <!-- 5. judgment (center 1115) -->
   <rect x="1010" y="70" width="210" height="104" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
   <text x="1115" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#9a3f12">Judgment</text>
-  <text x="1115" y="142" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">does it match intent?</text>
+  <text x="1115" y="142" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">does it match intent?</text>
 
   <!-- forward arrows -->
   <g stroke="#1c1917" stroke-width="2" fill="none">
@@ -611,7 +611,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- dashed return path: judgment -> model -->
   <path d="M1115,174 C1115,300 640,330 380,300 L380,178"
         fill="none" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#pl-ah-mut)"/>
-  <text x="720" y="345" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">refine the model — a sharper description each pass</text>
+  <text x="720" y="345" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">refine the model — a sharper description each pass</text>
 </svg><figcaption data-short="The Printer Loop"><span class="fig-label">Figure 1.3-1.</span> <em>The Printer Loop.</em> The loop that produces: a goal becomes a model, the agent builds, evidence meets judgment, and the model sharpens each pass.</figcaption></figure>
 <p id="idx-def-success-metric">Engineering a loop well starts with the metric, because the metric is what the agent steers by. The agent does not magically know your goals or your environment. You have to make its progress <em>measurable</em> — deterministically, through a quantitative check, or through a rubric that scores a qualitative result. Skip this, and you have told the agent nothing about what "done" means, so it searches, and searches, and searches, and never knows when to stop.</p>
 <p id="idx-ex-loop-engineering-1">The orchestration layer of this book's companion repository is itself a worked example of a loop engineered this way. The catalogue models the orchestrator — the process that dispatches agents, waits for them to land work, and cleans up after them — as an explicit reactive loop with a typed lifecycle: <em>dispatch → work → land → tombstone</em>, then refill and go again. The loop is written down as a model the agent can read — which is the second idea.</p>
@@ -660,18 +660,18 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- ===== the admission gate on the feedback path (lever 4) ===== -->
   <rect x="360" y="38" width="240" height="70" rx="10" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
   <circle cx="392" cy="62" r="12" fill="#1f7a4d"/>
-  <text x="392" y="67" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">4</text>
+  <text x="392" y="67" text-anchor="middle" font-size="15.36" font-weight="700" fill="#ffffff">4</text>
   <text x="492" y="68" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">Admission rule</text>
-  <text x="480" y="94" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">may the result advance?</text>
+  <text x="480" y="94" text-anchor="middle" font-size="15.36" font-style="italic" fill="#57534e">may the result advance?</text>
 
   <!-- ===== feedback path: output → gate → next turn's input ===== -->
   <path d="M 775 208 L 775 72 L 607 72" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#leArrow)"/>
   <path d="M 360 72 L 185 72 L 185 202" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#leArrow)"/>
-  <text x="300" y="127" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the next turn's input</text>
+  <text x="300" y="127" text-anchor="middle" font-size="15.36" font-style="italic" fill="#57534e">the next turn's input</text>
 
   <!-- fail branch: gate → reason again -->
   <path d="M 480 108 L 480 202" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#leArrowGreen)"/>
-  <text x="494" y="160" font-size="15" font-style="italic" fill="#1f7a4d">fails — run again</text>
+  <text x="494" y="160" font-size="15.36" font-style="italic" fill="#1f7a4d">fails — run again</text>
 
   <!-- ===== the three stations ===== -->
   <!-- Modeled state (lever 1, blue) -->
@@ -696,21 +696,21 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- ===== the lever callouts ===== -->
   <!-- lever 1 — the state exposed (Modeling Thesis) -->
   <circle cx="86" cy="352" r="12" fill="#2f5169"/>
-  <text x="86" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">1</text>
+  <text x="86" y="357" text-anchor="middle" font-size="15.36" font-weight="700" fill="#ffffff">1</text>
   <text x="196" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#2f5169">The state exposed</text>
   <text x="185" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a model, deliberately reduced</text>
   <text x="185" y="403" text-anchor="middle" font-size="16" font-style="italic" fill="#2f5169">— the Modeling Thesis lever</text>
 
   <!-- lever 2 — the action surface -->
   <circle cx="378" cy="352" r="12" fill="#1f7a4d"/>
-  <text x="378" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">2</text>
+  <text x="378" y="357" text-anchor="middle" font-size="15.36" font-weight="700" fill="#ffffff">2</text>
   <text x="492" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#1f7a4d">The action surface</text>
   <text x="480" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">tools and sanctioned seams —</text>
   <text x="480" y="403" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the wrong move is unavailable</text>
 
   <!-- lever 3 — the success criterion -->
   <circle cx="662" cy="352" r="12" fill="#1f7a4d"/>
-  <text x="662" y="357" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">3</text>
+  <text x="662" y="357" text-anchor="middle" font-size="15.36" font-weight="700" fill="#ffffff">3</text>
   <text x="793" y="358" text-anchor="middle" font-size="19" font-weight="700" fill="#1f7a4d">The success criterion</text>
   <text x="775" y="382" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">progress is measured, not felt</text>
 

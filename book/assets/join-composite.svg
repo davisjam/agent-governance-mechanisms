@@ -31,10 +31,10 @@
 
   <rect x="45" y="100" width="210" height="92" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="150" y="136" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Journey: goal</text>
-  <text x="150" y="166" text-anchor="middle" font-size="16.5" font-weight="600" fill="#9a3f12">criticality: MAJOR</text>
+  <text x="150" y="166" text-anchor="middle" font-size="18.88" font-weight="600" fill="#9a3f12">criticality: MAJOR</text>
 
   <line x1="150" y1="196" x2="150" y2="246" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="172" y="226" font-size="16" font-style="italic" fill="#57534e">calls</text>
+  <text x="172" y="226" font-size="18.88" font-style="italic" fill="#57534e">calls</text>
 
   <polygon points="72,252 240,252 228,308 60,308" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
   <text x="150" y="286" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">endpoint</text>
@@ -50,15 +50,15 @@
   <text x="510" y="177" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">major?</text>
 
   <path d="M496,222 C478,248 464,260 448,276" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="452" y="252" text-anchor="end" font-size="15" font-style="italic" fill="#57534e">yes</text>
+  <text x="452" y="252" text-anchor="end" font-size="18.88" font-style="italic" fill="#57534e">yes</text>
   <path d="M524,222 C560,250 580,260 618,276" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="600" y="252" font-size="15" font-style="italic" fill="#57534e">no</text>
+  <text x="600" y="252" font-size="18.88" font-style="italic" fill="#57534e">no</text>
 
   <rect x="350" y="280" width="190" height="62" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="445" y="318" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">local + staging</text>
 
   <rect x="552" y="280" width="150" height="62" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="627" y="318" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">staging only</text>
+  <text x="627" y="318" text-anchor="middle" font-size="18.88" font-weight="700" fill="#1c1917">staging only</text>
 
   <line x1="445" y1="346" x2="455" y2="392" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
 
@@ -79,7 +79,7 @@
 
   <!-- the node join: same endpoint, checked for any test at all -->
   <line x1="200" y1="310" x2="200" y2="452" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#jc-ah-mut)"/>
-  <text x="190" y="388" text-anchor="end" font-size="16" font-style="italic" fill="#57534e">node join</text>
+  <text x="190" y="388" text-anchor="end" font-size="18.88" font-style="italic" fill="#57534e">node join</text>
 
   <!-- covered? feeds the floor lint -->
   <path d="M247,505 C290,490 310,465 339,436" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
@@ -100,18 +100,18 @@
     <path d="M 935,230 v 80 a 105,11 0 0 0 210,0 v -80" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
     <ellipse cx="1040" cy="230" rx="105" ry="11" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
     <text x="1040" y="272" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">HostLoadProfile</text>
-    <text x="1040" y="298" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">ceiling · budget</text>
+    <text x="1040" y="298" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">ceiling · budget</text>
   </g>
   <path d="M1010,224 C980,205 950,198 924,188" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
 
   <!-- the plan's two outcomes -->
   <path d="M800,188 C780,260 790,320 848,376" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="880" y="368" font-size="15" font-style="italic" fill="#57534e">cost gate only</text>
+  <text x="880" y="368" font-size="18.88" font-style="italic" fill="#57534e">cost gate only</text>
   <rect x="770" y="380" width="290" height="58" rx="29" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
   <text x="915" y="417" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">fan out — parallel</text>
 
   <path d="M780,188 C752,300 755,420 808,486" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#jc-ah)"/>
-  <text x="880" y="478" font-size="15" font-style="italic" fill="#57534e">cost gate + a scarce host</text>
+  <text x="880" y="478" font-size="18.88" font-style="italic" fill="#57534e">cost gate + a scarce host</text>
   <rect x="770" y="490" width="290" height="58" rx="29" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
   <text x="915" y="527" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">serialize — fan / join</text>
 </svg>

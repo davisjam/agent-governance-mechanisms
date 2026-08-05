@@ -14,11 +14,11 @@
 
   <style>
     .block  { fill:#f6f4ef; stroke:#1c1917; stroke-width:1.5; }
-    .btitle { font-size:32px; font-weight:700; fill:#1c1917; }
+    .btitle { font-size:26.88px; font-weight:700; fill:#1c1917; }
     .bsub   { font-size:25px; font-style:italic; fill:#57534e; }
     .tab    { fill:#ffffff; stroke:#1c1917; stroke-width:1.5; }
-    .tablbl { font-size:32px; font-weight:600; fill:#1c1917; }
-    .govlbl { font-size:44px; font-weight:700; fill:#ffffff; }
+    .tablbl { font-size:26.88px; font-weight:600; fill:#1c1917; }
+    .govlbl { font-size:26.88px; font-weight:700; fill:#ffffff; }
     .intlbl { font-size:25px; font-weight:600; fill:#1c1917; }
   </style>
 

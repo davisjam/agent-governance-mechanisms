@@ -358,8 +358,8 @@
   <!-- Churn box: a short reject-branch, parked right above the fleet -->
   <rect x="44" y="104" width="228" height="98" rx="12" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
   <text x="158" y="140" text-anchor="middle" font-size="23" font-weight="700" fill="#b23b3b">Churn</text>
-  <text x="158" y="165" text-anchor="middle" font-size="15" fill="#b23b3b">work outgrows the window;</text>
-  <text x="158" y="185" text-anchor="middle" font-size="15" fill="#b23b3b">drift, confidently-wrong</text>
+  <text x="158" y="165" text-anchor="middle" font-size="16.41" fill="#b23b3b">work outgrows the window;</text>
+  <text x="158" y="185" text-anchor="middle" font-size="17.28" fill="#b23b3b">drift, confidently-wrong</text>
 
   <!-- ================= BAD PATH: a short fray, straight up out of the fleet to Churn ================= -->
   <!-- the reject-branch: ORIGINATES on the fleet top edge (y=293), frays up, TERMINATES on Churn's bottom edge (y=202) -->
@@ -368,13 +368,13 @@
   <path d="M174 236 L150 224 L166 214 L158 204"
         fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"
         marker-end="url(#bi-churn-mg-ah-red)" opacity="0.9"/>
-  <text x="238" y="258" text-anchor="middle" font-size="15.5" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
+  <text x="238" y="258" text-anchor="middle" font-size="17.28" font-style="italic" fill="#b23b3b" font-weight="600">left ungoverned</text>
 
   <!-- ============ THE FLEET: single origin, centered on the spine (y=344) ============ -->
   <rect x="46" y="293" width="196" height="102" rx="12" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
   <text x="144" y="333" text-anchor="middle" font-size="20" font-weight="700" fill="#2f5169">The agent fleet</text>
-  <text x="144" y="359" text-anchor="middle" font-size="15.5" fill="#2f5169">fast · cheap</text>
-  <text x="144" y="380" text-anchor="middle" font-size="15" fill="#57534e">one input, two fates</text>
+  <text x="144" y="359" text-anchor="middle" font-size="17.28" fill="#2f5169">fast · cheap</text>
+  <text x="144" y="380" text-anchor="middle" font-size="17.28" fill="#57534e">one input, two fates</text>
 
   <!-- ============ SPINE: fleet -> governed env -> trustworthy (all straight, y=344) ============ -->
   <!-- tail on the fleet's right edge (x=242), head on the container's left edge (x=308) -->
@@ -383,15 +383,15 @@
   <!-- The governed environment: the HERO container (center y=344) -->
   <rect x="308" y="216" width="452" height="256" rx="16" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
   <path d="M308 232 a16 16 0 0 1 16 -16 h420 a16 16 0 0 1 16 16 v22 h-452 z" fill="#1f7a4d"/>
-  <text x="534" y="245" text-anchor="middle" font-size="17" font-weight="700" fill="#ffffff" letter-spacing="0.3">The governed environment</text>
+  <text x="534" y="245" text-anchor="middle" font-size="17.28" font-weight="700" fill="#ffffff" letter-spacing="0.3">The governed environment</text>
 
   <rect x="334" y="278" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
-  <text x="534" y="311" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">Modeling Thesis</text>
-  <text x="534" y="335" text-anchor="middle" font-size="15.5" fill="#2f5169">a typed model the fleet reasons through</text>
+  <text x="534" y="311" text-anchor="middle" font-size="17.28" font-weight="700" fill="#2f5169">Modeling Thesis</text>
+  <text x="534" y="335" text-anchor="middle" font-size="17.28" fill="#2f5169">a typed model the fleet reasons through</text>
 
   <rect x="334" y="370" width="400" height="80" rx="10" fill="#ffffff" stroke="#2f5169" stroke-width="2"/>
-  <text x="534" y="403" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5169">Alignment Thesis</text>
-  <text x="534" y="427" text-anchor="middle" font-size="15.5" fill="#2f5169">keeps output aligned with intent</text>
+  <text x="534" y="403" text-anchor="middle" font-size="17.28" font-weight="700" fill="#2f5169">Alignment Thesis</text>
+  <text x="534" y="427" text-anchor="middle" font-size="17.28" fill="#2f5169">keeps output aligned with intent</text>
 
   <!-- straight output arrow, rightward on the spine: tail on container edge (x=760), head on Trustworthy edge (x=846) -->
   <path d="M760 344 L844 344" fill="none" stroke="#1f7a4d" stroke-width="3" marker-end="url(#bi-churn-mg-ah-green)"/>
@@ -400,15 +400,15 @@
   <rect x="846" y="274" width="204" height="140" rx="12" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
   <text x="948" y="309" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">Trustworthy</text>
   <text x="948" y="331" text-anchor="middle" font-size="19" font-weight="700" fill="#155c38">software</text>
-  <text x="948" y="358" text-anchor="middle" font-size="15.5" fill="#155c38">high quality · auditable</text>
-  <text x="948" y="378" text-anchor="middle" font-size="15.5" font-style="italic" fill="#1f7a4d">at velocity</text>
+  <text x="948" y="358" text-anchor="middle" font-size="17.28" fill="#155c38">high quality · auditable</text>
+  <text x="948" y="378" text-anchor="middle" font-size="17.28" font-style="italic" fill="#1f7a4d">at velocity</text>
   <!-- auditability motif: a small model-traceability tag, centered in the box -->
   <rect x="870" y="389" width="156" height="20" rx="10" fill="#ffffff" stroke="#1f7a4d" stroke-width="1.2"/>
   <path d="M881 399 l3 3 l5.5 -6.5" fill="none" stroke="#1f7a4d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="956" y="404" text-anchor="middle" font-size="12" fill="#155c38" letter-spacing="0.2">traces to the models</text>
+  <text x="956" y="404" text-anchor="middle" font-size="14.62" fill="#155c38" letter-spacing="0.2">traces to the models</text>
 
   <!-- takeaway caption -->
-  <text x="540" y="497" text-anchor="middle" font-size="17" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
+  <text x="540" y="497" text-anchor="middle" font-size="17.28" font-style="italic" fill="#57534e">MAGE is the governed path: the two theses hold off churn.</text>
 </svg></figure>
   <div class="ih-words">
     <p class="s-kick">Big idea 1 · the problem</p>
@@ -448,7 +448,7 @@
   </g>
 
   <!-- ============ (a) Velocity-centric: role ring (top-left) ============ -->
-  <text x="295" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1c1917">(a) Velocity-centric</text>
+  <text x="295" y="46" text-anchor="middle" font-size="28.32" font-weight="700" fill="#1c1917">(a) Velocity-centric</text>
   <g font-size="28" fill="#1c1917" text-anchor="middle">
     <text x="295" y="112" font-weight="700">Human</text>
     <text x="295" y="144" font-size="22" font-style="italic" fill="#57534e">goal ↓</text>
@@ -474,7 +474,7 @@
   <text x="295" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#b23b3b">Insufficient quality control</text>
 
   <!-- ============ (b) Oversight-centric: round trip (top-right) ============ -->
-  <text x="885" y="46" text-anchor="middle" font-size="38" font-weight="700" fill="#1c1917">(b) Oversight-centric</text>
+  <text x="885" y="46" text-anchor="middle" font-size="28.32" font-weight="700" fill="#1c1917">(b) Oversight-centric</text>
   <g font-size="28" fill="#1c1917">
     <text x="753" y="266" text-anchor="middle" font-weight="700">Human</text>
     <text x="1017" y="258" text-anchor="middle">Agent:</text>
@@ -490,7 +490,7 @@
   <text x="885" y="446" text-anchor="middle" font-size="24" font-style="italic" fill="#57534e">Human attention gates progress</text>
 
   <!-- ============ (c) Governance-centric: env box (bottom-center, the synthesis) ============ -->
-  <text x="590" y="606" text-anchor="middle" font-size="38" font-weight="700" fill="#1c1917">(c) Governance-centric</text>
+  <text x="590" y="606" text-anchor="middle" font-size="28.32" font-weight="700" fill="#1c1917">(c) Governance-centric</text>
   <g font-size="28" fill="#1c1917">
     <text x="452" y="674" text-anchor="middle" font-weight="700">Human</text>
 
@@ -544,7 +544,7 @@
   <line x1="480" y1="70" x2="480" y2="530" stroke="#e4e0d8" stroke-width="1.5" stroke-dasharray="6 6"/>
 
   <!-- ================= LEFT PANEL — typical agentic methods ================= -->
-  <text x="240" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1c1917">Typical agentic methods</text>
+  <text x="240" y="42" text-anchor="middle" font-size="23.04" font-weight="700" fill="#1c1917">Typical agentic methods</text>
   <text x="240" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#b23b3b">three islands, no glue</text>
 
   <!-- three unconnected islands -->
@@ -571,7 +571,7 @@
   <text x="240" y="446" text-anchor="middle" font-size="21" font-style="italic" fill="#b23b3b">no guardrails</text>
 
   <!-- ================= RIGHT PANEL — the MAGE move ================= -->
-  <text x="720" y="42" text-anchor="middle" font-size="29" font-weight="700" fill="#1c1917">The MAGE move</text>
+  <text x="720" y="42" text-anchor="middle" font-size="23.04" font-weight="700" fill="#1c1917">The MAGE move</text>
   <text x="720" y="70" text-anchor="middle" font-size="20" font-style="italic" fill="#1f7a4d">a typed model at the apex</text>
 
   <!-- the apex: the typed model (box widened so the italic caption fits inside its rect) -->
@@ -648,7 +648,7 @@
 
   <!-- ================= LEFT — constraint / wall ================= -->
   <rect x="70" y="164" width="360" height="228" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#2f5169">Constraint — prevents</text>
+  <text x="250" y="200" text-anchor="middle" font-size="23.04" font-weight="700" fill="#2f5169">Constraint — prevents</text>
 
   <!-- wall icon: brick courses -->
   <g stroke="#2f5169" stroke-width="2" fill="none">
@@ -665,7 +665,7 @@
 
   <!-- ================= RIGHT — sensor / detector ================= -->
   <rect x="530" y="164" width="360" height="228" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#2f5169">Sensor — detects</text>
+  <text x="710" y="200" text-anchor="middle" font-size="23.04" font-weight="700" fill="#2f5169">Sensor — detects</text>
 
   <!-- sensor icon: a dish detecting a spark -->
   <circle cx="710" cy="252" r="26" fill="none" stroke="#2f5169" stroke-width="2.5"/>
@@ -698,26 +698,26 @@
   </defs>
   <rect x="0" y="0" width="1000" height="340" fill="#fdfcf9"/>
   <text x="500" y="46" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Governance runs soft to hard</text>
-  <text x="500" y="72" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">Soft aims the agent; hard holds the line. A mature environment uses both.</text>
-  <text x="150" y="112" text-anchor="middle" font-size="13.5" fill="#57534e">probabilistic · aims an agent</text>
-  <text x="850" y="112" text-anchor="middle" font-size="13.5" fill="#9a3f12">deterministic · holds the line</text>
+  <text x="500" y="72" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">Soft aims the agent; hard holds the line. A mature environment uses both.</text>
+  <text x="150" y="112" text-anchor="middle" font-size="16" fill="#57534e">probabilistic · aims an agent</text>
+  <text x="850" y="112" text-anchor="middle" font-size="16" fill="#9a3f12">deterministic · holds the line</text>
   <rect x="70" y="126" width="860" height="46" rx="12" fill="url(#bi-convert-failures-frbGrad)" stroke="#e4e0d8" stroke-width="1.5"/>
   <text x="150" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">SOFT</text>
   <text x="850" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#fdfcf9">HARD</text>
   <line x1="150" y1="172" x2="150" y2="196" stroke="#e4e0d8" stroke-width="1.5"/>
-  <text x="150" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">convention · brief</text>
-  <text x="150" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">template · prose</text>
+  <text x="150" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#57534e">convention · brief</text>
+  <text x="150" y="231" text-anchor="middle" font-size="16" font-weight="600" fill="#57534e">template · prose</text>
   <line x1="330" y1="172" x2="330" y2="196" stroke="#2f5169" stroke-width="1.5"/>
-  <text x="330" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">reviewing agent</text>
+  <text x="330" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#2f5169">reviewing agent</text>
   <line x1="500" y1="172" x2="500" y2="196" stroke="#2f5169" stroke-width="1.5"/>
-  <text x="500" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">doc-derived test</text>
+  <text x="500" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#2f5169">doc-derived test</text>
   <line x1="680" y1="172" x2="680" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="680" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">lint · type · schema</text>
+  <text x="680" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#9a3f12">lint · type · schema</text>
   <line x1="850" y1="172" x2="850" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="850" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">quality / drift / deploy gate ·</text>
-  <text x="850" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">marker file the tool reads</text>
-  <text x="500" y="288" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
-  <text x="500" y="314" text-anchor="middle" font-size="13" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
+  <text x="850" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#9a3f12">quality / drift / deploy gate ·</text>
+  <text x="850" y="231" text-anchor="middle" font-size="16" font-weight="600" fill="#9a3f12">marker file the tool reads</text>
+  <text x="500" y="288" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
+  <text x="500" y="314" text-anchor="middle" font-size="16" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
 </svg></figure>
   <div class="s-words">
     <p class="s-kick">Big idea 5 · the practice</p>
@@ -746,10 +746,10 @@
   </defs>
 
   <!-- ======== LANE 1: SDLC ======== -->
-  <text x="26" y="22" font-size="13" font-weight="700" fill="#57534e" letter-spacing="1.5">SDLC — CONVENTIONAL</text>
+  <text x="26" y="22" font-size="15.04" font-weight="700" fill="#57534e" letter-spacing="1.5">SDLC — CONVENTIONAL</text>
   <path d="M 850 46 C 850 30, 90 30, 90 44" fill="none" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#bi-seat-moves-arr-cycle)"/>
 
-  <g font-size="12.5" text-anchor="middle" fill="#1c1917" word-spacing="1.2">
+  <g font-size="15.04" text-anchor="middle" fill="#1c1917" word-spacing="1.2">
     <rect x="26"  y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
     <text x="90"  y="74">Requirements</text>
     <rect x="178" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
@@ -757,8 +757,8 @@
     <rect x="330" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
     <text x="394" y="74">Design</text>
     <rect x="482" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#1c1917" stroke-width="1.6"/>
-    <text x="546" y="68" font-weight="600">Implementation</text>
-    <text x="546" y="84" font-size="11" fill="#57534e">eats the calendar</text>
+    <text font-size="14.45" x="546" y="68" font-weight="600">Implementation</text>
+    <text x="546" y="84" font-size="14.41" fill="#57534e">eats the calendar</text>
     <rect x="634" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
     <text x="698" y="74">Validation</text>
     <rect x="786" y="48" width="128" height="44" rx="6" fill="#f6f4ef" stroke="#e4e0d8"/>
@@ -772,35 +772,35 @@
     <line x1="762" y1="70" x2="780" y2="70" marker-end="url(#bi-seat-moves-arr-ink)"/>
   </g>
   <path d="M 26 102 L 26 108 L 914 108 L 914 102" fill="none" stroke="#57534e" stroke-width="1.2"/>
-  <text x="470" y="126" font-size="12.5" text-anchor="middle" fill="#1c1917" font-weight="600">the engineering role — every seat, and above all the developer’s</text>
+  <text x="470" y="126" font-size="15.04" text-anchor="middle" fill="#1c1917" font-weight="600">the engineering role — every seat, and above all the developer’s</text>
 
   <!-- ======== REASSIGNMENT ARROW ======== -->
   <line x1="546" y1="136" x2="546" y2="186" stroke="#9a3f12" stroke-width="2.2" marker-end="url(#bi-seat-moves-arr-accent)"/>
-  <text x="560" y="158" font-size="12.5" fill="#9a3f12" font-weight="700">one seat reassigned:</text>
-  <text x="560" y="174" font-size="12.5" fill="#9a3f12">the D is delegated to the fleet</text>
+  <text x="560" y="158" font-size="15.04" fill="#9a3f12" font-weight="700">one seat reassigned:</text>
+  <text x="560" y="174" font-size="15.04" fill="#9a3f12">the D is delegated to the fleet</text>
 
   <!-- ======== LANE 2: SELC ======== -->
-  <text x="26" y="182" font-size="13" font-weight="700" fill="#57534e" letter-spacing="1.5">SELC — MAGE</text>
+  <text x="26" y="182" font-size="15.04" font-weight="700" fill="#57534e" letter-spacing="1.5">SELC — MAGE</text>
   <path d="M 850 202 C 850 188, 90 188, 90 200" fill="none" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#bi-seat-moves-arr-cycle)"/>
 
-  <g font-size="12.5" text-anchor="middle" fill="#1c1917" word-spacing="1.2">
+  <g font-size="15.04" text-anchor="middle" fill="#1c1917" word-spacing="1.2">
     <rect x="26"  y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
     <text x="90"  y="232">Requirements</text>
     <rect x="178" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
     <text x="242" y="226">Specification</text>
-    <text x="242" y="242" font-size="11" fill="#57534e">authored as models</text>
+    <text x="242" y="242" font-size="12.65" fill="#57534e">authored as models</text>
     <rect x="330" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
     <text x="394" y="226">Design</text>
-    <text x="394" y="242" font-size="11" fill="#57534e">authored as models</text>
+    <text x="394" y="242" font-size="12.65" fill="#57534e">authored as models</text>
     <rect x="482" y="206" width="128" height="44" rx="6" fill="#e7edf3" stroke="#2f5169" stroke-width="1.6"/>
-    <text x="546" y="226" font-weight="600" fill="#2f5169">Implementation</text>
-    <text x="546" y="242" font-size="11" fill="#2f5169">the agents</text>
+    <text font-size="14.45" x="546" y="226" font-weight="600" fill="#2f5169">Implementation</text>
+    <text x="546" y="242" font-size="15.04" fill="#2f5169">the agents</text>
     <rect x="634" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
     <text x="698" y="226">Validation</text>
-    <text x="698" y="242" font-size="11" fill="#57534e">gates, not reading</text>
+    <text x="698" y="242" font-size="13.82" fill="#57534e">gates, not reading</text>
     <rect x="786" y="206" width="128" height="44" rx="6" fill="#fdfcf9" stroke="#9a3f12"/>
     <text x="850" y="226">Maintenance</text>
-    <text x="850" y="242" font-size="11" fill="#57534e">run as governance</text>
+    <text x="850" y="242" font-size="13.6" fill="#57534e">run as governance</text>
   </g>
   <g stroke="#57534e" stroke-width="1.4">
     <line x1="154" y1="228" x2="172" y2="228" marker-end="url(#bi-seat-moves-arr-ink)"/>
@@ -811,16 +811,16 @@
   </g>
 
   <path d="M 26 260 L 26 266 L 458 266 L 458 260" fill="none" stroke="#9a3f12" stroke-width="1.2"/>
-  <text x="242" y="284" font-size="12.5" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — authors the intent</text>
+  <text x="242" y="284" font-size="15.04" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — authors the intent</text>
   <path d="M 482 260 L 482 266 L 610 266 L 610 260" fill="none" stroke="#2f5169" stroke-width="1.2"/>
-  <text x="546" y="284" font-size="12.5" text-anchor="middle" fill="#2f5169" font-weight="600">the fleet — develops</text>
+  <text x="546" y="284" font-size="15.04" text-anchor="middle" fill="#2f5169" font-weight="600">the fleet — develops</text>
   <path d="M 634 260 L 634 266 L 914 266 L 914 260" fill="none" stroke="#9a3f12" stroke-width="1.2"/>
-  <text x="774" y="284" font-size="12.5" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — judges and governs</text>
+  <text x="774" y="284" font-size="15.04" text-anchor="middle" fill="#9a3f12" font-weight="600">the engineer — judges and governs</text>
 
   <rect x="26" y="304" width="888" height="34" rx="6" fill="#e3f0e7" stroke="#1f7a4d"/>
-  <text x="470" y="326" font-size="12.5" text-anchor="middle" fill="#155c38" font-weight="600">governance — the environment holds every seat’s output to the standard the engineer set (Part Two)</text>
+  <text x="470" y="326" font-size="15.04" text-anchor="middle" fill="#155c38" font-weight="600">governance — the environment holds every seat’s output to the standard the engineer set (Part Two)</text>
 
-  <text x="470" y="368" font-size="11.5" text-anchor="middle" fill="#57534e" font-style="italic">the keystrokes are delegated; the accountability is not</text>
+  <text x="470" y="368" font-size="15.04" text-anchor="middle" fill="#57534e" font-style="italic">the keystrokes are delegated; the accountability is not</text>
 </svg></figure>
   <div class="s-words">
     <p class="s-kick">Big idea 6 · the seat</p>

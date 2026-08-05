@@ -24,40 +24,40 @@
   </defs>
 
   <!-- zone kickers + role-colored underlines -->
-  <text x="304" y="52" text-anchor="middle" font-size="18" font-style="italic" fill="#2f5169">HARD · deterministic · machine-read</text>
+  <text x="304" y="52" text-anchor="middle" font-size="19.2" font-style="italic" fill="#2f5169">HARD · deterministic · machine-read</text>
   <line x1="25" y1="66" x2="584" y2="66" stroke="#2f5169" stroke-width="1.5"/>
-  <text x="760" y="52" text-anchor="middle" font-size="18" font-style="italic" fill="#9a3f12">FLAGSHIP · the deeper cut</text>
+  <text x="760" y="52" text-anchor="middle" font-size="19.2" font-style="italic" fill="#9a3f12">FLAGSHIP · the deeper cut</text>
   <line x1="600" y1="66" x2="920" y2="66" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="1065" y="52" text-anchor="middle" font-size="18" font-style="italic" fill="#57534e">SOFT · aims a reader</text>
+  <text x="1065" y="52" text-anchor="middle" font-size="19.2" font-style="italic" fill="#57534e">SOFT · aims a reader</text>
   <line x1="935" y1="66" x2="1195" y2="66" stroke="#57534e" stroke-width="1.5"/>
 
   <!-- hard card 1: cold-start latency -->
   <rect x="25" y="110" width="272" height="150" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="161" y="148" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">cold-start latency</text>
-  <text x="161" y="180" text-anchor="middle" font-size="15" fill="#57534e">ms per service · longest-path Σ</text>
-  <text x="161" y="228" text-anchor="middle" font-size="15.5" font-style="italic" fill="#2f5169">→ fed into the perf model</text>
+  <text x="161" y="148" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">cold-start latency</text>
+  <text x="161" y="180" text-anchor="middle" font-size="17.96" fill="#57534e">ms per service · longest-path Σ</text>
+  <text x="161" y="228" text-anchor="middle" font-size="19.2" font-style="italic" fill="#2f5169">→ fed into the perf model</text>
 
   <!-- hard card 2: component-distance grade -->
   <rect x="312" y="110" width="272" height="150" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="448" y="148" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">component-distance grade</text>
-  <text x="448" y="180" text-anchor="middle" font-size="15" fill="#57534e">HARD / SOFT / SILENT</text>
-  <text x="448" y="228" text-anchor="middle" font-size="15.5" font-style="italic" fill="#2f5169">→ decides whether a gate fires</text>
+  <text x="448" y="148" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">component-distance grade</text>
+  <text x="448" y="180" text-anchor="middle" font-size="19.2" fill="#57534e">HARD / SOFT / SILENT</text>
+  <text x="448" y="228" text-anchor="middle" font-size="18.63" font-style="italic" fill="#2f5169">→ decides whether a gate fires</text>
 
   <!-- flagship card: entry-point-native coverage -->
   <rect x="600" y="95" width="320" height="180" rx="10" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
   <text x="760" y="136" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">entry-point-native coverage</text>
-  <text x="760" y="172" text-anchor="middle" font-size="15.5" fill="#57534e">is the model claim exercised?</text>
-  <text x="760" y="238" text-anchor="middle" font-size="15.5" font-style="italic" fill="#9a3f12">→ names the untested invariant</text>
+  <text x="760" y="172" text-anchor="middle" font-size="19.2" fill="#57534e">is the model claim exercised?</text>
+  <text x="760" y="238" text-anchor="middle" font-size="19.2" font-style="italic" fill="#9a3f12">→ names the untested invariant</text>
 
   <!-- soft card: doc-derived-test pinning -->
   <rect x="935" y="110" width="260" height="150" rx="10" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
-  <text x="1065" y="148" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">doc-derived-test pinning</text>
-  <text x="1065" y="176" text-anchor="middle" font-size="15" fill="#57534e">is this doc-claim</text>
-  <text x="1065" y="196" text-anchor="middle" font-size="15" fill="#57534e">pinned by a test?</text>
-  <text x="1065" y="234" text-anchor="middle" font-size="15.5" font-style="italic" fill="#57534e">→ nudges what to test next</text>
+  <text x="1065" y="148" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">doc-derived-test pinning</text>
+  <text x="1065" y="176" text-anchor="middle" font-size="19.2" fill="#57534e">is this doc-claim</text>
+  <text x="1065" y="196" text-anchor="middle" font-size="19.2" fill="#57534e">pinned by a test?</text>
+  <text x="1065" y="234" text-anchor="middle" font-size="19.2" font-style="italic" fill="#57534e">→ nudges what to test next</text>
 
   <!-- the spine: hard to soft -->
   <line x1="40" y1="320" x2="1160" y2="320" stroke="#1c1917" stroke-width="3" marker-end="url(#ms-ah)"/>
-  <text x="40" y="356" font-size="17" font-style="italic" fill="#57534e">a machine blocks on it alone</text>
-  <text x="1160" y="356" text-anchor="end" font-size="17" font-style="italic" fill="#57534e">a reader must still judge</text>
+  <text x="40" y="356" font-size="19.2" font-style="italic" fill="#57534e">a machine blocks on it alone</text>
+  <text x="1160" y="356" text-anchor="end" font-size="19.2" font-style="italic" fill="#57534e">a reader must still judge</text>
 </svg>

@@ -24,16 +24,16 @@
   <!-- y gridlines (20% / 40%) + ticks; baseline at 0% -->
   <line x1="130" y1="280" x2="920" y2="280" stroke="#e4e0d8" stroke-width="1"/>
   <line x1="130" y1="180" x2="920" y2="180" stroke="#e4e0d8" stroke-width="1"/>
-  <text x="118" y="284" text-anchor="end" font-size="12" fill="#57534e">20%</text>
-  <text x="118" y="184" text-anchor="end" font-size="12" fill="#57534e">40%</text>
-  <text x="118" y="384" text-anchor="end" font-size="12" fill="#57534e">0%</text>
+  <text x="118" y="284" text-anchor="end" font-size="16" fill="#57534e">20%</text>
+  <text x="118" y="184" text-anchor="end" font-size="16" fill="#57534e">40%</text>
+  <text x="118" y="384" text-anchor="end" font-size="16" fill="#57534e">0%</text>
 
   <!-- x baseline (0%) -->
   <line x1="130" y1="380" x2="920" y2="380" stroke="#1c1917" stroke-width="1.5"/>
 
   <!-- loop target reference at 10% -->
   <line x1="130" y1="330" x2="920" y2="330" stroke="#57534e" stroke-width="1.5" stroke-dasharray="6 5"/>
-  <text x="912" y="322" text-anchor="end" font-size="12" font-style="italic" fill="#57534e">loop target — orphan rate ≤ 10%</text>
+  <text x="912" y="322" text-anchor="end" font-size="16" font-style="italic" fill="#57534e">loop target — orphan rate ≤ 10%</text>
 
   <!-- the drain line: 56 -> 55 -> 52 -> 39 -> 32.2 -> 30.1 -> 20.9 -> 14.9 -> 7.89 (crosses target) -->
   <polyline points="130,100 228.8,105 327.5,120 426.3,185 525,219 623.8,229.5 722.5,275.5 821.3,305.5 920,340.6"
@@ -49,27 +49,27 @@
   <circle cx="920"   cy="340.6" r="5" fill="#1f7a4d"/>
 
   <!-- value labels above each point (the ninth sits below, clearing the target reference line) -->
-  <text x="130"   y="88"  text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a4d">56%</text>
-  <text x="228.8" y="93"  text-anchor="middle" font-size="12" fill="#1f7a4d">55%</text>
-  <text x="327.5" y="108" text-anchor="middle" font-size="12" fill="#1f7a4d">52%</text>
-  <text x="426.3" y="173" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a4d">39%</text>
-  <text x="525"   y="207" text-anchor="middle" font-size="12" fill="#1f7a4d">32.2%</text>
-  <text x="623.8" y="217" text-anchor="middle" font-size="12" fill="#1f7a4d">30.1%</text>
-  <text x="722.5" y="263" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a4d">20.9%</text>
-  <text x="821.3" y="293" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a4d">14.9%</text>
-  <text x="920"   y="360" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a4d">7.89%</text>
+  <text x="130"   y="88"  text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">56%</text>
+  <text x="228.8" y="93"  text-anchor="middle" font-size="16" fill="#1f7a4d">55%</text>
+  <text x="327.5" y="108" text-anchor="middle" font-size="16" fill="#1f7a4d">52%</text>
+  <text x="426.3" y="173" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">39%</text>
+  <text x="525"   y="207" text-anchor="middle" font-size="16" fill="#1f7a4d">32.2%</text>
+  <text x="623.8" y="217" text-anchor="middle" font-size="16" fill="#1f7a4d">30.1%</text>
+  <text x="722.5" y="263" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">20.9%</text>
+  <text x="821.3" y="293" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">14.9%</text>
+  <text x="920"   y="360" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a4d">7.89%</text>
 
   <!-- x milestone labels -->
-  <text x="130"   y="406" text-anchor="middle" font-size="11" fill="#57534e">pilot</text>
-  <text x="228.8" y="406" text-anchor="middle" font-size="11" fill="#57534e">baseline</text>
-  <text x="327.5" y="406" text-anchor="middle" font-size="11" fill="#57534e">C1·p4</text>
-  <text x="426.3" y="406" text-anchor="middle" font-size="11" fill="#57534e">wave-1</text>
-  <text x="525"   y="406" text-anchor="middle" font-size="11" fill="#57534e">cluster-1</text>
-  <text x="623.8" y="406" text-anchor="middle" font-size="11" fill="#57534e">cluster-3</text>
-  <text x="722.5" y="406" text-anchor="middle" font-size="11" fill="#57534e">cluster-2</text>
-  <text x="821.3" y="406" text-anchor="middle" font-size="11" fill="#57534e">cluster-4</text>
-  <text x="920"   y="406" text-anchor="middle" font-size="11" fill="#57534e">residue-tidy</text>
+  <text x="130"   y="406" text-anchor="middle" font-size="16" fill="#57534e">pilot</text>
+  <text x="228.8" y="406" text-anchor="middle" font-size="16" fill="#57534e">baseline</text>
+  <text x="327.5" y="406" text-anchor="middle" font-size="16" fill="#57534e">C1·p4</text>
+  <text x="426.3" y="406" text-anchor="middle" font-size="16" fill="#57534e">wave-1</text>
+  <text x="525"   y="406" text-anchor="middle" font-size="16" fill="#57534e">cluster-1</text>
+  <text x="623.8" y="406" text-anchor="middle" font-size="16" fill="#57534e">cluster-3</text>
+  <text x="722.5" y="406" text-anchor="middle" font-size="16" fill="#57534e">cluster-2</text>
+  <text x="821.3" y="406" text-anchor="middle" font-size="16" fill="#57534e">cluster-4</text>
+  <text x="920"   y="406" text-anchor="middle" font-size="16" fill="#57534e">residue-tidy</text>
 
   <!-- axis caption -->
-  <text x="130" y="440" text-anchor="start" font-size="13" font-style="italic" fill="#57534e">orphan rate (tests whose code reaches no model) · nine tracer re-runs, 2026-07-24 → 08-03 · N drifts 144→152</text>
+  <text x="130" y="440" text-anchor="start" font-size="16" font-style="italic" fill="#57534e">orphan rate (tests whose code reaches no model) · nine tracer re-runs, 2026-07-24 → 08-03 · N drifts 144→152</text>
 </svg>

@@ -29,44 +29,44 @@
   </defs>
 
   <!-- input cap -->
-  <text x="60" y="180" text-anchor="middle" font-size="15" font-weight="700" fill="#57534e">a</text>
-  <text x="60" y="198" text-anchor="middle" font-size="15" font-weight="700" fill="#57534e">document</text>
+  <text x="60" y="180" text-anchor="middle" font-size="19.2" font-weight="700" fill="#57534e">a</text>
+  <text x="60" y="198" text-anchor="middle" font-size="19.2" font-weight="700" fill="#57534e">document</text>
 
   <!-- ============ lane bands ============ -->
-  <text x="118" y="104" font-size="14" font-weight="700" fill="#2f5169">the sanctioned door — every mutation routes through here</text>
+  <text x="118" y="104" font-size="19.2" font-weight="700" fill="#2f5169">the sanctioned door — every mutation routes through here</text>
   <rect x="112" y="116" width="404" height="132" rx="12" fill="none" stroke="#2f5169" stroke-width="2" stroke-dasharray="7 5"/>
 
-  <text x="1108" y="104" text-anchor="end" font-size="14" font-weight="700" fill="#1f7a4d">the guarantee — complete provenance · caught fidelity loss</text>
+  <text x="1108" y="104" text-anchor="end" font-size="19.2" font-weight="700" fill="#1f7a4d">the guarantee — complete provenance · caught fidelity loss</text>
   <rect x="520" y="116" width="590" height="132" rx="12" fill="none" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="7 5"/>
 
   <!-- ============ stage boxes ============ -->
   <!-- MARK · a11y-prefix (door) -->
   <rect x="130" y="140" width="180" height="86" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="220" y="176" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">MARK</text>
-  <text x="220" y="202" text-anchor="middle" font-size="13" font-weight="600" fill="#2f5169">a11y-prefix</text>
+  <text x="220" y="176" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">MARK</text>
+  <text x="220" y="202" text-anchor="middle" font-size="19.2" font-weight="600" fill="#2f5169">a11y-prefix</text>
 
   <!-- EMIT · mutator-stamps (door) -->
   <rect x="328" y="140" width="180" height="86" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-  <text x="418" y="176" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">EMIT</text>
-  <text x="418" y="202" text-anchor="middle" font-size="13" font-weight="600" fill="#2f5169">mutator-stamps</text>
+  <text x="418" y="176" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">EMIT</text>
+  <text x="418" y="202" text-anchor="middle" font-size="19.2" font-weight="600" fill="#2f5169">mutator-stamps</text>
 
   <!-- COVER · f10-wiring-lint (guarantee) -->
   <rect x="526" y="140" width="180" height="86" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="616" y="176" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">COVER</text>
-  <text x="616" y="202" text-anchor="middle" font-size="13" font-weight="600" fill="#1f7a4d">f10-wiring-lint</text>
+  <text x="616" y="176" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">COVER</text>
+  <text x="616" y="202" text-anchor="middle" font-size="19.2" font-weight="600" fill="#1f7a4d">f10-wiring-lint</text>
 
   <!-- READ · derive-changelog (guarantee) -->
   <rect x="724" y="140" width="180" height="86" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="814" y="176" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">READ</text>
-  <text x="814" y="202" text-anchor="middle" font-size="13" font-weight="600" fill="#1f7a4d">derive-changelog</text>
+  <text x="814" y="176" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">READ</text>
+  <text x="814" y="202" text-anchor="middle" font-size="19.2" font-weight="600" fill="#1f7a4d">derive-changelog</text>
 
   <!-- GATE · content-validator (guarantee) -->
   <rect x="922" y="140" width="180" height="86" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="1012" y="176" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">GATE</text>
-  <text x="1012" y="202" text-anchor="middle" font-size="13" font-weight="600" fill="#1f7a4d">content-validator</text>
+  <text x="1012" y="176" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">GATE</text>
+  <text x="1012" y="202" text-anchor="middle" font-size="18.75" font-weight="600" fill="#1f7a4d">content-validator</text>
 
   <!-- ============ per-stage role glosses (free-floating, below the bands) ============ -->
-  <g font-size="12.5" font-style="italic" fill="#57534e" text-anchor="middle">
+  <g font-size="19.2" font-style="italic" fill="#57534e" text-anchor="middle">
     <text x="220" y="274">name every insertion</text>
     <text x="418" y="274">stamp every mutation</text>
     <text x="616" y="274">wire the whole verb set</text>
@@ -75,7 +75,7 @@
   </g>
 
   <!-- ============ the artifact strip (embedded evidence) ============ -->
-  <text x="306" y="336" font-size="13" font-weight="700" fill="#57534e">the artifact — evidence embedded in the file</text>
+  <text x="306" y="336" font-size="19.2" font-weight="700" fill="#57534e">the artifact — evidence embedded in the file</text>
   <rect x="300" y="346" width="802" height="40" rx="6" fill="#f6f4ef" stroke="#e4e0d8" stroke-width="1.5"/>
   <!-- embedded stamps -->
   <g fill="#9a3f12">
@@ -85,11 +85,11 @@
     <path d="M690,356 l7,10 l-7,10 l-7,-10 z"/>
     <path d="M800,356 l7,10 l-7,10 l-7,-10 z"/>
   </g>
-  <text x="1015" y="371" text-anchor="middle" font-size="12.5" font-style="italic" fill="#9a3f12">stamps = provenance</text>
+  <text x="1015" y="371" text-anchor="middle" font-size="19.2" font-style="italic" fill="#9a3f12">stamps = provenance</text>
 
   <!-- ============ per-pass fidelity signal (churn chip under GATE) ============ -->
   <rect x="940" y="286" width="150" height="34" rx="6" fill="#fbeaea" stroke="#b23b3b" stroke-width="1.5"/>
-  <text x="1015" y="308" text-anchor="middle" font-size="13" font-weight="600" fill="#b23b3b">pass N dropped it</text>
+  <text x="1015" y="308" text-anchor="middle" font-size="15.92" font-weight="600" fill="#b23b3b">pass N dropped it</text>
 
   <!-- ============ arrows ============ -->
   <g fill="none" stroke="#1c1917" stroke-width="2.2" marker-end="url(#pfArrow)">
@@ -107,10 +107,10 @@
   <g fill="none" stroke="#9a3f12" stroke-width="2.4" marker-end="url(#pfArrow)">
     <path d="M1102,189 L1150,189 L1150,410"/>
   </g>
-  <text x="1150" y="432" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3f12">ships —</text>
-  <text x="1150" y="450" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3f12">history intact</text>
+  <text x="1150" y="432" text-anchor="middle" font-size="19.2" font-weight="700" fill="#9a3f12">ships —</text>
+  <text x="1150" y="450" text-anchor="middle" font-size="19.2" font-weight="700" fill="#9a3f12">history intact</text>
 
   <!-- small labels on the vertical stamp arrows -->
-  <text x="428" y="290" font-size="12" font-style="italic" fill="#57534e">drops</text>
-  <text x="758" y="290" font-size="12" font-style="italic" fill="#57534e">reads back</text>
+  <text x="428" y="290" font-size="19.2" font-style="italic" fill="#57534e">drops</text>
+  <text x="758" y="290" font-size="19.2" font-style="italic" fill="#57534e">reads back</text>
 </svg>

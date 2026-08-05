@@ -582,30 +582,30 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- 1. velocity rises (center 135) -->
   <rect x="30" y="70" width="210" height="104" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="135" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Velocity rises</text>
-  <text x="135" y="142" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the fleet accelerates</text>
+  <text x="135" y="142" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">the fleet accelerates</text>
 
   <!-- 2. a failure recurs (center 380) -->
   <rect x="275" y="70" width="210" height="104" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
-  <text x="380" y="116" text-anchor="middle" font-size="19" font-weight="700" fill="#b23b3b">A failure recurs</text>
-  <text x="380" y="142" text-anchor="middle" font-size="15" font-style="italic" fill="#b23b3b">the same wall, twice</text>
+  <text x="380" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#b23b3b">A failure recurs</text>
+  <text x="380" y="142" text-anchor="middle" font-size="20" font-style="italic" fill="#b23b3b">the same wall, twice</text>
 
   <!-- 3. diagnose the class (center 625) -->
   <rect x="520" y="70" width="210" height="104" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="625" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Diagnose</text>
-  <text x="625" y="134" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the class, not</text>
-  <text x="625" y="154" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">the instance</text>
+  <text x="625" y="134" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">the class, not</text>
+  <text x="625" y="154" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">the instance</text>
 
   <!-- 4. encode a mechanism (center 870) -->
   <rect x="765" y="70" width="210" height="104" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
   <text x="870" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Encode a</text>
   <text x="870" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">mechanism</text>
-  <text x="870" y="158" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">type · lint · gate · sensor</text>
+  <text x="870" y="158" text-anchor="middle" font-size="18.11" font-style="italic" fill="#57534e">type · lint · gate · sensor</text>
 
   <!-- 5. the class cannot recur (center 1115) -->
   <rect x="1010" y="70" width="210" height="104" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
   <text x="1115" y="110" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">The class</text>
   <text x="1115" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#1f7a4d">can't recur</text>
-  <text x="1115" y="158" text-anchor="middle" font-size="13" font-style="italic" fill="#57534e">prevented by construction</text>
+  <text x="1115" y="158" text-anchor="middle" font-size="16.43" font-style="italic" fill="#57534e">prevented by construction</text>
 
   <!-- forward arrows -->
   <g stroke="#1c1917" stroke-width="2" fill="none">
@@ -618,7 +618,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- dashed return path: prevention -> velocity -->
   <path d="M1115,174 C1115,300 640,330 135,300 L135,178"
         fill="none" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#gc-ah-mut)"/>
-  <text x="625" y="345" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">the environment is now harder to break — and velocity climbs again</text>
+  <text x="625" y="345" text-anchor="middle" font-size="20" font-style="italic" fill="#57534e">the environment is now harder to break — and velocity climbs again</text>
 </svg><figcaption data-short="The Governance-Conversion Loop"><span class="fig-label">Figure 2.3-1.</span> <em>The Governance-Conversion Loop.</em> The loop that hardens the environment: when the printer loop keeps hitting one wall, judgment converts the failure class into a durable mechanism — the same loop shape as the printer loop, escalated.</figcaption></figure>
 <p>None of this is new as an instinct. Manufacturing stops the line at a defect and reshapes the work so the defect cannot recur; resilience engineering treats an incident as a signal about the system, not a verdict on the operator <sup class="cite-ref"><a href="#wc-2-3-the-governed-environment-2" aria-label="citation 2">2</a></sup><span class="cite-note"><span class="cn-mark">2.</span> E. Hollnagel et al., <em>Resilience Engineering: Concepts and Precepts</em> (Ashgate, 2006).</span>; site reliability practice turns each outage into a blameless postmortem whose action items become durable reliability work <sup class="cite-ref"><a href="#wc-2-3-the-governed-environment-3" aria-label="citation 3">3</a></sup><span class="cite-note"><span class="cn-mark">3.</span> B. Beyer et al., <em>Site Reliability Engineering: How Google Runs Production Systems</em> (O'Reilly Media, 2016).</span>; Shingo built mistake-proofing into the fixture itself <sup class="cite-ref"><a href="#wc-2-3-the-governed-environment-4" aria-label="citation 4">4</a></sup><span class="cite-note"><span class="cn-mark">4.</span> Shigeo Shingo, <em>Zero Quality Control: Source Inspection and the Poka-Yoke System</em>, trans. Andrew P. Dillon (Productivity Press, 1986).</span>. MAGE inherits that family and states its promotion rule for a fleet: an ex-post failure becomes an ex-ante control when judgment classifies the recurrence and encodes it in the environment. The changed ingredient is velocity: the fleet surfaces structural gaps fast enough that the environment can accumulate reliability one failure class at a time.</p>
 <h2 id="control-growth"><span class="sec-num">2.3.3</span> The controls accumulate</h2>
@@ -637,18 +637,18 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- legend -->
   <rect x="130" y="30" width="16" height="4" fill="#9a3f12"/>
-  <text x="152" y="38" font-size="13" fill="#1c1917">lint files</text>
+  <text x="152" y="38" font-size="16" fill="#1c1917">lint files</text>
   <rect x="250" y="30" width="16" height="4" fill="#2f5169"/>
-  <text x="272" y="38" font-size="13" fill="#1c1917">gate scripts</text>
+  <text x="272" y="38" font-size="16" fill="#1c1917">gate scripts</text>
 
   <!-- y gridlines + tick labels (count 200..600); baseline at 0. No 800 line — the 747 peak
        floats above the top gridline, as the support-ratio chart lets its peak float. -->
   <line x1="130" y1="313.25" x2="920" y2="313.25" stroke="#e4e0d8" stroke-width="1"/>
   <line x1="130" y1="246.5"  x2="920" y2="246.5"  stroke="#e4e0d8" stroke-width="1"/>
   <line x1="130" y1="179.75" x2="920" y2="179.75" stroke="#e4e0d8" stroke-width="1"/>
-  <text x="118" y="317.25" text-anchor="end" font-size="12" fill="#57534e">200</text>
-  <text x="118" y="250.5"  text-anchor="end" font-size="12" fill="#57534e">400</text>
-  <text x="118" y="183.75" text-anchor="end" font-size="12" fill="#57534e">600</text>
+  <text x="118" y="317.25" text-anchor="end" font-size="16" fill="#57534e">200</text>
+  <text x="118" y="250.5"  text-anchor="end" font-size="16" fill="#57534e">400</text>
+  <text x="118" y="183.75" text-anchor="end" font-size="16" fill="#57534e">600</text>
 
   <!-- x axis baseline (count 0) -->
   <line x1="130" y1="380" x2="920" y2="380" stroke="#1c1917" stroke-width="1.5"/>
@@ -660,9 +660,9 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <circle cx="400" cy="267.86" r="5" fill="#9a3f12"/>
   <circle cx="640" cy="181.42" r="5" fill="#9a3f12"/>
   <circle cx="880" cy="130.69" r="5" fill="#9a3f12"/>
-  <text x="400" y="287" text-anchor="middle" font-size="15" font-weight="700" fill="#9a3f12">336</text>
-  <text x="640" y="165" text-anchor="middle" font-size="15" font-weight="700" fill="#9a3f12">595</text>
-  <text x="880" y="115" text-anchor="middle" font-size="15" font-weight="700" fill="#9a3f12">747</text>
+  <text x="400" y="287" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">336</text>
+  <text x="640" y="165" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">595</text>
+  <text x="880" y="115" text-anchor="middle" font-size="16" font-weight="700" fill="#9a3f12">747</text>
 
   <!-- the gate-script line: 0 -> 20 -> 76 -> 102 -->
   <polyline points="160,380 400,373.33 640,354.63 880,345.96"
@@ -671,25 +671,25 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <circle cx="400" cy="373.33" r="5" fill="#2f5169"/>
   <circle cx="640" cy="354.63" r="5" fill="#2f5169"/>
   <circle cx="880" cy="345.96" r="5" fill="#2f5169"/>
-  <text x="400" y="368" text-anchor="middle" font-size="13" font-weight="700" fill="#2f5169">20</text>
-  <text x="640" y="349" text-anchor="middle" font-size="13" font-weight="700" fill="#2f5169">76</text>
-  <text x="880" y="341" text-anchor="middle" font-size="13" font-weight="700" fill="#2f5169">102</text>
+  <text x="400" y="368" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">20</text>
+  <text x="640" y="349" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">76</text>
+  <text x="880" y="341" text-anchor="middle" font-size="16" font-weight="700" fill="#2f5169">102</text>
 
   <!-- the shared zero at the prototype window -->
-  <text x="160" y="368" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">0</text>
+  <text x="160" y="368" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">0</text>
 
   <!-- x window labels + dates -->
-  <text x="160" y="406" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">prototype</text>
-  <text x="160" y="426" text-anchor="middle" font-size="12" fill="#57534e">Apr 9</text>
-  <text x="400" y="406" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">mechanization</text>
-  <text x="400" y="426" text-anchor="middle" font-size="12" fill="#57534e">May 31</text>
-  <text x="640" y="406" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">hardening</text>
-  <text x="640" y="426" text-anchor="middle" font-size="12" fill="#57534e">Jun 30</text>
-  <text x="880" y="406" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1917">now</text>
-  <text x="880" y="426" text-anchor="middle" font-size="12" fill="#57534e">Aug 3</text>
+  <text x="160" y="406" text-anchor="middle" font-size="16" font-weight="600" fill="#1c1917">prototype</text>
+  <text x="160" y="426" text-anchor="middle" font-size="16" fill="#57534e">Apr 9</text>
+  <text x="400" y="406" text-anchor="middle" font-size="16" font-weight="600" fill="#1c1917">mechanization</text>
+  <text x="400" y="426" text-anchor="middle" font-size="16" fill="#57534e">May 31</text>
+  <text x="640" y="406" text-anchor="middle" font-size="16" font-weight="600" fill="#1c1917">hardening</text>
+  <text x="640" y="426" text-anchor="middle" font-size="16" fill="#57534e">Jun 30</text>
+  <text x="880" y="406" text-anchor="middle" font-size="16" font-weight="600" fill="#1c1917">now</text>
+  <text x="880" y="426" text-anchor="middle" font-size="16" fill="#57534e">Aug 3</text>
 
   <!-- axis caption -->
-  <text x="130" y="452" text-anchor="start" font-size="13" font-style="italic" fill="#57534e">count of governance controls in the tree · lint files and gate scripts · 993 registered lint specs at the final window</text>
+  <text x="130" y="452" text-anchor="start" font-size="16" font-style="italic" fill="#57534e">count of governance controls in the tree · lint files and gate scripts · 993 registered lint specs at the final window</text>
 </svg><figcaption data-short="The controls accumulate across four windows — lint files (0 to 336 to 595 to…"><span class="fig-label">Figure 2.3-2.</span> The controls accumulate across four windows — lint files (0 to 336 to 595 to 747) and gate scripts (0 to 20 to 76 to 102). Both start at literal zero: the substrate is post-prototype. The climb is steepest through mechanization and rises after, one class at a time.</figcaption></figure>
 <table id="tbl-2-3-1" class="book-table" data-label="control-growth-table"><caption data-short="Control growth across the four windows"><span class="tbl-label">Table 2.3-1.</span> The control substrate across the four study windows — project-specific lint files and gate scripts counted from a tree scan at each dated commit.</caption><thead><tr><th>Window</th><th class="num">lint files</th><th class="num">gate scripts</th></tr></thead><tbody><tr><td>prototype</td><td class="num">0</td><td class="num">0</td></tr><tr><td>mechanization</td><td class="num">336</td><td class="num">20</td></tr><tr><td>hardening</td><td class="num">595</td><td class="num">76</td></tr><tr><td>now</td><td class="num">747</td><td class="num">102</td></tr></tbody></table>
 <p>The curve is the accumulation, not its cause. Those lint files carry 993 registered lint specs at the final window, and each spec is a policy the environment now enforces on every agent. What the count cannot separate is which controls a failure drove and which the domain suggested up front — the two modes interleave by design, and no commit trail cleanly splits them. But the discipline that converts a failure is itself documented and named. A paired fix-and-lint tag marks the commits that ship a code fix beside the check that forbids its recurrence, and it appears in 208 commits; 27 lints name a specific dated incident in their own text, spot-checked as genuine after-the-failure conversions. Read the curve as a documented, growing discipline, then — not a measured causal rate. For the data, see <a href="2.3-the-governed-environment.html#control-growth">The Governed Environment: Ex-Ante and Ex-Post →</a></p>
@@ -729,7 +729,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- ================= LEFT — constraint / wall ================= -->
   <rect x="70" y="164" width="360" height="228" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#2f5169">Constraint — prevents</text>
+  <text x="250" y="200" text-anchor="middle" font-size="23.04" font-weight="700" fill="#2f5169">Constraint — prevents</text>
 
   <!-- wall icon: brick courses -->
   <g stroke="#2f5169" stroke-width="2" fill="none">
@@ -746,7 +746,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- ================= RIGHT — sensor / detector ================= -->
   <rect x="530" y="164" width="360" height="228" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#2f5169">Sensor — detects</text>
+  <text x="710" y="200" text-anchor="middle" font-size="23.04" font-weight="700" fill="#2f5169">Sensor — detects</text>
 
   <!-- sensor icon: a dish detecting a spark -->
   <circle cx="710" cy="252" r="26" fill="none" stroke="#2f5169" stroke-width="2.5"/>

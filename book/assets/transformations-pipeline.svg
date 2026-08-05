@@ -37,21 +37,21 @@
   <text x="60" y="112" text-anchor="end" font-size="18" font-weight="700" fill="#2f5169">communicate</text>
   <g>
     <rect x="150" y="72" width="156" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="228" y="103" text-anchor="middle" font-size="16" fill="#1c1917">language weights</text>
+    <text x="228" y="103" text-anchor="middle" font-size="16.64" fill="#1c1917">language weights</text>
     <rect x="330" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
     <text x="400" y="103" text-anchor="middle" font-size="17" fill="#1c1917">figures + genre</text>
     <rect x="510" y="72" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
     <text x="580" y="103" text-anchor="middle" font-size="17" fill="#1c1917">the lexicon</text>
     <rect x="690" y="72" width="140" height="52" rx="8" fill="#faf1e6" stroke="#b23b3b" stroke-width="2"/>
     <text x="760" y="95" text-anchor="middle" font-size="17" fill="#1c1917">audience</text>
-    <text x="760" y="114" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">(you supply)</text>
+    <text x="760" y="114" text-anchor="middle" font-size="16.64" font-style="italic" fill="#b23b3b">(you supply)</text>
   </g>
 
   <!-- lane 2: self-operate -->
   <text x="60" y="210" text-anchor="end" font-size="18" font-weight="700" fill="#2f5169">self-operate</text>
   <g>
     <rect x="150" y="182" width="156" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
-    <text x="228" y="213" text-anchor="middle" font-size="16" fill="#1c1917">event → activity</text>
+    <text x="228" y="213" text-anchor="middle" font-size="16.64" fill="#1c1917">event → activity</text>
     <rect x="330" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
     <text x="400" y="213" text-anchor="middle" font-size="17" fill="#1c1917">design / defect</text>
     <rect x="510" y="182" width="140" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
@@ -92,5 +92,5 @@
   <!-- shared takeaway band -->
   <rect x="150" y="392" width="680" height="52" rx="10" fill="none" stroke="#2f5169" stroke-width="2" stroke-dasharray="6 5"/>
   <text x="490" y="416" text-anchor="middle" font-size="19" font-weight="700" fill="#2f5169">One skeleton: a reasoning task broken into sized input-to-output steps</text>
-  <text x="490" y="437" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">each step sized to the model and the guarantee you need</text>
+  <text x="490" y="437" text-anchor="middle" font-size="16.64" font-style="italic" fill="#57534e">each step sized to the model and the guarantee you need</text>
 </svg>

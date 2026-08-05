@@ -10,7 +10,7 @@
     </marker>
   </defs>
 
-  <text x="30" y="42" font-size="30" font-weight="bold" fill="#2f5169">The editor: one MVC loop over the document</text>
+  <text x="30" y="42" font-size="21.6" font-weight="bold" fill="#2f5169">The editor: one MVC loop over the document</text>
 
   <!-- VIEW box (two-pane) -->
   <rect x="24" y="66" width="300" height="150" rx="3" fill="#e7edf3" stroke="#2f5169" stroke-width="1.8"/>

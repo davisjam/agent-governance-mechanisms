@@ -14,24 +14,24 @@
   </defs>
   <rect x="0" y="0" width="1000" height="340" fill="#fdfcf9"/>
   <text x="500" y="46" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">Governance runs soft to hard</text>
-  <text x="500" y="72" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">Soft aims the agent; hard holds the line. A mature environment uses both.</text>
-  <text x="150" y="112" text-anchor="middle" font-size="13.5" fill="#57534e">probabilistic · aims an agent</text>
-  <text x="850" y="112" text-anchor="middle" font-size="13.5" fill="#9a3f12">deterministic · holds the line</text>
+  <text x="500" y="72" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">Soft aims the agent; hard holds the line. A mature environment uses both.</text>
+  <text x="150" y="112" text-anchor="middle" font-size="16" fill="#57534e">probabilistic · aims an agent</text>
+  <text x="850" y="112" text-anchor="middle" font-size="16" fill="#9a3f12">deterministic · holds the line</text>
   <rect x="70" y="126" width="860" height="46" rx="12" fill="url(#frbGrad)" stroke="#e4e0d8" stroke-width="1.5"/>
   <text x="150" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">SOFT</text>
   <text x="850" y="156" text-anchor="middle" font-size="22" font-weight="700" fill="#fdfcf9">HARD</text>
   <line x1="150" y1="172" x2="150" y2="196" stroke="#e4e0d8" stroke-width="1.5"/>
-  <text x="150" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">convention · brief</text>
-  <text x="150" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#57534e">template · prose</text>
+  <text x="150" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#57534e">convention · brief</text>
+  <text x="150" y="231" text-anchor="middle" font-size="16" font-weight="600" fill="#57534e">template · prose</text>
   <line x1="330" y1="172" x2="330" y2="196" stroke="#2f5169" stroke-width="1.5"/>
-  <text x="330" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">reviewing agent</text>
+  <text x="330" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#2f5169">reviewing agent</text>
   <line x1="500" y1="172" x2="500" y2="196" stroke="#2f5169" stroke-width="1.5"/>
-  <text x="500" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#2f5169">doc-derived test</text>
+  <text x="500" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#2f5169">doc-derived test</text>
   <line x1="680" y1="172" x2="680" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="680" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">lint · type · schema</text>
+  <text x="680" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#9a3f12">lint · type · schema</text>
   <line x1="850" y1="172" x2="850" y2="196" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="850" y="214" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">quality / drift / deploy gate ·</text>
-  <text x="850" y="231" text-anchor="middle" font-size="13.5" font-weight="600" fill="#9a3f12">marker file the tool reads</text>
-  <text x="500" y="288" text-anchor="middle" font-size="14.5" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
-  <text x="500" y="314" text-anchor="middle" font-size="13" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
+  <text x="850" y="214" text-anchor="middle" font-size="16" font-weight="600" fill="#9a3f12">quality / drift / deploy gate ·</text>
+  <text x="850" y="231" text-anchor="middle" font-size="16" font-weight="600" fill="#9a3f12">marker file the tool reads</text>
+  <text x="500" y="288" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">The second time a soft rule fails, convert it: a documented rule becomes a lint the agent cannot talk past.</text>
+  <text x="500" y="314" text-anchor="middle" font-size="16" fill="#155c38">Stronger guardrails let the fleet run faster, safely.</text>
 </svg>

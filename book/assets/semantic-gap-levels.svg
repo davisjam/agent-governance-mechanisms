@@ -25,7 +25,7 @@
   </defs>
 
   <!-- ================= TOP RUNG — the right level ================= -->
-  <text x="480" y="46" text-anchor="middle" font-size="30" font-weight="700" fill="#1c1917">Enforce here — the property is legible</text>
+  <text x="480" y="46" text-anchor="middle" font-size="23.04" font-weight="700" fill="#1c1917">Enforce here — the property is legible</text>
 
   <!-- one wide box = the whole unit of work -->
   <rect x="150" y="66" width="660" height="70" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>

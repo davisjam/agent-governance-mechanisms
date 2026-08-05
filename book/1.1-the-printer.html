@@ -567,8 +567,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- ===================== TOP ROW ===================== -->
   <!-- Decision diamond: "What kind of task" -->
   <polygon points="128,66 268,120 128,174 -12,120" fill="#e7edf3" stroke="#2f5169" stroke-width="1.5"/>
-  <text x="128" y="114" text-anchor="middle" font-size="30" font-weight="700" fill="#1c1917">What kind</text>
-  <text x="128" y="146" text-anchor="middle" font-size="30" font-weight="700" fill="#1c1917">of task?</text>
+  <text x="128" y="114" text-anchor="middle" font-size="25.44" font-weight="700" fill="#1c1917">What kind</text>
+  <text x="128" y="146" text-anchor="middle" font-size="25.44" font-weight="700" fill="#1c1917">of task?</text>
 
   <!-- arrow: diamond -> specify I/O -->
   <line x1="268" y1="120" x2="305" y2="120" stroke="#2f5169" stroke-width="2.2" marker-end="url(#csp-ah)"/>
@@ -584,8 +584,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- One-shot scripting -->
   <rect x="705" y="62" width="245" height="168" rx="6" fill="#2f5169" stroke="#1c1917" stroke-width="1.5"/>
-  <text x="827" y="112" text-anchor="middle" font-size="40" font-weight="700" fill="#ffffff">“One-shot</text>
-  <text x="827" y="150" text-anchor="middle" font-size="40" font-weight="700" fill="#ffffff">scripting”</text>
+  <text x="827" y="112" text-anchor="middle" font-size="25.44" font-weight="700" fill="#ffffff">“One-shot</text>
+  <text x="827" y="150" text-anchor="middle" font-size="25.44" font-weight="700" fill="#ffffff">scripting”</text>
   <text x="827" y="188" text-anchor="middle" font-size="24" font-style="italic" fill="#e7edf3">eg a CSV-to-HTML</text>
   <text x="827" y="214" text-anchor="middle" font-size="24" font-style="italic" fill="#e7edf3">report script</text>
 
@@ -599,7 +599,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- ===================== MIDDLE ROW ===================== -->
   <!-- Supervised autonomy -->
   <rect x="225" y="258" width="470" height="82" rx="6" fill="#2f5169" stroke="#1c1917" stroke-width="1.5"/>
-  <text x="460" y="311" text-anchor="middle" font-size="40" font-weight="700" font-style="italic" fill="#ffffff">Supervised autonomy</text>
+  <text x="460" y="311" text-anchor="middle" font-size="25.44" font-weight="700" font-style="italic" fill="#ffffff">Supervised autonomy</text>
 
   <!-- ===================== FAN-OUT to four leaves ===================== -->
   <!-- leaf centers: 130, 350, 620, 900 ; leaf tops at y=420 ; hub at (460,340) -->
@@ -610,13 +610,13 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- Leaf 1: Correctness conditions -->
   <rect x="16" y="420" width="228" height="116" rx="6" fill="#2f5169" stroke="#1c1917" stroke-width="1.5"/>
-  <text x="130" y="468" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">Correctness</text>
-  <text x="130" y="502" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">conditions</text>
+  <text x="130" y="468" text-anchor="middle" font-size="25.44" font-weight="700" fill="#ffffff">Correctness</text>
+  <text x="130" y="502" text-anchor="middle" font-size="25.44" font-weight="700" fill="#ffffff">conditions</text>
 
   <!-- Leaf 2: Propose sub-tasks -->
   <rect x="264" y="420" width="172" height="116" rx="6" fill="#2f5169" stroke="#1c1917" stroke-width="1.5"/>
-  <text x="350" y="468" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">Propose</text>
-  <text x="350" y="502" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">sub-tasks</text>
+  <text x="350" y="468" text-anchor="middle" font-size="25.44" font-weight="700" fill="#ffffff">Propose</text>
+  <text x="350" y="502" text-anchor="middle" font-size="25.44" font-weight="700" fill="#ffffff">sub-tasks</text>
 
   <!-- Leaf 3: Tools to determinize recurring processes -->
   <rect x="440" y="420" width="360" height="116" rx="6" fill="#2f5169" stroke="#1c1917" stroke-width="1.5"/>
@@ -632,8 +632,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <!-- divider between the System pair and the Development pair -->
   <line x1="438" y1="420" x2="438" y2="576" stroke="#e4e0d8" stroke-width="1.5"/>
 
-  <text x="225" y="566" text-anchor="middle" font-size="30" font-weight="700" fill="#1c1917">System design</text>
-  <text x="745" y="566" text-anchor="middle" font-size="30" font-weight="700" fill="#1c1917">Development process</text>
+  <text x="225" y="566" text-anchor="middle" font-size="25.44" font-weight="700" fill="#1c1917">System design</text>
+  <text x="745" y="566" text-anchor="middle" font-size="25.44" font-weight="700" fill="#1c1917">Development process</text>
 </svg><figcaption data-short="The Task-Mode Heuristic"><span class="fig-label">Figure 1.1-1.</span> <em>The Task-Mode Heuristic.</em> Specify a task's input/output behavior, then split on size and difficulty: a simple no-reasoning task goes to one-shot scripting, a hard or reasoning-heavy one to supervised autonomy. If unsure, try to one-shot it, but switch paths rather than throw good tokens after bad.</figcaption></figure>
 <h3>The two modes</h3>
 <span id="idx-def-reasoning-horizon"></span><span id="idx-def-long-horizon-task"></span><p>Start at the decision on the left. You have a computational task and you can say what it takes in and what it must produce. From there the path forks on how big and how hard the work is. More formally, what makes a task hard is often its <strong>reasoning horizon</strong> — the amount of intermediate reasoning state you must hold in mind at once to get it right — and a <strong>long-horizon task</strong> is one whose reasoning state will not fit losslessly within the working memory available to hold it.</p>

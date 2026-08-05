@@ -29,44 +29,44 @@
   </defs>
 
   <!-- header -->
-  <text x="44" y="36" font-size="15" font-weight="700" fill="#1c1917">The governance-of-governance stack — govern the control estate as its own subject</text>
+  <text x="44" y="36" font-size="19.2" font-weight="700" fill="#1c1917">The governance-of-governance stack — govern the control estate as its own subject</text>
 
   <!-- capability legend (free-floating swatches) -->
   <rect x="82" y="104" width="15" height="15" rx="3" fill="#f2effb" stroke="#7c6bb0" stroke-width="1.5"/>
-  <text x="104" y="116" font-size="12.5" fill="#57534e">model the estate</text>
+  <text x="104" y="116" font-size="19.2" fill="#57534e">model the estate</text>
   <rect x="340" y="104" width="15" height="15" rx="3" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="1.5"/>
-  <text x="362" y="116" font-size="12.5" fill="#57534e">query + grow the estate — coverage, blast radius, new controls</text>
+  <text x="362" y="116" font-size="19.2" fill="#57534e">query + grow the estate — coverage, blast radius, new controls</text>
   <rect x="957" y="104" width="15" height="15" rx="3" fill="#faf1e6" stroke="#9a3f12" stroke-width="1.5"/>
-  <text x="979" y="116" font-size="12.5" fill="#57534e">deliver it</text>
+  <text x="979" y="116" font-size="19.2" fill="#57534e">deliver it</text>
 
   <!-- ============ stage boxes (width 160, step 175) ============ -->
   <!-- 1 GRAPH -->
   <rect x="82" y="150" width="160" height="78" rx="8" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="162" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">GRAPH</text>
-  <text x="162" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#7c6bb0">conflict graph</text>
+  <text x="162" y="186" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">GRAPH</text>
+  <text x="162" y="210" text-anchor="middle" font-size="19.2" font-weight="600" fill="#7c6bb0">conflict graph</text>
   <!-- 2 CENSUS -->
   <rect x="257" y="150" width="160" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="337" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">CENSUS</text>
-  <text x="337" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#1f7a4d">coverage map</text>
+  <text x="337" y="186" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">CENSUS</text>
+  <text x="337" y="210" text-anchor="middle" font-size="19.2" font-weight="600" fill="#1f7a4d">coverage map</text>
   <!-- 3 RADIUS -->
   <rect x="432" y="150" width="160" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="512" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">RADIUS</text>
-  <text x="512" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#1f7a4d">blast radius</text>
+  <text x="512" y="186" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">RADIUS</text>
+  <text x="512" y="210" text-anchor="middle" font-size="19.2" font-weight="600" fill="#1f7a4d">blast radius</text>
   <!-- 4 INTERPRET -->
   <rect x="607" y="150" width="160" height="78" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
-  <text x="687" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">INTERPRET</text>
-  <text x="687" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#1f7a4d">failure → control</text>
+  <text x="687" y="186" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">INTERPRET</text>
+  <text x="687" y="210" text-anchor="middle" font-size="18.14" font-weight="600" fill="#1f7a4d">failure → control</text>
   <!-- 5 REGISTRY -->
   <rect x="782" y="150" width="160" height="78" rx="8" fill="#f2effb" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="862" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">REGISTRY</text>
-  <text x="862" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#7c6bb0">rule metadata</text>
+  <text x="862" y="186" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">REGISTRY</text>
+  <text x="862" y="210" text-anchor="middle" font-size="19.2" font-weight="600" fill="#7c6bb0">rule metadata</text>
   <!-- 6 INDEX -->
   <rect x="957" y="150" width="160" height="78" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2"/>
-  <text x="1037" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#1c1917">INDEX</text>
-  <text x="1037" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#9a3f12">enforced doc</text>
+  <text x="1037" y="186" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">INDEX</text>
+  <text x="1037" y="210" text-anchor="middle" font-size="19.2" font-weight="600" fill="#9a3f12">enforced doc</text>
 
   <!-- ============ per-part action row (free-floating) ============ -->
-  <g font-size="11" font-style="italic" fill="#57534e" text-anchor="middle">
+  <g font-size="19.2" font-style="italic" fill="#57534e" text-anchor="middle">
     <text x="162" y="252">who collides with whom</text>
     <text x="337" y="252">which target is bare</text>
     <text x="512" y="252">what a change breaks</text>
@@ -86,6 +86,6 @@
   </g>
 
   <!-- synthesis caption -->
-  <text x="600" y="308" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">The control estate is modeled, queried for its blind spots and change-safety, grown when a failure recurs,</text>
-  <text x="600" y="328" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1c1917">and delivered to every agent as enforced infrastructure.</text>
+  <text x="600" y="308" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">The control estate is modeled, queried for its blind spots and change-safety, grown when a failure recurs,</text>
+  <text x="600" y="328" text-anchor="middle" font-size="19.2" font-weight="700" fill="#1c1917">and delivered to every agent as enforced infrastructure.</text>
 </svg>

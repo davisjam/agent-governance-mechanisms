@@ -26,34 +26,34 @@
 
   <!-- header: badge [4] + loop name + R tag -->
   <circle cx="34" cy="34" r="15" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2.4"/>
-  <text x="34" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#7c6bb0">4</text>
-  <text x="58" y="30" text-anchor="start" font-size="15" font-weight="700" fill="#1c1917">Capability-amplification loop</text>
-  <text x="58" y="47" text-anchor="start" font-size="11.5" font-style="italic" fill="#57534e">stronger E enlarges ambition</text>
+  <text x="34" y="40" text-anchor="middle" font-size="9.12" font-weight="700" fill="#7c6bb0">4</text>
+  <text x="58" y="30" text-anchor="start" font-size="9.12" font-weight="700" fill="#1c1917">Capability-amplification loop</text>
+  <text x="58" y="47" text-anchor="start" font-size="9.12" font-style="italic" fill="#57534e">stronger E enlarges ambition</text>
   <rect x="330" y="20" width="24" height="24" rx="4" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="342" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#7c6bb0">R</text>
+  <text x="342" y="38" text-anchor="middle" font-size="9.12" font-weight="700" fill="#7c6bb0">R</text>
 
   <!-- Box 1: Stronger environment -->
   <rect x="40" y="74" width="300" height="50" rx="8" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="190" y="104" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Stronger environment</text>
+  <text x="190" y="104" text-anchor="middle" font-size="9.12" font-weight="700" fill="#1c1917">Stronger environment</text>
 
   <!-- arrow 1 -->
   <path d="M190,124 L190,150" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#l4-arrow)"/>
 
   <!-- Box 2: Larger tasks / more concurrency -->
   <rect x="40" y="152" width="300" height="50" rx="8" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="190" y="182" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Larger tasks &#183; more concurrency</text>
+  <text x="190" y="182" text-anchor="middle" font-size="9.12" font-weight="700" fill="#1c1917">Larger tasks &#183; more concurrency</text>
 
   <!-- arrow 2 -->
   <path d="M190,202 L190,228" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#l4-arrow)"/>
 
   <!-- Box 3: Expanded task frontier -->
   <rect x="40" y="230" width="300" height="50" rx="8" fill="#fdfcf9" stroke="#7c6bb0" stroke-width="2"/>
-  <text x="190" y="260" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1917">Expanded task frontier</text>
+  <text x="190" y="260" text-anchor="middle" font-size="9.12" font-weight="700" fill="#1c1917">Expanded task frontier</text>
 
   <!-- arrow 3 -->
   <path d="M190,280 L190,306" fill="none" stroke="#7c6bb0" stroke-width="2.4" marker-end="url(#l4-arrow)"/>
 
   <!-- Box 4: New governance pressure (reopens the cycle, emphasised) -->
   <rect x="40" y="308" width="300" height="52" rx="8" fill="#f6f4ef" stroke="#7c6bb0" stroke-width="2.6"/>
-  <text x="190" y="340" text-anchor="middle" font-size="15" font-weight="700" fill="#7c6bb0">New governance pressure</text>
+  <text x="190" y="340" text-anchor="middle" font-size="9.12" font-weight="700" fill="#7c6bb0">New governance pressure</text>
 </svg>

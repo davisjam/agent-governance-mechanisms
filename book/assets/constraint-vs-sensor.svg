@@ -36,7 +36,7 @@
 
   <!-- ================= LEFT — constraint / wall ================= -->
   <rect x="70" y="164" width="360" height="228" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="250" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#2f5169">Constraint — prevents</text>
+  <text x="250" y="200" text-anchor="middle" font-size="23.04" font-weight="700" fill="#2f5169">Constraint — prevents</text>
 
   <!-- wall icon: brick courses -->
   <g stroke="#2f5169" stroke-width="2" fill="none">
@@ -53,7 +53,7 @@
 
   <!-- ================= RIGHT — sensor / detector ================= -->
   <rect x="530" y="164" width="360" height="228" rx="10" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
-  <text x="710" y="200" text-anchor="middle" font-size="27" font-weight="700" fill="#2f5169">Sensor — detects</text>
+  <text x="710" y="200" text-anchor="middle" font-size="23.04" font-weight="700" fill="#2f5169">Sensor — detects</text>
 
   <!-- sensor icon: a dish detecting a spark -->
   <circle cx="710" cy="252" r="26" fill="none" stroke="#2f5169" stroke-width="2.5"/>
