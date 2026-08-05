@@ -18,10 +18,10 @@ ONE SOURCE, TWO CONSUMERS.
     idiom. The COUNT guard (`EXPECT_HYPOTHESES` / `EXPECT_SUBHYP`) reddens on a silent add/drop/reclassify of
     a hypothesis or sub-hypothesis — the exact H-table drift the chapter fears.
 
-Reads the meta-file at check-time (rule-#33 best form — stable, no codegen, no snapshot). AUDIT-ONLY: the
-model itself never gates; `catalog.py validate` prints its `[theory]` findings without incrementing the
-issue count until a follow-up flips it BLOCKING once a clean session confirms parity holds (the repo's
-blocking-lint landing discipline).
+Reads the meta-file at check-time (rule-#33 best form — stable, no codegen, no snapshot). BLOCKING: a
+chapter<->model drift gates. `verify` exits non-zero on any finding, and `catalog.py validate` increments its
+issue count for each `[theory]` finding. Landed AUDIT-ONLY-first, promoted to BLOCKING once a clean session
+confirmed parity holds (the repo's blocking-lint landing discipline).
 
 Run `python3 book-models/theory_of_mage_model.py verify` to drift-check (structural + parity + count);
 `... hypotheses-table` to print the markdown table for the page; `... show` to list every hypothesis.
@@ -237,10 +237,11 @@ def _cmd_verify() -> int:
     model = derive_model()
     findings = all_findings(model)
     if findings:
-        print(f"theory-of-mage: {len(findings)} finding(s) (audit-only — review candidates, not build stops):")
+        print(f"theory-of-mage: {len(findings)} drift finding(s) — regenerate the chapter table from "
+              f"`... hypotheses-table` (BLOCKING):")
         for f in findings:
             print(f"  {f}")
-        return 0  # audit-only: report, never gate
+        return 1  # BLOCKING: a chapter<->model drift gates
     print(f"theory-of-mage is in sync ({len(model.hypotheses)} hypotheses, {model.sub_count()} "
           f"sub-hypotheses; structural clean; page table matches the model)")
     return 0

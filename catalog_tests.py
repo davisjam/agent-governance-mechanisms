@@ -242,14 +242,15 @@ CHECKS = [
     # overlap metric (the spine / chapter-shape / flagship models' landing path). See tests/book_models.py.
     Check("book-models: metaphor-spans structure + overlap metric (metaphor-spans.json)", 1,
           lambda strict: check_metaphor_spans(), audit_only=True),
-    # AUDIT-ONLY (rule #55 first landing): the THEORY-OF-MAGE projection view-model — the 'Toward a Theory of
-    # MAGE' chapter's Seven-Hypotheses table is projected from theory_of_mage_declared.json (H4 folds its
-    # H4a/H4b sub-hypotheses). Asserts the TM1-TM7 structural invariants (delegated to theory_model_check),
-    # the parity check (chapter table == projection), and the ratified count guard (7 hypotheses, 2 sub).
-    # Lands audit-only-first; promote once a clean session confirms the chapter stays byte-equal to the
-    # projection (the dashboard model's own landing path). See tests/book_models.py.
+    # BLOCKING (rule #55 promotion — drain confirmed 0 at HEAD across a clean session): the THEORY-OF-MAGE
+    # projection view-model — the 'Toward a Theory of MAGE' chapter's Seven-Hypotheses table is projected from
+    # theory_of_mage_declared.json (H4 folds its H4a/H4b sub-hypotheses). Asserts the TM1-TM7 structural
+    # invariants (delegated to theory_model_check), the parity check (chapter table == projection), and the
+    # ratified count guard (7 hypotheses, 2 sub). Landed audit-only-first, promoted to blocking once a clean
+    # session confirmed the chapter stays byte-equal to the projection (the dashboard model's own landing
+    # path). A future chapter<->model drift now reddens the suite. See tests/book_models.py.
     Check("book-models: theory-of-mage hypotheses-table drift (theory_of_mage_declared.json)", 1,
-          lambda strict: check_theory_model(), audit_only=True),
+          lambda strict: check_theory_model()),
     # AUDIT-ONLY (rule #55: audit-first for a new lint while wiring is partial): governed data
     # cross-references — every [data:X] resolves, each manifest source+anchor still exists, each `holds`
     # number still appears in the source (loose match), uncited entries warned. Keyed off data-claims.json.

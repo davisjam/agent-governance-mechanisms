@@ -1142,25 +1142,44 @@ def cmd_validate(_args) -> int:
         for f in md_findings:
             print(f"              {f}")
         n_issues += len(md_findings)
-    # THEORY-OF-MAGE DRIFT GATE — AUDIT-ONLY. The 'Toward a Theory of MAGE' chapter's Seven-Hypotheses
+    # THEORY-OF-MAGE DRIFT GATE — BLOCKING. The 'Toward a Theory of MAGE' chapter's Seven-Hypotheses
     # table is a projection of a declared model (book-models/theory_of_mage_declared.json): the model
     # projects the 3-column table (H4 folds its H4a/H4b sub-hypotheses), theory_of_mage_model.py holds the
     # chapter's table byte-equal to that projection, delegates internal well-formedness to
-    # theory_model_check.check() (TM1-TM7), and guards the ratified hypothesis + sub-hypothesis counts. Lands
-    # AUDIT-ONLY-first (repo blocking-lint discipline) — it PRINTS its findings here so a committer sees any
-    # chapter<->JSON drift, but does NOT increment n_issues. A follow-up flips it BLOCKING once a clean
-    # session confirms parity holds (the dashboard model's own landing path). See
-    # book-models/theory_of_mage_model.py.
-    import theory_of_mage_model as tmm  # noqa: E402 — audit-only theory-projection/parity model
+    # theory_model_check.check() (TM1-TM7), and guards the ratified hypothesis + sub-hypothesis counts. Landed
+    # AUDIT-ONLY-first (repo blocking-lint discipline), promoted to BLOCKING once a clean session confirmed
+    # parity holds (the dashboard model's own landing path): a chapter<->JSON drift now increments n_issues
+    # and reddens validate. See book-models/theory_of_mage_model.py.
+    import theory_of_mage_model as tmm  # noqa: E402 — theory-projection/parity model (BLOCKING)
     tm_findings = tmm.all_findings()
     if tm_findings:
-        print(f"  [theory] AUDIT-ONLY: {len(tm_findings)} theory-drift finding(s) — "
-              f"run `python3 book-models/theory_of_mage_model.py verify` (does not gate):")
+        print(f"  [theory] {len(tm_findings)} theory-drift finding(s) — "
+              f"run `python3 book-models/theory_of_mage_model.py verify`:")
         for f in tm_findings:
             print(f"           {f}")
+        n_issues += len(tm_findings)
     else:
-        print("  [theory] AUDIT-ONLY: chapter Seven-Hypotheses table matches the declared model "
+        print("  [theory] chapter Seven-Hypotheses table matches the declared model "
               "(7 hypotheses, 2 sub-hypotheses; structural clean)")
+    # SOAPBOX GATE — BLOCKING. The substantiation aggregator (book-models/substantiation.py) nests the three
+    # evidence legs (data / literature / field-note) under the claim universe (spine + theory + discussion).
+    # SOAPBOX is its sharp report: a reality-claim asserted with NO backing of any kind AND no honest
+    # speculative frame (frame=='reality', not offered/single-case/possibility/conjecture) — the author's
+    # 'no-soapboxing' worry made mechanical. Landed AUDIT-ONLY-first, promoted to BLOCKING once a clean
+    # session confirmed the band empty: a registered reality-claim with no backing and no honest frame now
+    # increments n_issues and reddens validate. The DL3 UNDERQUANTIFIED + UNDER-SUBSTANTIATED-OR-SITUATED
+    # reports stay worklists (surfaced by `catalog.py substantiation`), never gating. See
+    # book-models/substantiation.py.
+    import substantiation as _sub  # noqa: E402 — book-model aggregator; soapbox band (BLOCKING)
+    sb_findings = _sub.soapbox()
+    if sb_findings:
+        print(f"  [soapbox] {len(sb_findings)} unbacked, unhedged reality-claim(s) — register data / "
+              f"literature / a field note, or frame it honestly; run `python3 book-models/substantiation.py`:")
+        for r in sb_findings:
+            print(f"            {r.id}")
+        n_issues += len(sb_findings)
+    else:
+        print("  [soapbox] every unbacked reality-claim carries an honest speculative frame (band empty)")
     # METAPHOR-SPANS CONFORMANCE — STRUCTURAL BLOCKING + OVERLAP AUDIT-ONLY. The book's sustained metaphors
     # are a declared model (book-models/metaphor-spans.json): each metaphor's span (introduced -> pays off)
     # plus its kind (core = always live / local = must pay off before the next local), so the author's rule
@@ -3490,7 +3509,7 @@ def cmd_theory(args) -> int:
     projection of the declared model (book-models/theory_of_mage_declared.json). No arg (or `verify`) drift-
     checks the chapter table against the projection (structural TM1-TM7 via theory_model_check + parity +
     the ratified count guard); `hypotheses-table` prints the markdown table for the page; `show` lists every
-    hypothesis. Reads the meta-file at query time; AUDIT-ONLY (reports, never gates)."""
+    hypothesis. Reads the meta-file at query time; BLOCKING (verify exits non-zero on any drift finding)."""
     bm = os.path.join(ROOT, "book-models")
     if bm not in sys.path:
         sys.path.insert(0, bm)

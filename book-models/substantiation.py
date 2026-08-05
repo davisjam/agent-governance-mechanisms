@@ -39,7 +39,9 @@ unframed assertion IS a reality-claim needing backing), then computes three repo
   - SOAPBOX — the sharp one: a reality-claim with NO backing of any kind AND frame=="reality" (NOT hedged as
     offered/single-case/possibility/conjecture). SOAPBOX ⊆ UNDER-SUBSTANTIATED-OR-SITUATED (the framed ones
     are situated, not soapbox).
-All three REPORT, never gate.
+DL3 UNDERQUANTIFIED + UNDER-SUBSTANTIATED-OR-SITUATED REPORT (worklists). SOAPBOX GATES — a non-empty band
+exits 1 here and increments the `catalog.py validate` issue count. Landed audit-only-first, promoted to
+BLOCKING once a clean session confirmed the band empty (the repo's blocking-lint landing discipline).
 
 Honest boundary: the check only sees REGISTERED claims. Unregistered Discussion prose (a sentence in no
 model) is invisible to it — finding those is the human audit. A clean SOAPBOX report means every registered
@@ -347,7 +349,8 @@ def under_substantiated() -> "list[ClaimSubstantiation]":
 
 def soapbox() -> "list[ClaimSubstantiation]":
     """The SOAPBOX report — reality-claims asserted with no backing of any kind and no honest speculative
-    frame. The author's 'no-soapboxing' worry, made mechanical. REPORT, never gate."""
+    frame. The author's 'no-soapboxing' worry, made mechanical. GATES: a non-empty band reddens `render()`
+    (exit 1) and the `[soapbox]` band in `catalog.py validate`."""
     rows, _ = aggregate()
     return [r for r in rows if r.soapbox]
 
@@ -377,7 +380,8 @@ def _to_jsonable() -> dict:
         "_note": ("Substantiation aggregate — data-claims + lit-positioning citations + field notes nested "
                   "under each claim (spine + theory + discussion). UNDERQUANTIFIED = quantifiable claim with no data; "
                   "UNDER-SUBSTANTIATED-OR-SITUATED = reality-claim with no data/lit/field-note; "
-                  "SOAPBOX = under-substantiated AND frame=='reality' (unhedged). Reports."),
+                  "SOAPBOX = under-substantiated AND frame=='reality' (unhedged) — GATES (exit 1); the other "
+                  "two REPORT."),
         "lit_positioning_present": lit_present,
         "claims": [{**asdict(r), "underquantified": r.underquantified,
                     "under_substantiated": r.under_substantiated, "soapbox": r.soapbox} for r in rows],
@@ -429,7 +433,11 @@ def render(as_json: bool = False) -> int:
     print("== SOAPBOX (reality-claim, no backing of any kind, unhedged frame=='reality') ==")
     print("  " + (", ".join(r.id for r in sb) if sb
                   else "none — every unbacked reality-claim carries an honest speculative frame"))
-    return 0
+    # BLOCKING: SOAPBOX gates. DL3 UNDERQUANTIFIED + UNDER-SUBSTANTIATED-OR-SITUATED stay REPORTS (worklists —
+    # the latter includes honestly-framed theory nodes), but a reality-claim asserted with NO backing and NO
+    # honest speculative frame reddens (exit 1). Landed audit-only-first, promoted once a clean session
+    # confirmed the band empty. A future unregistered/unbacked reality-claim now BLOCKS.
+    return 1 if sb else 0
 
 
 def main(argv: "list[str]") -> int:
