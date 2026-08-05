@@ -308,8 +308,13 @@ def _fence_body(block: str) -> tuple[str, str]:
 # ── Block-kind renderers — a `render_typst(block)` sibling to `Block.render_html()` ─────────────────
 
 def _render_heading(raw: str, section_no: str | None = None) -> str:
-    """`#`..`####` → Typst `=`..`====`. A trailing `{#slug}` id-anchor and an `## [role: X]` kicker are
-    folded into the heading text (the kicker as an emphasised lead).
+    """`#`..`####` → Typst `==`..`=====` (one level DEEPER than the markdown depth). The `+1` offset makes
+    room for the Part divider at Typst level-1, so the PDF bookmark tree nests Part → Chapter → section: a
+    chapter title emits at level-2 (see `render_chapter`), a `##` section at level-3, a `###` subsection at
+    level-4. The show-rules in `_PREAMBLE` are keyed to the shifted levels so the rendered sizes still
+    descend. A trailing `{#slug}` id-anchor and an `## [role: X]` kicker are folded into the heading text (the
+    kicker as an emphasised lead). Level logic below keys on the RAW markdown depth (`##` == level 2), not the
+    emitted depth, so the kicker/section-number stamping is unaffected by the offset.
 
     `section_no` (e.g. "1.1.3") is the DISPLAY-ONLY `part.chapter.section` locator the driving walk stamps
     on a `## ` (level-2) section heading — the Typst twin of the web build's `sec-num` span. Muted so it
@@ -335,7 +340,7 @@ def _render_heading(raw: str, section_no: str | None = None) -> str:
             if m:
                 kicker = f"#emph[{_esc(m.group(1).strip())}] "
     num = f"#text(fill: dt.muted)[{section_no}] " if (level == 2 and section_no) else ""
-    return "=" * level + " " + num + kicker + inline_typst(text) + label
+    return "=" * (level + 1) + " " + num + kicker + inline_typst(text) + label
 
 
 def _render_paragraph(raw: str) -> str:
@@ -792,10 +797,12 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     chap_num = f"{chapter.part}.{chapter.chapter}" if numbered else None
     title_num = f"#text(fill: dt.muted)[{chap_num}] " if chap_num else ""
     title_body = f"{title_num}{inline_typst(chapter.title)}"
-    # Appendix chapter/note titles render at the smaller per-entry head size (see _APPENDIX_HEADING_SIZE);
-    # body chapters keep the 1.5em H1 from the show rule.
-    title_line = (f"= #text(size: {_APPENDIX_HEADING_SIZE})[{title_body}]" if is_appendix
-                  else f"= {title_body}")
+    # Chapter titles emit at Typst LEVEL-2 (`==`), one below the Part divider's level-1 heading, so the PDF
+    # bookmark tree nests the chapter under its Part. The level-2 show-rule (see _PREAMBLE) carries the
+    # chapter-title size that the level-1 H1 used to. Appendix chapter/note titles keep the smaller per-entry
+    # head size (see _APPENDIX_HEADING_SIZE), inline-overriding the level-2 show rule.
+    title_line = (f"== #text(size: {_APPENDIX_HEADING_SIZE})[{title_body}]" if is_appendix
+                  else f"== {title_body}")
     # The Part landing page renders NO H1: the part-divider page ahead of it already carries the Part title
     # (and the `<part-N>` nav-target label), so a heading here would duplicate it. The page contributes the
     # intro paragraph + the Part-nav strip only.
@@ -930,11 +937,18 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 #set par(justify: true, leading: 0.62em, first-line-indent: 0pt, spacing: 0.9em)
 #set heading(numbering: none)
 #show heading: set text(font: dt.font-display, weight: "bold")
-#show heading.where(level: 1): set text(size: 1.5em)
-#show heading.where(level: 2): set text(size: 1.2em)
-// `### ` (H3) subheadings render ITALIC, not bold — a quieter sub-level (D67b). Overrides the general
-// bold above (later same-target show rule wins); keeps the display face at body size.
-#show heading.where(level: 3): set text(weight: "regular", style: "italic")
+// Heading levels shifted down one so the Part divider owns level-1 (the bookmark parent) — see
+// `_render_heading`/`render_chapter`/`_part_divider_typst`. The sizes below track the shift so the rendered
+// hierarchy still DESCENDS: Part (level-1) > chapter (level-2) > `##` section (level-3) > `###` subsection
+// (level-4). Level-1 (the dividers) gets NO size rule on purpose: each divider inline-sizes its own kicker +
+// title (1.1em / 2em) against the body em, so a level-1 `set text(size: …)` here would COMPOUND with those
+// inline ems and blow the divider titles up past their intended scale.
+#show heading.where(level: 2): set text(size: 1.5em)    // chapter title (the size the old level-1 H1 held)
+#show heading.where(level: 3): set text(size: 1.2em)    // `## ` section (the size the old level-2 held)
+// `### ` (H3) subheadings — now Typst level-4 after the shift — render ITALIC, not bold: a quieter sub-level
+// (D67b). Overrides the general bold above (later same-target show rule wins); keeps the display face at body
+// size. `#### ` (level-5) inherits the general bold display at body size, as it did before the shift.
+#show heading.where(level: 4): set text(weight: "regular", style: "italic")
 // Keep-with-next: a heading STICKS to the content after it, so a heading can never be the last meaningful
 // thing on a page (the orphaned-title failure — a chapter/section head alone on a page with its body flowing
 // to the next). `sticky` moves the heading to the following block's page rather than stranding it. The
@@ -1147,15 +1161,22 @@ def _part_nav_typst(current_part: int) -> str:
 
 
 def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
-    """A part-divider page before the first chapter of a numbered Part or an appendix Part. Front matter
-    (0) and true back matter (7 — apparatus) get no divider — they flow as chapters. Returns the Typst for
-    the divider, or None when this part gets none. The part title matches the web book's `_PART_TITLES` for
-    numbered parts; an appendix part reuses its own family name (e.g. "Appendix A — the pattern language")."""
-    if part in (0, 7):
+    """A part-divider page before the first chapter of a numbered Part, the back-matter Part, or an appendix
+    Part. Only front matter (0) gets no divider — its chapters open the book and sit at the OUTLINE root, so
+    a "Front Matter" parent would be redundant. Returns the Typst for the divider, or None. The divider's
+    title is a Typst LEVEL-1 heading, so it becomes the PDF-bookmark PARENT the demoted chapters (level-2)
+    nest under. Numbered parts use the web book's `_PART_TITLES`; the back-matter part titles as "Back Matter"
+    (a parent node so its apparatus does not mis-nest under the last numbered Part); an appendix part reuses
+    its own family name (e.g. "Appendix A — the pattern language")."""
+    if part == 0:
         return None
     part_titles = bb._PART_TITLES
     label = ""
-    if part in part_titles and part <= 6:
+    if part == 7:
+        # True back matter (apparatus). A bare title heading (no "Part N" kicker, no nav label) — it is a
+        # bookmark PARENT so About-the-Author / Colophon nest under it instead of under the last numbered Part.
+        kicker, title = "", part_titles.get(7, "Back Matter")
+    elif part in part_titles and part <= 6:
         kicker, title = f"Part {part}", part_titles[part]
         # The divider page is the Part opener, so it carries the `<part-N>` label the Part-nav strip links to
         # (`#link(<part-N>)`). Numbered Parts only — the appendix families are not Part-nav targets.
@@ -1171,13 +1192,22 @@ def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
     # Screen mode opens a part/appendix divider on a plain page break (no recto-forcing → no blank verso);
     # print mode forces a recto (odd) page per the bound-edition convention. Branches on the OUTPUT_TYPE seam.
     opener = "#pagebreak(to: \"odd\")\n" if OUTPUT_TYPE == "print" else "#pagebreak()\n"
+    # The title is a real Typst LEVEL-1 heading — the bookmark PARENT the demoted chapters (level-2) nest
+    # under. When a kicker is present it renders on its own muted line above the big title (the two-tier
+    # divider look), with a non-breaking space closing the kicker line so the flattened OUTLINE text keeps a
+    # separator ("Part 1 The Mindset", not "Part 1The Mindset"). `sticky` + block-spacing from the general
+    # heading show-rule stay contained inside the breakable:false block, so the divider still fills its own
+    # page. The `<part-N>` label (the Part-nav `#link(<part-N>)` target) attaches to the block, unchanged.
+    if kicker:
+        heading = (f"  = #text(size: 1.1em, fill: dt.muted)[{inline_typst(kicker)}~]"
+                   f"#linebreak()#text(size: 2em, weight: \"bold\")[{inline_typst(title)}]\n")
+    else:
+        heading = f"  = #text(size: 2em, weight: \"bold\")[{inline_typst(title)}]\n"
     return (
         opener +
         "#block(breakable: false)[\n"
         f"  #v(2.4in)\n"
-        f"  #text(size: 1.1em, fill: dt.muted)[{inline_typst(kicker)}]\n"
-        "  #v(0.4em)\n"
-        f"  #text(size: 2em, weight: \"bold\")[{inline_typst(title)}]\n"
+        + heading +
         "  #v(0.5em) #line(length: 30%, stroke: 1pt + dt.rule)\n"
         "]" + label
     )
