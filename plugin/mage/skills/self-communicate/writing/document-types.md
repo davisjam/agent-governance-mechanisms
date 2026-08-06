@@ -242,8 +242,11 @@ apply that type's specialized rules on top of the type-independent passes:
 
 - **A book** — check the thesis actually recurs across chapters (not just the preface); each chapter opens
   with a frame; each chapter carries at least one visual; no section blows the length cap; the conclusion
-  returns to the thesis. Several of these are mechanical enough to enforce with a structural lint over the
-  built book — that lint is the audit's automated arm; the audit runs the judgment the lint can't.
+  returns to the thesis. For a chapter that runs a **pedagogical inset**, run the seven-question **inset
+  audit** ([`audit.md`](audit.md) §"Inset audit") — needed-here, visibly separate, expert-skippable,
+  newcomer-rejoins, one concept not a survey, operationally sound, no mainline repeat. Several of the
+  book-level checks are mechanical enough to enforce with a structural lint over the built book — that lint
+  is the audit's automated arm; the audit runs the judgment the lint can't.
 - **A tutorial** — check there is no smuggled thesis, one running example, a visible win.
 - **A reference** — check entry-shape uniformity and exhaustiveness; flag any persuading prose as
   register drift.

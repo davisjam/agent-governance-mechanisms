@@ -285,6 +285,34 @@ interpretability). Each finding: quote the sentence, name which of the three sha
 fix as one of the three moves above. A soapbox orphan is a correctness finding, not a voice nitpick — it is
 a claim the book asserts and cannot yet stand behind.
 
+## Inset audit — the two-track book chapters
+
+Run this book-specialized check when the document type is an engineering book and a chapter runs a
+**pedagogical inset** — the boxed second track that teaches established background so the mainline can carry
+the argument ([`document-types.md`](document-types.md) §"Pedagogical insets"). Skip it for the other
+document types and for a chapter with no inset. For each inset, ask the seven questions:
+
+- **Needed here?** Is this background needed at *this exact point* in the argument?
+- **Visibly separate?** Is it visibly separate from the book's own argument (boxed as a second track, not
+  braided into a mainline paragraph)?
+- **Expert-skippable?** Can a reader who knows the concept skip it without losing the mainline?
+- **Newcomer rejoins?** Can a reader without the background read it and rejoin the argument?
+- **One concept, not a survey?** Does it teach one usable concept rather than survey a field?
+- **Operationally sound?** Is the simplified account operationally sound — scoped, and teaching no false
+  operational rule? This question is the audit hook for the [`voice.md`](voice.md) §"Teach the curious
+  engineer" classifier: a simplification that leaves the reader a *wrong* rule is a **correctness** finding
+  (first tier), not a voice nitpick; a merely-imprecise-to-a-specialist account is fine once its scope
+  clause is present.
+- **No mainline repeat?** Does the mainline avoid re-teaching the inset's concept after pointing into it
+  once?
+
+**Fix.** A "no" on *needed / visibly-separate / one-concept* is a placement or shaping fix — box the braided
+primer, cut a survey down to one concept, or move background the reader does not need here. A "no" on
+*expert-skippable / newcomer-rejoins* means the two tracks are not cleanly separated — tighten the mainline
+so it reads without the inset, or fill the inset so it stands alone. A "no" on *operationally sound* is a
+correctness break — scope the simplification or fix the false rule. A "no" on *no-mainline-repeat* is the
+progressive-density fix: compress the second mention to an invocation.
+
 ---
 
 ## Prioritization — rank the findings
