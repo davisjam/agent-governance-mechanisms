@@ -718,10 +718,11 @@ def check_part_opener_traceability() -> "tuple[str, list[str]]":
     Each `book/part<N>/00-part-intro.md` declares a `<!-- part-foreshadows: <spine-id>, … -->` decorator; for
     each id the loop must close — it resolves in the argument spine, at least one chapter WITHIN that Part
     advances it, and it reconciles to an ARGUMENT ANCHOR: a Big Idea OR a What-This-Book-Argues claim
-    (`argues_claims_declared.json`). Landed audit-only with five leg-(c) findings (opener premises like
-    `abundant-implementation` / `grounded-in-one-case` that reconcile to no Big Idea); those premises now
-    reconcile to their WTBA-claim id, so the loop closes for every declared id and this is promoted to
-    blocking. The source lint lives under `book-models/` (the `part-opener-traceability` lint)."""
+    (`argues_claims_declared.json`). Landed audit-only with leg-(c) findings on four opener premises that
+    mapped to no Big Idea; three (`abundant-implementation`, `sync-cost-reduced`, `mage-becomes-practical`)
+    now reconcile to their WTBA-claim id, and the fourth (`grounded-in-one-case`, an evidence-status caveat)
+    was dropped from its Part opener's foreshadows, so the loop closes for every declared id and this is
+    promoted to blocking. The source lint lives under `book-models/` (the `part-opener-traceability` lint)."""
     import sys as _sys  # noqa: E402 — local path bootstrap so the book-models lint module is importable
     bm = os.path.join(ROOT, "book-models")
     if bm not in _sys.path:

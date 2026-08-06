@@ -27,10 +27,12 @@ edit re-derives the answer with no second copy to maintain. Stdlib-only, matchin
 clone-and-run posture.
 
 Run `python3 book-models/lint_part_opener_traceability.py` (audit-only, exit 0) or `--strict` (exit 1 on any
-finding). Landed audit-only while a few openers foreshadowed argument premises that reconciled to no
-anchor; those five (`abundant-implementation`, `sync-cost-reduced`, `mage-becomes-practical`,
-`grounded-in-one-case`) now reconcile to their What-This-Book-Argues claim, so the loop closes for every
-declared id and this lint is BLOCKING (0 findings).
+finding). Landed audit-only while several openers foreshadowed argument premises that reconciled to no
+anchor. Four distinct spine nodes were involved; three (`abundant-implementation`, `sync-cost-reduced`,
+`mage-becomes-practical`) now reconcile to their What-This-Book-Argues claim, and the fourth
+(`grounded-in-one-case`, an evidence-status caveat that faithfully anchors to no WTBA claim) was dropped from
+its Part-5 opener's foreshadows rather than force-closed. The loop now closes for every declared id and this
+lint is BLOCKING (0 findings).
 """
 from __future__ import annotations
 

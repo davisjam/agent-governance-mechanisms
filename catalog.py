@@ -1080,6 +1080,10 @@ def cmd_validate(_args) -> int:
     if off_band_caps:
         print(f"  [caption] AUDIT-ONLY: {lcl.summary_line(off_band_caps)} — "
               f"run `python3 book-models/lint_caption_length.py` (does not gate)")
+    caption_orphans = lcl.orphan_rows()  # reverse join — a tier row no live directive uses (audit-only)
+    if caption_orphans:
+        print(f"  [caption] AUDIT-ONLY: {len(caption_orphans)} orphan caption-tier row(s) (declared tier, "
+              f"no live directive) — run `python3 book-models/lint_caption_length.py` (does not gate)")
     # NO-HARDCODED-REF — a cross-reference in the narrative prose names its target by a SYMBOLIC marker
     # (`{{part:N}}` / `[ref:<label>]` / `[appendix:<slug>]`), never a literal letter/number typed into the
     # sentence. The three "Appendix E" literals were converted to `[appendix: …]`, driving the tree to 0, so

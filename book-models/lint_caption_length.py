@@ -20,6 +20,12 @@ finding, always, by author instruction. The remedy is to resize the caption to i
 A caption whose id is absent from the registry is itself a finding (drift defense — a new figure/table must
 declare its tier, mirroring brick-fitness's "dense diagram with no verdict").
 
+REVERSE-ORPHAN GUARD (audit-only). The forward join above catches a live directive with no registry row
+(UNTIERED). `orphan_rows()` catches the reverse — a registry `tiers` key that matches NO live directive,
+the stale row a renamed or typo'd asset leaves behind. Both directions share one caption-id derivation
+(`_iter_captions`), so the two checks cannot key an id two different ways. A stale row is drift, not a
+broken build, so the orphan finding is surfaced audit-only and never flips the exit code.
+
 Scope — the captions an author writes in a chapter source `.md`:
   * `<!-- figure: <path> | <caption> -->`   — keyed on the asset path (`<path>`).
   * `<!-- table: <caption> [short: <short>] -->` — keyed on `<chapter-file>::<short>` (the `[short: ...]`
@@ -46,6 +52,7 @@ import json
 import os
 import pathlib
 import re
+from collections.abc import Iterator
 from dataclasses import dataclass
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -134,28 +141,42 @@ def _band_finding(f: pathlib.Path, kind: str, ref: str, cap_id: str, caption: st
     return None
 
 
-def findings() -> list[Finding]:
-    tiers = _load_tiers()
-    out: list[Finding] = []
+def _iter_captions() -> "Iterator[tuple[pathlib.Path, str, str, str, str]]":
+    """Yield `(src_file, kind, ref, cap_id, caption)` for every figure/table caption directive in the
+    chapter sources. This is the ONE place the caption-id keying lives — the band check (`findings`) and
+    the reverse-orphan check (`orphan_rows`) both consume it, so an id cannot be derived two ways."""
     for f in _src_files():
         rel_to_book = os.path.relpath(f, BOOK)
         txt = f.read_text(encoding="utf-8")
         for m in _FIGURE_RE.finditer(txt):
             src, _sep, caption = m.group(1).partition("|")
             asset = src.strip()
-            fnd = _band_finding(f, "figure", asset, asset, caption, tiers)
-            if fnd:
-                out.append(fnd)
+            yield f, "figure", asset, asset, caption
         for m in _TABLE_RE.finditer(txt):
             body = m.group(1)
             sm = _SHORT_VALUE_RE.search(body)
             short = sm.group(1).strip() if sm else ""
             caption = _SHORT_STRIP_RE.sub("", body)
             cap_id = f"{rel_to_book}::{short}" if short else ""
-            fnd = _band_finding(f, "table", short, cap_id, caption, tiers)
-            if fnd:
-                out.append(fnd)
+            yield f, "table", short, cap_id, caption
+
+
+def findings() -> list[Finding]:
+    tiers = _load_tiers()
+    out: list[Finding] = []
+    for f, kind, ref, cap_id, caption in _iter_captions():
+        fnd = _band_finding(f, kind, ref, cap_id, caption, tiers)
+        if fnd:
+            out.append(fnd)
     return out
+
+
+def orphan_rows() -> list[str]:
+    """Every registry `tiers` key that matches NO live caption directive — the reverse of the UNTIERED
+    forward join. A renamed or typo'd asset leaves a stale row the forward check never sees; this closes
+    the join symmetry. Audit-only: a stale row is drift, not a broken build."""
+    live = {cap_id for _f, _kind, _ref, cap_id, _cap in _iter_captions() if cap_id}
+    return sorted(key for key in _load_tiers() if key not in live)
 
 
 def summary_line(fs: list[Finding]) -> str:
@@ -171,8 +192,14 @@ def main(argv: list[str] | None = None) -> int:
     argparse.ArgumentParser(description=__doc__,
                             formatter_class=argparse.RawDescriptionHelpFormatter).parse_args(argv)
     fs = findings()
+    orphans = orphan_rows()
     print("== caption-length — every figure/table caption sized to its tier band "
           "(A anchor / B supporting / C reference; HARD, no noqa) ==")
+    if orphans:
+        print(f"  AUDIT-ONLY: {len(orphans)} orphan registry row(s) — a declared tier whose caption id no "
+              f"live directive uses (stale/renamed asset; does not gate):")
+        for key in orphans:
+            print(f"    [orphan] {key}")
     if not fs:
         print("  clean — every caption sits within its tier band")
         return 0

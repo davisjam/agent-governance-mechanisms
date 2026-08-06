@@ -147,8 +147,9 @@ CHECKS = [
     # BLOCKING (rule #55 promotion): every claim a Part opener foreshadows (its `<!-- part-foreshadows: … -->`
     # decorator) must trace to the spine — the id resolves, a chapter WITHIN that Part advances it, and it
     # reconciles to an ARGUMENT ANCHOR (a Big Idea OR a What-This-Book-Argues claim). Landed audit-only with
-    # five leg-(c) findings (opener premises that map to no Big Idea); those premises now reconcile to their
-    # WTBA-claim id, closing the loop for every declared id, so this is promoted to blocking. See tests/book.py.
+    # leg-(c) findings on four opener premises that mapped to no Big Idea; three now reconcile to their
+    # WTBA-claim id and the fourth (grounded-in-one-case) was dropped from its Part opener's foreshadows, so
+    # the loop closes for every declared id and this is promoted to blocking. See tests/book.py.
     Check("book: Part-opener foreshadow claims trace to spine + argument anchor + Part chapters (part-opener-traceability)", 1,
           lambda strict: check_part_opener_traceability()),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
