@@ -7,7 +7,7 @@
     "derived_ids": 239,
     "missing_topic_sentence": 6,
     "sections_drained": 181,
-    "paragraph_points": 568
+    "paragraph_points": 565
   },
   "chapters": [
     {
@@ -995,97 +995,82 @@
       "part": 2,
       "sections": [
         {
-          "section_id": "first-four-definitions",
+          "section_id": "first-three-definitions",
           "level": 2,
-          "heading_text": "First, four definitions",
-          "topic_sentence": "Before the walk, I owe you four definitions — *engineering*, *software engineering*, *agent*, and *model* — and, before we leave them, one adjective the last of them will come to lean on: *structured*.",
+          "heading_text": "First, three definitions",
+          "topic_sentence": "Before the walk I owe you three definitions — *agent*, *model*, and the adjective the second leans on, *structured*.",
           "id_source": "derived",
           "block_index": 10,
           "points": [
             {
               "slug": "definitions-carry-the-books-argument",
-              "text": "Four definitions carry the book's argument.",
+              "text": "Three definitions carry the stack; engineering motivates them.",
               "block_index": 12
-            },
-            {
-              "slug": "trade-offs-separate-engineer-from-technician",
-              "text": "Articulated trade-offs separate the engineer from the technician.",
-              "block_index": 16
-            },
-            {
-              "slug": "prediction-before-construction-is-the-engineering-move",
-              "text": "Engineers predict outcomes before building.",
-              "block_index": 18
-            },
-            {
-              "slug": "engineering-selects-the-artifact-before-building",
-              "text": "Software engineering selects the artifact before building it.",
-              "block_index": 22
             },
             {
               "slug": "intelligence-devises-means-within-constraints",
               "text": "Intelligence devises means to goals within constraints.",
-              "block_index": 26
+              "block_index": 20
             },
             {
               "slug": "controllable-not-controlled-is-why-governance-exists",
               "text": "Controllable, not controlled, is why governance exists.",
-              "block_index": 28
+              "block_index": 22
             },
             {
               "slug": "models-are-the-agents-knowledge-base",
               "text": "The models are the agent's knowledge base.",
-              "block_index": 30
+              "block_index": 24
             },
             {
               "slug": "perceive-act-builds-agents-controllability-governs-them",
               "text": "Perceive-and-act builds agents; controllability governs them.",
-              "block_index": 32
+              "block_index": 26
             },
             {
               "slug": "model-fidelity-trades-against-cost",
               "text": "Model fidelity trades against reasoning cost.",
-              "block_index": 35
+              "block_index": 29
             },
             {
               "slug": "blueprint-models-specify-rather-than-approximate",
               "text": "A blueprint model specifies; the build may not diverge.",
-              "block_index": 37
+              "block_index": 31
             },
             {
               "slug": "model-is-constraint-blueprint-and-knowledge-base",
               "text": "A model is constraint, blueprint, and knowledge base.",
-              "block_index": 39
+              "block_index": 33
             },
             {
               "slug": "model-does-double-duty-in-this-trade",
               "text": "The word model does double duty; context disambiguates.",
-              "block_index": 41
+              "block_index": 35
             },
             {
               "slug": "structured-is-the-broad-sense-a-declared-verifiable-shape",
               "text": "Structured means a declared, verifiable shape, not a variable's type.",
-              "block_index": 43
+              "block_index": 37
             },
             {
               "slug": "structured-is-what-admits-the-machine",
               "text": "The structure is what admits the machine.",
-              "block_index": 48
+              "block_index": 42
             },
             {
               "slug": "formal-model-definition-assembles-the-pieces",
               "text": "The formal definition assembles approximation, blueprint, and structure.",
-              "block_index": 51
+              "block_index": 45
             },
             {
               "slug": "five-load-bearing-terms-do-the-gatekeeping",
               "text": "Five load-bearing clauses gatekeep what counts as a model.",
-              "block_index": 55
+              "block_index": 49
             },
             {
               "slug": "definition-relations-tell-the-book-in-a-nutshell",
-              "text": "The four definitions' relations summarize the whole book.",
-              "block_index": 57
+              "text": "The definitions' relations summarize the whole book.",
+              "block_index": 51
             }
           ]
         },
@@ -1095,57 +1080,57 @@
           "heading_text": "The four layers",
           "topic_sentence": "**At the bottom sits the foundation model.** It comes from a commercial vendor or an open-weight release, and it is a general language reasoner, able to *induce* an understanding of your environment — though that induction is expensive, and it happens fresh every time.",
           "id_source": "derived",
-          "block_index": 59,
+          "block_index": 53,
           "points": [
             {
               "slug": "foundation-layer-spares-the-model-reasoning-cost",
               "text": "Tell the model where to look; spare its reasoning.",
-              "block_index": 61
+              "block_index": 55
             },
             {
               "slug": "model-constituents-are-a-control-surface",
               "text": "The model's three parts steer differently.",
-              "block_index": 66
+              "block_index": 60
             },
             {
               "slug": "models-pack-the-window-denser",
               "text": "You cannot widen the window; pack it denser.",
-              "block_index": 69
+              "block_index": 63
             },
             {
               "slug": "window-control-is-the-books-bet",
               "text": "Model choice is yours; the book bets on the window.",
-              "block_index": 71
+              "block_index": 65
             },
             {
               "slug": "the-model-reasons-over-a-world-representation",
               "text": "The model reasons over a world representation, so equip it.",
-              "block_index": 73
+              "block_index": 67
             },
             {
               "slug": "harness-manages-the-context-window-and-holds-two-mechanism-points",
               "text": "The harness manages the context window and holds two mechanisms.",
-              "block_index": 75
+              "block_index": 69
             },
             {
               "slug": "the-harness-layer-has-a-named-taxonomy",
               "text": "The field names a framework, harness, and agent-OS taxonomy.",
-              "block_index": 79
+              "block_index": 73
             },
             {
               "slug": "skills-are-soft-hooks-are-hard-tools-are-deterministic",
               "text": "Skills are soft, hooks are hard, tools take deterministic action.",
-              "block_index": 81
+              "block_index": 75
             },
             {
               "slug": "engineering-environment-must-be-written-down-and-offers-git-and-ci-hooks",
               "text": "Write down the engineering environment; it offers git hooks.",
-              "block_index": 86
+              "block_index": 80
             },
             {
               "slug": "application-layer-makes-mistakes-structurally-impossible-via-static-analysis",
               "text": "Static analysis makes a mistake class structurally impossible.",
-              "block_index": 90
+              "block_index": 84
             }
           ]
         },
@@ -1155,27 +1140,27 @@
           "heading_text": "Every layer is a place to steer",
           "topic_sentence": "Read the stack as a list of opportunities, because that is what it is.",
           "id_source": "derived",
-          "block_index": 93,
+          "block_index": 87,
           "points": [
             {
               "slug": "read-each-layer-as-an-injection-opportunity",
               "text": "Read each layer as an injection opportunity.",
-              "block_index": 95
+              "block_index": 89
             },
             {
               "slug": "every-layer-serves-one-goal-narrow-the-search",
               "text": "Every layer serves one goal: narrow the agent's search.",
-              "block_index": 98
+              "block_index": 92
             },
             {
               "slug": "mechanisms-interact-and-the-interplay-is-its-own-problem",
               "text": "Mechanisms interact; the interplay is its own problem.",
-              "block_index": 100
+              "block_index": 94
             },
             {
               "slug": "the-stack-grounds-both-theses",
               "text": "The stack grounds both the Modeling and Alignment theses.",
-              "block_index": 102
+              "block_index": 96
             }
           ]
         }
