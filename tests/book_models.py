@@ -300,20 +300,23 @@ def check_theory_model():
 
 
 def check_metaphor_spans():
-    """The metaphor-spans view's structural + overlap check (audit-only first landing, rule-#55 discipline).
-    The model (`book-models/metaphor-spans.json`) records every sustained metaphor's span — introduced ->
-    pays off — plus its kind (core = always live, exempt / local = must pay off before the next local), so
-    the author's rule 'never introduce a second metaphor until the first has paid off' is measurable. This
-    re-derives the model and reports: the C1-C7 STRUCTURAL invariants (well-formedness, page + anchor
-    resolution, local-has-payoff / core-does-not, the ratified core/local split); and that the computed
-    OVERLAP set equals the ratified set (0 today). The vehicle-collision check is a derived secondary note,
-    surfaced by the model CLI, not asserted here. Keyed off `book-models/metaphor-spans.json` + the book
-    chapters (for anchor resolution)."""
+    """The metaphor + slogan registry's structural + overlap check (audit-only first landing, rule-#55
+    discipline). The model (`book-models/metaphor-spans.json`) records every sustained metaphor's span —
+    introduced -> pays off — plus its `recurrence` (core = always live, exempt / local = must pay off before
+    the next local) AND every registered slogan (its canonical phrasing, scope, and the idea it elaborates),
+    so three house rules are measurable: never open a 2nd metaphor before the 1st pays off; one canonical
+    slogan per idea; ration polished slogans. This re-derives the model and reports: the STRUCTURAL
+    invariants for BOTH kinds (well-formedness, page + anchor resolution, local-has-payoff / core-does-not,
+    scope enum, the ratified 8-core/11-local + 6/1/1-slogan split, elaborates-resolves = dangling class f,
+    one-invoke-by-name-canonical-per-idea = competing class a); and that the computed OVERLAP set equals the
+    ratified set (0 today). The vehicle-collision check + the audit-only density classes (b/c/d/e) are
+    surfaced by the model CLI / lint_slogan_density.py, not asserted here. Keyed off
+    `book-models/metaphor-spans.json` + the book chapters (for anchor resolution)."""
     import metaphor_spans_model as msm  # noqa: E402 — path set above; the book-model package
 
     issues: list[str] = []
 
-    # C1-C7 — structural / schema + resolution invariants (blocking half in catalog.py validate).
+    # STRUCTURAL — schema + resolution invariants for both kinds (blocking half in catalog.py validate).
     issues.extend(msm.structural_findings())
 
     # The editorial metric — the computed overlap set must equal the ratified set (0 today).

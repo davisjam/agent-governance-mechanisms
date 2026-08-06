@@ -1,16 +1,20 @@
 {
-  "_provenance": "AUTHORED source of truth for the book's metaphor spans — where each metaphor is introduced and where it pays off — so the editorial rule 'never introduce a second metaphor until the first has paid off' is MEASURABLE. book-models/metaphor_spans_model.py projects the inventory and computes overlaps, wired into `catalog.py validate` (structural BLOCKING; overlap AUDIT-ONLY-first). Edit a span HERE. Anchors are heading/index-def/point slugs (stable across prose edits), NOT line numbers; re-resolve an anchor with `python3 book-models/metaphor_spans_model.py anchors`.",
+  "_provenance": "AUTHORED source of truth for the book's metaphors AND slogans — the writing techniques that elaborate a declared idea — so the house rules 'one slogan per idea / ration polished slogans / never open a 2nd image before the 1st pays off' are MEASURABLE. Every entry carries a `kind` discriminator (metaphor | slogan) and an `elaborates: {model, id}` link to the declared idea it expands (the join that makes 'one idea, several competing slogans' detectable). Metaphor entries live in `metaphors`, slogans in `slogans`; both share name/slug/notes and diverge on the fields their governing rule needs. book-models/metaphor_spans_model.py projects the inventory + structural + overlap + density checks; metaphor_slogan_index_model.py derives every occurrence from the built HTML. Edit an entry HERE. Anchors are heading/index-def/point slugs (stable across prose edits), NOT line numbers; re-resolve an anchor with `python3 book-models/metaphor_spans_model.py anchors`.",
 
   "overlap_rule": "A LOCAL metaphor must pay off before the next LOCAL metaphor is introduced within the same stretch. CORE vocabulary (the Printer, churn, map-and-territory, the Model Zoo, the loop, the engineer's seat) is always live and exempt. Overlap = two locals in one stretch whose [introduced_at, pays_off_at] spans intersect. Any real overlap must be ratified (overlap_ok:true + a rationale on either party) or it is a finding.",
 
-  "ratified_counts": { "core": 8, "local": 9, "overlaps": 0 },
+  "ration_rule": "Each declared idea gets ONE canonical slogan (scope invoke-by-name) at its best location. Later appearances are blunt referential invocations, not fresh polished formulations. A `used-once` line appears exactly once; a `commandment` may recur as a refrain. Density/clustering caps ration polished occurrences. A slogan and a metaphor elaborating the SAME idea do not compete — only two invoke-by-name slogans on one idea do.",
+
+  "ratified_counts": { "core": 8, "local": 11, "overlaps": 0, "slogans": 6, "commandments": 1, "used_once": 1 },
 
   "metaphors": [
     {
+      "kind": "metaphor",
       "name": "The Printer",
       "slug": "printer",
-      "kind": "core",
+      "recurrence": "core",
       "vehicle": "a 3D printer, not a coder or a stapler",
+      "elaborates": { "model": "argument-spine", "id": "fault-lies-in-instructions" },
       "introduced_at": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "printer-metaphor" },
       "payoff": "A bad build indicts the instructions, not the machine.",
       "overlap_ok": false,
@@ -18,10 +22,12 @@
       "notes": "The governing metaphor. Boundary named in 1.3 (loops-and-models); revisited at the close in 6.3-conclusion. Sub-images (stapler, CAD/slicing, the open-ended-technology siblings) belong to this cluster, not separate rows."
     },
     {
+      "kind": "metaphor",
       "name": "Churn",
       "slug": "churn",
-      "kind": "core",
+      "recurrence": "core",
       "vehicle": "velocity decayed into rework",
+      "elaborates": { "model": "big-ideas", "id": "churn" },
       "introduced_at": { "chapter": "0.2", "page_slug": "0.3-the-books-language", "anchor": "" },
       "payoff": "The wall a fleet hits; the governed environment pushes it back.",
       "overlap_ok": false,
@@ -29,10 +35,12 @@
       "notes": "Named as recurring vocabulary on the glossary page (ground truth for core). Cashed as an empirical curve in 5.2-the-timeline-and-the-work (anchor churn): peaks at mechanization, then collapses."
     },
     {
+      "kind": "metaphor",
       "name": "Engineering capital",
       "slug": "engineering-capital",
-      "kind": "core",
+      "recurrence": "core",
       "vehicle": "financial capital that earns compounding interest, not error that snowballs",
+      "elaborates": { "model": "claims", "id": "conversions-compound" },
       "introduced_at": { "chapter": "0.3", "page_slug": "0.3-the-books-language", "anchor": "" },
       "payoff": "The stock the positive dual of churn accrues; it earns returns while it stays fit, and depreciates when it does not.",
       "overlap_ok": false,
@@ -40,21 +48,25 @@
       "notes": "The vehicle for the compounding principle — attached to the STOCK (engineering capital), so flow (compounding) and stock stay coherent. Named on the glossary page (ground truth for core); pays off in Part 6 (the increasing-returns proposition + the Bureaucracy-vs-Engineering-capital section, where technical debt is set against engineering capital). Compound INTEREST, deliberately: it fixes the valence against the pre-existing opposite-sign term `compounding-failure-probability` (Part 4). No vehicle collision — no prior `capital`/`compound` span exists."
     },
     {
+      "kind": "metaphor",
       "name": "Map and territory",
       "slug": "map-and-territory",
-      "kind": "core",
+      "recurrence": "core",
       "vehicle": "a map drops detail and is not the land",
+      "elaborates": { "model": "definitions", "id": "model" },
       "introduced_at": { "chapter": "0.2", "page_slug": "0.3-the-books-language", "anchor": "" },
       "payoff": "Justifies the drift and parity gates that keep map equal to territory.",
       "overlap_ok": false,
       "overlap_rationale": "",
-      "notes": "Named on the glossary page (ground truth for core). Does real work in 2.2-models-and-the-semantic-gap (anchor map-and-territory): model is the map, code the territory, hand-sync drifts."
+      "notes": "Named on the glossary page (ground truth for core). Does real work in 2.2-models-and-the-semantic-gap (anchor map-and-territory): model is the map, code the territory, hand-sync drifts. Elaborates the DEFINITION of `model` — the map that drops detail IS the model of the code."
     },
     {
+      "kind": "metaphor",
       "name": "The Model Zoo",
       "slug": "model-zoo",
-      "kind": "core",
+      "recurrence": "core",
       "vehicle": "a zoo of executable models on tour",
+      "elaborates": { "model": "big-ideas", "id": "modeling-thesis" },
       "introduced_at": { "chapter": "0.2", "page_slug": "0.3-the-books-language", "anchor": "" },
       "payoff": "The 4+1 views, each walked as a drift-gated model over real code.",
       "overlap_ok": false,
@@ -62,21 +74,25 @@
       "notes": "Named on the glossary page (ground truth for core). Opens and carries all of Part 3, from 3.1-the-executable-zoo (anchor model-zoo) onward."
     },
     {
+      "kind": "metaphor",
       "name": "The loop",
       "slug": "the-loop",
-      "kind": "core",
+      "recurrence": "core",
       "vehicle": "a generate-check-correct feedback loop",
+      "elaborates": { "model": "definitions", "id": "engineered-agent-loop" },
       "introduced_at": { "chapter": "1.3", "page_slug": "1.3-loops-and-models", "anchor": "loop-engineering" },
       "payoff": "Agent work is a loop you engineer at four control points.",
       "overlap_ok": false,
       "overlap_rationale": "",
-      "notes": "\"Nearly everything in this book is an instance of it.\" The four levers land in 1.3; recurs book-wide."
+      "notes": "\"Nearly everything in this book is an instance of it.\" The four levers land in 1.3; recurs book-wide. Elaborates the DEFINITION of the engineered agent loop."
     },
     {
+      "kind": "metaphor",
       "name": "The engineer's seat",
       "slug": "engineers-seat",
-      "kind": "core",
+      "recurrence": "core",
       "vehicle": "two seats — the engineer's and the developer's",
+      "elaborates": { "model": "big-ideas", "id": "seat-moves" },
       "introduced_at": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "engineers-seat" },
       "payoff": "The developer's seat moves to the fleet; humans keep the engineering seats.",
       "overlap_ok": false,
@@ -84,22 +100,26 @@
       "notes": "Classed core (medium confidence): anchors chapter 1.5 and is cashed in the back matter (6.2-implications-for-se). If read as a chapter-local frame, reclassify local — it is then the sole local in 1.5 (still no overlap)."
     },
     {
+      "kind": "metaphor",
       "name": "The reasoning horizon",
       "slug": "reasoning-horizon",
-      "kind": "core",
+      "recurrence": "core",
       "vehicle": "a horizon bounding how much reasoning state a task can hold at once",
+      "elaborates": { "model": "definitions", "id": "reasoning-horizon" },
       "introduced_at": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "reasoning-horizon" },
       "payoff": "Models extend the horizon; MAGE moves the wall, it does not remove it.",
       "overlap_ok": false,
       "overlap_rationale": "",
-      "notes": "Core vocabulary from 1.1 onward: the reasoning-horizon reframe of the Modeling Thesis recurs across the preface, 1.4, 2.3, 3.1/3.7, and the theory chapter's Reasoning-Horizon Proposition (6.0). Sub-images 'reasoning state' and 'working memory' belong to this cluster, not separate rows. Spatial vehicle named once, then used plainly (the define-once discipline)."
+      "notes": "Core vocabulary from 1.1 onward: the reasoning-horizon reframe of the Modeling Thesis recurs across the preface, 1.4, 2.3, 3.1/3.7, and the theory chapter's Reasoning-Horizon Proposition (6.0). Sub-images 'reasoning state' and 'working memory' belong to this cluster, not separate rows. Spatial vehicle named once, then used plainly (the define-once discipline). Elaborates the DEFINITION of `reasoning-horizon`."
     },
 
     {
+      "kind": "metaphor",
       "name": "The search space",
       "slug": "search-space",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "agent behavior as a search over a vast space",
+      "elaborates": { "model": "big-ideas", "id": "modeling-thesis" },
       "introduced_at": { "chapter": "1.3", "page_slug": "1.3-loops-and-models", "anchor": "search-space" },
       "pays_off_at": { "chapter": "1.3", "page_slug": "1.3-loops-and-models", "anchor": "structuring-loop-and-model-conditions-the-distribution" },
       "stretch": "1.3-loops-and-models",
@@ -109,10 +129,12 @@
       "notes": "Sole local in 1.3; co-occurs only with the core loop (exempt)."
     },
     {
+      "kind": "metaphor",
       "name": "Poka-yoke / the fixture",
       "slug": "poka-yoke-fixture",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "a jig that will not seat a bad part",
+      "elaborates": { "model": "claims", "id": "constraint-prevents-sensor-detects" },
       "introduced_at": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "improving-the-process-is-engineering-too-toyota-named-the-moves" },
       "pays_off_at": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "improving-the-process-is-engineering-too-toyota-named-the-moves" },
       "stretch": "1.5-the-engineers-seat",
@@ -122,10 +144,12 @@
       "notes": "Pays off in place, in the paragraph that raises it."
     },
     {
+      "kind": "metaphor",
       "name": "The raven and the pebbles",
       "slug": "raven-pebbles",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "Aesop's raven raising water to reach it",
+      "elaborates": { "model": "definitions", "id": "agent" },
       "introduced_at": { "chapter": "2.1", "page_slug": "2.1-the-agent-stack", "anchor": "intelligence-devises-means-within-constraints" },
       "pays_off_at": { "chapter": "2.1", "page_slug": "2.1-the-agent-stack", "anchor": "intelligence-devises-means-within-constraints" },
       "stretch": "2.1-the-agent-stack",
@@ -135,10 +159,12 @@
       "notes": "Pays off in the paragraph that defines the agent."
     },
     {
+      "kind": "metaphor",
       "name": "The evidence staircase",
       "slug": "evidence-staircase",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "staged steps, cheap to expensive",
+      "elaborates": { "model": "big-ideas", "id": "governance-centric" },
       "introduced_at": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "four-classes-prevention-detection-evidence-admission" },
       "pays_off_at": { "chapter": "2.3", "page_slug": "2.3-the-governed-environment", "anchor": "four-classes-prevention-detection-evidence-admission" },
       "stretch": "2.3-the-governed-environment",
@@ -148,10 +174,12 @@
       "notes": "Vehicle word 'staircase' is reused by mage-staircase (5.4) — see the vehicle-collision check. Renaming this to 'the evidence ladder/ratchet' (a DEFERRED editorial call, no content edit here) would free 'staircase' for the load-bearing 5.4 close."
     },
     {
+      "kind": "metaphor",
       "name": "The diffusion analogy",
       "slug": "diffusion-analogy",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "an image-diffusion model",
+      "elaborates": { "model": "argument-spine", "id": "abundant-implementation" },
       "introduced_at": { "chapter": "4.4", "page_slug": "4.4-training-data", "anchor": "diffusion-analogy" },
       "pays_off_at": { "chapter": "4.4", "page_slug": "4.4-training-data", "anchor": "diffusion-analogy" },
       "stretch": "4.4-training-data",
@@ -161,10 +189,12 @@
       "notes": "Pays off in the section that raises it."
     },
     {
+      "kind": "metaphor",
       "name": "Jugaad",
       "slug": "jugaad",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "Hindi — a resourceful improvisation",
+      "elaborates": { "model": "claims", "id": "convert-failures-to-controls" },
       "introduced_at": { "chapter": "4.5", "page_slug": "4.5-lessons-learned", "anchor": "the-difference-is-what-counts-as-proof" },
       "pays_off_at": { "chapter": "4.5", "page_slug": "4.5-lessons-learned", "anchor": "the-difference-is-what-counts-as-proof" },
       "stretch": "4.5-lessons-learned",
@@ -174,10 +204,12 @@
       "notes": "\"MAGE begins where jugaad ends.\" Pays off in the same passage."
     },
     {
+      "kind": "metaphor",
       "name": "The coin",
       "slug": "coin",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "two sides of one coin",
+      "elaborates": { "model": "claims", "id": "model-earns-keep-via-invariants" },
       "introduced_at": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "model-claim-coverage-is-the-saturation-oracle" },
       "pays_off_at": { "chapter": "4.6", "page_slug": "4.6-generative-validation", "anchor": "model-claim-coverage-is-the-saturation-oracle" },
       "stretch": "4.6-generative-validation",
@@ -187,23 +219,27 @@
       "notes": "Carried by the figure 'The Coin Is the Model' in the same section."
     },
     {
+      "kind": "metaphor",
       "name": "The DOJ ramp",
       "slug": "doj-ramp",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "call-ahead-for-a-ramp versus the ramp is simply there",
+      "elaborates": { "model": "argues-claims", "id": "reliability-from-environment" },
       "introduced_at": { "chapter": "5.1", "page_slug": "5.1-the-ada-context", "anchor": "doj-rule-made-access-part-of-service" },
       "pays_off_at": { "chapter": "5.1", "page_slug": "5.1-the-ada-context", "anchor": "doj-rule-made-access-part-of-service" },
       "stretch": "5.1-the-ada-context",
       "payoff": "Accessibility as a property present by default, not requested on demand.",
       "overlap_ok": false,
       "overlap_rationale": "",
-      "notes": "The DOJ's own analogy, carried in the burden-shift table."
+      "notes": "The DOJ's own analogy, carried in the burden-shift table. The ramp present-by-default is reliability from the environment, not on demand."
     },
     {
+      "kind": "metaphor",
       "name": "The MAGE staircase",
       "slug": "mage-staircase",
-      "kind": "local",
+      "recurrence": "local",
       "vehicle": "a five-rung climb of delegated jobs",
+      "elaborates": { "model": "argument-spine", "id": "mage-becomes-practical" },
       "introduced_at": { "chapter": "5.4", "page_slug": "5.4-the-road-to-mage", "anchor": "staircase-of-delegated-jobs" },
       "pays_off_at": { "chapter": "5.4", "page_slug": "5.4-the-road-to-mage", "anchor": "the-graph-equals-map-to-territory" },
       "stretch": "5.4-the-road-to-mage",
@@ -211,6 +247,158 @@
       "overlap_ok": false,
       "overlap_rationale": "",
       "notes": "The book's structural climb; shares the vehicle word 'staircase' with evidence-staircase (2.3), a different Part."
+    },
+    {
+      "kind": "metaphor",
+      "name": "The scar healed into a wall",
+      "slug": "scar-healed-into-a-wall",
+      "recurrence": "local",
+      "vehicle": "a scar that heals into a load-bearing wall",
+      "elaborates": { "model": "argument-spine", "id": "failures-become-machinery" },
+      "introduced_at": { "chapter": "1.2", "page_slug": "1.2-mage-by-example", "anchor": "" },
+      "pays_off_at": { "chapter": "1.2", "page_slug": "1.2-mage-by-example", "anchor": "" },
+      "stretch": "1.2-mage-by-example",
+      "payoff": "A failure, once converted, hardens into permanent structure.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "NEW (part1.md). Used-once vivid image: 'Use scar once.' A converted failure heals into load-bearing structure. Anchor empty until the net-subtractive fix-wave marks the paragraph; density lint's used-once class guards the single occurrence."
+    },
+    {
+      "kind": "metaphor",
+      "name": "The compiler analogy",
+      "slug": "compiler-analogy",
+      "recurrence": "local",
+      "vehicle": "machines execute progressively higher-level descriptions",
+      "elaborates": { "model": "argument-spine", "id": "seat-moves" },
+      "introduced_at": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "" },
+      "pays_off_at": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "" },
+      "stretch": "1.5-the-engineers-seat",
+      "payoff": "Each abstraction lifts the human's seat to a higher-level description.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "NEW (part1.md). As compilers lifted the human off assembly, machines executing ever-higher-level descriptions move the developer's seat up. Anchor empty until the fix-wave marks the paragraph; co-occurs with core engineers-seat (exempt) and local poka-yoke-fixture (pays off in place — no span overlap)."
+    }
+  ],
+
+  "slogans": [
+    {
+      "kind": "slogan",
+      "name": "Printer posture",
+      "slug": "printer-posture",
+      "canonical": "Treat the agent as a printer, not a coder.",
+      "elaborates": { "model": "claims", "id": "printer-not-coder" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "" },
+      "competitors": [
+        "printer, not coder",
+        "builds exactly what its instructions describe",
+        "can execute from a structured model, not a vibe"
+      ],
+      "notes": "Later uses: 'The printer posture applies here', not a new polished line."
+    },
+    {
+      "kind": "slogan",
+      "name": "Failure diagnosis",
+      "slug": "failure-diagnosis",
+      "canonical": "Read a bad build first as evidence about the instructions.",
+      "elaborates": { "model": "argument-spine", "id": "fault-lies-in-instructions" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "" },
+      "competitors": [
+        "whose fault is it",
+        "suspect the instructions before the agent"
+      ],
+      "notes": "The printer-cluster diagnosis slogan; elaborates a DIFFERENT claim than printer-posture (fault-lies-in-instructions vs printer-not-coder), so they do not compete."
+    },
+    {
+      "kind": "slogan",
+      "name": "Governance conversion",
+      "slug": "governance-conversion",
+      "canonical": "Convert recurring failure into a durable mechanism.",
+      "elaborates": { "model": "claims", "id": "convert-failures-to-controls" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "1.4", "page_slug": "1.4-why-mage-follows-from-the-machine", "anchor": "" },
+      "competitors": [
+        "spend attention once per failure class",
+        "recurring failure becomes machinery",
+        "convert judgment into infrastructure",
+        "permanent countermeasure"
+      ],
+      "notes": "The governance move stated once, then invoked by name."
+    },
+    {
+      "kind": "slogan",
+      "name": "Review replacement",
+      "slug": "review-replacement",
+      "canonical": "The apparatus is the review.",
+      "elaborates": { "model": "claims", "id": "apparatus-is-the-review" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "1.4", "page_slug": "1.4-why-mage-follows-from-the-machine", "anchor": "" },
+      "competitors": [
+        "the environment holds every change",
+        "reliability from the environment, not repeated inspection"
+      ],
+      "notes": "Points at the apparatus-is-the-review claim added to claims_declared.json (ratified decision A) — a major book claim that previously had no declared home."
+    },
+    {
+      "kind": "slogan",
+      "name": "Human role",
+      "slug": "human-role",
+      "canonical": "The keystrokes move; the accountability does not.",
+      "elaborates": { "model": "argument-spine", "id": "seat-moves" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "" },
+      "competitors": [
+        "code got cheap, judgment did not",
+        "developer's seat goes to the fleet",
+        "implementation moves toward the fleet",
+        "SDLC becomes SELC"
+      ],
+      "notes": "The seat-moves slogan. Co-elaborated by the commandment 'Govern; do not type' (sanctioned refrain) and the compiler-analogy metaphor — none competes with this canonical."
+    },
+    {
+      "kind": "slogan",
+      "name": "Reasoning limit",
+      "slug": "reasoning-limit",
+      "canonical": "Finite reasoning horizon.",
+      "elaborates": { "model": "definitions", "id": "reasoning-horizon" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "" },
+      "competitors": [
+        "runs out of reasoning horizon",
+        "too much to hold in mind at once"
+      ],
+      "notes": "Compresses the reasoning-horizon DEFINITION (ratified decision B: definitions is a fifth allowed elaborates namespace)."
+    },
+    {
+      "kind": "slogan",
+      "name": "Govern; do not type",
+      "slug": "govern-do-not-type",
+      "canonical": "Govern; do not type.",
+      "elaborates": { "model": "argument-spine", "id": "seat-moves" },
+      "scope": "commandment",
+      "ration_budget": 0,
+      "home": { "chapter": "1.5", "page_slug": "1.5-the-engineers-seat", "anchor": "" },
+      "competitors": [],
+      "notes": "A commandment — may recur as a refrain, so it does not count as a competing canonical against human-role (both elaborate seat-moves). ration_budget 0 = unbudgeted refrain."
+    },
+    {
+      "kind": "slogan",
+      "name": "Danger in the instructions",
+      "slug": "danger-in-instructions",
+      "canonical": "The danger was already in the instructions; the speed just gets you there first.",
+      "elaborates": { "model": "argument-spine", "id": "fault-lies-in-instructions" },
+      "scope": "used-once",
+      "ration_budget": 1,
+      "home": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "" },
+      "competitors": [],
+      "notes": "A used-once vivid line — appears exactly once. Co-elaborates fault-lies-in-instructions beside the failure-diagnosis canonical (a sanctioned co-elaboration, not a second canonical)."
     }
   ]
 }

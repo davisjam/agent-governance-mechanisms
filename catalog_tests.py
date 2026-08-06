@@ -275,15 +275,18 @@ CHECKS = [
     # chapter-shape / flagship models' own landing path. See tests/book_models.py.
     Check("book-models: literature-positioning drift + structure (lit-positioning.json)", 1,
           lambda strict: check_lit_positioning(), audit_only=True),
-    # AUDIT-ONLY (rule #55 first landing): the METAPHOR-SPANS view-model — every sustained metaphor's span
-    # (introduced -> pays off) + kind (core = always live, exempt / local = must pay off before the next
-    # local), so the author's rule 'never introduce a second metaphor until the first has paid off' is
-    # measurable. Asserts the C1-C7 structural invariants (well-formedness, page + anchor resolution,
-    # local-has-payoff / core-does-not, the ratified 6-core/9-local split) AND that the computed overlap set
-    # equals the ratified set (0 today). The structural half is BLOCKING in catalog.py validate; this test
-    # lands audit-only while the overlap half is audit-only-first — promote once a clean session confirms the
-    # overlap metric (the spine / chapter-shape / flagship models' landing path). See tests/book_models.py.
-    Check("book-models: metaphor-spans structure + overlap metric (metaphor-spans.json)", 1,
+    # AUDIT-ONLY (rule #55 first landing): the METAPHOR + SLOGAN registry — every sustained metaphor's span
+    # (introduced -> pays off) + recurrence (core = always live, exempt / local = must pay off before the next
+    # local), AND every registered slogan (canonical phrasing, scope, and the idea it elaborates), so three
+    # house rules are measurable: never open a 2nd metaphor before the 1st pays off; one canonical slogan per
+    # idea; ration polished slogans. Asserts the structural invariants for both kinds (well-formedness, page +
+    # anchor resolution, local-has-payoff / core-does-not, scope enum, the ratified 8-core/11-local +
+    # 6/1/1-slogan split, elaborates-resolves = class f, one-canonical-per-idea = class a) AND that the
+    # computed overlap set equals the ratified set (0 today). The structural half is BLOCKING in catalog.py
+    # validate; this test lands audit-only while the overlap + density halves are audit-only-first — promote
+    # once a clean session confirms them (the spine / chapter-shape / flagship models' landing path). See
+    # tests/book_models.py.
+    Check("book-models: metaphor + slogan registry structure + overlap metric (metaphor-spans.json)", 1,
           lambda strict: check_metaphor_spans(), audit_only=True),
     # BLOCKING (rule #55 promotion — drain confirmed 0 at HEAD across a clean session): the THEORY-OF-MAGE
     # projection view-model — the 'Toward a Theory of MAGE' chapter's Seven-Hypotheses table is projected from

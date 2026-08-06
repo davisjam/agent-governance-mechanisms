@@ -1205,16 +1205,19 @@ def cmd_validate(_args) -> int:
         n_issues += len(sb_findings)
     else:
         print("  [soapbox] every unbacked reality-claim carries an honest speculative frame (band empty)")
-    # METAPHOR-SPANS CONFORMANCE — STRUCTURAL BLOCKING + OVERLAP AUDIT-ONLY. The book's sustained metaphors
-    # are a declared model (book-models/metaphor-spans.json): each metaphor's span (introduced -> pays off)
-    # plus its kind (core = always live / local = must pay off before the next local), so the author's rule
-    # "never introduce a second metaphor until the first has paid off" is MEASURABLE. Two halves, two
-    # landings: (1) the STRUCTURAL / schema invariants (C1-C7 — well-formedness, page + anchor resolution,
-    # local-has-payoff, the ratified core/local split) land BLOCKING (green from birth; a malformed row
-    # reddens validate); (2) the OVERLAP metric + the softer vehicle-collision check land AUDIT-ONLY-first
-    # (repo blocking-lint discipline) — they PRINT here so a committer sees them, but do NOT increment
-    # n_issues. Today's overlap count is 0, so the audit-only phase catches a newly-authored overlap before a
-    # follow-up flips it blocking. See book-models/metaphor_spans_model.py + tests/book_models.py.
+    # METAPHOR + SLOGAN REGISTRY CONFORMANCE — STRUCTURAL BLOCKING + OVERLAP AUDIT-ONLY. The book's sustained
+    # metaphors AND registered slogans are one declared model (book-models/metaphor-spans.json), discriminated
+    # by `kind` (metaphor | slogan); every entry carries `elaborates: {model, id}`, the join to the declared
+    # idea it expands. Three house rules become MEASURABLE: never open a 2nd metaphor before the 1st pays off;
+    # one canonical slogan per idea; ration polished slogans. Two halves, two landings: (1) the STRUCTURAL /
+    # schema invariants for BOTH kinds (well-formedness, page + anchor resolution, local-has-payoff, scope
+    # enum, the ratified core/local/slogan split) PLUS the two born-blocking density classes —
+    # exactly-one-invoke-by-name-canonical-per-idea (class a) and elaborates-resolves (class f, dangling) —
+    # land BLOCKING (green from birth; a malformed row or a competing canonical reddens validate); (2) the
+    # OVERLAP metric + the softer vehicle-collision check land AUDIT-ONLY-first (repo blocking-lint discipline)
+    # — they PRINT here so a committer sees them, but do NOT increment n_issues. The remaining density classes
+    # (competitor-at-full-strength / over-use / used-once / tag consistency) live in lint_slogan_density.py,
+    # surfaced audit-only below. See book-models/metaphor_spans_model.py + tests/book_models.py.
     import metaphor_spans_model as msm  # noqa: E402 — structural-blocking + overlap-audit-only model
     mp_structural = msm.structural_findings()
     if mp_structural:
