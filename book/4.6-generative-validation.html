@@ -322,11 +322,11 @@ figure.book-figure img { max-width: 100%; height: auto; }
 figure.book-figure figcaption { font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }
 figure.book-figure figcaption.fig-label-only { text-align: center; }
-/* D74 — the author portrait floats left at a capped width so the bio flows around it (a wrap figure). */
-figure.book-figure.portrait-wrap { float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
-                                    text-align: center; }
-figure.book-figure.portrait-wrap img { width: 100%; border-radius: 4px; }
-figure.book-figure.portrait-wrap figcaption { text-align: center; }
+/* D74 — the author portrait floats left at a capped width so the bio flows around it. It is a PLAIN
+   (unnumbered, uncaptioned) `figure.plain-image.portrait-wrap`, not a `book-figure` float. */
+figure.portrait-wrap { float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
+                        text-align: center; }
+figure.portrait-wrap img { width: 100%; height: auto; border-radius: 4px; }
 .fig-label, .tbl-label { font-weight: 700; color: var(--ink); }
 table caption { caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }

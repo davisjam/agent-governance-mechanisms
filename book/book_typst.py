@@ -515,18 +515,21 @@ def _render_table(block: Block_t) -> str:
     return f"#figure(\n  fit-table({tbl}),\n  kind: table,{caption}\n){label}"
 
 
-def _render_figure(block: Block_t, width: str = "85%") -> str:
+def _render_figure(block: Block_t, width: str = "85%", bare: bool = False) -> str:
     """A `<!-- figure: path | caption -->` → `#figure(image(path), caption: […])`, numbered + labelled.
     `width` sizes the image (default 85% of the measure; the wrapped author portrait passes a small width so
-    it sits beside the bio, see `render_chapter`)."""
+    it sits beside the bio, see `render_chapter`). `bare=True` renders just the image — no `#figure`
+    wrapper, so no "Figure N" number and no caption — for a plain picture like the author portrait."""
     spec = block.raw[len("<!--"):-len("-->")].strip()[len("figure:"):].strip()
     rel = spec.split("|", 1)[0].strip()
     asset = HERE / rel
     if not asset.is_file():
         raise SystemExit(f"figure directive: asset not found: {asset}")
+    img = f'image("{_root_rel(asset, _EmitCtx.root)}", width: {width})'
+    if bare:
+        return f"#{img}"
     caption = _caption_block(block.caption)
     label = f" <{block.label}>" if block.label else ""
-    img = f'image("{_root_rel(asset, _EmitCtx.root)}", width: {width})'
     return f"#figure(\n  {img},{caption}\n){label}"
 
 
@@ -875,7 +878,8 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         # following bio paragraphs beside it, instead of a full-measure figure. Consumes the rest of the
         # chapter's content blocks into the text column (the about-the-author chapter is portrait + bio only).
         if b.kind is ir.BlockKind.FIGURE and "author-headshot" in b.raw:
-            left = _render_figure(b, width="100%")
+            # A PLAIN portrait, not a numbered float: `bare=True` → no "Figure N-N" number, no caption.
+            left = _render_figure(b, width="100%", bare=True)
             bio: list[str] = []
             for j in range(i + 1, len(blocks)):
                 if j in skip:

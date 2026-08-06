@@ -953,10 +953,16 @@ def _figure_block(comment: str) -> str:
     asset = HERE / rel
     if not asset.is_file():
         raise SystemExit(f"figure directive: asset not found: {asset}")
+    # The author portrait is a PLAIN image, not a numbered float. Emit it WITHOUT the `book-figure`
+    # class — so the float-numbering pass skips it (no "Figure N-N" label, no list-of-floats entry) —
+    # and WITHOUT a figcaption. The `figure:` pipe field supplies ALT text only (a bare portrait needs
+    # no visible caption); `portrait-wrap` still floats it beside the bio.
+    if "author-headshot" in rel:
+        alt = html.escape((_split_caption_md(caption)[0] if caption else "") or asset.stem, quote=True)
+        src = html.escape(rel, quote=True)
+        return f'<figure class="plain-image portrait-wrap"><img src="{src}" alt="{alt}"></figure>'
     cap_html = _caption_el("figcaption", caption) if caption else ""
-    # D74 — the author portrait floats so the bio flows around it (a capped-width `portrait-wrap` figure).
-    # The extra class rides alongside `book-figure`, so the float-numbering pass still matches this figure.
-    extra_cls = " portrait-wrap" if "author-headshot" in rel else ""
+    extra_cls = ""
     if asset.suffix.lower() == ".svg":
         svg = asset.read_text(encoding="utf-8")
         # Strip an XML prolog / leading comment so only the <svg>…</svg> is spliced inline.
@@ -1862,11 +1868,11 @@ figure.book-figure img {{ max-width: 100%; height: auto; }}
 figure.book-figure figcaption {{ font-size: 14px; color: var(--muted); margin-top: 0.6rem;
                                 text-align: left; line-height: 1.5; }}
 figure.book-figure figcaption.fig-label-only {{ text-align: center; }}
-/* D74 — the author portrait floats left at a capped width so the bio flows around it (a wrap figure). */
-figure.book-figure.portrait-wrap {{ float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
-                                    text-align: center; }}
-figure.book-figure.portrait-wrap img {{ width: 100%; border-radius: 4px; }}
-figure.book-figure.portrait-wrap figcaption {{ text-align: center; }}
+/* D74 — the author portrait floats left at a capped width so the bio flows around it. It is a PLAIN
+   (unnumbered, uncaptioned) `figure.plain-image.portrait-wrap`, not a `book-figure` float. */
+figure.portrait-wrap {{ float: left; width: 190px; max-width: 40%; margin: 0.2rem 1.5rem 0.8rem 0;
+                        text-align: center; }}
+figure.portrait-wrap img {{ width: 100%; height: auto; border-radius: 4px; }}
 .fig-label, .tbl-label {{ font-weight: 700; color: var(--ink); }}
 table caption {{ caption-side: top; text-align: left; font-size: 14px; color: var(--muted);
                  margin-bottom: 0.45rem; line-height: 1.5; }}
