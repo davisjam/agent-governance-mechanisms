@@ -16,9 +16,9 @@ rather than advancing the system. Compounding is what the same environment does 
 recurring failure into a durable mechanism and you do not merely retire one failure — you leave the
 environment permanently better able to absorb the next change. The judgment spent once keeps paying.
 
-The unit that compounds has a name: **engineering capital**. A validator, a typed model, an architectural
-constraint, a generated artifact — each is capital on the balance sheet of the environment, because it
-lowers the recurring reasoning a future change demands. Where churn is a negative-feedback regime in which
+The unit that compounds has a name: **engineering capital**. A validator, a structured model, an
+architectural constraint, a generated artifact — each is capital on the balance sheet of the environment,
+because it lowers the recurring reasoning a future change demands. Where churn is a negative-feedback regime in which
 effort dissipates, compounding is a positive-feedback regime in which effort accrues. That is the sign
 contrast: the same system, two directions.
 
