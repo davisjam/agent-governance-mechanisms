@@ -5290,7 +5290,13 @@ def _number_floats(body: str, chapter_id: str, fig_n: int, tbl_n: int,
         if collect is not None:
             ds = _DATA_SHORT_RE.search(frag)
             if ds and ds.group(1):
-                collect.append({"kind": kind, "num": num, "short": ds.group(1), "slug": slug, "html": frag})
+                # `data-short` is HTML-escaped (an attribute value, written via `html.escape` in
+                # `_caption_el`). The one consumer — the list-of-figures builder — embeds this short form in
+                # markdown that is rendered through `inline()`, which escapes AGAIN. Storing the escaped
+                # string double-escaped it (`model's` → `model&amp;#x27;s`). Store the RAW short so the list
+                # renders it exactly ONCE, the same way the in-text figcaption renders its caption via `inline`.
+                collect.append({"kind": kind, "num": num, "short": html.unescape(ds.group(1)),
+                                "slug": slug, "html": frag})
         if label_sink is not None:
             dl = _DATA_LABEL_RE.search(frag)
             if dl and dl.group(1):
