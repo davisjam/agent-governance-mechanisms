@@ -3691,17 +3691,17 @@
           "heading_text": "The right-sized leap, and the wrong-shaped one",
           "topic_sentence": "Two transformations from this book show the lens at work — one sized right, one shaped wrong.",
           "id_source": "derived",
-          "block_index": 12,
+          "block_index": 13,
           "points": [
             {
               "slug": "sizing-the-leap-down-buys-cheap-auditable-typed-edits",
               "text": "Sizing the leap down buys cheap, auditable edits.",
-              "block_index": 15
+              "block_index": 16
             },
             {
               "slug": "a-well-sized-transformation-of-the-wrong-shape-still-fails",
               "text": "A well-sized transformation of wrong shape still fails.",
-              "block_index": 18
+              "block_index": 19
             }
           ]
         },
@@ -3711,7 +3711,7 @@
           "heading_text": "The skills are transformations all the way down",
           "topic_sentence": "[ref:transformations-pipeline] shows the shared skeleton — each skill carrying an input to an output through a sequence of sized transformations.",
           "id_source": "derived",
-          "block_index": 20,
+          "block_index": 21,
           "points": [
             {
               "slug": "each-skill-names-the-transformation-steps-you-supply-the-breakdown",
@@ -3721,7 +3721,7 @@
             {
               "slug": "the-catalogue-reads-like-a-symptom-to-mechanism-lookup",
               "text": "The catalogue reads as symptom-to-mechanism lookup.",
-              "block_index": 28
+              "block_index": 27
             }
           ]
         }
