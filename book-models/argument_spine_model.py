@@ -222,19 +222,27 @@ def derive_model() -> SpineModel:
     ) for d in decl["spine"]]
     spine.sort(key=lambda s: s.order)
 
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
     advances: "dict[str, list[str]]" = decl.get("chapter_advances", {})
     exemptions: "dict[str, str]" = decl.get("chapter_exemptions", {})
     outline = om.derive_outline()
-    chapters = [ChapterLabel(slug=c.slug, advances=list(advances.get(c.slug, [])),
-                             exempt=exemptions.get(c.slug))
+
+    def _lab(slug: str) -> str:
+        # chapter_advances / chapter_exemptions are keyed by the number-free identity LABEL now; map each
+        # outline slug to its label to look the labels up. Falls back to the slug for a chapter with no
+        # identity row (should not happen — CI3 asserts full outline coverage).
+        return chapter_identity.label_for_slug(slug) or slug
+
+    chapters = [ChapterLabel(slug=c.slug, advances=list(advances.get(_lab(c.slug), [])),
+                             exempt=exemptions.get(_lab(c.slug)))
                 for c in outline.chapters]
     # Any label keyed to a chapter the outline no longer defines still surfaces (AS5 reddens it), appended
     # after the outline's chapters so the artifact never silently drops a hand-authored label.
-    known = {c.slug for c in outline.chapters}
-    for slug in advances:
-        if slug not in known:
-            chapters.append(ChapterLabel(slug=slug, advances=list(advances[slug]),
-                                         exempt=exemptions.get(slug)))
+    known = {_lab(c.slug) for c in outline.chapters}
+    for label in advances:
+        if label not in known:
+            chapters.append(ChapterLabel(slug=label, advances=list(advances[label]),
+                                         exempt=exemptions.get(label)))
 
     # Derive the reverse projection: spine claim -> chapters that advance it.
     by_id = {s.id: s for s in spine}
@@ -348,14 +356,16 @@ def structural_findings(model: "SpineModel | None" = None) -> "list[str]":
     for slug in sorted(idea_slugs - covered_ideas):
         findings.append(f"AS4 big-idea {slug!r} is reconciled by no spine claim")
 
-    # AS5 — exhaustive chapter labeling, keys == outline chapter slugs.
+    # AS5 — exhaustive chapter labeling, keys == outline chapter LABELS (number-free identity model).
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
     decl = _load_declared()
     labeled = set(decl.get("chapter_advances", {}))
-    outline_slugs = {c.slug for c in om.derive_outline().chapters}
-    for slug in sorted(outline_slugs - labeled):
-        findings.append(f"AS5 chapter {slug!r} carries no argument label (chapter_advances is exhaustive)")
-    for slug in sorted(labeled - outline_slugs):
-        findings.append(f"AS5 chapter_advances keys {slug!r} — the outline defines no such chapter")
+    outline_labels = {chapter_identity.label_for_slug(c.slug) or c.slug
+                      for c in om.derive_outline().chapters}
+    for label in sorted(outline_labels - labeled):
+        findings.append(f"AS5 chapter {label!r} carries no argument label (chapter_advances is exhaustive)")
+    for label in sorted(labeled - outline_labels):
+        findings.append(f"AS5 chapter_advances keys {label!r} — the outline defines no such chapter")
 
     # AS6 — advanced ids resolve; no duplicates per chapter.
     spine_ids = {s.id for s in model.spine}
