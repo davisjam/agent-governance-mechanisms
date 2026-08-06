@@ -378,6 +378,30 @@ def _render_ordered_list(raw: str) -> str:
     return "\n".join(f"+ {inline_typst(t)}" for t in items)
 
 
+def _render_argues_claims(raw: str) -> str:
+    """Page-scoped print treatment for the six central claims on "What This Book Argues" — the Typst twin of
+    the web `.argues-page ol` (larger claim text, more air between claims, accent-coloured bold numerals).
+    Scoped to a single content block via `#[ … ]` so no other numbered list in the book changes. The claim
+    prose (each led by a `**bold.**` lead-in) renders exactly as an ordinary ordered list would; only the
+    enum's size, item spacing, and numeral style differ. The page's HEADING is left as the ordinary (now
+    semibold) chapter title — confidence through clarity, no decorative treatment."""
+    items: list[str] = []
+    for ln in raw.splitlines():
+        s = ln.strip()
+        if re.match(r"^\d+\.\s", s):
+            items.append(re.sub(r"^\d+\.\s+", "", s))
+        elif items:
+            items[-1] += " " + s
+    body = "\n".join(f"+ {inline_typst(t)}" for t in items)
+    return (
+        "#[\n"
+        "  #set text(size: 1.06em)\n"
+        "  #set enum(spacing: 1.15em, numbering: n => text(fill: dt.accent, weight: \"bold\")[#n.])\n"
+        f"{_indent(body)}\n"
+        "]"
+    )
+
+
 def _render_code(raw: str) -> str:
     """A non-mermaid fence → a Typst raw block. Language-tagged so Typst can highlight (unknown langs are
     fine — Typst falls back to plain). We emit an explicit `#raw(..., block: true)` so arbitrary body text
@@ -895,7 +919,13 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
         if chap_num and b.kind is ir.BlockKind.HEADING and b.raw.strip().startswith("## "):
             section_no += 1
             sec = f"{chap_num}.{section_no}"
-        frag = render_typst(b, caption_md, is_def=is_def, section_no=sec)
+        # Page-scoped: the six central claims on "What This Book Argues" get the print twin of the web
+        # `.argues-page ol` feature treatment (larger text, more air, accent-bold numerals). Only that page's
+        # ordered list is rerouted; every other numbered list in the book renders through _render_ordered_list.
+        if chapter.slug == bb._WHAT_THIS_BOOK_ARGUES_SLUG and b.kind is ir.BlockKind.ORDERED_LIST:
+            frag = _render_argues_claims(b.raw)
+        else:
+            frag = render_typst(b, caption_md, is_def=is_def, section_no=sec)
         # D71(a) keep-with-next: a paragraph that immediately introduces a figure/table/diagram sticks to it,
         # so the introducing sentence ("… in Table 4.2-1.", "… shown below.") is never split from its float
         # across a page break. Systematic — every paragraph that directly precedes a float, not one-off.
