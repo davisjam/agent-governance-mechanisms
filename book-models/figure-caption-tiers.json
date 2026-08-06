@@ -103,6 +103,12 @@
       "location": "part2",
       "rationale": "the two governance moves; author-ratified to anchor (names a book-central idea)"
     },
+    "assets/form-move-2x2.svg": {
+      "tier": "B",
+      "kind": "comparison",
+      "location": "part2",
+      "rationale": "form (soft/hard) x move (constraint/sensor) 2x2; one worked example per cell"
+    },
     "assets/config-optimization-runbook.svg": {
       "tier": "B",
       "kind": "runbook",
@@ -366,12 +372,6 @@
       "kind": "summary-of-points",
       "location": "part1",
       "rationale": "supports the derivation figure"
-    },
-    "part2/2.3-the-governed-environment.md::Control growth across the four windows": {
-      "tier": "B",
-      "kind": "data",
-      "location": "part2",
-      "rationale": "measured counts"
     },
     "part2/2.4-lifecycles-and-runbooks.md::Typing a runbook's steps": {
       "tier": "B",

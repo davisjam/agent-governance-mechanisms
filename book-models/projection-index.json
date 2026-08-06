@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 34,
     "slugs_rendered": 25,
-    "total_sites": 1179,
+    "total_sites": 1177,
     "by_projection": {
-      "book-pdf": 25,
-      "book-web": 840,
+      "book-pdf": 24,
+      "book-web": 839,
       "website-catalogue": 221,
       "website-concepts": 41,
       "website-landing": 8,
@@ -71,7 +71,7 @@
           },
           {
             "file": "book/2.3-the-governed-environment.html",
-            "occ": 23
+            "occ": 25
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",
@@ -371,7 +371,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 85
+            "occ": 84
           },
           {
             "file": "book/index.html",
@@ -1745,20 +1745,6 @@
       }
     },
     "evidence-staircase": {
-      "book": {
-        "book-web": [
-          {
-            "file": "book/2.3-the-governed-environment.html",
-            "occ": 1
-          }
-        ],
-        "book-pdf": [
-          {
-            "file": "book/mage-book.pdf",
-            "occ": 1
-          }
-        ]
-      },
       "website": {
         "website-misc": [
           {
@@ -1797,7 +1783,7 @@
           },
           {
             "file": "book/2.3-the-governed-environment.html",
-            "occ": 5
+            "occ": 4
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",
@@ -2025,7 +2011,7 @@
           },
           {
             "file": "book/2.3-the-governed-environment.html",
-            "occ": 24
+            "occ": 27
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",
@@ -2325,7 +2311,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 255
+            "occ": 257
           },
           {
             "file": "book/index.html",
@@ -2773,7 +2759,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 108
+            "occ": 109
           },
           {
             "file": "catalogue-figure.html",
@@ -4339,7 +4325,7 @@
           },
           {
             "file": "book/2.3-the-governed-environment.html",
-            "occ": 6
+            "occ": 8
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",
@@ -4635,7 +4621,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 31
+            "occ": 33
           },
           {
             "file": "book/index.html",
@@ -4929,7 +4915,7 @@
           },
           {
             "file": "book/2.3-the-governed-environment.html",
-            "occ": 7
+            "occ": 8
           },
           {
             "file": "book/2.4-lifecycles-and-runbooks.html",

@@ -3,8 +3,8 @@
   "_counts": {
     "chapters": 37,
     "sections": 265,
-    "explicit_ids": 30,
-    "derived_ids": 235,
+    "explicit_ids": 31,
+    "derived_ids": 234,
     "missing_topic_sentence": 6,
     "sections_drained": 178,
     "paragraph_points": 559
@@ -1430,12 +1430,12 @@
           "heading_text": "Ex-ante: everything you can decide up front",
           "topic_sentence": "Some things you genuinely know from the beginning, and you should write every one of them down.",
           "id_source": "derived",
-          "block_index": 3,
+          "block_index": 4,
           "points": [
             {
               "slug": "ex-ante-write-down-what-you-know-and-determinize-it-with-cheap-checks",
               "text": "Write down what you know; determinize it with cheap checks.",
-              "block_index": 5
+              "block_index": 6
             }
           ]
         },
@@ -1445,22 +1445,22 @@
           "heading_text": "Ex-post: everything you learn by building",
           "topic_sentence": "But you will not know everything, and pretending otherwise is the mistake.",
           "id_source": "derived",
-          "block_index": 9,
+          "block_index": 10,
           "points": [
             {
               "slug": "ex-post-you-build-governance-as-failures-reveal-themselves",
               "text": "You build governance ex-post, as failures reveal themselves.",
-              "block_index": 11
+              "block_index": 12
             },
             {
               "slug": "ex-post-is-where-most-real-mechanisms-come-from-not-a-fallback",
               "text": "Ex-post is where most real mechanisms come from.",
-              "block_index": 14
+              "block_index": 15
             },
             {
               "slug": "the-engine-is-to-hold-a-quality-goal-with-a-mechanism-placed-up-front-or-after-a-failure-seen-twice",
               "text": "Hold a quality goal with a mechanism that keeps it.",
-              "block_index": 16
+              "block_index": 17
             }
           ]
         },
@@ -1470,12 +1470,12 @@
           "heading_text": "The controls accumulate",
           "topic_sentence": "Run the promotion rule for a season and the environment fills with controls.",
           "id_source": "explicit",
-          "block_index": 22,
+          "block_index": 23,
           "points": [
             {
               "slug": "the-control-substrate-grew-from-zero",
               "text": "The control substrate grew from zero.",
-              "block_index": 24
+              "block_index": 25
             }
           ]
         },
@@ -1525,42 +1525,42 @@
             {
               "slug": "most-real-mechanisms-are-a-package-so-tag-the-primary-move",
               "text": "Most mechanisms are a package; tag the primary move.",
-              "block_index": 59
+              "block_index": 60
             },
             {
               "slug": "a-purely-organizational-answer-is-all-sensors-and-never-removes-a-failure-class",
               "text": "A purely organizational answer is all sensors, removing no class.",
-              "block_index": 61
+              "block_index": 62
             },
             {
               "slug": "the-constraint-is-poka-yoke-the-sensors-stop-is-jidoka",
               "text": "The constraint is poka-yoke; the sensor's stop is jidoka.",
-              "block_index": 63
+              "block_index": 64
             }
           ]
         },
         {
           "section_id": "four-classes-one-bounded-term",
           "level": 3,
-          "heading_text": "Four classes, one bounded term",
+          "heading_text": "Two axes, one bounded term",
           "topic_sentence": "One boundary before moving on, because without it the word swells.",
-          "id_source": "derived",
-          "block_index": 65,
+          "id_source": "explicit",
+          "block_index": 66,
           "points": [
             {
               "slug": "governance-mechanism-needs-a-boundary",
               "text": "Without a boundary, the word mechanism swells.",
-              "block_index": 67
+              "block_index": 68
             },
             {
               "slug": "four-classes-prevention-detection-evidence-admission",
-              "text": "Four classes: prevention, detection, evidence, admission.",
-              "block_index": 71
+              "text": "Two questions cross: how it treats failure, where it acts.",
+              "block_index": 72
             },
             {
               "slug": "a-model-is-not-a-mechanism-until-something-enforces-it",
               "text": "A model joins governance only when something enforces it.",
-              "block_index": 75
+              "block_index": 76
             }
           ]
         },
@@ -1570,17 +1570,17 @@
           "heading_text": "What it adds up to",
           "topic_sentence": "Step back and this is what you are really doing: describing policies for how the engineering work should proceed, and letting those policies produce a **governed engineering environment** — the rules of the road the agents operate within.",
           "id_source": "derived",
-          "block_index": 77,
+          "block_index": 78,
           "points": [
             {
               "slug": "the-governed-environment-is-determinize-what-you-can-then-convert-every-surprise-into-a-constraint-or-sensor",
               "text": "Determinize what you can; convert every surprise into a mechanism.",
-              "block_index": 78
+              "block_index": 79
             },
             {
               "slug": "governance-extends-the-reasoning-horizon-by-holding-the-obligation-in-the-environment",
               "text": "Governance extends the reasoning horizon: the environment holds the obligation.",
-              "block_index": 81
+              "block_index": 82
             }
           ]
         },
@@ -1590,32 +1590,32 @@
           "heading_text": "The residual: goals no mechanism reaches",
           "topic_sentence": "That closing line reads as if it settles everything.",
           "id_source": "derived",
-          "block_index": 84,
+          "block_index": 85,
           "points": [
             {
               "slug": "some-goals-split-into-neither-because-the-failure-is-an-absence-nobody-specified",
               "text": "Some goals split into neither, being an absence nobody specified.",
-              "block_index": 86
+              "block_index": 87
             },
             {
               "slug": "the-residual-is-a-human-job-that-sets-the-throughput-ceiling",
               "text": "The residual is a human job setting the throughput ceiling.",
-              "block_index": 89
+              "block_index": 90
             },
             {
               "slug": "the-residual-is-the-complement-of-the-two-moves-not-a-third-value-on-the-soft-hard-axis",
               "text": "The residual is the complement of both moves, not soft.",
-              "block_index": 91
+              "block_index": 92
             },
             {
               "slug": "naming-the-residual-is-the-honest-edge-that-makes-the-mechanized-core-credible",
               "text": "Naming the residual is the honest edge that earns trust.",
-              "block_index": 93
+              "block_index": 94
             },
             {
               "slug": "the-residual-is-not-a-fixed-wall-authoring-the-missing-spec-pulls-a-goal-out",
               "text": "The residual is not fixed; authoring the spec shrinks it.",
-              "block_index": 95
+              "block_index": 96
             }
           ]
         }

@@ -859,7 +859,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-75",
+          "element": "2.3-the-governed-environment::block-76",
           "role": "paragraph-point"
         }
       ]
@@ -949,7 +949,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-61",
+          "element": "2.3-the-governed-environment::block-62",
           "role": "paragraph-point"
         }
       ]
@@ -2219,7 +2219,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-5",
+          "element": "2.3-the-governed-environment::block-6",
           "role": "paragraph-point"
         }
       ]
@@ -2229,7 +2229,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-14",
+          "element": "2.3-the-governed-environment::block-15",
           "role": "paragraph-point"
         }
       ]
@@ -2239,7 +2239,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-11",
+          "element": "2.3-the-governed-environment::block-12",
           "role": "paragraph-point"
         }
       ]
@@ -2419,7 +2419,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-71",
+          "element": "2.3-the-governed-environment::block-72",
           "role": "paragraph-point"
         }
       ]
@@ -2599,7 +2599,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-81",
+          "element": "2.3-the-governed-environment::block-82",
           "role": "paragraph-point"
         }
       ]
@@ -2629,7 +2629,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-67",
+          "element": "2.3-the-governed-environment::block-68",
           "role": "paragraph-point"
         }
       ]
@@ -3379,7 +3379,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-59",
+          "element": "2.3-the-governed-environment::block-60",
           "role": "paragraph-point"
         }
       ]
@@ -3429,7 +3429,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-93",
+          "element": "2.3-the-governed-environment::block-94",
           "role": "paragraph-point"
         }
       ]
@@ -4189,7 +4189,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-86",
+          "element": "2.3-the-governed-environment::block-87",
           "role": "paragraph-point"
         }
       ]
@@ -4609,7 +4609,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-63",
+          "element": "2.3-the-governed-environment::block-64",
           "role": "paragraph-point"
         }
       ]
@@ -4619,7 +4619,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-24",
+          "element": "2.3-the-governed-environment::block-25",
           "role": "paragraph-point"
         }
       ]
@@ -4709,7 +4709,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-16",
+          "element": "2.3-the-governed-environment::block-17",
           "role": "paragraph-point"
         }
       ]
@@ -4889,7 +4889,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-78",
+          "element": "2.3-the-governed-environment::block-79",
           "role": "paragraph-point"
         }
       ]
@@ -5249,7 +5249,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-89",
+          "element": "2.3-the-governed-environment::block-90",
           "role": "paragraph-point"
         }
       ]
@@ -5259,7 +5259,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-95",
+          "element": "2.3-the-governed-environment::block-96",
           "role": "paragraph-point"
         }
       ]
@@ -5269,7 +5269,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-91",
+          "element": "2.3-the-governed-environment::block-92",
           "role": "paragraph-point"
         }
       ]
@@ -9989,12 +9989,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-61",
+          "element": "2.3-the-governed-environment::block-62",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-63",
+          "element": "2.3-the-governed-environment::block-64",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10034,7 +10034,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-16",
+          "element": "2.3-the-governed-environment::block-17",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10049,17 +10049,17 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-59",
+          "element": "2.3-the-governed-environment::block-60",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-71",
+          "element": "2.3-the-governed-environment::block-72",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-78",
+          "element": "2.3-the-governed-environment::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10079,12 +10079,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-66",
+          "element": "2.3-the-governed-environment::block-67",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-85",
+          "element": "2.3-the-governed-environment::block-86",
           "role": "section-term[tier-1]"
         },
         {
@@ -11244,7 +11244,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-5",
+          "element": "2.3-the-governed-environment::block-6",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11259,7 +11259,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-4",
+          "element": "2.3-the-governed-environment::block-5",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11274,17 +11274,17 @@
         },
         {
           "view": "outline",
+          "element": "2.3-the-governed-environment::block-12",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-15",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "2.3-the-governed-environment::block-11",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-14",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-10",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11844,17 +11844,17 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-14",
+          "element": "2.3-the-governed-environment::block-15",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-16",
+          "element": "2.3-the-governed-environment::block-17",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-24",
+          "element": "2.3-the-governed-environment::block-25",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11934,12 +11934,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-10",
+          "element": "2.3-the-governed-environment::block-11",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-23",
+          "element": "2.3-the-governed-environment::block-24",
           "role": "section-term[tier-1]"
         },
         {
@@ -12094,22 +12094,22 @@
       "dependents": [
         {
           "view": "outline",
+          "element": "2.3-the-governed-environment::block-68",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-72",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "2.3-the-governed-environment::block-76",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "2.3-the-governed-environment::block-67",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-71",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-75",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "2.3-the-governed-environment::block-66",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12119,12 +12119,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-59",
+          "element": "2.3-the-governed-environment::block-60",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-71",
+          "element": "2.3-the-governed-environment::block-72",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12269,12 +12269,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-78",
+          "element": "2.3-the-governed-environment::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-81",
+          "element": "2.3-the-governed-environment::block-82",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12804,7 +12804,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-89",
+          "element": "2.3-the-governed-environment::block-90",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13564,7 +13564,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-95",
+          "element": "2.3-the-governed-environment::block-96",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13779,7 +13779,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-75",
+          "element": "2.3-the-governed-environment::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14984,7 +14984,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-81",
+          "element": "2.3-the-governed-environment::block-82",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15169,27 +15169,27 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-86",
+          "element": "2.3-the-governed-environment::block-87",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-89",
+          "element": "2.3-the-governed-environment::block-90",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-91",
+          "element": "2.3-the-governed-environment::block-92",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-93",
+          "element": "2.3-the-governed-environment::block-94",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-95",
+          "element": "2.3-the-governed-environment::block-96",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15199,7 +15199,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-85",
+          "element": "2.3-the-governed-environment::block-86",
           "role": "section-term[tier-1]"
         }
       ]
@@ -15834,12 +15834,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-61",
+          "element": "2.3-the-governed-environment::block-62",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-63",
+          "element": "2.3-the-governed-environment::block-64",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16164,7 +16164,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-91",
+          "element": "2.3-the-governed-environment::block-92",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16254,12 +16254,12 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-5",
+          "element": "2.3-the-governed-environment::block-6",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-4",
+          "element": "2.3-the-governed-environment::block-5",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16744,7 +16744,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-81",
+          "element": "2.3-the-governed-environment::block-82",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16879,7 +16879,7 @@
         },
         {
           "view": "outline",
-          "element": "2.3-the-governed-environment::block-81",
+          "element": "2.3-the-governed-environment::block-82",
           "role": "paragraph-term[tier-2]"
         },
         {
