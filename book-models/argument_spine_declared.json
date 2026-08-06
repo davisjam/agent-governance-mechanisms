@@ -24,7 +24,7 @@
       "order": 3,
       "statement": "Human per-change oversight cannot scale with agent throughput; attention must be spent per class of failure, not per change.",
       "seeds": [2],
-      "reconciles": {"claims": [], "big_ideas": []},
+      "reconciles": {"claims": ["apparatus-is-the-review"], "big_ideas": []},
       "reviewed_hash": "cf81b75e7fd6",
       "quantifiable": true, "reality_claim": true, "measurand": "human review effort per change against agent throughput"
     },

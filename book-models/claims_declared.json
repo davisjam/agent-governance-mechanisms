@@ -399,6 +399,24 @@
       ],
       "provenance": "stated",
       "anchor": "3.1 'The coherence triangle': the model provides two kinds of value — the schema names the parts, and the checked invariants (each earned from a failure) complete it; the invariants and gate complete the schema's value rather than replacing it."
+    },
+    {
+      "id": "apparatus-is-the-review",
+      "kind": "distinction",
+      "statement": "The apparatus is the review: the environment holds every change to standard, not per-change human inspection.",
+      "distinguishes": [
+        "the governing apparatus — constraints, sensors, validators, gates hold every change to standard",
+        "per-change human inspection — re-reading each change by hand"
+      ],
+      "home": "three-ways-to-run-a-fleet",
+      "asserted_at": [],
+      "contradicted_by": "Prose treating recurring per-change human review as the reliability mechanism, rather than the governing apparatus that holds every change automatically.",
+      "watch_phrases": [],
+      "relates_to": [
+        "big-idea:alignment-thesis"
+      ],
+      "provenance": "implicit",
+      "anchor": "part1.md names 'The apparatus is the review' a major book claim, but no chapter yet lands it as a dedicated named formulation — the review-replacement slogan's net-subtractive fix-wave will canonicalize it. Homed at the governance-vs-oversight argument (three-ways-to-run-a-fleet); it is the Alignment-Thesis consequence of oversight-does-not-scale."
     }
   ]
 }

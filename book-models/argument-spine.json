@@ -6,7 +6,7 @@
     "chapters_labeled": 33,
     "chapters_exempt": 8,
     "advancement_edges": 89,
-    "reconciled_claims": 19,
+    "reconciled_claims": 20,
     "reconciled_big_ideas": 6,
     "zero_claim_suspects": 2,
     "over_cap_unfocused": 0,
@@ -114,7 +114,9 @@
       "seeds": [
         2
       ],
-      "reconciles_claims": [],
+      "reconciles_claims": [
+        "apparatus-is-the-review"
+      ],
       "reconciles_big_ideas": [],
       "reconciles_argues_claims": [],
       "exempt": null,
