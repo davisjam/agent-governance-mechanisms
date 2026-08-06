@@ -3,10 +3,10 @@
   "_counts": {
     "tracked_slugs": 31,
     "slugs_rendered": 24,
-    "total_sites": 1166,
+    "total_sites": 1173,
     "by_projection": {
       "book-pdf": 24,
-      "book-web": 829,
+      "book-web": 836,
       "website-catalogue": 221,
       "website-concepts": 41,
       "website-landing": 8,
@@ -175,6 +175,10 @@
           },
           {
             "file": "book/7.2-colophon.html",
+            "occ": 3
+          },
+          {
+            "file": "book/appendices-front-door.html",
             "occ": 3
           },
           {
@@ -405,7 +409,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 96
+            "occ": 97
           }
         ]
       },
@@ -1371,11 +1375,15 @@
           },
           {
             "file": "book/7.1-about-the-author.html",
-            "occ": 10
+            "occ": 9
           },
           {
             "file": "book/7.2-colophon.html",
-            "occ": 11
+            "occ": 9
+          },
+          {
+            "file": "book/appendices-front-door.html",
+            "occ": 9
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
@@ -1605,7 +1613,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 96
+            "occ": 97
           }
         ]
       },
@@ -2124,6 +2132,10 @@
             "occ": 29
           },
           {
+            "file": "book/appendices-front-door.html",
+            "occ": 7
+          },
+          {
             "file": "book/appendix-a-context-management-stack.html",
             "occ": 16
           },
@@ -2351,7 +2363,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 96
+            "occ": 97
           }
         ]
       },
@@ -2942,6 +2954,10 @@
             "occ": 2
           },
           {
+            "file": "book/appendices-front-door.html",
+            "occ": 2
+          },
+          {
             "file": "book/appendix-a-context-management-stack.html",
             "occ": 2
           },
@@ -3165,7 +3181,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 95
+            "occ": 96
           }
         ]
       },
@@ -3462,6 +3478,10 @@
             "occ": 1
           },
           {
+            "file": "book/appendices-front-door.html",
+            "occ": 1
+          },
+          {
             "file": "book/appendix-a-context-management-stack.html",
             "occ": 1
           },
@@ -3685,7 +3705,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 95
+            "occ": 96
           }
         ]
       },
@@ -3962,6 +3982,10 @@
             "occ": 3
           },
           {
+            "file": "book/appendices-front-door.html",
+            "occ": 2
+          },
+          {
             "file": "book/appendix-a-context-management-stack.html",
             "occ": 2
           },
@@ -4185,7 +4209,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 95
+            "occ": 96
           }
         ]
       },
@@ -4392,6 +4416,10 @@
           {
             "file": "book/7.2-colophon.html",
             "occ": 7
+          },
+          {
+            "file": "book/appendices-front-door.html",
+            "occ": 1
           },
           {
             "file": "book/appendix-a-context-management-stack.html",
@@ -4617,7 +4645,7 @@
         "book-pdf": [
           {
             "file": "book/mage-book.pdf",
-            "occ": 95
+            "occ": 96
           }
         ]
       },

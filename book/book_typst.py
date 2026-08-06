@@ -818,9 +818,12 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     # never touch a heading anchor, so `@ref`/metadata queries keep resolving.
     is_appendix = chapter.slug.startswith("appendix")
     is_part_page = _is_part_page(chapter)
+    is_appendix_divider = _is_appendix_divider(chapter)
     # A Part landing page (chapter-0 synthetic record) is unnumbered — like front/back matter and the appendix,
-    # it never prints an `N.0`. Suppressing on `is_part_page` keeps the number off the Part opener.
-    numbered = chapter.part not in (0, 7) and not is_appendix and not is_part_page
+    # it never prints an `N.0`. Suppressing on `is_part_page` keeps the number off the Part opener; the
+    # appendices mode-marker is likewise unnumbered.
+    numbered = (chapter.part not in (0, 7) and not is_appendix and not is_part_page
+                and not is_appendix_divider)
     chap_num = f"{chapter.part}.{chapter.chapter}" if numbered else None
     title_num = f"#text(fill: dt.muted)[{chap_num}] " if chap_num else ""
     title_body = f"{title_num}{inline_typst(chapter.title)}"
@@ -833,7 +836,9 @@ def render_chapter(chapter: ir.Chapter, ctx: _EmitCtx) -> str:
     # The Part landing page renders NO H1: the part-divider page ahead of it already carries the Part title
     # (and the `<part-N>` nav-target label), so a heading here would duplicate it. The page contributes the
     # intro paragraph + the Part-nav strip only.
-    out: list[str] = [] if is_part_page else [title_line, ""]
+    # The Part landing page and the appendices mode-marker render NO H1 in the body: the divider page ahead
+    # already carries the title, so a heading here would duplicate it. Each contributes its prose only.
+    out: list[str] = [] if (is_part_page or is_appendix_divider) else [title_line, ""]
     blocks = chapter.blocks
     # Keep-together note (appendix v2, §13.6): a note declaring `note-spread` renders as an indivisible
     # one-page card — but ONLY in print mode, where a page boundary is a hard reading seam. On a SCREEN PDF
@@ -1193,6 +1198,36 @@ def _is_part_page(ch: "ir.Chapter") -> bool:
     return ch.slug == f"part-{ch.part}-intro"
 
 
+def _is_appendix_divider(ch: "ir.Chapter") -> bool:
+    """The appendices mode-marker — the synthetic divider `build_appendix_chapters` prepends before Appendix A
+    (web twin: the record's `is_appendix_divider` flag). The IR carries no flags, so match on the minted slug."""
+    return ch.slug == bb._APPENDICES_DIVIDER_SLUG
+
+
+def _appendices_divider_typst() -> str:
+    """The appendices mode-marker divider page — distinct from a numbered Part divider: a muted 'Reference'
+    kicker over the big 'Appendices' title, then the subtitle in the accent italic, marking the reader's shift
+    out of the argument and into the reference manual. A LEVEL-1 heading, so it becomes the PDF-bookmark PARENT
+    the appendix families would otherwise sit beside; the author paragraph flows after via `render_chapter`."""
+    opener = "#pagebreak(to: \"odd\")\n" if OUTPUT_TYPE == "print" else "#pagebreak()\n"
+    title = inline_typst(bb._APPENDICES_DIVIDER_TITLE)
+    sub = inline_typst(bb._APPENDICES_DIVIDER_SUBTITLE)
+    heading = (
+        f"  = #text(size: 1.05em, fill: dt.muted, tracking: 0.08em)[#upper[Reference]~]"
+        f"#linebreak()#text(size: 2.4em, weight: \"bold\")[{title}]\n"
+        f"  #v(0.35em)\n"
+        f"  #text(size: 1.35em, fill: dt.accent, style: \"italic\")[{sub}]\n"
+    )
+    return (
+        opener +
+        "#block(breakable: false)[\n"
+        f"  #v(2.4in)\n"
+        + heading +
+        "  #v(0.5em) #line(length: 30%, stroke: 1pt + dt.rule)\n"
+        "]"
+    )
+
+
 def _part_nav_typst(current_part: int) -> str:
     """The Part-nav strip closing a Part landing page in the PDF — a row of separate boxed chips, one per
     numbered Part, matching the web pill bar (`_part_nav_html`) button-for-button. Each chip is an inline
@@ -1238,6 +1273,9 @@ def _part_divider_typst(part: int, ch: ir.Chapter) -> "str | None":
     its own family name (e.g. "Appendix A — the pattern language")."""
     if part == 0:
         return None
+    # The appendices mode-marker takes its own part (one below Appendix A); render its distinct divider.
+    if _is_appendix_divider(ch):
+        return _appendices_divider_typst()
     part_titles = bb._PART_TITLES
     label = ""
     if part == 7:

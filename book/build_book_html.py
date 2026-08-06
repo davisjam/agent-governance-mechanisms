@@ -1611,6 +1611,17 @@ body {{ font-family: var(--font-body); font-size: 17px; line-height: 1.65;
    quieter still (italic regular, below). Mirrors the PDF show-rules in book_typst.py. */
 h1, h2, h3, h4, header.chap h1 {{ font-family: var(--font-display); font-weight: var(--display-weight); }}
 main.wrap.part-page header.chap h1 {{ font-weight: 700; }}
+/* The appendices mode-marker — the reader leaves the argument and enters the reference manual. Distinct
+   from a numbered Part divider: centred, no rule under the title, a subtitle in the accent italic, and the
+   author paragraph set left in a measured column under a hairline. */
+main.wrap.appendices-divider {{ text-align: center; }}
+main.wrap.appendices-divider header.chap {{ border-bottom: none; padding: 3.6rem 0 0.3rem; margin-bottom: 0; }}
+main.wrap.appendices-divider header.chap .kicker {{ color: var(--muted); }}
+main.wrap.appendices-divider header.chap h1 {{ font-weight: 700; font-size: 2.7rem; letter-spacing: 0.01em; }}
+main.wrap.appendices-divider .appendices-divider-sub {{ font-family: var(--font-display); font-style: italic;
+       color: var(--accent); font-size: 1.35rem; margin: 0.15rem 0 1.8rem; }}
+main.wrap.appendices-divider .appendices-divider-body {{ text-align: left; max-width: 40rem; margin: 0 auto;
+       border-top: 1px solid var(--rule); padding-top: 1.7rem; }}
 .wrap {{ max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }}
 nav.toc {{ background: var(--panel); border-bottom: 1px solid var(--rule); padding: 0.9rem 1.4rem; font-size: 14px; }}
 nav.toc .toc-inner {{ max-width: 52rem; margin: 0 auto; }}
@@ -2037,7 +2048,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 def _chap_ref(c: dict) -> str:
     """The 'N.M' reference for a numbered chapter, or '' for front/back matter, the appendix, and a Part
     landing page (the Part opener carries no chapter number)."""
-    return "" if c.get("is_matter") or c.get("is_appendix") or c.get("is_part_page") else str(c["seq"])
+    return ("" if c.get("is_matter") or c.get("is_appendix") or c.get("is_part_page")
+            or c.get("is_appendix_divider") else str(c["seq"]))
 
 
 def _toc_prefix(c: dict) -> str:
@@ -2174,7 +2186,7 @@ def toc_html(chapters: list[dict], current_slug: str | None) -> str:
 def _part_label(c: dict) -> str:
     """The heading a Part gets in the TOC / index. Front and back matter and the appendix name
     themselves; numbered Parts get 'Part N — Title'."""
-    if c.get("is_appendix"):
+    if c.get("is_appendix") or c.get("is_appendix_divider"):
         return c["part_title"]
     if c["part"] in (0, 7):
         return c["part_title"]
@@ -2192,6 +2204,11 @@ def _kicker_html(chapters: list[dict], idx: int, num_label: str) -> str:
     if c.get("is_part_page"):
         return (f'<a href="index.html" aria-label="Book contents — jump to the chapter list">'
                 f'Part {c["part"]}</a>')
+    # The appendices mode-marker: a single small-caps kicker naming the reference section, linking to the
+    # whole-book Contents (there is no earlier page in its group; the H1 below carries the section title).
+    if c.get("is_appendix_divider"):
+        return ('<a href="index.html" aria-label="Book contents — jump to the chapter list">'
+                'Reference</a>')
     part_first = next((p for p in chapters if p["part"] == c["part"]), c)
     part_text = html.escape(_part_label(c))
     part_link = (
@@ -2209,7 +2226,8 @@ def _kicker_html(chapters: list[dict], idx: int, num_label: str) -> str:
 
 
 def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str = "",
-         head_meta: str = "", appendix: bool = False, part_page: bool = False) -> str:
+         head_meta: str = "", appendix: bool = False, part_page: bool = False,
+         appendices_divider: bool = False) -> str:
     runtime = MERMAID_CDN if mermaid else ""
     # <main> landmark so the content is a single main region (axe landmark-one-main / region). It carries
     # an aria-label of the page title so it stays a UNIQUELY-NAMED main landmark even when a page embeds the
@@ -2232,6 +2250,10 @@ def page(title: str, toc: str, main: str, mermaid: bool = False, provenance: str
     # bold — the one bold heading in the hierarchy — while every other chapter/section title stays semibold.
     if part_page:
         main_cls += " part-page"
+    # The appendices mode-marker gets its own class so the centred divider CSS (base `<style>`, always
+    # shipped) renders it distinct from a numbered Part divider.
+    if appendices_divider:
+        main_cls += " appendices-divider"
     return (
         f'<!DOCTYPE html>\n<html lang="en">{provenance}<head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
@@ -3463,13 +3485,55 @@ def _appendix_v2_enabled() -> bool:
     return APPENDIX_V2
 
 
+# The appendices mode-marker page — a synthetic divider that sits immediately BEFORE Appendix A, giving the
+# appendices their own identity (the reader leaves the argument and enters the reference manual). It is NOT a
+# numbered Part ("Part 7" is back matter) and NOT an appendix front-door; the `is_appendix_divider` flag routes
+# it to its own distinct rendering on both surfaces (web: `main.wrap.appendices-divider`; PDF: a dedicated
+# `_part_divider_typst` branch). It takes its own part number, one below Appendix A, so it heads its own
+# TOC/index group and — in the PDF — its own bookmark-parent divider page.
+_APPENDICES_DIVIDER_SLUG = "appendices-front-door"
+_APPENDICES_DIVIDER_TITLE = "Appendices"
+_APPENDICES_DIVIDER_SUBTITLE = "The Working Surface of MAGE"
+# The author paragraph, VERBATIM. Do not re-list the individual appendices here — the front-matter
+# "What each appendix is for" section already does that, and the divider links across to it.
+_APPENDICES_DIVIDER_BODY_MD = (
+    "The argument ends here. What follows is the working surface of MAGE: the reference material you return "
+    "to while building rather than read sequentially. The chapters developed the ideas and showed them "
+    "operating in a real system. These appendices package those ideas for repeated use—engineering stacks, "
+    "flagship mechanisms, operational references, and implementation guidance. Like the Gang of Four, they "
+    "are meant to be consulted when a problem arises, not necessarily read cover to cover.\n\n"
+    "See [What each appendix is for](0.5-how-to-read-this-book.html#what-each-appendix-is-for) in the front "
+    "matter for the guide to each appendix and the question it answers."
+)
+
+
+def _appendices_divider_record(part: int) -> dict:
+    """The synthetic mode-marker record that heads the appendices (see `_APPENDICES_DIVIDER_SLUG`). Shaped
+    like a chapter record so the pager / TOC / index machinery renders it, but flagged `is_appendix_divider`
+    so every number-suppression and styling site treats it as its own distinct page — neither a numbered Part
+    divider nor an appendix front-door."""
+    return {
+        "slug": _APPENDICES_DIVIDER_SLUG,
+        "part": part,
+        "part_title": _APPENDICES_DIVIDER_TITLE,
+        "chapter": 0,
+        "chapter_title": _APPENDICES_DIVIDER_TITLE,
+        "body_md": _APPENDICES_DIVIDER_BODY_MD,
+        "is_appendix_divider": True,
+        "mermaid": False,
+    }
+
+
 def build_appendix_chapters(next_part: int, for_print: bool = False) -> list[dict]:
     """Dispatch to the selected appendix projection (see `_appendix_v2_enabled`). Every caller — the web
     build, the print/PDF build, and `expected_page_slugs` — routes through here, so the flag governs the whole
-    appendix in one place and the two projections can never partially mix within one build."""
+    appendix in one place and the two projections can never partially mix within one build. The appendices
+    open with the mode-marker divider (`_appendices_divider_record`), which takes `next_part`; the appendix
+    families shift one part up so each keeps its own part number → its own divider / bookmark parent."""
+    divider = _appendices_divider_record(next_part)
     if _appendix_v2_enabled():
-        return _build_appendix_chapters_v2(next_part, for_print)
-    return _build_appendix_chapters_v1(next_part, for_print)
+        return [divider] + _build_appendix_chapters_v2(next_part + 1, for_print)
+    return [divider] + _build_appendix_chapters_v1(next_part + 1, for_print)
 
 
 def _build_appendix_chapters_v1(next_part: int, for_print: bool = False) -> list[dict]:
@@ -4961,6 +5025,8 @@ def _index_ref_label(pg: dict) -> str:
         return title
     if pg.get("is_part_page"):
         return f'Part {pg["part"]}'
+    if pg.get("is_appendix_divider"):
+        return pg["chapter_title"]
     if pg.get("is_matter"):
         return pg["chapter_title"]
     return f'Ch. {pg["seq"]}'
@@ -5156,8 +5222,9 @@ def compute_word_counts(chapters: list[dict]) -> WordCounts:
     app_letter_order: list[str] = []
     for pg in chapters:
         wc = _prose_word_count(pg["body_md"])
-        if pg.get("is_appendix"):
-            letter = _appendix_letter(pg)
+        if pg.get("is_appendix") or pg.get("is_appendix_divider"):
+            # The appendices mode-marker counts under APPENDIX (its own labelled line), not as a body Part.
+            letter = "Appendices divider" if pg.get("is_appendix_divider") else _appendix_letter(pg)
             if letter not in app_by_letter:
                 app_by_letter[letter] = 0
                 app_letter_order.append(letter)
@@ -5173,7 +5240,8 @@ def compute_word_counts(chapters: list[dict]) -> WordCounts:
                    else f"Part {p} — {_PART_TITLES.get(p, '')}", body_by_part[p])
                   for p in body_part_order]
     body_total = sum(body_by_part.values())
-    appendix_letters = [(f"Appendix {ltr}", app_by_letter[ltr]) for ltr in app_letter_order]
+    appendix_letters = [(ltr if ltr == "Appendices divider" else f"Appendix {ltr}", app_by_letter[ltr])
+                         for ltr in app_letter_order]
     appendix_total = sum(app_by_letter.values())
     return WordCounts(
         body_parts=body_parts,
@@ -6215,7 +6283,7 @@ def build() -> int:
     seen_parts: set[int] = set()
     for c in chapters:
         c["show_epigraph"] = (c["part"] not in seen_parts and not c.get("is_appendix")
-                              and not c.get("is_part_page"))
+                              and not c.get("is_part_page") and not c.get("is_appendix_divider"))
         seen_parts.add(c["part"])
 
     # Curated concept index — harvest the index-def / index-example tags across all pages in reading
@@ -6238,6 +6306,8 @@ def build() -> int:
     for i, c in enumerate(chapters):
         if c.get("is_part_page"):
             num_label = f'Part {c["part"]}'
+        elif c.get("is_appendix_divider"):
+            num_label = c["chapter_title"]  # "Appendices" — the reference section's own label
         elif c.get("is_appendix"):
             num_label = "Appendix"
         elif c.get("is_matter"):
@@ -6251,6 +6321,7 @@ def build() -> int:
         # `section_prefix` below, each `## ` section — and never touches a heading's `{#slug}` id anchor,
         # so cross-refs, index-defs, and glossary pointers keep resolving.
         chap_num = (None if c.get("is_matter") or c.get("is_appendix") or c.get("is_part_page")
+                    or c.get("is_appendix_divider")
                     else f'{c["part"]}.{c["chapter"]}')
         chap_num_html = f'<span class="chap-num">{html.escape(chap_num)}</span> ' if chap_num else ""
         header = (
@@ -6287,15 +6358,28 @@ def build() -> int:
             # The claims-page scoping wrapper (see `.argues-page` CSS) — page chrome (nav bar, footer) stays
             # outside it, exactly like the apparatus-page frame above.
             content = f'<div class="argues-page">{header}{body}</div>'
+        elif c.get("is_appendix_divider"):
+            # The mode-marker: the H1 (in `header`), then the subtitle in the accent italic, then the author
+            # paragraph set left in a measured column. The subtitle is structural, not markdown, so it stays
+            # out of the one-<h1> heading stream.
+            subtitle = (f'<p class="appendices-divider-sub">'
+                        f'{html.escape(_APPENDICES_DIVIDER_SUBTITLE)}</p>')
+            content = (f'{header}{subtitle}'
+                       f'<div class="appendices-divider-body">{body}</div>')
         else:
             content = header + body
         main = content + nav_bar + foot
         toc = toc_html(chapters, c["slug"])
+        # The divider's <title> reads as the mode-marker ("Appendices — The Working Surface of MAGE") rather
+        # than the redundant "Appendices · Appendices" the num_label/title join would produce.
+        page_title = (f'{_APPENDICES_DIVIDER_TITLE} — {_APPENDICES_DIVIDER_SUBTITLE}'
+                      if c.get("is_appendix_divider") else f'{num_label} · {c["chapter_title"]}')
         out = HERE / f'{c["slug"]}.html'
         out.write_text(
-            page(f'{num_label} · {c["chapter_title"]}', toc, main, mermaid=c.get("mermaid", False),
+            page(page_title, toc, main, mermaid=c.get("mermaid", False),
                  head_meta=_chapter_head_meta(c, cited_keys), appendix=c.get("is_appendix", False),
-                 part_page=c.get("is_part_page", False)),
+                 part_page=c.get("is_part_page", False),
+                 appendices_divider=c.get("is_appendix_divider", False)),
             encoding="utf-8",
         )
 

@@ -65,6 +65,17 @@ body { font-family: var(--font-body); font-size: 17px; line-height: 1.65;
    quieter still (italic regular, below). Mirrors the PDF show-rules in book_typst.py. */
 h1, h2, h3, h4, header.chap h1 { font-family: var(--font-display); font-weight: var(--display-weight); }
 main.wrap.part-page header.chap h1 { font-weight: 700; }
+/* The appendices mode-marker — the reader leaves the argument and enters the reference manual. Distinct
+   from a numbered Part divider: centred, no rule under the title, a subtitle in the accent italic, and the
+   author paragraph set left in a measured column under a hairline. */
+main.wrap.appendices-divider { text-align: center; }
+main.wrap.appendices-divider header.chap { border-bottom: none; padding: 3.6rem 0 0.3rem; margin-bottom: 0; }
+main.wrap.appendices-divider header.chap .kicker { color: var(--muted); }
+main.wrap.appendices-divider header.chap h1 { font-weight: 700; font-size: 2.7rem; letter-spacing: 0.01em; }
+main.wrap.appendices-divider .appendices-divider-sub { font-family: var(--font-display); font-style: italic;
+       color: var(--accent); font-size: 1.35rem; margin: 0.15rem 0 1.8rem; }
+main.wrap.appendices-divider .appendices-divider-body { text-align: left; max-width: 40rem; margin: 0 auto;
+       border-top: 1px solid var(--rule); padding-top: 1.7rem; }
 .wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
 nav.toc { background: var(--panel); border-bottom: 1px solid var(--rule); padding: 0.9rem 1.4rem; font-size: 14px; }
 nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
@@ -533,6 +544,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li class="part">Back Matter</li>
 <li><a class="" href="7.1-about-the-author.html">About the Author</a></li>
 <li><a class="" href="7.2-colophon.html">Colophon: Dogfooding MAGE</a></li>
+<li class="part">Appendices</li>
+<li><a class="" href="appendices-front-door.html">Appendices</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
 <li><a class="" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
@@ -655,8 +668,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <p>Read the book once, front to back, and you learn the method. Return to it while you build, and it works a second way.</p>
 <ul><li><strong>The first pass is sequential.</strong> Each part rests on the one before it, from the two theses through the method and into the DocAble case, then out through the back matter — the Theory of MAGE, its implications, and the conclusion — that closes the argument. Read in order and it arrives assembled.</li><li><strong>Every pass after that is not.</strong> Once you are standing up a governed environment of your own, the book turns into a reference you open at the page you need. The appendices carry that second mode. They reward repeated consultation, not a straight read, and most readers will reach for them long after they have set the chapters down.</li></ul>
 <p>The appendices are the reference interface to MAGE once you have the method. Treat them as part of the book's working surface, not as back matter tacked on behind it.</p>
-<h2>What each appendix is for</h2>
-<p>Five appendices, each with its own job. The first three form a reference triad you work in sequence; you reach for a different one depending on what you are asking.</p>
+<h2 id="what-each-appendix-is-for">What each appendix is for</h2>
+<p>Five appendices, each with its own job — the <a href="appendices-front-door.html">Appendices divider</a> marks where the argument ends and this reference manual begins. The first three form a reference triad you work in sequence; you reach for a different one depending on what you are asking.</p>
 <ul><li><strong><a href="appendix-stacks.html">Appendix A</a> — MAGE Engineering Stacks.</strong> Reusable engineering architectures: the clusters of mechanisms that travel together to stand up one capability, with the mandatory members marked off from the ones you can leave out. Reach here when the question is <em>"How should I build this capability?"</em></li><li><strong><a href="appendix-b-flagship-mechanisms.html">Appendix B</a> — Flagship Mechanisms.</strong> The engineering judgment behind the mechanisms that carry the most weight — the failure each one kills, the shape that kills it, the alternatives it replaces, and the seam where you wire it in. Reach here when the question is <em>"Why is this the right decision?"</em></li><li><strong><a href="appendix-c-mechanism-catalog.html">Appendix C</a> — Mechanism Catalog.</strong> The whole vocabulary at a glance: every mechanism as a compact brick with its figure, a short summary, and its metadata, each linking on to its fuller treatment. Reach here when the question is <em>"What is this mechanism again?"</em></li></ul>
 <p>The last two appendices stand apart from that triad, each answering a question the build sequence does not raise.</p>
 <ul><li><strong><a href="appendix-operators-reference.html">Appendix D</a> — Operator's Reference.</strong> The operator's dashboard: the metrics that steer the work while it is in flight and the verdicts that certify the system at maturity, each with what it counts, when to read it, and the direction that reads as healthy. Reach here when the question is <em>"What should I watch while running the system?"</em></li><li><strong><a href="appendix-skill-recipe.html">Appendix E</a> — How to Write a Skill.</strong> A build recipe, not a reference layer: the step-by-step for packaging a body of judgment into a skill an agent can reach for.</li></ul>

@@ -3,8 +3,8 @@
   "_counts": {
     "chapters": 37,
     "sections": 267,
-    "explicit_ids": 28,
-    "derived_ids": 239,
+    "explicit_ids": 29,
+    "derived_ids": 238,
     "missing_topic_sentence": 6,
     "sections_drained": 181,
     "paragraph_points": 568
@@ -149,8 +149,8 @@
           "section_id": "what-each-appendix-is-for",
           "level": 2,
           "heading_text": "What each appendix is for",
-          "topic_sentence": "Five appendices, each with its own job.",
-          "id_source": "derived",
+          "topic_sentence": "Five appendices, each with its own job — the [Appendices divider](appendices-front-door.html) marks where the argument ends and this reference manual begins.",
+          "id_source": "explicit",
           "block_index": 7,
           "points": []
         },

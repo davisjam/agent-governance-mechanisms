@@ -65,6 +65,17 @@ body { font-family: var(--font-body); font-size: 17px; line-height: 1.65;
    quieter still (italic regular, below). Mirrors the PDF show-rules in book_typst.py. */
 h1, h2, h3, h4, header.chap h1 { font-family: var(--font-display); font-weight: var(--display-weight); }
 main.wrap.part-page header.chap h1 { font-weight: 700; }
+/* The appendices mode-marker — the reader leaves the argument and enters the reference manual. Distinct
+   from a numbered Part divider: centred, no rule under the title, a subtitle in the accent italic, and the
+   author paragraph set left in a measured column under a hairline. */
+main.wrap.appendices-divider { text-align: center; }
+main.wrap.appendices-divider header.chap { border-bottom: none; padding: 3.6rem 0 0.3rem; margin-bottom: 0; }
+main.wrap.appendices-divider header.chap .kicker { color: var(--muted); }
+main.wrap.appendices-divider header.chap h1 { font-weight: 700; font-size: 2.7rem; letter-spacing: 0.01em; }
+main.wrap.appendices-divider .appendices-divider-sub { font-family: var(--font-display); font-style: italic;
+       color: var(--accent); font-size: 1.35rem; margin: 0.15rem 0 1.8rem; }
+main.wrap.appendices-divider .appendices-divider-body { text-align: left; max-width: 40rem; margin: 0 auto;
+       border-top: 1px solid var(--rule); padding-top: 1.7rem; }
 .wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
 nav.toc { background: var(--panel); border-bottom: 1px solid var(--rule); padding: 0.9rem 1.4rem; font-size: 14px; }
 nav.toc .toc-inner { max-width: 52rem; margin: 0 auto; }
@@ -533,6 +544,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li class="part">Back Matter</li>
 <li><a class="" href="7.1-about-the-author.html">About the Author</a></li>
 <li><a class="" href="7.2-colophon.html">Colophon: Dogfooding MAGE</a></li>
+<li class="part">Appendices</li>
+<li><a class="" href="appendices-front-door.html">Appendices</a></li>
 <li class="part">Appendix A — MAGE Engineering Stacks</li>
 <li><a class="" href="appendix-stacks.html">Appendix A — MAGE Engineering Stacks</a></li>
 <li><a class="current" href="appendix-a-provenance-fidelity-stack.html">Appendix A - 1. The provenance + fidelity stack</a></li>
