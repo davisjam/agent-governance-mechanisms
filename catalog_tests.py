@@ -34,6 +34,7 @@ import sys
 from typing import Callable, NamedTuple
 
 from tests.book import (
+    check_caption_orphan_gate,
     check_float_ref_gate,
     check_ir_render_fidelity,
     check_no_stray_comments,
@@ -150,6 +151,13 @@ CHECKS = [
           lambda strict: check_part_opener_traceability(), audit_only=True),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),
+    # BLOCKING (green at landing): no table caption stranded on a page while its body flows to the next (the
+    # 260805 Table 7.2-1 report). Runs the rendered-PDF caption-orphan sensor against book/mage-book.pdf when
+    # present; SKIPs when no PDF is rendered (gitignored; built by --pdf). The authoritative twin is the
+    # --pdf content-integrity gate on every push. The sticky-caption Typst show-rule drives it to 0. See
+    # tests/book.py + build_book_html._pdf_orphan_caption_pages.
+    Check("book: no orphaned table caption (caption rides with its body; PDF sensor)", 1,
+          lambda strict: check_caption_orphan_gate()),
     Check("book: IR render-complete blocks render byte-identically (C->A migration net)", 1, lambda strict: check_ir_render_fidelity()),
     # Bibliography subsystem gates (book/_design/bibliography-subsystem-260801.md §8-§9). BLOCKING: every
     # [cite:] resolves to references.bib (BIB-2); citations.json is fresh vs the .bib (BIB-6); the

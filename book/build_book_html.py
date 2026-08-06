@@ -5748,6 +5748,43 @@ def _pdf_orphan_heading_pages(pdf_path: pathlib.Path, chapter_titles: list[str],
     return orphans
 
 
+# ── Caption-orphan sensor ────────────────────────────────────────────────────────────────────────────
+# A TABLE caption sits ABOVE its body (`figure.caption(position: top)`), so on a correctly-laid-out page
+# the "Table N-N: …" caption line is FOLLOWED by the table's rows. When the caption is the last thing on a
+# page — its body pushed to the next page — the keep-together broke: the reader meets "Table N-N: …" with no
+# table under it (the 260805 Table 7.2-1 report: caption stranded on one page, body on the next). The
+# `#show figure.caption: block(sticky: true, …)` rule is the architecture that prevents it; this is the
+# build-time control that catches any residual. A table caption in the -layout text carries a COLON right
+# after its number ("Table 7.2-1:"); the list-of-tables page's entries carry an em-dash ("Table 7.2-1 — …")
+# and never a table body, so the colon anchor excludes them (a per-page caption-count guard is the belt).
+# FIGURES are exempt: their caption sits at the BOTTOM under an atomic (non-breakable) image, so a figure
+# caption can never strand from its image — text extraction cannot see the image anyway.
+_TABLE_CAPTION_RE = re.compile(r"^\s*Table\s+([A-Za-z0-9.]+-\d+):")
+# A table BODY row in -layout text: at least one column gutter — a run of 3+ spaces between two glyphs.
+# Centered/justified caption prose uses single internal spaces, so it never matches; any real multi-column
+# row does. A caption with NO such line after it on the page has no table body there → it is orphaned.
+_TABLE_ROW_RE = re.compile(r"\S {3,}\S")
+
+
+def _pdf_orphan_caption_pages(pdf_path: pathlib.Path) -> list[tuple[int, str]]:
+    """Caption-orphan sensor: a table caption stranded on a page while its table body flows to the next.
+    Reads the -layout text per page; flags a page carrying a "Table N-N:" caption with NO table-row line
+    after it on that page. Same shape as the orphaned-heading sensor — read the rendered PDF, assert a
+    layout invariant. Returns (page_number, caption_label) per orphan."""
+    layout = _run_pdftotext(pdf_path, "-layout", purpose="the caption-orphan sensor")
+    orphans: list[tuple[int, str]] = []
+    for pno, page in enumerate(layout.split("\x0c"), start=1):
+        lines = page.splitlines()
+        cap_idxs = [i for i, ln in enumerate(lines) if _TABLE_CAPTION_RE.match(ln)]
+        # A page with many caption labels is the list-of-tables index, never a float body — skip it.
+        if not cap_idxs or len(cap_idxs) > 4:
+            continue
+        for ci in cap_idxs:
+            if not any(_TABLE_ROW_RE.search(ln) for ln in lines[ci + 1:]):
+                orphans.append((pno, _TABLE_CAPTION_RE.match(lines[ci]).group(1)))
+    return orphans
+
+
 # ── Overflow (margin-bleed) sensor ───────────────────────────────────────────────────────────────────
 # The book's page geometry (set in the Typst preamble): US-Letter portrait (8.5×11in, 1.1in x-margins) for
 # body pages, flipped to landscape (11×8.5in, 0.6in x-margins) for the wide apparatus. `pdftotext -bbox`
@@ -5953,6 +5990,19 @@ def verify_pdf(pdf_path: pathlib.Path) -> int:
                         f"({listing})")
     else:
         print("PDF OVERFLOW SENSOR: PASS — no content bleeds past the text box.")
+
+    # Caption-orphan sensor: no table caption may sit stranded on a page while its table body flows to the
+    # next. BLOCKING — the sticky-caption Typst show-rule keeps every caption with its body, and this control
+    # catches any residual across the whole book. (Lands clean/green: the keep-together fix drives it to 0.)
+    cap_orphans = _pdf_orphan_caption_pages(pdf_path)
+    if cap_orphans:
+        listing = ", ".join(f"p{n} ({lbl!r})" for n, lbl in cap_orphans[:8])
+        print(f"PDF CAPTION-ORPHAN SENSOR: FAIL — {len(cap_orphans)} table caption(s) stranded from their "
+              f"body: {listing}", file=sys.stderr)
+        problems.append(f"caption orphan(s): {len(cap_orphans)} table caption(s) sit on a page with the "
+                        f"table body on the next — {listing}")
+    else:
+        print("PDF CAPTION-ORPHAN SENSOR: PASS — every table caption rides with its body.")
 
     if problems:
         print(f"PDF CONTENT-INTEGRITY FAILURES ({len(problems)}):", file=sys.stderr)

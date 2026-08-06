@@ -55,7 +55,7 @@ import os
 import re
 from typing import NamedTuple
 
-from tests.common import FAIL, PASS, ROOT, rel
+from tests.common import FAIL, PASS, ROOT, SKIP, rel
 
 # ---- tunable thresholds (module consts; adjust as the book settles) -------------------------------
 MAX_SECTION_WORDS = 400   # a heading-to-heading section over this many words is a wall of text
@@ -674,6 +674,28 @@ def check_float_ref_gate() -> "tuple[str, list[str]]":
     idx = _SuppressionIndex()
     active = [f for f in findings if not idx.covers("book-float-ref", f)]
     return (FAIL if active else PASS), [f.msg for f in active]
+
+
+def check_caption_orphan_gate() -> "tuple[str, list[str]]":
+    """Caption-orphan gate: no table caption may sit stranded on a page while its table body flows to the
+    next page (the 260805 Table 7.2-1 report — caption on p.238, body on p.239). Runs the rendered-PDF
+    sensor `_pdf_orphan_caption_pages` against `book/mage-book.pdf` when it is on disk; the PDF is gitignored
+    and rendered only by the `--pdf` build, so this SKIPs when no PDF has been rendered (or pdftotext is
+    absent). The authoritative twin is the `--pdf` content-integrity gate, which runs the SAME sensor on
+    every push; this surfaces the control in the suite whenever a PDF is present. The sticky-caption Typst
+    show-rule is the architecture that keeps every caption with its body — this catches any residual."""
+    import sys as _sys  # noqa: E402 — local path bootstrap so the book/ renderer module is importable
+    import shutil as _shutil  # noqa: E402 — local tool probe
+    if BOOK not in _sys.path:
+        _sys.path.insert(0, BOOK)
+    pdf = os.path.join(BOOK, "mage-book.pdf")
+    if not os.path.isfile(pdf) or not _shutil.which("pdftotext"):
+        return SKIP, ["book/mage-book.pdf not rendered (build with --pdf) or pdftotext absent"]
+    import pathlib as _pl  # noqa: E402 — local to this rule
+    import build_book_html as _bb  # noqa: E402 — the PDF sensors live in the book renderer
+    orphans = _bb._pdf_orphan_caption_pages(_pl.Path(pdf))
+    return (FAIL if orphans else PASS), [
+        f"p{n} — table caption {lbl!r} sits on a page with its table body on the next" for n, lbl in orphans]
 
 
 def check_no_stray_comments() -> "tuple[str, list[str]]":

@@ -1000,6 +1000,12 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 // reads as set apart from the prose above and below it (systematic, every figure/table).
 #show figure: set block(above: 1.5em, below: 1.5em)
 #show figure.caption: set text(size: 0.9em, style: "italic", fill: dt.muted)
+// Keep-together (caption-orphan fix): a figure/table caption is `sticky`, so it can NEVER be the last
+// thing on a page while its item's body flows onto the next. The caption always rides with its float
+// across a page break. Table captions sit at the top (below); a breakable table then keeps the caption +
+// its first rows together and flows the rest on. Image figures are atomic, so their caption is glued
+// regardless. Mirrors the `#block(sticky: true)` keep-with-next used for float-introducing prose.
+#show figure.caption: it => block(sticky: true, it)
 #show figure.where(kind: table): set figure.caption(position: top)
 // A dense table (e.g. the seven-hypotheses table) can exceed one page; let a TABLE figure break across
 // pages so its rows flow to the next page instead of bleeding past the bottom margin. Image figures stay
