@@ -1247,7 +1247,7 @@
           },
           {
             "file": "book/1.1-the-printer.html",
-            "occ": 10
+            "occ": 9
           },
           {
             "file": "book/1.2-mage-by-example.html",
@@ -1263,7 +1263,7 @@
           },
           {
             "file": "book/1.5-the-engineers-seat.html",
-            "occ": 25
+            "occ": 24
           },
           {
             "file": "book/2.1-the-agent-stack.html",
@@ -2009,7 +2009,7 @@
           },
           {
             "file": "book/1.4-why-mage-follows-from-the-machine.html",
-            "occ": 40
+            "occ": 41
           },
           {
             "file": "book/1.5-the-engineers-seat.html",
