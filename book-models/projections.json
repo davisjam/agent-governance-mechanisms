@@ -1,0 +1,62 @@
+{
+  "_provenance": "AUTHORED registry of the book models' rendered projections — the small hand-authored truth of what surfaces exist and which projection each belongs to. Each record names a projection, its kind (book|website), the built-output glob(s) it owns, and the builder that emits it. This is the config the DERIVED projection-index scans against; the index (projection-index.json) is generated, this file is written by hand. The `book` vs `website` split is the load-bearing dimension (a cross-cutting concept edit must land on BOTH surfaces); the finer projection id is the sub-grouping.",
+  "_regen": "This file is AUTHORED (not generated). The DERIVED sibling is book-models/projection-index.json, rebuilt by `python3 book-models/projections_model.py regenerate` (scans the built HTML for every projection's globs). Query with `python3 book-models/projections_model.py where <concept-slug>`.",
+  "projections": [
+    {
+      "id": "book-web",
+      "kind": "book",
+      "builder": "book/build_book_html.py",
+      "globs": ["book/*.html"],
+      "note": "The web book — every chapter, part-opener, appendix, and the assembled index/figures/bibliography pages. Non-recursive: node_modules/ and _print/ under book/ are build scratch, not surfaces."
+    },
+    {
+      "id": "book-pdf",
+      "kind": "book",
+      "builder": "book/build_book_html.py --pdf",
+      "globs": ["book/mage-book.pdf"],
+      "derived_twin_of": "book-web",
+      "note": "The Typst print edition. Renders the SAME chapter sources as book-web, so its churn map is a projection of book-web's chapter appearances — the single PDF file is one site, present whenever the concept appears in any book-web page. Gitignored + binary, so the index derives its presence from book-web rather than scanning the PDF; it is exempt from the HTML completeness gate."
+    },
+    {
+      "id": "website-landing",
+      "kind": "website",
+      "builder": "catalog.py",
+      "globs": ["index.html"],
+      "note": "The landing — hero, the six Big-Idea bricks, the gateway. A projection of the big-ideas model."
+    },
+    {
+      "id": "website-concepts",
+      "kind": "website",
+      "builder": "catalog.py",
+      "globs": ["concept-*.html"],
+      "note": "The rich per-idea concept ENTRY pages the landing bricks link to."
+    },
+    {
+      "id": "website-catalogue",
+      "kind": "website",
+      "builder": "catalog.py",
+      "globs": [
+        "catalogue-views.html",
+        "agent/*.html", "agent/**/*.html",
+        "models-bridge/*.html", "models-bridge/**/*.html",
+        "product/*.html", "product/**/*.html"
+      ],
+      "note": "The mechanism catalogue — the catalogue-views index plus every role-tree entry (agent/models-bridge/product) and each role README."
+    },
+    {
+      "id": "website-misc",
+      "kind": "website",
+      "builder": "catalog.py",
+      "globs": [
+        "ABSTRACTIONS.html",
+        "README.html",
+        "constructing-the-gee.html",
+        "development-workflow.html",
+        "quick-start.html",
+        "catalogue-figure.html",
+        "book-models/models-view.html"
+      ],
+      "note": "Supporting essays / glossary / quickstart / the browsable book-models reading view."
+    }
+  ]
+}
