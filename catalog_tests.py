@@ -43,6 +43,8 @@ from tests.book import (
 )
 from tests.book_models import (
     check_argument_spine,
+    check_chapter_identity,
+    check_chapter_identity_conformance,
     check_chapter_shape,
     check_claims_model,
     check_flagship_stack,
@@ -232,6 +234,24 @@ CHECKS = [
     # judgment-audit / audit-only forever (§4.2) — the watch-phrase lint surfaces candidates, never verdicts.
     Check("book-models: claims view drift + structure (claims.json)", 1,
           lambda strict: check_claims_model()),
+    # BLOCKING (clean at landing): the CHAPTER-IDENTITY model — the surrogate-key dimension table the whole
+    # book joins against (a frozen number-free `label` + the mutable `filename` per chapter; number derives
+    # from the N.M- prefix, title from the <!-- chapter-title: --> comment, neither stored). Drift
+    # (chapter_identity.json vs a fresh derivation) + CI1–CI5 bijection (unique labels; every filename on
+    # disk; asymmetric outline coverage; number + title derivable). Clean at HEAD (40 rows, 37 outline
+    # chapters covered, 3 non-outline rows permitted), so it lands blocking. See tests/book_models.py.
+    Check("book-models: chapter-identity drift + bijection (chapter_identity.json)", 1,
+          lambda strict: check_chapter_identity()),
+    # AUDIT-ONLY (rule #55 first landing): the CHAPTER-TEMPLATE CONFORMANCE sensor + dangling-label backstop.
+    # TEMPLATE (per chapter file): exactly one <!-- chapter-title: -->, exactly one H1 (counted outside code
+    # fences), and a filename prefix agreeing with outline reading order — the legs that make title()/number()
+    # derivation safe. BACKSTOP: every migrated model's chapter-`label` ref resolves to a real labels()
+    # member (the number-free-namespace precision net). The namespace note (a label that also names an outline
+    # section-id) is informational, never gated — permissive resolution matches today's slug ∪ section
+    # behavior. Lands audit-only with 5 non-conformers (0.3/0.6/3.7/4.5/5.1 lack an H1); a fix-wave drains
+    # them, then a follow-up promotes to blocking. See tests/book_models.py.
+    Check("book-models: chapter-template conformance + label backstop (chapter files)", 1,
+          lambda strict: check_chapter_identity_conformance(), audit_only=True),
     # AUDIT-ONLY (rule #55 first landing): the ARGUMENT-SPINE view-model — the book's linear argument as an
     # ordered run of claims reconciling the author's seed statements, the claims model, and the Big Ideas,
     # plus the per-chapter labeling of which spine claims each chapter advances (editorial directive Phase 1).

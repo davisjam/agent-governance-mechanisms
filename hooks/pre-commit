@@ -47,6 +47,10 @@ def _regen(script: str, artifact: str) -> None:
 _regen("outline_model.py", "outline.json")
 _regen("outcomes_model.py", "outcomes.json")
 _regen("reverse_index.py", "reverse_index.json")
+# The CHAPTER-IDENTITY artifact is a pure projection of the hand-authored chapter_identity_declared.json
+# (label + filename per chapter). Regen + stage it on every commit so the derived materialization never
+# goes stale vs the declared source — the same staleness class the sibling derived-view regens close.
+_regen("chapter_identity_model.py", "chapter_identity.json")
 
 # The PROJECTION index is a DERIVED inversion of the BUILT HTML (which projection + site each tracked
 # concept renders in). It scans the .html the `catalog build` above just wrote, so it regenerates AFTER

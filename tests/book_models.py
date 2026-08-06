@@ -37,7 +37,9 @@ concept model's L1–L3 landed (audit-only → drain → gate).
 """
 from __future__ import annotations
 
+import json
 import os
+import re
 import sys
 
 from tests.common import FAIL, PASS, ROOT, rel
@@ -136,6 +138,98 @@ def check_claims_model():
     # the fail tally. A follow-up promotes C1-C6 + freshness to blocking once a clean session confirms the
     # seed drains to 0; the watch-phrase lint (C7) stays audit-only forever (DESIGN §4.2).
     return (FAIL if issues else PASS), issues
+
+
+def check_chapter_identity():
+    """The chapter-identity model's drift + bijection check (BLOCKING — clean at landing). Re-derives the
+    identity table from the hand-authored `chapter_identity_declared.json` and reports: drift against the
+    on-disk `chapter_identity.json`; CI1–CI5 the bijection invariants (unique labels; every filename on
+    disk; asymmetric outline coverage — every outline chapter has a row, the 3 non-outline rows permitted;
+    number derivable from the N.M- prefix; title derivable from exactly one `<!-- chapter-title: -->`). This
+    is the surrogate-key model the whole book joins against — a forgotten row on ADD or a stale filename on
+    rename reddens here. Keyed off `book-models/chapter_identity.json` + `_declared.json` + the outline."""
+    import chapter_identity_model as cim  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+
+    fresh = cim.to_jsonable()
+    stored = cim.load_artifact()
+    if stored is None:
+        issues.append(f"{rel(cim._ARTIFACT)} missing — run "
+                      f"`python3 book-models/chapter_identity_model.py regenerate`")
+    elif stored.get("chapters") != fresh["chapters"] or stored.get("_counts") != fresh["_counts"]:
+        issues.append(f"DRIFT: {rel(cim._ARTIFACT)} disagrees with a fresh derivation — regenerate "
+                      f"with `python3 book-models/chapter_identity_model.py regenerate`")
+
+    issues.extend(cim.structural_findings())
+    return (FAIL if issues else PASS), issues
+
+
+def check_chapter_identity_conformance():
+    """The chapter-template conformance sensor + dangling-label backstop (AUDIT-ONLY first per the repo's
+    blocking-lint landing discipline; promoted BLOCKING once the non-conformers drain). Two layers:
+
+    - TEMPLATE (per file): every chapter file carries exactly one `<!-- chapter-title: -->`, exactly one H1
+      (counted OUTSIDE fenced code so a `# ` inside a ``` block is not miscounted), and a filename prefix
+      agreeing with its outline reading order. This is what makes `title()`/`number()` derivation safe.
+    - BACKSTOP (cross-model): every migrated downstream model's chapter-`label` reference resolves to a real
+      member of `chapter_identity.labels()` — the precision net for the number-free namespace (the field
+      the design calls out, since a bare label shares the slug namespace with outline section-ids).
+
+    The namespace note (a label that also names an outline section-id) is INFORMATIONAL only — permissive
+    resolution matches today's `slug ∪ section` behavior, no regression — so it never contributes to the
+    fail tally. Keyed off the chapter files + the migrated declared models + the outline."""
+    import chapter_identity_model as cim  # noqa: E402 — path set above; the book-model package
+
+    issues: list[str] = []
+    # Template legs 1+2 over all 40 chapter files, plus leg 3 (prefix ↔ outline order).
+    issues.extend(cim.conformance_findings())
+    issues.extend(cim._prefix_order_findings())
+    # Dangling-label backstop over the migrated models (skips non-bare-label values on a half-migrated tree).
+    issues.extend(_chapter_label_backstop_findings(cim))
+    # The namespace note is surfaced but NOT gated — print it, exclude from the fail tally.
+    for note in cim._namespace_findings():
+        issues.append(note)
+    gating = [i for i in issues if not i.startswith("namespace-note:")]
+    return (FAIL if gating else PASS), issues
+
+
+def _chapter_label_backstop_findings(cim) -> "list[str]":
+    """Resolve every migrated model's chapter-`label` reference against `cim.labels()`. On a HALF-migrated
+    tree a field may still hold a numbered `N.M-slug`; such values are skipped (still gated by the owning
+    model's own resolver), so this backstop only reddens on a value that LOOKS like a bare label yet names
+    no chapter — the dead-ref class that rotted silently before this model existed."""
+    labels = cim.labels()
+    out: "list[str]" = []
+
+    def _bare_label_miss(val: str) -> bool:
+        # A migrated value: no 'N.M-' prefix, no ':' namespace, not a section-anchor we can't judge here.
+        return isinstance(val, str) and bool(val) and not re.match(r"^\d+\.\d+-", val) \
+            and ":" not in val and not val.startswith("part-") and val != "book"
+
+    def _load(rel_path: str):
+        p = os.path.join(ROOT, rel_path)
+        return json.load(open(p, encoding="utf-8")) if os.path.isfile(p) else None
+
+    # claims: home + asserted_at chapter refs.
+    d = _load("book-models/claims_declared.json")
+    for c in (d or []) if isinstance(d, list) else (d or {}).get("claims", []):
+        vals = [c.get("home")] + list(c.get("asserted_at", []))
+        for v in vals:
+            if _bare_label_miss(v) and v not in labels and v not in _section_ids_cache(cim):
+                out.append(f"backstop: claims ref {v!r} resolves to no chapter label")
+    return out
+
+
+_SECTION_IDS: "set[str] | None" = None
+
+
+def _section_ids_cache(cim) -> "set[str]":
+    global _SECTION_IDS
+    if _SECTION_IDS is None:
+        import outline_model as om  # noqa: E402
+        _SECTION_IDS = {s.section_id for _c, s in om.derive_outline().sections()}
+    return _SECTION_IDS
 
 
 def check_argument_spine():
