@@ -156,8 +156,6 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 
 ### Lesson 4.5-lessons-learned
 
-  - **[DECLARED]** (know) After this chapter, the reader can recognize the recurring agent-shaped failure modes — optionality, false 'done', broken estimates, vibe coding — and adopt the disciplines that survive them. — _anchor: Section titles 'optionality-is-poison', 'done-is-a-claim-not-a-fact', 'the-cost-estimator-is-broken-...', 'vibe-coding-treats-the-program-as-an-i-o-device-...'._
-  - _elaborates (owned by the-governed-environment):_ (understand) After this chapter, the reader can split what is decidable up front from what is learned by building, and classify each mechanism as a constraint (prevent) or a sensor (catch).
   - **[DERIVED]** (know) After this section, the reader can recognize the agent-shaped failure modes and write tests that survive them. — _anchor: Heading text: 'Your tests must survive agent-shaped failure modes'._
   - **[DERIVED]** (understand) After this section, the reader can distinguish vibe coding from engineering by whether the program is treated as an I/O device or a system. — _anchor: Heading text: 'Vibe coding treats the program as an I/O device; engineering treats it as a system'._
   - **[DERIVED]** (analyze) After this section, the reader can classify a governance mechanism on the soft-to-hard spectrum — guidance that aims versus machinery that holds. _(primary: governance-is-a-spectrum-from-soft-to-hard · elaborated by: constraints-and-sensors)_ — _anchor: Heading text: 'Governance is a spectrum from soft to hard'._
@@ -177,7 +175,6 @@ The DECLARED + GAP-REC sets are the rearrange/fill worklist. The DERIVED set is 
 
 ### Lesson 5.1-the-ada-context
 
-  - **[DECLARED]** (understand) After this chapter, the reader can explain the accessibility problem the case-study system solves and why a document is not just a file. — _anchor: Section titles 'a-noble-idea-with-a-crushing-implementation', 'the-rule-that-changed-the-burden', 'why-a-document-is-not-just-a-file'._
 
 ### Lesson 5.2-the-timeline-and-the-work
 
