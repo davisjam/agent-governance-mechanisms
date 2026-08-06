@@ -35,7 +35,7 @@
       "y": "At agent throughput, per-change oversight becomes emergent, effortful work that does not keep pace — Dhanorkar et al. document 17 developers doing four forms of oversight.",
       "z": "MAGE spends human attention per class of failure, encoded as a mechanism the environment enforces, not per individual change.",
       "target_locations": [
-        "0.4-preface"
+        "preface"
       ],
       "citations": [
         {
@@ -71,7 +71,7 @@
       "y": "Recent work locates coding-agent capability in the runtime harness — tools, middleware, memory — more than the prompt; Lin et al. ablate the gain to tools/middleware/long-term memory, not the system prompt.",
       "z": "MAGE treats the harness as ONE layer of a governed environment, not a synonym for it — the environment encodes obligations the harness alone does not.",
       "target_locations": [
-        "1.4-why-mage-follows-from-the-machine"
+        "why-mage-follows-from-the-machine"
       ],
       "citations": [
         {
@@ -118,7 +118,7 @@
       "y": "Recent systems give agents a persistent, queryable representation of the repository — code graphs and codebase memory (RepoGraph, CodexGraph, Codebase-Memory, RANGER).",
       "z": "MAGE makes the models themselves the persistent context: the typed model IS the compact representation agents reason through and engineers specify against.",
       "target_locations": [
-        "3.1-the-executable-zoo"
+        "the-executable-zoo"
       ],
       "citations": [
         {
@@ -184,7 +184,7 @@
       "y": "Spec-driven development places an authoritative spec/contract around a stochastic generator with deterministic validation; academic studies show specification quality, not model capability, is the success factor (Vilas Boas et al.) and that citation-to-spec discipline enables 86-88% hallucination detection (Panda).",
       "z": "MAGE binds intent into drift-checked models — the spec is not a document but an enforced, executable model the environment holds implementation to.",
       "target_locations": [
-        "3.1-the-executable-zoo"
+        "the-executable-zoo"
       ],
       "citations": [
         {
@@ -232,7 +232,7 @@
       "y": "Recent work pairs an untrusted LLM generator with a trusted checker or prover — kernel-checked admission (AutoSOUP; AutoRocq; Fang & Xiong's ITP-checked project generation).",
       "z": "MAGE preserves the guarantee boundary: the stochastic generator proposes, a deterministic mechanism admits — the environment enforces the check, not the agent.",
       "target_locations": [
-        "5.3-the-built-system"
+        "the-built-system"
       ],
       "citations": [
         {
@@ -288,7 +288,7 @@
       "y": "The open question is whether agents change that economics — whether the reconciliation labor can be absorbed rather than borne.",
       "z": "MAGE's own model-sync measurement is the recent-LLM-era instance: sync cost is reduced and redistributed, not zero.",
       "target_locations": [
-        "2.2-models-and-the-semantic-gap"
+        "models-and-the-semantic-gap"
       ],
       "citations": [
         {
@@ -344,7 +344,7 @@
       "y": "Agentic velocity surfaces novel, unforeseeable failures faster than any playbook anticipates.",
       "z": "MAGE names the promotion rule: ex-post failure -> human classification -> recurring obligation -> ex-ante environmental control.",
       "target_locations": [
-        "2.3-the-governed-environment"
+        "the-governed-environment"
       ],
       "citations": [
         {
@@ -400,7 +400,7 @@
       "y": "The frontier now governs the oracle itself — OpenAI retiring SWE-Bench Verified (59.4% flawed test cases), decontaminated and live successors (Scale AI's SWE-Bench Pro at ~23%; the SWE-Bench Illusion 76%->53% memorization signature; SWE-bench-Live), and evidence that agent-authored tests are over-mocked or implementation-coupled (Hora & Robbes; the oracle study).",
       "z": "MAGE treats the suite as a fallible model that must be governed: completion is re-derived from the artifact and multiple evidence sources, not read off a green bar.",
       "target_locations": [
-        "6.2-implications-for-se"
+        "implications-for-se"
       ],
       "citations": [
         {
@@ -506,7 +506,7 @@
       "y": "Empirical study finds AI assistants recomposing developer work toward supervision (Vella & Blincoe: 82% report writing less code; they name it 'supervisory engineering work'), and education begins teaching critique and responsible GenAI use (Jackson/Liu/van der Hoek).",
       "z": "MAGE describes where the seat moves — human effort concentrates on intent, architecture, model authorship, validation, and judgment — not that coding is obsolete.",
       "target_locations": [
-        "1.5-the-engineers-seat"
+        "the-engineers-seat"
       ],
       "citations": [
         {
@@ -552,7 +552,7 @@
       "y": "Practitioner build-reports now document large agentic builds (Cloudflare vinext, ~1 week / 1 engineer / ~$1,100; Anthropic's C compiler — 16 agents, a ~100K-line Rust compiler building Linux 6.9 on x86/ARM/RISC-V; Anthropic/Bun's million-line Zig->Rust migration) and a governable-agentic case study (Davis et al., Cheap Code, Costly Judgment).",
       "z": "MAGE grounds its method in one deep case (DocAble), motivating hypotheses for broader use — a field report, never a proof.",
       "target_locations": [
-        "6.2-implications-for-se"
+        "implications-for-se"
       ],
       "citations": [
         {
@@ -643,7 +643,7 @@
       "y": "The field is beginning to treat governance of agentic software engineering as a first-class, formalizable subject — Ait et al. propose a domain-specific language for defining and enforcing governance policies across mixed human-agent teams.",
       "z": "MAGE converges with that direction but works at a different grain: not a single policy language, but a repertoire of governance mechanisms grounded in a production case.",
       "target_locations": [
-        "2.3-the-governed-environment"
+        "the-governed-environment"
       ],
       "citations": [
         {
@@ -679,7 +679,7 @@
       "y": "GenAI commoditizes the intelligence input: a ~400-study systematic review maps the field's effort, a three-firm field experiment across 4,867 developers measures a 26% rise in completed tasks, and the canonical single-task RCT clocks a 55.8% speedup — with honest complications where experienced developers in familiar repositories slow down.",
       "z": "MAGE proposes to hold the intelligence confound fixed and vary the environment, representations, and governance — a measurement regime whose effects are large and reproducible enough to build cumulative theory on.",
       "target_locations": [
-        "6.2-implications-for-se"
+        "implications-for-se"
       ],
       "citations": [
         {
@@ -745,7 +745,7 @@
       "y": "The staged model drew a documented critique — software capability evaluations grade process conformance in place of the outcomes the process was meant to produce, and under pressure the ladder decays into box-ticking (Bollinger & McGowan).",
       "z": "MAGE is a capability model, not a maturity ladder: a project's current bottleneck selects the next modeling or governance capability it needs, so no rung becomes the goal.",
       "target_locations": [
-        "6.1-toward-a-theory-of-mage"
+        "toward-a-theory-of-mage"
       ],
       "citations": [
         {
@@ -781,7 +781,7 @@
       "y": "This book reads that observable choice as an accidental-complexity concession: teams shipped fast and kept models thin because holding quality and a current model honest by hand was too expensive to afford at pace — an owned causal-historical interpretation, not an established finding.",
       "z": "MAGE changes that arithmetic: agents absorb the accidental work — they type the code, keep the map in sync, and hold the line for cents — so the essential properties a model names and a gate checks can finally get the attention Agile had to spend elsewhere.",
       "target_locations": [
-        "6.2-implications-for-se"
+        "implications-for-se"
       ],
       "citations": [
         {

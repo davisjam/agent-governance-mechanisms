@@ -179,20 +179,25 @@ def _chapter_slugs() -> "set[str]":
     and (2) the on-disk chapter files (the shared `_book_pages` resolver the sibling models use), so any real
     chapter page — e.g. a backmatter chapter the spine's chapter_advances map does not enumerate — resolves.
     The union only widens the valid set, so it can never introduce an LP4 finding. Read at check time."""
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
     slugs: "set[str]" = set(book_page_slugs())
     if os.path.isfile(_SPINE_DECLARED):
         data = json.load(open(_SPINE_DECLARED, encoding="utf-8"))
         slugs |= set(data.get("chapter_advances", {}))
+    slugs |= chapter_identity.labels()  # target_locations are number-free identity labels now
     return slugs
 
 
 def _chapter_text(slug: str) -> str:
-    """The source markdown of a chapter slug (book/{frontmatter,part<N>}/<slug>.md), or '' when the slug
-    has no file. Globs all chapter dirs — Part 0 (frontmatter), Part 6 (Reflections), and Part 7 (Back
-    Matter apparatus) hold real chapter files (the preface, the theory/implications/conclusion, the
-    colophon), not just part1-5; a part1-5-only glob misses them and false-flags a landed cite as absent.
-    Used by LP3 to confirm a landed cite actually appears in a target chapter."""
+    """The source markdown of a chapter, or '' when the key names no file. target_locations are number-free
+    identity LABELS now, so resolve the label to its filename via the identity table and read it; fall back
+    to a glob for a still-numbered slug (half-migration). Used by LP3 to confirm a landed cite actually
+    appears in a target chapter."""
     import glob
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
+    if slug in chapter_identity.labels():
+        path = os.path.join(_ROOT, "book", chapter_identity.filename(slug))
+        return open(path, encoding="utf-8").read() if os.path.isfile(path) else ""
     for sub in ("frontmatter", "part1", "part2", "part3", "part4", "part5", "part6", "part7"):
         hits = glob.glob(os.path.join(_ROOT, "book", sub, slug + ".md"))
         if hits:
