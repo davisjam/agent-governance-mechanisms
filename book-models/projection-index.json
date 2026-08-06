@@ -123,7 +123,7 @@
           },
           {
             "file": "book/4.2-the-skills.html",
-            "occ": 33
+            "occ": 34
           },
           {
             "file": "book/4.3-transformations.html",
@@ -155,7 +155,7 @@
           },
           {
             "file": "book/5.4-the-road-to-mage.html",
-            "occ": 32
+            "occ": 34
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
@@ -367,7 +367,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 81
+            "occ": 84
           },
           {
             "file": "book/index.html",
@@ -913,7 +913,7 @@
           },
           {
             "file": "book/5.2-the-timeline-and-the-work.html",
-            "occ": 14
+            "occ": 15
           },
           {
             "file": "book/6.1-toward-a-theory-of-mage.html",
@@ -2065,7 +2065,7 @@
           },
           {
             "file": "book/4.1-brownfield.html",
-            "occ": 77
+            "occ": 79
           },
           {
             "file": "book/4.2-the-skills.html",
@@ -2081,7 +2081,7 @@
           },
           {
             "file": "book/4.5-lessons-learned.html",
-            "occ": 14
+            "occ": 15
           },
           {
             "file": "book/4.6-generative-validation.html",
@@ -2097,7 +2097,7 @@
           },
           {
             "file": "book/5.3-the-built-system.html",
-            "occ": 76
+            "occ": 77
           },
           {
             "file": "book/5.4-the-road-to-mage.html",
@@ -2313,7 +2313,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 255
+            "occ": 256
           },
           {
             "file": "book/index.html",
@@ -4335,7 +4335,7 @@
           },
           {
             "file": "book/4.1-brownfield.html",
-            "occ": 10
+            "occ": 11
           },
           {
             "file": "book/4.2-the-skills.html",
@@ -4889,7 +4889,7 @@
           },
           {
             "file": "book/4.2-the-skills.html",
-            "occ": 2
+            "occ": 3
           },
           {
             "file": "book/4.6-generative-validation.html",
@@ -4941,7 +4941,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 14
+            "occ": 15
           }
         ],
         "book-pdf": [
