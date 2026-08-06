@@ -1068,15 +1068,18 @@ def cmd_validate(_args) -> int:
     if note_over:
         print(f"  [bnote]  AUDIT-ONLY: {len(note_over)} Appendix-B note(s) over the spread word budget — "
               f"run `python3 book-models/lint_appendix_b_note_word_cap.py` (does not gate)")
-    # CAPTION LENGTH — every authored figure/table caption ≤3 sentences AND ≤50 words. HARD cap, NO noqa
-    # escape (author instruction). A trim-wave drove the tree to 0, so it lands BLOCKING: an over-long
-    # caption increments n_issues and reddens validate. See book-models/lint_caption_length.py.
-    import lint_caption_length as lcl  # noqa: E402 — blocking caption-length cap (hard, no dispensation)
-    long_caps = lcl.findings()
-    if long_caps:
-        print(f"  [caption] {lcl.summary_line(long_caps)} — "
-              f"run `python3 book-models/lint_caption_length.py`")
-        n_issues += len(long_caps)
+    # CAPTION LENGTH — every authored figure/table caption sized to its argumentative TIER (A anchor /
+    # B supporting / C reference), read from book-models/figure-caption-tiers.json. HARD bands, NO noqa
+    # escape (author instruction); remedy is always to resize to the band. AUDIT-ONLY at landing (rule #55):
+    # the retired uniform ≤3/≤50 cap squeezed every caption short, so all A-tier captions are under their
+    # 60-120-word floor today — it PRINTS its finding count but does NOT increment n_issues. The Phase-3
+    # caption-rewrite wave drains the findings to 0, then a follow-up promotes it back to blocking. See
+    # book-models/lint_caption_length.py + book/_design/drafts/caption-tier-model-260806.md.
+    import lint_caption_length as lcl  # noqa: E402 — audit-only tier-aware caption-length sensor
+    off_band_caps = lcl.findings()
+    if off_band_caps:
+        print(f"  [caption] AUDIT-ONLY: {lcl.summary_line(off_band_caps)} — "
+              f"run `python3 book-models/lint_caption_length.py` (does not gate)")
     # NO-HARDCODED-REF — a cross-reference in the narrative prose names its target by a SYMBOLIC marker
     # (`{{part:N}}` / `[ref:<label>]` / `[appendix:<slug>]`), never a literal letter/number typed into the
     # sentence. The three "Appendix E" literals were converted to `[appendix: …]`, driving the tree to 0, so

@@ -1,0 +1,551 @@
+{
+  "_note": "Declared caption-tier verdicts for the book's authored figure/table captions. Each key is a caption id: for a figure, the `figure:` asset path (already unique in chapter scope); for a table, `<chapter-file>::<short>` using the table's existing `[short: ...]` print-index name (single source of truth: the same string the list-of-tables uses). `tier` is A|B|C — the caption's argumentative role (A Anchor 4-8 sentences/60-120 words; B Supporting 2-4/25-70; C Reference 1-2/<=30). `kind` and `location` are the classification axes; `rationale` is one line. Mirrors the brick-fitness.json genre: a flat declared map with a _note provenance block, no hardcoded list in the builder or lint. Consumed by book-models/lint_caption_length.py, which measures each authored caption's length against its tier band (A carries a floor: an under-written anchor is a finding). A new figure/table with no row here is itself a finding (drift defense). Source of the first-pass verdicts + the ratified A/B borderline resolutions (constraint-vs-sensor=A, services-reactive-view=A, join-composite=A, llm-as-function-call=B): book/_design/drafts/caption-tier-model-260806.md. The lint lands AUDIT-ONLY (rule #55): the current tree squeezed every caption to <=3 sentences/<=50 words under the retired uniform cap, so all 17 A-tier captions are under-length today; the Phase-3 rewrite wave drains the findings to 0, then the lint promotes to blocking.",
+  "tiers": {
+    "assets/mage-method.svg": {
+      "tier": "A",
+      "kind": "conceptual-framework",
+      "location": "frontmatter",
+      "rationale": "book-level method synthesis; reader learns the whole method from the caption"
+    },
+    "assets/mage-overview.svg": {
+      "tier": "A",
+      "kind": "conceptual-framework",
+      "location": "frontmatter",
+      "rationale": "the method in one picture; central framing"
+    },
+    "assets/oversight-modes.svg": {
+      "tier": "A",
+      "kind": "comparison-framework",
+      "location": "frontmatter",
+      "rationale": "introduces the governance-centric synthesis, a book-central idea"
+    },
+    "assets/book-map.svg": {
+      "tier": "A",
+      "kind": "roadmap",
+      "location": "frontmatter",
+      "rationale": "the book's own map"
+    },
+    "assets/one-shot-vs-supervised-autonomy.svg": {
+      "tier": "B",
+      "kind": "comparison",
+      "location": "part1",
+      "rationale": "the Task-Mode Heuristic; clarifies a prose decision rule"
+    },
+    "assets/docable-pipeline.svg": {
+      "tier": "A",
+      "kind": "architectural-overview",
+      "location": "part1",
+      "rationale": "introduces the whole case-study system"
+    },
+    "assets/printer-loop.svg": {
+      "tier": "A",
+      "kind": "core-loop",
+      "location": "part1",
+      "rationale": "the Printer Loop — a foundational book construct"
+    },
+    "assets/loop-engineering.svg": {
+      "tier": "B",
+      "kind": "mechanism-detail",
+      "location": "part1",
+      "rationale": "the four levers; elaborates the loop"
+    },
+    "assets/reasoning-horizon.svg": {
+      "tier": "B",
+      "kind": "conceptual-illustration",
+      "location": "part1",
+      "rationale": "why compaction needs models"
+    },
+    "assets/substrate-derivation.svg": {
+      "tier": "A",
+      "kind": "synthesis",
+      "location": "part1",
+      "rationale": "derives the two theses from machine properties — central argument"
+    },
+    "assets/sdlc-to-selc.svg": {
+      "tier": "B",
+      "kind": "comparison",
+      "location": "part1",
+      "rationale": "the reassigned seat"
+    },
+    "assets/agent-stack-layers.svg": {
+      "tier": "A",
+      "kind": "architectural-overview",
+      "location": "part2",
+      "rationale": "the MAGE stack — Part 2 anchor framework"
+    },
+    "assets/documentation-hierarchy.svg": {
+      "tier": "B",
+      "kind": "comparison",
+      "location": "part2",
+      "rationale": "islands vs model-at-apex"
+    },
+    "assets/semantic-gap-levels.svg": {
+      "tier": "B",
+      "kind": "conceptual-illustration",
+      "location": "part2",
+      "rationale": "where to lift a check"
+    },
+    "assets/governance-conversion-loop.svg": {
+      "tier": "A",
+      "kind": "core-loop",
+      "location": "part2",
+      "rationale": "the governance-conversion loop — central construct"
+    },
+    "assets/control-growth.svg": {
+      "tier": "B",
+      "kind": "data-chart",
+      "location": "part2",
+      "rationale": "controls-accumulate curve; supports the empirical claim"
+    },
+    "assets/constraint-vs-sensor.svg": {
+      "tier": "A",
+      "kind": "comparison",
+      "location": "part2",
+      "rationale": "the two governance moves; author-ratified to anchor (names a book-central idea)"
+    },
+    "assets/config-optimization-runbook.svg": {
+      "tier": "B",
+      "kind": "runbook",
+      "location": "part2",
+      "rationale": "the fenced judgment step"
+    },
+    "assets/metric-spectrum.svg": {
+      "tier": "B",
+      "kind": "conceptual-spectrum",
+      "location": "part2",
+      "rationale": "hard-vs-soft metrics"
+    },
+    "assets/mmm-drain-curve.svg": {
+      "tier": "B",
+      "kind": "data-chart",
+      "location": "part2",
+      "rationale": "the orphan-rate drain"
+    },
+    "assets/collision-edge.svg": {
+      "tier": "B",
+      "kind": "conceptual-illustration",
+      "location": "part2",
+      "rationale": "the conflict is the edge"
+    },
+    "assets/trunk-and-views.svg": {
+      "tier": "A",
+      "kind": "architectural-framework",
+      "location": "part3",
+      "rationale": "one trunk, five views — Part 3 anchor"
+    },
+    "assets/projection-axes.svg": {
+      "tier": "B",
+      "kind": "comparison",
+      "location": "part3",
+      "rationale": "one projection among siblings"
+    },
+    "assets/coherence-triangle.svg": {
+      "tier": "B",
+      "kind": "conceptual-illustration",
+      "location": "part3",
+      "rationale": "schema + invariants + proof"
+    },
+    "assets/dataflow-inset.svg": {
+      "tier": "C",
+      "kind": "structure-inset",
+      "location": "part3",
+      "rationale": "a labelled edge inset; identify-only"
+    },
+    "assets/service-model-structure.svg": {
+      "tier": "B",
+      "kind": "model-schema",
+      "location": "part3",
+      "rationale": "the logical-view schema"
+    },
+    "assets/sync-model-structure.svg": {
+      "tier": "B",
+      "kind": "model-schema",
+      "location": "part3",
+      "rationale": "the process-view lock schema"
+    },
+    "assets/component-model-structure.svg": {
+      "tier": "B",
+      "kind": "model-schema",
+      "location": "part3",
+      "rationale": "the development-view registry"
+    },
+    "assets/deployment-model-structure.svg": {
+      "tier": "B",
+      "kind": "model-schema",
+      "location": "part3",
+      "rationale": "the physical-view placement"
+    },
+    "assets/dag-policy-structure.svg": {
+      "tier": "B",
+      "kind": "conceptual-policy",
+      "location": "part3",
+      "rationale": "profile edit, not graph edit"
+    },
+    "assets/join-composite.svg": {
+      "tier": "A",
+      "kind": "synthesis",
+      "location": "part3",
+      "rationale": "the four-model join — synthesizes the whole Part-3 model set"
+    },
+    "assets/model-sync-two-layer-net.svg": {
+      "tier": "B",
+      "kind": "mechanism-illustration",
+      "location": "part3",
+      "rationale": "the two-layer net"
+    },
+    "assets/wiki-linkage.svg": {
+      "tier": "B",
+      "kind": "process-diagram",
+      "location": "part4",
+      "rationale": "the wiki-as-model round-trip"
+    },
+    "assets/squash-zero-promote.svg": {
+      "tier": "B",
+      "kind": "runbook",
+      "location": "part4",
+      "rationale": "audit -> drain -> promote"
+    },
+    "assets/three-skills.svg": {
+      "tier": "A",
+      "kind": "conceptual-framework",
+      "location": "part4",
+      "rationale": "introduces the three-skills framework"
+    },
+    "assets/skill-recipe.svg": {
+      "tier": "B",
+      "kind": "framework",
+      "location": "part4",
+      "rationale": "the skill skeleton; supports three-skills (sibling of the anchor)"
+    },
+    "assets/transformations-pipeline.svg": {
+      "tier": "B",
+      "kind": "process-synthesis",
+      "location": "part4",
+      "rationale": "one skeleton, sized transformations"
+    },
+    "assets/novelty-axis.svg": {
+      "tier": "B",
+      "kind": "conceptual-axis",
+      "location": "part4",
+      "rationale": "novelty sets the leap"
+    },
+    "assets/example-vs-generative.svg": {
+      "tier": "B",
+      "kind": "comparison",
+      "location": "part4",
+      "rationale": "a point vs a space"
+    },
+    "assets/generative-loop.svg": {
+      "tier": "B",
+      "kind": "conceptual-illustration",
+      "location": "part4",
+      "rationale": "the coin is the model"
+    },
+    "assets/velocity-commits-per-week.svg": {
+      "tier": "B",
+      "kind": "data-chart",
+      "location": "part5",
+      "rationale": "the velocity curve"
+    },
+    "assets/phased-timeline.svg": {
+      "tier": "B",
+      "kind": "timeline",
+      "location": "part5",
+      "rationale": "the messy timeline"
+    },
+    "assets/support-ratio-curve.svg": {
+      "tier": "B",
+      "kind": "data-chart",
+      "location": "part5",
+      "rationale": "the support ratio"
+    },
+    "assets/churn-per-path.svg": {
+      "tier": "B",
+      "kind": "data-chart",
+      "location": "part5",
+      "rationale": "path churn across windows"
+    },
+    "assets/llm-as-function-call.svg": {
+      "tier": "B",
+      "kind": "mechanism-illustration",
+      "location": "part5",
+      "rationale": "LLM as a function call; author-held at supporting"
+    },
+    "assets/services-reactive-view.svg": {
+      "tier": "A",
+      "kind": "architectural-overview",
+      "location": "part5",
+      "rationale": "the built system's runtime architecture — case-study anchor"
+    },
+    "assets/frontend-mvc-editor-dsl.svg": {
+      "tier": "B",
+      "kind": "architectural-detail",
+      "location": "part5",
+      "rationale": "the editor MVC loop"
+    },
+    "assets/dsl-remediation-function.svg": {
+      "tier": "B",
+      "kind": "conceptual-illustration",
+      "location": "part5",
+      "rationale": "two producers, one language"
+    },
+    "assets/mage-staircase.svg": {
+      "tier": "A",
+      "kind": "synthesis",
+      "location": "part5",
+      "rationale": "the road-to-MAGE staircase — chapter-summary synthesis"
+    },
+    "assets/mage-dynamic-model.svg": {
+      "tier": "A",
+      "kind": "conceptual-framework",
+      "location": "part6",
+      "rationale": "THE central theoretical model"
+    },
+    "assets/mage-loop-1-bootstrap.svg": {
+      "tier": "B",
+      "kind": "loop-inset",
+      "location": "part6",
+      "rationale": "one dynamic of the model; how-to-read"
+    },
+    "assets/mage-loop-2-churn.svg": {
+      "tier": "B",
+      "kind": "loop-inset",
+      "location": "part6",
+      "rationale": "churn/discovery loop"
+    },
+    "assets/mage-loop-3-adaptation.svg": {
+      "tier": "B",
+      "kind": "loop-inset",
+      "location": "part6",
+      "rationale": "governance-adaptation loop"
+    },
+    "assets/mage-loop-4-amplification.svg": {
+      "tier": "B",
+      "kind": "loop-inset",
+      "location": "part6",
+      "rationale": "capability-amplification loop"
+    },
+    "assets/mage-churn-curve.svg": {
+      "tier": "B",
+      "kind": "conceptual-illustration",
+      "location": "part6",
+      "rationale": "churn non-monotonic in governance"
+    },
+    "assets/soft-hard-spectrum.svg": {
+      "tier": "B",
+      "kind": "conceptual-spectrum",
+      "location": "part6",
+      "rationale": "the soft-hard spectrum"
+    },
+    "assets/author-headshot.jpg": {
+      "tier": "C",
+      "kind": "author-photo",
+      "location": "part7",
+      "rationale": "identify the author; one sentence"
+    },
+    "frontmatter/0.5-how-to-read-this-book.md::Where to look — surfaces, jobs, and the questions they answer": {
+      "tier": "C",
+      "kind": "reference-nav",
+      "location": "frontmatter",
+      "rationale": "look-up nav table"
+    },
+    "part1/1.4-why-mage-follows-from-the-machine.md::Substrate property → problem/opportunity → MAGE response": {
+      "tier": "B",
+      "kind": "summary-of-points",
+      "location": "part1",
+      "rationale": "supports the derivation figure"
+    },
+    "part2/2.3-the-governed-environment.md::Control growth across the four windows": {
+      "tier": "B",
+      "kind": "data",
+      "location": "part2",
+      "rationale": "measured counts"
+    },
+    "part2/2.4-lifecycles-and-runbooks.md::Typing a runbook's steps": {
+      "tier": "B",
+      "kind": "framework",
+      "location": "part2",
+      "rationale": "governs the step taxonomy"
+    },
+    "part2/2.5-metrics.md::Measure one level deeper": {
+      "tier": "B",
+      "kind": "framework",
+      "location": "part2",
+      "rationale": "decision-driving table"
+    },
+    "part2/2.5-metrics.md::The Missing-Model-Metric drain, run by run": {
+      "tier": "B",
+      "kind": "data",
+      "location": "part2",
+      "rationale": "per-run measurements"
+    },
+    "part2/2.5-metrics.md::The governance metrics at a glance": {
+      "tier": "C",
+      "kind": "reference-glance",
+      "location": "part2",
+      "rationale": "lookup summary"
+    },
+    "part3/3.1-the-executable-zoo.md::Token savings from working through a model": {
+      "tier": "B",
+      "kind": "data",
+      "location": "part3",
+      "rationale": "model-on-vs-off measurement"
+    },
+    "part3/3.2-the-logical-view.md::Invariants of the Logical view": {
+      "tier": "C",
+      "kind": "reference-lookup",
+      "location": "part3",
+      "rationale": "invariant lookup"
+    },
+    "part3/3.3-the-process-view.md::Invariants of the Process view": {
+      "tier": "C",
+      "kind": "reference-lookup",
+      "location": "part3",
+      "rationale": "invariant lookup"
+    },
+    "part3/3.4-the-development-view.md::Invariants of the Development view": {
+      "tier": "C",
+      "kind": "reference-lookup",
+      "location": "part3",
+      "rationale": "invariant lookup"
+    },
+    "part3/3.5-the-physical-view.md::Invariants of the Physical view: deployment placement": {
+      "tier": "C",
+      "kind": "reference-lookup",
+      "location": "part3",
+      "rationale": "invariant lookup"
+    },
+    "part3/3.5-the-physical-view.md::Invariants of the Physical view: host-stress edges": {
+      "tier": "C",
+      "kind": "reference-lookup",
+      "location": "part3",
+      "rationale": "invariant lookup"
+    },
+    "part3/3.6-the-scenarios-view.md::Invariants of the Scenarios view": {
+      "tier": "C",
+      "kind": "reference-lookup",
+      "location": "part3",
+      "rationale": "invariant lookup"
+    },
+    "part3/3.8-keeping-models-in-sync.md::Model-sync evidence — the derived floor under load": {
+      "tier": "B",
+      "kind": "data",
+      "location": "part3",
+      "rationale": "the derived floor under load"
+    },
+    "part3/3.8-keeping-models-in-sync.md::Documentation-hygiene aside — not model sync": {
+      "tier": "C",
+      "kind": "reference-aside",
+      "location": "part3",
+      "rationale": "small aside table"
+    },
+    "part4/4.1-brownfield.md::Sizing the mechanism": {
+      "tier": "A",
+      "kind": "design-decision-table",
+      "location": "part4",
+      "rationale": "the right-size-the-fix 2x2; caption interprets the cells"
+    },
+    "part4/4.2-the-skills.md::The self-operate skill, by layer": {
+      "tier": "C",
+      "kind": "reference-structure",
+      "location": "part4",
+      "rationale": "layer lookup"
+    },
+    "part4/4.2-the-skills.md::The self-governance skill, by layer": {
+      "tier": "C",
+      "kind": "reference-structure",
+      "location": "part4",
+      "rationale": "layer lookup"
+    },
+    "part4/4.2-the-skills.md::The self-communicate skill, by layer": {
+      "tier": "C",
+      "kind": "reference-structure",
+      "location": "part4",
+      "rationale": "layer lookup"
+    },
+    "part4/4.5-lessons-learned.md::Lessons learned, quotable": {
+      "tier": "B",
+      "kind": "summary-of-points",
+      "location": "part4",
+      "rationale": "lessons + moves"
+    },
+    "part5/5.1-the-ada-context.md::The burden shift": {
+      "tier": "C",
+      "kind": "reference-context",
+      "location": "part5",
+      "rationale": "one-row context"
+    },
+    "part5/5.2-the-timeline-and-the-work.md::The support ratio across four windows": {
+      "tier": "B",
+      "kind": "data",
+      "location": "part5",
+      "rationale": "measured ratio"
+    },
+    "part5/5.2-the-timeline-and-the-work.md::Per-path churn across the four windows": {
+      "tier": "B",
+      "kind": "data",
+      "location": "part5",
+      "rationale": "numstat measurement"
+    },
+    "part6/6.1-toward-a-theory-of-mage.md::The four dimensions of E": {
+      "tier": "B",
+      "kind": "framework",
+      "location": "part6",
+      "rationale": "dimensioning table"
+    },
+    "part6/6.1-toward-a-theory-of-mage.md::Constructs and moderators": {
+      "tier": "C",
+      "kind": "reference-lookup",
+      "location": "part6",
+      "rationale": "per-construct lookup of the model"
+    },
+    "part6/6.1-toward-a-theory-of-mage.md::The three MAGE outcomes and their observables": {
+      "tier": "B",
+      "kind": "summary-of-points",
+      "location": "part6",
+      "rationale": "the three predicted outcomes"
+    },
+    "part6/6.1-toward-a-theory-of-mage.md::MAGE's seven falsifiable hypotheses H1–H7": {
+      "tier": "A",
+      "kind": "design-decision-table",
+      "location": "part6",
+      "rationale": "the theory's core claims + falsifiers; caption interprets"
+    },
+    "part6/6.1-toward-a-theory-of-mage.md::Former predictions mapped to their subordinate status": {
+      "tier": "C",
+      "kind": "reference-restatement",
+      "location": "part6",
+      "rationale": "restated consequences"
+    },
+    "part6/6.1-toward-a-theory-of-mage.md::Three study designs mapped to H1–H7": {
+      "tier": "B",
+      "kind": "summary-of-points",
+      "location": "part6",
+      "rationale": "three study designs"
+    },
+    "part6/6.2-implications-for-se.md::The Null Result": {
+      "tier": "B",
+      "kind": "data",
+      "location": "part6",
+      "rationale": "per-cell ablation recall"
+    },
+    "part6/6.2-implications-for-se.md::The Three Evidence Forms": {
+      "tier": "B",
+      "kind": "comparison-summary",
+      "location": "part6",
+      "rationale": "evidence-form comparison"
+    },
+    "part7/7.2-colophon.md::The manuscript's governing models and the failures they prevent": {
+      "tier": "C",
+      "kind": "reference-colophon",
+      "location": "part7",
+      "rationale": "per-model lookup"
+    },
+    "part7/7.2-colophon.md::The governed manuscript as declared source, generated form, and drift check": {
+      "tier": "C",
+      "kind": "reference-colophon",
+      "location": "part7",
+      "rationale": "per-model lookup"
+    }
+  }
+}
