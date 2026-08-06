@@ -2635,22 +2635,22 @@
           "heading_text": "The component & zone model",
           "topic_sentence": "*A typed catalog of every component's code zone — its focus directories, its tags, its boundary kind, its external seams, its read surfaces — so \"which component owns this file, and what may touch it\" is a queried fact rather than a per-tool guess.*",
           "id_source": "explicit",
-          "block_index": 11,
+          "block_index": 12,
           "points": [
             {
               "slug": "the-component-zone-model-makes-ownership-a-queried-fact",
               "text": "The component-zone model makes ownership a queried fact.",
-              "block_index": 14
+              "block_index": 15
             },
             {
               "slug": "it-assesses-ownership-correctness-and-boundary-soundness",
               "text": "It assesses ownership correctness and boundary soundness.",
-              "block_index": 17
+              "block_index": 18
             },
             {
               "slug": "the-component-zone-model-derives-from-the-directory-tree",
               "text": "The component-zone model derives from the directory tree.",
-              "block_index": 26
+              "block_index": 27
             }
           ]
         },
@@ -2658,14 +2658,14 @@
           "section_id": "rule-metadata-registry",
           "level": 2,
           "heading_text": "The rule-metadata registry",
-          "topic_sentence": "The rule-metadata registry is the self-referential slice of the domain registries: the governance rules' own metadata, and so the model the governance machinery — and this book — are partly governed by.",
+          "topic_sentence": "The rule-metadata registry is the self-referential slice of the domain registries: the governance rules' own metadata, and so a model the governance machinery — and this book — are partly governed by.",
           "id_source": "explicit",
-          "block_index": 30,
+          "block_index": 34,
           "points": [
             {
               "slug": "rule-metadata-lives-beside-each-rule-and-generates-the-index",
               "text": "Rule metadata lives beside each rule and generates the index.",
-              "block_index": 32
+              "block_index": 36
             }
           ]
         }

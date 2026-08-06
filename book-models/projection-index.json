@@ -99,7 +99,7 @@
           },
           {
             "file": "book/3.4-the-development-view.html",
-            "occ": 6
+            "occ": 8
           },
           {
             "file": "book/3.5-the-physical-view.html",
@@ -2039,7 +2039,7 @@
           },
           {
             "file": "book/3.4-the-development-view.html",
-            "occ": 21
+            "occ": 26
           },
           {
             "file": "book/3.5-the-physical-view.html",
@@ -2759,7 +2759,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 110
+            "occ": 111
           },
           {
             "file": "catalogue-figure.html",

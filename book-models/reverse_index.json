@@ -2809,7 +2809,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-17",
+          "element": "3.4-the-development-view::block-18",
           "role": "paragraph-point"
         }
       ]
@@ -3959,7 +3959,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-32",
+          "element": "3.4-the-development-view::block-36",
           "role": "paragraph-point"
         }
       ]
@@ -4529,7 +4529,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-26",
+          "element": "3.4-the-development-view::block-27",
           "role": "paragraph-point"
         }
       ]
@@ -4539,7 +4539,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-14",
+          "element": "3.4-the-development-view::block-15",
           "role": "paragraph-point"
         }
       ]
@@ -9399,7 +9399,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-14",
+          "element": "3.4-the-development-view::block-15",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -9409,7 +9409,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-17",
+          "element": "3.4-the-development-view::block-18",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -9659,7 +9659,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-14",
+          "element": "3.4-the-development-view::block-15",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9709,7 +9709,7 @@
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-14",
+          "element": "3.4-the-development-view::block-15",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9739,7 +9739,7 @@
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-12",
+          "element": "3.4-the-development-view::block-13",
           "role": "section-term[tier-1]"
         },
         {
@@ -10679,7 +10679,7 @@
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-31",
+          "element": "3.4-the-development-view::block-35",
           "role": "section-term[tier-1]"
         }
       ]
@@ -12524,7 +12524,7 @@
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-26",
+          "element": "3.4-the-development-view::block-27",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13839,7 +13839,7 @@
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-26",
+          "element": "3.4-the-development-view::block-27",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14284,7 +14284,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-17",
+          "element": "3.4-the-development-view::block-18",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15054,12 +15054,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-17",
+          "element": "3.4-the-development-view::block-18",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-26",
+          "element": "3.4-the-development-view::block-27",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15159,7 +15159,7 @@
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-32",
+          "element": "3.4-the-development-view::block-36",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15189,7 +15189,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-32",
+          "element": "3.4-the-development-view::block-36",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15204,12 +15204,12 @@
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-32",
+          "element": "3.4-the-development-view::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "3.4-the-development-view::block-31",
+          "element": "3.4-the-development-view::block-35",
           "role": "section-term[tier-1]"
         }
       ]
