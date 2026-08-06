@@ -2,7 +2,7 @@
   "_note": "Data-claim manifest — the single source of truth for the book's governed data cross-references. One entry per grounded datum. A `[data: <slug>]` marker in the prose resolves against this file to a footnote-style cross-ref into the chapter that reports the number (fail-loud on an unknown slug, like an unknown {{token}}). Fields: `source` = the chapter slug (a book/<slug>.html page) that reports the datum; `anchor` = the {#heading-id} on that chapter's reporting section (\"\" until the render lands); `holds` = the load-bearing numbers/units that MUST still appear in the source (the check_data_claims lint compares digit-sequences+units under a loose match; a number change fails, a spelling change is fine; [] until the render pins them); `status` = final | preliminary | partial (the strength signal); `gloss` = a one-line description of the datum. THE ARGUMENTATIVE CHAIN (W-LEDGER 260803): every datum also carries `spine_claim` (or `spine_claims: []` when it genuinely bears weight for more than one) = the argument-spine claim id this number bears weight for (joins to book-models/argument_spine_declared.json — DL1); `observable` = the real-world quantity actually observed; `data_source` = how/where measured, with provenance (tool + method + artifact/commit); `limitation` = what the datum CANNOT show / the honest caveat. A preliminary datum with a stated limitation is honest; an unbound number is not. The extended check (DL1 join-integrity, DL2 four-fields-present, DL3 underquantified report, DL4 holds-still-appear) runs audit-only. The substantiation aggregator (`catalog.py substantiation`) joins these data-claims + the lit-positioning citations under each spine claim to flag under-substantiated-or-situated reality-claims. Regenerate the anchors + this file together when a source section moves. Queryable via `catalog.py data-claims`.",
 
   "refactor-cost": {
-    "source": "5.4-the-road-to-mage",
+    "source": "the-road-to-mage",
     "anchor": "refactor-cost",
     "holds": ["58 files", "5,000 lines", "5 hours"],
     "status": "final",
@@ -13,7 +13,7 @@
     "gloss": "A cross-format migration touched fifty-eight files and rewrote five thousand lines in about five hours of agent time — refactoring became an afternoon's work."
   },
   "nearly-free": {
-    "source": "5.1-the-ada-context",
+    "source": "the-ada-context",
     "anchor": "nearly-free",
     "holds": [],
     "status": "final",
@@ -24,7 +24,7 @@
     "gloss": "The per-document remediation cost cascade — do-it-yourself professor cost vs. external-vendor quote vs. the tool's per-deck processing cost — showing high-quality remediation nearly for free."
   },
   "velocity": {
-    "source": "5.2-the-timeline-and-the-work",
+    "source": "the-timeline-and-the-work",
     "anchor": "velocity",
     "holds": [],
     "status": "final",
@@ -35,7 +35,7 @@
     "gloss": "The velocity curve: commits per week across the project's history, rising as the fleet acquired capability then dipping during hardening."
   },
   "mbse-nav-token": {
-    "source": "3.8-keeping-models-in-sync",
+    "source": "keeping-models-in-sync",
     "anchor": "mbse-nav-token",
     "holds": ["20%", "12%", "82%", "50%"],
     "status": "preliminary",
@@ -47,7 +47,7 @@
   },
 
   "support-ratio-curve": {
-    "source": "5.2-the-timeline-and-the-work",
+    "source": "the-timeline-and-the-work",
     "anchor": "support-ratio-curve",
     "holds": ["0.85", "2.48", "3.68", "3.06", "26,956", "1,501,907"],
     "status": "final",
@@ -58,7 +58,7 @@
     "gloss": "The support-ratio curve across four windows (0.85 -> 2.48 -> 3.68 -> 3.06): governance investment led and kept pace with the fleet, crossing from sub-parity to ~3x while production LoC grew ~18x — the build-the-environment-first revealed preference."
   },
   "model-sync-efficacy": {
-    "source": "3.8-keeping-models-in-sync",
+    "source": "keeping-models-in-sync",
     "anchor": "model-sync-efficacy",
     "holds": ["+8,970", "−173 lines", "63 commits", "0", "56 closes", "27 genuine"],
     "status": "preliminary",
@@ -69,7 +69,7 @@
     "gloss": "The model-sync measurement: a drift-detection sensor whose readings (derived-floor churn +8,970/-173 lines across 63 commits; 0 model-drift reopens across a separate N=56 closes; ~27 pre-floor findings at S:N~1.0 before tuning) show reconciliation stays cheap and divergence is caught."
   },
   "mmm-drain": {
-    "source": "2.5-metrics",
+    "source": "metrics",
     "anchor": "mmm-drain",
     "holds": ["56%", "55%", "52%", "39%", "32.2%", "30.1%", "20.9%", "14.9%", "7.89%"],
     "status": "final",
@@ -80,7 +80,7 @@
     "gloss": "The Missing-Model-Metric drain: orphan (code-unmodelled) rate falling from 56% to 7.89% across nine tracer re-runs as the model-loop modeled each biggest orphan cluster in turn — code-to-model coverage rising to ~92%."
   },
   "churn": {
-    "source": "5.2-the-timeline-and-the-work",
+    "source": "the-timeline-and-the-work",
     "anchor": "churn",
     "holds": ["371,855", "941,120", "286,378", "3,767"],
     "status": "partial",
@@ -91,7 +91,7 @@
     "gloss": "Path churn (web/ + backend/) across four windows: mechanization is the add-and-delete peak; later windows go net-additive as the built environment stabilizes the code."
   },
   "control-growth": {
-    "source": "2.3-the-governed-environment",
+    "source": "the-governed-environment",
     "anchor": "control-growth",
     "holds": ["336", "595", "747", "20", "76", "102", "993 registered", "208 commits", "27 lints"],
     "status": "final",
@@ -102,7 +102,7 @@
     "gloss": "The control substrate accumulating across four windows: project-specific lint files 0 -> 336 -> 595 -> 747 and gate scripts 0 -> 20 -> 76 -> 102 (993 registered lint specs at the final window), the environment converting failures into durable machinery as a documented, named, growing discipline."
   },
   "epic-closure-rate": {
-    "source": "5.2-the-timeline-and-the-work",
+    "source": "the-timeline-and-the-work",
     "anchor": "",
     "holds": [],
     "status": "preliminary",
