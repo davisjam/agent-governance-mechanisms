@@ -306,6 +306,12 @@ MARKER_KEYWORDS = (
     #   MODEL-METADATA marker, the sibling of `point` / `section-terms`: consumed and stripped,
     #   renders NOTHING (the opener-traceability lint reads it from the source, not the HTML).
     "part-foreshadows",
+    # `<!-- slogan: <id> -->` — an author tag declaring that the line it heads is a REGISTERED, stylized
+    #   slogan occurrence (a canonical landing or a blunt referential invocation), keyed to the slogan
+    #   registry. An INERT authored MODEL-METADATA marker, the sibling of `point` / `section-terms` /
+    #   `part-foreshadows`: consumed and stripped, renders NOTHING (the slogan-density lint harvests it
+    #   from the source markdown, not the HTML).
+    "slogan",
     # ── Appendix-restructure v2 render directives (flag ON only; §13/§14). All four are consumed + stripped
     #    from reader-visible output the same as the rest of the vocabulary, so the notation-leak gate covers
     #    them by construction. `stack-legend` / `brick-grid` EMIT a build-generated block (a linked legend /
@@ -1265,6 +1271,11 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 # `<!-- part-foreshadows: <spine-id>, … -->` — a Part opener's declaration of the spine
                 # claims it foreshadows (the traceability notation). INERT like `point`/`section-terms`:
                 # consumed, stripped, renders NOTHING (the opener-traceability lint reads it from source).
+                return True
+            if inner.startswith("slogan:"):
+                # `<!-- slogan: <id> -->` — an author tag marking a registered slogan occurrence (canonical
+                # landing or blunt referential). INERT like `point`/`section-terms`/`part-foreshadows`:
+                # consumed, stripped, renders NOTHING (the slogan-density lint harvests it from source).
                 return True
         return False
 

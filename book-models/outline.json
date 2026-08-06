@@ -3,8 +3,8 @@
   "_counts": {
     "chapters": 37,
     "sections": 269,
-    "explicit_ids": 29,
-    "derived_ids": 240,
+    "explicit_ids": 30,
+    "derived_ids": 239,
     "missing_topic_sentence": 6,
     "sections_drained": 181,
     "paragraph_points": 568
@@ -210,12 +210,12 @@
           "heading_text": "What this book is about (and what it is not)",
           "topic_sentence": "Of course, not every programming task needs the machinery this book describes.",
           "id_source": "derived",
-          "block_index": 4,
+          "block_index": 6,
           "points": [
             {
               "slug": "task-mode-is-first-judgment",
               "text": "The first judgment is whether a task needs governed autonomy.",
-              "block_index": 6
+              "block_index": 8
             }
           ]
         },
@@ -225,27 +225,27 @@
           "heading_text": "The two modes",
           "topic_sentence": "Start at the decision on the left.",
           "id_source": "derived",
-          "block_index": 9,
+          "block_index": 11,
           "points": [
             {
               "slug": "two-modes-fork-on-size-and-difficulty",
               "text": "Mode forks on the task's reasoning horizon.",
-              "block_index": 11
+              "block_index": 13
             },
             {
               "slug": "one-shot-for-small-unsubtle-tasks",
               "text": "One-shot scripting fits a small, short-horizon task.",
-              "block_index": 15
+              "block_index": 18
             },
             {
               "slug": "supervised-autonomy-supplies-four-things",
               "text": "Supervised autonomy supplies four things in two groups.",
-              "block_index": 18
+              "block_index": 21
             },
             {
               "slug": "book-structure-fills-the-four",
               "text": "Each later part develops one of the four elements.",
-              "block_index": 24
+              "block_index": 27
             }
           ]
         },
@@ -255,37 +255,37 @@
           "heading_text": "Where the emphasis falls",
           "topic_sentence": "That fork runs along the reasoning horizon.",
           "id_source": "derived",
-          "block_index": 26,
+          "block_index": 29,
           "points": [
             {
               "slug": "reasoning-horizon-sorts-tasks",
               "text": "Tasks sort along the reasoning horizon, from short to long.",
-              "block_index": 29
+              "block_index": 32
             },
             {
               "slug": "mode-misjudgment-is-costly-both-ways",
               "text": "Misjudging the mode either way is expensive.",
-              "block_index": 31
+              "block_index": 34
             },
             {
               "slug": "leash-length-from-data-density-and-capability",
               "text": "Leash length follows training-data density and model capability.",
-              "block_index": 33
+              "block_index": 36
             },
             {
               "slug": "modularity-lowers-the-horizon-not-removes-it",
               "text": "Modularity lowers the reasoning horizon; it does not remove it.",
-              "block_index": 35
+              "block_index": 38
             },
             {
               "slug": "books-weight-is-supervised-autonomy",
               "text": "The book's weight falls on supervised autonomy.",
-              "block_index": 37
+              "block_index": 40
             },
             {
               "slug": "code-is-cheap-now-productionize-it",
               "text": "Code is cheap; turn the fabricator into a production line.",
-              "block_index": 39
+              "block_index": 42
             }
           ]
         },
@@ -295,12 +295,12 @@
           "heading_text": "The printer",
           "topic_sentence": "Think of a 3D printer.",
           "id_source": "derived",
-          "block_index": 41,
+          "block_index": 44,
           "points": [
             {
               "slug": "printer-is-the-governing-metaphor",
               "text": "The 3D printer is the book's governing metaphor.",
-              "block_index": 43
+              "block_index": 46
             }
           ]
         },
@@ -310,22 +310,22 @@
           "heading_text": "An open-ended technology",
           "topic_sentence": "A 3D printer belongs to a rare class of technology — the *open-ended* kind — alongside the invention of writing and the printing press.",
           "id_source": "derived",
-          "block_index": 46,
+          "block_index": 49,
           "points": [
             {
               "slug": "open-ended-technology-mints-genres",
               "text": "An open-ended technology arrives with no list; people invent genres.",
-              "block_index": 48
+              "block_index": 51
             },
             {
               "slug": "genai-is-open-ended-book-takes-one-genre",
               "text": "Generative AI is open-ended; this book takes one genre.",
-              "block_index": 50
+              "block_index": 53
             },
             {
               "slug": "quality-floor-was-always-the-price-now-cheap",
               "text": "The quality floor was the price; agents make it cheap.",
-              "block_index": 53
+              "block_index": 56
             }
           ]
         },
@@ -335,57 +335,57 @@
           "heading_text": "A picture is not enough",
           "topic_sentence": "Everyone can sketch a piece of software.",
           "id_source": "derived",
-          "block_index": 55,
+          "block_index": 58,
           "points": [
             {
               "slug": "everyone-can-sketch-software-but-a-picture-wont-print",
               "text": "Anyone can picture software, but a picture will not print.",
-              "block_index": 57
+              "block_index": 60
             },
             {
               "slug": "printer-needs-a-model-not-a-photo",
               "text": "A printer needs a structural model plus print notes.",
-              "block_index": 59
+              "block_index": 62
             },
             {
               "slug": "agents-need-the-instructions-not-just-the-picture",
               "text": "Agents need the build instructions, not just the picture.",
-              "block_index": 62
+              "block_index": 65
             }
           ]
         },
         {
           "section_id": "whose-fault-is-it",
           "level": 2,
-          "heading_text": "Whose fault is it?",
+          "heading_text": "Suspect the instructions first",
           "topic_sentence": "Here is the shift in posture the whole book turns on.",
-          "id_source": "derived",
-          "block_index": 65,
+          "id_source": "explicit",
+          "block_index": 68,
           "points": [
             {
               "slug": "agent-is-a-printer-not-a-stapler-so-suspect-the-instructions",
               "text": "An agent is a printer, not a stapler; suspect instructions.",
-              "block_index": 67
+              "block_index": 70
             },
             {
               "slug": "models-can-build-anything-you-can-explain",
               "text": "Models build anything you can explain; explaining is the discipline.",
-              "block_index": 70
+              "block_index": 73
             },
             {
               "slug": "the-promise-is-also-the-danger",
               "text": "Building anything you describe is both promise and danger.",
-              "block_index": 73
+              "block_index": 76
             },
             {
               "slug": "speed-exposes-the-danger-not-causes-it",
               "text": "Speed does not cause the danger; it exposes it.",
-              "block_index": 76
+              "block_index": 79
             },
             {
               "slug": "running-example-is-a-real-shipped-system",
               "text": "The running example is a shipped system, not a toy.",
-              "block_index": 78
+              "block_index": 82
             }
           ]
         }
@@ -508,12 +508,12 @@
           "heading_text": "Two scars",
           "topic_sentence": "None of that machinery was designed in advance.",
           "id_source": "derived",
-          "block_index": 36,
+          "block_index": 37,
           "points": [
             {
               "slug": "two-failures-teach-the-method",
               "text": "Two real failures show what the machinery is for.",
-              "block_index": 38
+              "block_index": 39
             }
           ]
         },
@@ -523,12 +523,12 @@
           "heading_text": "The library that lied",
           "topic_sentence": "Early on, the codebase held two libraries that could touch a PDF: the sanctioned one, and a convenient second one an agent had adopted for quick page operations.",
           "id_source": "derived",
-          "block_index": 40,
+          "block_index": 41,
           "points": [
             {
               "slug": "convenient-library-stripped-the-structure",
               "text": "A convenient library silently stripped the structure.",
-              "block_index": 41
+              "block_index": 42
             }
           ]
         },
@@ -538,12 +538,12 @@
           "heading_text": "The lever that lost work",
           "topic_sentence": "The second failure came from the process that built the product.",
           "id_source": "derived",
-          "block_index": 43,
+          "block_index": 44,
           "points": [
             {
               "slug": "orchestrator-reached-for-the-destructive-lever",
               "text": "A destructive escape lever twice discarded committed work.",
-              "block_index": 44
+              "block_index": 45
             }
           ]
         },
@@ -553,17 +553,17 @@
           "heading_text": "The move that recurs",
           "topic_sentence": "Neither fix stopped at the patch.",
           "id_source": "derived",
-          "block_index": 46,
+          "block_index": 47,
           "points": [
             {
               "slug": "failure-becomes-a-mechanism",
               "text": "Each failure became a mechanism retiring its class.",
-              "block_index": 48
+              "block_index": 49
             },
             {
               "slug": "attention-per-class-not-per-change",
               "text": "Attention moves from per-change to per-class.",
-              "block_index": 51
+              "block_index": 52
             }
           ]
         },
@@ -573,12 +573,12 @@
           "heading_text": "Where the map leads",
           "topic_sentence": "You now hold the object: a real system, built by a fleet, governed by machinery that grew scar by scar.",
           "id_source": "derived",
-          "block_index": 53,
+          "block_index": 54,
           "points": [
             {
               "slug": "parts-2-4-machinery-part-5-full-case",
               "text": "Parts 2–4 explain the machinery; Part 5 the case.",
-              "block_index": 55
+              "block_index": 56
             }
           ]
         }
@@ -834,12 +834,12 @@
             {
               "slug": "the-combination-requires-the-governed-environment",
               "text": "The governed engineering environment is what the combination requires.",
-              "block_index": 53
+              "block_index": 54
             },
             {
               "slug": "derivation-not-analogy-and-the-case-grounds-it",
               "text": "The method is derived from properties, grounded by one case.",
-              "block_index": 56
+              "block_index": 57
             }
           ]
         }
@@ -922,7 +922,7 @@
             {
               "slug": "engineers-always-had-models-unwritten",
               "text": "Engineers always had models; writing them down stopped paying.",
-              "block_index": 29
+              "block_index": 31
             }
           ]
         },
@@ -932,22 +932,22 @@
           "heading_text": "SDLC to SELC",
           "topic_sentence": "The field's own name for the lifecycle gives the old arrangement away: SDLC, the software *development* life cycle.",
           "id_source": "derived",
-          "block_index": 31,
+          "block_index": 33,
           "points": [
             {
               "slug": "sdlc-names-the-delegated-activity",
               "text": "SDLC names the activity the human no longer performs.",
-              "block_index": 34
+              "block_index": 36
             },
             {
               "slug": "rename-to-selc-engineering-life-cycle",
               "text": "Rename it SELC: the software engineering life cycle.",
-              "block_index": 36
+              "block_index": 38
             },
             {
               "slug": "delegation-keeps-accountability-intact",
               "text": "Delegating the keystrokes keeps accountability intact.",
-              "block_index": 41
+              "block_index": 43
             }
           ]
         },
@@ -957,27 +957,27 @@
           "heading_text": "A different seat is a different discipline",
           "topic_sentence": "Same lifecycle, then; no new phases.",
           "id_source": "derived",
-          "block_index": 43,
+          "block_index": 45,
           "points": [
             {
               "slug": "reassigned-seat-remakes-the-discipline",
               "text": "Same phases; the reassigned seat remakes the discipline.",
-              "block_index": 45
+              "block_index": 47
             },
             {
               "slug": "executing-from-models-repeats-assembly-to-code",
               "text": "Executing from models repeats the assembly-to-code move.",
-              "block_index": 47
+              "block_index": 49
             },
             {
               "slug": "rest-of-book-equips-the-engineers-seat",
               "text": "The rest of the book equips the engineer's seat.",
-              "block_index": 49
+              "block_index": 51
             },
             {
               "slug": "part-1-in-five-rules",
               "text": "Part 1 distilled into five rules for the engineer's seat.",
-              "block_index": 51
+              "block_index": 53
             }
           ]
         }

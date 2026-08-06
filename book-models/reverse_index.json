@@ -1154,7 +1154,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-67",
+          "element": "1.1-the-printer::block-70",
           "role": "paragraph-point"
         }
       ]
@@ -1254,7 +1254,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-62",
+          "element": "1.1-the-printer::block-65",
           "role": "paragraph-point"
         }
       ]
@@ -1404,7 +1404,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-51",
+          "element": "1.2-mage-by-example::block-52",
           "role": "paragraph-point"
         }
       ]
@@ -1484,7 +1484,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-24",
+          "element": "1.1-the-printer::block-27",
           "role": "paragraph-point"
         }
       ]
@@ -1494,7 +1494,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-37",
+          "element": "1.1-the-printer::block-40",
           "role": "paragraph-point"
         }
       ]
@@ -1644,7 +1644,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-39",
+          "element": "1.1-the-printer::block-42",
           "role": "paragraph-point"
         }
       ]
@@ -1754,7 +1754,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-41",
+          "element": "1.2-mage-by-example::block-42",
           "role": "paragraph-point"
         }
       ]
@@ -1834,7 +1834,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-41",
+          "element": "1.5-the-engineers-seat::block-43",
           "role": "paragraph-point"
         }
       ]
@@ -1854,7 +1854,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-56",
+          "element": "1.4-why-mage-follows-from-the-machine::block-57",
           "role": "paragraph-point"
         }
       ]
@@ -2114,7 +2114,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-29",
+          "element": "1.5-the-engineers-seat::block-31",
           "role": "paragraph-point"
         }
       ]
@@ -2214,7 +2214,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-57",
+          "element": "1.1-the-printer::block-60",
           "role": "paragraph-point"
         }
       ]
@@ -2284,7 +2284,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-47",
+          "element": "1.5-the-engineers-seat::block-49",
           "role": "paragraph-point"
         }
       ]
@@ -2344,7 +2344,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-48",
+          "element": "1.2-mage-by-example::block-49",
           "role": "paragraph-point"
         }
       ]
@@ -2544,7 +2544,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-50",
+          "element": "1.1-the-printer::block-53",
           "role": "paragraph-point"
         }
       ]
@@ -2934,7 +2934,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-33",
+          "element": "1.1-the-printer::block-36",
           "role": "paragraph-point"
         }
       ]
@@ -3174,7 +3174,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-31",
+          "element": "1.1-the-printer::block-34",
           "role": "paragraph-point"
         }
       ]
@@ -3374,7 +3374,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-70",
+          "element": "1.1-the-printer::block-73",
           "role": "paragraph-point"
         }
       ]
@@ -3394,7 +3394,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-35",
+          "element": "1.1-the-printer::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -3604,7 +3604,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-15",
+          "element": "1.1-the-printer::block-18",
           "role": "paragraph-point"
         }
       ]
@@ -3614,7 +3614,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-48",
+          "element": "1.1-the-printer::block-51",
           "role": "paragraph-point"
         }
       ]
@@ -3654,7 +3654,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-44",
+          "element": "1.2-mage-by-example::block-45",
           "role": "paragraph-point"
         }
       ]
@@ -3674,7 +3674,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-51",
+          "element": "1.5-the-engineers-seat::block-53",
           "role": "paragraph-point"
         }
       ]
@@ -3724,7 +3724,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-55",
+          "element": "1.2-mage-by-example::block-56",
           "role": "paragraph-point"
         }
       ]
@@ -3794,7 +3794,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-43",
+          "element": "1.1-the-printer::block-46",
           "role": "paragraph-point"
         }
       ]
@@ -3804,7 +3804,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-59",
+          "element": "1.1-the-printer::block-62",
           "role": "paragraph-point"
         }
       ]
@@ -3894,7 +3894,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-53",
+          "element": "1.1-the-printer::block-56",
           "role": "paragraph-point"
         }
       ]
@@ -3954,7 +3954,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-29",
+          "element": "1.1-the-printer::block-32",
           "role": "paragraph-point"
         }
       ]
@@ -3964,7 +3964,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-45",
+          "element": "1.5-the-engineers-seat::block-47",
           "role": "paragraph-point"
         }
       ]
@@ -4004,7 +4004,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-36",
+          "element": "1.5-the-engineers-seat::block-38",
           "role": "paragraph-point"
         }
       ]
@@ -4014,7 +4014,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-49",
+          "element": "1.5-the-engineers-seat::block-51",
           "role": "paragraph-point"
         }
       ]
@@ -4084,7 +4084,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-78",
+          "element": "1.1-the-printer::block-82",
           "role": "paragraph-point"
         }
       ]
@@ -4114,7 +4114,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-34",
+          "element": "1.5-the-engineers-seat::block-36",
           "role": "paragraph-point"
         }
       ]
@@ -4274,7 +4274,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-76",
+          "element": "1.1-the-printer::block-79",
           "role": "paragraph-point"
         }
       ]
@@ -4384,7 +4384,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-18",
+          "element": "1.1-the-printer::block-21",
           "role": "paragraph-point"
         }
       ]
@@ -4424,7 +4424,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-6",
+          "element": "1.1-the-printer::block-8",
           "role": "paragraph-point"
         }
       ]
@@ -4624,7 +4624,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-53",
+          "element": "1.4-why-mage-follows-from-the-machine::block-54",
           "role": "paragraph-point"
         }
       ]
@@ -5294,7 +5294,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-73",
+          "element": "1.1-the-printer::block-76",
           "role": "paragraph-point"
         }
       ]
@@ -5954,7 +5954,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-38",
+          "element": "1.2-mage-by-example::block-39",
           "role": "paragraph-point"
         }
       ]
@@ -5994,7 +5994,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-11",
+          "element": "1.1-the-printer::block-13",
           "role": "paragraph-point"
         }
       ]
@@ -9529,7 +9529,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-48",
+          "element": "1.2-mage-by-example::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9739,12 +9739,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-62",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.1-the-printer::block-67",
+          "element": "1.1-the-printer::block-65",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -9754,12 +9749,17 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-76",
+          "element": "1.1-the-printer::block-73",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-66",
+          "element": "1.1-the-printer::block-79",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-69",
           "role": "section-term[tier-1]"
         }
       ]
@@ -9779,7 +9779,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-59",
+          "element": "1.1-the-printer::block-62",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -9854,7 +9854,7 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-39",
+          "element": "1.1-the-printer::block-42",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -10154,7 +10154,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-51",
+          "element": "1.2-mage-by-example::block-52",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10194,7 +10194,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-47",
+          "element": "1.2-mage-by-example::block-48",
           "role": "section-term[tier-1]"
         },
         {
@@ -10224,7 +10224,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-37",
+          "element": "1.1-the-printer::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -10369,7 +10369,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-18",
+          "element": "1.1-the-printer::block-21",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11199,7 +11199,7 @@
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-51",
+          "element": "1.5-the-engineers-seat::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11319,7 +11319,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-56",
+          "element": "1.4-why-mage-follows-from-the-machine::block-57",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11354,7 +11354,7 @@
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-29",
+          "element": "1.5-the-engineers-seat::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -11364,7 +11364,7 @@
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-44",
+          "element": "1.5-the-engineers-seat::block-46",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11934,17 +11934,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-48",
+          "element": "1.1-the-printer::block-51",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "1.1-the-printer::block-50",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.1-the-printer::block-47",
           "role": "section-term[tier-1]"
         }
       ]
@@ -11989,7 +11989,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-48",
+          "element": "1.2-mage-by-example::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -12074,12 +12074,12 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-37",
+          "element": "1.2-mage-by-example::block-38",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-47",
+          "element": "1.2-mage-by-example::block-48",
           "role": "section-term[tier-1]"
         },
         {
@@ -12399,12 +12399,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-53",
+          "element": "1.4-why-mage-follows-from-the-machine::block-54",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-56",
+          "element": "1.4-why-mage-follows-from-the-machine::block-57",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13359,12 +13359,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-11",
+          "element": "1.1-the-printer::block-13",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-18",
+          "element": "1.1-the-printer::block-21",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13829,12 +13829,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-29",
+          "element": "1.5-the-engineers-seat::block-31",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-47",
+          "element": "1.5-the-engineers-seat::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -13934,7 +13934,7 @@
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-51",
+          "element": "1.5-the-engineers-seat::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14484,22 +14484,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-15",
+          "element": "1.1-the-printer::block-18",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-31",
+          "element": "1.1-the-printer::block-34",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-6",
+          "element": "1.1-the-printer::block-8",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-10",
+          "element": "1.1-the-printer::block-12",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14509,17 +14509,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-48",
+          "element": "1.1-the-printer::block-51",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
           "element": "1.1-the-printer::block-50",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.1-the-printer::block-47",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14779,12 +14779,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-57",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
-          "element": "1.1-the-printer::block-59",
+          "element": "1.1-the-printer::block-60",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14794,7 +14789,12 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-56",
+          "element": "1.1-the-printer::block-65",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-59",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14804,7 +14804,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-44",
+          "element": "1.2-mage-by-example::block-45",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14864,12 +14864,12 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-43",
+          "element": "1.1-the-printer::block-46",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-73",
+          "element": "1.1-the-printer::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -14879,12 +14879,12 @@
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-51",
+          "element": "1.5-the-engineers-seat::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-42",
+          "element": "1.1-the-printer::block-45",
           "role": "section-term[tier-1]"
         }
       ]
@@ -14979,12 +14979,12 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-50",
+          "element": "1.1-the-printer::block-53",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-53",
+          "element": "1.1-the-printer::block-56",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15104,7 +15104,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-53",
+          "element": "1.1-the-printer::block-56",
           "role": "paragraph-term[tier-2]"
         }
       ]
@@ -15159,22 +15159,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-11",
+          "element": "1.1-the-printer::block-13",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-15",
+          "element": "1.1-the-printer::block-18",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-29",
+          "element": "1.1-the-printer::block-32",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-35",
+          "element": "1.1-the-printer::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15209,7 +15209,7 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-27",
+          "element": "1.1-the-printer::block-30",
           "role": "section-term[tier-1]"
         },
         {
@@ -15644,7 +15644,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-78",
+          "element": "1.1-the-printer::block-82",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15809,22 +15809,17 @@
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-34",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "1.5-the-engineers-seat::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-41",
+          "element": "1.5-the-engineers-seat::block-38",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-45",
+          "element": "1.5-the-engineers-seat::block-43",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -15844,17 +15839,22 @@
         },
         {
           "view": "outline",
+          "element": "1.5-the-engineers-seat::block-53",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
           "element": "1.5-the-engineers-seat::block-20",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-33",
+          "element": "1.5-the-engineers-seat::block-35",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-44",
+          "element": "1.5-the-engineers-seat::block-46",
           "role": "section-term[tier-1]"
         }
       ]
@@ -15939,7 +15939,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-41",
+          "element": "1.2-mage-by-example::block-42",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16239,7 +16239,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-33",
+          "element": "1.1-the-printer::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16264,7 +16264,7 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-27",
+          "element": "1.1-the-printer::block-30",
           "role": "section-term[tier-1]"
         },
         {
@@ -16634,27 +16634,27 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-18",
+          "element": "1.1-the-printer::block-21",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-24",
+          "element": "1.1-the-printer::block-27",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-29",
+          "element": "1.1-the-printer::block-32",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-31",
+          "element": "1.1-the-printer::block-34",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-37",
+          "element": "1.1-the-printer::block-40",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16674,17 +16674,17 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-10",
+          "element": "1.1-the-printer::block-12",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-27",
+          "element": "1.1-the-printer::block-30",
           "role": "section-term[tier-1]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-5",
+          "element": "1.1-the-printer::block-7",
           "role": "section-term[tier-1]"
         },
         {
@@ -16809,17 +16809,17 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-11",
+          "element": "1.1-the-printer::block-13",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-6",
+          "element": "1.1-the-printer::block-8",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-5",
+          "element": "1.1-the-printer::block-7",
           "role": "section-term[tier-1]"
         }
       ]
@@ -16939,7 +16939,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-55",
+          "element": "1.2-mage-by-example::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -16959,7 +16959,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-53",
+          "element": "1.4-why-mage-follows-from-the-machine::block-54",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17014,7 +17014,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-54",
+          "element": "1.2-mage-by-example::block-55",
           "role": "section-term[tier-1]"
         },
         {
@@ -17044,7 +17044,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-55",
+          "element": "1.2-mage-by-example::block-56",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17074,7 +17074,7 @@
         },
         {
           "view": "outline",
-          "element": "1.4-why-mage-follows-from-the-machine::block-53",
+          "element": "1.4-why-mage-follows-from-the-machine::block-54",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17159,7 +17159,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-54",
+          "element": "1.2-mage-by-example::block-55",
           "role": "section-term[tier-1]"
         },
         {
@@ -17389,7 +17389,7 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-33",
+          "element": "1.1-the-printer::block-36",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17619,22 +17619,22 @@
       "dependents": [
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-73",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "1.1-the-printer::block-76",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-38",
+          "element": "1.1-the-printer::block-79",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-41",
+          "element": "1.2-mage-by-example::block-39",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.2-mage-by-example::block-42",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17659,7 +17659,7 @@
         },
         {
           "view": "outline",
-          "element": "1.2-mage-by-example::block-37",
+          "element": "1.2-mage-by-example::block-38",
           "role": "section-term[tier-1]"
         },
         {
@@ -17684,7 +17684,7 @@
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-47",
+          "element": "1.5-the-engineers-seat::block-49",
           "role": "paragraph-term[tier-2]"
         },
         {
@@ -17769,22 +17769,22 @@
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-67",
-          "role": "paragraph-term[tier-2]"
-        },
-        {
-          "view": "outline",
           "element": "1.1-the-printer::block-70",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.5-the-engineers-seat::block-41",
+          "element": "1.1-the-printer::block-73",
           "role": "paragraph-term[tier-2]"
         },
         {
           "view": "outline",
-          "element": "1.1-the-printer::block-66",
+          "element": "1.5-the-engineers-seat::block-43",
+          "role": "paragraph-term[tier-2]"
+        },
+        {
+          "view": "outline",
+          "element": "1.1-the-printer::block-69",
           "role": "section-term[tier-1]"
         }
       ]
