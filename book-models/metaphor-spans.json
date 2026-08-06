@@ -5,7 +5,7 @@
 
   "ration_rule": "Each declared idea gets ONE canonical slogan (scope invoke-by-name) at its best location. Later appearances are blunt referential invocations, not fresh polished formulations. A `used-once` line appears exactly once; a `commandment` may recur as a refrain. Density/clustering caps ration polished occurrences. A slogan and a metaphor elaborating the SAME idea do not compete — only two invoke-by-name slogans on one idea do.",
 
-  "ratified_counts": { "core": 8, "local": 11, "overlaps": 0, "slogans": 6, "commandments": 1, "used_once": 1 },
+  "ratified_counts": { "core": 8, "local": 12, "overlaps": 0, "slogans": 9, "commandments": 1, "used_once": 1 },
 
   "metaphors": [
     {
@@ -278,6 +278,21 @@
       "overlap_ok": false,
       "overlap_rationale": "",
       "notes": "NEW (part1.md). As compilers lifted the human off assembly, machines executing ever-higher-level descriptions move the developer's seat up. Anchor empty until the fix-wave marks the paragraph; co-occurs with core engineers-seat (exempt) and local poka-yoke-fixture (pays off in place — no span overlap)."
+    },
+    {
+      "kind": "metaphor",
+      "name": "The model bridge",
+      "slug": "model-bridge",
+      "recurrence": "local",
+      "vehicle": "a bridge the agents reason across",
+      "elaborates": { "model": "claims", "id": "ssot-not-snapshot" },
+      "introduced_at": { "chapter": "3.8", "page_slug": "3.8-keeping-models-in-sync", "anchor": "" },
+      "pays_off_at": { "chapter": "3.8", "page_slug": "3.8-keeping-models-in-sync", "anchor": "" },
+      "stretch": "3.8-keeping-models-in-sync",
+      "payoff": "The models are the bridge the agents reason across — kept as one derived source, not a drifting snapshot.",
+      "overlap_ok": false,
+      "overlap_rationale": "",
+      "notes": "NEW (Part-3 revision, WORK-ORDERS Part A). The teaching handle for the models-bridge / model-code traceability concept (amendment #5's own worked example): canonical term `models-bridge`, teaching handle 'the model bridge'. Elaborates ssot-not-snapshot (one derived source kept equal, not a hand-updated snapshot) — kept OFF the overloaded modeling-thesis per the judge REVISE. Local to Part 3 (not glossary-registered core vocabulary); sole local in the 3.8 stretch, so no overlap. Distinct image from reasoning-horizon (no dup). Anchors empty until the Part-3 fix-wave marks the paragraph. Vehicle word 'model' echoes model-zoo across a different stretch (accepted audit-only vehicle-collision)."
     }
   ],
 
@@ -400,6 +415,48 @@
       "home": { "chapter": "1.1", "page_slug": "1.1-the-printer", "anchor": "" },
       "competitors": [],
       "notes": "A used-once vivid line — appears exactly once. Co-elaborates fault-lies-in-instructions beside the failure-diagnosis canonical (a sanctioned co-elaboration, not a second canonical)."
+    },
+    {
+      "kind": "slogan",
+      "name": "One trunk, five views",
+      "slug": "one-trunk-five-views",
+      "canonical": "One trunk, five views.",
+      "elaborates": { "model": "big-ideas", "id": "modeling-thesis" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "3.1", "page_slug": "3.1-the-executable-zoo", "anchor": "" },
+      "competitors": [
+        "one schema worn five ways",
+        "one architecture worn five ways",
+        "every view is one architecture"
+      ],
+      "notes": "NEW (Part-3 revision). The Model-Zoo / 4+1 framing: one core architecture projected as five views. Elaborates the Modeling-Thesis Big-Idea (the model-zoo metaphor's namespace); no other invoke-by-name slogan lands on modeling-thesis, so no competing-canonical. Anchor empty until the Part-3 fix-wave marks the canonical landing."
+    },
+    {
+      "kind": "slogan",
+      "name": "Derived defends, snapshotted drifts",
+      "slug": "derived-defends-snapshotted-drifts",
+      "canonical": "Derived defends; snapshotted drifts.",
+      "elaborates": { "model": "claims", "id": "ssot-not-snapshot" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "3.8", "page_slug": "3.8-keeping-models-in-sync", "anchor": "" },
+      "competitors": [
+        "a check that re-reads the code can't fall behind it; a stored copy can"
+      ],
+      "notes": "NEW (Part-3 revision). A derived check re-reads the code and cannot fall behind it; a hand-updated snapshot is a second source that drifts. Elaborates ssot-not-snapshot; the model-bridge metaphor co-elaborates the same idea (a metaphor + a slogan do not compete — only two invoke-by-name slogans on one idea do). Anchor empty until the Part-3 fix-wave marks the canonical landing."
+    },
+    {
+      "kind": "slogan",
+      "name": "Profile edit, not graph edit",
+      "slug": "profile-edit-not-graph-edit",
+      "canonical": "Profile edit, not graph edit.",
+      "elaborates": { "model": "claims", "id": "profile-edit-not-graph-edit" },
+      "scope": "invoke-by-name",
+      "ration_budget": 3,
+      "home": { "chapter": "3.5", "page_slug": "3.5-the-physical-view", "anchor": "" },
+      "competitors": [],
+      "notes": "NEW (Part-3 revision). The Physical View: host-specific resource limits are a per-host scheduler profile over one shared invariant-DAG, not a forked execution graph per host. Elaborates the profile-edit-not-graph-edit claim added to claims_declared.json (it was a REAL dangler — no declared claim carried the idea; same pattern as apparatus-is-the-review). Anchor empty until the Part-3 fix-wave marks the canonical landing."
     }
   ]
 }

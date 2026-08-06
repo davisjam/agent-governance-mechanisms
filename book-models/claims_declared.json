@@ -417,6 +417,24 @@
       ],
       "provenance": "implicit",
       "anchor": "part1.md names 'The apparatus is the review' a major book claim, but no chapter yet lands it as a dedicated named formulation — the review-replacement slogan's net-subtractive fix-wave will canonicalize it. Homed at the governance-vs-oversight argument (three-ways-to-run-a-fleet); it is the Alignment-Thesis consequence of oversight-does-not-scale."
+    },
+    {
+      "id": "profile-edit-not-graph-edit",
+      "kind": "distinction",
+      "statement": "Host-specific resource limits live in a per-host scheduler profile, not by forking the execution graph.",
+      "distinguishes": [
+        "a per-host scheduler profile — host limits set as scheduling parameters against one shared graph",
+        "forking the execution graph — a separate invariant-DAG edited per host"
+      ],
+      "home": "3.5-the-physical-view",
+      "asserted_at": [],
+      "contradicted_by": "Prose that models a host's resource limits by editing or forking the execution graph itself, rather than as a per-host scheduling profile over one shared graph.",
+      "watch_phrases": [],
+      "relates_to": [
+        "concept:thesis-modeling"
+      ],
+      "provenance": "implicit",
+      "anchor": "The Physical View (3.5/3.6): host-specific resource limits are a per-host scheduler profile — `plan = plan_for(host_profile)` — over one shared invariant-DAG, not a forked graph per host. No chapter yet lands 'profile edit, not graph edit' as a dedicated named formulation; the profile-edit-not-graph-edit slogan's fix-wave canonicalizes it. A Modeling-Thesis instance: the deployment view is a model (a scheduling profile), not an edit to the executable graph."
     }
   ]
 }
