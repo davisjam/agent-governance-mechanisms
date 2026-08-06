@@ -570,6 +570,12 @@
       "kind": "reference-lookup",
       "location": "part3",
       "rationale": "the per-model template fields + reader questions"
+    },
+    "assets/task-closure-tree.svg": {
+      "tier": "A",
+      "kind": "mechanism-illustration",
+      "location": "part3",
+      "rationale": "task-closure expression tree + derived grade"
     }
   }
 }

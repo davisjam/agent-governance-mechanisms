@@ -66,7 +66,7 @@
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">← Catalogue landing</a> · <a href="../book/index.html">The book</a></nav>
 <h1>The book models — a reading view</h1>
 <p class="subtitle">The book's outline and learning-outcome models, rendered as an alternative way to read the spine. Every heading, topic sentence, and outcome below is projected straight from <code>book-models/outline.json</code> and <code>outcomes.json</code> — regenerated on every commit, so it never goes stale.</p>
-<p class="counts"><b>37</b> chapters · <b>262</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
+<p class="counts"><b>37</b> chapters · <b>261</b> sections · <b>80</b> learning outcomes (? declared · ? derived · ? gap-recommended)</p>
 <section class="book-outcomes">
 <h2>The program — what you'll be able to do after the whole book</h2>
 <div class="outcomes"><div class="oc-h">After the program — the reader can</div><ul class="oc-list"><li class="oc"><span class="bloom bloom-understand">understand</span><span class="oc-text">After the book, the reader can situate any governance move on the two thesis axes — constraint-vs-sensor and soft-vs-hard — and reach for the one the failure calls for. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can design a governed engineering environment in which a fleet of coding agents produces correct work at bounded risk — choosing the right mechanism, the right model, and the right transformation for each failure class. <span class="prov">declared</span></span></li><li class="oc"><span class="bloom bloom-create">create</span><span class="oc-text">After the book, the reader can model a system as structured, drift-checked views an agent reasons through, rather than leaving the structure in a human&#x27;s head. <span class="prov">declared</span></span></li></ul></div>
@@ -643,7 +643,7 @@
 </div>
 <div class="section s2" id="sec-3-6-the-scenarios-view--coverage-model-mapping">
 <div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">Coverage → model-node mapping</a></div>
-<p class="topic">Coverage-to-node mapping projects the test suite&#x27;s coverage onto the model&#x27;s *nodes* — states, seams, invariants, journey endpoints — instead of its lines.</p>
+<p class="topic">Coverage-to-node mapping projects the test suite&#x27;s coverage onto the model&#x27;s *nodes* — states, seams, invariants, journey endpoints — instead of its lines (node coverage over line coverage, as [Metrics](2.5-metrics.html) laid out).</p>
 </div>
 <div class="section s2" id="sec-3-6-the-scenarios-view--journey-task-closure">
 <div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">Journey task-closure — asserting the goal completed</a></div>
@@ -651,19 +651,15 @@
 </div>
 <div class="section s2" id="sec-3-6-the-scenarios-view--worked-join">
 <div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">Worked join — the journey↔coverage↔deploy-policy composition</a></div>
-<p class="topic">*Four models composed on a shared key, so a product goal reaches all the way to how the deploy runs its tests.</p>
+<p class="topic">**The compositional question:** *watch one fact — a journey is* major — *travel through four models with nothing said twice, until a product goal reaches all the way to how the deploy rations its tests.* The other model pages each show a single model; this one shows them **joining, not repeating.** Four models compose on one shared key — the journey and its endpoints:</p>
 </div>
 <div class="section s3" id="sec-3-6-the-scenarios-view--the-three-questions-the-join-answers">
 <div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">The three questions the join answers</a></div>
 <p class="topic">Three questions the raw deploy scripts and test config cannot answer on their own.</p>
 </div>
-<div class="section s3" id="sec-3-6-the-scenarios-view--the-four-models-and-their-join-keys">
-<div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">The four models and their join keys</a></div>
-<p class="topic">The four models compose through shared keys.</p>
-</div>
 <div class="section s3" id="sec-3-6-the-scenarios-view--the-composite-picture">
 <div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">The composite picture</a></div>
-<p class="topic">The join has no single appendix diagram, so this composite is composed from the four real panels, adding only the join edges between them.</p>
+<p class="topic">The join has no single appendix diagram, so this composite is built from the four real panels, adding only the join edges between them; read it left to right, in [ref:join-composite].</p>
 </div>
 <div class="section s3" id="sec-3-6-the-scenarios-view--the-invariants-the-join-spans">
 <div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">The invariants the join spans</a></div>
@@ -671,11 +667,11 @@
 </div>
 <div class="section s3" id="sec-3-6-the-scenarios-view--the-selector-and-scheduler-in-code">
 <div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">The Selector and Scheduler in code</a></div>
-<p class="topic">Two pieces of real policy code make the join concrete.</p>
+<p class="topic">Two pieces of real policy code make the join concrete — the **Selector** derives a host&#x27;s test roster from the journey model, and the **Scheduler** rations that roster per host.</p>
 </div>
 <div class="section s3" id="sec-3-6-the-scenarios-view--tracing-one-fact-through-four-models">
 <div class="sec-h"><a href="../book/3.6-the-scenarios-view.html">Tracing one fact through four models</a></div>
-<p class="topic">*Model-from-code, joined.* Every leg derives from the code: the journey&#x27;s deps from its real call sites (M13), coverage from the real test run (M5), the host tier from the criticality field by a pure function (M6), the rationing plan from the per-host profile (M7).</p>
+<p class="topic">The join keys chain, and a reader can walk them against the figure: the **endpoint** ties M13 to M5, the **criticality** ties M13 to M6, the **derived tier** ties M6 to M7&#x27;s roster, and the **host profile** ties the roster to the plan.</p>
 </div>
 </div>
 <div class="chapter">

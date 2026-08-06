@@ -2047,7 +2047,7 @@
           },
           {
             "file": "book/3.6-the-scenarios-view.html",
-            "occ": 37
+            "occ": 30
           },
           {
             "file": "book/3.7-the-scope-of-modeling.html",
@@ -2311,7 +2311,7 @@
           },
           {
             "file": "book/figures.html",
-            "occ": 262
+            "occ": 261
           },
           {
             "file": "book/index.html",
@@ -2759,7 +2759,7 @@
           },
           {
             "file": "book-models/models-view.html",
-            "occ": 111
+            "occ": 114
           },
           {
             "file": "catalogue-figure.html",

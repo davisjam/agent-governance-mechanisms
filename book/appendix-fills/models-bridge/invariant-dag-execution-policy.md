@@ -72,14 +72,14 @@ def load_lint(edges: list[Edge]) -> list[str]:
 
 def plan_for(concurrency_ceiling: int, budget: float) -> dict:
     """Pure map from a host profile to an execution plan (permits + cost-gate honoring)."""
-    return {"permits": concurrency_ceiling, "run_cost_gated": budget > 0.0}
+    return {"permits": concurrency_ceiling, "run_cost_gated": budget != float("inf")}
 
 if __name__ == "__main__":
     edges = load_graph()                  # reads the built dependency graph's typed edges
     findings = load_lint(edges)
     for f in findings:
         print(f"LOAD-IN-GRAPH: {f}")
-    # A new host is a new profile row, e.g. plan_for(concurrency_ceiling=1, budget=0.0)
+    # A new host is a new profile row, e.g. plan_for(concurrency_ceiling=1, budget=100.0)
     sys.exit(1 if findings else 0)
 ```
 

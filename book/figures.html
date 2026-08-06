@@ -594,7 +594,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 <li><a class="" href="appendix-d-from-drifted-wiki-to-trusted-model.html">Appendix D - 2. From Drifted Wiki to Trusted Model</a></li>
 <li class="part">Appendix E — How to Write a Skill</li>
 <li><a class="" href="appendix-skill-recipe.html">Appendix E — How to Write a Skill</a></li>
-<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 78 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
+<li><a class="" href="appendix-e-the-recipe.html">Appendix E - 1. The recipe — three steps</a></li></ol></details></div></nav><main class="wrap" aria-label="Figures Gallery · Model-Based Agentic Software Engineering"><header class="chap"><div class="kicker">Front Matter</div><h1>Figures Gallery</h1></header><p>Every figure in the book — 79 in all — gathered here in reading order, each with its full caption. A quick way to review the book's visuals in one place; every figure links back to where it appears in the text. The chapter figures come first; the appendix pattern pages follow in a lighter schematic style. (See also the <a href="list-of-figures.html">List of Figures and Tables</a> for tables, and a scannable index of short captions.)</p><section class="gallery-group"><h2>Chapter figures</h2><p class="gallery-group-note">The book-proper figures, hand-drawn to the house palette.</p><div class="gallery"><section class="gallery-item"><figure id="fig-0-1-1-fig-0-1-1" class="book-figure" data-label="mage-method"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720"
      role="group" aria-labelledby="fig-0-1-1-mmTitle fig-0-1-1-mmDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-0-1-1-mmTitle">The MAGE method at a glance</title>
@@ -2801,11 +2801,115 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
 
   <!-- ===== the registered slogan (verbatim) ===== -->
   <text x="500" y="520" text-anchor="middle" font-size="22" font-style="italic" font-weight="700" fill="#1c1917">Move stress between hosts — a profile edit, not a graph edit.</text>
-</svg><figcaption data-short="Profile edit, not graph edit"><span class="fig-label">Figure 3.5-2.</span> <em>Profile edit, not graph edit.</em> Correctness and cost-gate edges stay in the deploy graph, host-identical; the load intent is banned from the graph and moves to the Scheduler, which reads a per-host profile and emits the execution plan. Moving stress between hosts edits the profile, never the graph.</figcaption></figure><p class="gallery-source">From <a href="3.5-the-physical-view.html#fig-3-5-2">16 · The Physical View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-6-1-fig-3-6-1" class="book-figure" data-label="join-composite"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640"
-     role="group" aria-labelledby="fig-3-6-1-jcTitle fig-3-6-1-jcDesc"
+</svg><figcaption data-short="Profile edit, not graph edit"><span class="fig-label">Figure 3.5-2.</span> <em>Profile edit, not graph edit.</em> Correctness and cost-gate edges stay in the deploy graph, host-identical; the load intent is banned from the graph and moves to the Scheduler, which reads a per-host profile and emits the execution plan. Moving stress between hosts edits the profile, never the graph.</figcaption></figure><p class="gallery-source">From <a href="3.5-the-physical-view.html#fig-3-5-2">16 · The Physical View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-6-1-fig-3-6-1" class="book-figure" data-label="task-closure-tree"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700"
+     role="group" aria-labelledby="fig-3-6-1-tcTitle fig-3-6-1-tcDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
-  <title id="fig-3-6-1-jcTitle">The scenarios join: journey to selector to coverage to scheduler</title>
-  <desc id="fig-3-6-1-jcDesc">A major journey names an endpoint. The Selector derives that endpoint's
+  <title id="fig-3-6-1-tcTitle">Task-closure: an expression tree over observable predicates, and its derived grade</title>
+  <desc id="fig-3-6-1-tcDesc">On the left, a boolean closure expression is drawn as a tree. Its root is an AND
+    that must hold over three leaves: “artifact rendered” and “control inspectable”, both marked
+    observable, and a NOT over “error-fallback shown”. Lower left, two flow-only leaves are flagged
+    weak with a dashed border and a flow-only badge: “navigated to a URL” and “a route returned 2xx”;
+    they prove a flow ran, not that the task closed. A derivation arrow runs from the tree to a pure
+    function, closure-strength(), on the right. That function emits exactly one grade: TASK_CLOSED when
+    the strong leaves hold, FLOW_ONLY when only flow-only leaves are present, or DISABLED when no leaves
+    are declared. A dashed edge from the two flow-only leaves points at the FLOW_ONLY grade. A finding
+    edge leaves FLOW_ONLY: a FLOW_ONLY grade on a major journey is a build finding.</desc>
+
+  <defs>
+    <marker id="fig-3-6-1-tc-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+    <marker id="fig-3-6-1-tc-join" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
+    </marker>
+    <marker id="fig-3-6-1-tc-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b23b3b"/>
+    </marker>
+  </defs>
+
+  <text x="560" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">Task-closure — a `closure` expression tree over observable predicates</text>
+
+  <!-- ===== the AND root ===== -->
+  <rect x="300" y="84" width="180" height="66" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2.5"/>
+  <text x="390" y="118" text-anchor="middle" font-size="24" font-weight="700" fill="#1c1917">AND</text>
+  <text x="390" y="140" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">all must hold</text>
+
+  <!-- edges: AND -> three children -->
+  <g fill="none" stroke="#1c1917" stroke-width="2">
+    <path d="M360,150 C270,172 200,188 148,206" marker-end="url(#fig-3-6-1-tc-ah)"/>
+    <path d="M395,150 C398,172 400,188 400,206" marker-end="url(#fig-3-6-1-tc-ah)"/>
+    <path d="M480,116 C545,140 590,164 616,192" marker-end="url(#fig-3-6-1-tc-ah)"/>
+  </g>
+
+  <!-- leaf 1 -->
+  <rect x="30" y="210" width="230" height="78" rx="8" fill="#eef4fb" stroke="#2f5169" stroke-width="2"/>
+  <text x="145" y="248" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">artifact rendered</text>
+  <text x="145" y="272" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">observable</text>
+
+  <!-- leaf 2 -->
+  <rect x="285" y="210" width="230" height="78" rx="8" fill="#eef4fb" stroke="#2f5169" stroke-width="2"/>
+  <text x="400" y="248" text-anchor="middle" font-size="17" font-weight="700" fill="#1c1917">control inspectable</text>
+  <text x="400" y="272" text-anchor="middle" font-size="14" font-style="italic" fill="#57534e">observable</text>
+
+  <!-- NOT node -->
+  <rect x="560" y="192" width="120" height="52" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
+  <text x="620" y="226" text-anchor="middle" font-size="22" font-weight="700" fill="#1c1917">NOT</text>
+  <line x1="620" y1="244" x2="632" y2="296" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-tc-ah)"/>
+
+  <!-- error-fallback leaf -->
+  <rect x="525" y="300" width="230" height="78" rx="8" fill="#eef4fb" stroke="#2f5169" stroke-width="2"/>
+  <text x="640" y="336" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">error-fallback</text>
+  <text x="640" y="360" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">shown</text>
+
+  <!-- ===== the two FLOW-ONLY leaves, flagged weak ===== -->
+  <text x="30" y="428" font-size="17" font-weight="700" fill="#b23b3b">flow-only leaves — weak</text>
+  <rect x="30" y="442" width="250" height="60" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="145" y="470" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">navigated to a URL</text>
+  <text x="145" y="491" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">flow-only</text>
+
+  <rect x="30" y="516" width="250" height="60" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="145" y="544" text-anchor="middle" font-size="18" font-weight="700" fill="#1c1917">a route returned 2xx</text>
+  <text x="145" y="565" text-anchor="middle" font-size="14" font-style="italic" fill="#b23b3b">flow-only</text>
+
+  <text x="30" y="606" font-size="16" font-style="italic" fill="#b23b3b">they prove a flow ran, not that the task closed.</text>
+
+  <!-- ===== closure-strength(): the pure function ===== -->
+  <path d="M480,112 C600,104 690,120 758,134" fill="none" stroke="#1c1917" stroke-width="3" marker-end="url(#fig-3-6-1-tc-join)"/>
+  <text x="612" y="104" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">derives</text>
+
+  <rect x="760" y="96" width="270" height="80" rx="8" fill="#f6f4ef" stroke="#1c1917" stroke-width="2"/>
+  <text x="895" y="132" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">closure-strength()</text>
+  <text x="895" y="158" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">a pure function</text>
+
+  <line x1="895" y1="176" x2="895" y2="206" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-tc-ah)"/>
+  <text x="895" y="224" text-anchor="middle" font-size="16" font-style="italic" fill="#57534e">emits exactly one grade</text>
+
+  <!-- the three grades -->
+  <rect x="760" y="238" width="270" height="64" rx="8" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2.5"/>
+  <text x="895" y="268" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">TASK_CLOSED</text>
+  <text x="895" y="290" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">strong leaves hold</text>
+
+  <rect x="760" y="320" width="270" height="64" rx="8" fill="#faf1e6" stroke="#9a3f12" stroke-width="2.5"/>
+  <text x="895" y="350" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">FLOW_ONLY</text>
+  <text x="895" y="372" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">only flow-only leaves</text>
+
+  <rect x="760" y="402" width="270" height="64" rx="8" fill="#f3efe7" stroke="#57534e" stroke-width="2"/>
+  <text x="895" y="432" text-anchor="middle" font-size="20" font-weight="700" fill="#57534e">DISABLED</text>
+  <text x="895" y="454" text-anchor="middle" font-size="15" font-style="italic" fill="#57534e">no leaves declared</text>
+
+  <!-- flow-only leaves point at the FLOW_ONLY grade -->
+  <path d="M282,540 C500,586 690,540 756,368" fill="none" stroke="#b23b3b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#fig-3-6-1-tc-red)"/>
+
+  <!-- the finding edge -->
+  <path d="M770,378 C700,442 690,522 796,558" fill="none" stroke="#b23b3b" stroke-width="2.5" marker-end="url(#fig-3-6-1-tc-red)"/>
+  <rect x="740" y="560" width="350" height="80" rx="8" fill="#fbeaea" stroke="#b23b3b" stroke-width="2.5"/>
+  <text x="915" y="594" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">FLOW_ONLY on a MAJOR journey</text>
+  <text x="915" y="620" text-anchor="middle" font-size="18" font-weight="700" fill="#b23b3b">→ a build finding</text>
+</svg><figcaption data-short="Task-closure as an expression tree"><span class="fig-label">Figure 3.6-1.</span> <em>Task-closure as an expression tree.</em> A boolean <code>closure</code> is an AND over observable predicates — the artifact rendered, a control is inspectable, no error-fallback shown. Two <strong>flow-only</strong> leaves (navigated to a URL; a route returned 2xx) are the weak ones: they prove a flow ran, not that the task closed. A pure <code>closure-strength()</code> reads the leaves and emits exactly one grade — <code>TASK_CLOSED</code>, <code>FLOW_ONLY</code>, or <code>DISABLED</code>. A <code>FLOW_ONLY</code> grade on a MAJOR journey is a build finding.</figcaption></figure><p class="gallery-source">From <a href="3.6-the-scenarios-view.html#fig-3-6-1">17 · The Scenarios View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-6-2-fig-3-6-2" class="book-figure" data-label="join-composite"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640"
+     role="group" aria-labelledby="fig-3-6-2-jcTitle fig-3-6-2-jcDesc"
+     font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
+  <title id="fig-3-6-2-jcTitle">The scenarios join: journey to selector to coverage to scheduler</title>
+  <desc id="fig-3-6-2-jcDesc">A major journey names an endpoint. The Selector derives that endpoint's
     tests to the local-plus-staging tier (a minor one to staging only), and a coverage-floor
     lint fails if a major endpoint has no local test. The coverage model joins to the same
     endpoint node to check it is tested at all. The resulting test set flows to the deploy
@@ -2813,10 +2917,10 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
     tests out in parallel; when a cost gate and a scarce host combine it serializes them.</desc>
 
   <defs>
-    <marker id="fig-3-6-1-jc-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="fig-3-6-2-jc-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#1c1917"/>
     </marker>
-    <marker id="fig-3-6-1-jc-ah-mut" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <marker id="fig-3-6-2-jc-ah-mut" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#57534e"/>
     </marker>
   </defs>
@@ -2829,7 +2933,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <text x="150" y="136" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">Journey: goal</text>
   <text x="150" y="166" text-anchor="middle" font-size="18.88" font-weight="600" fill="#9a3f12">criticality: MAJOR</text>
 
-  <line x1="150" y1="196" x2="150" y2="246" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <line x1="150" y1="196" x2="150" y2="246" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
   <text x="172" y="226" font-size="18.88" font-style="italic" fill="#57534e">calls</text>
 
   <polygon points="72,252 240,252 228,308 60,308" fill="#f6f4ef" stroke="#57534e" stroke-width="2"/>
@@ -2840,14 +2944,14 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <text x="336" y="82" font-size="19" font-weight="700" fill="#1c1917">Selector (M6)</text>
 
   <!-- endpoint feeds the derivation -->
-  <path d="M244,280 C320,250 370,210 424,178" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <path d="M244,280 C320,250 370,210 424,178" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
 
   <polygon points="510,115 590,170 510,225 430,170" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="510" y="177" text-anchor="middle" font-size="19" font-weight="700" fill="#1c1917">major?</text>
 
-  <path d="M496,222 C478,248 464,260 448,276" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <path d="M496,222 C478,248 464,260 448,276" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
   <text x="452" y="252" text-anchor="end" font-size="18.88" font-style="italic" fill="#57534e">yes</text>
-  <path d="M524,222 C560,250 580,260 618,276" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <path d="M524,222 C560,250 580,260 618,276" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
   <text x="600" y="252" font-size="18.88" font-style="italic" fill="#57534e">no</text>
 
   <rect x="350" y="280" width="190" height="62" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
@@ -2856,7 +2960,7 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <rect x="552" y="280" width="150" height="62" rx="8" fill="#e7edf3" stroke="#2f5169" stroke-width="2"/>
   <text x="627" y="318" text-anchor="middle" font-size="18.88" font-weight="700" fill="#1c1917">staging only</text>
 
-  <line x1="445" y1="346" x2="455" y2="392" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <line x1="445" y1="346" x2="455" y2="392" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
 
   <!-- the coverage-floor lint (hexagon) -->
   <polygon points="345,430 372,396 568,396 595,430 568,464 372,464"
@@ -2874,11 +2978,11 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   </g>
 
   <!-- the node join: same endpoint, checked for any test at all -->
-  <line x1="200" y1="310" x2="200" y2="452" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#fig-3-6-1-jc-ah-mut)"/>
+  <line x1="200" y1="310" x2="200" y2="452" stroke="#57534e" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#fig-3-6-2-jc-ah-mut)"/>
   <text x="190" y="388" text-anchor="end" font-size="18.88" font-style="italic" fill="#57534e">node join</text>
 
   <!-- covered? feeds the floor lint -->
-  <path d="M247,505 C290,490 310,465 339,436" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <path d="M247,505 C290,490 310,465 339,436" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
 
   <!-- ===== Scheduler (M7) ===== -->
   <rect x="740" y="50" width="420" height="530" rx="10" fill="none" stroke="#57534e" stroke-width="1.5"/>
@@ -2888,8 +2992,8 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
   <text x="860" y="160" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">plan_for(host)</text>
 
   <!-- both tiers feed the plan -->
-  <path d="M544,296 C640,254 700,192 754,162" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
-  <path d="M706,310 C744,290 732,230 754,182" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <path d="M544,296 C640,254 700,192 754,162" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
+  <path d="M706,310 C744,290 732,230 754,182" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
 
   <!-- the per-host profile (cylinder) -->
   <g>
@@ -2898,19 +3002,19 @@ main.wrap.appendix h1 { text-transform: uppercase; letter-spacing: 0.015em; }
     <text x="1040" y="272" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">HostLoadProfile</text>
     <text x="1040" y="298" text-anchor="middle" font-size="18.88" font-style="italic" fill="#57534e">ceiling · budget</text>
   </g>
-  <path d="M1010,224 C980,205 950,198 924,188" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <path d="M1010,224 C980,205 950,198 924,188" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
 
   <!-- the plan's two outcomes -->
-  <path d="M800,188 C780,260 790,320 848,376" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <path d="M800,188 C780,260 790,320 848,376" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
   <text x="880" y="368" font-size="18.88" font-style="italic" fill="#57534e">cost gate only</text>
   <rect x="770" y="380" width="290" height="58" rx="29" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
   <text x="915" y="417" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">fan out — parallel</text>
 
-  <path d="M780,188 C752,300 755,420 808,486" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-1-jc-ah)"/>
+  <path d="M780,188 C752,300 755,420 808,486" fill="none" stroke="#1c1917" stroke-width="2" marker-end="url(#fig-3-6-2-jc-ah)"/>
   <text x="880" y="478" font-size="18.88" font-style="italic" fill="#57534e">cost gate + a scarce host</text>
   <rect x="770" y="490" width="290" height="58" rx="29" fill="#e3f0e7" stroke="#1f7a4d" stroke-width="2"/>
   <text x="915" y="527" text-anchor="middle" font-size="20" font-weight="700" fill="#1c1917">serialize — fan / join</text>
-</svg><figcaption data-short="The Four-Model Join"><span class="fig-label">Figure 3.6-1.</span> <em>The Four-Model Join.</em> Four models compose on one shared key so a product goal reaches all the way to how the deploy runs its tests, with nothing said twice. The user-journey model names a journey and its endpoints; the coverage-to-node map asks whether those endpoints are tested; the criticality-to-placement Selector derives which host tier each test runs on from the journey's criticality; and the Scheduler rations the resulting set per host. Read it left to right — a journey's criticality derives its test tier, coverage joins on the same endpoint node, and the Scheduler runs the set in parallel when only a cost gate applies, serialized when a scarce host is in play.</figcaption></figure><p class="gallery-source">From <a href="3.6-the-scenarios-view.html#fig-3-6-1">17 · The Scenarios View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-8-1-fig-3-8-1" class="book-figure" data-label="model-sync-two-layer-net"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 700"
+</svg><figcaption data-short="The four-model join"><span class="fig-label">Figure 3.6-2.</span> <em>The four-model join.</em> A <strong>journey</strong> (M13) names a MAJOR endpoint; the <strong>Selector</strong> (M6) derives its test tier (major → local + staging; minor → staging only) and a coverage-floor lint fails a major endpoint with no local test; <strong>Coverage</strong> (M5) joins on the same endpoint node to ask whether it is tested at all; the <strong>Scheduler</strong> (M7) reads a per-host profile and emits the plan — fan out in parallel when only a cost gate applies (rounded), serialize when a scarce host is in play (square). The heavy edges are the joins; shape, not colour, marks the two plan modes.</figcaption></figure><p class="gallery-source">From <a href="3.6-the-scenarios-view.html#fig-3-6-2">17 · The Scenarios View</a></p></section><hr><section class="gallery-item"><figure id="fig-3-8-1-fig-3-8-1" class="book-figure" data-label="model-sync-two-layer-net"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 700"
      role="group" aria-labelledby="fig-3-8-1-msTitle fig-3-8-1-msDesc"
      font-family="'Source Sans 3', -apple-system, 'Segoe UI', sans-serif">
   <title id="fig-3-8-1-msTitle">The model-to-code gap spanned by a two-layer net, with two escape hatches</title>
