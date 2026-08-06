@@ -253,9 +253,18 @@ def chapter_prose_anchors(ch: "book_ir.Chapter") -> "tuple[str, str]":
     return (_norm(opening_words[:ANCHOR_WORDS]), _norm(closing_words[-ANCHOR_WORDS:]))
 
 
+def _lab(slug: str) -> str:
+    """Map an outline/book-IR chapter slug to its number-free identity label (chapter_identity model). The
+    shape model keys every chapter map on the LABEL now — assessments, exemptions, advances, and the derived
+    anchor harvests all agree on one join key that survives a renumber. Falls back to the slug for a chapter
+    with no identity row (CI3 asserts there is none)."""
+    import chapter_identity_model as chapter_identity  # noqa: E402 — sibling book-model
+    return chapter_identity.label_for_slug(slug) or slug
+
+
 def current_anchors() -> "dict[str, tuple[str, str]]":
     doc = book_ir.parse_book()
-    return {ch.slug: chapter_prose_anchors(ch) for ch in doc.chapters}
+    return {_lab(ch.slug): chapter_prose_anchors(ch) for ch in doc.chapters}
 
 
 # ---- delivers harvest (the concept-join + anchor substrate) -----------------------------------------
@@ -273,7 +282,7 @@ def chapter_index_defs() -> "dict[str, list[str]]":
                 m = _INDEX_DEF_RE.search(b.raw)
                 if m:
                     defs.append(m.group(1))
-        out[ch.slug] = defs
+        out[_lab(ch.slug)] = defs
     return out
 
 
@@ -282,7 +291,7 @@ def chapter_labels() -> "dict[str, set[str]]":
     substrate — an `artifacts[].anchor` must resolve to one of these (a renamed/deleted figure reddens,
     the same staleness discipline CS5 applies to the opening/closing prose)."""
     doc = book_ir.parse_book()
-    return {ch.slug: {b.label for b in ch.floats() if b.label} for ch in doc.chapters}
+    return {_lab(ch.slug): {b.label for b in ch.floats() if b.label} for ch in doc.chapters}
 
 
 # ---- load + build -----------------------------------------------------------------------------------
@@ -334,11 +343,15 @@ def derive_model() -> ShapeModel:
             spine_advances=list(advances.get(slug, [])),
         )
 
-    chapters = [_build(c.slug) for c in om.derive_outline().chapters if c.slug in by_slug]
-    known = {c.slug for c in om.derive_outline().chapters}
-    for slug in by_slug:
-        if slug not in known:
-            chapters.append(_build(slug))
+    # Assessments are keyed by the number-free identity LABEL now; iterate the outline in order, map each
+    # slug to its label, and build the ones with an assessment. An assessment keyed to a chapter the outline
+    # no longer defines still surfaces (CS2 reddens it), appended after the outline's chapters.
+    chapters = [_build(lab) for c in om.derive_outline().chapters
+                if (lab := _lab(c.slug)) in by_slug]
+    known = {_lab(c.slug) for c in om.derive_outline().chapters}
+    for label in by_slug:
+        if label not in known:
+            chapters.append(_build(label))
     return ShapeModel(chapters=chapters)
 
 
@@ -399,12 +412,12 @@ def structural_findings(model: "ShapeModel | None" = None) -> "list[str]":
     decl = _load_declared()
     declared_slugs = [a["slug"] for a in decl.get("assessments", [])]
 
-    # CS2 — exhaustive + exact coverage of the outline's chapters.
-    outline_slugs = {c.slug for c in om.derive_outline().chapters}
-    for slug in sorted(outline_slugs - set(declared_slugs)):
-        findings.append(f"CS2 chapter {slug!r} carries no shape assessment (coverage is exhaustive)")
-    for slug in sorted(set(declared_slugs) - outline_slugs):
-        findings.append(f"CS2 assessment for {slug!r} — the outline defines no such chapter")
+    # CS2 — exhaustive + exact coverage of the outline's chapters, keyed by number-free identity LABEL.
+    outline_labels = {_lab(c.slug) for c in om.derive_outline().chapters}
+    for label in sorted(outline_labels - set(declared_slugs)):
+        findings.append(f"CS2 chapter {label!r} carries no shape assessment (coverage is exhaustive)")
+    for label in sorted(set(declared_slugs) - outline_labels):
+        findings.append(f"CS2 assessment for {label!r} — the outline defines no such chapter")
 
     # CS3 — enums + uniqueness.
     if len(declared_slugs) != len(set(declared_slugs)):
