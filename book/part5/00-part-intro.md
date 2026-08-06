@@ -1,3 +1,4 @@
+<!-- part-foreshadows: grounded-in-one-case, modeling-thesis, seat-moves -->
 Everything this book has argued so far rests on one system. This Part follows the design and
 construction of DocAble, a production document-accessibility platform built almost entirely by
 directing a fleet of coding agents rather than writing the implementation by hand. The setting

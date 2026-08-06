@@ -1,3 +1,4 @@
+<!-- part-foreshadows: govern-the-environment, alignment-thesis, failures-become-machinery -->
 Part 1 argued that reliability should come from the environment rather than from repeatedly
 reading code. This Part builds that environment.
 

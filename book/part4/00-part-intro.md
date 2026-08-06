@@ -1,3 +1,4 @@
+<!-- part-foreshadows: modeling-thesis, alignment-thesis, govern-the-environment, failures-become-machinery -->
 Earlier Parts laid out the ingredients and built the kitchen. This Part is where you learn to
 cook. The first three Parts built the pieces of MAGE; this one assembles them into a way of
 working. Models, mechanisms, and governance stop appearing one at a time and become the

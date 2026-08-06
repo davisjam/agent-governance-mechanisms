@@ -37,6 +37,7 @@ from tests.book import (
     check_float_ref_gate,
     check_ir_render_fidelity,
     check_no_stray_comments,
+    check_part_opener_traceability,
     run_book_audit,
 )
 from tests.book_models import (
@@ -141,6 +142,12 @@ CHECKS = [
     Check("html: one-<h1> check flags injected 2-<h1> / 0-<h1> pages (self-test)", 1,
           lambda strict: check_exactly_one_h1_selftest()),
     Check("book: no stray HTML comments in source (source-side twin of notation-leak; stray-book-comment)", 1, lambda strict: check_no_stray_comments()),
+    # AUDIT-ONLY (rule #55): every claim a Part opener foreshadows (its `<!-- part-foreshadows: … -->`
+    # decorator) must trace to the spine — the id resolves, a chapter WITHIN that Part advances it, and it
+    # reconciles to a Big Idea. Seeds a few leg-(c) findings (opener premises that map to no Big Idea), so it
+    # lands audit-only; promotes to blocking once the loop closes for every declared id. See tests/book.py.
+    Check("book: Part-opener foreshadow claims trace to spine + Big Ideas + Part chapters (part-opener-traceability)", 1,
+          lambda strict: check_part_opener_traceability(), audit_only=True),
     Check("html: book/*.html <-> build outputs (no orphans, present + non-empty)", 1, lambda strict: check_book_html_tracking()),
     Check("book: every float introduced by a [ref:] cross-ref (book-float-ref)", 1, lambda strict: check_float_ref_gate()),
     Check("book: IR render-complete blocks render byte-identically (C->A migration net)", 1, lambda strict: check_ir_render_fidelity()),

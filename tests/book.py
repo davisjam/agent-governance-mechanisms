@@ -691,6 +691,23 @@ def check_no_stray_comments() -> "tuple[str, list[str]]":
     return (FAIL if fs else PASS), fs
 
 
+def check_part_opener_traceability() -> "tuple[str, list[str]]":
+    """AUDIT-ONLY (rule-#55 landing): every claim a Part opener foreshadows must trace to the book's spine.
+    Each `book/part<N>/00-part-intro.md` declares a `<!-- part-foreshadows: <spine-id>, … -->` decorator; for
+    each id the loop must close — it resolves in the argument spine, at least one chapter WITHIN that Part
+    advances it, and it reconciles to at least one Big Idea. Seeds a handful of leg-(c) findings today
+    (opener premises like `abundant-implementation` / `grounded-in-one-case` that reconcile to no Big Idea),
+    so it lands audit-only; promotes to blocking once the loop closes for every declared id. The source lint
+    lives under `book-models/` (the `part-opener-traceability` lint)."""
+    import sys as _sys  # noqa: E402 — local path bootstrap so the book-models lint module is importable
+    bm = os.path.join(ROOT, "book-models")
+    if bm not in _sys.path:
+        _sys.path.insert(0, bm)
+    import lint_part_opener_traceability as _lint  # noqa: E402 — the opener-traceability lint under book-models/
+    fs = _lint.findings()
+    return (FAIL if fs else PASS), fs
+
+
 def check_ir_render_fidelity() -> "tuple[str, list[str]]":
     """BLOCKING gate for the C→A migration: every render-complete IR block renders byte-identically through
     `book_ir.Block.render_html()` and through the renderer (`md_to_html` on the block's raw slice). This is

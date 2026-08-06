@@ -301,6 +301,11 @@ MARKER_KEYWORDS = (
     "part-title", "chapter-title", "figure", "figure-iframe",
     "gloss", "gloss-only", "glossary-auto", "eq", "index-def", "index-example",
     "inset", "data", "label", "table", "point", "section-terms", "web-only",
+    # `<!-- part-foreshadows: <spine-id>, <spine-id>, … -->` — a Part opener's declaration of the
+    #   argument-spine claim ids it foreshadows (the traceability decorator). An INERT authored
+    #   MODEL-METADATA marker, the sibling of `point` / `section-terms`: consumed and stripped,
+    #   renders NOTHING (the opener-traceability lint reads it from the source, not the HTML).
+    "part-foreshadows",
     # ── Appendix-restructure v2 render directives (flag ON only; §13/§14). All four are consumed + stripped
     #    from reader-visible output the same as the rest of the vocabulary, so the notation-leak gate covers
     #    them by construction. `stack-legend` / `brick-grid` EMIT a build-generated block (a linked legend /
@@ -1249,6 +1254,11 @@ def md_to_html(md: str, anchor_map: dict[tuple[str, str, int], str] | None = Non
                 # `<!-- section-terms: <t1>, <t2> -->` — the tier-1 sibling of `point`: names the major
                 # concepts a section develops (the drain notation). Equally INERT — consumed, stripped,
                 # renders NOTHING (the reverse index reads it from the IR). Same byte-identical guarantee.
+                return True
+            if inner.startswith("part-foreshadows:"):
+                # `<!-- part-foreshadows: <spine-id>, … -->` — a Part opener's declaration of the spine
+                # claims it foreshadows (the traceability notation). INERT like `point`/`section-terms`:
+                # consumed, stripped, renders NOTHING (the opener-traceability lint reads it from source).
                 return True
         return False
 

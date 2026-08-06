@@ -1,3 +1,4 @@
+<!-- part-foreshadows: seat-moves, govern-the-environment, mage-becomes-practical -->
 Every book eventually reaches the same question: what should change because of everything that
 came before? This final Part asks that question of software engineering itself. If
 implementation has become abundant, what remains the scarce work? If coding agents can build

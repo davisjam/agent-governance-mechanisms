@@ -1,3 +1,4 @@
+<!-- part-foreshadows: sync-cost-reduced, modeling-thesis, mage-becomes-practical -->
 Model-based engineering never failed on its ideas. It failed on the cost of keeping models
 equal to rapidly changing code. Coding agents change that equation. This Part argues that
 models can once again become first-class engineering artifacts: not documentation that slowly
