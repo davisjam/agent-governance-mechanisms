@@ -242,16 +242,17 @@ CHECKS = [
     # chapters covered, 3 non-outline rows permitted), so it lands blocking. See tests/book_models.py.
     Check("book-models: chapter-identity drift + bijection (chapter_identity.json)", 1,
           lambda strict: check_chapter_identity()),
-    # AUDIT-ONLY (rule #55 first landing): the CHAPTER-TEMPLATE CONFORMANCE sensor + dangling-label backstop.
-    # TEMPLATE (per chapter file): exactly one <!-- chapter-title: -->, exactly one H1 (counted outside code
-    # fences), and a filename prefix agreeing with outline reading order — the legs that make title()/number()
-    # derivation safe. BACKSTOP: every migrated model's chapter-`label` ref resolves to a real labels()
-    # member (the number-free-namespace precision net). The namespace note (a label that also names an outline
+    # BLOCKING (rule #55 promotion — drained): the CHAPTER-TEMPLATE CONFORMANCE sensor + dangling-label
+    # backstop. TEMPLATE (per chapter file): exactly one <!-- chapter-title: -->, exactly one H1 (counted
+    # outside code fences; the bare apparatus page 0.6-acknowledgments is H1-exempt by design), and a
+    # filename prefix agreeing with outline reading order — the legs that make title()/number() derivation
+    # safe. BACKSTOP: every migrated model's chapter-`label` ref resolves to a real labels() member (the
+    # number-free-namespace precision net). The namespace note (a label that also names an outline
     # section-id) is informational, never gated — permissive resolution matches today's slug ∪ section
-    # behavior. Lands audit-only with 5 non-conformers (0.3/0.6/3.7/4.5/5.1 lack an H1); a fix-wave drains
-    # them, then a follow-up promotes to blocking. See tests/book_models.py.
+    # behavior. Landed audit-only with 5 non-conformers; the §4 fix-wave (0.3/3.7/4.5/5.1 H1s + 0.6
+    # exemption) drained them to 0, so this is now promoted to BLOCKING. See tests/book_models.py.
     Check("book-models: chapter-template conformance + label backstop (chapter files)", 1,
-          lambda strict: check_chapter_identity_conformance(), audit_only=True),
+          lambda strict: check_chapter_identity_conformance()),
     # AUDIT-ONLY (rule #55 first landing): the ARGUMENT-SPINE view-model — the book's linear argument as an
     # ordered run of claims reconciling the author's seed statements, the claims model, and the Big Ideas,
     # plus the per-chapter labeling of which spine claims each chapter advances (editorial directive Phase 1).
