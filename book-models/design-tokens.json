@@ -23,10 +23,10 @@
     "diagram-trust":    "#155c38",  "diagram-trust-fill":    "#eef7f0"
   },
   "type": {
-    "display": { "family": "Fraunces",
-                 "css-stack": "\"Fraunces\", \"Iowan Old Style\", Palatino, Georgia, serif",
-                 "typst-stack": ["Fraunces 9pt", "Georgia", "New Computer Modern"],
-                 "display-weight": 600, "display-tracking-em": -0.03 },
+    "display": { "family": "Source Serif 4",
+                 "css-stack": "\"Source Serif 4\", Charter, \"IBM Plex Serif\", Georgia, serif",
+                 "typst-stack": ["Source Serif 4", "Charter", "New Computer Modern"],
+                 "display-weight": 600, "display-tracking-em": -0.01 },
     "body":    { "family": "Source Sans 3",
                  "css-stack": "\"Source Sans 3\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
                  "typst-stack": ["Source Sans 3", "Helvetica"] },

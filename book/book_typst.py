@@ -930,7 +930,7 @@ _PREAMBLE = _TYPST_PREAMBLE + """\
 // The compiled PDF and the emitted .typ live under book/_typst/ (gitignored — created, never committed).
 // Type/colour/surface come from the design-token `dt` preamble above. Body stays at a print-native 11pt
 // (the token body step is screen-sized; print density is protected here) while the faces + palette follow
-// the tokens: Fraunces display headings, a quiet body face, umber accent, and the semantic-box anchors.
+// the tokens: Source Serif 4 display headings, a quiet body face, umber accent, and the semantic-box anchors.
 #set document(title: "Model-Based Agentic Software Engineering")
 #set page(paper: "us-letter", margin: (x: 1.1in, y: 1in), numbering: "1", fill: dt.paper)
 #set text(font: dt.font-body, size: 11pt, lang: "en", fill: dt.ink)

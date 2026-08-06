@@ -1331,7 +1331,7 @@ NAV_GRID = (
 
 
 # FONT_CSS carries the design-token :root block (inlined once — it is present on every page) plus the
-# family bindings and the shared footer/topnav chrome, all token-referenced. Display = Fraunces, body =
+# family bindings and the shared footer/topnav chrome, all token-referenced. Display = Source Serif 4, body =
 # Source Sans 3, mono = IBM Plex Mono (the Umber Monograph faces).
 FONT_CSS = (CSS_ROOT_BLOCK +
             '  body { font-family:var(--font-body); }\n'

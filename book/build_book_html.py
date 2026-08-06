@@ -480,7 +480,7 @@ def _apply_part_refs(md: str) -> str:
 
 
 # `{{dt:<key>}}` — derive a design-system NAME from the token SSOT so the colophon's prose (faces, accent)
-# follows book-models/design-tokens.json instead of hardcoding "Fraunces"/"burnt umber". Colon-namespaced
+# follows book-models/design-tokens.json instead of hardcoding "Source Serif 4"/"burnt umber". Colon-namespaced
 # like {{part:N}}, so _apply_metrics (which matches [a-z0-9_]+ only, no colon) never touches it. Unknown
 # key fails loud — a mistyped face stops the build, never ships {{dt:typo}} to the reader.
 _DT_TOKEN_RE = re.compile(r"\{\{\s*dt:([a-z0-9_]+)\s*\}\}")
@@ -6033,7 +6033,7 @@ def build_pdf() -> int:
     print(f"Typst source: {typ_src} ({len(typ):,} bytes, {len(slugs)} chapters)")
 
     # Compile. `--root ..` so leading-`/` image paths (figure SVGs, cached mermaid SVGs) resolve against
-    # the repo root. `--font-path` points Typst at the bundled OFL statics (book/fonts/) — Fraunces /
+    # the repo root. `--font-path` points Typst at the bundled OFL statics (book/fonts/) — Source Serif 4 /
     # Source Sans 3 / IBM Plex Mono are not installed on the host or the CI runner, so without this flag
     # Typst silently substitutes a default serif and the PDF diverges from the web book, which loads the
     # real faces via Google Fonts. Typst fails loud on any unresolved reference / bad image / math error.

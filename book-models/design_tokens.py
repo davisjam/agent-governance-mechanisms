@@ -2,7 +2,7 @@
 
 The repo's own thesis, applied to its own styling: project the artifact from a typed model, then gate
 drift. `design-tokens.json` is the single source of truth for the Umber-Monograph visual system (warm
-paper, burnt-umber accent, a Fraunces display face, one 8-step type scale addressed by ROLE, and the
+paper, burnt-umber accent, a Source Serif 4 display face, one 8-step type scale addressed by ROLE, and the
 decided semantic-box anchors — thesis GREEN, definition BLUE, inset LAVENDER). This module reads it and
 emits each renderer's native form so the three surfaces (site / web book / PDF) cannot diverge:
 
@@ -161,12 +161,16 @@ def css_root_block(t: Tokens | None = None) -> str:
 
 
 def google_fonts_link(t: Tokens | None = None) -> str:
-    """The <link> loading the display (Fraunces), body (Source Sans 3), and mono (IBM Plex Mono) faces."""
+    """The <link> loading the display (Source Serif 4), body (Source Sans 3), and mono (IBM Plex Mono) faces.
+
+    Source Serif 4 loads weights 400 / 600 / 700 (upright) + 400 italic — the per-level heading weights
+    (Part bold 700, chapter/section semibold 600, the italic `###` sub-level) plus regular. `opsz` is the
+    face's 8..60 optical-size axis (its native range), so the browser picks the size-appropriate cut."""
     return (
         '<link rel="preconnect" href="https://fonts.googleapis.com">'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
         '<link href="https://fonts.googleapis.com/css2?'
-        "family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&"
+        "family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&"
         "family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&"
         'family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">'
     )
